@@ -130,12 +130,16 @@ Status: standing legal/editorial caution. Any future item text obtained through 
 
 ## Product / SEO open decisions
 
-### P16 — Final application stack
-Docs-first repository. Framework, deployment provider, package manager, database/analytics choices intentionally unresolved.
+### P16 — Final application architecture
+**Resolved constraint:** Do not use Next.js. The implementation direction is standards-first **HTML, CSS, and TypeScript**, with crawlable semantic HTML for acquisition/reference pages and progressive enhancement for stateful study behavior.
 
-Decision criteria: static/SSR acquisition pages; installable offline PWA; local-first progress; print rendering; versioned content packs; strong accessibility; low operating cost.
+**Still open:** exact build tool/package manager, static-page generation approach, test stack, service-worker tooling, machine-readable content schema implementation, analytics choice, and exact Cloudflare deployment/configuration.
 
-Status: OPEN until implementation task.
+**Preferred direction:** Cloudflare, pending a dedicated current-primary-source architecture pass. Do not freeze Workers/Pages/static-asset configuration from memory.
+
+Decision criteria remain: indexable static HTML; installable/offline PWA; explicit versioned content packs; local-first progress; deterministic print rendering; strong accessibility; low operating cost; minimal backend.
+
+**Status:** PARTIALLY RESOLVED. See `../product/ARCHITECTURE_CONSTRAINTS.md`.
 
 ### P17 — Domain / canonical host
 Preferred naming direction: NYCustodianExam / NY Custodian Exam. Domain registration/canonical production host not established in corpus.
@@ -184,5 +188,6 @@ Status: optional / deferred.
 - REJECTED: 2017/2021/2026-only cadence; 2024 OC exam is officially recovered and promotion existence is corroborated.
 - RESOLVED: 2024 OC final announcement recovered.
 - REFINED: old/new DCS guide continuity — one scrub-brush sample verified identical across editions; “since 2001” dating relies on prior researcher reading unless the dated old copy is recovered directly.
+- PARTIALLY RESOLVED P16: standards-first HTML/CSS/TypeScript; no Next.js. Cloudflare/build specifics remain open pending research.
 
 Keep this file as the single queue of unresolved truth claims. When an item is resolved, update the relevant canonical document and retain a short resolution note here if the former conflict is important to provenance.
