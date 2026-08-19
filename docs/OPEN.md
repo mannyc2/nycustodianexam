@@ -131,15 +131,17 @@ Status: standing legal/editorial caution. Any future item text obtained through 
 ## Product / SEO open decisions
 
 ### P16 — Final application architecture
-**Resolved constraint:** Do not use Next.js. The implementation direction is standards-first **HTML, CSS, and TypeScript**, with crawlable semantic HTML for acquisition/reference pages and progressive enhancement for stateful study behavior.
+**Resolved:** standards-first semantic **HTML/CSS** presentation; **TypeScript + Effect** for nontrivial application behavior; **Vite** as the build/development tool; **Cloudflare Workers Static Assets** as the initial deployment target; no Next.js; no Worker script merely to serve static files.
 
-**Still open:** exact build tool/package manager, static-page generation approach, test stack, service-worker tooling, machine-readable content schema implementation, analytics choice, and exact Cloudflare deployment/configuration.
+**Effect release gate:** as of 2026-08-19, Effect v4 remains beta. Prefer stable `effect@latest`/v3 if scaffolding begins before v4 GA; if v4 reaches GA before dependency lock, re-evaluate against the GA release. Do not make core product behavior depend on beta-only unstable modules.
 
-**Preferred direction:** Cloudflare, pending a dedicated current-primary-source architecture pass. Do not freeze Workers/Pages/static-asset configuration from memory.
+**UI view layer:** no React/Vue/Solid/Svelte requirement initially. Keep a replaceable DOM/view-adapter boundary and use the first representative player vertical slice to determine whether a small declarative UI library earns its cost for interactive islands.
+
+**Still open:** package manager, exact static HTML generation implementation, machine-readable content schemas, service-worker tooling/cache protocol, CSS organization, final Effect major at dependency lock, first-party analytics, correction-endpoint storage/design, and canonical host.
 
 Decision criteria remain: indexable static HTML; installable/offline PWA; explicit versioned content packs; local-first progress; deterministic print rendering; strong accessibility; low operating cost; minimal backend.
 
-**Status:** PARTIALLY RESOLVED. See `../product/ARCHITECTURE_CONSTRAINTS.md`.
+**Status:** SUBSTANTIALLY RESOLVED. See `../product/ARCHITECTURE_CONSTRAINTS.md` and `../research/architecture/EFFECT_VANILLA_CLOUDFLARE_2026-08-19.md`.
 
 ### P17 — Domain / canonical host
 Preferred naming direction: NYCustodianExam / NY Custodian Exam. Domain registration/canonical production host not established in corpus.
@@ -188,6 +190,6 @@ Status: optional / deferred.
 - REJECTED: 2017/2021/2026-only cadence; 2024 OC exam is officially recovered and promotion existence is corroborated.
 - RESOLVED: 2024 OC final announcement recovered.
 - REFINED: old/new DCS guide continuity — one scrub-brush sample verified identical across editions; “since 2001” dating relies on prior researcher reading unless the dated old copy is recovered directly.
-- PARTIALLY RESOLVED P16: standards-first HTML/CSS/TypeScript; no Next.js. Cloudflare/build specifics remain open pending research.
+- SUBSTANTIALLY RESOLVED P16: standards-first HTML/CSS + Vite + TypeScript/Effect; Workers Static Assets; no Next.js; no UI framework required initially. Presentation-library choice remains evidence-gated by the first vertical slice; final Effect major remains gated on v4 GA status at dependency lock.
 
 Keep this file as the single queue of unresolved truth claims. When an item is resolved, update the relevant canonical document and retain a short resolution note here if the former conflict is important to provenance.
