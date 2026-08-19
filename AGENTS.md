@@ -19,7 +19,11 @@ These files control exam truth and scope.
 - `product/FEATURE_SPEC.md` — maintained product/UX behavior contract recovered from prior design work.
 - `product/ARCHITECTURE_CONSTRAINTS.md` — later/current implementation decisions that may supersede engineering assumptions in the recovered feature spec.
 
-Current constraint: **do not introduce Next.js. Prefer standards-first HTML/CSS/TypeScript; exact build tooling and Cloudflare deployment configuration remain pending current-source architecture research.**
+Current architecture: **standards-first semantic HTML/CSS; TypeScript + Effect for nontrivial application behavior; Vite for build/development; Cloudflare Workers Static Assets for initial deployment; no Next.js; no UI framework required initially.** The first representative player vertical slice is the evidence gate for whether a small declarative UI layer is warranted for interactive application islands.
+
+As of 2026-08-19 Effect v4 is beta. Prefer the stable release line if scaffolding begins before v4 GA; re-check the current official Effect status at dependency-lock time.
+
+Read `research/architecture/EFFECT_VANILLA_CLOUDFLARE_2026-08-19.md` before changing these decisions.
 
 ### Illustration production — `illustration/`
 
@@ -71,6 +75,20 @@ Officially published sample material may be discussed only in its lawful/public 
 - Pre-answer UI/accessibility data must not leak the correct answer.
 - Reviewed translations preserve canonical English terminology and must not imply a bilingual official exam.
 
+## Effect implementation rules
+
+When application code is introduced:
+
+- Effect owns nontrivial behavior and side-effect orchestration; view adapters render explicit state.
+- Prefer typed expected errors over thrown exceptions.
+- Use Schema at untrusted-data boundaries.
+- Keep browser/runtime globals behind platform adapters/services.
+- Use services/Layers for capabilities such as persistence, content/profile registries, networking, clocks, and offline-pack storage.
+- Use structured concurrency, schedules, scopes, and retries only where their semantics are real.
+- Do not wrap trivial DOM rendering in Effect merely for stylistic purity.
+- Run Effects at application edges rather than scattering runtime calls through domain modules.
+- A player/session use-case must be testable without constructing DOM elements.
+
 ## Research workflow
 
 Before a research pass:
@@ -93,4 +111,4 @@ When merging research:
 
 ## Implementation status
 
-Application code is not yet scaffolded. Before implementation, perform the dedicated current-primary-source architecture pass described in `product/ARCHITECTURE_CONSTRAINTS.md`. Do not add frameworks, databases, analytics vendors, or backend services just because they are common defaults.
+Application code is not yet scaffolded. The Effect/Vite/Workers architecture pass has been completed. The next implementation task should begin with the representative vertical slice required by `product/ARCHITECTURE_CONSTRAINTS.md`; do not add frameworks, databases, analytics vendors, or backend services just because they are common defaults.
