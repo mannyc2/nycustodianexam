@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-hidden="true" focusable="false">
+  <style>
+  .outer { fill: #ffffff; stroke: #111111; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+  .outer-none { fill: none; stroke: #111111; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+  .struct { fill: none; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .struct-fill { fill: #ffffff; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .fine { fill: none; stroke: #111111; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .light { fill: #dddddd; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .mid { fill: #bcbcbc; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .ink { fill: #111111; stroke: none; }
+</style>
+  
+<g>
+  <!-- top cap -->
+  <path class="outer" d="M358 142 L615 142 L681 205 L329 205 Z"/>
+  <path class="light" d="M358 142 L615 142 L681 205 L329 205 Z"/>
+  <path class="fine" d="M385 156 L365 192 M430 151 L407 197 M475 149 L453 198 M520 149 L498 198 M565 151 L544 197 M610 157 L590 192"/>
+
+  <!-- front rails -->
+  <path class="outer" d="M349 203 L410 203 L304 890 L229 890 Z"/>
+  <path class="outer" d="M598 203 L659 203 L795 890 L720 890 Z"/>
+
+  <!-- rear rails/supports -->
+  <path class="outer" d="M615 205 L666 205 L909 890 L839 890 Z"/>
+  <path class="outer" d="M335 205 L384 205 L501 890 L432 890 Z"/>
+
+  <!-- front steps in perspective -->
+  <path class="struct-fill" d="M337 304 L636 304 L662 344 L329 344 Z"/>
+  <path class="struct-fill" d="M318 429 L660 429 L690 473 L306 473 Z"/>
+  <path class="struct-fill" d="M296 568 L687 568 L720 619 L281 619 Z"/>
+  <path class="struct-fill" d="M270 724 L718 724 L757 782 L251 782 Z"/>
+  <path class="fine" d="M365 314 L351 337 M417 310 L402 340 M470 308 L454 341 M523 308 L507 341 M576 310 L560 340 M626 315 L613 337"/>
+
+  <!-- locked spreader bars -->
+  <path class="struct-fill" d="M375 506 L476 565 L460 591 L359 532 Z"/>
+  <circle class="struct-fill" cx="370" cy="519" r="12"/>
+  <circle class="struct-fill" cx="468" cy="578" r="12"/>
+  <path class="struct-fill" d="M664 510 L806 565 L795 594 L653 540 Z"/>
+  <circle class="struct-fill" cx="659" cy="525" r="12"/>
+  <circle class="struct-fill" cx="800" cy="580" r="12"/>
+
+  <!-- feet -->
+  <path class="mid" d="M216 878 L314 878 L314 914 L208 914 Z"/>
+  <path class="mid" d="M709 878 L806 878 L813 914 L706 914 Z"/>
+  <path class="mid" d="M421 878 L511 878 L515 914 L419 914 Z"/>
+  <path class="mid" d="M829 878 L921 878 L930 914 L826 914 Z"/>
+</g>
+
+</svg>
