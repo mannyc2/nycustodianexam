@@ -1,39 +1,70 @@
-# NYS Entry-Level Custodians & Janitors — Exam Research Corpus
+# NY Custodian Exam
 
-Provenance-tracked knowledge base for a free study site covering the New York State
-**Entry-Level Custodians and Janitors** civil-service written test series (a statewide
-DCS-prepared series), with a **Nassau County** logistics layer. The series is used by
-40+ Nassau school-district/library/BOCES jurisdictions and by local commissions across
-NY State; the site's audience rule extends coverage to any jurisdiction whose
-announcement uses the same three-subject plan.
+Provenance-tracked research, product, and content-production repository for a free study site covering the New York **Entry-Level Custodians and Janitors** civil-service written-test series, with a Nassau County logistics layer and evidence-gated expansion to other same-plan jurisdictions.
 
-## Documents (`/docs`)
+The site is independent and unofficial. It does not solicit, reconstruct, buy, publish, or represent secure examination content as practice material.
+
+## Repository map
+
+### `docs/` — exam truth and scope authority
+
 | File | Role |
 |---|---|
-| `FACTBASE.md` | Established facts: exam identity, format, scoring, logistics, legal framework, titles, jurisdictions |
-| `SCOPE.md` | Scope-of-test extraction — individually testable facts with citations (question-bank foundation) |
-| `TAXONOMY.md` | Tool & hazard taxonomy: name / use / confusable-with / source, with evidence tiers |
-| `LANDSCAPE.md` | Competitive landscape, learning-science evidence, accessibility & design guidance |
-| `OPEN.md` | Conflicts-and-gaps ledger: every unresolved question, contradiction, and pending action |
+| `FACTBASE.md` | Established exam, format, scoring, logistics, legal, title, and jurisdiction facts |
+| `SCOPE.md` | Source-backed testable facts that constrain original study content |
+| `TAXONOMY.md` | Tool, equipment, hazard, confusion-set, and evidence-tier taxonomy |
+| `LANDSCAPE.md` | Competitive, learning, accessibility, design, and product evidence |
+| `OPEN.md` | Unresolved truth claims, conflicts, recovery targets, and product/SEO decisions |
 
-## Research prompts (`/prompts`)
-Ready-to-run prompts for the next research passes. **Always attach or point the
-researcher at the canonical `/docs` files** — two prior passes failed corpus control
-by diffing against derivatives.
+### `product/` — behavior and implementation constraints
 
-## Provenance rules (summary)
-- Every fact carries a tier tag ([OFFICIAL]/[COMMERCIAL]/[ANECDOTE]/[INFERRED]) and date.
-- Nothing enters SCOPE or TAXONOMY without a citation; conflicts are logged, never silently merged.
-- Precedence: newer official > older official > commercial > anecdote.
-- **Test security:** no secure, remembered, or reconstructed examination items — ever.
-  The only lawfully published questions for this series are the official DCS guide samples.
+- `FEATURE_SPEC.md` — normalized recovery of the full buildable product specification: page states, atlas/practice/hazards/review/simulation/print, data model, offline, accessibility, privacy, corrections, QA, and release gates.
+- `ARCHITECTURE_CONSTRAINTS.md` — current implementation decisions. **No Next.js; standards-first HTML/CSS/TypeScript.** Cloudflare is preferred but exact architecture is pending a current-source research pass.
 
-## Workflow
-Research outputs are merged into `/docs` one at a time with a per-input changelog;
-"assemble" produces final documents plus a build brief.
+### `illustration/` — visual production
 
-## Repository status
+- `PIPELINE_SPEC.md` — normalized production contract for original line art and hazard scenes.
+- `RECOVERED_ASSET_MANIFEST.md` — integrity record for recovered historical matrices/schema/prompts/templates.
+- `examples/` — recovered SVG prototypes. Examples are not automatically approved production assets.
 
-This repository is currently **docs-first**. Application code, framework selection, deployment configuration, and a repository-wide license are intentionally deferred until the research corpus and initial content-production contracts are stable.
+`docs/TAXONOMY.md` always controls which concepts are currently in scope; old illustration matrices cannot override it.
 
-See [`AGENTS.md`](AGENTS.md) for agent/research rules and [`CONTRIBUTING.md`](CONTRIBUTING.md) for contribution boundaries.
+### `research/`
+
+Supporting investigations and provenance. Research reports do not become canonical merely because they are committed. Accepted findings are reconciled into `docs/`.
+
+### `recovery/`
+
+`CORPUS_RECOVERY.md` records prior-chat/Library artifacts that were recovered, already integrated, superseded, deliberately not duplicated, or not independently located.
+
+### `prompts/`
+
+Reusable research instructions. A prompt is not evidence.
+
+## Authority rule
+
+When documents disagree, resolve the disagreement by domain rather than filename age:
+
+1. current `docs/` controls exam facts/scope;
+2. current architecture constraints control implementation decisions;
+3. product spec controls UX/product behavior;
+4. illustration spec controls production mechanics for concepts admitted by the taxonomy;
+5. research/recovery artifacts supply provenance and proposals, not higher-precedence truth.
+
+Never silently replace an unknown fact with an inference.
+
+## Provenance and security rules
+
+- Preserve source tier, locator, and date.
+- Prefer newer controlling official evidence to older official evidence; official evidence to commercial/anecdotal material.
+- Contradictions stay visible until a controlling source resolves them.
+- Nothing enters scored content without source support and review.
+- No secure, remembered, reconstructed, photographed, review-session, or purported “actual” exam item content.
+- Practice questions and illustrations are original or independently rights-cleared.
+- Entry-level and high-level series remain separate unless explicit evidence says otherwise.
+
+## Current status
+
+The repository is still **docs/product-spec first**. Production application code has not been scaffolded. The next architecture task is a current-primary-source research pass for a frameworkless HTML/CSS/TypeScript implementation and Cloudflare deployment, followed by machine-readable content-schema design and one end-to-end vertical slice.
+
+See [`AGENTS.md`](AGENTS.md) for agent rules and [`CONTRIBUTING.md`](CONTRIBUTING.md) for contribution boundaries.
