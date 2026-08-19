@@ -1,60 +1,96 @@
 # Agent instructions
 
-This repository is a provenance-tracked research corpus for a free NY civil-service Custodian exam study site.
+This repository is a provenance-tracked research and product corpus for a free NY civil-service Custodian exam study site.
 
-## Canonical documents
+## Read by task domain
 
-The canonical project state lives in `docs/`:
+### Exam facts and content scope — `docs/`
 
 - `docs/FACTBASE.md` — established exam/logistics/legal facts.
 - `docs/SCOPE.md` — testable content facts and source basis.
-- `docs/TAXONOMY.md` — tool/hazard taxonomy and evidence tiers.
-- `docs/LANDSCAPE.md` — competitive, pedagogical, accessibility, product, and SEO evidence.
-- `docs/OPEN.md` — unresolved questions, conflicts, and pending work.
+- `docs/TAXONOMY.md` — current tool/hazard taxonomy and evidence tiers.
+- `docs/LANDSCAPE.md` — competitive, pedagogical, accessibility, design, and SEO evidence.
+- `docs/OPEN.md` — unresolved facts, conflicts, recovery targets, and pending product/SEO decisions.
 
-Do not treat generated research reports, chat summaries, old prompts, or derivative files as canonical when they conflict with these documents.
+These files control exam truth and scope.
+
+### Product behavior — `product/`
+
+- `product/FEATURE_SPEC.md` — maintained product/UX behavior contract recovered from prior design work.
+- `product/ARCHITECTURE_CONSTRAINTS.md` — later/current implementation decisions that may supersede engineering assumptions in the recovered feature spec.
+
+Current constraint: **do not introduce Next.js. Prefer standards-first HTML/CSS/TypeScript; exact build tooling and Cloudflare deployment configuration remain pending current-source architecture research.**
+
+### Illustration production — `illustration/`
+
+`illustration/PIPELINE_SPEC.md` governs production mechanics only for concepts admitted by the **current** `docs/TAXONOMY.md`. Historical recovered QA matrices reflect an older taxonomy snapshot and must never delete/downgrade newer taxonomy entries.
+
+SVGs in `illustration/examples/` are prototypes, not automatically accepted production assets.
+
+### Supporting evidence and recovery
+
+- `research/` — investigations/provenance; committing a report does not make it canonical.
+- `recovery/CORPUS_RECOVERY.md` — reconciliation ledger; bookkeeping, not exam truth.
+- `prompts/` — instructions, never evidence.
+
+## Conflict/precedence rule
+
+Resolve conflicts by domain:
+
+1. `docs/` controls exam facts and allowed scope.
+2. current architecture constraints control implementation/tooling decisions.
+3. product spec controls user-visible behavior when it does not contradict exam truth.
+4. illustration spec controls production mechanics for taxonomy-approved concepts.
+5. supporting research/recovery artifacts are lower-precedence provenance/proposals.
+
+Do not let an older recovered artifact roll back a later canonical reconciliation.
 
 ## Evidence rules
 
-- Preserve provenance and dates.
-- Distinguish official evidence, reputable secondary evidence, anecdote, and inference.
-- Prefer newer official material over older official material; official material over commercial material; commercial material over anecdote.
-- Do not silently resolve contradictions. Record them in `docs/OPEN.md` unless a controlling source clearly resolves the conflict.
+- Preserve provenance, evidence tier, locator, and dates.
+- Distinguish official evidence, reputable secondary/research evidence, commercial description, anecdote, and inference.
+- Prefer newer controlling official material over older official material; official over commercial/anecdotal material.
+- Do not silently resolve contradictions. Record genuine unresolved truth claims in `docs/OPEN.md`.
 - Do not turn an editorial recommendation into an exam fact.
 - Unknown facts stay unknown.
+- Before re-researching, search the canonical corpus and recovery ledger to avoid duplicate passes.
 
 ## Exam-security boundary
 
 Never request, reproduce, reconstruct, summarize, paraphrase, store, or publish secure or remembered examination questions, drawings, answer choices, or keys.
 
-Officially published sample questions may be discussed only within their lawful/public context. Historical material requires an explicit rights/security determination before content ingestion.
+Officially published sample material may be discussed only in its lawful/public context. Historical/FOIL material requires an explicit security/rights determination before any item text is ingested. Candidate recollections never define item content.
 
 ## Site-content rules
 
-- The site is independent and unofficial.
-- Practice questions and illustrations must be original or have verified rights.
-- Never advertise "actual questions," leaked answers, guaranteed passing, fabricated review counts, or unsupported official-length/weight/score claims.
-- Entry-level and high-level series content remain separate unless evidence explicitly establishes overlap.
-- Every scored explanation should ultimately expose a source basis.
+- Site is independent and unofficial.
+- Practice questions and illustrations must be original or independently rights-cleared.
+- Never advertise “actual questions,” leaked answers, guaranteed passing, fabricated review counts, or unsupported official-length/weight/score claims.
+- Entry-level and high-level series remain separate unless evidence explicitly establishes compatibility.
+- Every scored explanation ultimately exposes source lines and a rationale for every distractor.
+- Pre-answer UI/accessibility data must not leak the correct answer.
+- Reviewed translations preserve canonical English terminology and must not imply a bilingual official exam.
 
 ## Research workflow
 
 Before a research pass:
 
-1. Read the relevant canonical docs.
-2. Identify what is already established so it is not re-researched unnecessarily.
-3. State the cutoff date for time-sensitive findings.
-4. Search primary/official sources first.
-5. Record genuine gaps as gaps rather than filling them with assumptions.
+1. Read the relevant authority files and `recovery/CORPUS_RECOVERY.md`.
+2. Identify what is already established/integrated.
+3. State cutoff date for time-sensitive findings.
+4. Search primary/official sources first where the claim calls for them.
+5. Record genuine gaps rather than filling them with assumptions.
+6. Do not create another derivative report when an existing maintained document can be updated cleanly.
 
 When merging research:
 
 1. Diff against the canonical files.
-2. Merge one research input at a time.
+2. Merge one evidence input at a time.
 3. Preserve source URLs/citations and observation dates.
-4. Update `docs/OPEN.md` for new conflicts or unresolved questions.
-5. Do not delete superseded evidence when it is useful to understand a dated change; mark its status instead.
+4. Update `docs/OPEN.md` for new factual conflicts/unresolved questions.
+5. Retain useful superseded evidence with status rather than silently deleting provenance.
+6. Update recovery status when a formerly missing artifact surfaces.
 
 ## Implementation status
 
-The repository is docs-first. Do not introduce a framework, package manager, deployment provider, analytics vendor, or application architecture unless the task explicitly calls for implementation and the decision is supported by the current product requirements.
+Application code is not yet scaffolded. Before implementation, perform the dedicated current-primary-source architecture pass described in `product/ARCHITECTURE_CONSTRAINTS.md`. Do not add frameworks, databases, analytics vendors, or backend services just because they are common defaults.
