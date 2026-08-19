@@ -29,7 +29,21 @@ Do not silently replace contradictory evidence. Resolve it only when a controlli
 
 Read `product/FEATURE_SPEC.md`, `product/ARCHITECTURE_CONSTRAINTS.md`, and the relevant canonical fact/scope documents. Product code/specification must tolerate unresolved facts rather than inventing values.
 
-Current implementation boundary: **no Next.js; standards-first HTML/CSS/TypeScript.** Exact build/deployment tooling remains subject to the planned current-source architecture research.
+Current implementation direction: **standards-first semantic HTML/CSS + Vite + TypeScript/Effect, initially deployed through Cloudflare Workers Static Assets.** Do not introduce Next.js or another UI framework as a default. Preserve the Effect/domain-to-view boundary so the representative vertical slice can determine whether a small declarative renderer is warranted for interactive application islands.
+
+## Before changing Effect architecture
+
+Read `research/architecture/EFFECT_VANILLA_CLOUDFLARE_2026-08-19.md` and re-check current official Effect/Cloudflare documentation if the change depends on version or platform status.
+
+Expected implementation discipline:
+
+- typed expected errors;
+- Schema validation at untrusted-data boundaries;
+- services/Layers for capabilities rather than scattered browser globals;
+- Effect-owned orchestration for persistence/network/offline/concurrency workflows;
+- plain view adapters for rendering explicit state;
+- Effect runtime execution at application edges;
+- no dependency on beta-only Effect APIs for core behavior unless a later reviewed architecture decision explicitly permits it.
 
 ## Before changing illustration production
 
@@ -75,4 +89,4 @@ Before importing a recovered prior-chat artifact, classify it in `recovery/CORPU
 
 ## Code
 
-Application code has not yet been scaffolded. Once implementation begins, add concrete commands for type checking, tests, formatting, accessibility/browser QA, content validation, and deployment to this file and `AGENTS.md` based on the selected standards-first stack rather than generic framework defaults.
+Application code has not yet been scaffolded. The first implementation should follow the vertical-slice gate in `product/ARCHITECTURE_CONSTRAINTS.md`. Add concrete test/format/build commands to this file once the toolchain actually exists rather than inventing commands before the repository contains them.
