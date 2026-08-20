@@ -47,9 +47,29 @@ Expected implementation discipline:
 
 ## Before changing illustration production
 
-Read the current `docs/TAXONOMY.md` first. Recovered illustration QA matrices represent an older inventory snapshot and cannot override current taxonomy scope.
+Read, in order:
 
-Examples in `illustration/examples/` are prototypes unless a later production review explicitly accepts an asset revision. Never use official exam/DCS sample artwork as a generation input or style reference.
+1. `docs/TAXONOMY.md`;
+2. `illustration/README.md`;
+3. `illustration/TOOL_GEOMETRY_PIPELINE.md` for isolated tools;
+4. `illustration/PIPELINE_SPEC.md` for recovered/hazard/fallback guidance;
+5. the relevant research file when changing a decision.
+
+For tool assets:
+
+- deterministic project-owned geometry or deterministic 2D construction is the source of truth;
+- keep sourced, measured, and editorial parameters distinct;
+- downloadable supplier/community CAD is not automatically reusable or mechanically suitable;
+- a fixed static SVG/raster revision controls scored use;
+- interactive GLB is optional atlas-only content and must not auto-download;
+- pre-answer rotation is prohibited in scored questions;
+- image generation cannot invent or restyle the controlling mechanically meaningful geometry;
+- automated geometry/hash checks do not replace independent human mechanical review;
+- no illustration is better than an unsupported or rights-unclear illustration.
+
+Recovered illustration QA matrices represent older inventory snapshots and cannot override current taxonomy scope. Examples in `illustration/examples/` are prototypes unless a later production review explicitly accepts an exact asset revision.
+
+Never use official exam/DCS sample artwork as a generation input, tracing source, or style reference.
 
 ## Exam security
 
@@ -75,7 +95,7 @@ Good contributions include:
 - evidence about a jurisdiction using the same test plan;
 - original practice-content QA that does not derive from secure questions;
 - implementation work that satisfies the maintained product/accessibility contracts;
-- current-taxonomy illustration QA and original asset reviews.
+- current-taxonomy geometry evidence, parameter records, deterministic models, invariant checks, rights reviews, and independent mechanical reviews.
 
 ## Editorial boundaries
 
@@ -86,6 +106,8 @@ The project must not imply affiliation with NYS DCS, Nassau County, a school dis
 Put substantial exploratory work in `research/` first when appropriate. A research report is evidence/proposal, not automatically project truth. Merge accepted factual findings into the relevant canonical `docs/` file after review.
 
 Before importing a recovered prior-chat artifact, classify it in `recovery/CORPUS_RECOVERY.md`: already integrated, genuinely missing, superseded/derivative, prototype, or not located. Do not dump transcripts or create duplicate maintained truths.
+
+For a research bundle, verify the exact recorded SHA-256 before importing files. Do not reconstruct missing evidence files from a completion summary.
 
 ## Code
 
