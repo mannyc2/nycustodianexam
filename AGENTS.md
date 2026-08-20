@@ -27,9 +27,16 @@ Read `research/architecture/EFFECT_VANILLA_CLOUDFLARE_2026-08-19.md` before chan
 
 ### Illustration production — `illustration/`
 
-`illustration/PIPELINE_SPEC.md` governs production mechanics only for concepts admitted by the **current** `docs/TAXONOMY.md`. Historical recovered QA matrices reflect an older taxonomy snapshot and must never delete/downgrade newer taxonomy entries.
+`docs/TAXONOMY.md` controls which concepts and decisive distinctions are allowed.
 
-SVGs in `illustration/examples/` are prototypes, not automatically accepted production assets.
+For isolated tools:
+
+- `illustration/TOOL_GEOMETRY_PIPELINE.md` is the current production architecture.
+- `illustration/PIPELINE_SPEC.md` is recovered historical/fallback guidance. Its AI-first raster-source assumption is superseded for mechanically modeled tool assets.
+- `research/illustration/TOOL_GEOMETRY_PIPELINE_2026-08-20.md` records the immutable-base research that justified the change.
+- historical QA matrices and SVGs in `illustration/examples/` are inputs/prototypes, not accepted production assets.
+
+For hazard scenes and broader contextual illustrations, the recovered pipeline remains supporting guidance until a dedicated maintained decision supersedes it. Do not apply the tool B-rep pipeline to scenes automatically.
 
 ### Supporting evidence and recovery
 
@@ -44,7 +51,7 @@ Resolve conflicts by domain:
 1. `docs/` controls exam facts and allowed scope.
 2. current architecture constraints control implementation/tooling decisions.
 3. product spec controls user-visible behavior when it does not contradict exam truth.
-4. illustration spec controls production mechanics for taxonomy-approved concepts.
+4. current illustration decisions control production mechanics for taxonomy-approved concepts.
 5. supporting research/recovery artifacts are lower-precedence provenance/proposals.
 
 Do not let an older recovered artifact roll back a later canonical reconciliation.
@@ -88,6 +95,25 @@ When application code is introduced:
 - Do not wrap trivial DOM rendering in Effect merely for stylistic purity.
 - Run Effects at application edges rather than scattering runtime calls through domain modules.
 - A player/session use-case must be testable without constructing DOM elements.
+
+## Tool-asset production rules
+
+For tool visuals:
+
+- deterministic project-owned geometry or deterministic 2D construction is the source of truth;
+- standards/classification systems constrain or describe geometry but do not fill missing geometry automatically;
+- supplier/community CAD is reference material unless both mechanical suitability and modification/redistribution rights pass review;
+- preserve sourced, measured, and editorial parameters as distinct provenance classes;
+- validate B-rep/component/units/intersections and taxonomy-specific invariants before rendering;
+- use STEP AP242 as neutral CAD interchange/master derivative and static hidden-line SVG as the controlling scored/print view;
+- GLB is optional, derived, user-invoked atlas content and must not auto-download;
+- scored questions pin a fixed static view and do not permit pre-answer rotation;
+- image generation cannot invent, repair, or style the controlling mechanically meaningful geometry;
+- every asset requires independent mechanical, rights, accessibility, print, metadata-leak, and deterministic-rebuild review;
+- a reproducible build does not prove mechanical correctness;
+- when geometry or rights cannot be established, publish no illustration.
+
+No POC or prototype becomes production-approved merely because it passes automated validation.
 
 ## Research workflow
 
