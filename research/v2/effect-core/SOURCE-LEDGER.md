@@ -1,125 +1,172 @@
 # Source Ledger
 
+Status: BLOCKED - preliminary source inspection only
+
 ## Research metadata
 
 | Field | Value |
 | --- | --- |
 | Observation date | 2026-08-21 |
 | Repository | `mannyc2/nycustodianexam` |
-| Repository base | `8b0d26245c1d78fb0be4e79f874a7d8872056ceb` |
-| Official Effect source | `Effect-TS/effect` |
+| Source branch | `agent/chat-corpus-reconciliation` |
+| Source head at branch creation | `8b0d26245c1d78fb0be4e79f874a7d8872056ceb` |
+| Source head at final drift check | `645e885748c830f7a9cbbbe90ac0f31149bfc81c` |
+| Required SHA supplied by request | `<BASE_SHA>` |
+| Official Effect repository | `Effect-TS/effect` |
 | Effect source snapshot | `436f10d1efccec308426532ff3f88df9a96434f3` |
-| Effect version in package manifests | `4.0.0-rc.111` |
-| Research mode | Documentation and source inspection only; no implementation |
+| Effect package version at snapshot | `4.0.0-rc.111` |
+| Bun runtime coordinate used for probes | None |
+| Research mode | Documentation and source inspection only; no implementation or runtime probes |
 
-Technical API claims were taken from official repository source, migration notes, official generated guidance, standards, and platform documentation. No community blog, forum answer, or prior memo was treated as API authority.
+## Evidence labels
 
-## Repository inputs
+- CONFIRMED: official declarations, documentation, or source establish the claim.
+- OBSERVED: a committed reproducible probe establishes the exact coordinate.
+- INFERRED: a project-specific recommendation derived from evidence.
+- UNKNOWN: not established.
+- BLOCKED: required authority, immutable coordinate, or probe was unavailable.
 
-All available repository files were read at the immutable base SHA.
+No claim in this branch is labeled OBSERVED. No fixture, installation, typecheck, runtime probe, browser probe, or deployment probe was run.
 
-| Requested input | Status | Pinned source or evidence | Use |
+## Immutable-source and governance record
+
+### Initial checkpoint
+
+The request supplied `<BASE_SHA>` rather than a concrete SHA. The source branch resolved to `8b0d26245c1d78fb0be4e79f874a7d8872056ceb` before branch creation. At that head, the named shared contract and prompt-curation files did not exist. The output branch and draft PR were created from that observed head before extended research.
+
+### Final drift check
+
+The source branch later resolved to `645e885748c830f7a9cbbbe90ac0f31149bfc81c`. That merge added the shared contract, doctrine, skill adaptation, and lane prompt. The shared contract and lane prompt still contain `{{POST_CURATION_SOURCE_SHA}}` and expressly state that the lane must not run until the placeholder is replaced by an exact source SHA.
+
+The post-drift governance files were read only to classify the run and record the blocker. They were not silently treated as part of the original immutable research base. This lane is therefore not contract-complete.
+
+## Repository inputs read at the branch-creation source head
+
+| Input | Status | Pinned coordinate | Use |
 | --- | --- | --- | --- |
-| `AGENTS.md` | Read | https://github.com/mannyc2/nycustodianexam/blob/8b0d26245c1d78fb0be4e79f874a7d8872056ceb/AGENTS.md | Repository authority, Effect v4 rule, workspace constraints, research and publication requirements |
-| `product/ARCHITECTURE_CONSTRAINTS.md` | Read | https://github.com/mannyc2/nycustodianexam/blob/8b0d26245c1d78fb0be4e79f874a7d8872056ceb/product/ARCHITECTURE_CONSTRAINTS.md | Browser-first, Bun workspace, standards-first, exact Effect pin, Cloudflare Static Assets direction |
-| `product/FEATURE_SPEC.md` | Read | https://github.com/mannyc2/nycustodianexam/blob/8b0d26245c1d78fb0be4e79f874a7d8872056ceb/product/FEATURE_SPEC.md | Offline packs, commit-before-reveal, append-only attempts, deterministic sessions, IndexedDB, service-worker requirements |
-| `research/initial-pass/NORMALIZATION.md` | Read | https://github.com/mannyc2/nycustodianexam/blob/8b0d26245c1d78fb0be4e79f874a7d8872056ceb/research/initial-pass/NORMALIZATION.md | Prior claims to retain, reject, or revalidate |
-| `research/initial-pass/REUSABLE-FINDINGS.md` | Read | https://github.com/mannyc2/nycustodianexam/blob/8b0d26245c1d78fb0be4e79f874a7d8872056ceb/research/initial-pass/REUSABLE-FINDINGS.md | Product-specific reusable findings, not current Effect API authority |
-| `research/initial-pass/REDO-REQUIRED.md` | Read | https://github.com/mannyc2/nycustodianexam/blob/8b0d26245c1d78fb0be4e79f874a7d8872056ceb/research/initial-pass/REDO-REQUIRED.md | Required re-research boundaries and stale v3 warnings |
-| `research/initial-pass/RAW-EFFECT-REPORTS.md` | Read | https://github.com/mannyc2/nycustodianexam/blob/8b0d26245c1d78fb0be4e79f874a7d8872056ceb/research/initial-pass/RAW-EFFECT-REPORTS.md | Index evidence for prior E04/E08 references; not a substitute for the missing raw reports |
+| `AGENTS.md` | CONFIRMED, read | `mannyc2/nycustodianexam@8b0d26245c1d78fb0be4e79f874a7d8872056ceb:AGENTS.md` | Repository authority, Effect v4 constraint, workspace direction, authorized path, publication rules |
+| `product/ARCHITECTURE_CONSTRAINTS.md` | CONFIRMED, read | `mannyc2/nycustodianexam@8b0d26245c1d78fb0be4e79f874a7d8872056ceb:product/ARCHITECTURE_CONSTRAINTS.md` | Browser-first architecture, Bun workspace, standards-first APIs, static Cloudflare direction |
+| `product/FEATURE_SPEC.md` | CONFIRMED, read | `mannyc2/nycustodianexam@8b0d26245c1d78fb0be4e79f874a7d8872056ceb:product/FEATURE_SPEC.md` | Offline packs, commit-before-reveal, append-only attempts, deterministic sessions, IndexedDB and service-worker requirements |
+| `research/initial-pass/NORMALIZATION.md` | CONFIRMED, read | `mannyc2/nycustodianexam@8b0d26245c1d78fb0be4e79f874a7d8872056ceb:research/initial-pass/NORMALIZATION.md` | Prior claims requiring retention, rejection, or v4 verification |
+| `research/initial-pass/REUSABLE-FINDINGS.md` | CONFIRMED, read | `mannyc2/nycustodianexam@8b0d26245c1d78fb0be4e79f874a7d8872056ceb:research/initial-pass/REUSABLE-FINDINGS.md` | Product-specific reusable findings, not current Effect API authority |
+| `research/initial-pass/REDO-REQUIRED.md` | CONFIRMED, read | `mannyc2/nycustodianexam@8b0d26245c1d78fb0be4e79f874a7d8872056ceb:research/initial-pass/REDO-REQUIRED.md` | Stale v3 claims and required second-pass boundaries |
+| `research/initial-pass/RAW-EFFECT-REPORTS.md` | CONFIRMED, read as index only | `mannyc2/nycustodianexam@8b0d26245c1d78fb0be4e79f874a7d8872056ceb:research/initial-pass/RAW-EFFECT-REPORTS.md` | Evidence that prior E04/E08 reports were referenced; not a substitute for the raw reports |
 
-## Requested inputs unavailable at the base
+## Governance files that appeared only after source drift
 
-These paths or named files were searched at the pinned base and were not present. They were not reconstructed, copied from chat memory, or represented as read.
+| Input | Status | Pinned coordinate | Consequence |
+| --- | --- | --- | --- |
+| `prompts/research-v2/00-SHARED-RESEARCH-CONTRACT.md` | CONFIRMED, read after drift | `mannyc2/nycustodianexam@645e885748c830f7a9cbbbe90ac0f31149bfc81c:prompts/research-v2/00-SHARED-RESEARCH-CONTRACT.md` | Blocks execution while the source-SHA placeholder remains; requires an early receipt, fixture, probes, CSV ledgers, receipts and checksums |
+| `research/prompt-curation/EFFECT-V4-BUN-RESEARCH-DOCTRINE.md` | CONFIRMED, read after drift | `mannyc2/nycustodianexam@645e885748c830f7a9cbbbe90ac0f31149bfc81c:research/prompt-curation/EFFECT-V4-BUN-RESEARCH-DOCTRINE.md` | Requires an exact latest-v4 cohort, Bun fixture, installed package guidance, and runtime-specific roots |
+| `research/prompt-curation/EFFECT-SKILL-ADAPTATION.md` | CONFIRMED, read after drift | `mannyc2/nycustodianexam@645e885748c830f7a9cbbbe90ac0f31149bfc81c:research/prompt-curation/EFFECT-SKILL-ADAPTATION.md` | Requires a private Bun fixture and complete reading of installed `node_modules/effect/AGENTS.md` before code-level recommendations |
+| `prompts/research-v2/01-effect-v4-core-monorepo.md` | CONFIRMED, read after drift | `mannyc2/nycustodianexam@645e885748c830f7a9cbbbe90ac0f31149bfc81c:prompts/research-v2/01-effect-v4-core-monorepo.md` | Also blocks execution while its source-SHA placeholder remains and requires representative compile/test probes |
 
-| Requested input | Status | Evidence and consequence |
+## Contract-required inputs not completed after drift
+
+These were not retroactively treated as completed because the lane was already invalidated by the missing immutable SHA and source drift.
+
+| Input or action | Status |
+| --- | --- |
+| `README.md` complete reading | BLOCKED / not completed for this lane |
+| `CONTRIBUTING.md` complete reading | BLOCKED / not completed for this lane |
+| `research/initial-pass/README.md` complete reading | BLOCKED / not completed for this lane |
+| `research/initial-pass/DUPLICATION-AND-SUPERSESSION.md` complete reading | BLOCKED / not completed for this lane |
+| `docs/OPEN.md` complete reading | BLOCKED / not completed for this lane |
+| Private Bun fixture with exact dependencies and committed `bun.lock` | BLOCKED / not created |
+| Complete installed `node_modules/effect/AGENTS.md` reading | BLOCKED / no installation existed |
+| Required compile and runtime probes | BLOCKED / not run |
+| Raw probe results | BLOCKED / none |
+
+## Prior raw reports
+
+| Requested input | Status | Evidence |
 | --- | --- | --- |
-| `prompts/research-v2/00-SHARED-RESEARCH-CONTRACT.md` | Unavailable at base | The `prompts` tree at the pinned SHA did not contain `research-v2/00-SHARED-RESEARCH-CONTRACT.md`. The explicit user task and `AGENTS.md` governed the pass. |
-| `research/prompt-curation/EFFECT-V4-BUN-RESEARCH-DOCTRINE.md` | Unavailable at base | No `research/prompt-curation` path or repository search result existed at the pinned SHA. |
-| `research/prompt-curation/EFFECT-SKILL-ADAPTATION.md` | Unavailable at base | No `research/prompt-curation` path or repository search result existed at the pinned SHA. |
-| `04-architecture-memo-effect-browser-first-study-app.md` | Unavailable at base | The raw index referenced an E04 item, but recursive tree and repository search did not expose the named raw file. Only normalization/index material was available. |
-| `08-architecture-memo-effect-browser-first-study-app.md` | Unavailable at base | The raw index referenced an E08 item, but recursive tree and repository search did not expose the named raw file. Only normalization/index material was available. |
+| `04-architecture-memo-effect-browser-first-study-app.md` | UNKNOWN / unavailable at both observed source heads | Repository path listing and code search did not expose the named file; only normalization and index material was available |
+| `08-architecture-memo-effect-browser-first-study-app.md` | UNKNOWN / unavailable at both observed source heads | Repository path listing and code search did not expose the named file; only normalization and index material was available |
 
-## Official Effect v4 source
+Neither raw report was reconstructed from conversation memory or copied mechanically.
 
-Every GitHub source below is pinned to the same upstream commit.
+## Official Effect v4 sources
 
-| ID | Official source | Finding used |
+Every Effect source below is pinned to `Effect-TS/effect@436f10d1efccec308426532ff3f88df9a96434f3`.
+
+| ID | Path | Evidence used |
 | --- | --- | --- |
-| E01 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/packages/effect/package.json | Core package is `effect@4.0.0-rc.111`; stable and `effect/unstable/*` export boundaries |
-| E02 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/MIGRATION.md | Unified v4 ecosystem versioning, package consolidation, unstable module policy, migration index |
-| E03 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/migration/services.md | `Context.Service`, explicit Layers, removed accessors/dependencies, `yield*` preference, v4 naming |
-| E04 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/ai-docs/src/01_effect/03_services/01_service.ts | Current class-based service and `Layer.effect` example |
-| E05 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/ai-docs/src/01_effect/03_services/20_layer-composition.ts | `Layer.provide` versus `Layer.provideMerge`; root composition pattern |
-| E06 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/migration/layer-memoization.md | Shared v4 Layer memoization, composition preference, `Layer.fresh`, and local memo maps |
-| E07 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/ai-docs/src/01_effect/01_basics/02_effect-fn.ts | Named `Effect.fn` for reusable Effect-returning functions; `Effect.fn.Return`; operator convention |
-| E08 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/ai-docs/src/01_effect/01_basics/01_effect-gen.ts | `Effect.gen` for effect values and generator control-flow convention |
-| E09 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/.patterns/effect.md | No JavaScript try/catch for yielded Effect failures, `return yield*`, and limited `Effect.fnUntraced` use |
-| E10 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/ai-docs/src/01_effect/04_errors/01_error-handling.ts | `Schema.TaggedError`, `catchTag`, and typed expected-error handling |
-| E11 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/ai-docs/src/01_effect/04_errors/20_reason-errors.ts | Tagged reason unions, `catchReason`, `catchReasons`, and `unwrapReason` |
-| E12 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/packages/effect/src/Scope.ts | Scope as an explicit service and lifetime boundary; finalization strategies and child scopes |
-| E13 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/migration/scope.md | `Scope.extend` renamed to `Scope.provide` |
-| E14 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/migration/forking.md | Current `forkChild`, `forkScoped`, `forkIn`, and `forkDetach` names and ownership semantics |
-| E15 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/migration/runtime.md | Removal of `Runtime<R>`; Context and `Effect.run*With`; reduced Runtime module |
-| E16 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/packages/effect/src/ManagedRuntime.ts | Lazy Layer build, cached Context, owned Scope, repeated JS boundary runners, mandatory disposal |
-| E17 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/migration/fiber-keep-alive.md | Core v4 keep-alive behavior and continued recommendation for platform `runMain` roots |
-| E18 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/packages/effect/src/Clock.ts | Wall-clock and monotonic time distinctions, sleep, and replaceable test clock |
-| E19 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/packages/effect/src/Random.ts | Random service, deterministic `withSeed`, and non-security warning |
-| E20 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/packages/effect/src/DateTime.ts | UTC/zoned models, IANA zones, current-time and date operations |
-| E21 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/ai-docs/src/07_datetime/20_time-zones.ts | `DateTime.now`, current-zone Layer, and explicit zone provision |
-| E22 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/packages/platform/browser/package.json | `@effect/platform-browser@4.0.0-rc.111` and its package boundary |
-| E23 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/packages/platform/browser/src/BrowserRuntime.ts | Browser root and non-persisted `pagehide` interruption; teardown caveat |
-| E24 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/packages/platform/browser/src/BrowserPersistence.ts | Current IndexedDB persistence implementation, scoped database handle, Clock use, and unstable persistence dependency |
-| E25 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/packages/platform/bun/package.json | `@effect/platform-bun@4.0.0-rc.111` |
-| E26 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/packages/platform/bun/src/BunRuntime.ts | Bun process root, signal handling, reporting, and exit behavior |
-| E27 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/packages/platform/bun/src/BunFileSystem.ts | Bun FileSystem Layer |
-| E28 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/packages/platform/bun/src/BunPath.ts | Bun Path Layers |
-| E29 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/packages/vitest/package.json | `@effect/vitest@4.0.0-rc.111` and matching peer requirements |
-| E30 | https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/packages/vitest/src/index.ts | Scoped Effect tests and suite-shared test Layers |
-| E31 | https://github.com/Effect-TS/effect/tree/436f10d1efccec308426532ff3f88df9a96434f3/packages/platform | Official platform packages at the snapshot: browser, Bun, Deno, Node, and Node-shared; no Cloudflare package |
+| E01 | `packages/effect/package.json` | CONFIRMED `effect@4.0.0-rc.111`; stable and `effect/unstable/*` exports |
+| E02 | `MIGRATION.md` | CONFIRMED unified v4 versioning, package consolidation, unstable-module policy and migration index |
+| E03 | `migration/services.md` | CONFIRMED `Context.Service`, explicit Layers, removed accessors/dependencies and `yield*` preference |
+| E04 | `ai-docs/src/01_effect/03_services/01_service.ts` | CONFIRMED class-based service and `Layer.effect` examples |
+| E05 | `ai-docs/src/01_effect/03_services/20_layer-composition.ts` | CONFIRMED `Layer.provide`, `Layer.provideMerge` and root composition |
+| E06 | `migration/layer-memoization.md` | CONFIRMED shared v4 memoization, composition preference, `Layer.fresh` and local memo maps |
+| E07 | `ai-docs/src/01_effect/01_basics/02_effect-fn.ts` | CONFIRMED named `Effect.fn` guidance for reusable effect-returning functions |
+| E08 | `ai-docs/src/01_effect/01_basics/01_effect-gen.ts` | CONFIRMED `Effect.gen` use for effect values and local orchestration |
+| E09 | `.patterns/effect.md` | CONFIRMED no JavaScript `try`/`catch` for yielded Effect failures, `return yield*`, limited `Effect.fnUntraced` |
+| E10 | `ai-docs/src/01_effect/04_errors/01_error-handling.ts` | CONFIRMED `Schema.TaggedError`, `catchTag` and typed expected-error handling |
+| E11 | `ai-docs/src/01_effect/04_errors/20_reason-errors.ts` | CONFIRMED tagged reason unions, `catchReason`, `catchReasons` and `unwrapReason` |
+| E12 | `packages/effect/src/Scope.ts` | CONFIRMED Scope as an explicit service and resource lifetime boundary |
+| E13 | `migration/scope.md` | CONFIRMED `Scope.extend` renamed to `Scope.provide` |
+| E14 | `migration/forking.md` | CONFIRMED current `forkChild`, `forkScoped`, `forkIn` and `forkDetach` names |
+| E15 | `migration/runtime.md` | CONFIRMED removal of v3 `Runtime<R>` and use of Context / `Effect.run*With` |
+| E16 | `packages/effect/src/ManagedRuntime.ts` | CONFIRMED lazy Layer construction, cached Context, owned Scope and disposal requirement |
+| E17 | `migration/fiber-keep-alive.md` | CONFIRMED v4 core keep-alive behavior and continuing platform `runMain` recommendation |
+| E18 | `packages/effect/src/Clock.ts` | CONFIRMED wall-clock and monotonic-time distinction, sleep and replaceability |
+| E19 | `packages/effect/src/Random.ts` | CONFIRMED seeded Random service and non-security warning |
+| E20 | `packages/effect/src/DateTime.ts` | CONFIRMED UTC/zoned models, IANA zones and current-time operations |
+| E21 | `ai-docs/src/07_datetime/20_time-zones.ts` | CONFIRMED explicit current-zone Layer patterns |
+| E22 | `packages/platform/browser/package.json` | CONFIRMED `@effect/platform-browser@4.0.0-rc.111` |
+| E23 | `packages/platform/browser/src/BrowserRuntime.ts` | CONFIRMED page root and non-persisted `pagehide` interruption behavior |
+| E24 | `packages/platform/browser/src/BrowserPersistence.ts` | CONFIRMED generic IndexedDB persistence implementation and unstable persistence dependency |
+| E25 | `packages/platform/bun/package.json` | CONFIRMED `@effect/platform-bun@4.0.0-rc.111` |
+| E26 | `packages/platform/bun/src/BunRuntime.ts` | CONFIRMED Bun process root, signal handling, reporting and exit behavior |
+| E27 | `packages/platform/bun/src/BunFileSystem.ts` | CONFIRMED Bun FileSystem Layer |
+| E28 | `packages/platform/bun/src/BunPath.ts` | CONFIRMED Bun Path Layers |
+| E29 | `packages/vitest/package.json` | CONFIRMED `@effect/vitest@4.0.0-rc.111` and aligned peer requirements |
+| E30 | `packages/vitest/src/index.ts` | CONFIRMED scoped Effect tests and suite-shared test Layers |
+| E31 | `packages/platform/` | CONFIRMED browser, Bun, Deno, Node and Node-shared platform directories; no Cloudflare package at this snapshot |
 
-## Official Bun, Cloudflare, and Web standards
+Canonical upstream URL prefix:
 
-These sources were observed on 2026-08-21. They are time-sensitive and should be rechecked before implementation or deployment changes.
+```text
+https://github.com/Effect-TS/effect/blob/436f10d1efccec308426532ff3f88df9a96434f3/
+```
 
-| ID | Official source | Finding used |
-| --- | --- | --- |
-| P01 | https://bun.sh/docs/pm/workspaces | Bun workspace declarations and `workspace:` dependency protocol |
-| P02 | https://bun.com/docs/pm/catalogs | Root dependency catalogs and `catalog:` references for one aligned Effect version set |
-| P03 | https://developers.cloudflare.com/workers/static-assets/ | Workers Static Assets deployment and static-first configuration |
-| P04 | https://developers.cloudflare.com/workers/best-practices/workers-best-practices/ | Recommendation to use Static Assets for static sites and avoid unnecessary Worker code |
-| P05 | https://developers.cloudflare.com/workers/runtime-apis/context/ | `ctx.waitUntil` ownership for work that must continue after a response |
-| P06 | https://developers.cloudflare.com/workers/runtime-apis/handlers/fetch/ | Native module Worker `fetch` handler and request/response boundary |
-| P07 | https://developers.cloudflare.com/workers/runtime-apis/web-standards/ | Workers support for Web-standard APIs and standards-first adapter design |
-| P08 | https://www.w3.org/TR/service-workers/ | Event-driven service-worker lifetime, `respondWith`, `waitUntil`, and host termination model |
+## Registry and platform observations
 
-## Findings inherited only as product constraints
+These are source observations, not committed runtime probes.
 
-The initial-pass normalization and reusable-findings documents were used to identify product requirements and stale claims requiring verification. They were not used as proof of current Effect APIs. In particular, this pass corrected or replaced prior terminology where current upstream v4 source differs:
+| ID | Authority | Coordinate | Status | Use and limitation |
+| --- | --- | --- | --- | --- |
+| R01 | npm package version history | `effect@4.0.0-rc.111` under the `rc` tag | CONFIRMED registry availability | The npm default `latest` tag remains on v3; this project explicitly targets latest v4. No installation was performed. |
+| R02 | npm package version history | `@effect/vitest@4.0.0-rc.111` | CONFIRMED registry availability | No installation or test run was performed. |
+| R03 | npm package/profile and platform binary listings | `bun@1.4.0` / Bun 1.4.0 binaries | CONFIRMED registry publication on 2026-08-21 | The Bun homepage cache still displayed 1.3.14. No local `bun --version` observation or fixture was produced, so 1.4.0 is not an OBSERVED probe coordinate for this lane. |
+| P01 | Bun documentation | Workspaces and `workspace:*` | CONFIRMED documentation | Used for the proposed workspace dependency law; no workspace was created. |
+| P02 | Bun documentation | Root catalogs and `catalog:` | CONFIRMED documentation | Used for aligned Effect-version recommendation; no catalog was created. |
+| P03 | Cloudflare documentation | Workers Static Assets | CONFIRMED documentation | Supports static-first deployment and no empty Worker app. |
+| P04 | Cloudflare documentation | `ctx.waitUntil`, module `fetch`, Web-standard APIs | CONFIRMED documentation | Supports event/request-owned Effect boundaries; no Worker probe was run. |
+| P05 | W3C Service Workers specification | `respondWith`, `waitUntil`, event-driven lifetime | CONFIRMED standard | Supports separate service-worker root and termination-safe correctness; no browser probe was run. |
 
-- detached fibers are `Effect.forkDetach`, not `forkDaemon`;
-- `Scope.Scope` remains an explicit service requirement;
-- the v3 `Runtime<R>` model is removed;
-- v4 services use `Context.Service` and explicit Layers;
-- common platform functionality is consolidated into `effect`, while runtime packages remain `@effect/platform-*`;
-- the inspected v4 source is on a release-candidate line, not a stable GA release.
+## Project-specific inferences
 
-## Architectural inferences
+The following are INFERRED recommendations rather than direct upstream prescriptions:
 
-The following recommendations are project-specific deductions from the official APIs and product requirements, not direct quotations from one source:
-
-- two apps and two portable packages are sufficient initially;
-- browser storage and network implementations should stay in `apps/site`;
-- durable study replay should own and version its PRNG algorithm rather than depend on library implementation stability;
-- generic browser persistence is not sufficient evidence for the product's required multi-store atomic transactions;
-- window, service worker, compiler, Cloudflare, and tests require distinct runtime owners;
-- no Cloudflare Worker app should exist while deployment remains static-only.
+- Start with `apps/site`, `apps/content-compiler`, `packages/content` and `packages/study`.
+- Keep browser storage and network implementations in `apps/site`.
+- Keep deterministic content and study policy platform-neutral.
+- Use cohesive `ContentStore`, `StudyStore` and `PackSource` capabilities rather than a generic key/value repository or service per object store.
+- Keep `LocalDatabase` app-internal.
+- Use a project-owned, versioned pure PRNG for durable replay compatibility.
+- Treat generic Effect browser persistence as insufficient evidence for pack activation and answer-checkpoint transaction requirements.
+- Give browser windows, service workers, Bun compiler processes, future Cloudflare requests and tests distinct runtime owners.
+- Do not create a Cloudflare Worker app while the product remains static-only.
 
 ## Limitations and revalidation requirements
 
-1. The upstream package manifests at the snapshot declare `4.0.0-rc.111`, while the opening banner in `MIGRATION.md` still says beta. This ledger records both and uses the package manifests for the exact version status.
-2. Effect v4 is a release candidate at this snapshot. API names, unstable module locations, and package details can change before GA.
-3. Five requested repository inputs were absent. This pass did not invent their contents.
-4. No package installation, typecheck, bundle measurement, browser prototype, service-worker prototype, IndexedDB transaction test, or Cloudflare deployment was performed.
-5. Storage adapter selection remains subject to the dedicated Effect plus IndexedDB research pass.
-6. Before implementation, re-resolve upstream `main` or the selected release tag, pin one exact aligned version set, and review every `effect/unstable/*` import again.
+1. The lane lacks a valid immutable required source SHA and is BLOCKED by the shared contract.
+2. The source branch drifted from `8b0d26245c1d78fb0be4e79f874a7d8872056ceb` to `645e885748c830f7a9cbbbe90ac0f31149bfc81c`.
+3. The newly added shared contract and lane prompt still contain an unreplaced source-SHA placeholder and expressly prohibit execution.
+4. The upstream package manifests identify `4.0.0-rc.111`; Effect v4 remains a release candidate at the pinned snapshot.
+5. No private Bun fixture, `bun.lock`, installed-package guidance reading, compile probe, typecheck, test, browser prototype, service-worker prototype, IndexedDB transaction test, bundle measurement or Cloudflare deployment was produced.
+6. The exact Bun runtime used for a probe is UNKNOWN because no probe was run; only Bun 1.4.0 registry publication was confirmed.
+7. The two requested prior raw architecture reports remain unavailable.
+8. Storage adapter selection remains deferred to the dedicated Effect plus IndexedDB research lane.
+9. Before implementation, a clean compliant lane must start from a stamped immutable SHA, use a newly authorized branch/path, install the exact coordinated cohort, read installed package guidance completely and commit the required probes and raw results.
