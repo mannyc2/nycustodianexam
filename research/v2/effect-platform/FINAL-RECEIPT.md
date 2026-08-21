@@ -15,7 +15,9 @@
 - Initial GitHub checkpoint: `582c5ba53329dce1f072074711cbedf45c8b7576` — `research: initialize Effect v4 platform/runtime lane`
 - Source/package baseline: `12e01c5b78ff77c05913560a0a8013357218be98` — `research: record v4 platform source baseline`
 - Final substantive research: `e64b8a02e3143590f6407fdbccd7b51759ab3bb4` — `research: map Effect v4 platform/runtime capabilities`
-- Receipt/manifest publication: this receipt is written in the terminal publication commit. Its resulting Git SHA is necessarily known only after Git creates the commit; the exact final branch head is recorded in PR #7 and the visible handoff rather than fabricating a self-referential commit SHA inside this file.
+- Initial receipt/manifest publication: `3d4526e5ad95655522d802a0b9805647988d58a3` — `research: finalize Effect v4 platform lane receipts`
+- First drift correction: `c7515388db5dd4981be10810a303b7f82ff4fbda` — `research: record final source drift`
+- Terminal receipt/manifest publication: this receipt is written in the terminal publication commit. Its resulting Git SHA is necessarily known only after Git creates the commit; the exact final branch head is recorded in PR #7 and the visible handoff rather than fabricating a self-referential commit SHA inside this file.
 
 ## Upstream coordinates
 
@@ -96,7 +98,7 @@ No production dependency cohort is locked by this lane.
 - checked current Cloudflare Worker handler/context/fetch/cache/request-signal documentation;
 - checked browser Service Worker event lifetime semantics;
 - searched current Effect upstream for a Cloudflare/workerd adapter and found none;
-- rechecked source branch drift during finalization and again immediately before terminal handoff.
+- rechecked source branch drift repeatedly during finalization without rebasing the lane.
 
 ### Runtime probes not performed — **BLOCKED**
 
@@ -121,28 +123,30 @@ The lane remained based on the immutable launch source:
 645e885748c830f7a9cbbbe90ac0f31149bfc81c
 ```
 
-An earlier finalization check returned **identical**. Before terminal handoff, a second check observed that `agent/chat-corpus-reconciliation` had advanced by five commits to:
+The source branch advanced after the lane launched. The terminal observed source head was:
 
 ```text
-ae1ddff4f9f6fb8d7e7fa7af5ca91819f77301bb
+ce94858ca32a8ddc7f4b3d22ecfc0f5ac355eafd
 ```
 
-Final comparison result:
+Final observed comparison from the immutable launch SHA:
 
 ```text
 status: ahead
-ahead_by: 5
+ahead_by: 9
 behind_by: 0
 merge_base: 645e885748c830f7a9cbbbe90ac0f31149bfc81c
 ```
 
-The later source changes add/adjust launch-governance material (`LANE-INDEX.csv`, `LAUNCH-CONTRACT.md`, the research-v2 README, and `LAUNCH-READINESS.md`). They were **not** rebased into or treated as evidence for this lane. Research conclusions remain tied to the exact immutable base supplied at launch.
+The post-launch source updates include launch-governance and source-state bookkeeping (`LAUNCH-CONTRACT.md`, `LANE-INDEX.csv`, research-v2 README/readiness changes, and related root/recovery wording). They were **not** rebased into or treated as evidence for this lane. Research conclusions remain tied to the exact immutable base supplied at launch.
+
+Because sibling/governance work can continue advancing the moving reconciliation branch, this receipt records the exact final observed source state rather than trying to chase the branch. The lane itself remains immutable-base research.
 
 ## Launch-gate limitation recorded
 
 The immutable base's curated suite described `{{POST_CURATION_SOURCE_SHA}}` in a way that created a self-reference problem if interpreted as requiring a repository stamping commit whose own SHA appeared inside that commit. With explicit maintainer authorization after PR #4 was merged, this lane used the exact post-curation merge commit `645e885748c830f7a9cbbbe90ac0f31149bfc81c` as immutable source and documented the issue rather than inventing a hash.
 
-After this lane had already launched, source commit `ae1ddff4f9f6fb8d7e7fa7af5ca91819f77301bb` merged a new `LAUNCH-CONTRACT.md` that explicitly defines the token as a launch-time variable and says no repository edit is required merely to substitute it. That later governance change resolves the self-reference ambiguity for future lanes, but it is recorded here only as post-launch drift and was not silently substituted into this lane's immutable source.
+After this lane had already launched, source governance explicitly clarified the intended model: `{{POST_CURATION_SOURCE_SHA}}` is a launch-time variable supplied by the launch message, and no repository edit is required merely to substitute it. That later governance resolves the ambiguity for future lanes but was not silently substituted into this lane's immutable source.
 
 ## Checksums
 
