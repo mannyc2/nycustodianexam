@@ -1,201 +1,208 @@
 # Architecture constraints and decisions
 
-**Status:** current implementation constraints, updated 2026-08-19 after primary-source Effect/Cloudflare research. This file records decisions made after the recovered v1 feature-design pass. It does not replace the product behavior contract or the exam-fact corpus.
+**Status:** current maintainer constraints, updated 2026-08-21 after normalizing the initial parallel research pass. This file records accepted direction and explicit research gates. It does not replace the product behavior contract or the exam-fact corpus.
 
-See `research/architecture/EFFECT_VANILLA_CLOUDFLARE_2026-08-19.md` for the evidence and reasoning behind the Effect/Vite/Cloudflare decisions below.
+The first-pass reports are preserved under `research/initial-pass/`. They remain evidence, not current authority. Several were written against Effect v3 or early Effect v4 release candidates and therefore require a current v4/Bun redo before implementation details are frozen.
 
-## Resolved
+## Resolved constraints
+
+### Latest Effect v4 is the project target
+
+The application and all new architecture research MUST target the **latest available Effect v4 line** at the time dependencies are locked.
+
+- Do not choose Effect v3 as a production fallback.
+- Do not copy v3 APIs, package boundaries, or service patterns forward merely because an older report used them.
+- Pin the exact selected Effect v4 version and compatible ecosystem cohort once the dependency-lock decision is made.
+- Re-check current official Effect documentation, source, migration guidance, package metadata, and examples at the start of every version-sensitive research or implementation task.
+- Prefer current v4-native service, Layer, Schema, runtime, platform, testing, and reactivity patterns.
+- Treat `effect/unstable/*` or equivalent unstable surfaces according to their actual current status; the requirement to use v4 does not convert unstable APIs into silently accepted production dependencies.
+
+The initial v3-era reports remain useful for problem framing, measurements, browser semantics, and failure modes. Their exact package/version/API recommendations are historical only.
+
+### Effect should shape the architecture, not decorate it
+
+Effect owns behavior with meaningful failure, dependency, lifecycle, resource, concurrency, retry, validation, persistence, or observability semantics.
+
+The implementation should follow current Effect patterns closely:
+
+- cohesive capability services rather than one service per function;
+- Layers that assemble real runtime capabilities rather than a giant invisible application container;
+- typed expected failures rather than thrown exceptions or defect conversion;
+- Schema at every untrusted or persisted data boundary;
+- scoped resource ownership and structured concurrency where provider semantics support them;
+- runtime execution at application boundaries rather than scattered `runPromise` calls;
+- deterministic Clock/Random dependencies where behavior must be reproducible;
+- explicit platform implementations for browser, build, Cloudflare, service-worker, and test runtimes;
+- renderer-neutral application state and use cases that can be tested without DOM construction.
+
+Avoid carrying forward a generic Clean Architecture folder tree such as `domain/application/ports/adapters/ui` as the organizing principle. Package and module boundaries should follow cohesive product capabilities and current Effect composition patterns.
+
+Effect does not need to wrap:
+
+- pure deterministic functions;
+- static HTML generation that has no runtime capability needs;
+- trivial DOM property updates;
+- native browser values merely to hide a global.
+
+### Bun is the workspace and tooling direction
+
+Use **Bun** for the monorepo's package-management and workspace baseline.
+
+- Use Bun workspaces.
+- Use Bun's lockfile and workspace dependency protocol/conventions.
+- Prefer Bun scripts, task execution, testing, and runtime capabilities where they fit the selected tools and are supported by the relevant packages.
+- Do not introduce pnpm/npm/yarn workspace assumptions into new architecture work.
+- Do not install both Node- and Bun-specific Effect platform implementations without a demonstrated runtime requirement.
+- Vite and Cloudflare tooling may still run within the Bun-managed workspace; Bun ownership of the workspace does not mean replacing every specialist build/deployment tool.
+
+### Top-level monorepo shape
+
+The implementation repository will use:
+
+```text
+apps/
+packages/
+```
+
+The exact workspace packages are intentionally not frozen yet. New research must determine a small, Effect-native package graph rather than producing many ceremonial packages.
+
+Likely responsibilities to evaluate include:
+
+```text
+apps/
+  site/                  # generated/static HTML plus interactive study application
+  content-compiler/      # build-time publication/compiler executable, if an app is justified
+  worker/                # optional Cloudflare Worker only when a real server capability exists
+
+packages/
+  domain-or-content capabilities
+  schemas and compiler model
+  browser persistence/platform implementation
+  Cloudflare implementation
+  renderer/view integration
+  shared testing support
+```
+
+Those names are illustrative, not accepted package names. A package is justified only by a real dependency, runtime, publication, or ownership boundary.
+
+Do not create:
+
+- a package for every service;
+- a universal `core` dumping ground;
+- mirrored `ports` and `adapters` packages without a concrete runtime substitution need;
+- a framework-specific package before the rendering decision is made;
+- an empty `apps/worker` merely because Cloudflare is planned.
 
 ### Standards-first HTML and CSS remain the presentation foundation
 
-Do **not** use Next.js. Do not introduce React, Vue, Solid, Svelte, or another UI framework merely because the product has interactive study modes or because Effect is being adopted.
+Do **not** use Next.js.
 
-The site is designed as a standards-first web application:
+- Acquisition/reference pages expose useful semantic HTML without requiring client-side rendering.
+- Native HTML controls and semantics are preferred.
+- Indexable pages do not depend on a SPA router.
+- Business/application state is not inferred by scraping the DOM.
+- Static pages should not import the Effect runtime unless they contain a real interactive capability that requires it.
+- CSS and page generation remain independent of the choice of interactive renderer.
 
-- acquisition/reference pages expose useful semantic HTML without requiring client-side rendering;
-- native HTML controls and semantics are preferred over custom-widget abstractions;
-- the browser does not need a SPA router to reach indexable content;
-- application state is never inferred by scraping the rendered DOM;
-- business/domain rules remain independent of presentation code.
+No renderer is selected yet. Direct DOM controllers, Effect v4 reactivity, Effect ecosystem integrations, Web Components, and small declarative renderers must be re-evaluated against current v4 APIs and one representative player spike.
 
-A declarative UI library remains an evidence-gated option for **interactive application islands only** if the first vertical slice demonstrates that manual DOM synchronization is becoming a material source of complexity or accessibility drift. A view-layer reconsideration does not imply reconsidering static/indexable HTML or adopting a server framework.
+A UI library may be adopted for interactive islands if it materially improves correctness, accessibility, lifecycle ownership, or state synchronization. That would not authorize converting the site into a client-rendered acquisition SPA.
 
-### Effect is the preferred application/runtime architecture for nontrivial TypeScript behavior
+### Vite and Cloudflare remain the preferred web delivery direction
 
-Use Effect best practices for behavior with meaningful failure, dependency, lifecycle, concurrency, retry, cancellation, validation, or persistence semantics.
+Use Vite as browser build/development tooling unless the v4/Bun research produces stronger evidence for another small tool.
 
-Effect should own, among other things:
+Use Cloudflare Workers Static Assets as the preferred deployment direction. Do not add Worker code merely to serve static files.
 
-- profile/content-pack validation and compatibility;
-- Schema decoding at untrusted-data boundaries;
-- IndexedDB persistence workflows and migrations;
-- session/attempt orchestration;
-- offline pack download, validation, update, and activation;
-- typed correction/network failures;
-- review scheduling and deterministic session assembly;
-- dependency services and Layers for storage, network, clock, content/profile registries, and related capabilities;
-- structured concurrency, schedules, and scopes where those semantics are real.
-
-Do not make trivial rendering operations Effectful merely for stylistic purity. **Effect owns application behavior and side-effect orchestration; presentation adapters render explicit state.**
-
-Run Effects at application edges rather than scattering `Effect.runPromise` through domain modules. Prefer typed expected errors over thrown exceptions, and keep browser globals inside adapters/services rather than throughout business logic.
-
-### Stable Effect release line at scaffold time
-
-As of 2026-08-19, Effect v4 remains beta and the official project identifies `effect@latest` as the stable v3 line.
-
-For the first implementation scaffold:
-
-- prefer stable Effect v3 if implementation starts while v4 is still beta;
-- if v4 reaches GA before dependencies are locked, re-evaluate using the GA release rather than mechanically choosing v3;
-- avoid beta-only/unstable Effect modules for core product behavior;
-- build around durable Effect concepts (`Effect`, `Layer`, `Context`, `Schema`, `Stream`, `Schedule`, `Scope`) that carry across the major-version transition;
-- pin compatible Effect ecosystem versions and record the selected major at dependency-lock time.
-
-### Vite is the preferred build and development tool
-
-Use **Vite as tooling, not as the application framework**.
-
-Vite should provide:
-
-- TypeScript/ESM development and production bundling;
-- asset processing and production chunk output;
-- integration with Cloudflare's official Vite plugin when a Worker environment exists;
-- build orchestration for generated static HTML and client scripts;
-- measurable bundle artifacts for size budgets.
-
-Vite does not own routing, application state, or the requirement that reference/acquisition pages remain crawlable HTML.
-
-### Cloudflare Workers Static Assets is the preferred deployment target
-
-Cloudflare's current best-practices guidance recommends Workers Static Assets for new static/full-stack projects rather than Pages.
-
-Initial deployment should therefore be:
+The intended shape remains:
 
 ```text
-Vite/static generation
-      -> dist/ HTML + CSS + JS + content/assets
-      -> Cloudflare Workers Static Assets
-      -> no Worker script required
+Bun workspace
+  -> content compiler / static generation
+  -> semantic HTML + CSS
+  -> Vite-built interactive chunks
+  -> Cloudflare Workers Static Assets
+  -> optional narrow Worker only for justified server capabilities
 ```
 
-Do **not** add a Worker merely to serve static files. Add Worker code only when a real server-side capability exists, such as the correction endpoint or another narrowly justified API.
-
-If Worker code is introduced, use Cloudflare's official Vite integration and test Worker behavior against the Workers runtime rather than assuming Node semantics.
+Exact Vite, Cloudflare plugin, Wrangler, routing, caching, headers, service-worker, and preview-deployment configuration remains open until the new research pass.
 
 ### Research prose is not runtime content
 
-Keep three distinct layers:
+Keep distinct:
 
 - `docs/` — human-readable factual research and scope authority;
-- future machine-readable publication data — reviewed exam profiles, sources, tools, questions, scenes, translations, and content-pack manifests;
-- site implementation — rendering, interaction, print, offline, and validation code.
+- machine-readable publication data — reviewed profiles, claims, tools, questions, scenes, translations, sources, geometry records, and pack manifests;
+- application/build code — compiler, validation, rendering, interaction, persistence, print, and offline behavior;
+- `research/` — raw evidence and proposals.
 
 Mutable announcement facts and scored content must not exist only as handwritten page prose.
 
-## Required Effect/view boundary
+## Maintained product invariants
 
-The first implementation must preserve this logical separation:
+The architecture must preserve:
+
+- crawlable, indexable acquisition/reference HTML;
+- versioned announcement facts with visible unknown/conflicting states;
+- local-first progress with no required account;
+- explicit offline content packs rather than accidental cache-only behavior;
+- deterministic simulation and print outputs;
+- WCAG 2.2 behavior and first-class nonvisual equivalents;
+- no answer/reveal leakage through DOM, accessibility data, filenames, manifests, SVG/GLB metadata, or static assets before commitment;
+- original or independently rights-cleared assets;
+- no third-party behavioral advertising/tracking requirement;
+- a minimal or absent backend until a concrete feature requires one.
+
+### Durable commit-before-reveal rule
+
+In normal persistent study mode:
 
 ```text
-static/generated semantic HTML
-        |
-        v
-view adapters / DOM controllers
-        |
-        v
-application use-cases (Effect)
-        |
-        +--> profile/content services
-        +--> progress/session services
-        +--> offline/update services
-        +--> correction/network services
-        |
-        v
-platform adapters
-        +--> IndexedDB
-        +--> fetch / browser HTTP
-        +--> Cache API / service-worker boundary
-        +--> browser clock / crypto / storage
+select
+  -> explicit commit request
+  -> one durable IndexedDB transaction completes
+  -> reveal correctness and explanations
 ```
 
-A player/session use-case must be testable without constructing an `HTMLElement`.
+Do not reveal after only an in-memory commit while durable persistence has failed. A separately labeled nonpersistent mode may exist only after explicit learner acknowledgment and must define its own truthful commit semantics.
 
-## UI-framework reconsideration gate
+## Required future research discipline
 
-Do not freeze "vanilla DOM forever" before one representative vertical slice exists.
+Every new parallel research prompt must:
 
-Reconsider a small declarative UI layer only if the slice demonstrates one or more of these:
+1. target latest Effect v4 explicitly;
+2. require Bun and Bun-workspace analysis;
+3. assume top-level `apps/` and `packages/`;
+4. require current official Effect primary sources for version-sensitive conclusions;
+5. ask for Effect-native patterns rather than generic ports/adapters architecture;
+6. require use of `@GitHub` or the connected GitHub tool;
+7. create a dedicated branch from an immutable base;
+8. commit and push exact raw reports and machine-readable outputs;
+9. open a draft PR;
+10. return branch, head SHA, commit, and PR receipts;
+11. stop instead of silently producing sandbox-only output when GitHub write access is unavailable.
 
-- multiple competing manual render paths for the same player state;
-- stale listener or teardown bugs;
-- substantial DOM diff/update bookkeeping;
-- accessibility state repeatedly drifting from application state;
-- otherwise-pure application transitions becoming difficult to test because view code and behavior are interleaved.
-
-If none of those appear, direct DOM/native-control adapters remain the preferred lower-complexity presentation layer.
-
-## First vertical slice required before presentation architecture is frozen
-
-The first slice should include:
-
-1. static indexable practice landing HTML;
-2. one visual question player;
-3. select -> explicit commit -> reveal state machine;
-4. typed Effect use-case for attempt persistence;
-5. IndexedDB adapter supplied through a service/Layer boundary;
-6. Schema-validated content fixture;
-7. neutral pre-answer accessibility description and post-answer full description;
-8. reload restoration;
-9. offline cached execution;
-10. browser assertion that answer-bearing content is absent before commit;
-11. Effect tests with fake platform services; and
-12. a production bundle-size report.
-
-Use this slice as evidence for whether a UI framework earns its cost.
-
-## Testing direction
-
-Use separate test layers rather than forcing one environment to simulate everything:
-
-- Effect/domain tests for schemas, service behavior, typed errors, scheduling, compatibility, state transitions, and deterministic assembly;
-- real browser tests for DOM semantics, accessibility tree behavior, IndexedDB, service workers, pointer/touch, focus, print, and offline workflows;
-- if a Cloudflare Worker is added, use Cloudflare's Workers test integration/runtime for Worker-side behavior.
-
-## Bundle discipline
-
-Effect's current package metadata is designed to be tree-shakable, but bundle cost must be measured rather than assumed.
-
-- keep server/provider-specific integrations out of browser chunks;
-- favor appropriate modular imports for the selected stable Effect major;
-- split optional heavy modes only when measurements justify it;
-- record production compressed sizes in CI once application code exists;
-- treat bundle regressions as measured engineering failures, not folklore about Effect or functional programming.
-
-## Non-negotiable properties inherited from the product contract
-
-- Crawlable, indexable HTML for acquisition/reference pages.
-- Versioned announcement facts; unknown values remain visibly unknown.
-- Local-first progress with no required account.
-- Installable/offline behavior with explicit content-pack handling rather than accidental cache-only UX.
-- Deterministic print output from the same validated content.
-- WCAG 2.2 behavior and nonvisual equivalents as first-class requirements.
-- No answer/reveal leakage through rendered DOM, accessible names, user-facing metadata, or asset naming before commitment.
-- Original or independently rights-cleared images only.
-- No third-party behavioral advertising/tracking requirement.
-- A minimal or absent backend until a concrete feature requires one.
+The user also requested alignment with ideas in a `SKILL.md`. No project-relevant `SKILL.md` was present in the repository or supplied research archive during this normalization pass. Future prompts must identify and attach/read the exact intended file before claiming conformance.
 
 ## Still open
 
-- package manager;
-- exact static HTML generation implementation;
-- machine-readable content format and concrete Schema definitions;
-- service-worker implementation/tooling and cache/version protocol;
-- exact CSS organization/design-token strategy;
-- whether the vertical slice warrants a declarative UI library for application islands;
-- final Effect major if v4 reaches GA before dependency lock;
-- first-party analytics choice, if any;
+- exact latest Effect v4 version/cohort to pin;
+- exact Bun version and lockfile policy;
+- exact Bun workspace/package graph under `apps/` and `packages/`;
+- current v4 service/Layer/runtime conventions for each runtime;
+- current v4 Platform/browser/Cloudflare package choices;
+- content compiler workspace and concrete Effect Schema definitions;
+- IndexedDB provider and transaction API under v4;
+- service-worker ownership/tooling and cache/version protocol;
+- UI state/reactivity and renderer choice;
+- exact Vite/Bun integration and chunk boundaries;
+- Cloudflare configuration and optional Worker API architecture;
+- test runner, browser tests, Effect test integration, and accessibility tooling;
+- measured v4/Bun bundle budgets;
+- CSS organization/design tokens;
+- first-party observability/analytics choice, if any;
 - correction endpoint implementation/storage;
-- custom-domain/canonical-host configuration.
+- custom-domain/canonical-host configuration;
+- the exact `SKILL.md` whose ideas should govern the next prompts.
 
-These remaining choices should be resolved from primary sources and implementation evidence rather than framework convention.
+Resolve these through the improved v4/Bun research program and implementation evidence, not by carrying first-pass defaults forward.
