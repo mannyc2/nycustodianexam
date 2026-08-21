@@ -38,11 +38,13 @@ Before conducting architecture research, read:
 
 - `research/prompt-curation/EFFECT-V4-BUN-RESEARCH-DOCTRINE.md`;
 - `research/prompt-curation/EFFECT-SKILL-ADAPTATION.md`;
+- `prompts/research-v2/LAUNCH-CONTRACT.md`;
 - `prompts/research-v2/00-SHARED-RESEARCH-CONTRACT.md`;
+- `prompts/research-v2/LANE-INDEX.csv`;
 - the applicable lane prompt under `prompts/research-v2/`;
 - `research/initial-pass/` for raw evidence, supersession records, and redo requirements.
 
-The v2 prompt suite is deliberately stamped with a source-SHA placeholder until this curation work is merged. Do not run a lane against a moving branch or invent the required SHA.
+Every launch message supplies one exact immutable source SHA. Treat `{{POST_CURATION_SOURCE_SHA}}` in a lane template as that launch-time value; do not infer a moving branch head or edit the repository merely to substitute it. Stop if the launch message omits the SHA or `@GitHub` shows source drift.
 
 ### Illustration production — `illustration/`
 
@@ -60,7 +62,7 @@ For hazard scenes and broader contextual illustrations, the recovered pipeline r
 ### Supporting evidence and recovery
 
 - `research/initial-pass/` — normalized first-pass research, raw inputs, supersession records, and redo requirements.
-- `research/prompt-curation/` — maintained Effect v4/Bun research doctrine and source ledger.
+- `research/prompt-curation/` — maintained Effect v4/Bun research doctrine and launch-readiness records.
 - other `research/` directories — investigations/provenance; committing a report does not make it authoritative.
 - `recovery/CORPUS_RECOVERY.md` — reconciliation ledger.
 - `prompts/` — instructions, never evidence.
@@ -223,7 +225,7 @@ Do not leave the only durable copy in a chat sandbox.
 Before a research pass:
 
 1. Read the relevant authority files.
-2. Read the prompt doctrine, shared contract, and applicable lane prompt.
+2. Read `prompts/research-v2/LAUNCH-CONTRACT.md`, the prompt doctrine, shared contract, and applicable lane prompt.
 3. Read the initial-pass normalization and redo ledger.
 4. Establish the actual current Effect v4, Bun, Vite, and Cloudflare versions/statuses where relevant.
 5. Read installed `node_modules/effect/AGENTS.md` completely before code-level Effect work.
@@ -244,4 +246,4 @@ When reconciling research:
 
 ## Implementation status
 
-Application code and the Bun workspace have not yet been scaffolded. The second-pass Effect v4/Bun prompt foundation is being curated before the improved parallel research program runs. Do not implement from superseded v3 recommendations.
+Application code and the Bun workspace have not yet been scaffolded. The second-pass Effect v4/Bun research foundation is finalized. R2.1 through R2.10 are independently launchable with an exact source SHA supplied by the launch message; R2.90 runs after the intended lanes are complete or explicitly missing. Do not implement from superseded v3 recommendations.

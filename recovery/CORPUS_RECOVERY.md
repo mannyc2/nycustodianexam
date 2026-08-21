@@ -2,7 +2,7 @@
 
 **Initial recovery date:** 2026-08-19  
 **Updated:** 2026-08-21  
-**Current normalization branch:** `research/normalize-initial-effect-outputs`  
+**Current source branch:** `agent/chat-corpus-reconciliation`  
 **Purpose:** distinguish maintained authority, exact recovered artifacts, normalized research, superseded recommendations, prototypes, and unavailable work.
 
 ## Status vocabulary
@@ -76,15 +76,26 @@ That is rejected. Normal persistent mode requires the IndexedDB attempt transact
 - Effect-native capability/service/Layer organization rather than generic ports/adapters ceremony;
 - mandatory `@GitHub` branch, commit, push, and draft PR for every future research lane.
 
+## Effect v4/Bun prompt curation
+
+The prompt foundation has been curated and is no longer an unresolved recovery input.
+
+| Work | Status | Repository disposition | Reconciliation note |
+|---|---|---|---|
+| Official Effect setup `SKILL.md` | **RECOVERED / CURRENT INPUT** | `research/prompt-curation/EFFECT-SKILL-ADAPTATION.md` + source ledger | Identified as `Effect-TS/skills/skills/effect-ts/SKILL.md`; adapted to Bun while preserving its installed `effect/AGENTS.md` and source-inspection workflow. |
+| Effect v4/Bun research doctrine | **CURRENT CONSTRAINT / CURATED** | `research/prompt-curation/EFFECT-V4-BUN-RESEARCH-DOCTRINE.md` | Latest-v4, Bun-workspace, Effect-native research discipline. |
+| V2 lane suite | **CURATED / READY TO LAUNCH** | `prompts/research-v2/` | R2.1–R2.10 use disjoint paths and may run in parallel; R2.90 is synthesis. Launch messages supply one exact immutable source SHA. |
+| Launch-time SHA contract | **CURATED / READY** | `prompts/research-v2/LAUNCH-CONTRACT.md`; `LANE-INDEX.csv` | Avoids self-referential prompt-file stamping; researchers verify the supplied SHA with `@GitHub` and stop on drift. |
+
 ## Deterministic tool geometry
 
 | Artifact/work | Status | Repository disposition | Reconciliation note |
 |---|---|---|---|
 | Deterministic tool-geometry report | **RECOVERED-RAW** | `research/initial-pass/raw/tool-geometry/report/` | Exact 91,620-byte report preserved in five concatenable parts; SHA-256 recorded in its README. |
 | Asset manifest schema | **RECOVERED-RAW** | `research/initial-pass/raw/tool-geometry/asset-manifest.schema.json` | Proposal, not maintained compiler authority. |
-| Taxonomy inventory / confusion pairs / visual invariants / source ledger / summaries | **RECOVERED SOURCE ARCHIVE; SELECTED GITHUB IMPORT** | source archive + normalization ledgers | Compact evidence is being imported where practical; checksums retained. |
+| Taxonomy inventory / confusion pairs / visual invariants / source ledger / summaries | **RECOVERED SOURCE ARCHIVE / GITHUB-REPRESENTED** | raw source archive + normalization ledgers | Compact evidence and checksums are represented in the recovered research corpus; no production approval follows from preservation. |
 | Four CadQuery/OCCT POCs | **RECOVERED EVIDENCE / HUMAN-REVIEW-REQUIRED** | raw evidence receipt; maintained decision in `illustration/TOOL_GEOMETRY_PIPELINE.md` | Adjustable wrench, pipe wrench, cup plunger, flange plunger. 79/79 controlled-build hashes matched, but mechanical/rights/accessibility approval is not established. |
-| STEP/STL/GLB/raster/WebP trees | **RECOVERED IN SUPPLIED ARCHIVE / NOT COMMITTED AS PRODUCTION ASSETS** | checksum manifests and receipts | Large model/render binaries are research evidence only. No Git LFS or production asset publication in normalization PR. |
+| STEP/STL/GLB/raster/WebP trees | **RECOVERED IN SUPPLIED ARCHIVE / NOT COMMITTED AS PRODUCTION ASSETS** | checksum manifests and receipts | Large model/render binaries are research evidence only. No Git LFS or production asset publication in normalization work. |
 
 Nested research-bundle SHA-256:
 
@@ -156,8 +167,10 @@ Current tool decision:
 ## Outstanding recovery/input gaps
 
 - standalone print-system artifact;
-- dedicated hazard-scene production research;
-- exact project-relevant `SKILL.md` requested by the maintainer;
-- improved latest-v4/Bun reruns for the areas in `research/initial-pass/REDO-REQUIRED.md`.
+- second-pass latest-v4/Bun research lanes R2.1–R2.10;
+- human mechanical review and later production approval for tool POCs;
+- dedicated hazard-scene production decision (R2.9).
+
+The Effect `SKILL.md`, first-pass raw research, geometry evidence, and v2 prompt foundation are no longer recovery gaps.
 
 Any future artifact should be classified here before altering maintained project state.

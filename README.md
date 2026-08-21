@@ -54,7 +54,8 @@ Key files:
 - `EFFECT-SKILL-ADAPTATION.md` — Bun adaptation of the official Effect setup skill;
 - `EFFECT-V4-BUN-RESEARCH-DOCTRINE.md` — shared Effect-native and Bun-workspace rules;
 - `SOURCE-LEDGER.md` — official Effect/Bun/project evidence coordinates;
-- `DECISION-MATRIX.csv` — fixed constraints versus still-open decisions.
+- `DECISION-MATRIX.csv` — fixed constraints versus still-open decisions;
+- `LAUNCH-READINESS.md` — finalized launch model, parallelism, and remaining research scope.
 
 The official Effect skill’s operational rule is now explicit: after the exact v4 package is installed, agents must read `node_modules/effect/AGENTS.md` completely, follow relevant package-local docs, and inspect installed source when needed.
 
@@ -62,10 +63,10 @@ The official Effect skill’s operational rule is now explicit: after the exact 
 
 The curated program contains:
 
-- one mandatory shared GitHub/Effect/Bun contract;
-- five P0 architecture-critical lanes;
-- three P1 compiler/monorepo/testing lanes;
-- two specialist illustration lanes;
+- `LAUNCH-CONTRACT.md` — launch-time immutable-SHA semantics and minimal launch-message form;
+- `00-SHARED-RESEARCH-CONTRACT.md` — common GitHub/Effect/Bun/evidence contract;
+- `LANE-INDEX.csv` — lane branches, allowed paths, prior-research pointers, dependencies, and overlap ownership;
+- ten independent research lanes;
 - one final synthesis lane.
 
 Every lane requires:
@@ -79,7 +80,9 @@ Every lane requires:
 7. final branch/head/PR receipts;
 8. stopping when GitHub writes are unavailable.
 
-The prompts contain `{{POST_CURATION_SOURCE_SHA}}` until this curation PR is merged. They are not runnable against a moving branch. After merge, stamp the resulting immutable reconciliation SHA into the suite before launching parallel lanes.
+The `{{POST_CURATION_SOURCE_SHA}}` token appearing in lane templates is a **launch-time variable**, not a repository-edit requirement. Each launch message supplies the exact immutable source SHA explicitly. Researchers must verify it with `@GitHub` and stop on drift.
+
+R2.1 through R2.10 have disjoint output paths and may run in parallel. A lane may inspect sibling PRs that already exist, but it must not wait or poll for them. R2.90 runs only after the intended architecture lanes are complete or explicitly missing and reads their PR branches directly.
 
 ### `illustration/` — visual production
 
@@ -191,6 +194,6 @@ Never replace an unknown fact with an inference.
 
 The repository remains docs/product-spec first. No Bun workspace or application code has been scaffolded.
 
-The first-pass output is normalized, and the maintained Effect v4/Bun prompt foundation is being curated for review. After this curation PR is merged and its resulting source SHA is stamped into `prompts/research-v2/`, the improved parallel program can run with every result published through GitHub from the beginning.
+The initial mixed-version research is normalized, the maintained Effect v4/Bun prompt foundation is curated, the official Effect skill is identified/adapted, and the v2 launch contract is finalized. The next action is to launch the individual R2.1–R2.10 research lanes from one explicitly supplied immutable reconciliation SHA, with every result published through GitHub from the beginning.
 
 See [`AGENTS.md`](AGENTS.md) and [`CONTRIBUTING.md`](CONTRIBUTING.md).
