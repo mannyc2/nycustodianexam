@@ -1,0 +1,20 @@
+Effect v4 platform/runtime lane — execution environment
+Accessed: 2026-08-21 UTC
+
+Host OS: Linux x86_64
+Node: v22.16.0
+Bun: NOT INSTALLED (`bun: command not found`)
+Outbound package/source fetch from container: BLOCKED (external hostname/DNS resolution failed during clone/install attempt)
+Connected GitHub reads/writes: AVAILABLE through @GitHub connector
+Public web research: AVAILABLE through web research capability
+
+Consequences:
+- No genuine Bun package install was run.
+- No `bun.lock` was generated.
+- No installed `node_modules/effect/AGENTS.md` was available to read.
+- No current Effect package was executed locally.
+- No real-browser IndexedDB transaction probe was executed.
+- No service-worker browser probe was executed.
+- No local workerd/Wrangler/Miniflare probe was executed.
+
+These are reported as BLOCKED rather than inferred from source. Upstream source and registry coordinates are preserved separately in SOURCE-LEDGER.csv and PACKAGE-STATUS.csv.
