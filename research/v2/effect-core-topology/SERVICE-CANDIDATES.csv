@@ -1,0 +1,15 @@
+candidate_id,capability,recommended_form,layer_ownership,workspace_placement,consumers,rationale
+SC01,content/profile registry,Schema model plus pure module,none,packages/content,compiler and site,Profiles and immutable content are data plus deterministic lookup/compatibility rules
+SC02,session assembler,pure module/function,none,packages/study,site and tests,Assembly is deterministic from explicit content policy seed and history inputs
+SC03,attempt commit,Effect service,AttemptStore implementation Layer,packages/study contract; apps/site implementation,site,Owns atomic event plus projections plus review plus checkpoint; failure and substitution are meaningful
+SC04,progress materializer,pure reducer plus storage transaction participant,provided through AttemptStore operation,packages/study,site,Projection logic is pure; atomic persistence is owned by the attempt capability
+SC05,review scheduler,pure module/function,none,packages/study,site and tests,Due calculations consume explicit instant/policy and are deterministic
+SC06,pack installer/activator,Effect service/workflow,scoped app Layer,apps/site private initially,site,Needs network/storage/checksum failures staging activation serialization and host lifecycle
+SC07,checksum comparison,pure function over bytes and digest,none,packages/content or caller-private,site and compiler,Comparison is pure; byte acquisition/crypto remains host-owned
+SC08,clock,built-in Effect Clock at boundaries,runtime-provided,none,host roots,No project wrapper unless product calendar policy is needed
+SC09,random,versioned pure PRNG for replay; built-in Random otherwise,runtime-provided,packages/study for PRNG,site and tests,Permanent replay cannot depend on an unspecified library algorithm
+SC10,correction client,Effect service if endpoint exists,site transport Layer,apps/site private unless reused,site,Network/offline/timeout/submission failures and substitution justify a service
+SC11,view/screen-state transitions,pure reducer,none,packages/study or apps/site,renderer and tests,No lifecycle or host capability; renderer consumes state rather than owning rules
+SC12,content compiler,runtime-root program plus private modules,Bun compiler root Layer,apps/content-compiler,build pipeline,Executable/runtime boundary justifies an app not a service per compiler pass
+SC13,content store reads,Effect service only for host storage,browser storage Layer,apps/site implementation; portable contract only if needed,site/study,Expose domain reads never raw IDB handles
+SC14,configuration defaults,Context.Reference for nondurable defaults,reference override context/layer,owning package,host roots/tests,Do not use for durable settings or business state
