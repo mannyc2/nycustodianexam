@@ -1,0 +1,13 @@
+question_id,question,status,why_it_matters,next_probe
+O001,What are raw/gzip9/Brotli11 bytes for P01-P13 under the exact cohort?,BLOCKED,All runtime bundle conclusions.,Run Bun 1.4.0 install and Vite 8.2.2 builds.
+O002,Does Bun isolated linking resolve exactly one Effect 4.0.0-rc.111 cohort across all workspaces?,BLOCKED,Duplicate runtime/code risk.,Inspect generated bun.lock and installed dependency graph.
+O003,What is the narrow-subpath vs namespace/barrel import sensitivity for P02-P09?,BLOCKED,Import guidance.,Build both variants with identical minifier/target.
+O004,"What are initial and dynamic route closures for static, direct-DOM, and renderer apps?",BLOCKED,Route-level performance and preload guidance.,Parse Vite manifest and independently compress fetched chunks.
+O005,Does a manual Effect vendor chunk reduce repeat-route transfer without causing unwanted modulepreload on acquisition pages?,BLOCKED,Chunk policy.,Compare natural and manual splitting using manifests/network closure.
+O006,How large is current v4 IndexedDB integration relative to domain core?,BLOCKED,Persistence implementation boundary.,Measure P05.
+O007,How large is BrowserHttpClient and its unstable HTTP transitive graph?,BLOCKED,Browser networking choice.,Measure P08.
+O008,How large is unstable reactivity Atom core?,BLOCKED,Whether it is even worth considering after stability review.,Measure P07.
+O009,What is the Preact renderer incremental closure over equal direct-DOM player behavior?,BLOCKED,UI renderer decision.,Measure P10 vs P11.
+O010,What is the native vs Effect service-worker delta?,BLOCKED,Service worker implementation choice.,Measure P12 vs P13.
+O011,What is Oxc vs Terser output on this exact graph?,BLOCKED,Minifier choice/budgets.,Run both minifiers on same source and target.
+O012,Are two clean builds byte-identical and hash-identical?,BLOCKED,Reproducibility.,Delete outputs/node_modules as specified and execute two clean builds.
