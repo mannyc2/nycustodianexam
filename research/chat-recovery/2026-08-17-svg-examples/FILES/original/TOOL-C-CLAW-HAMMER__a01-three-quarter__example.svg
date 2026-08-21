@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-hidden="true" focusable="false">
+  <style>
+  .outer { fill: #ffffff; stroke: #111111; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+  .outer-none { fill: none; stroke: #111111; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+  .struct { fill: none; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .struct-fill { fill: #ffffff; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .fine { fill: none; stroke: #111111; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .light { fill: #dddddd; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .mid { fill: #bcbcbc; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .ink { fill: #111111; stroke: none; }
+</style>
+  
+<g transform="rotate(-34 512 512)">
+  <path class="outer" d="M475 282 Q512 262 549 282 L548 845 Q512 872 476 845 Z"/>
+  <path class="fine" d="M486 360 L537 332 M486 420 L537 392 M486 480 L537 452 M486 540 L537 512 M486 600 L537 572 M486 660 L537 632 M486 720 L537 692"/>
+  <!-- head and face -->
+  <path class="outer" d="M315 237 L490 237 L520 275 L491 313 L315 313 Z"/>
+  <path class="light" d="M280 246 L315 237 L315 313 L280 304 Z"/>
+  <path class="struct" d="M280 246 L280 304"/>
+  <!-- neck and claw -->
+  <path class="outer" d="M520 250 Q584 245 638 211 L721 157 Q742 146 760 161 Q775 176 760 195 L676 284 Q626 337 520 300 Z"/>
+  <path class="struct" d="M664 273 L758 178"/>
+  <path class="struct" d="M681 288 L773 199"/>
+  <path class="outer-none" d="M710 230 Q739 238 764 219"/>
+</g>
+
+</svg>

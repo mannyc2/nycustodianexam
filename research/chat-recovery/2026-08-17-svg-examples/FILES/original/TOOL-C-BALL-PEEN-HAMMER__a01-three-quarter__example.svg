@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-hidden="true" focusable="false">
+  <style>
+  .outer { fill: #ffffff; stroke: #111111; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+  .outer-none { fill: none; stroke: #111111; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+  .struct { fill: none; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .struct-fill { fill: #ffffff; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .fine { fill: none; stroke: #111111; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .light { fill: #dddddd; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .mid { fill: #bcbcbc; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .ink { fill: #111111; stroke: none; }
+</style>
+  
+<g transform="rotate(-34 512 512)">
+  <path class="outer" d="M475 282 Q512 262 549 282 L548 845 Q512 872 476 845 Z"/>
+  <path class="fine" d="M486 360 L537 332 M486 420 L537 392 M486 480 L537 452 M486 540 L537 512 M486 600 L537 572 M486 660 L537 632 M486 720 L537 692"/>
+  <!-- flat striking face -->
+  <path class="outer" d="M305 238 L487 238 L519 275 L488 312 L305 312 Z"/>
+  <path class="light" d="M269 247 L305 238 L305 312 L269 303 Z"/>
+  <path class="struct" d="M269 247 L269 303"/>
+  <!-- rounded peen -->
+  <path class="outer" d="M519 247 L643 247 Q696 247 723 275 Q696 303 643 303 L519 303 Z"/>
+  <ellipse class="light" cx="725" cy="275" rx="52" ry="48"/>
+  <path class="fine" d="M702 244 Q729 275 702 306 M719 232 Q749 275 719 318"/>
+</g>
+
+</svg>

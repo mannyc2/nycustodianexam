@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-hidden="true" focusable="false">
+  <style>
+  .outer { fill: #ffffff; stroke: #111111; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+  .outer-none { fill: none; stroke: #111111; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+  .struct { fill: none; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .struct-fill { fill: #ffffff; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .fine { fill: none; stroke: #111111; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .light { fill: #dddddd; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .mid { fill: #bcbcbc; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .ink { fill: #111111; stroke: none; }
+</style>
+  
+<rect x="34" y="72" width="460" height="880" rx="20" fill="#ffffff" stroke="#111111" stroke-width="4"/>
+<rect x="530" y="72" width="460" height="880" rx="20" fill="#ffffff" stroke="#111111" stroke-width="4"/>
+<g transform="translate(-18 80) scale(0.55)">
+<g transform="rotate(8 512 512)">
+  <!-- handle -->
+  <path class="outer" d="M486 118 Q512 98 538 118 L543 626 Q515 646 487 626 Z"/>
+  <path class="struct" d="M500 142 L504 608"/>
+  <path class="fine" d="M495 180 L535 160 M496 230 L536 210 M497 280 L537 260"/>
+  <!-- cup neck -->
+  <path class="outer" d="M468 610 Q515 588 561 610 L566 675 Q515 698 463 675 Z"/>
+  <!-- simple rubber cup -->
+  <path class="outer" d="M324 760 Q340 676 414 646 Q515 603 616 646 Q690 676 706 760 Q638 824 515 828 Q392 824 324 760 Z"/>
+  <path class="struct" d="M324 760 Q410 792 515 792 Q620 792 706 760"/>
+  <path class="fine" d="M365 726 Q380 688 420 672 M665 726 Q650 688 610 672"/>
+</g>
+</g>
+<g transform="translate(478 80) scale(0.55)">
+<g transform="rotate(8 512 512)">
+  <!-- handle -->
+  <path class="outer" d="M486 112 Q512 92 538 112 L543 610 Q515 630 487 610 Z"/>
+  <path class="struct" d="M500 136 L504 592"/>
+  <path class="fine" d="M495 174 L535 154 M496 224 L536 204 M497 274 L537 254"/>
+  <!-- cup neck -->
+  <path class="outer" d="M468 594 Q515 572 561 594 L566 658 Q515 682 463 658 Z"/>
+  <!-- rubber cup -->
+  <path class="outer" d="M324 742 Q340 658 414 628 Q515 585 616 628 Q690 658 706 742 Q638 806 515 810 Q392 806 324 742 Z"/>
+  <path class="struct" d="M324 742 Q410 774 515 774 Q620 774 706 742"/>
+  <!-- visible lower flange extension -->
+  <path class="outer" d="M435 774 Q515 804 595 774 L580 872 Q515 908 450 872 Z"/>
+  <ellipse class="struct" cx="515" cy="868" rx="65" ry="22"/>
+  <path class="fine" d="M468 798 L458 854 M500 807 L494 877 M532 807 L536 877 M563 798 L573 854"/>
+</g>
+</g>
+
+</svg>
