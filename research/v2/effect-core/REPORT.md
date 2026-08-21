@@ -1,22 +1,34 @@
 # Effect v4 Core Architecture
 
-Status: complete
+Status: BLOCKED - preliminary source-inspection draft, not a contract-complete lane
+
+Evidence status: upstream API claims are CONFIRMED at the pinned source coordinate; project recommendations are INFERRED; no runtime or compile probes are OBSERVED.
 
 | Field | Value |
 | --- | --- |
 | Repository | `mannyc2/nycustodianexam` |
 | Source branch | `agent/chat-corpus-reconciliation` |
-| Resolved base SHA | `8b0d26245c1d78fb0be4e79f874a7d8872056ceb` |
+| Source head at branch creation | `8b0d26245c1d78fb0be4e79f874a7d8872056ceb` |
+| Source head at final drift check | `645e885748c830f7a9cbbbe90ac0f31149bfc81c` |
 | Output branch | `research/v2-effect-core` |
 | Research cutoff | 2026-08-21 |
 | Effect source snapshot | `Effect-TS/effect@436f10d1efccec308426532ff3f88df9a96434f3` |
 | Effect package version at snapshot | `4.0.0-rc.111` |
+| Bun runtime probe coordinate | None; no fixture or Bun probe was run |
 
-The prompt supplied `<BASE_SHA>` rather than a concrete SHA. The source branch was resolved once before branch creation, and all repository reading was pinned to the resolved SHA above.
+## Completion blocker
 
-Five requested repository inputs were not present at that base: the shared research contract, two prompt-curation files, and the two named prior raw memos. Their absence is recorded in `SOURCE-LEDGER.md`; none is represented as read or reconstructed.
+The request supplied `<BASE_SHA>` instead of a concrete immutable SHA. At the initial GitHub checkpoint, the source branch resolved to `8b0d26245c1d78fb0be4e79f874a7d8872056ceb`; the named shared contract and prompt-curation files did not exist there. The output branch and draft PR were created from that head before extended research.
 
-## Decision
+During the final drift check, the source branch had advanced to `645e885748c830f7a9cbbbe90ac0f31149bfc81c`. That merge introduced the shared contract, doctrine, skill adaptation, and lane prompt. The newly available contract and lane prompt both state that the lane must not run until the required source-SHA placeholder is replaced with a concrete SHA. Their placeholders remain unreplaced.
+
+Therefore this branch cannot be certified as a completed v2 lane. It also lacks the contract's required pre-research `START-RECEIPT.md`, private Bun fixture, installed-package `AGENTS.md` reading, compile/runtime probes, and required raw results. The draft PR should remain draft and should not be merged as a completed lane.
+
+The three governance files added after drift were read only to identify and document the blocker; they were not silently treated as part of the original immutable research base. The named E04 and E08 raw reports remain unavailable even at the later source head.
+
+The substantive architecture below is retained as useful preliminary source-inspection work.
+
+## Preliminary decision
 
 Use Effect v4 as the application effect system, not as a reason to wrap every function or Web API.
 
@@ -143,15 +155,19 @@ The current `@effect/platform-browser` IndexedDB persistence implementation uses
 - Treat every `effect/unstable/*` import as an explicit architecture choice. Keep unstable platform integration out of portable packages unless it is central to their contract and covered by compatibility tests.
 - Re-resolve the official Effect source immediately before implementation. This report is pinned to a release-candidate snapshot, not a promise that APIs will remain unchanged before v4 GA.
 
-## Implementation gates
+## Preliminary implementation gates
 
 Before application code is added:
 
-1. Recheck the exact Effect v4 release and align every Effect ecosystem dependency.
-2. Confirm the package graph still has a real reason for every boundary.
-3. Select the IndexedDB adapter and transaction model in the dedicated persistence pass.
-4. Define stable Schema versions for persisted and cross-realm messages.
-5. Define root Layers separately for window, service worker, compiler, and tests.
-6. Keep Cloudflare deployment static unless a concrete server responsibility is approved.
+1. Resolve and stamp a concrete repository source SHA in the lane prompt.
+2. Authorize a clean retry branch because the required branch already exists and force-push is prohibited.
+3. Recheck the exact Effect v4 release and align every Effect ecosystem dependency.
+4. Establish an exact Bun runtime coordinate in a committed private fixture and run the required probes.
+5. Read the installed `node_modules/effect/AGENTS.md` completely and follow its linked package guidance.
+6. Confirm the package graph still has a real reason for every boundary.
+7. Select the IndexedDB adapter and transaction model in the dedicated persistence pass.
+8. Define stable Schema versions for persisted and cross-realm messages.
+9. Define root Layers separately for window, service worker, compiler, and tests.
+10. Keep Cloudflare deployment static unless a concrete server responsibility is approved.
 
-The proposed graph, service matrix, anti-patterns, and complete source inventory are in the sibling deliverables.
+The proposed graph, service matrix, anti-patterns, and source inventory are retained in the sibling deliverables, but they are not a substitute for a compliant rerun with probes and raw results.
