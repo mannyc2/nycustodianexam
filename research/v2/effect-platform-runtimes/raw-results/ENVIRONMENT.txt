@@ -1,0 +1,38 @@
+R2.3 initial probe environment
+Observation date: 2026-08-21 UTC
+
+Project source
+- repository: mannyc2/nycustodianexam
+- source branch: agent/chat-corpus-reconciliation
+- source SHA: 00155a1d555d1d4c84f3ab9682ee876dd2a57fbb
+- output branch: research/v2-effect-platform-runtimes
+
+Host
+- OS: Linux
+- architecture: x86_64
+- kernel: 6.18.35
+- Node: v22.16.0
+- npm: 10.9.2
+- Chromium executable: /usr/bin/chromium
+- Chromium version: 142.0.7444.175
+- Python Playwright command: /opt/pyvenv/bin/playwright
+- Docker: unavailable
+- Podman: unavailable
+
+Runtime availability at lane start
+- Bun: not initially installed
+- workerd: not initially installed
+- Wrangler: not initially installed
+- Chromium: available and able to run local pages
+
+Network observations
+- ordinary process DNS/outbound package installation was unavailable in the execution container;
+- direct official release archive download through the container download bridge rejected ZIP content;
+- the lane therefore records any alternate artifact bootstrap explicitly and verifies the resulting executable before treating a probe as OBSERVED.
+
+Current coordinates selected for attempted execution
+- Bun: 1.4.0, official tag bun-v1.4.0, commit d6d12356646cf2f424208e8cec1261b9661c517b
+- Effect runtime fixture: coherent published 4.0.0-rc.110 cohort
+- Effect latest source audit: 4.0.0-rc.111 at 436f10d1efccec308426532ff3f88df9a96434f3
+
+This file records the initial environment. Later raw result files record the exact executable versions and commands for every successful probe or the terminal blocker for every unavailable probe.
