@@ -1,0 +1,17 @@
+{
+  "name": "@nycustodianexam-research/r2-3-runtime-matrix",
+  "private": true,
+  "type": "module",
+  "packageManager": "bun@1.4.0",
+  "scripts": {
+    "probe:bun": "bun run probes/bun-runtime.ts",
+    "probe:http": "bun run probes/browser-http-server.ts",
+    "build:browser": "bun build browser/index.ts --target=browser --outdir=dist/browser --minify --metafile=raw-results/browser-metafile.json",
+    "build:workerd": "bun build workerd/worker.ts --target=browser --outdir=dist/workerd --minify --metafile=raw-results/workerd-metafile.json"
+  },
+  "dependencies": {
+    "@effect/platform-browser": "4.0.0-rc.110",
+    "@effect/platform-bun": "4.0.0-rc.110",
+    "effect": "4.0.0-rc.110"
+  }
+}
