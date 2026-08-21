@@ -2,21 +2,30 @@
 
 These prompts replace the initial mixed-version architecture prompts.
 
-## Not runnable until the source SHA is stamped
+## Launch with an exact source SHA
 
-Every prompt contains:
+Every lane is launched with one exact immutable source SHA supplied in the launch message.
+
+Read first:
+
+- `LAUNCH-CONTRACT.md` — launch-time SHA semantics and minimal launch-message form;
+- `00-SHARED-RESEARCH-CONTRACT.md` — complete common research/GitHub/Effect/Bun contract;
+- `LANE-INDEX.csv` — branches, allowed paths, prior-research pointers, overlap rules, and hard prerequisites.
+
+Some lane files still display the token:
 
 ```text
 {{POST_CURATION_SOURCE_SHA}}
 ```
 
-After this curation PR is merged into `agent/chat-corpus-reconciliation`, replace that placeholder in every prompt with the resulting immutable branch SHA. Do not run a lane against a moving branch.
+That token is a launch-time variable. It means the exact `Required source SHA` supplied by the launch message; it does **not** require editing the repository prompt file before launch.
+
+If a launch message omits the exact SHA, stop. Never infer a moving branch head.
 
 ## Shared contract
 
-Every researcher must first read:
+Every researcher must also read:
 
-- `00-SHARED-RESEARCH-CONTRACT.md`;
 - `research/prompt-curation/EFFECT-V4-BUN-RESEARCH-DOCTRINE.md`;
 - `research/prompt-curation/EFFECT-SKILL-ADAPTATION.md`.
 
@@ -33,7 +42,9 @@ The shared contract makes `@GitHub` publication a completion requirement:
 
 ## Parallel run plan
 
-### P0 — run in parallel first
+### Parallel research lanes
+
+R2.1 through R2.10 use disjoint output paths and may be launched simultaneously. A lane may inspect a sibling PR that already exists, but it must not wait or poll for another lane.
 
 | ID | Prompt | Branch |
 |---|---|---|
@@ -42,29 +53,17 @@ The shared contract makes `@GitHub` publication a completion requirement:
 | R2.3 | `03-effect-v4-platform-runtime-matrix.md` | `research/v2-effect-platform-runtimes` |
 | R2.4 | `04-effect-v4-indexeddb-offline.md` | `research/v2-effect-indexeddb-offline` |
 | R2.5 | `05-effect-v4-browser-bundling.md` | `research/v2-effect-browser-bundling` |
-
-The branches use disjoint paths and may run simultaneously.
-
-### P1 — may run alongside P0, but synthesis should reconcile P0 first
-
-| ID | Prompt | Branch |
-|---|---|---|
 | R2.6 | `06-effect-v4-schema-content-compiler.md` | `research/v2-effect-schema-compiler` |
 | R2.7 | `07-bun-monorepo-build-discipline.md` | `research/v2-bun-monorepo-discipline` |
 | R2.8 | `08-testing-accessibility-performance-observability.md` | `research/v2-testing-accessibility-observability` |
-
-R2.7 should inspect any available P0 PRs without waiting for missing lanes.
-
-### P2 — specialist lanes
-
-| ID | Prompt | Branch |
-|---|---|---|
 | R2.9 | `09-hazard-scene-production.md` | `research/v2-hazard-scene-production` |
 | R2.10 | `10-tool-geometry-audit.md` | `research/v2-tool-geometry-audit` |
 
+Dependency and overlap details live in `LANE-INDEX.csv`.
+
 ### Final reconciliation
 
-Run `90-architecture-synthesis.md` only after the intended lanes are complete or explicitly missing.
+Run `90-architecture-synthesis.md` only after the intended architecture lanes are complete or explicitly missing. The synthesis reads their PR branches directly; they do not need to be merged into the source branch first.
 
 ## Fixed project constraints
 
