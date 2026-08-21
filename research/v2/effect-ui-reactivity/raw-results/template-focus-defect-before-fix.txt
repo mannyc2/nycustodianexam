@@ -1,0 +1,13 @@
+{
+  "expectedActiveElementId": "error-panel",
+  "observed": {
+    "phase": "commit-failed",
+    "focusIntent": null,
+    "activeElementId": "",
+    "errorPanelPresent": true
+  },
+  "status": "FAIL"
+}
+targeted_probe_exit=1
+
+targeted_probe_exit=1

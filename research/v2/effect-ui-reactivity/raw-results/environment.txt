@@ -1,0 +1,11 @@
+utc=2026-08-21T22:08:44Z
+kernel=Linux 6.18.35 x86_64 GNU/Linux
+arch=x86_64
+node=v22.16.0
+npm=10.9.2
+tsc=Version 5.8.3
+chromium=Chromium 144.0.7559.96 built on Debian GNU/Linux 13 (trixie)
+python=Python 3.13.5
+playwright=1.57.0
+bun=bash: line 15: bun: command not found
+vite=bash: line 16: vite: command not found
