@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "researchId": "v2-effect-core",
+  "status": "complete",
+  "repository": "mannyc2/nycustodianexam",
+  "researchCutoff": "2026-08-21",
+  "base": {
+    "branch": "agent/chat-corpus-reconciliation",
+    "requestedSha": "<BASE_SHA>",
+    "resolvedSha": "8b0d26245c1d78fb0be4e79f874a7d8872056ceb",
+    "resolution": "The prompt supplied a placeholder. The source branch was resolved once before branch creation and repository reading was pinned to that SHA."
+  },
+  "output": {
+    "branch": "research/v2-effect-core",
+    "path": "research/v2/effect-core",
+    "draftPullRequest": 5,
+    "draftPullRequestUrl": "https://github.com/mannyc2/nycustodianexam/pull/5"
+  },
+  "effectSnapshot": {
+    "repository": "Effect-TS/effect",
+    "ref": "main",
+    "sha": "436f10d1efccec308426532ff3f88df9a96434f3",
+    "version": "4.0.0-rc.111",
+    "status": "release-candidate",
+    "observedAt": "2026-08-21",
+    "alignedPackages": [
+      "effect",
+      "@effect/platform-browser",
+      "@effect/platform-bun",
+      "@effect/vitest"
+    ]
+  },
+  "implementationChanges": false,
+  "deliverables": [
+    {
+      "path": "research/v2/effect-core/REPORT.md",
+      "kind": "report"
+    },
+    {
+      "path": "research/v2/effect-core/PACKAGE-GRAPH.md",
+      "kind": "package-dependency-graph"
+    },
+    {
+      "path": "research/v2/effect-core/SERVICE-LAYER-MATRIX.md",
+      "kind": "service-layer-matrix"
+    },
+    {
+      "path": "research/v2/effect-core/ANTI-PATTERNS.md",
+      "kind": "anti-pattern-list"
+    },
+    {
+      "path": "research/v2/effect-core/SOURCE-LEDGER.md",
+      "kind": "source-ledger"
+    },
+    {
+      "path": "research/v2/effect-core/MANIFEST.json",
+      "kind": "manifest"
+    }
+  ],
+  "requiredInputStatus": [
+    {
+      "path": "AGENTS.md",
+      "status": "read"
+    },
+    {
+      "path": "product/ARCHITECTURE_CONSTRAINTS.md",
+      "status": "read"
+    },
+    {
+      "path": "product/FEATURE_SPEC.md",
+      "status": "read"
+    },
+    {
+      "path": "research/initial-pass/NORMALIZATION.md",
+      "status": "read"
+    },
+    {
+      "path": "research/initial-pass/REUSABLE-FINDINGS.md",
+      "status": "read"
+    },
+    {
+      "path": "research/initial-pass/REDO-REQUIRED.md",
+      "status": "read"
+    },
+    {
+      "path": "research/initial-pass/RAW-EFFECT-REPORTS.md",
+      "status": "read-as-index"
+    },
+    {
+      "path": "prompts/research-v2/00-SHARED-RESEARCH-CONTRACT.md",
+      "status": "unavailable-at-base"
+    },
+    {
+      "path": "research/prompt-curation/EFFECT-V4-BUN-RESEARCH-DOCTRINE.md",
+      "status": "unavailable-at-base"
+    },
+    {
+      "path": "research/prompt-curation/EFFECT-SKILL-ADAPTATION.md",
+      "status": "unavailable-at-base"
+    },
+    {
+      "path": "04-architecture-memo-effect-browser-first-study-app.md",
+      "status": "unavailable-at-base"
+    },
+    {
+      "path": "08-architecture-memo-effect-browser-first-study-app.md",
+      "status": "unavailable-at-base"
+    }
+  ],
+  "proposedWorkspaces": [
+    {
+      "path": "apps/site",
+      "name": "@nycustodian/site",
+      "role": "browser application and service-worker host"
+    },
+    {
+      "path": "apps/content-compiler",
+      "name": "@nycustodian/content-compiler",
+      "role": "finite Bun content compiler"
+    },
+    {
+      "path": "packages/content",
+      "name": "@nycustodian/content",
+      "role": "portable content schemas, models, and validation"
+    },
+    {
+      "path": "packages/study",
+      "name": "@nycustodian/study",
+      "role": "portable deterministic study logic and state models"
+    }
+  ],
+  "keyDecisions": [
+    "Use Context.Service and explicit root-composed Layers.",
+    "Use named Effect.fn for reusable effectful functions and Effect.gen for effect values and local orchestration.",
+    "Use Schema.TaggedError for stable expected boundary failures while preserving interruption.",
+    "Own resources with Layers and Scopes at the narrowest correct lifetime.",
+    "Default to forkChild or scoped fibers; detached work requires explicit host ownership.",
+    "Use Clock and DateTime for testable time and explicit zones; use a project-owned versioned PRNG for durable replay.",
+    "Use one distinct runtime owner for each browser window, service worker, Bun compiler, future Cloudflare Worker, and test root.",
+    "Use BrowserRuntime.runMain for the initial interactive page and BunRuntime.runMain for the compiler.",
+    "Use ManagedRuntime only at repeated JavaScript-to-Effect boundaries and always give it one disposal owner.",
+    "Keep browser storage and network implementations app-local.",
+    "Deploy static assets without a Cloudflare Worker until a concrete server responsibility exists.",
+    "Pin all Effect ecosystem packages to one exact matching v4 version through the Bun root catalog."
+  ],
+  "explicitlyDeferred": [
+    "IndexedDB adapter and transaction implementation selection",
+    "Any effect/unstable persistence or HTTP adoption",
+    "Cloudflare Worker application",
+    "Separate UI, storage, runtime, worker, shared, or test-support workspace"
+  ],
+  "verification": {
+    "documentationOnly": true,
+    "implementationCreated": false,
+    "packageGraphChanged": false,
+    "dependenciesChanged": false,
+    "workflowsChanged": false,
+    "draftPullRequestOpenedBeforeExtendedResearch": true
+  }
+}
