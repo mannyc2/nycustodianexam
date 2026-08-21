@@ -131,17 +131,52 @@ Status: standing legal/editorial caution. Any future item text obtained through 
 ## Product / SEO open decisions
 
 ### P16 — Final application architecture
-**Resolved:** standards-first semantic **HTML/CSS** presentation; **TypeScript + Effect** for nontrivial application behavior; **Vite** as the build/development tool; **Cloudflare Workers Static Assets** as the initial deployment target; no Next.js; no Worker script merely to serve static files.
 
-**Effect release gate:** as of 2026-08-19, Effect v4 remains beta. Prefer stable `effect@latest`/v3 if scaffolding begins before v4 GA; if v4 reaches GA before dependency lock, re-evaluate against the GA release. Do not make core product behavior depend on beta-only unstable modules.
+**Resolved constraints:**
 
-**UI view layer:** no React/Vue/Solid/Svelte requirement initially. Keep a replaceable DOM/view-adapter boundary and use the first representative player vertical slice to determine whether a small declarative UI library earns its cost for interactive islands.
+- standards-first semantic HTML/CSS presentation;
+- no Next.js;
+- latest available Effect v4 is mandatory for new architecture and implementation work;
+- Effect v3 is historical/migration/regression evidence only, not a production fallback;
+- Bun is the package-management, workspace, and primary TypeScript tooling direction;
+- Bun workspaces with top-level `apps/` and `packages/`;
+- Vite remains the preferred browser build/development direction unless stronger second-pass evidence changes it;
+- Cloudflare Workers Static Assets remains the initial deployment direction;
+- no Worker script merely to serve static files;
+- static acquisition/reference pages remain useful and indexable without a client-rendered SPA shell;
+- no UI renderer is preselected;
+- normal persistent answer commitment requires the authoritative IndexedDB transaction to complete before reveal.
 
-**Still open:** package manager, exact static HTML generation implementation, machine-readable content schemas, service-worker tooling/cache protocol, CSS organization, final Effect major at dependency lock, first-party analytics, correction-endpoint storage/design, and canonical host.
+**Effect learning/governance rule:** the intended skill is the official `Effect-TS/skills` `skills/effect-ts/SKILL.md`. Once the exact v4 package is installed, agents must read `node_modules/effect/AGENTS.md` completely, follow relevant package-local documentation, and inspect installed Effect/platform source where needed.
 
-Decision criteria remain: indexable static HTML; installable/offline PWA; explicit versioned content packs; local-first progress; deterministic print rendering; strong accessibility; low operating cost; minimal backend.
+**Effect architecture rule:** use current v4-native services, focused Layers, Schema models/tagged errors, Scope, structured concurrency, runtime-root composition, and testing patterns where they fit. Keep pure deterministic logic plain. Do not impose generic `domain/application/ports/adapters/ui`, service-per-function, package-per-service, giant application-service, or universal-core structures.
 
-**Status:** SUBSTANTIALLY RESOLVED. See `../product/ARCHITECTURE_CONSTRAINTS.md` and `../research/architecture/EFFECT_VANILLA_CLOUDFLARE_2026-08-19.md`.
+**Bun workspace rule:** expect a private root package, root catalog for one exact coordinated Effect cohort, explicit workspace/runtime dependencies, isolated installs unless measured incompatibility requires otherwise, committed `bun.lock`, frozen CI installs, minimal reviewed lifecycle-script trust, and runtime-specific TypeScript boundaries. Browser/service-worker/workerd code does not become Bun-runtime code merely because Bun owns the workspace.
+
+**Curated second-pass program:** see `../research/prompt-curation/` and `../prompts/research-v2/`. Every lane must use an immutable source SHA, connected `@GitHub`, an early receipt/branch/draft PR, exact raw reports/evidence/fixtures/lockfiles, incremental pushes, and final branch/head/PR receipts.
+
+**Still open and delegated to the second pass:**
+
+- exact Effect v4 cohort to lock after lane-start verification;
+- exact Bun version and root workspace configuration;
+- exact package graph below `apps/` and `packages/`;
+- service/Layer/runtime topology;
+- current v4 Platform/browser/Bun/Cloudflare choices;
+- content compiler workspace and Schema model;
+- IndexedDB provider and transaction API;
+- service-worker/cache/version ownership;
+- v4 reactivity and UI renderer choice;
+- Vite chunk boundaries and measured bundle budgets;
+- Cloudflare routing/configuration and optional Worker API;
+- testing/accessibility/performance/observability tooling;
+- CSS/design-token organization;
+- correction endpoint implementation/storage;
+- first-party analytics/observability policy;
+- custom domain/canonical host.
+
+Decision criteria remain: indexable static HTML; installable/offline PWA; explicit versioned content packs; local-first progress; deterministic print and simulations; WCAG behavior; no pre-answer leakage; low operating cost; minimal backend.
+
+**Status:** CURATED / READY FOR SECOND-PASS RESEARCH. The prompt suite must be stamped with the immutable post-curation source SHA before lanes run.
 
 ### P17 — Domain / canonical host
 Preferred naming direction: NYCustodianExam / NY Custodian Exam. Domain registration/canonical production host not established in corpus.
@@ -190,6 +225,9 @@ Status: optional / deferred.
 - REJECTED: 2017/2021/2026-only cadence; 2024 OC exam is officially recovered and promotion existence is corroborated.
 - RESOLVED: 2024 OC final announcement recovered.
 - REFINED: old/new DCS guide continuity — one scrub-brush sample verified identical across editions; “since 2001” dating relies on prior researcher reading unless the dated old copy is recovered directly.
-- SUBSTANTIALLY RESOLVED P16: standards-first HTML/CSS + Vite + TypeScript/Effect; Workers Static Assets; no Next.js; no UI framework required initially. Presentation-library choice remains evidence-gated by the first vertical slice; final Effect major remains gated on v4 GA status at dependency lock.
+- SUPERSEDED: “prefer Effect v3 until v4 GA.” The maintained project constraint is now latest available Effect v4; unstable surfaces remain individually evidence-gated.
+- RESOLVED: package-manager/workspace direction — Bun, Bun workspaces, top-level `apps/` and `packages/`.
+- RESOLVED: intended Effect `SKILL.md` identity and installed-package learning rule.
+- CURATED P16: latest Effect v4 + Bun workspaces + standards-first HTML/CSS + Vite/Workers Static Assets direction; exact package/runtime/UI/storage/build choices remain assigned to the second-pass research program.
 
 Keep this file as the single queue of unresolved truth claims. When an item is resolved, update the relevant canonical document and retain a short resolution note here if the former conflict is important to provenance.
