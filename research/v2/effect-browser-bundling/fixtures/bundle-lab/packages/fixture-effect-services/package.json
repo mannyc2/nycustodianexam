@@ -1,0 +1,10 @@
+{
+  "name": "@r25/fixture-effect-services",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "dependencies": {
+    "effect": "catalog:",
+    "@effect/platform-browser": "catalog:"
+  }
+}
