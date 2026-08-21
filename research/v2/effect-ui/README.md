@@ -32,6 +32,7 @@ It does not implement application code, add dependencies, choose a renderer by p
 ## Deliverables
 
 - `REPORT.md`
+- `UPSTREAM-BASELINE.md`
 - `RENDERER-MATRIX.csv`
 - `STATE-OWNERSHIP.md`
 - `QUESTION-PLAYER-SPIKE.md`
