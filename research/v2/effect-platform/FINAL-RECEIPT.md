@@ -96,7 +96,7 @@ No production dependency cohort is locked by this lane.
 - checked current Cloudflare Worker handler/context/fetch/cache/request-signal documentation;
 - checked browser Service Worker event lifetime semantics;
 - searched current Effect upstream for a Cloudflare/workerd adapter and found none;
-- rechecked source branch drift at finalization.
+- rechecked source branch drift during finalization and again immediately before terminal handoff.
 
 ### Runtime probes not performed — **BLOCKED**
 
@@ -115,20 +115,34 @@ Those gates are enumerated in `OPEN-QUESTIONS.csv` and `REPORT.md`.
 
 ## Source-branch drift recheck
 
-At finalization, comparing:
+The lane remained based on the immutable launch source:
 
 ```text
-base: 645e885748c830f7a9cbbbe90ac0f31149bfc81c
-head: agent/chat-corpus-reconciliation
+645e885748c830f7a9cbbbe90ac0f31149bfc81c
 ```
 
-returned **identical**, `ahead_by=0`, `behind_by=0`.
+An earlier finalization check returned **identical**. Before terminal handoff, a second check observed that `agent/chat-corpus-reconciliation` had advanced by five commits to:
 
-The lane therefore remained based on exactly the immutable post-curation source throughout the research. No rebase or silent source update occurred.
+```text
+ae1ddff4f9f6fb8d7e7fa7af5ca91819f77301bb
+```
+
+Final comparison result:
+
+```text
+status: ahead
+ahead_by: 5
+behind_by: 0
+merge_base: 645e885748c830f7a9cbbbe90ac0f31149bfc81c
+```
+
+The later source changes add/adjust launch-governance material (`LANE-INDEX.csv`, `LAUNCH-CONTRACT.md`, the research-v2 README, and `LAUNCH-READINESS.md`). They were **not** rebased into or treated as evidence for this lane. Research conclusions remain tied to the exact immutable base supplied at launch.
 
 ## Launch-gate limitation recorded
 
-The curated suite's `{{POST_CURATION_SOURCE_SHA}}` stamping instructions are self-referential if the embedded SHA is required to equal the commit that contains it. With explicit maintainer authorization after PR #4 was merged, this lane used the exact post-curation merge commit `645e885748c830f7a9cbbbe90ac0f31149bfc81c` as immutable source and documented the inconsistency rather than inventing a hash.
+The immutable base's curated suite described `{{POST_CURATION_SOURCE_SHA}}` in a way that created a self-reference problem if interpreted as requiring a repository stamping commit whose own SHA appeared inside that commit. With explicit maintainer authorization after PR #4 was merged, this lane used the exact post-curation merge commit `645e885748c830f7a9cbbbe90ac0f31149bfc81c` as immutable source and documented the issue rather than inventing a hash.
+
+After this lane had already launched, source commit `ae1ddff4f9f6fb8d7e7fa7af5ca91819f77301bb` merged a new `LAUNCH-CONTRACT.md` that explicitly defines the token as a launch-time variable and says no repository edit is required merely to substitute it. That later governance change resolves the self-reference ambiguity for future lanes, but it is recorded here only as post-launch drift and was not silently substituted into this lane's immutable source.
 
 ## Checksums
 
