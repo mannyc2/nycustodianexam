@@ -1,0 +1,47 @@
+R2.2 source coordinate audit
+Accessed at: 2026-08-21T22:33:58Z
+
+Repository source
+- mannyc2/nycustodianexam
+- source branch: agent/chat-corpus-reconciliation
+- required source SHA: 00155a1d555d1d4c84f3ab9682ee876dd2a57fbb
+- output branch: research/v2-effect-ui-reactivity
+- draft PR: https://github.com/mannyc2/nycustodianexam/pull/12
+
+Effect v4 cohort
+- upstream repository: Effect-TS/effect
+- tag: effect@4.0.0-rc.111
+- tag commit: 648f566d7557e33abd8da8546c42aa93343e2db9
+- effect: 4.0.0-rc.111
+- @effect/atom-react: 4.0.0-rc.111
+- @effect/atom-solid: 4.0.0-rc.111
+- @effect/atom-vue: 4.0.0-rc.111
+- namespace: effect/unstable/reactivity (explicitly unstable)
+- package-local guidance status: published node_modules/effect/AGENTS.md could not be read because package installation was blocked; exact-tag upstream LLMS.md and source were read instead
+
+Bun
+- upstream repository: oven-sh/bun
+- tag: bun-v1.4.0
+- tag commit: 34cbb9a40b4bd1bd767d134a7065e66c2432a676
+- bun-v1.4.1 did not resolve at the audit time
+- local executable: unavailable
+
+Renderer and tool coordinates pinned in the fixture
+- lit-html: 3.3.3, tag commit 20afabd3c5bfd49fdcdf1b8518e05c7f99a46db6
+- React: 19.2.8
+- React DOM: 19.2.8
+- scheduler: 0.27.0
+- Preact: 10.29.8
+- Solid: 1.9.15
+- Vue: 3.5.41
+- Vite: 8.2.1
+
+Local runner
+- Linux 6.18.35 x86_64
+- Node 22.16.0
+- npm 10.9.2
+- TypeScript 5.8.3
+- Chromium 144.0.7559.96 (Debian)
+- Python 3.13.5
+- Playwright Python 1.57.0
+- NETWORK=caas_packages_only
