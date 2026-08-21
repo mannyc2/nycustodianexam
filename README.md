@@ -19,21 +19,21 @@ The site is independent and unofficial. It does not solicit, reconstruct, buy, p
 ### `product/` — behavior and current architecture constraints
 
 - `FEATURE_SPEC.md` — maintained buildable product specification: page states, atlas, practice, hazards, review, simulation, print, data model, offline, accessibility, privacy, corrections, QA, and release gates.
-- `ARCHITECTURE_CONSTRAINTS.md` — current implementation direction and the research gates that remain before scaffolding.
+- `ARCHITECTURE_CONSTRAINTS.md` — maintained latest-v4/Bun implementation direction and the research gates remaining before scaffolding.
 
 ### `research/initial-pass/` — normalized first parallel research batch
 
-The first parallel Effect research pass was completed mostly outside GitHub and used mixed assumptions. It has now been recovered and normalized here.
+The first parallel Effect research pass was completed mostly outside GitHub and used mixed assumptions. It is preserved and normalized here.
 
 This directory contains:
 
-- exact raw reports and receipts where practical through the connected GitHub text-write path;
+- exact raw reports and recovered evidence;
 - reusable findings;
 - duplicate/supersession analysis;
 - v3-era recommendations quarantined from current authority;
 - conflicts such as the rejected in-memory-commit-before-reveal behavior;
-- the improved latest-v4/Bun redo requirements;
-- raw deterministic tool-geometry research and compact evidence.
+- latest-v4/Bun redo requirements;
+- raw deterministic tool-geometry research and POC evidence.
 
 Start with:
 
@@ -43,6 +43,43 @@ Start with:
 4. `DUPLICATION-AND-SUPERSESSION.md`
 5. `REDO-REQUIRED.md`
 6. `DECISION-MATRIX.csv`
+
+### `research/prompt-curation/` — Effect v4 and Bun research doctrine
+
+This directory identifies and adapts the official Effect `SKILL.md`, pins the upstream coordinates inspected during curation, and defines the maintained doctrine for the second architecture pass.
+
+Key files:
+
+- `REPORT.md` — curation findings and resulting research program;
+- `EFFECT-SKILL-ADAPTATION.md` — Bun adaptation of the official Effect setup skill;
+- `EFFECT-V4-BUN-RESEARCH-DOCTRINE.md` — shared Effect-native and Bun-workspace rules;
+- `SOURCE-LEDGER.md` — official Effect/Bun/project evidence coordinates;
+- `DECISION-MATRIX.csv` — fixed constraints versus still-open decisions.
+
+The official Effect skill’s operational rule is now explicit: after the exact v4 package is installed, agents must read `node_modules/effect/AGENTS.md` completely, follow relevant package-local docs, and inspect installed source when needed.
+
+### `prompts/research-v2/` — second-pass parallel research program
+
+The curated program contains:
+
+- one mandatory shared GitHub/Effect/Bun contract;
+- five P0 architecture-critical lanes;
+- three P1 compiler/monorepo/testing lanes;
+- two specialist illustration lanes;
+- one final synthesis lane.
+
+Every lane requires:
+
+1. immutable source-SHA verification;
+2. immediate `@GitHub` branch creation;
+3. an initial receipt commit and push;
+4. an early draft PR;
+5. exact raw reports, source ledgers, fixtures, `package.json`, `bun.lock`, raw measurements, and checksums where applicable;
+6. incremental pushes;
+7. final branch/head/PR receipts;
+8. stopping when GitHub writes are unavailable.
+
+The prompts contain `{{POST_CURATION_SOURCE_SHA}}` until this curation PR is merged. They are not runnable against a moving branch. After merge, stamp the resulting immutable reconciliation SHA into the suite before launching parallel lanes.
 
 ### `illustration/` — visual production
 
@@ -65,19 +102,19 @@ Supporting investigations and provenance. A report does not become maintained au
 
 `CORPUS_RECOVERY.md` records prior-chat/Library artifacts that were recovered, integrated, superseded, unavailable, or pending human review.
 
-### `prompts/`
+### Other `prompts/`
 
-Reusable research instructions. Prompts are not evidence.
+Earlier reusable research instructions. Prompts are not evidence.
 
 ## Current implementation direction
 
-The improved architecture program will target:
+The architecture program targets:
 
 - **latest available Effect v4**;
 - **Bun** package management/tooling;
 - **Bun workspaces**;
 - top-level **`apps/` and `packages/`**;
-- Effect-native service, Layer, Schema, runtime, platform, reactivity, and testing patterns;
+- Effect-native service, Layer, Schema, typed-error, Scope, concurrency, runtime, platform, reactivity, and testing patterns;
 - standards-first semantic HTML/CSS;
 - no Next.js;
 - Vite browser tooling unless stronger evidence changes it;
@@ -86,7 +123,32 @@ The improved architecture program will target:
 
 Effect v3 recommendations in the initial raw reports are historical only and must not be implemented as fallback architecture.
 
-The exact workspace/package graph remains open. It should be small and capability-oriented, not a generic `domain/application/ports/adapters/ui` tree or one package per service.
+The exact workspace/package graph remains open. It should be small and capability/runtime-oriented, not a generic `domain/application/ports/adapters/ui` tree, one package per service, or a universal `packages/core`.
+
+### Effect learning workflow
+
+The selected skill is the official `Effect-TS/skills` Effect setup skill. In the eventual Bun workspace:
+
+- the exact selected v4 package is available as a root development dependency for installed guidance/source access;
+- each runtime workspace still declares its own explicit runtime dependency, normally through a Bun catalog;
+- before Effect code is written, `node_modules/effect/AGENTS.md` is read completely;
+- linked package-local docs and installed source are used instead of stale copied examples.
+
+### Bun workspace baseline
+
+The second pass evaluates and later implementation is expected to use:
+
+- private root package;
+- `apps/*` and `packages/*` workspaces;
+- Bun catalog for one exact coordinated Effect cohort;
+- explicit `workspace:*` dependencies;
+- isolated installs unless a measured incompatibility requires an exception;
+- committed text `bun.lock`;
+- `bun ci`/frozen installs;
+- minimal reviewed lifecycle-script trust;
+- runtime-specific TypeScript configuration.
+
+Bun owns package management and scripts; it does not turn browser, service-worker, or Cloudflare workerd code into Bun-runtime code or automatically replace Vite, Wrangler, Playwright, and specialist tooling.
 
 ### Durable answer commitment
 
@@ -95,7 +157,7 @@ Normal persistent study mode follows:
 ```text
 select
   -> explicit commit
-  -> durable IndexedDB transaction succeeds
+  -> authoritative IndexedDB transaction succeeds
   -> reveal correctness and explanation
 ```
 
@@ -115,7 +177,7 @@ Never replace an unknown fact with an inference.
 
 ## Provenance and security rules
 
-- Preserve source tier, locator, date, and exact artifact checksum.
+- Preserve source tier, locator, date, exact version/ref, and artifact checksum.
 - Prefer newer controlling official evidence to older official evidence; official evidence to commercial/anecdotal material.
 - Keep contradictions visible until resolved.
 - Nothing enters scored content without source support and review.
@@ -125,16 +187,10 @@ Never replace an unknown fact with an inference.
 - Matching build hashes establish reproducibility, not mechanical correctness.
 - Entry-level and high-level series remain separate unless explicit evidence says otherwise.
 
-## Research publication rule
-
-Future parallel research must use the connected `@GitHub` capability to create a dedicated branch, commit/push exact outputs, and open a draft PR. Sandbox-only completion is not sufficient.
-
 ## Current status
 
 The repository remains docs/product-spec first. No Bun workspace or application code has been scaffolded.
 
-The first-pass outputs are now being normalized for maintainer review. The next step after review is a better parallel research program constrained to latest Effect v4, Bun workspaces, `apps/`/`packages/`, Effect-native patterns, and mandatory GitHub publication.
-
-The maintainer also requested alignment with a specific `SKILL.md`; that exact file is not currently present and must be supplied or identified before the next prompts claim to follow it.
+The first-pass output is normalized, and the maintained Effect v4/Bun prompt foundation is being curated for review. After this curation PR is merged and its resulting source SHA is stamped into `prompts/research-v2/`, the improved parallel program can run with every result published through GitHub from the beginning.
 
 See [`AGENTS.md`](AGENTS.md) and [`CONTRIBUTING.md`](CONTRIBUTING.md).
