@@ -1,0 +1,236 @@
+{
+  "accessibility": {
+    "fullDescription": "The boxes directly in front of the extinguisher cabinet represent obstructed access. The rolling bin is an authored decoy and is safe as depicted because it is stable and separated from the cabinet. Exact source applicability and correction language require content-editor approval before scored use.",
+    "neutralAttemptDescription": "A generic hallway with a wall-mounted extinguisher cabinet, two closed boxes on the floor directly in front of it, and a lidded rolling bin farther right.",
+    "neutralZones": [
+      {
+        "text": "A blank frame hangs on the left wall with clear floor space below.",
+        "zoneId": "z1"
+      },
+      {
+        "text": "A wall-mounted cabinet contains a generic extinguisher silhouette; two closed boxes sit directly in front of the cabinet and overlap its lower edge in the view.",
+        "zoneId": "z2"
+      },
+      {
+        "text": "A lidded rolling bin stands farther right, separated from the cabinet.",
+        "zoneId": "z3"
+      }
+    ],
+    "state": "draft-unreviewed"
+  },
+  "authoringRoute": "S",
+  "canvas": {
+    "aspectRatio": "3:2",
+    "height": 800,
+    "width": 1200
+  },
+  "claimRefs": [
+    {
+      "locator": "29 CFR 1910.157 readily-accessible extinguisher basis; exact applicability and wording require content review",
+      "sourceId": "OSHA_FIRE",
+      "status": "source-backed pilot basis, not scored-content approval"
+    }
+  ],
+  "environment": "hallway/common-area",
+  "files": {
+    "authoringManifest": "authoring/scenes/P5-EXTINGUISHER-BOXES-HALLWAY-BASE.json",
+    "learnerSvg": "renders/learner/s-05.svg",
+    "reviewOverlaySvg": "review/annotated/s-05.review.svg"
+  },
+  "negativeInventory": [
+    "The two boxes are closed, individually floor-supported, and not stacked; no falling-object condition is depicted.",
+    "No exit or doorway is shown, so no separate egress target is implied.",
+    "The rolling bin is clear of the cabinet and passage.",
+    "No loose cord, wet floor, chemical spill, or broken glass appears.",
+    "The correction is not already depicted."
+  ],
+  "pilotClass": "P5 inaccessible fire extinguisher",
+  "publicAssetId": "s-05",
+  "regions": [
+    {
+      "anchorPoint": {
+        "x": 0.420833,
+        "y": 0.65
+      },
+      "conditionId": "extinguisher-access-obstructed-by-boxes",
+      "kind": "target",
+      "polygon": [
+        {
+          "x": 0.275,
+          "y": 0.19375
+        },
+        {
+          "x": 0.541667,
+          "y": 0.19375
+        },
+        {
+          "x": 0.595833,
+          "y": 0.8625
+        },
+        {
+          "x": 0.270833,
+          "y": 0.8625
+        }
+      ],
+      "regionId": "r1",
+      "reviewState": "draft-unreviewed",
+      "semanticObjectId": "o1",
+      "toleranceClass": "pilot-medium",
+      "zoneId": "z2"
+    },
+    {
+      "anchorPoint": {
+        "x": 0.816667,
+        "y": 0.68125
+      },
+      "conditionId": "stable-bin-clear-of-fire-equipment",
+      "kind": "decoy",
+      "polygon": [
+        {
+          "x": 0.729167,
+          "y": 0.5125
+        },
+        {
+          "x": 0.9,
+          "y": 0.5125
+        },
+        {
+          "x": 0.904167,
+          "y": 0.83125
+        },
+        {
+          "x": 0.733333,
+          "y": 0.83125
+        }
+      ],
+      "regionId": "r2",
+      "reviewState": "draft-unreviewed",
+      "semanticObjectId": "o2",
+      "toleranceClass": "pilot-medium",
+      "zoneId": "z3"
+    }
+  ],
+  "review": {
+    "accessibility": "not-reviewed",
+    "accidentalHazards": "not-reviewed",
+    "decoys": "not-reviewed",
+    "hotspots": "draft-only",
+    "phone": "automated-render-only",
+    "print": "not-reviewed",
+    "productionApproved": false,
+    "rights": "not-reviewed",
+    "scoredUseApproved": false,
+    "semantic": "not-reviewed"
+  },
+  "rights": {
+    "generator": "source/generate_scenes.py",
+    "officialImageInputs": false,
+    "sourceMethod": "project-owned deterministic SVG construction",
+    "state": "review-required",
+    "thirdPartyVisualInputs": []
+  },
+  "sceneId": "P5-EXTINGUISHER-BOXES-HALLWAY-BASE",
+  "sceneVersion": "0.1.0-draft.1",
+  "semanticInventory": [
+    {
+      "conditionId": "extinguisher-access-obstructed-by-boxes",
+      "correctionConcept": "remove the stored boxes and preserve ready access under the admitted source-backed rule",
+      "objectId": "o1",
+      "role": "target"
+    },
+    {
+      "conditionId": "stable-bin-clear-of-fire-equipment",
+      "objectId": "o2",
+      "role": "decoy",
+      "safeAsDepicted": "The lidded bin is stable and spatially separated from the extinguisher cabinet and access area."
+    }
+  ],
+  "transferOf": null,
+  "zones": [
+    {
+      "labelNeutral": "left wall fixture area",
+      "observableFacts": [
+        "A blank wall frame hangs on the left wall.",
+        "The floor below it is clear."
+      ],
+      "order": 1,
+      "polygon": [
+        {
+          "x": 0.079167,
+          "y": 0.11875
+        },
+        {
+          "x": 0.283333,
+          "y": 0.11875
+        },
+        {
+          "x": 0.308333,
+          "y": 0.9625
+        },
+        {
+          "x": 0.029167,
+          "y": 0.9625
+        },
+        {
+          "x": 0.083333,
+          "y": 0.6375
+        }
+      ],
+      "zoneId": "z1"
+    },
+    {
+      "labelNeutral": "center cabinet and floor-storage area",
+      "observableFacts": [
+        "A wall-mounted cabinet contains a generic extinguisher silhouette.",
+        "Two closed boxes sit directly in front of the cabinet and overlap its lower edge in the view."
+      ],
+      "order": 2,
+      "polygon": [
+        {
+          "x": 0.283333,
+          "y": 0.11875
+        },
+        {
+          "x": 0.633333,
+          "y": 0.11875
+        },
+        {
+          "x": 0.666667,
+          "y": 0.9625
+        },
+        {
+          "x": 0.308333,
+          "y": 0.9625
+        }
+      ],
+      "zoneId": "z2"
+    },
+    {
+      "labelNeutral": "right bin area",
+      "observableFacts": [
+        "A lidded rolling bin stands against the right wall.",
+        "Clear floor space separates it from the cabinet."
+      ],
+      "order": 3,
+      "polygon": [
+        {
+          "x": 0.633333,
+          "y": 0.11875
+        },
+        {
+          "x": 0.916667,
+          "y": 0.11875
+        },
+        {
+          "x": 0.970833,
+          "y": 0.9625
+        },
+        {
+          "x": 0.666667,
+          "y": 0.9625
+        }
+      ],
+      "zoneId": "z3"
+    }
+  ]
+}

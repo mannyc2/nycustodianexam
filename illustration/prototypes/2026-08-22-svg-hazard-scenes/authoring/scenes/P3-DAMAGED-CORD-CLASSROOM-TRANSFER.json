@@ -1,0 +1,236 @@
+{
+  "accessibility": {
+    "fullDescription": "The split section of the vacuum cord is the authored unsafe condition. The wall-stored cord is an authored decoy and is safe as depicted because it is intact, coiled, and off the floor. Exact source wording and correction language require content-editor approval before scored use.",
+    "neutralAttemptDescription": "A generic classroom-like room with an upright vacuum, a cord following the wall edge to an outlet, a separate wall-stored cord, and a low table.",
+    "neutralZones": [
+      {
+        "text": "A cord runs from a wall outlet along the back edge of the floor.",
+        "zoneId": "z1"
+      },
+      {
+        "text": "A short section of the cord covering is split and two inner lines are visible; a separate cord is coiled on a wall hook.",
+        "zoneId": "z2"
+      },
+      {
+        "text": "An upright vacuum stands on the right near a low table.",
+        "zoneId": "z3"
+      }
+    ],
+    "state": "draft-unreviewed"
+  },
+  "authoringRoute": "S",
+  "canvas": {
+    "aspectRatio": "3:2",
+    "height": 800,
+    "width": 1200
+  },
+  "claimRefs": [
+    {
+      "locator": "29 CFR 1910.334 damaged cord/equipment visual-inspection basis; exact subparagraph and wording require content review",
+      "sourceId": "OSHA_ELEC",
+      "status": "source-backed pilot basis, not scored-content approval"
+    }
+  ],
+  "environment": "classroom",
+  "files": {
+    "authoringManifest": "authoring/scenes/P3-DAMAGED-CORD-CLASSROOM-TRANSFER.json",
+    "learnerSvg": "renders/learner/s-04.svg",
+    "reviewOverlaySvg": "review/annotated/s-04.review.svg"
+  },
+  "negativeInventory": [
+    "The active cord follows the wall edge and does not cross a walking route.",
+    "No missing grounding pin or wet electrical contact is depicted.",
+    "The vacuum is upright and stable.",
+    "The table does not obstruct the room path.",
+    "No broken glass, spill, or fire-equipment obstruction appears."
+  ],
+  "pilotClass": "P3 damaged cord",
+  "publicAssetId": "s-04",
+  "regions": [
+    {
+      "anchorPoint": {
+        "x": 0.433333,
+        "y": 0.755
+      },
+      "conditionId": "split-outer-cord-insulation",
+      "kind": "target",
+      "polygon": [
+        {
+          "x": 0.371667,
+          "y": 0.7075
+        },
+        {
+          "x": 0.495,
+          "y": 0.7075
+        },
+        {
+          "x": 0.5075,
+          "y": 0.7975
+        },
+        {
+          "x": 0.3625,
+          "y": 0.8
+        }
+      ],
+      "regionId": "r1",
+      "reviewState": "draft-unreviewed",
+      "semanticObjectId": "o1",
+      "toleranceClass": "pilot-medium",
+      "zoneId": "z2"
+    },
+    {
+      "anchorPoint": {
+        "x": 0.433333,
+        "y": 0.35625
+      },
+      "conditionId": "intact-wall-stored-cord",
+      "kind": "decoy",
+      "polygon": [
+        {
+          "x": 0.373333,
+          "y": 0.2375
+        },
+        {
+          "x": 0.495,
+          "y": 0.2375
+        },
+        {
+          "x": 0.51,
+          "y": 0.46875
+        },
+        {
+          "x": 0.358333,
+          "y": 0.46875
+        }
+      ],
+      "regionId": "r2",
+      "reviewState": "draft-unreviewed",
+      "semanticObjectId": "o2",
+      "toleranceClass": "pilot-medium",
+      "zoneId": "z2"
+    }
+  ],
+  "review": {
+    "accessibility": "not-reviewed",
+    "accidentalHazards": "not-reviewed",
+    "decoys": "not-reviewed",
+    "hotspots": "draft-only",
+    "phone": "automated-render-only",
+    "print": "not-reviewed",
+    "productionApproved": false,
+    "rights": "not-reviewed",
+    "scoredUseApproved": false,
+    "semantic": "not-reviewed"
+  },
+  "rights": {
+    "generator": "source/generate_scenes.py",
+    "officialImageInputs": false,
+    "sourceMethod": "project-owned deterministic SVG construction",
+    "state": "review-required",
+    "thirdPartyVisualInputs": []
+  },
+  "sceneId": "P3-DAMAGED-CORD-CLASSROOM-TRANSFER",
+  "sceneVersion": "0.1.0-draft.1",
+  "semanticInventory": [
+    {
+      "conditionId": "split-outer-cord-insulation",
+      "correctionConcept": "remove the damaged cord-connected equipment from use until repaired or replaced under the admitted rule",
+      "objectId": "o1",
+      "role": "target"
+    },
+    {
+      "conditionId": "intact-wall-stored-cord",
+      "objectId": "o2",
+      "role": "decoy",
+      "safeAsDepicted": "The separate cord is intact, coiled, and stored above the walking surface."
+    }
+  ],
+  "transferOf": "P3-DAMAGED-CORD-UTILITY-BASE",
+  "zones": [
+    {
+      "labelNeutral": "left wall and outlet area",
+      "observableFacts": [
+        "A wall outlet is near the lower left wall.",
+        "The equipment cord follows the wall edge from the outlet."
+      ],
+      "order": 1,
+      "polygon": [
+        {
+          "x": 0.070833,
+          "y": 0.11875
+        },
+        {
+          "x": 0.329167,
+          "y": 0.11875
+        },
+        {
+          "x": 0.358333,
+          "y": 0.9625
+        },
+        {
+          "x": 0.029167,
+          "y": 0.9625
+        },
+        {
+          "x": 0.070833,
+          "y": 0.625
+        }
+      ],
+      "zoneId": "z1"
+    },
+    {
+      "labelNeutral": "center cord and wall-storage area",
+      "observableFacts": [
+        "A short section of the cord covering is split, with two inner lines visible.",
+        "A separate intact cord is coiled on a wall hook."
+      ],
+      "order": 2,
+      "polygon": [
+        {
+          "x": 0.329167,
+          "y": 0.11875
+        },
+        {
+          "x": 0.558333,
+          "y": 0.11875
+        },
+        {
+          "x": 0.591667,
+          "y": 0.9625
+        },
+        {
+          "x": 0.358333,
+          "y": 0.9625
+        }
+      ],
+      "zoneId": "z2"
+    },
+    {
+      "labelNeutral": "right equipment area",
+      "observableFacts": [
+        "An upright vacuum stands on the right.",
+        "A low table stands behind it with clear floor space beneath."
+      ],
+      "order": 3,
+      "polygon": [
+        {
+          "x": 0.558333,
+          "y": 0.11875
+        },
+        {
+          "x": 0.916667,
+          "y": 0.11875
+        },
+        {
+          "x": 0.970833,
+          "y": 0.9625
+        },
+        {
+          "x": 0.591667,
+          "y": 0.9625
+        }
+      ],
+      "zoneId": "z3"
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img" aria-hidden="true" focusable="false" shape-rendering="geometricPrecision">
+<style>.bg{fill:#fff}
+.o{fill:#fff;stroke:#111;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+.s{fill:none;stroke:#111;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.f{fill:none;stroke:#111;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.g1{fill:#e4e4e4;stroke:#111;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.g2{fill:#bdbdbd;stroke:#111;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.g3{fill:#8f8f8f;stroke:#111;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.k{fill:#111;stroke:none}
+.c{fill:none;stroke:#111;stroke-width:10;stroke-linecap:round;stroke-linejoin:round}
+.rv-zone{fill:none;stroke:#555;stroke-width:3;stroke-dasharray:12 10}
+.rv-target{fill:none;stroke:#111;stroke-width:8}
+.rv-decoy{fill:none;stroke:#555;stroke-width:5;stroke-dasharray:16 10}
+.rv-label{font-family:Arial,sans-serif;font-size:34px;font-weight:700;fill:#111;stroke:#fff;stroke-width:7;paint-order:stroke}</style>
+  <rect class="bg" height="800" width="1200" x="0" y="0"/>
+  <line class="s" x1="100" x2="1100" y1="95" y2="95"/>
+  <line class="s" x1="100" x2="100" y1="95" y2="510"/>
+  <line class="s" x1="1100" x2="1100" y1="95" y2="510"/>
+  <line class="s" x1="100" x2="1100" y1="510" y2="510"/>
+  <line class="s" x1="100" x2="35" y1="510" y2="770"/>
+  <line class="s" x1="1100" x2="1165" y1="510" y2="770"/>
+  <line class="s" x1="35" x2="1165" y1="770" y2="770"/>
+  <line class="f" x1="610" x2="130" y1="510" y2="770"/>
+  <line class="f" x1="610" x2="300" y1="510" y2="770"/>
+  <line class="f" x1="610" x2="470" y1="510" y2="770"/>
+  <line class="f" x1="610" x2="650" y1="510" y2="770"/>
+  <line class="f" x1="610" x2="830" y1="510" y2="770"/>
+  <line class="f" x1="610" x2="1010" y1="510" y2="770"/>
+  <line class="f" x1="83" x2="1117" y1="565" y2="565"/>
+  <line class="f" x1="66" x2="1134" y1="635" y2="635"/>
+  <line class="f" x1="48" x2="1152" y1="706" y2="706"/>
+  <line class="f" x1="100" x2="1100" y1="470" y2="470"/>
+  <rect class="o" height="300" rx="8" width="220" x="405" y="180"/>
+  <rect class="f" height="270" rx="5" width="190" x="420" y="195"/>
+  <rect class="g1" height="155" rx="22" width="66" x="482.0" y="275"/>
+  <rect class="o" height="30" rx="5" width="40" x="495.0" y="248"/>
+  <line class="s" x1="511.0" x2="511.0" y1="248" y2="225"/>
+  <path class="s" d="M 510.0 226 Q 547.0 207 563.0 241"/>
+  <path class="f" d="M 563.0 241 Q 585.0 285 563.0 325"/>
+  <rect class="g1" height="210" width="190" x="350" y="445"/>
+  <line class="f" x1="445.0" x2="445.0" y1="445" y2="655"/>
+  <line class="f" x1="362" x2="528" y1="503.8" y2="503.8"/>
+  <rect class="g1" height="180" width="185" x="525" y="475"/>
+  <line class="f" x1="617.5" x2="617.5" y1="475" y2="655"/>
+  <line class="f" x1="537" x2="698" y1="525.4" y2="525.4"/>
+  <path class="g1" d="M 915 455 L 1045 455 L 1025 620 L 935 620 Z"/>
+  <rect class="o" height="35" rx="8" width="160" x="900" y="430"/>
+  <circle class="o" cx="955" cy="635" r="15"/>
+  <circle class="o" cx="1010" cy="635" r="15"/>
+  <rect class="o" height="105" rx="6" width="150" x="145" y="235"/>
+  <line class="f" x1="170" x2="270" y1="270" y2="270"/>
+  <line class="f" x1="170" x2="270" y1="307" y2="307"/>
+  <polygon class="rv-zone" points="95.0004,95 340,95 370,770 35.0004,770 99.9996,510"/>
+  <text class="rv-label" text-anchor="middle" x="187.99992" y="448.0">Z1</text>
+  <polygon class="rv-zone" points="340,95 760,95 800,770 370,770"/>
+  <text class="rv-label" text-anchor="middle" x="567.4998" y="432.5">Z2</text>
+  <polygon class="rv-zone" points="760,95 1100,95 1165,770 800,770"/>
+  <text class="rv-label" text-anchor="middle" x="956.25" y="432.5">Z3</text>
+  <polygon class="rv-target" points="330,155 650,155 715,690 325,690"/>
+  <text class="rv-label" text-anchor="middle" x="504.9996" y="520.0">T1</text>
+  <polygon class="rv-decoy" points="875,410 1080,410 1085,665 880,665"/>
+  <text class="rv-label" text-anchor="middle" x="980.0004" y="545.0">D1</text>
+</svg>

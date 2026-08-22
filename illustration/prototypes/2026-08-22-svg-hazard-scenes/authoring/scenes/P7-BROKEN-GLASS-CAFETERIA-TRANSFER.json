@@ -1,0 +1,236 @@
+{
+  "accessibility": {
+    "fullDescription": "The angular fragments and broken rim on the left foreground floor represent exposed broken glass. The round shallow object is an authored decoy and is safe as depicted because it is intact and has no sharp edge. Handling/disposal procedure and exact correction language require separate content-editor approval before scored use.",
+    "neutralAttemptDescription": "A generic cafeteria service area with a counter, several angular translucent-looking fragments on the left foreground floor, a round shallow lid-like object on the right floor, and a small closed bin.",
+    "neutralZones": [
+      {
+        "text": "Several angular translucent-looking fragments and part of a broken curved rim lie across the left foreground tiles.",
+        "zoneId": "z1"
+      },
+      {
+        "text": "A generic service counter has two shallow trays on top and closed doors below.",
+        "zoneId": "z2"
+      },
+      {
+        "text": "A round shallow lid-like object lies flat near a small closed bin.",
+        "zoneId": "z3"
+      }
+    ],
+    "state": "draft-unreviewed"
+  },
+  "authoringRoute": "S",
+  "canvas": {
+    "aspectRatio": "3:2",
+    "height": 800,
+    "width": 1200
+  },
+  "claimRefs": [
+    {
+      "locator": "29 CFR 1910.22 walking-surface housekeeping/sharp-object basis; stronger handling/disposal claims require separate source review",
+      "sourceId": "OSHA_FLOOR",
+      "status": "source-backed pilot basis, not scored-content approval"
+    }
+  ],
+  "environment": "cafeteria",
+  "files": {
+    "authoringManifest": "authoring/scenes/P7-BROKEN-GLASS-CAFETERIA-TRANSFER.json",
+    "learnerSvg": "renders/learner/s-08.svg",
+    "reviewOverlaySvg": "review/annotated/s-08.review.svg"
+  },
+  "negativeInventory": [
+    "No liquid spill accompanies the fragments.",
+    "No food, chemical, or sanitation-contact relationship is depicted.",
+    "No contaminated medical sharp or bodily-fluid cue appears.",
+    "The service counter and trays are stable and closed.",
+    "No loose cord, fire-equipment obstruction, or unstable load appears."
+  ],
+  "pilotClass": "P7 exposed broken glass",
+  "publicAssetId": "s-08",
+  "regions": [
+    {
+      "anchorPoint": {
+        "x": 0.275,
+        "y": 0.825
+      },
+      "conditionId": "exposed-broken-glass-on-walking-surface",
+      "kind": "target",
+      "polygon": [
+        {
+          "x": 0.120833,
+          "y": 0.65625
+        },
+        {
+          "x": 0.433333,
+          "y": 0.65625
+        },
+        {
+          "x": 0.445833,
+          "y": 0.96875
+        },
+        {
+          "x": 0.104167,
+          "y": 0.96875
+        }
+      ],
+      "regionId": "r1",
+      "reviewState": "draft-unreviewed",
+      "semanticObjectId": "o1",
+      "toleranceClass": "pilot-medium",
+      "zoneId": "z1"
+    },
+    {
+      "anchorPoint": {
+        "x": 0.758333,
+        "y": 0.85
+      },
+      "conditionId": "intact-flat-plastic-lid",
+      "kind": "decoy",
+      "polygon": [
+        {
+          "x": 0.695833,
+          "y": 0.78125
+        },
+        {
+          "x": 0.820833,
+          "y": 0.78125
+        },
+        {
+          "x": 0.833333,
+          "y": 0.91875
+        },
+        {
+          "x": 0.683333,
+          "y": 0.91875
+        }
+      ],
+      "regionId": "r2",
+      "reviewState": "draft-unreviewed",
+      "semanticObjectId": "o2",
+      "toleranceClass": "pilot-medium",
+      "zoneId": "z3"
+    }
+  ],
+  "review": {
+    "accessibility": "not-reviewed",
+    "accidentalHazards": "not-reviewed",
+    "decoys": "not-reviewed",
+    "hotspots": "draft-only",
+    "phone": "automated-render-only",
+    "print": "not-reviewed",
+    "productionApproved": false,
+    "rights": "not-reviewed",
+    "scoredUseApproved": false,
+    "semantic": "not-reviewed"
+  },
+  "rights": {
+    "generator": "source/generate_scenes.py",
+    "officialImageInputs": false,
+    "sourceMethod": "project-owned deterministic SVG construction",
+    "state": "review-required",
+    "thirdPartyVisualInputs": []
+  },
+  "sceneId": "P7-BROKEN-GLASS-CAFETERIA-TRANSFER",
+  "sceneVersion": "0.1.0-draft.1",
+  "semanticInventory": [
+    {
+      "conditionId": "exposed-broken-glass-on-walking-surface",
+      "correctionConcept": "isolate and remove the sharp debris using the admitted source-backed procedure/content profile",
+      "objectId": "o1",
+      "role": "target"
+    },
+    {
+      "conditionId": "intact-flat-plastic-lid",
+      "objectId": "o2",
+      "role": "decoy",
+      "safeAsDepicted": "The round object is intact, shallow, and flat on the floor with no sharp or broken edges depicted; ordinary housekeeping relevance is separate from the authored sharp-object target."
+    }
+  ],
+  "transferOf": "P7-BROKEN-GLASS-CLASSROOM-BASE",
+  "zones": [
+    {
+      "labelNeutral": "left foreground floor area",
+      "observableFacts": [
+        "Several angular translucent-looking fragments and part of a broken curved rim lie on the floor.",
+        "The fragments are separated across multiple floor tiles."
+      ],
+      "order": 1,
+      "polygon": [
+        {
+          "x": 0.079167,
+          "y": 0.11875
+        },
+        {
+          "x": 0.445833,
+          "y": 0.11875
+        },
+        {
+          "x": 0.466667,
+          "y": 0.9625
+        },
+        {
+          "x": 0.029167,
+          "y": 0.9625
+        },
+        {
+          "x": 0.070833,
+          "y": 0.6125
+        }
+      ],
+      "zoneId": "z1"
+    },
+    {
+      "labelNeutral": "service-counter area",
+      "observableFacts": [
+        "A generic service counter has two shallow trays on top.",
+        "The counter doors are closed."
+      ],
+      "order": 2,
+      "polygon": [
+        {
+          "x": 0.445833,
+          "y": 0.11875
+        },
+        {
+          "x": 0.683333,
+          "y": 0.11875
+        },
+        {
+          "x": 0.704167,
+          "y": 0.9625
+        },
+        {
+          "x": 0.466667,
+          "y": 0.9625
+        }
+      ],
+      "zoneId": "z2"
+    },
+    {
+      "labelNeutral": "right floor and bin area",
+      "observableFacts": [
+        "A round shallow lid-like object lies flat on the floor.",
+        "A small closed bin stands against the wall."
+      ],
+      "order": 3,
+      "polygon": [
+        {
+          "x": 0.683333,
+          "y": 0.11875
+        },
+        {
+          "x": 0.916667,
+          "y": 0.11875
+        },
+        {
+          "x": 0.970833,
+          "y": 0.9625
+        },
+        {
+          "x": 0.704167,
+          "y": 0.9625
+        }
+      ],
+      "zoneId": "z3"
+    }
+  ]
+}

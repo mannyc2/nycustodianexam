@@ -1,0 +1,150 @@
+check_id,scope,status,detail
+CORPUS-LEARNER-COUNT,corpus,PASS,"observed=['s-01', 's-02', 's-03', 's-04', 's-05', 's-06', 's-07', 's-08']"
+CORPUS-REVIEW-COUNT,corpus,PASS,count=8
+CORPUS-MANIFEST-COUNT,corpus,PASS,count=8
+CORPUS-GENERATOR-REPEAT,corpus,PASS,byte-identical generated corpus after rerun
+SVG-XML,renders/learner/s-01.svg,PASS,well-formed XML
+SVG-CANVAS,renders/learner/s-01.svg,PASS,1200x800 / 3:2 logical canvas
+SVG-SAFE-ELEMENTS,renders/learner/s-01.svg,PASS,no disallowed executable/embedded/text elements
+SVG-NO-EVENTS,renders/learner/s-01.svg,PASS,no event-handler attributes
+SVG-NO-EXTERNALS,renders/learner/s-01.svg,PASS,no href/src/external URL/data URI
+SVG-NO-ANSWER-TERMS,renders/learner/s-01.svg,PASS,no semantic answer terms in learner SVG bytes
+SVG-NO-REVIEW-CSS,renders/learner/s-01.svg,PASS,review-only classes absent
+SVG-XML,renders/learner/s-02.svg,PASS,well-formed XML
+SVG-CANVAS,renders/learner/s-02.svg,PASS,1200x800 / 3:2 logical canvas
+SVG-SAFE-ELEMENTS,renders/learner/s-02.svg,PASS,no disallowed executable/embedded/text elements
+SVG-NO-EVENTS,renders/learner/s-02.svg,PASS,no event-handler attributes
+SVG-NO-EXTERNALS,renders/learner/s-02.svg,PASS,no href/src/external URL/data URI
+SVG-NO-ANSWER-TERMS,renders/learner/s-02.svg,PASS,no semantic answer terms in learner SVG bytes
+SVG-NO-REVIEW-CSS,renders/learner/s-02.svg,PASS,review-only classes absent
+SVG-XML,renders/learner/s-03.svg,PASS,well-formed XML
+SVG-CANVAS,renders/learner/s-03.svg,PASS,1200x800 / 3:2 logical canvas
+SVG-SAFE-ELEMENTS,renders/learner/s-03.svg,PASS,no disallowed executable/embedded/text elements
+SVG-NO-EVENTS,renders/learner/s-03.svg,PASS,no event-handler attributes
+SVG-NO-EXTERNALS,renders/learner/s-03.svg,PASS,no href/src/external URL/data URI
+SVG-NO-ANSWER-TERMS,renders/learner/s-03.svg,PASS,no semantic answer terms in learner SVG bytes
+SVG-NO-REVIEW-CSS,renders/learner/s-03.svg,PASS,review-only classes absent
+SVG-XML,renders/learner/s-04.svg,PASS,well-formed XML
+SVG-CANVAS,renders/learner/s-04.svg,PASS,1200x800 / 3:2 logical canvas
+SVG-SAFE-ELEMENTS,renders/learner/s-04.svg,PASS,no disallowed executable/embedded/text elements
+SVG-NO-EVENTS,renders/learner/s-04.svg,PASS,no event-handler attributes
+SVG-NO-EXTERNALS,renders/learner/s-04.svg,PASS,no href/src/external URL/data URI
+SVG-NO-ANSWER-TERMS,renders/learner/s-04.svg,PASS,no semantic answer terms in learner SVG bytes
+SVG-NO-REVIEW-CSS,renders/learner/s-04.svg,PASS,review-only classes absent
+SVG-XML,renders/learner/s-05.svg,PASS,well-formed XML
+SVG-CANVAS,renders/learner/s-05.svg,PASS,1200x800 / 3:2 logical canvas
+SVG-SAFE-ELEMENTS,renders/learner/s-05.svg,PASS,no disallowed executable/embedded/text elements
+SVG-NO-EVENTS,renders/learner/s-05.svg,PASS,no event-handler attributes
+SVG-NO-EXTERNALS,renders/learner/s-05.svg,PASS,no href/src/external URL/data URI
+SVG-NO-ANSWER-TERMS,renders/learner/s-05.svg,PASS,no semantic answer terms in learner SVG bytes
+SVG-NO-REVIEW-CSS,renders/learner/s-05.svg,PASS,review-only classes absent
+SVG-XML,renders/learner/s-06.svg,PASS,well-formed XML
+SVG-CANVAS,renders/learner/s-06.svg,PASS,1200x800 / 3:2 logical canvas
+SVG-SAFE-ELEMENTS,renders/learner/s-06.svg,PASS,no disallowed executable/embedded/text elements
+SVG-NO-EVENTS,renders/learner/s-06.svg,PASS,no event-handler attributes
+SVG-NO-EXTERNALS,renders/learner/s-06.svg,PASS,no href/src/external URL/data URI
+SVG-NO-ANSWER-TERMS,renders/learner/s-06.svg,PASS,no semantic answer terms in learner SVG bytes
+SVG-NO-REVIEW-CSS,renders/learner/s-06.svg,PASS,review-only classes absent
+SVG-XML,renders/learner/s-07.svg,PASS,well-formed XML
+SVG-CANVAS,renders/learner/s-07.svg,PASS,1200x800 / 3:2 logical canvas
+SVG-SAFE-ELEMENTS,renders/learner/s-07.svg,PASS,no disallowed executable/embedded/text elements
+SVG-NO-EVENTS,renders/learner/s-07.svg,PASS,no event-handler attributes
+SVG-NO-EXTERNALS,renders/learner/s-07.svg,PASS,no href/src/external URL/data URI
+SVG-NO-ANSWER-TERMS,renders/learner/s-07.svg,PASS,no semantic answer terms in learner SVG bytes
+SVG-NO-REVIEW-CSS,renders/learner/s-07.svg,PASS,review-only classes absent
+SVG-XML,renders/learner/s-08.svg,PASS,well-formed XML
+SVG-CANVAS,renders/learner/s-08.svg,PASS,1200x800 / 3:2 logical canvas
+SVG-SAFE-ELEMENTS,renders/learner/s-08.svg,PASS,no disallowed executable/embedded/text elements
+SVG-NO-EVENTS,renders/learner/s-08.svg,PASS,no event-handler attributes
+SVG-NO-EXTERNALS,renders/learner/s-08.svg,PASS,no href/src/external URL/data URI
+SVG-NO-ANSWER-TERMS,renders/learner/s-08.svg,PASS,no semantic answer terms in learner SVG bytes
+SVG-NO-REVIEW-CSS,renders/learner/s-08.svg,PASS,review-only classes absent
+MANIFEST-JSON,authoring/scenes/P1-WET-FLOOR-HALLWAY-BASE.json,PASS,valid JSON
+MANIFEST-ASSET-PATH,authoring/scenes/P1-WET-FLOOR-HALLWAY-BASE.json,PASS,expected renders/learner/s-01.svg; observed renders/learner/s-01.svg
+MANIFEST-INPUT-PROVENANCE,authoring/scenes/P1-WET-FLOOR-HALLWAY-BASE.json,PASS,no official or third-party visual inputs
+MANIFEST-NONAPPROVAL,authoring/scenes/P1-WET-FLOOR-HALLWAY-BASE.json,PASS,production/scored approval explicitly false
+MANIFEST-ZONE-ORDER,authoring/scenes/P1-WET-FLOOR-HALLWAY-BASE.json,PASS,"orders=[1, 2, 3]"
+MANIFEST-REGION-KINDS,authoring/scenes/P1-WET-FLOOR-HALLWAY-BASE.json,PASS,"kinds=['target', 'decoy']"
+MANIFEST-REGION-GEOMETRY,authoring/scenes/P1-WET-FLOOR-HALLWAY-BASE.json,PASS,"all polygons valid, normalized, and contain anchors"
+MANIFEST-REGION-SEPARATION,authoring/scenes/P1-WET-FLOOR-HALLWAY-BASE.json,PASS,target/decoy remain separated after a 12-unit (1.5% short-edge) pilot buffer
+MANIFEST-JSON,authoring/scenes/P1-WET-FLOOR-LOBBY-TRANSFER.json,PASS,valid JSON
+MANIFEST-ASSET-PATH,authoring/scenes/P1-WET-FLOOR-LOBBY-TRANSFER.json,PASS,expected renders/learner/s-02.svg; observed renders/learner/s-02.svg
+MANIFEST-INPUT-PROVENANCE,authoring/scenes/P1-WET-FLOOR-LOBBY-TRANSFER.json,PASS,no official or third-party visual inputs
+MANIFEST-NONAPPROVAL,authoring/scenes/P1-WET-FLOOR-LOBBY-TRANSFER.json,PASS,production/scored approval explicitly false
+MANIFEST-ZONE-ORDER,authoring/scenes/P1-WET-FLOOR-LOBBY-TRANSFER.json,PASS,"orders=[1, 2, 3]"
+MANIFEST-REGION-KINDS,authoring/scenes/P1-WET-FLOOR-LOBBY-TRANSFER.json,PASS,"kinds=['target', 'decoy']"
+MANIFEST-REGION-GEOMETRY,authoring/scenes/P1-WET-FLOOR-LOBBY-TRANSFER.json,PASS,"all polygons valid, normalized, and contain anchors"
+MANIFEST-REGION-SEPARATION,authoring/scenes/P1-WET-FLOOR-LOBBY-TRANSFER.json,PASS,target/decoy remain separated after a 12-unit (1.5% short-edge) pilot buffer
+MANIFEST-JSON,authoring/scenes/P3-DAMAGED-CORD-CLASSROOM-TRANSFER.json,PASS,valid JSON
+MANIFEST-ASSET-PATH,authoring/scenes/P3-DAMAGED-CORD-CLASSROOM-TRANSFER.json,PASS,expected renders/learner/s-04.svg; observed renders/learner/s-04.svg
+MANIFEST-INPUT-PROVENANCE,authoring/scenes/P3-DAMAGED-CORD-CLASSROOM-TRANSFER.json,PASS,no official or third-party visual inputs
+MANIFEST-NONAPPROVAL,authoring/scenes/P3-DAMAGED-CORD-CLASSROOM-TRANSFER.json,PASS,production/scored approval explicitly false
+MANIFEST-ZONE-ORDER,authoring/scenes/P3-DAMAGED-CORD-CLASSROOM-TRANSFER.json,PASS,"orders=[1, 2, 3]"
+MANIFEST-REGION-KINDS,authoring/scenes/P3-DAMAGED-CORD-CLASSROOM-TRANSFER.json,PASS,"kinds=['target', 'decoy']"
+MANIFEST-REGION-GEOMETRY,authoring/scenes/P3-DAMAGED-CORD-CLASSROOM-TRANSFER.json,PASS,"all polygons valid, normalized, and contain anchors"
+MANIFEST-REGION-SEPARATION,authoring/scenes/P3-DAMAGED-CORD-CLASSROOM-TRANSFER.json,PASS,target/decoy remain separated after a 12-unit (1.5% short-edge) pilot buffer
+MANIFEST-JSON,authoring/scenes/P3-DAMAGED-CORD-UTILITY-BASE.json,PASS,valid JSON
+MANIFEST-ASSET-PATH,authoring/scenes/P3-DAMAGED-CORD-UTILITY-BASE.json,PASS,expected renders/learner/s-03.svg; observed renders/learner/s-03.svg
+MANIFEST-INPUT-PROVENANCE,authoring/scenes/P3-DAMAGED-CORD-UTILITY-BASE.json,PASS,no official or third-party visual inputs
+MANIFEST-NONAPPROVAL,authoring/scenes/P3-DAMAGED-CORD-UTILITY-BASE.json,PASS,production/scored approval explicitly false
+MANIFEST-ZONE-ORDER,authoring/scenes/P3-DAMAGED-CORD-UTILITY-BASE.json,PASS,"orders=[1, 2, 3]"
+MANIFEST-REGION-KINDS,authoring/scenes/P3-DAMAGED-CORD-UTILITY-BASE.json,PASS,"kinds=['target', 'decoy']"
+MANIFEST-REGION-GEOMETRY,authoring/scenes/P3-DAMAGED-CORD-UTILITY-BASE.json,PASS,"all polygons valid, normalized, and contain anchors"
+MANIFEST-REGION-SEPARATION,authoring/scenes/P3-DAMAGED-CORD-UTILITY-BASE.json,PASS,target/decoy remain separated after a 12-unit (1.5% short-edge) pilot buffer
+MANIFEST-JSON,authoring/scenes/P5-EXTINGUISHER-BOXES-HALLWAY-BASE.json,PASS,valid JSON
+MANIFEST-ASSET-PATH,authoring/scenes/P5-EXTINGUISHER-BOXES-HALLWAY-BASE.json,PASS,expected renders/learner/s-05.svg; observed renders/learner/s-05.svg
+MANIFEST-INPUT-PROVENANCE,authoring/scenes/P5-EXTINGUISHER-BOXES-HALLWAY-BASE.json,PASS,no official or third-party visual inputs
+MANIFEST-NONAPPROVAL,authoring/scenes/P5-EXTINGUISHER-BOXES-HALLWAY-BASE.json,PASS,production/scored approval explicitly false
+MANIFEST-ZONE-ORDER,authoring/scenes/P5-EXTINGUISHER-BOXES-HALLWAY-BASE.json,PASS,"orders=[1, 2, 3]"
+MANIFEST-REGION-KINDS,authoring/scenes/P5-EXTINGUISHER-BOXES-HALLWAY-BASE.json,PASS,"kinds=['target', 'decoy']"
+MANIFEST-REGION-GEOMETRY,authoring/scenes/P5-EXTINGUISHER-BOXES-HALLWAY-BASE.json,PASS,"all polygons valid, normalized, and contain anchors"
+MANIFEST-REGION-SEPARATION,authoring/scenes/P5-EXTINGUISHER-BOXES-HALLWAY-BASE.json,PASS,target/decoy remain separated after a 12-unit (1.5% short-edge) pilot buffer
+MANIFEST-JSON,authoring/scenes/P5-EXTINGUISHER-CART-GYM-TRANSFER.json,PASS,valid JSON
+MANIFEST-ASSET-PATH,authoring/scenes/P5-EXTINGUISHER-CART-GYM-TRANSFER.json,PASS,expected renders/learner/s-06.svg; observed renders/learner/s-06.svg
+MANIFEST-INPUT-PROVENANCE,authoring/scenes/P5-EXTINGUISHER-CART-GYM-TRANSFER.json,PASS,no official or third-party visual inputs
+MANIFEST-NONAPPROVAL,authoring/scenes/P5-EXTINGUISHER-CART-GYM-TRANSFER.json,PASS,production/scored approval explicitly false
+MANIFEST-ZONE-ORDER,authoring/scenes/P5-EXTINGUISHER-CART-GYM-TRANSFER.json,PASS,"orders=[1, 2, 3]"
+MANIFEST-REGION-KINDS,authoring/scenes/P5-EXTINGUISHER-CART-GYM-TRANSFER.json,PASS,"kinds=['target', 'decoy']"
+MANIFEST-REGION-GEOMETRY,authoring/scenes/P5-EXTINGUISHER-CART-GYM-TRANSFER.json,PASS,"all polygons valid, normalized, and contain anchors"
+MANIFEST-REGION-SEPARATION,authoring/scenes/P5-EXTINGUISHER-CART-GYM-TRANSFER.json,PASS,target/decoy remain separated after a 12-unit (1.5% short-edge) pilot buffer
+MANIFEST-JSON,authoring/scenes/P7-BROKEN-GLASS-CAFETERIA-TRANSFER.json,PASS,valid JSON
+MANIFEST-ASSET-PATH,authoring/scenes/P7-BROKEN-GLASS-CAFETERIA-TRANSFER.json,PASS,expected renders/learner/s-08.svg; observed renders/learner/s-08.svg
+MANIFEST-INPUT-PROVENANCE,authoring/scenes/P7-BROKEN-GLASS-CAFETERIA-TRANSFER.json,PASS,no official or third-party visual inputs
+MANIFEST-NONAPPROVAL,authoring/scenes/P7-BROKEN-GLASS-CAFETERIA-TRANSFER.json,PASS,production/scored approval explicitly false
+MANIFEST-ZONE-ORDER,authoring/scenes/P7-BROKEN-GLASS-CAFETERIA-TRANSFER.json,PASS,"orders=[1, 2, 3]"
+MANIFEST-REGION-KINDS,authoring/scenes/P7-BROKEN-GLASS-CAFETERIA-TRANSFER.json,PASS,"kinds=['target', 'decoy']"
+MANIFEST-REGION-GEOMETRY,authoring/scenes/P7-BROKEN-GLASS-CAFETERIA-TRANSFER.json,PASS,"all polygons valid, normalized, and contain anchors"
+MANIFEST-REGION-SEPARATION,authoring/scenes/P7-BROKEN-GLASS-CAFETERIA-TRANSFER.json,PASS,target/decoy remain separated after a 12-unit (1.5% short-edge) pilot buffer
+MANIFEST-JSON,authoring/scenes/P7-BROKEN-GLASS-CLASSROOM-BASE.json,PASS,valid JSON
+MANIFEST-ASSET-PATH,authoring/scenes/P7-BROKEN-GLASS-CLASSROOM-BASE.json,PASS,expected renders/learner/s-07.svg; observed renders/learner/s-07.svg
+MANIFEST-INPUT-PROVENANCE,authoring/scenes/P7-BROKEN-GLASS-CLASSROOM-BASE.json,PASS,no official or third-party visual inputs
+MANIFEST-NONAPPROVAL,authoring/scenes/P7-BROKEN-GLASS-CLASSROOM-BASE.json,PASS,production/scored approval explicitly false
+MANIFEST-ZONE-ORDER,authoring/scenes/P7-BROKEN-GLASS-CLASSROOM-BASE.json,PASS,"orders=[1, 2, 3]"
+MANIFEST-REGION-KINDS,authoring/scenes/P7-BROKEN-GLASS-CLASSROOM-BASE.json,PASS,"kinds=['target', 'decoy']"
+MANIFEST-REGION-GEOMETRY,authoring/scenes/P7-BROKEN-GLASS-CLASSROOM-BASE.json,PASS,"all polygons valid, normalized, and contain anchors"
+MANIFEST-REGION-SEPARATION,authoring/scenes/P7-BROKEN-GLASS-CLASSROOM-BASE.json,PASS,target/decoy remain separated after a 12-unit (1.5% short-edge) pilot buffer
+CORPUS-MANIFEST-ID-SET,corpus,PASS,"observed=['s-01', 's-02', 's-03', 's-04', 's-05', 's-06', 's-07', 's-08']"
+RENDER-CANONICAL,renders/learner/s-01.svg,PASS,sha256=bba57cfc1ded0cacdb905a35f241a9eb6412dc98d8c7be8ae9bb9838dac591a6; nonwhite=0.132052; grayscale=True; repeat_equal=True
+RENDER-PHONE,renders/learner/s-01.svg,PASS,sha256=58011e87a88e2dd92880175314be761b79c66b08112bd6dc2ebf9c010e297824; nonwhite=0.154931; grayscale=True; repeat_equal=True
+RENDER-PRINT,renders/learner/s-01.svg,PASS,sha256=cf42ac5eab79fc0d5f534a9b1be97756403c492a1d68be07d37e48f9b6f32904; nonwhite=0.126798; grayscale=True; repeat_equal=True
+RENDER-CANONICAL,renders/learner/s-02.svg,PASS,sha256=b83eeabe83ddcfd50ab157b2ad9e4437d85ad650f830bdbc73baf180826b3b19; nonwhite=0.143601; grayscale=True; repeat_equal=True
+RENDER-PHONE,renders/learner/s-02.svg,PASS,sha256=6c7f873baedd7ce49a9b23784d42660e9142518abef77aa7ab1f21e9922eb8db; nonwhite=0.175856; grayscale=True; repeat_equal=True
+RENDER-PRINT,renders/learner/s-02.svg,PASS,sha256=a72554c0de6dfa21d944d1e6919b3b437ac0c0944791c4acfda985926d1a1560; nonwhite=0.138887; grayscale=True; repeat_equal=True
+RENDER-CANONICAL,renders/learner/s-03.svg,PASS,sha256=b0e62718c3e91aa90222dd63b1b04bc53b22b6efb7e4c02d014b51d6974badc4; nonwhite=0.088446; grayscale=True; repeat_equal=True
+RENDER-PHONE,renders/learner/s-03.svg,PASS,sha256=42ff66f6c29c68d8a33e42fcbf399a7c3fe8ef95d3b9620fcaae3f10aa8768f6; nonwhite=0.115301; grayscale=True; repeat_equal=True
+RENDER-PRINT,renders/learner/s-03.svg,PASS,sha256=630701c266dbb0c50da9e212b5c2bad4d8eab5752efa3eb2c9cc006b3ea7ceb7; nonwhite=0.082935; grayscale=True; repeat_equal=True
+RENDER-CANONICAL,renders/learner/s-04.svg,PASS,sha256=3ad2dcedb89d26f37cd6eb5a0372fd89b5a5866c9416bafdc1929f4f33d396af; nonwhite=0.094354; grayscale=True; repeat_equal=True
+RENDER-PHONE,renders/learner/s-04.svg,PASS,sha256=f72bed5f2f7ff38e3d0a031fb7893123588262d18ef46c6d2740cf70c5e3dc78; nonwhite=0.123241; grayscale=True; repeat_equal=True
+RENDER-PRINT,renders/learner/s-04.svg,PASS,sha256=29da34dfb7727302e86ebfd0debf9d6d23014dda0a747da43d227cd3d5af953c; nonwhite=0.087984; grayscale=True; repeat_equal=True
+RENDER-CANONICAL,renders/learner/s-05.svg,PASS,sha256=596c76e8acafcbfe55331153267251f8fe6c360de624012aab2153f22406ca75; nonwhite=0.169479; grayscale=True; repeat_equal=True
+RENDER-PHONE,renders/learner/s-05.svg,PASS,sha256=ab11165f6513c72bed189d8b03a52aa9fabfbd4a26346ff3ae568f2bd70c67bc; nonwhite=0.193877; grayscale=True; repeat_equal=True
+RENDER-PRINT,renders/learner/s-05.svg,PASS,sha256=122fa2299c512da9a8bfaedaebefa9f417d5754667de6154ccb532d1bd4267d7; nonwhite=0.164782; grayscale=True; repeat_equal=True
+RENDER-CANONICAL,renders/learner/s-06.svg,PASS,sha256=9a6ec99c88d721dd813f046772c2366e5c9ad8f587217911e31b16afb494cd67; nonwhite=0.137035; grayscale=True; repeat_equal=True
+RENDER-PHONE,renders/learner/s-06.svg,PASS,sha256=c83310f081a50d031f6226079fcd0eee2836a7654101e15bd8640f2f283ed7dc; nonwhite=0.168056; grayscale=True; repeat_equal=True
+RENDER-PRINT,renders/learner/s-06.svg,PASS,sha256=0f9dd2c4af00b78eb85bf355e69402b60c25c080858ebf49a72cb6332933b202; nonwhite=0.131288; grayscale=True; repeat_equal=True
+RENDER-CANONICAL,renders/learner/s-07.svg,PASS,sha256=8df5de94a50e61bcdd85f6b001c85939a3a7ae854ff4ce1a4b409c9fd702586d; nonwhite=0.106537; grayscale=True; repeat_equal=True
+RENDER-PHONE,renders/learner/s-07.svg,PASS,sha256=55d8c4621ae68223b098c62e53170c52856c899ef34f76a7460b63289a828dbb; nonwhite=0.134792; grayscale=True; repeat_equal=True
+RENDER-PRINT,renders/learner/s-07.svg,PASS,sha256=aec48ed06579bd2ae7e3d42fee3be69d79e778b6ed79ce786369d3b8a4bf10f0; nonwhite=0.101569; grayscale=True; repeat_equal=True
+RENDER-CANONICAL,renders/learner/s-08.svg,PASS,sha256=d4a65f9b766da58c950889f07a0cd8bd428868e86fa7abf496116e5892c27466; nonwhite=0.172474; grayscale=True; repeat_equal=True
+RENDER-PHONE,renders/learner/s-08.svg,PASS,sha256=a68a8bf3d9e26c8b2ce0a01906e95a56e952e2a8facfdf761eabf659a3d53bc2; nonwhite=0.196343; grayscale=True; repeat_equal=True
+RENDER-PRINT,renders/learner/s-08.svg,PASS,sha256=330a20981e4a81c1da839952af6d044917e798415fe5c675259fccc91809d628; nonwhite=0.167577; grayscale=True; repeat_equal=True

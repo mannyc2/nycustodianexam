@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img" aria-hidden="true" focusable="false" shape-rendering="geometricPrecision">
+<style>.bg{fill:#fff}
+.o{fill:#fff;stroke:#111;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+.s{fill:none;stroke:#111;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.f{fill:none;stroke:#111;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.g1{fill:#e4e4e4;stroke:#111;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.g2{fill:#bdbdbd;stroke:#111;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.g3{fill:#8f8f8f;stroke:#111;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.k{fill:#111;stroke:none}
+.c{fill:none;stroke:#111;stroke-width:10;stroke-linecap:round;stroke-linejoin:round}
+.rv-zone{fill:none;stroke:#555;stroke-width:3;stroke-dasharray:12 10}
+.rv-target{fill:none;stroke:#111;stroke-width:8}
+.rv-decoy{fill:none;stroke:#555;stroke-width:5;stroke-dasharray:16 10}
+.rv-label{font-family:Arial,sans-serif;font-size:34px;font-weight:700;fill:#111;stroke:#fff;stroke-width:7;paint-order:stroke}</style>
+  <rect class="bg" height="800" width="1200" x="0" y="0"/>
+  <line class="s" x1="100" x2="1100" y1="95" y2="95"/>
+  <line class="s" x1="100" x2="100" y1="95" y2="500"/>
+  <line class="s" x1="1100" x2="1100" y1="95" y2="500"/>
+  <line class="s" x1="100" x2="1100" y1="500" y2="500"/>
+  <line class="s" x1="100" x2="35" y1="500" y2="770"/>
+  <line class="s" x1="1100" x2="1165" y1="500" y2="770"/>
+  <line class="s" x1="35" x2="1165" y1="770" y2="770"/>
+  <line class="f" x1="555" x2="130" y1="500" y2="770"/>
+  <line class="f" x1="555" x2="300" y1="500" y2="770"/>
+  <line class="f" x1="555" x2="470" y1="500" y2="770"/>
+  <line class="f" x1="555" x2="650" y1="500" y2="770"/>
+  <line class="f" x1="555" x2="830" y1="500" y2="770"/>
+  <line class="f" x1="555" x2="1010" y1="500" y2="770"/>
+  <line class="f" x1="83" x2="1117" y1="565" y2="565"/>
+  <line class="f" x1="66" x2="1134" y1="635" y2="635"/>
+  <line class="f" x1="48" x2="1152" y1="706" y2="706"/>
+  <line class="f" x1="100" x2="1100" y1="470" y2="470"/>
+  <rect class="o" height="315" width="190" x="145" y="185"/>
+  <circle class="o" cx="312" cy="355.1" r="8"/>
+  <rect class="o" height="78" rx="8" width="245" x="835" y="405"/>
+  <line class="s" x1="865" x2="850" y1="483" y2="542"/>
+  <line class="s" x1="1047" x2="1062" y1="483" y2="542"/>
+  <rect class="o" height="90" rx="6" width="155" x="875" y="255"/>
+  <line class="f" x1="952" x2="952" y1="255" y2="345"/>
+  <polygon class="g1" points="920,585 1110,585 1155,650 875,650"/>
+  <line class="f" x1="948" x2="984" y1="601" y2="636"/>
+  <line class="f" x1="992" x2="1028" y1="601" y2="636"/>
+  <line class="f" x1="1036" x2="1072" y1="601" y2="636"/>
+  <path class="g2" d="M 335 629 Q 378 588 435 604 Q 486 570 548 601 Q 615 578 675 616 Q 739 603 789 655 Q 747 706 681 698 Q 626 733 566 705 Q 498 735 446 701 Q 385 716 335 669 Q 317 651 335 629 Z"/>
+  <path class="f" d="M 397 648 Q 454 623 508 646"/>
+  <path class="f" d="M 553 660 Q 616 632 682 658"/>
+  <path class="f" d="M 475 687 Q 530 674 579 690"/>
+  <polygon class="rv-zone" points="95.0004,95 390,95 390,535 69.9996,770 35.0004,770 99.9996,500"/>
+  <text class="rv-label" text-anchor="middle" x="180.0" y="460.8333333333333">Z1</text>
+  <polygon class="rv-zone" points="390,95 760,95 820,770 350,770"/>
+  <text class="rv-label" text-anchor="middle" x="579.9999" y="432.5">Z2</text>
+  <polygon class="rv-zone" points="760,95 1100,95 1165,770 820,770"/>
+  <text class="rv-label" text-anchor="middle" x="961.2497999999999" y="432.5">Z3</text>
+  <polygon class="rv-target" points="320,620 410,585 515,575 655,590 800,635 790,705 640,735 490,730 340,690"/>
+  <text class="rv-label" text-anchor="middle" x="560.0004" y="660.0">T1</text>
+  <polygon class="rv-decoy" points="865,570 1120,570 1165,665 855,665"/>
+  <text class="rv-label" text-anchor="middle" x="950.0004" y="620.0">D1</text>
+</svg>

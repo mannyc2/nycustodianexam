@@ -1,0 +1,19 @@
+# Observed build commands and result - 2026-08-22
+
+$ python3 source/generate_scenes.py
+exit=0
+stdout=<empty>
+stderr=<empty>
+outputs=8 learner SVGs; 8 annotated review SVGs; 8 scene manifests; 1 scene index
+
+$ python3 source/validate_scenes.py
+exit=0
+stdout=checks=149 pass=149 fail=0
+stderr=<empty>
+
+Validation rendered every learner SVG twice at each profile:
+- canonical: 1200 x 800;
+- phone probe: 360 x 240;
+- print probe: 1800 x 1200.
+
+Matching render hashes establish same-environment deterministic output only. They do not establish cross-platform byte identity.

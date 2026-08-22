@@ -1,0 +1,236 @@
+{
+  "accessibility": {
+    "fullDescription": "The angular fragments and broken rim on the center floor represent exposed broken glass. The crumpled paper is an authored decoy and is not the sharp-object condition depicted by the scene. Handling/disposal procedure and exact correction language require separate content-editor approval before scored use.",
+    "neutralAttemptDescription": "A generic classroom with a low table, a closed cabinet, several angular translucent-looking fragments on the center floor, a crumpled paper ball, and an upright waste bin.",
+    "neutralZones": [
+      {
+        "text": "A low classroom table stands on the left with clear floor space beneath it.",
+        "zoneId": "z1"
+      },
+      {
+        "text": "Several angular translucent-looking fragments and part of a broken curved rim lie across the center foreground tiles.",
+        "zoneId": "z2"
+      },
+      {
+        "text": "A closed cabinet stands on the right; a crumpled paper ball lies near an upright waste bin.",
+        "zoneId": "z3"
+      }
+    ],
+    "state": "draft-unreviewed"
+  },
+  "authoringRoute": "S",
+  "canvas": {
+    "aspectRatio": "3:2",
+    "height": 800,
+    "width": 1200
+  },
+  "claimRefs": [
+    {
+      "locator": "29 CFR 1910.22 walking-surface housekeeping/sharp-object basis; stronger handling/disposal claims require separate source review",
+      "sourceId": "OSHA_FLOOR",
+      "status": "source-backed pilot basis, not scored-content approval"
+    }
+  ],
+  "environment": "classroom",
+  "files": {
+    "authoringManifest": "authoring/scenes/P7-BROKEN-GLASS-CLASSROOM-BASE.json",
+    "learnerSvg": "renders/learner/s-07.svg",
+    "reviewOverlaySvg": "review/annotated/s-07.review.svg"
+  },
+  "negativeInventory": [
+    "No liquid spill accompanies the broken material.",
+    "No contaminated medical sharp, needle, or bodily-fluid cue appears.",
+    "No person is shown handling the fragments.",
+    "Furniture is stable and does not obstruct the room path.",
+    "No loose cord, chemical container, or fire-equipment obstruction appears."
+  ],
+  "pilotClass": "P7 exposed broken glass",
+  "publicAssetId": "s-07",
+  "regions": [
+    {
+      "anchorPoint": {
+        "x": 0.475,
+        "y": 0.83125
+      },
+      "conditionId": "exposed-broken-glass-on-walking-surface",
+      "kind": "target",
+      "polygon": [
+        {
+          "x": 0.3125,
+          "y": 0.66875
+        },
+        {
+          "x": 0.620833,
+          "y": 0.66875
+        },
+        {
+          "x": 0.629167,
+          "y": 0.95625
+        },
+        {
+          "x": 0.304167,
+          "y": 0.95625
+        }
+      ],
+      "regionId": "r1",
+      "reviewState": "draft-unreviewed",
+      "semanticObjectId": "o1",
+      "toleranceClass": "pilot-medium",
+      "zoneId": "z2"
+    },
+    {
+      "anchorPoint": {
+        "x": 0.7125,
+        "y": 0.85
+      },
+      "conditionId": "crumpled-paper-debris",
+      "kind": "decoy",
+      "polygon": [
+        {
+          "x": 0.670833,
+          "y": 0.79375
+        },
+        {
+          "x": 0.754167,
+          "y": 0.79375
+        },
+        {
+          "x": 0.7625,
+          "y": 0.9125
+        },
+        {
+          "x": 0.6625,
+          "y": 0.9125
+        }
+      ],
+      "regionId": "r2",
+      "reviewState": "draft-unreviewed",
+      "semanticObjectId": "o2",
+      "toleranceClass": "pilot-medium",
+      "zoneId": "z3"
+    }
+  ],
+  "review": {
+    "accessibility": "not-reviewed",
+    "accidentalHazards": "not-reviewed",
+    "decoys": "not-reviewed",
+    "hotspots": "draft-only",
+    "phone": "automated-render-only",
+    "print": "not-reviewed",
+    "productionApproved": false,
+    "rights": "not-reviewed",
+    "scoredUseApproved": false,
+    "semantic": "not-reviewed"
+  },
+  "rights": {
+    "generator": "source/generate_scenes.py",
+    "officialImageInputs": false,
+    "sourceMethod": "project-owned deterministic SVG construction",
+    "state": "review-required",
+    "thirdPartyVisualInputs": []
+  },
+  "sceneId": "P7-BROKEN-GLASS-CLASSROOM-BASE",
+  "sceneVersion": "0.1.0-draft.1",
+  "semanticInventory": [
+    {
+      "conditionId": "exposed-broken-glass-on-walking-surface",
+      "correctionConcept": "isolate and remove the sharp debris using the admitted source-backed procedure/content profile",
+      "objectId": "o1",
+      "role": "target"
+    },
+    {
+      "conditionId": "crumpled-paper-debris",
+      "objectId": "o2",
+      "role": "decoy",
+      "safeAsDepicted": "The object is depicted as soft crumpled paper rather than a sharp or protruding fragment; ordinary housekeeping relevance is separate from the authored sharp-object target."
+    }
+  ],
+  "transferOf": null,
+  "zones": [
+    {
+      "labelNeutral": "left table area",
+      "observableFacts": [
+        "A low classroom table stands on the left.",
+        "The floor beneath the table is clear."
+      ],
+      "order": 1,
+      "polygon": [
+        {
+          "x": 0.079167,
+          "y": 0.11875
+        },
+        {
+          "x": 0.379167,
+          "y": 0.11875
+        },
+        {
+          "x": 0.4,
+          "y": 0.9625
+        },
+        {
+          "x": 0.029167,
+          "y": 0.9625
+        },
+        {
+          "x": 0.083333,
+          "y": 0.63125
+        }
+      ],
+      "zoneId": "z1"
+    },
+    {
+      "labelNeutral": "center foreground floor area",
+      "observableFacts": [
+        "Several angular translucent-looking fragments and part of a broken curved rim lie on the floor.",
+        "The fragments occupy multiple adjacent tiles."
+      ],
+      "order": 2,
+      "polygon": [
+        {
+          "x": 0.379167,
+          "y": 0.11875
+        },
+        {
+          "x": 0.658333,
+          "y": 0.11875
+        },
+        {
+          "x": 0.679167,
+          "y": 0.9625
+        },
+        {
+          "x": 0.4,
+          "y": 0.9625
+        }
+      ],
+      "zoneId": "z2"
+    },
+    {
+      "labelNeutral": "right cabinet and floor area",
+      "observableFacts": [
+        "A closed storage cabinet stands against the wall.",
+        "A crumpled paper ball lies on the floor near an upright waste bin."
+      ],
+      "order": 3,
+      "polygon": [
+        {
+          "x": 0.658333,
+          "y": 0.11875
+        },
+        {
+          "x": 0.916667,
+          "y": 0.11875
+        },
+        {
+          "x": 0.970833,
+          "y": 0.9625
+        },
+        {
+          "x": 0.679167,
+          "y": 0.9625
+        }
+      ],
+      "zoneId": "z3"
+    }
+  ]
+}
