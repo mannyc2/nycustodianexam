@@ -1,0 +1,189 @@
+{
+  "generated": "2026-08-22",
+  "rows": [
+    {
+      "probe": "p02-effect.ns",
+      "file": "assets/p02-effect.ns-BFwHUkgA.js",
+      "raw_bytes": 33774,
+      "gzip9_bytes": 11829,
+      "brotli11_bytes": 10847,
+      "sha256": "4c3959621c7ee44b"
+    },
+    {
+      "probe": "p02-effect.sub",
+      "file": "assets/p02-effect.sub-BqTlpZoR.js",
+      "raw_bytes": 33778,
+      "gzip9_bytes": 11831,
+      "brotli11_bytes": 10877,
+      "sha256": "33b9aebd754d8cdd"
+    },
+    {
+      "probe": "p03-schema.ns",
+      "file": "assets/p03-schema.ns-DCpl_o6w.js",
+      "raw_bytes": 69158,
+      "gzip9_bytes": 22991,
+      "brotli11_bytes": 20955,
+      "sha256": "067e366d1bd7065d"
+    },
+    {
+      "probe": "p03-schema.sub",
+      "file": "assets/p03-schema.sub-BWnPTRU7.js",
+      "raw_bytes": 69158,
+      "gzip9_bytes": 23024,
+      "brotli11_bytes": 20956,
+      "sha256": "e423d4f88c57cc8a"
+    },
+    {
+      "probe": "p04-service-layer.ns",
+      "file": "assets/p04-service-layer.ns-QdQdIv7l.js",
+      "raw_bytes": 31478,
+      "gzip9_bytes": 11149,
+      "brotli11_bytes": 10266,
+      "sha256": "235d3b40fd8864a9"
+    },
+    {
+      "probe": "p04-service-layer.sub",
+      "file": "assets/p04-service-layer.sub-CtWvfaVt.js",
+      "raw_bytes": 31477,
+      "gzip9_bytes": 11133,
+      "brotli11_bytes": 10287,
+      "sha256": "ac4a67e4a577633a"
+    },
+    {
+      "probe": "p05-indexeddb.ns",
+      "file": "assets/p05-indexeddb.ns-DUSYJlin.js",
+      "raw_bytes": 106650,
+      "gzip9_bytes": 33401,
+      "brotli11_bytes": 30197,
+      "sha256": "cb74fabc8213784d"
+    },
+    {
+      "probe": "p05-indexeddb.sub",
+      "file": "assets/p05-indexeddb.sub-CEFPHe-G.js",
+      "raw_bytes": 106650,
+      "gzip9_bytes": 33468,
+      "brotli11_bytes": 30179,
+      "sha256": "ee798614b434b78c"
+    },
+    {
+      "probe": "p06-stream.ns",
+      "file": "assets/p06-stream.ns-B8V5bkrj.js",
+      "raw_bytes": 28642,
+      "gzip9_bytes": 10031,
+      "brotli11_bytes": 9204,
+      "sha256": "e301a6b314d75a10"
+    },
+    {
+      "probe": "p06-stream.sub",
+      "file": "assets/p06-stream.sub-BEzYFWe9.js",
+      "raw_bytes": 28648,
+      "gzip9_bytes": 10028,
+      "brotli11_bytes": 9198,
+      "sha256": "5f56f16474569a41"
+    },
+    {
+      "probe": "p07-atom",
+      "file": "assets/p07-atom-C9WQ8C6b.js",
+      "raw_bytes": 73334,
+      "gzip9_bytes": 24144,
+      "brotli11_bytes": 22021,
+      "sha256": "89d5139ca929c313"
+    },
+    {
+      "probe": "p08-browser-http.ns",
+      "file": "assets/p08-browser-http.ns-A9qC7yE6.js",
+      "raw_bytes": 99671,
+      "gzip9_bytes": 32798,
+      "brotli11_bytes": 29579,
+      "sha256": "435894d775ddd79e"
+    },
+    {
+      "probe": "p08-browser-http.sub",
+      "file": "assets/p08-browser-http.sub-BPUkfOds.js",
+      "raw_bytes": 99671,
+      "gzip9_bytes": 32808,
+      "brotli11_bytes": 29601,
+      "sha256": "f8b147bf2e4f94bb"
+    },
+    {
+      "probe": "p09-worker-http",
+      "file": "assets/p09-worker-http-DHMJZXYv.js",
+      "raw_bytes": 133514,
+      "gzip9_bytes": 44425,
+      "brotli11_bytes": 39799,
+      "sha256": "4922aef99e64cee2"
+    }
+  ],
+  "totals": {
+    "p02-effect.ns": {
+      "raw": 33774,
+      "gzip9": 11829,
+      "brotli11": 10847
+    },
+    "p02-effect.sub": {
+      "raw": 33778,
+      "gzip9": 11831,
+      "brotli11": 10877
+    },
+    "p03-schema.ns": {
+      "raw": 69158,
+      "gzip9": 22991,
+      "brotli11": 20955
+    },
+    "p03-schema.sub": {
+      "raw": 69158,
+      "gzip9": 23024,
+      "brotli11": 20956
+    },
+    "p04-service-layer.ns": {
+      "raw": 31478,
+      "gzip9": 11149,
+      "brotli11": 10266
+    },
+    "p04-service-layer.sub": {
+      "raw": 31477,
+      "gzip9": 11133,
+      "brotli11": 10287
+    },
+    "p05-indexeddb.ns": {
+      "raw": 106650,
+      "gzip9": 33401,
+      "brotli11": 30197
+    },
+    "p05-indexeddb.sub": {
+      "raw": 106650,
+      "gzip9": 33468,
+      "brotli11": 30179
+    },
+    "p06-stream.ns": {
+      "raw": 28642,
+      "gzip9": 10031,
+      "brotli11": 9204
+    },
+    "p06-stream.sub": {
+      "raw": 28648,
+      "gzip9": 10028,
+      "brotli11": 9198
+    },
+    "p07-atom": {
+      "raw": 73334,
+      "gzip9": 24144,
+      "brotli11": 22021
+    },
+    "p08-browser-http.ns": {
+      "raw": 99671,
+      "gzip9": 32798,
+      "brotli11": 29579
+    },
+    "p08-browser-http.sub": {
+      "raw": 99671,
+      "gzip9": 32808,
+      "brotli11": 29601
+    },
+    "p09-worker-http": {
+      "raw": 133514,
+      "gzip9": 44425,
+      "brotli11": 39799
+    }
+  }
+}

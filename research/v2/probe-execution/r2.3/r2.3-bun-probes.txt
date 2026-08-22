@@ -1,0 +1,36 @@
+== probe:bun ==
+$ bun run probes/bun-runtime.ts
+[11:47:39.418] INFO (#2): Bun runtime probe {
+  file: "/tmp/r23-nPwF6T/probe.txt",
+  value: "bun-runtime-ok",
+}
+exit: 0
+== probe:layer-reuse ==
+$ bun run probes/layer-reuse.ts
+exit: 0
+== probe:web-handler ==
+$ bun run probes/http-web-handler.ts
+exit: 0
+27 |   Effect.succeed(web.handler),
+28 |   (handler) => Effect.promise(async () => {
+29 |     const first = await handler(new Request("https://worker.test/reuse"))
+30 |     const second = await handler(new Request("https://worker.test/reuse"))
+31 |     return {
+32 |       first: await first.json(),
+                              ^
+SyntaxError: Unexpected end of JSON input
+      at <anonymous> (/tmp/claude-0/-home-user-nycustodianexam/fc86e7f7-0861-55de-b51c-0a66b4a0477f/scratchpad/probes/effect-platform-runtimes/fixtures/runtime-matrix/probes/layer-reuse.ts:32:26)
+
+Bun v1.4.0 (Linux x64)
+== build:browser ==
+$ bun build browser/probe.js --target=browser --outdir=dist/browser --minify --metafile=raw-results/browser-metafile.json
+Bundled 1 module in 3ms
+
+  probe.js  5.85 KB  (entry point)
+
+== build:workerd ==
+$ bun build workerd/worker.ts --target=browser --outdir=dist/workerd --minify --metafile=raw-results/workerd-metafile.json
+Bundled 1 module in 3ms
+
+  worker.js  1.0 KB  (entry point)
+

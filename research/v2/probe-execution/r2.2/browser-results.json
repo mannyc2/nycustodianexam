@@ -1,0 +1,41 @@
+{
+  "timestamp_utc": "2026-08-22T11:46:59Z",
+  "base": "http://127.0.0.1:36811",
+  "chromium_executable": "/opt/pw-browsers/chromium-1194/chrome-linux/chrome",
+  "results": [
+    {
+      "renderer": "direct",
+      "failure_no_reveal": true,
+      "retry_same_attempt_id": true,
+      "durable_reveal": true,
+      "focus_outcome": true,
+      "live_region": true,
+      "flag": true,
+      "next": true,
+      "restoration": true,
+      "disposal": true,
+      "attempt_id": "1c83239a-8699-453d-9b88-24a69619cac8"
+    },
+    {
+      "renderer": "direct",
+      "unknown_outcome_reconciled": true
+    },
+    {
+      "renderer": "template",
+      "failure_no_reveal": true,
+      "retry_same_attempt_id": true,
+      "durable_reveal": true,
+      "focus_outcome": true,
+      "live_region": true,
+      "flag": true,
+      "next": true,
+      "restoration": true,
+      "disposal": true,
+      "attempt_id": "01372c06-1979-4c9f-846b-7f60648e0e2c"
+    },
+    {
+      "renderer": "template",
+      "unknown_outcome_reconciled": true
+    }
+  ]
+}

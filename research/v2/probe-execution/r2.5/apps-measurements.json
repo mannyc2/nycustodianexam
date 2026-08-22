@@ -1,0 +1,91 @@
+{
+  "generated": "2026-08-22",
+  "rows": [
+    {
+      "probe": "question-player-direct-dom",
+      "file": "assets/index-CLpm-tLG.js",
+      "raw_bytes": 75377,
+      "gzip9_bytes": 25510,
+      "brotli11_bytes": 23127,
+      "sha256": "e5d862c702dd466e"
+    },
+    {
+      "probe": "question-player-direct-dom",
+      "file": "index.html",
+      "raw_bytes": 224,
+      "gzip9_bytes": 187,
+      "brotli11_bytes": 111,
+      "sha256": "f4ae5f0277103d72"
+    },
+    {
+      "probe": "question-player-renderer-candidate",
+      "file": "assets/index-CsCkoFm-.js",
+      "raw_bytes": 88334,
+      "gzip9_bytes": 30651,
+      "brotli11_bytes": 27774,
+      "sha256": "a43a73a3e6b57e8d"
+    },
+    {
+      "probe": "question-player-renderer-candidate",
+      "file": "index.html",
+      "raw_bytes": 232,
+      "gzip9_bytes": 189,
+      "brotli11_bytes": 110,
+      "sha256": "114f82c17fce9c4d"
+    },
+    {
+      "probe": "service-worker",
+      "file": "effect-sw-QdKXeXgz.js",
+      "raw_bytes": 38286,
+      "gzip9_bytes": 13378,
+      "brotli11_bytes": 12294,
+      "sha256": "9c0faf6b10e8f6ee"
+    },
+    {
+      "probe": "service-worker",
+      "file": "native-sw-FxLAy3OK.js",
+      "raw_bytes": 379,
+      "gzip9_bytes": 242,
+      "brotli11_bytes": 214,
+      "sha256": "c9b3af28fa23a5dd"
+    },
+    {
+      "probe": "static-reference",
+      "file": "assets/index-DtZpGfxl.js",
+      "raw_bytes": 885,
+      "gzip9_bytes": 485,
+      "brotli11_bytes": 402,
+      "sha256": "da25491bfb96be9b"
+    },
+    {
+      "probe": "static-reference",
+      "file": "index.html",
+      "raw_bytes": 547,
+      "gzip9_bytes": 347,
+      "brotli11_bytes": 231,
+      "sha256": "bcba932910e13de8"
+    }
+  ],
+  "totals": {
+    "question-player-direct-dom": {
+      "raw": 75377,
+      "gzip9": 25510,
+      "brotli11": 23127
+    },
+    "question-player-renderer-candidate": {
+      "raw": 88334,
+      "gzip9": 30651,
+      "brotli11": 27774
+    },
+    "service-worker": {
+      "raw": 38665,
+      "gzip9": 13620,
+      "brotli11": 12508
+    },
+    "static-reference": {
+      "raw": 885,
+      "gzip9": 485,
+      "brotli11": 402
+    }
+  }
+}

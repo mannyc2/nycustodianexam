@@ -1,0 +1,48 @@
+== test:model ==
+# Subtest: disposed state ignores later UI commands
+ok 3 - disposed state ignores later UI commands
+  ---
+  duration_ms: 0.221153
+  type: 'test'
+  ...
+1..3
+# tests 3
+# suites 0
+# pass 3
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 86.65376
+exit: 0
+== build ==
+$ vite build
+vite v8.2.1 building client environment for production...
+transforming...
+✓ 21 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/.vite/manifest.json                0.92 kB │ gzip: 0.28 kB
+dist/lit.html                           1.76 kB │ gzip: 0.76 kB
+dist/template.html                      1.83 kB │ gzip: 0.78 kB
+dist/direct.html                        2.07 kB │ gzip: 0.86 kB
+dist/assets/bootstrap-DmetCxRR.css      0.76 kB │ gzip: 0.39 kB
+dist/assets/model-C5G7sulI.js           2.18 kB │ gzip: 0.77 kB
+dist/assets/template-view-BgO6M2bC.js   3.00 kB │ gzip: 1.22 kB
+dist/assets/bootstrap-_JoFRf1l.js      10.55 kB │ gzip: 4.02 kB
+dist/assets/lit-view-xr0GjCG3.js       11.89 kB │ gzip: 4.88 kB
+
+✓ built in 169ms
+== measure:vite ==
+$ node scripts/measure-vite.mjs
+file:///tmp/claude-0/-home-user-nycustodianexam/fc86e7f7-0861-55de-b51c-0a66b4a0477f/scratchpad/probes/effect-ui-reactivity/fixtures/question-player/scripts/measure-vite.mjs:19
+    if (!item) throw new Error(`Missing Vite manifest entry: ${key}`)
+                     ^
+
+Error: Missing Vite manifest entry: direct.html
+    at visit (file:///tmp/claude-0/-home-user-nycustodianexam/fc86e7f7-0861-55de-b51c-0a66b4a0477f/scratchpad/probes/effect-ui-reactivity/fixtures/question-player/scripts/measure-vite.mjs:19:22)
+    at collect (file:///tmp/claude-0/-home-user-nycustodianexam/fc86e7f7-0861-55de-b51c-0a66b4a0477f/scratchpad/probes/effect-ui-reactivity/fixtures/question-player/scripts/measure-vite.mjs:26:3)
+    at file:///tmp/claude-0/-home-user-nycustodianexam/fc86e7f7-0861-55de-b51c-0a66b4a0477f/scratchpad/probes/effect-ui-reactivity/fixtures/question-player/scripts/measure-vite.mjs:36:17
+
+Node.js v22.22.2
+error: script "measure:vite" exited with code 1

@@ -1,0 +1,27 @@
+== bun version ==
+1.4.0
+== build ==
+$ bun build ./src/bun-main.ts --target=bun --outdir=./dist
+Bundled 108 modules in 34ms
+
+  bun-main.js  0.62 MB  (entry point)
+
+build exit: 0
+== test ==
+bun test v1.4.0 (34cbb9a40)
+
+ 1 pass
+ 0 fail
+ 1 expect() calls
+Ran 1 test across 1 file. [116.00ms]
+test exit: 0
+== probe ==
+$ bun run ./src/bun-main.ts
+[11:42:26.046] INFO (#2): committed attempt {
+  attemptId: "attempt-1",
+  sessionId: "session-1",
+  questionId: "question-1",
+  selectedOptionId: "option-b",
+  committedAt: 0,
+}
+probe exit: 0

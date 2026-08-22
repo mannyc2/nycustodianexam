@@ -1,0 +1,45 @@
+{
+  "methodology": "Vite production manifest closure; raw and gzip bytes, no source maps.",
+  "vite": "8.2.1",
+  "arms": {
+    "direct": {
+      "files": [
+        "assets/bootstrap-DmetCxRR.css",
+        "assets/bootstrap-_JoFRf1l.js",
+        "assets/model-C5G7sulI.js"
+      ],
+      "bytes": 13503,
+      "gzip_bytes": 4958
+    },
+    "template": {
+      "files": [
+        "assets/bootstrap-DmetCxRR.css",
+        "assets/bootstrap-_JoFRf1l.js",
+        "assets/model-C5G7sulI.js",
+        "assets/template-view-BgO6M2bC.js"
+      ],
+      "bytes": 16509,
+      "gzip_bytes": 5748
+    },
+    "lit": {
+      "files": [
+        "assets/bootstrap-DmetCxRR.css",
+        "assets/bootstrap-_JoFRf1l.js",
+        "assets/lit-view-xr0GjCG3.js",
+        "assets/model-C5G7sulI.js"
+      ],
+      "bytes": 25395,
+      "gzip_bytes": 9321
+    }
+  },
+  "deltas": {
+    "template_minus_direct": {
+      "bytes": 3006,
+      "gzip_bytes": 790
+    },
+    "lit_minus_direct": {
+      "bytes": 11892,
+      "gzip_bytes": 4363
+    }
+  }
+}

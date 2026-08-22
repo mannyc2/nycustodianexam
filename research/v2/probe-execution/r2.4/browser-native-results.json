@@ -1,0 +1,133 @@
+{
+  "cdp": {
+    "browser": "Chrome/141.0.7390.37",
+    "protocolVersion": "1.3",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36"
+  },
+  "single": {
+    "environment": {
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
+      "locks": true,
+      "broadcastChannel": true,
+      "indexedDB": true,
+      "storageManager": true
+    },
+    "openMigrate": {
+      "v1Stores": [
+        "attemptEvents",
+        "installations",
+        "meta",
+        "packs",
+        "progressViews",
+        "sessions"
+      ],
+      "v2Stores": [
+        "attemptEvents",
+        "installations",
+        "meta",
+        "packs",
+        "progressViews",
+        "sessions"
+      ],
+      "v2Indexes": [
+        "bySession"
+      ],
+      "pass": true
+    },
+    "attemptTransaction": {
+      "beforeFailure": "InjectedBeforeTransaction",
+      "beforeCount": 0,
+      "afterBeforeCount": 0,
+      "afterWriteError": "AbortError:Aborted",
+      "rolledBack": true,
+      "success": {
+        "status": "committed"
+      },
+      "persisted": true,
+      "pass": true
+    },
+    "idempotentRetry": {
+      "sameRetry": {
+        "status": "alreadyCommitted"
+      },
+      "conflict": "AttemptIdConflict",
+      "eventCount": 1,
+      "pass": true
+    },
+    "packActivation": {
+      "pointerBefore": "v1",
+      "pointerAfter": "v2",
+      "v1": {
+        "packId": "core",
+        "version": "v1",
+        "state": "rollback-retained",
+        "checksum": "h1"
+      },
+      "v2": {
+        "packId": "core",
+        "version": "v2",
+        "state": "active",
+        "checksum": "h2"
+      },
+      "pass": true
+    },
+    "sessionPinning": {
+      "pinnedVersion": "v1",
+      "newSessionVersion": "v2",
+      "pass": true
+    },
+    "errorTranslation": {
+      "constraint": {
+        "native": "ConstraintError",
+        "mapped": "StorageConstraintViolation"
+      },
+      "dataClone": {
+        "native": "DataCloneError",
+        "mapped": "StorageRecordNotCloneable"
+      },
+      "quota": {
+        "native": "QuotaExceededError",
+        "mapped": "StorageQuotaExceeded",
+        "synthetic": true
+      },
+      "storageEstimate": {
+        "quota": 162331904409,
+        "usage": 20094,
+        "usageDetails": {
+          "indexedDB": 20094
+        }
+      },
+      "persisted": false,
+      "pass": true
+    }
+  },
+  "twoTabDuplicate": {
+    "results": [
+      {
+        "status": "committed"
+      },
+      {
+        "status": "alreadyCommitted"
+      }
+    ],
+    "eventCount": 1,
+    "pass": true
+  },
+  "broadcastChannel": {
+    "received": {
+      "kind": "progressInvalidated",
+      "generation": 2
+    },
+    "pass": true
+  },
+  "webLocks": {
+    "first": {
+      "start": 1787399774412.2,
+      "end": 1787399774939.9
+    },
+    "second": {
+      "acquired": 1787399774941.0999
+    },
+    "exclusive": true
+  }
+}

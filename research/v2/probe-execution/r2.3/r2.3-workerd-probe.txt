@@ -1,0 +1,6 @@
+workerd runtime probe 2026-08-22T11:54:48Z
+workerd binary: workerd 2026-08-22 (npm workerd@latest)
+config: modules worker (embed dist/worker.js), compatibilityDate 2026-08-01, text binding BUILD_ID=r23-workerd-probe, http socket 127.0.0.1:8787
+POST /api/corrections -> {"accepted":true,"correctionId":"c-1","buildId":"r23-workerd-probe"} (repeated request also accepted)
+workerdRuntimeProof: true (real workerd, not Node emulation)
+not yet covered: Request.signal client-disconnect (Q-08), cold/warm benchmarks (Q-09), Effect-layer worker variant

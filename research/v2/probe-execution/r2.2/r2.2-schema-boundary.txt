@@ -1,0 +1,4 @@
+VALID decoded: {"id":"q1","version":"2026-08-22","prompt":"Which tool loosens a threaded pipe fitting?","options":[{"id":"a","label":"Pipe wrench"},{"id":"b","label":"Cup plunger"}]}
+INVALID exit tag: Failure
+INVALID cause: Cause([Fail(SchemaError(Expected string
+  at ["version"]))])

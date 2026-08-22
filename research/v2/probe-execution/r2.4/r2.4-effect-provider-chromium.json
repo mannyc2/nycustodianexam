@@ -1,0 +1,7 @@
+{
+  "probe": "R2.3 probes/browser-indexeddb.ts bundled for browser (bun build --target=browser) at effect@4.0.0-rc.111 / @effect/platform-browser@4.0.0-rc.111",
+  "browser": "Chromium 141.0.7390.37 (headless, localhost origin)",
+  "result": { "status": "ok", "rows": [{ "id": "attempt-001", "selected": "B", "committed": true }] },
+  "meaning": "IndexedDbDatabase/IndexedDbTable/IndexedDbVersion schema-typed open+migration, withTransaction readwrite insert, and select round-trip all execute in a real browser.",
+  "date": "2026-08-22"
+}

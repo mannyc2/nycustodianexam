@@ -38,6 +38,13 @@ controlling for facts and `product/FEATURE_SPEC.md` for product behavior.
 | R2.10 tool geometry audit | #17 | Complete audit; four tools flagged `evidence-blocked` |
 | R2.90 architecture synthesis | — | Not launched; gated on R2.1–R2.8 complete-or-explicitly-missing |
 
+> **Update (2026-08-22, later the same day):** the probe-execution pass
+> described in §2 step 4 has been run — see `research/v2/probe-execution/`
+> (FINDINGS.md maps every blocked question to its observed answer). The
+> systemic blocker below is materially closed for R2.1–R2.5; decision D3 is
+> resolved (a network-enabled Bun/Chromium/workerd environment exists and
+> the fixtures pass in it). R2.90 synthesis can now run on measured evidence.
+
 ### The one systemic problem
 
 Every Effect/Bun/browser lane hit the same wall: the research environments had no
