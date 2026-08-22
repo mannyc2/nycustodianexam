@@ -1,6 +1,8 @@
-# Temporary probe download links
+# Probe artifact coordinates
 
-This file exists only to make the exact public probe artifact auditable while constructing the private R2.7 fixture. Delete it before the final manifest.
+The temporary download-link file is retained only as provenance for the Bun 1.4.0 artifact lookup performed during the lane. No download or runtime observation from this file is promoted to executable proof.
 
-- [Bun 1.4.0 Linux x64 official release archive](https://github.com/oven-sh/bun/releases/download/bun-v1.4.0/bun-linux-x64.zip)
-- [Bun 1.4.0 Linux x64 SourceForge mirror](https://master.dl.sourceforge.net/project/bun.mirror/bun-v1.4.0/bun-linux-x64.zip)
+- Bun release: `bun-v1.4.0`
+- Bun tag commit: `34cbb9a40b4bd1bd767d134a7065e66c2432a676`
+
+The authoritative lane limitations are recorded in `raw-results/PROBE-STATUS.md`.
