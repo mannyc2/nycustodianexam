@@ -1,0 +1,9 @@
+test_type,runner,reason,notes
+pure deterministic TypeScript,Bun test,Fast native runner with no browser or Effect-specific integration requirement,Keep deterministic policies portable
+Bun compiler/tooling,Bun test,Matches Bun runtime APIs and filesystem/process fixture needs,Use temporary directories and exact toolchain pin
+Effect service and Layer tests,Vitest plus @effect/vitest,Official Effect-aware integration for services Layers scopes clock/random and property tests,Pin exact Effect cohort
+IndexedDB and browser persistence,Playwright real browsers,Transaction lifetime migration quota and browser semantics require real engines,fake-indexeddb only secondary
+Service Worker lifecycle,Playwright real browsers,install activate fetch respondWith waitUntil are host semantics,Test restart and offline behavior
+Accessibility browser behavior,Playwright plus accessibility tooling,Needs actual DOM focus names live regions and keyboard behavior,Manual assistive-technology checks remain separate
+Cloudflare Worker,Cloudflare workerd/Vitest tooling when Worker exists,Must execute in workerd semantics rather than Bun or Node,Do not create until a server capability exists
+bundle and static output,build scripts plus Vite artifact inspection,Verification concerns emitted artifacts rather than a unit-test runtime,Keep numeric gates provisional pending R2.5
