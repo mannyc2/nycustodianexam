@@ -44,6 +44,15 @@ controlling for facts and `product/FEATURE_SPEC.md` for product behavior.
 > systemic blocker below is materially closed for R2.1–R2.5; decision D3 is
 > resolved (a network-enabled Bun/Chromium/workerd environment exists and
 > the fixtures pass in it). R2.90 synthesis can now run on measured evidence.
+>
+> **Update 2 (same day): the merge train has landed.** Lane PRs #11–#17 were
+> merged into `agent/chat-corpus-reconciliation`, and PR #1 was merged into
+> `main` (`de9f9b4`, 184 commits, 356 files). §2 steps 1–2 are done for the
+> finished lanes; decision D1 is resolved. Main now carries the full corpus,
+> the v2 launch contract, and lanes R2.1–R2.5, R2.9, R2.10. Only PRs #18
+> (R2.7) and #19 (R2.8) remain open, still based on the integration branch;
+> when they finish (or are descoped per D2), merge them there and open a
+> short follow-up PR from the integration branch to main.
 
 ### The one systemic problem
 
