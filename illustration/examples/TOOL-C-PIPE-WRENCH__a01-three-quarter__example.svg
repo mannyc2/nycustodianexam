@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-hidden="true" focusable="false">
+  <style>
+  .outer { fill: #ffffff; stroke: #111111; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+  .outer-none { fill: none; stroke: #111111; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+  .struct { fill: none; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .struct-fill { fill: #ffffff; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .fine { fill: none; stroke: #111111; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .light { fill: #dddddd; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .mid { fill: #bcbcbc; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .ink { fill: #111111; stroke: none; }
+</style>
+  
+<g transform="rotate(-24 512 512)">
+  <!-- tapered handle -->
+  <path class="outer" d="M132 522 Q112 548 132 580 L642 580 Q680 578 713 551 L748 518 L710 486 Q676 522 637 522 Z"/>
+  <path class="struct" d="M180 548 L630 548"/>
+  <path class="fine" d="M214 535 L196 565 M252 535 L234 565 M290 535 L272 565"/>
+
+  <!-- fixed heel jaw -->
+  <path class="outer" d="M642 522 L700 472 L744 472 L744 493 L848 493 L850 544 L760 544 L710 584 L642 580 Z"/>
+  <!-- lower serrations -->
+  <path class="struct" d="M754 493 L765 481 L776 493 L787 481 L798 493 L809 481 L820 493 L831 481 L842 493"/>
+
+  <!-- adjustable hook jaw, deliberately offset -->
+  <path class="outer" d="M700 472 L716 420 Q754 372 821 360 Q849 355 873 366 L862 419 Q835 415 810 426 L770 447 L748 493 L716 501 Z"/>
+  <!-- opposing upper serrations -->
+  <path class="struct" d="M773 446 L784 456 L795 439 L806 448 L817 431 L828 440 L840 421 L851 431"/>
+
+  <!-- adjustment shank and nut -->
+  <path class="struct-fill" d="M718 463 L756 463 L759 527 L716 527 Z"/>
+  <ellipse class="light" cx="738" cy="525" rx="32" ry="22"/>
+  <path class="fine" d="M718 514 L727 535 M731 507 L740 541 M744 507 L753 538 M757 512 L763 530"/>
+  <path class="fine" d="M729 439 L749 439 M727 450 L751 450"/>
+</g>
+
+</svg>

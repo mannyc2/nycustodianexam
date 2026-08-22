@@ -1,0 +1,18 @@
+{
+  "status": "BLOCKED",
+  "browser": "Chromium 144.0.7559.96",
+  "blocker": "Managed browser URL policy prevents localhost and file probe pages before fixture JS executes",
+  "required_probes": {
+    "open_migrate": "NOT_RUN",
+    "multi_store_attempt_transaction": "NOT_RUN",
+    "injected_abort_before_after_writes": "NOT_RUN",
+    "idempotent_retry": "NOT_RUN",
+    "two_tab_duplicate_commit": "NOT_RUN",
+    "staged_pack_atomic_activation": "NOT_RUN",
+    "active_session_version_pin": "NOT_RUN",
+    "quota_error_translation": "PARTIAL_SOURCE_ONLY; actual quota exhaustion NOT_RUN",
+    "effect_vs_alternative_runtime": "NOT_RUN"
+  },
+  "source_fixture": "fixtures/browser-native/probe.js",
+  "controller": "fixtures/browser-native/cdp.mjs"
+}

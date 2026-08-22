@@ -1,0 +1,17 @@
+R2.5 native bootstrap evidence
+UTC date: 2026-08-21
+
+1. Bun 1.4.0 release artifact route
+- Current release coordinate was verified from Bun's official site/release metadata.
+- The available execution-environment file transport refused the Bun release archive because its content type was application/zip.
+- No Bun executable was materialized.
+
+2. Rolldown 1.2.5 native binding route
+- Vite 8.2.2 depends on rolldown ~1.2.4; current compatible Rolldown 1.2.5 was pinned for the fixture.
+- The Linux x64 GNU native binding asset was located.
+- A 19,910,424-byte binding response was reached, but the available file transport rejected the derived application/x-sharedlib payload.
+- No native Rolldown binding was materialized.
+
+3. Consequence
+- Substituting a WASM/browser Rolldown, a different Vite generation, esbuild, or first-pass v3 outputs would change the required toolchain and invalidate the lane.
+- Therefore no Vite build, bundle bytes, compression output, route manifest, minifier comparison, clean-build hash comparison, or Bun lockfile is claimed.

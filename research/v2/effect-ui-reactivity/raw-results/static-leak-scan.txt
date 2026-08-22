@@ -1,0 +1,3 @@
+$ grep for answer-key and explanation literals under fixtures/question-player/public
+PASS: no answer-key or explanation literal found in served public files
+Note: result.correct and post-commit rendering code are expected; the secret key and rationale payload are absent.

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" role="img" aria-hidden="true" focusable="false">
+<style>
+  .outer { fill: #ffffff; stroke: #111111; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+  .struct { fill: none; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .fine { fill: none; stroke: #111111; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .gray15 { fill: #d9d9d9; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .gray30 { fill: #b3b3b3; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .ink { fill: #111111; stroke: none; }
+</style>
+<g>
+  <path class="struct" d="M 90 120 L 934 120 L 934 835 L 90 835 Z"/>
+  <path class="struct" d="M 90 610 L 934 610"/>
+  <path class="fine" d="M 90 610 L 330 835 M 258 610 L 430 835 M 426 610 L 530 835 M 594 610 L 630 835 M 762 610 L 730 835 M 930 610 L 830 835"/>
+  <path class="fine" d="M 90 674 L 934 674 M 90 749 L 934 749"/>
+  <path class="outer" d="M 132 231 L 290 231 L 290 610 L 132 610 Z"/>
+  <circle class="outer" cx="263" cy="425" r="8"/>
+  <path class="outer" d="M 742 229 L 894 229 L 894 610 L 742 610 Z"/>
+  <circle class="outer" cx="768" cy="425" r="8"/>
+  <path class="outer" d="M 423 343 L 604 343 L 620 406 L 604 467 L 423 467 L 407 406 Z"/>
+  <path class="gray15" d="M 445 365 Q 514 339 582 365 L 571 405 Q 514 386 456 405 Z"/>
+  <path class="struct" d="M 501 343 L 501 306 L 548 306 L 548 343"/>
+  <path class="struct" d="M 524 306 Q 546 279 567 302"/>
+  <path class="fine" d="M 568 305 Q 580 325 570 347"/>
+  <path class="fine" d="M 571 365 Q 583 383 570 402"/>
+  <path class="outer" d="M 454 467 L 573 467 L 573 610 L 454 610 Z"/>
+  <path class="gray15" d="M 391 670 Q 430 632 486 651 Q 521 620 563 647 Q 617 631 659 673 Q 628 704 582 704 Q 536 729 490 705 Q 439 719 391 670 Z"/>
+  <path class="fine" d="M 443 672 Q 478 660 511 675 M 545 677 Q 580 662 615 678"/>
+  <path class="struct" d="M 91 365 L 132 365 L 132 545 L 91 545"/>
+  <path class="outer" d="M 97 466 L 126 466 L 126 542 L 97 542 Z"/>
+  <path class="fine" d="M 98 493 L 126 493"/>
+  <path class="struct" d="M 850 165 L 850 202 Q 850 217 835 217"/>
+  <path class="struct" d="M 820 213 Q 792 220 801 245 Q 809 270 839 258 Q 867 247 858 223 Q 850 202 820 213 Z"/>
+  <path class="struct" d="M 811 246 Q 789 258 799 278 Q 808 299 832 289 Q 854 278 846 258"/>
+  <path class="fine" d="M 799 279 L 784 309"/>
+  <path class="outer" d="M 774 304 L 793 313 L 786 333 L 766 324 Z"/>
+</g>
+</svg>

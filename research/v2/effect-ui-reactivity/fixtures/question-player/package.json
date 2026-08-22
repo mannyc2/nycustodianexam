@@ -1,0 +1,30 @@
+{
+  "name": "@research/r2-effect-ui-question-player",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:model": "node --test tests/model.test.mjs",
+    "test:browser:native": "python tests/browser_probe.py",
+    "test:browser:policy-safe": "python tests/browser_inline_probe.py",
+    "measure:source": "node scripts/measure.mjs",
+    "build": "vite build",
+    "measure:vite": "node scripts/measure-vite.mjs",
+    "probe:available": "bash scripts/run-available-probes.sh"
+  },
+  "dependencies": {
+    "effect": "4.0.0-rc.111",
+    "lit-html": "3.3.3"
+  },
+  "devDependencies": {
+    "@effect/atom-react": "4.0.0-rc.111",
+    "@effect/atom-solid": "4.0.0-rc.111",
+    "@effect/atom-vue": "4.0.0-rc.111",
+    "preact": "10.29.8",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "scheduler": "0.27.0",
+    "solid-js": "1.9.15",
+    "vite": "8.2.1",
+    "vue": "3.5.41"
+  }
+}

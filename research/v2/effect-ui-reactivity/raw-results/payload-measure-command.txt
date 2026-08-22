@@ -1,0 +1,63 @@
+{
+  "methodology": "Unbundled local source-closure bytes and gzip. The lit-html package is excluded, so this is not a production bundle comparison.",
+  "arms": {
+    "direct": {
+      "files": [
+        "js/bootstrap.js",
+        "js/controller.js",
+        "js/model.js",
+        "js/persistence.js",
+        "js/grade-client.js",
+        "js/question.js",
+        "js/fixture-decoder.js",
+        "styles.css",
+        "js/direct-view.js",
+        "direct.html"
+      ],
+      "bytes": 20620,
+      "gzip_bytes": 5553
+    },
+    "template": {
+      "files": [
+        "js/bootstrap.js",
+        "js/controller.js",
+        "js/model.js",
+        "js/persistence.js",
+        "js/grade-client.js",
+        "js/question.js",
+        "js/fixture-decoder.js",
+        "styles.css",
+        "js/template-view.js",
+        "template.html"
+      ],
+      "bytes": 21662,
+      "gzip_bytes": 5864
+    },
+    "lit_source_without_dependency": {
+      "files": [
+        "js/bootstrap.js",
+        "js/controller.js",
+        "js/model.js",
+        "js/persistence.js",
+        "js/grade-client.js",
+        "js/question.js",
+        "js/fixture-decoder.js",
+        "styles.css",
+        "js/lit-view.js",
+        "lit.html"
+      ],
+      "bytes": 21001,
+      "gzip_bytes": 5612
+    }
+  },
+  "deltas": {
+    "template_minus_direct": {
+      "bytes": 1042,
+      "gzip_bytes": 311
+    },
+    "lit_first_party_source_minus_direct": {
+      "bytes": 381,
+      "gzip_bytes": 59
+    }
+  }
+}

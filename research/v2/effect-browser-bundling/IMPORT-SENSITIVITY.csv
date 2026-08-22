@@ -1,0 +1,17 @@
+probe_id,variant,import_shape,raw_bytes,gzip9_bytes,brotli11_bytes,status,notes
+P02,namespace_or_barrel,current public/unstable surface as applicable,,,,BLOCKED,Source emission/install/build blocked.
+P02,narrow_subpath,narrowest current subpath permitted,,,,BLOCKED,Source emission/install/build blocked.
+P03,namespace_or_barrel,current public/unstable surface as applicable,,,,BLOCKED,Source emission/install/build blocked.
+P03,narrow_subpath,narrowest current subpath permitted,,,,BLOCKED,Source emission/install/build blocked.
+P04,namespace_or_barrel,current public/unstable surface as applicable,,,,BLOCKED,Source emission/install/build blocked.
+P04,narrow_subpath,narrowest current subpath permitted,,,,BLOCKED,Source emission/install/build blocked.
+P05,namespace_or_barrel,current public/unstable surface as applicable,,,,BLOCKED,Source emission/install/build blocked.
+P05,narrow_subpath,narrowest current subpath permitted,,,,BLOCKED,Source emission/install/build blocked.
+P06,namespace_or_barrel,current public/unstable surface as applicable,,,,BLOCKED,Source emission/install/build blocked.
+P06,narrow_subpath,narrowest current subpath permitted,,,,BLOCKED,Source emission/install/build blocked.
+P07,namespace_or_barrel,current public/unstable surface as applicable,,,,BLOCKED,Source emission/install/build blocked.
+P07,narrow_subpath,narrowest current subpath permitted,,,,BLOCKED,Source emission/install/build blocked.
+P08,namespace_or_barrel,current public/unstable surface as applicable,,,,BLOCKED,Source emission/install/build blocked.
+P08,narrow_subpath,narrowest current subpath permitted,,,,BLOCKED,Source emission/install/build blocked.
+P09,namespace_or_barrel,current public/unstable surface as applicable,,,,BLOCKED,Source emission/install/build blocked.
+P09,narrow_subpath,narrowest current subpath permitted,,,,BLOCKED,Source emission/install/build blocked.

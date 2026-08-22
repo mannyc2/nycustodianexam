@@ -1,0 +1,59 @@
+{
+  "build_a": {
+    "reimport_bounds_mm": {
+      "x": 10.0,
+      "y": 20.0,
+      "z": 30.0
+    },
+    "step": {
+      "normalized_sha256": "911b522fda55449fd133849756f69920b1e9975bdfc5e8adc3fd51a3958c9b4c",
+      "path": "smoke-a/box.step",
+      "sha256": "4325edae157a927f03b6e186dd86439178008b32ab7c1767fe5ca6e76981f65a",
+      "size_bytes": 15478
+    },
+    "stl": {
+      "finite_vertices": true,
+      "path": "smoke-a/box.stl",
+      "sha256": "fde9b4a2e0e08b28f8cf4f05478ec88d57207116c51ff143fe31f08c4f94a129",
+      "size_bytes": 684,
+      "watertight": true
+    }
+  },
+  "build_b": {
+    "reimport_bounds_mm": {
+      "x": 10.0,
+      "y": 20.0,
+      "z": 30.0
+    },
+    "step": {
+      "normalized_sha256": "911b522fda55449fd133849756f69920b1e9975bdfc5e8adc3fd51a3958c9b4c",
+      "path": "smoke-b/box.step",
+      "sha256": "b7ee7c852dc907a5cdd5eecdcf101d6e95985c1037a3e96ddf473f8a5d72a28d",
+      "size_bytes": 15478
+    },
+    "stl": {
+      "finite_vertices": true,
+      "path": "smoke-b/box.stl",
+      "sha256": "fde9b4a2e0e08b28f8cf4f05478ec88d57207116c51ff143fe31f08c4f94a129",
+      "size_bytes": 684,
+      "watertight": true
+    }
+  },
+  "comparison": {
+    "normalized_step_hash_match": true,
+    "step_hash_match": false,
+    "stl_hash_match": true
+  },
+  "environment": {
+    "architecture": "x86_64",
+    "cadquery": "2.8.0",
+    "cadquery-ocp": "7.9.3.1.1",
+    "numpy": "2.3.5",
+    "ocp_module": "7.9.3.1",
+    "os": "Linux-6.18.35-x86_64-with-glibc2.41",
+    "pillow": "12.3.0",
+    "python": "3.13.5",
+    "trimesh": "4.11.1"
+  },
+  "probe_scope": "generic CadQuery/OCCT environment smoke only; not a POC rebuild"
+}

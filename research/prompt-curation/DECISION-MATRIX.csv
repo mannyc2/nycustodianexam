@@ -1,0 +1,19 @@
+decision_id,decision,status,curated_position,evidence_needed_in_redo
+D01,Effect production major,MAINTAINED_CONSTRAINT,Latest available Effect v4 only; v3 historical/regression evidence,Exact v4 cohort and upstream/registry coordinate at lane start
+D02,Effect coding guidance,CURATED,Read installed package AGENTS completely; follow links; inspect source; default to current gen/fn/Schema/Context.Service/Layer guidance,Implementation fixture at exact selected cohort
+D03,Service granularity,CURATED,Cohesive capabilities; no service-per-function or giant app service,Core architecture lane and vertical slice
+D04,Layer ownership,CURATED,Focused Layers composed at runtime roots; no per-event construction,Core/platform/offline lanes
+D05,Package organization,OPEN_WITH_CONSTRAINTS,Top-level apps/packages; package only for runtime/build/ownership/publication/reuse boundaries,Core topology plus Bun monorepo lane
+D06,Root Effect dependency,CURATED,Exact selected v4 as root dev dependency for AGENTS/source visibility plus explicit runtime dependencies in consuming workspaces,Scaffold/isolated-install probe
+D07,Bun dependency versions,CURATED,Use root Bun catalogs for one exact coordinated Effect cohort,Monorepo probe
+D08,Bun linker,CURATED_BASELINE,Use isolated linker unless a measured tool incompatibility requires an exception,Monorepo tool compatibility probe
+D09,Lockfile/CI,CURATED,Commit bun.lock and use bun ci/frozen install,CI fixture
+D10,Test runner,OPEN,Do not assume bun test replaces @effect/vitest; evaluate responsibilities,Testing lane
+D11,Static-page Effect boundary,RESEARCH_HYPOTHESIS,No Effect on static pages without a real interactive capability,Rerun route-closure measurements on latest v4/Bun/Vite
+D12,Renderer,OPEN,Effect is not renderer; evaluate direct DOM/v4 reactivity/framework bindings/small renderer with full player spike,UI lane
+D13,IndexedDB provider,OPEN,Durable transaction before reveal; provider/API choice requires latest v4 research,Offline lane
+D14,Service worker,OPEN_WITH_BIAS,Keep lifecycle event-scoped and likely small/native; do not assume Effect runtime,Offline/platform/bundling lanes
+D15,Cloudflare Worker,DEFERRED,No Worker app until server capability exists; compare native boundary and v4 HTTP/HttpApi when needed,Platform/Cloudflare lane
+D16,Unstable Effect modules,CURATED_GUARD,Using v4 does not automatically approve unstable APIs; isolate and record reason/migration risk,Every relevant lane
+D17,GitHub research workflow,MAINTAINED_CONSTRAINT,Early branch/receipt/draft PR; raw outputs committed and pushed; stop without GitHub,Every lane
+D18,Durable commit before reveal,MAINTAINED_INVARIANT,Reveal only after authoritative IndexedDB transaction succeeds in normal persistent mode,Offline/UI vertical slice

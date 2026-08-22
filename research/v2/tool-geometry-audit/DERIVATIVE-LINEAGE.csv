@@ -1,0 +1,37 @@
+poc_id,stage,claimed_input,claimed_output,expected_hash_record,source_present,output_present,lineage_verifiable,status,notes
+adjustable-wrench,parameters,source/provenance JSON,CadQuery model inputs,per-file SHA in missing manifests,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+adjustable-wrench,brep,parameters + build_poc.py,OCCT B-rep components,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+adjustable-wrench,step,accepted B-rep,STEP neutral file,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+adjustable-wrench,stl,B-rep/components,review STL + component STL,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+adjustable-wrench,glb,accepted geometry/mesh,neutral-metadata atlas GLB,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+adjustable-wrench,svg,B-rep + camera record + hidden-line settings,three-quarter/profile/feature SVG,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+adjustable-wrench,png,controlling SVG/render,PNG derivative,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+adjustable-wrench,webp,controlling SVG/render,WebP derivative,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+adjustable-wrench,manifest,all sources/outputs/reviews,asset manifest + OUTPUTS.sha256,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+pipe-wrench,parameters,source/provenance JSON,CadQuery model inputs,per-file SHA in missing manifests,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+pipe-wrench,brep,parameters + build_poc.py,OCCT B-rep components,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+pipe-wrench,step,accepted B-rep,STEP neutral file,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+pipe-wrench,stl,B-rep/components,review STL + component STL,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+pipe-wrench,glb,accepted geometry/mesh,neutral-metadata atlas GLB,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+pipe-wrench,svg,B-rep + camera record + hidden-line settings,three-quarter/profile/feature SVG,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+pipe-wrench,png,controlling SVG/render,PNG derivative,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+pipe-wrench,webp,controlling SVG/render,WebP derivative,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+pipe-wrench,manifest,all sources/outputs/reviews,asset manifest + OUTPUTS.sha256,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+cup-plunger,parameters,source/provenance JSON,CadQuery model inputs,per-file SHA in missing manifests,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+cup-plunger,brep,parameters + build_poc.py,OCCT B-rep components,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+cup-plunger,step,accepted B-rep,STEP neutral file,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+cup-plunger,stl,B-rep/components,review STL + component STL,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+cup-plunger,glb,accepted geometry/mesh,neutral-metadata atlas GLB,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+cup-plunger,svg,B-rep + camera record + hidden-line settings,three-quarter/profile/feature SVG,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+cup-plunger,png,controlling SVG/render,PNG derivative,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+cup-plunger,webp,controlling SVG/render,WebP derivative,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+cup-plunger,manifest,all sources/outputs/reviews,asset manifest + OUTPUTS.sha256,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+flange-plunger,parameters,source/provenance JSON,CadQuery model inputs,per-file SHA in missing manifests,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+flange-plunger,brep,parameters + build_poc.py,OCCT B-rep components,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+flange-plunger,step,accepted B-rep,STEP neutral file,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+flange-plunger,stl,B-rep/components,review STL + component STL,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+flange-plunger,glb,accepted geometry/mesh,neutral-metadata atlas GLB,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+flange-plunger,svg,B-rep + camera record + hidden-line settings,three-quarter/profile/feature SVG,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+flange-plunger,png,controlling SVG/render,PNG derivative,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+flange-plunger,webp,controlling SVG/render,WebP derivative,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.
+flange-plunger,manifest,all sources/outputs/reviews,asset manifest + OUTPUTS.sha256,not present,no,no,no,BLOCKED,Narrative claims this stage existed; exact bytes and per-file lineage are unavailable.

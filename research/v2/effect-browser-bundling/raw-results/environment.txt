@@ -1,0 +1,30 @@
+$ date -u +%Y-%m-%dT%H:%M:%SZ
+2026-08-21T22:57:24Z
+
+$ uname -a
+Linux 57bc091768e7 6.18.35 #1 SMP Mon Jul 27 18:07:50 UTC 2026 x86_64 GNU/Linux
+
+$ uname -m
+x86_64
+
+$ node --version
+v22.16.0
+
+$ npm --version
+10.9.2
+
+$ bun --version
+bash: line 18: bun: command not found
+exit=127
+
+$ command -v vite
+exit=1
+
+$ command -v rolldown
+exit=1
+
+$ command -v docker
+exit=1
+
+$ command -v podman
+exit=1

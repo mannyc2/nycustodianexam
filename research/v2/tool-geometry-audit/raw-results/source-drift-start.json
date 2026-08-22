@@ -1,0 +1,9 @@
+{
+  "ahead_by": 0,
+  "behind_by": 0,
+  "checked_at": "2026-08-22T10:25:01Z",
+  "comparison_status": "identical",
+  "repository": "mannyc2/nycustodianexam",
+  "required_sha": "00155a1d555d1d4c84f3ab9682ee876dd2a57fbb",
+  "source_branch": "agent/chat-corpus-reconciliation"
+}
