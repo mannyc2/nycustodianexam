@@ -1,0 +1,38 @@
+{
+  "name": "@nycustodianexam/r25-effect-browser-bundling-fixture",
+  "private": true,
+  "packageManager": "bun@1.4.0",
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "packages/*"
+    ],
+    "catalog": {
+      "effect": "4.0.0-rc.111",
+      "@effect/platform-browser": "4.0.0-rc.111",
+      "@effect/platform-bun": "4.0.0-rc.111",
+      "vite": "8.2.2",
+      "rolldown": "1.2.5",
+      "terser": "5.50.0",
+      "preact": "10.29.8",
+      "@cloudflare/vite-plugin": "1.53.1",
+      "wrangler": "4.125.0"
+    }
+  },
+  "overrides": {
+    "rolldown": "1.2.5"
+  },
+  "scripts": {
+    "install:frozen": "bun install --frozen-lockfile",
+    "build:static": "bun --filter @r25/static-reference run build",
+    "build:direct-dom": "bun --filter @r25/question-player-direct-dom run build",
+    "build:renderer": "bun --filter @r25/question-player-renderer-candidate run build",
+    "build:service-worker": "bun --filter @r25/service-worker run build",
+    "build:worker": "bun --filter @r25/optional-worker run build"
+  },
+  "devDependencies": {
+    "vite": "catalog:",
+    "rolldown": "catalog:",
+    "terser": "catalog:"
+  }
+}

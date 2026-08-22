@@ -1,0 +1,17 @@
+{
+  "name": "@r25/optional-worker",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "build": "vite build",
+    "check": "wrangler deploy --dry-run"
+  },
+  "dependencies": {
+    "effect": "catalog:"
+  },
+  "devDependencies": {
+    "vite": "catalog:",
+    "@cloudflare/vite-plugin": "catalog:",
+    "wrangler": "catalog:"
+  }
+}
