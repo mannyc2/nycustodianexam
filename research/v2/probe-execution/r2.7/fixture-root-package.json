@@ -1,0 +1,22 @@
+{
+  "name": "@r27/fixture-root",
+  "private": true,
+  "packageManager": "bun@1.4.0",
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "packages/*"
+    ],
+    "catalog": {
+      "effect": "4.0.0-rc.111",
+      "@effect/platform-bun": "4.0.0-rc.111",
+      "@effect/platform-browser": "4.0.0-rc.111"
+    }
+  },
+  "scripts": {
+    "content-build": "bun --filter @r27/content-compiler build",
+    "site-build": "bun run content-build && bun --filter @r27/site build",
+    "build-all-unordered": "bun --filter '*' build",
+    "typecheck": "bun --filter '*' typecheck"
+  }
+}

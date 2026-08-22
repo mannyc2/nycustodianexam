@@ -185,6 +185,47 @@ route budgets on a real host.
 
 ---
 
+## R2.7 — Bun monorepo discipline (`research/v2-bun-monorepo-discipline`, PR #18)
+
+Executed after the lane published (head `2fad6c5`) against its fixture rerun
+contract: a private four-workspace fixture (`apps/site`,
+`apps/content-compiler`, `packages/content`, `packages/study`) with the exact
+recommended dependency direction, root catalog at the rc.111 cohort,
+`workspace:*` edges, isolated linker, Bun 1.4.0. Evidence: `r2.7/`.
+
+**All five blocked gates now OBSERVED — pass:**
+
+1. **Install/lock/`bun ci`:** generated text `bun.lock` (JSON), single
+   `effect@4.0.0-rc.111` cohort, frozen `bun ci` passes with no changes, and
+   both app entries execute across the workspace graph
+   (`r2.7/gate1-install-ci.txt`).
+2. **Filter script execution:** `bun --filter '*' build` ran in dependency
+   order in this fixture (content → compiler/study → site), and the explicit
+   prerequisite chain (`content-build` before site build) works
+   (`r2.7/gate2-filter-order.txt`). The lane's "declare explicit
+   prerequisites, don't assume order" advice stands.
+3. **Undeclared-dependency rejection:** under the isolated linker, an import
+   of a package the workspace does not declare (`@effect/platform-bun` from
+   `packages/study`) fails to resolve (`r2.7/gate3-undeclared.txt`).
+4. **Lifecycle trust:** a dependency's `postinstall` is blocked by default
+   (`bun pm untrusted` lists it); it executes only after an explicit
+   `trustedDependencies` grant (`r2.7/gate4-lifecycle-trust.txt`).
+5. **Duplicate-cohort check:** the generated lockfile resolves exactly one
+   Effect version.
+
+**Mechanics finding (correction to script templates):** at Bun 1.4.0,
+`bun --filter '<pattern>' <script>` works, but inserting `run` between the
+filter and the script name (`bun --filter <pattern> run <script>`) fails with
+"No workspace packages matched the filter". Root scripts must use the
+filter-then-script form. (This also explains the `build:*` script failures
+observed in the R2.5 bundle-lab root manifest, which used the `run` form.)
+
+R2.7's principal recommendation (one pinned Bun, one root text lockfile,
+frozen CI installs, isolated ownership, explicit ordering, Vite for browser
+builds, no premature Turbo/Nx) is now fully runtime-backed.
+
+---
+
 ## Aggregate read for the synthesis lane (R2.90)
 
 1. **The stack works as pinned.** Bun 1.4.0 + rc.111 installs, builds, tests,

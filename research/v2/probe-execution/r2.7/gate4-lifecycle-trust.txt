@@ -1,0 +1,19 @@
+== gate 4: lifecycle trust — default (untrusted) ==
+Saved lockfile
+
++ r27-lifecycle-probe@vendor/lifecycle-probe
+
+1 package installed [3.00ms]
+postinstall BLOCKED by default (no marker file)
+bun pm untrusted v1.4.0 (34cbb9a40)
+
+./node_modules/r27-lifecycle-probe @vendor/lifecycle-probe
+ » [postinstall]: node -e "require('fs').writeFileSync('/tmp/r27-lifecycle-ran.txt','postinstall executed')"
+
+These dependencies had their lifecycle scripts blocked during install.
+
+== gate 4b: after trustedDependencies grant ==
++ r27-lifecycle-probe@vendor/lifecycle-probe
+
+17 packages installed [58.00ms]
+postinstall EXECUTED after explicit trust: postinstall executed

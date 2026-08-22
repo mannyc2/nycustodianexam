@@ -1,0 +1,22 @@
+== gate 1: bun install (generate lockfile) ==
+bun install v1.4.0 (34cbb9a40)
+Resolving dependencies
+Resolved, downloaded and extracted [11]
+Saved lockfile
+
+16 packages installed [2.86s]
+exit: 0
+
+== bun.lock is text, effect cohort ==
+bun.lock: JSON text data
+"effect@4.0.0-rc.111"
+
+== gate 1b: bun ci (frozen) ==
+bun install v1.4.0 (34cbb9a40)
+
+Checked 23 installs across 26 packages (no changes) [4.00ms]
+exit: 0
+
+== gate: runtime smoke ==
+site: {"questionId":"q1","correct":true}
+compiler: q1

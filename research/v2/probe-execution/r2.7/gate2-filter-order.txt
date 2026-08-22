@@ -1,0 +1,21 @@
+== gate 2 (corrected syntax): bun --filter '*' build — observed execution order ==
+$ bun --filter '*' build
+@r27/content build: build:content
+@r27/content build: Exited with code 0
+@r27/content-compiler build: build:content-compiler
+@r27/content-compiler build: Exited with code 0
+@r27/study build: build:study
+@r27/study build: Exited with code 0
+@r27/site build: build:site
+@r27/site build: Exited with code 0
+
+== gate 2b: explicit prerequisite ordering ==
+$ bun run content-build && bun --filter @r27/site build
+$ bun --filter @r27/content-compiler build
+@r27/content-compiler build: build:content-compiler
+@r27/content-compiler build: Exited with code 0
+@r27/site build: build:site
+@r27/site build: Exited with code 0
+exit: 0
+
+NOTE: bun --filter '<pattern>' <script> works; 'bun --filter <pattern> run <script>' reports 'No workspace packages matched' at bun 1.4.0.

@@ -1,0 +1,5 @@
+== gate 3: undeclared dependency negative case ==
+error: Cannot find module '@effect/platform-bun' from '/tmp/claude-0/-home-user-nycustodianexam/fc86e7f7-0861-55de-b51c-0a66b4a0477f/scratchpad/probes/r27-fixture/packages/study/src/undeclared.ts'
+
+Bun v1.4.0 (Linux x64)
+exit: 1
