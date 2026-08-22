@@ -1,0 +1,260 @@
+{
+  "accessibility": {
+    "fullDescription": "The center-floor patch represents an uncorrected wet walking surface. The flat mat at the right is an authored decoy and is safe as depicted because it is intact, flat, and separate from the wet area. Source and correction wording require content-editor approval before scored use.",
+    "neutralAttemptDescription": "A generic school hallway with a closed door, a bench, a flat floor mat, and an irregular reflective patch across several floor tiles.",
+    "neutralZones": [
+      {
+        "text": "A closed door is set into the left wall, with clear floor space nearby.",
+        "zoneId": "z1"
+      },
+      {
+        "text": "An irregular shallow-looking gray patch spans several center floor tiles.",
+        "zoneId": "z2"
+      },
+      {
+        "text": "A bench stands on the right, and a rectangular mat lies flat on the floor in front of it.",
+        "zoneId": "z3"
+      }
+    ],
+    "state": "draft-unreviewed"
+  },
+  "authoringRoute": "S",
+  "canvas": {
+    "aspectRatio": "3:2",
+    "height": 800,
+    "width": 1200
+  },
+  "claimRefs": [
+    {
+      "locator": "29 CFR 1910.22 wet-surface/spill housekeeping basis; exact content admission remains required",
+      "sourceId": "OSHA_FLOOR",
+      "status": "source-backed pilot basis, not scored-content approval"
+    }
+  ],
+  "environment": "hallway/common-area",
+  "files": {
+    "authoringManifest": "authoring/scenes/P1-WET-FLOOR-HALLWAY-BASE.json",
+    "learnerSvg": "renders/learner/s-01.svg",
+    "reviewOverlaySvg": "review/annotated/s-01.review.svg"
+  },
+  "negativeInventory": [
+    "No loose cord or hose crosses the walking path.",
+    "No exit, doorway, or fire equipment is obstructed.",
+    "The mat has no raised or curled edge.",
+    "No warning sign or other correction is already depicted.",
+    "No unstable furniture, broken glass, or chemical container appears."
+  ],
+  "pilotClass": "P1 wet floor",
+  "publicAssetId": "s-01",
+  "regions": [
+    {
+      "anchorPoint": {
+        "x": 0.466667,
+        "y": 0.825
+      },
+      "conditionId": "wet-surface-without-visible-control",
+      "kind": "target",
+      "polygon": [
+        {
+          "x": 0.266667,
+          "y": 0.775
+        },
+        {
+          "x": 0.341667,
+          "y": 0.73125
+        },
+        {
+          "x": 0.429167,
+          "y": 0.71875
+        },
+        {
+          "x": 0.545833,
+          "y": 0.7375
+        },
+        {
+          "x": 0.666667,
+          "y": 0.79375
+        },
+        {
+          "x": 0.658333,
+          "y": 0.88125
+        },
+        {
+          "x": 0.533333,
+          "y": 0.91875
+        },
+        {
+          "x": 0.408333,
+          "y": 0.9125
+        },
+        {
+          "x": 0.283333,
+          "y": 0.8625
+        }
+      ],
+      "regionId": "r1",
+      "reviewState": "draft-unreviewed",
+      "semanticObjectId": "o1",
+      "toleranceClass": "pilot-medium",
+      "zoneId": "z2"
+    },
+    {
+      "anchorPoint": {
+        "x": 0.791667,
+        "y": 0.775
+      },
+      "conditionId": "flat-intact-floor-mat",
+      "kind": "decoy",
+      "polygon": [
+        {
+          "x": 0.720833,
+          "y": 0.7125
+        },
+        {
+          "x": 0.933333,
+          "y": 0.7125
+        },
+        {
+          "x": 0.970833,
+          "y": 0.83125
+        },
+        {
+          "x": 0.7125,
+          "y": 0.83125
+        }
+      ],
+      "regionId": "r2",
+      "reviewState": "draft-unreviewed",
+      "semanticObjectId": "o2",
+      "toleranceClass": "pilot-medium",
+      "zoneId": "z3"
+    }
+  ],
+  "review": {
+    "accessibility": "not-reviewed",
+    "accidentalHazards": "not-reviewed",
+    "decoys": "not-reviewed",
+    "hotspots": "draft-only",
+    "phone": "automated-render-only",
+    "print": "not-reviewed",
+    "productionApproved": false,
+    "rights": "not-reviewed",
+    "scoredUseApproved": false,
+    "semantic": "not-reviewed"
+  },
+  "rights": {
+    "generator": "source/generate_scenes.py",
+    "officialImageInputs": false,
+    "sourceMethod": "project-owned deterministic SVG construction",
+    "state": "review-required",
+    "thirdPartyVisualInputs": []
+  },
+  "sceneId": "P1-WET-FLOOR-HALLWAY-BASE",
+  "sceneVersion": "0.1.0-draft.1",
+  "semanticInventory": [
+    {
+      "conditionId": "wet-surface-without-visible-control",
+      "correctionConcept": "remove or control the wet condition and pedestrian exposure under the admitted source-backed rule",
+      "objectId": "o1",
+      "role": "target"
+    },
+    {
+      "conditionId": "flat-intact-floor-mat",
+      "objectId": "o2",
+      "role": "decoy",
+      "safeAsDepicted": "The mat is flat, intact, and outside the authored wet patch; no curled edge or obstruction is shown."
+    }
+  ],
+  "transferOf": null,
+  "zones": [
+    {
+      "labelNeutral": "left doorway area",
+      "observableFacts": [
+        "A closed door is set into the left wall.",
+        "The adjacent floor tiles are unobstructed."
+      ],
+      "order": 1,
+      "polygon": [
+        {
+          "x": 0.079167,
+          "y": 0.11875
+        },
+        {
+          "x": 0.325,
+          "y": 0.11875
+        },
+        {
+          "x": 0.325,
+          "y": 0.66875
+        },
+        {
+          "x": 0.058333,
+          "y": 0.9625
+        },
+        {
+          "x": 0.029167,
+          "y": 0.9625
+        },
+        {
+          "x": 0.083333,
+          "y": 0.625
+        }
+      ],
+      "zoneId": "z1"
+    },
+    {
+      "labelNeutral": "center floor area",
+      "observableFacts": [
+        "An irregular shallow-looking patch with a reflective gray surface spans several floor tiles.",
+        "No floor-control object is drawn beside the patch."
+      ],
+      "order": 2,
+      "polygon": [
+        {
+          "x": 0.325,
+          "y": 0.11875
+        },
+        {
+          "x": 0.633333,
+          "y": 0.11875
+        },
+        {
+          "x": 0.683333,
+          "y": 0.9625
+        },
+        {
+          "x": 0.291667,
+          "y": 0.9625
+        }
+      ],
+      "zoneId": "z2"
+    },
+    {
+      "labelNeutral": "right bench and mat area",
+      "observableFacts": [
+        "A bench stands against the right wall.",
+        "A flat rectangular mat lies flush with the floor in front of the bench."
+      ],
+      "order": 3,
+      "polygon": [
+        {
+          "x": 0.633333,
+          "y": 0.11875
+        },
+        {
+          "x": 0.916667,
+          "y": 0.11875
+        },
+        {
+          "x": 0.970833,
+          "y": 0.9625
+        },
+        {
+          "x": 0.683333,
+          "y": 0.9625
+        }
+      ],
+      "zoneId": "z3"
+    }
+  ]
+}

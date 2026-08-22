@@ -1,0 +1,90 @@
+[
+  {
+    "approval": "draft-unreviewed",
+    "authoringManifest": "authoring/scenes/P1-WET-FLOOR-HALLWAY-BASE.json",
+    "environment": "hallway/common-area",
+    "learnerSvg": "renders/learner/s-01.svg",
+    "pilotClass": "P1 wet floor",
+    "publicAssetId": "s-01",
+    "reviewOverlaySvg": "review/annotated/s-01.review.svg",
+    "sceneId": "P1-WET-FLOOR-HALLWAY-BASE",
+    "transferOf": null
+  },
+  {
+    "approval": "draft-unreviewed",
+    "authoringManifest": "authoring/scenes/P1-WET-FLOOR-LOBBY-TRANSFER.json",
+    "environment": "entrance/lobby",
+    "learnerSvg": "renders/learner/s-02.svg",
+    "pilotClass": "P1 wet floor",
+    "publicAssetId": "s-02",
+    "reviewOverlaySvg": "review/annotated/s-02.review.svg",
+    "sceneId": "P1-WET-FLOOR-LOBBY-TRANSFER",
+    "transferOf": "P1-WET-FLOOR-HALLWAY-BASE"
+  },
+  {
+    "approval": "draft-unreviewed",
+    "authoringManifest": "authoring/scenes/P3-DAMAGED-CORD-UTILITY-BASE.json",
+    "environment": "mechanical/utility-area",
+    "learnerSvg": "renders/learner/s-03.svg",
+    "pilotClass": "P3 damaged cord",
+    "publicAssetId": "s-03",
+    "reviewOverlaySvg": "review/annotated/s-03.review.svg",
+    "sceneId": "P3-DAMAGED-CORD-UTILITY-BASE",
+    "transferOf": null
+  },
+  {
+    "approval": "draft-unreviewed",
+    "authoringManifest": "authoring/scenes/P3-DAMAGED-CORD-CLASSROOM-TRANSFER.json",
+    "environment": "classroom",
+    "learnerSvg": "renders/learner/s-04.svg",
+    "pilotClass": "P3 damaged cord",
+    "publicAssetId": "s-04",
+    "reviewOverlaySvg": "review/annotated/s-04.review.svg",
+    "sceneId": "P3-DAMAGED-CORD-CLASSROOM-TRANSFER",
+    "transferOf": "P3-DAMAGED-CORD-UTILITY-BASE"
+  },
+  {
+    "approval": "draft-unreviewed",
+    "authoringManifest": "authoring/scenes/P5-EXTINGUISHER-BOXES-HALLWAY-BASE.json",
+    "environment": "hallway/common-area",
+    "learnerSvg": "renders/learner/s-05.svg",
+    "pilotClass": "P5 inaccessible fire extinguisher",
+    "publicAssetId": "s-05",
+    "reviewOverlaySvg": "review/annotated/s-05.review.svg",
+    "sceneId": "P5-EXTINGUISHER-BOXES-HALLWAY-BASE",
+    "transferOf": null
+  },
+  {
+    "approval": "draft-unreviewed",
+    "authoringManifest": "authoring/scenes/P5-EXTINGUISHER-CART-GYM-TRANSFER.json",
+    "environment": "gym/common-area",
+    "learnerSvg": "renders/learner/s-06.svg",
+    "pilotClass": "P5 inaccessible fire extinguisher",
+    "publicAssetId": "s-06",
+    "reviewOverlaySvg": "review/annotated/s-06.review.svg",
+    "sceneId": "P5-EXTINGUISHER-CART-GYM-TRANSFER",
+    "transferOf": "P5-EXTINGUISHER-BOXES-HALLWAY-BASE"
+  },
+  {
+    "approval": "draft-unreviewed",
+    "authoringManifest": "authoring/scenes/P7-BROKEN-GLASS-CLASSROOM-BASE.json",
+    "environment": "classroom",
+    "learnerSvg": "renders/learner/s-07.svg",
+    "pilotClass": "P7 exposed broken glass",
+    "publicAssetId": "s-07",
+    "reviewOverlaySvg": "review/annotated/s-07.review.svg",
+    "sceneId": "P7-BROKEN-GLASS-CLASSROOM-BASE",
+    "transferOf": null
+  },
+  {
+    "approval": "draft-unreviewed",
+    "authoringManifest": "authoring/scenes/P7-BROKEN-GLASS-CAFETERIA-TRANSFER.json",
+    "environment": "cafeteria",
+    "learnerSvg": "renders/learner/s-08.svg",
+    "pilotClass": "P7 exposed broken glass",
+    "publicAssetId": "s-08",
+    "reviewOverlaySvg": "review/annotated/s-08.review.svg",
+    "sceneId": "P7-BROKEN-GLASS-CAFETERIA-TRANSFER",
+    "transferOf": "P7-BROKEN-GLASS-CLASSROOM-BASE"
+  }
+]

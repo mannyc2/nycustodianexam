@@ -1,0 +1,236 @@
+{
+  "accessibility": {
+    "fullDescription": "The janitor cart directly in front of the extinguisher cabinet represents obstructed access. The folded chairs are an authored decoy and are safe as depicted because they are stable inside a rack and outside the passage. Exact source applicability and correction language require content-editor approval before scored use.",
+    "neutralAttemptDescription": "A generic gym-adjacent common area with folded chairs in a low rack, a closed wall cabinet, a wall-mounted extinguisher cabinet, and a janitor cart parked directly in front of it.",
+    "neutralZones": [
+      {
+        "text": "Three folded chairs rest together inside a low wall rack on the left.",
+        "zoneId": "z1"
+      },
+      {
+        "text": "A closed two-door wall cabinet hangs at center with clear floor space below.",
+        "zoneId": "z2"
+      },
+      {
+        "text": "A janitor cart is parked directly in front of a wall-mounted cabinet containing a generic extinguisher silhouette.",
+        "zoneId": "z3"
+      }
+    ],
+    "state": "draft-unreviewed"
+  },
+  "authoringRoute": "S",
+  "canvas": {
+    "aspectRatio": "3:2",
+    "height": 800,
+    "width": 1200
+  },
+  "claimRefs": [
+    {
+      "locator": "29 CFR 1910.157 readily-accessible extinguisher basis; exact applicability and wording require content review",
+      "sourceId": "OSHA_FIRE",
+      "status": "source-backed pilot basis, not scored-content approval"
+    }
+  ],
+  "environment": "gym/common-area",
+  "files": {
+    "authoringManifest": "authoring/scenes/P5-EXTINGUISHER-CART-GYM-TRANSFER.json",
+    "learnerSvg": "renders/learner/s-06.svg",
+    "reviewOverlaySvg": "review/annotated/s-06.review.svg"
+  },
+  "negativeInventory": [
+    "The janitor cart is stable and has no loose mop, hose, cord, or leaking container.",
+    "The folded chairs are retained by a rack and do not obstruct the walking path.",
+    "No exit or doorway is shown, avoiding a second egress rule.",
+    "No wet floor, chemical spill, broken glass, or unstable stack appears.",
+    "The correction is not already depicted."
+  ],
+  "pilotClass": "P5 inaccessible fire extinguisher",
+  "publicAssetId": "s-06",
+  "regions": [
+    {
+      "anchorPoint": {
+        "x": 0.733333,
+        "y": 0.625
+      },
+      "conditionId": "extinguisher-access-obstructed-by-cart",
+      "kind": "target",
+      "polygon": [
+        {
+          "x": 0.583333,
+          "y": 0.16875
+        },
+        {
+          "x": 0.8875,
+          "y": 0.16875
+        },
+        {
+          "x": 0.9,
+          "y": 0.93125
+        },
+        {
+          "x": 0.575,
+          "y": 0.93125
+        }
+      ],
+      "regionId": "r1",
+      "reviewState": "draft-unreviewed",
+      "semanticObjectId": "o1",
+      "toleranceClass": "pilot-medium",
+      "zoneId": "z3"
+    },
+    {
+      "anchorPoint": {
+        "x": 0.208333,
+        "y": 0.66875
+      },
+      "conditionId": "folded-chairs-stable-in-rack",
+      "kind": "decoy",
+      "polygon": [
+        {
+          "x": 0.0875,
+          "y": 0.4875
+        },
+        {
+          "x": 0.3375,
+          "y": 0.4875
+        },
+        {
+          "x": 0.35,
+          "y": 0.8625
+        },
+        {
+          "x": 0.075,
+          "y": 0.8625
+        }
+      ],
+      "regionId": "r2",
+      "reviewState": "draft-unreviewed",
+      "semanticObjectId": "o2",
+      "toleranceClass": "pilot-medium",
+      "zoneId": "z1"
+    }
+  ],
+  "review": {
+    "accessibility": "not-reviewed",
+    "accidentalHazards": "not-reviewed",
+    "decoys": "not-reviewed",
+    "hotspots": "draft-only",
+    "phone": "automated-render-only",
+    "print": "not-reviewed",
+    "productionApproved": false,
+    "rights": "not-reviewed",
+    "scoredUseApproved": false,
+    "semantic": "not-reviewed"
+  },
+  "rights": {
+    "generator": "source/generate_scenes.py",
+    "officialImageInputs": false,
+    "sourceMethod": "project-owned deterministic SVG construction",
+    "state": "review-required",
+    "thirdPartyVisualInputs": []
+  },
+  "sceneId": "P5-EXTINGUISHER-CART-GYM-TRANSFER",
+  "sceneVersion": "0.1.0-draft.1",
+  "semanticInventory": [
+    {
+      "conditionId": "extinguisher-access-obstructed-by-cart",
+      "correctionConcept": "move the cart and preserve ready access under the admitted source-backed rule",
+      "objectId": "o1",
+      "role": "target"
+    },
+    {
+      "conditionId": "folded-chairs-stable-in-rack",
+      "objectId": "o2",
+      "role": "decoy",
+      "safeAsDepicted": "The folded chairs are retained inside a low rack and do not extend into the passage or fire-equipment area."
+    }
+  ],
+  "transferOf": "P5-EXTINGUISHER-BOXES-HALLWAY-BASE",
+  "zones": [
+    {
+      "labelNeutral": "left folded-chair area",
+      "observableFacts": [
+        "Three folded chairs rest together inside a low wall rack.",
+        "Their legs remain within the rack footprint."
+      ],
+      "order": 1,
+      "polygon": [
+        {
+          "x": 0.070833,
+          "y": 0.11875
+        },
+        {
+          "x": 0.35,
+          "y": 0.11875
+        },
+        {
+          "x": 0.375,
+          "y": 0.9625
+        },
+        {
+          "x": 0.029167,
+          "y": 0.9625
+        },
+        {
+          "x": 0.070833,
+          "y": 0.625
+        }
+      ],
+      "zoneId": "z1"
+    },
+    {
+      "labelNeutral": "center wall-storage area",
+      "observableFacts": [
+        "A closed two-door wall cabinet hangs in the center.",
+        "The floor beneath it is clear."
+      ],
+      "order": 2,
+      "polygon": [
+        {
+          "x": 0.35,
+          "y": 0.11875
+        },
+        {
+          "x": 0.575,
+          "y": 0.11875
+        },
+        {
+          "x": 0.591667,
+          "y": 0.9625
+        },
+        {
+          "x": 0.375,
+          "y": 0.9625
+        }
+      ],
+      "zoneId": "z2"
+    },
+    {
+      "labelNeutral": "right fire-equipment and cart area",
+      "observableFacts": [
+        "A wall-mounted cabinet contains a generic extinguisher silhouette.",
+        "A loaded janitor cart is parked directly in front of the cabinet."
+      ],
+      "order": 3,
+      "polygon": [
+        {
+          "x": 0.575,
+          "y": 0.11875
+        },
+        {
+          "x": 0.916667,
+          "y": 0.11875
+        },
+        {
+          "x": 0.970833,
+          "y": 0.9625
+        },
+        {
+          "x": 0.591667,
+          "y": 0.9625
+        }
+      ],
+      "zoneId": "z3"
+    }
+  ]
+}

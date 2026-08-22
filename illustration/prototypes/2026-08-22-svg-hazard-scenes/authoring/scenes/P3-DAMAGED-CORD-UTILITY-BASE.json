@@ -1,0 +1,236 @@
+{
+  "accessibility": {
+    "fullDescription": "The split outer covering on the equipment cord is the authored unsafe condition. The wall-stored spare cord is an authored decoy and is safe as depicted because it is intact, coiled, and off the walking surface. Exact source wording and correction language require content-editor approval before scored use.",
+    "neutralAttemptDescription": "A generic utility-area scene with a parked floor-cleaning machine, a cord following the wall edge to an outlet, and a separate cord coiled on a wall hook.",
+    "neutralZones": [
+      {
+        "text": "A corded floor-cleaning machine is parked on the left.",
+        "zoneId": "z1"
+      },
+      {
+        "text": "Its cord follows the back edge of the floor; a short section of the outer covering is split and two inner lines are visible.",
+        "zoneId": "z2"
+      },
+      {
+        "text": "A separate intact cord is coiled on a wall hook near the outlet.",
+        "zoneId": "z3"
+      }
+    ],
+    "state": "draft-unreviewed"
+  },
+  "authoringRoute": "S",
+  "canvas": {
+    "aspectRatio": "3:2",
+    "height": 800,
+    "width": 1200
+  },
+  "claimRefs": [
+    {
+      "locator": "29 CFR 1910.334 damaged cord/equipment visual-inspection basis; exact subparagraph and wording require content review",
+      "sourceId": "OSHA_ELEC",
+      "status": "source-backed pilot basis, not scored-content approval"
+    }
+  ],
+  "environment": "mechanical/utility-area",
+  "files": {
+    "authoringManifest": "authoring/scenes/P3-DAMAGED-CORD-UTILITY-BASE.json",
+    "learnerSvg": "renders/learner/s-03.svg",
+    "reviewOverlaySvg": "review/annotated/s-03.review.svg"
+  },
+  "negativeInventory": [
+    "The equipment cord follows the baseboard and does not cross the walking path.",
+    "No missing or deformed grounding pin is depicted.",
+    "No wet surface or energized-water contact is depicted.",
+    "The floor machine is upright and parked without unstable parts.",
+    "No exit or fire equipment is obstructed."
+  ],
+  "pilotClass": "P3 damaged cord",
+  "publicAssetId": "s-03",
+  "regions": [
+    {
+      "anchorPoint": {
+        "x": 0.641667,
+        "y": 0.75625
+      },
+      "conditionId": "split-outer-cord-insulation",
+      "kind": "target",
+      "polygon": [
+        {
+          "x": 0.59,
+          "y": 0.7125
+        },
+        {
+          "x": 0.6975,
+          "y": 0.7125
+        },
+        {
+          "x": 0.708333,
+          "y": 0.7975
+        },
+        {
+          "x": 0.585,
+          "y": 0.8
+        }
+      ],
+      "regionId": "r1",
+      "reviewState": "draft-unreviewed",
+      "semanticObjectId": "o1",
+      "toleranceClass": "pilot-medium",
+      "zoneId": "z2"
+    },
+    {
+      "anchorPoint": {
+        "x": 0.716667,
+        "y": 0.375
+      },
+      "conditionId": "intact-wall-stored-cord",
+      "kind": "decoy",
+      "polygon": [
+        {
+          "x": 0.648333,
+          "y": 0.2375
+        },
+        {
+          "x": 0.79,
+          "y": 0.2375
+        },
+        {
+          "x": 0.796667,
+          "y": 0.4875
+        },
+        {
+          "x": 0.641667,
+          "y": 0.4875
+        }
+      ],
+      "regionId": "r2",
+      "reviewState": "draft-unreviewed",
+      "semanticObjectId": "o2",
+      "toleranceClass": "pilot-medium",
+      "zoneId": "z3"
+    }
+  ],
+  "review": {
+    "accessibility": "not-reviewed",
+    "accidentalHazards": "not-reviewed",
+    "decoys": "not-reviewed",
+    "hotspots": "draft-only",
+    "phone": "automated-render-only",
+    "print": "not-reviewed",
+    "productionApproved": false,
+    "rights": "not-reviewed",
+    "scoredUseApproved": false,
+    "semantic": "not-reviewed"
+  },
+  "rights": {
+    "generator": "source/generate_scenes.py",
+    "officialImageInputs": false,
+    "sourceMethod": "project-owned deterministic SVG construction",
+    "state": "review-required",
+    "thirdPartyVisualInputs": []
+  },
+  "sceneId": "P3-DAMAGED-CORD-UTILITY-BASE",
+  "sceneVersion": "0.1.0-draft.1",
+  "semanticInventory": [
+    {
+      "conditionId": "split-outer-cord-insulation",
+      "correctionConcept": "remove the damaged cord-connected equipment from use until repaired or replaced under the admitted rule",
+      "objectId": "o1",
+      "role": "target"
+    },
+    {
+      "conditionId": "intact-wall-stored-cord",
+      "objectId": "o2",
+      "role": "decoy",
+      "safeAsDepicted": "The spare cord is intact, fully coiled, and stored on a wall hook rather than crossing a walking path."
+    }
+  ],
+  "transferOf": null,
+  "zones": [
+    {
+      "labelNeutral": "left equipment area",
+      "observableFacts": [
+        "A corded floor-cleaning machine is parked on the left.",
+        "Its cord leaves the machine toward the rear wall."
+      ],
+      "order": 1,
+      "polygon": [
+        {
+          "x": 0.079167,
+          "y": 0.11875
+        },
+        {
+          "x": 0.433333,
+          "y": 0.11875
+        },
+        {
+          "x": 0.4625,
+          "y": 0.9625
+        },
+        {
+          "x": 0.029167,
+          "y": 0.9625
+        },
+        {
+          "x": 0.083333,
+          "y": 0.65
+        }
+      ],
+      "zoneId": "z1"
+    },
+    {
+      "labelNeutral": "center baseboard and cord area",
+      "observableFacts": [
+        "The power cord follows the back edge of the floor.",
+        "A short section of the outer covering is split, with two inner lines visible."
+      ],
+      "order": 2,
+      "polygon": [
+        {
+          "x": 0.433333,
+          "y": 0.11875
+        },
+        {
+          "x": 0.75,
+          "y": 0.11875
+        },
+        {
+          "x": 0.775,
+          "y": 0.9625
+        },
+        {
+          "x": 0.4625,
+          "y": 0.9625
+        }
+      ],
+      "zoneId": "z2"
+    },
+    {
+      "labelNeutral": "right wall storage and outlet area",
+      "observableFacts": [
+        "An intact spare cord is coiled on a wall hook.",
+        "The equipment cord continues to a wall outlet."
+      ],
+      "order": 3,
+      "polygon": [
+        {
+          "x": 0.75,
+          "y": 0.11875
+        },
+        {
+          "x": 0.916667,
+          "y": 0.11875
+        },
+        {
+          "x": 0.970833,
+          "y": 0.9625
+        },
+        {
+          "x": 0.775,
+          "y": 0.9625
+        }
+      ],
+      "zoneId": "z3"
+    }
+  ]
+}

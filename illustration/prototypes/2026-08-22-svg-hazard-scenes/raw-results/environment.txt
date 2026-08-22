@@ -1,0 +1,11 @@
+observation_date=2026-08-22
+python=3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]
+platform=Linux-6.18.35-x86_64-with-glibc2.41
+implementation=CPython
+CairoSVG=2.8.2
+Pillow=12.3.0
+Shapely=2.1.2
+generator=source/generate_scenes.py
+validator=source/validate_scenes.py
+official_image_inputs=false
+third_party_visual_inputs=none

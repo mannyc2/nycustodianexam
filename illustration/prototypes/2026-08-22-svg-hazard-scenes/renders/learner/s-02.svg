@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img" aria-hidden="true" focusable="false" shape-rendering="geometricPrecision">
+<style>.bg{fill:#fff}
+.o{fill:#fff;stroke:#111;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+.s{fill:none;stroke:#111;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.f{fill:none;stroke:#111;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.g1{fill:#e4e4e4;stroke:#111;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.g2{fill:#bdbdbd;stroke:#111;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.g3{fill:#8f8f8f;stroke:#111;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.k{fill:#111;stroke:none}
+.c{fill:none;stroke:#111;stroke-width:10;stroke-linecap:round;stroke-linejoin:round}</style>
+  <rect class="bg" height="800" width="1200" x="0" y="0"/>
+  <line class="s" x1="85" x2="1115" y1="95" y2="95"/>
+  <line class="s" x1="85" x2="85" y1="95" y2="480"/>
+  <line class="s" x1="1115" x2="1115" y1="95" y2="480"/>
+  <line class="s" x1="85" x2="1115" y1="480" y2="480"/>
+  <line class="s" x1="85" x2="35" y1="480" y2="770"/>
+  <line class="s" x1="1115" x2="1165" y1="480" y2="770"/>
+  <line class="s" x1="35" x2="1165" y1="770" y2="770"/>
+  <line class="f" x1="720" x2="130" y1="480" y2="770"/>
+  <line class="f" x1="720" x2="300" y1="480" y2="770"/>
+  <line class="f" x1="720" x2="470" y1="480" y2="770"/>
+  <line class="f" x1="720" x2="650" y1="480" y2="770"/>
+  <line class="f" x1="720" x2="830" y1="480" y2="770"/>
+  <line class="f" x1="720" x2="1010" y1="480" y2="770"/>
+  <line class="f" x1="83" x2="1117" y1="565" y2="565"/>
+  <line class="f" x1="66" x2="1134" y1="635" y2="635"/>
+  <line class="f" x1="48" x2="1152" y1="706" y2="706"/>
+  <line class="f" x1="85" x2="1115" y1="470" y2="470"/>
+  <rect class="o" height="335" width="385" x="560" y="145"/>
+  <line class="s" x1="752" x2="752" y1="145" y2="480"/>
+  <circle class="o" cx="725" cy="320" r="8"/>
+  <circle class="o" cx="779" cy="320" r="8"/>
+  <rect class="o" height="200" rx="8" width="165" x="105" y="280"/>
+  <path class="g1" d="M 150 455 L 225 455 L 214 530 L 161 530 Z"/>
+  <line class="s" x1="168" x2="154" y1="455" y2="315"/>
+  <path class="f" d="M 140 330 Q 154 302 168 330"/>
+  <line class="s" x1="195" x2="181" y1="455" y2="315"/>
+  <path class="f" d="M 167 330 Q 181 302 195 330"/>
+  <line class="s" x1="220" x2="206" y1="455" y2="315"/>
+  <path class="f" d="M 192 330 Q 206 302 220 330"/>
+  <polygon class="g1" points="500,515 730,515 785,610 445,610"/>
+  <line class="f" x1="528" x2="564" y1="531" y2="596"/>
+  <line class="f" x1="572" x2="608" y1="531" y2="596"/>
+  <line class="f" x1="616" x2="652" y1="531" y2="596"/>
+  <path class="g2" d="M 875 625 Q 910 590 950 610 Q 995 586 1040 620 Q 1090 610 1125 650 Q 1140 690 1110 720 Q 1060 748 1015 728 Q 970 752 930 728 Q 890 742 855 705 Q 840 670 875 625 Z"/>
+  <path class="f" d="M 895 652 Q 940 632 985 650"/>
+  <path class="f" d="M 1010 680 Q 1050 662 1090 680"/>
+  <path class="f" d="M 920 708 Q 960 694 1000 708"/>
+  <rect class="o" height="145" rx="6" width="105" x="970" y="220"/>
+  <line class="f" x1="990" x2="1055" y1="252" y2="252"/>
+  <line class="f" x1="990" x2="1055" y1="288" y2="288"/>
+  <line class="f" x1="990" x2="1055" y1="324" y2="324"/>
+</svg>

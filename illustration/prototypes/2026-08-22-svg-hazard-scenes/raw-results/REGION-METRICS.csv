@@ -1,0 +1,17 @@
+asset_id,scene_id,region_id,kind,logical_bbox_width,logical_bbox_height,phone_bbox_width_360,phone_bbox_height_240,review_state
+s-01,P1-WET-FLOOR-HALLWAY-BASE,r1,target,480.0,160.0,144.0,48.0,draft-unreviewed
+s-01,P1-WET-FLOOR-HALLWAY-BASE,r2,decoy,310.0,95.0,93.0,28.5,draft-unreviewed
+s-02,P1-WET-FLOOR-LOBBY-TRANSFER,r1,target,300.0,180.0,90.0,54.0,draft-unreviewed
+s-02,P1-WET-FLOOR-LOBBY-TRANSFER,r2,decoy,375.0,125.0,112.5,37.5,draft-unreviewed
+s-04,P3-DAMAGED-CORD-CLASSROOM-TRANSFER,r1,target,174.0,74.0,52.2,22.2,draft-unreviewed
+s-04,P3-DAMAGED-CORD-CLASSROOM-TRANSFER,r2,decoy,182.0,185.0,54.6,55.5,draft-unreviewed
+s-03,P3-DAMAGED-CORD-UTILITY-BASE,r1,target,148.0,70.0,44.4,21.0,draft-unreviewed
+s-03,P3-DAMAGED-CORD-UTILITY-BASE,r2,decoy,186.0,200.0,55.8,60.0,draft-unreviewed
+s-05,P5-EXTINGUISHER-BOXES-HALLWAY-BASE,r1,target,390.0,535.0,117.0,160.5,draft-unreviewed
+s-05,P5-EXTINGUISHER-BOXES-HALLWAY-BASE,r2,decoy,210.0,255.0,63.0,76.5,draft-unreviewed
+s-06,P5-EXTINGUISHER-CART-GYM-TRANSFER,r1,target,390.0,610.0,117.0,183.0,draft-unreviewed
+s-06,P5-EXTINGUISHER-CART-GYM-TRANSFER,r2,decoy,330.0,300.0,99.0,90.0,draft-unreviewed
+s-08,P7-BROKEN-GLASS-CAFETERIA-TRANSFER,r1,target,410.0,250.0,123.0,75.0,draft-unreviewed
+s-08,P7-BROKEN-GLASS-CAFETERIA-TRANSFER,r2,decoy,180.0,110.0,54.0,33.0,draft-unreviewed
+s-07,P7-BROKEN-GLASS-CLASSROOM-BASE,r1,target,390.0,230.0,117.0,69.0,draft-unreviewed
+s-07,P7-BROKEN-GLASS-CLASSROOM-BASE,r2,decoy,120.0,95.0,36.0,28.5,draft-unreviewed
