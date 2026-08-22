@@ -1,0 +1,26 @@
+[
+  {
+    "label": "same-process-a",
+    "raw_sha256": "4325edae157a927f03b6e186dd86439178008b32ab7c1767fe5ca6e76981f65a",
+    "normalized_sha256": "911b522fda55449fd133849756f69920b1e9975bdfc5e8adc3fd51a3958c9b4c",
+    "size_bytes": 15478
+  },
+  {
+    "label": "same-process-b",
+    "raw_sha256": "b7ee7c852dc907a5cdd5eecdcf101d6e95985c1037a3e96ddf473f8a5d72a28d",
+    "normalized_sha256": "911b522fda55449fd133849756f69920b1e9975bdfc5e8adc3fd51a3958c9b4c",
+    "size_bytes": 15478
+  },
+  {
+    "label": "separate-process-a",
+    "raw_sha256": "ba675a980ee7a2f38fe8a2a5de713ff7ca80a85db3cd3837d94157f8d13c90c9",
+    "normalized_sha256": "911b522fda55449fd133849756f69920b1e9975bdfc5e8adc3fd51a3958c9b4c",
+    "size_bytes": 15478
+  },
+  {
+    "label": "separate-process-b",
+    "raw_sha256": "b7e71adda886d6bbeccaec6367fef96e78a01eb87682d5d6fd8aa25660f0d258",
+    "normalized_sha256": "911b522fda55449fd133849756f69920b1e9975bdfc5e8adc3fd51a3958c9b4c",
+    "size_bytes": 15478
+  }
+]

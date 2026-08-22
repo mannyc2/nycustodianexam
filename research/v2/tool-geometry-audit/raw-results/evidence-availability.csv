@@ -1,0 +1,19 @@
+evidence,expected_path_or_name,github_state,note
+outer archive,8f7353c8-08fd-4677-bfeb-69a595dd0638.zip,absent,archive SHA recorded only
+nested research bundle,research-bundle.zip,absent,archive SHA recorded only
+POC evidence archive,poc-evidence.zip,absent,archive SHA recorded only
+research report,research-report.md,partial/inconsistent,"five parts present, but total size conflicts with recorded size"
+asset schema,asset-manifest.schema.json,present,proposal only
+taxonomy inventory,taxonomy-inventory.csv,absent,SHA recorded only
+confusable pairs,confusable-pairs.csv,absent,SHA recorded only
+visual invariant sheets,first-20-visual-invariants.csv,absent,SHA recorded only
+source/rights ledger,source-ledger.csv,absent,SHA recorded only
+top-level POC summary,poc-summary.json,absent,SHA recorded only
+deliverable checksums,DELIVERABLE-SHA256SUMS,absent,SHA recorded only
+POC build script,poc/build_poc.py,absent,SHA recorded only
+POC parameter records,poc/parameters/*.json,absent,no file hashes available in GitHub
+POC internal summary,poc/poc-summary.json,absent,SHA recorded only
+POC manifest,poc/MANIFEST.sha256,absent,SHA recorded only
+build A,poc/poc-build-a/**,absent,no source or outputs
+build B,poc/poc-build-b/**,absent,no source or outputs
+STEP/STL/GLB/SVG/PNG/WebP outputs,generated derivatives,absent,binary omission acknowledged; exact per-file ledger also absent
