@@ -5,10 +5,11 @@
 - Repository: `mannyc2/nycustodianexam`
 - Source branch: `agent/chat-corpus-reconciliation`
 - Required immutable source SHA: `00155a1d555d1d4c84f3ab9682ee876dd2a57fbb`
-- Verification result: **PASS** - the source branch compared identical to the required SHA (`ahead_by: 0`, `behind_by: 0`).
+- Verification result: **PASS** - the source branch compared identical to the required SHA (`ahead_by: 0`, `behind_by: 0`) at lane start.
 - Output branch: `research/v2-effect-platform-runtimes`
 - UTC start time: `2026-08-21T20:56:58Z`
-- GitHub access result: **PASS** - branch creation and repository writes are available through the connected GitHub capability.
+- GitHub access result at initial checkpoint: **PASS** - the branch and draft PR were created through connected GitHub access.
+- Draft PR: `https://github.com/mannyc2/nycustodianexam/pull/13`
 
 ## Authorized scope
 
@@ -31,12 +32,8 @@ Closed, unmerged PR #7 (`research/v2-effect-platform`, head `7fb3965056f57305ff1
 - observed npm `@effect/platform-bun` release candidate `4.0.0-rc.110`;
 - Bun `1.3.14`.
 
-All coordinates, package publication state, exports, source semantics, and runtime conclusions will be independently re-checked. Special emphasis will be placed on the Bun install/runtime, real browser, browser bundle, and workerd/Cloudflare evidence that PR #7 explicitly left blocked.
+All coordinates, package publication state, exports, source semantics, and runtime conclusions are independently re-checked. Special emphasis is placed on the Bun install/runtime, real browser, browser bundle, and workerd/Cloudflare evidence that PR #7 explicitly left blocked.
 
-## Intended checkpoints
+## Continuation authorization
 
-1. Publish this start receipt and open a draft PR.
-2. Complete mandatory repository reading and independently audit PR #7 artifacts.
-3. Pin current upstream/package coordinates and commit the source/fixture baseline.
-4. Run and preserve browser, Bun, handler/build, lifecycle-reuse, and workerd-compatible probes where supported.
-5. Publish the substantive reports, matrices, raw results, manifest, final receipt, and source-drift recheck incrementally.
+The branch and draft PR already existed when this execution resumed. The user explicitly directed this execution to use the existing branch/PR and finish the work. The continuation did not force-push, rewrite history, create a duplicate branch, or create a duplicate PR.
