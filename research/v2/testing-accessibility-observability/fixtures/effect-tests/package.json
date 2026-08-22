@@ -1,0 +1,15 @@
+{
+  "name": "@nycustodianexam/r2-8-effect-tests",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "effect": "4.0.0-rc.111"
+  },
+  "devDependencies": {
+    "@effect/vitest": "4.0.0-rc.111",
+    "vitest": "4.1.10"
+  },
+  "scripts": {
+    "test": "vitest run"
+  }
+}

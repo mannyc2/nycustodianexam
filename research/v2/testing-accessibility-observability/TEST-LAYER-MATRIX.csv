@@ -1,0 +1,16 @@
+layer,responsibility,preferred_runner,real_runtime_required,can_use_test_double,release_blocking
+pure-transition,deterministic state transitions and properties,Vitest or Bun test,no,yes,yes
+Effect-service,use cases services Layers typed failures,@effect/vitest,no,yes,yes
+shared-Layer,resource construction/finalization and substitutions,@effect/vitest,no,yes,yes
+Schema-compiler,decode encode publication fixtures,Vitest/Bun,no,yes,yes
+Bun-runtime,Bun APIs scripts compiler/build integration,Bun test,yes,no,yes
+browser-IDB,transaction abort completion migrations retry,Playwright real browser,yes,secondary only,yes
+multi-tab,cross-tab race stale tab invalidation,Playwright multi-context,yes,no,yes
+service-worker,lifecycle offline reload cache semantics,Playwright real origin,yes,no,yes
+renderer-browser,DOM focus live regions interaction,Playwright real browser,yes,limited,yes
+Cloudflare-Worker,workerd bindings/request lifecycle,@cloudflare/vitest-pool-workers/current equivalent,yes,no,when Worker exists
+static-output,semantic HTML SEO metadata leak scan,artifact parser plus browser where needed,no,yes,yes
+print,print CSS pagination large-print grayscale,browser print/PDF inspection,yes,no,yes
+geometry,manifest/hash/closure/reproducibility,Bun scripts/no specialist runtime,no,yes,yes
+bundle,production emitted-file closure,Vite production build,no,no,yes
+field-performance,LCP INP CLS,privacy-safe field collection,yes,no,post-launch gate
