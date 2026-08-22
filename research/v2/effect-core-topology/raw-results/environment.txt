@@ -1,0 +1,43 @@
+R2.1 probe environment
+Captured: 2026-08-21 UTC
+
+OS / architecture
+-----------------
+$ uname -a
+Linux 2d9b1ed0cf72 6.18.35 #1 SMP Mon Jul 27 18:07:50 UTC 2026 x86_64 GNU/Linux
+
+$ uname -m
+x86_64
+
+$ ldd --version | head -1
+ldd (Debian GLIBC 2.41-12+deb13u3) 2.41
+
+Available tools
+---------------
+$ bun --version
+bash: bun: command not found
+
+$ node --version
+v22.16.0
+
+$ npm --version
+10.9.2
+
+$ tsc --version
+Version 5.8.3
+
+Network observations
+--------------------
+$ git clone --filter=blob:none --no-checkout https://github.com/mannyc2/nycustodianexam.git
+fatal: unable to access 'https://github.com/mannyc2/nycustodianexam.git/': Could not resolve host: github.com
+
+An attempted direct release-asset request from the shell failed with:
+Network is unreachable
+
+An attempted npm metadata lookup did not complete before timeout.
+
+Interpretation
+--------------
+The GitHub connector and browser research tools were available, but the execution
+shell could not resolve or connect to public package/release hosts. The lane did
+not authorize dispatching an external workflow.
