@@ -1,0 +1,93 @@
+{
+  "chromiumVersion": "144.0.7559.96",
+  "console": [
+    {
+      "text": "Failed to load resource: the server responded with a status of 404 (File not found)",
+      "type": "error"
+    }
+  ],
+  "payload": {
+    "blobFile": {
+      "blobText": "r23",
+      "fileName": "probe.txt",
+      "fileSize": 3
+    },
+    "broadcastChannel": {
+      "available": true,
+      "value": {
+        "ping": "pong"
+      }
+    },
+    "cacheStorage": {
+      "body": "cache-ok"
+    },
+    "compression": {
+      "available": true,
+      "compressedBytes": 49,
+      "roundTrip": true
+    },
+    "crypto": {
+      "randomNonZero": true,
+      "sha256Length": 32
+    },
+    "domEvents": {
+      "observed": true
+    },
+    "environment": {
+      "onlineHint": true,
+      "secureContext": true,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/144.0.0.0 Safari/537.36",
+      "websocketAvailable": true
+    },
+    "fetchAbort": {
+      "aborted": true,
+      "name": null,
+      "reason": "r23-client-abort"
+    },
+    "indexedDb": {
+      "abortObserved": true,
+      "abortedValueMissing": true,
+      "committedValue": {
+        "committed": true,
+        "selected": "B"
+      }
+    },
+    "serviceWorker": {
+      "activateWaitUntilMarker": "activated",
+      "available": true,
+      "controlled": true,
+      "echo": {
+        "handledBy": "service-worker",
+        "method": "GET"
+      },
+      "installWaitUntilMarker": "installed",
+      "messageResult": {
+        "messageLifetimeExtended": true
+      }
+    },
+    "storageManager": {
+      "available": true,
+      "persisted": false,
+      "quotaIsNumber": true,
+      "usageIsNumber": true
+    },
+    "streams": {
+      "chunks": [
+        "a",
+        "b"
+      ]
+    },
+    "webLocks": {
+      "available": true,
+      "sequence": [
+        "acquired",
+        "released"
+      ]
+    },
+    "worker": {
+      "doubled": 42
+    }
+  },
+  "status": "complete",
+  "url": "http://127.0.0.1:8766/index.html"
+}

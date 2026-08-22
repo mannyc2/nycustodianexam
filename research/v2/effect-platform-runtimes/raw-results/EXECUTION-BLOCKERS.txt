@@ -1,0 +1,26 @@
+R2.3 terminal execution blockers
+Observed at: 2026-08-21T23:34:35Z
+
+Executable availability:
+bun: NOT FOUND
+workerd: NOT FOUND
+wrangler: NOT FOUND
+miniflare: NOT FOUND
+docker: NOT FOUND
+podman: NOT FOUND
+gh: NOT FOUND
+
+Ordinary network/DNS probe (expected environment limitation):
+curl: (6) Could not resolve host: registry.npmjs.org
+curl_exit_status=6
+
+Installed/cache search:
+node_modules directories containing effect:
+npm cache entries matching effect@4.0.0-rc.110:
+
+Consequences:
+- No Bun executable probe or generated bun.lock could be produced.
+- No installed node_modules/effect/AGENTS.md could be read.
+- No Effect package execution or Effect bundle measurement could be produced.
+- No workerd/Wrangler/Miniflare runtime probe could be produced.
+- Native browser, Service Worker, TypeScript build, and Node Web-handler-shape probes were executed and are recorded separately.
