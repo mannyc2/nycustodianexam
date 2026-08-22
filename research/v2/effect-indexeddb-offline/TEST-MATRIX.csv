@@ -1,0 +1,21 @@
+test_id,level,scenario,runtime,expected,status,notes
+T01,real browser,open fresh v1 then v2 migration,Chromium/Firefox/WebKit,object stores and indexes exactly match target; no data loss,BLOCKED,managed Chromium blocks fixture origin
+T02,real browser,authoritative multi-store attempt commit,Chromium/Firefox/WebKit,attempt + projection + session all present only after complete,BLOCKED,fixture committed
+T03,real browser,inject failure before transaction,Chromium/Firefox/WebKit,no state changed,BLOCKED,fixture committed
+T04,real browser,abort after attempt write before other writes,Chromium/Firefox/WebKit,all transaction stores rolled back,BLOCKED,fixture committed
+T05,real browser,same attempt retry,Chromium/Firefox/WebKit,one event; identical retry returns AlreadyCommitted,BLOCKED,fixture committed
+T06,real browser two-tab,same attempt ID concurrent commit,Chromium/Firefox/WebKit,one event; loser reconciles identical payload,BLOCKED,fixture committed
+T07,real browser,same attempt ID different payload,Chromium/Firefox/WebKit,AttemptIdConflict; no overwrite,BLOCKED,fixture committed
+T08,real browser,stage candidate pack then activate,Chromium/Firefox/WebKit,old pointer until short activation tx completes; candidate pointer/state flip atomic,BLOCKED,fixture committed
+T09,real browser,active session across pack activation,Chromium/Firefox/WebKit,existing session retains old version; new session uses new version,BLOCKED,fixture committed
+T10,real browser two-tab,BroadcastChannel invalidation,Chromium/Firefox/WebKit,message received where supported; receiver rereads DB,BLOCKED,fixture committed
+T11,real browser two-tab,Web Lock pack installer exclusion,Chromium/Firefox/WebKit,one owner at a time; durable state resumes after owner loss,BLOCKED,fixture committed
+T12,real browser multi-tab,blocked DB upgrade,Chromium/Firefox/WebKit,typed blocked state; old tab prompted/closed; no DB deletion,NOT_RUN,requires orchestration extension to fixture
+T13,real browser,QuotaExceededError / storage pressure,Chromium/Firefox/WebKit,typed quota failure; old state retained; cleanup/export UX,NOT_RUN,actual exhaustion nondeterministic; do not use synthetic result as evidence
+T14,real browser,DataCloneError / invalid record,Chromium/Firefox/WebKit,typed non-cloneable/encode failure; transaction abort,BLOCKED,fixture contains candidate
+T15,real browser,cache asset eviction with DB state retained,Chromium/Firefox/WebKit,pack incomplete/repair; learner attempts preserved,NOT_RUN,requires service-worker/cache harness
+T16,real browser,terminate tab during pack download,Chromium/Firefox/WebKit,durable installation checkpoint resumes,NOT_RUN,requires network/cache harness
+T17,real browser,terminate during logical migration,Chromium/Firefox/WebKit,migration resumes from checkpoint; active generation unchanged until validate,NOT_RUN,requires migration fixture
+T18,Bun fixture,compile/typecheck selected Effect provider exact cohort,Bun 1.4.0,package resolves; provider contract compiles,BLOCKED,Bun/package install unavailable; installed effect/AGENTS.md unavailable
+T19,Bun+browser bundle,measure selected provider lazy chunk,production bundler,size recorded against budget,NOT_RUN,belongs with bundling evidence; do not estimate here
+T20,secondary emulator,fast adapter suite with fake-indexeddb 6.2.5,Bun test,CRUD/migration/idempotency smoke; never sole browser evidence,BLOCKED,package install unavailable

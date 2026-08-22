@@ -1,0 +1,25 @@
+error,category,trigger,retry,recovery,notes
+DatabaseOpenFailed,database,IDB open error/unknown provider open failure,no,retry once only if transient; otherwise recovery UI,provider cause preserved
+DatabaseUpgradeBlocked,database,blocked versionchange,yes after tab coordination,broadcast close request; ask other tabs to refresh,never delete database automatically
+DatabaseUpgradeFailed,database,upgrade migration abort/error,no blind retry,retain old version if browser did; surface diagnostics,migration code/incompatibility
+DatabaseVersionTooNew,database,older app sees unsupported logical/physical version,no,update/reload application,fail closed
+StorageTransactionAborted,transaction,AbortError/transaction abort,only if operation idempotent,reconcile immutable ID then retry if needed,Effect interruption may request abort
+StorageTransactionInactive,transaction,TransactionInactiveError,no,treat as adapter defect; remove async gap,do not mask with retry
+StorageConstraintViolation,transaction,ConstraintError,context-dependent,for immutable ID reread and compare,duplicate attempt may resolve idempotently
+StorageQuotaExceeded,storage,QuotaExceededError,after cleanup/user action,remove optional/retired data; offer export; retry,actual exhaustion requires browser test
+StorageRecordDecodeFailed,integrity,Effect Schema decode error,no blind retry,rebuild projection or quarantine affected pack; preserve diagnostics,stored data is untrusted
+StorageRecordEncodeFailed,integrity,Effect Schema encode error,no,program/data defect; do not write,pre-transaction validation preferred
+StorageRecordNotCloneable,integrity,DataCloneError,no,reject unsupported stored value,real browser mapping required
+StorageCommitOutcomeUnknown,transaction,context terminated before outcome observed and reconciliation initially unavailable,reconcile first,reopen and query immutable operation ID,use sparingly
+AttemptIdConflict,attempt,same attemptId with different canonical payload,no,stop and surface integrity/session conflict,same ID/same payload is success
+SessionRevisionConflict,session,expected session revision/position differs,no blind retry,reload durable session; require explicit recovery,prevents stale-tab advancement
+PackHashMismatch,pack,downloaded bytes digest differs,only refetch immutable URL under bounded policy,quarantine object/candidate,never activate
+PackGraphIncomplete,pack,manifest reference missing,after missing object is restored,remain staged/quarantined,ready requires closure
+PackIncompatible,pack,app/content/profile compatibility failure,no,keep old active pack,requires new app/content
+PackActivationGenerationConflict,pack,active generation changed during plan,yes after reread/replan,recompute candidate against current active generation,cross-tab race
+PackActivationFailed,pack,activation transaction failure,after cause resolved,old pointer remains if tx aborted; reread,never bulk copy in activation
+AssetMissing,cache,required immutable asset unavailable,yes,restore asset; pack cannot be ready per policy,do not delete progress
+StoragePersistenceDenied,storage,navigator.storage.persist() false/denied,not as error loop,warn; allow pack size/removal/export controls,UA policy
+StorageEstimateUnavailable,storage,StorageManager estimate missing/fails,n/a,continue with conservative UX,not correctness failure
+StorageEvicted,storage,active metadata/object closure missing after prior installation,yes via reinstall,preserve surviving attempts; reinstall packs,distinguish from 'no progress'
+DatabaseTerminated,database,abnormal connection termination/provider close,yes after reopening,close stale handle/reopen/reconcile,real-browser lifecycle test required

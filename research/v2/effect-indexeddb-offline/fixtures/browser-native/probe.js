@@ -1,0 +1,83 @@
+const DB='r24-native-probe';
+const sleep=(ms)=>new Promise(r=>setTimeout(r,ms));
+const req=(r)=>new Promise((resolve,reject)=>{r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)});
+const txDone=(tx)=>new Promise((resolve,reject)=>{tx.oncomplete=()=>resolve();tx.onabort=()=>reject(tx.error||new DOMException('Aborted','AbortError'));tx.onerror=()=>{};});
+const deleteDb=(name=DB)=>new Promise((resolve,reject)=>{const r=indexedDB.deleteDatabase(name);r.onsuccess=()=>resolve();r.onerror=()=>reject(r.error);r.onblocked=()=>reject(new Error('delete blocked'));});
+const openDb=(version=2)=>new Promise((resolve,reject)=>{const r=indexedDB.open(DB,version);r.onerror=()=>reject(r.error);r.onblocked=()=>reject(new Error('open blocked'));r.onupgradeneeded=(ev)=>{
+ const db=r.result;
+ if(ev.oldVersion<1){
+  db.createObjectStore('attemptEvents',{keyPath:'attemptId'});
+  db.createObjectStore('progressViews',{keyPath:'progressKey'});
+  db.createObjectStore('sessions',{keyPath:'sessionId'});
+  db.createObjectStore('meta',{keyPath:'key'});
+  db.createObjectStore('packs',{keyPath:['packId','version']});
+  db.createObjectStore('installations',{keyPath:'installationId'});
+ }
+ if(ev.oldVersion<2){
+  const attempts=r.transaction.objectStore('attemptEvents');
+  if(!attempts.indexNames.contains('bySession')) attempts.createIndex('bySession','sessionId');
+  const sessions=r.transaction.objectStore('sessions');
+  if(!sessions.indexNames.contains('byPackVersion')) sessions.createIndex('byPackVersion','packVersion');
+ }
+};r.onsuccess=()=>resolve(r.result)});
+const getOne=async(store,key)=>{const db=await openDb();const tx=db.transaction(store,'readonly');const out=await req(tx.objectStore(store).get(key));await txDone(tx);db.close();return out};
+const all=async(store)=>{const db=await openDb();const tx=db.transaction(store,'readonly');const out=await req(tx.objectStore(store).getAll());await txDone(tx);db.close();return out};
+const stable=(v)=>JSON.stringify(v,Object.keys(v).sort());
+function classify(e){const n=e?.name||'UnknownError';if(n==='QuotaExceededError')return 'StorageQuotaExceeded';if(n==='ConstraintError')return 'StorageConstraintViolation';if(n==='TransactionInactiveError')return 'StorageTransactionInactive';if(n==='AbortError')return 'StorageTransactionAborted';if(n==='DataCloneError')return 'StorageRecordNotCloneable';return 'StorageUnknown';}
+async function commitAttempt(payload,{injectAfterAttempt=false}={}){
+ const existing=await getOne('attemptEvents',payload.attemptId);
+ if(existing){if(stable(existing)===stable(payload)) return {status:'alreadyCommitted'};throw Object.assign(new Error('AttemptIdConflict'),{name:'AttemptIdConflict'});}
+ const db=await openDb();
+ const tx=db.transaction(['attemptEvents','progressViews','sessions'],'readwrite',{durability:'strict'});
+ const done=txDone(tx);
+ try{
+  tx.objectStore('attemptEvents').add(payload);
+  if(injectAfterAttempt){tx.abort();await done;throw new Error('unreachable');}
+  tx.objectStore('progressViews').put({progressKey:`q:${payload.questionId}`,questionId:payload.questionId,lastAttemptId:payload.attemptId,correct:payload.correct});
+  tx.objectStore('sessions').put({sessionId:payload.sessionId,position:payload.position+1,packVersion:payload.packVersion,profileVersion:payload.profileVersion});
+  await done;db.close();return {status:'committed'};
+ }catch(e){db.close();
+  if(e?.name==='ConstraintError' || e?.name==='AbortError'){
+   const after=await getOne('attemptEvents',payload.attemptId);
+   if(after && stable(after)===stable(payload)) return {status:'alreadyCommittedAfterRace'};
+   if(after) throw Object.assign(new Error('AttemptIdConflict'),{name:'AttemptIdConflict'});
+  }
+  throw e;
+ }
+}
+async function runSingle(){
+ const out={environment:{userAgent:navigator.userAgent,locks:!!navigator.locks,broadcastChannel:!!globalThis.BroadcastChannel,indexedDB:!!globalThis.indexedDB,storageManager:!!navigator.storage}};
+ await deleteDb().catch(()=>{});
+ let db=await openDb(1); const v1Stores=[...db.objectStoreNames]; db.close();
+ db=await openDb(2); const v2Stores=[...db.objectStoreNames]; const v2Indexes=[...db.transaction('attemptEvents','readonly').objectStore('attemptEvents').indexNames];db.close();
+ out.openMigrate={v1Stores,v2Stores,v2Indexes,pass:v1Stores.length===6&&v2Indexes.includes('bySession')};
+ const base={attemptId:'a-success',sessionId:'s1',questionId:'q1',profileVersion:'p1',packVersion:'pack-v1',position:0,answer:'B',correct:true,committedAt:'2026-08-21T22:00:00Z'};
+ const beforeCount=(await all('attemptEvents')).length;
+ let beforeFailure='';try{throw new Error('InjectedBeforeTransaction')}catch(e){beforeFailure=e.message}
+ const afterBeforeCount=(await all('attemptEvents')).length;
+ const partial={...base,attemptId:'a-abort',questionId:'q-abort'};let afterWriteError='';try{await commitAttempt(partial,{injectAfterAttempt:true})}catch(e){afterWriteError=e.name+':'+e.message}
+ const afterAbortAttempt=await getOne('attemptEvents','a-abort');const afterAbortProjection=await getOne('progressViews','q:q-abort');
+ const success=await commitAttempt(base);const persistedAttempt=await getOne('attemptEvents','a-success');const persistedProjection=await getOne('progressViews','q:q1');const persistedSession=await getOne('sessions','s1');
+ out.attemptTransaction={beforeFailure,beforeCount,afterBeforeCount,afterWriteError,rolledBack:!afterAbortAttempt&&!afterAbortProjection,success,persisted:!!persistedAttempt&&!!persistedProjection&&persistedSession?.position===1,pass:beforeCount===afterBeforeCount&&!afterAbortAttempt&&!afterAbortProjection&&success.status==='committed'};
+ const sameRetry=await commitAttempt(base);let conflict='';try{await commitAttempt({...base,answer:'C'})}catch(e){conflict=e.name}
+ out.idempotentRetry={sameRetry,conflict,eventCount:(await all('attemptEvents')).filter(x=>x.attemptId==='a-success').length,pass:sameRetry.status==='alreadyCommitted'&&conflict==='AttemptIdConflict'};
+ // seed old active pack and a pinned session
+ db=await openDb();let tx=db.transaction(['packs','meta','sessions'],'readwrite');let done=txDone(tx);tx.objectStore('packs').put({packId:'core',version:'v1',state:'active',checksum:'h1'});tx.objectStore('meta').put({key:'activePack',value:'v1'});tx.objectStore('sessions').put({sessionId:'pinned',position:2,packVersion:'v1',profileVersion:'p1'});await done;db.close();
+ // stage v2 outside activation tx
+ db=await openDb();tx=db.transaction(['packs','installations'],'readwrite');done=txDone(tx);tx.objectStore('packs').put({packId:'core',version:'v2',state:'ready',checksum:'h2'});tx.objectStore('installations').put({installationId:'i-v2',packId:'core',version:'v2',state:'ready'});await done;db.close();
+ const pointerBefore=(await getOne('meta','activePack')).value;
+ // short atomic pointer/state activation
+ db=await openDb();tx=db.transaction(['packs','meta','installations'],'readwrite',{durability:'strict'});done=txDone(tx);tx.objectStore('meta').put({key:'activePack',value:'v2'});tx.objectStore('packs').put({packId:'core',version:'v1',state:'rollback-retained',checksum:'h1'});tx.objectStore('packs').put({packId:'core',version:'v2',state:'active',checksum:'h2'});tx.objectStore('installations').put({installationId:'i-v2',packId:'core',version:'v2',state:'completed'});await done;db.close();
+ const pointerAfter=(await getOne('meta','activePack')).value;const pinned=await getOne('sessions','pinned');
+ db=await openDb();tx=db.transaction('sessions','readwrite');done=txDone(tx);tx.objectStore('sessions').put({sessionId:'new-after-activation',position:0,packVersion:pointerAfter,profileVersion:'p1'});await done;db.close();const fresh=await getOne('sessions','new-after-activation');
+ out.packActivation={pointerBefore,pointerAfter,v1:await getOne('packs',['core','v1']),v2:await getOne('packs',['core','v2']),pass:pointerBefore==='v1'&&pointerAfter==='v2'};
+ out.sessionPinning={pinnedVersion:pinned.packVersion,newSessionVersion:fresh.packVersion,pass:pinned.packVersion==='v1'&&fresh.packVersion==='v2'};
+ // real ConstraintError and DataCloneError, simulated quota translation
+ let constraintName='';db=await openDb();tx=db.transaction('attemptEvents','readwrite');done=txDone(tx);tx.objectStore('attemptEvents').add(base);try{await done}catch(e){constraintName=e?.name||tx.error?.name||'unknown'}db.close();
+ let cloneName='';db=await openDb();tx=db.transaction('meta','readwrite');done=txDone(tx);try{tx.objectStore('meta').put({key:'bad-clone',value:()=>1});await done}catch(e){cloneName=e.name;try{tx.abort()}catch{}}db.close();
+ const quotaSynthetic=new DOMException('synthetic quota mapping only','QuotaExceededError');
+ let estimate=null,persisted=null;try{estimate=await navigator.storage.estimate();persisted=await navigator.storage.persisted()}catch{}
+ out.errorTranslation={constraint:{native:constraintName,mapped:classify({name:constraintName})},dataClone:{native:cloneName,mapped:classify({name:cloneName})},quota:{native:'QuotaExceededError',mapped:classify(quotaSynthetic),synthetic:true},storageEstimate:estimate,persisted,pass:classify({name:'ConstraintError'})==='StorageConstraintViolation'&&classify(quotaSynthetic)==='StorageQuotaExceeded'};
+ return out;
+}
+window.R24={runSingle,commitAttempt,deleteDb,openDb,getOne,all,classify,sleep};
