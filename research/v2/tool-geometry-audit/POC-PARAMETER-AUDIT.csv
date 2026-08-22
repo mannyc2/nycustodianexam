@@ -1,0 +1,19 @@
+poc_id,parameter_or_group,unit_expected,claimed_basis_from_report,audited_basis,evidence_class,value_available,source_coordinate_available,uncertainty_available,status,resolution
+adjustable-wrench,overall dimensions and jaw capacity,mm,report says standards can constrain dimensions,unknown,standards-backed or editorial,absent,absent,absent,BLOCKED,recover parameter JSON and exact ISO/measurement citations
+adjustable-wrench,smooth parallel jaw faces,mm/boolean,decisive invariant,narrative only,derived/editorial,absent,current taxonomy only,absent,BLOCKED,inspect B-rep faces and parallelism tolerance
+adjustable-wrench,"worm diameter, pitch, tooth/profile",mm,explicitly unresolved,unknown,editorial,absent,absent,absent,BLOCKED,recover source and review worm engagement/profile
+adjustable-wrench,movable jaw guide clearance,mm,explicitly unresolved,unknown,editorial,absent,absent,absent,BLOCKED,recover value/tolerance and collision/contact tests
+adjustable-wrench,handle cross-section and contour,mm,explicitly unresolved,unknown,editorial,absent,absent,absent,BLOCKED,recover values and genericity rationale
+pipe-wrench,overall dimensions and jaw offsets,mm,explicitly unresolved,unknown,editorial or sourced,absent,absent,absent,BLOCKED,recover parameter JSON and reference/measurement basis
+pipe-wrench,tooth pitch/profile/orientation,mm/deg,explicitly unresolved,unknown,editorial,absent,absent,absent,BLOCKED,inspect exact serration geometry and opposing grip direction
+pipe-wrench,hook-jaw articulation/display pose,mm/deg,explicitly unresolved,unknown,editorial,absent,absent,absent,BLOCKED,recover pose and verify open throat/clearances
+pipe-wrench,adjustment mechanism detail,mm,explicitly unresolved,unknown,editorial,absent,absent,absent,BLOCKED,recover source and engagement model
+pipe-wrench,body taper and clearances,mm,explicitly unresolved,unknown,editorial,absent,absent,absent,BLOCKED,recover values and intersection tests
+cup-plunger,handle length/diameter/insertion depth,mm,insertion depth unresolved,unknown,editorial or measured,absent,absent,absent,BLOCKED,recover parameter/provenance record
+cup-plunger,cup diameter/height/curvature,mm,curvature unresolved,unknown,editorial or measured,absent,absent,absent,BLOCKED,recover dimensions and representative-object basis
+cup-plunger,rubber wall thickness/material deformation,mm/material,explicitly unresolved,unknown,editorial,absent,absent,absent,BLOCKED,mechanical/material review required; rigid B-rep may mislead
+cup-plunger,plain rim/no flange,mm/boolean,decisive invariant,narrative only,derived/editorial,absent,current taxonomy only,absent,BLOCKED,inspect underside and fixed scored view
+flange-plunger,handle length/diameter/insertion depth,mm,insertion depth unresolved,unknown,editorial or measured,absent,absent,absent,BLOCKED,recover parameter/provenance record
+flange-plunger,cup diameter/height/curvature,mm,curvature unresolved,unknown,editorial or measured,absent,absent,absent,BLOCKED,recover dimensions and representative-object basis
+flange-plunger,flange diameter/height/thickness/profile,mm,flange profile unresolved,unknown,editorial,absent,absent,absent,BLOCKED,recover exact profile and verify attachment/visibility
+flange-plunger,flange flexibility/material deformation,material,explicitly unresolved,unknown,editorial,absent,absent,absent,BLOCKED,qualified review needed; static rigid pose may overstate shape

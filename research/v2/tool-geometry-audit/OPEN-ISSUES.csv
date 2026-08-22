@@ -1,0 +1,13 @@
+issue_id,severity,area,status,description,impact,resolution_evidence,owner,blocks
+ISSUE-001,critical,raw identity,open,"report parts do not match recorded 91,620-byte report size",raw report completeness and exact SHA cannot be trusted,recover exact archive and verify all checksums,recovery owner,all POC audit
+ISSUE-002,critical,source availability,open,build_poc.py and parameter JSON are absent,no model definition can be audited or rebuilt,recover exact files at recorded hashes,recovery owner,rebuild and geometry review
+ISSUE-003,critical,manifests,open,DELIVERABLE-SHA256SUMS and POC MANIFEST are absent,79/79 claim cannot be independently checked,recover checksum manifests and build trees,recovery owner,checksum/reproducibility gate
+ISSUE-004,high,environment,open,historical dependency/container versions are absent,cross-run results cannot be reproduced,recover lock/container digest and raw commands,build owner,rebuild gate
+ISSUE-005,high,STEP determinism,open,current OCCT emits volatile timestamp/counter fields,raw byte hashes may differ without geometry drift,define normalized and semantic STEP equivalence policy,geometry tooling owner,reproducibility policy
+ISSUE-006,high,taxonomy,open,old 14-pair narrative does not match current 14-pair registry,old inventory cannot drive production,regenerate inventory and pair assets from current taxonomy,content owner,taxonomy compatibility
+ISSUE-007,high,rights,open,ABO official surfaces conflict on CC BY vs CC BY-NC,ABO reuse is legally ambiguous,pin exact archive LICENSE and obtain rights review,rights owner,ABO use
+ISSUE-008,high,rights,open,exact standards/source ledger is absent,parameter claims cannot be tied to sources/editions,recover source ledger and clause-level citations,rights/content owner,parameter approval
+ISSUE-009,high,mechanical,open,no qualified review has occurred,reproducibility cannot become correctness,complete exact-hash mechanical packet review,mechanical SME,production approval
+ISSUE-010,high,answer leak,open,no SVG/GLB/scored-page bytes are present,metadata and view leakage cannot be tested,run structured asset and browser leak probes,security/accessibility owner,scored use
+ISSUE-011,high,accessibility,open,no neutral/full descriptions or nonvisual equivalents are present,WCAG behavior cannot be reviewed,author and test exact release candidates,accessibility owner,publication
+ISSUE-012,medium,binary storage,open,no approved LFS/object storage/release artifact policy,future reviewed binaries lack durable publication path,select storage and immutable addressing policy,maintainer,asset import

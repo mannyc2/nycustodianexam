@@ -1,0 +1,11 @@
+decision_id,decision,evidence_status,recommendation,alternatives,adoption_status,stability,runtime_measurement_required,blocking_items,handoff
+D-001,Raw tree identity,CONFIRMED,"Treat current raw tree as partial/inconsistent, not exact bundle reconstruction",trust README claim without size check,audit finding,stable at source SHA,no,missing archive and report bytes,recovery owner
+D-002,Four POC classifications,BLOCKED,Classify all four as evidence-blocked,non-reproducible; rights-blocked; approved,audit finding,until exact evidence recovered,yes after recovery,"source, parameters, manifests, outputs",geometry owner
+D-003,Historical 79/79 claim,UNKNOWN,Retain as unverified historical claim only,accept as current proof,audit finding,until manifests recovered,yes,comparison inputs and environment,build owner
+D-004,STEP reproducibility metric,OBSERVED,Use raw hash plus normalized-header hash plus re-import/geometric equivalence,raw hash only,recommended,tool-version-sensitive,yes,policy and representative POC probes,geometry tooling owner
+D-005,Taxonomy authority,CONFIRMED,Regenerate inventory/pairs from current docs/TAXONOMY.md,reuse old missing CSV,recommended,changes with taxonomy SHA,yes for generated inventory,current generator and review,content owner
+D-006,ABO use,CONFIRMED,Keep rights-blocked until exact archive license conflict is resolved,assume more permissive page,recommended,license-surface-sensitive,no,exact LICENSE and rights review,rights owner
+D-007,Project-authored POC rights,BLOCKED,Require parameter/source ledger and repository provenance before reuse,assume MIT cures all inputs,recommended,per exact source hash,no,missing model/source evidence,rights owner
+D-008,Scored asset authority,CONFIRMED,Fixed static reviewed asset only; no pre-answer rotation,interactive GLB in scored mode,maintained direction,stable unless product contract changes,yes,actual delivery fixture and leak scan,security/accessibility owner
+D-009,Mechanical approval,CONFIRMED,Require qualified exact-hash review after reproducibility,automated validation only,maintained direction,per semantic model hash,yes,recovered POCs and reviewer roster,mechanical SME
+D-010,Production approval,CONFIRMED,Grant none in R2.10,promote four POCs,audit finding,stable,no,all evidence/review gates,maintainer
