@@ -1,0 +1,9 @@
+# Manifest note
+#
+# This lane was published through the connected GitHub contents API. A complete
+# content-hash manifest cannot be truthfully generated without reading every
+# final remote blob after publication. The lane therefore records file-level
+# integrity through Git blob SHAs exposed by GitHub and leaves cryptographic
+# SHA-256 recomputation as a final follow-up gate rather than fabricating values.
+#
+# Required substantive paths are enumerated in FINAL-RECEIPT.md.
