@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>R2.2 direct DOM question-player spike</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body data-renderer="direct">
+<main id="player" data-phase="static" data-renderer="direct-dom">
+  <h1>Question-player research fixture</h1>
+  <form id="question-form">
+    <fieldset>
+      <legend id="question-heading" tabindex="-1">Which action best preserves a fire door's protective function?</legend>
+      <div class="options">
+        <label><input type="radio" name="answer" value="a"><span>Prop it open while the corridor is occupied</span></label>
+        <label><input type="radio" name="answer" value="b"><span>Keep it unobstructed and allow it to close and latch</span></label>
+        <label><input type="radio" name="answer" value="c"><span>Remove the closer if it shuts too quickly</span></label>
+        <label><input type="radio" name="answer" value="d"><span>Cover the latch so the door opens silently</span></label>
+      </div>
+    </fieldset>
+    <div class="actions">
+      <button id="commit-button" type="submit" disabled>Commit answer</button>
+      <button id="flag-button" type="button" aria-pressed="false">Flag for review</button>
+      <button id="next-button" type="button" hidden>Next item</button>
+      <button id="leave-button" type="button">Leave player</button>
+    </div>
+  </form>
+  <section id="error-panel" class="panel error" tabindex="-1" role="alert" hidden>
+    <h2>Save failed</h2>
+    <p id="error-text"></p>
+  </section>
+  <section id="outcome-panel" class="panel outcome" hidden>
+    <h2 id="outcome-heading" tabindex="-1"></h2>
+    <p id="explanation"></p>
+  </section>
+  <p id="live-region" role="status" aria-live="polite" aria-atomic="true">Loading study state.</p>
+</main>
+<script type="module" src="./js/bootstrap.js"></script>
+</body>
+</html>

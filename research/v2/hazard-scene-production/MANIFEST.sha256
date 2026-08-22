@@ -1,0 +1,19 @@
+# R2.9 SHA-256 manifest
+# Generated from exact GitHub blob contents at substantive head 0dd9ad3c154a8e197cd3b97f28c18e7fb431c4b0.
+# Excludes MANIFEST.sha256 (self-reference) and FINAL-RECEIPT.md (final bookkeeping/self-reference).
+29b7b09c25bc4501ab13e59e9def957a6069617df7ab3a3aba0e5d01cb7926e9  research/v2/hazard-scene-production/ACCESSIBILITY-AUTHORING.md
+a3dcbb474429108b492c1da5e96a49f6a901658dc94856f82d130d1b76b79b6a  research/v2/hazard-scene-production/COST-THROUGHPUT-MODEL.csv
+e7ab47027f6c4ae907c9fcde90e617c67a4bc059d44a400c35ac6f8e1b783740  research/v2/hazard-scene-production/DECISION-MATRIX.csv
+7929e1c6312e1201fa11cfbeac47183c2ed82c365ed15ce802d4a117d1f6828f  research/v2/hazard-scene-production/GENERATIVE-BOUNDARY.md
+ae1200eed42f6fb9e98dc205b7301d747e1e979f9719c31e36a4984ca8443651  research/v2/hazard-scene-production/OPEN-QUESTIONS.csv
+e446f7b93507fc59ce39e3d59ceefda82fb30432ed1424b11641f8dad144fc21  research/v2/hazard-scene-production/PILOT-PLAN.md
+3eef0055deacfd1f82edac3722064f681b041bb78c84c2de9e1385ec7d1833ff  research/v2/hazard-scene-production/PIPELINE-COMPARISON.csv
+e0955d949e6448981abad5c4b1cde0b143384e309124cc45b9a43b5753135e01  research/v2/hazard-scene-production/QA-FAILURE-CATALOG.csv
+6c2e7ffe5fb8c44c98eaf28cba2a3773d7884bb295d1751f5509ea7984fac927  research/v2/hazard-scene-production/README.md
+825e177301001b5d36339e9c56ccc56c76e69c5c8d0ceb596d2ea73824c8feaa  research/v2/hazard-scene-production/REPORT.md
+bf15535045b11711e9b6bac322811aa6b3d400efc454d92ba647b9cf332e58a6  research/v2/hazard-scene-production/SCENE-ASSET-ARCHITECTURE.md
+a81cf5e84148ecedd9d915cc26b8a682362724bd81b0bc221b5d1e5dd83aa01c  research/v2/hazard-scene-production/SOURCE-LEDGER.csv
+5aed997c9576e363bbff11a0e683efae3320c720c0ee30b54785f63958380fb8  research/v2/hazard-scene-production/START-RECEIPT.md
+e35f3669a5265cffab3b70e68848782bcc1bce4dfbda34df20074c92e73f39c3  research/v2/hazard-scene-production/VERSIONING-CONTRACT.md
+324667efc53f7fb179815ee44954e3d8a0e7c1e1a79ca4146cc7c77caa3c6401  research/v2/hazard-scene-production/WORKSPACE-INTEGRATION.md
+9f8b30f6fea8d60ba1bfcbe6229e13ee550c338c0e855f82c500ee8ac2bd57d0  research/v2/hazard-scene-production/ZONE-HOTSPOT-CONTRACT.md

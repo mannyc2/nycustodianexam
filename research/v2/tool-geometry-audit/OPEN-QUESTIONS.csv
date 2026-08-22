@@ -1,0 +1,13 @@
+question_id,question,evidence_status,why_open,resolving_evidence,handoff
+Q-001,Where are the exact outer archive and nested POC archive bytes?,BLOCKED,only hashes are present,archive bytes matching recorded SHA-256 values,recovery owner
+Q-002,"Why are the five report parts 44,092 bytes shorter than the recorded report?",UNKNOWN,no complete source report is present,exact report plus a part-generation receipt,recovery owner
+Q-003,What exact versions and container produced the historical 79/79 result?,UNKNOWN,environment lock is absent,"container digest, lockfile, commands, raw logs",build owner
+Q-004,"Which 79 files were compared, and were volatile STEP fields normalized?",UNKNOWN,comparison manifest is absent,two output manifests and comparison script,geometry tooling owner
+Q-005,What are the exact parameter values and basis categories for each POC?,BLOCKED,parameter records are absent,four parameter/provenance JSON files,content/geometry owner
+Q-006,Which ISO/ASME/ANSI clauses or original measurements support each value?,BLOCKED,source ledger is absent,dated source ledger and measurement sheets,rights/content owner
+Q-007,Does each recovered B-rep pass exact component/contact/intersection review?,BLOCKED,model source and outputs are absent,"source, STEP, validation, and qualified review",mechanical SME
+Q-008,Does the current taxonomy require a regenerated 65-asset inventory?,INFERRED,pair set and taxonomy have drifted,machine-generated inventory at current SHA,content owner
+Q-009,Which exact ABO license applies to the candidate archive/object?,UNKNOWN,official pages conflict,the archive LICENSE plus legal/rights determination,rights owner
+Q-010,"Are actual GLB/SVG names, metadata, URLs, and descriptions answer-neutral?",BLOCKED,no derivatives or delivery fixture,structured scan and browser pre-commit inspection,security/accessibility owner
+Q-011,Who is qualified to sign off each tool family?,UNKNOWN,no reviewer roster exists,documented reviewer roles and competence,maintainer
+Q-012,Where will exact reviewed binaries be stored and version-pinned?,UNKNOWN,storage policy is not approved,maintainer storage/versioning decision,maintainer

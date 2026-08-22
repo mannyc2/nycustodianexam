@@ -1,0 +1,9 @@
+R2.4 execution environment
+observed_utc=2026-08-21T22:20:59Z
+os=Linux x86_64, kernel 6.18.35
+node=v22.16.0
+bun=NOT_FOUND_ON_PATH
+chromium=Chromium 144.0.7559.96 built on Debian GNU/Linux 13 (trixie)
+chromium_cdp=available on loopback
+outbound_package_install=BLOCKED/unavailable in executor
+effect_runtime_fixture=NOT_RUN (no Bun/package install; installed effect/AGENTS.md unavailable)

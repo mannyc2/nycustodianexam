@@ -1,0 +1,16 @@
+decision_area,source_inputs,normalized_position,status,open_or_rejected,redo_priority
+effect-version,"E01,E02,E04,E06,E07,E08,E09",latest Effect v4 required,SUPERSEDED/REDO,v3 findings historical only,P0
+effect-core-patterns,"E04,E08",pure deterministic functions + Effect capability workflows; cohesive services/Layers; edge-owned runtime,"REUSABLE, NEEDS V4 RESTATEMENT",exact APIs and package topology open,P0
+ui-renderer,"E01,E03",renderer-neutral state and full question-player evidence gate,PROVISIONAL/REDO,"direct DOM and Lit are candidates, not decisions",P0
+commit-before-reveal,"E01,E03,E04,E08,product spec",durable transaction completes before reveal in persistent mode,MAINTAINED/REJECT CONFLICT,E01/E03 failure behavior rejected,accepted
+schema-content-compiler,E05,Effect v4 Schema for values; registry relational gates for publication,STRONG REUSABLE/REFRESH,exact latest v4 APIs and Bun placement open,P1
+effect-platform,"E06,E09",selective abstractions; native APIs inside project services where truthful,REUSABLE PRINCIPLE/REDO,v4 package/API/Cloudflare reality open,P0
+indexeddb-provider,E07,"one DB, multiple services, short transactions, staged packs",ARCHITECTURE REUSABLE; PROVIDER REDO,idb choice not accepted under v4 constraint,P0
+service-worker,"E02,E06,E07",small native worker is a strong hypothesis,PROVISIONAL/REDO,must validate latest v4 and lifecycle/bundle evidence,P1
+static-page-boundary,"E02,E04,E06,E08",static/reference pages should avoid eager Effect runtime,STRONG PROVISIONAL,remeasure latest v4+Bun/Vite integrated graph,P0
+bundle-budgets,E02,per-file gzip/Brotli route closure measurement,METHOD ACCEPTED; NUMBERS PROVISIONAL,rerun current v4+Bun workspaces,P0
+cloudflare,"E04,E06,E09",Cloudflare direction retained; v3 analysis superseded,REDO,native fetch vs v4 HTTP/HttpApi needs current research,P0
+workspace-layout,"E01,E03,E04,E08",apps/ and packages/ with Bun workspaces,FIRST-PASS LAYOUT REJECTED,exact Effect-native packages/apps open,P0
+testing,"E01,E03,E04,E07,E08","pure, Effect, browser, cross-tab, offline, accessibility and failure-injection layers",REUSABLE/REFRESH,Bun/current v4 tools and commands open,P1
+tool-geometry,geometry bundle,deterministic B-rep/static render pipeline; no production approval,RAW RECOVERED,human mechanical review pending,separate
+hazard-scenes,historical illustration pipeline,separate production research needed,OPEN,tool CAD architecture does not automatically apply,P2

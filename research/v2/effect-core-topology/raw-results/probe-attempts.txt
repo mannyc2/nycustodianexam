@@ -1,0 +1,48 @@
+R2.1 required probe result
+Captured: 2026-08-21 UTC
+
+Selected coordinates
+---------------------
+Bun: 1.4.0
+effect: 4.0.0-rc.111
+@effect/platform-bun source coordinate: 4.0.0-rc.111
+Effect source: 436f10d1efccec308426532ff3f88df9a96434f3
+
+Planned commands
+----------------
+bun install
+bun run build
+bun test
+bun run probe
+
+Observed result
+---------------
+1. `bun --version` failed because Bun was not installed.
+2. Bun release/package acquisition failed because the shell had no outbound
+   DNS/TCP connectivity.
+3. `bun install` was therefore not run.
+4. A real text `bun.lock` was not generated.
+5. `node_modules/effect/AGENTS.md` was not materialized and could not be read.
+6. The TypeScript fixture was not compiled.
+7. The Bun test suite was not executed.
+8. The BunRuntime entry was not executed.
+9. The ManagedRuntime browser bridge was not executed in a browser.
+
+Statuses by required probe
+--------------------------
+P1 Context.Service + focused Layer + named methods: BLOCKED runtime; source fixture committed.
+P2 Schema-modeled expected errors: BLOCKED runtime; source fixture committed.
+P3 scoped background/resource Layer: BLOCKED runtime; source fixture committed.
+P4 BunRuntime process entry: BLOCKED runtime; source fixture committed.
+P5 browser ManagedRuntime imperative bridge: BLOCKED runtime/browser; source fixture committed.
+P6 Layer composition and test substitution: BLOCKED runtime; source fixture committed.
+
+Source-level evidence
+---------------------
+The exact upstream source/guidance was inspected for Context.Service, Effect.fn,
+Schema.TaggedError, Context.Reference, ManagedRuntime, BunRuntime, Layer.launch,
+Effect.acquireRelease, and current migration behavior.
+
+No compile or runtime success is claimed. The resolving probe is to run the
+committed fixture with Bun 1.4.0 in a network-enabled environment and preserve
+the generated lockfile and raw command output.

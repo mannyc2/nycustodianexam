@@ -1,0 +1,32 @@
+R2.10 POC rebuild attempt
+source_branch=agent/chat-corpus-reconciliation
+source_sha=00155a1d555d1d4c84f3ab9682ee876dd2a57fbb
+started_at=2026-08-22T10:36:22Z
+
+GitHub evidence lookup:
+- expected build script: source/tool-geometry/poc/build_poc.py
+- repository path lookup: no matching file under research/initial-pass/raw/tool-geometry/
+- expected parameters: poc/parameters/*.json
+- repository path lookup: no parameter directory
+- expected dependency lock/container specification: absent
+- expected build A/B manifests and outputs: absent
+
+Result:
+BLOCKED_BEFORE_POC_EXECUTION
+
+Reason:
+The exact source script, parameter records, dependency environment, manifests, and target outputs are not present in the immutable GitHub source. Reconstructing them from narrative prose is prohibited.
+
+Secondary environment probes executed:
+1. python probes/toolchain_smoke.py --out raw-results
+2. python probes/step_process_probe.py raw-results/process-a/box.step
+3. sleep 2
+4. python probes/step_process_probe.py raw-results/process-b/box.step
+
+Secondary probe result:
+- CadQuery/OCCT imports and STEP/STL export work in this audit environment.
+- Same-process identical geometry: STL hashes match; STEP hashes differ because the translator product counter changes.
+- Separate-process identical geometry: STEP hashes differ because FILE_NAME embeds export time.
+- After normalizing only those observed volatile fields, all four STEP files have the same normalized SHA-256.
+
+These probes do not reproduce any of the four POCs.

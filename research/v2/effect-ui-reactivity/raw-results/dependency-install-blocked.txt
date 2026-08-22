@@ -1,0 +1,31 @@
+R2.2 dependency acquisition probe
+utc=2026-08-21T22:26:38Z
+NETWORK=caas_packages_only
+
+$ bun --version
+bash: line 14: bun: command not found
+exit=127
+
+$ npm --fetch-retries=0 --fetch-timeout=5000 view effect@4.0.0-rc.111 version
+npm error code EAI_AGAIN
+npm error syscall getaddrinfo
+npm error errno EAI_AGAIN
+npm error request to https://registry.npmjs.org/effect failed, reason: getaddrinfo EAI_AGAIN registry.npmjs.org
+npm error A complete log of this run can be found in: /home/oai/.npm/_logs/2026-08-21T22_26_38_727Z-debug-0.log
+exit=1
+
+$ git ls-remote https://github.com/Effect-TS/effect.git refs/tags/effect@4.0.0-rc.111
+fatal: unable to access 'https://github.com/Effect-TS/effect.git/': Could not resolve host: github.com
+exit=128
+
+$ curl -I --connect-timeout 5 https://registry.npmjs.org/effect
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0curl: (6) Could not resolve host: registry.npmjs.org
+exit=6
+
+node_modules/effect/AGENTS.md:
+absent
+bun.lock:
+absent-not-fabricated

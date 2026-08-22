@@ -1,0 +1,20 @@
+record_id,path_or_object,recorded_sha256,recorded_size_bytes,present_in_git,git_blob_sha,git_size_bytes,verification,status,notes
+outer-archive,source/8f7353c8-08fd-4677-bfeb-69a595dd0638.zip,40cfab3f2a0a6d26782b7e24776d4d595ba6cef86389836030134844c3aaeff5,,no,,,record only,BLOCKED,bytes absent
+research-bundle,source/tool-geometry/research-bundle.zip,a3dbdb262733be6527347e26cb5e6d8fdb612cf7ee6a09574730a7a6ad188b06,,no,,,record only,BLOCKED,bytes absent
+poc-evidence,source/tool-geometry/poc-evidence.zip,725f997229f7f708dfb00189b3790f8d7fa0f5e30ed3378fd0fd29f48ac5ee7d,,no,,,record only,BLOCKED,bytes absent
+research-report,source/tool-geometry/research-report.md,d12a9f91383c8ce0339d078f9404e1095b53c9537012b334c26e08143e9ce327,91620,partial,,47528,size comparison,FAILED,"present parts are 44,092 bytes short"
+asset-schema,source/tool-geometry/asset-manifest.schema.json,09bb058c31219c021e477eafd7a92ef24ba5c1036bda407537ff8a602e3fdd69,,yes,45cb90652271ddd98174e665ce32e2b37a731946,8261,Git blob identity observed; source SHA-256 not recomputed,PARTIAL,"connector exposed content and Git SHA-1, not a local source archive byte stream"
+taxonomy-inventory,source/tool-geometry/taxonomy-inventory.csv,cf6c73e70b46ea7e599844b0ece3703010bb13f4c6f19bd1cec53f4f43bb1802,,no,,,record only,BLOCKED,bytes absent
+confusable-pairs,source/tool-geometry/confusable-pairs.csv,ab7c85d77464a34dc8e90c7b2c54eb8c5382bce3907cb7ed19a782672c38834d,,no,,,record only,BLOCKED,bytes absent
+visual-invariants,source/tool-geometry/first-20-visual-invariants.csv,7e9b9c727d647395fa8f36c11af0c0daf9726da18148d8d80de003b1e26eebd1,,no,,,record only,BLOCKED,bytes absent
+raw-source-ledger,source/tool-geometry/source-ledger.csv,7c752becfe77906bfdc3dffcd1ff6c78ba8946860ca3f06bbac3a7686781758b,,no,,,record only,BLOCKED,bytes absent
+top-poc-summary,source/tool-geometry/poc-summary.json,08fc24f8d0f55e430286e2cb05eb9c339dc0d29210b8e8955258756ae22786f1,,no,,,record only,BLOCKED,bytes absent
+deliverable-sums,source/tool-geometry/DELIVERABLE-SHA256SUMS,e2340ca7daf1dba45bbdd31d9e69db97d3abb5c6883d913a5937c4e6a2b0fe16,,no,,,record only,BLOCKED,bytes absent
+build-script,source/tool-geometry/poc/build_poc.py,9192da5817ca73f35b3fcec3b15b86ae2f3284825e8ad7520fbdf4c1b0561738,,no,,,record only,BLOCKED,bytes absent
+poc-summary,source/tool-geometry/poc/poc-summary.json,db8018650e290a6f515564f26c5c0ce935a1e2e887efcc9d856c1b52660972cb,,no,,,record only,BLOCKED,bytes absent
+poc-manifest,source/tool-geometry/poc/MANIFEST.sha256,36c657fb36d7df50f1de79325b54c381b28e7f53e5ab79c84763f2c5dd4d08a8,,no,,,record only,BLOCKED,bytes absent
+report-part-01,research/initial-pass/raw/tool-geometry/report/part-01.md,,,yes,6be7dc485b4c8998bee2fb5c880e68292ba9c1f9,14794,Git object observed,CONFIRMED,no source SHA-256 row for the part
+report-part-02,research/initial-pass/raw/tool-geometry/report/part-02.md,,,yes,3be7e246c9ad70de8eb621dd7a84054ea1c4367a3,11286,Git object observed,CONFIRMED,no source SHA-256 row for the part
+report-part-03,research/initial-pass/raw/tool-geometry/report/part-03.md,,,yes,0f8464ad92f7b3a09d3501aee19ca4bba3eb53e0,10940,Git object observed,CONFIRMED,no source SHA-256 row for the part
+report-part-04,research/initial-pass/raw/tool-geometry/report/part-04.md,,,yes,782e36a17d2e35a9744d42099f5afac6fb2c6642,8724,Git object observed,CONFIRMED,no source SHA-256 row for the part
+report-part-05,research/initial-pass/raw/tool-geometry/report/part-05.md,,,yes,510cbba0fffa07c41a5ffd52b7613869b4a74352,1784,Git object observed,CONFIRMED,no source SHA-256 row for the part

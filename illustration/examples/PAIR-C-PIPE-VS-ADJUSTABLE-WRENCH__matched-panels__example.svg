@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-hidden="true" focusable="false">
+  <style>
+  .outer { fill: #ffffff; stroke: #111111; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+  .outer-none { fill: none; stroke: #111111; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+  .struct { fill: none; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .struct-fill { fill: #ffffff; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .fine { fill: none; stroke: #111111; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .light { fill: #dddddd; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .mid { fill: #bcbcbc; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .ink { fill: #111111; stroke: none; }
+</style>
+  
+<rect x="34" y="72" width="460" height="880" rx="20" fill="#ffffff" stroke="#111111" stroke-width="4"/>
+<rect x="530" y="72" width="460" height="880" rx="20" fill="#ffffff" stroke="#111111" stroke-width="4"/>
+<g transform="translate(-18 80) scale(0.55)">
+<g transform="rotate(-24 512 512)">
+  <path class="outer" d="M132 522 Q112 548 132 580 L642 580 Q680 578 713 551 L748 518 L710 486 Q676 522 637 522 Z"/>
+  <path class="struct" d="M180 548 L630 548"/>
+  <path class="fine" d="M214 535 L196 565 M252 535 L234 565 M290 535 L272 565"/>
+  <path class="outer" d="M642 522 L700 472 L744 472 L744 493 L848 493 L850 544 L760 544 L710 584 L642 580 Z"/>
+  <path class="struct" d="M754 493 L765 481 L776 493 L787 481 L798 493 L809 481 L820 493 L831 481 L842 493"/>
+  <path class="outer" d="M700 472 L716 420 Q754 372 821 360 Q849 355 873 366 L862 419 Q835 415 810 426 L770 447 L748 493 L716 501 Z"/>
+  <path class="struct" d="M773 446 L784 456 L795 439 L806 448 L817 431 L828 440 L840 421 L851 431"/>
+  <path class="struct-fill" d="M718 463 L756 463 L759 527 L716 527 Z"/>
+  <ellipse class="light" cx="738" cy="525" rx="32" ry="22"/>
+  <path class="fine" d="M718 514 L727 535 M731 507 L740 541 M744 507 L753 538 M757 512 L763 530"/>
+  <path class="fine" d="M729 439 L749 439 M727 450 L751 450"/>
+</g>
+</g>
+<g transform="translate(478 80) scale(0.55)">
+<g transform="rotate(-24 512 512)">
+  <path class="outer" d="M130 522 Q110 550 132 582 L638 582 Q677 579 712 548 L744 518 L707 486 Q674 522 635 522 Z"/>
+  <path class="struct" d="M178 550 L624 550"/>
+  <ellipse class="struct" cx="172" cy="552" rx="21" ry="14"/>
+  <path class="outer" d="M635 522 L698 455 L721 387 L774 374 L773 442 L855 442 L855 487 L756 487 L729 517 L704 548 Z"/>
+  <path class="outer" d="M704 548 L733 507 L756 487 L855 487 L855 533 L780 533 L750 570 L704 582 Z"/>
+  <rect class="struct-fill" x="708" y="466" width="58" height="78" rx="8"/>
+  <ellipse class="light" cx="737" cy="505" rx="34" ry="23"/>
+  <path class="fine" d="M716 495 L724 516 M729 488 L737 522 M742 487 L750 521 M755 491 L762 513"/>
+  <path class="struct" d="M773 442 L773 487 M756 487 L756 533"/>
+  <path class="struct" d="M777 442 L850 442 M779 487 L850 487"/>
+</g>
+</g>
+</svg>
