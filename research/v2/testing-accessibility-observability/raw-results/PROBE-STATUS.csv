@@ -1,0 +1,9 @@
+probe_id,probe,status,evidence
+P01,Effect service test with test Layer,BLOCKED,Fixture committed; Bun/package install unavailable so @effect/vitest execution not claimed
+P02,clock/random determinism,BLOCKED,Fixture committed using TestClock and Random.withSeed; execution not claimed
+P03,interruption/finalizer assertion,BLOCKED,Pattern specified; executable fixture pending installed package environment
+P04,browser durable-commit failure and no-reveal,BLOCKED,Representative browser fixture committed; real-origin execution not claimed
+P05,accessibility-tree pre-reveal scan,BLOCKED,Gate specified; Playwright/AT execution pending
+P06,offline reload,BLOCKED,Requires real-origin Service Worker/browser harness
+P07,bundle gate sample,BLOCKED,R2.5 final current-v4 production measurements unavailable; numeric gate intentionally provisional
+P08,Cloudflare test harness,BLOCKED,No Worker implementation and no current workerd harness execution in this lane
