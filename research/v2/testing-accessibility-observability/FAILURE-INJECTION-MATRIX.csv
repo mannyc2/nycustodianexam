@@ -1,0 +1,19 @@
+failure_id,boundary,injection,authoritative_expected_result,runner,status
+F01,attempt commit,IndexedDB unavailable,no reveal; selection remains editable; typed recoverable error,real browser,BLOCKED
+F02,attempt commit,quota exceeded,no reveal; prior state intact; cleanup/export guidance,real browser,BLOCKED
+F03,attempt commit,transaction abort after partial writes,all participating stores rolled back; no reveal,real browser,BLOCKED
+F04,attempt commit,unknown outcome after request dispatch,reconcile stable attempt ID before deciding; never double count,real browser,BLOCKED
+F05,attempt retry,same ID same payload,one authoritative event; retry succeeds as reconciliation,real browser,BLOCKED
+F06,attempt retry,same ID different payload,typed conflict; no overwrite,real browser,BLOCKED
+F07,pack download,network timeout/offline,durable staged state remains resumable; active pack unchanged,real browser/SW,BLOCKED
+F08,pack validation,checksum/schema mismatch,candidate quarantined; active pack unchanged,Bun+browser,BLOCKED
+F09,pack activation,transaction abort,old active generation remains authoritative,real browser,BLOCKED
+F10,crash/reload,before durable attempt completion,restored as selected/uncommitted; no reveal,real browser,BLOCKED
+F11,crash/reload,after durable commit before UI reveal,reconcile committed attempt and reveal exactly once,real browser,BLOCKED
+F12,multi-tab,stale tab commits same attempt,DB/idempotency authority resolves race; advisory messages do not decide truth,real browser multi-context,BLOCKED
+F13,service worker,termination during background pack work,durable checkpoint permits restart; no logical activation from cache alone,real browser/SW,BLOCKED
+F14,asset loading,required asset missing/evicted,session does not pretend complete content; repair/offline state shown,real browser/SW,BLOCKED
+F15,persisted content,corrupt record/schema decode failure,typed invalid-data state; no guessed fallback,Effect+browser,BLOCKED
+F16,correction endpoint,timeout/server failure,draft remains local; not marked submitted,Worker/browser,BLOCKED
+F17,export,interruption during generation,no mutation of learner authority; retry safe,Bun/browser,BLOCKED
+F18,import,partial-invalid/unknown references,validate/preview/quarantine before authoritative write,Effect+browser,BLOCKED
