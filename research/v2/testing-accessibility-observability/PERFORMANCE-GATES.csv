@@ -1,0 +1,16 @@
+surface,measurement,artifact_basis,numeric_gate,status,notes
+acquisition-reference-initial,initial JS route closure,production emitted files + manifest,PROVISIONAL,BLOCKED,R2.5 final measured Effect-bearing baseline unavailable
+question-player-cold,cold lazy player closure,production emitted files + manifest,PROVISIONAL,BLOCKED,measure raw/minified/gzip/Brotli per emitted file
+question-player-incremental,incremental transition/load closure,production emitted files + network trace,PROVISIONAL,BLOCKED,exclude cached bytes from incremental transfer only when trace proves cache hit
+hazard-player,cold/incremental hazard closure,production emitted files + manifest,PROVISIONAL,BLOCKED,include renderer and scene runtime actually loaded
+offline-manager,cold offline manager closure,production emitted files + manifest,PROVISIONAL,BLOCKED,measure storage/provider imports separately where lazy
+service-worker,worker script bytes,production worker artifact,PROVISIONAL,BLOCKED,native and Effect variants must be measured separately if compared
+optional-glb-viewer,user-invoked viewer closure,production emitted files + asset manifest,PROVISIONAL,BLOCKED,must not preload into scored flow
+optional-worker,Worker bundle/closure,production Worker build,PROVISIONAL,BLOCKED,only if Worker exists
+LCP,p75 field metric,privacy-safe first-party Web Vitals,<=2500ms,CONFIRMED_TARGET,field target from maintained landscape
+INP,p75 field metric,privacy-safe first-party Web Vitals,<=200ms,CONFIRMED_TARGET,field target from maintained landscape
+CLS,p75 field metric,privacy-safe first-party Web Vitals,<=0.1,CONFIRMED_TARGET,field target from maintained landscape
+storage-attempt-commit,selection-to-durable-complete latency,real browser trace,BASELINE_THEN_REGRESSION_GATE,PROVISIONAL,correctness/atomicity always outrank latency
+pack-activation,validated-ready-to-active pointer flip,real browser trace,BASELINE_THEN_REGRESSION_GATE,PROVISIONAL,network/staging excluded from short activation transaction
+print-generation,request-to-print-ready + page integrity,real browser print output,BASELINE_THEN_REGRESSION_GATE,PROVISIONAL,determinism and page correctness are hard gates
+no-preload-leakage,network requests before user invokes optional asset/player,production browser trace,zero forbidden requests,REQUIRED,GLB/answer-bearing/optional heavy assets must not preload contrary to product boundary
