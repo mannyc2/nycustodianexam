@@ -1,0 +1,14 @@
+R2.2 E01/E03 provenance check
+Accessed at: 2026-08-21T22:33:58Z
+
+The immutable source tree's research/initial-pass/RAW-EFFECT-REPORTS.md index identifies the two prior UI reports:
+- 01-effect-state-ui-rendering-v3-baseline.md
+- 03-effect-state-ui-rendering-direct-dom.md
+
+A recursive inspection of the immutable source tree at 00155a1d555d1d4c84f3ab9682ee876dd2a57fbb found no blobs for those exact files. The absence was confirmed through the Git tree rather than inferred from a truncated directory listing.
+
+Treatment:
+- Status: BLOCKED for exact raw-file reading.
+- Normalized first-pass summaries were read.
+- Closed, unmerged PR #6 was inspected only as preliminary recovery evidence.
+- No missing text was reconstructed or presented as exact source content.

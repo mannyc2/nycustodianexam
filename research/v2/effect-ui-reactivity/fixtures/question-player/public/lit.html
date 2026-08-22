@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>R2.2 lit-html question-player spike</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body data-renderer="lit">
+<main id="player" data-phase="static" data-renderer="lit-html">
+  <h1>Question-player research fixture</h1>
+  <div id="lit-host">
+    <form id="question-form">
+      <fieldset>
+        <legend id="question-heading" tabindex="-1">Which action best preserves a fire door's protective function?</legend>
+        <div class="options">
+          <label><input type="radio" name="answer" value="a"><span>Prop it open while the corridor is occupied</span></label>
+          <label><input type="radio" name="answer" value="b"><span>Keep it unobstructed and allow it to close and latch</span></label>
+          <label><input type="radio" name="answer" value="c"><span>Remove the closer if it shuts too quickly</span></label>
+          <label><input type="radio" name="answer" value="d"><span>Cover the latch so the door opens silently</span></label>
+        </div>
+      </fieldset>
+      <div class="actions">
+        <button id="commit-button" type="submit" disabled>Commit answer</button>
+        <button id="flag-button" type="button" aria-pressed="false">Flag for review</button>
+        <button id="leave-button" type="button">Leave player</button>
+      </div>
+    </form>
+  </div>
+  <p id="live-region" role="status" aria-live="polite" aria-atomic="true">Loading study state.</p>
+</main>
+<script type="module" src="./js/bootstrap.js"></script>
+</body>
+</html>
