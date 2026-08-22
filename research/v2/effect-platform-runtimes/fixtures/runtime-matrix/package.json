@@ -5,8 +5,11 @@
   "packageManager": "bun@1.4.0",
   "scripts": {
     "probe:bun": "bun run probes/bun-runtime.ts",
-    "probe:http": "bun run probes/browser-http-server.ts",
-    "build:browser": "bun build browser/index.ts --target=browser --outdir=dist/browser --minify --metafile=raw-results/browser-metafile.json",
+    "probe:http": "bun run probes/browser-http-client.ts",
+    "probe:indexeddb": "bun run probes/browser-indexeddb.ts",
+    "probe:web-handler": "bun run probes/http-web-handler.ts",
+    "probe:layer-reuse": "bun run probes/layer-reuse.ts",
+    "build:browser": "bun build browser/probe.js --target=browser --outdir=dist/browser --minify --metafile=raw-results/browser-metafile.json",
     "build:workerd": "bun build workerd/worker.ts --target=browser --outdir=dist/workerd --minify --metafile=raw-results/workerd-metafile.json"
   },
   "dependencies": {

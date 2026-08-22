@@ -1,23 +1,19 @@
-# Pinned probe download links
+# Official artifact bootstrap coordinates
 
-These exact URLs are retained so every externally retrieved probe input is reviewable. They are not application dependencies.
+The environment could not materialize these artifacts, so they remain coordinates rather than executable evidence.
 
-## Bun 1.3.14 Linux x64
+## Bun 1.4.0
 
-- [Raw npm platform binary](https://unpkg.com/%40oven/bun-linux-x64%401.3.14/bin/bun)
-- [Official GitHub release ZIP](https://github.com/oven-sh/bun/releases/download/bun-v1.3.14/bun-linux-x64.zip)
+- Official release: https://github.com/oven-sh/bun/releases/tag/bun-v1.4.0
+- Official Linux x64 npm package: https://www.npmjs.com/package/@oven/bun-linux-x64/v/1.4.0
+- Tag commit: `34cbb9a40b4bd1bd767d134a7065e66c2432a676`
 
-## Effect v4 browser modules
+## Coherent Effect fixture cohort
 
-- [effect rc.111 standalone ESM](https://esm.unpkg.com/effect@4.0.0-rc.111?standalone)
-- [BrowserHttpClient rc.111 standalone ESM](https://esm.unpkg.com/@effect/platform-browser@4.0.0-rc.111/BrowserHttpClient?standalone)
-- [IndexedDb rc.111 standalone ESM](https://esm.unpkg.com/@effect/platform-browser@4.0.0-rc.111/IndexedDb?standalone)
-- [IndexedDbTable rc.111 standalone ESM](https://esm.unpkg.com/@effect/platform-browser@4.0.0-rc.111/IndexedDbTable?standalone)
-- [IndexedDbDatabase rc.111 standalone ESM](https://esm.unpkg.com/@effect/platform-browser@4.0.0-rc.111/IndexedDbDatabase?standalone)
-- [IndexedDbQueryBuilder rc.111 standalone ESM](https://esm.unpkg.com/@effect/platform-browser@4.0.0-rc.111/IndexedDbQueryBuilder?standalone)
+- `effect@4.0.0-rc.110`
+- `@effect/platform-browser@4.0.0-rc.110`
+- `@effect/platform-bun@4.0.0-rc.110`
+- transitive `@effect/platform-node-shared@4.0.0-rc.110`
+- Effect tag commit: `66114151c2b4640bf773f2b3456ce70d679422f6`
 
-## Registry-coherent Bun-facing Effect cohort
-
-- [effect rc.110 standalone ESM](https://esm.unpkg.com/effect@4.0.0-rc.110?standalone)
-- [platform-bun rc.110 standalone ESM](https://esm.unpkg.com/@effect/platform-bun@4.0.0-rc.110?standalone)
-- [platform-node-shared rc.110 standalone ESM](https://esm.unpkg.com/@effect/platform-node-shared@4.0.0-rc.110?standalone)
+The latest source audit is separately pinned at Effect commit `993f4be99949d4682f79c22b9cb8dc2fda37ec7c`, version `4.0.0-rc.111`.

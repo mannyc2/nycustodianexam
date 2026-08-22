@@ -1,23 +1,14 @@
 # Runtime-matrix probe fixture
 
-This is a private Bun fixture for executable R2.3 evidence. It intentionally selects one coherent published Effect cohort at `4.0.0-rc.110` rather than mixing the latest source `effect@4.0.0-rc.111` with the registry-lagging `@effect/platform-bun@4.0.0-rc.110`.
+This is a private Bun fixture for executable R2.3 evidence. It selects one coherent published Effect cohort at `4.0.0-rc.110` rather than mixing the latest source `effect@4.0.0-rc.111` with the registry-lagging `@effect/platform-bun@4.0.0-rc.110`.
 
-The lane separately audits upstream source at latest commit `436f10d1efccec308426532ff3f88df9a96434f3` (`4.0.0-rc.111`). Results must therefore state whether they are:
+The lane separately audits upstream source at commit `993f4be99949d4682f79c22b9cb8dc2fda37ec7c` (`4.0.0-rc.111`). The only change after the preliminary coordinate `436f10d1efccec308426532ff3f88df9a96434f3` was an unrelated Pool benchmark.
 
-- source-confirmed at rc.111;
-- registry-resolved and executable at rc.110;
-- project recommendations inferred from those two evidence classes.
+## Evidence status
 
-## Required executable gates
+- `browser/` and `run_browser_probe.py`: **OBSERVED** in Chromium 144.0.7559.96.
+- `workerd/`: TypeScript build and Web `Request`/`Response` execution **OBSERVED** under Node 22; explicitly not workerd runtime proof.
+- `probes/*.ts`: exact Effect/Bun probe sources, **NOT EXECUTED** because the environment had no Bun executable, no package install path, and no cached Effect cohort.
+- `bun.lock`: intentionally absent. A lockfile was not fabricated.
 
-1. `bun install` resolves the exact declared cohort and produces a committed text `bun.lock`.
-2. `node_modules/effect/AGENTS.md` is read completely before writing Effect probe code.
-3. Bun runtime entry and filesystem operation execute under Bun 1.4.0.
-4. Browser bundle compiles without Bun or Node implementation leakage.
-5. Real Chromium runs Browser HttpClient and one first-party IndexedDB operation.
-6. Effect Web handler converts a Request into a Response.
-7. A Cloudflare-compatible bundle executes under workerd rather than being relabeled from a Bun or Node run.
-8. Runtime and Layer reuse behavior is measured.
-9. Client abort behavior is measured where the local harness exposes a truthful signal.
-
-Every command and raw result belongs under the lane root `raw-results/`. No credentials or production application data are used.
+See `raw-results/PROBE-SUMMARY.csv` and `raw-results/EXECUTION-BLOCKERS.txt` for the evidence boundary.
