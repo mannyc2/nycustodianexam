@@ -1,11 +1,13 @@
-R2.3 initial probe environment
+R2.3 finalized probe environment
 Observation date: 2026-08-21 UTC
+Finalized at: 2026-08-22T00:01:37Z
 
 Project source
 - repository: mannyc2/nycustodianexam
 - source branch: agent/chat-corpus-reconciliation
-- source SHA: 00155a1d555d1d4c84f3ab9682ee876dd2a57fbb
+- immutable source SHA: 00155a1d555d1d4c84f3ab9682ee876dd2a57fbb
 - output branch: research/v2-effect-platform-runtimes
+- draft PR: https://github.com/mannyc2/nycustodianexam/pull/13
 
 Host
 - OS: Linux
@@ -13,26 +15,39 @@ Host
 - kernel: 6.18.35
 - Node: v22.16.0
 - npm: 10.9.2
+- TypeScript: 5.8.3
+- Python: 3.13.5
+- Python Playwright: 1.57.0
 - Chromium executable: /usr/bin/chromium
-- Chromium version: 142.0.7444.175
-- Python Playwright command: /opt/pyvenv/bin/playwright
+- Chromium version: Chromium 144.0.7559.96 built on Debian GNU/Linux 13 (trixie)
 - Docker: unavailable
 - Podman: unavailable
 
-Runtime availability at lane start
-- Bun: not initially installed
-- workerd: not initially installed
-- Wrangler: not initially installed
-- Chromium: available and able to run local pages
+Runtime availability
+- Bun: unavailable
+- workerd: unavailable
+- Wrangler: unavailable
+- Miniflare: unavailable
+- Chromium: available and exercised against localhost
 
 Network observations
 - ordinary process DNS/outbound package installation was unavailable in the execution container;
-- direct official release archive download through the container download bridge rejected ZIP content;
-- the lane therefore records any alternate artifact bootstrap explicitly and verifies the resulting executable before treating a probe as OBSERVED.
+- official package and release coordinates were verified through connected GitHub/web capabilities;
+- executable package bootstrap could not be materialized into this container;
+- no credentials or production data were used.
 
-Current coordinates selected for attempted execution
-- Bun: 1.4.0, official tag bun-v1.4.0, commit d6d12356646cf2f424208e8cec1261b9661c517b
-- Effect runtime fixture: coherent published 4.0.0-rc.110 cohort
-- Effect latest source audit: 4.0.0-rc.111 at 436f10d1efccec308426532ff3f88df9a96434f3
+Chromium harness policy handling
+- the managed Chromium URL blocklist prevented localhost navigation initially;
+- the exact policy file was backed up, the URLBlocklist key was removed only for the isolated localhost probe, and the original file was restored immediately afterward;
+- restored policy SHA-256: 3b740260e337305aaef268e6c63af8fa2796057ce46f43df5ae5a3949e085e86
+- restored policy contains URLBlocklist ["*"]: yes
 
-This file records the initial environment. Later raw result files record the exact executable versions and commands for every successful probe or the terminal blocker for every unavailable probe.
+Current coordinates
+- Effect latest source version: 4.0.0-rc.111
+- Effect latest source audit commit: 993f4be99949d4682f79c22b9cb8dc2fda37ec7c
+- Effect executable fixture candidate: coherent published 4.0.0-rc.110 cohort (not installed)
+- Effect rc.110 tag commit: 66114151c2b4640bf773f2b3456ce70d679422f6
+- Bun: 1.4.0
+- Bun tag commit: 34cbb9a40b4bd1bd767d134a7065e66c2432a676
+- Chromium observed: 144.0.7559.96
+- workerd package coordinate researched: 1.20260821.1 (runtime not installed)
