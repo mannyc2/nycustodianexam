@@ -45,6 +45,15 @@ controlling for facts and `product/FEATURE_SPEC.md` for product behavior.
 > resolved (a network-enabled Bun/Chromium/workerd environment exists and
 > the fixtures pass in it). R2.90 synthesis can now run on measured evidence.
 >
+> **Update 3 (same day): consolidation complete.** R2.7 published (PR #18)
+> and R2.8 published (PR #19); both merged into the integration branch and
+> landed on `main` via follow-up PR #21 (`d94981c`). All ten launched v2
+> lanes are on `main`; decision D2 is moot. An R2.90 synthesis DRAFT is at
+> `research/v2/architecture-synthesis-draft/` on the planning branch,
+> covering all 18 required decisions with evidence status; next steps are
+> its promotion/adoption, the authority reconciliation PR, and the MV1
+> scaffold (see IMPLEMENTATION-SEQUENCE.md there).
+>
 > **Update 2 (same day): the merge train has landed.** Lane PRs #11–#17 were
 > merged into `agent/chat-corpus-reconciliation`, and PR #1 was merged into
 > `main` (`de9f9b4`, 184 commits, 356 files). §2 steps 1–2 are done for the

@@ -1,0 +1,12 @@
+lane,branch,pr,final_head,availability,evidence_ceiling
+R2.1 core topology,research/v2-effect-core-topology,#11 merged,95f5787,complete,report+probes; all four fixture gates OBSERVED via probe-execution
+R2.2 UI reactivity,research/v2-effect-ui-reactivity,#12 merged,af588b1,complete,full renderer behavioral suite OBSERVED in Chromium; closures MEASURED
+R2.3 platform/runtime,research/v2-effect-platform-runtimes,#13 merged,d86cfc1,complete,Bun/web-handler/layer-reuse/capability probes OBSERVED; real workerd OBSERVED
+R2.4 IndexedDB/offline,research/v2-effect-indexeddb-offline,#14 merged,7e1c241,complete,native contract + Effect provider OBSERVED in Chromium; Firefox/WebKit pending
+R2.5 browser bundling,research/v2-effect-browser-bundling,#15 merged,5ee9366,complete (blocked-lane receipt),P01-P13 closures MEASURED via probe-execution; routed-app closures pending
+R2.6 schema/content compiler,research/v2-effect-schema-compiler,never launched,-,MISSING,reduced question set folded into this synthesis; compiler spike required
+R2.7 Bun monorepo discipline,research/v2-bun-monorepo-discipline,#18 merged,2fad6c5,complete,all five blocked gates OBSERVED via probe-execution rerun fixture
+R2.8 testing/a11y/perf/observability,research/v2-testing-accessibility-observability,#19 merged,b26f6d7,complete,full document set + fixtures; runner/gate decisions D01-D10; numeric budgets provisional pending routed closures
+R2.9 hazard scenes,research/v2-hazard-scene-production,#16 merged,ad09dc8,complete,method lane; 24-scene pilot required before production
+R2.10 tool geometry audit,research/v2-tool-geometry-audit,#17 merged,683591b,complete,audit; four tools evidence-blocked for scored use
+probe-execution pass,claude/research-branches-planning-w99r3u,-,research/v2/probe-execution/,complete,runtime evidence layer consumed by this synthesis

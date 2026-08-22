@@ -1,0 +1,11 @@
+item,owner,gate
+Effect v4 GA recheck before dependency freeze,implementation launch,compile-contract + probe rerun at exact GA coordinate
+Firefox/WebKit IndexedDB + capability floors,test lane/implementation,Playwright tri-browser run of committed fixtures
+Two-tab versionchange upgrade ergonomics,implementation/test,blocked-upgrade two-tab fixture
+Routed-app chunk closures and vendor-chunk policy (O004/O005),scaffold time,routed Vite fixture + manifest closure measurement
+Numeric bundle budgets (binding),scaffold time,derive from routed closures; provisional numbers in DELIVERY section
+R2.6 content compiler design,implementation spike,relational publication-gate fixture on BunRuntime
+Request.signal disconnect + isolate benchmarks under workerd,only if Worker endpoint approved,Workers-Vitest harness
+Hazard-scene 24-candidate pilot,content production,R2.9 PILOT-PLAN.md
+Tool geometry rights/evidence for 4 audited tools,content production,R2.10 evidence ledger
+Session persistence flush-before-navigation contract,implementation,explicit await/pagehide flush + test (probe-execution R2.2 finding)
