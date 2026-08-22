@@ -1,0 +1,24 @@
+"code","severity","phase","safe_message_template","related_locations","notes"
+"STRUCT.INVALID_VALUE","error","decode","Value does not satisfy the current record schema","field path","Wrap current Schema issue; formatter prose is not stable API"
+"STRUCT.UNKNOWN_PROPERTY","error","decode","Unknown property at field path","record","Offer safe spelling hint without value echo"
+"MIGRATION.AUTHOR_INPUT_REQUIRED","error","migrate","Migration requires reviewed author input","historical record and destination field","Never fabricate evidence or review state"
+"IDENTITY.DUPLICATE_ID","error","identity","ID occurs more than once","all defining files","Duplicate-preserving buckets precede map"
+"REFERENCE.MISSING","error","references","Referenced ID does not resolve","reference and expected registry","Use narrower suffix codes in machine output"
+"SOURCE.SPAN_DIGEST_MISMATCH","error","source-integrity","Selected source span no longer matches retained revision","source record and span","Detect extraction drift"
+"PROVENANCE.VERIFIED_WITHOUT_SPAN","error","provenance","Verified claim has no usable source span","claim","Publication blocker"
+"CONFLICT.ALTERNATIVE_UNSUPPORTED","error","conflicts","Conflict alternative lacks independent support","fact and alternative claim","Never collapse contradiction"
+"QUESTION.RATIONALE_MISSING","error","question-coherence","Question option lacks required rationale","question and option","Every distractor included"
+"AUDIENCE.HIGH_LEVEL_DEPENDENCY","error","audience-test-plan","Entry item reaches high-level-only concept","full graph path","Include question→claim→concept path"
+"ACCESSIBILITY.NONVISUAL_EQUIVALENT_MISSING","error","visual-accessibility","Scored visual lacks a nonvisual equivalent","item and asset","Blocking unless explicit reviewed exception policy exists"
+"REVIEW.RIGHTS_MISSING_OR_STALE","error","rights","Asset lacks passed rights review for current basis","asset and reviews","Digest-bound review"
+"REVIEW.ACCESSIBILITY_MISSING_OR_STALE","error","visual-accessibility","Asset lacks passed accessibility review for current basis","asset and reviews","Digest-bound review"
+"REVIEW.TRANSLATION_MISSING_OR_STALE","error","translation","Translation lacks passed review for current basis","translation and reviews","Machine-only translation cannot pass as reviewed"
+"SECURITY.PRECOMMIT_LEAK","error","security-leak","Pre-commit artifact contains answer-bearing material","source item and generated artifact","Do not print leaked content in diagnostics"
+"FACT.MUTABLE_LITERAL","error","mutable-facts","Protected template contains mutable fact literal","template and fact ID","Require fact/profile reference"
+"HISTORY.IMMUTABLE_TUPLE_CHANGED","error","historical-immutability","Published identity tuple maps to different bytes","current and prior manifests","Never overwrite history"
+"PACK.OBJECT_MISSING","error","pack-closure","Pack references a missing object","manifest and object ID","Manifest cannot publish"
+"PUBLICATION.CLOSURE_INCOMPLETE","error","publication-closure","Candidate release has unresolved blocking diagnostics","candidate root","Summary only"
+
+Deterministic sort key is `(phase order, code, normalized file path, JSON pointer,
+message, sorted related IDs)`. Terminal, JSON, CSV, and future GitHub annotations
+are renderers of the same encoded diagnostics. `reportInput` remains disabled.

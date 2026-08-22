@@ -1,0 +1,13 @@
+{
+  "formatVersion": 1,
+  "records": [
+    {"_tag":"Source","schemaVersion":1,"id":"source:osha","revision":1,"title":"OSHA custodial source","revisionDigest":"sha256:1111111111111111111111111111111111111111111111111111111111111111","lineCount":100},
+    {"_tag":"SourceSpan","schemaVersion":1,"id":"span:osha-10","sourceId":"source:osha","sourceRevisionDigest":"sha256:1111111111111111111111111111111111111111111111111111111111111111","startLine":10,"endLine":12,"selectedTextDigest":"sha256:2222222222222222222222222222222222222222222222222222222222222222"},
+    {"_tag":"Claim","schemaVersion":1,"id":"claim:wet-floor","revision":1,"status":"verified","text":"Mark a wet floor.","supportSpanIds":["span:osha-10"]},
+    {"_tag":"Concept","schemaVersion":1,"id":"concept:wet-floor-warning","revision":1,"audience":"entry","title":"Wet-floor warning"},
+    {"_tag":"Image","schemaVersion":1,"id":"image:wet-floor-sign","revision":1,"basisDigest":"sha256:3333333333333333333333333333333333333333333333333333333333333333","neutralPreAnswerDescription":"A freestanding folding object on a floor.","fullPostAnswerDescription":"A yellow wet-floor warning sign.","nonvisualEquivalent":"Choose the object used to warn people about a wet floor."},
+    {"_tag":"Review","schemaVersion":1,"id":"review:rights-image","revision":1,"reviewType":"rights","subjectId":"image:wet-floor-sign","subjectBasisDigest":"sha256:3333333333333333333333333333333333333333333333333333333333333333","outcome":"passed","policyVersion":1},
+    {"_tag":"Review","schemaVersion":1,"id":"review:a11y-image","revision":1,"reviewType":"accessibility","subjectId":"image:wet-floor-sign","subjectBasisDigest":"sha256:3333333333333333333333333333333333333333333333333333333333333333","outcome":"passed","policyVersion":1},
+    {"_tag":"Question","schemaVersion":1,"id":"question:wet-floor-1","revision":1,"audience":"entry","conceptIds":["concept:wet-floor-warning"],"prompt":{"promptType":"visual","text":"Which item is used to warn people?","imageId":"image:wet-floor-sign"},"options":[{"id":"option:sign","text":"Wet-floor sign","rationale":{"text":"This warns people about the hazard.","claimIds":["claim:wet-floor"]}},{"id":"option:mop","text":"Wet mop","rationale":{"text":"This cleans the floor but is not the warning device.","claimIds":["claim:wet-floor"]}}],"correctOptionId":"option:sign"}
+  ]
+}

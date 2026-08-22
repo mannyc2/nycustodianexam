@@ -1,0 +1,12 @@
+{
+  "formatVersion": 1,
+  "records": [
+    {"_tag":"Source","schemaVersion":1,"id":"source:duplicate","revision":1,"title":"First","revisionDigest":"sha256:1111111111111111111111111111111111111111111111111111111111111111","lineCount":10},
+    {"_tag":"Source","schemaVersion":1,"id":"source:duplicate","revision":2,"title":"Second","revisionDigest":"sha256:2222222222222222222222222222222222222222222222222222222222222222","lineCount":20},
+    {"_tag":"Claim","schemaVersion":1,"id":"claim:unsupported","revision":1,"status":"verified","text":"Unsupported claim","supportSpanIds":[]},
+    {"_tag":"Concept","schemaVersion":1,"id":"concept:boiler-diagnosis","revision":1,"audience":"high-level","title":"Boiler diagnosis"},
+    {"_tag":"Image","schemaVersion":1,"id":"image:stale-review","revision":1,"basisDigest":"sha256:3333333333333333333333333333333333333333333333333333333333333333","neutralPreAnswerDescription":"An object.","fullPostAnswerDescription":"A named object.","nonvisualEquivalent":"Text equivalent."},
+    {"_tag":"Review","schemaVersion":1,"id":"review:stale-rights","revision":1,"reviewType":"rights","subjectId":"image:stale-review","subjectBasisDigest":"sha256:4444444444444444444444444444444444444444444444444444444444444444","outcome":"passed","policyVersion":1},
+    {"_tag":"Question","schemaVersion":1,"id":"question:bad-boundary","revision":1,"audience":"entry","conceptIds":["concept:boiler-diagnosis","concept:missing"],"prompt":{"promptType":"visual","text":"Choose.","imageId":"image:stale-review"},"options":[{"id":"option:a","text":"A","rationale":{"text":"A reason.","claimIds":["claim:unsupported"]}},{"id":"option:b","text":"B","rationale":{"text":"B reason.","claimIds":["claim:missing"]}}],"correctOptionId":"option:a"}
+  ]
+}
