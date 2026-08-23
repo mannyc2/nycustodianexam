@@ -15,6 +15,12 @@ tools are not required to become SVG, CAD, or 3D assets.
 `../docs/TAXONOMY.md` controls the admitted concepts and decisive distinctions.
 All Tier A/B concepts remain launch scope.
 
+The initial production release is complete: 65 tool/PPE masters, 14
+deterministic comparisons, and 18 hazard scenes are recorded under
+`../content/authoring/visuals/releases/` with exact asset manifests under
+`../content/assets/`. Later pixel changes create new reviewed revisions; they do
+not reopen the accepted bytes in place.
+
 ## Public sample artwork
 
 Publicly released official sample artwork may be supplied to Codex to copy its

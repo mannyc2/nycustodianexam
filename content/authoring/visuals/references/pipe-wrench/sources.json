@@ -1,0 +1,61 @@
+{
+  "referenceSetId": "pipe-wrench-mechanism-bakeoff-2026-08-23",
+  "date": "2026-08-23",
+  "status": "authoring references only; never learner-facing",
+  "usageRule": "Use references only to understand generic mechanism, library style, or paired framing as explicitly assigned. Do not reproduce labels, numbering, logos, trade dress, exact proprietary silhouette, or source composition.",
+  "references": [
+    {
+      "referenceId": "ridgid-exploded-anatomy",
+      "localPath": "content/authoring/visuals/references/pipe-wrench/ridgid-straight-wrench-exploded.png",
+      "sha256": "b5aa2b5a4d8188888c19e80470fd7f8cd07f0be77636813fec9de6e3bd299153",
+      "sourceTitle": "RIDGID Straight Pipe Wrench Parts List",
+      "sourceUrl": "https://cdn2.ridgid.com/resources/media?key=b00c51ee-6056-4cb8-8459-dc6ece1044bd&languageCode=sv&type=document",
+      "sourceDocumentSha256": "7593cc7f7808495e9dede8140135043f615c6b098c18042eaba65271513b3aa9",
+      "localTransform": "Rendered one-page PDF at 300 dpi, then cropped x=1300,y=450,w=1050,h=1550 without content-aware alteration.",
+      "allowedRole": "Generic component anatomy: hook jaw and its threaded shank are one part; adjustment nut is a separate annular part; heel jaw and handle form the body assembly.",
+      "forbiddenRole": "No logo, numbering, callout, table, exploded composition, manufacturer silhouette, or trade dress may appear in generated output."
+    },
+    {
+      "referenceId": "patent-side-mechanism",
+      "localPath": "content/authoring/visuals/references/pipe-wrench/us11247313-fig3.png",
+      "sha256": "a56646a2304cd51e676594ed5420a6a53f51eb166d81ed097cd69916713aeff5",
+      "sourceTitle": "US11247313B2, Figure 3",
+      "sourceUrl": "https://patents.google.com/patent/US11247313B2/en",
+      "imageUrl": "https://patentimages.storage.googleapis.com/f3/10/11/a061ba8071fe9c/US11247313-20220215-D00002.png",
+      "allowedRole": "Side-view continuity of a hook-jaw element and its threaded shank through a housing opening and adjustment-nut assembly.",
+      "forbiddenRole": "Do not reproduce patent numbers, figure label, reference numerals, leader lines, quick-adjust proprietary details, cropped handle, or exact drawing composition."
+    },
+    {
+      "referenceId": "assembled-product-anatomy",
+      "localPath": "content/authoring/visuals/references/pipe-wrench/straight-pipe-wrench-assembled-packshot.jpg",
+      "sha256": "bd312c12650c81ee62667937cf90d03baf2cd2dbe4fb2560c04e8cc6a0302984",
+      "sourceTitle": "RIDGID 31010 straight pipe wrench product packshot",
+      "sourcePageUrl": "https://ocldirect.co.uk/ridgid-31010-model-10-straight-pipe-wrench-10-inch-250mm/",
+      "sourceImageUrl": "https://cdn11.bigcommerce.com/s-rw3y3ugps5/images/stencil/1280x1280/products/6903/22007/apigrp7yg__13456.1578661179.1280.1280__42507.1676544702.jpg?c=1",
+      "corroboratingManufacturerUrl": "https://www.ridgid.com/us/en/straight-pipe-wrench",
+      "allowedRole": "Assembled traditional mechanism and silhouette: a full-floating forged hook jaw continues as a threaded shank through one knurled nut; a short rounded shank end may remain visible beyond the nut.",
+      "forbiddenRole": "Do not reproduce red color, logo, lettering, labels, model marks, country marks, hang-hole shape, exact proprietary contours, surface texture, trade dress, camera angle, or source composition."
+    },
+    {
+      "referenceId": "unrelated-library-ink-style",
+      "localPath": "content/assets/masters/tools/t038.png",
+      "sha256": "4bbd8effc5f6238222c885f25ba947f8088fd1fc2fab8463eb256c78775896b7",
+      "allowedRole": "Library line weight, sparse hatching, white isolation, and restrained dimensional treatment from a different wrench class.",
+      "forbiddenRole": "Do not reproduce its fixed open-end or box-end geometry, diagonal angle, contours, proportions, or composition."
+    },
+    {
+      "referenceId": "accepted-library-style",
+      "localPath": "content/assets/masters/tools/t037.png",
+      "sha256": "0f2e1e00b8b16e4472f117e80b6e8819b798aaa3f6c7eae9d2aa1bbbfdbe9c89",
+      "allowedRole": "Existing accepted library line weight, hatching restraint, generic subject identity, and pure-white isolated presentation.",
+      "forbiddenRole": "Do not reproduce its three-quarter angle, exact contours, handle-hole treatment, or composition."
+    },
+    {
+      "referenceId": "matched-profile-framing",
+      "localPath": "content/assets/candidates/visual-pilot-v2/v2t001-e1.png",
+      "sha256": "7ac7c9016edfb191365e93a6e714c606edccc584934233b12c07693579052928",
+      "allowedRole": "Strict horizontal side-profile direction, square-canvas occupancy, scale, and whitespace for the adjustable-wrench comparison pair.",
+      "forbiddenRole": "Do not borrow its smooth parallel jaws, movable-jaw mechanism, worm gear, handle details, or contours."
+    }
+  ]
+}

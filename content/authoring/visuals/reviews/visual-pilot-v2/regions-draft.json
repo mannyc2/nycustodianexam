@@ -1,0 +1,964 @@
+{
+  "packageId": "visual-pilot-v2-regions-draft",
+  "date": "2026-08-23",
+  "status": "hash-bound authoring draft; normalized rectangles require human overlay review before promotion",
+  "provenance": {
+    "lineage": {
+      "path": "content/authoring/visuals/reviews/visual-pilot-v2/lineage.json",
+      "sha256": "4c5b6177aac0f07c478ffa617ffe05604fd8112098078a3d8d60fd8aab876796"
+    },
+    "independentReview": {
+      "path": "content/authoring/visuals/reviews/visual-pilot-v2/independent-review.json",
+      "sha256": "c276faf835532ed46f9bfecd9c64ce349d9b48dbd2318ec0f5a8984f7c95c0a7"
+    },
+    "visualPolicy": {
+      "path": "illustration/VISUAL_AUTHORING_POLICY.md",
+      "sha256": "a17d47cd976fbd4caa2b57f834216450f8316063d0b9759ef4fbd0e451d0d904"
+    },
+    "taxonomy": {
+      "path": "docs/TAXONOMY.md",
+      "sha256": "c2c487e2a16f5b5de7848d7915c4be2bd0b24749c266727f94a237b21025d952"
+    }
+  },
+  "legend": {
+    "target": "red overlay",
+    "decoy": "blue overlay",
+    "note": "Overlays are review artifacts and are never learner-facing."
+  },
+  "scenes": [
+    {
+      "candidateId": "v2s001",
+      "sceneId": "scene.chemical.closet-unidentified-container",
+      "imageBinding": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2s001.png",
+        "candidateSha256": "25cb4d539ef7111942fff8852a4d4c82913d16cd6d8cd2b7de0f01e131d93a72",
+        "width": 1536,
+        "height": 1024,
+        "mode": "RGB"
+      },
+      "logicalPlane": {
+        "width": 1,
+        "height": 1,
+        "origin": "top-left",
+        "coordinates": "normalized"
+      },
+      "zoneOrder": [
+        {
+          "order": 1,
+          "label": "left shelving"
+        },
+        {
+          "order": 2,
+          "label": "center wall and sink"
+        },
+        {
+          "order": 3,
+          "label": "right doorway"
+        },
+        {
+          "order": 4,
+          "label": "floor"
+        }
+      ],
+      "targetRegions": [
+        {
+          "inventoryId": "target-1",
+          "polygons": [
+            [
+              [
+                0.185,
+                0.235
+              ],
+              [
+                0.26,
+                0.235
+              ],
+              [
+                0.26,
+                0.445
+              ],
+              [
+                0.185,
+                0.445
+              ]
+            ]
+          ]
+        }
+      ],
+      "decoyRegions": [
+        {
+          "inventoryId": "decoy-1",
+          "polygons": [
+            [
+              [
+                0.04,
+                0.455
+              ],
+              [
+                0.17,
+                0.455
+              ],
+              [
+                0.17,
+                0.73
+              ],
+              [
+                0.04,
+                0.73
+              ]
+            ],
+            [
+              [
+                0.14,
+                0.455
+              ],
+              [
+                0.278,
+                0.455
+              ],
+              [
+                0.278,
+                0.725
+              ],
+              [
+                0.14,
+                0.725
+              ]
+            ],
+            [
+              [
+                0.25,
+                0.445
+              ],
+              [
+                0.39,
+                0.445
+              ],
+              [
+                0.39,
+                0.715
+              ],
+              [
+                0.25,
+                0.715
+              ]
+            ]
+          ]
+        }
+      ],
+      "validation": {
+        "coordinateBounds": "pass",
+        "targetCount": "pass",
+        "decoyCount": "pass",
+        "targetTargetNonOverlap": "pass",
+        "targetDecoyNonOverlap": "pass"
+      },
+      "reviewOverlay": "content/authoring/visuals/reviews/visual-pilot-v2/regions/overlays/v2s001.png",
+      "reviewStatus": "draft; exact-pixel human overlay inspection required",
+      "publication": "authoring-only; never ship before answer reveal",
+      "reviewOverlaySha256": "2378ae217d6dccb66d7816bb2109d7bd71d92514b68da17faff64d55c5796db2",
+      "phoneReviewOverlay": {
+        "path": "content/authoring/visuals/reviews/visual-pilot-v2/regions/phone/01.png",
+        "sha256": "65710ae2caa93f3182b24605d75a6663143285c676a0808e324933e98b509cb9",
+        "width": 480,
+        "height": 320
+      }
+    },
+    {
+      "candidateId": "v2s002",
+      "sceneId": "scene.chemical.kitchen-chemicals-over-foodware",
+      "imageBinding": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2s002.png",
+        "candidateSha256": "0282da9dca8879343eb829a651e34115d33d4397c9f2fad7c234b7e29abc306d",
+        "width": 1536,
+        "height": 1024,
+        "mode": "RGB"
+      },
+      "logicalPlane": {
+        "width": 1,
+        "height": 1,
+        "origin": "top-left",
+        "coordinates": "normalized"
+      },
+      "zoneOrder": [
+        {
+          "order": 1,
+          "label": "left upper shelf"
+        },
+        {
+          "order": 2,
+          "label": "left middle shelf"
+        },
+        {
+          "order": 3,
+          "label": "center"
+        },
+        {
+          "order": 4,
+          "label": "right rack"
+        }
+      ],
+      "targetRegions": [
+        {
+          "inventoryId": "target-1",
+          "polygons": [
+            [
+              [
+                0.04,
+                0.105
+              ],
+              [
+                0.435,
+                0.105
+              ],
+              [
+                0.435,
+                0.385
+              ],
+              [
+                0.04,
+                0.385
+              ]
+            ],
+            [
+              [
+                0.035,
+                0.465
+              ],
+              [
+                0.435,
+                0.465
+              ],
+              [
+                0.435,
+                0.69
+              ],
+              [
+                0.035,
+                0.69
+              ]
+            ]
+          ]
+        }
+      ],
+      "decoyRegions": [
+        {
+          "inventoryId": "decoy-1",
+          "polygons": [
+            [
+              [
+                0.72,
+                0.195
+              ],
+              [
+                0.965,
+                0.195
+              ],
+              [
+                0.965,
+                0.32
+              ],
+              [
+                0.72,
+                0.32
+              ]
+            ],
+            [
+              [
+                0.72,
+                0.37
+              ],
+              [
+                0.975,
+                0.37
+              ],
+              [
+                0.975,
+                0.5
+              ],
+              [
+                0.72,
+                0.5
+              ]
+            ],
+            [
+              [
+                0.72,
+                0.545
+              ],
+              [
+                0.985,
+                0.545
+              ],
+              [
+                0.985,
+                0.715
+              ],
+              [
+                0.72,
+                0.715
+              ]
+            ]
+          ]
+        }
+      ],
+      "validation": {
+        "coordinateBounds": "pass",
+        "targetCount": "pass",
+        "decoyCount": "pass",
+        "targetTargetNonOverlap": "pass",
+        "targetDecoyNonOverlap": "pass"
+      },
+      "reviewOverlay": "content/authoring/visuals/reviews/visual-pilot-v2/regions/overlays/v2s002.png",
+      "reviewStatus": "draft; exact-pixel human overlay inspection required",
+      "publication": "authoring-only; never ship before answer reveal",
+      "reviewOverlaySha256": "f2f963c4952764c72d843e06062503414a28bbe6da5862f0f6005cf263e135a0",
+      "phoneReviewOverlay": {
+        "path": "content/authoring/visuals/reviews/visual-pilot-v2/regions/phone/02.png",
+        "sha256": "d7eacb78ec8ac8acedea3d718a0f0155a34febaa479f784b0dc890ee2f33f4ca",
+        "width": 480,
+        "height": 320
+      }
+    },
+    {
+      "candidateId": "v2s003",
+      "sceneId": "scene.zero.classroom-orderly",
+      "imageBinding": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2s003.png",
+        "candidateSha256": "74d43dfd491252ee33786fa57f84e5fbde1958fd624505594d890d2589d75792",
+        "width": 1536,
+        "height": 1024,
+        "mode": "RGB"
+      },
+      "logicalPlane": {
+        "width": 1,
+        "height": 1,
+        "origin": "top-left",
+        "coordinates": "normalized"
+      },
+      "zoneOrder": [
+        {
+          "order": 1,
+          "label": "left teacher wall"
+        },
+        {
+          "order": 2,
+          "label": "desks and aisle"
+        },
+        {
+          "order": 3,
+          "label": "cabinet and fan"
+        },
+        {
+          "order": 4,
+          "label": "right wall"
+        }
+      ],
+      "targetRegions": [],
+      "decoyRegions": [
+        {
+          "inventoryId": "decoy-1",
+          "polygons": [
+            [
+              [
+                0.65,
+                0.22
+              ],
+              [
+                0.925,
+                0.22
+              ],
+              [
+                0.925,
+                0.845
+              ],
+              [
+                0.65,
+                0.845
+              ]
+            ]
+          ]
+        },
+        {
+          "inventoryId": "decoy-2",
+          "polygons": [
+            [
+              [
+                0.805,
+                0.625
+              ],
+              [
+                0.975,
+                0.625
+              ],
+              [
+                0.975,
+                0.76
+              ],
+              [
+                0.805,
+                0.76
+              ]
+            ],
+            [
+              [
+                0.805,
+                0.71
+              ],
+              [
+                0.998,
+                0.71
+              ],
+              [
+                0.998,
+                0.8
+              ],
+              [
+                0.805,
+                0.8
+              ]
+            ]
+          ]
+        },
+        {
+          "inventoryId": "decoy-3",
+          "polygons": [
+            [
+              [
+                0.565,
+                0.25
+              ],
+              [
+                0.7,
+                0.25
+              ],
+              [
+                0.7,
+                0.455
+              ],
+              [
+                0.565,
+                0.455
+              ]
+            ]
+          ]
+        }
+      ],
+      "validation": {
+        "coordinateBounds": "pass",
+        "targetCount": "pass",
+        "decoyCount": "pass",
+        "targetTargetNonOverlap": "pass",
+        "targetDecoyNonOverlap": "pass"
+      },
+      "reviewOverlay": "content/authoring/visuals/reviews/visual-pilot-v2/regions/overlays/v2s003.png",
+      "reviewStatus": "draft; exact-pixel human overlay inspection required",
+      "publication": "authoring-only; never ship before answer reveal",
+      "reviewOverlaySha256": "0614f9a412967c3d38a16658019bf06767c990d34574730eb3e5ab7a80091c6b",
+      "phoneReviewOverlay": {
+        "path": "content/authoring/visuals/reviews/visual-pilot-v2/regions/phone/03.png",
+        "sha256": "3c0ed5fcc588fa7d463ef310d38abc39c957c472091652474b6953e5378cb9e6",
+        "width": 480,
+        "height": 320
+      }
+    },
+    {
+      "candidateId": "v2s004",
+      "sceneId": "scene.slip.gym-hose-across-walkway",
+      "imageBinding": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2s004.png",
+        "candidateSha256": "ed9e50f1aa65b48ac7f3a9cfaf09f14ec932f183316812e82aaaf1e59bcba504",
+        "width": 1536,
+        "height": 1024,
+        "mode": "RGB"
+      },
+      "logicalPlane": {
+        "width": 1,
+        "height": 1,
+        "origin": "top-left",
+        "coordinates": "normalized"
+      },
+      "zoneOrder": [
+        {
+          "order": 1,
+          "label": "left wall equipment"
+        },
+        {
+          "order": 2,
+          "label": "central floor"
+        },
+        {
+          "order": 3,
+          "label": "rear wall"
+        },
+        {
+          "order": 4,
+          "label": "right court"
+        }
+      ],
+      "targetRegions": [
+        {
+          "inventoryId": "target-1",
+          "polygons": [
+            [
+              [
+                0.195,
+                0.49
+              ],
+              [
+                0.355,
+                0.49
+              ],
+              [
+                0.355,
+                0.73
+              ],
+              [
+                0.195,
+                0.73
+              ]
+            ],
+            [
+              [
+                0.325,
+                0.49
+              ],
+              [
+                0.72,
+                0.49
+              ],
+              [
+                0.72,
+                0.735
+              ],
+              [
+                0.325,
+                0.735
+              ]
+            ],
+            [
+              [
+                0.69,
+                0.58
+              ],
+              [
+                0.985,
+                0.58
+              ],
+              [
+                0.985,
+                0.825
+              ],
+              [
+                0.69,
+                0.825
+              ]
+            ]
+          ]
+        }
+      ],
+      "decoyRegions": [
+        {
+          "inventoryId": "decoy-1",
+          "polygons": [
+            [
+              [
+                0.025,
+                0.35
+              ],
+              [
+                0.19,
+                0.35
+              ],
+              [
+                0.19,
+                0.785
+              ],
+              [
+                0.025,
+                0.785
+              ]
+            ]
+          ]
+        }
+      ],
+      "validation": {
+        "coordinateBounds": "pass",
+        "targetCount": "pass",
+        "decoyCount": "pass",
+        "targetTargetNonOverlap": "pass",
+        "targetDecoyNonOverlap": "pass"
+      },
+      "reviewOverlay": "content/authoring/visuals/reviews/visual-pilot-v2/regions/overlays/v2s004.png",
+      "reviewStatus": "draft; exact-pixel human overlay inspection required",
+      "publication": "authoring-only; never ship before answer reveal",
+      "reviewOverlaySha256": "bc09d3a9d60dbf033b5e9851fd79b8594f663c152bff0ec471dbe72506c8c751",
+      "phoneReviewOverlay": {
+        "path": "content/authoring/visuals/reviews/visual-pilot-v2/regions/phone/04.png",
+        "sha256": "76189b9309f2b54cff6400cc427f5ff26480f18edfacc097d6e97fc6b985d2f6",
+        "width": 480,
+        "height": 320
+      }
+    },
+    {
+      "candidateId": "v2s005",
+      "sceneId": "scene.chemical.cafeteria-chemical-with-cups",
+      "imageBinding": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2s005-e1.png",
+        "candidateSha256": "56dbf3d11af3512343de12e3c8c38f032d325d0b8154f91a31d84887ed67b354",
+        "width": 1536,
+        "height": 1024,
+        "mode": "RGB"
+      },
+      "logicalPlane": {
+        "width": 1,
+        "height": 1,
+        "origin": "top-left",
+        "coordinates": "normalized"
+      },
+      "zoneOrder": [
+        {
+          "order": 1,
+          "label": "left sink"
+        },
+        {
+          "order": 2,
+          "label": "center tote"
+        },
+        {
+          "order": 3,
+          "label": "lower storage"
+        },
+        {
+          "order": 4,
+          "label": "right counter"
+        }
+      ],
+      "targetRegions": [
+        {
+          "inventoryId": "target-1",
+          "polygons": [
+            [
+              [
+                0.28,
+                0.12
+              ],
+              [
+                0.495,
+                0.12
+              ],
+              [
+                0.495,
+                0.455
+              ],
+              [
+                0.28,
+                0.455
+              ]
+            ]
+          ]
+        }
+      ],
+      "decoyRegions": [
+        {
+          "inventoryId": "decoy-1",
+          "polygons": [
+            [
+              [
+                0.315,
+                0.54
+              ],
+              [
+                0.455,
+                0.54
+              ],
+              [
+                0.455,
+                0.845
+              ],
+              [
+                0.315,
+                0.845
+              ]
+            ]
+          ]
+        }
+      ],
+      "validation": {
+        "coordinateBounds": "pass",
+        "targetCount": "pass",
+        "decoyCount": "pass",
+        "targetTargetNonOverlap": "pass",
+        "targetDecoyNonOverlap": "pass"
+      },
+      "reviewOverlay": "content/authoring/visuals/reviews/visual-pilot-v2/regions/overlays/v2s005.png",
+      "reviewStatus": "draft; exact-pixel human overlay inspection required",
+      "publication": "authoring-only; never ship before answer reveal",
+      "reviewOverlaySha256": "d021700a577a55f0cca0de695a7dc75e7f93a6e9c9b319f7dd336c1c8c4fd763",
+      "phoneReviewOverlay": {
+        "path": "content/authoring/visuals/reviews/visual-pilot-v2/regions/phone/05.png",
+        "sha256": "83197b27a5a44427e98a8e6ee727dbd2fb6b3259325f0f196728bb6ed4610658",
+        "width": 480,
+        "height": 320
+      }
+    },
+    {
+      "candidateId": "v2s006",
+      "sceneId": "scene.electrical.gym-fan-damaged-cord",
+      "imageBinding": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2s006-g3.png",
+        "candidateSha256": "2d596c48339ffb3ab80a39f311cfbf5a25c3a9c870706338c68f357163296a61",
+        "width": 1536,
+        "height": 1024,
+        "mode": "RGB"
+      },
+      "logicalPlane": {
+        "width": 1,
+        "height": 1,
+        "origin": "top-left",
+        "coordinates": "normalized"
+      },
+      "zoneOrder": [
+        {
+          "order": 1,
+          "label": "left fan"
+        },
+        {
+          "order": 2,
+          "label": "center cord run"
+        },
+        {
+          "order": 3,
+          "label": "right plug and receptacle"
+        },
+        {
+          "order": 4,
+          "label": "foreground floor"
+        }
+      ],
+      "targetRegions": [
+        {
+          "inventoryId": "target-1",
+          "polygons": [
+            [
+              [
+                0.495,
+                0.52
+              ],
+              [
+                0.69,
+                0.52
+              ],
+              [
+                0.69,
+                0.67
+              ],
+              [
+                0.495,
+                0.67
+              ]
+            ]
+          ]
+        }
+      ],
+      "decoyRegions": [
+        {
+          "inventoryId": "decoy-1",
+          "polygons": [
+            [
+              [
+                0.015,
+                0.12
+              ],
+              [
+                0.325,
+                0.12
+              ],
+              [
+                0.325,
+                0.69
+              ],
+              [
+                0.015,
+                0.69
+              ]
+            ]
+          ]
+        }
+      ],
+      "validation": {
+        "coordinateBounds": "pass",
+        "targetCount": "pass",
+        "decoyCount": "pass",
+        "targetTargetNonOverlap": "pass",
+        "targetDecoyNonOverlap": "pass"
+      },
+      "reviewOverlay": "content/authoring/visuals/reviews/visual-pilot-v2/regions/overlays/v2s006.png",
+      "reviewStatus": "draft; exact-pixel human overlay inspection required",
+      "publication": "authoring-only; never ship before answer reveal",
+      "reviewOverlaySha256": "0829c6080551ccadecdb02f46b1f50a6b4f761233fdfa2d96d754e4bbe48bea2",
+      "phoneReviewOverlay": {
+        "path": "content/authoring/visuals/reviews/visual-pilot-v2/regions/phone/06.png",
+        "sha256": "ef6fecc56d76103843bfb7ad8e7e7ecddd520ded3a6f3dc29067d7d10fc7a522",
+        "width": 480,
+        "height": 320
+      }
+    },
+    {
+      "candidateId": "v2s007",
+      "sceneId": "scene.zero.loading-area-orderly",
+      "imageBinding": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2s007.png",
+        "candidateSha256": "c8fdd4497efa59a9469e199531e4c54aa97bccc38a45afc128a0cbc7dc1bfa90",
+        "width": 1536,
+        "height": 1024,
+        "mode": "RGB"
+      },
+      "logicalPlane": {
+        "width": 1,
+        "height": 1,
+        "origin": "top-left",
+        "coordinates": "normalized"
+      },
+      "zoneOrder": [
+        {
+          "order": 1,
+          "label": "left pallet load"
+        },
+        {
+          "order": 2,
+          "label": "center door"
+        },
+        {
+          "order": 3,
+          "label": "right cabinet and foreground"
+        },
+        {
+          "order": 4,
+          "label": "right wall"
+        }
+      ],
+      "targetRegions": [],
+      "decoyRegions": [
+        {
+          "inventoryId": "decoy-1",
+          "polygons": [
+            [
+              [
+                0.025,
+                0.345
+              ],
+              [
+                0.34,
+                0.345
+              ],
+              [
+                0.34,
+                0.76
+              ],
+              [
+                0.025,
+                0.76
+              ]
+            ]
+          ]
+        },
+        {
+          "inventoryId": "decoy-2",
+          "polygons": [
+            [
+              [
+                0.835,
+                0.105
+              ],
+              [
+                0.995,
+                0.105
+              ],
+              [
+                0.995,
+                0.77
+              ],
+              [
+                0.835,
+                0.77
+              ]
+            ]
+          ]
+        },
+        {
+          "inventoryId": "decoy-3",
+          "polygons": [
+            [
+              [
+                0.375,
+                0.08
+              ],
+              [
+                0.6,
+                0.08
+              ],
+              [
+                0.6,
+                0.595
+              ],
+              [
+                0.375,
+                0.595
+              ]
+            ],
+            [
+              [
+                0.35,
+                0.59
+              ],
+              [
+                0.65,
+                0.59
+              ],
+              [
+                0.65,
+                0.97
+              ],
+              [
+                0.35,
+                0.97
+              ]
+            ]
+          ]
+        }
+      ],
+      "validation": {
+        "coordinateBounds": "pass",
+        "targetCount": "pass",
+        "decoyCount": "pass",
+        "targetTargetNonOverlap": "pass",
+        "targetDecoyNonOverlap": "pass"
+      },
+      "reviewOverlay": "content/authoring/visuals/reviews/visual-pilot-v2/regions/overlays/v2s007.png",
+      "reviewStatus": "draft; exact-pixel human overlay inspection required",
+      "publication": "authoring-only; never ship before answer reveal",
+      "reviewOverlaySha256": "4a08dd02f562bfb3d49765ad1d897a68713aeb40d4195d84dfeaefbd87859a5d",
+      "phoneReviewOverlay": {
+        "path": "content/authoring/visuals/reviews/visual-pilot-v2/regions/phone/07.png",
+        "sha256": "fd406648322c26b74064b04fcc4c010233bb6d07111a3fd3b0f3c89d0e3fcff6",
+        "width": 480,
+        "height": 320
+      }
+    }
+  ],
+  "contactSheet": {
+    "path": "content/authoring/visuals/reviews/visual-pilot-v2/REGION-OVERLAYS-CONTACT-SHEET.png",
+    "sha256": "cafdc75b35addeb48764c6e1520843e465d991923510f516a7255e878cbcbbef",
+    "order": [
+      "v2s001",
+      "v2s002",
+      "v2s003",
+      "v2s004",
+      "v2s005",
+      "v2s006",
+      "v2s007"
+    ],
+    "review": "Exact-pixel authoring inspection completed; maintainer approval remains required."
+  }
+}

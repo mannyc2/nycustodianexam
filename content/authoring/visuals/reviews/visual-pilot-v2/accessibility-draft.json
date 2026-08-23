@@ -1,0 +1,1338 @@
+{
+  "packageId": "visual-pilot-v2-accessibility-draft",
+  "date": "2026-08-23",
+  "status": "hash-bound authoring draft; visual pass does not authorize scored use or promotion",
+  "provenance": {
+    "lineage": {
+      "path": "content/authoring/visuals/reviews/visual-pilot-v2/lineage.json",
+      "sha256": "4c5b6177aac0f07c478ffa617ffe05604fd8112098078a3d8d60fd8aab876796"
+    },
+    "independentReview": {
+      "path": "content/authoring/visuals/reviews/visual-pilot-v2/independent-review.json",
+      "sha256": "c276faf835532ed46f9bfecd9c64ce349d9b48dbd2318ec0f5a8984f7c95c0a7"
+    },
+    "visualPolicy": {
+      "path": "illustration/VISUAL_AUTHORING_POLICY.md",
+      "sha256": "a17d47cd976fbd4caa2b57f834216450f8316063d0b9759ef4fbd0e451d0d904"
+    },
+    "taxonomy": {
+      "path": "docs/TAXONOMY.md",
+      "sha256": "c2c487e2a16f5b5de7848d7915c4be2bd0b24749c266727f94a237b21025d952"
+    }
+  },
+  "toolPolicy": {
+    "completeImageInteraction": "Tool identification uses the complete image and ordinary answer controls; no feature hotspots are authored.",
+    "usageDecision": "Choose scored, atlas-only, or post-answer-only per angle. Scored use requires a reviewed neutral description and linked nonvisual item."
+  },
+  "scenePolicy": {
+    "regionRelationship": "Every target and decoy inventoryId maps to regions-draft.json against the same candidate hash.",
+    "zeroTarget": "Zero-target scenes remain valid through scoring and submission; do not require a click merely because an image is present."
+  },
+  "tools": [
+    {
+      "candidateId": "v2t001",
+      "conceptId": "tool.adjustable-wrench",
+      "viewId": "matched-profile-jaws-open",
+      "imageBinding": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2t001-e1.png",
+        "candidateSha256": "7ac7c9016edfb191365e93a6e714c606edccc584934233b12c07693579052928",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGB"
+      },
+      "visualReview": {
+        "verdict": "pass",
+        "reason": "Adjustable-wrench geometry is coherent; smooth parallel jaws, movable jaw, worm, and complete handle remain clear at 320 pixels.",
+        "gate": "visual gate passed; metadata and usage decisions remain draft"
+      },
+      "usageScope": "undecided",
+      "neutralPreAnswer": {
+        "description": "A single metal object in strict side view. A long straight handle extends right from an open head at left. The head has two smooth flat opposing faces, and a ridged rotating cylinder sits directly beneath the lower movable member.",
+        "policy": "Describes only visible geometry and orientation; does not state the canonical term or answer option."
+      },
+      "fullPostAnswer": {
+        "status": "draft; visual gate passed",
+        "canonicalTerm": "Adjustable wrench",
+        "description": "An adjustable wrench in side profile. Its fixed and movable jaws have smooth parallel faces, and the worm gear beneath the movable jaw changes the opening. Unlike a pipe wrench, it has no curved hook jaw or serrated gripping teeth.",
+        "decisiveFeatures": [
+          "fixed and movable smooth parallel gripping faces",
+          "worm gear beneath the movable jaw",
+          "complete straight handle"
+        ],
+        "confusableContrast": [
+          "A pipe wrench uses serrated hook-and-heel jaws rather than smooth parallel jaws."
+        ]
+      },
+      "nonvisualEquivalent": {
+        "status": "draft-unlinked",
+        "itemId": null,
+        "preAnswerStem": "Which tool has one fixed jaw and one movable smooth jaw adjusted by a worm screw, rather than serrated hook-and-heel jaws?",
+        "constructNotice": "This text item tests the same feature distinction but is not the same visual-recognition task."
+      },
+      "publication": "Authoring draft. If used for scoring, keep canonical terms and decisive-feature explanations out of the active accessibility tree until commitment."
+    },
+    {
+      "candidateId": "v2t002",
+      "conceptId": "tool.pipe-wrench",
+      "viewId": "matched-profile-jaws-open",
+      "imageBinding": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2t002-b5.png",
+        "candidateSha256": "334044fb3c25f5e14be4c47e0df0512961ce8dce08e568e0d91b021faa8f1e99",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGB"
+      },
+      "visualReview": {
+        "verdict": "pass",
+        "reason": "The corrected horizontal profile shows one recognizable traditional pipe wrench with opposed serrated jaws, one hook stem entering the opaque body on the same plausible axis as one threaded shank emerging through one knurled nut, and one valid short rounded threaded end beyond the nut. The topology and line hierarchy remain readable at 320 pixels.",
+        "gate": "visual gate passed; metadata and usage decisions remain draft"
+      },
+      "usageScope": "undecided",
+      "neutralPreAnswer": {
+        "description": "A heavy straight handle extends right from an open C-shaped head. Both opposing inner faces carry coarse teeth. A short threaded shank emerges behind the upper head, passes through one crosshatched rotating cylinder, and ends in a rounded tip.",
+        "policy": "Describes only visible geometry and orientation; does not state the canonical term or answer option."
+      },
+      "fullPostAnswer": {
+        "status": "draft; visual gate passed",
+        "canonicalTerm": "Pipe wrench",
+        "description": "A pipe wrench in strict side profile. Its curved serrated hook jaw enters the opaque body on the same plausible axis as its threaded shank, which emerges through one knurled adjustment nut and ends in a short rounded threaded tip. The opaque body naturally hides the middle of that connection. The curved hook jaw and serrated heel jaw distinguish it from an adjustable wrench's smooth parallel jaws.",
+        "decisiveFeatures": [
+          "curved offset serrated hook jaw",
+          "opposing serrated heel jaw",
+          "one threaded hook-jaw shank passes through one knurled adjustment nut, with a valid short rounded end beyond the nut"
+        ],
+        "confusableContrast": [
+          "An adjustable wrench uses smooth parallel jaws and a worm gear beneath its movable jaw."
+        ]
+      },
+      "nonvisualEquivalent": {
+        "status": "draft-unlinked",
+        "itemId": null,
+        "preAnswerStem": "Which tool uses a curved serrated hook jaw opposite a serrated heel jaw and a knurled adjustment nut?",
+        "constructNotice": "This text item tests the same feature distinction but is not the same visual-recognition task."
+      },
+      "publication": "Authoring draft. If used for scoring, keep canonical terms and decisive-feature explanations out of the active accessibility tree until commitment."
+    },
+    {
+      "candidateId": "v2t003",
+      "conceptId": "tool.plunger.cup",
+      "viewId": "matched-low-underside",
+      "imageBinding": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2t003.png",
+        "candidateSha256": "63d4381ef7f01e513f7287f37fac88362643bc811b9a9b1f1bca9995bd9f5e66",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGB"
+      },
+      "visualReview": {
+        "verdict": "pass",
+        "reason": "The cup plunger has one uninterrupted open rim, an empty center, no flange, and a complete matched-angle handle at 320 pixels.",
+        "gate": "visual gate passed; metadata and usage decisions remain draft"
+      },
+      "usageScope": "undecided",
+      "neutralPreAnswer": {
+        "description": "A long plain handle joins a bell-shaped flexible cup viewed from below. The broad circular rim is continuous, and the cup center is open with no narrower projection.",
+        "policy": "Describes only visible geometry and orientation; does not state the canonical term or answer option."
+      },
+      "fullPostAnswer": {
+        "status": "draft; visual gate passed",
+        "canonicalTerm": "Cup plunger",
+        "description": "A cup plunger viewed from beneath. Its simple rubber cup has one uninterrupted rim and no projecting lower flange, distinguishing it from a flange toilet plunger.",
+        "decisiveFeatures": [
+          "single uninterrupted open cup rim",
+          "empty cup center",
+          "no projecting lower flange"
+        ],
+        "confusableContrast": [
+          "A flange toilet plunger has a narrower flexible sleeve projecting below the outer cup."
+        ]
+      },
+      "nonvisualEquivalent": {
+        "status": "draft-unlinked",
+        "itemId": null,
+        "preAnswerStem": "Which plunger has a simple open cup with no narrower sleeve projecting beneath its outer rim?",
+        "constructNotice": "This text item tests the same feature distinction but is not the same visual-recognition task."
+      },
+      "publication": "Authoring draft. If used for scoring, keep canonical terms and decisive-feature explanations out of the active accessibility tree until commitment."
+    },
+    {
+      "candidateId": "v2t004",
+      "conceptId": "tool.plunger.flange",
+      "viewId": "matched-low-underside",
+      "imageBinding": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2t004.png",
+        "candidateSha256": "4d22405839f7d226e9374d96e614ef98b7d3c1ae6f6c19fc9f95ae06597d6cb0",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGB"
+      },
+      "visualReview": {
+        "verdict": "pass",
+        "reason": "The lower flange remains unmistakably separate from the outer cup at 320 pixels; no accordion bellows or fixture context appears.",
+        "gate": "visual gate passed; metadata and usage decisions remain draft"
+      },
+      "usageScope": "undecided",
+      "neutralPreAnswer": {
+        "description": "A long plain handle joins a broad bell-shaped flexible cup viewed from below. A second narrower hollow sleeve projects from the center below the outer rim.",
+        "policy": "Describes only visible geometry and orientation; does not state the canonical term or answer option."
+      },
+      "fullPostAnswer": {
+        "status": "draft; visual gate passed",
+        "canonicalTerm": "Flange toilet plunger",
+        "description": "A flange toilet plunger viewed from beneath. The narrower flange extending below the outer cup helps distinguish it from a plain cup plunger.",
+        "decisiveFeatures": [
+          "broad outer cup",
+          "narrower hollow flexible flange projecting below the cup",
+          "complete handle"
+        ],
+        "confusableContrast": [
+          "A plain cup plunger has one open cup rim without a projecting lower sleeve."
+        ]
+      },
+      "nonvisualEquivalent": {
+        "status": "draft-unlinked",
+        "itemId": null,
+        "preAnswerStem": "Which plunger has a narrower flexible flange projecting beneath the center of its outer cup?",
+        "constructNotice": "This text item tests the same feature distinction but is not the same visual-recognition task."
+      },
+      "publication": "Authoring draft. If used for scoring, keep canonical terms and decisive-feature explanations out of the active accessibility tree until commitment."
+    },
+    {
+      "candidateId": "v2t005",
+      "conceptId": "tool.pliers.slip-joint",
+      "viewId": "matched-face-pivot-open",
+      "imageBinding": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2t005-g2.png",
+        "candidateSha256": "872ed51b966152cd9b06460fed2abec9353527fd0c57540834309824034a6626",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGB"
+      },
+      "visualReview": {
+        "verdict": "pass",
+        "reason": "The repaired joint reads as one ordinary pivot pin seated at the left end of one continuous oblong slot, with the remaining right-hand slot visibly empty; the distinction survives 320-pixel review.",
+        "gate": "visual gate passed; metadata and usage decisions remain draft"
+      },
+      "usageScope": "undecided",
+      "neutralPreAnswer": {
+        "description": "Two curved handles open to the right while short serrated opposing jaws open to the left. The crossing joint contains one short oblong slot, with one round fastener at its left end and visibly empty slot length to the right.",
+        "policy": "Describes only visible geometry and orientation; does not state the canonical term or answer option."
+      },
+      "fullPostAnswer": {
+        "status": "draft; visual gate passed",
+        "canonicalTerm": "Slip-joint pliers",
+        "description": "Slip-joint pliers shown face-on. One pivot pin can occupy positions along a short oblong slot to change the jaw opening. Unlike tongue-and-groove pliers, this joint does not use a long row of adjustment grooves.",
+        "decisiveFeatures": [
+          "short ordinary serrated opposing jaws",
+          "one pivot pin seated in one continuous short oblong slot",
+          "empty alternate slot length beside the seated pin"
+        ],
+        "confusableContrast": [
+          "Tongue-and-groove pliers use offset curved jaws and a row of several adjustment grooves."
+        ]
+      },
+      "nonvisualEquivalent": {
+        "status": "draft-unlinked",
+        "itemId": null,
+        "preAnswerStem": "Which pliers use one pivot moving in a short oblong slot rather than a row of several grooves?",
+        "constructNotice": "This text item tests the same feature distinction but is not the same visual-recognition task."
+      },
+      "publication": "Authoring draft. If used for scoring, keep canonical terms and decisive-feature explanations out of the active accessibility tree until commitment."
+    },
+    {
+      "candidateId": "v2t006",
+      "conceptId": "tool.pliers.tongue-groove",
+      "viewId": "matched-face-pivot-open",
+      "imageBinding": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2t006.png",
+        "candidateSha256": "b2c2bd0f635f256548e52a47b30260248a87ad9e5466ff10a3b477e4e3535b65",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGB"
+      },
+      "visualReview": {
+        "verdict": "pass",
+        "reason": "At least five adjustment positions, one seated pivot, offset curved serrated jaws, and complete handles remain distinct at 320 pixels.",
+        "gate": "visual gate passed; metadata and usage decisions remain draft"
+      },
+      "usageScope": "undecided",
+      "neutralPreAnswer": {
+        "description": "Two long handles open to the right while offset curved serrated jaws open to the left. A round pin sits beside a row of more than five scalloped adjustment recesses.",
+        "policy": "Describes only visible geometry and orientation; does not state the canonical term or answer option."
+      },
+      "fullPostAnswer": {
+        "status": "draft; visual gate passed",
+        "canonicalTerm": "Tongue-and-groove pliers",
+        "description": "Tongue-and-groove pliers shown face-on. Their pivot can seat in a row of grooves, moving the offset curved jaws through a broad range. Slip-joint pliers instead have a short oblong adjustment slot.",
+        "decisiveFeatures": [
+          "offset curved serrated jaws",
+          "row of more than five adjustment grooves",
+          "one pivot seated in the grooved channel"
+        ],
+        "confusableContrast": [
+          "Slip-joint pliers use a short oblong slot instead of a row of several grooves."
+        ]
+      },
+      "nonvisualEquivalent": {
+        "status": "draft-unlinked",
+        "itemId": null,
+        "preAnswerStem": "Which pliers have offset curved jaws and a pivot that can move through a row of several adjustment grooves?",
+        "constructNotice": "This text item tests the same feature distinction but is not the same visual-recognition task."
+      },
+      "publication": "Authoring draft. If used for scoring, keep canonical terms and decisive-feature explanations out of the active accessibility tree until commitment."
+    }
+  ],
+  "scenes": [
+    {
+      "candidateId": "v2s001",
+      "sceneId": "scene.chemical.closet-unidentified-container",
+      "imageBinding": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2s001.png",
+        "candidateSha256": "25cb4d539ef7111942fff8852a4d4c82913d16cd6d8cd2b7de0f01e131d93a72",
+        "width": 1536,
+        "height": 1024,
+        "mode": "RGB"
+      },
+      "visualReview": {
+        "verdict": "pass",
+        "reason": "The blank half-filled spray bottle is the sole clear target; safe jugs are capped, contained, and differentiated by hatched panels at 480 by 320 pixels.",
+        "gate": "visual gate passed; metadata and usage decisions remain draft"
+      },
+      "neutralPreAnswer": {
+        "overview": "A custodial closet with open shelving, stored containers and cloths, a wall-held mop, a service sink, an open door, and tiled floor.",
+        "zones": [
+          {
+            "order": 1,
+            "label": "left shelving",
+            "description": "A lidded bin and folded cloths sit above a trigger bottle; capped jugs in shallow trays and other containers sit below."
+          },
+          {
+            "order": 2,
+            "label": "center wall and sink",
+            "description": "A long-handled mop is clipped vertically beside an empty wall-mounted sink."
+          },
+          {
+            "order": 3,
+            "label": "right doorway",
+            "description": "An open door leads to an empty adjoining area."
+          },
+          {
+            "order": 4,
+            "label": "floor",
+            "description": "The tiled walking surface has no visible liquid or stored object."
+          }
+        ],
+        "policy": "Does not state target or decoy counts, identify the answer, or use hazard-emphasizing language."
+      },
+      "fullPostAnswer": {
+        "claim": "An authored transferred workplace chemical in a working container must be identified under the hazard-communication program; the exact chemical is not inferred from appearance.",
+        "targets": [
+          {
+            "inventoryId": "target-1",
+            "zone": "left shelving",
+            "zoneOrder": 1,
+            "condition": "blank trigger-spray bottle visibly containing liquid, authored as a transferred workplace chemical container",
+            "correction": "identify the working container according to the hazard-communication program",
+            "sourceIds": [
+              "OSHA_HAZCOM"
+            ]
+          }
+        ],
+        "decoys": [
+          {
+            "inventoryId": "decoy-1",
+            "zone": "left shelving",
+            "zoneOrder": 1,
+            "condition": "capped jugs with hatched front identification panels, upright in individual containment trays",
+            "safeBecause": "they are closed, upright, contained, and visually distinguished from the blank working container; exact contents are not inferred",
+            "sourceIds": [
+              "OSHA_HAZCOM"
+            ]
+          }
+        ],
+        "safeBackground": [
+          {
+            "inventoryId": "safe-1",
+            "zone": "left shelving",
+            "zoneOrder": 1,
+            "condition": "folded cloths and a lidded bin",
+            "sourceIds": []
+          },
+          {
+            "inventoryId": "safe-2",
+            "zone": "center wall and sink",
+            "zoneOrder": 2,
+            "condition": "mop clipped in a wall rack and an empty service sink",
+            "sourceIds": []
+          },
+          {
+            "inventoryId": "safe-3",
+            "zone": "floor",
+            "zoneOrder": 4,
+            "condition": "dry clear floor and doorway",
+            "sourceIds": []
+          }
+        ],
+        "sources": [
+          {
+            "id": "OSHA_HAZCOM",
+            "title": "29 CFR 1910.1200 Hazard Communication",
+            "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.1200",
+            "locator": "1910.1200(f)(6)",
+            "scope": "Workplace containers of hazardous chemicals must be identified; the brief does not infer a chemical identity from appearance."
+          }
+        ]
+      },
+      "nonvisualZonedEquivalent": {
+        "constructNotice": "This is an equivalent knowledge task, not the same visual-recognition task.",
+        "statements": [
+          {
+            "inventoryId": "target-1",
+            "zone": "left shelving",
+            "zoneOrder": 1,
+            "role": "target",
+            "statement": "blank trigger-spray bottle visibly containing liquid, authored as a transferred workplace chemical container; correction: identify the working container according to the hazard-communication program."
+          },
+          {
+            "inventoryId": "decoy-1",
+            "zone": "left shelving",
+            "zoneOrder": 1,
+            "role": "decoy",
+            "statement": "capped jugs with hatched front identification panels, upright in individual containment trays; safe because they are closed, upright, contained, and visually distinguished from the blank working container; exact contents are not inferred."
+          },
+          {
+            "inventoryId": "safe-1",
+            "zone": "left shelving",
+            "zoneOrder": 1,
+            "role": "safe-background",
+            "statement": "folded cloths and a lidded bin"
+          },
+          {
+            "inventoryId": "safe-2",
+            "zone": "center wall and sink",
+            "zoneOrder": 2,
+            "role": "safe-background",
+            "statement": "mop clipped in a wall rack and an empty service sink"
+          },
+          {
+            "inventoryId": "safe-3",
+            "zone": "floor",
+            "zoneOrder": 4,
+            "role": "safe-background",
+            "statement": "dry clear floor and doorway"
+          }
+        ]
+      },
+      "publication": "Authoring draft. Keep full descriptions, source explanations, target/decoy roles, and regions out of the active accessibility tree until commitment."
+    },
+    {
+      "candidateId": "v2s002",
+      "sceneId": "scene.chemical.kitchen-chemicals-over-foodware",
+      "imageBinding": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2s002.png",
+        "candidateSha256": "0282da9dca8879343eb829a651e34115d33d4397c9f2fad7c234b7e29abc306d",
+        "width": 1536,
+        "height": 1024,
+        "mode": "RGB"
+      },
+      "visualReview": {
+        "verdict": "pass",
+        "reason": "Chemicals are unmistakably above uncovered bowls and utensils; the separate inverted-pan rack remains safe and no second hazard appears.",
+        "gate": "visual gate passed; metadata and usage decisions remain draft"
+      },
+      "neutralPreAnswer": {
+        "overview": "A tiled kitchen storeroom with two open metal racks, closed handled bottles, uncovered bowls and utensils, inverted pans, and a closed door.",
+        "zones": [
+          {
+            "order": 1,
+            "label": "left upper shelf",
+            "description": "Closed handled bottles with diagonally hatched front panels sit on the upper shelf."
+          },
+          {
+            "order": 2,
+            "label": "left middle shelf",
+            "description": "Uncovered mixing bowls and utensils sit directly below the bottles."
+          },
+          {
+            "order": 3,
+            "label": "center",
+            "description": "A closed door and open tiled floor occupy the center."
+          },
+          {
+            "order": 4,
+            "label": "right rack",
+            "description": "Inverted pans sit on three shelves."
+          }
+        ],
+        "policy": "Does not state target or decoy counts, identify the answer, or use hazard-emphasizing language."
+      },
+      "fullPostAnswer": {
+        "claim": "Poisonous or toxic materials must be stored so they cannot contaminate food-contact articles, including not directly above them.",
+        "targets": [
+          {
+            "inventoryId": "target-1",
+            "zone": "left upper and middle shelves",
+            "zoneOrder": [
+              1,
+              2
+            ],
+            "condition": "cleaning-supply bottles stored directly above uncovered bowls and preparation utensils",
+            "correction": "store the chemicals separately from and below or otherwise protected away from food-contact articles",
+            "sourceIds": [
+              "FDA_FOOD"
+            ]
+          }
+        ],
+        "decoys": [
+          {
+            "inventoryId": "decoy-1",
+            "zone": "right rack",
+            "zoneOrder": 4,
+            "condition": "pans stored inverted on a separate rack",
+            "safeBecause": "they are protected and away from the bottle storage",
+            "sourceIds": [
+              "FDA_FOOD"
+            ]
+          }
+        ],
+        "safeBackground": [
+          {
+            "inventoryId": "safe-1",
+            "zone": "left shelving",
+            "zoneOrder": 1,
+            "condition": "stable open metal shelving",
+            "sourceIds": []
+          },
+          {
+            "inventoryId": "safe-2",
+            "zone": "center",
+            "zoneOrder": 3,
+            "condition": "clean tiled wall and closed door",
+            "sourceIds": []
+          },
+          {
+            "inventoryId": "safe-3",
+            "zone": "center",
+            "zoneOrder": 3,
+            "condition": "floor without visible spill",
+            "sourceIds": []
+          }
+        ],
+        "sources": [
+          {
+            "id": "FDA_FOOD",
+            "title": "FDA Food Code 2022",
+            "url": "https://www.fda.gov/media/184685/download",
+            "locator": "7-201.11 Separation",
+            "scope": "Poisonous or toxic materials must be stored so they cannot contaminate food, equipment, utensils, linens, or single-use articles, including not above them."
+          }
+        ]
+      },
+      "nonvisualZonedEquivalent": {
+        "constructNotice": "This is an equivalent knowledge task, not the same visual-recognition task.",
+        "statements": [
+          {
+            "inventoryId": "target-1",
+            "zone": "left upper and middle shelves",
+            "zoneOrder": [
+              1,
+              2
+            ],
+            "role": "target",
+            "statement": "cleaning-supply bottles stored directly above uncovered bowls and preparation utensils; correction: store the chemicals separately from and below or otherwise protected away from food-contact articles."
+          },
+          {
+            "inventoryId": "decoy-1",
+            "zone": "right rack",
+            "zoneOrder": 4,
+            "role": "decoy",
+            "statement": "pans stored inverted on a separate rack; safe because they are protected and away from the bottle storage."
+          },
+          {
+            "inventoryId": "safe-1",
+            "zone": "left shelving",
+            "zoneOrder": 1,
+            "role": "safe-background",
+            "statement": "stable open metal shelving"
+          },
+          {
+            "inventoryId": "safe-2",
+            "zone": "center",
+            "zoneOrder": 3,
+            "role": "safe-background",
+            "statement": "clean tiled wall and closed door"
+          },
+          {
+            "inventoryId": "safe-3",
+            "zone": "center",
+            "zoneOrder": 3,
+            "role": "safe-background",
+            "statement": "floor without visible spill"
+          }
+        ]
+      },
+      "publication": "Authoring draft. Keep full descriptions, source explanations, target/decoy roles, and regions out of the active accessibility tree until commitment."
+    },
+    {
+      "candidateId": "v2s003",
+      "sceneId": "scene.zero.classroom-orderly",
+      "imageBinding": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2s003.png",
+        "candidateSha256": "74d43dfd491252ee33786fa57f84e5fbde1958fd624505594d890d2589d75792",
+        "width": 1536,
+        "height": 1024,
+        "mode": "RGB"
+      },
+      "visualReview": {
+        "verdict": "pass",
+        "reason": "The zero-hazard scene holds at phone size: stable open ladder away from the doorway, clear aisle, guarded fan, closed cabinet, a short intact wall-side lead, and a protected floor-level cord run outside the aisle.",
+        "gate": "visual gate passed; metadata and usage decisions remain draft"
+      },
+      "neutralPreAnswer": {
+        "overview": "A classroom with desks and chairs, an open doorway, a writing board, cabinets, a portable fan, an open stepladder, and a wall-edge electrical lead.",
+        "zones": [
+          {
+            "order": 1,
+            "label": "left teacher wall",
+            "description": "An open doorway and a writing board occupy the left wall."
+          },
+          {
+            "order": 2,
+            "label": "desks and aisle",
+            "description": "Orderly desk rows border a broad central floor area."
+          },
+          {
+            "order": 3,
+            "label": "cabinet and fan",
+            "description": "Closed cabinets and a fan with a concentric grille sit along the rear wall."
+          },
+          {
+            "order": 4,
+            "label": "right wall",
+            "description": "An open ladder, wall receptacle, short cord lead, and floor-level protector run along the baseboard."
+          }
+        ],
+        "policy": "Does not state target or decoy counts, identify the answer, or use hazard-emphasizing language."
+      },
+      "fullPostAnswer": {
+        "claim": "Zero-hazard control: the ladder, wall-side electrical lead, guarded fan, aisle, cabinets, and doorway are safe as visibly depicted.",
+        "targets": [],
+        "decoys": [
+          {
+            "inventoryId": "decoy-1",
+            "zone": "right wall",
+            "zoneOrder": 4,
+            "condition": "stepladder fully open with all feet on level floor, visible braces extended, unused, and well away from the doorway",
+            "safeBecause": "it is stable, correctly opened, unused, and outside the doorway route",
+            "sourceIds": [
+              "OSHA_LADDER",
+              "OSHA_FLOOR"
+            ]
+          },
+          {
+            "inventoryId": "decoy-2",
+            "zone": "right wall",
+            "zoneOrder": 4,
+            "condition": "intact lead descending beside the wall, with its floor-level run beneath a low-profile protector outside the aisle",
+            "safeBecause": "the visible floor-level portion is protected and stays at the wall edge; the pixels do not claim the short wall-side lead is covered",
+            "sourceIds": [
+              "OSHA_ELEC",
+              "OSHA_FLOOR"
+            ]
+          },
+          {
+            "inventoryId": "decoy-3",
+            "zone": "cabinet and fan",
+            "zoneOrder": 3,
+            "condition": "fan blades enclosed by a complete close-spaced guard",
+            "safeBecause": "the blades are visibly guarded",
+            "sourceIds": []
+          }
+        ],
+        "safeBackground": [
+          {
+            "inventoryId": "safe-1",
+            "zone": "desks and aisle",
+            "zoneOrder": 2,
+            "condition": "orderly chairs and desks with a clear aisle shown without liquid",
+            "sourceIds": []
+          },
+          {
+            "inventoryId": "safe-2",
+            "zone": "cabinet and fan",
+            "zoneOrder": 3,
+            "condition": "closed cabinet",
+            "sourceIds": []
+          },
+          {
+            "inventoryId": "safe-3",
+            "zone": "left teacher wall",
+            "zoneOrder": 1,
+            "condition": "unobstructed doorway",
+            "sourceIds": []
+          }
+        ],
+        "sources": [
+          {
+            "id": "OSHA_LADDER",
+            "title": "29 CFR 1910.23 Ladders",
+            "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.23",
+            "locator": "1910.23(b) and (c)",
+            "scope": "Ladders must be inspected, used only on stable and level surfaces unless secured or stabilized, and used according to their design."
+          },
+          {
+            "id": "OSHA_FLOOR",
+            "title": "29 CFR 1910.22 General requirements",
+            "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.22",
+            "locator": "1910.22(a)(1)-(3)",
+            "scope": "Walking-working surfaces must be kept clean, orderly, sanitary, and free of hazards such as sharp or protruding objects, loose boards, corrosion, leaks, spills, snow, and ice."
+          },
+          {
+            "id": "OSHA_ELEC",
+            "title": "29 CFR 1910.334 Use of equipment",
+            "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.334",
+            "locator": "1910.334(a)(2) and (a)(4)",
+            "scope": "Damaged cord-and-plug equipment must be removed from service; equipment used where water contact is likely must be approved for that location."
+          }
+        ]
+      },
+      "nonvisualZonedEquivalent": {
+        "constructNotice": "This is an equivalent knowledge task, not the same visual-recognition task.",
+        "statements": [
+          {
+            "inventoryId": "decoy-1",
+            "zone": "right wall",
+            "zoneOrder": 4,
+            "role": "decoy",
+            "statement": "stepladder fully open with all feet on level floor, visible braces extended, unused, and well away from the doorway; safe because it is stable, correctly opened, unused, and outside the doorway route."
+          },
+          {
+            "inventoryId": "decoy-2",
+            "zone": "right wall",
+            "zoneOrder": 4,
+            "role": "decoy",
+            "statement": "intact lead descending beside the wall, with its floor-level run beneath a low-profile protector outside the aisle; safe because the visible floor-level portion is protected and stays at the wall edge; the pixels do not claim the short wall-side lead is covered."
+          },
+          {
+            "inventoryId": "decoy-3",
+            "zone": "cabinet and fan",
+            "zoneOrder": 3,
+            "role": "decoy",
+            "statement": "fan blades enclosed by a complete close-spaced guard; safe because the blades are visibly guarded."
+          },
+          {
+            "inventoryId": "safe-1",
+            "zone": "desks and aisle",
+            "zoneOrder": 2,
+            "role": "safe-background",
+            "statement": "orderly chairs and desks with a clear aisle shown without liquid"
+          },
+          {
+            "inventoryId": "safe-2",
+            "zone": "cabinet and fan",
+            "zoneOrder": 3,
+            "role": "safe-background",
+            "statement": "closed cabinet"
+          },
+          {
+            "inventoryId": "safe-3",
+            "zone": "left teacher wall",
+            "zoneOrder": 1,
+            "role": "safe-background",
+            "statement": "unobstructed doorway"
+          }
+        ]
+      },
+      "publication": "Authoring draft. Keep full descriptions, source explanations, target/decoy roles, and regions out of the active accessibility tree until commitment."
+    },
+    {
+      "candidateId": "v2s004",
+      "sceneId": "scene.slip.gym-hose-across-walkway",
+      "imageBinding": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2s004.png",
+        "candidateSha256": "ed9e50f1aa65b48ac7f3a9cfaf09f14ec932f183316812e82aaaf1e59bcba504",
+        "width": 1536,
+        "height": 1024,
+        "mode": "RGB"
+      },
+      "visualReview": {
+        "verdict": "pass",
+        "reason": "The attached ribbed hose clearly arches across the dry walking lane; the vacuum and stacked mats remain outside it and no second hazard is visible.",
+        "gate": "visual gate passed; metadata and usage decisions remain draft"
+      },
+      "neutralPreAnswer": {
+        "overview": "A gym-side floor area with a wheeled canister machine by the left wall, stacked mats above it, a closed door, and an attached ribbed hose ending in a floor nozzle.",
+        "zones": [
+          {
+            "order": 1,
+            "label": "left wall equipment",
+            "description": "A canister machine stands below stacked mats."
+          },
+          {
+            "order": 2,
+            "label": "central floor",
+            "description": "The attached hose bends outward across the floor."
+          },
+          {
+            "order": 3,
+            "label": "rear wall",
+            "description": "A closed door and open wall-side route occupy the rear."
+          },
+          {
+            "order": 4,
+            "label": "right court",
+            "description": "The hose continues to its nozzle near a court line."
+          }
+        ],
+        "policy": "Does not state target or decoy counts, identify the answer, or use hazard-emphasizing language."
+      },
+      "fullPostAnswer": {
+        "claim": "A raised hose spanning a walking lane is a visible obstruction that should be removed, rerouted, or secured.",
+        "targets": [
+          {
+            "inventoryId": "target-1",
+            "zone": "central floor and right court",
+            "zoneOrder": [
+              2,
+              4
+            ],
+            "condition": "thick ribbed hose spanning the walking lane with a raised section and visible floor beneath it",
+            "correction": "remove, reroute, or secure the hose so the walking route is clear",
+            "sourceIds": [
+              "OSHA_FLOOR"
+            ]
+          }
+        ],
+        "decoys": [
+          {
+            "inventoryId": "decoy-1",
+            "zone": "left wall equipment",
+            "zoneOrder": 1,
+            "condition": "canister machine upright and parked against the wall outside the route",
+            "safeBecause": "the body is outside the walking route; no visually unprovable caster-brake state is claimed",
+            "sourceIds": [
+              "OSHA_FLOOR"
+            ]
+          }
+        ],
+        "safeBackground": [
+          {
+            "inventoryId": "safe-1",
+            "zone": "left wall equipment",
+            "zoneOrder": 1,
+            "condition": "mats stacked flat",
+            "sourceIds": []
+          },
+          {
+            "inventoryId": "safe-2",
+            "zone": "rear wall",
+            "zoneOrder": 3,
+            "condition": "closed door",
+            "sourceIds": []
+          },
+          {
+            "inventoryId": "safe-3",
+            "zone": "central floor",
+            "zoneOrder": 2,
+            "condition": "floor without visible liquid",
+            "sourceIds": []
+          }
+        ],
+        "sources": [
+          {
+            "id": "OSHA_FLOOR",
+            "title": "29 CFR 1910.22 General requirements",
+            "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.22",
+            "locator": "1910.22(a)(1)-(3)",
+            "scope": "Walking-working surfaces must be kept clean, orderly, sanitary, and free of hazards such as sharp or protruding objects, loose boards, corrosion, leaks, spills, snow, and ice."
+          }
+        ]
+      },
+      "nonvisualZonedEquivalent": {
+        "constructNotice": "This is an equivalent knowledge task, not the same visual-recognition task.",
+        "statements": [
+          {
+            "inventoryId": "target-1",
+            "zone": "central floor and right court",
+            "zoneOrder": [
+              2,
+              4
+            ],
+            "role": "target",
+            "statement": "thick ribbed hose spanning the walking lane with a raised section and visible floor beneath it; correction: remove, reroute, or secure the hose so the walking route is clear."
+          },
+          {
+            "inventoryId": "decoy-1",
+            "zone": "left wall equipment",
+            "zoneOrder": 1,
+            "role": "decoy",
+            "statement": "canister machine upright and parked against the wall outside the route; safe because the body is outside the walking route; no visually unprovable caster-brake state is claimed."
+          },
+          {
+            "inventoryId": "safe-1",
+            "zone": "left wall equipment",
+            "zoneOrder": 1,
+            "role": "safe-background",
+            "statement": "mats stacked flat"
+          },
+          {
+            "inventoryId": "safe-2",
+            "zone": "rear wall",
+            "zoneOrder": 3,
+            "role": "safe-background",
+            "statement": "closed door"
+          },
+          {
+            "inventoryId": "safe-3",
+            "zone": "central floor",
+            "zoneOrder": 2,
+            "role": "safe-background",
+            "statement": "floor without visible liquid"
+          }
+        ]
+      },
+      "publication": "Authoring draft. Keep full descriptions, source explanations, target/decoy roles, and regions out of the active accessibility tree until commitment."
+    },
+    {
+      "candidateId": "v2s005",
+      "sceneId": "scene.chemical.cafeteria-chemical-with-cups",
+      "imageBinding": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2s005-e1.png",
+        "candidateSha256": "56dbf3d11af3512343de12e3c8c38f032d325d0b8154f91a31d84887ed67b354",
+        "width": 1536,
+        "height": 1024,
+        "mode": "RGB"
+      },
+      "visualReview": {
+        "verdict": "pass",
+        "reason": "The corrected lower jug has a bordered diagonal-hatched identification panel, remains capped and contained, and the full changed scene contains no new accidental hazard or material style drift.",
+        "gate": "visual gate passed; metadata and usage decisions remain draft"
+      },
+      "neutralPreAnswer": {
+        "overview": "A cafeteria back counter with an empty sink, cabinets, an open counter-top tote holding stacked cups and a trigger bottle, and a capped handled jug in a lower compartment.",
+        "zones": [
+          {
+            "order": 1,
+            "label": "left sink",
+            "description": "An empty basin and clear counter occupy the left side."
+          },
+          {
+            "order": 2,
+            "label": "center tote",
+            "description": "Uncovered cups and a closed trigger bottle stand side by side in one tote."
+          },
+          {
+            "order": 3,
+            "label": "lower storage",
+            "description": "A capped handled jug stands upright in a shallow tray inside the open compartment."
+          },
+          {
+            "order": 4,
+            "label": "right counter",
+            "description": "Empty serving wells, closed cabinet doors, and tiled floor occupy the right side."
+          }
+        ],
+        "policy": "Does not state target or decoy counts, identify the answer, or use hazard-emphasizing language."
+      },
+      "fullPostAnswer": {
+        "claim": "Poisonous or toxic materials must be stored so they cannot contaminate single-use articles.",
+        "targets": [
+          {
+            "inventoryId": "target-1",
+            "zone": "center tote",
+            "zoneOrder": 2,
+            "condition": "identified cleaning spray bottle stored in the same open tote as uncovered disposable cups",
+            "correction": "physically separate chemical storage from single-use articles",
+            "sourceIds": [
+              "FDA_FOOD"
+            ]
+          }
+        ],
+        "decoys": [
+          {
+            "inventoryId": "decoy-1",
+            "zone": "lower storage",
+            "zoneOrder": 3,
+            "condition": "separate jug capped, identified by a hatched panel, upright, and contained in a shallow tray",
+            "safeBecause": "it is physically separated from the cups",
+            "sourceIds": [
+              "FDA_FOOD"
+            ]
+          }
+        ],
+        "safeBackground": [
+          {
+            "inventoryId": "safe-1",
+            "zone": "left sink",
+            "zoneOrder": 1,
+            "condition": "empty sink and clear counter",
+            "sourceIds": []
+          },
+          {
+            "inventoryId": "safe-2",
+            "zone": "right counter",
+            "zoneOrder": 4,
+            "condition": "floor without visible liquid",
+            "sourceIds": []
+          },
+          {
+            "inventoryId": "safe-3",
+            "zone": "right counter",
+            "zoneOrder": 4,
+            "condition": "remaining cabinet doors closed",
+            "sourceIds": []
+          }
+        ],
+        "sources": [
+          {
+            "id": "FDA_FOOD",
+            "title": "FDA Food Code 2022",
+            "url": "https://www.fda.gov/media/184685/download",
+            "locator": "7-201.11 Separation",
+            "scope": "Poisonous or toxic materials must be stored so they cannot contaminate food, equipment, utensils, linens, or single-use articles, including not above them."
+          }
+        ]
+      },
+      "nonvisualZonedEquivalent": {
+        "constructNotice": "This is an equivalent knowledge task, not the same visual-recognition task.",
+        "statements": [
+          {
+            "inventoryId": "target-1",
+            "zone": "center tote",
+            "zoneOrder": 2,
+            "role": "target",
+            "statement": "identified cleaning spray bottle stored in the same open tote as uncovered disposable cups; correction: physically separate chemical storage from single-use articles."
+          },
+          {
+            "inventoryId": "decoy-1",
+            "zone": "lower storage",
+            "zoneOrder": 3,
+            "role": "decoy",
+            "statement": "separate jug capped, identified by a hatched panel, upright, and contained in a shallow tray; safe because it is physically separated from the cups."
+          },
+          {
+            "inventoryId": "safe-1",
+            "zone": "left sink",
+            "zoneOrder": 1,
+            "role": "safe-background",
+            "statement": "empty sink and clear counter"
+          },
+          {
+            "inventoryId": "safe-2",
+            "zone": "right counter",
+            "zoneOrder": 4,
+            "role": "safe-background",
+            "statement": "floor without visible liquid"
+          },
+          {
+            "inventoryId": "safe-3",
+            "zone": "right counter",
+            "zoneOrder": 4,
+            "role": "safe-background",
+            "statement": "remaining cabinet doors closed"
+          }
+        ]
+      },
+      "publication": "Authoring draft. Keep full descriptions, source explanations, target/decoy roles, and regions out of the active accessibility tree until commitment."
+    },
+    {
+      "candidateId": "v2s006",
+      "sceneId": "scene.electrical.gym-fan-damaged-cord",
+      "imageBinding": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2s006-g3.png",
+        "candidateSha256": "2d596c48339ffb3ab80a39f311cfbf5a25c3a9c870706338c68f357163296a61",
+        "width": 1536,
+        "height": 1024,
+        "mode": "RGB"
+      },
+      "visualReview": {
+        "verdict": "pass",
+        "reason": "One peeled-open section of black outer jacket exposes exactly two smooth, separately insulated conductors with a visible gap; the damage remains distinct at 480 by 320 pixels while the guard, plug, dry floor, and clear route remain safe background.",
+        "gate": "visual gate passed; metadata and usage decisions remain draft"
+      },
+      "neutralPreAnswer": {
+        "overview": "A low wall-side view shows a portable floor fan at left, one power cord running along the wall edge to a connected plug and receptacle at right, and broad tiled floor in front.",
+        "zones": [
+          {
+            "order": 1,
+            "label": "left fan",
+            "description": "A portable fan stands on two feet with a complete concentric front grille."
+          },
+          {
+            "order": 2,
+            "label": "center cord run",
+            "description": "One thick cord follows the wall edge from the fan toward the receptacle."
+          },
+          {
+            "order": 3,
+            "label": "right plug and receptacle",
+            "description": "The plug is connected to the lower socket of a wall receptacle."
+          },
+          {
+            "order": 4,
+            "label": "foreground floor",
+            "description": "A broad tiled walking surface fills the foreground."
+          }
+        ],
+        "policy": "Does not state target or decoy counts, identify the answer, or use hazard-emphasizing language."
+      },
+      "fullPostAnswer": {
+        "claim": "Cord-and-plug equipment with damage that may expose a worker to injury must be removed from service until repaired and tested.",
+        "targets": [
+          {
+            "inventoryId": "target-1",
+            "zone": "center cord run",
+            "zoneOrder": 2,
+            "condition": "one outer-jacket split a short distance from the fan housing along the wall-edge cord run, exposing exactly two separate fully insulated inner conductors while the cord remains plugged in",
+            "correction": "disconnect and remove the damaged fan from service for proper repair and testing",
+            "sourceIds": [
+              "OSHA_ELEC"
+            ]
+          }
+        ],
+        "decoys": [
+          {
+            "inventoryId": "decoy-1",
+            "zone": "left fan",
+            "zoneOrder": 1,
+            "condition": "fan blades enclosed by a complete close-spaced guard",
+            "safeBecause": "the guard is intact; the authored hazard is the damaged cord",
+            "sourceIds": []
+          }
+        ],
+        "safeBackground": [
+          {
+            "inventoryId": "safe-1",
+            "zone": "foreground floor",
+            "zoneOrder": 4,
+            "condition": "dry floor without stored objects",
+            "sourceIds": []
+          },
+          {
+            "inventoryId": "safe-2",
+            "zone": "center cord run",
+            "zoneOrder": 2,
+            "condition": "cord route kept at the wall edge outside the walking path",
+            "sourceIds": []
+          },
+          {
+            "inventoryId": "safe-3",
+            "zone": "right plug and receptacle",
+            "zoneOrder": 3,
+            "condition": "plug seated in an intact-looking receptacle",
+            "sourceIds": []
+          }
+        ],
+        "sources": [
+          {
+            "id": "OSHA_ELEC",
+            "title": "29 CFR 1910.334 Use of equipment",
+            "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.334",
+            "locator": "1910.334(a)(2) and (a)(4)",
+            "scope": "Damaged cord-and-plug equipment must be removed from service; equipment used where water contact is likely must be approved for that location."
+          }
+        ]
+      },
+      "nonvisualZonedEquivalent": {
+        "constructNotice": "This is an equivalent knowledge task, not the same visual-recognition task.",
+        "statements": [
+          {
+            "inventoryId": "target-1",
+            "zone": "center cord run",
+            "zoneOrder": 2,
+            "role": "target",
+            "statement": "one outer-jacket split a short distance from the fan housing along the wall-edge cord run, exposing exactly two separate fully insulated inner conductors while the cord remains plugged in; correction: disconnect and remove the damaged fan from service for proper repair and testing."
+          },
+          {
+            "inventoryId": "decoy-1",
+            "zone": "left fan",
+            "zoneOrder": 1,
+            "role": "decoy",
+            "statement": "fan blades enclosed by a complete close-spaced guard; safe because the guard is intact; the authored hazard is the damaged cord."
+          },
+          {
+            "inventoryId": "safe-1",
+            "zone": "foreground floor",
+            "zoneOrder": 4,
+            "role": "safe-background",
+            "statement": "dry floor without stored objects"
+          },
+          {
+            "inventoryId": "safe-2",
+            "zone": "center cord run",
+            "zoneOrder": 2,
+            "role": "safe-background",
+            "statement": "cord route kept at the wall edge outside the walking path"
+          },
+          {
+            "inventoryId": "safe-3",
+            "zone": "right plug and receptacle",
+            "zoneOrder": 3,
+            "role": "safe-background",
+            "statement": "plug seated in an intact-looking receptacle"
+          }
+        ]
+      },
+      "publication": "Authoring draft. Keep full descriptions, source explanations, target/decoy roles, and regions out of the active accessibility tree until commitment."
+    },
+    {
+      "candidateId": "v2s007",
+      "sceneId": "scene.zero.loading-area-orderly",
+      "imageBinding": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2s007.png",
+        "candidateSha256": "c8fdd4497efa59a9469e199531e4c54aa97bccc38a45afc128a0cbc7dc1bfa90",
+        "width": 1536,
+        "height": 1024,
+        "mode": "RGB"
+      },
+      "visualReview": {
+        "verdict": "pass",
+        "reason": "The load is low, aligned, and pallet-supported; the hand truck is bracketed, the cabinet closed, the floor dry, and the door approach clear at phone size.",
+        "gate": "visual gate passed; metadata and usage decisions remain draft"
+      },
+      "neutralPreAnswer": {
+        "overview": "A service/loading room contains sealed cartons on a pallet, a closed door, a low cabinet, an upright hand truck at the right wall, and broad open floor.",
+        "zones": [
+          {
+            "order": 1,
+            "label": "left pallet load",
+            "description": "Aligned sealed cartons form three low rows on a pallet."
+          },
+          {
+            "order": 2,
+            "label": "center door",
+            "description": "A closed service door has open floor in front."
+          },
+          {
+            "order": 3,
+            "label": "right cabinet and foreground",
+            "description": "A closed low cabinet borders broad open floor."
+          },
+          {
+            "order": 4,
+            "label": "right wall",
+            "description": "An empty hand truck is held upright against the wall."
+          }
+        ],
+        "policy": "Does not state target or decoy counts, identify the answer, or use hazard-emphasizing language."
+      },
+      "fullPostAnswer": {
+        "claim": "Zero-hazard control: the palletized cartons, bracketed hand truck, doorway approach, cabinet, and floor are safe as visibly depicted.",
+        "targets": [],
+        "decoys": [
+          {
+            "inventoryId": "decoy-1",
+            "zone": "left pallet load",
+            "zoneOrder": 1,
+            "condition": "cartons squarely aligned without visible lean or overhang and supported by an intact pallet",
+            "safeBecause": "the load is low, stable-looking, and fully supported",
+            "sourceIds": [
+              "NIOSH_MMH"
+            ]
+          },
+          {
+            "inventoryId": "decoy-2",
+            "zone": "right wall",
+            "zoneOrder": 4,
+            "condition": "empty hand truck held upright by a visible wall bracket outside the route",
+            "safeBecause": "it is secured upright and outside the walking route",
+            "sourceIds": [
+              "NIOSH_MMH",
+              "OSHA_FLOOR"
+            ]
+          },
+          {
+            "inventoryId": "decoy-3",
+            "zone": "center door",
+            "zoneOrder": 2,
+            "condition": "closed service door with a broad unobstructed approach",
+            "safeBecause": "the approach and doorway are clear",
+            "sourceIds": [
+              "OSHA_EGRESS"
+            ]
+          }
+        ],
+        "safeBackground": [
+          {
+            "inventoryId": "safe-1",
+            "zone": "right cabinet and foreground",
+            "zoneOrder": 3,
+            "condition": "level floor without visible liquid, debris, or cord",
+            "sourceIds": []
+          },
+          {
+            "inventoryId": "safe-2",
+            "zone": "right cabinet and foreground",
+            "zoneOrder": 3,
+            "condition": "closed low cabinet",
+            "sourceIds": []
+          }
+        ],
+        "sources": [
+          {
+            "id": "NIOSH_MMH",
+            "title": "NIOSH Ergonomic Guidelines for Manual Material Handling",
+            "url": "https://www.cdc.gov/niosh/docs/2007-131/pdfs/2007-131.pdf",
+            "locator": "material-handling risk factors and mechanical-aid guidance",
+            "scope": "Use only broad handling, stability, visibility, and mechanical-aid concepts; do not imply one universal lifting technique."
+          },
+          {
+            "id": "OSHA_FLOOR",
+            "title": "29 CFR 1910.22 General requirements",
+            "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.22",
+            "locator": "1910.22(a)(1)-(3)",
+            "scope": "Walking-working surfaces must be kept clean, orderly, sanitary, and free of hazards such as sharp or protruding objects, loose boards, corrosion, leaks, spills, snow, and ice."
+          },
+          {
+            "id": "OSHA_EGRESS",
+            "title": "29 CFR 1910.37 Exit routes",
+            "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.37",
+            "locator": "1910.37(a)(3)",
+            "scope": "Exit routes must be free and unobstructed."
+          }
+        ]
+      },
+      "nonvisualZonedEquivalent": {
+        "constructNotice": "This is an equivalent knowledge task, not the same visual-recognition task.",
+        "statements": [
+          {
+            "inventoryId": "decoy-1",
+            "zone": "left pallet load",
+            "zoneOrder": 1,
+            "role": "decoy",
+            "statement": "cartons squarely aligned without visible lean or overhang and supported by an intact pallet; safe because the load is low, stable-looking, and fully supported."
+          },
+          {
+            "inventoryId": "decoy-2",
+            "zone": "right wall",
+            "zoneOrder": 4,
+            "role": "decoy",
+            "statement": "empty hand truck held upright by a visible wall bracket outside the route; safe because it is secured upright and outside the walking route."
+          },
+          {
+            "inventoryId": "decoy-3",
+            "zone": "center door",
+            "zoneOrder": 2,
+            "role": "decoy",
+            "statement": "closed service door with a broad unobstructed approach; safe because the approach and doorway are clear."
+          },
+          {
+            "inventoryId": "safe-1",
+            "zone": "right cabinet and foreground",
+            "zoneOrder": 3,
+            "role": "safe-background",
+            "statement": "level floor without visible liquid, debris, or cord"
+          },
+          {
+            "inventoryId": "safe-2",
+            "zone": "right cabinet and foreground",
+            "zoneOrder": 3,
+            "role": "safe-background",
+            "statement": "closed low cabinet"
+          }
+        ]
+      },
+      "publication": "Authoring draft. Keep full descriptions, source explanations, target/decoy roles, and regions out of the active accessibility tree until commitment."
+    }
+  ]
+}

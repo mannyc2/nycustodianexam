@@ -1,0 +1,182 @@
+{
+  "pilotId": "visual-pilot-v2",
+  "date": "2026-08-23",
+  "status": "independent-candidate-review-complete; not promoted",
+  "reviewer": "Codex /root/image_quality independent visual gate, followed by blinded pipe-wrench bake-off review and separate reference-based mechanism adjudication",
+  "reviewInputs": {
+    "brief": "content/authoring/visuals/briefs/visual-pilot-v2.json",
+    "repairBriefs": [
+      "content/authoring/visuals/briefs/visual-pilot-v2-gate-repair.json",
+      "content/authoring/visuals/briefs/visual-pilot-v2-gate-repair-2.json",
+      "content/authoring/visuals/briefs/visual-pilot-v2-gate-repair-3.json",
+      "content/authoring/visuals/briefs/visual-pilot-v2-gate-repair-4.json",
+      "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-bakeoff.json",
+      "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-bakeoff-2.json"
+    ],
+    "lineage": "content/authoring/visuals/reviews/visual-pilot-v2/lineage.json",
+    "toolsPhoneSheet": "content/authoring/visuals/reviews/visual-pilot-v2/TOOLS-PHONE-CONTACT-SHEET.png",
+    "scenesPhoneSheet": "content/authoring/visuals/reviews/visual-pilot-v2/SCENES-PHONE-CONTACT-SHEET.png"
+  },
+  "counts": {
+    "reviewCandidates": 13,
+    "pass": 13,
+    "provisional": 0,
+    "reject": 0
+  },
+  "verdicts": [
+    {
+      "candidateId": "v2t001",
+      "path": "content/assets/candidates/visual-pilot-v2/v2t001-e1.png",
+      "sha256": "7ac7c9016edfb191365e93a6e714c606edccc584934233b12c07693579052928",
+      "verdict": "pass",
+      "reason": "Adjustable-wrench geometry is coherent; smooth parallel jaws, movable jaw, worm, and complete handle remain clear at 320 pixels."
+    },
+    {
+      "candidateId": "v2t002",
+      "path": "content/assets/candidates/visual-pilot-v2/v2t002-b5.png",
+      "sha256": "334044fb3c25f5e14be4c47e0df0512961ce8dce08e568e0d91b021faa8f1e99",
+      "verdict": "pass",
+      "reason": "The corrected horizontal profile shows one recognizable traditional pipe wrench with opposed serrated jaws, one hook stem entering the opaque body on the same plausible axis as one threaded shank emerging through one knurled nut, and one valid short rounded threaded end beyond the nut. The topology and line hierarchy remain readable at 320 pixels.",
+      "reviewNote": "The generating operator initially rejected the naturally occluded hook-jaw-to-shank junction. A blinded native/320 review passed this candidate, and a separate adjudicator compared it with the assembled packshot and exploded parts reference, confirmed that opaque housing occlusion is normal, and selected this candidate. The accepted t037 master remains unchanged.",
+      "mechanismEvidence": {
+        "assembledReference": "content/authoring/visuals/references/pipe-wrench/straight-pipe-wrench-assembled-packshot.jpg",
+        "assembledReferenceSha256": "bd312c12650c81ee62667937cf90d03baf2cd2dbe4fb2560c04e8cc6a0302984",
+        "partsReference": "content/authoring/visuals/references/pipe-wrench/ridgid-straight-wrench-exploded.png",
+        "partsReferenceSha256": "b5aa2b5a4d8188888c19e80470fd7f8cd07f0be77636813fec9de6e3bd299153",
+        "finding": "A short rounded threaded shank end beyond the nut is valid traditional geometry; the opaque body may hide the middle of the one-piece hook-jaw and shank connection when visible portions align and no contradictory second mechanism exists."
+      },
+      "nonselectedOrFailedAttempts": [
+        {
+          "path": "content/assets/candidates/visual-pilot-v2/v2t002-g2.png",
+          "sha256": "4d2f9ceea8687de6e20537277026a22b00447b418f8e17918a4374655a59825f",
+          "reason": "The nut surrounded a standalone threaded rod disconnected from the curved hook jaw."
+        },
+        {
+          "path": "content/assets/candidates/visual-pilot-v2/v2t002-e2.png",
+          "sha256": "a7ddd04c238078a5e896acfa02f5fbb420e609d3b51e787a0608599d4a262b46",
+          "reason": "A full-height body-wall line separated the curved hook jaw from the corrected rack and nut."
+        },
+        {
+          "path": "content/assets/candidates/visual-pilot-v2/v2t002-e3.png",
+          "sha256": "97a334f3d1121664af22ad0ec0adf26c7cceec7cd87409fe29cb674ca2701fb1",
+          "reason": "A residual separator and missing lower contour connection remained visible at 320 pixels."
+        },
+        {
+          "path": "content/assets/candidates/visual-pilot-v2/v2t002-b1.png",
+          "sha256": "33f55dc49ae22464b3292dea20898cfe2d34f4b0768872b79f9d9661ff958550",
+          "reason": "The patent-led prompt reproduced a proprietary-looking U-shaped rack as a separate mechanism."
+        },
+        {
+          "path": "content/assets/candidates/visual-pilot-v2/v2t002-b2.png",
+          "sha256": "e2b7c34b877b5608ac4c74eeb411fe9d00919f2a4168de70c1c4130e78083929",
+          "reason": "The assembled object was recognizable but repeated the existing diagonal master composition instead of supplying the matched side profile."
+        },
+        {
+          "path": "content/assets/candidates/visual-pilot-v2/v2t002-b3.png",
+          "sha256": "f4c8fd17a7eb61f7df61fb6d73d0d3da2b73d38d9bebc85150cba636dd2bd2b4",
+          "reason": "The paired-profile strategy produced a loop-ended rack while the hook jaw terminated behind a separate body block."
+        },
+        {
+          "path": "content/assets/candidates/visual-pilot-v2/v2t002-b4.png",
+          "sha256": "baa390662ca5f5c30cd806288ca09e37ad65d14e60444bcb995e1985e2e0541a",
+          "reason": "Reference adjudication found plausible topology, but the broad two-banded adjuster remained ambiguous as two collars or nuts at 320 pixels and lost the final comparison."
+        },
+        {
+          "path": "content/assets/candidates/visual-pilot-v2/v2t002-e4.png",
+          "sha256": "90f56db313c53ef9ecbc3482963c07ab041a3c70c8d00480e5889b489ab51f0d",
+          "reason": "The whole-head edit retained a smooth upper hook tail while adding a separate lower threaded element through the nut."
+        }
+      ]
+    },
+    {
+      "candidateId": "v2t003",
+      "path": "content/assets/candidates/visual-pilot-v2/v2t003.png",
+      "sha256": "63d4381ef7f01e513f7287f37fac88362643bc811b9a9b1f1bca9995bd9f5e66",
+      "verdict": "pass",
+      "reason": "The cup plunger has one uninterrupted open rim, an empty center, no flange, and a complete matched-angle handle at 320 pixels."
+    },
+    {
+      "candidateId": "v2t004",
+      "path": "content/assets/candidates/visual-pilot-v2/v2t004.png",
+      "sha256": "4d22405839f7d226e9374d96e614ef98b7d3c1ae6f6c19fc9f95ae06597d6cb0",
+      "verdict": "pass",
+      "reason": "The lower flange remains unmistakably separate from the outer cup at 320 pixels; no accordion bellows or fixture context appears."
+    },
+    {
+      "candidateId": "v2t005",
+      "path": "content/assets/candidates/visual-pilot-v2/v2t005-g2.png",
+      "sha256": "872ed51b966152cd9b06460fed2abec9353527fd0c57540834309824034a6626",
+      "verdict": "pass",
+      "reason": "The repaired joint reads as one ordinary pivot pin seated at the left end of one continuous oblong slot, with the remaining right-hand slot visibly empty; the distinction survives 320-pixel review.",
+      "reviewNote": "The close framing is acceptable for the review pilot because the complete tool remains visible with white margin, but should not be treated as a reusable framing target."
+    },
+    {
+      "candidateId": "v2t006",
+      "path": "content/assets/candidates/visual-pilot-v2/v2t006.png",
+      "sha256": "b2c2bd0f635f256548e52a47b30260248a87ad9e5466ff10a3b477e4e3535b65",
+      "verdict": "pass",
+      "reason": "At least five adjustment positions, one seated pivot, offset curved serrated jaws, and complete handles remain distinct at 320 pixels."
+    },
+    {
+      "candidateId": "v2s001",
+      "path": "content/assets/candidates/visual-pilot-v2/v2s001.png",
+      "sha256": "25cb4d539ef7111942fff8852a4d4c82913d16cd6d8cd2b7de0f01e131d93a72",
+      "verdict": "pass",
+      "reason": "The blank half-filled spray bottle is the sole clear target; safe jugs are capped, contained, and differentiated by hatched panels at 480 by 320 pixels."
+    },
+    {
+      "candidateId": "v2s002",
+      "path": "content/assets/candidates/visual-pilot-v2/v2s002.png",
+      "sha256": "0282da9dca8879343eb829a651e34115d33d4397c9f2fad7c234b7e29abc306d",
+      "verdict": "pass",
+      "reason": "Chemicals are unmistakably above uncovered bowls and utensils; the separate inverted-pan rack remains safe and no second hazard appears."
+    },
+    {
+      "candidateId": "v2s003",
+      "path": "content/assets/candidates/visual-pilot-v2/v2s003.png",
+      "sha256": "74d43dfd491252ee33786fa57f84e5fbde1958fd624505594d890d2589d75792",
+      "verdict": "pass",
+      "reason": "The zero-hazard scene holds at phone size: stable open ladder away from the doorway, clear aisle, guarded fan, closed cabinet, a short intact wall-side lead, and a protected floor-level cord run outside the aisle.",
+      "reviewNote": "Accessibility language must not claim that the short wall-side lead is covered."
+    },
+    {
+      "candidateId": "v2s004",
+      "path": "content/assets/candidates/visual-pilot-v2/v2s004.png",
+      "sha256": "ed9e50f1aa65b48ac7f3a9cfaf09f14ec932f183316812e82aaaf1e59bcba504",
+      "verdict": "pass",
+      "reason": "The attached ribbed hose clearly arches across the dry walking lane; the vacuum and stacked mats remain outside it and no second hazard is visible.",
+      "reviewNote": "Release prose must not claim a visually unprovable brake state."
+    },
+    {
+      "candidateId": "v2s005",
+      "path": "content/assets/candidates/visual-pilot-v2/v2s005-e1.png",
+      "sha256": "56dbf3d11af3512343de12e3c8c38f032d325d0b8154f91a31d84887ed67b354",
+      "verdict": "pass",
+      "reason": "The corrected lower jug has a bordered diagonal-hatched identification panel, remains capped and contained, and the full changed scene contains no new accidental hazard or material style drift.",
+      "reviewNote": "The earlier v2s005.png was rejected because its blank lower jug created a second unidentified-container condition."
+    },
+    {
+      "candidateId": "v2s006",
+      "path": "content/assets/candidates/visual-pilot-v2/v2s006-g3.png",
+      "sha256": "2d596c48339ffb3ab80a39f311cfbf5a25c3a9c870706338c68f357163296a61",
+      "verdict": "pass",
+      "reason": "One peeled-open section of black outer jacket exposes exactly two smooth, separately insulated conductors with a visible gap; the damage remains distinct at 480 by 320 pixels while the guard, plug, dry floor, and clear route remain safe background.",
+      "semanticRevision": "The final pixels place the split a short distance from the fan housing along the wall-edge cord run, not immediately outside the housing. Target, accessibility, and region language must use the pixel-true location; the supported safety claim and correction are unchanged.",
+      "reviewNote": "Earlier attempts were rejected because the target resembled a connector, disappeared at phone size, or was absent."
+    },
+    {
+      "candidateId": "v2s007",
+      "path": "content/assets/candidates/visual-pilot-v2/v2s007.png",
+      "sha256": "c8fdd4497efa59a9469e199531e4c54aa97bccc38a45afc128a0cbc7dc1bfa90",
+      "verdict": "pass",
+      "reason": "The load is low, aligned, and pallet-supported; the hand truck is bracketed, the cabinet closed, the floor dry, and the door approach clear at phone size.",
+      "reviewNote": "Accessibility language must describe broad open floor and must not invent a marked walking lane."
+    }
+  ],
+  "packageGates": [
+    "No candidate is an accepted master or release asset.",
+    "All 13 selected candidate hashes have passed independent visual review; the pipe-wrench pass includes a separate assembled-reference mechanism adjudication.",
+    "Every passing changed scene still requires human-authored regions and accessibility review against the exact final pixels before scored use.",
+    "Alternate tool views require authored neutral and full accessibility descriptions and an explicit atlas/post-answer versus scored-use decision."
+  ]
+}

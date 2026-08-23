@@ -1,0 +1,1490 @@
+[
+  {
+    "briefId": "full-tool-001",
+    "briefVersion": 1,
+    "slot": 1,
+    "candidateId": "a001",
+    "conceptId": "tool.scrub-brush",
+    "canonicalTerm": "Scrub brush",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.scrub-brush",
+      "https://www.cs.ny.gov/testing/test_guides/Custodians_Janitors_EntryLevel_TestGuide.pdf"
+    ],
+    "desiredView": "three-quarter view from slightly above, exposing the bristle rows along two sides",
+    "mustShow": [
+      "a low rectangular block",
+      "broad flat underside",
+      "dense rows of short stiff bristles",
+      "simple shallow finger ridges on top"
+    ],
+    "mustNotShow": [
+      "long handle",
+      "raised arched palm handle",
+      "soft feather-like fibers",
+      "toilet-brush shape"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a001.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one rectangular flat handheld block scrub brush.\nSubject: Scrub brush.\nDesired view: three-quarter view from slightly above, exposing the bristle rows along two sides.\nMust show: a low rectangular block; broad flat underside; dense rows of short stiff bristles; simple shallow finger ridges on top.\nMust not show: long handle; raised arched palm handle; soft feather-like fibers; toilet-brush shape.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-002",
+    "briefVersion": 1,
+    "slot": 2,
+    "candidateId": "a002",
+    "conceptId": "tool.staple-gun",
+    "canonicalTerm": "Staple gun",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.staple-gun",
+      "https://www.cs.ny.gov/testing/test_guides/Custodians_Janitors_EntryLevel_TestGuide.pdf"
+    ],
+    "desiredView": "clean three-quarter side view with the squeeze lever slightly open",
+    "mustShow": [
+      "rectangular staple magazine along the base",
+      "hinged upper squeeze lever",
+      "rear pivot",
+      "short flat staple-driving nose",
+      "mechanically plausible lever gap"
+    ],
+    "mustNotShow": [
+      "electrical cord",
+      "heated loop tip",
+      "soldering-gun body",
+      "caulking plunger rod",
+      "loose staples"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a002.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one manual hand-operated staple gun.\nSubject: Staple gun.\nDesired view: clean three-quarter side view with the squeeze lever slightly open.\nMust show: rectangular staple magazine along the base; hinged upper squeeze lever; rear pivot; short flat staple-driving nose; mechanically plausible lever gap.\nMust not show: electrical cord; heated loop tip; soldering-gun body; caulking plunger rod; loose staples.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-003",
+    "briefVersion": 1,
+    "slot": 3,
+    "candidateId": "a003",
+    "conceptId": "ppe.protective-gloves",
+    "canonicalTerm": "Protective gloves (generic)",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#ppe.protective-gloves",
+      "https://www.cs.ny.gov/testing/test_guides/Custodians_Janitors_EntryLevel_TestGuide.pdf"
+    ],
+    "desiredView": "palms upward in a tidy overlapping pair, with both cuffs and all fingers complete",
+    "mustShow": [
+      "two separate gloves arranged as a pair",
+      "long gauntlet cuffs",
+      "textured palms and fingertips",
+      "flexible chemical-cleaning glove form"
+    ],
+    "mustNotShow": [
+      "hands inside",
+      "brand marks",
+      "disposable food-service glove shape",
+      "medical claims",
+      "tears"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a003.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one matched pair of generic protective cleaning gloves.\nSubject: Protective gloves (generic).\nDesired view: palms upward in a tidy overlapping pair, with both cuffs and all fingers complete.\nMust show: two separate gloves arranged as a pair; long gauntlet cuffs; textured palms and fingertips; flexible chemical-cleaning glove form.\nMust not show: hands inside; brand marks; disposable food-service glove shape; medical claims; tears.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-004",
+    "briefVersion": 1,
+    "slot": 4,
+    "candidateId": "a004",
+    "conceptId": "tool.push-broom",
+    "canonicalTerm": "Push broom",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.push-broom"
+    ],
+    "desiredView": "three-quarter view showing the full handle and broad face of the head",
+    "mustShow": [
+      "long straight handle",
+      "angled reinforced socket",
+      "very wide rectangular broom head",
+      "dense straight medium-length bristles",
+      "head much wider than it is deep"
+    ],
+    "mustNotShow": [
+      "small deck-brush head",
+      "diagonally cut fan head",
+      "mop yarn",
+      "detached handle"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a004.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one long-handled push broom.\nSubject: Push broom.\nDesired view: three-quarter view showing the full handle and broad face of the head.\nMust show: long straight handle; angled reinforced socket; very wide rectangular broom head; dense straight medium-length bristles; head much wider than it is deep.\nMust not show: small deck-brush head; diagonally cut fan head; mop yarn; detached handle.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-005",
+    "briefVersion": 1,
+    "slot": 5,
+    "candidateId": "a005",
+    "conceptId": "tool.angle-broom",
+    "canonicalTerm": "Angle broom / household broom",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.angle-broom"
+    ],
+    "desiredView": "three-quarter side view making the diagonal bristle edge unmistakable",
+    "mustShow": [
+      "long straight handle",
+      "narrow fan-shaped synthetic bristle head",
+      "bristle ends cut on a strong diagonal for corner access",
+      "small collar at the handle"
+    ],
+    "mustNotShow": [
+      "wide rectangular push-broom head",
+      "deck-brush block",
+      "round corn-broom binding",
+      "mop yarn"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a005.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one long-handled angle broom.\nSubject: Angle broom / household broom.\nDesired view: three-quarter side view making the diagonal bristle edge unmistakable.\nMust show: long straight handle; narrow fan-shaped synthetic bristle head; bristle ends cut on a strong diagonal for corner access; small collar at the handle.\nMust not show: wide rectangular push-broom head; deck-brush block; round corn-broom binding; mop yarn.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-006",
+    "briefVersion": 1,
+    "slot": 6,
+    "candidateId": "a006",
+    "conceptId": "tool.dust-mop",
+    "canonicalTerm": "Dust mop",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.dust-mop"
+    ],
+    "desiredView": "slightly elevated three-quarter view showing the wide fringed head and swivel",
+    "mustShow": [
+      "long handle",
+      "swiveling connector",
+      "broad low rectangular frame",
+      "thick fluffy fringed dust-mop cover extending around all four edges"
+    ],
+    "mustNotShow": [
+      "loose wet-mop strings",
+      "smooth flat-mop pad",
+      "broom bristles",
+      "bucket"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a006.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one dry dust mop.\nSubject: Dust mop.\nDesired view: slightly elevated three-quarter view showing the wide fringed head and swivel.\nMust show: long handle; swiveling connector; broad low rectangular frame; thick fluffy fringed dust-mop cover extending around all four edges.\nMust not show: loose wet-mop strings; smooth flat-mop pad; broom bristles; bucket.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-007",
+    "briefVersion": 1,
+    "slot": 7,
+    "candidateId": "a007",
+    "conceptId": "tool.wet-mop",
+    "canonicalTerm": "Wet/string mop",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.wet-mop"
+    ],
+    "desiredView": "three-quarter view with the yarn bundle hanging freely and the clamp visible",
+    "mustShow": [
+      "long handle",
+      "metal or plastic mop clamp",
+      "dense bundle of long loose absorbent yarn strands hanging from the clamp"
+    ],
+    "mustNotShow": [
+      "flat rectangular pad",
+      "dust-mop fringe",
+      "broom bristles",
+      "bucket or wringer"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a007.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one traditional wet string mop.\nSubject: Wet/string mop.\nDesired view: three-quarter view with the yarn bundle hanging freely and the clamp visible.\nMust show: long handle; metal or plastic mop clamp; dense bundle of long loose absorbent yarn strands hanging from the clamp.\nMust not show: flat rectangular pad; dust-mop fringe; broom bristles; bucket or wringer.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-008",
+    "briefVersion": 1,
+    "slot": 8,
+    "candidateId": "a008",
+    "conceptId": "tool.flat-mop",
+    "canonicalTerm": "Flat mop",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.flat-mop"
+    ],
+    "desiredView": "slightly elevated three-quarter view revealing the slim plate, pad edge, and swivel",
+    "mustShow": [
+      "long handle",
+      "swiveling joint",
+      "very low rectangular plate",
+      "thin washable pad wrapped continuously around the underside and edges"
+    ],
+    "mustNotShow": [
+      "loose string yarn",
+      "fluffy dust fringe",
+      "rubber squeegee blade",
+      "spray bottle"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a008.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one articulated flat mop.\nSubject: Flat mop.\nDesired view: slightly elevated three-quarter view revealing the slim plate, pad edge, and swivel.\nMust show: long handle; swiveling joint; very low rectangular plate; thin washable pad wrapped continuously around the underside and edges.\nMust not show: loose string yarn; fluffy dust fringe; rubber squeegee blade; spray bottle.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-009",
+    "briefVersion": 1,
+    "slot": 9,
+    "candidateId": "a009",
+    "conceptId": "equipment.mop-bucket-wringer",
+    "canonicalTerm": "Mop bucket and wringer",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#equipment.mop-bucket-wringer"
+    ],
+    "desiredView": "three-quarter view from slightly above showing the bucket cavity and wringer mechanism",
+    "mustShow": [
+      "deep rectangular bucket",
+      "four small swivel casters",
+      "wringer mounted securely over one end",
+      "tall press lever",
+      "perforated wringer basket"
+    ],
+    "mustNotShow": [
+      "mop",
+      "janitor-cart shelves",
+      "detached wringer",
+      "round household pail"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a009.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one commercial mop bucket with side-press wringer.\nSubject: Mop bucket and wringer.\nDesired view: three-quarter view from slightly above showing the bucket cavity and wringer mechanism.\nMust show: deep rectangular bucket; four small swivel casters; wringer mounted securely over one end; tall press lever; perforated wringer basket.\nMust not show: mop; janitor-cart shelves; detached wringer; round household pail.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-010",
+    "briefVersion": 1,
+    "slot": 10,
+    "candidateId": "a010",
+    "conceptId": "tool.deck-brush",
+    "canonicalTerm": "Deck brush",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.deck-brush"
+    ],
+    "desiredView": "low three-quarter view showing the compact block, stiff bristles, socket, and full handle",
+    "mustShow": [
+      "long straight handle",
+      "small deep rectangular scrub block",
+      "reinforced top socket",
+      "dense short very stiff bristles",
+      "head substantially narrower than a push broom"
+    ],
+    "mustNotShow": [
+      "wide push-broom head",
+      "handheld brush",
+      "diagonally cut broom head",
+      "soft mop fibers"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a010.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one long-handled deck brush.\nSubject: Deck brush.\nDesired view: low three-quarter view showing the compact block, stiff bristles, socket, and full handle.\nMust show: long straight handle; small deep rectangular scrub block; reinforced top socket; dense short very stiff bristles; head substantially narrower than a push broom.\nMust not show: wide push-broom head; handheld brush; diagonally cut broom head; soft mop fibers.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-011",
+    "briefVersion": 1,
+    "slot": 11,
+    "candidateId": "a011",
+    "conceptId": "tool.hand-scrub-brush",
+    "canonicalTerm": "Hand scrub brush",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.hand-scrub-brush"
+    ],
+    "desiredView": "three-quarter view from slightly below so the arched grip and bristle bed are both clear",
+    "mustShow": [
+      "short iron-shaped body",
+      "raised arched palm grip integrated over the body",
+      "dense short stiff bristles under a flat base",
+      "pointed front for corners"
+    ],
+    "mustNotShow": [
+      "long handle",
+      "toilet-brush head",
+      "flat handleless block brush",
+      "soft duster fibers"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a011.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one compact handled hand scrub brush.\nSubject: Hand scrub brush.\nDesired view: three-quarter view from slightly below so the arched grip and bristle bed are both clear.\nMust show: short iron-shaped body; raised arched palm grip integrated over the body; dense short stiff bristles under a flat base; pointed front for corners.\nMust not show: long handle; toilet-brush head; flat handleless block brush; soft duster fibers.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-012",
+    "briefVersion": 1,
+    "slot": 12,
+    "candidateId": "a012",
+    "conceptId": "tool.toilet-bowl-brush",
+    "canonicalTerm": "Toilet bowl brush",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.toilet-bowl-brush"
+    ],
+    "desiredView": "diagonal side view with the complete rounded bristle head separated visually from the shaft",
+    "mustShow": [
+      "long straight hand grip",
+      "narrow shaft",
+      "dense rounded radial bristle head that curves around the tip",
+      "small splash guard above the head"
+    ],
+    "mustNotShow": [
+      "flat scrub-brush block",
+      "floor-brush head",
+      "plunger cup",
+      "storage holder"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a012.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one toilet bowl brush.\nSubject: Toilet bowl brush.\nDesired view: diagonal side view with the complete rounded bristle head separated visually from the shaft.\nMust show: long straight hand grip; narrow shaft; dense rounded radial bristle head that curves around the tip; small splash guard above the head.\nMust not show: flat scrub-brush block; floor-brush head; plunger cup; storage holder.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-013",
+    "briefVersion": 1,
+    "slot": 13,
+    "candidateId": "a013",
+    "conceptId": "tool.duster",
+    "canonicalTerm": "Duster / feather or synthetic duster",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.duster"
+    ],
+    "desiredView": "diagonal side view showing the complete handle and tapered soft head",
+    "mustShow": [
+      "slender handle",
+      "one elongated soft fluffy dusting head",
+      "many flexible fine fibers tapering toward the tip"
+    ],
+    "mustNotShow": [
+      "stiff scrub bristles",
+      "broom head",
+      "cleaning cloth",
+      "multiple tools"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a013.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one handheld synthetic or feather duster.\nSubject: Duster / feather or synthetic duster.\nDesired view: diagonal side view showing the complete handle and tapered soft head.\nMust show: slender handle; one elongated soft fluffy dusting head; many flexible fine fibers tapering toward the tip.\nMust not show: stiff scrub bristles; broom head; cleaning cloth; multiple tools.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-017",
+    "briefVersion": 1,
+    "slot": 17,
+    "candidateId": "a017",
+    "conceptId": "tool.window-strip-washer",
+    "canonicalTerm": "Window washer / strip washer",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.window-strip-washer"
+    ],
+    "desiredView": "three-quarter side view revealing the fabric sleeve thickness and T-bar connection",
+    "mustShow": [
+      "short hand grip",
+      "straight T-bar frame",
+      "thick cylindrical fabric sleeve spanning the full crossbar",
+      "plush washable texture"
+    ],
+    "mustNotShow": [
+      "rubber squeegee blade",
+      "long floor handle",
+      "sponge on a flat plate",
+      "water droplets"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a017.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one professional window strip washer.\nSubject: Window washer / strip washer.\nDesired view: three-quarter side view revealing the fabric sleeve thickness and T-bar connection.\nMust show: short hand grip; straight T-bar frame; thick cylindrical fabric sleeve spanning the full crossbar; plush washable texture.\nMust not show: rubber squeegee blade; long floor handle; sponge on a flat plate; water droplets.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-018",
+    "briefVersion": 1,
+    "slot": 18,
+    "candidateId": "a018",
+    "conceptId": "equipment.janitor-cart",
+    "canonicalTerm": "Janitor cart",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#equipment.janitor-cart"
+    ],
+    "desiredView": "three-quarter view from the open-shelf side showing wheels, shelves, handle, and bag frame",
+    "mustShow": [
+      "upright push handle",
+      "two large rear wheels and two front swivel casters",
+      "two molded supply shelves",
+      "rear bag frame with one generic waste bag",
+      "coherent single chassis"
+    ],
+    "mustNotShow": [
+      "hand-truck toe plate",
+      "flat dolly",
+      "loose bottles or tools",
+      "person",
+      "detached bag"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a018.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one compact commercial janitor cart.\nSubject: Janitor cart.\nDesired view: three-quarter view from the open-shelf side showing wheels, shelves, handle, and bag frame.\nMust show: upright push handle; two large rear wheels and two front swivel casters; two molded supply shelves; rear bag frame with one generic waste bag; coherent single chassis.\nMust not show: hand-truck toe plate; flat dolly; loose bottles or tools; person; detached bag.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-019",
+    "briefVersion": 1,
+    "slot": 19,
+    "candidateId": "a019",
+    "conceptId": "equipment.hand-truck",
+    "canonicalTerm": "Hand truck",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#equipment.hand-truck"
+    ],
+    "desiredView": "three-quarter view clearly showing the toe plate, axle, frame, and both handles",
+    "mustShow": [
+      "tall rigid vertical frame",
+      "two handles at the top",
+      "two large wheels on one axle",
+      "broad toe plate projecting forward at the bottom",
+      "cross braces"
+    ],
+    "mustNotShow": [
+      "four-wheel platform",
+      "shelves",
+      "bag",
+      "wheelbarrow tub",
+      "carried load"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a019.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one two-wheel hand truck.\nSubject: Hand truck.\nDesired view: three-quarter view clearly showing the toe plate, axle, frame, and both handles.\nMust show: tall rigid vertical frame; two handles at the top; two large wheels on one axle; broad toe plate projecting forward at the bottom; cross braces.\nMust not show: four-wheel platform; shelves; bag; wheelbarrow tub; carried load.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-020",
+    "briefVersion": 1,
+    "slot": 20,
+    "candidateId": "a020",
+    "conceptId": "equipment.dolly",
+    "canonicalTerm": "Equipment dolly",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#equipment.dolly"
+    ],
+    "desiredView": "slightly elevated three-quarter view showing all four caster positions and the flat platform",
+    "mustShow": [
+      "flat rectangular platform",
+      "reinforced edge frame",
+      "four swivel casters under the corners",
+      "very low profile"
+    ],
+    "mustNotShow": [
+      "upright push handle",
+      "hand-truck toe plate",
+      "shelves",
+      "carried load"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a020.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one low four-wheel equipment dolly.\nSubject: Equipment dolly.\nDesired view: slightly elevated three-quarter view showing all four caster positions and the flat platform.\nMust show: flat rectangular platform; reinforced edge frame; four swivel casters under the corners; very low profile.\nMust not show: upright push handle; hand-truck toe plate; shelves; carried load.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-021",
+    "briefVersion": 1,
+    "slot": 21,
+    "candidateId": "a021",
+    "conceptId": "equipment.vacuum.upright",
+    "canonicalTerm": "Upright vacuum",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#equipment.vacuum.upright"
+    ],
+    "desiredView": "three-quarter side view showing the direct upright body-to-floor-head relationship",
+    "mustShow": [
+      "integrated upright handle",
+      "tall dry dust bag or slim dry collection body",
+      "compact motor housing",
+      "wide floor nozzle directly beneath",
+      "two rear wheels",
+      "one complete power cord looped on hooks with plug visible"
+    ],
+    "mustNotShow": [
+      "separate canister and hose",
+      "wet/dry tank",
+      "transparent solution tanks",
+      "extractor recovery lid",
+      "open cord end"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a021.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one representative corded dry upright vacuum cleaner.\nSubject: Upright vacuum.\nDesired view: three-quarter side view showing the direct upright body-to-floor-head relationship.\nMust show: integrated upright handle; tall dry dust bag or slim dry collection body; compact motor housing; wide floor nozzle directly beneath; two rear wheels; one complete power cord looped on hooks with plug visible.\nMust not show: separate canister and hose; wet/dry tank; transparent solution tanks; extractor recovery lid; open cord end.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-022",
+    "briefVersion": 1,
+    "slot": 22,
+    "candidateId": "a022",
+    "conceptId": "equipment.vacuum.canister",
+    "canonicalTerm": "Canister vacuum",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#equipment.vacuum.canister"
+    ],
+    "desiredView": "shallow S-shaped three-quarter composition making canister to hose to wand to nozzle fully traceable",
+    "mustShow": [
+      "small horizontal wheeled canister",
+      "one corrugated suction hose connected to its inlet",
+      "hose connected to a hand grip",
+      "two joined rigid wand tubes",
+      "flat dry floor nozzle attached at the far end",
+      "every joint visibly closed"
+    ],
+    "mustNotShow": [
+      "open hose or tube end",
+      "wet/dry bucket tank",
+      "steam gun",
+      "detached nozzles",
+      "duplicate accessories",
+      "upright bag"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a022.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one representative dry canister vacuum shown as a continuous assembled system.\nSubject: Canister vacuum.\nDesired view: shallow S-shaped three-quarter composition making canister to hose to wand to nozzle fully traceable.\nMust show: small horizontal wheeled canister; one corrugated suction hose connected to its inlet; hose connected to a hand grip; two joined rigid wand tubes; flat dry floor nozzle attached at the far end; every joint visibly closed.\nMust not show: open hose or tube end; wet/dry bucket tank; steam gun; detached nozzles; duplicate accessories; upright bag.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-023",
+    "briefVersion": 1,
+    "slot": 23,
+    "candidateId": "a023",
+    "conceptId": "equipment.vacuum.wet-dry",
+    "canonicalTerm": "Wet/dry vacuum",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#equipment.vacuum.wet-dry"
+    ],
+    "desiredView": "three-quarter view from slightly above showing the cylindrical tank, motor head, casters, drain, and complete hose",
+    "mustShow": [
+      "large cylindrical collection tank on a four-caster base",
+      "domed motor head with carry handle",
+      "drain cap low on the tank",
+      "one corrugated suction hose fully connected from lid inlet to a broad handheld utility nozzle",
+      "every end closed"
+    ],
+    "mustNotShow": [
+      "dry upright bag",
+      "carpet-extractor twin tanks",
+      "steam wand",
+      "detached accessories",
+      "open hose end"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a023.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one representative wet/dry shop vacuum shown as a continuous assembled system.\nSubject: Wet/dry vacuum.\nDesired view: three-quarter view from slightly above showing the cylindrical tank, motor head, casters, drain, and complete hose.\nMust show: large cylindrical collection tank on a four-caster base; domed motor head with carry handle; drain cap low on the tank; one corrugated suction hose fully connected from lid inlet to a broad handheld utility nozzle; every end closed.\nMust not show: dry upright bag; carpet-extractor twin tanks; steam wand; detached accessories; open hose end.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-024",
+    "briefVersion": 1,
+    "slot": 24,
+    "candidateId": "a024",
+    "conceptId": "equipment.carpet-extractor",
+    "canonicalTerm": "Carpet extractor",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#equipment.carpet-extractor"
+    ],
+    "desiredView": "operator-side three-quarter view emphasizing the twin-tank body and rectangular extraction head",
+    "mustShow": [
+      "two distinct integrated tanks in the upright body",
+      "transparent or outlined recovery-tank lid",
+      "wide rectangular extraction head at floor level",
+      "long operator handle",
+      "two large rear wheels",
+      "short visible solution-and-recovery path integrated into the machine"
+    ],
+    "mustNotShow": [
+      "dry vacuum bag",
+      "separate canister hose",
+      "circular floor-machine deck",
+      "steam gun",
+      "open tubing"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a024.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one representative upright walk-behind carpet extractor.\nSubject: Carpet extractor.\nDesired view: operator-side three-quarter view emphasizing the twin-tank body and rectangular extraction head.\nMust show: two distinct integrated tanks in the upright body; transparent or outlined recovery-tank lid; wide rectangular extraction head at floor level; long operator handle; two large rear wheels; short visible solution-and-recovery path integrated into the machine.\nMust not show: dry vacuum bag; separate canister hose; circular floor-machine deck; steam gun; open tubing.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-028",
+    "briefVersion": 1,
+    "slot": 28,
+    "candidateId": "a028",
+    "conceptId": "equipment.vacuum.ride-on",
+    "canonicalTerm": "Ride-on industrial vacuum cleaner",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#equipment.vacuum.ride-on"
+    ],
+    "desiredView": "front three-quarter product view showing seat, steering, pickup deck, wheels, and suction duct",
+    "mustShow": [
+      "single operator seat",
+      "steering wheel",
+      "enclosed rear collection body",
+      "four wheels",
+      "broad rectangular vacuum pickup deck beneath the front",
+      "one large central suction duct visibly entering the collection body"
+    ],
+    "mustNotShow": [
+      "rotating side sweeper brushes",
+      "water tanks",
+      "trailing floor squeegee",
+      "circular burnisher deck",
+      "rider"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a028.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one representative compact ride-on industrial vacuum cleaner.\nSubject: Ride-on industrial vacuum cleaner.\nDesired view: front three-quarter product view showing seat, steering, pickup deck, wheels, and suction duct.\nMust show: single operator seat; steering wheel; enclosed rear collection body; four wheels; broad rectangular vacuum pickup deck beneath the front; one large central suction duct visibly entering the collection body.\nMust not show: rotating side sweeper brushes; water tanks; trailing floor squeegee; circular burnisher deck; rider.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-029",
+    "briefVersion": 1,
+    "slot": 29,
+    "candidateId": "a029",
+    "conceptId": "equipment.snow-blower",
+    "canonicalTerm": "Snow blower",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#equipment.snow-blower"
+    ],
+    "desiredView": "front three-quarter view looking partly into the auger housing while retaining the full machine",
+    "mustShow": [
+      "front open auger housing",
+      "two visible opposing spiral auger flights",
+      "central impeller opening",
+      "tall directional discharge chute",
+      "engine body",
+      "two treaded wheels",
+      "full handlebar with controls"
+    ],
+    "mustNotShow": [
+      "lawn-mower cutting deck",
+      "snow",
+      "operator",
+      "disconnected chute",
+      "crawler tracks"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a029.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one representative walk-behind two-stage snow blower.\nSubject: Snow blower.\nDesired view: front three-quarter view looking partly into the auger housing while retaining the full machine.\nMust show: front open auger housing; two visible opposing spiral auger flights; central impeller opening; tall directional discharge chute; engine body; two treaded wheels; full handlebar with controls.\nMust not show: lawn-mower cutting deck; snow; operator; disconnected chute; crawler tracks.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-030",
+    "briefVersion": 1,
+    "slot": 30,
+    "candidateId": "a030",
+    "conceptId": "equipment.hedge-trimmer",
+    "canonicalTerm": "Hedge trimmer",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#equipment.hedge-trimmer"
+    ],
+    "desiredView": "diagonal side view with the full toothed blade separated clearly from both handles",
+    "mustShow": [
+      "rear pistol grip with trigger",
+      "forward wraparound support handle",
+      "long straight double-sided reciprocating blade",
+      "evenly spaced guard teeth and smaller cutter teeth",
+      "compact rear power housing"
+    ],
+    "mustNotShow": [
+      "chainsaw chain and bar",
+      "pruning-shear pivot",
+      "loose cord",
+      "branch",
+      "battery branding"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a030.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one handheld electric hedge trimmer.\nSubject: Hedge trimmer.\nDesired view: diagonal side view with the full toothed blade separated clearly from both handles.\nMust show: rear pistol grip with trigger; forward wraparound support handle; long straight double-sided reciprocating blade; evenly spaced guard teeth and smaller cutter teeth; compact rear power housing.\nMust not show: chainsaw chain and bar; pruning-shear pivot; loose cord; branch; battery branding.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-034",
+    "briefVersion": 1,
+    "slot": 34,
+    "candidateId": "a034",
+    "conceptId": "tool.screwdriver.slotted",
+    "canonicalTerm": "Flat/slotted screwdriver",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.screwdriver.slotted"
+    ],
+    "desiredView": "diagonal three-quarter view with the flat tip closest to the viewer and large enough to inspect",
+    "mustShow": [
+      "single straight shaft",
+      "ergonomic handle",
+      "one clearly visible flat blade tip with a straight rectangular edge",
+      "mechanically plausible ferrule"
+    ],
+    "mustNotShow": [
+      "cross-shaped Phillips tip",
+      "chisel head",
+      "interchangeable bits",
+      "screw"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a034.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one flat or slotted screwdriver.\nSubject: Flat/slotted screwdriver.\nDesired view: diagonal three-quarter view with the flat tip closest to the viewer and large enough to inspect.\nMust show: single straight shaft; ergonomic handle; one clearly visible flat blade tip with a straight rectangular edge; mechanically plausible ferrule.\nMust not show: cross-shaped Phillips tip; chisel head; interchangeable bits; screw.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-035",
+    "briefVersion": 1,
+    "slot": 35,
+    "candidateId": "a035",
+    "conceptId": "tool.screwdriver.phillips",
+    "canonicalTerm": "Phillips screwdriver",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.screwdriver.phillips"
+    ],
+    "desiredView": "diagonal three-quarter view with the cruciform tip closest to the viewer and large enough to inspect",
+    "mustShow": [
+      "single straight shaft",
+      "ergonomic handle",
+      "one clearly visible cross-shaped cruciform tip with four tapered flutes"
+    ],
+    "mustNotShow": [
+      "flat slotted blade",
+      "Torx or hex tip",
+      "interchangeable bits",
+      "screw"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a035.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one Phillips screwdriver.\nSubject: Phillips screwdriver.\nDesired view: diagonal three-quarter view with the cruciform tip closest to the viewer and large enough to inspect.\nMust show: single straight shaft; ergonomic handle; one clearly visible cross-shaped cruciform tip with four tapered flutes.\nMust not show: flat slotted blade; Torx or hex tip; interchangeable bits; screw.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-038",
+    "briefVersion": 1,
+    "slot": 38,
+    "candidateId": "a038",
+    "conceptId": "tool.wrench.fixed",
+    "canonicalTerm": "Combination/open-end/box wrench",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.wrench.fixed"
+    ],
+    "desiredView": "slightly elevated three-quarter side view showing both fixed ends clearly",
+    "mustShow": [
+      "one open-ended fixed jaw at one end",
+      "one closed box end at the other",
+      "straight forged handle",
+      "both ends aligned and complete"
+    ],
+    "mustNotShow": [
+      "movable jaw",
+      "worm gear",
+      "serrated pipe-wrench teeth",
+      "ratchet mechanism",
+      "size markings"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a038.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one fixed combination wrench.\nSubject: Combination/open-end/box wrench.\nDesired view: slightly elevated three-quarter side view showing both fixed ends clearly.\nMust show: one open-ended fixed jaw at one end; one closed box end at the other; straight forged handle; both ends aligned and complete.\nMust not show: movable jaw; worm gear; serrated pipe-wrench teeth; ratchet mechanism; size markings.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-041",
+    "briefVersion": 1,
+    "slot": 41,
+    "candidateId": "a041",
+    "conceptId": "tool.pliers.needle-nose",
+    "canonicalTerm": "Needle-nose pliers",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.pliers.needle-nose"
+    ],
+    "desiredView": "three-quarter side view with jaws slightly open and their full taper visible",
+    "mustShow": [
+      "two very long narrow tapered jaws meeting at a fine point",
+      "shallow gripping serrations",
+      "central pivot",
+      "two curved insulated-style handles"
+    ],
+    "mustNotShow": [
+      "short diagonal cutter head",
+      "locking lever",
+      "tongue-and-groove channels",
+      "wire"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a041.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one pair of needle-nose pliers.\nSubject: Needle-nose pliers.\nDesired view: three-quarter side view with jaws slightly open and their full taper visible.\nMust show: two very long narrow tapered jaws meeting at a fine point; shallow gripping serrations; central pivot; two curved insulated-style handles.\nMust not show: short diagonal cutter head; locking lever; tongue-and-groove channels; wire.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-042",
+    "briefVersion": 1,
+    "slot": 42,
+    "candidateId": "a042",
+    "conceptId": "tool.pliers.diagonal-cutting",
+    "canonicalTerm": "Diagonal cutting pliers",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.pliers.diagonal-cutting"
+    ],
+    "desiredView": "close three-quarter side view with jaws slightly open so both diagonal cutters are visible",
+    "mustShow": [
+      "short robust opposing jaws",
+      "clearly visible angled cutting edges meeting across the head",
+      "central pivot",
+      "two curved handles"
+    ],
+    "mustNotShow": [
+      "long pointed gripping jaws",
+      "flat gripping pads",
+      "locking screw",
+      "wire"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a042.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one pair of diagonal cutting pliers.\nSubject: Diagonal cutting pliers.\nDesired view: close three-quarter side view with jaws slightly open so both diagonal cutters are visible.\nMust show: short robust opposing jaws; clearly visible angled cutting edges meeting across the head; central pivot; two curved handles.\nMust not show: long pointed gripping jaws; flat gripping pads; locking screw; wire.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-043",
+    "briefVersion": 1,
+    "slot": 43,
+    "candidateId": "a043",
+    "conceptId": "tool.pliers.locking",
+    "canonicalTerm": "Locking pliers",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.pliers.locking"
+    ],
+    "desiredView": "three-quarter side view with the jaws slightly open and the full locking linkage visible",
+    "mustShow": [
+      "curved serrated gripping jaws",
+      "over-center compound linkage",
+      "release lever inside one handle",
+      "knurled adjustment screw at the end of the opposite handle"
+    ],
+    "mustNotShow": [
+      "ordinary simple plier pivot",
+      "clamp frame",
+      "pipe-wrench hook jaw",
+      "loose bolt"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a043.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one pair of locking pliers.\nSubject: Locking pliers.\nDesired view: three-quarter side view with the jaws slightly open and the full locking linkage visible.\nMust show: curved serrated gripping jaws; over-center compound linkage; release lever inside one handle; knurled adjustment screw at the end of the opposite handle.\nMust not show: ordinary simple plier pivot; clamp frame; pipe-wrench hook jaw; loose bolt.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-044",
+    "briefVersion": 1,
+    "slot": 44,
+    "candidateId": "a044",
+    "conceptId": "tool.clamp.c",
+    "canonicalTerm": "C-clamp",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.clamp.c"
+    ],
+    "desiredView": "three-quarter view with the spindle partially open and all contact pads visible",
+    "mustShow": [
+      "heavy C-shaped frame",
+      "fixed anvil pad",
+      "threaded screw spindle",
+      "swivel pressure pad",
+      "sliding T-handle",
+      "open throat"
+    ],
+    "mustNotShow": [
+      "long bar rail",
+      "plier handles",
+      "vise base",
+      "workpiece"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a044.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one C-clamp.\nSubject: C-clamp.\nDesired view: three-quarter view with the spindle partially open and all contact pads visible.\nMust show: heavy C-shaped frame; fixed anvil pad; threaded screw spindle; swivel pressure pad; sliding T-handle; open throat.\nMust not show: long bar rail; plier handles; vise base; workpiece.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-045",
+    "briefVersion": 1,
+    "slot": 45,
+    "candidateId": "a045",
+    "conceptId": "tool.clamp.bar",
+    "canonicalTerm": "Bar clamp",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.clamp.bar"
+    ],
+    "desiredView": "long three-quarter side view fitting the complete rail and both jaws inside the canvas",
+    "mustShow": [
+      "long straight metal bar",
+      "fixed jaw at one end",
+      "sliding movable jaw",
+      "two opposing flat pads",
+      "screw handle on the movable jaw"
+    ],
+    "mustNotShow": [
+      "C-shaped frame",
+      "plier linkage",
+      "workpiece",
+      "multiple clamps"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a045.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one bar clamp.\nSubject: Bar clamp.\nDesired view: long three-quarter side view fitting the complete rail and both jaws inside the canvas.\nMust show: long straight metal bar; fixed jaw at one end; sliding movable jaw; two opposing flat pads; screw handle on the movable jaw.\nMust not show: C-shaped frame; plier linkage; workpiece; multiple clamps.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-046",
+    "briefVersion": 1,
+    "slot": 46,
+    "candidateId": "a046",
+    "conceptId": "tool.hand-plane",
+    "canonicalTerm": "Hand plane",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.hand-plane",
+      "https://www.cs.ny.gov/testing/test_guides/Custodians_Janitors_EntryLevel_TestGuide.pdf"
+    ],
+    "desiredView": "low three-quarter side view showing the sole line, knob, tote, and cutter assembly",
+    "mustShow": [
+      "flat sole",
+      "cast body",
+      "front round knob",
+      "rear curved tote handle",
+      "central frog and cap iron",
+      "blade mouth in the sole"
+    ],
+    "mustNotShow": [
+      "saw teeth",
+      "powered cord",
+      "sanding pad",
+      "loose wood shavings",
+      "brand name"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a046.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one traditional metal bench hand plane.\nSubject: Hand plane.\nDesired view: low three-quarter side view showing the sole line, knob, tote, and cutter assembly.\nMust show: flat sole; cast body; front round knob; rear curved tote handle; central frog and cap iron; blade mouth in the sole.\nMust not show: saw teeth; powered cord; sanding pad; loose wood shavings; brand name.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-047",
+    "briefVersion": 1,
+    "slot": 47,
+    "candidateId": "a047",
+    "conceptId": "tool.saw.crosscut",
+    "canonicalTerm": "Crosscut saw",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.saw.crosscut"
+    ],
+    "desiredView": "strict side view, blade horizontal, with the entire toothed edge prominent and uncropped",
+    "mustShow": [
+      "closed hand grip",
+      "broad tapering blade",
+      "a fully visible cutting edge with many fine alternating bevel teeth shaped like small knife points for cutting across grain",
+      "tooth tips and alternating bevel rhythm large enough to inspect"
+    ],
+    "mustNotShow": [
+      "coarse square chisel-like rip teeth",
+      "hacksaw frame",
+      "circular saw",
+      "tooth-detail inset or callout",
+      "wood"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a047.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one traditional crosscut hand saw.\nSubject: Crosscut saw.\nDesired view: strict side view, blade horizontal, with the entire toothed edge prominent and uncropped.\nMust show: closed hand grip; broad tapering blade; a fully visible cutting edge with many fine alternating bevel teeth shaped like small knife points for cutting across grain; tooth tips and alternating bevel rhythm large enough to inspect.\nMust not show: coarse square chisel-like rip teeth; hacksaw frame; circular saw; tooth-detail inset or callout; wood.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-048",
+    "briefVersion": 1,
+    "slot": 48,
+    "candidateId": "a048",
+    "conceptId": "tool.saw.rip",
+    "canonicalTerm": "Rip saw",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.saw.rip"
+    ],
+    "desiredView": "strict side view, blade horizontal, with the entire toothed edge prominent and uncropped",
+    "mustShow": [
+      "closed hand grip",
+      "broad tapering blade",
+      "a fully visible cutting edge with fewer larger coarse chisel-like teeth having near-square front faces for cutting with grain",
+      "tooth profile large enough to inspect"
+    ],
+    "mustNotShow": [
+      "fine alternating knife-like crosscut teeth",
+      "hacksaw frame",
+      "circular saw",
+      "tooth-detail inset or callout",
+      "wood"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a048.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one traditional rip hand saw.\nSubject: Rip saw.\nDesired view: strict side view, blade horizontal, with the entire toothed edge prominent and uncropped.\nMust show: closed hand grip; broad tapering blade; a fully visible cutting edge with fewer larger coarse chisel-like teeth having near-square front faces for cutting with grain; tooth profile large enough to inspect.\nMust not show: fine alternating knife-like crosscut teeth; hacksaw frame; circular saw; tooth-detail inset or callout; wood.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-049",
+    "briefVersion": 1,
+    "slot": 49,
+    "candidateId": "a049",
+    "conceptId": "tool.saw.hacksaw",
+    "canonicalTerm": "Hacksaw",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.saw.hacksaw"
+    ],
+    "desiredView": "three-quarter side view showing both blade attachment points and the full frame",
+    "mustShow": [
+      "rigid C-shaped metal bow frame",
+      "thin straight replaceable blade tensioned between front and rear pins",
+      "many tiny uniform teeth along one edge",
+      "pistol-style rear handle",
+      "front tension mechanism"
+    ],
+    "mustNotShow": [
+      "solid wood-saw blade",
+      "open blade end",
+      "coping-saw depth",
+      "pipe or workpiece"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a049.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one full-size hand hacksaw.\nSubject: Hacksaw.\nDesired view: three-quarter side view showing both blade attachment points and the full frame.\nMust show: rigid C-shaped metal bow frame; thin straight replaceable blade tensioned between front and rear pins; many tiny uniform teeth along one edge; pistol-style rear handle; front tension mechanism.\nMust not show: solid wood-saw blade; open blade end; coping-saw depth; pipe or workpiece.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-050",
+    "briefVersion": 1,
+    "slot": 50,
+    "candidateId": "a050",
+    "conceptId": "tool.utility-knife",
+    "canonicalTerm": "Utility knife",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.utility-knife"
+    ],
+    "desiredView": "three-quarter side view with the short trapezoid blade and slider clearly visible",
+    "mustShow": [
+      "sturdy elongated handle",
+      "thumb slider",
+      "short trapezoid utility blade protruding slightly from the front",
+      "visible blade guide",
+      "complete intact body"
+    ],
+    "mustNotShow": [
+      "broad putty-knife blade",
+      "paint scraper",
+      "snap-off segmented blade",
+      "loose spare blades",
+      "cutting material"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a050.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one retractable utility knife.\nSubject: Utility knife.\nDesired view: three-quarter side view with the short trapezoid blade and slider clearly visible.\nMust show: sturdy elongated handle; thumb slider; short trapezoid utility blade protruding slightly from the front; visible blade guide; complete intact body.\nMust not show: broad putty-knife blade; paint scraper; snap-off segmented blade; loose spare blades; cutting material.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-051",
+    "briefVersion": 1,
+    "slot": 51,
+    "candidateId": "a051",
+    "conceptId": "tool.putty-knife",
+    "canonicalTerm": "Putty knife",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.putty-knife"
+    ],
+    "desiredView": "slightly elevated three-quarter side view showing the thin flexible blade profile and full edge",
+    "mustShow": [
+      "long narrow handle",
+      "slim tang and ferrule",
+      "thin flexible broad leaf-shaped steel blade",
+      "gently rounded blade corners",
+      "straight application edge"
+    ],
+    "mustNotShow": [
+      "thick reinforced scraper blade",
+      "hooked pull scraper",
+      "utility-knife blade",
+      "putty or workpiece"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a051.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one flexible putty knife.\nSubject: Putty knife.\nDesired view: slightly elevated three-quarter side view showing the thin flexible blade profile and full edge.\nMust show: long narrow handle; slim tang and ferrule; thin flexible broad leaf-shaped steel blade; gently rounded blade corners; straight application edge.\nMust not show: thick reinforced scraper blade; hooked pull scraper; utility-knife blade; putty or workpiece.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-052",
+    "briefVersion": 1,
+    "slot": 52,
+    "candidateId": "a052",
+    "conceptId": "tool.paint-scraper",
+    "canonicalTerm": "Paint scraper",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.paint-scraper"
+    ],
+    "desiredView": "low three-quarter side view emphasizing the reinforced blade spine, thickness, and beveled edge",
+    "mustShow": [
+      "short stout handle",
+      "reinforced ferrule",
+      "short thick rigid rectangular blade",
+      "clearly beveled scraping edge",
+      "blade noticeably stiffer and shorter than a flexible putty knife"
+    ],
+    "mustNotShow": [
+      "thin flexible leaf blade",
+      "utility-knife slider",
+      "hooked razor scraper",
+      "paint chips or workpiece"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a052.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one rigid paint scraper.\nSubject: Paint scraper.\nDesired view: low three-quarter side view emphasizing the reinforced blade spine, thickness, and beveled edge.\nMust show: short stout handle; reinforced ferrule; short thick rigid rectangular blade; clearly beveled scraping edge; blade noticeably stiffer and shorter than a flexible putty knife.\nMust not show: thin flexible leaf blade; utility-knife slider; hooked razor scraper; paint chips or workpiece.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-053",
+    "briefVersion": 1,
+    "slot": 53,
+    "candidateId": "a053",
+    "conceptId": "tool.tape-measure",
+    "canonicalTerm": "Tape measure",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.tape-measure"
+    ],
+    "desiredView": "three-quarter view showing the case controls, extended tape, and hooked end within the canvas",
+    "mustShow": [
+      "compact rounded rectangular case",
+      "belt clip",
+      "lock button",
+      "short section of steel tape extended from the front",
+      "hooked metal end tab",
+      "simple unlabeled tick marks only"
+    ],
+    "mustNotShow": [
+      "numbers or letters",
+      "loose coil",
+      "folding rule",
+      "fully retracted tape",
+      "hand"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a053.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one retractable tape measure.\nSubject: Tape measure.\nDesired view: three-quarter view showing the case controls, extended tape, and hooked end within the canvas.\nMust show: compact rounded rectangular case; belt clip; lock button; short section of steel tape extended from the front; hooked metal end tab; simple unlabeled tick marks only.\nMust not show: numbers or letters; loose coil; folding rule; fully retracted tape; hand.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-054",
+    "briefVersion": 1,
+    "slot": 54,
+    "candidateId": "a054",
+    "conceptId": "tool.level",
+    "canonicalTerm": "Level",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.level"
+    ],
+    "desiredView": "slightly elevated three-quarter side view showing all three vial windows",
+    "mustShow": [
+      "long rigid rectangular body",
+      "two end caps",
+      "three clearly visible vial windows for horizontal, vertical, and diagonal readings",
+      "centered bubbles represented without markings"
+    ],
+    "mustNotShow": [
+      "ruler numbers",
+      "carpenter-square L shape",
+      "laser",
+      "tripod"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a054.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one rectangular spirit level.\nSubject: Level.\nDesired view: slightly elevated three-quarter side view showing all three vial windows.\nMust show: long rigid rectangular body; two end caps; three clearly visible vial windows for horizontal, vertical, and diagonal readings; centered bubbles represented without markings.\nMust not show: ruler numbers; carpenter-square L shape; laser; tripod.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-055",
+    "briefVersion": 1,
+    "slot": 55,
+    "candidateId": "a055",
+    "conceptId": "tool.square",
+    "canonicalTerm": "Carpenter square / combination square",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.square"
+    ],
+    "desiredView": "slightly elevated strict face view with both unequal legs clearly visible",
+    "mustShow": [
+      "single rigid L-shaped metal tool",
+      "long wide blade",
+      "shorter narrower tongue",
+      "exact 90-degree inside corner",
+      "both legs complete"
+    ],
+    "mustNotShow": [
+      "level vials",
+      "adjustable combination head",
+      "ruler numbers",
+      "separate straightedges"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a055.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one traditional carpenter framing square.\nSubject: Carpenter square / combination square.\nDesired view: slightly elevated strict face view with both unequal legs clearly visible.\nMust show: single rigid L-shaped metal tool; long wide blade; shorter narrower tongue; exact 90-degree inside corner; both legs complete.\nMust not show: level vials; adjustable combination head; ruler numbers; separate straightedges.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-058",
+    "briefVersion": 1,
+    "slot": 58,
+    "candidateId": "a058",
+    "conceptId": "tool.drain-snake",
+    "canonicalTerm": "Hand auger / drain snake",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.drain-snake"
+    ],
+    "desiredView": "three-quarter view with one compact cable curve so the drum, crank, guide, cable, and terminal auger are all traceable",
+    "mustShow": [
+      "round enclosed cable drum",
+      "integrated carry grip",
+      "side crank handle",
+      "short guide tube",
+      "one flexible metal cable exiting the guide tube and ending in a small corkscrew auger tip",
+      "every cable connection continuous"
+    ],
+    "mustNotShow": [
+      "plunger cup",
+      "toilet auger elbow",
+      "power drill",
+      "open or cut cable end",
+      "detached tip",
+      "pipe"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a058.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one hand-crank drum drain auger shown as a complete continuous tool.\nSubject: Hand auger / drain snake.\nDesired view: three-quarter view with one compact cable curve so the drum, crank, guide, cable, and terminal auger are all traceable.\nMust show: round enclosed cable drum; integrated carry grip; side crank handle; short guide tube; one flexible metal cable exiting the guide tube and ending in a small corkscrew auger tip; every cable connection continuous.\nMust not show: plunger cup; toilet auger elbow; power drill; open or cut cable end; detached tip; pipe.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-060",
+    "briefVersion": 1,
+    "slot": 60,
+    "candidateId": "a060",
+    "conceptId": "tool.soldering-gun",
+    "canonicalTerm": "Soldering gun",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.soldering-gun",
+      "https://www.cs.ny.gov/testing/test_guides/Custodians_Janitors_EntryLevel_TestGuide.pdf"
+    ],
+    "desiredView": "three-quarter side view with the U-shaped tip, trigger, body, and complete cord visible",
+    "mustShow": [
+      "bulky transformer housing",
+      "pistol grip with trigger",
+      "two short rigid front posts",
+      "one continuous U-shaped copper heating tip connected to both posts",
+      "one power cord neatly looped with its plug visible"
+    ],
+    "mustNotShow": [
+      "staple magazine",
+      "staple-driving nose",
+      "caulking plunger rod",
+      "open cord end",
+      "separate tip",
+      "solder spool"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a060.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one corded pistol-grip soldering gun.\nSubject: Soldering gun.\nDesired view: three-quarter side view with the U-shaped tip, trigger, body, and complete cord visible.\nMust show: bulky transformer housing; pistol grip with trigger; two short rigid front posts; one continuous U-shaped copper heating tip connected to both posts; one power cord neatly looped with its plug visible.\nMust not show: staple magazine; staple-driving nose; caulking plunger rod; open cord end; separate tip; solder spool.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-064",
+    "briefVersion": 1,
+    "slot": 64,
+    "candidateId": "a064",
+    "conceptId": "ppe.ear-plugs",
+    "canonicalTerm": "Protective ear plugs",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#ppe.ear-plugs"
+    ],
+    "desiredView": "close three-quarter arrangement with both triple-flange profiles and the entire connecting cord visible",
+    "mustShow": [
+      "two small identical triple-flange earplugs",
+      "short stems",
+      "one flexible cord continuously connecting the two stems",
+      "soft rounded insertion tips"
+    ],
+    "mustNotShow": [
+      "earbuds",
+      "speaker grilles",
+      "microphone",
+      "audio jack",
+      "charging case",
+      "disconnected cord"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a064.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one matched pair of reusable corded hearing-protection earplugs.\nSubject: Protective ear plugs.\nDesired view: close three-quarter arrangement with both triple-flange profiles and the entire connecting cord visible.\nMust show: two small identical triple-flange earplugs; short stems; one flexible cord continuously connecting the two stems; soft rounded insertion tips.\nMust not show: earbuds; speaker grilles; microphone; audio jack; charging case; disconnected cord.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "full-tool-065",
+    "briefVersion": 1,
+    "slot": 65,
+    "candidateId": "a065",
+    "conceptId": "safety.wet-floor-sign",
+    "canonicalTerm": "Wet-floor warning sign/cone",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#safety.wet-floor-sign"
+    ],
+    "desiredView": "front three-quarter view showing the hinge, both feet, and the pictogram panel",
+    "mustShow": [
+      "self-supporting hinged A-frame body",
+      "carry-handle cutout at the top",
+      "two splayed panels connected at the hinge",
+      "simple generic slipping-person warning pictogram on the front panel with no words"
+    ],
+    "mustNotShow": [
+      "letters or words",
+      "traffic cone",
+      "floor puddle",
+      "room",
+      "person outside the pictogram",
+      "extra sign"
+    ],
+    "aspectRatio": "1:1",
+    "background": "visually pure white",
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "candidatePath": "content/assets/candidates/tools/a065.png",
+    "prompt": "Use case: scientific-educational.\nAsset type: one isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. Use original geometry and composition; do not copy any particular official sample drawing.\nComposition: one complete mechanically plausible subject centered at roughly 70% of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nPrimary request: Create one folding A-frame wet-floor warning sign.\nSubject: Wet-floor warning sign/cone.\nDesired view: front three-quarter view showing the hinge, both feet, and the pictogram panel.\nMust show: self-supporting hinged A-frame body; carry-handle cutout at the top; two splayed panels connected at the hinge; simple generic slipping-person warning pictogram on the front panel with no words.\nMust not show: letters or words; traffic cone; floor puddle; room; person outside the pictogram; extra sign.\nAbsolute exclusions: No text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, realistic people outside the requested pictogram, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  }
+]

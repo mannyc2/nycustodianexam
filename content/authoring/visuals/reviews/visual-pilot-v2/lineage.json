@@ -1,0 +1,989 @@
+{
+  "pilotId": "visual-pilot-v2",
+  "date": "2026-08-23",
+  "status": "candidate-review-package; not promoted",
+  "generator": "Codex built-in image_gen; one complete native raster per call",
+  "generatorModelIdentifier": "not exposed by the production surface",
+  "brief": {
+    "path": "content/authoring/visuals/briefs/visual-pilot-v2.json",
+    "sha256": "9c4f67d80fdb47bc483411aa9ffd867ca1a1c57c79c538678ce4354916b6b3ca",
+    "taxonomyRevision": {
+      "path": "docs/TAXONOMY.md",
+      "sha256": "c2c487e2a16f5b5de7848d7915c4be2bd0b24749c266727f94a237b21025d952"
+    },
+    "visualPolicyRevision": {
+      "path": "illustration/VISUAL_AUTHORING_POLICY.md",
+      "sha256": "a17d47cd976fbd4caa2b57f834216450f8316063d0b9759ef4fbd0e451d0d904"
+    }
+  },
+  "repairBriefs": [
+    {
+      "path": "content/authoring/visuals/briefs/visual-pilot-v2-gate-repair.json",
+      "sha256": "e181616a70b42f570e2e026c237325a0cf0d3388b82c4ac4d72a39132a1c2625"
+    },
+    {
+      "path": "content/authoring/visuals/briefs/visual-pilot-v2-gate-repair-2.json",
+      "sha256": "89d0c95bc56fcb9a53445b9334b18525c1d70a697da088c58e279d7b2cb6acfa"
+    },
+    {
+      "path": "content/authoring/visuals/briefs/visual-pilot-v2-gate-repair-3.json",
+      "sha256": "991b6433bfb6adcb09a4ef1de878f0f593d69f5ba16f2e7477ce3daa5192ad33"
+    },
+    {
+      "path": "content/authoring/visuals/briefs/visual-pilot-v2-gate-repair-4.json",
+      "sha256": "eb44e6c4dc72170e81eb2a40fb8e9aed11e5a764a8779e8a9fa2062f683454c3"
+    },
+    {
+      "path": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-bakeoff.json",
+      "sha256": "5f3282ae69129328d613bc68e9b6bed93a30975a9037733ddaf6e68c1c1294d5"
+    },
+    {
+      "path": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-bakeoff-2.json",
+      "sha256": "4ef672f65069dc271d8cee2c66cd77300c85b8e1d38a82b0c47fb861bd20bb98"
+    }
+  ],
+  "reviewCandidates": [
+    {
+      "candidateId": "v2t001",
+      "kind": "tool",
+      "conceptId": "tool.adjustable-wrench",
+      "canonicalTerm": "Adjustable wrench",
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2.json#v2t001",
+      "exactPrompt": "Use case: scientific-educational.\nAsset type: one alternate-view isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle/medium: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. This must be a line drawing, not a photograph, not a shaded 3D render, and not color artwork.\nComposition/framing: one complete mechanically plausible subject centered at roughly 72 percent of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nColor palette: black, white, and restrained neutral-gray line hatching only.\nAbsolute exclusions: no text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.\nPrimary request: create one generic adjustable wrench in a strict orthographic side profile, handle horizontal and jaws facing left, with the jaws moderately open.\nMust show: a fixed jaw and movable jaw with smooth parallel gripping faces; a clearly visible worm gear directly beneath the movable jaw; a complete plain handle; mechanically coherent jaw travel.\nMust not show: serrated teeth, an offset hook jaw, a pipe-wrench heel jaw, multiple adjustment channels, or decorative product contours.\nPairing constraint: match the framing, scale, horizontal orientation, and jaw-facing direction requested for candidate v2t002, while preserving the adjustable wrench's own decisive geometry.\nTargeted correction: retain the correct adjustable-wrench mechanism, but use a genuinely square canvas with a uniform pure white background and only crisp black technical contour lines plus very sparse light-gray functional hatching; absolutely no dark field, vignette, glow, gradient, solid gray fill, 3D shading, or photographic lighting.",
+      "promptSha256": "fc74b05cfe2aae004ae9bdabc6a42a3614b8363fc1e655705819e2e6bd833bf8",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a02fe2-a370-7ab3-b860-7719262c0e6d/exec-b278c045-3f48-433a-976b-7da525723605.png",
+      "generatedCandidate": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2t001.png",
+        "native": {
+          "format": "PNG",
+          "width": 1254,
+          "height": 1254,
+          "bitDepth": 8,
+          "colorType": 6,
+          "mode": "RGBA",
+          "bytes": 584830,
+          "sha256": "345970e466bdc394ead09053a731484a6d046ec0aa192d77ff5c94344f8defd1",
+          "chunkTypes": [
+            "IHDR",
+            "caBX",
+            "IDAT",
+            "IEND"
+          ],
+          "provenanceChunkPresent": true
+        }
+      },
+      "reviewCandidate": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2t001-e1.png",
+        "native": {
+          "format": "PNG",
+          "width": 1254,
+          "height": 1254,
+          "bitDepth": 8,
+          "colorType": 2,
+          "mode": "RGB",
+          "bytes": 357761,
+          "sha256": "7ac7c9016edfb191365e93a6e714c606edccc584934233b12c07693579052928",
+          "chunkTypes": [
+            "IHDR",
+            "pHYs",
+            "IDAT",
+            "IEND"
+          ],
+          "provenanceChunkPresent": false
+        }
+      },
+      "edit": {
+        "kind": "bounded-raster-edit",
+        "reason": "Composite the native transparent background onto opaque white without changing subject pixels.",
+        "command": "ffmpeg -f lavfi -i \"color=c=white:s=1254x1254,format=rgba\" -i v2t001.png -filter_complex \"[0:v][1:v]overlay=format=auto,format=rgb24\" -frames:v 1 v2t001-e1.png"
+      },
+      "pixelTruthReconciliation": null,
+      "referenceInputs": null,
+      "status": "review-only; see independent-review.json"
+    },
+    {
+      "candidateId": "v2t002",
+      "kind": "tool",
+      "conceptId": "tool.pipe-wrench",
+      "canonicalTerm": "Pipe wrench",
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-bakeoff-2.json#v2t002-b5",
+      "exactPrompt": "Use case: scientific-educational\nAsset type: square tool-recognition illustration for a custodial-training image library\nInput images: Image 1 is the sole anatomy-only reference. Use it only to understand the assembled mechanical relationship of a traditional straight pipe wrench. Generate a new original illustration; do not edit, trace, or restyle the photographed product.\n\nPrimary request: Create one generic traditional straight pipe wrench in clean monochrome instructional technical line art.\n\nScene/backdrop: plain white square canvas with no scene, border, labels, or callouts.\nSubject: one complete straight pipe wrench. The jaws are on the left and the handle extends to the right. The lower fixed heel jaw is integral to the wrench body. Above it is one movable full-floating hook jaw. Their two serrated gripping faces oppose each other across a clear jaw opening.\n\nMechanical topology: the curved movable hook jaw and its straight threaded shank are one continuous physical part. That single shank remains on one centerline as it enters the body and passes through exactly one knurled circular adjustment nut. Show enough of the aligned shank immediately before and after the nut to make the continuity unambiguous; normal body occlusion elsewhere is physically acceptable. A short rounded threaded end may remain visible just beyond the nut toward the handle. Include only one hook jaw, one aligned threaded shank, one adjustment nut, and one fixed heel jaw.\n\nStyle/medium: original monochrome technical line-art illustration matching a restrained educational tool library: crisp graphite-black outlines, controlled pale-gray form washes, sparse functional hatching, consistent line weight, clean white background, and no photographic rendering.\nComposition/framing: exact orthographic side profile, long axis strictly horizontal, jaws left and handle right. Center the complete tool with generous even padding; use most of the square width while keeping every edge visible. Keep the head large and mechanically readable at a 320 × 320 thumbnail.\nContours: invent neutral generic body, jaw, nut, and handle contours while preserving mechanically plausible traditional geometry.\n\nConstraints: one isolated tool only; physically connected parts; clearly opposed serrated faces; recognizable pipe-wrench silhouette; original generic design.\nAvoid: diagonal, rotated, three-quarter, top-down, or perspective views; duplicated or parallel shanks; a detached hook jaw; a second nut; floating parts; fused jaw faces; extra gears or rack pieces; red, orange, or any other color; photorealism; glossy product-shot lighting; logos; brand names; lettering; numerals; labels; badges; country marks; a handle hang-hole; copied head contours, handle recesses, plate layouts, fasteners, knurl patterns, or other source-specific trade dress; watermark.",
+      "promptSha256": "8010c243aa8f84f981a15b27bcc2781f8ae336bb1cd7a1f976536e2b8dee54be",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a03052-0483-7eb2-8eef-c69e097dc401/exec-6f3cb312-bbca-40a4-a3d3-a55f67858394.png",
+      "generatedCandidate": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2t002-b5.png",
+        "native": {
+          "format": "PNG",
+          "width": 1254,
+          "height": 1254,
+          "bitDepth": 8,
+          "colorType": 2,
+          "mode": "RGB",
+          "bytes": 1057443,
+          "sha256": "334044fb3c25f5e14be4c47e0df0512961ce8dce08e568e0d91b021faa8f1e99",
+          "chunkTypes": [
+            "IHDR",
+            "caBX",
+            "IDAT",
+            "IEND"
+          ],
+          "provenanceChunkPresent": true
+        }
+      },
+      "reviewCandidate": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2t002-b5.png",
+        "native": {
+          "format": "PNG",
+          "width": 1254,
+          "height": 1254,
+          "bitDepth": 8,
+          "colorType": 2,
+          "mode": "RGB",
+          "bytes": 1057443,
+          "sha256": "334044fb3c25f5e14be4c47e0df0512961ce8dce08e568e0d91b021faa8f1e99",
+          "chunkTypes": [
+            "IHDR",
+            "caBX",
+            "IDAT",
+            "IEND"
+          ],
+          "provenanceChunkPresent": true
+        }
+      },
+      "edit": null,
+      "pixelTruthReconciliation": "The opaque head naturally hides the middle of the hook-jaw-to-shank connection. The visible hook stem overlaps the axis of the single threaded shank emerging through one knurled nut, and the short rounded threaded end beyond the nut is valid traditional geometry. Independent blinded review and a separate reference-based mechanism adjudication both passed this topology at native and 320-pixel sizes.",
+      "referenceInputs": [
+        {
+          "path": "content/authoring/visuals/references/pipe-wrench/straight-pipe-wrench-assembled-packshot.jpg",
+          "sha256": "bd312c12650c81ee62667937cf90d03baf2cd2dbe4fb2560c04e8cc6a0302984",
+          "use": "sole assembled-anatomy reference; color, branding, lettering, contours, and trade dress excluded"
+        }
+      ],
+      "status": "review-only; see independent-review.json"
+    },
+    {
+      "candidateId": "v2t003",
+      "kind": "tool",
+      "conceptId": "tool.plunger.cup",
+      "canonicalTerm": "Cup plunger",
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2.json#v2t003",
+      "exactPrompt": "Use case: scientific-educational.\nAsset type: one alternate-view isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle/medium: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. This must be a line drawing, not a photograph, not a shaded 3D render, and not color artwork.\nComposition/framing: one complete mechanically plausible subject centered at roughly 72 percent of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nColor palette: black, white, and restrained neutral-gray line hatching only.\nAbsolute exclusions: no text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.\nPrimary request: create one generic cup plunger in a low underside three-quarter view. Tilt the complete tool diagonally so the viewer can look into the rubber cup's open mouth while the full handle remains visible.\nMust show: one simple bell-shaped rubber cup; a continuous uninterrupted open rim; an empty center beneath the handle socket; a complete plain handle.\nMust not show: an extended lower flange, inner sleeve, folded toilet flange, accordion bellows, toilet, sink, drain, water, or use context.\nPairing constraint: match the framing, scale, handle tilt, and underside camera angle requested for candidate v2t004.\nTargeted correction: show a completely hollow, unobstructed cup interior with no interior disk, inner sleeve, secondary ring, folded flange, or central projection; only the small mechanically plausible handle attachment may meet the cup at its upper interior apex. Use a uniform opaque pure white background and crisp black technical contours with only sparse light-gray functional hatching; no transparency, dark field, vignette, gradient, solid gray modeling, or photographic lighting.",
+      "promptSha256": "aa412fdffc89c7c6e64bdd0a64aa1ad9bba3b30de3dd724467a37489e5b55dbc",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a02fe2-a370-7ab3-b860-7719262c0e6d/exec-f91c565a-f807-40f5-b1c0-6ba4c5f7c22b.png",
+      "generatedCandidate": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2t003.png",
+        "native": {
+          "format": "PNG",
+          "width": 1254,
+          "height": 1254,
+          "bitDepth": 8,
+          "colorType": 2,
+          "mode": "RGB",
+          "bytes": 813943,
+          "sha256": "63d4381ef7f01e513f7287f37fac88362643bc811b9a9b1f1bca9995bd9f5e66",
+          "chunkTypes": [
+            "IHDR",
+            "caBX",
+            "IDAT",
+            "IEND"
+          ],
+          "provenanceChunkPresent": true
+        }
+      },
+      "reviewCandidate": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2t003.png",
+        "native": {
+          "format": "PNG",
+          "width": 1254,
+          "height": 1254,
+          "bitDepth": 8,
+          "colorType": 2,
+          "mode": "RGB",
+          "bytes": 813943,
+          "sha256": "63d4381ef7f01e513f7287f37fac88362643bc811b9a9b1f1bca9995bd9f5e66",
+          "chunkTypes": [
+            "IHDR",
+            "caBX",
+            "IDAT",
+            "IEND"
+          ],
+          "provenanceChunkPresent": true
+        }
+      },
+      "edit": null,
+      "pixelTruthReconciliation": null,
+      "referenceInputs": null,
+      "status": "review-only; see independent-review.json"
+    },
+    {
+      "candidateId": "v2t004",
+      "kind": "tool",
+      "conceptId": "tool.plunger.flange",
+      "canonicalTerm": "Flange toilet plunger",
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2.json#v2t004",
+      "exactPrompt": "Use case: scientific-educational.\nAsset type: one alternate-view isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle/medium: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. This must be a line drawing, not a photograph, not a shaded 3D render, and not color artwork.\nComposition/framing: one complete mechanically plausible subject centered at roughly 72 percent of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nColor palette: black, white, and restrained neutral-gray line hatching only.\nAbsolute exclusions: no text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.\nPrimary request: create one generic flange toilet plunger in a low underside three-quarter view. Tilt the complete tool diagonally so the viewer can see beneath the outer rubber cup while the full handle remains visible.\nMust show: one outer bell-shaped rubber cup; a distinct narrower cylindrical rubber flange or sleeve extending well below the center of that cup; a clear visible gap and shape transition between the outer cup rim and the lower flange; a complete plain handle.\nMust not show: a plain cup with an empty center, a flange folded invisibly inside the cup, accordion bellows, toilet, sink, drain, water, or use context.\nPairing constraint: match the framing, scale, handle tilt, and underside camera angle requested for candidate v2t003.\nTargeted correction: retain the clearly projecting open cylindrical lower flange, the visible transition from the outer bell-shaped cup, and the complete diagonally tilted handle. Use a uniform opaque pure white background and crisp black technical contours with only sparse light-gray functional hatching; no transparency, dark field, vignette, gradient, dense tonal modeling, solid gray fill, 3D shading, or photographic lighting.",
+      "promptSha256": "9d688589e1fe7f0d39e1d652919f71f6d52c911eca4b622cf63580d6d2ff1599",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a02fe2-a370-7ab3-b860-7719262c0e6d/exec-1f568c62-9feb-4a17-afbd-5e26550c0dfa.png",
+      "generatedCandidate": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2t004.png",
+        "native": {
+          "format": "PNG",
+          "width": 1254,
+          "height": 1254,
+          "bitDepth": 8,
+          "colorType": 2,
+          "mode": "RGB",
+          "bytes": 1130106,
+          "sha256": "4d22405839f7d226e9374d96e614ef98b7d3c1ae6f6c19fc9f95ae06597d6cb0",
+          "chunkTypes": [
+            "IHDR",
+            "caBX",
+            "IDAT",
+            "IEND"
+          ],
+          "provenanceChunkPresent": true
+        }
+      },
+      "reviewCandidate": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2t004.png",
+        "native": {
+          "format": "PNG",
+          "width": 1254,
+          "height": 1254,
+          "bitDepth": 8,
+          "colorType": 2,
+          "mode": "RGB",
+          "bytes": 1130106,
+          "sha256": "4d22405839f7d226e9374d96e614ef98b7d3c1ae6f6c19fc9f95ae06597d6cb0",
+          "chunkTypes": [
+            "IHDR",
+            "caBX",
+            "IDAT",
+            "IEND"
+          ],
+          "provenanceChunkPresent": true
+        }
+      },
+      "edit": null,
+      "pixelTruthReconciliation": null,
+      "referenceInputs": null,
+      "status": "review-only; see independent-review.json"
+    },
+    {
+      "candidateId": "v2t005",
+      "kind": "tool",
+      "conceptId": "tool.pliers.slip-joint",
+      "canonicalTerm": "Slip-joint pliers",
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2.json#v2t005",
+      "exactPrompt": "Use case: scientific-educational.\nAsset type: one alternate-view isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure opaque white with no floor plane and no shadow.\nStyle/medium: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. This must be a line drawing, not a photograph, not a shaded 3D render, and not color artwork.\nComposition/framing: one complete generic pair of slip-joint pliers in strict top-down face view, jaws facing left and handles moderately open, centered at roughly 72 percent of a square canvas with generous even padding. Match the scale, orientation, handle opening, and jaw direction of the v2t006 tongue-and-groove comparison view without borrowing its geometry. Nothing may touch the canvas edge.\nDecisive joint geometry: draw one continuous short pill-shaped or oblong slip slot in one plier member. Show exactly one circular pivot pin total, seated at the far-left end of that slot. The remaining continuous right-hand length of the same outlined slot must be visibly empty white space. The empty portion is not a separate hole and has no circular outline of its own. Only one circular object may appear anywhere in the joint area. Keep the linkage mechanically coherent.\nOther required geometry: ordinary opposing short serrated gripping jaws and two complete plain handles.\nAbsolute exclusions: no second circular disc, hole, washer, pin, rivet, button, or fastener; no two separate pivot holes; no multiple arcing adjustment channels; no tongue-and-groove rack; no long needle-nose jaws; no cutting edges; no locking linkage; no pipe-wrench jaws; no text or pseudo-text; no labels, arrows, callouts, letters, numbers, answer marks, logos, brands, watermarks, hands, people, props, shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected parts, or impossible joints.\nOutput intent: one native square raster candidate; do not add explanatory text.",
+      "promptSha256": "90bea1dee54057d1aa9236e7dc6d2c3a85a8141da8722cfe497f356edf03b3e7",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a03019-d846-7c72-ad0d-0be4c38f7346/exec-2858cb99-da95-4b93-b84e-77deef00f89c.png",
+      "generatedCandidate": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2t005-g2.png",
+        "native": {
+          "format": "PNG",
+          "width": 1254,
+          "height": 1254,
+          "bitDepth": 8,
+          "colorType": 2,
+          "mode": "RGB",
+          "bytes": 802811,
+          "sha256": "872ed51b966152cd9b06460fed2abec9353527fd0c57540834309824034a6626",
+          "chunkTypes": [
+            "IHDR",
+            "caBX",
+            "IDAT",
+            "IEND"
+          ],
+          "provenanceChunkPresent": true
+        }
+      },
+      "reviewCandidate": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2t005-g2.png",
+        "native": {
+          "format": "PNG",
+          "width": 1254,
+          "height": 1254,
+          "bitDepth": 8,
+          "colorType": 2,
+          "mode": "RGB",
+          "bytes": 802811,
+          "sha256": "872ed51b966152cd9b06460fed2abec9353527fd0c57540834309824034a6626",
+          "chunkTypes": [
+            "IHDR",
+            "caBX",
+            "IDAT",
+            "IEND"
+          ],
+          "provenanceChunkPresent": true
+        }
+      },
+      "edit": null,
+      "pixelTruthReconciliation": "The complete tool remains visible, but its approximately 92-percent horizontal occupancy is closer than the requested framing and must not become a reusable composition target.",
+      "referenceInputs": null,
+      "status": "review-only; see independent-review.json"
+    },
+    {
+      "candidateId": "v2t006",
+      "kind": "tool",
+      "conceptId": "tool.pliers.tongue-groove",
+      "canonicalTerm": "Tongue-and-groove pliers",
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2.json#v2t006",
+      "exactPrompt": "Use case: scientific-educational.\nAsset type: one alternate-view isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle/medium: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. This must be a line drawing, not a photograph, not a shaded 3D render, and not color artwork.\nComposition/framing: one complete mechanically plausible subject centered at roughly 72 percent of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nColor palette: black, white, and restrained neutral-gray line hatching only.\nAbsolute exclusions: no text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.\nPrimary request: create one generic pair of tongue-and-groove pliers in a strict top-down face view, jaws facing left and handles moderately open.\nMust show: a clearly visible multi-position tongue-and-groove adjustment channel with at least five distinct grooves; the pivot seated in one groove; offset curved serrated jaws for larger irregular objects; two complete handles.\nMust not show: only one elongated two-position slip slot, long needle-nose jaws, diagonal cutting edges, locking linkage, or pipe-wrench jaws.\nPairing constraint: match the framing, scale, orientation, handle opening, and jaw-facing direction requested for candidate v2t005.",
+      "promptSha256": "18efb644cd2179800809b04c6c319c06235b53e7f7cb057a0458e6c5b4cbbd59",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a02fe2-a370-7ab3-b860-7719262c0e6d/exec-787aa301-ed99-466d-9efd-79f07e00a205.png",
+      "generatedCandidate": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2t006.png",
+        "native": {
+          "format": "PNG",
+          "width": 1254,
+          "height": 1254,
+          "bitDepth": 8,
+          "colorType": 2,
+          "mode": "RGB",
+          "bytes": 828728,
+          "sha256": "b2c2bd0f635f256548e52a47b30260248a87ad9e5466ff10a3b477e4e3535b65",
+          "chunkTypes": [
+            "IHDR",
+            "caBX",
+            "IDAT",
+            "IEND"
+          ],
+          "provenanceChunkPresent": true
+        }
+      },
+      "reviewCandidate": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2t006.png",
+        "native": {
+          "format": "PNG",
+          "width": 1254,
+          "height": 1254,
+          "bitDepth": 8,
+          "colorType": 2,
+          "mode": "RGB",
+          "bytes": 828728,
+          "sha256": "b2c2bd0f635f256548e52a47b30260248a87ad9e5466ff10a3b477e4e3535b65",
+          "chunkTypes": [
+            "IHDR",
+            "caBX",
+            "IDAT",
+            "IEND"
+          ],
+          "provenanceChunkPresent": true
+        }
+      },
+      "edit": null,
+      "pixelTruthReconciliation": null,
+      "referenceInputs": null,
+      "status": "review-only; see independent-review.json"
+    },
+    {
+      "candidateId": "v2s001",
+      "kind": "scene",
+      "conceptId": "scene.chemical.closet-unidentified-container",
+      "canonicalTerm": null,
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2.json#v2s001",
+      "exactPrompt": "Use case: scientific-educational.\nAsset type: one original school/custodial hazard-recognition scene for exam preparation.\nStyle/medium: original black monochrome technical line illustration with confident medium contour, sparse functional hatching, restrained interior detail, generous whitespace, and plain civil-service test-booklet economy. This must be a clean line drawing, not a photograph, not photorealistic, not a shaded 3D render, and not color artwork.\nComposition/framing: wide 3:2 landscape scene with complete, mechanically plausible objects and an unambiguous walking space; every meaning-bearing object must remain fully visible at phone size.\nColor palette: black, white, and restrained neutral-gray line hatching only. No cue may depend on color.\nAbsolute exclusions: no text or pseudo-text; no readable signs or labels; no letters, numbers, arrows, circles, answer marks, logos, brands, watermarks, decorative borders, cropped meaning-bearing objects, impossible joints or poses, duplicated people or parts, floating objects, dramatic spotlighting, or visual emphasis on the target. Do not introduce any unauthored spill, obstruction, damaged cord, sharp object, unstable stack, missing guard, unsafe person, or other hazard.\nOutput intent: one native raster candidate; do not add annotations or explanatory text.\nPrimary request: create a wide landscape custodial closet from an original eye-level composition. On a middle shelf, place one transparent-outline trigger spray bottle visibly half-filled with liquid, using a clear horizontal liquid line and sparse hatching below it. The entire smooth bottle body must be blank: no panel, symbol, writing, or mark. On a separate lower shelf, show several closed generic supply jugs standing upright in low containment trays; each jug has one large bordered identification panel filled only with uniform diagonal hatching, never letters or symbols. A mop is clipped securely into a wall rack, the service sink is empty, the doorway is clear, and the floor is completely dry.\nMeaning constraint: the blank half-filled spray bottle is the only hazard. Keep all other containers closed, stable, and contained.\nTargeted regeneration correction: Preserve every requirement above, but show no extra bottles or jugs beyond the single blank half-filled target spray bottle and the lower-shelf decoy jugs. Every non-target supply jug must have the requested large bordered uniformly diagonal-hatched identification panel. Do not place any blank non-target container on any shelf.",
+      "promptSha256": "a8a887f16e53007f44636a7842bf3ff1a2531085fa55f08bf1693247a2ed32f5",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a02fe2-bd12-7ba2-8821-74e5cedef4dc/exec-17cda14c-633e-410b-8872-c72d5203007e.png",
+      "generatedCandidate": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2s001.png",
+        "native": {
+          "format": "PNG",
+          "width": 1536,
+          "height": 1024,
+          "bitDepth": 8,
+          "colorType": 2,
+          "mode": "RGB",
+          "bytes": 2433760,
+          "sha256": "25cb4d539ef7111942fff8852a4d4c82913d16cd6d8cd2b7de0f01e131d93a72",
+          "chunkTypes": [
+            "IHDR",
+            "caBX",
+            "IDAT",
+            "IEND"
+          ],
+          "provenanceChunkPresent": true
+        }
+      },
+      "reviewCandidate": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2s001.png",
+        "native": {
+          "format": "PNG",
+          "width": 1536,
+          "height": 1024,
+          "bitDepth": 8,
+          "colorType": 2,
+          "mode": "RGB",
+          "bytes": 2433760,
+          "sha256": "25cb4d539ef7111942fff8852a4d4c82913d16cd6d8cd2b7de0f01e131d93a72",
+          "chunkTypes": [
+            "IHDR",
+            "caBX",
+            "IDAT",
+            "IEND"
+          ],
+          "provenanceChunkPresent": true
+        }
+      },
+      "edit": null,
+      "pixelTruthReconciliation": null,
+      "referenceInputs": null,
+      "status": "review-only; see independent-review.json"
+    },
+    {
+      "candidateId": "v2s002",
+      "kind": "scene",
+      "conceptId": "scene.chemical.kitchen-chemicals-over-foodware",
+      "canonicalTerm": null,
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2.json#v2s002",
+      "exactPrompt": "Use case: scientific-educational.\nAsset type: one original school/custodial hazard-recognition scene for exam preparation.\nStyle/medium: original black monochrome technical line illustration with confident medium contour, sparse functional hatching, restrained interior detail, generous whitespace, and plain civil-service test-booklet economy. This must be a clean line drawing, not a photograph, not photorealistic, not a shaded 3D render, and not color artwork.\nComposition/framing: wide 3:2 landscape scene with complete, mechanically plausible objects and an unambiguous walking space; every meaning-bearing object must remain fully visible at phone size.\nColor palette: black, white, and restrained neutral-gray line hatching only. No cue may depend on color.\nAbsolute exclusions: no text or pseudo-text; no readable signs or labels; no letters, numbers, arrows, circles, answer marks, logos, brands, watermarks, decorative borders, cropped meaning-bearing objects, impossible joints or poses, duplicated people or parts, floating objects, dramatic spotlighting, or visual emphasis on the target. Do not introduce any unauthored spill, obstruction, damaged cord, sharp object, unstable stack, missing guard, unsafe person, or other hazard.\nOutput intent: one native raster candidate; do not add annotations or explanatory text.\nPrimary request: create a wide landscape school-kitchen storage area from an original straight-on composition. On one stable open metal shelving unit, place several closed generic cleaning-supply bottles on the upper shelf. Give each bottle one large bordered identification panel filled only with uniform diagonal hatching, never letters or symbols. Directly beneath those bottles, on the next shelf in the same vertical column, place uncovered clean mixing bowls and food-preparation utensils. On a clearly separate rack several feet away, store clean pans inverted. Keep the tiled wall clean, the floor dry, and every shelf stable.\nMeaning constraint: the only hazard is the chemical-storage relationship directly above the uncovered bowls and utensils. No bottle is open or leaking.",
+      "promptSha256": "5c0fc87331cbc187c9a99011673c938862be1321bbc88d961503c16baef53679",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a02fe2-bd12-7ba2-8821-74e5cedef4dc/exec-70345ae8-14d2-4621-8175-92e165501dd9.png",
+      "generatedCandidate": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2s002.png",
+        "native": {
+          "format": "PNG",
+          "width": 1536,
+          "height": 1024,
+          "bitDepth": 8,
+          "colorType": 2,
+          "mode": "RGB",
+          "bytes": 1935779,
+          "sha256": "0282da9dca8879343eb829a651e34115d33d4397c9f2fad7c234b7e29abc306d",
+          "chunkTypes": [
+            "IHDR",
+            "caBX",
+            "IDAT",
+            "IEND"
+          ],
+          "provenanceChunkPresent": true
+        }
+      },
+      "reviewCandidate": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2s002.png",
+        "native": {
+          "format": "PNG",
+          "width": 1536,
+          "height": 1024,
+          "bitDepth": 8,
+          "colorType": 2,
+          "mode": "RGB",
+          "bytes": 1935779,
+          "sha256": "0282da9dca8879343eb829a651e34115d33d4397c9f2fad7c234b7e29abc306d",
+          "chunkTypes": [
+            "IHDR",
+            "caBX",
+            "IDAT",
+            "IEND"
+          ],
+          "provenanceChunkPresent": true
+        }
+      },
+      "edit": null,
+      "pixelTruthReconciliation": null,
+      "referenceInputs": null,
+      "status": "review-only; see independent-review.json"
+    },
+    {
+      "candidateId": "v2s003",
+      "kind": "scene",
+      "conceptId": "scene.zero.classroom-orderly",
+      "canonicalTerm": null,
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2.json#v2s003",
+      "exactPrompt": "Use case: scientific-educational.\nAsset type: one original school/custodial hazard-recognition scene for exam preparation.\nStyle/medium: original black monochrome technical line illustration with confident medium contour, sparse functional hatching, restrained interior detail, generous whitespace, and plain civil-service test-booklet economy. This must be a clean line drawing, not a photograph, not photorealistic, not a shaded 3D render, and not color artwork.\nComposition/framing: wide 3:2 landscape scene with complete, mechanically plausible objects and an unambiguous walking space; every meaning-bearing object must remain fully visible at phone size.\nColor palette: black, white, and restrained neutral-gray line hatching only. No cue may depend on color.\nAbsolute exclusions: no text or pseudo-text; no readable signs or labels; no letters, numbers, arrows, circles, answer marks, logos, brands, watermarks, decorative borders, cropped meaning-bearing objects, impossible joints or poses, duplicated people or parts, floating objects, dramatic spotlighting, or visual emphasis on the target. Do not introduce any unauthored spill, obstruction, damaged cord, sharp object, unstable stack, missing guard, unsafe person, or other hazard.\nOutput intent: one native raster candidate; do not add annotations or explanatory text.\nPrimary request: create a wide landscape orderly school classroom with zero hazards from an original corner viewpoint. Keep a broad, completely dry central aisle unobstructed from foreground to the clear doorway at far left. Against the far-right side wall, well separated from the doorway, place a fully open stepladder with all four feet flat and both spreaders visibly locked; no person is present. Along that same wall edge, place an undamaged cord fully beneath a low-profile cord protector that never enters the aisle. A portable fan on a low cabinet has complete close-spaced front and rear guards. Desks are orderly, chairs tucked in, and a supply cabinet is closed.\nMeaning constraint: every suspicious detail is safe as depicted. This scene has zero hazards.\nTargeted regeneration correction: Preserve every requirement above, but make the protected-cord detail unmistakable at phone size. Show the intact fan cord entering a broad, shallow, beveled floor cord protector that is visibly a separate object from the wall baseboard, then show that protector running only along the far-right wall edge to the receptacle. No loose or exposed cord loop may remain, and the protector must never enter the central aisle.",
+      "promptSha256": "c399c2725334fab971dc1cc4fdffc468646b8a65ac017b8ae90392afe616cd1d",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a02fe2-bd12-7ba2-8821-74e5cedef4dc/exec-054240dc-433c-4d54-97d7-45889aca4c9b.png",
+      "generatedCandidate": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2s003.png",
+        "native": {
+          "format": "PNG",
+          "width": 1536,
+          "height": 1024,
+          "bitDepth": 8,
+          "colorType": 2,
+          "mode": "RGB",
+          "bytes": 1649702,
+          "sha256": "74d43dfd491252ee33786fa57f84e5fbde1958fd624505594d890d2589d75792",
+          "chunkTypes": [
+            "IHDR",
+            "caBX",
+            "IDAT",
+            "IEND"
+          ],
+          "provenanceChunkPresent": true
+        }
+      },
+      "reviewCandidate": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2s003.png",
+        "native": {
+          "format": "PNG",
+          "width": 1536,
+          "height": 1024,
+          "bitDepth": 8,
+          "colorType": 2,
+          "mode": "RGB",
+          "bytes": 1649702,
+          "sha256": "74d43dfd491252ee33786fa57f84e5fbde1958fd624505594d890d2589d75792",
+          "chunkTypes": [
+            "IHDR",
+            "caBX",
+            "IDAT",
+            "IEND"
+          ],
+          "provenanceChunkPresent": true
+        }
+      },
+      "edit": null,
+      "pixelTruthReconciliation": "Final accessibility language describes the short intact wall-side lead separately and claims protection only for the visible floor-level run; it does not repeat the brief's stronger fully-covered-cord wording.",
+      "referenceInputs": null,
+      "status": "review-only; see independent-review.json"
+    },
+    {
+      "candidateId": "v2s004",
+      "kind": "scene",
+      "conceptId": "scene.slip.gym-hose-across-walkway",
+      "canonicalTerm": null,
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2.json#v2s004",
+      "exactPrompt": "Use case: scientific-educational.\nAsset type: one original school/custodial hazard-recognition scene for exam preparation.\nStyle/medium: original black monochrome technical line illustration with confident medium contour, sparse functional hatching, restrained interior detail, generous whitespace, and plain civil-service test-booklet economy. This must be a clean line drawing, not a photograph, not photorealistic, not a shaded 3D render, and not color artwork.\nComposition/framing: wide 3:2 landscape scene with complete, mechanically plausible objects and an unambiguous walking space; every meaning-bearing object must remain fully visible at phone size.\nColor palette: black, white, and restrained neutral-gray line hatching only. No cue may depend on color.\nAbsolute exclusions: no text or pseudo-text; no readable signs or labels; no letters, numbers, arrows, circles, answer marks, logos, brands, watermarks, decorative borders, cropped meaning-bearing objects, impossible joints or poses, duplicated people or parts, floating objects, dramatic spotlighting, or visual emphasis on the target. Do not introduce any unauthored spill, obstruction, damaged cord, sharp object, unstable stack, missing guard, unsafe person, or other hazard.\nOutput intent: one native raster candidate; do not add annotations or explanatory text.\nPrimary request: create a wide landscape gym-side walking lane beside a school gym. A wheeled wet/dry vacuum is parked fully against the side wall, stable and outside the lane. Its thick ribbed suction hose remains attached but stretches diagonally across the entire central walking lane, with a clearly visible raised arch and open floor beneath it that makes the trip condition unmistakable. No electrical cord crosses the lane. The floor is completely dry. Folded gym mats are stacked flat on a low wall rack, and a closed equipment-room door remains outside the walking route.\nMeaning constraint: the loose ribbed hose across the lane is the only hazard.\nTargeted correction: keep the complete suction hose, including its free nozzle/end, fully visible inside the canvas with generous right-edge margin; preserve all other brief requirements exactly.",
+      "promptSha256": "32da2ce696f9644c412ae00ea8e8f5e36a0604924277d150095aefe64e3c7341",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a02fe2-dc13-7212-a208-a3ea0db6fde3/exec-fed1b5f7-0456-41b0-9a64-40b58218210d.png",
+      "generatedCandidate": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2s004.png",
+        "native": {
+          "format": "PNG",
+          "width": 1536,
+          "height": 1024,
+          "bitDepth": 8,
+          "colorType": 2,
+          "mode": "RGB",
+          "bytes": 2040874,
+          "sha256": "ed9e50f1aa65b48ac7f3a9cfaf09f14ec932f183316812e82aaaf1e59bcba504",
+          "chunkTypes": [
+            "IHDR",
+            "caBX",
+            "IDAT",
+            "IEND"
+          ],
+          "provenanceChunkPresent": true
+        }
+      },
+      "reviewCandidate": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2s004.png",
+        "native": {
+          "format": "PNG",
+          "width": 1536,
+          "height": 1024,
+          "bitDepth": 8,
+          "colorType": 2,
+          "mode": "RGB",
+          "bytes": 2040874,
+          "sha256": "ed9e50f1aa65b48ac7f3a9cfaf09f14ec932f183316812e82aaaf1e59bcba504",
+          "chunkTypes": [
+            "IHDR",
+            "caBX",
+            "IDAT",
+            "IEND"
+          ],
+          "provenanceChunkPresent": true
+        }
+      },
+      "edit": null,
+      "pixelTruthReconciliation": "Final accessibility language does not claim that caster brakes are set because that state is not visibly provable.",
+      "referenceInputs": null,
+      "status": "review-only; see independent-review.json"
+    },
+    {
+      "candidateId": "v2s005",
+      "kind": "scene",
+      "conceptId": "scene.chemical.cafeteria-chemical-with-cups",
+      "canonicalTerm": null,
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2.json#v2s005",
+      "exactPrompt": "Edit the supplied raster candidate as a tightly bounded scientific-educational correction. Preserve the exact wide cafeteria scene, camera, framing, line-art style, cups, spray bottle, tote, sink, counter, cabinet, floor, every object position, all safety meaning, and the pure monochrome palette. Change only the separate closed cleaning jug standing upright in the lower cabinet containment tray: add one large bordered rectangular identification panel on the jug's front face, filled only with uniform diagonal black line hatching. The panel must contain no letters, numbers, symbols, pseudo-text, logo, or readable mark. Keep the jug closed, upright, several feet away from the tote, and inside its existing containment tray. Do not add or remove any other object, hazard, spill, color, text, label, cue, or decoration. Output the complete edited scene as one native raster.",
+      "promptSha256": "80bd49d516bb6beaea9fbb5d1299082a4442b8daa7109639773a16882a385645",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a02fc9-7789-74a1-9b74-dcd8ce448059/exec-cce3b793-e2f2-49f4-bcea-a9afc7992592.png",
+      "generatedCandidate": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2s005-e1.png",
+        "native": {
+          "format": "PNG",
+          "width": 1536,
+          "height": 1024,
+          "bitDepth": 8,
+          "colorType": 2,
+          "mode": "RGB",
+          "bytes": 1880000,
+          "sha256": "56dbf3d11af3512343de12e3c8c38f032d325d0b8154f91a31d84887ed67b354",
+          "chunkTypes": [
+            "IHDR",
+            "caBX",
+            "IDAT",
+            "IEND"
+          ],
+          "provenanceChunkPresent": true
+        }
+      },
+      "reviewCandidate": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2s005-e1.png",
+        "native": {
+          "format": "PNG",
+          "width": 1536,
+          "height": 1024,
+          "bitDepth": 8,
+          "colorType": 2,
+          "mode": "RGB",
+          "bytes": 1880000,
+          "sha256": "56dbf3d11af3512343de12e3c8c38f032d325d0b8154f91a31d84887ed67b354",
+          "chunkTypes": [
+            "IHDR",
+            "caBX",
+            "IDAT",
+            "IEND"
+          ],
+          "provenanceChunkPresent": true
+        }
+      },
+      "edit": {
+        "kind": "imagegen-edit",
+        "reason": "Add a nonreadable hatched identification panel to the otherwise blank safe-background jug.",
+        "referencedImage": "content/assets/candidates/visual-pilot-v2/v2s005.png",
+        "referencedImageSha256": "ef486d4c5e2e29933c3329e52fdea926d2fae7fb74682ca221d3f0570f2ef0a0"
+      },
+      "pixelTruthReconciliation": null,
+      "referenceInputs": null,
+      "status": "review-only; see independent-review.json"
+    },
+    {
+      "candidateId": "v2s006",
+      "kind": "scene",
+      "conceptId": "scene.electrical.gym-fan-damaged-cord",
+      "canonicalTerm": null,
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2.json#v2s006",
+      "exactPrompt": "Use case: scientific-educational.\nAsset type: one original school/custodial hazard-recognition scene for exam preparation.\nStyle/medium: original black monochrome technical line illustration with confident medium contour, sparse functional hatching, restrained interior detail, generous whitespace, and plain civil-service test-booklet economy. This must be a clean line drawing, not a photograph, not photorealistic, not a shaded 3D render, and not color artwork.\nComposition/framing: wide 3:2 landscape, low close wall-side view. Show one complete portable floor fan against the gym wall occupying about the left two-fifths. Keep its close-spaced front and rear guards complete. From the fan housing, route one thick but plausible power cord horizontally along the wall edge toward a connected plug and receptacle at right. The cord never enters the walking route. Keep the gym floor dry, level, broad, and completely clear. Do not add mats, storage, doors, people, or other props.\nPrimary target: immediately outside the fan housing and clearly beyond the intact strain relief, depict one large open split in the black outer cord jacket. The damaged span must occupy at least one-fifth of the image width. Peel the two jacket edges visibly apart so the gap cannot resemble a collar, splice, tape, ferrule, or connector. Inside that one gap, show exactly two separate smooth parallel inner conductors, each retaining complete light neutral-gray insulation outlined in black. Place a clear white gap between the two insulated conductors. Each conductor must visibly continue from intact outer cord on the fan side to intact outer cord on the plug side. No third wire, no bare copper, no frayed strands. Make the cord and its two inner conductors thick enough to remain distinct at a 480-by-320 reduction while keeping mechanically plausible proportions.\nMeaning constraint: the large damaged cord jacket is the only hazard. The guard, plug, receptacle, floor, and route are safe as depicted.\nColor palette: black, white, and restrained neutral-gray line hatching only. No cue may depend on color.\nAbsolute exclusions: no inline connector, repair sleeve, tape, strain-relief collar at the damaged span, sparks, smoke, heat, bare metal conductor, wet surface, loose route-crossing cord, missing guard, unstable object, blocked egress, person, text, pseudo-text, readable sign, label, letter, number, arrow, circle, callout, logo, brand, watermark, decorative border, cropped meaning-bearing object, impossible connection, floating part, dramatic spotlighting, inset detail, or visual highlighting of the target.\nOutput intent: one native raster candidate; do not add annotations or explanatory text.",
+      "promptSha256": "0272b5e7b94b256141842ec28370887369390c1db68a70d4f49405e3f7fe8aed",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a03019-f9ca-7652-b61f-ad173bfc2c08/exec-dac50203-6167-492c-a9af-d3733f2c8874.png",
+      "generatedCandidate": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2s006-g3.png",
+        "native": {
+          "format": "PNG",
+          "width": 1536,
+          "height": 1024,
+          "bitDepth": 8,
+          "colorType": 2,
+          "mode": "RGB",
+          "bytes": 1941149,
+          "sha256": "2d596c48339ffb3ab80a39f311cfbf5a25c3a9c870706338c68f357163296a61",
+          "chunkTypes": [
+            "IHDR",
+            "caBX",
+            "IDAT",
+            "IEND"
+          ],
+          "provenanceChunkPresent": true
+        }
+      },
+      "reviewCandidate": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2s006-g3.png",
+        "native": {
+          "format": "PNG",
+          "width": 1536,
+          "height": 1024,
+          "bitDepth": 8,
+          "colorType": 2,
+          "mode": "RGB",
+          "bytes": 1941149,
+          "sha256": "2d596c48339ffb3ab80a39f311cfbf5a25c3a9c870706338c68f357163296a61",
+          "chunkTypes": [
+            "IHDR",
+            "caBX",
+            "IDAT",
+            "IEND"
+          ],
+          "provenanceChunkPresent": true
+        }
+      },
+      "edit": null,
+      "pixelTruthReconciliation": "The final pixels place the jacket split a short distance from the fan housing along the wall-edge cord run, not immediately outside the housing. Target, accessibility, and region language uses the pixel-true location; the safety claim and correction are unchanged.",
+      "referenceInputs": null,
+      "status": "review-only; see independent-review.json"
+    },
+    {
+      "candidateId": "v2s007",
+      "kind": "scene",
+      "conceptId": "scene.zero.loading-area-orderly",
+      "canonicalTerm": null,
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2.json#v2s007",
+      "exactPrompt": "Use case: scientific-educational.\nAsset type: one original school/custodial hazard-recognition scene for exam preparation.\nStyle/medium: original black monochrome technical line illustration with confident medium contour, sparse functional hatching, restrained interior detail, generous whitespace, and plain civil-service test-booklet economy. This must be a clean line drawing, not a photograph, not photorealistic, not a shaded 3D render, and not color artwork.\nComposition/framing: wide 3:2 landscape scene with complete, mechanically plausible objects and an unambiguous walking space; every meaning-bearing object must remain fully visible at phone size.\nColor palette: black, white, and restrained neutral-gray line hatching only. No cue may depend on color.\nAbsolute exclusions: no text or pseudo-text; no readable signs or labels; no letters, numbers, arrows, circles, answer marks, logos, brands, watermarks, decorative borders, cropped meaning-bearing objects, impossible joints or poses, duplicated people or parts, floating objects, dramatic spotlighting, or visual emphasis on the target. Do not introduce any unauthored spill, obstruction, damaged cord, sharp object, unstable stack, missing guard, unsafe person, or other hazard.\nOutput intent: one native raster candidate; do not add annotations or explanatory text.\nPrimary request: create a wide landscape orderly school loading/service area with zero hazards. On one side, place uniform sealed cartons stacked squarely in short interlocking rows on an intact pallet; no carton leans, overhangs, bulges, or appears crushed. On the opposite wall, secure an empty hand truck upright in a clearly visible wall bracket outside the route. A closed service door has a broad completely unobstructed approach. The level floor is entirely dry, a low storage cabinet is closed, and no cord or debris is present.\nMeaning constraint: every suspicious detail is safe as depicted. This scene has zero hazards.",
+      "promptSha256": "f26dd5c4c2bf2c81d35e91b9486ff3fb2fd258e0245f733b3168e089e631da98",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a02fe2-dc13-7212-a208-a3ea0db6fde3/exec-49f74485-9bd9-494e-9380-7f60236ba149.png",
+      "generatedCandidate": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2s007.png",
+        "native": {
+          "format": "PNG",
+          "width": 1536,
+          "height": 1024,
+          "bitDepth": 8,
+          "colorType": 2,
+          "mode": "RGB",
+          "bytes": 2394161,
+          "sha256": "c8fdd4497efa59a9469e199531e4c54aa97bccc38a45afc128a0cbc7dc1bfa90",
+          "chunkTypes": [
+            "IHDR",
+            "caBX",
+            "IDAT",
+            "IEND"
+          ],
+          "provenanceChunkPresent": true
+        }
+      },
+      "reviewCandidate": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2s007.png",
+        "native": {
+          "format": "PNG",
+          "width": 1536,
+          "height": 1024,
+          "bitDepth": 8,
+          "colorType": 2,
+          "mode": "RGB",
+          "bytes": 2394161,
+          "sha256": "c8fdd4497efa59a9469e199531e4c54aa97bccc38a45afc128a0cbc7dc1bfa90",
+          "chunkTypes": [
+            "IHDR",
+            "caBX",
+            "IDAT",
+            "IEND"
+          ],
+          "provenanceChunkPresent": true
+        }
+      },
+      "edit": null,
+      "pixelTruthReconciliation": "Final accessibility language describes broad open floor and omits the brief's marked-walking-lane wording because no distinct marked lane is visible.",
+      "referenceInputs": null,
+      "status": "review-only; see independent-review.json"
+    }
+  ],
+  "unsuccessfulAttempts": [
+    {
+      "path": "content/assets/candidates/visual-pilot-v2/v2t001-r1.png",
+      "sha256": "978e8575ff423e31162abe0d33f1e907b62ef6a01f51f0b1766b43bd1faf102f",
+      "reason": "Landscape/transparent presentation failed the square opaque-white brief."
+    },
+    {
+      "path": "content/assets/candidates/visual-pilot-v2/v2t002-r1.png",
+      "sha256": "6ed2c44be187fdf9f2ff29ae24377cd09dc2221b9f8f0d4014bccfc63ac7779d",
+      "reason": "Landscape/transparent presentation failed the square opaque-white brief."
+    },
+    {
+      "path": "content/assets/candidates/visual-pilot-v2/v2t002.png",
+      "sha256": "a2b648d8720b07f72525573673f8b542a8df30965fb40346ccf5586c9eddcf9e",
+      "reason": "The curved hook jaw entered the body on a different axis while the loop-ended threaded element beyond the nut read as a separate shank."
+    },
+    {
+      "path": "content/assets/candidates/visual-pilot-v2/v2t002-g2.png",
+      "sha256": "4d2f9ceea8687de6e20537277026a22b00447b418f8e17918a4374655a59825f",
+      "reason": "The adjustment nut surrounded a standalone threaded rod that was not visibly continuous with the curved hook jaw.",
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2-gate-repair-2.json#v2t002-g2",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a03024-d552-74a1-943c-fe0047c3014f/exec-7df2a2f7-6451-4172-bff2-a403278b5201.png"
+    },
+    {
+      "path": "content/assets/candidates/visual-pilot-v2/v2t002-e2.png",
+      "sha256": "a7ddd04c238078a5e896acfa02f5fbb420e609d3b51e787a0608599d4a262b46",
+      "reason": "A full-height body-wall line visibly separated the curved hook jaw from the otherwise corrected threaded rack and nut.",
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2-gate-repair-3.json#v2t002-e2",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a0302b-2ede-72e2-a543-113343418f7f/exec-dea53e59-6d76-45f4-bda0-3fd435f3fa66.png",
+      "editInputs": [
+        {
+          "path": "content/assets/candidates/visual-pilot-v2/v2t002-g2.png",
+          "sha256": "4d2f9ceea8687de6e20537277026a22b00447b418f8e17918a4374655a59825f"
+        },
+        {
+          "path": "content/assets/masters/tools/t037.png",
+          "sha256": "0f2e1e00b8b16e4472f117e80b6e8819b798aaa3f6c7eae9d2aa1bbbfdbe9c89",
+          "use": "accepted same-library mechanical-anatomy reference only; source bytes unchanged"
+        }
+      ]
+    },
+    {
+      "path": "content/assets/candidates/visual-pilot-v2/v2t002-e3.png",
+      "sha256": "97a334f3d1121664af22ad0ec0adf26c7cceec7cd87409fe29cb674ca2701fb1",
+      "reason": "A residual vertical separator and missing lower contour connection still prevented the rack from reading as the hook jaw's continuous shank at 320 pixels.",
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2-gate-repair-4.json#v2t002-e3",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a0302b-2ede-72e2-a543-113343418f7f/exec-500b5cdd-7751-44c6-99a6-5a627e249da9.png",
+      "editInputs": [
+        {
+          "path": "content/assets/candidates/visual-pilot-v2/v2t002-e2.png",
+          "sha256": "a7ddd04c238078a5e896acfa02f5fbb420e609d3b51e787a0608599d4a262b46"
+        }
+      ]
+    },
+    {
+      "path": "content/assets/candidates/visual-pilot-v2/v2t002-b1.png",
+      "sha256": "33f55dc49ae22464b3292dea20898cfe2d34f4b0768872b79f9d9661ff958550",
+      "reason": "The patent-led reference caused a proprietary-looking U-shaped rack to appear as a second mechanism disconnected from the hook jaw.",
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-bakeoff.json#v2t002-b1",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a03045-02f9-78e3-9f46-aa864c7759fd/exec-55e4ad3e-e045-445b-864b-9ca3103fdac9.png",
+      "referenceInputs": [
+        {
+          "path": "content/authoring/visuals/references/pipe-wrench/us11247313-fig3.png",
+          "sha256": "a56646a2304cd51e676594ed5420a6a53f51eb166d81ed097cd69916713aeff5",
+          "use": "mechanism topology only"
+        },
+        {
+          "path": "content/assets/masters/tools/t037.png",
+          "sha256": "0f2e1e00b8b16e4472f117e80b6e8819b798aaa3f6c7eae9d2aa1bbbfdbe9c89",
+          "use": "library line style only"
+        }
+      ]
+    },
+    {
+      "path": "content/assets/candidates/visual-pilot-v2/v2t002-b2.png",
+      "sha256": "e2b7c34b877b5608ac4c74eeb411fe9d00919f2a4168de70c1c4130e78083929",
+      "reason": "The assembled object was recognizable, but it repeated the existing diagonal master composition and left the hook-jaw-to-shank connection occluded and inferential rather than producing the requested matched profile.",
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-bakeoff.json#v2t002-b2",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a03045-d13f-7133-b871-01d31ce441bc/exec-da78af61-e0ad-4f2f-a75d-5cc31a62b535.png",
+      "referenceInputs": [
+        {
+          "path": "content/authoring/visuals/references/pipe-wrench/ridgid-straight-wrench-exploded.png",
+          "sha256": "b5aa2b5a4d8188888c19e80470fd7f8cd07f0be77636813fec9de6e3bd299153",
+          "use": "component anatomy and assembly only"
+        },
+        {
+          "path": "content/assets/masters/tools/t037.png",
+          "sha256": "0f2e1e00b8b16e4472f117e80b6e8819b798aaa3f6c7eae9d2aa1bbbfdbe9c89",
+          "use": "library style only"
+        }
+      ]
+    },
+    {
+      "path": "content/assets/candidates/visual-pilot-v2/v2t002-b3.png",
+      "sha256": "f4c8fd17a7eb61f7df61fb6d73d0d3da2b73d38d9bebc85150cba636dd2bd2b4",
+      "reason": "The paired-profile strategy produced a loop-ended rack emerging from the nut while the hook jaw terminated behind the body block.",
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-bakeoff.json#v2t002-b3",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a03045-f472-7533-8d89-ebbdb53a7f3e/exec-7d3c91f0-0545-4fdd-bcca-8c7f62653b8a.png",
+      "referenceInputs": [
+        {
+          "path": "content/assets/candidates/visual-pilot-v2/v2t001-e1.png",
+          "sha256": "7ac7c9016edfb191365e93a6e714c606edccc584934233b12c07693579052928",
+          "use": "matched profile framing only"
+        },
+        {
+          "path": "content/assets/masters/tools/t037.png",
+          "sha256": "0f2e1e00b8b16e4472f117e80b6e8819b798aaa3f6c7eae9d2aa1bbbfdbe9c89",
+          "use": "library style only"
+        },
+        {
+          "path": "content/authoring/visuals/references/pipe-wrench/us11247313-fig3.png",
+          "sha256": "a56646a2304cd51e676594ed5420a6a53f51eb166d81ed097cd69916713aeff5",
+          "use": "mechanism topology only"
+        }
+      ]
+    },
+    {
+      "path": "content/assets/candidates/visual-pilot-v2/v2t002-b4.png",
+      "sha256": "baa390662ca5f5c30cd806288ca09e37ad65d14e60444bcb995e1985e2e0541a",
+      "reason": "The assembled-packshot strategy produced plausible overall topology, but the broad two-banded adjuster remained ambiguous as two collars or nuts at 320 pixels and lost the final adjudication.",
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-bakeoff-2.json#v2t002-b4",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a03051-d95a-70b1-b57a-24f062d6f79c/exec-19a70d2d-e35c-4462-8e8a-27fca856a72c.png",
+      "referenceInputs": [
+        {
+          "path": "content/authoring/visuals/references/pipe-wrench/straight-pipe-wrench-assembled-packshot.jpg",
+          "sha256": "bd312c12650c81ee62667937cf90d03baf2cd2dbe4fb2560c04e8cc6a0302984",
+          "use": "assembled anatomy only"
+        },
+        {
+          "path": "content/assets/candidates/visual-pilot-v2/v2t001-e1.png",
+          "sha256": "7ac7c9016edfb191365e93a6e714c606edccc584934233b12c07693579052928",
+          "use": "matched profile framing only"
+        },
+        {
+          "path": "content/assets/masters/tools/t038.png",
+          "sha256": "4bbd8effc5f6238222c885f25ba947f8088fd1fc2fab8463eb256c78775896b7",
+          "use": "unrelated library line style only"
+        }
+      ]
+    },
+    {
+      "path": "content/assets/candidates/visual-pilot-v2/v2t002-e4.png",
+      "sha256": "90f56db313c53ef9ecbc3482963c07ab041a3c70c8d00480e5889b489ab51f0d",
+      "reason": "The whole-head edit retained a smooth upper hook tail while adding a separate lower threaded element through the nut.",
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-bakeoff-2.json#v2t002-e4",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a03052-2fed-71e2-a08e-75580b9a2b61/exec-4f90e19e-3813-4c99-b50b-edf57a3cc8d3.png",
+      "editInputs": [
+        {
+          "path": "content/assets/candidates/visual-pilot-v2/v2t002-e1.png",
+          "sha256": "5916afea0b3380cd3c54a8725763e86908f657f180c7d746d8a46b660c21feba"
+        },
+        {
+          "path": "content/authoring/visuals/references/pipe-wrench/straight-pipe-wrench-assembled-packshot.jpg",
+          "sha256": "bd312c12650c81ee62667937cf90d03baf2cd2dbe4fb2560c04e8cc6a0302984",
+          "use": "assembled mechanism reference only"
+        }
+      ]
+    },
+    {
+      "path": "content/assets/candidates/visual-pilot-v2/v2t003-r1.png",
+      "sha256": "6e84b63b6c08fc5b9e3b32b605c1d507d43eec04317b44bb05074543b39b1c57",
+      "reason": "An interior disk made the cup-plunger opening ambiguous."
+    },
+    {
+      "path": "content/assets/candidates/visual-pilot-v2/v2t004-r1.png",
+      "sha256": "4b7e6fc9f6ba0ec1cdc0d8824c0b43afb6ccfeaead67c2e960a198228ea1a176",
+      "reason": "Dense tonal modeling and transparency failed the presentation brief."
+    },
+    {
+      "path": "content/assets/candidates/visual-pilot-v2/v2t005-r1.png",
+      "sha256": "c4ced9e4cc4ae4bb73073c60195fc028809162e19cba0cc6b7086542499eba70",
+      "reason": "Two fastener-like pivot discs made the two-position mechanism ambiguous."
+    },
+    {
+      "path": "content/assets/candidates/visual-pilot-v2/v2t005.png",
+      "sha256": "3f73ab279786a21568b4f8dcecb7ffd4d02f3f04fe4f5b8d097ae2462cf1dc51",
+      "reason": "Two similarly outlined circular forms left the seated-pin versus vacant-position anatomy ambiguous."
+    },
+    {
+      "path": "content/assets/candidates/visual-pilot-v2/v2s001-r1.png",
+      "sha256": "41ac36583db2731210d8564d06bc854396f8682e3d46303c19b8d6b088076c30",
+      "reason": "Extra blank containers created additional unidentified-container hazards."
+    },
+    {
+      "path": "content/assets/candidates/visual-pilot-v2/v2s003-r1.png",
+      "sha256": "5b597823fc577346ca567cb3b1831ccad5f7631af4995c0ed1b68b3cd271c8f7",
+      "reason": "The cord protector resembled the baseboard and routing was ambiguous."
+    },
+    {
+      "path": "content/assets/candidates/visual-pilot-v2/v2s004-r1.png",
+      "sha256": "41ebc6df710bcd1500dc6cf9a8f70db9eb6d2d54380016030d24d3b35fa83f58",
+      "reason": "The hose target was cropped at the right canvas edge."
+    },
+    {
+      "path": "content/assets/candidates/visual-pilot-v2/v2s005.png",
+      "sha256": "ef486d4c5e2e29933c3329e52fdea926d2fae7fb74682ca221d3f0570f2ef0a0",
+      "reason": "A blank lower safe-background jug created a second unidentified-container condition."
+    },
+    {
+      "path": "content/assets/candidates/visual-pilot-v2/v2s006-r1.png",
+      "sha256": "6ffb3827299889ca2e9c7c850483ece507f4b94c247811efdb8e03ad301c6a1a",
+      "reason": "Damage appeared near the receptacle and resembled frayed strands."
+    },
+    {
+      "path": "content/assets/candidates/visual-pilot-v2/v2s006.png",
+      "sha256": "6780f490a3004c191f2f1ca772f71468b1813a872c3a113e62c885d1aad0ff9d",
+      "reason": "The jacket split read as an inline connector and included a stray blue-gray cue."
+    },
+    {
+      "path": "content/assets/candidates/visual-pilot-v2/v2s006-e1.png",
+      "sha256": "d504dba9983fcdb0a22c03617c89b3af087eb5f96788e2a58a676a207d359019",
+      "reason": "Grayscale normalization removed color but the target still read as a connector at phone size."
+    },
+    {
+      "path": "content/assets/candidates/visual-pilot-v2/v2s006-e2.png",
+      "sha256": "d3198748f6406f65e173e2ab9c0e49e6ef9e81761475922c5f0fc7663df5411d",
+      "reason": "The requested damaged-jacket target was absent at native and phone sizes."
+    }
+  ],
+  "reviewDerivatives": {
+    "toolsPhone": "content/authoring/visuals/reviews/visual-pilot-v2/TOOLS-PHONE-CONTACT-SHEET.png",
+    "toolsPrint": "content/authoring/visuals/reviews/visual-pilot-v2/TOOLS-PRINT-CONTACT-SHEET.png",
+    "scenesPhone": "content/authoring/visuals/reviews/visual-pilot-v2/SCENES-PHONE-CONTACT-SHEET.png",
+    "scenesPrint": "content/authoring/visuals/reviews/visual-pilot-v2/SCENES-PRINT-CONTACT-SHEET.png"
+  }
+}

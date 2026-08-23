@@ -1,0 +1,141 @@
+{
+  "reviewId": "visual-pilot-v2-pipe-wrench-bakeoff-review",
+  "date": "2026-08-23",
+  "status": "complete; selected candidate passed; candidate-only; accepted master unchanged",
+  "briefs": [
+    {
+      "path": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-bakeoff.json",
+      "sha256": "5f3282ae69129328d613bc68e9b6bed93a30975a9037733ddaf6e68c1c1294d5"
+    },
+    {
+      "path": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-bakeoff-2.json",
+      "sha256": "4ef672f65069dc271d8cee2c66cd77300c85b8e1d38a82b0c47fb861bd20bb98"
+    }
+  ],
+  "referenceSet": {
+    "path": "content/authoring/visuals/references/pipe-wrench/sources.json",
+    "sha256": "4ab51d1b95e21851b91a0f251475a663b3c806b6f4dbde7add5aae323d00e83c"
+  },
+  "correctedMechanismFinding": "Manufacturer-aligned assembled and exploded references show that a short rounded threaded shank end beyond the nut is valid traditional geometry. The opaque body may hide the middle of the one-piece hook-jaw and shank connection when the visible portions plausibly align and no contradictory second mechanism exists.",
+  "selected": {
+    "candidateId": "v2t002-b5",
+    "path": "content/assets/candidates/visual-pilot-v2/v2t002-b5.png",
+    "sha256": "334044fb3c25f5e14be4c47e0df0512961ce8dce08e568e0d91b021faa8f1e99",
+    "dimensions": "1254x1254 RGB PNG",
+    "strategy": "single assembled-anatomy reference; composition and monochrome style expressed in text",
+    "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-bakeoff-2.json#v2t002-b5",
+    "generatedSource": "/home/cjpher/.codex/generated_images/01a03052-0483-7eb2-8eef-c69e097dc401/exec-6f3cb312-bbca-40a4-a3d3-a55f67858394.png",
+    "decision": "pass",
+    "decisionBasis": "A blinded native/320 review passed the corrected real-world gate. A separate adjudicator then compared the candidate against assembled and exploded anatomy references, confirmed that the opaque housing plausibly hides the hook-jaw-to-shank junction, and selected this candidate."
+  },
+  "attempts": [
+    {
+      "candidateId": "v2t002-b1",
+      "path": "content/assets/candidates/visual-pilot-v2/v2t002-b1.png",
+      "sha256": "33f55dc49ae22464b3292dea20898cfe2d34f4b0768872b79f9d9661ff958550",
+      "strategy": "patent-led strict side mechanism",
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-bakeoff.json#v2t002-b1",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a03045-02f9-78e3-9f46-aa864c7759fd/exec-55e4ad3e-e045-445b-864b-9ca3103fdac9.png",
+      "finalVerdict": "reject",
+      "finding": "The patent image dominated content and produced a proprietary-looking U-shaped rack as a second mechanism."
+    },
+    {
+      "candidateId": "v2t002-b2",
+      "path": "content/assets/candidates/visual-pilot-v2/v2t002-b2.png",
+      "sha256": "e2b7c34b877b5608ac4c74eeb411fe9d00919f2a4168de70c1c4130e78083929",
+      "strategy": "manufacturer exploded-assembly led",
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-bakeoff.json#v2t002-b2",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a03045-d13f-7133-b871-01d31ce441bc/exec-da78af61-e0ad-4f2f-a75d-5cc31a62b535.png",
+      "finalVerdict": "reject",
+      "finding": "Recognizable assembled wrench, but the same-subject style reference dominated and reproduced the existing diagonal master rather than the requested matched profile."
+    },
+    {
+      "candidateId": "v2t002-b3",
+      "path": "content/assets/candidates/visual-pilot-v2/v2t002-b3.png",
+      "sha256": "f4c8fd17a7eb61f7df61fb6d73d0d3da2b73d38d9bebc85150cba636dd2bd2b4",
+      "strategy": "matched adjustable-wrench pair with patent anatomy",
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-bakeoff.json#v2t002-b3",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a03045-f472-7533-8d89-ebbdb53a7f3e/exec-7d3c91f0-0545-4fdd-bcca-8c7f62653b8a.png",
+      "finalVerdict": "reject",
+      "finding": "The paired profile was clean, but the patent reference again produced a loop-ended rack while the hook jaw terminated behind a separate body block."
+    },
+    {
+      "candidateId": "v2t002-b4",
+      "path": "content/assets/candidates/visual-pilot-v2/v2t002-b4.png",
+      "sha256": "baa390662ca5f5c30cd806288ca09e37ad65d14e60444bcb995e1985e2e0541a",
+      "strategy": "content-isolated assembled anatomy, matched framing, unrelated line-style reference",
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-bakeoff-2.json#v2t002-b4",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a03051-d95a-70b1-b57a-24f062d6f79c/exec-19a70d2d-e35c-4462-8e8a-27fca856a72c.png",
+      "finalVerdict": "provisional-nonselected",
+      "finding": "The corrected gate found plausible overall topology, but the broad two-banded adjuster ambiguously resembled two collars or nuts at 320 pixels."
+    },
+    {
+      "candidateId": "v2t002-b5",
+      "path": "content/assets/candidates/visual-pilot-v2/v2t002-b5.png",
+      "sha256": "334044fb3c25f5e14be4c47e0df0512961ce8dce08e568e0d91b021faa8f1e99",
+      "strategy": "single assembled-anatomy reference",
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-bakeoff-2.json#v2t002-b5",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a03052-0483-7eb2-8eef-c69e097dc401/exec-6f3cb312-bbca-40a4-a3d3-a55f67858394.png",
+      "finalVerdict": "pass-selected",
+      "finding": "The simplest reference set produced the clearest single threaded shank, single knurled nut, horizontal paired framing, and thumbnail readability."
+    },
+    {
+      "candidateId": "v2t002-e4",
+      "path": "content/assets/candidates/visual-pilot-v2/v2t002-e4.png",
+      "sha256": "90f56db313c53ef9ecbc3482963c07ab041a3c70c8d00480e5889b489ab51f0d",
+      "strategy": "whole-head reference-guided edit",
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-bakeoff-2.json#v2t002-e4",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a03052-2fed-71e2-a08e-75580b9a2b61/exec-4f90e19e-3813-4c99-b50b-edf57a3cc8d3.png",
+      "finalVerdict": "reject",
+      "finding": "The whole-head edit kept a smooth upper hook tail and introduced a separate lower threaded element through the nut."
+    }
+  ],
+  "blindReviews": [
+    {
+      "round": 1,
+      "anonymousOrder": {
+        "A": "v2t002-b1",
+        "B": "v2t002-b2",
+        "C": "v2t002-b3",
+        "D": "v2t002-e1"
+      },
+      "result": "D ranked above B, C, and A under the earlier overly strict visible-continuity gate; all four rejected."
+    },
+    {
+      "round": 2,
+      "anonymousOrder": {
+        "A": "v2t002-b4",
+        "B": "v2t002-b5",
+        "C": "v2t002-e4",
+        "D": "v2t002-e1",
+        "E": "v2t002-b2"
+      },
+      "result": "Under the corrected traditional-mechanism gate, B ranked first and A second; B and A passed, D/C/E failed."
+    }
+  ],
+  "adjudication": {
+    "inputs": [
+      "v2t002-b4",
+      "v2t002-b5",
+      "assembled product packshot",
+      "manufacturer exploded parts reference"
+    ],
+    "result": "v2t002-b4 provisional because its adjuster resembles two collars at 320 pixels; v2t002-b5 pass and selected because its one nut, aligned shank, opposed jaws, profile, and thumbnail readability are unambiguous.",
+    "policyCorrection": "Do not reject a pipe wrench merely because an opaque housing hides the hook-jaw-to-shank transition. Reject only visible contradiction, duplication, misalignment, or an incorrect mechanism."
+  },
+  "contactSheet": {
+    "path": "content/authoring/visuals/reviews/visual-pilot-v2/pipe-wrench-bakeoff/PHONE-CONTACT-SHEET.png",
+    "sha256": "3e0965819d9504a37abaefc4bf5f80d6c18b0e52510b3ebc829192ec3f48b6bc",
+    "dimensions": "1280x640 RGB PNG",
+    "order": [
+      "top-left: v2t002-e1",
+      "top-second: v2t002-b1",
+      "top-third: v2t002-b2",
+      "top-right: v2t002-b3",
+      "bottom-left: v2t002-b4",
+      "bottom-second: v2t002-b5 selected",
+      "bottom-third: v2t002-e4",
+      "bottom-right: accepted reference master t037"
+    ]
+  }
+}

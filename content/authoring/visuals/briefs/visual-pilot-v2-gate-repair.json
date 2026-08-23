@@ -1,0 +1,113 @@
+{
+  "repairId": "visual-pilot-v2-gate-repair",
+  "briefVersion": 1,
+  "date": "2026-08-23",
+  "status": "generation-ready",
+  "parentBrief": {
+    "path": "content/authoring/visuals/briefs/visual-pilot-v2.json",
+    "sha256": "9c4f67d80fdb47bc483411aa9ffd867ca1a1c57c79c538678ce4354916b6b3ca"
+  },
+  "taxonomyRevision": {
+    "path": "docs/TAXONOMY.md",
+    "sha256": "c2c487e2a16f5b5de7848d7915c4be2bd0b24749c266727f94a237b21025d952"
+  },
+  "visualPolicyRevision": {
+    "path": "illustration/VISUAL_AUTHORING_POLICY.md",
+    "sha256": "a17d47cd976fbd4caa2b57f834216450f8316063d0b9759ef4fbd0e451d0d904"
+  },
+  "generationMode": "one complete native raster per built-in image_gen call",
+  "generatorSurface": "Codex built-in image_gen",
+  "assets": [
+    {
+      "candidateId": "v2t005-g2",
+      "parentCandidateId": "v2t005",
+      "conceptId": "tool.pliers.slip-joint",
+      "canonicalTerm": "Slip-joint pliers",
+      "candidateRole": "mechanical-clarity replacement",
+      "evidenceSources": [
+        "docs/TAXONOMY.md#slip-joint-pliers",
+        "content/authoring/visuals/briefs/tools/pilot.json"
+      ],
+      "priorFailure": "The prior joint showed two similarly outlined circular forms, which could read as two pivot fasteners rather than one seated pin and one vacant alternate position.",
+      "mustShow": [
+        "strict top-down face view with jaws left and handles moderately open",
+        "one continuous short pill-shaped or oblong slip slot",
+        "exactly one circular pivot pin total, seated at one end of that slot",
+        "the remaining continuous length of the same slot visibly empty",
+        "ordinary opposing serrated gripping jaws and two complete handles"
+      ],
+      "mustNotShow": [
+        "a second circular disc, hole, washer, pin, rivet, or fastener in the joint",
+        "two separate circular pivot holes",
+        "multiple tongue-and-groove channels",
+        "long needle-nose jaws",
+        "cutting edges, locking linkage, or pipe-wrench jaws"
+      ],
+      "requestedOutputCount": 1,
+      "requestedDimensions": "native built-in square output; measure after generation",
+      "candidatePath": "content/assets/candidates/visual-pilot-v2/v2t005-g2.png",
+      "prompt": "Use case: scientific-educational.\nAsset type: one alternate-view isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure opaque white with no floor plane and no shadow.\nStyle/medium: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. This must be a line drawing, not a photograph, not a shaded 3D render, and not color artwork.\nComposition/framing: one complete generic pair of slip-joint pliers in strict top-down face view, jaws facing left and handles moderately open, centered at roughly 72 percent of a square canvas with generous even padding. Match the scale, orientation, handle opening, and jaw direction of the v2t006 tongue-and-groove comparison view without borrowing its geometry. Nothing may touch the canvas edge.\nDecisive joint geometry: draw one continuous short pill-shaped or oblong slip slot in one plier member. Show exactly one circular pivot pin total, seated at the far-left end of that slot. The remaining continuous right-hand length of the same outlined slot must be visibly empty white space. The empty portion is not a separate hole and has no circular outline of its own. Only one circular object may appear anywhere in the joint area. Keep the linkage mechanically coherent.\nOther required geometry: ordinary opposing short serrated gripping jaws and two complete plain handles.\nAbsolute exclusions: no second circular disc, hole, washer, pin, rivet, button, or fastener; no two separate pivot holes; no multiple arcing adjustment channels; no tongue-and-groove rack; no long needle-nose jaws; no cutting edges; no locking linkage; no pipe-wrench jaws; no text or pseudo-text; no labels, arrows, callouts, letters, numbers, answer marks, logos, brands, watermarks, hands, people, props, shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected parts, or impossible joints.\nOutput intent: one native square raster candidate; do not add explanatory text."
+    },
+    {
+      "candidateId": "v2s006-g3",
+      "parentCandidateId": "v2s006",
+      "sceneId": "scene.electrical.gym-fan-damaged-cord",
+      "candidateRole": "phone-legibility replacement",
+      "sourceIds": [
+        "OSHA_ELEC"
+      ],
+      "supportedClaim": "Cord-and-plug equipment with visible damage that may expose a worker to injury must be removed from service.",
+      "source": {
+        "title": "29 CFR 1910.334 Use of equipment",
+        "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.334",
+        "locator": "1910.334(a)(2) and (a)(4)"
+      },
+      "priorFailure": "Earlier candidates rendered the intended jacket split as an inline connector or omitted it; exactly two insulated conductors did not survive 480-by-320 review.",
+      "targetInventory": [
+        {
+          "id": "target-1",
+          "condition": "one large open split in the fan power-cord outer jacket immediately outside the housing, exposing exactly two separate intact insulated conductors",
+          "correction": "disconnect and remove the damaged fan from service for proper repair and testing"
+        }
+      ],
+      "decoyInventory": [
+        {
+          "id": "decoy-1",
+          "condition": "complete close-spaced front and rear fan guards",
+          "safeBecause": "the guards are intact; the only authored hazard is the damaged cord"
+        }
+      ],
+      "safeBackgroundInventory": [
+        "dry level gym floor",
+        "clear walking route",
+        "cord entirely along the wall edge",
+        "intact connected plug and receptacle"
+      ],
+      "negativeHazardInventory": [
+        "no wet surface or spill",
+        "no cord crossing a walking route",
+        "no missing guard",
+        "no unstable storage",
+        "no blocked door or egress",
+        "no smoke, sparks, heat, bare copper, or person"
+      ],
+      "zoneOrder": [
+        "left: complete portable fan against wall",
+        "lower center: large readable damaged cord segment immediately outside fan housing",
+        "right: intact cord continuing along wall edge to connected plug and receptacle",
+        "background: dry clear gym floor"
+      ],
+      "compositionConstraints": [
+        "landscape 3:2 low close wall-side view",
+        "complete fan remains inside frame and occupies about the left two-fifths",
+        "damaged segment occupies at least one-fifth of image width and remains at least 10 pixels thick after 480-by-320 reduction",
+        "the two inner insulated conductors have a clear white gap between them at phone size",
+        "no inset, magnifier, arrow, circle, spotlight, or other answer emphasis"
+      ],
+      "requestedOutputCount": 1,
+      "requestedDimensions": "native built-in wide landscape output; measure after generation",
+      "candidatePath": "content/assets/candidates/visual-pilot-v2/v2s006-g3.png",
+      "prompt": "Use case: scientific-educational.\nAsset type: one original school/custodial hazard-recognition scene for exam preparation.\nStyle/medium: original black monochrome technical line illustration with confident medium contour, sparse functional hatching, restrained interior detail, generous whitespace, and plain civil-service test-booklet economy. This must be a clean line drawing, not a photograph, not photorealistic, not a shaded 3D render, and not color artwork.\nComposition/framing: wide 3:2 landscape, low close wall-side view. Show one complete portable floor fan against the gym wall occupying about the left two-fifths. Keep its close-spaced front and rear guards complete. From the fan housing, route one thick but plausible power cord horizontally along the wall edge toward a connected plug and receptacle at right. The cord never enters the walking route. Keep the gym floor dry, level, broad, and completely clear. Do not add mats, storage, doors, people, or other props.\nPrimary target: immediately outside the fan housing and clearly beyond the intact strain relief, depict one large open split in the black outer cord jacket. The damaged span must occupy at least one-fifth of the image width. Peel the two jacket edges visibly apart so the gap cannot resemble a collar, splice, tape, ferrule, or connector. Inside that one gap, show exactly two separate smooth parallel inner conductors, each retaining complete light neutral-gray insulation outlined in black. Place a clear white gap between the two insulated conductors. Each conductor must visibly continue from intact outer cord on the fan side to intact outer cord on the plug side. No third wire, no bare copper, no frayed strands. Make the cord and its two inner conductors thick enough to remain distinct at a 480-by-320 reduction while keeping mechanically plausible proportions.\nMeaning constraint: the large damaged cord jacket is the only hazard. The guard, plug, receptacle, floor, and route are safe as depicted.\nColor palette: black, white, and restrained neutral-gray line hatching only. No cue may depend on color.\nAbsolute exclusions: no inline connector, repair sleeve, tape, strain-relief collar at the damaged span, sparks, smoke, heat, bare metal conductor, wet surface, loose route-crossing cord, missing guard, unstable object, blocked egress, person, text, pseudo-text, readable sign, label, letter, number, arrow, circle, callout, logo, brand, watermark, decorative border, cropped meaning-bearing object, impossible connection, floating part, dramatic spotlighting, inset detail, or visual highlighting of the target.\nOutput intent: one native raster candidate; do not add annotations or explanatory text."
+    }
+  ]
+}

@@ -1,0 +1,1361 @@
+[
+  {
+    "id": "tool.scrub-brush",
+    "canonicalTerm": "Scrub brush",
+    "evidenceTier": "A",
+    "visualFamily": "cleaning implements",
+    "confusableIds": [],
+    "historicalSourceClass": "E",
+    "historicalProductionStatus": "reference-only",
+    "requiredMasters": [
+      {
+        "id": "tool.scrub-brush.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.staple-gun",
+    "canonicalTerm": "Staple gun",
+    "evidenceTier": "A",
+    "visualFamily": "articulated hand tools",
+    "confusableIds": [],
+    "historicalSourceClass": "E",
+    "historicalProductionStatus": "reference-only",
+    "requiredMasters": [
+      {
+        "id": "tool.staple-gun.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "ppe.protective-gloves",
+    "canonicalTerm": "Protective gloves (generic)",
+    "evidenceTier": "A/A-B overlap",
+    "visualFamily": "PPE",
+    "confusableIds": [],
+    "historicalSourceClass": "E",
+    "historicalProductionStatus": "reference-only",
+    "requiredMasters": [
+      {
+        "id": "ppe.protective-gloves.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.push-broom",
+    "canonicalTerm": "Push broom",
+    "evidenceTier": "B",
+    "visualFamily": "cleaning implements",
+    "confusableIds": [
+      "tool.deck-brush"
+    ],
+    "historicalSourceClass": "E",
+    "historicalProductionStatus": "reference-only",
+    "requiredMasters": [
+      {
+        "id": "tool.push-broom.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.angle-broom",
+    "canonicalTerm": "Angle broom / household broom",
+    "evidenceTier": "B",
+    "visualFamily": "cleaning implements",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.angle-broom.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.dust-mop",
+    "canonicalTerm": "Dust mop",
+    "evidenceTier": "B",
+    "visualFamily": "soft or deformable tools",
+    "confusableIds": [
+      "tool.wet-mop"
+    ],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.dust-mop.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.wet-mop",
+    "canonicalTerm": "Wet/string mop",
+    "evidenceTier": "B",
+    "visualFamily": "soft or deformable tools",
+    "confusableIds": [
+      "tool.dust-mop"
+    ],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.wet-mop.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.flat-mop",
+    "canonicalTerm": "Flat mop",
+    "evidenceTier": "B",
+    "visualFamily": "soft or deformable tools",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.flat-mop.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "equipment.mop-bucket-wringer",
+    "canonicalTerm": "Mop bucket and wringer",
+    "evidenceTier": "B",
+    "visualFamily": "carts/material-handling equipment",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "equipment.mop-bucket-wringer.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.deck-brush",
+    "canonicalTerm": "Deck brush",
+    "evidenceTier": "B",
+    "visualFamily": "cleaning implements",
+    "confusableIds": [
+      "tool.push-broom"
+    ],
+    "historicalSourceClass": "E",
+    "historicalProductionStatus": "reference-only",
+    "requiredMasters": [
+      {
+        "id": "tool.deck-brush.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.hand-scrub-brush",
+    "canonicalTerm": "Hand scrub brush",
+    "evidenceTier": "A/B",
+    "visualFamily": "cleaning implements",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.hand-scrub-brush.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.toilet-bowl-brush",
+    "canonicalTerm": "Toilet bowl brush",
+    "evidenceTier": "B",
+    "visualFamily": "cleaning implements",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.toilet-bowl-brush.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.duster",
+    "canonicalTerm": "Duster / feather or synthetic duster",
+    "evidenceTier": "B",
+    "visualFamily": "soft or deformable tools",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.duster.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.dustpan",
+    "canonicalTerm": "Dustpan",
+    "evidenceTier": "B",
+    "visualFamily": "cleaning implements",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.dustpan.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.floor-squeegee",
+    "canonicalTerm": "Floor squeegee",
+    "evidenceTier": "B",
+    "visualFamily": "cleaning implements",
+    "confusableIds": [
+      "tool.window-squeegee"
+    ],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.floor-squeegee.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.window-squeegee",
+    "canonicalTerm": "Window squeegee",
+    "evidenceTier": "B",
+    "visualFamily": "cleaning implements",
+    "confusableIds": [
+      "tool.floor-squeegee"
+    ],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.window-squeegee.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.window-strip-washer",
+    "canonicalTerm": "Window washer / strip washer",
+    "evidenceTier": "B",
+    "visualFamily": "cleaning implements",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.window-strip-washer.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "equipment.janitor-cart",
+    "canonicalTerm": "Janitor cart",
+    "evidenceTier": "B",
+    "visualFamily": "carts/material-handling equipment",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "equipment.janitor-cart.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "equipment.hand-truck",
+    "canonicalTerm": "Hand truck",
+    "evidenceTier": "B",
+    "visualFamily": "carts/material-handling equipment",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "equipment.hand-truck.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "equipment.dolly",
+    "canonicalTerm": "Equipment dolly",
+    "evidenceTier": "B",
+    "visualFamily": "carts/material-handling equipment",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "equipment.dolly.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "equipment.vacuum.upright",
+    "canonicalTerm": "Upright vacuum",
+    "evidenceTier": "B",
+    "visualFamily": "powered cleaning equipment",
+    "confusableIds": [
+      "equipment.carpet-extractor"
+    ],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "equipment.vacuum.upright.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "equipment.vacuum.canister",
+    "canonicalTerm": "Canister vacuum",
+    "evidenceTier": "B",
+    "visualFamily": "powered cleaning equipment",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "equipment.vacuum.canister.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "equipment.vacuum.wet-dry",
+    "canonicalTerm": "Wet/dry vacuum",
+    "evidenceTier": "B",
+    "visualFamily": "powered cleaning equipment",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "equipment.vacuum.wet-dry.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "equipment.carpet-extractor",
+    "canonicalTerm": "Carpet extractor",
+    "evidenceTier": "B",
+    "visualFamily": "powered cleaning equipment",
+    "confusableIds": [
+      "equipment.vacuum.upright"
+    ],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "equipment.carpet-extractor.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "equipment.steam-cleaner",
+    "canonicalTerm": "Steam-cleaning equipment",
+    "evidenceTier": "B",
+    "visualFamily": "powered cleaning equipment",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "equipment.steam-cleaner.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "equipment.floor-machine.low-speed",
+    "canonicalTerm": "Low-speed rotary floor machine",
+    "evidenceTier": "B",
+    "visualFamily": "powered cleaning equipment",
+    "confusableIds": [
+      "equipment.burnisher.high-speed"
+    ],
+    "historicalSourceClass": "E",
+    "historicalProductionStatus": "reference-only",
+    "requiredMasters": [
+      {
+        "id": "equipment.floor-machine.low-speed.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "equipment.burnisher.high-speed",
+    "canonicalTerm": "High-speed burnisher",
+    "evidenceTier": "B",
+    "visualFamily": "powered cleaning equipment",
+    "confusableIds": [
+      "equipment.floor-machine.low-speed"
+    ],
+    "historicalSourceClass": "E",
+    "historicalProductionStatus": "reference-only",
+    "requiredMasters": [
+      {
+        "id": "equipment.burnisher.high-speed.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "equipment.vacuum.ride-on",
+    "canonicalTerm": "Ride-on industrial vacuum cleaner",
+    "evidenceTier": "B/C",
+    "visualFamily": "powered cleaning equipment",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "equipment.vacuum.ride-on.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "equipment.snow-blower",
+    "canonicalTerm": "Snow blower",
+    "evidenceTier": "B/C",
+    "visualFamily": "other",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "equipment.snow-blower.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "equipment.hedge-trimmer",
+    "canonicalTerm": "Hedge trimmer",
+    "evidenceTier": "B/C",
+    "visualFamily": "other",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "equipment.hedge-trimmer.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.hammer.claw",
+    "canonicalTerm": "Claw hammer",
+    "evidenceTier": "B",
+    "visualFamily": "rigid hand tools",
+    "confusableIds": [
+      "tool.hammer.ball-peen"
+    ],
+    "historicalSourceClass": "E",
+    "historicalProductionStatus": "reference-only",
+    "requiredMasters": [
+      {
+        "id": "tool.hammer.claw.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.hammer.ball-peen",
+    "canonicalTerm": "Ball-peen hammer",
+    "evidenceTier": "B",
+    "visualFamily": "rigid hand tools",
+    "confusableIds": [
+      "tool.hammer.claw"
+    ],
+    "historicalSourceClass": "E",
+    "historicalProductionStatus": "reference-only",
+    "requiredMasters": [
+      {
+        "id": "tool.hammer.ball-peen.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.mallet.rubber",
+    "canonicalTerm": "Rubber mallet",
+    "evidenceTier": "B",
+    "visualFamily": "rigid hand tools",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.mallet.rubber.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.screwdriver.slotted",
+    "canonicalTerm": "Flat/slotted screwdriver",
+    "evidenceTier": "B",
+    "visualFamily": "rigid hand tools",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.screwdriver.slotted.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.screwdriver.phillips",
+    "canonicalTerm": "Phillips screwdriver",
+    "evidenceTier": "B",
+    "visualFamily": "rigid hand tools",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.screwdriver.phillips.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.adjustable-wrench",
+    "canonicalTerm": "Adjustable wrench",
+    "evidenceTier": "B",
+    "visualFamily": "articulated hand tools",
+    "confusableIds": [
+      "tool.pipe-wrench"
+    ],
+    "historicalSourceClass": "C",
+    "historicalProductionStatus": "prototype-not-approved",
+    "requiredMasters": [
+      {
+        "id": "tool.adjustable-wrench.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.pipe-wrench",
+    "canonicalTerm": "Pipe wrench",
+    "evidenceTier": "B",
+    "visualFamily": "articulated hand tools",
+    "confusableIds": [
+      "tool.adjustable-wrench"
+    ],
+    "historicalSourceClass": "C",
+    "historicalProductionStatus": "prototype-not-approved",
+    "requiredMasters": [
+      {
+        "id": "tool.pipe-wrench.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.wrench.fixed",
+    "canonicalTerm": "Combination/open-end/box wrench",
+    "evidenceTier": "B",
+    "visualFamily": "rigid hand tools",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.wrench.fixed.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.pliers.slip-joint",
+    "canonicalTerm": "Slip-joint pliers",
+    "evidenceTier": "B",
+    "visualFamily": "articulated hand tools",
+    "confusableIds": [
+      "tool.pliers.tongue-groove"
+    ],
+    "historicalSourceClass": "E",
+    "historicalProductionStatus": "reference-only",
+    "requiredMasters": [
+      {
+        "id": "tool.pliers.slip-joint.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.pliers.tongue-groove",
+    "canonicalTerm": "Tongue-and-groove pliers",
+    "evidenceTier": "B",
+    "visualFamily": "articulated hand tools",
+    "confusableIds": [
+      "tool.pliers.slip-joint"
+    ],
+    "historicalSourceClass": "E",
+    "historicalProductionStatus": "reference-only",
+    "requiredMasters": [
+      {
+        "id": "tool.pliers.tongue-groove.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.pliers.needle-nose",
+    "canonicalTerm": "Needle-nose pliers",
+    "evidenceTier": "B",
+    "visualFamily": "articulated hand tools",
+    "confusableIds": [
+      "tool.pliers.diagonal-cutting"
+    ],
+    "historicalSourceClass": "E",
+    "historicalProductionStatus": "reference-only",
+    "requiredMasters": [
+      {
+        "id": "tool.pliers.needle-nose.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.pliers.diagonal-cutting",
+    "canonicalTerm": "Diagonal cutting pliers",
+    "evidenceTier": "B",
+    "visualFamily": "articulated hand tools",
+    "confusableIds": [
+      "tool.pliers.needle-nose"
+    ],
+    "historicalSourceClass": "E",
+    "historicalProductionStatus": "reference-only",
+    "requiredMasters": [
+      {
+        "id": "tool.pliers.diagonal-cutting.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.pliers.locking",
+    "canonicalTerm": "Locking pliers",
+    "evidenceTier": "B",
+    "visualFamily": "articulated hand tools",
+    "confusableIds": [
+      "tool.clamp.c"
+    ],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.pliers.locking.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.clamp.c",
+    "canonicalTerm": "C-clamp",
+    "evidenceTier": "B",
+    "visualFamily": "articulated hand tools",
+    "confusableIds": [
+      "tool.pliers.locking",
+      "tool.clamp.bar"
+    ],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.clamp.c.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.clamp.bar",
+    "canonicalTerm": "Bar clamp",
+    "evidenceTier": "B",
+    "visualFamily": "articulated hand tools",
+    "confusableIds": [
+      "tool.clamp.c"
+    ],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.clamp.bar.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.hand-plane",
+    "canonicalTerm": "Hand plane",
+    "evidenceTier": "A/B",
+    "visualFamily": "rigid hand tools",
+    "confusableIds": [],
+    "historicalSourceClass": "E",
+    "historicalProductionStatus": "reference-only",
+    "requiredMasters": [
+      {
+        "id": "tool.hand-plane.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.saw.crosscut",
+    "canonicalTerm": "Crosscut saw",
+    "evidenceTier": "B",
+    "visualFamily": "rigid hand tools",
+    "confusableIds": [
+      "tool.saw.rip"
+    ],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.saw.crosscut.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.saw.rip",
+    "canonicalTerm": "Rip saw",
+    "evidenceTier": "B",
+    "visualFamily": "rigid hand tools",
+    "confusableIds": [
+      "tool.saw.crosscut"
+    ],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.saw.rip.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.saw.hacksaw",
+    "canonicalTerm": "Hacksaw",
+    "evidenceTier": "B",
+    "visualFamily": "rigid hand tools",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.saw.hacksaw.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.utility-knife",
+    "canonicalTerm": "Utility knife",
+    "evidenceTier": "B",
+    "visualFamily": "articulated hand tools",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.utility-knife.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.putty-knife",
+    "canonicalTerm": "Putty knife",
+    "evidenceTier": "B",
+    "visualFamily": "rigid hand tools",
+    "confusableIds": [
+      "tool.paint-scraper"
+    ],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.putty-knife.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.paint-scraper",
+    "canonicalTerm": "Paint scraper",
+    "evidenceTier": "B",
+    "visualFamily": "rigid hand tools",
+    "confusableIds": [
+      "tool.putty-knife"
+    ],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.paint-scraper.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.tape-measure",
+    "canonicalTerm": "Tape measure",
+    "evidenceTier": "B",
+    "visualFamily": "articulated hand tools",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.tape-measure.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.level",
+    "canonicalTerm": "Level",
+    "evidenceTier": "B",
+    "visualFamily": "rigid hand tools",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.level.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.square",
+    "canonicalTerm": "Carpenter square / combination square",
+    "evidenceTier": "B",
+    "visualFamily": "rigid hand tools",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.square.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.plunger.cup",
+    "canonicalTerm": "Plunger - cup",
+    "evidenceTier": "B",
+    "visualFamily": "soft or deformable tools",
+    "confusableIds": [
+      "tool.plunger.flange"
+    ],
+    "historicalSourceClass": "C",
+    "historicalProductionStatus": "prototype-not-approved",
+    "requiredMasters": [
+      {
+        "id": "tool.plunger.cup.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.plunger.flange",
+    "canonicalTerm": "Plunger - flange",
+    "evidenceTier": "B",
+    "visualFamily": "soft or deformable tools",
+    "confusableIds": [
+      "tool.plunger.cup"
+    ],
+    "historicalSourceClass": "C",
+    "historicalProductionStatus": "prototype-not-approved",
+    "requiredMasters": [
+      {
+        "id": "tool.plunger.flange.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.drain-snake",
+    "canonicalTerm": "Hand auger / drain snake",
+    "evidenceTier": "B/C",
+    "visualFamily": "soft or deformable tools",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.drain-snake.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.pipe-reamer",
+    "canonicalTerm": "Pipe reamer",
+    "evidenceTier": "B/C",
+    "visualFamily": "rigid hand tools",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.pipe-reamer.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "tool.soldering-gun",
+    "canonicalTerm": "Soldering gun",
+    "evidenceTier": "A visual/C operational",
+    "visualFamily": "other",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "tool.soldering-gun.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "access.stepladder",
+    "canonicalTerm": "Stepladder",
+    "evidenceTier": "B",
+    "visualFamily": "ladders/access equipment",
+    "confusableIds": [
+      "access.extension-ladder"
+    ],
+    "historicalSourceClass": "E",
+    "historicalProductionStatus": "reference-only",
+    "requiredMasters": [
+      {
+        "id": "access.stepladder.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "access.extension-ladder",
+    "canonicalTerm": "Extension ladder",
+    "evidenceTier": "B",
+    "visualFamily": "ladders/access equipment",
+    "confusableIds": [
+      "access.stepladder"
+    ],
+    "historicalSourceClass": "E",
+    "historicalProductionStatus": "reference-only",
+    "requiredMasters": [
+      {
+        "id": "access.extension-ladder.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "ppe.safety-glasses",
+    "canonicalTerm": "Safety glasses",
+    "evidenceTier": "B",
+    "visualFamily": "PPE",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "ppe.safety-glasses.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "ppe.ear-plugs",
+    "canonicalTerm": "Protective ear plugs",
+    "evidenceTier": "B",
+    "visualFamily": "PPE",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "ppe.ear-plugs.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  },
+  {
+    "id": "safety.wet-floor-sign",
+    "canonicalTerm": "Wet-floor warning sign/cone",
+    "evidenceTier": "B",
+    "visualFamily": "other",
+    "confusableIds": [],
+    "historicalSourceClass": "F",
+    "historicalProductionStatus": "blocked-not-audited",
+    "requiredMasters": [
+      {
+        "id": "safety.wet-floor-sign.master.default",
+        "view": "feature-revealing isolated view"
+      }
+    ],
+    "inventoryBasis": {
+      "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+      "provenance": "content/authoring/visuals/inventory/taxonomy-inventory.provenance.json",
+      "observationDate": "2026-08-20"
+    }
+  }
+]

@@ -1,0 +1,96 @@
+{
+  "reviewId": "visual-pilot-v2-pipe-wrench-adjustment-closeup-v1-review",
+  "date": "2026-08-23",
+  "status": "complete; retry independently passed; selected as a supplemental candidate only; no master or release-manifest mutation",
+  "brief": {
+    "path": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-adjustment-closeup-v1.json",
+    "sha256": "76667117563d1b8e487cab698337197b3ce9023ccb3cd811b5c9fc6175caabdf"
+  },
+  "referenceSet": {
+    "ledgerPath": "content/authoring/visuals/references/pipe-wrench/sources.json",
+    "ledgerSha256": "4ab51d1b95e21851b91a0f251475a663b3c806b6f4dbde7add5aae323d00e83c",
+    "orderedInputs": [
+      {
+        "imageIndex": 1,
+        "path": "content/authoring/visuals/references/pipe-wrench/straight-pipe-wrench-assembled-packshot.jpg",
+        "sha256": "bd312c12650c81ee62667937cf90d03baf2cd2dbe4fb2560c04e8cc6a0302984",
+        "role": "sole assembled-anatomy reference; not a style, color, angle, contour, branding, or composition reference"
+      }
+    ]
+  },
+  "generation": {
+    "surface": "Codex built-in image_gen",
+    "mode": "reference-guided generation from scratch",
+    "calls": 2,
+    "retryPolicyCompliance": "One initial call was made. Native and 320-pixel inspection found a fatal shank-axis/nut-count ambiguity, so the one permitted targeted retry was made. No further generations were attempted.",
+    "nativeResultDimensions": "1254x1254 RGB PNG for both calls"
+  },
+  "candidates": [
+    {
+      "candidateId": "v2t002-adjustment-c1",
+      "path": "content/assets/candidates/visual-pilot-v2/v2t002-adjustment-c1.png",
+      "sha256": "e407256263b50dff0fb6813e1827487750fc11d6f95b6eec895bc8e1c6a99201",
+      "dimensions": "1254x1254",
+      "format": "PNG",
+      "color": "8-bit RGB",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a0306e-acfd-7d81-b4a1-c74e6340e437/exec-deb95209-8588-41a7-aa4c-6a6fac4eee77.png",
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-adjustment-closeup-v1.json#generation.prompt",
+      "promptSha256": "d2920821dfe4a6aa765fde475c96ce533ab5e1e82cc7095cfdeb4bb5d643b432",
+      "prompt": "Use case: scientific-educational\nAsset type: supplemental square feature close-up for a custodial-training image library\nInput images: Image 1 is the sole anatomy-only reference. Use it only to understand the assembled mechanical relationship of a traditional straight pipe wrench. Generate a new original illustration from scratch; do not edit, trace, crop, recolor, or restyle the photographed product.\n\nPrimary request: Create a magnified, mechanically coherent close-up of one generic traditional pipe-wrench head and its adjustment mechanism. The image should teach the relationship of the hook jaw, threaded shank, adjustment nut, and fixed heel jaw entirely through clear geometry, without labels or arrows.\n\nScene/backdrop: pure white square canvas with no scene, floor plane, border, callout, or decoration.\nSubject and mechanism: Show one assembled pipe-wrench head. On the left, one curved movable full-floating hook jaw continues into one straight threaded shank as one continuous physical component. The same single shank stays on one clear axis, enters the body neck, and passes through exactly one clearly bounded knurled circular adjustment nut. Show a short aligned section of threaded shank immediately on both sides of that one nut; a short rounded shank end beyond the nut is acceptable. The opaque body may naturally hide a small middle part of the hook-jaw-to-shank connection, but all visible portions must align and no contradictory second component may appear. Below the hook jaw, one fixed heel jaw is integral to the body. Its serrated gripping face directly opposes the hook jaw's serrated inner face across one open pipe-gripping throat.\n\nStyle/medium: new original monochrome educational technical line art; crisp graphite-black outer contours, consistent medium interior lines, controlled pale-gray form washes, and sparse functional hatching. Invent neutral generic body, jaw, nut, and shank contours. Do not reproduce any source-specific outline, plate, fastener, texture, or knurl pattern.\nComposition/framing: exact orthographic side close-up, no perspective and no visible top or underside planes. Head at left, threaded shank and nut extending right on a level axis. Fill roughly 82 percent of the square with the mechanism. Keep the complete hook jaw, fixed heel jaw, open throat, entire visible shank, entire single nut, and a short section of body/handle inside the frame with even white clearance. Intentionally omit most of the long handle so the adjustment mechanism is large and readable at 320 by 320 pixels.\n\nConstraints: one assembled mechanism only; one hook jaw; one threaded shank; one adjustment nut; one fixed heel jaw; physically connected parts; opposed serrations; generic and unbranded; no text, pseudo-text, numerals, labels, arrows, circles, dimensions, answer cues, logos, watermarks, hands, pipe, extra tools, or additional parts.\nAvoid: an exploded view; transparent housing; fictional cutaway; diagonal, rotated, three-quarter, top-down, or photographic view; adjustable-wrench crescent geometry, smooth parallel jaws, or worm gear; duplicated, forked, parallel, detached, floating, or misaligned shanks; a second nut, collar, rack, rod, gear, jaw, or loose fragment; fused jaws; same-facing teeth; impossible intersections; red, orange, or any color; glossy surfaces; shadows; reflections; copied branding, contours, proportions, holes, recesses, plates, fasteners, textures, trade dress, or source composition.",
+      "verdict": "reject-preserved",
+      "fatalFinding": "The visible smooth hook-jaw stem entered the upper housing while the threaded segment exited lower on a different centerline, so the one-piece mechanism was not demonstrated. Two narrow side bands around the knurled center also weakened the exactly-one-nut reading at 320 pixels.",
+      "nonfatalPositives": "The image had a strong orthographic close-up, complete meaning-bearing crop, opposed serrated jaws, clean monochrome treatment, and no text, branding, or source trade dress."
+    },
+    {
+      "candidateId": "v2t002-adjustment-c2",
+      "path": "content/assets/candidates/visual-pilot-v2/v2t002-adjustment-c2.png",
+      "sha256": "10d317531be59d59d4275638f8ff66f04aecee7bdf599ea9ea1168be5344c495",
+      "dimensions": "1254x1254",
+      "format": "PNG",
+      "color": "8-bit RGB",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a0306e-acfd-7d81-b4a1-c74e6340e437/exec-908d4540-795a-4ff5-b4e8-37a5dc35f749.png",
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-adjustment-closeup-v1.json#generation.retry.prompt",
+      "promptSha256": "96efc092d68706541a52f0682d62ad0b32cb4468685015450898f1eb56f64297",
+      "prompt": "Use case: scientific-educational\nAsset type: supplemental square feature close-up for a custodial-training image library\nInput images: Image 1 is the sole anatomy-only reference. Use it only to understand the assembled relationship of a traditional straight pipe wrench. Generate a new original illustration from scratch; do not edit, trace, crop, recolor, or restyle the photographed product.\n\nPrimary request: Create a magnified orthographic side close-up of one generic traditional pipe-wrench head and its adjustment mechanism. Correct one specific failure mode: the hook jaw must not enter the body on one axis while a separate threaded rod exits on another axis. Show one unmistakable hook-jaw-and-threaded-shank component and one unmistakable adjustment nut.\n\nScene/backdrop: pure white square canvas with no scene, floor plane, border, callout, or decoration.\nSubject and mechanism: At left, show one curved movable full-floating hook jaw. Its rear section must transition directly into one straight visibly threaded shank before that shank reaches the body. Keep that single shank perfectly straight and centered on one horizontal axis through the natural open recess of the solid wrench body and through exactly one adjustment nut. Preserve a clearly visible threaded section immediately before the nut and a short threaded section immediately after it, ending in one rounded tip. The solid body may overlap only the lower edge of the assembly; do not hide the hook-jaw-to-shank transition behind the housing, bend it, offset it, or replace it with a second smooth stem. Show exactly one simple drum-shaped knurled nut: one bounded cylinder with one continuous knurled face, no side flanges, rings, spacers, washers, collars, or second band that could be read as another nut. Below the hook jaw, show one fixed heel jaw integral to the wrench body. Its serrated face must directly oppose the hook jaw's serrated inner face across one open pipe-gripping throat.\n\nStyle/medium: new original monochrome educational technical line art; crisp graphite-black outer contours, consistent medium interior lines, controlled pale-gray form washes, and sparse functional hatching. Invent neutral generic contours. Do not reproduce any source-specific outline, plate, fastener, texture, or knurl pattern.\nComposition/framing: exact orthographic side close-up, no perspective and no visible top or underside planes. Head at left, one straight threaded shank and its one nut extending right on a level axis. Fill roughly 82 percent of the square. Keep the complete hook jaw, fixed heel jaw, open throat, hook-jaw-to-thread transition, entire visible shank, entire single nut, rounded tip, and a short section of body/handle inside the frame with even white clearance. Intentionally omit most of the long handle so the mechanism is large and readable at 320 by 320 pixels.\n\nConstraints: one assembled mechanism only; one hook jaw continuously becoming one threaded shank; one unflanged adjustment nut; one fixed heel jaw; physically connected parts; opposed serrations; generic and unbranded; no text, pseudo-text, numerals, labels, arrows, circles, dimensions, answer cues, logos, watermarks, hands, pipe, extra tools, or additional parts.\nAvoid: an exploded view; transparent housing; fictional cutaway; diagonal, rotated, three-quarter, top-down, or photographic view; adjustable-wrench crescent geometry, smooth parallel jaws, or worm gear; an offset smooth bridge from jaw to body; duplicated, forked, parallel, detached, floating, bent, or misaligned shanks; a second nut, collar, ring, flange, rack, rod, gear, jaw, or loose fragment; fused jaws; same-facing teeth; impossible intersections; red, orange, or any color; glossy surfaces; shadows; reflections; copied branding, contours, proportions, holes, recesses, plates, fasteners, textures, trade dress, or source composition.",
+      "verdict": "pass-selected-candidate-only",
+      "decisionBasis": "The targeted retry makes one threaded shank visibly begin at the rear of the hook jaw and remain on one straight axis through one plain knurled drum. The fixed heel jaw remains integral to the body, and the two serrated faces oppose each other across one clear throat."
+    }
+  ],
+  "selected": {
+    "candidateId": "v2t002-adjustment-c2",
+    "path": "content/assets/candidates/visual-pilot-v2/v2t002-adjustment-c2.png",
+    "sha256": "10d317531be59d59d4275638f8ff66f04aecee7bdf599ea9ea1168be5344c495",
+    "verdict": "pass as a supplemental production candidate",
+    "releaseState": "not promoted; no accepted master, app reference, derivative manifest, or release manifest changed"
+  },
+  "independentBlindReview": {
+    "status": "complete",
+    "method": "A separate read-only reviewer inspected both attempts at native and 320-pixel scale, checked topology without trusting the filenames or self-review, and evaluated text, branding, answer cues, and reference similarity.",
+    "v2t002-adjustment-c1": "Reject: the hook-jaw stem and threaded shank occupy different axes, and the multi-band nut remains ambiguous at phone size.",
+    "v2t002-adjustment-c2": "Pass as an atlas or post-answer mechanism close-up: one continuous hook-jaw/shank, one plain knurled nut, opposed serrated jaws, clear phone readability, and generic unbranded treatment.",
+    "selection": "v2t002-adjustment-c2"
+  },
+  "visualQa": {
+    "native1254": {
+      "mechanical": "Pass. One hook jaw transitions into one visible threaded shank; that shank remains straight through one nut and ends in one rounded tip. The fixed heel jaw is integral to the lower body and its teeth oppose the hook jaw.",
+      "partCount": "Pass. One hook jaw, one shank, one single-face knurled nut, one heel jaw, and one connected body/handle section; no detached or duplicate mechanism.",
+      "composition": "Pass. Exact side close-up with all meaning-bearing head and adjustment features fully inside the frame; only most of the long handle is deliberately excluded.",
+      "style": "Pass. Clean monochrome line art, pale-gray washes, sparse hatching, and pure-white isolation.",
+      "rightsSimilarity": "Pass. It does not retain the anatomy reference's diagonal camera angle, red product color, logo, lettering, country/model marks, handle hole, cast texture, plate layout, or overall composition.",
+      "security": "Pass. No text, pseudo-text, answer label, arrow, circle, dimension, logo, watermark, hand, pipe, or unrelated object is visible."
+    },
+    "phone320": {
+      "method": "Reduced each native PNG to 320x320 with FFmpeg Lanczos filtering and visually inspected the resulting pixels; the temporary review reductions were not added as release assets.",
+      "mechanical": "Pass for c2. Hook jaw, continuous thread run, one knurled drum, rounded shank tip, and opposed heel jaw remain visually separable without labels. C1 remained reject because its offset stem/shank reading and side-band ambiguity persisted.",
+      "legibility": "Pass for c2. Outer silhouette, open throat, serrations, threads, and nut texture remain distinct at phone size; pale interior shading does not erase the decisive features."
+    }
+  },
+  "accessibilityDraft": {
+    "neutralAttemptDescription": "A close-up black-and-white line drawing shows the head and adjustment area of a hand tool.",
+    "fullDescription": "Close-up side view of a traditional pipe wrench: the curved serrated hook jaw continues into one threaded shank that passes through one knurled adjustment nut, opposite a serrated fixed heel jaw on the wrench body."
+  },
+  "limitations": [
+    "This close crop is a supplemental learning view and must not replace the complete-tool recognition image.",
+    "Independent candidate QA is complete, but promotion would still require the repository's immutable derivative-manifest and app-integration release steps."
+  ]
+}

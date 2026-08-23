@@ -1,0 +1,48 @@
+{
+  "briefId": "visual-pilot-v2-gate-repair-3",
+  "date": "2026-08-23",
+  "status": "generation-authorized; candidate-only; independent review required",
+  "parentRepairBrief": {
+    "path": "content/authoring/visuals/briefs/visual-pilot-v2-gate-repair-2.json",
+    "sha256": "89d0c95bc56fcb9a53445b9334b18525c1d70a697da088c58e279d7b2cb6acfa"
+  },
+  "taxonomyRevision": {
+    "path": "docs/TAXONOMY.md",
+    "sha256": "c2c487e2a16f5b5de7848d7915c4be2bd0b24749c266727f94a237b21025d952"
+  },
+  "visualPolicyRevision": {
+    "path": "illustration/VISUAL_AUTHORING_POLICY.md",
+    "sha256": "a17d47cd976fbd4caa2b57f834216450f8316063d0b9759ef4fbd0e451d0d904"
+  },
+  "generatorSurface": "Codex built-in image_gen",
+  "generationRule": "One complete native raster edit in one image_gen call; preserve every result under a new candidate filename; do not overwrite the accepted reference master, target candidate, or any earlier asset.",
+  "assets": [
+    {
+      "candidateId": "v2t002-e2",
+      "parentCandidateId": "v2t002",
+      "conceptId": "tool.pipe-wrench",
+      "canonicalTerm": "Pipe wrench",
+      "candidatePath": "content/assets/candidates/visual-pilot-v2/v2t002-e2.png",
+      "editTarget": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2t002-g2.png",
+        "sha256": "4d2f9ceea8687de6e20537277026a22b00447b418f8e17918a4374655a59825f",
+        "role": "first input; preserve this candidate's side profile, canvas, handle, jaws, style, and all non-mechanism pixels as closely as possible"
+      },
+      "mechanicalReference": {
+        "path": "content/assets/masters/tools/t037.png",
+        "sha256": "0f2e1e00b8b16e4472f117e80b6e8819b798aaa3f6c7eae9d2aa1bbbfdbe9c89",
+        "role": "second input; accepted same-library reference for the continuous hook-jaw shank passing through the adjustment nut only",
+        "restriction": "Do not copy its three-quarter angle, silhouette, composition, handle details, contour peculiarities, or projection beyond the nut."
+      },
+      "priorFailure": "The first regeneration placed the nut around a standalone threaded rod that was disconnected from the curved hook jaw.",
+      "requiredEvidence": [
+        "the curved hook jaw, its straight shank, and the threaded rack through the nut are visibly one continuous component",
+        "the single knurled nut wraps and engages that same shank on one centerline",
+        "a short continuation exits the nut into the housing and terminates there",
+        "no standalone rod, hidden gap, extra tail, or separate mechanism",
+        "mechanical relationship survives 320 by 320 review"
+      ],
+      "prompt": "Use case: scientific-educational.\nTask: tightly bounded raster edit using two supplied local images. The first image is the target side-profile pipe-wrench candidate to edit. The second image is an accepted same-library three-quarter pipe-wrench reference; use it only to understand that the curved hook jaw, its straight threaded shank, and the rack passing through the adjustment nut are one continuous component. Do not copy the second image's angle, silhouette, composition, handle details, contour peculiarities, or protruding tail.\nPreserve from the first image: the exact square opaque-white canvas; black monochrome technical line-art style; strict horizontal side profile; jaws facing left; complete heavy handle to the right; curved serrated hook jaw; opposing serrated heel jaw; one knurled nut; open throat; object placement; pure-white background; and absence of text, logo, shadow, color, or props.\nChange only the adjustment mechanism inside the wrench head. Delete the standalone horizontal threaded rod currently floating through the knurled nut. Redraw the existing curved hook jaw so the very same physical component has one straight rectangular threaded shank visibly and continuously extending rightward from the hook-jaw root into the open body window. The continuous outlines from the curved hook jaw must flow directly into the shank with no body wall, blank gap, joint, or hidden break between them. Place the existing single knurled nut directly around that same shank on the same centerline. Show the shank entering the nut from the jaw side, visibly passing through the nut's central opening with clear thread engagement, and continuing only a short distance beyond the nut inside the housing before terminating cleanly before the handle neck.\nCritical failure exclusions: no standalone threaded rod; no second shank; no shank disconnected from the hook jaw; no nut in a separate window or on another centerline; no gap between shank and nut; no extra threaded tail, U-loop, fork, hook, or projection outside the housing; no second nut; no change to answer meaning; no smooth adjustable-wrench jaws; no crop; no text, pseudo-text, labels, arrows, logos, brands, watermarks, hands, people, props, background tone, shadow, color, or decorative border.\nOutput: the complete edited first image as one native square raster candidate, without annotations or explanatory text."
+    }
+  ]
+}

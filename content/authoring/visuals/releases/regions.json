@@ -1,0 +1,1666 @@
+[
+  {
+    "sceneId": "scene.slip.hallway-wet-floor",
+    "opaqueAssetId": "s001",
+    "logicalPlane": {
+      "width": 1,
+      "height": 1,
+      "origin": "top-left",
+      "coordinates": "normalized"
+    },
+    "masterSha256": "5648c401bd764f44b1f23e1dbaa5aac3e79c4292990e68c98f1d47947037ff0d",
+    "zoneOrder": [
+      {
+        "order": 1,
+        "label": "far hallway"
+      },
+      {
+        "order": 2,
+        "label": "left wall and alcove"
+      },
+      {
+        "order": 3,
+        "label": "central walking surface"
+      },
+      {
+        "order": 4,
+        "label": "right wall"
+      }
+    ],
+    "targetRegions": [
+      {
+        "inventoryId": "target-1",
+        "polygons": [
+          [
+            [
+              0.17,
+              0.55
+            ],
+            [
+              0.8,
+              0.55
+            ],
+            [
+              0.8,
+              0.92
+            ],
+            [
+              0.17,
+              0.92
+            ]
+          ]
+        ]
+      }
+    ],
+    "decoyRegions": [
+      {
+        "inventoryId": "decoy-1",
+        "polygons": [
+          [
+            [
+              0.72,
+              0.48
+            ],
+            [
+              0.99,
+              0.48
+            ],
+            [
+              0.99,
+              0.55
+            ],
+            [
+              0.72,
+              0.55
+            ]
+          ],
+          [
+            [
+              0.81,
+              0.55
+            ],
+            [
+              0.99,
+              0.55
+            ],
+            [
+              0.99,
+              0.76
+            ],
+            [
+              0.81,
+              0.76
+            ]
+          ]
+        ]
+      }
+    ],
+    "validation": {
+      "coordinateBounds": "pass",
+      "targetCount": "pass",
+      "decoyCount": "pass",
+      "targetTargetNonOverlap": "pass",
+      "targetDecoyNonOverlap": "pass"
+    },
+    "reviewOverlay": "content/authoring/visuals/reviews/scenes/overlays/s001.png",
+    "publication": "authoring-only; never ship before answer reveal"
+  },
+  {
+    "sceneId": "scene.slip.lobby-raised-mat",
+    "opaqueAssetId": "s002",
+    "logicalPlane": {
+      "width": 1,
+      "height": 1,
+      "origin": "top-left",
+      "coordinates": "normalized"
+    },
+    "masterSha256": "d692813cd7f4a25a8dcfbe5867f3d63e8c0738de48e55203f856214f463958f7",
+    "zoneOrder": [
+      {
+        "order": 1,
+        "label": "entrance doors"
+      },
+      {
+        "order": 2,
+        "label": "left wall furnishings"
+      },
+      {
+        "order": 3,
+        "label": "central mat and floor"
+      },
+      {
+        "order": 4,
+        "label": "right-side stand"
+      }
+    ],
+    "targetRegions": [
+      {
+        "inventoryId": "target-1",
+        "polygons": [
+          [
+            [
+              0.47,
+              0.61
+            ],
+            [
+              0.69,
+              0.61
+            ],
+            [
+              0.69,
+              0.8
+            ],
+            [
+              0.47,
+              0.8
+            ]
+          ]
+        ]
+      }
+    ],
+    "decoyRegions": [
+      {
+        "inventoryId": "decoy-1",
+        "polygons": [
+          [
+            [
+              0.83,
+              0.16
+            ],
+            [
+              0.96,
+              0.16
+            ],
+            [
+              0.96,
+              0.61
+            ],
+            [
+              0.83,
+              0.61
+            ]
+          ]
+        ]
+      }
+    ],
+    "validation": {
+      "coordinateBounds": "pass",
+      "targetCount": "pass",
+      "decoyCount": "pass",
+      "targetTargetNonOverlap": "pass",
+      "targetDecoyNonOverlap": "pass"
+    },
+    "reviewOverlay": "content/authoring/visuals/reviews/scenes/overlays/s002.png",
+    "publication": "authoring-only; never ship before answer reveal"
+  },
+  {
+    "sceneId": "scene.egress.stairwell-boxes",
+    "opaqueAssetId": "s003",
+    "logicalPlane": {
+      "width": 1,
+      "height": 1,
+      "origin": "top-left",
+      "coordinates": "normalized"
+    },
+    "masterSha256": "4562c968a15c57d039cfdf9d95091da596c5ebf1068f7b6952ddccfac69d1a30",
+    "zoneOrder": [
+      {
+        "order": 1,
+        "label": "upper flight"
+      },
+      {
+        "order": 2,
+        "label": "landing"
+      },
+      {
+        "order": 3,
+        "label": "lower flight"
+      },
+      {
+        "order": 4,
+        "label": "wall fixtures"
+      }
+    ],
+    "targetRegions": [
+      {
+        "inventoryId": "target-1",
+        "polygons": [
+          [
+            [
+              0.25,
+              0.31
+            ],
+            [
+              0.68,
+              0.31
+            ],
+            [
+              0.68,
+              0.58
+            ],
+            [
+              0.25,
+              0.58
+            ]
+          ]
+        ]
+      }
+    ],
+    "decoyRegions": [
+      {
+        "inventoryId": "decoy-1",
+        "polygons": [
+          [
+            [
+              0.07,
+              0.22
+            ],
+            [
+              0.25,
+              0.22
+            ],
+            [
+              0.25,
+              0.62
+            ],
+            [
+              0.07,
+              0.62
+            ]
+          ]
+        ]
+      }
+    ],
+    "validation": {
+      "coordinateBounds": "pass",
+      "targetCount": "pass",
+      "decoyCount": "pass",
+      "targetTargetNonOverlap": "pass",
+      "targetDecoyNonOverlap": "pass"
+    },
+    "reviewOverlay": "content/authoring/visuals/reviews/scenes/overlays/s003.png",
+    "publication": "authoring-only; never ship before answer reveal"
+  },
+  {
+    "sceneId": "scene.egress.gym-exit-obstruction",
+    "opaqueAssetId": "s004",
+    "logicalPlane": {
+      "width": 1,
+      "height": 1,
+      "origin": "top-left",
+      "coordinates": "normalized"
+    },
+    "masterSha256": "26acf87611e08ad3e23046801bf64bd3d1335dfa1704206c072ec19c0a855796",
+    "zoneOrder": [
+      {
+        "order": 1,
+        "label": "left court"
+      },
+      {
+        "order": 2,
+        "label": "rear double doors"
+      },
+      {
+        "order": 3,
+        "label": "doorway obstruction"
+      },
+      {
+        "order": 4,
+        "label": "right wall storage"
+      }
+    ],
+    "targetRegions": [
+      {
+        "inventoryId": "target-1",
+        "polygons": [
+          [
+            [
+              0.38,
+              0.3
+            ],
+            [
+              0.71,
+              0.3
+            ],
+            [
+              0.71,
+              0.55
+            ],
+            [
+              0.38,
+              0.55
+            ]
+          ]
+        ]
+      }
+    ],
+    "decoyRegions": [
+      {
+        "inventoryId": "decoy-1",
+        "polygons": [
+          [
+            [
+              0.8,
+              0.39
+            ],
+            [
+              0.96,
+              0.39
+            ],
+            [
+              0.96,
+              0.66
+            ],
+            [
+              0.8,
+              0.66
+            ]
+          ]
+        ]
+      }
+    ],
+    "validation": {
+      "coordinateBounds": "pass",
+      "targetCount": "pass",
+      "decoyCount": "pass",
+      "targetTargetNonOverlap": "pass",
+      "targetDecoyNonOverlap": "pass"
+    },
+    "reviewOverlay": "content/authoring/visuals/reviews/scenes/overlays/s004.png",
+    "publication": "authoring-only; never ship before answer reveal"
+  },
+  {
+    "sceneId": "scene.chemical.closet-unidentified-container",
+    "opaqueAssetId": "s005",
+    "logicalPlane": {
+      "width": 1,
+      "height": 1,
+      "origin": "top-left",
+      "coordinates": "normalized"
+    },
+    "masterSha256": "5358f246b72323505707abebe123ba6abc98152c5a8b9a2052e1bf88775c785b",
+    "zoneOrder": [
+      {
+        "order": 1,
+        "label": "upper wall rack"
+      },
+      {
+        "order": 2,
+        "label": "left shelving"
+      },
+      {
+        "order": 3,
+        "label": "service sink"
+      },
+      {
+        "order": 4,
+        "label": "lower floor"
+      }
+    ],
+    "targetRegions": [
+      {
+        "inventoryId": "target-1",
+        "polygons": [
+          [
+            [
+              0.2,
+              0.25
+            ],
+            [
+              0.31,
+              0.25
+            ],
+            [
+              0.31,
+              0.45
+            ],
+            [
+              0.2,
+              0.45
+            ]
+          ]
+        ]
+      }
+    ],
+    "decoyRegions": [
+      {
+        "inventoryId": "decoy-1",
+        "polygons": [
+          [
+            [
+              0.15,
+              0.05
+            ],
+            [
+              0.46,
+              0.05
+            ],
+            [
+              0.46,
+              0.25
+            ],
+            [
+              0.15,
+              0.25
+            ]
+          ],
+          [
+            [
+              0.15,
+              0.47
+            ],
+            [
+              0.46,
+              0.47
+            ],
+            [
+              0.46,
+              0.91
+            ],
+            [
+              0.15,
+              0.91
+            ]
+          ]
+        ]
+      }
+    ],
+    "validation": {
+      "coordinateBounds": "pass",
+      "targetCount": "pass",
+      "decoyCount": "pass",
+      "targetTargetNonOverlap": "pass",
+      "targetDecoyNonOverlap": "pass"
+    },
+    "reviewOverlay": "content/authoring/visuals/reviews/scenes/overlays/s005.png",
+    "publication": "authoring-only; never ship before answer reveal"
+  },
+  {
+    "sceneId": "scene.chemical.kitchen-chemicals-over-foodware",
+    "opaqueAssetId": "s006",
+    "logicalPlane": {
+      "width": 1,
+      "height": 1,
+      "origin": "top-left",
+      "coordinates": "normalized"
+    },
+    "masterSha256": "45f3e40548c6e584e1bda054c4a75f9d034f173a6dc7a962eeb4beaab4c9b4bd",
+    "zoneOrder": [
+      {
+        "order": 1,
+        "label": "upper chemical shelf"
+      },
+      {
+        "order": 2,
+        "label": "center utensil shelf"
+      },
+      {
+        "order": 3,
+        "label": "lower bowl shelf"
+      },
+      {
+        "order": 4,
+        "label": "separate pan rack"
+      }
+    ],
+    "targetRegions": [
+      {
+        "inventoryId": "target-1",
+        "polygons": [
+          [
+            [
+              0.03,
+              0.1
+            ],
+            [
+              0.64,
+              0.1
+            ],
+            [
+              0.64,
+              0.64
+            ],
+            [
+              0.03,
+              0.64
+            ]
+          ]
+        ]
+      }
+    ],
+    "decoyRegions": [
+      {
+        "inventoryId": "decoy-1",
+        "polygons": [
+          [
+            [
+              0.68,
+              0.08
+            ],
+            [
+              0.98,
+              0.08
+            ],
+            [
+              0.98,
+              0.79
+            ],
+            [
+              0.68,
+              0.79
+            ]
+          ]
+        ]
+      }
+    ],
+    "validation": {
+      "coordinateBounds": "pass",
+      "targetCount": "pass",
+      "decoyCount": "pass",
+      "targetTargetNonOverlap": "pass",
+      "targetDecoyNonOverlap": "pass"
+    },
+    "reviewOverlay": "content/authoring/visuals/reviews/scenes/overlays/s006.png",
+    "publication": "authoring-only; never ship before answer reveal"
+  },
+  {
+    "sceneId": "scene.electrical.utility-damaged-cord",
+    "opaqueAssetId": "s007",
+    "logicalPlane": {
+      "width": 1,
+      "height": 1,
+      "origin": "top-left",
+      "coordinates": "normalized"
+    },
+    "masterSha256": "aff208b2f56d1155d56fddb3f3b98428e6a7f622deaa770e1283b5d37f605c1f",
+    "zoneOrder": [
+      {
+        "order": 1,
+        "label": "wall storage"
+      },
+      {
+        "order": 2,
+        "label": "work light"
+      },
+      {
+        "order": 3,
+        "label": "connected cord and receptacle"
+      },
+      {
+        "order": 4,
+        "label": "floor"
+      }
+    ],
+    "targetRegions": [
+      {
+        "inventoryId": "target-1",
+        "polygons": [
+          [
+            [
+              0.73,
+              0.39
+            ],
+            [
+              0.86,
+              0.39
+            ],
+            [
+              0.86,
+              0.72
+            ],
+            [
+              0.73,
+              0.72
+            ]
+          ]
+        ]
+      }
+    ],
+    "decoyRegions": [
+      {
+        "inventoryId": "decoy-1",
+        "polygons": [
+          [
+            [
+              0.27,
+              0.1
+            ],
+            [
+              0.41,
+              0.1
+            ],
+            [
+              0.41,
+              0.49
+            ],
+            [
+              0.27,
+              0.49
+            ]
+          ]
+        ]
+      }
+    ],
+    "validation": {
+      "coordinateBounds": "pass",
+      "targetCount": "pass",
+      "decoyCount": "pass",
+      "targetTargetNonOverlap": "pass",
+      "targetDecoyNonOverlap": "pass"
+    },
+    "reviewOverlay": "content/authoring/visuals/reviews/scenes/overlays/s007.png",
+    "publication": "authoring-only; never ship before answer reveal"
+  },
+  {
+    "sceneId": "scene.electrical.classroom-wet-power-strip",
+    "opaqueAssetId": "s008",
+    "logicalPlane": {
+      "width": 1,
+      "height": 1,
+      "origin": "top-left",
+      "coordinates": "normalized"
+    },
+    "masterSha256": "0e1b3b2b164b244d1690a72fd4e936940a3c913bebf2516424fc387e9ddb84b7",
+    "zoneOrder": [
+      {
+        "order": 1,
+        "label": "teacher desk"
+      },
+      {
+        "order": 2,
+        "label": "student desks"
+      },
+      {
+        "order": 3,
+        "label": "right wall connection"
+      },
+      {
+        "order": 4,
+        "label": "central aisle"
+      }
+    ],
+    "targetRegions": [
+      {
+        "inventoryId": "target-1",
+        "polygons": [
+          [
+            [
+              0.76,
+              0.67
+            ],
+            [
+              0.98,
+              0.67
+            ],
+            [
+              0.98,
+              0.95
+            ],
+            [
+              0.76,
+              0.95
+            ]
+          ]
+        ]
+      }
+    ],
+    "decoyRegions": [
+      {
+        "inventoryId": "decoy-1",
+        "polygons": [
+          [
+            [
+              0.64,
+              0.29
+            ],
+            [
+              0.76,
+              0.29
+            ],
+            [
+              0.76,
+              0.34
+            ],
+            [
+              0.64,
+              0.34
+            ]
+          ]
+        ]
+      }
+    ],
+    "validation": {
+      "coordinateBounds": "pass",
+      "targetCount": "pass",
+      "decoyCount": "pass",
+      "targetTargetNonOverlap": "pass",
+      "targetDecoyNonOverlap": "pass"
+    },
+    "reviewOverlay": "content/authoring/visuals/reviews/scenes/overlays/s008.png",
+    "publication": "authoring-only; never ship before answer reveal"
+  },
+  {
+    "sceneId": "scene.sharps.restroom-broken-glass",
+    "opaqueAssetId": "s009",
+    "logicalPlane": {
+      "width": 1,
+      "height": 1,
+      "origin": "top-left",
+      "coordinates": "normalized"
+    },
+    "masterSha256": "958ad83f58746da23cea3db6a9125517369de117f2bb8e954856b974c1b61b69",
+    "zoneOrder": [
+      {
+        "order": 1,
+        "label": "sink and mirror"
+      },
+      {
+        "order": 2,
+        "label": "stall"
+      },
+      {
+        "order": 3,
+        "label": "central floor"
+      },
+      {
+        "order": 4,
+        "label": "waste bin"
+      }
+    ],
+    "targetRegions": [
+      {
+        "inventoryId": "target-1",
+        "polygons": [
+          [
+            [
+              0.24,
+              0.73
+            ],
+            [
+              0.69,
+              0.73
+            ],
+            [
+              0.69,
+              0.96
+            ],
+            [
+              0.24,
+              0.96
+            ]
+          ]
+        ]
+      }
+    ],
+    "decoyRegions": [
+      {
+        "inventoryId": "decoy-1",
+        "polygons": [
+          [
+            [
+              0.1,
+              0.02
+            ],
+            [
+              0.28,
+              0.02
+            ],
+            [
+              0.28,
+              0.31
+            ],
+            [
+              0.1,
+              0.31
+            ]
+          ]
+        ]
+      }
+    ],
+    "validation": {
+      "coordinateBounds": "pass",
+      "targetCount": "pass",
+      "decoyCount": "pass",
+      "targetTargetNonOverlap": "pass",
+      "targetDecoyNonOverlap": "pass"
+    },
+    "reviewOverlay": "content/authoring/visuals/reviews/scenes/overlays/s009.png",
+    "publication": "authoring-only; never ship before answer reveal"
+  },
+  {
+    "sceneId": "scene.sharps.grounds-broken-bottle",
+    "opaqueAssetId": "s010",
+    "logicalPlane": {
+      "width": 1,
+      "height": 1,
+      "origin": "top-left",
+      "coordinates": "normalized"
+    },
+    "masterSha256": "40191790c92181821514ec9cc366aefb3975d0e7b6c3d8fa20ca6dc003b40e1c",
+    "zoneOrder": [
+      {
+        "order": 1,
+        "label": "building edge"
+      },
+      {
+        "order": 2,
+        "label": "walkway"
+      },
+      {
+        "order": 3,
+        "label": "shard area"
+      },
+      {
+        "order": 4,
+        "label": "collection-bin pad and planting bed"
+      }
+    ],
+    "targetRegions": [
+      {
+        "inventoryId": "target-1",
+        "polygons": [
+          [
+            [
+              0.04,
+              0.63
+            ],
+            [
+              0.48,
+              0.63
+            ],
+            [
+              0.48,
+              0.96
+            ],
+            [
+              0.04,
+              0.96
+            ]
+          ]
+        ]
+      }
+    ],
+    "decoyRegions": [
+      {
+        "inventoryId": "decoy-1",
+        "polygons": [
+          [
+            [
+              0.72,
+              0.16
+            ],
+            [
+              0.93,
+              0.16
+            ],
+            [
+              0.93,
+              0.61
+            ],
+            [
+              0.72,
+              0.61
+            ]
+          ]
+        ]
+      }
+    ],
+    "validation": {
+      "coordinateBounds": "pass",
+      "targetCount": "pass",
+      "decoyCount": "pass",
+      "targetTargetNonOverlap": "pass",
+      "targetDecoyNonOverlap": "pass"
+    },
+    "reviewOverlay": "content/authoring/visuals/reviews/scenes/overlays/s010.png",
+    "publication": "authoring-only; never ship before answer reveal"
+  },
+  {
+    "sceneId": "scene.material.loading-unstable-stack",
+    "opaqueAssetId": "s011",
+    "logicalPlane": {
+      "width": 1,
+      "height": 1,
+      "origin": "top-left",
+      "coordinates": "normalized"
+    },
+    "masterSha256": "3ee76f0487fb823e11d6965d6954fe259db4fa2d8f1826732a4459f863e62f3d",
+    "zoneOrder": [
+      {
+        "order": 1,
+        "label": "loading door"
+      },
+      {
+        "order": 2,
+        "label": "unstable dolly load"
+      },
+      {
+        "order": 3,
+        "label": "stable pallet"
+      },
+      {
+        "order": 4,
+        "label": "wall storage"
+      }
+    ],
+    "targetRegions": [
+      {
+        "inventoryId": "target-1",
+        "polygons": [
+          [
+            [
+              0.18,
+              0.07
+            ],
+            [
+              0.46,
+              0.07
+            ],
+            [
+              0.46,
+              0.88
+            ],
+            [
+              0.18,
+              0.88
+            ]
+          ]
+        ]
+      }
+    ],
+    "decoyRegions": [
+      {
+        "inventoryId": "decoy-1",
+        "polygons": [
+          [
+            [
+              0.5,
+              0.54
+            ],
+            [
+              0.81,
+              0.54
+            ],
+            [
+              0.81,
+              0.89
+            ],
+            [
+              0.5,
+              0.89
+            ]
+          ]
+        ]
+      }
+    ],
+    "validation": {
+      "coordinateBounds": "pass",
+      "targetCount": "pass",
+      "decoyCount": "pass",
+      "targetTargetNonOverlap": "pass",
+      "targetDecoyNonOverlap": "pass"
+    },
+    "reviewOverlay": "content/authoring/visuals/reviews/scenes/overlays/s011.png",
+    "publication": "authoring-only; never ship before answer reveal"
+  },
+  {
+    "sceneId": "scene.material.cafeteria-obscured-vision",
+    "opaqueAssetId": "s012",
+    "logicalPlane": {
+      "width": 1,
+      "height": 1,
+      "origin": "top-left",
+      "coordinates": "normalized"
+    },
+    "masterSha256": "3a5df0d37df6e6ef3660104458a91d940938fb34f068cc4518c7a695aa5a54f8",
+    "zoneOrder": [
+      {
+        "order": 1,
+        "label": "serving counter"
+      },
+      {
+        "order": 2,
+        "label": "dining tables"
+      },
+      {
+        "order": 3,
+        "label": "person and carried load"
+      },
+      {
+        "order": 4,
+        "label": "wall-side cart"
+      }
+    ],
+    "targetRegions": [
+      {
+        "inventoryId": "target-1",
+        "polygons": [
+          [
+            [
+              0.5,
+              0.12
+            ],
+            [
+              0.72,
+              0.12
+            ],
+            [
+              0.72,
+              0.65
+            ],
+            [
+              0.5,
+              0.65
+            ]
+          ]
+        ]
+      }
+    ],
+    "decoyRegions": [
+      {
+        "inventoryId": "decoy-1",
+        "polygons": [
+          [
+            [
+              0.76,
+              0.4
+            ],
+            [
+              0.95,
+              0.4
+            ],
+            [
+              0.95,
+              0.7
+            ],
+            [
+              0.76,
+              0.7
+            ]
+          ]
+        ]
+      }
+    ],
+    "validation": {
+      "coordinateBounds": "pass",
+      "targetCount": "pass",
+      "decoyCount": "pass",
+      "targetTargetNonOverlap": "pass",
+      "targetDecoyNonOverlap": "pass"
+    },
+    "reviewOverlay": "content/authoring/visuals/reviews/scenes/overlays/s012.png",
+    "publication": "authoring-only; never ship before answer reveal"
+  },
+  {
+    "sceneId": "scene.biological.restroom-bare-hand-cleaning",
+    "opaqueAssetId": "s013",
+    "logicalPlane": {
+      "width": 1,
+      "height": 1,
+      "origin": "top-left",
+      "coordinates": "normalized"
+    },
+    "masterSha256": "5955ab3d871a6cd7dd54cdbda9c0f1976d6ba549a2144ddd6e9ca36adb936ba8",
+    "zoneOrder": [
+      {
+        "order": 1,
+        "label": "sink"
+      },
+      {
+        "order": 2,
+        "label": "cleaning cart"
+      },
+      {
+        "order": 3,
+        "label": "person and toilet"
+      },
+      {
+        "order": 4,
+        "label": "tool holder and floor"
+      }
+    ],
+    "targetRegions": [
+      {
+        "inventoryId": "target-1",
+        "polygons": [
+          [
+            [
+              0.58,
+              0.47
+            ],
+            [
+              0.79,
+              0.47
+            ],
+            [
+              0.79,
+              0.73
+            ],
+            [
+              0.58,
+              0.73
+            ]
+          ]
+        ]
+      }
+    ],
+    "decoyRegions": [
+      {
+        "inventoryId": "decoy-1",
+        "polygons": [
+          [
+            [
+              0.79,
+              0.5
+            ],
+            [
+              0.85,
+              0.5
+            ],
+            [
+              0.85,
+              0.72
+            ],
+            [
+              0.79,
+              0.72
+            ]
+          ]
+        ]
+      }
+    ],
+    "validation": {
+      "coordinateBounds": "pass",
+      "targetCount": "pass",
+      "decoyCount": "pass",
+      "targetTargetNonOverlap": "pass",
+      "targetDecoyNonOverlap": "pass"
+    },
+    "reviewOverlay": "content/authoring/visuals/reviews/scenes/overlays/s013.png",
+    "publication": "authoring-only; never ship before answer reveal"
+  },
+  {
+    "sceneId": "scene.biological.cafeteria-mop-on-table",
+    "opaqueAssetId": "s014",
+    "logicalPlane": {
+      "width": 1,
+      "height": 1,
+      "origin": "top-left",
+      "coordinates": "normalized"
+    },
+    "masterSha256": "a289ca419858bf088b43329b4e379e896c8cf7a65f64ce44d7d6ab5554f072ac",
+    "zoneOrder": [
+      {
+        "order": 1,
+        "label": "left dining tables"
+      },
+      {
+        "order": 2,
+        "label": "central target table"
+      },
+      {
+        "order": 3,
+        "label": "janitor cart"
+      },
+      {
+        "order": 4,
+        "label": "right dining area"
+      }
+    ],
+    "targetRegions": [
+      {
+        "inventoryId": "target-1",
+        "polygons": [
+          [
+            [
+              0.27,
+              0.42
+            ],
+            [
+              0.58,
+              0.42
+            ],
+            [
+              0.58,
+              0.68
+            ],
+            [
+              0.27,
+              0.68
+            ]
+          ]
+        ]
+      }
+    ],
+    "decoyRegions": [
+      {
+        "inventoryId": "decoy-1",
+        "polygons": [
+          [
+            [
+              0.8,
+              0.61
+            ],
+            [
+              0.91,
+              0.61
+            ],
+            [
+              0.91,
+              0.74
+            ],
+            [
+              0.8,
+              0.74
+            ]
+          ]
+        ]
+      }
+    ],
+    "validation": {
+      "coordinateBounds": "pass",
+      "targetCount": "pass",
+      "decoyCount": "pass",
+      "targetTargetNonOverlap": "pass",
+      "targetDecoyNonOverlap": "pass"
+    },
+    "reviewOverlay": "content/authoring/visuals/reviews/scenes/overlays/s014.png",
+    "publication": "authoring-only; never ship before answer reveal"
+  },
+  {
+    "sceneId": "scene.machine.gym-unguarded-fan",
+    "opaqueAssetId": "s015",
+    "logicalPlane": {
+      "width": 1,
+      "height": 1,
+      "origin": "top-left",
+      "coordinates": "normalized"
+    },
+    "masterSha256": "e16a3596d90b417917361983485fe18cf76fea2e78d201ef294fe72580dddb04",
+    "zoneOrder": [
+      {
+        "order": 1,
+        "label": "left wall storage"
+      },
+      {
+        "order": 2,
+        "label": "clear court"
+      },
+      {
+        "order": 3,
+        "label": "unguarded fan"
+      },
+      {
+        "order": 4,
+        "label": "intact stored fan"
+      }
+    ],
+    "targetRegions": [
+      {
+        "inventoryId": "target-1",
+        "polygons": [
+          [
+            [
+              0.08,
+              0.39
+            ],
+            [
+              0.37,
+              0.39
+            ],
+            [
+              0.37,
+              0.8
+            ],
+            [
+              0.08,
+              0.8
+            ]
+          ]
+        ]
+      }
+    ],
+    "decoyRegions": [
+      {
+        "inventoryId": "decoy-1",
+        "polygons": [
+          [
+            [
+              0.44,
+              0.46
+            ],
+            [
+              0.55,
+              0.46
+            ],
+            [
+              0.55,
+              0.66
+            ],
+            [
+              0.44,
+              0.66
+            ]
+          ]
+        ]
+      }
+    ],
+    "validation": {
+      "coordinateBounds": "pass",
+      "targetCount": "pass",
+      "decoyCount": "pass",
+      "targetTargetNonOverlap": "pass",
+      "targetDecoyNonOverlap": "pass"
+    },
+    "reviewOverlay": "content/authoring/visuals/reviews/scenes/overlays/s015.png",
+    "publication": "authoring-only; never ship before answer reveal"
+  },
+  {
+    "sceneId": "scene.machine.utility-saw-guard",
+    "opaqueAssetId": "s016",
+    "logicalPlane": {
+      "width": 1,
+      "height": 1,
+      "origin": "top-left",
+      "coordinates": "normalized"
+    },
+    "masterSha256": "31a9de7f24626de9f7b61bd33c20fddd128d1254881d88bd3871ad60aad80c9d",
+    "zoneOrder": [
+      {
+        "order": 1,
+        "label": "wall tool storage"
+      },
+      {
+        "order": 2,
+        "label": "workbench left"
+      },
+      {
+        "order": 3,
+        "label": "saw and exposed blade"
+      },
+      {
+        "order": 4,
+        "label": "lower floor"
+      }
+    ],
+    "targetRegions": [
+      {
+        "inventoryId": "target-1",
+        "polygons": [
+          [
+            [
+              0.42,
+              0.18
+            ],
+            [
+              0.83,
+              0.18
+            ],
+            [
+              0.83,
+              0.59
+            ],
+            [
+              0.42,
+              0.59
+            ]
+          ]
+        ]
+      }
+    ],
+    "decoyRegions": [
+      {
+        "inventoryId": "decoy-1",
+        "polygons": [
+          [
+            [
+              0.05,
+              0.05
+            ],
+            [
+              0.24,
+              0.05
+            ],
+            [
+              0.24,
+              0.41
+            ],
+            [
+              0.05,
+              0.41
+            ]
+          ]
+        ]
+      }
+    ],
+    "validation": {
+      "coordinateBounds": "pass",
+      "targetCount": "pass",
+      "decoyCount": "pass",
+      "targetTargetNonOverlap": "pass",
+      "targetDecoyNonOverlap": "pass"
+    },
+    "reviewOverlay": "content/authoring/visuals/reviews/scenes/overlays/s016.png",
+    "publication": "authoring-only; never ship before answer reveal"
+  },
+  {
+    "sceneId": "scene.zero.classroom-orderly",
+    "opaqueAssetId": "s017",
+    "logicalPlane": {
+      "width": 1,
+      "height": 1,
+      "origin": "top-left",
+      "coordinates": "normalized"
+    },
+    "masterSha256": "888bd553461e6bc986d50e2489684b3b570ee726b45cc997af43a1234bcc4e27",
+    "zoneOrder": [
+      {
+        "order": 1,
+        "label": "teacher area"
+      },
+      {
+        "order": 2,
+        "label": "student desks"
+      },
+      {
+        "order": 3,
+        "label": "wall-side ladder"
+      },
+      {
+        "order": 4,
+        "label": "wall-side cord and fan"
+      }
+    ],
+    "targetRegions": [],
+    "decoyRegions": [
+      {
+        "inventoryId": "decoy-1",
+        "polygons": [
+          [
+            [
+              0.77,
+              0.12
+            ],
+            [
+              0.94,
+              0.12
+            ],
+            [
+              0.94,
+              0.59
+            ],
+            [
+              0.77,
+              0.59
+            ]
+          ]
+        ]
+      },
+      {
+        "inventoryId": "decoy-2",
+        "polygons": [
+          [
+            [
+              0.33,
+              0.48
+            ],
+            [
+              0.67,
+              0.48
+            ],
+            [
+              0.67,
+              0.55
+            ],
+            [
+              0.33,
+              0.55
+            ]
+          ]
+        ]
+      },
+      {
+        "inventoryId": "decoy-3",
+        "polygons": [
+          [
+            [
+              0.65,
+              0.31
+            ],
+            [
+              0.77,
+              0.31
+            ],
+            [
+              0.77,
+              0.49
+            ],
+            [
+              0.65,
+              0.49
+            ]
+          ]
+        ]
+      }
+    ],
+    "validation": {
+      "coordinateBounds": "pass",
+      "targetCount": "pass",
+      "decoyCount": "pass",
+      "targetTargetNonOverlap": "pass",
+      "targetDecoyNonOverlap": "pass"
+    },
+    "reviewOverlay": "content/authoring/visuals/reviews/scenes/overlays/s017.png",
+    "publication": "authoring-only; never ship before answer reveal"
+  },
+  {
+    "sceneId": "scene.zero.closet-contained",
+    "opaqueAssetId": "s018",
+    "logicalPlane": {
+      "width": 1,
+      "height": 1,
+      "origin": "top-left",
+      "coordinates": "normalized"
+    },
+    "masterSha256": "6392d4f0575647918acacda18d1593d714408e5e1321a7b12787afd127790bbf",
+    "zoneOrder": [
+      {
+        "order": 1,
+        "label": "upper wall storage"
+      },
+      {
+        "order": 2,
+        "label": "left shelf and containment"
+      },
+      {
+        "order": 3,
+        "label": "service sink"
+      },
+      {
+        "order": 4,
+        "label": "floor and doorway"
+      }
+    ],
+    "targetRegions": [],
+    "decoyRegions": [
+      {
+        "inventoryId": "decoy-1",
+        "polygons": [
+          [
+            [
+              0.23,
+              0.41
+            ],
+            [
+              0.46,
+              0.41
+            ],
+            [
+              0.46,
+              0.63
+            ],
+            [
+              0.23,
+              0.63
+            ]
+          ]
+        ]
+      },
+      {
+        "inventoryId": "decoy-2",
+        "polygons": [
+          [
+            [
+              0.47,
+              0.05
+            ],
+            [
+              0.66,
+              0.05
+            ],
+            [
+              0.66,
+              0.78
+            ],
+            [
+              0.47,
+              0.78
+            ]
+          ]
+        ]
+      },
+      {
+        "inventoryId": "decoy-3",
+        "polygons": [
+          [
+            [
+              0.64,
+              0.11
+            ],
+            [
+              0.73,
+              0.11
+            ],
+            [
+              0.73,
+              0.4
+            ],
+            [
+              0.64,
+              0.4
+            ]
+          ]
+        ]
+      }
+    ],
+    "validation": {
+      "coordinateBounds": "pass",
+      "targetCount": "pass",
+      "decoyCount": "pass",
+      "targetTargetNonOverlap": "pass",
+      "targetDecoyNonOverlap": "pass"
+    },
+    "reviewOverlay": "content/authoring/visuals/reviews/scenes/overlays/s018.png",
+    "publication": "authoring-only; never ship before answer reveal"
+  }
+]

@@ -1,0 +1,117 @@
+{
+  "briefId": "visual-pilot-v2-next-weak-tools-broom-brush-v1",
+  "briefVersion": 1,
+  "date": "2026-08-23",
+  "status": "generation-authorized; candidate-only; independent review required",
+  "generatorSurface": "Codex built-in image_gen",
+  "taxonomyRevision": {
+    "path": "docs/TAXONOMY.md",
+    "sha256": "c2c487e2a16f5b5de7848d7915c4be2bd0b24749c266727f94a237b21025d952"
+  },
+  "visualPolicyRevision": {
+    "path": "illustration/VISUAL_AUTHORING_POLICY.md",
+    "sha256": "a17d47cd976fbd4caa2b57f834216450f8316063d0b9759ef4fbd0e451d0d904"
+  },
+  "referenceSet": {
+    "path": "content/authoring/visuals/references/next-weak-tools/sources.json",
+    "sha256": "e6dbff636934b34f51e76ea695c3f28dffa12061999f3823dcb26b4290048052"
+  },
+  "selectionBasis": "The accepted library phone sheet reduces both long-handled tools enough that their decisive head proportions and bristle character carry little visual weight. Push broom and deck brush are a maintained confusable pair. These matched, foreshortened feature-revealing views enlarge the head while retaining the complete tool.",
+  "workflowFindingApplied": "Each candidate receives exactly one manufacturer anatomy reference. The reference controls subject topology only; prompt text controls view, framing, style, genericization, and all forbidden content.",
+  "retryPromptAssembly": "For a targeted retry, the exact prompt is the asset prompt, two newline characters, and targetedRetry.promptSuffix. Both strings remain immutable in this brief.",
+  "generationRule": "Run one independent built-in image_gen call per asset with the exact prompt and sole local reference. Preserve every native result under a new candidate path. A single targeted retry is allowed only for a fatal content, geometry, style, or phone-readability failure. Do not overwrite or promote accepted masters.",
+  "sharedGate": [
+    "one complete isolated long-handled implement is mechanically connected and uncropped",
+    "the head is large enough that its proportion and bristle character remain legible at 320 by 320",
+    "the matched low head-level three-quarter composition does not borrow the other tool's decisive features",
+    "monochrome generic technical line art contains no source color, logo, label, packaging, trade dress, text, or scene props"
+  ],
+  "assets": [
+    {
+      "candidateId": "v2t007",
+      "conceptId": "tool.push-broom",
+      "canonicalTerm": "Push broom",
+      "viewId": "matched-head-foreground-three-quarter",
+      "viewPurpose": "Make the broad sweeping head and long flexible bristle curtain unmistakable at phone size while retaining the complete handle.",
+      "candidatePath": "content/assets/candidates/visual-pilot-v2/v2t007.png",
+      "generationMode": "single-anatomy-reference generation from scratch",
+      "referencedImages": [
+        {
+          "path": "content/authoring/visuals/references/next-weak-tools/push-broom-assembled-alt.jpg",
+          "sha256": "5404ecac1fbc19b9eef99e95e1e5d3772b484f8258fd53e9a832de442c1d85dd",
+          "role": "sole anatomy reference for the relationship among the broad head, long handle, optional support brace, and sweeping bristles; do not copy styling, composition, colors, branding, contours, proportions, or trade dress"
+        }
+      ],
+      "mustShow": [
+        "one complete long handle joined centrally to one very broad rectangular broom block",
+        "head much wider than it is deep",
+        "one long continuous curtain of flexible sweeping bristles",
+        "low head-level three-quarter view with the large head in the foreground and complete handle visibly receding"
+      ],
+      "mustNotShow": [
+        "compact deck-brush proportions",
+        "short rigid scrub-bristle tufts",
+        "angle-broom fan shape",
+        "squeegee blade or secondary cleaning head"
+      ],
+      "prompt": "Use case: scientific-educational\nAsset type: alternate-view isolated tool-recognition illustration for a custodial-training image library\nInput images: Image 1 is the sole anatomy-only reference. Use it only to understand the generic assembled relationship of a commercial push broom's broad rectangular head, centrally attached long handle, optional stabilizing brace, and long sweeping bristles. Generate a new original illustration; do not edit, trace, restyle, or reproduce the photographed product.\n\nPrimary request: Create one generic commercial push broom in clean monochrome instructional technical line art.\n\nScene/backdrop: plain pure-white square canvas with no floor plane, shadow, scene, border, label, or callout.\nSubject: exactly one complete push broom. One long plain handle is mechanically joined at the center of one straight rectangular broom block that is dramatically wider than it is deep. Beneath the block is one long, continuous, even curtain of many flexible sweeping bristles. A simple generic support brace may connect the handle to the head, but it must remain subordinate to the decisive wide-head silhouette.\n\nStyle/medium: original monochrome technical line-art illustration matching a restrained educational tool library: crisp graphite-black outer contours, consistent medium line weight, sparse functional hatching, restrained pale-gray form accents, and ample clean white space; not photographic and not a shaded 3D render.\nComposition/framing: matched low head-level three-quarter view. Put the broad broom head across the lower foreground so it occupies roughly 78 percent of the square width and its long bristle curtain is unmistakable. Foreshorten the handle as it recedes diagonally upward into the background, but show the complete handle and end cap inside the canvas. Center the complete connected tool with generous clear margins and no cropped edge.\n\nConstraints: the head is much wider than a deck-scrub head; bristles are visibly longer and more flexible than scrub-brush tufts; generic unbranded construction; one tool only; every part physically connected; all decisive geometry readable at 320 by 320.\nAvoid: compact narrow deck-brush block; short stiff tuft clusters; angle-broom fan; floor squeegee; mop; duplicate heads or handles; detached brace; impossible attachment; floor or room context; hands or people; debris; motion marks; color; wood grain; painted product finish; photographic texture; cast shadows; gradients; logo badge; brand name; retail label or packaging; letters; numerals; arrows; watermark; copied product proportions, brace contours, surface details, or trade dress.",
+      "requestedOutputCount": 1,
+      "requestedDimensions": "native built-in square output; measure after generation",
+      "qaChecklist": [
+        "Complete tool, handle, head, brace if present, and bristles are connected and uncropped.",
+        "Broad head and continuous flexible bristle curtain dominate the foreground and remain legible at 320 by 320.",
+        "No compact deck-brush head, stiff scrub tufts, angle-broom fan, squeegee, or secondary tool feature appears.",
+        "Artwork remains generic monochrome line art with no inherited logo, label, color, packaging, source composition, or trade dress."
+      ],
+      "targetedRetry": {
+        "candidateId": "v2t007-g2",
+        "candidatePath": "content/assets/candidates/visual-pilot-v2/v2t007-g2.png",
+        "reason": "The first result is complete and clean but its compact block and blunt stiff-looking bristles can read as a deck brush at 320 pixels.",
+        "promptSuffix": "Targeted correction: change only the head proportions and bristle character. Make the straight rectangular push-broom block unmistakably extra wide and shallow, spanning at least three quarters of the square canvas width in the foreground. Beneath it, show one continuous curtain of noticeably long, fine, flexible sweeping fibers with softly uneven free tips; do not divide them into short blunt scrub-brush tufts. Preserve the complete single handle, central connected socket, low head-level three-quarter view, pure-white isolation, monochrome technical line style, generous uncropped margins, and every exclusion above."
+      }
+    },
+    {
+      "candidateId": "v2t008",
+      "conceptId": "tool.deck-brush",
+      "canonicalTerm": "Deck brush",
+      "viewId": "matched-head-foreground-three-quarter",
+      "viewPurpose": "Make the compact thick scrub block and dense short stiff bristles unmistakable at phone size while retaining the complete handle.",
+      "candidatePath": "content/assets/candidates/visual-pilot-v2/v2t008.png",
+      "generationMode": "single-anatomy-reference generation from scratch",
+      "referencedImages": [
+        {
+          "path": "content/authoring/visuals/references/next-weak-tools/deck-scrub-head.jpg",
+          "sha256": "44cb12773e5e59a103fc4871344414d1ccb3e5e00b69298f109302657a912a48",
+          "role": "sole anatomy reference for the compact thick block and dense short stiff scrub bristles; add a generic complete long handle from the textual brief; do not copy color, texture, tuft pattern, contours, proportions, crop, or trade dress"
+        }
+      ],
+      "mustShow": [
+        "one complete long handle joined centrally to one compact thick rectangular scrub block",
+        "head only moderately longer than it is deep",
+        "dense short stiff straight bristle tufts",
+        "low head-level three-quarter view with the compact head large in the foreground and complete handle visibly receding"
+      ],
+      "mustNotShow": [
+        "very broad push-broom head",
+        "long flexible sweeping-bristle curtain",
+        "push-broom stabilizing brace",
+        "squeegee blade, hand-grip body, or angle-broom fan"
+      ],
+      "prompt": "Use case: scientific-educational\nAsset type: alternate-view isolated tool-recognition illustration for a custodial-training image library\nInput images: Image 1 is the sole anatomy-only reference. Use it only to understand a generic deck scrub brush head: one compact thick rectangular block carrying dense short stiff straight bristle tufts. Add the complete long handle described below. Generate a new original illustration; do not edit, trace, restyle, or reproduce the photographed product.\n\nPrimary request: Create one generic long-handled deck scrub brush in clean monochrome instructional technical line art.\n\nScene/backdrop: plain pure-white square canvas with no floor plane, shadow, scene, border, label, or callout.\nSubject: exactly one complete deck brush. One long plain handle is mechanically joined at the center of one compact thick rectangular scrub block. The block is only moderately longer than it is deep, not extremely wide. Beneath it are many dense, short, stiff, straight bristle tufts with a blunt even working face suited to scrubbing. No wide support brace is present.\n\nStyle/medium: original monochrome technical line-art illustration matching a restrained educational tool library: crisp graphite-black outer contours, consistent medium line weight, sparse functional hatching, restrained pale-gray form accents, and ample clean white space; not photographic and not a shaded 3D render.\nComposition/framing: matched low head-level three-quarter view. Put the compact scrub head across the lower foreground so it occupies roughly 62 percent of the square width and its block thickness plus short stiff bristles are unmistakable. Foreshorten the handle as it recedes diagonally upward into the background, but show the complete handle and end cap inside the canvas. Center the complete connected tool with generous clear margins and no cropped edge.\n\nConstraints: the head is compact and thick compared with a push broom; bristles are visibly short, dense, straight, and stiff rather than long and flowing; generic unbranded construction; one tool only; every part physically connected; all decisive geometry readable at 320 by 320.\nAvoid: very broad 24- or 36-inch push-broom silhouette; long flexible sweeping-bristle curtain; push-broom stabilizing brace; angle-broom fan; floor squeegee; mop; hand scrub-brush grip; duplicate heads or handles; impossible attachment; floor or room context; hands or people; water, foam, or debris; motion marks; color; blue plastic; wood grain; photographic texture; cast shadows; gradients; logo; brand name; labels; letters; numerals; arrows; watermark; copied tuft layout, block rounding, surface details, source crop, or trade dress.",
+      "requestedOutputCount": 1,
+      "requestedDimensions": "native built-in square output; measure after generation",
+      "qaChecklist": [
+        "Complete tool, handle, compact block, and dense bristle tufts are connected and uncropped.",
+        "Block thickness and short stiff scrub bristles dominate the foreground and remain legible at 320 by 320.",
+        "No broad push-broom head, long flexible bristle curtain, brace, angle-broom fan, squeegee, or secondary tool feature appears.",
+        "Artwork remains generic monochrome line art with no inherited color, texture, tuft layout, logo, source crop, or trade dress."
+      ],
+      "targetedRetry": {
+        "candidateId": "v2t008-g2",
+        "candidatePath": "content/assets/candidates/visual-pilot-v2/v2t008-g2.png",
+        "reason": "The first result fatally borrowed a very broad push-broom block, long sweeping fringe, and two stabilizing braces.",
+        "promptSuffix": "Targeted correction: change only the head proportions, bristle character, and forbidden brace. Replace the extra-wide braced sweeping head with one compact thick deck-scrub block whose visible length is only about three times its front-to-back depth and no more than half the square canvas width. Connect the single handle directly to one small central socket with absolutely no stabilizing rods, yoke, or brace. Beneath the block, show dense short rigid straight scrub-bristle tufts ending in a blunt even working face, never a long flexible fringe. Preserve the complete handle, low head-level three-quarter view, pure-white isolation, monochrome technical line style, generous uncropped margins, and every exclusion above."
+      }
+    }
+  ]
+}

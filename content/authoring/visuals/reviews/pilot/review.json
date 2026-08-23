@@ -1,0 +1,1231 @@
+{
+  "runId": "plan-001-tool-pilot-2026-08-23",
+  "status": "checkpoint-awaiting-maintainer-review",
+  "reviewAuthority": "Codex operator self-review only; not an independent acceptance",
+  "selectedCount": 19,
+  "firstPassSelectedCount": 18,
+  "firstPassRate": 0.9474,
+  "finalViableCandidateCount": 19,
+  "selected": [
+    {
+      "candidateId": "c001",
+      "briefId": "pilot-tool-01",
+      "conceptId": "tool.dustpan",
+      "canonicalTerm": "Dustpan",
+      "file": "content/assets/candidates/pilot/c001.png",
+      "copiedFromBuiltInOutput": "/home/cjpher/.codex/generated_images/01a02c6a-2460-7640-894a-be8ad5ac723c/exec-82fe7040-c7f1-4af0-987c-2389a5e09885.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGB",
+        "bytes": 934641,
+        "sha256": "5e9a23baab1e12be3f50eab6f76e78389c97dc4a35ee8a47cc9b62a0a2d4be67",
+        "metadataKeys": [],
+        "nearWhiteCornerMinimumChannel": 253
+      },
+      "measuredObjectFootprint": {
+        "threshold": "grayscale < 245",
+        "bbox": [
+          78,
+          138,
+          1145,
+          1083
+        ],
+        "width": 1067,
+        "height": 945,
+        "bboxAreaRatio": 0.6412
+      },
+      "reviewDerivatives": {
+        "phone": {
+          "file": "content/authoring/visuals/reviews/pilot/phone/c001.png",
+          "bytes": 62654,
+          "sha256": "40f1244daf7210267bc5ca16b770d9efa2688c2a007c7cb82ddaf834e884262b",
+          "width": 320,
+          "height": 320
+        },
+        "grayscalePrint": {
+          "file": "content/authoring/visuals/reviews/pilot/print/c001.png",
+          "bytes": 28997,
+          "sha256": "baade62ce1d7641393fa2bb950d9cefc5822462965d5b9d9a9b0edc93ab8f5b9",
+          "width": 320,
+          "height": 320,
+          "mode": "L"
+        }
+      },
+      "selfReview": {
+        "correctClassAndSubtype": "PASS",
+        "mustShowFeatures": "PASS",
+        "mustNotShowFeatures": "PASS",
+        "mechanicalCoherence": "PASS",
+        "noBrandLogoWatermarkOrText": "PASS",
+        "styleConsistency": "PASS",
+        "phone320": "PASS",
+        "grayscale320": "PASS",
+        "suspiciousSimilarity": "NO MATCH OBSERVED; text-only high-level public style reference was used",
+        "answerLeak": "PASS",
+        "exactWhitePixelBackground": "CONDITIONAL — visually white, corner channels measure 252–253 rather than exact 255"
+      },
+      "note": "No concept-specific exception recorded.",
+      "checkpointDisposition": "PROPOSED-MASTER — maintainer and independent review still required"
+    },
+    {
+      "candidateId": "c002",
+      "briefId": "pilot-tool-02",
+      "conceptId": "tool.mallet.rubber",
+      "canonicalTerm": "Rubber mallet",
+      "file": "content/assets/candidates/pilot/c002.png",
+      "copiedFromBuiltInOutput": "/home/cjpher/.codex/generated_images/01a02c6a-2460-7640-894a-be8ad5ac723c/exec-f8813194-010b-4702-a61d-bdf7c1925a29.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGB",
+        "bytes": 1193596,
+        "sha256": "1c1645630c9f94f6817db1a074a55e33df76a869b935c787efb9ea6be01f7b14",
+        "metadataKeys": [],
+        "nearWhiteCornerMinimumChannel": 253
+      },
+      "measuredObjectFootprint": {
+        "threshold": "grayscale < 245",
+        "bbox": [
+          23,
+          121,
+          1223,
+          958
+        ],
+        "width": 1200,
+        "height": 837,
+        "bboxAreaRatio": 0.6387
+      },
+      "reviewDerivatives": {
+        "phone": {
+          "file": "content/authoring/visuals/reviews/pilot/phone/c002.png",
+          "bytes": 70744,
+          "sha256": "5a4a6e9b11895d7d9ee89aaca274589cedc39d0fae57b2f7931a8210fd31a45b",
+          "width": 320,
+          "height": 320
+        },
+        "grayscalePrint": {
+          "file": "content/authoring/visuals/reviews/pilot/print/c002.png",
+          "bytes": 31134,
+          "sha256": "2c2f3374d5990583994901f5f1a937cf94ad726420f0278b31aad2c56053a85c",
+          "width": 320,
+          "height": 320,
+          "mode": "L"
+        }
+      },
+      "selfReview": {
+        "correctClassAndSubtype": "PASS",
+        "mustShowFeatures": "PASS",
+        "mustNotShowFeatures": "PASS",
+        "mechanicalCoherence": "PASS",
+        "noBrandLogoWatermarkOrText": "PASS",
+        "styleConsistency": "PASS",
+        "phone320": "PASS",
+        "grayscale320": "PASS",
+        "suspiciousSimilarity": "NO MATCH OBSERVED; text-only high-level public style reference was used",
+        "answerLeak": "PASS",
+        "exactWhitePixelBackground": "CONDITIONAL — visually white, corner channels measure 252–253 rather than exact 255"
+      },
+      "note": "No concept-specific exception recorded.",
+      "checkpointDisposition": "PROPOSED-MASTER — maintainer and independent review still required"
+    },
+    {
+      "candidateId": "c003",
+      "briefId": "pilot-tool-03",
+      "conceptId": "ppe.safety-glasses",
+      "canonicalTerm": "Generic safety glasses",
+      "file": "content/assets/candidates/pilot/c003.png",
+      "copiedFromBuiltInOutput": "/home/cjpher/.codex/generated_images/01a02c6a-2460-7640-894a-be8ad5ac723c/exec-287cba77-56ef-4538-8ba5-b4b1c8336cc5.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGB",
+        "bytes": 953547,
+        "sha256": "351bebed901ecc30f2b2c1fa90afdf3c7fc2261088241570f393e589cac5218d",
+        "metadataKeys": [],
+        "nearWhiteCornerMinimumChannel": 253
+      },
+      "measuredObjectFootprint": {
+        "threshold": "grayscale < 245",
+        "bbox": [
+          25,
+          291,
+          1233,
+          919
+        ],
+        "width": 1208,
+        "height": 628,
+        "bboxAreaRatio": 0.4824
+      },
+      "reviewDerivatives": {
+        "phone": {
+          "file": "content/authoring/visuals/reviews/pilot/phone/c003.png",
+          "bytes": 63809,
+          "sha256": "dd0178635bf9041b27d13af59b9a17ce85ecb1e47a5d0c7c47ef18d7909cbdd8",
+          "width": 320,
+          "height": 320
+        },
+        "grayscalePrint": {
+          "file": "content/authoring/visuals/reviews/pilot/print/c003.png",
+          "bytes": 28754,
+          "sha256": "03471d3d6a9f251aca42b9518d5ca312e61f21e148908f94e43a64e217903c96",
+          "width": 320,
+          "height": 320,
+          "mode": "L"
+        }
+      },
+      "selfReview": {
+        "correctClassAndSubtype": "PASS",
+        "mustShowFeatures": "PASS",
+        "mustNotShowFeatures": "PASS",
+        "mechanicalCoherence": "PASS",
+        "noBrandLogoWatermarkOrText": "PASS",
+        "styleConsistency": "PASS",
+        "phone320": "PASS",
+        "grayscale320": "PASS",
+        "suspiciousSimilarity": "NO MATCH OBSERVED; text-only high-level public style reference was used",
+        "answerLeak": "PASS",
+        "exactWhitePixelBackground": "CONDITIONAL — visually white, corner channels measure 252–253 rather than exact 255"
+      },
+      "note": "No concept-specific exception recorded.",
+      "checkpointDisposition": "PROPOSED-MASTER — maintainer and independent review still required"
+    },
+    {
+      "candidateId": "c004",
+      "briefId": "pilot-tool-04",
+      "conceptId": "tool.adjustable-wrench",
+      "canonicalTerm": "Adjustable wrench",
+      "file": "content/assets/candidates/pilot/c004.png",
+      "copiedFromBuiltInOutput": "/home/cjpher/.codex/generated_images/01a02c6a-2460-7640-894a-be8ad5ac723c/exec-28932e3e-dbb0-485f-89a5-533e6dfa1149.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGB",
+        "bytes": 920909,
+        "sha256": "edb1f4e907926fd83ed55aaa11668d285bf85a181f98e0aeeb8b845dbc0b192d",
+        "metadataKeys": [],
+        "nearWhiteCornerMinimumChannel": 253
+      },
+      "measuredObjectFootprint": {
+        "threshold": "grayscale < 245",
+        "bbox": [
+          84,
+          146,
+          1201,
+          1074
+        ],
+        "width": 1117,
+        "height": 928,
+        "bboxAreaRatio": 0.6592
+      },
+      "reviewDerivatives": {
+        "phone": {
+          "file": "content/authoring/visuals/reviews/pilot/phone/c004.png",
+          "bytes": 62147,
+          "sha256": "53b51d08c7f80ea4109bca467b0f8b46636083a6f22f5f490837d4621ab18e0e",
+          "width": 320,
+          "height": 320
+        },
+        "grayscalePrint": {
+          "file": "content/authoring/visuals/reviews/pilot/print/c004.png",
+          "bytes": 28820,
+          "sha256": "3f980f14347257eea06f772d53337c3e1261c0b5e2e5c62472aa3795ad812259",
+          "width": 320,
+          "height": 320,
+          "mode": "L"
+        }
+      },
+      "selfReview": {
+        "correctClassAndSubtype": "PASS",
+        "mustShowFeatures": "PASS",
+        "mustNotShowFeatures": "PASS",
+        "mechanicalCoherence": "PASS",
+        "noBrandLogoWatermarkOrText": "PASS",
+        "styleConsistency": "PASS",
+        "phone320": "PASS",
+        "grayscale320": "PASS",
+        "suspiciousSimilarity": "NO MATCH OBSERVED; text-only high-level public style reference was used",
+        "answerLeak": "PASS",
+        "exactWhitePixelBackground": "CONDITIONAL — visually white, corner channels measure 252–253 rather than exact 255"
+      },
+      "note": "No concept-specific exception recorded.",
+      "checkpointDisposition": "PROPOSED-MASTER — maintainer and independent review still required"
+    },
+    {
+      "candidateId": "c005",
+      "briefId": "pilot-tool-05",
+      "conceptId": "tool.pipe-wrench",
+      "canonicalTerm": "Straight pipe wrench",
+      "file": "content/assets/candidates/pilot/c005.png",
+      "copiedFromBuiltInOutput": "/home/cjpher/.codex/generated_images/01a02c6a-2460-7640-894a-be8ad5ac723c/exec-339556d6-52fc-4cb7-9766-edd3994919fd.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGB",
+        "bytes": 1097679,
+        "sha256": "0f2e1e00b8b16e4472f117e80b6e8819b798aaa3f6c7eae9d2aa1bbbfdbe9c89",
+        "metadataKeys": [],
+        "nearWhiteCornerMinimumChannel": 252
+      },
+      "measuredObjectFootprint": {
+        "threshold": "grayscale < 245",
+        "bbox": [
+          40,
+          55,
+          1211,
+          1182
+        ],
+        "width": 1171,
+        "height": 1127,
+        "bboxAreaRatio": 0.8392
+      },
+      "reviewDerivatives": {
+        "phone": {
+          "file": "content/authoring/visuals/reviews/pilot/phone/c005.png",
+          "bytes": 74583,
+          "sha256": "124de019727abe67aad22d284ca9ea62cee046dfacac9bdd5553640b3e2a5aa7",
+          "width": 320,
+          "height": 320
+        },
+        "grayscalePrint": {
+          "file": "content/authoring/visuals/reviews/pilot/print/c005.png",
+          "bytes": 32911,
+          "sha256": "479323bf08548fe739a79e14d1c4d1b900fd06d787054c69510da0563d992ab8",
+          "width": 320,
+          "height": 320,
+          "mode": "L"
+        }
+      },
+      "selfReview": {
+        "correctClassAndSubtype": "PASS",
+        "mustShowFeatures": "PASS",
+        "mustNotShowFeatures": "PASS",
+        "mechanicalCoherence": "PASS",
+        "noBrandLogoWatermarkOrText": "PASS",
+        "styleConsistency": "PASS",
+        "phone320": "PASS",
+        "grayscale320": "PASS",
+        "suspiciousSimilarity": "NO MATCH OBSERVED; text-only high-level public style reference was used",
+        "answerLeak": "PASS",
+        "exactWhitePixelBackground": "CONDITIONAL — visually white, corner channels measure 252–253 rather than exact 255"
+      },
+      "note": "No concept-specific exception recorded.",
+      "checkpointDisposition": "PROPOSED-MASTER — maintainer and independent review still required"
+    },
+    {
+      "candidateId": "c006",
+      "briefId": "pilot-tool-06",
+      "conceptId": "tool.plunger.cup",
+      "canonicalTerm": "Cup plunger",
+      "file": "content/assets/candidates/pilot/c006.png",
+      "copiedFromBuiltInOutput": "/home/cjpher/.codex/generated_images/01a02c6a-2460-7640-894a-be8ad5ac723c/exec-0136433b-0550-4856-84ab-24901c8e1bce.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGB",
+        "bytes": 1076299,
+        "sha256": "104cc6d101dc34b0b7839faeb0ca6917d5674ba4648188c534e15efe7e518bbb",
+        "metadataKeys": [],
+        "nearWhiteCornerMinimumChannel": 252
+      },
+      "measuredObjectFootprint": {
+        "threshold": "grayscale < 245",
+        "bbox": [
+          243,
+          26,
+          985,
+          1181
+        ],
+        "width": 742,
+        "height": 1155,
+        "bboxAreaRatio": 0.545
+      },
+      "reviewDerivatives": {
+        "phone": {
+          "file": "content/authoring/visuals/reviews/pilot/phone/c006.png",
+          "bytes": 74575,
+          "sha256": "d6660155cb6e7440850a164c9be8a73e16d196ec2e54bfea069f9d0fb6dfddc3",
+          "width": 320,
+          "height": 320
+        },
+        "grayscalePrint": {
+          "file": "content/authoring/visuals/reviews/pilot/print/c006.png",
+          "bytes": 32838,
+          "sha256": "0e1b42dc8131781502d7a9cdb310653a01d6ea95c8b63ad97fe5917db2cd1fd9",
+          "width": 320,
+          "height": 320,
+          "mode": "L"
+        }
+      },
+      "selfReview": {
+        "correctClassAndSubtype": "PASS",
+        "mustShowFeatures": "PASS",
+        "mustNotShowFeatures": "PASS",
+        "mechanicalCoherence": "PASS",
+        "noBrandLogoWatermarkOrText": "PASS",
+        "styleConsistency": "PASS",
+        "phone320": "PASS",
+        "grayscale320": "PASS",
+        "suspiciousSimilarity": "NO MATCH OBSERVED; text-only high-level public style reference was used",
+        "answerLeak": "PASS",
+        "exactWhitePixelBackground": "CONDITIONAL — visually white, corner channels measure 252–253 rather than exact 255"
+      },
+      "note": "No concept-specific exception recorded.",
+      "checkpointDisposition": "PROPOSED-MASTER — maintainer and independent review still required"
+    },
+    {
+      "candidateId": "c007",
+      "briefId": "pilot-tool-07",
+      "conceptId": "tool.plunger.flange",
+      "canonicalTerm": "Flange toilet plunger",
+      "file": "content/assets/candidates/pilot/c007.png",
+      "copiedFromBuiltInOutput": "/home/cjpher/.codex/generated_images/01a02c6a-2460-7640-894a-be8ad5ac723c/exec-529cff8b-6313-44fd-ad8f-b0b85a5b2870.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGB",
+        "bytes": 998410,
+        "sha256": "990b2fb2508ddd67cfc3c915b9fbc46c933cf771989d08aa9cabea87accd3fa5",
+        "metadataKeys": [],
+        "nearWhiteCornerMinimumChannel": 252
+      },
+      "measuredObjectFootprint": {
+        "threshold": "grayscale < 245",
+        "bbox": [
+          236,
+          26,
+          1009,
+          1193
+        ],
+        "width": 773,
+        "height": 1167,
+        "bboxAreaRatio": 0.5737
+      },
+      "reviewDerivatives": {
+        "phone": {
+          "file": "content/authoring/visuals/reviews/pilot/phone/c007.png",
+          "bytes": 69592,
+          "sha256": "9e0f155b3c048692d616b2e34c3a9284eefc0f5ba20168b6fe3096e1655dba7d",
+          "width": 320,
+          "height": 320
+        },
+        "grayscalePrint": {
+          "file": "content/authoring/visuals/reviews/pilot/print/c007.png",
+          "bytes": 31336,
+          "sha256": "a28822ba83fe4ab9235a11e1104e7896a484c2df10126d94e16483143dea15dc",
+          "width": 320,
+          "height": 320,
+          "mode": "L"
+        }
+      },
+      "selfReview": {
+        "correctClassAndSubtype": "PASS",
+        "mustShowFeatures": "PASS",
+        "mustNotShowFeatures": "PASS",
+        "mechanicalCoherence": "PASS",
+        "noBrandLogoWatermarkOrText": "PASS",
+        "styleConsistency": "PASS",
+        "phone320": "PASS",
+        "grayscale320": "PASS",
+        "suspiciousSimilarity": "NO MATCH OBSERVED; text-only high-level public style reference was used",
+        "answerLeak": "PASS",
+        "exactWhitePixelBackground": "CONDITIONAL — visually white, corner channels measure 252–253 rather than exact 255"
+      },
+      "note": "No concept-specific exception recorded.",
+      "checkpointDisposition": "PROPOSED-MASTER — maintainer and independent review still required"
+    },
+    {
+      "candidateId": "c008",
+      "briefId": "pilot-tool-08",
+      "conceptId": "tool.hammer.claw",
+      "canonicalTerm": "Claw hammer",
+      "file": "content/assets/candidates/pilot/c008.png",
+      "copiedFromBuiltInOutput": "/home/cjpher/.codex/generated_images/01a02c6a-2460-7640-894a-be8ad5ac723c/exec-4c1969ba-5eb6-4aac-8e98-828e21788f29.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGB",
+        "bytes": 911441,
+        "sha256": "397e47e84fe86fe7ebe1c79cd88a3b2cd6c5e7f4469aaa2ea0cbacb927ca299c",
+        "metadataKeys": [],
+        "nearWhiteCornerMinimumChannel": 253
+      },
+      "measuredObjectFootprint": {
+        "threshold": "grayscale < 245",
+        "bbox": [
+          63,
+          94,
+          1190,
+          1159
+        ],
+        "width": 1127,
+        "height": 1065,
+        "bboxAreaRatio": 0.7633
+      },
+      "reviewDerivatives": {
+        "phone": {
+          "file": "content/authoring/visuals/reviews/pilot/phone/c008.png",
+          "bytes": 60394,
+          "sha256": "56e17beae3220f11d3d6c21cc14b22f2a7ccbbe72eb2cf4ae082ccc882a3dbcf",
+          "width": 320,
+          "height": 320
+        },
+        "grayscalePrint": {
+          "file": "content/authoring/visuals/reviews/pilot/print/c008.png",
+          "bytes": 30732,
+          "sha256": "8ce4962309bb1277afd7ff3ad5d02cb333a782c715029d24f6d1454aa79299cf",
+          "width": 320,
+          "height": 320,
+          "mode": "L"
+        }
+      },
+      "selfReview": {
+        "correctClassAndSubtype": "PASS",
+        "mustShowFeatures": "PASS",
+        "mustNotShowFeatures": "PASS",
+        "mechanicalCoherence": "PASS",
+        "noBrandLogoWatermarkOrText": "PASS",
+        "styleConsistency": "PASS",
+        "phone320": "PASS",
+        "grayscale320": "PASS",
+        "suspiciousSimilarity": "NO MATCH OBSERVED; text-only high-level public style reference was used",
+        "answerLeak": "PASS",
+        "exactWhitePixelBackground": "CONDITIONAL — visually white, corner channels measure 252–253 rather than exact 255"
+      },
+      "note": "No concept-specific exception recorded.",
+      "checkpointDisposition": "PROPOSED-MASTER — maintainer and independent review still required"
+    },
+    {
+      "candidateId": "c009",
+      "briefId": "pilot-tool-09",
+      "conceptId": "tool.hammer.ball-peen",
+      "canonicalTerm": "Ball-peen hammer",
+      "file": "content/assets/candidates/pilot/c009.png",
+      "copiedFromBuiltInOutput": "/home/cjpher/.codex/generated_images/01a02c6a-2460-7640-894a-be8ad5ac723c/exec-090863c7-3c53-4b97-8a9e-031e4f8d9d64.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGB",
+        "bytes": 877410,
+        "sha256": "eeb77736078900f6ab5ba1ef054c08a92f355d9173cc3a30b4de6cc90bdda73a",
+        "metadataKeys": [],
+        "nearWhiteCornerMinimumChannel": 253
+      },
+      "measuredObjectFootprint": {
+        "threshold": "grayscale < 245",
+        "bbox": [
+          60,
+          99,
+          1193,
+          1091
+        ],
+        "width": 1133,
+        "height": 992,
+        "bboxAreaRatio": 0.7147
+      },
+      "reviewDerivatives": {
+        "phone": {
+          "file": "content/authoring/visuals/reviews/pilot/phone/c009.png",
+          "bytes": 59111,
+          "sha256": "5e0ba1369828c94b70e030cd79fd68f0febd43634d713575be5b14ae74ddc5ea",
+          "width": 320,
+          "height": 320
+        },
+        "grayscalePrint": {
+          "file": "content/authoring/visuals/reviews/pilot/print/c009.png",
+          "bytes": 30226,
+          "sha256": "7df938f773983572f08cd8f4dc39d9b2e8a52b2a3bc0c118d9ac5ef426780202",
+          "width": 320,
+          "height": 320,
+          "mode": "L"
+        }
+      },
+      "selfReview": {
+        "correctClassAndSubtype": "PASS",
+        "mustShowFeatures": "PASS",
+        "mustNotShowFeatures": "PASS",
+        "mechanicalCoherence": "PASS",
+        "noBrandLogoWatermarkOrText": "PASS",
+        "styleConsistency": "PASS",
+        "phone320": "PASS",
+        "grayscale320": "PASS",
+        "suspiciousSimilarity": "NO MATCH OBSERVED; text-only high-level public style reference was used",
+        "answerLeak": "PASS",
+        "exactWhitePixelBackground": "CONDITIONAL — visually white, corner channels measure 252–253 rather than exact 255"
+      },
+      "note": "No concept-specific exception recorded.",
+      "checkpointDisposition": "PROPOSED-MASTER — maintainer and independent review still required"
+    },
+    {
+      "candidateId": "c010",
+      "briefId": "pilot-tool-10",
+      "conceptId": "access.stepladder",
+      "canonicalTerm": "Open stepladder",
+      "file": "content/assets/candidates/pilot/c010.png",
+      "copiedFromBuiltInOutput": "/home/cjpher/.codex/generated_images/01a02c6a-2460-7640-894a-be8ad5ac723c/exec-948af619-5ac4-4a86-b868-1ce7c95219ec.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGB",
+        "bytes": 1106523,
+        "sha256": "b46f6f6f880239ed23f96b947f3674840adf20187b1976cc67e8a76150e67ec9",
+        "metadataKeys": [],
+        "nearWhiteCornerMinimumChannel": 252
+      },
+      "measuredObjectFootprint": {
+        "threshold": "grayscale < 245",
+        "bbox": [
+          234,
+          45,
+          999,
+          1198
+        ],
+        "width": 765,
+        "height": 1153,
+        "bboxAreaRatio": 0.5609
+      },
+      "reviewDerivatives": {
+        "phone": {
+          "file": "content/authoring/visuals/reviews/pilot/phone/c010.png",
+          "bytes": 74860,
+          "sha256": "a90921239673b9511270b3d0e9df740ce414cd21477169e91f2fc4c79788c50b",
+          "width": 320,
+          "height": 320
+        },
+        "grayscalePrint": {
+          "file": "content/authoring/visuals/reviews/pilot/print/c010.png",
+          "bytes": 33702,
+          "sha256": "7b0bb6270e77a05cc6419fd5ee9b3fd6b118ca62a1c3cf2bb60f195931e44dda",
+          "width": 320,
+          "height": 320,
+          "mode": "L"
+        }
+      },
+      "selfReview": {
+        "correctClassAndSubtype": "PASS",
+        "mustShowFeatures": "PASS",
+        "mustNotShowFeatures": "PASS",
+        "mechanicalCoherence": "PASS",
+        "noBrandLogoWatermarkOrText": "PASS",
+        "styleConsistency": "PASS",
+        "phone320": "PASS",
+        "grayscale320": "PASS",
+        "suspiciousSimilarity": "NO MATCH OBSERVED; text-only high-level public style reference was used",
+        "answerLeak": "PASS",
+        "exactWhitePixelBackground": "CONDITIONAL — visually white, corner channels measure 252–253 rather than exact 255"
+      },
+      "note": "No concept-specific exception recorded.",
+      "checkpointDisposition": "PROPOSED-MASTER — maintainer and independent review still required"
+    },
+    {
+      "candidateId": "c011",
+      "briefId": "pilot-tool-11",
+      "conceptId": "access.extension-ladder",
+      "canonicalTerm": "Two-section extension ladder",
+      "file": "content/assets/candidates/pilot/c011.png",
+      "copiedFromBuiltInOutput": "/home/cjpher/.codex/generated_images/01a02c6a-2460-7640-894a-be8ad5ac723c/exec-14a3014b-4459-4a26-a4bd-5c4c1351fb4f.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGB",
+        "bytes": 861766,
+        "sha256": "50d98e31affe85aa449cbbeef1e252bd530febb69966be356147fcee7e9fb948",
+        "metadataKeys": [],
+        "nearWhiteCornerMinimumChannel": 253
+      },
+      "measuredObjectFootprint": {
+        "threshold": "grayscale < 245",
+        "bbox": [
+          423,
+          24,
+          801,
+          1218
+        ],
+        "width": 378,
+        "height": 1194,
+        "bboxAreaRatio": 0.287
+      },
+      "reviewDerivatives": {
+        "phone": {
+          "file": "content/authoring/visuals/reviews/pilot/phone/c011.png",
+          "bytes": 58067,
+          "sha256": "ba837159528254024b0486b9206864e046dab8b994d6f66894f0f011e5a27618",
+          "width": 320,
+          "height": 320
+        },
+        "grayscalePrint": {
+          "file": "content/authoring/visuals/reviews/pilot/print/c011.png",
+          "bytes": 25407,
+          "sha256": "3fa71db3e3971c33f798687b8a08e44f872321bbc460bb1938632c6c0b83afce",
+          "width": 320,
+          "height": 320,
+          "mode": "L"
+        }
+      },
+      "selfReview": {
+        "correctClassAndSubtype": "PASS",
+        "mustShowFeatures": "PASS",
+        "mustNotShowFeatures": "PASS",
+        "mechanicalCoherence": "PASS",
+        "noBrandLogoWatermarkOrText": "PASS",
+        "styleConsistency": "PASS",
+        "phone320": "PASS",
+        "grayscale320": "PASS",
+        "suspiciousSimilarity": "NO MATCH OBSERVED; text-only high-level public style reference was used",
+        "answerLeak": "PASS",
+        "exactWhitePixelBackground": "CONDITIONAL — visually white, corner channels measure 252–253 rather than exact 255"
+      },
+      "note": "No concept-specific exception recorded.",
+      "checkpointDisposition": "PROPOSED-MASTER — maintainer and independent review still required"
+    },
+    {
+      "candidateId": "c012",
+      "briefId": "pilot-tool-12",
+      "conceptId": "equipment.floor-machine.low-speed",
+      "canonicalTerm": "Representative low-speed rotary floor machine",
+      "file": "content/assets/candidates/pilot/c012.png",
+      "copiedFromBuiltInOutput": "/home/cjpher/.codex/generated_images/01a02c6a-2460-7640-894a-be8ad5ac723c/exec-6eef9db8-9706-41d6-8a11-717560e49636.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGB",
+        "bytes": 1050366,
+        "sha256": "a3f24d1b0b695843f339e2674f33338e1b0e0855a53be5819f893b8834cd6137",
+        "metadataKeys": [],
+        "nearWhiteCornerMinimumChannel": 252
+      },
+      "measuredObjectFootprint": {
+        "threshold": "grayscale < 245",
+        "bbox": [
+          83,
+          51,
+          1080,
+          1167
+        ],
+        "width": 997,
+        "height": 1116,
+        "bboxAreaRatio": 0.7076
+      },
+      "reviewDerivatives": {
+        "phone": {
+          "file": "content/authoring/visuals/reviews/pilot/phone/c012.png",
+          "bytes": 74868,
+          "sha256": "4f6d9ea08d4c8f8baffeb789609d36bf341006780984d39dbc1f4b529a217fe8",
+          "width": 320,
+          "height": 320
+        },
+        "grayscalePrint": {
+          "file": "content/authoring/visuals/reviews/pilot/print/c012.png",
+          "bytes": 33651,
+          "sha256": "eecc1e8b746e6ac53f0add37426002723fb5548be14fdc043c5bc6fec234ac04",
+          "width": 320,
+          "height": 320,
+          "mode": "L"
+        }
+      },
+      "selfReview": {
+        "correctClassAndSubtype": "PASS",
+        "mustShowFeatures": "PASS",
+        "mustNotShowFeatures": "PASS",
+        "mechanicalCoherence": "PASS",
+        "noBrandLogoWatermarkOrText": "PASS",
+        "styleConsistency": "PASS",
+        "phone320": "PASS",
+        "grayscale320": "PASS",
+        "suspiciousSimilarity": "NO MATCH OBSERVED; text-only high-level public style reference was used",
+        "answerLeak": "PASS",
+        "exactWhitePixelBackground": "CONDITIONAL — visually white, corner channels measure 252–253 rather than exact 255"
+      },
+      "note": "Representative conventional configuration passes recognition review; do not publish a universal silhouette claim or use silhouette alone as the scored distinction.",
+      "checkpointDisposition": "PROPOSED-MASTER — maintainer and independent review still required"
+    },
+    {
+      "candidateId": "c013",
+      "briefId": "pilot-tool-13",
+      "conceptId": "equipment.burnisher.high-speed",
+      "canonicalTerm": "Representative walk-behind high-speed burnisher",
+      "file": "content/assets/candidates/pilot/c013.png",
+      "copiedFromBuiltInOutput": "/home/cjpher/.codex/generated_images/01a02c6a-2460-7640-894a-be8ad5ac723c/exec-22664d29-32df-4830-a1fd-dfd3c7c4a716.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGB",
+        "bytes": 1155208,
+        "sha256": "d2d5177e206e3e4bebe907480a1b6abd3bd115e0b32648fb9a9f079740182649",
+        "metadataKeys": [],
+        "nearWhiteCornerMinimumChannel": 252
+      },
+      "measuredObjectFootprint": {
+        "threshold": "grayscale < 245",
+        "bbox": [
+          158,
+          69,
+          1206,
+          1174
+        ],
+        "width": 1048,
+        "height": 1105,
+        "bboxAreaRatio": 0.7364
+      },
+      "reviewDerivatives": {
+        "phone": {
+          "file": "content/authoring/visuals/reviews/pilot/phone/c013.png",
+          "bytes": 76982,
+          "sha256": "93df21c6fe9ee0ab1a1dd23a0946e15d953f997e728141e9a0590a40d260d5e2",
+          "width": 320,
+          "height": 320
+        },
+        "grayscalePrint": {
+          "file": "content/authoring/visuals/reviews/pilot/print/c013.png",
+          "bytes": 33444,
+          "sha256": "7852fef9d532adcaf445a9efc79bd1a700e289bac65108064f05a4fa1a105e1a",
+          "width": 320,
+          "height": 320,
+          "mode": "L"
+        }
+      },
+      "selfReview": {
+        "correctClassAndSubtype": "PASS",
+        "mustShowFeatures": "PASS",
+        "mustNotShowFeatures": "PASS",
+        "mechanicalCoherence": "PASS",
+        "noBrandLogoWatermarkOrText": "PASS",
+        "styleConsistency": "PASS",
+        "phone320": "PASS",
+        "grayscale320": "PASS",
+        "suspiciousSimilarity": "NO MATCH OBSERVED; text-only high-level public style reference was used",
+        "answerLeak": "PASS",
+        "exactWhitePixelBackground": "CONDITIONAL — visually white, corner channels measure 252–253 rather than exact 255"
+      },
+      "note": "Representative walk-behind configuration passes recognition review; pair use remains conditional on specialist comparative review because no universal silhouette exists.",
+      "checkpointDisposition": "PROPOSED-MASTER — maintainer and independent review still required"
+    },
+    {
+      "candidateId": "c014",
+      "briefId": "pilot-tool-14",
+      "conceptId": "tool.pliers.slip-joint",
+      "canonicalTerm": "Slip-joint pliers",
+      "file": "content/assets/candidates/pilot/c014.png",
+      "copiedFromBuiltInOutput": "/home/cjpher/.codex/generated_images/01a02c6a-2460-7640-894a-be8ad5ac723c/exec-efbff043-b6ce-4f46-95fa-dffc32d02335.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGB",
+        "bytes": 1065800,
+        "sha256": "1026ed8ce9150ba63bb62d07a2c3baade75ea4db0ee91b2fe592c3b6e36799c3",
+        "metadataKeys": [],
+        "nearWhiteCornerMinimumChannel": 252
+      },
+      "measuredObjectFootprint": {
+        "threshold": "grayscale < 245",
+        "bbox": [
+          57,
+          133,
+          1223,
+          1110
+        ],
+        "width": 1166,
+        "height": 977,
+        "bboxAreaRatio": 0.7244
+      },
+      "reviewDerivatives": {
+        "phone": {
+          "file": "content/authoring/visuals/reviews/pilot/phone/c014.png",
+          "bytes": 68647,
+          "sha256": "ac7a099c8efea286edf6df5eb5a8b2eab807c9f51fb22825d47268536a5559a5",
+          "width": 320,
+          "height": 320
+        },
+        "grayscalePrint": {
+          "file": "content/authoring/visuals/reviews/pilot/print/c014.png",
+          "bytes": 29975,
+          "sha256": "f6fae252d30e7b8bf3ec1e5f7183bdf65347d412e4e5ee68f260cc374333fa88",
+          "width": 320,
+          "height": 320,
+          "mode": "L"
+        }
+      },
+      "selfReview": {
+        "correctClassAndSubtype": "PASS",
+        "mustShowFeatures": "PASS",
+        "mustNotShowFeatures": "PASS",
+        "mechanicalCoherence": "PASS",
+        "noBrandLogoWatermarkOrText": "PASS",
+        "styleConsistency": "PASS",
+        "phone320": "PASS",
+        "grayscale320": "PASS",
+        "suspiciousSimilarity": "NO MATCH OBSERVED; text-only high-level public style reference was used",
+        "answerLeak": "PASS",
+        "exactWhitePixelBackground": "CONDITIONAL — visually white, corner channels measure 252–253 rather than exact 255"
+      },
+      "note": "Second attempt selected after the first attempt was rejected for an invented second pivot; selected candidate has one pin in one elongated two-position slot.",
+      "checkpointDisposition": "PROPOSED-MASTER — maintainer and independent review still required"
+    },
+    {
+      "candidateId": "c015",
+      "briefId": "pilot-tool-15",
+      "conceptId": "tool.pliers.tongue-groove",
+      "canonicalTerm": "Tongue-and-groove pliers",
+      "file": "content/assets/candidates/pilot/c015.png",
+      "copiedFromBuiltInOutput": "/home/cjpher/.codex/generated_images/01a02c6a-2460-7640-894a-be8ad5ac723c/exec-63bde1a2-65c6-45af-a092-fc39fde318db.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGB",
+        "bytes": 888372,
+        "sha256": "1e920e0887275aae1043db05dd5232c0cf913401a3abe75b225d5bb6b032e6dd",
+        "metadataKeys": [],
+        "nearWhiteCornerMinimumChannel": 252
+      },
+      "measuredObjectFootprint": {
+        "threshold": "grayscale < 245",
+        "bbox": [
+          37,
+          173,
+          1220,
+          911
+        ],
+        "width": 1183,
+        "height": 738,
+        "bboxAreaRatio": 0.5552
+      },
+      "reviewDerivatives": {
+        "phone": {
+          "file": "content/authoring/visuals/reviews/pilot/phone/c015.png",
+          "bytes": 61058,
+          "sha256": "3975ebe92b6fa3cd83e1bec0657af20be149a76482dae2307cca3cd950d6f2ce",
+          "width": 320,
+          "height": 320
+        },
+        "grayscalePrint": {
+          "file": "content/authoring/visuals/reviews/pilot/print/c015.png",
+          "bytes": 29927,
+          "sha256": "b4c427cadd34ef6599024dfcb8357f4bb8c67be7214a1af3ad35ed359070ef99",
+          "width": 320,
+          "height": 320,
+          "mode": "L"
+        }
+      },
+      "selfReview": {
+        "correctClassAndSubtype": "PASS",
+        "mustShowFeatures": "PASS",
+        "mustNotShowFeatures": "PASS",
+        "mechanicalCoherence": "PASS",
+        "noBrandLogoWatermarkOrText": "PASS",
+        "styleConsistency": "PASS",
+        "phone320": "PASS",
+        "grayscale320": "PASS",
+        "suspiciousSimilarity": "NO MATCH OBSERVED; text-only high-level public style reference was used",
+        "answerLeak": "PASS",
+        "exactWhitePixelBackground": "CONDITIONAL — visually white, corner channels measure 252–253 rather than exact 255"
+      },
+      "note": "No concept-specific exception recorded.",
+      "checkpointDisposition": "PROPOSED-MASTER — maintainer and independent review still required"
+    },
+    {
+      "candidateId": "c016",
+      "briefId": "pilot-tool-16",
+      "conceptId": "tool.floor-squeegee",
+      "canonicalTerm": "Floor squeegee",
+      "file": "content/assets/candidates/pilot/c016.png",
+      "copiedFromBuiltInOutput": "/home/cjpher/.codex/generated_images/01a02c6a-2460-7640-894a-be8ad5ac723c/exec-65ab640c-8d3f-4a47-bdf7-4e49b60c95b9.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGB",
+        "bytes": 784606,
+        "sha256": "71b5d47efb7d7275239e3fb5580eab7f150949ff1f3ae759a03a23e2a2b9334a",
+        "metadataKeys": [],
+        "nearWhiteCornerMinimumChannel": 253
+      },
+      "measuredObjectFootprint": {
+        "threshold": "grayscale < 245",
+        "bbox": [
+          141,
+          31,
+          1017,
+          1183
+        ],
+        "width": 876,
+        "height": 1152,
+        "bboxAreaRatio": 0.6417
+      },
+      "reviewDerivatives": {
+        "phone": {
+          "file": "content/authoring/visuals/reviews/pilot/phone/c016.png",
+          "bytes": 52151,
+          "sha256": "93c0fff278f13eb0f221c49e088d2553eab76367ad6cfe31a040f4528310d594",
+          "width": 320,
+          "height": 320
+        },
+        "grayscalePrint": {
+          "file": "content/authoring/visuals/reviews/pilot/print/c016.png",
+          "bytes": 26627,
+          "sha256": "9925632a7aa036ff6186d8d070dcf36c50b33efa71a072ae0efa67f18e0a16d8",
+          "width": 320,
+          "height": 320,
+          "mode": "L"
+        }
+      },
+      "selfReview": {
+        "correctClassAndSubtype": "PASS",
+        "mustShowFeatures": "PASS",
+        "mustNotShowFeatures": "PASS",
+        "mechanicalCoherence": "PASS",
+        "noBrandLogoWatermarkOrText": "PASS",
+        "styleConsistency": "PASS",
+        "phone320": "PASS",
+        "grayscale320": "PASS",
+        "suspiciousSimilarity": "NO MATCH OBSERVED; text-only high-level public style reference was used",
+        "answerLeak": "PASS",
+        "exactWhitePixelBackground": "CONDITIONAL — visually white, corner channels measure 252–253 rather than exact 255"
+      },
+      "note": "No concept-specific exception recorded.",
+      "checkpointDisposition": "PROPOSED-MASTER — maintainer and independent review still required"
+    },
+    {
+      "candidateId": "c017",
+      "briefId": "pilot-tool-17",
+      "conceptId": "tool.window-squeegee",
+      "canonicalTerm": "Handheld window squeegee",
+      "file": "content/assets/candidates/pilot/c017.png",
+      "copiedFromBuiltInOutput": "/home/cjpher/.codex/generated_images/01a02c6a-2460-7640-894a-be8ad5ac723c/exec-fd4e7fb3-c852-4122-94b6-1fdf35a92e5c.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGB",
+        "bytes": 900440,
+        "sha256": "8b676a848a4eb92278a944b1cedf73f9a4c1e76e77fc6b3582b94c5c22cafc2b",
+        "metadataKeys": [],
+        "nearWhiteCornerMinimumChannel": 253
+      },
+      "measuredObjectFootprint": {
+        "threshold": "grayscale < 245",
+        "bbox": [
+          77,
+          181,
+          1178,
+          1069
+        ],
+        "width": 1101,
+        "height": 888,
+        "bboxAreaRatio": 0.6217
+      },
+      "reviewDerivatives": {
+        "phone": {
+          "file": "content/authoring/visuals/reviews/pilot/phone/c017.png",
+          "bytes": 60663,
+          "sha256": "a3f3dde82de10ebc81402bd889c55eed9a741f5dd4ef0af963f38bb58cee8619",
+          "width": 320,
+          "height": 320
+        },
+        "grayscalePrint": {
+          "file": "content/authoring/visuals/reviews/pilot/print/c017.png",
+          "bytes": 26681,
+          "sha256": "25e4a71ea03a4e9e12030c47358f2eeb1460b25542893133f015147f7db30cb2",
+          "width": 320,
+          "height": 320,
+          "mode": "L"
+        }
+      },
+      "selfReview": {
+        "correctClassAndSubtype": "PASS",
+        "mustShowFeatures": "PASS",
+        "mustNotShowFeatures": "PASS",
+        "mechanicalCoherence": "PASS",
+        "noBrandLogoWatermarkOrText": "PASS",
+        "styleConsistency": "PASS",
+        "phone320": "PASS",
+        "grayscale320": "PASS",
+        "suspiciousSimilarity": "NO MATCH OBSERVED; text-only high-level public style reference was used",
+        "answerLeak": "PASS",
+        "exactWhitePixelBackground": "CONDITIONAL — visually white, corner channels measure 252–253 rather than exact 255"
+      },
+      "note": "No concept-specific exception recorded.",
+      "checkpointDisposition": "PROPOSED-MASTER — maintainer and independent review still required"
+    },
+    {
+      "candidateId": "c018",
+      "briefId": "pilot-tool-18",
+      "conceptId": "tool.pipe-reamer",
+      "canonicalTerm": "Manual ratchet pipe reamer",
+      "file": "content/assets/candidates/pilot/c018.png",
+      "copiedFromBuiltInOutput": "/home/cjpher/.codex/generated_images/01a02c6a-2460-7640-894a-be8ad5ac723c/exec-3dc0963e-154f-47c1-8303-2baa081cdacd.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGB",
+        "bytes": 1096764,
+        "sha256": "a6f873e7d1decfddf80dbbb759e0c8382223254fb5432ba8f0237374bc369b87",
+        "metadataKeys": [],
+        "nearWhiteCornerMinimumChannel": 253
+      },
+      "measuredObjectFootprint": {
+        "threshold": "grayscale < 245",
+        "bbox": [
+          197,
+          170,
+          1218,
+          1093
+        ],
+        "width": 1021,
+        "height": 923,
+        "bboxAreaRatio": 0.5993
+      },
+      "reviewDerivatives": {
+        "phone": {
+          "file": "content/authoring/visuals/reviews/pilot/phone/c018.png",
+          "bytes": 72617,
+          "sha256": "8e64ed5b907de0817c42d25eedd4c6b02a9efdd23eed81205f96072b8cb8668b",
+          "width": 320,
+          "height": 320
+        },
+        "grayscalePrint": {
+          "file": "content/authoring/visuals/reviews/pilot/print/c018.png",
+          "bytes": 31410,
+          "sha256": "4443e6eb7599422df4ba7a8661d861df8d0b8b55c24f40e9ebba9455864a03d1",
+          "width": 320,
+          "height": 320,
+          "mode": "L"
+        }
+      },
+      "selfReview": {
+        "correctClassAndSubtype": "PASS",
+        "mustShowFeatures": "PASS",
+        "mustNotShowFeatures": "PASS",
+        "mechanicalCoherence": "PASS",
+        "noBrandLogoWatermarkOrText": "PASS",
+        "styleConsistency": "PASS",
+        "phone320": "PASS",
+        "grayscale320": "PASS",
+        "suspiciousSimilarity": "NO MATCH OBSERVED; text-only high-level public style reference was used",
+        "answerLeak": "PASS",
+        "exactWhitePixelBackground": "CONDITIONAL — visually white, corner channels measure 252–253 rather than exact 255"
+      },
+      "note": "Representative manual ratchet pipe reamer follows the cited manufacturer class; exact product trade dress was excluded.",
+      "checkpointDisposition": "PROPOSED-MASTER — maintainer and independent review still required"
+    },
+    {
+      "candidateId": "c019",
+      "briefId": "pilot-tool-19",
+      "conceptId": "equipment.steam-cleaner",
+      "canonicalTerm": "Compact professional steam-cleaning machine",
+      "file": "content/assets/candidates/pilot/c019.png",
+      "copiedFromBuiltInOutput": "/home/cjpher/.codex/generated_images/01a02c6a-2460-7640-894a-be8ad5ac723c/exec-c45c11ef-6f43-4d09-b9c2-2733b6ee06fe.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGB",
+        "bytes": 1516471,
+        "sha256": "bd24c51fd4882e7a3bcb9667bc77f791713019b40b6c75d324628ba766aac681",
+        "metadataKeys": [],
+        "nearWhiteCornerMinimumChannel": 252
+      },
+      "measuredObjectFootprint": {
+        "threshold": "grayscale < 245",
+        "bbox": [
+          57,
+          70,
+          1215,
+          1148
+        ],
+        "width": 1158,
+        "height": 1078,
+        "bboxAreaRatio": 0.7938
+      },
+      "reviewDerivatives": {
+        "phone": {
+          "file": "content/authoring/visuals/reviews/pilot/phone/c019.png",
+          "bytes": 97940,
+          "sha256": "20223261d1921cbb03cca6b78fa87f4c1a633b986d2fdfbc185686f2303c633d",
+          "width": 320,
+          "height": 320
+        },
+        "grayscalePrint": {
+          "file": "content/authoring/visuals/reviews/pilot/print/c019.png",
+          "bytes": 44424,
+          "sha256": "145dce2ec7c5d43631e742cb3ee179933c2e73827a1ffce73f4932cc454d809f",
+          "width": 320,
+          "height": 320,
+          "mode": "L"
+        }
+      },
+      "selfReview": {
+        "correctClassAndSubtype": "PASS",
+        "mustShowFeatures": "PASS",
+        "mustNotShowFeatures": "PASS",
+        "mechanicalCoherence": "PASS",
+        "noBrandLogoWatermarkOrText": "PASS",
+        "styleConsistency": "PASS",
+        "phone320": "PASS",
+        "grayscale320": "PASS",
+        "suspiciousSimilarity": "NO MATCH OBSERVED; text-only high-level public style reference was used",
+        "answerLeak": "PASS",
+        "exactWhitePixelBackground": "CONDITIONAL — visually white, corner channels measure 252–253 rather than exact 255"
+      },
+      "note": "Compact professional steam-cleaner body, hose, gun, extension tubes, and floor nozzle remain readable at 320 px despite the dense accessory set.",
+      "checkpointDisposition": "PROPOSED-MASTER — maintainer and independent review still required"
+    }
+  ],
+  "rejected": [
+    {
+      "candidateId": "c014-r1",
+      "conceptId": "tool.pliers.slip-joint",
+      "file": "content/assets/candidates/pilot/rejected/c014-r1.png",
+      "copiedFromBuiltInOutput": "/home/cjpher/.codex/generated_images/01a02c6a-2460-7640-894a-be8ad5ac723c/exec-a0f97f7c-579a-4397-bcdf-689917b4963e.png",
+      "native": {
+        "file": "content/assets/candidates/pilot/rejected/c014-r1.png",
+        "bytes": 978429,
+        "sha256": "598ca9e9d37c476452b93b04fd5d7e358c2536b8a5b961689a81db56ffbf9c0d",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGB",
+        "bbox": [
+          55,
+          138,
+          1223,
+          1125
+        ],
+        "bboxWidth": 1168,
+        "bboxHeight": 987,
+        "bboxAreaRatio": 0.7331,
+        "cornerMinChannel": 253,
+        "metadataKeys": []
+      },
+      "failureCodes": [
+        "INVENTED_MECHANISM",
+        "DUPLICATED_PIVOT"
+      ],
+      "reason": "Candidate showed a fixed central pivot plus a second slotted adjustment assembly, violating the single-pin two-position slip-joint brief.",
+      "correction": "Regenerated from a strengthened brief; no raster edit was used."
+    }
+  ],
+  "reviewSheets": {
+    "phone": "content/authoring/visuals/reviews/pilot/PHONE-CONTACT-SHEET.png",
+    "grayscalePrint": "content/authoring/visuals/reviews/pilot/PRINT-CONTACT-SHEET.png"
+  },
+  "unresolved": [
+    "Independent technical/style/rights review has not been performed.",
+    "Near-white native backgrounds are visually clean but not pixel-exact 255 white.",
+    "The floor-machine/burnisher pair needs specialist comparative signoff before scored comparison use."
+  ]
+}

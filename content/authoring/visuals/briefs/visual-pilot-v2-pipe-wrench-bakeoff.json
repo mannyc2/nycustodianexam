@@ -1,0 +1,125 @@
+{
+  "briefId": "visual-pilot-v2-pipe-wrench-bakeoff",
+  "date": "2026-08-23",
+  "status": "generation-authorized; three-strategy reference-guided bake-off; candidate-only; blinded independent review required",
+  "parentRepairBrief": {
+    "path": "content/authoring/visuals/briefs/visual-pilot-v2-gate-repair-4.json",
+    "sha256": "eb44e6c4dc72170e81eb2a40fb8e9aed11e5a764a8779e8a9fa2062f683454c3"
+  },
+  "referenceSet": {
+    "path": "content/authoring/visuals/references/pipe-wrench/sources.json",
+    "sha256": "ddab921fdaae324b2acd6efb5451191a4c374c5676250350ebf28fd19ea69b19"
+  },
+  "taxonomyRevision": {
+    "path": "docs/TAXONOMY.md",
+    "sha256": "c2c487e2a16f5b5de7848d7915c4be2bd0b24749c266727f94a237b21025d952"
+  },
+  "visualPolicyRevision": {
+    "path": "illustration/VISUAL_AUTHORING_POLICY.md",
+    "sha256": "a17d47cd976fbd4caa2b57f834216450f8316063d0b9759ef4fbd0e451d0d904"
+  },
+  "generatorSurface": "Codex built-in image_gen",
+  "generationRule": "Generate each candidate from scratch in exactly one independent image_gen call using the listed local references in the listed order. Preserve each native result under its new candidate filename. Do not edit, overwrite, or promote any prior candidate or accepted master during generation.",
+  "comparisonRule": "Judge anonymous candidate rasters at native resolution and at 320 by 320. Any failed gate is a rejection; select only a mechanically coherent candidate that survives both sizes.",
+  "sharedGate": [
+    "complete isolated straight pipe wrench is instantly recognizable and uncropped",
+    "movable hook jaw and threaded shank read as one continuous unbroken component",
+    "exactly one knurled adjustment nut visibly surrounds and engages that same shank",
+    "integral fixed heel jaw and opposed serrated gripping faces form a plausible open throat",
+    "mechanism remains legible at 320 by 320 with no text, labels, logos, shadows, or stray parts"
+  ],
+  "assets": [
+    {
+      "candidateId": "v2t002-b1",
+      "parentCandidateId": "v2t002",
+      "strategy": "patent-led strict side mechanism",
+      "conceptId": "tool.pipe-wrench",
+      "canonicalTerm": "Pipe wrench",
+      "candidatePath": "content/assets/candidates/visual-pilot-v2/v2t002-b1.png",
+      "generationMode": "reference-guided generation from scratch",
+      "referencedImages": [
+        {
+          "path": "content/authoring/visuals/references/pipe-wrench/us11247313-fig3.png",
+          "sha256": "a56646a2304cd51e676594ed5420a6a53f51eb166d81ed097cd69916713aeff5",
+          "role": "mechanism topology only: continuous hook jaw and threaded shank engaging one nut; omit all labels, exact contours, proportions, and proprietary quick-adjust details"
+        },
+        {
+          "path": "content/assets/masters/tools/t037.png",
+          "sha256": "0f2e1e00b8b16e4472f117e80b6e8819b798aaa3f6c7eae9d2aa1bbbfdbe9c89",
+          "role": "library line style only: black contour, sparse hatching, restrained detail, white isolated presentation; do not copy angle or geometry"
+        }
+      ],
+      "prompt": "Use case: scientific-educational\nAsset type: isolated exam-prep tool-recognition illustration\n\nInput images: Image 1 is a mechanism reference only; use it to understand the continuous hook-jaw, threaded-shank, and adjustment-nut relationship. Image 2 is a style reference only; use its black technical line weight, sparse hatching, and clean white presentation.\n\nPrimary request: Create a new, original illustration of one generic traditional straight pipe wrench.\n\nMechanism: Draw the curved movable hook jaw and its straight rectangular threaded shank as one visibly unbroken steel component. Both outer contour lines must flow continuously from the hook-jaw root into the shank. That same threaded shank enters, passes through the center of exactly one wide knurled adjustment nut, and remains visible for a short distance beyond the nut inside an open housing window. The nut directly surrounds and engages the shank. Include one serrated hook-jaw face opposite one serrated heel jaw integral with the heavy body and handle.\n\nComposition: strict orthographic side profile; jaws face left; complete straight handle extends horizontally right; moderately open throat; entire tool centered with generous padding on a square, pure opaque-white canvas.\n\nStyle: original black monochrome civil-service test-booklet line art, confident medium contours, restrained functional hatching, high whitespace.\n\nConstraints: Invent fresh proportions and contours. Do not trace either reference. Omit all patent labels, callouts, numbering, and proprietary quick-adjust or release details. No separate threaded rod, extra nut, branding, text, color, shadow, props, or cropped parts.\n\nOutput: one complete unannotated raster illustration.",
+      "qaChecklist": [
+        "The complete wrench is horizontal, uncropped, in strict side profile on pure white.",
+        "Both visible contours flow uninterrupted from the curved hook jaw into one rectangular threaded shank, including at 320 by 320.",
+        "That same shank visibly enters, passes through, and briefly exits exactly one centered knurled nut; no independent rod is present.",
+        "Both opposing jaw faces are serrated, with a curved offset hook jaw and an integral heel jaw clearly distinguishable from an adjustable wrench.",
+        "Geometry is original and generic; no patent numbers, callouts, copied contours, proprietary release hardware, logos, text, color, or shadows appear."
+      ]
+    },
+    {
+      "candidateId": "v2t002-b2",
+      "parentCandidateId": "v2t002",
+      "strategy": "manufacturer exploded-assembly led",
+      "conceptId": "tool.pipe-wrench",
+      "canonicalTerm": "Pipe wrench",
+      "candidatePath": "content/assets/candidates/visual-pilot-v2/v2t002-b2.png",
+      "generationMode": "reference-guided generation from scratch",
+      "referencedImages": [
+        {
+          "path": "content/authoring/visuals/references/pipe-wrench/ridgid-straight-wrench-exploded.png",
+          "sha256": "b5aa2b5a4d8188888c19e80470fd7f8cd07f0be77636813fec9de6e3bd299153",
+          "role": "authoritative component anatomy and assembly relationship only; do not copy exploded layout, labels, numbers, logo, trade dress, or exact silhouette"
+        },
+        {
+          "path": "content/assets/masters/tools/t037.png",
+          "sha256": "0f2e1e00b8b16e4472f117e80b6e8819b798aaa3f6c7eae9d2aa1bbbfdbe9c89",
+          "role": "style, line weight, tonal restraint, and diagonal full-object framing only; do not inherit ambiguous mechanism or exact contours"
+        }
+      ],
+      "prompt": "Use case: scientific-educational\nAsset type: isolated tool-library image for a custodian training interface\nInput images: Image 1 is the authoritative assembly/mechanism reference only; Image 2 is the visual-style reference only.\nPrimary request: Generate from scratch one fully assembled straight-pattern pipe wrench in normal working configuration.\nScene/backdrop: clean white background.\nSubject/mechanism: one movable hook jaw whose long shank is visibly a single continuous forged part; the shank passes straight through the wrench-head guide and has adjustment threads machined directly into it. One round knurled adjustment nut is seated in the head, encircles the shank, and visibly engages those threads. The fixed heel jaw is integral to the handle body. The hook-jaw teeth and heel-jaw teeth face each other across a moderate open gap.\nStyle/medium: match Image 2’s crisp black-and-white engraved technical line art, confident dark outlines, restrained fine hatching, and subtle dimensional shading.\nComposition/framing: near side elevation with only slight three-quarter depth; head at upper left and handle extending to lower right; entire wrench centered with generous white padding and a strong readable silhouette.\nConstraints: show one complete assembled wrench only; preserve mechanically plausible proportions and connections; keep the nut-to-thread relationship clearly legible at thumbnail size; no text, labels, numbers, arrows, logos, or watermark.\nAvoid: exploded-view spacing; detached or floating parts; a seam or gap between hook jaw and shank; a second rack, linkage, hinge, pivot, spring, screw, or adjustment nut; fused jaws; extra handles; duplicated teeth; cropped edges; heavy gray fill; background texture.",
+      "qaChecklist": [
+        "The complete object is uncropped and instantly reads as one straight pipe wrench.",
+        "The hook jaw flows into one unbroken shank with no seam, gap, hinge, or detached connector.",
+        "Exactly one knurled adjustment nut is seated in the head and visibly meshes with threads on that shank.",
+        "One fixed heel jaw and one movable hook jaw have opposed serrated faces with a clear working gap.",
+        "Lines remain crisp and mechanism-readable at 320 pixels, with no labels, ghosts, duplicate parts, heavy fill, or background clutter."
+      ]
+    },
+    {
+      "candidateId": "v2t002-b3",
+      "parentCandidateId": "v2t002",
+      "strategy": "matched adjustable-wrench pair",
+      "conceptId": "tool.pipe-wrench",
+      "canonicalTerm": "Pipe wrench",
+      "candidatePath": "content/assets/candidates/visual-pilot-v2/v2t002-b3.png",
+      "generationMode": "reference-guided generation from scratch",
+      "referencedImages": [
+        {
+          "path": "content/assets/candidates/visual-pilot-v2/v2t001-e1.png",
+          "sha256": "7ac7c9016edfb191365e93a6e714c606edccc584934233b12c07693579052928",
+          "role": "composition, side-view orientation, apparent scale, square-canvas occupancy, and padding only; do not borrow adjustable-wrench anatomy"
+        },
+        {
+          "path": "content/assets/masters/tools/t037.png",
+          "sha256": "0f2e1e00b8b16e4472f117e80b6e8819b798aaa3f6c7eae9d2aa1bbbfdbe9c89",
+          "role": "established ink treatment, contour weight, and hatching only; do not copy diagonal perspective or exact contours"
+        },
+        {
+          "path": "content/authoring/visuals/references/pipe-wrench/us11247313-fig3.png",
+          "sha256": "a56646a2304cd51e676594ed5420a6a53f51eb166d81ed097cd69916713aeff5",
+          "role": "mechanism relationship only: continuous hook jaw, threaded shank, adjustment nut, and body; omit patent labels, numbers, callouts, exact contours, and proprietary details"
+        }
+      ],
+      "prompt": "Use case: scientific-educational\nAsset type: square tool-identification illustration; companion asset to Image 1\n\nPrimary request: Generate from scratch one mechanically accurate straight pipe wrench.\n\nInput images:\nImage 1: composition and framing reference only—match its horizontal side elevation, apparent tool scale, generous padding, and jaws-left/handle-right orientation; do not copy adjustable-wrench anatomy.\nImage 2: visual-style reference only—match its crisp monochrome pen-and-ink contours and restrained light-gray hatching; do not copy its diagonal perspective.\nImage 3: mechanical-anatomy reference only—use it to understand the continuous hook-jaw, threaded-shank, adjustment-nut, and body relationship; ignore and omit all patent labels, numbers, and callouts.\n\nScene/backdrop: plain clean white background; one isolated tool and nothing else.\nSubject: a classic straight pipe wrench with a moderately open jaw and a circular hanging hole at the handle end.\nMechanical construction: show the upper hook jaw and its long threaded shank as one visibly continuous forged component aligned through the head opening. A single round knurled adjustment nut must surround and engage that same threaded shank. The lower fixed heel jaw must be integral to the wrench body and handle. Both serrated gripping faces oppose each other plausibly.\nStyle/medium: clean black-and-white technical pen-and-ink illustration with a strong outer contour, precise internal lines, and sparse fine gray hatching.\nComposition/framing: exact side elevation, horizontal, jaws at left and handle extending right; entire tool centered and fully visible with margins comparable to Image 1.\nConstraints: unmistakable pipe-wrench silhouette; mechanically coherent connected parts; crisp and readable when reduced to 320 × 320; no text, labels, numerals, arrows, logos, or watermark.\nAvoid: disconnected or floating hook jaw; broken connection between hook and threaded shank; nut beside the shank instead of encircling it; separate worm screw or coil spring; adjustable-wrench crescent jaw; duplicated, fused, or misaligned jaws; impossible intersections; extra handles or parts; exploded, cutaway, or transparent views; diagonal or three-quarter perspective; crop; border; cast shadow; gradient; color; background objects.",
+      "qaChecklist": [
+        "Reads immediately as one straight pipe wrench in horizontal side elevation, matching Image 1’s scale and padding.",
+        "Hook jaw and threaded shank form one continuous, unbroken component.",
+        "Exactly one knurled adjustment nut visibly surrounds and engages that shank.",
+        "Fixed heel jaw remains integral to the body; opposing serrated faces and jaw opening are mechanically plausible.",
+        "Linework stays crisp at 320 pixels, with no crop, stray parts, labels, patent marks, logos, shadows, or background clutter."
+      ]
+    }
+  ]
+}

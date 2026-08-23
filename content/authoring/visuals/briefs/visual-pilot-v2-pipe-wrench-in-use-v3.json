@@ -1,0 +1,47 @@
+{
+  "briefId": "visual-pilot-v2-pipe-wrench-in-use-v3",
+  "briefVersion": 3,
+  "date": "2026-08-23",
+  "status": "generation-authorized; candidate-only; topology-repair iteration",
+  "conceptId": "pipe-wrench",
+  "variantId": "pipe-wrench-in-use",
+  "supersedesBrief": {
+    "path": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-in-use-v2.json",
+    "reason": "v2t002-u3 exposed both contacts and removed source-like handle details, but fatally depicted the movable hook stem and threaded adjustment shank as separate mechanisms and added a return below the nut."
+  },
+  "generatorSurface": "Codex built-in image_gen",
+  "generationMode": "reference-guided transformation from project-owned reviewed artwork",
+  "outputRequest": {
+    "count": 1,
+    "candidateId": "v2t002-u4",
+    "candidatePath": "content/assets/candidates/visual-pilot-v2/v2t002-u4.png",
+    "nativeDimensions": "one native square raster at generator-selected dimensions; preserve original bytes"
+  },
+  "referencedImages": [
+    {
+      "path": "content/assets/masters/tools/t037.png",
+      "sha256": "334044fb3c25f5e14be4c47e0df0512961ce8dce08e568e0d91b021faa8f1e99",
+      "role": "project-owned accepted generic master; preserve its single continuous hook-jaw/shank/nut/fixed-heel topology while creating a materially different in-use composition"
+    },
+    {
+      "path": "content/assets/candidates/visual-pilot-v2/v2t002-adjustment-c2.png",
+      "sha256": "10d317531be59d59d4275638f8ff66f04aecee7bdf599ea9ea1168be5344c495",
+      "role": "project-owned passed supplemental mechanism view; use only to disambiguate the one-shank/one-nut relationship and opposed serrated jaws"
+    }
+  ],
+  "mustShow": [
+    "exactly one pipe wrench and one round cylindrical metal fitting",
+    "one continuous movable hook jaw and threaded shank engaging one adjustment nut",
+    "one fixed heel jaw integral to the body, with both serrated contacts visible on opposite sides of the cylinder",
+    "one complete plain solid undecorated handle, no hole or recessed panel",
+    "near-profile working pose with the fitting horizontal and the handle descending almost vertically",
+    "monochrome instructional line art on opaque white, readable at 320 by 320"
+  ],
+  "mustNotShow": [
+    "a separate inner screw, second shank, return loop, U-shaped rack, fork, extra rail, duplicate nut, or disconnected mechanism",
+    "an adjustable-wrench worm gear, smooth parallel jaws, hex workpiece, hidden contact, or tooth penetration",
+    "copied angle or decorative handle traits from either input",
+    "hands, people, force multipliers, arrows, text, brands, logos, watermark, scenery, shadow, or color"
+  ],
+  "prompt": "Use case: scientific-educational. Create one original square black-and-white technical line illustration for a custodial-training atlas.\n\nThe two inputs are project-owned generic drawings, not manufacturer products. Image 1 is the accepted full-tool topology reference. Image 2 is a passed close-up that clarifies the adjustment mechanism. Create a new in-use composition rather than copying either image's angle or framing.\n\nNon-negotiable mechanism: preserve exactly the same single adjustment system shown by the inputs. The curved movable hook jaw is the top end of one straight rectangular threaded shank. That same one-piece shank passes through exactly one plain knurled adjustment nut at the body. There is no other screw or threaded member. Do not invent a separate inner threaded rod, a second shank, a loop below the nut, a return bend, U-shape, fork, second rack, second rail, second nut, or worm gear. The lower fixed heel jaw is integral to the body and has no moving rack.\n\nIn-use transformation: show exactly one short round cylindrical steel pipe coupling running almost horizontally across the upper third of the canvas. Seat it inside the open jaws. Make the hook-jaw serrations visibly touch the top of the cylinder and the fixed-heel serrations visibly touch its underside. Both tangent contact points must be unobstructed, outside the body silhouette, and unmistakable at 320 by 320, with no gap and no teeth penetrating through the metal. Establish roundness with one restrained elliptical end rim or circumferential band; never make the fitting hexagonal.\n\nNew composition: turn the tool into a near-side working profile with the complete handle descending almost vertically and leaning slightly left. Enlarge the head and pipe contact while retaining the full handle and even white padding. Redesign the handle as a plain solid forged bar with a softly rounded solid end. No inset panel, recess, groove, channel, cutout, round hole, oblong hole, or decorative contour.\n\nStyle: original monochrome educational line art on opaque pure white; crisp black contours, medium interior lines, sparse functional hatching, minimal pale-gray form wash. Exactly one wrench and one fitting. No hands, people, cheater bar, hammer, arrows, motion marks, labels, text, pseudo-text, numerals, branding, logo, watermark, color, floor, room, bench, border, cast shadow, photorealism, glossy product rendering, duplicate parts, detached parts, or copied trade dress."
+}
