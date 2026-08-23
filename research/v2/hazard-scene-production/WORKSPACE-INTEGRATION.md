@@ -1,5 +1,11 @@
 # Workspace Integration
 
+> **Current route notice:** Codex-native generation now supplies accepted raster
+> masters outside the application workspace. Any SVG/Blender/generative-R&D
+> routing below is historical. The reusable integration rule is that the content
+> compiler validates and transforms pinned reviewed masters; no image generator,
+> Blender runtime, or model dependency belongs in learner builds.
+
 Evidence status: **INFERRED handoff constrained by the maintained Bun/Effect architecture direction.**
 
 R2.9 is a content-production architecture lane. It does not scaffold the application, select the final child workspace graph, or add production dependencies.
@@ -267,17 +273,17 @@ Decision rule:
 - choose LFS/object storage only if `.blend`, layered art, or lossless raster masters make ordinary Git history materially inefficient;
 - whatever storage is selected must preserve immutable content hashes and durable provenance; a mutable external share link is not a sufficient production source.
 
-## Synthesis handoff
+## Current synthesis handoff
 
-R2.90/final architecture synthesis should treat the following as the R2.9 candidate decisions:
+R2.90/final architecture synthesis must carry the reconciled decision:
 
-- mixed deterministic-first scene architecture;
-- static controlling scored views;
-- semantic manifest + final pixels + regions as three agreeing authorities;
-- human-authored regions and stable zone order;
-- text-to-image excluded from controlling production;
-- controlled project-owned image-to-image only optional/pilot/noncontrolling;
-- immutable scene/view/region/accessibility versioning;
-- pilot required before production adoption and before launch scene-count/cost commitments.
+- Codex-native image generation is the production authoring route;
+- accepted raster bytes are the static controlling scored views;
+- semantic manifest + final pixels + regions remain three agreeing authorities;
+- regions and stable zone order remain human-authored;
+- model regeneration and deterministic SVG/3D fallbacks are not required;
+- scene/view/region/accessibility versions remain immutable; and
+- the revised Codex pilot measures dimensions, batching, and review behavior
+  before bulk production, without cutting Tier A/B launch scope.
 
 Do not convert R2.9 planning priors into empirical budgets. Consume the future pilot's raw timings/failure logs instead.

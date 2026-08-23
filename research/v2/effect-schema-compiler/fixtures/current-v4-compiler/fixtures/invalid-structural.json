@@ -1,0 +1,16 @@
+{
+  "formatVersion": 1,
+  "records": [
+    {
+      "_tag": "Question",
+      "schemaVersion": 1,
+      "id": "bad-id",
+      "revision": 0,
+      "audience": "entry",
+      "conceptIds": [],
+      "prompt": {"promptType":"text","text":""},
+      "options": [],
+      "correctOptonId": "option:missing"
+    }
+  ]
+}

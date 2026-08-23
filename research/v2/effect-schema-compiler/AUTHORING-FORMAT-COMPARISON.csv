@@ -1,0 +1,7 @@
+"format","executable","comments","source_locations","editor_support","determinism_risk","security_risk","recommendation","reason"
+"JSONC","no","yes","good with location-preserving parser","strong","low after canonical parse","low","accept now","Explicit data model comments and predictable semantics; generate strict canonical JSON"
+"JSON","no","no","good","strong","low","low","generated/interchange","Best output format but inconvenient for research notes and author rationale"
+"YAML","no","yes","good","strong","medium","medium","reject for v1 authoring","Implicit typing aliases merges and parser variation increase state space"
+"TypeScript data","yes","yes","compiler locations","strong","high","high","reject for corpus authoring","Executes code and permits environment/order-dependent inputs"
+"CSV","no","limited","row/column","strong","medium","low","limited bulk import only","Poor fit for nested rationales provenance translations and scenes"
+"generated intermediate","no","n/a","generated source map","machine-only","low","low","accept","Strict current-version JSON between decode/gates and artifact generation"

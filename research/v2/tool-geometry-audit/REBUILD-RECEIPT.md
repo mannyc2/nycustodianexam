@@ -1,69 +1,75 @@
 # Rebuild receipt
 
-## POC rebuild status
+## Result
 
-`BLOCKED_BEFORE_EXECUTION`.
+`OBSERVED_PASS`.
 
-No POC was rebuilt. The exact `build_poc.py`, parameter JSON, dependency pin, build manifests, and expected outputs are absent from the immutable GitHub source. Reconstructing model code from report prose would create new evidence rather than audit the recovered evidence.
+The exact recovered source was built twice in a fresh temporary environment. Both
+reruns reproduce the recovered historical 79-file build exactly.
 
-## Audit environment
+## Input identity
 
-- OS: Linux 6.18.35, x86_64, glibc 2.41
-- Python: 3.13.5
-- CadQuery: 2.8.0
-- cadquery-ocp: 7.9.3.1.1
-- OCP module: 7.9.3.1
-- trimesh: 4.11.1
-- Pillow: 12.3.0
-- Bun: not installed; not needed for this Python/CAD audit
-- Effect: not used; no Effect dependency or fixture applies to this lane
+- Path in this lane: `recovered-input/research-bundle.zip`
+- Bytes: `2,309,138`
+- SHA-256:
+  `a3dbdb262733be6527347e26cb5e6d8fdb612cf7ee6a09574730a7a6ad188b06`
+- Archive members: `90`
+- ZIP test: pass
 
-The historical POC environment is `UNKNOWN`. The report asks for pinned OS, Python, CadQuery, OCCT, trimesh, exporter, renderer, and encoder versions, but the GitHub-preserved raw evidence does not contain the environment lock or build script that would establish them.
-
-## Commands run
+## Fresh audit environment
 
 ```text
-python probes/toolchain_smoke.py --out raw-results
-python probes/step_process_probe.py raw-results/process-a/box.step
-sleep 2
-python probes/step_process_probe.py raw-results/process-b/box.step
+Linux 6.8.0-101-generic x86_64 glibc 2.39
+Python 3.12.3
+CadQuery 2.8.0
+cadquery-ocp 7.9.3.1.1
+OCP 7.9.3.1
+trimesh 4.11.1
+numpy 2.3.5
+scipy 1.17.0
+Pillow 12.3.0
+CairoSVG 2.8.2
+SOURCE_DATE_EPOCH=1787184000
 ```
 
-## Toolchain smoke result
+The recovered build receipt names Python 3.13.5 on Linux 6.18.35/glibc 2.41 with
+the same specialist package versions. The cross-Python exact match is observed,
+not generalized beyond these runs.
 
-The committed smoke probe creates one 10 x 20 x 30 mm box, exports STEP and STL twice, re-imports STEP, and checks STL watertightness.
+## Commands
 
-Observed:
+```text
+unzip recovered-input/research-bundle.zip -d <bundle>
+SOURCE_DATE_EPOCH=1787184000 python <bundle>/build_poc.py --out <rerun-a>
+SOURCE_DATE_EPOCH=1787184000 python <bundle>/build_poc.py --out <rerun-b>
+python probes/recovered_bundle_audit.py \
+  --archive recovered-input/research-bundle.zip \
+  --bundle-root <bundle> \
+  --historical-build <bundle>/poc-build-a \
+  --rerun-a <rerun-a> \
+  --rerun-b <rerun-b> \
+  --out raw-results/recovered-bundle-audit.json
+```
 
-- both STEP files re-imported to 10 x 20 x 30 mm;
-- both STL files were watertight;
-- two same-process STL hashes matched exactly;
-- two same-process STEP hashes did not match;
-- the same-process STEP difference was the OCCT translator product counter (`... 1` versus `... 2`);
-- two separate-process STEP hashes also did not match;
-- the separate-process STEP difference was the embedded `FILE_NAME` timestamp;
-- normalizing only the observed timestamp/counter fields produced one common normalized STEP SHA-256: `911b522fda55449fd133849756f69920b1e9975bdfc5e8adc3fd51a3958c9b4c`.
+## Manifest comparison
 
-This is an environment observation, not POC evidence. It demonstrates why a future rebuild must distinguish:
+| Comparison | Result |
+|---|---|
+| historical manifest | 79/79 match |
+| rerun A manifest | 79/79 match |
+| rerun B manifest | 79/79 match |
+| historical vs rerun A | exact; 0 differences |
+| rerun A vs rerun B | exact; 0 differences |
 
-1. byte identity;
-2. normalized container/header identity;
-3. STEP re-import and topology/geometry equivalence;
-4. mechanical correctness.
+## Independent geometry observations
 
-## Historical 79/79 claim
+| POC | STEP re-import | Bounds delta | Part meshes | Combined review mesh | GLB metadata |
+|---|---|---:|---|---|---|
+| `t0004` | valid, 3 solids | 0 mm | all watertight | watertight | neutral |
+| `t0005` | valid, 3 solids | 0 mm | all watertight | watertight | neutral |
+| `t0006` | valid, 2 solids | 0.105941 mm | all watertight | **not watertight** | neutral |
+| `t0007` | valid, 2 solids | 0.120172 mm | all watertight | watertight | neutral |
 
-The report says two controlled Linux builds matched 79 of 79 compared file hashes. The claim cannot be rechecked because the comparison manifest, build trees, commands, and environment are absent. Given the observed OCCT header volatility, the recovered manifest must show exactly which files were compared and how STEP volatility was controlled.
-
-## Required next rebuild
-
-The POC rebuild becomes runnable only after exact recovery of:
-
-- `build_poc.py` at recorded SHA-256 `9192da5817ca73f35b3fcec3b15b86ae2f3284825e8ad7520fbdf4c1b0561738`;
-- all parameter/provenance JSON;
-- dependency lock or container digest;
-- `MANIFEST.sha256` at recorded SHA-256 `36c657fb36d7df50f1de79325b54c381b28e7f53e5ab79c84763f2c5dd4d08a8`;
-- build A and build B outputs and raw logs;
-- the exact checksum files that define the 79-file comparison.
-
-Until then all four POCs remain `evidence-blocked`.
+The smoke probe's earlier STEP-header volatility remains a useful general caution,
+but this exact POC build neutralizes its relevant inputs sufficiently to reproduce
+the STEP bytes in both fresh runs.

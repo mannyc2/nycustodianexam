@@ -1,0 +1,19 @@
+# Consecutive probe hash comparison
+
+The following SHA-256 values were identical before and after a second consecutive
+`bun run probe` invocation:
+
+```text
+9a429bd1716ce9d95bc856a29015f2305db53a303aa107595fe7d4080e0aae3f  canonical-corpus.json
+164ec6b824fdcdfe45ff2b27f2d0763ace86b2c2bc6de849efebdf19cf4f9828  corpus.schema.json
+c04eb3e99d5c0e4b0b6fededf3905cdab1ed0648807608edfefb48290527a23a  invalid-relational.result.json
+9ac6c96c215075246d58213198db02949424b61af23b51a9a9f80ac0d3bbecc9  invalid-structural.result.json
+7ee2eb4dfa404d809435df1d4c833a122451b6bae90062da5e861c1ecbda9ca9  probe-summary.json
+c1254679071411d2b6ea8196ce33a441982c102d7ad83cc8b3eb8120f71f1988  status-and-translation.result.json
+6ed592fa0b5eacc8bb122d3891bc772ca720f33ba1ae5603ec9eb1b85c7bbfff  valid.result.json
+```
+
+The valid fixture's internal canonical content-object digest is
+`sha256:9a429bd1716ce9d95bc856a29015f2305db53a303aa107595fe7d4080e0aae3f`;
+its manifest-derived release root is
+`sha256:200597dfa7beb682608a882fc438d0165311c473770971e8fcf3d1f873e5d15f`.

@@ -1,0 +1,1519 @@
+{
+  "archive": {
+    "bytes": 2309138,
+    "fileCount": 90,
+    "path": "/mnt/models/dev/nycustodianexam/recovery-input/research-bundle.zip",
+    "sha256": "a3dbdb262733be6527347e26cb5e6d8fdb612cf7ee6a09574730a7a6ad188b06",
+    "uncompressedBytes": 6289966,
+    "zipTestBadMember": null
+  },
+  "assets": [
+    {
+      "assetId": "t0004",
+      "deliveryFileNames": [
+        "renders/feature.png",
+        "renders/feature.svg",
+        "renders/feature.webp",
+        "renders/profile.png",
+        "renders/profile.svg",
+        "renders/profile.webp",
+        "renders/three-quarter.png",
+        "renders/three-quarter.svg",
+        "renders/three-quarter.webp",
+        "web/model.glb"
+      ],
+      "glb": {
+        "allExtrasPaths": [
+          "$.meshes[0].extras",
+          "$.meshes[1].extras",
+          "$.meshes[2].extras"
+        ],
+        "assetVersion": "2.0",
+        "cameraCount": 0,
+        "expectedTransformedLengthsM": [
+          0.255,
+          0.0175,
+          0.073
+        ],
+        "forbiddenHits": [],
+        "generator": "https://github.com/mikedh/trimesh",
+        "materialNames": [],
+        "meshNames": [
+          "mesh-001",
+          "mesh-002",
+          "mesh-003"
+        ],
+        "neutral": true,
+        "nodeNames": [
+          "world",
+          "part-001",
+          "part-002",
+          "part-003"
+        ],
+        "sceneBoundsM": [
+          [
+            -0.202999994,
+            -0.00875,
+            -0.037999999
+          ],
+          [
+            0.052000001,
+            0.00875,
+            0.035
+          ]
+        ],
+        "sceneLengthsM": [
+          0.254999995,
+          0.0175,
+          0.072999999
+        ],
+        "topLevelExtras": null,
+        "transformedLengthMaxAbsDeltaM": 5e-09
+      },
+      "parameters": {
+        "authoringUnits": "mm",
+        "bodyThicknessMm": 15.5,
+        "dimensionStatus": {
+          "bodyThicknessMm": "corroborated product dimension",
+          "displayJawOpeningMm": "editorial pose",
+          "headEnvelopeWidthMm": "editorial closure",
+          "maxJawOpeningMm": "corroborated product dimension",
+          "overallLengthMm": "corroborated product dimension",
+          "wormDiameterMm": "editorial closure"
+        },
+        "displayJawOpeningMm": 12.0,
+        "headEnvelopeWidthMm": 69.0,
+        "jawSurface": "smooth",
+        "maxJawOpeningMm": 31.0,
+        "overallLengthMm": 255.0,
+        "wormDiameterMm": 15.0
+      },
+      "partMeshes": {
+        "part-001.stl": {
+          "bounds": [
+            [
+              -203.0,
+              -35.0,
+              -7.75
+            ],
+            [
+              52.0,
+              38.0,
+              7.75
+            ]
+          ],
+          "connectedComponents": 1,
+          "faces": 120,
+          "vertices": 62,
+          "volumeMm3": 92472.224775,
+          "watertight": true,
+          "windingConsistent": true
+        },
+        "part-002.stl": {
+          "bounds": [
+            [
+              5.0,
+              -19.0,
+              -7.25
+            ],
+            [
+              52.0,
+              8.0,
+              7.25
+            ]
+          ],
+          "connectedComponents": 1,
+          "faces": 44,
+          "vertices": 24,
+          "volumeMm3": 13375.692292,
+          "watertight": true,
+          "windingConsistent": true
+        },
+        "part-003.stl": {
+          "bounds": [
+            [
+              4.5,
+              -33.886059,
+              -8.75
+            ],
+            [
+              19.5,
+              -19.113941,
+              8.75
+            ]
+          ],
+          "connectedComponents": 1,
+          "faces": 68,
+          "vertices": 36,
+          "volumeMm3": 3030.084758,
+          "watertight": true,
+          "windingConsistent": true
+        }
+      },
+      "recordedValidation": {
+        "checks": {
+          "allPartMeshesWatertight": true,
+          "allPartsBrepValid": true,
+          "deliveryMetadataNeutral": true,
+          "noUnexpectedIntersection": true,
+          "partCountMatches": true,
+          "unitsAreMm": true
+        },
+        "compoundBboxMm": {
+          "xlen": 255.0,
+          "xmax": 52.0,
+          "xmin": -203.0,
+          "ylen": 73.0,
+          "ymax": 38.0,
+          "ymin": -35.0,
+          "zlen": 17.5,
+          "zmax": 8.75,
+          "zmin": -8.75
+        },
+        "compoundBrepValid": true,
+        "expected": {
+          "allowedIntersectionPairs": [],
+          "jawFacesParallel": true,
+          "jawToothCount": 0,
+          "partCount": 3,
+          "wormPresent": true
+        },
+        "expectedFieldsWithoutIndependentAssertion": [
+          "jawFacesParallel",
+          "jawToothCount",
+          "wormPresent"
+        ],
+        "pairwiseIntersections": [
+          {
+            "allowedMechanicalEngagement": false,
+            "intersectionVolumeMm3": 0.0,
+            "partsPrivateBuildMetadata": [
+              "body-fixed-jaw",
+              "moving-jaw-rack"
+            ],
+            "pass": true
+          },
+          {
+            "allowedMechanicalEngagement": false,
+            "intersectionVolumeMm3": 0.0,
+            "partsPrivateBuildMetadata": [
+              "body-fixed-jaw",
+              "worm-adjuster"
+            ],
+            "pass": true
+          },
+          {
+            "allowedMechanicalEngagement": false,
+            "intersectionVolumeMm3": 0.0,
+            "partsPrivateBuildMetadata": [
+              "moving-jaw-rack",
+              "worm-adjuster"
+            ],
+            "pass": true
+          }
+        ]
+      },
+      "renders": {
+        "renders/feature.png": {
+          "metadataKeys": [],
+          "mode": "L",
+          "phoneProbeDarkPixelBbox": [
+            7,
+            7,
+            76,
+            246
+          ],
+          "phoneProbeDarkPixelFraction": 0.00994141,
+          "phoneProbeDarkPixels": 1018,
+          "phoneProbeSizePx": [
+            320,
+            320
+          ],
+          "sourceSizePx": [
+            2048,
+            2048
+          ]
+        },
+        "renders/profile.png": {
+          "metadataKeys": [],
+          "mode": "L",
+          "phoneProbeDarkPixelBbox": [
+            7,
+            7,
+            246,
+            75
+          ],
+          "phoneProbeDarkPixelFraction": 0.00665039,
+          "phoneProbeDarkPixels": 681,
+          "phoneProbeSizePx": [
+            320,
+            320
+          ],
+          "sourceSizePx": [
+            2048,
+            2048
+          ]
+        },
+        "renders/three-quarter.png": {
+          "metadataKeys": [],
+          "mode": "L",
+          "phoneProbeDarkPixelBbox": [
+            6,
+            7,
+            247,
+            111
+          ],
+          "phoneProbeDarkPixelFraction": 0.01339844,
+          "phoneProbeDarkPixels": 1372,
+          "phoneProbeSizePx": [
+            320,
+            320
+          ],
+          "sourceSizePx": [
+            2048,
+            2048
+          ]
+        }
+      },
+      "reviewMesh": {
+        "bounds": [
+          [
+            -203.0,
+            -35.0,
+            -8.75
+          ],
+          [
+            52.0,
+            38.0,
+            8.75
+          ]
+        ],
+        "connectedComponents": 3,
+        "faces": 232,
+        "vertices": 122,
+        "volumeMm3": 108878.001825,
+        "watertight": true,
+        "windingConsistent": true
+      },
+      "sourceModel": {
+        "pairwiseMinimumDistances": [
+          {
+            "minimumDistanceMm": 1.0,
+            "parts": [
+              "body-fixed-jaw",
+              "moving-jaw-rack"
+            ]
+          },
+          {
+            "minimumDistanceMm": 0.5,
+            "parts": [
+              "body-fixed-jaw",
+              "worm-adjuster"
+            ]
+          },
+          {
+            "minimumDistanceMm": 0.113941852,
+            "parts": [
+              "moving-jaw-rack",
+              "worm-adjuster"
+            ]
+          }
+        ],
+        "partNames": [
+          "body-fixed-jaw",
+          "moving-jaw-rack",
+          "worm-adjuster"
+        ],
+        "sourcePartCount": 3
+      },
+      "sourceRecord": {
+        "authoritativeOrCorroborated": [
+          "smooth parallel gripping faces",
+          "moving jaw",
+          "worm adjustment",
+          "selected principal dimensions"
+        ],
+        "controllingGeometry": [
+          "original project-authored B-rep"
+        ],
+        "editorialOrInferred": [
+          "body contour",
+          "fillets",
+          "guide form",
+          "worm tooth form",
+          "display opening"
+        ],
+        "factReferences": [
+          {
+            "organization": "ISO",
+            "rights": "copyrighted standard; reference only",
+            "sourceFileHashStatus": "not downloaded or not redistributed; reference-only web/document source",
+            "sourceFileSha256": null,
+            "title": "ISO 6787:2018 Assembly tools for screws and nuts - Adjustable wrenches",
+            "url": "https://www.iso.org/standard/71911.html",
+            "use": "functional type, terminology, test envelope; standard text not redistributed"
+          },
+          {
+            "organization": "Bahco/SNA Europe",
+            "rights": "manufacturer page; facts reference only; no manufacturer asset reused",
+            "sourceFileHashStatus": "not downloaded or not redistributed; reference-only web/document source",
+            "sourceFileSha256": null,
+            "title": "Bahco 8072 adjustable wrench product data",
+            "url": "https://www.bahco.com/int_en/ergotm-central-nut-adjustable-wrenches-with-rubber-handle-and-extra-wide-jaw-pb_80_series_.html",
+            "use": "10-inch-class overall length, jaw opening, and thickness corroboration"
+          }
+        ],
+        "licenseOfNewGeometry": "CC0-1.0",
+        "observationDate": "2026-08-20",
+        "productionStatus": "prototype; human mechanical review required",
+        "sourceClass": "C"
+      },
+      "stepReimport": {
+        "bboxMm": {
+          "xlen": 255.0,
+          "xmax": 52.0,
+          "xmin": -203.0,
+          "ylen": 73.0,
+          "ymax": 38.0,
+          "ymin": -35.0,
+          "zlen": 17.5,
+          "zmax": 8.75,
+          "zmin": -8.75
+        },
+        "recordedBboxMaxAbsDeltaMm": 0.0,
+        "solidCount": 3,
+        "valid": true,
+        "volumeMm3": 108878.002015
+      },
+      "svgScan": {
+        "renders/feature.svg": {
+          "bytes": 12983,
+          "forbiddenHits": [],
+          "hiddenLineColorPresent": true
+        },
+        "renders/profile.svg": {
+          "bytes": 4571,
+          "forbiddenHits": [],
+          "hiddenLineColorPresent": true
+        },
+        "renders/three-quarter.svg": {
+          "bytes": 12037,
+          "forbiddenHits": [],
+          "hiddenLineColorPresent": true
+        }
+      }
+    },
+    {
+      "assetId": "t0005",
+      "deliveryFileNames": [
+        "renders/feature.png",
+        "renders/feature.svg",
+        "renders/feature.webp",
+        "renders/profile.png",
+        "renders/profile.svg",
+        "renders/profile.webp",
+        "renders/three-quarter.png",
+        "renders/three-quarter.svg",
+        "renders/three-quarter.webp",
+        "web/model.glb"
+      ],
+      "glb": {
+        "allExtrasPaths": [
+          "$.meshes[0].extras",
+          "$.meshes[1].extras",
+          "$.meshes[2].extras"
+        ],
+        "assetVersion": "2.0",
+        "cameraCount": 0,
+        "expectedTransformedLengthsM": [
+          0.25,
+          0.028,
+          0.084
+        ],
+        "forbiddenHits": [],
+        "generator": "https://github.com/mikedh/trimesh",
+        "materialNames": [],
+        "meshNames": [
+          "mesh-001",
+          "mesh-002",
+          "mesh-003"
+        ],
+        "neutral": true,
+        "nodeNames": [
+          "world",
+          "part-001",
+          "part-002",
+          "part-003"
+        ],
+        "sceneBoundsM": [
+          [
+            -0.200000003,
+            -0.013997233,
+            -0.066
+          ],
+          [
+            0.050000001,
+            0.013997233,
+            0.017999999
+          ]
+        ],
+        "sceneLengthsM": [
+          0.250000004,
+          0.027994465,
+          0.083999999
+        ],
+        "topLevelExtras": null,
+        "transformedLengthMaxAbsDeltaM": 5.535e-06
+      },
+      "parameters": {
+        "authoringUnits": "mm",
+        "bodyThicknessMm": 18.0,
+        "dimensionStatus": {
+          "bodyThicknessMm": "editorial closure",
+          "displayJawOpeningMm": "editorial pose",
+          "fixedJawTeeth": "editorial count; serration presence is controlling",
+          "hookJawTeeth": "editorial count; serration presence is controlling",
+          "overallLengthMm": "corroborated nominal product size",
+          "ratedPipeCapacityMm": "corroborated product capacity"
+        },
+        "displayJawOpeningMm": 20.0,
+        "fixedJawTeeth": 9,
+        "hookJawTeeth": 9,
+        "jawSurface": "serrated",
+        "overallLengthMm": 250.0,
+        "ratedPipeCapacityMm": 40.0
+      },
+      "partMeshes": {
+        "part-001.stl": {
+          "bounds": [
+            [
+              -200.0,
+              -18.0,
+              -9.0
+            ],
+            [
+              48.0,
+              45.0,
+              9.0
+            ]
+          ],
+          "connectedComponents": 1,
+          "faces": 192,
+          "vertices": 98,
+          "volumeMm3": 115308.545372,
+          "watertight": true,
+          "windingConsistent": true
+        },
+        "part-002.stl": {
+          "bounds": [
+            [
+              -4.5,
+              18.0,
+              -8.5
+            ],
+            [
+              50.0,
+              66.0,
+              8.5
+            ]
+          ],
+          "connectedComponents": 1,
+          "faces": 148,
+          "vertices": 76,
+          "volumeMm3": 18269.30523,
+          "watertight": true,
+          "windingConsistent": true
+        },
+        "part-003.stl": {
+          "bounds": [
+            [
+              -14.0,
+              31.0,
+              -13.997232
+            ],
+            [
+              14.0,
+              41.0,
+              13.997232
+            ]
+          ],
+          "connectedComponents": 1,
+          "faces": 1896,
+          "vertices": 948,
+          "volumeMm3": 3015.134156,
+          "watertight": true,
+          "windingConsistent": true
+        }
+      },
+      "recordedValidation": {
+        "checks": {
+          "allPartMeshesWatertight": true,
+          "allPartsBrepValid": true,
+          "deliveryMetadataNeutral": true,
+          "noUnexpectedIntersection": true,
+          "partCountMatches": true,
+          "unitsAreMm": true
+        },
+        "compoundBboxMm": {
+          "xlen": 250.0,
+          "xmax": 50.0,
+          "xmin": -200.0,
+          "ylen": 84.0,
+          "ymax": 66.0,
+          "ymin": -18.0,
+          "zlen": 28.0,
+          "zmax": 14.0,
+          "zmin": -14.0
+        },
+        "compoundBrepValid": true,
+        "expected": {
+          "adjustingNutPresent": true,
+          "allowedIntersectionPairs": [],
+          "hookJawPresent": true,
+          "jawToothCount": 18,
+          "partCount": 3
+        },
+        "expectedFieldsWithoutIndependentAssertion": [
+          "adjustingNutPresent",
+          "hookJawPresent",
+          "jawToothCount"
+        ],
+        "pairwiseIntersections": [
+          {
+            "allowedMechanicalEngagement": false,
+            "intersectionVolumeMm3": 0.0,
+            "partsPrivateBuildMetadata": [
+              "handle-fixed-heel-jaw",
+              "hook-jaw-stem"
+            ],
+            "pass": true
+          },
+          {
+            "allowedMechanicalEngagement": false,
+            "intersectionVolumeMm3": 0.0,
+            "partsPrivateBuildMetadata": [
+              "adjusting-nut",
+              "handle-fixed-heel-jaw"
+            ],
+            "pass": true
+          },
+          {
+            "allowedMechanicalEngagement": false,
+            "intersectionVolumeMm3": 0.0,
+            "partsPrivateBuildMetadata": [
+              "adjusting-nut",
+              "hook-jaw-stem"
+            ],
+            "pass": true
+          }
+        ]
+      },
+      "renders": {
+        "renders/feature.png": {
+          "metadataKeys": [],
+          "mode": "L",
+          "phoneProbeDarkPixelBbox": [
+            7,
+            7,
+            88,
+            246
+          ],
+          "phoneProbeDarkPixelFraction": 0.01243164,
+          "phoneProbeDarkPixels": 1273,
+          "phoneProbeSizePx": [
+            320,
+            320
+          ],
+          "sourceSizePx": [
+            2048,
+            2048
+          ]
+        },
+        "renders/profile.png": {
+          "metadataKeys": [],
+          "mode": "L",
+          "phoneProbeDarkPixelBbox": [
+            7,
+            7,
+            246,
+            87
+          ],
+          "phoneProbeDarkPixelFraction": 0.0084375,
+          "phoneProbeDarkPixels": 864,
+          "phoneProbeSizePx": [
+            320,
+            320
+          ],
+          "sourceSizePx": [
+            2048,
+            2048
+          ]
+        },
+        "renders/three-quarter.png": {
+          "metadataKeys": [],
+          "mode": "L",
+          "phoneProbeDarkPixelBbox": [
+            7,
+            7,
+            246,
+            101
+          ],
+          "phoneProbeDarkPixelFraction": 0.01265625,
+          "phoneProbeDarkPixels": 1296,
+          "phoneProbeSizePx": [
+            320,
+            320
+          ],
+          "sourceSizePx": [
+            2048,
+            2048
+          ]
+        }
+      },
+      "reviewMesh": {
+        "bounds": [
+          [
+            -200.0,
+            -18.0,
+            -13.997232
+          ],
+          [
+            50.0,
+            66.0,
+            13.997232
+          ]
+        ],
+        "connectedComponents": 3,
+        "faces": 2236,
+        "vertices": 1122,
+        "volumeMm3": 136592.984759,
+        "watertight": true,
+        "windingConsistent": true
+      },
+      "sourceModel": {
+        "pairwiseMinimumDistances": [
+          {
+            "minimumDistanceMm": 1.453295897,
+            "parts": [
+              "handle-fixed-heel-jaw",
+              "hook-jaw-stem"
+            ]
+          },
+          {
+            "minimumDistanceMm": 1.0,
+            "parts": [
+              "adjusting-nut",
+              "handle-fixed-heel-jaw"
+            ]
+          },
+          {
+            "minimumDistanceMm": 0.382307969,
+            "parts": [
+              "adjusting-nut",
+              "hook-jaw-stem"
+            ]
+          }
+        ],
+        "partNames": [
+          "handle-fixed-heel-jaw",
+          "hook-jaw-stem",
+          "adjusting-nut"
+        ],
+        "sourcePartCount": 3
+      },
+      "sourceRecord": {
+        "authoritativeOrCorroborated": [
+          "hook jaw",
+          "fixed heel jaw",
+          "serrated gripping surfaces",
+          "adjusting nut",
+          "selected nominal size/capacity"
+        ],
+        "controllingGeometry": [
+          "original project-authored B-rep"
+        ],
+        "editorialOrInferred": [
+          "body contour",
+          "jaw tooth count/pitch",
+          "guide form",
+          "nut contour",
+          "display opening"
+        ],
+        "factReferences": [
+          {
+            "organization": "RIDGID/Emerson",
+            "rights": "manufacturer page; facts reference only; no manufacturer asset reused",
+            "sourceFileHashStatus": "not downloaded or not redistributed; reference-only web/document source",
+            "sourceFileSha256": null,
+            "title": "Heavy-Duty Straight Pipe Wrenches",
+            "url": "https://www.ridgid.com/us/en/straight-pipe-wrench",
+            "use": "nominal size/capacity and component relationship corroboration"
+          },
+          {
+            "organization": "U.S. General Services Administration (cancelled specification)",
+            "rights": "government specification; document status/rights separately reviewed",
+            "sourceFileHashStatus": "not downloaded or not redistributed; reference-only web/document source",
+            "sourceFileSha256": null,
+            "title": "Federal Specification GGG-W-651E, Wrenches, Pipe",
+            "url": "https://quicksearch.dla.mil/qsDocDetails.aspx?ident_number=21236",
+            "use": "historical public specification reference; not treated as current generic geometry"
+          }
+        ],
+        "licenseOfNewGeometry": "CC0-1.0",
+        "observationDate": "2026-08-20",
+        "productionStatus": "prototype; human mechanical review required",
+        "sourceClass": "C"
+      },
+      "stepReimport": {
+        "bboxMm": {
+          "xlen": 250.0,
+          "xmax": 50.0,
+          "xmin": -200.0,
+          "ylen": 84.0,
+          "ymax": 66.0,
+          "ymin": -18.0,
+          "zlen": 28.0,
+          "zmax": 14.0,
+          "zmin": -14.0
+        },
+        "recordedBboxMaxAbsDeltaMm": 0.0,
+        "solidCount": 3,
+        "valid": true,
+        "volumeMm3": 136593.77932
+      },
+      "svgScan": {
+        "renders/feature.svg": {
+          "bytes": 40713,
+          "forbiddenHits": [],
+          "hiddenLineColorPresent": true
+        },
+        "renders/profile.svg": {
+          "bytes": 8618,
+          "forbiddenHits": [],
+          "hiddenLineColorPresent": true
+        },
+        "renders/three-quarter.svg": {
+          "bytes": 37330,
+          "forbiddenHits": [],
+          "hiddenLineColorPresent": true
+        }
+      }
+    },
+    {
+      "assetId": "t0006",
+      "deliveryFileNames": [
+        "renders/feature.png",
+        "renders/feature.svg",
+        "renders/feature.webp",
+        "renders/profile.png",
+        "renders/profile.svg",
+        "renders/profile.webp",
+        "renders/three-quarter.png",
+        "renders/three-quarter.svg",
+        "renders/three-quarter.webp",
+        "web/model.glb"
+      ],
+      "glb": {
+        "allExtrasPaths": [
+          "$.meshes[0].extras",
+          "$.meshes[1].extras"
+        ],
+        "assetVersion": "2.0",
+        "cameraCount": 0,
+        "expectedTransformedLengthsM": [
+          0.136105941,
+          0.530054947,
+          0.136079058
+        ],
+        "forbiddenHits": [],
+        "generator": "https://github.com/mikedh/trimesh",
+        "materialNames": [],
+        "meshNames": [
+          "mesh-001",
+          "mesh-002"
+        ],
+        "neutral": true,
+        "nodeNames": [
+          "world",
+          "part-001",
+          "part-002"
+        ],
+        "sceneBoundsM": [
+          [
+            -0.068000004,
+            0.0,
+            -0.067986555
+          ],
+          [
+            0.068000004,
+            0.529999971,
+            0.067986555
+          ]
+        ],
+        "sceneLengthsM": [
+          0.136000007,
+          0.529999971,
+          0.135973111
+        ],
+        "topLevelExtras": null,
+        "transformedLengthMaxAbsDeltaM": 0.000105947
+      },
+      "parameters": {
+        "authoringUnits": "mm",
+        "cupOuterDiameterMm": 136.0,
+        "dimensionStatus": {
+          "cupOuterDiameterMm": "editorial closure",
+          "extendedFlangeHeightMm": "controlling categorical invariant",
+          "handleDiameterMm": "editorial closure",
+          "overallHeightMm": "corroborated common product class"
+        },
+        "extendedFlangeHeightMm": 0.0,
+        "handleDiameterMm": 20.0,
+        "overallHeightMm": 530.0
+      },
+      "partMeshes": {
+        "part-001.stl": {
+          "bounds": [
+            [
+              -68.0,
+              -67.986557,
+              0.0
+            ],
+            [
+              68.0,
+              67.986557,
+              61.0
+            ]
+          ],
+          "connectedComponents": 1,
+          "faces": 9322,
+          "vertices": 4661,
+          "volumeMm3": 143437.081546,
+          "watertight": true,
+          "windingConsistent": true
+        },
+        "part-002.stl": {
+          "bounds": [
+            [
+              -10.0,
+              -9.998023,
+              55.0
+            ],
+            [
+              10.0,
+              9.998023,
+              530.0
+            ]
+          ],
+          "connectedComponents": 1,
+          "faces": 628,
+          "vertices": 316,
+          "volumeMm3": 149186.321695,
+          "watertight": true,
+          "windingConsistent": true
+        }
+      },
+      "recordedValidation": {
+        "checks": {
+          "allPartMeshesWatertight": true,
+          "allPartsBrepValid": true,
+          "deliveryMetadataNeutral": true,
+          "noUnexpectedIntersection": true,
+          "partCountMatches": true,
+          "unitsAreMm": true
+        },
+        "compoundBboxMm": {
+          "xlen": 136.105941,
+          "xmax": 68.05297,
+          "xmin": -68.05297,
+          "ylen": 136.079058,
+          "ymax": 68.039529,
+          "ymin": -68.039529,
+          "zlen": 530.054947,
+          "zmax": 530.001977,
+          "zmin": -0.05297
+        },
+        "compoundBrepValid": true,
+        "expected": {
+          "allowedIntersectionPairs": [
+            [
+              "handle",
+              "simple-cup"
+            ]
+          ],
+          "extendedFlangePresent": false,
+          "partCount": 2
+        },
+        "expectedFieldsWithoutIndependentAssertion": [
+          "extendedFlangePresent"
+        ],
+        "pairwiseIntersections": [
+          {
+            "allowedMechanicalEngagement": true,
+            "intersectionVolumeMm3": 205.25072,
+            "partsPrivateBuildMetadata": [
+              "handle",
+              "simple-cup"
+            ],
+            "pass": true
+          }
+        ]
+      },
+      "renders": {
+        "renders/feature.png": {
+          "metadataKeys": [],
+          "mode": "L",
+          "phoneProbeDarkPixelBbox": [
+            6,
+            6,
+            247,
+            132
+          ],
+          "phoneProbeDarkPixelFraction": 0.03111328,
+          "phoneProbeDarkPixels": 3186,
+          "phoneProbeSizePx": [
+            320,
+            320
+          ],
+          "sourceSizePx": [
+            2048,
+            2048
+          ]
+        },
+        "renders/profile.png": {
+          "metadataKeys": [],
+          "mode": "L",
+          "phoneProbeDarkPixelBbox": [
+            221,
+            7,
+            244,
+            68
+          ],
+          "phoneProbeDarkPixelFraction": 7.813e-05,
+          "phoneProbeDarkPixels": 8,
+          "phoneProbeSizePx": [
+            320,
+            320
+          ],
+          "sourceSizePx": [
+            2048,
+            2048
+          ]
+        },
+        "renders/three-quarter.png": {
+          "metadataKeys": [],
+          "mode": "L",
+          "phoneProbeDarkPixelBbox": [
+            7,
+            15,
+            67,
+            245
+          ],
+          "phoneProbeDarkPixelFraction": 0.00015625,
+          "phoneProbeDarkPixels": 16,
+          "phoneProbeSizePx": [
+            320,
+            320
+          ],
+          "sourceSizePx": [
+            2048,
+            2048
+          ]
+        }
+      },
+      "reviewMesh": {
+        "bounds": [
+          [
+            -68.0,
+            -67.986557,
+            0.0
+          ],
+          [
+            68.0,
+            67.986557,
+            530.0
+          ]
+        ],
+        "connectedComponents": 2,
+        "faces": 9950,
+        "vertices": 4898,
+        "volumeMm3": 292623.403241,
+        "watertight": false,
+        "windingConsistent": true
+      },
+      "sourceModel": {
+        "pairwiseMinimumDistances": [
+          {
+            "minimumDistanceMm": 0.0,
+            "parts": [
+              "handle",
+              "simple-cup"
+            ]
+          }
+        ],
+        "partNames": [
+          "simple-cup",
+          "handle"
+        ],
+        "sourcePartCount": 2
+      },
+      "sourceRecord": {
+        "authoritativeOrCorroborated": [
+          "simple flexible cup",
+          "handle",
+          "absence of extended toilet flange"
+        ],
+        "controllingGeometry": [
+          "original project-authored revolved B-rep"
+        ],
+        "editorialOrInferred": [
+          "cup profile",
+          "wall thickness",
+          "handle attachment",
+          "exact dimensions"
+        ],
+        "factReferences": [
+          {
+            "organization": "multiple commercial manufacturers; category corroboration only",
+            "rights": "retailer/manufacturer imagery reference only; no image reused",
+            "sourceFileHashStatus": "not downloaded or not redistributed; reference-only web/document source",
+            "sourceFileSha256": null,
+            "title": "Cup plunger product category/reference",
+            "url": "https://www.homedepot.com/p/HDX-5-in-Force-Cup-Plunger-BC2451-5/302785815",
+            "use": "simple cup/no extended toilet flange and common size class"
+          }
+        ],
+        "licenseOfNewGeometry": "CC0-1.0",
+        "observationDate": "2026-08-20",
+        "productionStatus": "prototype; physical measurement or stronger dimensional source required",
+        "sourceClass": "C"
+      },
+      "stepReimport": {
+        "bboxMm": {
+          "xlen": 136.0,
+          "xmax": 68.0,
+          "xmin": -68.0,
+          "ylen": 136.0,
+          "ymax": 68.0,
+          "ymin": -68.0,
+          "zlen": 530.0,
+          "zmax": 530.0,
+          "zmin": -0.0
+        },
+        "recordedBboxMaxAbsDeltaMm": 0.105941,
+        "solidCount": 2,
+        "valid": true,
+        "volumeMm3": 292757.689005
+      },
+      "svgScan": {
+        "renders/feature.svg": {
+          "bytes": 75922,
+          "forbiddenHits": [],
+          "hiddenLineColorPresent": true
+        },
+        "renders/profile.svg": {
+          "bytes": 4544,
+          "forbiddenHits": [],
+          "hiddenLineColorPresent": true
+        },
+        "renders/three-quarter.svg": {
+          "bytes": 84969,
+          "forbiddenHits": [],
+          "hiddenLineColorPresent": true
+        }
+      }
+    },
+    {
+      "assetId": "t0007",
+      "deliveryFileNames": [
+        "renders/feature.png",
+        "renders/feature.svg",
+        "renders/feature.webp",
+        "renders/profile.png",
+        "renders/profile.svg",
+        "renders/profile.webp",
+        "renders/three-quarter.png",
+        "renders/three-quarter.svg",
+        "renders/three-quarter.webp",
+        "web/model.glb"
+      ],
+      "glb": {
+        "allExtrasPaths": [
+          "$.meshes[0].extras",
+          "$.meshes[1].extras"
+        ],
+        "assetVersion": "2.0",
+        "cameraCount": 0,
+        "expectedTransformedLengthsM": [
+          0.154120172,
+          0.654633191,
+          0.154089731
+        ],
+        "forbiddenHits": [],
+        "generator": "https://github.com/mikedh/trimesh",
+        "materialNames": [],
+        "meshNames": [
+          "mesh-001",
+          "mesh-002"
+        ],
+        "neutral": true,
+        "nodeNames": [
+          "world",
+          "part-001",
+          "part-002"
+        ],
+        "sceneBoundsM": [
+          [
+            -0.077,
+            -0.045000002,
+            -0.076984778
+          ],
+          [
+            0.077,
+            0.609599948,
+            0.076984778
+          ]
+        ],
+        "sceneLengthsM": [
+          0.153999999,
+          0.65459995,
+          0.153969556
+        ],
+        "topLevelExtras": null,
+        "transformedLengthMaxAbsDeltaM": 0.000120175
+      },
+      "parameters": {
+        "authoringUnits": "mm",
+        "cupOuterDiameterMm": 154.0,
+        "dimensionStatus": {
+          "cupOuterDiameterMm": "editorial closure",
+          "extendedFlangeHeightMm": "feature confirmed; exact height editorial",
+          "handleDiameterMm": "corroborated manufacturer dimension (1 in)",
+          "overallHeightMm": "corroborated manufacturer dimension (24 in)"
+        },
+        "extendedFlangeHeightMm": 45.0,
+        "handleDiameterMm": 25.4,
+        "overallHeightMm": 609.6
+      },
+      "partMeshes": {
+        "part-001.stl": {
+          "bounds": [
+            [
+              -77.0,
+              -76.984779,
+              -45.0
+            ],
+            [
+              77.0,
+              76.984779,
+              66.0
+            ]
+          ],
+          "connectedComponents": 1,
+          "faces": 15168,
+          "vertices": 7584,
+          "volumeMm3": 312959.816443,
+          "watertight": true,
+          "windingConsistent": true
+        },
+        "part-002.stl": {
+          "bounds": [
+            [
+              -12.7,
+              -12.69749,
+              60.0
+            ],
+            [
+              12.7,
+              12.69749,
+              609.599976
+            ]
+          ],
+          "connectedComponents": 1,
+          "faces": 628,
+          "vertices": 316,
+          "volumeMm3": 278413.023267,
+          "watertight": true,
+          "windingConsistent": true
+        }
+      },
+      "recordedValidation": {
+        "checks": {
+          "allPartMeshesWatertight": true,
+          "allPartsBrepValid": true,
+          "deliveryMetadataNeutral": true,
+          "noUnexpectedIntersection": true,
+          "partCountMatches": true,
+          "unitsAreMm": true
+        },
+        "compoundBboxMm": {
+          "xlen": 154.120172,
+          "xmax": 77.060086,
+          "xmin": -77.060086,
+          "ylen": 154.089731,
+          "ymax": 77.044865,
+          "ymin": -77.044865,
+          "zlen": 654.633191,
+          "zmax": 609.602511,
+          "zmin": -45.030681
+        },
+        "compoundBrepValid": true,
+        "expected": {
+          "allowedIntersectionPairs": [
+            [
+              "cup-with-extended-flange",
+              "handle"
+            ]
+          ],
+          "extendedFlangeMinHeightMm": 40.0,
+          "extendedFlangePresent": true,
+          "partCount": 2
+        },
+        "expectedFieldsWithoutIndependentAssertion": [
+          "extendedFlangeMinHeightMm",
+          "extendedFlangePresent"
+        ],
+        "pairwiseIntersections": [
+          {
+            "allowedMechanicalEngagement": true,
+            "intersectionVolumeMm3": 739.744539,
+            "partsPrivateBuildMetadata": [
+              "cup-with-extended-flange",
+              "handle"
+            ],
+            "pass": true
+          }
+        ]
+      },
+      "renders": {
+        "renders/feature.png": {
+          "metadataKeys": [],
+          "mode": "L",
+          "phoneProbeDarkPixelBbox": [
+            6,
+            6,
+            247,
+            190
+          ],
+          "phoneProbeDarkPixelFraction": 0.03517578,
+          "phoneProbeDarkPixels": 3602,
+          "phoneProbeSizePx": [
+            320,
+            320
+          ],
+          "sourceSizePx": [
+            2048,
+            2048
+          ]
+        },
+        "renders/profile.png": {
+          "metadataKeys": [],
+          "mode": "L",
+          "phoneProbeDarkPixelBbox": [
+            230,
+            11,
+            230,
+            58
+          ],
+          "phoneProbeDarkPixelFraction": 4.883e-05,
+          "phoneProbeDarkPixels": 5,
+          "phoneProbeSizePx": [
+            320,
+            320
+          ],
+          "sourceSizePx": [
+            2048,
+            2048
+          ]
+        },
+        "renders/three-quarter.png": {
+          "metadataKeys": [],
+          "mode": "L",
+          "phoneProbeDarkPixelBbox": [
+            7,
+            27,
+            59,
+            38
+          ],
+          "phoneProbeDarkPixelFraction": 3.906e-05,
+          "phoneProbeDarkPixels": 4,
+          "phoneProbeSizePx": [
+            320,
+            320
+          ],
+          "sourceSizePx": [
+            2048,
+            2048
+          ]
+        }
+      },
+      "reviewMesh": {
+        "bounds": [
+          [
+            -77.0,
+            -76.984779,
+            -45.0
+          ],
+          [
+            77.0,
+            76.984779,
+            609.599976
+          ]
+        ],
+        "connectedComponents": 2,
+        "faces": 15796,
+        "vertices": 7900,
+        "volumeMm3": 591372.83971,
+        "watertight": true,
+        "windingConsistent": true
+      },
+      "sourceModel": {
+        "pairwiseMinimumDistances": [
+          {
+            "minimumDistanceMm": 0.0,
+            "parts": [
+              "cup-with-extended-flange",
+              "handle"
+            ]
+          }
+        ],
+        "partNames": [
+          "cup-with-extended-flange",
+          "handle"
+        ],
+        "sourcePartCount": 2
+      },
+      "sourceRecord": {
+        "authoritativeOrCorroborated": [
+          "flexible cup",
+          "extended flange beneath cup",
+          "handle",
+          "selected overall/handle dimensions"
+        ],
+        "controllingGeometry": [
+          "original project-authored revolved B-rep"
+        ],
+        "editorialOrInferred": [
+          "cup and flange contour",
+          "wall thickness",
+          "attachment",
+          "flange length"
+        ],
+        "factReferences": [
+          {
+            "organization": "Libman Commercial",
+            "rights": "manufacturer page/catalog facts reference only; no image reused",
+            "sourceFileHashStatus": "not downloaded or not redistributed; reference-only web/document source",
+            "sourceFileSha256": null,
+            "title": "Premium Toilet Plunger #597",
+            "url": "https://libman.com/products/premium-toilet-plunger",
+            "use": "extended flange, 24-inch total height, 1-inch handle class"
+          }
+        ],
+        "licenseOfNewGeometry": "CC0-1.0",
+        "observationDate": "2026-08-20",
+        "productionStatus": "prototype; physical measurement or stronger dimensional source required",
+        "sourceClass": "C"
+      },
+      "stepReimport": {
+        "bboxMm": {
+          "xlen": 154.0,
+          "xmax": 77.0,
+          "xmin": -77.0,
+          "ylen": 154.0,
+          "ymax": 77.0,
+          "ymin": -77.0,
+          "zlen": 654.6,
+          "zmax": 609.6,
+          "zmin": -45.0
+        },
+        "recordedBboxMaxAbsDeltaMm": 0.120172,
+        "solidCount": 2,
+        "valid": true,
+        "volumeMm3": 591661.499252
+      },
+      "svgScan": {
+        "renders/feature.svg": {
+          "bytes": 122819,
+          "forbiddenHits": [],
+          "hiddenLineColorPresent": true
+        },
+        "renders/profile.svg": {
+          "bytes": 6079,
+          "forbiddenHits": [],
+          "hiddenLineColorPresent": true
+        },
+        "renders/three-quarter.svg": {
+          "bytes": 104359,
+          "forbiddenHits": [],
+          "hiddenLineColorPresent": true
+        }
+      }
+    }
+  ],
+  "generatedBuildEnvironmentReceipt": {
+    "networkRequired": false,
+    "observationDate": "2026-08-20",
+    "packages": {
+      "CairoSVG": "2.8.2",
+      "OCP": "7.9.3.1",
+      "Pillow": "12.3.0",
+      "cadquery": "2.8.0",
+      "numpy": "2.3.5",
+      "scipy": "1.17.0",
+      "trimesh": "4.11.1"
+    },
+    "platform": "Linux-6.18.35-x86_64-with-glibc2.41",
+    "python": "3.12.3",
+    "sourceDateEpoch": "1787184000"
+  },
+  "historicalManifest": {
+    "allMatch": true,
+    "entryCount": 79,
+    "mismatches": []
+  },
+  "historicalToRerunA": {
+    "differences": [],
+    "exactMatch": true,
+    "leftFileCount": 79,
+    "rightFileCount": 79
+  },
+  "rerunAManifest": {
+    "allMatch": true,
+    "entryCount": 79,
+    "mismatches": []
+  },
+  "rerunAToB": {
+    "differences": [],
+    "exactMatch": true,
+    "leftFileCount": 79,
+    "rightFileCount": 79
+  },
+  "rerunBManifest": {
+    "allMatch": true,
+    "entryCount": 79,
+    "mismatches": []
+  },
+  "runtimeObserved": {
+    "CairoSVG": "2.8.2",
+    "OCP": "7.9.3.1",
+    "Pillow": "12.3.0",
+    "cadquery": "2.8.0",
+    "numpy": "2.3.5",
+    "platform": "Linux-6.8.0-101-generic-x86_64-with-glibc2.39",
+    "python": "3.13.5",
+    "scipy": "1.17.0",
+    "trimesh": "4.11.1"
+  },
+  "topLevelHashes": {
+    "asset-manifest.schema.json": "8fd9c611c958c57e3eab495ae647486be3db798a80a1ca4db78e6b6c74aa8194",
+    "build_poc.py": "55468f47e0e0f0e5c552dd649fc6647ba6cf191ebaee4513f4feea4a1ace5dab",
+    "compare_builds.py": "5b9fc527a37b3fc425212c842d30cce203f60f7fe0f14e42ec3159fdfbc963b0",
+    "confusable-pairs.csv": "c4ee01c36df4e587e3024dd502baa6ff19d0a9f0e3d1343a83cc4f9678991fa5",
+    "first-20-visual-invariants.csv": "a9cdb5f82ead884d7954f4b1099ab9135086f70b81d993f6a09a2009675eca0e",
+    "poc-summary.json": "edc41b6b700e1545d4a43ad1e835c0552df165785e5d4625366bb1da8771dc0f",
+    "research-report.md": "d1807d0fdf4f7fec7758873163a240ac04e9874dff13121123abbbee57456531",
+    "source-ledger.csv": "08598822f8c5114f4fe48850fa9cd889916254106e3689682a156cc58fa2885a",
+    "taxonomy-inventory.csv": "8a0eb561003f8b7fd6fd164680fdcda2d891118a2ad591ccf0aa1a6fa22560e2"
+  }
+}

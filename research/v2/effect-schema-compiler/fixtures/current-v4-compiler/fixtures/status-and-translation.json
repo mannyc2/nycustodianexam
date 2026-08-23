@@ -1,0 +1,14 @@
+{
+  "formatVersion": 1,
+  "records": [
+    {"_tag":"Source","schemaVersion":1,"id":"source:announcement","revision":1,"title":"Announcement","revisionDigest":"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","lineCount":30},
+    {"_tag":"SourceSpan","schemaVersion":1,"id":"span:announcement-1","sourceId":"source:announcement","sourceRevisionDigest":"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","startLine":1,"endLine":3,"selectedTextDigest":"sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"},
+    {"_tag":"Claim","schemaVersion":1,"id":"claim:fee-old","revision":1,"status":"verified","text":"The previous fee was stated.","supportSpanIds":["span:announcement-1"]},
+    {"_tag":"Claim","schemaVersion":1,"id":"claim:fee-new","revision":1,"status":"verified","text":"The replacement fee was stated.","supportSpanIds":["span:announcement-1"]},
+    {"_tag":"Claim","schemaVersion":1,"id":"claim:count-a","revision":1,"status":"conflicting","text":"One source describes one count.","supportSpanIds":["span:announcement-1"]},
+    {"_tag":"Claim","schemaVersion":1,"id":"claim:count-b","revision":1,"status":"conflicting","text":"Another source describes another count.","supportSpanIds":["span:announcement-1"]},
+    {"_tag":"AnnouncementProfile","schemaVersion":1,"id":"profile:sample","revision":1,"title":"Sample profile","facts":[{"status":"not_published","reason":"The agency has not published a value."},{"status":"conflicting","alternativeClaimIds":["claim:count-a","claim:count-b"]},{"status":"superseded","previousClaimId":"claim:fee-old","replacementClaimId":"claim:fee-new"}]},
+    {"_tag":"Translation","schemaVersion":1,"id":"translation:sample-es","revision":1,"subjectId":"profile:sample","sourceLocale":"en","locale":"es","sourceBasisDigest":"sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc","basisDigest":"sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd","translatedText":"Perfil de muestra"},
+    {"_tag":"Review","schemaVersion":1,"id":"review:translation-sample","revision":1,"reviewType":"translation","subjectId":"translation:sample-es","subjectBasisDigest":"sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd","outcome":"passed","policyVersion":1}
+  ]
+}

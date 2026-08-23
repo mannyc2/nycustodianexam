@@ -1,92 +1,82 @@
-# R2.10 final receipt
+# R2.10 recovery final receipt
 
-## GitHub coordinates
+## Coordinates
 
 - Repository: `mannyc2/nycustodianexam`
-- Lane: `R2.10`
-- Source branch: `agent/chat-corpus-reconciliation`
-- Required and observed source SHA: `00155a1d555d1d4c84f3ab9682ee876dd2a57fbb`
-- Final source-drift comparison: identical; ahead 0, behind 0 at `2026-08-22T10:55:08Z`
-- Output branch: `research/v2-tool-geometry-audit`
-- Draft PR: https://github.com/mannyc2/nycustodianexam/pull/17
+- Lane: `R2.10` recovery
+- Base commit: `d94981c62e3834177f0db9bc387b2c601c40636b`
+- Output branch: `research/v2-tool-geometry-audit-recovery`
+- Pull request: https://github.com/mannyc2/nycustodianexam/pull/24
+- Start receipt commit: `26107c780351730d1e94507711b179c6b874957a`
+- Recovered-bundle commit: `0ab2f64`
 - Allowed path: `research/v2/tool-geometry-audit/**`
-- Initial lane commit: `1e42f9b2c855fcff4a5ff2fc6a30c970118d61e6`
-- Evidence baseline commit: `c9ce7a686dfbb918e6f9345e98204b31a14f0a9c`
-- Substantive audit commit: `147bace26a9471fb17d1aa05504a78a5ed6ad7f7`
-- Finalization commit: the commit containing this receipt and `MANIFEST.sha256`; its SHA is recorded in the draft PR body and returned in the external GitHub receipt because a commit cannot contain its own SHA.
 - Force push: not used
-- PR state: draft
 
-## Audit disposition
+The commit containing this receipt cannot record its own SHA. The pull request
+and Git history provide that final coordinate.
 
-The exact GitHub-preserved corpus is partial and internally inconsistent with its README. The five report parts total 47,528 bytes, not the recorded 91,620 bytes, and the source/model/parameter/manifests needed to execute or mechanically inspect the four POCs are absent.
+## Recovered evidence
 
-Per-POC classification:
+- Committed bundle: `recovered-input/research-bundle.zip`
+- Bytes: `2,309,138`
+- SHA-256:
+  `a3dbdb262733be6527347e26cb5e6d8fdb612cf7ee6a09574730a7a6ad188b06`
+- ZIP entries: `90`
+- Uncompressed bytes: `6,289,966`
+- Integrity: pass
 
-- adjustable wrench: `evidence-blocked`;
-- pipe wrench: `evidence-blocked`;
-- cup plunger: `evidence-blocked`;
-- flange plunger: `evidence-blocked`.
+The exact archive contains the POC source, four parameter records, manifests,
+historical build, derivatives, inventories, source/rights records, and report.
+The earlier GitHub report fragments remain a distinct, conflicting package
+state and are not silently equated with this archive.
 
-No POC is production-approved, mechanically approved, rights-cleared, accessibility-approved, or answer-leak approved.
+## Rebuild receipt
 
-## Rebuild and probe receipt
+A fresh Python 3.12.3 environment used CadQuery 2.8.0,
+cadquery-ocp 7.9.3.1.1, OCP 7.9.3.1, trimesh 4.11.1, NumPy 2.3.5,
+SciPy 1.17.0, Pillow 12.3.0, and CairoSVG 2.8.2.
 
-- Exact historical POC rebuild: `BLOCKED_BEFORE_EXECUTION`.
-- Reason: missing `build_poc.py`, parameter/provenance JSON, dependency/container pin, manifests, build trees, and derivatives.
-- Effect coordinate: not applicable; no Effect code or package was used.
-- Bun coordinate: not installed and not used.
-- Audit runtime: Linux 6.18.35 x86_64, Python 3.13.5, CadQuery 2.8.0, cadquery-ocp 7.9.3.1.1, OCP 7.9.3.1, trimesh 4.11.1, NumPy 2.3.5, Pillow 12.3.0.
-- Generic toolchain smoke: executed and committed; it is not POC evidence.
-- Browser/GLB/SVG/raster/print/phone probes: not run because exact derivatives and delivery fixtures are absent.
-- Mechanical review: not performed; a qualified-review packet is supplied for later exact-hash review.
+- historical manifest: 79/79;
+- fresh build A manifest: 79/79;
+- fresh build B manifest: 79/79;
+- historical versus A exact bytes: 79/79;
+- A versus B exact bytes: 79/79.
 
-## Key findings
+The recovered historical receipt used Python 3.13.5. The exact cross-version
+result is observed for these two environments only.
 
-1. The raw tree contains seven files totaling 57,375 bytes and omits the compact evidence its README says is preserved.
-2. The present report parts are 44,092 bytes shorter than the recorded source report, so the recorded report SHA-256 cannot describe the present part set.
-3. Archive and POC SHA-256 values are recovery coordinates only while the corresponding bytes are absent.
-4. The current 14-pair taxonomy registry differs from the recovered 14-pair narrative set; the old missing inventory must not control current work.
-5. Rights and parameter provenance remain blocked; ABO also has conflicting official license surfaces.
-6. A generic current-environment probe found byte-stable STL output but volatile STEP headers/counters, requiring separate raw-byte, normalized-header, and semantic geometry reproducibility policies.
-7. Reproducibility, mechanical correctness, rights clearance, accessibility, answer-leak safety, and production approval remain separate gates.
+## Final POC dispositions
 
-## Published outputs
+- adjustable wrench: `reproducible and reviewable`;
+- pipe wrench: `reproducible and reviewable`;
+- cup plunger: `reproducible but requires model/view rework`;
+- flange plunger: `reproducible but requires model/view rework`.
 
-Required lane outputs:
+All four are accepted as recovered research/pipeline evidence and retired as
+production-art candidates. They will not be repaired into the shipping artwork.
+Codex-native image generation is the production route established separately by
+maintained illustration authority.
 
+Retirement closes production mechanical, accessibility, and delivery review for
+these POCs. It does not convert reproducibility into mechanical certification.
+
+## Published verification material
+
+- `probes/recovered_bundle_audit.py`
+- `raw-results/recovered-bundle-audit.json`
+- `raw-results/recovery-recheck.md`
 - `CHECKSUM-AUDIT.csv`
 - `RAW-BUNDLE-IDENTITY.md`
 - `REBUILD-RECEIPT.md`
-- `TAXONOMY-DIFF.csv`
-- `SOURCE-RIGHTS-AUDIT.csv`
-- `POC-PARAMETER-AUDIT.csv`
 - `POC-GEOMETRY-AUDIT.csv`
-- `DERIVATIVE-LINEAGE.csv`
+- `POC-PARAMETER-AUDIT.csv`
+- `POC-VISUAL-REVIEW.md`
 - `ANSWER-LEAK-AUDIT.md`
-- `HUMAN-MECHANICAL-REVIEW-PACKET.md`
+- `SOURCE-RIGHTS-AUDIT.csv`
+- `TAXONOMY-DIFF.csv`
 - `OPEN-ISSUES.csv`
-- `raw-results/**`
-
-Shared outputs:
-
-- `README.md`
-- `START-RECEIPT.md`
-- `REPORT.md`
-- `SOURCE-LEDGER.csv`
-- `DECISION-MATRIX.csv`
 - `OPEN-QUESTIONS.csv`
-- `FINAL-RECEIPT.md`
-- `MANIFEST.sha256`
 
-Additional committed reproducibility material:
-
-- `probes/toolchain_smoke.py`
-- `probes/step_process_probe.py`
-- `probes/requirements-audit.txt`
-
-## Remaining blockers
-
-The audit can be resumed only after recovering exact archive/source bytes and verifying their recorded hashes. A subsequent lane must then rebuild twice in the historical pinned environment, inspect exact model and derivative hashes, regenerate current-taxonomy inventories, and complete rights, leak, accessibility, and qualified mechanical review.
-
-This receipt records an audit result, not production approval.
+R2.10 has no remaining evidence blocker. Future Codex-generated production
+images have their own exact-byte content, rights, accessibility, leak, and
+phone/print release gates.
