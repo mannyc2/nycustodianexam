@@ -1,91 +1,43 @@
 # Raw bundle identity audit
 
-## Result
+## Current result
 
-`FAILED / BLOCKED`.
+`RECOVERED / VERIFIED`, with one retained cross-package identity conflict.
 
-The GitHub-preserved tree does not match the scope described by its own README, and the present report parts cannot reconstruct the recorded report byte identity.
+The original R2.10 GitHub-tree finding remains historically correct: its seven
+raw files did not contain the promised model/source/build evidence. The exact
+archives were later recovered from the earlier task workspace.
 
-## Immutable source observed
+## Verified archive coordinates
 
-- Source branch: `agent/chat-corpus-reconciliation`
-- Source SHA: `00155a1d555d1d4c84f3ab9682ee876dd2a57fbb`
-- Raw path: `research/initial-pass/raw/tool-geometry/`
-- Present files: 7
-- Present bytes under that path: 57,375
-- Present report-part bytes: 47,528
+| Artifact | Bytes | Files | Uncompressed bytes | SHA-256 | Status |
+|---|---:|---:|---:|---|---|
+| `all-research-2026-08-21.zip` | 2,471,268 | not used as build root | not used | `40cfab3f2a0a6d26782b7e24776d4d595ba6cef86389836030134844c3aaeff5` | exact recorded outer archive observed |
+| `recovered-input/research-bundle.zip` | 2,309,138 | 90 | 6,289,966 | `a3dbdb262733be6527347e26cb5e6d8fdb612cf7ee6a09574730a7a6ad188b06` | exact recorded nested bundle committed |
 
-The path contains only:
+Both ZIP integrity checks pass. The nested bundle is the audit/rebuild authority.
 
-1. `README.md`;
-2. `asset-manifest.schema.json`;
-3. `report/part-01.md` through `report/part-05.md`.
+## Contents recovered
 
-## Report identity contradiction
+- `build_poc.py` and `compare_builds.py`;
+- parameters and source records for `t0004`–`t0007`;
+- the historical `poc-build-a` tree and 79-entry `SHA256SUMS`;
+- STEP, review/component STL, GLB, SVG, PNG, and WebP derivatives;
+- fixed-view and pair-preview records;
+- research report, taxonomy inventory, confusable pairs, invariant sheet, schema,
+  source ledger, and POC summary.
 
-The raw README states that concatenating the five parts reproduces:
+## Retained conflict
 
-- file: `research-report.md`
-- size: 91,620 bytes
-- SHA-256: `d12a9f91383c8ce0339d078f9404e1095b53c9537012b334c26e08143e9ce327`
+The five partial report fragments in the original Git tree total 47,528 bytes and
+claim another 91,620-byte report identity. The exact recovered bundle instead
+contains a 101,586-byte `research-report.md` with SHA-256
+`d1807d0fdf4f7fec7758873163a240ac04e9874dff13121123abbbee57456531`.
 
-GitHub reports the five blobs as:
+Likewise, several compact-file hashes extracted from the partial narrative do not
+match the corresponding exact recovered-bundle files. This is recorded as a
+normalization/package conflict, not used to reject the archive whose own recorded
+ZIP hash matches exactly.
 
-| Part | Bytes |
-|---|---:|
-| part-01.md | 14,794 |
-| part-02.md | 11,286 |
-| part-03.md | 10,940 |
-| part-04.md | 8,724 |
-| part-05.md | 1,784 |
-| Total | 47,528 |
-
-The part set is 44,092 bytes shorter than the recorded report. No concatenation order or line-ending choice can add those absent bytes. The claimed report SHA-256 therefore cannot describe the present part set.
-
-## Missing compact evidence
-
-The report and normalization receipts name compact evidence that is absent from the immutable Git tree:
-
-- `taxonomy-inventory.csv`;
-- `confusable-pairs.csv`;
-- `first-20-visual-invariants.csv`;
-- `source-ledger.csv`;
-- `poc-summary.json`;
-- `DELIVERABLE-SHA256SUMS`;
-- `poc/build_poc.py`;
-- `poc/parameters/*.json`;
-- `poc/poc-summary.json`;
-- `poc/MANIFEST.sha256`;
-- build A and build B manifests/validation trees.
-
-The raw README says these compact files are preserved in the branch. The actual tree contradicts that statement.
-
-## Missing archives and binaries
-
-The following identities are recorded, but the bytes are absent:
-
-- outer archive SHA-256 `40cfab3f2a0a6d26782b7e24776d4d595ba6cef86389836030134844c3aaeff5`;
-- nested bundle SHA-256 `a3dbdb262733be6527347e26cb5e6d8fdb612cf7ee6a09574730a7a6ad188b06`;
-- POC evidence archive SHA-256 `725f997229f7f708dfb00189b3790f8d7fa0f5e30ed3378fd0fd29f48ac5ee7d`.
-
-These are useful provenance coordinates, not verified archive identities in this lane. A hash record cannot substitute for the hashed object.
-
-## What remains trustworthy
-
-- GitHub object identity and size for the seven present files: `CONFIRMED`.
-- Narrative statements in the five parts: present as report fragments, but not proven complete.
-- Proposed schema fields: inspectable, but no instance manifests exist.
-- Historical archive SHA records: present as claims, not reverified.
-
-## Required recovery
-
-A later recovery must provide the exact outer archive or nested bundle bytes. It must then:
-
-1. verify the outer and nested archive SHA-256 values;
-2. safely extract the archive;
-3. verify `DELIVERABLE-SHA256SUMS` and `poc/MANIFEST.sha256`;
-4. compare every expected compact file against `SOURCE-HASHES.sha256`;
-5. preserve the exact source, parameters, build environment, logs, and generated outputs;
-6. repeat this audit without using report prose as a replacement for absent files.
-
-No production or POC approval follows from the present partial tree.
+The recovered archive may support claims about its exact contents and builds. It
+does not retroactively make the earlier fragment set complete.
