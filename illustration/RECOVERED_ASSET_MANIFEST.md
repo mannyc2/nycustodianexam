@@ -1,6 +1,6 @@
 # Recovered illustration artifact manifest
 
-These hashes identify the exact durable artifacts recovered from the ChatGPT Library on 2026-08-19. The normalized production contract in this directory supersedes these files as an implementation-facing document, while `../docs/TAXONOMY.md` controls current content scope.
+These hashes identify the exact durable artifacts recovered from the ChatGPT Library on 2026-08-19. `VISUAL_AUTHORING_POLICY.md` is the current production authority; the normalized recovered contract and artifacts below are supporting history. `../docs/TAXONOMY.md` controls current content scope.
 
 | Recovered artifact | SHA-256 | Recovery disposition |
 |---|---|---|
@@ -12,4 +12,4 @@ These hashes identify the exact durable artifacts recovered from the ChatGPT Lib
 | `asset-review-log-template.csv` | `70760c20af9caf2a31516d08f5c5c7a5e0c2f6202aef5c9f9392816618008233` | Historical production template |
 | `cost-model-assumptions.csv` | `e7a192cce464b6758c62b58ea5e7d41f403d121de8f92a5fe583cafd20633df6` | Historical planning assumptions; not current quotes |
 
-The recovered SVG example package also contained raster previews/contact sheets. Those are derivative renderings; this repository restores the SVG source prototypes rather than treating preview PNGs as additional source-of-truth art.
+The recovered SVG example package also contained raster previews/contact sheets. They and the restored SVG prototypes are historical examples, not production sources of truth. Current production preserves accepted Codex-generated raster masters.

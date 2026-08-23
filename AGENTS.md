@@ -50,14 +50,19 @@ Every launch message supplies one exact immutable source SHA. Treat `{{POST_CURA
 
 `docs/TAXONOMY.md` controls which concepts and decisive distinctions are allowed.
 
-For isolated tools:
+`illustration/VISUAL_AUTHORING_POLICY.md` is the current production authority for
+isolated tools, confusable comparisons, and hazard scenes. Use Codex-native image
+generation; preserve the accepted reviewed raster bytes as the visual source of
+truth. Do not require SVG/CAD/3D production assets or model-output regeneration.
 
-- `illustration/TOOL_GEOMETRY_PIPELINE.md` is the current production architecture.
-- `illustration/PIPELINE_SPEC.md` is recovered historical/fallback guidance.
-- raw deterministic geometry evidence is preserved under `research/initial-pass/raw/`.
-- prototypes and POCs are not production-approved.
+Publicly released official sample artwork may be used as a high-level visual-
+style reference under that policy. It may never provide secure/recalled content,
+item composition, or artwork to trace/reconstruct.
 
-For hazard scenes and broader contextual illustrations, the recovered pipeline remains supporting guidance until a dedicated maintained decision supersedes it.
+`illustration/TOOL_GEOMETRY_PIPELINE.md`, `illustration/PIPELINE_SPEC.md`, and the
+R2.9 deterministic-first recommendation are supporting or historical material
+only. The four recovered R2.10 CAD/SVG POCs are retired production-art
+candidates, not work awaiting repair or approval.
 
 ### Supporting evidence and recovery
 

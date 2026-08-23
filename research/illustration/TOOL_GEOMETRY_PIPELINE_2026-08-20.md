@@ -1,5 +1,10 @@
 # Deterministic tool-geometry pipeline research
 
+> **Superseded production recommendation (2026-08-23):** The evidence remains
+> historical research. `illustration/VISUAL_AUTHORING_POLICY.md` now controls and
+> selects Codex-native raster generation. R2.10 recovered the exact bundle,
+> reproduced it twice, and retired all four POCs as production-art candidates.
+
 **Integration date:** 2026-08-20  
 **Repository base audited by the research:** `mannyc2/nycustodianexam` `main` at `92efee4fb2cfd0f6032d0f9348cb8cc8ba89356c`  
 **Evidence status:** user-supplied completion summary from an immutable-base research pass  
@@ -232,9 +237,10 @@ It does not automatically settle:
 - which Class E references can be promoted;
 - whether any POC model passes final mechanical review.
 
-Current authority after integration:
+Current authority after the 2026-08-23 reconciliation:
 
 1. `docs/TAXONOMY.md` controls concept scope and decisive feature requirements.
-2. `illustration/TOOL_GEOMETRY_PIPELINE.md` controls current tool-production architecture.
-3. this research file records the evidence/result that justified the decision.
-4. `illustration/PIPELINE_SPEC.md` remains historical/fallback guidance and hazard-scene QA material; it is no longer the default source pipeline for tool geometry.
+2. `illustration/VISUAL_AUTHORING_POLICY.md` controls Codex-native production.
+3. `illustration/TOOL_GEOMETRY_PIPELINE.md` preserves this deterministic route as optional research/reference material.
+4. this research file records the evidence/result behind the superseded route.
+5. `illustration/PIPELINE_SPEC.md` remains supporting QA/accessibility guidance where it does not conflict with current policy.

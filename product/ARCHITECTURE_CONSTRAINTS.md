@@ -1,6 +1,6 @@
 # Architecture constraints and decisions
 
-**Status:** maintained constraints, updated 2026-08-21 after normalizing the initial research pass and curating the second-pass Effect v4/Bun research foundation. This file records accepted direction and explicit research gates. It does not replace the product behavior contract or the exam-fact corpus.
+**Status:** maintained constraints, updated 2026-08-23 after normalizing the initial research pass, curating the second-pass Effect v4/Bun research foundation, and resolving visual authoring. This file records accepted direction and explicit research gates. It does not replace the product behavior contract or the exam-fact corpus.
 
 Supporting material:
 
@@ -235,6 +235,26 @@ Keep distinct:
 
 Mutable announcement facts and scored content must not exist only as handwritten page prose.
 
+### Codex-native image generation is the visual-authoring route
+
+`../illustration/VISUAL_AUTHORING_POLICY.md` controls production artwork for
+isolated tools, confusable comparisons, and hazard scenes.
+
+- Codex image generation authors the production images.
+- The exact accepted reviewed raster bytes are the visual source of truth.
+- Publicly released official sample artwork may guide high-level visual style,
+  but may not provide secure/recalled item content or a composition to copy.
+- The four recovered R2.10 CAD/SVG POCs are retired research evidence, not a
+  production backlog.
+- R2.9's deterministic-first SVG/3D recommendation is superseded as an
+  authoring-route decision. Its semantic scene, target/decoy, region,
+  accessibility, QA, and immutable-version contracts remain applicable.
+- Image generation is outside the application/runtime build. The content
+  compiler consumes pinned image bytes and deterministically emits reviewed web,
+  print, and offline derivatives.
+- All Tier A/B taxonomy concepts remain launch scope. A pilot determines native
+  dimensions, prompt/reference packaging, and safe batch size, not scope.
+
 ## Maintained product invariants
 
 The architecture must preserve:
@@ -324,7 +344,8 @@ A final synthesis lane proposes maintained decisions and the first implementatio
 - first-party observability/analytics choice, if any;
 - correction endpoint implementation/storage;
 - custom-domain/canonical-host configuration;
-- hazard-scene production method;
-- production approval of any geometry asset.
+- exact native Codex output dimensions and safe multi-image tile grid after the
+  visual pilot;
+- production approval of each exact generated image and scene.
 
 Resolve these through the curated second-pass program and implementation evidence, not by carrying first-pass defaults forward.
