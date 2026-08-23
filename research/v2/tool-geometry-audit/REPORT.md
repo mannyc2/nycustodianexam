@@ -1,99 +1,137 @@
-# R2.10 report: deterministic tool-geometry evidence and POC audit
+# R2.10 report: recovered tool-geometry evidence and POC audit
 
 ## Executive verdict
 
-The immutable source branch was verified at `00155a1d555d1d4c84f3ab9682ee876dd2a57fbb`. The audit was performed only under the authorized lane path and the PR remains draft.
+The four POCs are no longer evidence-blocked. The exact recovered archive matches
+the repository's recorded SHA-256, its historical 79-entry manifest verifies, and
+two independent fresh builds are byte-identical to the historical build and to
+each other.
 
-The recovered GitHub corpus is insufficient to rebuild, inspect, or approve any of the four proof models. All four are classified `evidence-blocked`:
+The final classifications are:
 
-- adjustable wrench;
-- pipe wrench;
-- cup plunger;
-- flange plunger.
+- adjustable wrench — `reproducible and reviewable`;
+- pipe wrench — `reproducible and reviewable`;
+- cup plunger — `reproducible but requires model/view rework`;
+- flange plunger — `reproducible but requires model/view rework`.
 
-This is an audit failure of evidence availability and identity, not a finding that the underlying concept of deterministic project-authored geometry is unsound.
+All four are accepted as recovered POC/pipeline evidence and retired as
+production-art candidates. No claim of production mechanical certification is
+needed or made.
 
-## Load-bearing findings
+## What changed after the original audit
 
-### 1. The present raw tree is not the tree described by its README
+PR #17 examined the only bytes then present in GitHub: a README, a proposed
+schema, and five incomplete report parts. Its blocked result was truthful for that
+input. The later recovery supplied both recorded archive coordinates:
 
-The immutable path contains seven files totaling 57,375 bytes: a README, a proposed schema, and five report parts. The README says compact inventories, ledgers, POC source/parameters, summaries, and manifests are also preserved. They are not present.
+| Artifact | Bytes | SHA-256 | Result |
+|---|---:|---|---|
+| consolidated outer archive | 2,471,268 | `40cfab3f2a0a6d26782b7e24776d4d595ba6cef86389836030134844c3aaeff5` | verified external recovery input |
+| nested `research-bundle.zip` | 2,309,138 | `a3dbdb262733be6527347e26cb5e6d8fdb612cf7ee6a09574730a7a6ad188b06` | verified and committed in this lane |
 
-### 2. The recorded report identity is impossible for the present part set
+The nested bundle contains the model source, parameters, source records, build
+script, comparison script, historical build, STEP/STL/GLB/SVG/PNG/WebP outputs,
+manifest, and report/inventory material for all four POCs.
 
-The five blobs total 47,528 bytes. The README records a 91,620-byte original report. The 44,092-byte shortfall proves the present part set cannot reproduce the recorded report byte stream or SHA-256.
+## Reproducibility result
 
-### 3. Archive and POC hashes are coordinates, not verified objects
+The fresh audit used Python 3.12.3 with the exact recorded specialist package
+versions. The recovered historical receipt used Python 3.13.5. Despite that
+difference:
 
-The outer archive, nested research bundle, and POC evidence archive are absent. Their SHA-256 values remain useful recovery coordinates, but this lane cannot verify an object that is not available.
+- historical manifest: 79/79 pass;
+- rerun A manifest: 79/79 pass;
+- rerun B manifest: 79/79 pass;
+- historical versus rerun A: exact 79/79 match;
+- rerun A versus rerun B: exact 79/79 match.
 
-### 4. The actual POC definitions cannot be audited
+This is an observed result for these environments, not a claim that every Python,
+OS, or OCCT combination is supported.
 
-No model script, parameter record, B-rep, STEP, STL, GLB, SVG, raster, per-asset manifest, validation JSON, or build log exists in the immutable Git tree. Therefore the requested part count, intersections, pose, tooth/jaw/flange geometry, bounds, STEP re-import, mesh watertightness, metadata, views, and visibility checks are all blocked.
+## Structural and derivative results
 
-### 5. Current taxonomy has drifted from the recovered narrative inventory
+All four recovered STEP files re-import as valid solids. Recorded/re-imported
+bounds agree exactly for the two wrenches and within 0.121 mm for the two plunger
+models. Every component STL is watertight. The cup-plunger combined review mesh is
+not watertight; the other three combined review meshes are watertight.
 
-The current taxonomy still contains 14 registered pairs, but the set is different. Several raw-report pairs are absent or renamed; several current pairs do not appear in the raw narrative. The missing `confusable-pairs.csv` cannot control current work. A new machine-readable inventory must be generated from the current taxonomy SHA.
+GLB delivery metadata uses neutral node/mesh names and contains no canonical tool
+names, taxonomy IDs, materials, cameras, or top-level extras. All inspected SVG
+and GLB files are clear of the denylisted answer-bearing names. These are
+asset-level observations; no application precommit page existed to audit.
 
-The four POC narrative invariants remain directionally aligned with current taxonomy, but geometry alignment cannot be observed without model bytes.
+## Per-POC result
 
-### 6. Rights remain independent from geometry and reproducibility
+### Adjustable wrench (`t0004`)
 
-The source ledger required to connect parameters to exact standards, references, measurements, and rights is absent. Current official sources confirm:
+The source has three parts, smooth jaws, a moving-jaw form, and a worm component.
+STEP, part meshes, combined review mesh, GLB, and three static views reproduce.
+The source explicitly marks body contour, fillets, guide form, worm tooth form,
+and display opening as editorial. Automated validation records the decisive
+features but does not independently measure jaw parallelism or worm correctness.
 
-- ISO 6787 is a dimensional/performance standard for adjustable wrenches, not a complete reusable generic model;
-- ETIM/ECLASS are classification/property systems, not geometry sources;
-- STEP and glTF are interchange/delivery formats, not geometry rights;
-- Objaverse requires object-level license review;
-- Poly Haven is CC0 but no suitable tool asset was selected;
-- ABO remains blocked because official surfaces conflict between CC BY 4.0 and CC BY-NC 4.0.
+Disposition: reproducible and reviewable; accepted as pipeline evidence; retired
+as a production-art candidate.
 
-The repository MIT license does not prove that missing parameter inputs, third-party reference material, or model derivatives are rights-cleared.
-This is a source-and-license evidence audit, not legal advice or a legal clearance opinion.
+### Pipe wrench (`t0005`)
 
-### 7. Exact STEP byte identity needs a declared policy
+The source has three parts, distinct hook/fixed-jaw forms, serrations, and an
+adjusting component. STEP, meshes, GLB, and fixed views reproduce. Tooth count,
+pitch, body contour, guide/nut form, and display opening remain editorial, and
+the automated check does not independently establish those mechanisms.
 
-A committed environment smoke probe used Python 3.13.5, CadQuery 2.8.0, and OCCT 7.9.3.1. Identical geometry produced:
+Disposition: reproducible and reviewable; accepted as pipeline evidence; retired
+as a production-art candidate.
 
-- matching STL bytes;
-- different STEP bytes in one process because the translator product counter changed;
-- different STEP bytes across processes because the header timestamp changed;
-- matching normalized STEP hashes after removing only those observed volatile fields;
-- matching re-imported 10 x 20 x 30 mm bounds.
+### Cup plunger (`t0006`)
 
-This does not invalidate the historical 79/79 claim, but it makes the absent manifest and commands essential. Future reproducibility must state whether it requires raw bytes, normalized headers, or semantic/geometric equivalence.
+The source has separate cup and handle parts and records a zero-height extended
+flange. STEP and both component meshes pass, but the combined review mesh is not
+watertight. The feature view communicates the open cup; the full profile and
+three-quarter line renders are too faint at phone scale. Cup contour, thickness,
+attachment, and exact dimensions remain editorial.
 
-## Per-POC disposition
+Disposition: reproducible but requires model/view rework; accepted as pipeline
+evidence; retired as a production-art candidate.
 
-| POC | Classification | Why |
-|---|---|---|
-| Adjustable wrench | evidence-blocked | model, parameters, validation, and derivatives absent |
-| Pipe wrench | evidence-blocked | model, parameters, validation, and derivatives absent |
-| Cup plunger | evidence-blocked | model, parameters, validation, and derivatives absent |
-| Flange plunger | evidence-blocked | model, parameters, validation, and derivatives absent |
+### Flange plunger (`t0007`)
 
-None is production-approved.
+The source has separate cup/flange and handle parts and a 45 mm editorial flange
+height. STEP and meshes pass. The feature view communicates the extended flange,
+but the profile and three-quarter renders are too faint at phone scale and the
+rigid model cannot establish flexible resting behavior.
 
-## Required recovery and rerun sequence
+Disposition: reproducible but requires model/view rework; accepted as pipeline
+evidence; retired as a production-art candidate.
 
-1. Recover the exact outer or nested archive bytes and verify their recorded SHA-256 values.
-2. Verify every compact file against `SOURCE-HASHES.sha256`.
-3. Verify the internal deliverable and POC manifests before executing code.
-4. Recreate the exact historical dependency/container environment.
-5. Run two clean POC builds with raw logs and complete output inventories.
-6. Compare raw hashes, normalized container/header hashes, and semantic geometry checks separately.
-7. Inspect every model and derivative named in the lane prompt.
-8. Regenerate taxonomy inventory and confusable pairs at the current source SHA.
-9. Complete rights, answer-leak, accessibility, and qualified mechanical review against exact hashes.
-10. Only then consider a separate production-approval decision.
+## Identity conflict retained
 
-## Effect and Bun coordinates
+The exact recovered archive's internal top-level file hashes do not match several
+compact-file hashes extracted from the earlier partial narrative. Because the
+archive itself matches its recorded SHA-256, its bytes are identified; the
+different compact ledger represents another normalization/package state. R2.10
+records both and does not pretend they are the same artifact.
 
-- Effect: not used; this lane contains no Effect code and no Effect package coordinate.
-- Bun: not installed and not used; this is a Python/CadQuery evidence audit, not a TypeScript workspace probe.
+## Rights and factual basis
 
-The lane still followed the repository's publication and evidence-status contract.
+The bundle declares the newly authored POC code and geometry CC0-1.0 and states
+that no third-party model, image, texture, logo, or official exam drawing was
+included. Manufacturer/standard material appears as factual reference URLs only.
+That is sufficient to preserve and audit the POCs as research evidence.
 
-## Conclusion
+It is not sufficient to turn every editorial dimension into an authoritative
+generic tool specification. That limitation is one reason the four POCs are
+retired rather than promoted as shipping illustrations.
 
-The maintained deterministic geometry direction remains plausible and preferable to generative geometry for mechanically decisive isolated tools. The four recovered POC success claims, however, cannot be promoted beyond historical narrative until the exact source tree and build evidence are recovered. Reproducibility, mechanical correctness, rights clearance, accessibility, answer-leak safety, and production approval remain distinct gates.
+## Architecture consequence
+
+R2.10 now has one canonical conclusion: the recovered deterministic geometry
+pipeline is reproducible, but its four outputs are closed research prototypes.
+They neither block nor control the maintained Codex-native illustration route.
+Future illustrations still require exact final-byte identity, taxonomy/content
+review, rights review, accessibility records, leak checks, and phone/print QA.
+
+## Effect and Bun
+
+Effect and Bun are not used by this Python/CadQuery audit. No application code was
+introduced.

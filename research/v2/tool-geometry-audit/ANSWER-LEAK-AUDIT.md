@@ -1,59 +1,45 @@
 # Answer-leak audit
 
-## Verdict
+## Disposition
 
-The architecture is directionally correct, but the actual leak controls cannot be verified because no POC SVG, GLB, asset manifest instance, delivery manifest, or scored-page fixture is present.
+The recovered POC derivatives pass an asset-level metadata inspection. They are
+accepted as historical pipeline evidence and retired as production-art
+candidates, so they will not be published to a scored client.
 
-## Inspectable proposal
+This is not an application-level approval. The Codex-native production images,
+delivery manifests, question pages, accessibility text, and offline packs must
+be checked at their exact release hashes when they exist.
 
-The proposed JSON Schema requires internal fields such as:
+## Observed recovered surfaces
 
-- `taxonomyId`;
-- `canonicalName`;
-- source file paths;
-- decisive invariants;
-- generated output paths;
-- validation/review records.
+| Surface | Observation | Status |
+|---|---|---|
+| Research paths and filenames | POC IDs and concept names are present in the research archive | acceptable for internal evidence; do not deploy |
+| SVG content | Recovered files parse; the automated scan found no forbidden answer-bearing terms or active external content | `OBSERVED_PASS` for recovered assets |
+| GLB structure | Node and mesh names are neutral; no materials, cameras, top-level extras, or external URIs were found | `OBSERVED_PASS` for recovered assets |
+| PNG/WebP metadata | The recovered raster probe reported no answer-bearing metadata | `OBSERVED_PASS` for recovered assets |
+| Scored URL/DOM/bundle | No application fixture exists | future release gate, not a POC blocker |
+| Accessible name and nonvisual equivalent | No application fixture exists | future release gate, not a POC blocker |
 
-Those fields are appropriate for internal authoring and review. They are answer-bearing and must not be shipped unchanged to a pre-commit scored client.
+The machine-readable observations are in
+`raw-results/recovered-bundle-audit.json`.
 
-The report states that GLB nodes/materials should use neutral names such as `component_00` and `material_00`, and that scored assets should use fixed static views. These are unverified requirements, not observed passes.
+## Production rule
 
-## Surface audit
+Internal authoring records may contain canonical names, taxonomy IDs, decisive
+features, source paths, and review verdicts. The pre-commit scored client must
+not expose those fields through filenames, URLs, metadata, DOM, accessibility
+names, offline indexes, source maps, or alternate images.
 
-| Surface | Evidence available | Status | Required gate |
-|---|---|---|---|
-| Repository research paths | Names identify the POC | acceptable for internal research | never expose as scored delivery URLs |
-| Scored asset URL/filename | No delivery fixture | BLOCKED | content-addressed or neutral mapped path |
-| DOM and visible text | No scored fixture | BLOCKED | no answer, family, or decisive verdict before durable commit |
-| `alt` / accessible name | No fixture | BLOCKED | neutral attempt description only; full description after commit |
-| SVG title/desc/IDs/classes/comments | No SVG bytes | BLOCKED | parse and reject answer-bearing strings and active content |
-| GLB node/mesh/material/extras/URIs | No GLB bytes | BLOCKED | structured parse and denylist scan, not byte grep alone |
-| Asset manifest | Only schema, no instances | BLOCKED | compile a stripped delivery manifest with neutral IDs |
-| Offline pack index | No pack fixture | BLOCKED | no canonical name or answer mapping in pre-commit public metadata |
-| Source maps/bundle strings | No application fixture | BLOCKED | build scan and browser observation before release |
-| Camera/rotation | Narrative only | BLOCKED | fixed scored static view; no pre-answer GLB or alternate views |
+For each accepted Codex-generated release image, the release process must:
 
-## Decisive-feature leakage
+1. scan image metadata and delivery paths;
+2. inspect the pre-commit page, network requests, offline pack, and built bundle;
+3. verify a neutral pre-commit description and a complete post-commit or
+   equivalent nonvisual path;
+4. confirm that no alternate image or hidden label reveals the answer; and
+5. repeat the checks whenever the image bytes, delivery map, or page behavior
+   changes.
 
-A neutral description cannot simply recite the decisive taxonomy difference when that difference solves the item. Examples:
-
-- naming smooth parallel jaws and a worm can identify an adjustable wrench;
-- naming serrated hook/heel jaws can identify a pipe wrench;
-- stating that a lower flange is present can identify a flange plunger;
-- stating that no flange exists can identify a cup plunger.
-
-The pre-commit description should communicate that an image is present and its general orientation without disclosing the answer-bearing comparison. A full descriptive equivalent must be available after commitment, and a separately authored nonvisual equivalent must preserve accessibility without leaking the scored answer.
-
-## Required future probe
-
-For each exact release candidate hash:
-
-1. parse SVG XML and GLB JSON/chunks;
-2. enumerate filenames, paths, IDs, titles, descriptions, classes, comments, node names, mesh names, material names, extras, URIs, and extension payloads;
-3. render the scored page before commitment with screen-reader accessibility inspection;
-4. inspect network requests, offline manifests, HTML, source maps, and bundled strings;
-5. confirm that only the exact authored static view is reachable before commitment;
-6. repeat after every semantic or delivery-path change.
-
-No answer-leak pass is granted by this audit.
+The recovered POCs require no further leak, accessibility, or browser approval
+unless a maintainer explicitly reopens them for deployment.

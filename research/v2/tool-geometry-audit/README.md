@@ -1,38 +1,54 @@
 # R2.10 deterministic tool-geometry audit
 
-This lane audits the recovered deterministic tool-geometry research and four proof-of-concept models without granting production approval.
+This lane audits the deterministic tool-geometry research and four proof-of-
+concept models without conflating reproducibility with production-art approval.
 
-## Immutable coordinates
+## Current status
 
-- Repository: `mannyc2/nycustodianexam`
-- Source branch: `agent/chat-corpus-reconciliation`
-- Source SHA: `00155a1d555d1d4c84f3ab9682ee876dd2a57fbb`
-- Output branch: `research/v2-tool-geometry-audit`
-- Draft PR: https://github.com/mannyc2/nycustodianexam/pull/17
-- Allowed path: `research/v2/tool-geometry-audit/**`
+The original R2.10 audit in PR #17 correctly found that the GitHub-preserved raw
+tree was incomplete. A later exact archive recovery now supersedes its four
+`evidence-blocked` classifications.
 
-## Verdict
+The exact recovered bundle is committed at
+`recovered-input/research-bundle.zip`:
 
-The GitHub-preserved corpus is not sufficient to reproduce or mechanically inspect any of the four POCs. The present raw tree contains seven files: one README, one proposed JSON Schema, and five report parts. It does not contain the named `build_poc.py`, parameter records, source/rights ledger, inventories, POC summaries, internal manifests, build trees, or generated derivatives.
+- bytes: `2,309,138`;
+- SHA-256:
+  `a3dbdb262733be6527347e26cb5e6d8fdb612cf7ee6a09574730a7a6ad188b06`;
+- archive members: `90`;
+- uncompressed bytes: `6,289,966`;
+- archive integrity: pass.
 
-The five present report parts total 47,528 bytes, while the raw README claims they reconstruct a 91,620-byte report. Therefore the present part set cannot match the recorded report identity. The original archive hashes remain provenance coordinates only because the corresponding archive bytes are absent.
+All 79 historical manifest entries verify. Two fresh builds reproduce all 79
+files exactly, both against each other and against the recovered historical
+build.
 
-Each POC is classified `evidence-blocked`. This status is narrower and more accurate than `non-reproducible`: the build cannot be attempted because the source package is unavailable, not because the model code was executed and failed.
+## Four POC dispositions
 
-## Files
+| POC | R2.10 classification | Durable disposition |
+|---|---|---|
+| adjustable wrench | reproducible and reviewable | accepted as POC/pipeline evidence; retired as production-art candidate |
+| pipe wrench | reproducible and reviewable | accepted as POC/pipeline evidence; retired as production-art candidate |
+| cup plunger | reproducible but requires model/view rework | accepted as POC/pipeline evidence; retired as production-art candidate |
+| flange plunger | reproducible but requires model/view rework | accepted as POC/pipeline evidence; retired as production-art candidate |
 
-- `REPORT.md`: full findings and recommendations.
-- `RAW-BUNDLE-IDENTITY.md`: Git tree versus recorded archive identity.
-- `REBUILD-RECEIPT.md`: environment and rebuild/probe results.
-- `CHECKSUM-AUDIT.csv`: every available recorded checksum and verification state.
-- `TAXONOMY-DIFF.csv`: old report claims versus current taxonomy.
-- `SOURCE-RIGHTS-AUDIT.csv`: reference and redistribution audit.
-- `POC-PARAMETER-AUDIT.csv`: parameter provenance gaps.
-- `POC-GEOMETRY-AUDIT.csv`: per-POC geometry status.
-- `DERIVATIVE-LINEAGE.csv`: claimed STEP/STL/GLB/SVG/PNG/WebP lineage.
-- `ANSWER-LEAK-AUDIT.md`: metadata and scored-delivery controls.
-- `HUMAN-MECHANICAL-REVIEW-PACKET.md`: exact questions for qualified reviewers.
-- `SOURCE-LEDGER.csv`, `DECISION-MATRIX.csv`, `OPEN-QUESTIONS.csv`, `OPEN-ISSUES.csv`.
-- `probes/` and `raw-results/`: committed scripts and raw observations.
+“Retired” is a final disposition, not another blocker. These four models prove the
+recovered deterministic pipeline can reproduce its artifacts. They are not the
+site's shipping illustrations and need no production-asset approval after the
+maintained visual-authoring policy selects another route.
 
-No file in this lane is a production asset, certification, or mechanical approval.
+## Navigation
+
+- `REPORT.md` — current conclusions and POC dispositions.
+- `RAW-BUNDLE-IDENTITY.md` — archive recovery and identity conflicts.
+- `REBUILD-RECEIPT.md` — exact rerun environment, commands, and results.
+- `POC-GEOMETRY-AUDIT.csv` and `POC-PARAMETER-AUDIT.csv` — per-POC evidence.
+- `POC-VISUAL-REVIEW.md` — fixed-view inspection and retirement rationale.
+- `ANSWER-LEAK-AUDIT.md` — derivative metadata findings.
+- `CHECKSUM-AUDIT.csv`, `DECISION-MATRIX.csv`, `OPEN-ISSUES.csv`, and
+  `OPEN-QUESTIONS.csv` — current evidence ledger.
+- `raw-results/recovered-bundle-audit.json` — complete independent measurements.
+- `probes/recovered_bundle_audit.py` — reproducible audit probe.
+
+No file in this lane is an official exam asset, mechanical certification, or
+shipping study-site illustration.
