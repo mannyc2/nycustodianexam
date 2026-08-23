@@ -6,16 +6,12 @@ Sequence risk and dependency closure; do not redefine launch content scope. All
 Tier A/B content remains launch. Content/asset production can run in parallel
 once the relevant schemas/review gates are stable.
 
-## 0. Maintainer authority reconciliation
+## 0. Completed prerequisites
 
-Before scored visual production, decide and durably record:
-
-- Codex-native generation as an allowed authoring route;
-- public released-sample style reference boundary;
-- final-byte versus regeneration authority;
-- all Tier A/B launch scope.
-
-Do not edit authority inside R2.90. Produce a separate reviewed PR.
+- R2.6 compiler research merged in PR #22.
+- R2.10 exact archive recovered; four POCs classified and retired in PR #24.
+- Codex-native visual authority, public released-sample style boundary, accepted-
+  byte authority, and Tier A/B launch scope merged in PR #25.
 
 ## 1. Version/workspace gate
 
@@ -84,9 +80,9 @@ which the architecture is accepted or revised—not merely when a page renders.
 
 Freeze the full Tier A/B editorial registry and author atomic source/claim records,
 original items, all rationales, translations where chosen, and nonvisual forms.
-Run Codex visual pilots after authority approval; batch accepted tools/scenes only
-after obscure-tool/scene QA economics are observed. The compiler blocks partial
-or stale review state.
+Run the Codex visual pilot under current authority; batch accepted tools/scenes
+only after native dimensions and obscure-tool/scene fidelity are measured. The
+compiler blocks partial or stale review state.
 
 Exit: launch inventory completeness and content/review coverage are derived, not
 estimated by prose.

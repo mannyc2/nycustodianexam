@@ -71,29 +71,23 @@ the baseline production manifest, gzip/Brotli closures, and zero-Effect static
 route. Subsequent changes use reviewed relative regression gates until enough
 data supports absolute budgets.
 
-## 8. Codex-native visuals versus maintained deterministic-first research
+## 8. Codex-native visuals versus deterministic-first research — resolved
 
-Current maintainer direction is to generate whatever visuals are needed with
-Codex, matching the style of released public test images. R2.9 rejects text-to-
-image as the controlling scored-scene production path, and R2.10 cannot approve
-the missing deterministic tool POCs.
+The conflict is closed by merged PR #25 and
+`illustration/VISUAL_AUTHORING_POLICY.md`. Codex-native generation is the
+production-art route. Publicly released official samples may guide high-level
+style, while secure/recalled content and sample item/composition reconstruction
+remain prohibited.
 
-**Resolution proposed for maintainer review:** distinguish **asset creation** from
-**release/build determinism**. Codex may generate candidates one at a time or in
-contact sheets. Once a candidate passes exact-tool/scene accuracy, rights,
-accessibility, answer-leak, content, and security review, commit/preserve its
-final bytes and basis digest. Builds consume those immutable bytes and remain
-deterministic; exact model regeneration is not required for historical attempts.
+Accepted reviewed raster bytes control release/build inputs; model regeneration
+and deterministic SVG/CAD/3D fallbacks are not required. R2.9's semantic,
+target/decoy, region, accessibility, QA, and versioning contracts remain in
+force. R2.10's four POCs are recovered research evidence and retired
+production-art candidates.
 
-For tool images, style-match only the publicly released samples and never copy a
-released item composition or use secure/recalled material. For hazards, author
-the semantic inventory and final target/decoy regions against the accepted final
-pixels. The first visual pilot must measure Codex native dimensions, single vs
-multi-image consistency, obscure-tool mechanical fidelity, line/style
-consistency, phone/print legibility, and revision labor.
-
-This changes maintained visual policy and therefore cannot become controlling
-authority inside this research PR. A separate reconciliation PR is required.
+The remaining visual unknowns are measurements, not authority conflicts: native
+Codex dimensions, one-vs-batch fidelity, obscure-tool accuracy, phone/print
+legibility, review effort, and per-asset approval.
 
 ## 9. All Tier A/B launch versus staged implementation
 

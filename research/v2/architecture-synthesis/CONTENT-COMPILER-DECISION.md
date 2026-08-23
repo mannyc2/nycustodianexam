@@ -2,7 +2,7 @@
 
 ## Adopted boundary
 
-Use the recovered R2.6 design at draft PR #22/head `3ac1626`:
+Use the merged R2.6 design from PR #22/head `3ac1626`:
 
 ```text
 location-aware authoring unknown
@@ -70,7 +70,7 @@ related-record locations, safe messages, deterministic sort, and input reporting
 disabled. Independent authoring errors accumulate. File/hash/history/write/publish
 failures remain typed Effect failures.
 
-## Visual inputs under proposed maintainer direction
+## Visual inputs under maintained policy
 
 The compiler is production-method agnostic. For Codex-generated tool or hazard
 art, authoring stores:

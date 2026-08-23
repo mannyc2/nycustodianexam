@@ -1,30 +1,34 @@
-# R2.90 — architecture synthesis
+# R2.90 — reconciled architecture synthesis
 
-This is the first cross-lane synthesis of the second-pass Effect v4/Bun research.
-It proposes the initial implementation architecture and sequence; it does not
-scaffold the application or amend maintained product authority.
+This is the final cross-lane synthesis of the second-pass Effect v4/Bun research,
+updated after R2.6, the R2.10 evidence recovery, and the maintained Codex-native
+visual-authoring decision merged to `main`.
+
+It does not redo those lanes. It consumes their completed outputs and resolves
+the synthesis statements that were provisional in the earlier R2.90 draft.
 
 ## Proposed first lock
 
 - Effect cohort: exact synchronized `4.0.0-rc.111`, rechecked at scaffold time.
-- Bun: exact `1.4.0`, with the full workspace gate run before adoption.
+- Bun: exact `1.4.0`, with the full workspace gate before adoption.
 - Initial graph: `apps/site`, `apps/content-compiler`, `packages/content`.
 - Static/reference routes: semantic HTML with zero Effect closure.
 - Interactive player: lazy direct-DOM island, one browser `ManagedRuntime`, no
-  Atom/reactivity dependency.
-- Persistence: project-owned contracts with the first-party Effect IndexedDB
-  provider as a conditional implementation; `idb` is the ready fallback.
-- Offline: native service-worker lifecycle, Cache Storage for HTTP bytes,
+  Atom/reactivity dependency initially.
+- Persistence: project-owned contracts; test the first-party Effect IndexedDB
+  provider, with `idb` as the ready fallback.
+- Offline: native service-worker lifecycle, Cache Storage for HTTP bytes, and
   IndexedDB for application truth.
 - Delivery: Vite and Cloudflare Static Assets; no Worker until an endpoint exists.
 - Verification: Bun test, `@effect/vitest`, real Playwright browsers,
-  accessibility/manual gates, artifact leak scans, and route-closure measurement.
-- Content: the recovered R2.6 compiler boundary; manifest-last publication.
+  accessibility/manual gates, leak scans, and measured route closures.
+- Content: merged R2.6 Schema/registry/gate compiler with manifest-last
+  publication.
+- Visuals: Codex-native generation outside runtime; public released samples may
+  guide high-level style; exact accepted raster bytes enter the compiler.
 
-The visual-production method remains outside the runtime graph. Current maintainer
-direction permits Codex-native generation; final accepted image bytes become
-immutable inputs and still pass mechanical/content, rights, accessibility,
-security/leak, and scene/hotspot review.
+All Tier A/B concepts remain launch scope. A vertical slice and visual pilot
+sequence work and establish measurements; they do not shrink the launch corpus.
 
 ## Navigation
 
@@ -47,5 +51,6 @@ security/leak, and scene/hotspot review.
 - [FINAL-RECEIPT.md](FINAL-RECEIPT.md) and
   [MANIFEST.sha256](MANIFEST.sha256)
 
-Maintained authority, if the proposal is accepted, must be updated in a separate
-maintainer-reviewed reconciliation PR.
+The remaining open items are implementation measurements and per-content release
+gates, not missing R2.6/R2.9/R2.10 architecture research or a visual-authority
+conflict.

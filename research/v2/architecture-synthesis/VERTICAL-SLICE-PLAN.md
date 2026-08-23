@@ -141,11 +141,12 @@ source citation + exact line + supported claim
 
 ## Visual sub-pilot
 
-If the slice is visual, use the maintainer-directed Codex pilot only after the
-separate authority reconciliation. Record native generation dimensions and test:
+If the slice is visual, use the maintained Codex-native pilot. Record native
+generation dimensions and test:
 
 - single-image versus contact-sheet consistency;
-- simple public-sample line/test-diagram style match without copying composition;
+- public released-sample line/test-diagram style match without copying item
+  content or composition;
 - mechanically obscure tool features at phone/print size;
 - neutral/full description and nonvisual equivalent;
 - exact-basis content/mechanical, rights, accessibility, and leak review.

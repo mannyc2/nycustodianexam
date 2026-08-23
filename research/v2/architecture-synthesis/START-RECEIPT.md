@@ -1,5 +1,9 @@
 # R2.90 architecture synthesis start receipt
 
+> **Historical start snapshot:** The availability statements below were true at
+> lane start and are superseded by `FINAL-RECEIPT.md`: R2.6 later merged, R2.10
+> recovered/rebuilt the POCs, and PR #25 resolved visual authority.
+
 - Repository: `mannyc2/nycustodianexam`
 - Canonical base branch: `main`
 - Immutable base SHA: `d94981c62e3834177f0db9bc387b2c601c40636b`

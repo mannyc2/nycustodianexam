@@ -56,9 +56,9 @@ Effect cohort update.
 
 ## Visual player consequence
 
-The renderer displays the exact accepted immutable image view. Tool images may be
-Codex-generated and style-matched to public released samples after the separate
-policy reconciliation. Hazard markers use human-authored normalized regions
+The renderer displays the exact accepted immutable image view. Tool images are
+Codex-generated and may be style-matched to public released samples under the
+maintained visual policy. Hazard markers use human-authored normalized regions
 against final pixels; no runtime computer vision or image generation is needed.
 Visual and nonvisual formats report separately while testing the same supported
 concepts.

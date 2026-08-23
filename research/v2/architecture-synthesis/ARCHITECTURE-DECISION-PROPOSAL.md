@@ -2,8 +2,9 @@
 
 ## Status
 
-Proposed for maintainer review. No decision here changes maintained authority or
-licenses application implementation by itself.
+Reconciled implementation proposal. R2.6, R2.10 recovery, and the maintained
+visual-authoring policy are merged. This document selects the first scaffold and
+verification sequence; each provisional choice still has its named stop gate.
 
 ## Decision set
 
@@ -15,7 +16,7 @@ licenses application implementation by itself.
 | 4 | Keep deterministic policies/gates pure; define cohesive services only for host I/O/lifecycle/substitution; compose one Layer root per host | R2.1; R2.3; R2.6 | service per function; giant Application/Platform service | service count review after slice | accept now |
 | 5 | Use one browser `ManagedRuntime`; finite compiler via `BunRuntime.runMain`; native service-worker lifecycle; no Worker root yet | R2.1–R2.3 | runtime per event; universal root; long-lived SW fiber | run current package lifecycle probes | accept provisionally |
 | 6 | Model expected operational/domain failures with Schema tagged errors; accumulate author diagnostics as sorted data; translate provider errors once | R2.1 error architecture; R2.4 taxonomy; R2.6 diagnostics | raw exceptions; one generic error; author errors in Effect channel | production redaction/failure-injection review | accept now |
-| 7 | Adopt R2.6 Schema→registry gates→validated corpus→canonical outputs→manifest-last compiler | R2.6 PR #22 current fixture | manual validation; Schema-only global refinements; JSON Schema authority | JSONC parser and canonical JSON profile spikes | accept now |
+| 7 | Adopt R2.6 Schema→registry gates→validated corpus→canonical outputs→manifest-last compiler | merged R2.6 PR #22 and current fixture | manual validation; Schema-only global refinements; JSON Schema authority | JSONC parser and canonical JSON profile spikes | accept now |
 | 8 | Put all durable learner/content state in one origin DB behind project contracts; try first-party Effect IDB, retain `idb` fallback | R2.4; R2.3 native IDB evidence | raw native IDB; `idb`; Dexie | provider execution/browser/bundle contract | implementation spike |
 | 9 | One strict attempt transaction writes event, projections, and session checkpoint; reveal after commit or same-ID reconciliation | maintained product; R2.2/R2.4/R2.8 | optimistic reveal; eventual save | real-browser abort/quota/race/uncertain-result tests | accept now |
 | 10 | Stage packs outside transactions; activate with short generation flip; BroadcastChannel advisory; Web Locks only for long duplicate jobs | R2.4 | long network transaction; messages/locks as truth | cross-tab/crash/quota test suite | accept now |
@@ -26,7 +27,7 @@ licenses application implementation by itself.
 | 15 | Use Bun test for pure/Bun host tests, `@effect/vitest` for Effect, Playwright real browsers for Web semantics, manual AT/release matrix | R2.7/R2.8 | one runner; fake storage/jsdom certification | execute Chromium/Firefox/WebKit and manual matrix | accept now |
 | 16 | Local diagnostics by default; any telemetry first-party, consented, allowlisted, redacted, bounded | R2.8; maintained privacy | mandatory analytics; third-party tracking | product decision and event review | accept now |
 | 17 | Do not add `apps/worker`; if corrections justify it, use native module fetch plus narrow Effect use case | R2.3 | unstable HttpRouter/HttpApi now | workerd bundle/cold-start/abuse tests when authorized | defer |
-| 18 | Keep visual generation outside runtime; accept final reviewed immutable bytes. Pilot Codex-native style-matched images under separate authority reconciliation | maintainer direction; R2.9 semantic contracts; R2.10 evidence gaps; R2.6 digest reviews | deterministic SVG/CAD only; generative controlling runtime | native output sizes; obscure-tool fidelity; legal/editorial/a11y/security review | implementation/content pilot after authority review |
+| 18 | Keep Codex-native visual generation outside runtime; allow public released-sample style reference; accept final reviewed immutable raster bytes | maintained visual policy PR #25; R2.9 semantic contracts; recovered R2.10; R2.6 digest reviews | deterministic SVG/CAD production; generative runtime | native dimensions; one-vs-batch and obscure-tool fidelity; per-asset content/rights/a11y/security review | visual pilot then full Tier A/B production |
 
 ## Cross-cutting laws
 
@@ -37,13 +38,13 @@ licenses application implementation by itself.
 4. No provider abstraction promises stronger rollback/cancellation than its host.
 5. No generated artifact publishes without current source/review/closure gates.
 6. No package exists merely because a diagram has a box.
-7. No missing bundle, browser, visual, or geometry evidence is converted to a
+7. No missing bundle, browser, visual, or content evidence is converted to a
    positive production claim.
 8. Sequencing a vertical slice does not reduce the Tier A/B launch universe.
 
-## Approval consequence
+## Implementation consequence
 
-If accepted, a separate authority reconciliation should update the maintained
-architecture/product files, followed by an implementation scaffold PR that runs
-the explicit version/install/provider/bundle gates. This synthesis itself remains
-research-only.
+The authority reconciliation is complete. The next application PR should
+scaffold only the selected graph and run the explicit
+version/install/provider/bundle gates. The Codex visual pilot may run in parallel
+under maintained policy; neither activity implies per-content approval.
