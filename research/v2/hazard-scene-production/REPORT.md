@@ -1,5 +1,13 @@
 # R2.9 Report — Hazard-Scene Production Architecture
 
+> **Superseded authoring-route recommendation (2026-08-23):** This report is
+> preserved as historical research. Its deterministic-first route and exclusion
+> of text-to-image from controlling production no longer govern the project.
+> `../../../illustration/VISUAL_AUTHORING_POLICY.md`, this directory's current
+> `README.md`, `GENERATIVE-BOUNDARY.md`, and `DECISION-MATRIX.csv` authorize
+> Codex-native image generation. The semantic, target/decoy, hotspot,
+> accessibility, QA, and versioning analysis remains supporting guidance.
+
 **Repository:** `mannyc2/nycustodianexam`  
 **Immutable source:** `00155a1d555d1d4c84f3ab9682ee876dd2a57fbb`  
 **Source branch:** `agent/chat-corpus-reconciliation`  

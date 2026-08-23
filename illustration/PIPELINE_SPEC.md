@@ -1,6 +1,13 @@
 # Illustration production pipeline
 ## Normalized recovered contract — 2026-08-19
 
+> **Current authority:** `VISUAL_AUTHORING_POLICY.md` supersedes this recovered
+> contract wherever it requires SVG/vector output, forbids a public released
+> sample as a style reference, or treats model regeneration as the controlling
+> source. Production uses Codex-native image generation and preserves accepted
+> reviewed raster bytes. The QA, accessibility, lineage, and failure material
+> below remains supporting guidance.
+
 **Source:** normalized from `ILLUSTRATION_PIPELINE_SPEC.md` authored 2026-08-17. Original recovered SHA-256: `30a81fafc77b58fab34c7c0290b06573a524e8a0d4dfbad782858cc929815502`.
 
 **Scope warning:** the source pipeline used a 120-tool taxonomy snapshot available at that time. `../docs/TAXONOMY.md` now controls content scope. Reconcile IDs/rows against the current taxonomy before producing batches.
@@ -9,7 +16,7 @@
 
 # 1. Production objective
 
-Create original monochrome instructional illustrations for a free study website without copying, tracing, reconstructing, or using official exam artwork as generation input or style reference.
+Create original monochrome instructional illustrations for a free study website without copying, tracing, or reconstructing an official sample's particular subject or composition. Publicly released official sample artwork may be supplied as a high-level visual-style reference under `VISUAL_AUTHORING_POLICY.md`.
 
 Recovered planning scope at the time of the source artifact:
 
@@ -27,7 +34,7 @@ These are editorial/production quantities, never official exam counts or weights
 
 Use a consistent text-prompted instructional genre:
 
-> Original instructional line drawing for a free study website. Clean monochrome technical illustration, black ink on white, crisp contours, sparse interior detail, and limited functional hatching. No photorealism, color, gradients, decorative texture, dramatic lighting, cast shadow, background clutter, brand, logo, watermark, caption, answer label, callout arrow, or official-agency visual language. Geometry must be mechanically coherent and recognizable in black-and-white print. Not to scale. Create from text only; do not imitate or use official exam imagery.
+> Original instructional line drawing for a free study website. Closely match the high-level visual language of the supplied publicly released sample: clean monochrome black ink on white, comparable contour weight, sparse interior detail, restrained functional hatching, generous whitespace, and plain test-booklet framing. No photorealism, color, gradients, decorative texture, dramatic lighting, cast shadow, background clutter, brand, logo, watermark, caption, answer label, or callout arrow. Geometry must be mechanically coherent and recognizable in black-and-white print. Create an original subject and composition; do not trace or reproduce a particular sample drawing.
 
 ## Canonical asset geometry
 
@@ -35,9 +42,9 @@ Use a consistent text-prompted instructional genre:
 
 - raster working/master target: 2048×2048 grayscale on white when raster generation is used;
 - object occupies roughly 68–82% of the canvas with safe clear margins;
-- final tool delivery is SVG with a `0 0 1024 1024` viewBox;
+- final tool delivery is a reviewed raster derivative from the preserved native Codex output; do not require SVG conversion;
 - canonical presentation uses white background even when SVG background is transparent;
-- optional raster derivative is secondary, not source of truth.
+- the accepted native raster master is the visual source of truth.
 
 ### Tool detail
 
@@ -142,7 +149,7 @@ Every generation request is assembled from a versioned brief containing at least
 - prompt-template version;
 - explicit declarations that official/third-party images were not provided.
 
-The generator receives taxonomy text and the locked style/technical brief only. No official image crop, image-to-image input, style embedding from official art, or request to imitate DCS artwork is allowed.
+The generator receives the taxonomy/technical brief and may receive publicly released official sample artwork as a high-level style reference. No secure, remembered, candidate-recalled, or rights-unreviewed FOIL image is allowed. Do not request reconstruction of a sample subject, item, choices, or composition.
 
 For confusable sets, prefer independently generating/rendering each tool with the same camera spec and composing them later. A model-generated pair sheet is only a draft because defining traits can bleed across concepts.
 
@@ -157,7 +164,9 @@ Examples of decisive contrasts used in prior prototypes include:
 
 # 6. Raster → vector pipeline
 
-For isolated tools:
+The recovered raster-to-vector sequence below is historical. Current isolated tools remain raster-native. If an exceptional downstream need motivates vectorization, treat it as a derivative and repeat visual/security QA; vector output never replaces the accepted raster master.
+
+For historical isolated-tool vector experiments:
 
 1. **Technical raster gate first.** Never vectorize a mechanically wrong candidate.
 2. Normalize grayscale/levels and remove obvious noise.
@@ -168,7 +177,7 @@ For isolated tools:
 7. Render at several web sizes plus intended print size and compare to the technically accepted source.
 8. Release only after binary technical/vector/accessibility/rights review.
 
-Hazard scenes may remain raster when tracing repeatedly destroys cues/decoys/depth or manual vector cleanup is not worth the production cost. Isolated tools do not receive that exception: if trace fails, manually redraw vector paths or escalate.
+Hazard scenes and isolated tools may remain raster. Current policy does not require tracing or manual vector redraw.
 
 ---
 
@@ -278,9 +287,9 @@ Do not claim blanket copyright ownership over untouched AI-generated pixels. Tra
 
 Risk reduction rules:
 
-- text-only briefs rather than official-image conditioning;
+- independently supported subject briefs; a publicly released sample may condition high-level style only;
 - no named-artist imitation;
-- compare accepted output against known official samples **outside** the generation system;
+- compare accepted output against public samples for suspiciously close expression whether the sample was supplied inside or outside the generation system;
 - reject suspiciously close composition/expression;
 - do not rely on fair use as the production plan.
 
@@ -308,11 +317,11 @@ Before publishing any illustration batch:
 
 - current taxonomy diff complete;
 - stable IDs mapped;
-- no official image input/style reference used;
+- any public sample style reference is provenance-recorded and was not used to reproduce item content/composition;
 - prompt/generator/input/candidate lineage recorded;
 - every tool technical checklist PASS;
 - every scene target/decoy + accidental-hazard sweep PASS;
-- vector QA PASS for isolated tools;
+- raster integrity/derivative QA PASS for isolated tools; vector QA only when a vector derivative actually exists;
 - neutral + learning accessibility descriptions PASS;
 - nonvisual-equivalent dependencies satisfied where required;
 - rights/similarity review PASS;
@@ -320,4 +329,4 @@ Before publishing any illustration batch:
 - provider terms reviewed for the production date/account;
 - smallest intended phone/print render passes.
 
-The next production task is **not** “generate 150 images.” It is to reconcile the historical QA matrices against the current `docs/TAXONOMY.md`, lock stable IDs, then run the pilot.
+The next production task is the Codex-native pilot in `VISUAL_AUTHORING_POLICY.md`, followed by generation of the full Tier A/B launch inventory with the measured working dimensions and batch rules.

@@ -1,5 +1,11 @@
 # R2.9 Final GitHub Receipt
 
+> **Historical receipt:** This records the original lane conclusion. The
+> deterministic-first and generative-exclusion decisions were superseded by the
+> maintainer reconciliation in `SUPERSESSION-RECEIPT.md` and
+> `../../../illustration/VISUAL_AUTHORING_POLICY.md`. Do not use the historical
+> conclusion below as current production authority.
+
 Publication status: **COMPLETE**  
 Research status: **COMPLETE AS AN ARCHITECTURE/PRODUCTION-METHOD LANE; evidence-bearing scene pilot remains required before production adoption**
 

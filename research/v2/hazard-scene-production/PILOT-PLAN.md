@@ -1,329 +1,141 @@
-# R2.9 Evidence-Bearing Pilot Plan
+# Codex-native visual production pilot
 
-Status: **required before production adoption; not executed by this research lane**.
-
-No pilot output is automatically a production scene. Every candidate still needs normal content/source/review admission.
+**Status:** next production action. This plan replaces the unexecuted R2.9
+multi-route SVG/Blender comparison.
 
 ## Objective
 
-Replace R2.9's inferred method scores and planning-hour assumptions with measured evidence about:
-
-- accepted-scene labor and iteration count;
-- accidental-hazard/decoy failure rate;
-- geometry and target-separation quality;
-- changed-scene variant efficiency;
-- hotspot stability and authoring effort;
-- accessibility-authoring effort and leakage failures;
-- phone/print readability;
-- deterministic rebuild behavior;
-- rights/provenance completeness;
-- offline derivative size;
-- optional controlled-generative derivative overhead/benefit.
-
-## Tool coordinates for the pilot
-
-At R2.9 research time the current coordinates are:
-
-- Blender `5.2.0 LTS` — current LTS/stable release on 2026-08-21;
-- Bun `1.4.0` — current stable Bun on 2026-08-21;
-- Effect `4.0.0-rc.111` — current v4 RC package coordinate on 2026-08-21.
-
-The pilot must refresh and then pin exact coordinates at its own launch. R2.9 does **not** require Blender to be orchestrated through Effect; use Effect only where future workspace code genuinely benefits from typed errors/resources/concurrency.
-
-## Pilot sample
-
-Build **16 primary method-comparison candidates + 8 changed-scene transfer variants = 24 static scene candidates**.
-
-For each of eight mandatory hazard classes, produce the same semantic brief through two candidate routes selected to expose a real tradeoff. Then create one changed-scene transfer variant through the better-performing deterministic route for that class.
-
-Do not compare methods using different hazard meanings.
-
-### P1 — wet floor
-
-Source basis: OSHA 29 CFR 1910.22 surface-condition/spill requirements.
-
-Base brief: generic school hallway or entry tile with one authored wet-surface target and at least one safe-but-suspicious decoy. The correction itself must not already be depicted.
-
-Compare:
-
-- Route S: modular SVG/2D composition;
-- Route B/C: simple 3D block + deterministic line render, cleanup only if needed.
-
-Transfer variant: move wet area and safe props to a materially different zone/camera without changing the rule.
-
-### P2 — chemical storage/incompatibility
-
-Source basis: OSHA HazCom for labels/SDS handling-storage plus CDC bleach guidance for the pilot's specific no-mixing rule. Final content admission should prefer exact product/SDS evidence where a real incompatibility is depicted.
-
-Base brief: generic custodial-closet work area showing an observable setup that represents a source-backed incompatible cleaning-chemical use/storage condition without depending on tiny label text or color coding.
-
-Compare:
-
-- Route S: modular shelf/container SVG scene;
-- Route C/H: deterministic block + human cleanup/illustration to make container identity/relations readable without brands.
-
-Transfer variant: change shelving/camera/container positions while preserving the same source-backed relation.
-
-### P3 — damaged cord / grounding
-
-Source basis: OSHA 29 CFR 1910.334 visual inspection, damaged cord/plug removal, grounding continuity.
-
-Base brief: cord-and-plug-connected custodial equipment with one visually decisive damaged-insulation **or** missing/deformed grounding condition. Do not combine multiple electrical rules in one target for the comparison.
-
-Compare:
-
-- Route S: modular vector;
-- Route B/C: 3D equipment/cord block + line render/cleanup.
-
-Transfer variant: different equipment orientation and cord path with the same exact damage class.
-
-### P4 — ladder misuse
-
-Source basis: OSHA 29 CFR 1910.23, including stable/level use and stepladder cap/top-step rule.
-
-Base brief: school maintenance/custodial context with one person/ladder relation. Use a rule visible by pose/geometry; avoid textual ladder labels.
-
-Compare:
-
-- Route B: 3D block + deterministic line render;
-- Route C/H: same block + human 2D cleanup or human illustrator constrained by the block.
-
-Transfer variant: different camera/room and person orientation, same ladder condition.
-
-### P5 — blocked egress / fire equipment
-
-Source basis: OSHA 29 CFR 1910.37 and 1910.157.
-
-Base brief: choose **one** primary rule for a candidate (blocked exit route or inaccessible extinguisher) and use the other only as safe background if it can be guaranteed nonhazardous.
-
-Compare:
-
-- Route S: modular SVG hallway/door/fire-equipment scene;
-- Route B: 3D block + line render.
-
-Transfer variant: different obstruction object/placement while preserving the same rule.
-
-### P6 — lifting / material handling
-
-Source basis: NIOSH ergonomic manual-material-handling guidance; content editor must avoid presenting the NIOSH lifting equation as a universal simple weight limit.
-
-Base brief: an observable handling/posture/visibility or unstable-load condition that can be explained without unsupported numeric weight claims.
-
-Compare:
-
-- Route B: 3D block with person/load geometry;
-- Route C/H: block + human cleanup/illustration.
-
-Transfer variant: different load form/orientation/room with the same admitted principle.
-
-### P7 — broken glass / sharps
-
-Source basis: OSHA 1910.22's requirement to keep walking-working surfaces free of sharp/protruding hazards; stronger claim/source may be added by content review if the scene depicts handling/disposal behavior.
-
-Base brief: exposed broken-glass/sharp condition in a school/custodial environment. Do not imply contaminated medical sharps unless the source/content profile supports that separate claim.
-
-Compare:
-
-- Route S: modular SVG;
-- Route C/H: block/illustrated irregular debris.
-
-Transfer variant: different room/surface and shard distribution while preserving recognizability at phone/print size.
-
-### P8 — food-service contamination
-
-Source basis: FDA 2022 Food Code with December 2024 supplement, including separation of poisonous/toxic materials from food/equipment/utensils and working-container identification. Jurisdiction/content scope review remains required because the Food Code is model guidance.
-
-Base brief: cafeteria/kitchen scene with one visually clear contamination-risk relationship that does not rely only on reading a label.
-
-Compare:
-
-- Route C: deterministic kitchen block + human cleanup;
-- Route H: human illustration from the same blocking/semantic package.
-
-Transfer variant: different counter/storage arrangement with the same admitted principle.
-
-## Decoys
-
-Each base brief must include at least one documented safe-but-suspicious decoy where doing so is fair and source-defensible. The goal is to measure decoy control, not maximize decoy count.
-
-Examples of acceptable decoy design strategy:
-
-- a cord placed near but not across the walking path, intact and undamaged;
-- a properly positioned ladder component that looks visually salient but is being used correctly;
-- a box near, but not obstructing, an exit/fire-equipment access zone;
-- a closed/appropriately placed generic chemical container whose observable state is safe;
-- a dry reflective floor patch distinct from an actual spill only if the distinction remains fair in grayscale/phone use.
-
-Any decoy for which reviewers cannot give a source-backed “safe as depicted” rationale is rejected.
-
-## Production procedure per candidate
-
-### Stage 0 — source/semantic brief
-
-Record:
-
-- claim IDs and exact source locators;
-- intended target condition;
-- correction concept;
-- environment;
-- target/decoy inventory;
-- negative-hazard inventory;
-- allowed/forbidden cues;
-- expected decisive visual features;
-- accessibility risks.
-
-The two compared methods receive the same brief.
-
-### Stage 1 — source asset/block authoring
-
-Track active labor separately for:
-
-- component creation;
-- scene composition/blocking;
-- person/pose work;
-- cleanup;
-- variant modification.
-
-Do not count reusable library setup entirely as one scene's marginal cost; record setup and per-scene hours separately.
-
-### Stage 2 — candidate render/drawing
-
-Freeze candidate hash before semantic review. For deterministic routes, record exact tool version/command/settings and run a repeat build on the same pinned environment.
-
-### Stage 3 — blind semantic review
-
-A reviewer who did not author the scene receives the final static candidate plus the semantic/source inventory (not the production history) and records stable QA codes.
-
-Required zero-tolerance findings:
-
-- missing/ambiguous targets: 0 unresolved;
-- accidental hazards: 0 unresolved;
-- unsafe decoys: 0 unresolved;
-- impossible meaning-bearing geometry: 0 unresolved;
-- text/color-only cues: 0 unresolved;
-- correction already depicted: 0 unresolved;
-- rights/provenance gaps: 0 unresolved.
-
-A repaired candidate restarts review and increments revision count.
-
-### Stage 4 — zone/hotspot authoring
-
-Author regions only after semantic acceptance. Record:
-
-- authoring minutes;
-- minimum semantic-region separation;
-- tolerance-expanded overlap count;
-- each target visible area at canonical phone render sizes;
-- blind reviewer marker coordinates.
-
-### Stage 5 — accessibility authoring/review
-
-Record:
-
-- neutral overview/zone authoring minutes;
-- full-description authoring minutes;
-- leakage failures;
-- zone-order mismatches;
-- blind nonvisual-equivalent review outcome;
-- keyboard/screen-reader issues.
-
-### Stage 6 — phone/print review
-
-Test a documented small-phone viewport and grayscale print/PDF profile. Measure:
-
-- target/decoy recognition by reviewers;
-- number of zoom/pan actions needed;
-- any decisive feature lost;
-- annotation/key readability after reveal.
-
-### Stage 7 — transfer variant
-
-Create one changed-scene variant using the same semantic rule. Record marginal hours, reused component count, and any semantic QA regression.
-
-## Optional generative subpilot
-
-Do **not** run free-form text-to-image as an alternative scored-scene method.
-
-If desired, select **two already accepted deterministic base scenes** from different classes and apply one controlled image-to-image style derivative using only project-owned render/depth/segmentation/edge inputs. The derivative must satisfy every gate in `GENERATIVE-BOUNDARY.md`.
-
-Record:
-
-- generator/model/control coordinates/hashes;
-- generation attempts;
-- rejected attempt count/reasons;
-- structural metrics;
-- human review hours;
-- whether visual/readability quality improved;
-- total accepted-derivative labor vs ordinary human cleanup.
-
-A derivative rejection is a valid pilot result. Do not tune until a passing image appears without counting all attempts/review time.
+Determine the production settings for Codex-native artwork while deliberately
+testing the concepts most likely to expose tool-shape, style, scene-inventory,
+batching, phone, print, accessibility, and answer-leak failures.
+
+The pilot chooses prompt/reference packaging, native-size handling, and safe
+batch size. It does not reduce launch scope: every Tier A/B concept remains
+planned for launch.
+
+## Phase 0 — style and native-output calibration
+
+Use the publicly released test sample artwork as the approved style reference.
+Record its public provenance. Ask Codex to copy its high-level monochrome visual
+language while generating original subjects and compositions.
+
+Generate three simple, independently supported tool concepts one image at a
+time. For each result record:
+
+- native file format, width, height, color space, and bytes;
+- usable object footprint and safe crop margin;
+- prompt/reference/brief coordinates;
+- style review findings at full, phone, and grayscale-print sizes; and
+- metadata/derivative behavior.
+
+Do not assume 1024, 1536, 2048, or any other native dimension in advance.
+
+## Phase 1 — difficult isolated tools
+
+Generate at least these challenge groups one image at a time:
+
+- adjustable wrench and pipe wrench;
+- cup plunger and flange plunger;
+- claw hammer and ball-peen hammer;
+- stepladder and extension ladder;
+- low-speed rotary floor machine and high-speed burnisher;
+- one subtle plier confusion pair;
+- one mop or squeegee confusion pair; and
+- at least two obscure Tier A/B concepts selected from the current taxonomy.
+
+The four recovered POCs may inform what historically went wrong, but they are
+not generation inputs unless a maintainer explicitly approves a project-owned
+reference use. Codex generates new raster artwork.
+
+Each pair member must pass independently before a comparison panel is composed.
+Review decisive `must_show` and confusable `must_not_show` features at the
+smallest intended use.
+
+## Phase 2 — hazard-family scenes
+
+Generate at least one original scene for every maintained hazard family:
+
+1. slip/trip/fall;
+2. egress/fire;
+3. chemical;
+4. electrical;
+5. sharps/broken material;
+6. material handling/storage;
+7. biological/sanitation; and
+8. machine/tool safety.
+
+Distribute the pilots across different maintained school/custodial environments.
+Each brief has one source-backed controlling claim, explicit targets/decoys,
+negative-hazard inventory, zone order, and composition constraints before
+generation.
+
+Scenes fail on any missing/ambiguous target, accidental hazard, unsafe decoy,
+impossible meaning-bearing relation, added signage/pseudotext, answer emphasis,
+or phone/print ambiguity.
+
+## Phase 3 — multi-image trial and tile calculation
+
+Only after Phase 0 records the actual native Codex dimensions, calculate a trial
+grid:
+
+1. define the accepted minimum per-tool pixel rectangle from phone/print tests;
+2. reserve measured outer and inter-tile crop margins;
+3. compute the maximum rows/columns that fit without downscaling below that
+   rectangle; and
+4. test a small sheet containing simple tools plus at least one difficult pair.
+
+Compare one-image and batched production on feature accuracy, style variance,
+tile bleed, crop labor, rejection rate, and accepted asset pixels. Adopt the
+largest grid only if it is no worse on technical accuracy and review labor.
+Otherwise keep one-image production. Hazard scenes remain one scene per native
+canvas unless a later measured test proves a real benefit.
+
+## Review workflow
+
+For every candidate:
+
+1. freeze/hash before review;
+2. content/mechanical-plausibility review against independent sources;
+3. style and public-sample similarity review;
+4. confusable-feature or target/decoy/negative-inventory review;
+5. independent accidental-hazard review for scenes;
+6. neutral/full accessibility authoring and leakage review;
+7. phone, zoom, grayscale print/PDF review;
+8. metadata and opaque-delivery scan; and
+9. rights/provider/input provenance decision.
+
+Wrong silhouettes, mechanisms, part counts, decisive features, people/poses, or
+scene relationships trigger regeneration. Local raster correction is allowed
+only for bounded unambiguous changes and creates a new reviewed hash.
 
 ## Metrics
 
-For every candidate capture:
+Capture per asset:
 
-- `setup_hours_allocated`;
-- `scene_author_hours`;
-- `render_generation_minutes`;
-- `semantic_review_hours`;
-- `repair_hours`;
-- `hotspot_hours`;
-- `accessibility_hours`;
-- `phone_print_qa_hours`;
-- `rights_admin_hours`;
-- `total_active_hours_to_acceptance`;
-- `revision_count`;
-- QA failure count by stable code;
-- `accepted_first_review` boolean;
-- `changed_variant_hours`;
-- component reuse count;
-- deterministic same-environment rebuild: hash equal / visually equal / drift;
-- canonical master bytes;
-- web derivative bytes;
-- print derivative bytes;
-- target/decoy reviewer classification accuracy;
-- target marker dispersion/region separation;
-- accessibility leakage failures;
-- rights/provenance completeness.
+- generation attempts and rejected reasons;
+- time to accepted candidate;
+- first-review pass;
+- failure counts by stable QA code;
+- native and delivery dimensions/bytes;
+- phone/print recognition outcome;
+- technical/style review time;
+- accessibility/region authoring time;
+- local edit time;
+- batch crop time and usable pixels, when applicable; and
+- complete lineage/review closure.
 
-Do not use a single weighted “quality score” to hide release-blocking failures.
+## Exit criteria
 
-## Review roles
+The pilot completes when:
 
-At minimum separate these responsibilities; one person may fill multiple roles except where independence is explicitly required:
+- at least one accepted candidate covers every challenge group and hazard family;
+- no accepted image has an unresolved critical QA, rights, accessibility, leak,
+  phone, or print failure;
+- the native-size and derivative contract is recorded;
+- the safe batch decision is supported by measured results; and
+- the resulting versioned prompt/reference/brief templates are ready to apply to
+  the complete Tier A/B launch inventory.
 
-1. **content/source reviewer** — claim is within scope and source-supported;
-2. **scene author** — builds/draws the candidate;
-3. **independent accidental-hazard/decoy reviewer** — cannot be the sole scene author;
-4. **interaction reviewer** — zones/hotspots/matching;
-5. **accessibility/print reviewer**;
-6. **rights/provenance reviewer**.
-
-For any generative subpilot, the generator operator cannot be the sole accidental-hazard reviewer.
-
-## Promotion gates for the architecture
-
-The mixed architecture is promoted from research recommendation to maintained production decision only if the pilot shows:
-
-- at least one accepted scene in all eight classes;
-- no unresolved critical QA failures in any accepted candidate;
-- all accepted deterministic candidates have complete manifests and repeat-build records;
-- all accepted scenes pass phone/print/accessibility checks;
-- transfer variants do not systematically reintroduce ambiguity/location shortcuts;
-- measured labor supports an affordable launch scene count;
-- the modular library demonstrates real reuse without template-answer leakage;
-- rights/provenance records are complete.
-
-Method-specific promotion:
-
-- Route S needs accepted examples showing that reusable SVG composition stays readable and nonrepetitive.
-- Route B needs accepted examples showing line render quality without excessive cleanup.
-- Route C needs evidence that cleanup preserves semantics/hotspots at manageable review cost.
-- Route H needs explicit rights terms and measured cost/variant speed.
-- Generative derivative remains noncontrolling unless it beats deterministic/human cleanup on total accepted-scene labor while passing every structural/rights/reproducibility gate.
-
-## Decision output from the pilot
-
-Publish raw timings, candidate/revision manifests, failure logs, screenshots/print artifacts, and method summary. The decision should route **scene classes**, not declare one universal winner unless the evidence unexpectedly supports one.
-
-If the 24-candidate pilot is too expensive to complete, stop after the first four classes and report a partial pilot rather than shrinking review rigor. Missing evidence is preferable to bulk-producing unvalidated scenes.
+Partial failure does not reopen SVG/CAD as the default. Improve the brief,
+reference package, candidate selection, or review/correction workflow and rerun
+the failed class.
