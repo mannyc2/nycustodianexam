@@ -1,0 +1,81 @@
+{
+  "briefId": "visual-pilot-v2-pipe-wrench-in-use-v1",
+  "briefVersion": 1,
+  "date": "2026-08-23",
+  "status": "generation-authorized; candidate-only; independent variant review required",
+  "conceptId": "pipe-wrench",
+  "variantId": "pipe-wrench-in-use",
+  "taxonomyRevision": {
+    "path": "docs/TAXONOMY.md",
+    "sha256": "c2c487e2a16f5b5de7848d7915c4be2bd0b24749c266727f94a237b21025d952",
+    "coordinates": "Pipe wrench entry at lines 123-124; Illustration QA rules and family-specific QA at lines 347-360",
+    "supportedFact": "A pipe wrench is used to grip and turn pipe or round fittings with visible serrated angled jaws; it must not read as an adjustable wrench with smooth parallel jaws."
+  },
+  "authoringPolicy": {
+    "path": "illustration/VISUAL_AUTHORING_POLICY.md",
+    "sha256": "a17d47cd976fbd4caa2b57f834216450f8316063d0b9759ef4fbd0e451d0d904"
+  },
+  "referenceLedger": {
+    "path": "content/authoring/visuals/references/pipe-wrench/sources.json",
+    "sha256": "4ab51d1b95e21851b91a0f251475a663b3c806b6f4dbde7add5aae323d00e83c"
+  },
+  "parentBakeoffBrief": {
+    "path": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-bakeoff-2.json",
+    "sha256": "4ef672f65069dc271d8cee2c66cd77300c85b8e1d38a82b0c47fb861bd20bb98",
+    "learningApplied": "Use one assembled-anatomy reference only; control composition and line-art style entirely by text."
+  },
+  "generatorSurface": "Codex built-in image_gen",
+  "generationMode": "reference-guided generation from scratch",
+  "outputRequest": {
+    "count": 1,
+    "nativeDimensions": "one native square raster at the generator-selected dimensions; record the observed dimensions and preserve the original bytes",
+    "background": "pure white, opaque",
+    "candidateId": "v2t002-u1",
+    "candidatePath": "content/assets/candidates/visual-pilot-v2/v2t002-u1.png",
+    "retryRule": "Generate exactly one initial candidate. Only if native or 320-by-320 review finds a fatal mechanical, safety, content, branding, or legibility defect, permit one targeted retry as v2t002-u2 without overwriting v2t002-u1."
+  },
+  "referencedImages": [
+    {
+      "path": "content/authoring/visuals/references/pipe-wrench/straight-pipe-wrench-assembled-packshot.jpg",
+      "sha256": "bd312c12650c81ee62667937cf90d03baf2cd2dbe4fb2560c04e8cc6a0302984",
+      "role": "sole anatomy reference for the assembled traditional pipe-wrench topology only; do not use its color, brand, lettering, camera angle, composition, exact contours, proportions, surface details, or trade dress"
+    }
+  ],
+  "visualFacts": [
+    "One movable hook jaw continues into one aligned threaded shank engaging exactly one knurled adjustment nut.",
+    "One fixed heel jaw is integral to the wrench body; its serrated face opposes the hook jaw's serrated face.",
+    "The two opposed serrated jaw faces contact opposite sides of one round cylindrical metal fitting without intersecting it.",
+    "The full unextended handle is visible; no person, hand, cheater bar, hammer strike, or other unsafe force multiplier is shown."
+  ],
+  "mustShow": [
+    "one complete generic traditional straight pipe wrench, fully assembled and uncropped",
+    "one round cylindrical metal pipe coupling or fitting visibly seated inside the jaw opening",
+    "both opposed serrated gripping faces tangent to opposite sides of the fitting, with no daylight at the contact points and no tooth penetration through the metal",
+    "one coherent hook-jaw, aligned threaded-shank, single adjustment-nut, fixed-heel-jaw mechanism",
+    "a feature-revealing side-oblique working view readable at 320 by 320",
+    "original monochrome instructional line art on pure white"
+  ],
+  "mustNotShow": [
+    "smooth parallel adjustable-wrench jaws or an adjustable-wrench worm gear",
+    "hex nut, bolt head, flat plate, rectangular stock, hose, or plastic tube as the gripped object",
+    "a floating or duplicated jaw, shank, rack, nut, handle, pipe, or fitting",
+    "a person, hand, cheater bar, handle extension, hammer, impact, strained pose, or unsafe body position",
+    "motion arrows, force arrows, labels, text, pseudo-text, numerals, dimensions, circles, answer markers, branding, logos, watermarks, color-only cues, or irrelevant props",
+    "photorealism, dramatic shadows, workshop scenery, product-shot gloss, copied proprietary contours, or source trade dress"
+  ],
+  "prompt": "Use case: scientific-educational\nAsset type: square in-use tool-recognition illustration for a custodial-training image library\nInput images: Image 1 is the sole anatomy-only reference. Use it only to understand the assembled mechanical relationship of a traditional straight pipe wrench: one movable hook jaw continuous with one threaded shank, one knurled adjustment nut, one fixed heel jaw, and one handle. Generate a new original illustration from scratch; do not edit, trace, restyle, or reproduce the photographed product. Do not borrow Image 1's color, brand, lettering, camera angle, composition, exact contours, proportions, surface details, or trade dress.\n\nPrimary request: Create an original monochrome instructional line-art scene showing one generic traditional straight pipe wrench correctly seated on and gripping one round cylindrical metal pipe coupling or round fitting. No person or hand is present. The static working grip should make the tool's intended use clear without arrows or text.\n\nScene/backdrop: pure white square canvas with no floor, room, bench, border, callout, or decoration.\n\nSubject and contact geometry: Show one thick round steel pipe coupling or fitting as a short, clearly cylindrical object viewed in a simple side-oblique orientation, with a visible curved outer surface and one elliptical circular rim or band that establishes roundness. The fitting must not be hexagonal. Seat the fitting fully inside the wrench's jaw opening. The hook jaw's serrated inner face and the fixed heel jaw's serrated face must oppose each other and touch opposite sides of the fitting tangentially. Both contact points must be visible and plausible: no floating gap, no fused surfaces, and no teeth passing through the fitting. The wrench surrounds only the fitting's outside cylindrical surface.\n\nWrench mechanism: Depict one movable curved hook jaw continuing into one straight threaded shank on one centerline. That one shank engages exactly one knurled circular adjustment nut seated at the body. Normal housing occlusion is acceptable, but no contradictory second shank, rack, rod, or nut may appear. Depict one fixed heel jaw integral to the body. Show one complete ordinary-length handle with no extension, no cheater bar, and no impact tool.\n\nStyle/medium: original black-and-white educational technical line art; crisp graphite-black outer contours, consistent medium interior lines, sparse functional hatching, and restrained pale-gray form wash only where it clarifies the cylinder and tool surfaces; no photographic rendering.\n\nComposition/framing: feature-revealing near-side view with slight depth only to establish the round fitting and jaw contact. The fitting sits left of center, the wrench head encloses it, and the complete handle extends diagonally down toward the right at about 25 degrees. Keep every part of the wrench visible with generous even padding. Make the head, opposed teeth, two contact points, single nut, and cylindrical fitting large and legible after reduction to 320 by 320 pixels.\n\nConstraints: exactly one wrench and one round metal fitting; mechanically plausible connected parts; safe generic use context; original generic contours; pure white background; monochrome only.\nAvoid: smooth parallel crescent-wrench jaws; adjustable-wrench worm gear; hex nut or bolt head; square stock; flat plate; duplicated or detached parts; impossible jaw intersection; teeth embedded through metal; loose noncontacting jaws; a second tool or pipe; a person, hand, glove, body, cheater bar, extension pipe, hammer, impact, unsafe pose, workshop scene, color, glossy product photography, cast shadow, logo, brand name, lettering, numerals, labels, arrows, motion marks, dimensions, border, watermark, or copied trade dress.",
+  "targetedRetry": {
+    "candidateId": "v2t002-u2",
+    "trigger": "v2t002-u1 fatally failed the one-hook-jaw/one-straight-shank topology gate by placing a curved looped rack behind the adjustment nut, disconnected from the movable hook jaw.",
+    "singleChange": "Keep the successful round-fitting contact scene, but force the movable hook jaw to continue into the only straight threaded shank and forbid any bend, loop, return, fork, or second toothed rail after the nut.",
+    "prompt": "Use case: scientific-educational\nAsset type: square in-use tool-recognition illustration for a custodial-training image library\nInput images: Image 1 is the sole anatomy-only reference. Use it only to understand the assembled traditional straight-pipe-wrench topology. Generate a new original illustration from scratch; do not edit, trace, restyle, or reproduce the product. Do not borrow the reference's color, brand, lettering, camera angle, composition, exact contours, proportions, surface details, or trade dress.\n\nPrimary request: Create original monochrome instructional line art showing exactly one generic traditional straight pipe wrench correctly gripping exactly one thick round cylindrical steel pipe coupling or round fitting. No person or hand appears. Preserve the successful scene idea of a clearly cylindrical fitting seated inside the jaws, but correct the adjustment mechanism described below.\n\nScene/backdrop: pure white square canvas with no room, floor, bench, border, callout, shadow, or decoration.\n\nCorrect jaw contact: Show the fitting as a short solid-walled cylinder in simple side-oblique view, with a curved outer surface and one elliptical rim or circumferential band establishing roundness. The fitting is not hexagonal. The hook jaw's serrated inner face and the fixed heel jaw's serrated face oppose each other and visibly touch opposite sides of the fitting tangentially. No gap, fusion, or tooth penetration.\n\nCritical topology correction: The curved movable hook jaw itself must continue directly into the only threaded shank in the entire image. Draw that single shank as one straight, solid, constant-centerline metal member traveling from the rear of the hook jaw through the body and through exactly one knurled adjustment nut. Immediately after the nut, terminate it as one short straight rounded threaded end on the same centerline. The shank must never bend or curve after the nut. Do not draw a U-shape, loop, return bend, hook, oval opening, inner toothed edge, second rail, second rack, second rod, fork, or detached threaded piece anywhere near or behind the nut. The fixed heel jaw belongs to the body and does not continue into a rack.\n\nStyle/medium: original black-and-white educational technical line art; crisp graphite-black contours, consistent medium interior lines, sparse functional hatching, restrained pale-gray form wash only to clarify the cylinder and tool; no photographic rendering.\n\nComposition/framing: feature-revealing near-side view with slight depth only for the cylinder and contact points. Fitting left of center; wrench head around it; complete ordinary-length handle extends diagonally down-right. Keep the entire wrench visible with generous padding. Make the head, opposed teeth, two contact points, one straight shank, one nut, and round fitting legible at 320 by 320.\n\nConstraints: exactly one wrench, one round fitting, one hook jaw, one straight threaded shank, one adjustment nut, one fixed heel jaw, and one unextended handle; connected mechanically plausible parts; safe generic use; pure white background; monochrome only.\nAvoid: any looped or curved rack; any threaded oval or U-shaped tail; smooth parallel crescent-wrench jaws; worm gear; hex nut or bolt head; square stock; flat plate; duplicate or detached parts; a person, hand, cheater bar, extension pipe, hammer, impact, unsafe pose, workshop scene, color, cast shadow, logo, brand, lettering, numerals, labels, arrows, motion marks, dimensions, border, watermark, or copied trade dress."
+  },
+  "qaChecklist": [
+    "Exactly one complete pipe wrench and one clearly round cylindrical metal fitting appear; no person or extra prop appears.",
+    "The two visible serrated faces oppose one another and visibly contact opposite sides of the fitting without gaps, fusion, or impossible penetration.",
+    "The wrench has one movable hook-jaw/shank system, one adjustment nut, one integral fixed heel jaw, and one ordinary unextended handle.",
+    "The fitting reads as round/cylindrical rather than hexagonal, flat, square, hose-like, or rectangular.",
+    "The scene is original monochrome line art on pure white, with no text, pseudo-text, arrows, labels, color, brand, logo, watermark, trade dress, or answer cue.",
+    "At 320 by 320 the fitting, opposed toothed jaws, two contact points, and complete handle remain readable."
+  ]
+}

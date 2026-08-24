@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "artifact": "content/authoring/visuals/inventory/taxonomy-inventory.csv",
+  "artifactSha256": "d61197c0b7ed118fb0248cdd94d2be75a6e71120408577a532e85aa0659231cd",
+  "rowCount": 65,
+  "normalization": "Source CRLF line endings normalized to LF; header, row order, and field values are unchanged.",
+  "source": {
+    "archivePathAtObservation": "research/v2/tool-geometry-audit/recovered-input/research-bundle.zip",
+    "archiveSha256": "a3dbdb262733be6527347e26cb5e6d8fdb612cf7ee6a09574730a7a6ad188b06",
+    "internalMember": "taxonomy-inventory.csv",
+    "memberSha256": "8a0eb561003f8b7fd6fd164680fdcda2d891118a2ad591ccf0aa1a6fa22560e2",
+    "memberBytes": 7058,
+    "observationDate": "2026-08-20"
+  }
+}

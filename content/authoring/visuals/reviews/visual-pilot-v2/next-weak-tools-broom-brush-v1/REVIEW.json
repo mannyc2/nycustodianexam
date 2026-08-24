@@ -1,0 +1,150 @@
+{
+  "reviewId": "visual-pilot-v2-next-weak-tools-broom-brush-v1-review",
+  "date": "2026-08-23",
+  "status": "complete; both targeted retries independently passed; selected as candidate-only alternate views; no master overwritten",
+  "brief": {
+    "path": "content/authoring/visuals/briefs/visual-pilot-v2-next-weak-tools-broom-brush-v1.json",
+    "sha256": "a94e08a3a9efbf8d482c6919f9987d1db5b1a50be447c5ff786298f5a4169935"
+  },
+  "referenceLedger": {
+    "path": "content/authoring/visuals/references/next-weak-tools/sources.json",
+    "sha256": "e6dbff636934b34f51e76ea695c3f28dffa12061999f3823dcb26b4290048052"
+  },
+  "selectionBasis": "Push broom and deck brush are a maintained confusable pair whose decisive head proportions and bristle character were visually light in the accepted-library phone sheet. Matched low head-level alternate views enlarge those differences while preserving each complete tool.",
+  "generator": {
+    "surface": "Codex built-in image_gen",
+    "mode": "one anatomy reference per independent generation from scratch",
+    "callCount": 4,
+    "callPolicy": "One initial candidate per concept, followed by one targeted retry only after the initial candidate failed phone-scale semantic distinction. Every native result was preserved."
+  },
+  "independentBlindReview": {
+    "status": "complete",
+    "method": "The reviewer inspected every candidate and the accepted baselines at native and 320-pixel scale without modifying files, then evaluated subject identity, confusable-pair leakage, mechanical connection, crop, style, branding, and reference similarity.",
+    "result": "Select v2t007-g2 and v2t008-g2 as matched supplemental recognition views. Retain t004 and t010 as accepted baselines; do not treat these alternates as baseline replacements."
+  },
+  "selected": [
+    {
+      "candidateId": "v2t007-g2",
+      "conceptId": "tool.push-broom",
+      "canonicalTerm": "Push broom",
+      "path": "content/assets/candidates/visual-pilot-v2/v2t007-g2.png",
+      "sha256": "c82770ee694f2a5cedbd999b81ca6d29f295fa67ff964229daf2eb3b72ef8c01",
+      "dimensions": "1254x1254 RGB PNG",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a02fc9-7789-74a1-9b74-dcd8ce448059/exec-4e3a4957-b4ab-4a47-8a9e-4e895dba9d5f.png",
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2-next-weak-tools-broom-brush-v1.json#assets[0].prompt plus targetedRetry.promptSuffix",
+      "decision": "pass-select",
+      "decisionBasis": "The extra-wide shallow block, long fine flexible sweeping curtain, coherent central socket and brace, complete crop, and strong phone-scale recognition distinguish it from a deck brush. The generic line art contains no mark, copied decorative contour, color, or product-specific surface treatment."
+    },
+    {
+      "candidateId": "v2t008-g2",
+      "conceptId": "tool.deck-brush",
+      "canonicalTerm": "Deck brush",
+      "path": "content/assets/candidates/visual-pilot-v2/v2t008-g2.png",
+      "sha256": "e03b162718b512075a44bb7763671118e3bbba4fd4985da67f373e0440244917",
+      "dimensions": "1254x1254 RGB PNG",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a02fc9-7789-74a1-9b74-dcd8ce448059/exec-4de34a5d-a049-4194-a85e-07f31788fa55.png",
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2-next-weak-tools-broom-brush-v1.json#assets[1].prompt plus targetedRetry.promptSuffix",
+      "decision": "pass-select",
+      "decisionBasis": "The compact deep block, direct central socket, short rigid tuft bundles, complete crop, and clear phone-scale recognition distinguish it from a push broom. It has no brace, flexible fringe, brand, or identifiable source trade dress."
+    }
+  ],
+  "attempts": [
+    {
+      "candidateId": "v2t007",
+      "conceptId": "tool.push-broom",
+      "path": "content/assets/candidates/visual-pilot-v2/v2t007.png",
+      "sha256": "955629ed5564ba1fd36337a2d45f3faf57a021cfda88905f42de166e2fe544d6",
+      "dimensions": "1254x1254 RGB PNG",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a02fc9-7789-74a1-9b74-dcd8ce448059/exec-230c2a9c-8d1a-41fb-9cd6-b057c85805b8.png",
+      "finalVerdict": "reject",
+      "finding": "The compact block and short separated blunt tufts read as a deck brush at 320 pixels, failing the broad-head and continuous flexible-curtain distinction."
+    },
+    {
+      "candidateId": "v2t007-g2",
+      "conceptId": "tool.push-broom",
+      "path": "content/assets/candidates/visual-pilot-v2/v2t007-g2.png",
+      "sha256": "c82770ee694f2a5cedbd999b81ca6d29f295fa67ff964229daf2eb3b72ef8c01",
+      "dimensions": "1254x1254 RGB PNG",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a02fc9-7789-74a1-9b74-dcd8ce448059/exec-4e3a4957-b4ab-4a47-8a9e-4e895dba9d5f.png",
+      "finalVerdict": "pass-select"
+    },
+    {
+      "candidateId": "v2t008",
+      "conceptId": "tool.deck-brush",
+      "path": "content/assets/candidates/visual-pilot-v2/v2t008.png",
+      "sha256": "21d181f5945660744453fccd3e5fd79865cb1f290a809a82cdd00efdc42cb54c",
+      "dimensions": "1254x1254 RGB PNG",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a02fc9-7789-74a1-9b74-dcd8ce448059/exec-2a9a6da0-d3a1-44e3-95d5-3d415224b77e.png",
+      "finalVerdict": "reject",
+      "finding": "The broad shallow head, long sweeping fringe, and wide stabilizing braces borrow the decisive topology of a push broom."
+    },
+    {
+      "candidateId": "v2t008-g2",
+      "conceptId": "tool.deck-brush",
+      "path": "content/assets/candidates/visual-pilot-v2/v2t008-g2.png",
+      "sha256": "e03b162718b512075a44bb7763671118e3bbba4fd4985da67f373e0440244917",
+      "dimensions": "1254x1254 RGB PNG",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a02fc9-7789-74a1-9b74-dcd8ce448059/exec-4de34a5d-a049-4194-a85e-07f31788fa55.png",
+      "finalVerdict": "pass-select"
+    }
+  ],
+  "acceptedBaselineComparison": [
+    {
+      "conceptId": "tool.push-broom",
+      "path": "content/assets/masters/tools/t004.png",
+      "sha256": "c3a9d7849c8e411bea78259354e0aaa24acbb601549e6c4b292396a25ff30763",
+      "role": "retained accepted baseline"
+    },
+    {
+      "conceptId": "tool.deck-brush",
+      "path": "content/assets/masters/tools/t010.png",
+      "sha256": "efc9bfad5684a3dc15102e6f5e62099445959cd10cb662b5c6d89eb90581fdda",
+      "role": "retained accepted baseline"
+    }
+  ],
+  "qa": {
+    "nativeAndPhone": {
+      "v2t007-g2": "Pass: a complete connected push broom with an unmistakably wide sweeping head and long flexible bristle curtain; slightly lighter linework than t004 remains within the library language.",
+      "v2t008-g2": "Pass: a complete connected deck brush with compact thick block, direct socket, and short stiff blunt tufts; faint block hatching is generic form treatment."
+    },
+    "pairContrast": "Pass: broad and flexible versus compact and stiff remains immediately distinguishable in the matched 320-pixel review.",
+    "securityAndRights": "Pass: no visible label, logo, text, pseudo-text, color-only cue, product-specific decoration, copied composition, or answer marker.",
+    "accessibilityDrafts": [
+      {
+        "candidateId": "v2t007-g2",
+        "neutralAttemptDescription": "A long-handled cleaning implement is shown from a low three-quarter view, isolated on white.",
+        "fullLearningDescription": "A push broom has a very wide shallow rectangular block, central braced handle, and long flexible sweeping bristles."
+      },
+      {
+        "candidateId": "v2t008-g2",
+        "neutralAttemptDescription": "A long-handled cleaning implement is shown from a low three-quarter view, isolated on white.",
+        "fullLearningDescription": "A deck brush has a compact thick rectangular block, direct central handle socket, and short dense stiff bristles."
+      }
+    ],
+    "answerLeak": "The full descriptions are post-answer learning text only. No learner-facing accessibility record was installed from this candidate review."
+  },
+  "reviewDerivatives": {
+    "phoneContactSheet": {
+      "path": "content/authoring/visuals/reviews/visual-pilot-v2/next-weak-tools-broom-brush-v1/PHONE-CONTACT-SHEET.png",
+      "sha256": "174906592b202c2547fc6251d85f5eaef8ad3ddbaee3e565e55e2e8ed0766ae0",
+      "dimensions": "992x664 RGB PNG",
+      "order": [
+        "top left: accepted push-broom baseline t004",
+        "top center: v2t007 rejected",
+        "top right: v2t007-g2 selected",
+        "bottom left: accepted deck-brush baseline t010",
+        "bottom center: v2t008 rejected",
+        "bottom right: v2t008-g2 selected"
+      ]
+    },
+    "phoneCandidates": [
+      { "path": "content/authoring/visuals/reviews/visual-pilot-v2/next-weak-tools-broom-brush-v1/phone/01.png", "sha256": "72667701c86604f67f79f7d6276922fafbe8b4222f6b3e1ed5ecd468b05195d6" },
+      { "path": "content/authoring/visuals/reviews/visual-pilot-v2/next-weak-tools-broom-brush-v1/phone/02.png", "sha256": "05ae84496b2170ee75a5c38f6c8fca807109b807ffe68aed3f726e54ebdc228e" },
+      { "path": "content/authoring/visuals/reviews/visual-pilot-v2/next-weak-tools-broom-brush-v1/phone/03.png", "sha256": "bca406cd81b4a1e32ef425c7debdd008e483de2641a22b6eee4f513e6dd122a1" },
+      { "path": "content/authoring/visuals/reviews/visual-pilot-v2/next-weak-tools-broom-brush-v1/phone/04.png", "sha256": "bb0d7be267e1e9c7ce4a5956fdcd27f61ada1785b78b5f3c01433cd059e60219" },
+      { "path": "content/authoring/visuals/reviews/visual-pilot-v2/next-weak-tools-broom-brush-v1/phone/05.png", "sha256": "e260742e9a28d29601d9b9cae7f5830622ccee9716059ee495715eb8a7f7f7c5" },
+      { "path": "content/authoring/visuals/reviews/visual-pilot-v2/next-weak-tools-broom-brush-v1/phone/06.png", "sha256": "091514847040eb186c2c5a4f08d01eb6fa6f4120431afd6f4a0c5435154eb8d1" }
+    ]
+  },
+  "masterImpact": "None. The existing accepted t004 and t010 masters and manifests remain unchanged; the passed g2 images are candidate-only alternate views."
+}

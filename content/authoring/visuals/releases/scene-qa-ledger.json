@@ -1,0 +1,488 @@
+[
+  {
+    "sceneId": "scene.slip.hallway-wet-floor",
+    "opaqueAssetId": "s001",
+    "exactMasterSha256": "5648c401bd764f44b1f23e1dbaa5aac3e79c4292990e68c98f1d47947037ff0d",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "overall": "accepted",
+    "reviews": {
+      "sourceAndScope": "pass",
+      "semanticContent": "pass — selected pixels match the authored target/decoy inventory after documented replacements and one decoy reconciliation",
+      "exactPixel": "pass — selected candidate and exact native master hashes match",
+      "operatorAccidentalHazardScreen": "pass",
+      "independentAccidentalHazardReview": "pass",
+      "styleAndSimilarity": "pass",
+      "rightsAndProvenance": "pass — text-only original generation; no source image or prohibited reconstruction supplied; native C2PA retained",
+      "securityAndAnswerLeak": "pass — opaque delivery IDs and stripped derivative metadata; answer-bearing overlays remain authoring-only",
+      "phone": "pass at 480x320 review size",
+      "grayscalePrint": "pass at 480x320 review size",
+      "accessibility": "pass — neutral, full, and nonvisual zoned records authored",
+      "regions": "pass — normalized one-to-one inventory regions authored and validated",
+      "checksum": "pass"
+    },
+    "independentFindings": [
+      "A broad reflective wet patch spans the central walking path with no warning control; the fixed wall conduit and alcove cart remain outside the route, with no second hazard or answer cue.",
+      "Phone and grayscale views preserve the target; two reviewed decoy polygons cover the conduit run without overlapping the wet-patch region."
+    ]
+  },
+  {
+    "sceneId": "scene.slip.lobby-raised-mat",
+    "opaqueAssetId": "s002",
+    "exactMasterSha256": "d692813cd7f4a25a8dcfbe5867f3d63e8c0738de48e55203f856214f463958f7",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "overall": "accepted",
+    "reviews": {
+      "sourceAndScope": "pass",
+      "semanticContent": "pass — selected pixels match the authored target/decoy inventory after documented replacements and one decoy reconciliation",
+      "exactPixel": "pass — selected candidate and exact native master hashes match",
+      "operatorAccidentalHazardScreen": "pass",
+      "independentAccidentalHazardReview": "pass",
+      "styleAndSimilarity": "pass",
+      "rightsAndProvenance": "pass — text-only original generation; no source image or prohibited reconstruction supplied; native C2PA retained",
+      "securityAndAnswerLeak": "pass — opaque delivery IDs and stripped derivative metadata; answer-bearing overlays remain authoring-only",
+      "phone": "pass at 480x320 review size",
+      "grayscalePrint": "pass at 480x320 review size",
+      "accessibility": "pass — neutral, full, and nonvisual zoned records authored",
+      "regions": "pass — normalized one-to-one inventory regions authored and validated",
+      "checksum": "pass"
+    },
+    "independentFindings": [
+      "One mat corner has a clear raised gap and shadow in the travel lane; the bench, dry floor, doors, and upright umbrella stand remain safe and unobstructed.",
+      "The target and decoy remain distinct in phone and grayscale views, the overlay aligns, and no text, extra hazard, or answer cue appears."
+    ]
+  },
+  {
+    "sceneId": "scene.egress.stairwell-boxes",
+    "opaqueAssetId": "s003",
+    "exactMasterSha256": "4562c968a15c57d039cfdf9d95091da596c5ebf1068f7b6952ddccfac69d1a30",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "overall": "accepted",
+    "reviews": {
+      "sourceAndScope": "pass",
+      "semanticContent": "pass — selected pixels match the authored target/decoy inventory after documented replacements and one decoy reconciliation",
+      "exactPixel": "pass — selected candidate and exact native master hashes match",
+      "operatorAccidentalHazardScreen": "pass",
+      "independentAccidentalHazardReview": "pass",
+      "styleAndSimilarity": "pass",
+      "rightsAndProvenance": "pass — text-only original generation; no source image or prohibited reconstruction supplied; native C2PA retained",
+      "securityAndAnswerLeak": "pass — opaque delivery IDs and stripped derivative metadata; answer-bearing overlays remain authoring-only",
+      "phone": "pass at 480x320 review size",
+      "grayscalePrint": "pass at 480x320 review size",
+      "accessibility": "pass — neutral, full, and nonvisual zoned records authored",
+      "regions": "pass — normalized one-to-one inventory regions authored and validated",
+      "checksum": "pass"
+    },
+    "independentFindings": [
+      "Two stable rows of closed boxes visibly narrow the stair landing while a continuous route remains; steps are dry and the wall handrail is intact.",
+      "The obstruction and rail regions align and survive phone/grayscale review; no leaning load, damaged rail, readable sign, or second hazard appears."
+    ]
+  },
+  {
+    "sceneId": "scene.egress.gym-exit-obstruction",
+    "opaqueAssetId": "s004",
+    "exactMasterSha256": "26acf87611e08ad3e23046801bf64bd3d1335dfa1704206c072ec19c0a855796",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "overall": "accepted",
+    "reviews": {
+      "sourceAndScope": "pass",
+      "semanticContent": "pass — selected pixels match the authored target/decoy inventory after documented replacements and one decoy reconciliation",
+      "exactPixel": "pass — selected candidate and exact native master hashes match",
+      "operatorAccidentalHazardScreen": "pass",
+      "independentAccidentalHazardReview": "pass",
+      "styleAndSimilarity": "pass",
+      "rightsAndProvenance": "pass — text-only original generation; no source image or prohibited reconstruction supplied; native C2PA retained",
+      "securityAndAnswerLeak": "pass — opaque delivery IDs and stripped derivative metadata; answer-bearing overlays remain authoring-only",
+      "phone": "pass at 480x320 review size",
+      "grayscalePrint": "pass at 480x320 review size",
+      "accessibility": "pass — neutral, full, and nonvisual zoned records authored",
+      "regions": "pass — normalized one-to-one inventory regions authored and validated",
+      "checksum": "pass"
+    },
+    "independentFindings": [
+      "Folded mats and a stable equipment cart directly obstruct the panic-bar double doors; the side-wall basketball rack remains stable and outside the exit approach.",
+      "Phone, grayscale, and overlay views remain fair, with a dry clear court and no readable exit text, unstable storage, or unrelated hazard."
+    ]
+  },
+  {
+    "sceneId": "scene.chemical.closet-unidentified-container",
+    "opaqueAssetId": "s005",
+    "exactMasterSha256": "5358f246b72323505707abebe123ba6abc98152c5a8b9a2052e1bf88775c785b",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "overall": "accepted",
+    "reviews": {
+      "sourceAndScope": "pass",
+      "semanticContent": "pass — selected pixels match the authored target/decoy inventory after documented replacements and one decoy reconciliation",
+      "exactPixel": "pass — selected candidate and exact native master hashes match",
+      "operatorAccidentalHazardScreen": "pass",
+      "independentAccidentalHazardReview": "pass",
+      "styleAndSimilarity": "pass",
+      "rightsAndProvenance": "pass — text-only original generation; no source image or prohibited reconstruction supplied; native C2PA retained",
+      "securityAndAnswerLeak": "pass — opaque delivery IDs and stripped derivative metadata; answer-bearing overlays remain authoring-only",
+      "phone": "pass at 480x320 review size",
+      "grayscalePrint": "pass at 480x320 review size",
+      "accessibility": "pass — neutral, full, and nonvisual zoned records authored",
+      "regions": "pass — normalized one-to-one inventory regions authored and validated",
+      "checksum": "pass"
+    },
+    "independentFindings": [
+      "The half-filled secondary spray bottle is wholly blank; all six closed supply jugs are upright, contained, and carry non-text identifiers that prevent another unlabeled-container condition.",
+      "Phone/grayscale preserve the distinction, and two decoy polygons cover all six jug instances without target overlap; sink, secured mop, and floor remain safe."
+    ]
+  },
+  {
+    "sceneId": "scene.chemical.kitchen-chemicals-over-foodware",
+    "opaqueAssetId": "s006",
+    "exactMasterSha256": "45f3e40548c6e584e1bda054c4a75f9d034f173a6dc7a962eeb4beaab4c9b4bd",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "overall": "accepted",
+    "reviews": {
+      "sourceAndScope": "pass",
+      "semanticContent": "pass — selected pixels match the authored target/decoy inventory after documented replacements and one decoy reconciliation",
+      "exactPixel": "pass — selected candidate and exact native master hashes match",
+      "operatorAccidentalHazardScreen": "pass",
+      "independentAccidentalHazardReview": "pass",
+      "styleAndSimilarity": "pass",
+      "rightsAndProvenance": "pass — text-only original generation; no source image or prohibited reconstruction supplied; native C2PA retained",
+      "securityAndAnswerLeak": "pass — opaque delivery IDs and stripped derivative metadata; answer-bearing overlays remain authoring-only",
+      "phone": "pass at 480x320 review size",
+      "grayscalePrint": "pass at 480x320 review size",
+      "accessibility": "pass — neutral, full, and nonvisual zoned records authored",
+      "regions": "pass — normalized one-to-one inventory regions authored and validated",
+      "checksum": "pass"
+    },
+    "independentFindings": [
+      "Closed marked cleaning-supply jugs sit directly above uncovered bowls and utensils; the separate inverted-pan rack is stable and safely separated.",
+      "The storage relationship survives phone and grayscale without color dependence; revised background/accessibility wording matches the stable racks, tiled wall, and dry floor, with no spill or second condition."
+    ]
+  },
+  {
+    "sceneId": "scene.electrical.utility-damaged-cord",
+    "opaqueAssetId": "s007",
+    "exactMasterSha256": "aff208b2f56d1155d56fddb3f3b98428e6a7f622deaa770e1283b5d37f605c1f",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "overall": "accepted",
+    "reviews": {
+      "sourceAndScope": "pass",
+      "semanticContent": "pass — selected pixels match the authored target/decoy inventory after documented replacements and one decoy reconciliation",
+      "exactPixel": "pass — selected candidate and exact native master hashes match",
+      "operatorAccidentalHazardScreen": "pass",
+      "independentAccidentalHazardReview": "pass",
+      "styleAndSimilarity": "pass",
+      "rightsAndProvenance": "pass — text-only original generation; no source image or prohibited reconstruction supplied; native C2PA retained",
+      "securityAndAnswerLeak": "pass — opaque delivery IDs and stripped derivative metadata; answer-bearing overlays remain authoring-only",
+      "phone": "pass at 480x320 review size",
+      "grayscalePrint": "pass at 480x320 review size",
+      "accessibility": "pass — neutral, full, and nonvisual zoned records authored",
+      "regions": "pass — normalized one-to-one inventory regions authored and validated",
+      "checksum": "pass"
+    },
+    "independentFindings": [
+      "The seated plug and split outer jacket expose distinct inner conductors; the spare extension cord is intact, coiled on its hook, and outside the walking route.",
+      "Damage and decoy remain legible in phone/grayscale and aligned in the overlay; the floor is dry, the light upright, and no water, overload, or trip cord appears."
+    ]
+  },
+  {
+    "sceneId": "scene.electrical.classroom-wet-power-strip",
+    "opaqueAssetId": "s008",
+    "exactMasterSha256": "0e1b3b2b164b244d1690a72fd4e936940a3c913bebf2516424fc387e9ddb84b7",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "overall": "accepted",
+    "reviews": {
+      "sourceAndScope": "pass",
+      "semanticContent": "pass — selected pixels match the authored target/decoy inventory after documented replacements and one decoy reconciliation",
+      "exactPixel": "pass — selected candidate and exact native master hashes match",
+      "operatorAccidentalHazardScreen": "pass",
+      "independentAccidentalHazardReview": "pass",
+      "styleAndSimilarity": "pass",
+      "rightsAndProvenance": "pass — text-only original generation; no source image or prohibited reconstruction supplied; native C2PA retained",
+      "securityAndAnswerLeak": "pass — opaque delivery IDs and stripped derivative metadata; answer-bearing overlays remain authoring-only",
+      "phone": "pass at 480x320 review size",
+      "grayscalePrint": "pass at 480x320 review size",
+      "accessibility": "pass — neutral, full, and nonvisual zoned records authored",
+      "regions": "pass — normalized one-to-one inventory regions authored and validated",
+      "checksum": "pass"
+    },
+    "independentFindings": [
+      "A connected power strip lies within a shallow wall-side puddle while the classroom's central aisle remains dry; the closed laptop is stable on a dry teacher desk.",
+      "Phone/grayscale and overlay views preserve the wet electrical relationship without showing a damaged cord, overload, person, crossing cable, text, or second hazard."
+    ]
+  },
+  {
+    "sceneId": "scene.sharps.restroom-broken-glass",
+    "opaqueAssetId": "s009",
+    "exactMasterSha256": "958ad83f58746da23cea3db6a9125517369de117f2bb8e954856b974c1b61b69",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "overall": "accepted",
+    "reviews": {
+      "sourceAndScope": "pass",
+      "semanticContent": "pass — selected pixels match the authored target/decoy inventory after documented replacements and one decoy reconciliation",
+      "exactPixel": "pass — selected candidate and exact native master hashes match",
+      "operatorAccidentalHazardScreen": "pass",
+      "independentAccidentalHazardReview": "pass",
+      "styleAndSimilarity": "pass",
+      "rightsAndProvenance": "pass — text-only original generation; no source image or prohibited reconstruction supplied; native C2PA retained",
+      "securityAndAnswerLeak": "pass — opaque delivery IDs and stripped derivative metadata; answer-bearing overlays remain authoring-only",
+      "phone": "pass at 480x320 review size",
+      "grayscalePrint": "pass at 480x320 review size",
+      "accessibility": "pass — neutral, full, and nonvisual zoned records authored",
+      "regions": "pass — normalized one-to-one inventory regions authored and validated",
+      "checksum": "pass"
+    },
+    "independentFindings": [
+      "Several large irregular pointed glass shards are exposed on the dry restroom floor; the rounded wall mirror is intact and securely mounted.",
+      "Shards remain recognizable in phone/grayscale and regions align; stall, lidded bin, and surrounding floor are safe, with no wetness, overflow, blood cue, or pseudotext."
+    ]
+  },
+  {
+    "sceneId": "scene.sharps.grounds-broken-bottle",
+    "opaqueAssetId": "s010",
+    "exactMasterSha256": "40191790c92181821514ec9cc366aefb3975d0e7b6c3d8fa20ca6dc003b40e1c",
+    "generatorOperator": "Codex /root — independent-review remediation thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "accidentalHazardReviewer": "Codex /root/scene_review_07_12 — independent visual reviewer",
+    "overall": "accepted",
+    "reviews": {
+      "sourceAndScope": "pass",
+      "semanticContent": "pass — selected pixels match the authored target/decoy inventory after documented replacements and one decoy reconciliation",
+      "exactPixel": "pass — selected candidate and exact native master hashes match",
+      "operatorAccidentalHazardScreen": "pass",
+      "independentAccidentalHazardReview": "pass",
+      "styleAndSimilarity": "pass",
+      "rightsAndProvenance": "pass — text-only original generation; no source image or prohibited reconstruction supplied; native C2PA retained",
+      "securityAndAnswerLeak": "pass — opaque delivery IDs and stripped derivative metadata; answer-bearing overlays remain authoring-only",
+      "phone": "pass at 480x320 review size",
+      "grayscalePrint": "pass at 480x320 review size",
+      "accessibility": "pass — neutral, full, and nonvisual zoned records authored",
+      "regions": "pass — normalized one-to-one inventory regions authored and validated",
+      "checksum": "pass"
+    },
+    "independentFindings": [
+      "The replacement clearly shows a broken bottle base, neck fragment, and separate pointed shards extending onto an otherwise level dry walkway; the grounds cart remains stable on grass outside the route.",
+      "The closed collection bin is blank, intact, stable on its pad, and contains no arrow, recycling mark, symbol, label, logo, text, or cue; phone/grayscale and revised regions pass."
+    ]
+  },
+  {
+    "sceneId": "scene.material.loading-unstable-stack",
+    "opaqueAssetId": "s011",
+    "exactMasterSha256": "3ee76f0487fb823e11d6965d6954fe259db4fa2d8f1826732a4459f863e62f3d",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "overall": "accepted",
+    "reviews": {
+      "sourceAndScope": "pass",
+      "semanticContent": "pass — selected pixels match the authored target/decoy inventory after documented replacements and one decoy reconciliation",
+      "exactPixel": "pass — selected candidate and exact native master hashes match",
+      "operatorAccidentalHazardScreen": "pass",
+      "independentAccidentalHazardReview": "pass",
+      "styleAndSimilarity": "pass",
+      "rightsAndProvenance": "pass — text-only original generation; no source image or prohibited reconstruction supplied; native C2PA retained",
+      "securityAndAnswerLeak": "pass — opaque delivery IDs and stripped derivative metadata; answer-bearing overlays remain authoring-only",
+      "phone": "pass at 480x320 review size",
+      "grayscalePrint": "pass at 480x320 review size",
+      "accessibility": "pass — neutral, full, and nonvisual zoned records authored",
+      "regions": "pass — normalized one-to-one inventory regions authored and validated",
+      "checksum": "pass"
+    },
+    "independentFindings": [
+      "The tall dolly load has an obvious lean, oversized upper boxes, offset/compressed lower boxes, and an intact visible dolly; the low pallet stack is aligned and stable.",
+      "Phone/grayscale and regions remain fair; loading threshold, side door, hand truck, and dry floor are unobstructed and no falling box, damaged equipment, debris, text, or second hazard appears."
+    ]
+  },
+  {
+    "sceneId": "scene.material.cafeteria-obscured-vision",
+    "opaqueAssetId": "s012",
+    "exactMasterSha256": "3a5df0d37df6e6ef3660104458a91d940938fb34f068cc4518c7a695aa5a54f8",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "overall": "accepted",
+    "reviews": {
+      "sourceAndScope": "pass",
+      "semanticContent": "pass — selected pixels match the authored target/decoy inventory after documented replacements and one decoy reconciliation",
+      "exactPixel": "pass — selected candidate and exact native master hashes match",
+      "operatorAccidentalHazardScreen": "pass",
+      "independentAccidentalHazardReview": "pass",
+      "styleAndSimilarity": "pass",
+      "rightsAndProvenance": "pass — text-only original generation; no source image or prohibited reconstruction supplied; native C2PA retained",
+      "securityAndAnswerLeak": "pass — opaque delivery IDs and stripped derivative metadata; answer-bearing overlays remain authoring-only",
+      "phone": "pass at 480x320 review size",
+      "grayscalePrint": "pass at 480x320 review size",
+      "accessibility": "pass — neutral, full, and nonvisual zoned records authored",
+      "regions": "pass — normalized one-to-one inventory regions authored and validated",
+      "checksum": "pass"
+    },
+    "independentFindings": [
+      "Three closed boxes cover the carrier's face and forward route while the full body, plausible hands, and both feet remain visible; the wall-side platform cart is empty and stable.",
+      "The clear dry aisle, tucked furniture, phone/grayscale recognition, and overlay alignment pass with no falling boxes, blocked exit, wet floor, text, or extra condition."
+    ]
+  },
+  {
+    "sceneId": "scene.biological.restroom-bare-hand-cleaning",
+    "opaqueAssetId": "s013",
+    "exactMasterSha256": "5955ab3d871a6cd7dd54cdbda9c0f1976d6ba549a2144ddd6e9ca36adb936ba8",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "overall": "accepted",
+    "reviews": {
+      "sourceAndScope": "pass",
+      "semanticContent": "pass — selected pixels match the authored target/decoy inventory after documented replacements and one decoy reconciliation",
+      "exactPixel": "pass — selected candidate and exact native master hashes match",
+      "operatorAccidentalHazardScreen": "pass",
+      "independentAccidentalHazardReview": "pass",
+      "styleAndSimilarity": "pass",
+      "rightsAndProvenance": "pass — text-only original generation; no source image or prohibited reconstruction supplied; native C2PA retained",
+      "securityAndAnswerLeak": "pass — opaque delivery IDs and stripped derivative metadata; answer-bearing overlays remain authoring-only",
+      "phone": "pass at 480x320 review size",
+      "grayscalePrint": "pass at 480x320 review size",
+      "accessibility": "pass — neutral, full, and nonvisual zoned records authored",
+      "regions": "pass — normalized one-to-one inventory regions authored and validated",
+      "checksum": "pass"
+    },
+    "independentFindings": [
+      "Bare fingers and wrist hold a cloth in visible contact with the inside of the toilet bowl; the unused toilet brush is upright and contained in its holder.",
+      "The target survives phone/grayscale and regions align; the bottle is capped, cart stable, sink empty, and floor dry, with no splash, blood, mixing, text, or second hazard."
+    ]
+  },
+  {
+    "sceneId": "scene.biological.cafeteria-mop-on-table",
+    "opaqueAssetId": "s014",
+    "exactMasterSha256": "a289ca419858bf088b43329b4e379e896c8cf7a65f64ce44d7d6ab5554f072ac",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "overall": "accepted",
+    "reviews": {
+      "sourceAndScope": "pass",
+      "semanticContent": "pass — selected pixels match the authored target/decoy inventory after documented replacements and one decoy reconciliation",
+      "exactPixel": "pass — selected candidate and exact native master hashes match",
+      "operatorAccidentalHazardScreen": "pass",
+      "independentAccidentalHazardReview": "pass",
+      "styleAndSimilarity": "pass",
+      "rightsAndProvenance": "pass — text-only original generation; no source image or prohibited reconstruction supplied; native C2PA retained",
+      "securityAndAnswerLeak": "pass — opaque delivery IDs and stripped derivative metadata; answer-bearing overlays remain authoring-only",
+      "phone": "pass at 480x320 review size",
+      "grayscalePrint": "pass at 480x320 review size",
+      "accessibility": "pass — neutral, full, and nonvisual zoned records authored",
+      "regions": "pass — normalized one-to-one inventory regions authored and validated",
+      "checksum": "pass"
+    },
+    "independentFindings": [
+      "A visibly used damp string-mop head lies directly across the dining tabletop with its handle attached; the folded microfiber cloth remains contained behind the cart cabinet front.",
+      "Phone/grayscale and regions pass; bucket and cart are stable, floor dry, and no food, spill, person, text, or separate condition appears."
+    ]
+  },
+  {
+    "sceneId": "scene.machine.gym-unguarded-fan",
+    "opaqueAssetId": "s015",
+    "exactMasterSha256": "e16a3596d90b417917361983485fe18cf76fea2e78d201ef294fe72580dddb04",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "overall": "accepted",
+    "reviews": {
+      "sourceAndScope": "pass",
+      "semanticContent": "pass — selected pixels match the authored target/decoy inventory after documented replacements and one decoy reconciliation",
+      "exactPixel": "pass — selected candidate and exact native master hashes match",
+      "operatorAccidentalHazardScreen": "pass",
+      "independentAccidentalHazardReview": "pass",
+      "styleAndSimilarity": "pass",
+      "rightsAndProvenance": "pass — text-only original generation; no source image or prohibited reconstruction supplied; native C2PA retained",
+      "securityAndAnswerLeak": "pass — opaque delivery IDs and stripped derivative metadata; answer-bearing overlays remain authoring-only",
+      "phone": "pass at 480x320 review size",
+      "grayscalePrint": "pass at 480x320 review size",
+      "accessibility": "pass — neutral, full, and nonvisual zoned records authored",
+      "regions": "pass — normalized one-to-one inventory regions authored and validated",
+      "checksum": "pass"
+    },
+    "independentFindings": [
+      "The connected foreground fan has fully exposed blades and no front grille; the farther fan has a complete close-spaced guard and is stored outside the court route.",
+      "The distinction survives phone/grayscale and regions align; the cord stays at the wall, the court is clear and dry, and no person, motion cue, text, or extra hazard appears."
+    ]
+  },
+  {
+    "sceneId": "scene.machine.utility-saw-guard",
+    "opaqueAssetId": "s016",
+    "exactMasterSha256": "31a9de7f24626de9f7b61bd33c20fddd128d1254881d88bd3871ad60aad80c9d",
+    "generatorOperator": "Codex /root — independent-review remediation thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "accidentalHazardReviewer": "Codex /root/scene_review_13_18 — independent visual reviewer",
+    "overall": "accepted",
+    "reviews": {
+      "sourceAndScope": "pass",
+      "semanticContent": "pass — selected pixels match the authored target/decoy inventory after documented replacements and one decoy reconciliation",
+      "exactPixel": "pass — selected candidate and exact native master hashes match",
+      "operatorAccidentalHazardScreen": "pass",
+      "independentAccidentalHazardReview": "pass",
+      "styleAndSimilarity": "pass",
+      "rightsAndProvenance": "pass — project-owned generated remediation candidate used only for targeted geometry refinement; no external source image or prohibited reconstruction supplied; native C2PA retained",
+      "securityAndAnswerLeak": "pass — opaque delivery IDs and stripped derivative metadata; answer-bearing overlays remain authoring-only",
+      "phone": "pass at 480x320 review size",
+      "grayscalePrint": "pass at 480x320 review size",
+      "accessibility": "pass — neutral, full, and nonvisual zoned records authored",
+      "regions": "pass — normalized one-to-one inventory regions authored and validated",
+      "checksum": "pass"
+    },
+    "independentFindings": [
+      "The replacement saw rests plausibly on its motor-housing side; its intact upper housing and retracted lower-guard mechanism leave the blade exposed while every tooth remains visibly clear of the solid tabletop.",
+      "The plug is disconnected, cord intact, and drill secured with its cord contained; phone/grayscale and revised regions pass with a clear dry bench and no text, cue, or second hazard."
+    ]
+  },
+  {
+    "sceneId": "scene.zero.classroom-orderly",
+    "opaqueAssetId": "s017",
+    "exactMasterSha256": "888bd553461e6bc986d50e2489684b3b570ee726b45cc997af43a1234bcc4e27",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "overall": "accepted",
+    "reviews": {
+      "sourceAndScope": "pass",
+      "semanticContent": "pass — selected pixels match the authored target/decoy inventory after documented replacements and one decoy reconciliation",
+      "exactPixel": "pass — selected candidate and exact native master hashes match",
+      "operatorAccidentalHazardScreen": "pass",
+      "independentAccidentalHazardReview": "pass",
+      "styleAndSimilarity": "pass",
+      "rightsAndProvenance": "pass — text-only original generation; no source image or prohibited reconstruction supplied; native C2PA retained",
+      "securityAndAnswerLeak": "pass — opaque delivery IDs and stripped derivative metadata; answer-bearing overlays remain authoring-only",
+      "phone": "pass at 480x320 review size",
+      "grayscalePrint": "pass at 480x320 review size",
+      "accessibility": "pass — neutral, full, and nonvisual zoned records authored",
+      "regions": "pass — normalized one-to-one inventory regions authored and validated",
+      "checksum": "pass"
+    },
+    "independentFindings": [
+      "Zero-control check found no target: the stepladder is fully open with flat feet and visible bracing, the cord stays within a low wall-edge protector, and the portable fan has a complete guard.",
+      "The doorway and central aisle remain clear and dry; all three decoy regions align and phone/grayscale show no spill, damaged cord, blocked exit, unstable storage, pseudotext, or other hazard."
+    ]
+  },
+  {
+    "sceneId": "scene.zero.closet-contained",
+    "opaqueAssetId": "s018",
+    "exactMasterSha256": "6392d4f0575647918acacda18d1593d714408e5e1321a7b12787afd127790bbf",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "overall": "accepted",
+    "reviews": {
+      "sourceAndScope": "pass",
+      "semanticContent": "pass — selected pixels match the authored target/decoy inventory after documented replacements and one decoy reconciliation",
+      "exactPixel": "pass — selected candidate and exact native master hashes match",
+      "operatorAccidentalHazardScreen": "pass",
+      "independentAccidentalHazardReview": "pass",
+      "styleAndSimilarity": "pass",
+      "rightsAndProvenance": "pass — text-only original generation; no source image or prohibited reconstruction supplied; native C2PA retained",
+      "securityAndAnswerLeak": "pass — opaque delivery IDs and stripped derivative metadata; answer-bearing overlays remain authoring-only",
+      "phone": "pass at 480x320 review size",
+      "grayscalePrint": "pass at 480x320 review size",
+      "accessibility": "pass — neutral, full, and nonvisual zoned records authored",
+      "regions": "pass — normalized one-to-one inventory regions authored and validated",
+      "checksum": "pass"
+    },
+    "independentFindings": [
+      "Zero-control check found no target: every bottle is capped, marked, upright, and inside the low tray; all three long handles are individually clipped and the folded floor sign is securely hooked.",
+      "The sink, cabinet, doorway, and floor remain safe and dry; all decoy regions align and phone/grayscale show no leak, blank secondary bottle, falling tool, obstruction, text, or extra hazard."
+    ]
+  }
+]

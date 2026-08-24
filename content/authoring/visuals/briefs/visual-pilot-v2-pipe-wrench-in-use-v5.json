@@ -1,0 +1,41 @@
+{
+  "briefId": "visual-pilot-v2-pipe-wrench-in-use-v5",
+  "briefVersion": 5,
+  "date": "2026-08-23",
+  "status": "generation-authorized; candidate-only; controlled repair of diagonal in-use view",
+  "conceptId": "pipe-wrench",
+  "variantId": "pipe-wrench-in-use-different-angle",
+  "supersedesBrief": {
+    "path": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-in-use-v4.json",
+    "reason": "v2t002-u5 passed as a supplemental contact view but retained the accepted master angle. This brief repairs the otherwise successful diagonal u2 candidate so the requested different-angle variant can be evaluated."
+  },
+  "generatorSurface": "Codex built-in image_gen",
+  "generationMode": "controlled edit of project-owned candidate artwork",
+  "outputRequest": {
+    "count": 1,
+    "candidateId": "v2t002-u6",
+    "candidatePath": "content/assets/candidates/visual-pilot-v2/v2t002-u6.png",
+    "nativeDimensions": "one native square raster at generator-selected dimensions; preserve original bytes"
+  },
+  "referencedImages": [
+    {
+      "path": "content/assets/candidates/visual-pilot-v2/v2t002-u2.png",
+      "sha256": "085a9f8ae2d6c0a5bb746dce5416e669575fdc79c66153ba3e75721bd1fe705f",
+      "role": "project-owned provisional diagonal candidate; retain its successful one-shank topology, round fitting, safe pose, monochrome style, and complete crop while changing only the explicit lower contact and handle decoration"
+    }
+  ],
+  "mustShow": [
+    "the same complete diagonal three-quarter pipe wrench and single round cylindrical fitting",
+    "upper hook-jaw and lower fixed-heel serrations both visibly tangent to opposite sides of the fitting",
+    "the same single straight threaded shank, one adjustment nut, one fixed heel jaw, and no extra mechanism",
+    "a plain solid handle with a softly rounded solid end and no recess, channel, or hole",
+    "monochrome line art on opaque white, readable at 320 by 320"
+  ],
+  "mustNotShow": [
+    "a looped rack, second shank, return, fork, duplicate nut, worm gear, or any changed mechanism",
+    "a hidden or gapped lower jaw contact, tooth penetration, or hexagonal workpiece",
+    "an inset handle panel, long recess, groove, round or oblong hanging hole, branded contour, or copied trade dress",
+    "hands, people, unsafe force multipliers, text, arrows, branding, watermark, scenery, shadow, or color"
+  ],
+  "prompt": "Make a controlled edit of Image 1, a project-owned generic candidate. Preserve the successful diagonal three-quarter composition, exact count of one complete pipe wrench and one round cylindrical steel fitting, safe no-person context, monochrome line-art style, pure-white canvas, generous crop, and the existing mechanically coherent adjustment topology.\n\nLock the mechanism: keep one curved hook jaw, one straight threaded shank, exactly one knurled adjustment nut, one fixed heel jaw, and one ordinary handle. Do not add, remove, duplicate, bend, or disconnect any mechanism part. No second screw, rack, rail, rod, nut, loop, U-shape, return, fork, or worm gear.\n\nMake only two semantic corrections. First, expose the lower fixed-heel-jaw contact with the round fitting. Keep the upper hook-jaw serrations tangent to the top of the cylindrical fitting. Shift the fitting slightly left if needed and reveal a short row of lower fixed-heel serrations visibly tangent to the fitting's lower-right outer circumference. Both opposite contact points must be outside the body silhouette, unobstructed, gap-free, nonpenetrating, and obvious at 320 by 320. Retain the fitting's round rim and cylindrical form; never make it hexagonal.\n\nSecond, replace the entire long decorative recessed handle face and oblong end hole with a generic plain solid forged handle. The handle remains the same length, diagonal direction, thickness, and complete uncropped position, but its face is flat and undecorated and its end is softly rounded and completely solid. No inset panel, channel, groove, cutout, stamped recess, round hole, oblong hole, or product-specific contour.\n\nDo not otherwise redesign or change the wrench head, threaded-shank/nut relationship, viewpoint, workpiece count, line weights, or framing. Add no hand, person, cheater bar, hammer, arrows, motion marks, labels, text, pseudo-text, numerals, logo, brand, watermark, color, floor, room, bench, border, cast shadow, photorealism, or copied trade dress."
+}

@@ -1,0 +1,143 @@
+[
+  {
+    "id": "comparison.floor-machine-burnisher",
+    "memberIds": [
+      "equipment.floor-machine.low-speed",
+      "equipment.burnisher.high-speed"
+    ],
+    "decisiveDistinction": "Representative body/handle/pad geometry only; never imply a universal silhouette or RPM cutoff.",
+    "compositionRule": "Compose only from independently accepted master hashes; do not regenerate a fused panel.",
+    "basis": "docs/TAXONOMY.md#confusable-pair-registry"
+  },
+  {
+    "id": "comparison.pipe-adjustable-wrench",
+    "memberIds": [
+      "tool.pipe-wrench",
+      "tool.adjustable-wrench"
+    ],
+    "decisiveDistinction": "Serrated offset hook/heel jaws versus smooth parallel jaws and visible worm gear.",
+    "compositionRule": "Compose only from independently accepted master hashes; do not regenerate a fused panel.",
+    "basis": "docs/TAXONOMY.md#confusable-pair-registry"
+  },
+  {
+    "id": "comparison.cup-flange-plunger",
+    "memberIds": [
+      "tool.plunger.cup",
+      "tool.plunger.flange"
+    ],
+    "decisiveDistinction": "Plain cup rim versus extended lower toilet flange.",
+    "compositionRule": "Compose only from independently accepted master hashes; do not regenerate a fused panel.",
+    "basis": "docs/TAXONOMY.md#confusable-pair-registry"
+  },
+  {
+    "id": "comparison.crosscut-rip-saw",
+    "memberIds": [
+      "tool.saw.crosscut",
+      "tool.saw.rip"
+    ],
+    "decisiveDistinction": "Use tooth-pattern distinction only when it remains accurately visible.",
+    "compositionRule": "Compose only from independently accepted master hashes; do not regenerate a fused panel.",
+    "basis": "docs/TAXONOMY.md#confusable-pair-registry"
+  },
+  {
+    "id": "comparison.claw-ball-peen-hammer",
+    "memberIds": [
+      "tool.hammer.claw",
+      "tool.hammer.ball-peen"
+    ],
+    "decisiveDistinction": "Split claw versus rounded hemispherical peen.",
+    "compositionRule": "Compose only from independently accepted master hashes; do not regenerate a fused panel.",
+    "basis": "docs/TAXONOMY.md#confusable-pair-registry"
+  },
+  {
+    "id": "comparison.step-extension-ladder",
+    "memberIds": [
+      "access.stepladder",
+      "access.extension-ladder"
+    ],
+    "decisiveDistinction": "Self-supporting A-frame/spreaders versus overlapping non-self-supporting rails.",
+    "compositionRule": "Compose only from independently accepted master hashes; do not regenerate a fused panel.",
+    "basis": "docs/TAXONOMY.md#confusable-pair-registry"
+  },
+  {
+    "id": "comparison.dust-wet-mop",
+    "memberIds": [
+      "tool.dust-mop",
+      "tool.wet-mop"
+    ],
+    "decisiveDistinction": "Frame/head form and material.",
+    "compositionRule": "Compose only from independently accepted master hashes; do not regenerate a fused panel.",
+    "basis": "docs/TAXONOMY.md#confusable-pair-registry"
+  },
+  {
+    "id": "comparison.floor-window-squeegee",
+    "memberIds": [
+      "tool.floor-squeegee",
+      "tool.window-squeegee"
+    ],
+    "decisiveDistinction": "Long-handled broad floor head versus short-handled window channel.",
+    "compositionRule": "Compose only from independently accepted master hashes; do not regenerate a fused panel.",
+    "basis": "docs/TAXONOMY.md#confusable-pair-registry"
+  },
+  {
+    "id": "comparison.upright-vacuum-carpet-extractor",
+    "memberIds": [
+      "equipment.vacuum.upright",
+      "equipment.carpet-extractor"
+    ],
+    "decisiveDistinction": "Representative configuration and task context; do not claim one universal silhouette.",
+    "compositionRule": "Compose only from independently accepted master hashes; do not regenerate a fused panel.",
+    "basis": "docs/TAXONOMY.md#confusable-pair-registry"
+  },
+  {
+    "id": "comparison.slip-joint-tongue-groove-pliers",
+    "memberIds": [
+      "tool.pliers.slip-joint",
+      "tool.pliers.tongue-groove"
+    ],
+    "decisiveDistinction": "Two-position slip pivot versus multi-position tongue-and-groove channel.",
+    "compositionRule": "Compose only from independently accepted master hashes; do not regenerate a fused panel.",
+    "basis": "docs/TAXONOMY.md#confusable-pair-registry"
+  },
+  {
+    "id": "comparison.needle-nose-diagonal-pliers",
+    "memberIds": [
+      "tool.pliers.needle-nose",
+      "tool.pliers.diagonal-cutting"
+    ],
+    "decisiveDistinction": "Long gripping jaws versus opposed cutting edges.",
+    "compositionRule": "Compose only from independently accepted master hashes; do not regenerate a fused panel.",
+    "basis": "docs/TAXONOMY.md#confusable-pair-registry"
+  },
+  {
+    "id": "comparison.putty-knife-paint-scraper",
+    "memberIds": [
+      "tool.putty-knife",
+      "tool.paint-scraper"
+    ],
+    "decisiveDistinction": "Flexible spreading blade versus scraping blade/handle geometry where supported.",
+    "compositionRule": "Compose only from independently accepted master hashes; do not regenerate a fused panel.",
+    "basis": "docs/TAXONOMY.md#confusable-pair-registry"
+  },
+  {
+    "id": "comparison.c-clamp-locking-bar-clamp",
+    "memberIds": [
+      "tool.clamp.c",
+      "tool.pliers.locking",
+      "tool.clamp.bar"
+    ],
+    "decisiveDistinction": "Context-dependent comparison: screw frame versus locking linkage or sliding bar.",
+    "compositionRule": "Compose only from independently accepted master hashes; do not regenerate a fused panel.",
+    "basis": "docs/TAXONOMY.md#confusable-pair-registry"
+  },
+  {
+    "id": "comparison.push-broom-deck-brush",
+    "memberIds": [
+      "tool.push-broom",
+      "tool.deck-brush"
+    ],
+    "decisiveDistinction": "Sweeping head versus stiff scrubbing-brush geometry.",
+    "compositionRule": "Compose only from independently accepted master hashes; do not regenerate a fused panel.",
+    "basis": "docs/TAXONOMY.md#confusable-pair-registry"
+  }
+]

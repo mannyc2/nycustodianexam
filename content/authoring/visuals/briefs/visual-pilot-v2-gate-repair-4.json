@@ -1,0 +1,41 @@
+{
+  "briefId": "visual-pilot-v2-gate-repair-4",
+  "date": "2026-08-23",
+  "status": "generation-authorized; final bounded attempt; candidate-only; independent review required",
+  "parentRepairBrief": {
+    "path": "content/authoring/visuals/briefs/visual-pilot-v2-gate-repair-3.json",
+    "sha256": "991b6433bfb6adcb09a4ef1de878f0f593d69f5ba16f2e7477ce3daa5192ad33"
+  },
+  "taxonomyRevision": {
+    "path": "docs/TAXONOMY.md",
+    "sha256": "c2c487e2a16f5b5de7848d7915c4be2bd0b24749c266727f94a237b21025d952"
+  },
+  "visualPolicyRevision": {
+    "path": "illustration/VISUAL_AUTHORING_POLICY.md",
+    "sha256": "a17d47cd976fbd4caa2b57f834216450f8316063d0b9759ef4fbd0e451d0d904"
+  },
+  "generatorSurface": "Codex built-in image_gen",
+  "generationRule": "One tightly bounded complete-raster edit in one image_gen call; preserve the result under a new candidate filename; do not overwrite any prior candidate or accepted master.",
+  "assets": [
+    {
+      "candidateId": "v2t002-e3",
+      "parentCandidateId": "v2t002",
+      "conceptId": "tool.pipe-wrench",
+      "canonicalTerm": "Pipe wrench",
+      "candidatePath": "content/assets/candidates/visual-pilot-v2/v2t002-e3.png",
+      "editTarget": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2t002-e2.png",
+        "sha256": "a7ddd04c238078a5e896acfa02f5fbb420e609d3b51e787a0608599d4a262b46"
+      },
+      "priorFailure": "The nut and rack now align, but a full-height vertical body-wall line at the rack's left end still visually separates the threaded shank from the curved hook jaw.",
+      "requiredEvidence": [
+        "no full-height separator line between curved hook jaw and threaded shank",
+        "upper and lower contours flow visibly and directly from the hook-jaw root into the threaded rack",
+        "existing rack passes through the single centered knurled nut and terminates inside the housing",
+        "all other pixels and meanings preserved as closely as possible",
+        "continuous mechanism survives 320 by 320 review"
+      ],
+      "prompt": "Use case: scientific-educational.\nTask: one microscopic, tightly bounded edit of the supplied side-profile pipe-wrench raster. Preserve the complete image, square opaque-white canvas, exact composition, scale, line-art style, handle, heel jaw, hook-jaw silhouette, serrated teeth, threaded rack, single knurled nut, open window, housing, and all non-junction pixels as closely as possible.\nChange only the small junction at the left end of the horizontal threaded rack. Erase the full-height straight vertical black separator line that currently runs from the upper housing down past the rack and makes the curved hook jaw look disconnected from its threaded shank. Redraw that junction so the same curved hook jaw narrows into one straight rectangular threaded shank: the shank's upper and lower contour lines must flow visibly and directly from the inner/root portion of the curved hook jaw into the existing horizontal threaded rack with no body wall, seam, blank gap, joint, or hidden break between them. Keep the existing rack continuing through the center of the existing single knurled nut and ending shortly inside the housing. The curved hook jaw, connected shank, rack, and nut engagement must read as one mechanically coherent adjustment assembly at 320 by 320 pixels.\nAbsolute preservation/exclusions: do not add a standalone rod, second shank, second nut, extra tail, U-loop, fork, hook, projection, label, arrow, text, pseudo-text, logo, brand, watermark, person, prop, shadow, gray field, or color. Do not change the jaw opening, tooth rows, handle, canvas, orientation, crop, answer meaning, or any unrelated contour.\nOutput: the complete edited image as one native square raster candidate, without annotations or explanatory text."
+    }
+  ]
+}

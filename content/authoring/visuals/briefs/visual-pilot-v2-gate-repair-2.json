@@ -1,0 +1,60 @@
+{
+  "briefId": "visual-pilot-v2-gate-repair-2",
+  "date": "2026-08-23",
+  "status": "generation-authorized; candidate-only; independent review required",
+  "parentPilot": {
+    "path": "content/authoring/visuals/briefs/visual-pilot-v2.json",
+    "sha256": "9c4f67d80fdb47bc483411aa9ffd867ca1a1c57c79c538678ce4354916b6b3ca"
+  },
+  "priorRepairBrief": {
+    "path": "content/authoring/visuals/briefs/visual-pilot-v2-gate-repair.json",
+    "sha256": "e181616a70b42f570e2e026c237325a0cf0d3388b82c4ac4d72a39132a1c2625"
+  },
+  "taxonomyRevision": {
+    "path": "docs/TAXONOMY.md",
+    "sha256": "c2c487e2a16f5b5de7848d7915c4be2bd0b24749c266727f94a237b21025d952"
+  },
+  "visualPolicyRevision": {
+    "path": "illustration/VISUAL_AUTHORING_POLICY.md",
+    "sha256": "a17d47cd976fbd4caa2b57f834216450f8316063d0b9759ef4fbd0e451d0d904"
+  },
+  "generatorSurface": "Codex built-in image_gen",
+  "generationRule": "One complete native raster in one generation call; preserve every result under a new candidate filename; do not overwrite accepted masters or earlier candidates.",
+  "assets": [
+    {
+      "candidateId": "v2t002-g2",
+      "parentCandidateId": "v2t002",
+      "conceptId": "tool-pipe-wrench",
+      "canonicalTerm": "Pipe wrench",
+      "candidatePath": "content/assets/candidates/visual-pilot-v2/v2t002-g2.png",
+      "priorRejectedCandidate": {
+        "path": "content/assets/candidates/visual-pilot-v2/v2t002-e1.png",
+        "sha256": "5916afea0b3380cd3c54a8725763e86908f657f180c7d746d8a46b660c21feba",
+        "failure": "The hook-jaw shank enters the upper housing while the knurled nut occupies a separate lower window, so the nut does not visibly or plausibly engage the shank. The ambiguity survives 320-pixel review."
+      },
+      "referenceUse": {
+        "source": "RIDGID straight pipe wrench product and parts documentation",
+        "url": "https://www.ridgid.com/us/en/straight-pipe-wrench",
+        "allowedUse": "mechanical anatomy only: one hook jaw, one heel jaw, one adjustment nut, and a continuous engaged shank",
+        "restriction": "Create generic original geometry; do not reproduce a manufacturer silhouette, trade dress, brand, logo, or catalog composition."
+      },
+      "requiredEvidence": [
+        "strict orthographic side profile with jaws left and handle right",
+        "one offset curved hook jaw and one opposing serrated heel jaw",
+        "one straight hook-jaw shank visibly continuous from the hook jaw through the body window",
+        "one knurled adjustment nut centered directly around and visibly engaging that same shank",
+        "a short visible continuation of the same shank beyond the nut inside the housing, ending before the handle neck",
+        "coherent anatomy at native size and at 320 by 320 pixels",
+        "complete tool on an opaque pure-white square canvas"
+      ],
+      "forbiddenEvidence": [
+        "nut in a separate window or on a different centerline from the hook-jaw shank",
+        "gap between shank and nut that makes their engagement inferred rather than visible",
+        "extra threaded tail, U-loop, fork, hook, rod, or projection beyond the body",
+        "smooth adjustable-wrench jaws, plier handles, disconnected parts, or impossible mechanism",
+        "text, pseudo-text, annotation, logo, shadow, gray field, color, or crop"
+      ],
+      "prompt": "Use case: scientific-educational.\nAsset type: one alternate-view isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure opaque white with no floor plane and no shadow.\nStyle/medium: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. This must be a line drawing, not a photograph, not a shaded 3D render, and not color artwork.\nComposition/framing: one complete generic traditional straight pipe wrench in strict orthographic side profile, handle horizontal to the right and jaws facing left, centered at roughly 72 percent of a square canvas with generous even padding. Match the scale and orientation of the v2t001 adjustable-wrench comparison without borrowing its geometry. Nothing may touch the canvas edge.\nRequired gripping geometry: show one clearly offset curved hook jaw above one fixed opposing heel jaw. Both gripping faces have distinct coarse serrated teeth and form one moderately open throat. The heel jaw is integral with the heavy housing and straight handle.\nDecisive adjustment geometry: the hook jaw must have one straight rectangular threaded shank visibly continuous from the curved hook jaw into an open side window in the wrench housing. Place exactly one wide knurled adjustment nut directly around that same shank, on the same centerline. The shank must visibly enter the nut from the jaw side, pass through the nut's central opening, and continue a short distance beyond it inside the housing before terminating cleanly before the handle neck. Show clear thread engagement where the nut meets the shank. The relationship must be visually explicit, not hidden or merely inferred.\nAbsolute exclusions: no nut in a separate lower or upper window; no nut offset from the shank centerline; no gap between the shank and nut; no second nut; no extra threaded tail, toothed rod, U-shaped loop, fork, hook, or projection beyond the housing; no smooth parallel adjustable-wrench jaws; no crescent-wrench worm gear; no pliers handles; no text or pseudo-text; no labels, arrows, callouts, letters, numbers, logos, brands, watermarks, hands, people, props, shadow, gray backdrop, color, decorative border, cropped subject, duplicated components, disconnected parts, or impossible joints.\nOutput intent: one native square raster candidate; do not add explanatory text."
+    }
+  ]
+}

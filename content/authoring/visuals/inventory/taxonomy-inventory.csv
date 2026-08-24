@@ -1,0 +1,66 @@
+taxonomyId,canonicalTerm,evidenceTier,visualFamily,confusableIds,currentSourceClass,productionStatus,priorityRank,plannedFirstTrancheClass,observationDate
+tool.scrub-brush,Scrub brush,A,cleaning implements,,E,reference-only,1,C,2026-08-20
+tool.staple-gun,Staple gun,A,articulated hand tools,,E,reference-only,2,C,2026-08-20
+ppe.protective-gloves,Protective gloves (generic),A/A-B overlap,PPE,,E,reference-only,3,D,2026-08-20
+tool.push-broom,Push broom,B,cleaning implements,tool.deck-brush,E,reference-only,16,C,2026-08-20
+tool.angle-broom,Angle broom / household broom,B,cleaning implements,,F,blocked-not-audited,,,2026-08-20
+tool.dust-mop,Dust mop,B,soft or deformable tools,tool.wet-mop,F,blocked-not-audited,,,2026-08-20
+tool.wet-mop,Wet/string mop,B,soft or deformable tools,tool.dust-mop,F,blocked-not-audited,,,2026-08-20
+tool.flat-mop,Flat mop,B,soft or deformable tools,,F,blocked-not-audited,,,2026-08-20
+equipment.mop-bucket-wringer,Mop bucket and wringer,B,carts/material-handling equipment,,F,blocked-not-audited,,,2026-08-20
+tool.deck-brush,Deck brush,B,cleaning implements,tool.push-broom,E,reference-only,17,C,2026-08-20
+tool.hand-scrub-brush,Hand scrub brush,A/B,cleaning implements,,F,blocked-not-audited,,,2026-08-20
+tool.toilet-bowl-brush,Toilet bowl brush,B,cleaning implements,,F,blocked-not-audited,,,2026-08-20
+tool.duster,Duster / feather or synthetic duster,B,soft or deformable tools,,F,blocked-not-audited,,,2026-08-20
+tool.dustpan,Dustpan,B,cleaning implements,,F,blocked-not-audited,,,2026-08-20
+tool.floor-squeegee,Floor squeegee,B,cleaning implements,tool.window-squeegee,F,blocked-not-audited,,,2026-08-20
+tool.window-squeegee,Window squeegee,B,cleaning implements,tool.floor-squeegee,F,blocked-not-audited,,,2026-08-20
+tool.window-strip-washer,Window washer / strip washer,B,cleaning implements,,F,blocked-not-audited,,,2026-08-20
+equipment.janitor-cart,Janitor cart,B,carts/material-handling equipment,,F,blocked-not-audited,,,2026-08-20
+equipment.hand-truck,Hand truck,B,carts/material-handling equipment,,F,blocked-not-audited,,,2026-08-20
+equipment.dolly,Equipment dolly,B,carts/material-handling equipment,,F,blocked-not-audited,,,2026-08-20
+equipment.vacuum.upright,Upright vacuum,B,powered cleaning equipment,equipment.carpet-extractor,F,blocked-not-audited,,,2026-08-20
+equipment.vacuum.canister,Canister vacuum,B,powered cleaning equipment,,F,blocked-not-audited,,,2026-08-20
+equipment.vacuum.wet-dry,Wet/dry vacuum,B,powered cleaning equipment,,F,blocked-not-audited,,,2026-08-20
+equipment.carpet-extractor,Carpet extractor,B,powered cleaning equipment,equipment.vacuum.upright,F,blocked-not-audited,,,2026-08-20
+equipment.steam-cleaner,Steam-cleaning equipment,B,powered cleaning equipment,,F,blocked-not-audited,,,2026-08-20
+equipment.floor-machine.low-speed,Low-speed rotary floor machine,B,powered cleaning equipment,equipment.burnisher.high-speed,E,reference-only,18,F,2026-08-20
+equipment.burnisher.high-speed,High-speed burnisher,B,powered cleaning equipment,equipment.floor-machine.low-speed,E,reference-only,19,F,2026-08-20
+equipment.vacuum.ride-on,Ride-on industrial vacuum cleaner,B/C,powered cleaning equipment,,F,blocked-not-audited,,,2026-08-20
+equipment.snow-blower,Snow blower,B/C,other,,F,blocked-not-audited,,,2026-08-20
+equipment.hedge-trimmer,Hedge trimmer,B/C,other,,F,blocked-not-audited,,,2026-08-20
+tool.hammer.claw,Claw hammer,B,rigid hand tools,tool.hammer.ball-peen,E,reference-only,10,C,2026-08-20
+tool.hammer.ball-peen,Ball-peen hammer,B,rigid hand tools,tool.hammer.claw,E,reference-only,11,C,2026-08-20
+tool.mallet.rubber,Rubber mallet,B,rigid hand tools,,F,blocked-not-audited,,,2026-08-20
+tool.screwdriver.slotted,Flat/slotted screwdriver,B,rigid hand tools,,F,blocked-not-audited,,,2026-08-20
+tool.screwdriver.phillips,Phillips screwdriver,B,rigid hand tools,,F,blocked-not-audited,,,2026-08-20
+tool.adjustable-wrench,Adjustable wrench,B,articulated hand tools,tool.pipe-wrench,C,prototype-not-approved,4,C,2026-08-20
+tool.pipe-wrench,Pipe wrench,B,articulated hand tools,tool.adjustable-wrench,C,prototype-not-approved,5,C,2026-08-20
+tool.wrench.fixed,Combination/open-end/box wrench,B,rigid hand tools,,F,blocked-not-audited,,,2026-08-20
+tool.pliers.slip-joint,Slip-joint pliers,B,articulated hand tools,tool.pliers.tongue-groove,E,reference-only,12,C,2026-08-20
+tool.pliers.tongue-groove,Tongue-and-groove pliers,B,articulated hand tools,tool.pliers.slip-joint,E,reference-only,13,C,2026-08-20
+tool.pliers.needle-nose,Needle-nose pliers,B,articulated hand tools,tool.pliers.diagonal-cutting,E,reference-only,14,C,2026-08-20
+tool.pliers.diagonal-cutting,Diagonal cutting pliers,B,articulated hand tools,tool.pliers.needle-nose,E,reference-only,15,C,2026-08-20
+tool.pliers.locking,Locking pliers,B,articulated hand tools,tool.clamp.c,F,blocked-not-audited,,,2026-08-20
+tool.clamp.c,C-clamp,B,articulated hand tools,tool.pliers.locking|tool.clamp.bar,F,blocked-not-audited,,,2026-08-20
+tool.clamp.bar,Bar clamp,B,articulated hand tools,tool.clamp.c,F,blocked-not-audited,,,2026-08-20
+tool.hand-plane,Hand plane,A/B,rigid hand tools,,E,reference-only,20,C,2026-08-20
+tool.saw.crosscut,Crosscut saw,B,rigid hand tools,tool.saw.rip,F,blocked-not-audited,,,2026-08-20
+tool.saw.rip,Rip saw,B,rigid hand tools,tool.saw.crosscut,F,blocked-not-audited,,,2026-08-20
+tool.saw.hacksaw,Hacksaw,B,rigid hand tools,,F,blocked-not-audited,,,2026-08-20
+tool.utility-knife,Utility knife,B,articulated hand tools,,F,blocked-not-audited,,,2026-08-20
+tool.putty-knife,Putty knife,B,rigid hand tools,tool.paint-scraper,F,blocked-not-audited,,,2026-08-20
+tool.paint-scraper,Paint scraper,B,rigid hand tools,tool.putty-knife,F,blocked-not-audited,,,2026-08-20
+tool.tape-measure,Tape measure,B,articulated hand tools,,F,blocked-not-audited,,,2026-08-20
+tool.level,Level,B,rigid hand tools,,F,blocked-not-audited,,,2026-08-20
+tool.square,Carpenter square / combination square,B,rigid hand tools,,F,blocked-not-audited,,,2026-08-20
+tool.plunger.cup,Plunger - cup,B,soft or deformable tools,tool.plunger.flange,C,prototype-not-approved,6,C,2026-08-20
+tool.plunger.flange,Plunger - flange,B,soft or deformable tools,tool.plunger.cup,C,prototype-not-approved,7,C,2026-08-20
+tool.drain-snake,Hand auger / drain snake,B/C,soft or deformable tools,,F,blocked-not-audited,,,2026-08-20
+tool.pipe-reamer,Pipe reamer,B/C,rigid hand tools,,F,blocked-not-audited,,,2026-08-20
+tool.soldering-gun,Soldering gun,A visual/C operational,other,,F,blocked-not-audited,,,2026-08-20
+access.stepladder,Stepladder,B,ladders/access equipment,access.extension-ladder,E,reference-only,8,C,2026-08-20
+access.extension-ladder,Extension ladder,B,ladders/access equipment,access.stepladder,E,reference-only,9,C,2026-08-20
+ppe.safety-glasses,Safety glasses,B,PPE,,F,blocked-not-audited,,,2026-08-20
+ppe.ear-plugs,Protective ear plugs,B,PPE,,F,blocked-not-audited,,,2026-08-20
+safety.wet-floor-sign,Wet-floor warning sign/cone,B,other,,F,blocked-not-audited,,,2026-08-20

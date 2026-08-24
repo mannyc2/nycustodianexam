@@ -1,0 +1,2365 @@
+{
+  "runId": "plan-001-tool-library-2026-08-23",
+  "status": "candidate-library-complete",
+  "counts": {
+    "inventoryConcepts": 65,
+    "selectedCandidates": 65,
+    "remainingConceptsGeneratedThisRun": 46,
+    "newFirstPassRejections": 3
+  },
+  "generationMode": "one image per native canvas",
+  "candidateProfile": {
+    "format": "PNG",
+    "width": 1254,
+    "height": 1254,
+    "bitDepth": 8,
+    "mode": "RGB",
+    "expectedChunkTypes": [
+      "IHDR",
+      "caBX",
+      "IDAT",
+      "IEND"
+    ],
+    "provenanceChunk": "caBX ancillary private chunk containing JUMBF/C2PA content credentials; preserved in native candidates",
+    "exposedTextMetadata": "none observed"
+  },
+  "selfReviewResult": "PASS at candidate level for all 65 selected concepts",
+  "selectedCandidates": [
+    {
+      "slot": 1,
+      "conceptId": "tool.scrub-brush",
+      "canonicalTerm": "Scrub brush",
+      "candidateId": "a001",
+      "candidatePath": "content/assets/candidates/tools/a001.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1239213,
+        "sha256": "10eb410a9546a35f08f13c8b1e8192fa0bbf17c361a1bf636c90bf2e8ef88dbf"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 2,
+      "conceptId": "tool.staple-gun",
+      "canonicalTerm": "Staple gun",
+      "candidateId": "a002",
+      "candidatePath": "content/assets/candidates/tools/a002.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1014501,
+        "sha256": "87659fe1f14ed61e3fc8fdfbc0bc939f84eb4c460a49828515cf68ff846112c4"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 3,
+      "conceptId": "ppe.protective-gloves",
+      "canonicalTerm": "Protective gloves (generic)",
+      "candidateId": "a003",
+      "candidatePath": "content/assets/candidates/tools/a003.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1468354,
+        "sha256": "b77029f49fe28fa1ef319f7e93e293dd684d2a1901b6eb5c75b06711f2062a01"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 4,
+      "conceptId": "tool.push-broom",
+      "canonicalTerm": "Push broom",
+      "candidateId": "a004",
+      "candidatePath": "content/assets/candidates/tools/a004.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 951802,
+        "sha256": "c3a9d7849c8e411bea78259354e0aaa24acbb601549e6c4b292396a25ff30763"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 5,
+      "conceptId": "tool.angle-broom",
+      "canonicalTerm": "Angle broom / household broom",
+      "candidateId": "a005",
+      "candidatePath": "content/assets/candidates/tools/a005.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 614396,
+        "sha256": "0952fa658d73906660cdd67d0980e41920151982dc73e4906ef4783c7b398c5e"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 6,
+      "conceptId": "tool.dust-mop",
+      "canonicalTerm": "Dust mop",
+      "candidateId": "a006",
+      "candidatePath": "content/assets/candidates/tools/a006.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1195969,
+        "sha256": "e614f74f1f8556a8fb8bb55629cb98ba8a65cb685c25ff6376a9e26cab5e384f"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 7,
+      "conceptId": "tool.wet-mop",
+      "canonicalTerm": "Wet/string mop",
+      "candidateId": "a007",
+      "candidatePath": "content/assets/candidates/tools/a007.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 924826,
+        "sha256": "4e81e3cedeca4c8cb29c7ea74aff9b475055f4df7ce7599942410bb04f946560"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 8,
+      "conceptId": "tool.flat-mop",
+      "canonicalTerm": "Flat mop",
+      "candidateId": "a008",
+      "candidatePath": "content/assets/candidates/tools/a008.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 804079,
+        "sha256": "c091cb04c18279c8d38b091d9f010225140f96f5ab8b99b4e1ae20cccda5ba40"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 9,
+      "conceptId": "equipment.mop-bucket-wringer",
+      "canonicalTerm": "Mop bucket and wringer",
+      "candidateId": "a009",
+      "candidatePath": "content/assets/candidates/tools/a009.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1195630,
+        "sha256": "88c9c4fadb8c2d28f4aba83dd106f98cd41f24a3899493299c1e8681d50749c5"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 10,
+      "conceptId": "tool.deck-brush",
+      "canonicalTerm": "Deck brush",
+      "candidateId": "a010",
+      "candidatePath": "content/assets/candidates/tools/a010.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 607867,
+        "sha256": "efc9bfad5684a3dc15102e6f5e62099445959cd10cb662b5c6d89eb90581fdda"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 11,
+      "conceptId": "tool.hand-scrub-brush",
+      "canonicalTerm": "Hand scrub brush",
+      "candidateId": "a011",
+      "candidatePath": "content/assets/candidates/tools/a011.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1168764,
+        "sha256": "b77bf3cac980ae255ef2b9ff7b540beb717deb95cca7d3965688ec1aaa658615"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 12,
+      "conceptId": "tool.toilet-bowl-brush",
+      "canonicalTerm": "Toilet bowl brush",
+      "candidateId": "a012",
+      "candidatePath": "content/assets/candidates/tools/a012.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 870251,
+        "sha256": "a5c6b698b4ae0402109047207cad34507d502a2dffc90b1174328569fd9d870a"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 13,
+      "conceptId": "tool.duster",
+      "canonicalTerm": "Duster / feather or synthetic duster",
+      "candidateId": "a013",
+      "candidatePath": "content/assets/candidates/tools/a013.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1279490,
+        "sha256": "3c507f01e7060a98be181fb2d73b756e8c9450e3cadc957dbc882ac13a46364a"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 14,
+      "conceptId": "tool.dustpan",
+      "canonicalTerm": "Dustpan",
+      "candidateId": "c001",
+      "candidatePath": "content/assets/candidates/pilot/c001.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 934641,
+        "sha256": "5e9a23baab1e12be3f50eab6f76e78389c97dc4a35ee8a47cc9b62a0a2d4be67"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 15,
+      "conceptId": "tool.floor-squeegee",
+      "canonicalTerm": "Floor squeegee",
+      "candidateId": "c016",
+      "candidatePath": "content/assets/candidates/pilot/c016.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 784606,
+        "sha256": "71b5d47efb7d7275239e3fb5580eab7f150949ff1f3ae759a03a23e2a2b9334a"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 16,
+      "conceptId": "tool.window-squeegee",
+      "canonicalTerm": "Window squeegee",
+      "candidateId": "c017",
+      "candidatePath": "content/assets/candidates/pilot/c017.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 900440,
+        "sha256": "8b676a848a4eb92278a944b1cedf73f9a4c1e76e77fc6b3582b94c5c22cafc2b"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 17,
+      "conceptId": "tool.window-strip-washer",
+      "canonicalTerm": "Window washer / strip washer",
+      "candidateId": "a017",
+      "candidatePath": "content/assets/candidates/tools/a017.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1148992,
+        "sha256": "d6e16d97dbcc9d283c30889d1b068274b752d4aea27feb1314d019066f2d13c2"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 18,
+      "conceptId": "equipment.janitor-cart",
+      "canonicalTerm": "Janitor cart",
+      "candidateId": "a018",
+      "candidatePath": "content/assets/candidates/tools/a018.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1279210,
+        "sha256": "6da5a747b104c564ba6572769ff71607056d356797699153da0faf7fc1a59cc3"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 19,
+      "conceptId": "equipment.hand-truck",
+      "canonicalTerm": "Hand truck",
+      "candidateId": "a019",
+      "candidatePath": "content/assets/candidates/tools/a019.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1088506,
+        "sha256": "8a28b1e5b32ee4175a178d375e570a30b5a84f5b29e84ecc4fbf290f33481926"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 20,
+      "conceptId": "equipment.dolly",
+      "canonicalTerm": "Equipment dolly",
+      "candidateId": "a020",
+      "candidatePath": "content/assets/candidates/tools/a020.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 787189,
+        "sha256": "9827bcdf40adea9bdc34f82aeeeda3aa2b37516c3da864d4a41f537b175b9b7a"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 21,
+      "conceptId": "equipment.vacuum.upright",
+      "canonicalTerm": "Upright vacuum",
+      "candidateId": "a021",
+      "candidatePath": "content/assets/candidates/tools/a021.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 805680,
+        "sha256": "44813420af51f4acef844ee152701ea4427fb378d8f77bae69fa861d68b997af"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": "Before scored upright-vacuum versus carpet-extractor comparison use, obtain specialist comparative signoff; the selected drawings represent specific generic configurations, not universal silhouettes."
+    },
+    {
+      "slot": 22,
+      "conceptId": "equipment.vacuum.canister",
+      "canonicalTerm": "Canister vacuum",
+      "candidateId": "a022",
+      "candidatePath": "content/assets/candidates/tools/a022.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1211291,
+        "sha256": "0af0571615b24b5dd2c3f082c0c0b6f2da3fb1f5356b509105af88ffada69471"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 23,
+      "conceptId": "equipment.vacuum.wet-dry",
+      "canonicalTerm": "Wet/dry vacuum",
+      "candidateId": "a023",
+      "candidatePath": "content/assets/candidates/tools/a023.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1244931,
+        "sha256": "d225978cb966dca72dc31a97300a9e6ea6379c72f7555112486950159bfd9ff7"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 24,
+      "conceptId": "equipment.carpet-extractor",
+      "canonicalTerm": "Carpet extractor",
+      "candidateId": "a024",
+      "candidatePath": "content/assets/candidates/tools/a024.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1155331,
+        "sha256": "7af38b58c9f88e7901f3a6c5a147c6af0b763877b36bdec823b8f710d9a52006"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": "Before scored upright-vacuum versus carpet-extractor comparison use, obtain specialist comparative signoff; the selected drawings represent specific generic configurations, not universal silhouettes."
+    },
+    {
+      "slot": 25,
+      "conceptId": "equipment.steam-cleaner",
+      "canonicalTerm": "Steam-cleaning equipment",
+      "candidateId": "c019-r2",
+      "candidatePath": "content/assets/candidates/pilot/c019-r2.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1090061,
+        "sha256": "b72203dad206ce2c746a7b82fc2e4f7edf0cebfa429ccf0db75bfa4847b40504"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 26,
+      "conceptId": "equipment.floor-machine.low-speed",
+      "canonicalTerm": "Low-speed rotary floor machine",
+      "candidateId": "c012-r3",
+      "candidatePath": "content/assets/candidates/pilot/c012-r3.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1131722,
+        "sha256": "de34e4a745063d286e1e97ee8ed51ee2f15519d9fdd190e1c54dcebda9401236"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": "Before scored floor-machine versus burnisher comparison use, obtain specialist comparative signoff; accessory and chassis geometry are representative, not universal."
+    },
+    {
+      "slot": 27,
+      "conceptId": "equipment.burnisher.high-speed",
+      "canonicalTerm": "High-speed burnisher",
+      "candidateId": "c013-r3",
+      "candidatePath": "content/assets/candidates/pilot/c013-r3.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1155793,
+        "sha256": "e2eb9525d58be5296185ef762509ddeb7f38b5264dfb3f5b19a31293c847c659"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": "Before scored floor-machine versus burnisher comparison use, obtain specialist comparative signoff; accessory and chassis geometry are representative, not universal."
+    },
+    {
+      "slot": 28,
+      "conceptId": "equipment.vacuum.ride-on",
+      "canonicalTerm": "Ride-on industrial vacuum cleaner",
+      "candidateId": "a028",
+      "candidatePath": "content/assets/candidates/tools/a028.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1490303,
+        "sha256": "75673fc6a171493a039225dcbbafb3773b774213da7958242fd84d74e589a267"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": "Entry recognition only pending scope and specialist review; do not infer a universal ride-on vacuum silhouette or teach operation from the image."
+    },
+    {
+      "slot": 29,
+      "conceptId": "equipment.snow-blower",
+      "canonicalTerm": "Snow blower",
+      "candidateId": "a029",
+      "candidatePath": "content/assets/candidates/tools/a029.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1392934,
+        "sha256": "9c7be5968d3b2b1edd8b498613ddcb1c04ec3b50285903ed20cf4b0d6dbb5f4d"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": "Entry recognition/basic-safety use only pending scope review; do not teach operation from the image."
+    },
+    {
+      "slot": 30,
+      "conceptId": "equipment.hedge-trimmer",
+      "canonicalTerm": "Hedge trimmer",
+      "candidateId": "a030",
+      "candidatePath": "content/assets/candidates/tools/a030.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 808880,
+        "sha256": "4f58d9e9c18ce44c9e677b1bd06f619357bc1338a07856993608ae6b5215dbfb"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": "Entry recognition/basic-safety use only pending scope review; do not teach operation from the image."
+    },
+    {
+      "slot": 31,
+      "conceptId": "tool.hammer.claw",
+      "canonicalTerm": "Claw hammer",
+      "candidateId": "c008",
+      "candidatePath": "content/assets/candidates/pilot/c008.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 911441,
+        "sha256": "397e47e84fe86fe7ebe1c79cd88a3b2cd6c5e7f4469aaa2ea0cbacb927ca299c"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 32,
+      "conceptId": "tool.hammer.ball-peen",
+      "canonicalTerm": "Ball-peen hammer",
+      "candidateId": "c009",
+      "candidatePath": "content/assets/candidates/pilot/c009.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 877410,
+        "sha256": "eeb77736078900f6ab5ba1ef054c08a92f355d9173cc3a30b4de6cc90bdda73a"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 33,
+      "conceptId": "tool.mallet.rubber",
+      "canonicalTerm": "Rubber mallet",
+      "candidateId": "c002",
+      "candidatePath": "content/assets/candidates/pilot/c002.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1193596,
+        "sha256": "1c1645630c9f94f6817db1a074a55e33df76a869b935c787efb9ea6be01f7b14"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 34,
+      "conceptId": "tool.screwdriver.slotted",
+      "canonicalTerm": "Flat/slotted screwdriver",
+      "candidateId": "a034",
+      "candidatePath": "content/assets/candidates/tools/a034.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 712710,
+        "sha256": "f545931298da5d3239ebe9f3f71dd296cf1ec6667932084445a25351339a3f79"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 35,
+      "conceptId": "tool.screwdriver.phillips",
+      "canonicalTerm": "Phillips screwdriver",
+      "candidateId": "a035",
+      "candidatePath": "content/assets/candidates/tools/a035.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 856803,
+        "sha256": "1d6bdd67585f9db7faa35311b8061630a07f80923bbf322bdda056ab054cccc4"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 36,
+      "conceptId": "tool.adjustable-wrench",
+      "canonicalTerm": "Adjustable wrench",
+      "candidateId": "c004",
+      "candidatePath": "content/assets/candidates/pilot/c004.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 920909,
+        "sha256": "edb1f4e907926fd83ed55aaa11668d285bf85a181f98e0aeeb8b845dbc0b192d"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 37,
+      "conceptId": "tool.pipe-wrench",
+      "canonicalTerm": "Pipe wrench",
+      "candidateId": "v2t002-b5",
+      "candidatePath": "content/assets/candidates/visual-pilot-v2/v2t002-b5.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1057443,
+        "sha256": "334044fb3c25f5e14be4c47e0df0512961ce8dce08e568e0d91b021faa8f1e99"
+      },
+      "candidateDisposition": "PASS — selected by blinded native/320 review and separate reference-based mechanism adjudication",
+      "masterPromotion": "PROMOTED — accepted as byte-identical t037 asset revision 2 on 2026-08-23",
+      "publicationGate": null,
+      "reviewReceipt": {
+        "path": "content/authoring/visuals/reviews/visual-pilot-v2/pipe-wrench-bakeoff/REVIEW.json",
+        "sha256": "84cbfe3d771d700382457b96d860483f75181d87a4f4d8228919b9e8c02d04e6",
+        "verdict": "pass-selected"
+      },
+      "lineageRecord": {
+        "path": "content/authoring/visuals/reviews/visual-pilot-v2/lineage.json",
+        "sha256": "4c5b6177aac0f07c478ffa617ffe05604fd8112098078a3d8d60fd8aab876796",
+        "candidateId": "v2t002"
+      },
+      "accessibility": {
+        "usageScope": "atlas and post-answer learning; not approved for pre-answer visual scoring",
+        "neutralPreAnswer": "A heavy straight handle extends right from an open C-shaped head. Both opposing inner faces carry coarse teeth. A short threaded shank emerges behind the upper head, passes through one crosshatched rotating cylinder, and ends in a rounded tip.",
+        "fullPostAnswer": "A pipe wrench in strict side profile. Its curved serrated hook jaw enters the opaque body on the same plausible axis as its threaded shank, which emerges through one knurled adjustment nut and ends in a short rounded threaded tip. The opaque body naturally hides the middle of that connection. The curved hook jaw and serrated heel jaw distinguish it from an adjustable wrench's smooth parallel jaws.",
+        "nonvisualEquivalent": {
+          "itemId": "tool-selection-001",
+          "releasePath": "content/releases/vertical-slice/question.precommit.json",
+          "relationship": "The nonvisual question tests the same pipe-wrench recognition distinction without exposing this answer-bearing image before commitment."
+        },
+        "source": "content/authoring/visuals/reviews/visual-pilot-v2/accessibility-draft.json#tools[candidateId=v2t002]"
+      },
+      "releaseBinding": {
+        "opaqueAssetId": "t037",
+        "assetRevision": 2,
+        "masterPath": "content/assets/masters/tools/t037.png",
+        "masterSha256": "334044fb3c25f5e14be4c47e0df0512961ce8dce08e568e0d91b021faa8f1e99",
+        "releaseRecord": "content/authoring/visuals/releases/tools.json#t037",
+        "productionReview": "content/authoring/visuals/reviews/releases/pipe-wrench-r2/REVIEW.json"
+      }
+    },
+    {
+      "slot": 38,
+      "conceptId": "tool.wrench.fixed",
+      "canonicalTerm": "Combination/open-end/box wrench",
+      "candidateId": "a038",
+      "candidatePath": "content/assets/candidates/tools/a038.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 667278,
+        "sha256": "4bbd8effc5f6238222c885f25ba947f8088fd1fc2fab8463eb256c78775896b7"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 39,
+      "conceptId": "tool.pliers.slip-joint",
+      "canonicalTerm": "Slip-joint pliers",
+      "candidateId": "c014",
+      "candidatePath": "content/assets/candidates/pilot/c014.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1065800,
+        "sha256": "1026ed8ce9150ba63bb62d07a2c3baade75ea4db0ee91b2fe592c3b6e36799c3"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 40,
+      "conceptId": "tool.pliers.tongue-groove",
+      "canonicalTerm": "Tongue-and-groove pliers",
+      "candidateId": "c015",
+      "candidatePath": "content/assets/candidates/pilot/c015.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 888372,
+        "sha256": "1e920e0887275aae1043db05dd5232c0cf913401a3abe75b225d5bb6b032e6dd"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 41,
+      "conceptId": "tool.pliers.needle-nose",
+      "canonicalTerm": "Needle-nose pliers",
+      "candidateId": "a041",
+      "candidatePath": "content/assets/candidates/tools/a041.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 778330,
+        "sha256": "042df1a3981f4b77734a30abaf00dafdd9315d91a591f6d43283605ae95d0d5b"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 42,
+      "conceptId": "tool.pliers.diagonal-cutting",
+      "canonicalTerm": "Diagonal cutting pliers",
+      "candidateId": "a042",
+      "candidatePath": "content/assets/candidates/tools/a042.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1095002,
+        "sha256": "58b0278edf8e93f4cc5c6f99044d38649f788651092153999fd33195dc16622b"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 43,
+      "conceptId": "tool.pliers.locking",
+      "canonicalTerm": "Locking pliers",
+      "candidateId": "a043",
+      "candidatePath": "content/assets/candidates/tools/a043.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1017051,
+        "sha256": "a4f0cd2f30074ee242144cc7b46d5f65e1a90729f42b6696a7838f560dfce51d"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 44,
+      "conceptId": "tool.clamp.c",
+      "canonicalTerm": "C-clamp",
+      "candidateId": "a044",
+      "candidatePath": "content/assets/candidates/tools/a044.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1195075,
+        "sha256": "616b2e4872ab57260314d6989da10d40ec237d1c11356c8b28cd08e7c084ea48"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 45,
+      "conceptId": "tool.clamp.bar",
+      "canonicalTerm": "Bar clamp",
+      "candidateId": "a045",
+      "candidatePath": "content/assets/candidates/tools/a045.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 864454,
+        "sha256": "0296b4791c1cfc61486b1be662a46510ac4e042c9f049c322f0d286b43ee0d16"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 46,
+      "conceptId": "tool.hand-plane",
+      "canonicalTerm": "Hand plane",
+      "candidateId": "a046",
+      "candidatePath": "content/assets/candidates/tools/a046.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1299133,
+        "sha256": "0ffb3ac63256fe1b45b706b036b367d9358a95bf76902004a62574a1a5d031ad"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 47,
+      "conceptId": "tool.saw.crosscut",
+      "canonicalTerm": "Crosscut saw",
+      "candidateId": "a047",
+      "candidatePath": "content/assets/candidates/tools/a047.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 944324,
+        "sha256": "4005bafca4faf322472ca7ef604132b5b79ee1dd6f4fa0642d36c778d34dcad7"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": "Crosscut/rip scored comparison remains gated on specialist tooth-geometry review at native and 320 px sizes."
+    },
+    {
+      "slot": 48,
+      "conceptId": "tool.saw.rip",
+      "canonicalTerm": "Rip saw",
+      "candidateId": "a048",
+      "candidatePath": "content/assets/candidates/tools/a048.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 880344,
+        "sha256": "98e5370dc861b948accea80c61fc5cb06abdbd1c0f1db65f132a6f22432a7b09"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": "Crosscut/rip scored comparison remains gated on specialist tooth-geometry review at native and 320 px sizes."
+    },
+    {
+      "slot": 49,
+      "conceptId": "tool.saw.hacksaw",
+      "canonicalTerm": "Hacksaw",
+      "candidateId": "a049",
+      "candidatePath": "content/assets/candidates/tools/a049.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 856406,
+        "sha256": "4fccfa152b3cce1177b7d4ccb90f1956d1f7b0bf94c8ca577539d04f1b3cfb3f"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 50,
+      "conceptId": "tool.utility-knife",
+      "canonicalTerm": "Utility knife",
+      "candidateId": "a050",
+      "candidatePath": "content/assets/candidates/tools/a050.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 963215,
+        "sha256": "2cfc18029ab5b7649ab8670ed06f146ba66924be19d60c166374996c5e6f3185"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 51,
+      "conceptId": "tool.putty-knife",
+      "canonicalTerm": "Putty knife",
+      "candidateId": "a051",
+      "candidatePath": "content/assets/candidates/tools/a051.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 711804,
+        "sha256": "d63e5b144821608016d9c5a009e78525c0c7b4cb4663caf150325523fb957923"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 52,
+      "conceptId": "tool.paint-scraper",
+      "canonicalTerm": "Paint scraper",
+      "candidateId": "a052",
+      "candidatePath": "content/assets/candidates/tools/a052.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1018090,
+        "sha256": "c4b339d16ad76a9e93115e64ef488fed48ed0795487bc3bf2f62150fb21b08d4"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 53,
+      "conceptId": "tool.tape-measure",
+      "canonicalTerm": "Tape measure",
+      "candidateId": "a053",
+      "candidatePath": "content/assets/candidates/tools/a053.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1128743,
+        "sha256": "b72ab9533aa5d454f8f41032f04ee772f77080ae8c5169512b6744f88afa7943"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 54,
+      "conceptId": "tool.level",
+      "canonicalTerm": "Level",
+      "candidateId": "a054",
+      "candidatePath": "content/assets/candidates/tools/a054.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 916127,
+        "sha256": "911ac9f73edecd46be511de9042868fe3acdf6cc7c8fe791b9150bf46784e597"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 55,
+      "conceptId": "tool.square",
+      "canonicalTerm": "Carpenter square / combination square",
+      "candidateId": "a055",
+      "candidatePath": "content/assets/candidates/tools/a055.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 869774,
+        "sha256": "e1f384de3392e1b1afa3c6504bec8c6d52d945209539bedb46d9dcadd656b94e"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 56,
+      "conceptId": "tool.plunger.cup",
+      "canonicalTerm": "Plunger - cup",
+      "candidateId": "c006",
+      "candidatePath": "content/assets/candidates/pilot/c006.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1076299,
+        "sha256": "104cc6d101dc34b0b7839faeb0ca6917d5674ba4648188c534e15efe7e518bbb"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 57,
+      "conceptId": "tool.plunger.flange",
+      "canonicalTerm": "Plunger - flange",
+      "candidateId": "c007",
+      "candidatePath": "content/assets/candidates/pilot/c007.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 998410,
+        "sha256": "990b2fb2508ddd67cfc3c915b9fbc46c933cf771989d08aa9cabea87accd3fa5"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 58,
+      "conceptId": "tool.drain-snake",
+      "canonicalTerm": "Hand auger / drain snake",
+      "candidateId": "a058",
+      "candidatePath": "content/assets/candidates/tools/a058.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1017988,
+        "sha256": "36d40e8566ba8f23433c9a7d5ec432f836696acfe8293252f4f89816fdf959fa"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 59,
+      "conceptId": "tool.pipe-reamer",
+      "canonicalTerm": "Pipe reamer",
+      "candidateId": "c018",
+      "candidatePath": "content/assets/candidates/pilot/c018.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1096764,
+        "sha256": "a6f873e7d1decfddf80dbbb759e0c8382223254fb5432ba8f0237374bc369b87"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 60,
+      "conceptId": "tool.soldering-gun",
+      "canonicalTerm": "Soldering gun",
+      "candidateId": "a060",
+      "candidatePath": "content/assets/candidates/tools/a060.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1270048,
+        "sha256": "eb758ce9befbf682a887c89fdaa198851b0e9b114fbfc2cfa66427a88a58e4a7"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": "Identification contrast only; the image does not establish skilled electrical work as entry-level operational scope."
+    },
+    {
+      "slot": 61,
+      "conceptId": "access.stepladder",
+      "canonicalTerm": "Stepladder",
+      "candidateId": "c010",
+      "candidatePath": "content/assets/candidates/pilot/c010.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1106523,
+        "sha256": "b46f6f6f880239ed23f96b947f3674840adf20187b1976cc67e8a76150e67ec9"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 62,
+      "conceptId": "access.extension-ladder",
+      "canonicalTerm": "Extension ladder",
+      "candidateId": "c011",
+      "candidatePath": "content/assets/candidates/pilot/c011.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 861766,
+        "sha256": "50d98e31affe85aa449cbbeef1e252bd530febb69966be356147fcee7e9fb948"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 63,
+      "conceptId": "ppe.safety-glasses",
+      "canonicalTerm": "Safety glasses",
+      "candidateId": "c003",
+      "candidatePath": "content/assets/candidates/pilot/c003.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 953547,
+        "sha256": "351bebed901ecc30f2b2c1fa90afdf3c7fc2261088241570f393e589cac5218d"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 64,
+      "conceptId": "ppe.ear-plugs",
+      "canonicalTerm": "Protective ear plugs",
+      "candidateId": "a064",
+      "candidatePath": "content/assets/candidates/tools/a064.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 951993,
+        "sha256": "bf1684a9dd3736fb3da74ab7f2d575e9ef87c1e68ab7b7b97e1642e9e0556fc4"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    },
+    {
+      "slot": 65,
+      "conceptId": "safety.wet-floor-sign",
+      "canonicalTerm": "Wet-floor warning sign/cone",
+      "candidateId": "a065",
+      "candidatePath": "content/assets/candidates/tools/a065.png",
+      "native": {
+        "format": "PNG",
+        "width": 1254,
+        "height": 1254,
+        "bitDepth": 8,
+        "colorType": 2,
+        "mode": "RGB",
+        "chunkTypes": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "ancillaryChunks": [
+          "caBX"
+        ],
+        "bytes": 1007128,
+        "sha256": "79c316db26a707e1a1ba1731697497347b8f6034f76b6605c8c7202c768cb37f"
+      },
+      "candidateDisposition": "PASS — selected candidate",
+      "masterPromotion": "PENDING — exact-white normalization decision and independent review",
+      "publicationGate": null
+    }
+  ],
+  "rejectionsThisRun": [
+    {
+      "candidate": "content/assets/candidates/tools/rejected/a013-r1.png",
+      "conceptId": "tool.duster",
+      "reason": "Single giant feather did not read reliably as a feather-duster cluster.",
+      "correction": "Regenerated as a multi-feather head; no raster edit used."
+    },
+    {
+      "candidate": "content/assets/candidates/tools/rejected/a021-r1.png",
+      "conceptId": "equipment.vacuum.upright",
+      "reason": "A small grille read as pseudo-text or a label-like mark.",
+      "correction": "Regenerated with blank housing and bag; no raster edit used."
+    },
+    {
+      "candidate": "content/assets/candidates/tools/rejected/a029-r1.png",
+      "conceptId": "equipment.snow-blower",
+      "reason": "The auger appeared as separate circular plates instead of opposing helical ribbons.",
+      "correction": "Regenerated with a continuous opposed helical auger; no raster edit used."
+    }
+  ],
+  "reviewSheets": {
+    "phone": "content/authoring/visuals/reviews/library/PHONE-CONTACT-SHEET.png",
+    "grayscalePrint": "content/authoring/visuals/reviews/library/PRINT-CONTACT-SHEET.png",
+    "index": [
+      {
+        "slot": 1,
+        "conceptId": "tool.scrub-brush",
+        "canonicalTerm": "Scrub brush",
+        "candidateId": "a001"
+      },
+      {
+        "slot": 2,
+        "conceptId": "tool.staple-gun",
+        "canonicalTerm": "Staple gun",
+        "candidateId": "a002"
+      },
+      {
+        "slot": 3,
+        "conceptId": "ppe.protective-gloves",
+        "canonicalTerm": "Protective gloves (generic)",
+        "candidateId": "a003"
+      },
+      {
+        "slot": 4,
+        "conceptId": "tool.push-broom",
+        "canonicalTerm": "Push broom",
+        "candidateId": "a004"
+      },
+      {
+        "slot": 5,
+        "conceptId": "tool.angle-broom",
+        "canonicalTerm": "Angle broom / household broom",
+        "candidateId": "a005"
+      },
+      {
+        "slot": 6,
+        "conceptId": "tool.dust-mop",
+        "canonicalTerm": "Dust mop",
+        "candidateId": "a006"
+      },
+      {
+        "slot": 7,
+        "conceptId": "tool.wet-mop",
+        "canonicalTerm": "Wet/string mop",
+        "candidateId": "a007"
+      },
+      {
+        "slot": 8,
+        "conceptId": "tool.flat-mop",
+        "canonicalTerm": "Flat mop",
+        "candidateId": "a008"
+      },
+      {
+        "slot": 9,
+        "conceptId": "equipment.mop-bucket-wringer",
+        "canonicalTerm": "Mop bucket and wringer",
+        "candidateId": "a009"
+      },
+      {
+        "slot": 10,
+        "conceptId": "tool.deck-brush",
+        "canonicalTerm": "Deck brush",
+        "candidateId": "a010"
+      },
+      {
+        "slot": 11,
+        "conceptId": "tool.hand-scrub-brush",
+        "canonicalTerm": "Hand scrub brush",
+        "candidateId": "a011"
+      },
+      {
+        "slot": 12,
+        "conceptId": "tool.toilet-bowl-brush",
+        "canonicalTerm": "Toilet bowl brush",
+        "candidateId": "a012"
+      },
+      {
+        "slot": 13,
+        "conceptId": "tool.duster",
+        "canonicalTerm": "Duster / feather or synthetic duster",
+        "candidateId": "a013"
+      },
+      {
+        "slot": 14,
+        "conceptId": "tool.dustpan",
+        "canonicalTerm": "Dustpan",
+        "candidateId": "c001"
+      },
+      {
+        "slot": 15,
+        "conceptId": "tool.floor-squeegee",
+        "canonicalTerm": "Floor squeegee",
+        "candidateId": "c016"
+      },
+      {
+        "slot": 16,
+        "conceptId": "tool.window-squeegee",
+        "canonicalTerm": "Window squeegee",
+        "candidateId": "c017"
+      },
+      {
+        "slot": 17,
+        "conceptId": "tool.window-strip-washer",
+        "canonicalTerm": "Window washer / strip washer",
+        "candidateId": "a017"
+      },
+      {
+        "slot": 18,
+        "conceptId": "equipment.janitor-cart",
+        "canonicalTerm": "Janitor cart",
+        "candidateId": "a018"
+      },
+      {
+        "slot": 19,
+        "conceptId": "equipment.hand-truck",
+        "canonicalTerm": "Hand truck",
+        "candidateId": "a019"
+      },
+      {
+        "slot": 20,
+        "conceptId": "equipment.dolly",
+        "canonicalTerm": "Equipment dolly",
+        "candidateId": "a020"
+      },
+      {
+        "slot": 21,
+        "conceptId": "equipment.vacuum.upright",
+        "canonicalTerm": "Upright vacuum",
+        "candidateId": "a021"
+      },
+      {
+        "slot": 22,
+        "conceptId": "equipment.vacuum.canister",
+        "canonicalTerm": "Canister vacuum",
+        "candidateId": "a022"
+      },
+      {
+        "slot": 23,
+        "conceptId": "equipment.vacuum.wet-dry",
+        "canonicalTerm": "Wet/dry vacuum",
+        "candidateId": "a023"
+      },
+      {
+        "slot": 24,
+        "conceptId": "equipment.carpet-extractor",
+        "canonicalTerm": "Carpet extractor",
+        "candidateId": "a024"
+      },
+      {
+        "slot": 25,
+        "conceptId": "equipment.steam-cleaner",
+        "canonicalTerm": "Steam-cleaning equipment",
+        "candidateId": "c019-r2"
+      },
+      {
+        "slot": 26,
+        "conceptId": "equipment.floor-machine.low-speed",
+        "canonicalTerm": "Low-speed rotary floor machine",
+        "candidateId": "c012-r3"
+      },
+      {
+        "slot": 27,
+        "conceptId": "equipment.burnisher.high-speed",
+        "canonicalTerm": "High-speed burnisher",
+        "candidateId": "c013-r3"
+      },
+      {
+        "slot": 28,
+        "conceptId": "equipment.vacuum.ride-on",
+        "canonicalTerm": "Ride-on industrial vacuum cleaner",
+        "candidateId": "a028"
+      },
+      {
+        "slot": 29,
+        "conceptId": "equipment.snow-blower",
+        "canonicalTerm": "Snow blower",
+        "candidateId": "a029"
+      },
+      {
+        "slot": 30,
+        "conceptId": "equipment.hedge-trimmer",
+        "canonicalTerm": "Hedge trimmer",
+        "candidateId": "a030"
+      },
+      {
+        "slot": 31,
+        "conceptId": "tool.hammer.claw",
+        "canonicalTerm": "Claw hammer",
+        "candidateId": "c008"
+      },
+      {
+        "slot": 32,
+        "conceptId": "tool.hammer.ball-peen",
+        "canonicalTerm": "Ball-peen hammer",
+        "candidateId": "c009"
+      },
+      {
+        "slot": 33,
+        "conceptId": "tool.mallet.rubber",
+        "canonicalTerm": "Rubber mallet",
+        "candidateId": "c002"
+      },
+      {
+        "slot": 34,
+        "conceptId": "tool.screwdriver.slotted",
+        "canonicalTerm": "Flat/slotted screwdriver",
+        "candidateId": "a034"
+      },
+      {
+        "slot": 35,
+        "conceptId": "tool.screwdriver.phillips",
+        "canonicalTerm": "Phillips screwdriver",
+        "candidateId": "a035"
+      },
+      {
+        "slot": 36,
+        "conceptId": "tool.adjustable-wrench",
+        "canonicalTerm": "Adjustable wrench",
+        "candidateId": "c004"
+      },
+      {
+        "slot": 37,
+        "conceptId": "tool.pipe-wrench",
+        "canonicalTerm": "Pipe wrench",
+        "candidateId": "v2t002-b5"
+      },
+      {
+        "slot": 38,
+        "conceptId": "tool.wrench.fixed",
+        "canonicalTerm": "Combination/open-end/box wrench",
+        "candidateId": "a038"
+      },
+      {
+        "slot": 39,
+        "conceptId": "tool.pliers.slip-joint",
+        "canonicalTerm": "Slip-joint pliers",
+        "candidateId": "c014"
+      },
+      {
+        "slot": 40,
+        "conceptId": "tool.pliers.tongue-groove",
+        "canonicalTerm": "Tongue-and-groove pliers",
+        "candidateId": "c015"
+      },
+      {
+        "slot": 41,
+        "conceptId": "tool.pliers.needle-nose",
+        "canonicalTerm": "Needle-nose pliers",
+        "candidateId": "a041"
+      },
+      {
+        "slot": 42,
+        "conceptId": "tool.pliers.diagonal-cutting",
+        "canonicalTerm": "Diagonal cutting pliers",
+        "candidateId": "a042"
+      },
+      {
+        "slot": 43,
+        "conceptId": "tool.pliers.locking",
+        "canonicalTerm": "Locking pliers",
+        "candidateId": "a043"
+      },
+      {
+        "slot": 44,
+        "conceptId": "tool.clamp.c",
+        "canonicalTerm": "C-clamp",
+        "candidateId": "a044"
+      },
+      {
+        "slot": 45,
+        "conceptId": "tool.clamp.bar",
+        "canonicalTerm": "Bar clamp",
+        "candidateId": "a045"
+      },
+      {
+        "slot": 46,
+        "conceptId": "tool.hand-plane",
+        "canonicalTerm": "Hand plane",
+        "candidateId": "a046"
+      },
+      {
+        "slot": 47,
+        "conceptId": "tool.saw.crosscut",
+        "canonicalTerm": "Crosscut saw",
+        "candidateId": "a047"
+      },
+      {
+        "slot": 48,
+        "conceptId": "tool.saw.rip",
+        "canonicalTerm": "Rip saw",
+        "candidateId": "a048"
+      },
+      {
+        "slot": 49,
+        "conceptId": "tool.saw.hacksaw",
+        "canonicalTerm": "Hacksaw",
+        "candidateId": "a049"
+      },
+      {
+        "slot": 50,
+        "conceptId": "tool.utility-knife",
+        "canonicalTerm": "Utility knife",
+        "candidateId": "a050"
+      },
+      {
+        "slot": 51,
+        "conceptId": "tool.putty-knife",
+        "canonicalTerm": "Putty knife",
+        "candidateId": "a051"
+      },
+      {
+        "slot": 52,
+        "conceptId": "tool.paint-scraper",
+        "canonicalTerm": "Paint scraper",
+        "candidateId": "a052"
+      },
+      {
+        "slot": 53,
+        "conceptId": "tool.tape-measure",
+        "canonicalTerm": "Tape measure",
+        "candidateId": "a053"
+      },
+      {
+        "slot": 54,
+        "conceptId": "tool.level",
+        "canonicalTerm": "Level",
+        "candidateId": "a054"
+      },
+      {
+        "slot": 55,
+        "conceptId": "tool.square",
+        "canonicalTerm": "Carpenter square / combination square",
+        "candidateId": "a055"
+      },
+      {
+        "slot": 56,
+        "conceptId": "tool.plunger.cup",
+        "canonicalTerm": "Plunger - cup",
+        "candidateId": "c006"
+      },
+      {
+        "slot": 57,
+        "conceptId": "tool.plunger.flange",
+        "canonicalTerm": "Plunger - flange",
+        "candidateId": "c007"
+      },
+      {
+        "slot": 58,
+        "conceptId": "tool.drain-snake",
+        "canonicalTerm": "Hand auger / drain snake",
+        "candidateId": "a058"
+      },
+      {
+        "slot": 59,
+        "conceptId": "tool.pipe-reamer",
+        "canonicalTerm": "Pipe reamer",
+        "candidateId": "c018"
+      },
+      {
+        "slot": 60,
+        "conceptId": "tool.soldering-gun",
+        "canonicalTerm": "Soldering gun",
+        "candidateId": "a060"
+      },
+      {
+        "slot": 61,
+        "conceptId": "access.stepladder",
+        "canonicalTerm": "Stepladder",
+        "candidateId": "c010"
+      },
+      {
+        "slot": 62,
+        "conceptId": "access.extension-ladder",
+        "canonicalTerm": "Extension ladder",
+        "candidateId": "c011"
+      },
+      {
+        "slot": 63,
+        "conceptId": "ppe.safety-glasses",
+        "canonicalTerm": "Safety glasses",
+        "candidateId": "c003"
+      },
+      {
+        "slot": 64,
+        "conceptId": "ppe.ear-plugs",
+        "canonicalTerm": "Protective ear plugs",
+        "candidateId": "a064"
+      },
+      {
+        "slot": 65,
+        "conceptId": "safety.wet-floor-sign",
+        "canonicalTerm": "Wet-floor warning sign/cone",
+        "candidateId": "a065"
+      }
+    ]
+  },
+  "unresolved": [
+    "Independent technical/style/rights review has not been performed.",
+    "Native backgrounds are visually white but the pilot established that some corner channels are near-white rather than pixel-exact 255; master normalization remains a separate gated step.",
+    "Floor-machine/burnisher, upright-vacuum/carpet-extractor, and crosscut/rip pair use remains gated on specialist comparative signoff.",
+    "Ride-on vacuum, snow blower, hedge trimmer, and soldering gun remain recognition-level or identification-only scope as specified in the taxonomy."
+  ]
+}

@@ -1,0 +1,379 @@
+[
+  {
+    "sceneId": "scene.slip.hallway-wet-floor",
+    "opaqueAssetId": "s001",
+    "generator": "OpenAI built-in imagegen, one complete full-canvas raster per call",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "promptRecord": "content/authoring/visuals/briefs/scenes/launch.json#scene-slot-1",
+    "selectedCandidate": {
+      "path": "content/assets/candidates/scenes/s001.png",
+      "sha256": "5648c401bd764f44b1f23e1dbaa5aac3e79c4292990e68c98f1d47947037ff0d",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "c2paChunkPresent": true
+    },
+    "rejectedAttempts": [],
+    "semanticRevision": "Pre-release decoy reconciliation: generated pixels show fixed wall conduit rather than a secured cord; safety meaning remains outside the walking route and the brief now matches the exact pixels."
+  },
+  {
+    "sceneId": "scene.slip.lobby-raised-mat",
+    "opaqueAssetId": "s002",
+    "generator": "OpenAI built-in imagegen, one complete full-canvas raster per call",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "promptRecord": "content/authoring/visuals/briefs/scenes/launch.json#scene-slot-2",
+    "selectedCandidate": {
+      "path": "content/assets/candidates/scenes/s002.png",
+      "sha256": "d692813cd7f4a25a8dcfbe5867f3d63e8c0738de48e55203f856214f463958f7",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "c2paChunkPresent": true
+    },
+    "rejectedAttempts": [],
+    "semanticRevision": null
+  },
+  {
+    "sceneId": "scene.egress.stairwell-boxes",
+    "opaqueAssetId": "s003",
+    "generator": "OpenAI built-in imagegen, one complete full-canvas raster per call",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "promptRecord": "content/authoring/visuals/briefs/scenes/launch.json#scene-slot-3",
+    "selectedCandidate": {
+      "path": "content/assets/candidates/scenes/s003.png",
+      "sha256": "4562c968a15c57d039cfdf9d95091da596c5ebf1068f7b6952ddccfac69d1a30",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "c2paChunkPresent": true
+    },
+    "rejectedAttempts": [],
+    "semanticRevision": null
+  },
+  {
+    "sceneId": "scene.egress.gym-exit-obstruction",
+    "opaqueAssetId": "s004",
+    "generator": "OpenAI built-in imagegen, one complete full-canvas raster per call",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "promptRecord": "content/authoring/visuals/briefs/scenes/launch.json#scene-slot-4",
+    "selectedCandidate": {
+      "path": "content/assets/candidates/scenes/s004.png",
+      "sha256": "26acf87611e08ad3e23046801bf64bd3d1335dfa1704206c072ec19c0a855796",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "c2paChunkPresent": true
+    },
+    "rejectedAttempts": [],
+    "semanticRevision": null
+  },
+  {
+    "sceneId": "scene.chemical.closet-unidentified-container",
+    "opaqueAssetId": "s005",
+    "generator": "OpenAI built-in imagegen, one complete full-canvas raster per call",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "promptRecord": "content/authoring/visuals/briefs/scenes/launch.json#scene-slot-5",
+    "selectedCandidate": {
+      "path": "content/assets/candidates/scenes/s005.png",
+      "sha256": "5358f246b72323505707abebe123ba6abc98152c5a8b9a2052e1bf88775c785b",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "c2paChunkPresent": true
+    },
+    "rejectedAttempts": [
+      {
+        "path": "content/assets/candidates/scenes/rejected/s005-r1.png",
+        "sha256": "bbb85aced116017422ee9197ab8bd007ef685116d57933408b371addb31531a9",
+        "reason": "Rejected because every depicted container appeared blank, making the intended unidentified secondary bottle ambiguous."
+      }
+    ],
+    "semanticRevision": null
+  },
+  {
+    "sceneId": "scene.chemical.kitchen-chemicals-over-foodware",
+    "opaqueAssetId": "s006",
+    "generator": "OpenAI built-in imagegen, one complete full-canvas raster per call",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "promptRecord": "content/authoring/visuals/briefs/scenes/launch.json#scene-slot-6",
+    "selectedCandidate": {
+      "path": "content/assets/candidates/scenes/s006.png",
+      "sha256": "45f3e40548c6e584e1bda054c4a75f9d034f173a6dc7a962eeb4beaab4c9b4bd",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "c2paChunkPresent": true
+    },
+    "rejectedAttempts": [
+      {
+        "path": "content/assets/candidates/scenes/rejected/s006-r1.png",
+        "sha256": "633e5ffd1afd2d9d15a4e44b21edaf96841fe0c89e214d466ae9ab968a65c612",
+        "reason": "Rejected because the chemical bottles lacked visible identifiers, adding a second chemical condition beyond the authored storage relationship."
+      }
+    ],
+    "semanticRevision": "Independent-review reconciliation: safe-background and zone wording now names the stable open racks, tiled wall, and dry floor actually present in the selected pixels; target and decoy meaning are unchanged."
+  },
+  {
+    "sceneId": "scene.electrical.utility-damaged-cord",
+    "opaqueAssetId": "s007",
+    "generator": "OpenAI built-in imagegen, one complete full-canvas raster per call",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "promptRecord": "content/authoring/visuals/briefs/scenes/launch.json#scene-slot-7",
+    "selectedCandidate": {
+      "path": "content/assets/candidates/scenes/s007.png",
+      "sha256": "aff208b2f56d1155d56fddb3f3b98428e6a7f622deaa770e1283b5d37f605c1f",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "c2paChunkPresent": true
+    },
+    "rejectedAttempts": [],
+    "semanticRevision": null
+  },
+  {
+    "sceneId": "scene.electrical.classroom-wet-power-strip",
+    "opaqueAssetId": "s008",
+    "generator": "OpenAI built-in imagegen, one complete full-canvas raster per call",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "promptRecord": "content/authoring/visuals/briefs/scenes/launch.json#scene-slot-8",
+    "selectedCandidate": {
+      "path": "content/assets/candidates/scenes/s008.png",
+      "sha256": "0e1b3b2b164b244d1690a72fd4e936940a3c913bebf2516424fc387e9ddb84b7",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "c2paChunkPresent": true
+    },
+    "rejectedAttempts": [],
+    "semanticRevision": null
+  },
+  {
+    "sceneId": "scene.sharps.restroom-broken-glass",
+    "opaqueAssetId": "s009",
+    "generator": "OpenAI built-in imagegen, one complete full-canvas raster per call",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "promptRecord": "content/authoring/visuals/briefs/scenes/launch.json#scene-slot-9",
+    "selectedCandidate": {
+      "path": "content/assets/candidates/scenes/s009.png",
+      "sha256": "958ad83f58746da23cea3db6a9125517369de117f2bb8e954856b974c1b61b69",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "c2paChunkPresent": true
+    },
+    "rejectedAttempts": [],
+    "semanticRevision": null
+  },
+  {
+    "sceneId": "scene.sharps.grounds-broken-bottle",
+    "opaqueAssetId": "s010",
+    "generator": "OpenAI built-in imagegen, one complete full-canvas raster per call",
+    "generatorOperator": "Codex /root — independent-review remediation thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "promptRecord": "content/authoring/visuals/briefs/scenes/launch.json#scene-slot-10",
+    "selectedCandidate": {
+      "path": "content/assets/candidates/scenes/s010.png",
+      "sha256": "40191790c92181821514ec9cc366aefb3975d0e7b6c3d8fa20ca6dc003b40e1c",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "c2paChunkPresent": true
+    },
+    "rejectedAttempts": [
+      {
+        "path": "content/assets/candidates/scenes/rejected/s010-r1.png",
+        "sha256": "d2f2f9bc1c9c181a3a62b4279b838555be99ed91c886c9d3ffbc4be1b5bd8ebf",
+        "reason": "Rejected by independent review because the bin carried a prominent recycling emblem made from forbidden arrows, creating consequential disposal signage."
+      }
+    ],
+    "semanticRevision": "Independent-review replacement: removed consequential recycling-arrow signage while preserving the broken-glass target, blank closed-bin decoy, dry level walkway, and outside-route grounds cart."
+  },
+  {
+    "sceneId": "scene.material.loading-unstable-stack",
+    "opaqueAssetId": "s011",
+    "generator": "OpenAI built-in imagegen, one complete full-canvas raster per call",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "promptRecord": "content/authoring/visuals/briefs/scenes/launch.json#scene-slot-11",
+    "selectedCandidate": {
+      "path": "content/assets/candidates/scenes/s011.png",
+      "sha256": "3ee76f0487fb823e11d6965d6954fe259db4fa2d8f1826732a4459f863e62f3d",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "c2paChunkPresent": true
+    },
+    "rejectedAttempts": [],
+    "semanticRevision": null
+  },
+  {
+    "sceneId": "scene.material.cafeteria-obscured-vision",
+    "opaqueAssetId": "s012",
+    "generator": "OpenAI built-in imagegen, one complete full-canvas raster per call",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "promptRecord": "content/authoring/visuals/briefs/scenes/launch.json#scene-slot-12",
+    "selectedCandidate": {
+      "path": "content/assets/candidates/scenes/s012.png",
+      "sha256": "3a5df0d37df6e6ef3660104458a91d940938fb34f068cc4518c7a695aa5a54f8",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "c2paChunkPresent": true
+    },
+    "rejectedAttempts": [],
+    "semanticRevision": null
+  },
+  {
+    "sceneId": "scene.biological.restroom-bare-hand-cleaning",
+    "opaqueAssetId": "s013",
+    "generator": "OpenAI built-in imagegen, one complete full-canvas raster per call",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "promptRecord": "content/authoring/visuals/briefs/scenes/launch.json#scene-slot-13",
+    "selectedCandidate": {
+      "path": "content/assets/candidates/scenes/s013.png",
+      "sha256": "5955ab3d871a6cd7dd54cdbda9c0f1976d6ba549a2144ddd6e9ca36adb936ba8",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "c2paChunkPresent": true
+    },
+    "rejectedAttempts": [],
+    "semanticRevision": null
+  },
+  {
+    "sceneId": "scene.biological.cafeteria-mop-on-table",
+    "opaqueAssetId": "s014",
+    "generator": "OpenAI built-in imagegen, one complete full-canvas raster per call",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "promptRecord": "content/authoring/visuals/briefs/scenes/launch.json#scene-slot-14",
+    "selectedCandidate": {
+      "path": "content/assets/candidates/scenes/s014.png",
+      "sha256": "a289ca419858bf088b43329b4e379e896c8cf7a65f64ce44d7d6ab5554f072ac",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "c2paChunkPresent": true
+    },
+    "rejectedAttempts": [],
+    "semanticRevision": null
+  },
+  {
+    "sceneId": "scene.machine.gym-unguarded-fan",
+    "opaqueAssetId": "s015",
+    "generator": "OpenAI built-in imagegen, one complete full-canvas raster per call",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "promptRecord": "content/authoring/visuals/briefs/scenes/launch.json#scene-slot-15",
+    "selectedCandidate": {
+      "path": "content/assets/candidates/scenes/s015.png",
+      "sha256": "e16a3596d90b417917361983485fe18cf76fea2e78d201ef294fe72580dddb04",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "c2paChunkPresent": true
+    },
+    "rejectedAttempts": [],
+    "semanticRevision": null
+  },
+  {
+    "sceneId": "scene.machine.utility-saw-guard",
+    "opaqueAssetId": "s016",
+    "generator": "OpenAI built-in imagegen; full-canvas regeneration followed by one targeted full-canvas geometry refinement",
+    "generatorOperator": "Codex /root — independent-review remediation thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "promptRecord": "content/authoring/visuals/briefs/scenes/launch.json#scene-slot-16",
+    "selectedCandidate": {
+      "path": "content/assets/candidates/scenes/s016.png",
+      "sha256": "31a9de7f24626de9f7b61bd33c20fddd128d1254881d88bd3871ad60aad80c9d",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "c2paChunkPresent": true
+    },
+    "rejectedAttempts": [
+      {
+        "path": "content/assets/candidates/scenes/rejected/s016-r1.png",
+        "sha256": "24e4a4687a32f29c8d10616645ab5b34d724cd0fd0c19fa5ddd69f810102514e",
+        "reason": "Rejected by independent review because the exposed blade projected through the solid workbench while the saw rested flat, creating impossible meaning-bearing geometry."
+      },
+      {
+        "path": "content/assets/candidates/scenes/rejected/s016-r2.png",
+        "sha256": "17aa476a039620e33a2ccce754f42ed2dc0f98755142445c245bd14904b2951e",
+        "reason": "Rejected during remediation because the lowest exposed blade teeth still appeared to touch the tabletop rather than remaining visibly clear of it."
+      }
+    ],
+    "semanticRevision": "Independent-review replacement: the unplugged saw now rests stably on its motor-housing side with the exposed blade clear of the solid bench; the drill remains securely cradled."
+  },
+  {
+    "sceneId": "scene.zero.classroom-orderly",
+    "opaqueAssetId": "s017",
+    "generator": "OpenAI built-in imagegen, one complete full-canvas raster per call",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "promptRecord": "content/authoring/visuals/briefs/scenes/launch.json#scene-slot-17",
+    "selectedCandidate": {
+      "path": "content/assets/candidates/scenes/s017.png",
+      "sha256": "888bd553461e6bc986d50e2489684b3b570ee726b45cc997af43a1234bcc4e27",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "c2paChunkPresent": true
+    },
+    "rejectedAttempts": [
+      {
+        "path": "content/assets/candidates/scenes/rejected/s017-r1.png",
+        "sha256": "62fe9a2250da33d3233cdf39a030b9280767bbdd4bffaa1a29c5751c952b77c1",
+        "reason": "Rejected because the stepladder sat too close to the classroom door and could be mistaken for an egress obstruction in a zero-hazard control."
+      }
+    ],
+    "semanticRevision": null
+  },
+  {
+    "sceneId": "scene.zero.closet-contained",
+    "opaqueAssetId": "s018",
+    "generator": "OpenAI built-in imagegen, one complete full-canvas raster per call",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "promptRecord": "content/authoring/visuals/briefs/scenes/launch.json#scene-slot-18",
+    "selectedCandidate": {
+      "path": "content/assets/candidates/scenes/s018.png",
+      "sha256": "6392d4f0575647918acacda18d1593d714408e5e1321a7b12787afd127790bbf",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "c2paChunkPresent": true
+    },
+    "rejectedAttempts": [],
+    "semanticRevision": null
+  }
+]

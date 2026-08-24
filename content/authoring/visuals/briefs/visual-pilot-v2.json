@@ -1,0 +1,489 @@
+{
+  "pilotId": "visual-pilot-v2",
+  "briefVersion": 1,
+  "date": "2026-08-23",
+  "status": "generation-ready",
+  "generationMode": "one complete native raster per built-in image_gen call",
+  "generatorSurface": "Codex built-in image_gen",
+  "taxonomyRevision": {
+    "path": "docs/TAXONOMY.md",
+    "sha256": "c2c487e2a16f5b5de7848d7915c4be2bd0b24749c266727f94a237b21025d952"
+  },
+  "visualPolicyRevision": {
+    "path": "illustration/VISUAL_AUTHORING_POLICY.md",
+    "sha256": "a17d47cd976fbd4caa2b57f834216450f8316063d0b9759ef4fbd0e451d0d904"
+  },
+  "promptAssembly": "For each candidate, concatenate sharedPrompts[candidate.sharedPrompt], a newline, and candidate.promptBody. The exact concatenated prompt is copied into the post-generation lineage record.",
+  "negativeHazardFamilies": [
+    "slip-trip-fall",
+    "egress-fire",
+    "chemical",
+    "electrical",
+    "sharps-broken-material",
+    "material-handling-storage",
+    "biological-sanitation",
+    "machine-tool-safety"
+  ],
+  "negativeInventoryRule": "For each scene candidate, every family not explicitly represented by an authored target is negative inventory. Any visible unauthored condition in any family rejects the candidate. Zero-hazard controls reject every visible hazard in every family.",
+  "sharedPrompts": {
+    "isolatedTool": "Use case: scientific-educational.\nAsset type: one alternate-view isolated exam-prep tool-recognition illustration.\nScene/backdrop: visually pure white with no floor plane and no shadow.\nStyle/medium: original black monochrome technical line illustration; confident medium contour; sparse functional hatching; restrained interior detail; high whitespace; generic unbranded construction; plain civil-service test-booklet visual language. This must be a line drawing, not a photograph, not a shaded 3D render, and not color artwork.\nComposition/framing: one complete mechanically plausible subject centered at roughly 72 percent of a square canvas with generous even padding. Nothing may touch or cross the canvas edge.\nColor palette: black, white, and restrained neutral-gray line hatching only.\nAbsolute exclusions: no text or pseudo-text; no labels, arrows, circles, letters, numbers, answer marks, logos, brands, watermarks, hands, people, room, floor plane, props, drop shadow, gray backdrop, decorative border, cropped subject, duplicated components, disconnected or floating parts, or impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "hazardScene": "Use case: scientific-educational.\nAsset type: one original school/custodial hazard-recognition scene for exam preparation.\nStyle/medium: original black monochrome technical line illustration with confident medium contour, sparse functional hatching, restrained interior detail, generous whitespace, and plain civil-service test-booklet economy. This must be a clean line drawing, not a photograph, not photorealistic, not a shaded 3D render, and not color artwork.\nComposition/framing: wide 3:2 landscape scene with complete, mechanically plausible objects and an unambiguous walking space; every meaning-bearing object must remain fully visible at phone size.\nColor palette: black, white, and restrained neutral-gray line hatching only. No cue may depend on color.\nAbsolute exclusions: no text or pseudo-text; no readable signs or labels; no letters, numbers, arrows, circles, answer marks, logos, brands, watermarks, decorative borders, cropped meaning-bearing objects, impossible joints or poses, duplicated people or parts, floating objects, dramatic spotlighting, or visual emphasis on the target. Do not introduce any unauthored spill, obstruction, damaged cord, sharp object, unstable stack, missing guard, unsafe person, or other hazard.\nOutput intent: one native raster candidate; do not add annotations or explanatory text."
+  },
+  "sourceCatalog": [
+    {
+      "id": "OSHA_FLOOR",
+      "title": "29 CFR 1910.22 General requirements",
+      "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.22",
+      "locator": "1910.22(a)(1)-(3)",
+      "scope": "Walking-working surfaces must be kept clean, orderly, sanitary, and free of hazards such as sharp or protruding objects, loose boards, corrosion, leaks, spills, snow, and ice."
+    },
+    {
+      "id": "OSHA_EGRESS",
+      "title": "29 CFR 1910.37 Exit routes",
+      "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.37",
+      "locator": "1910.37(a)(3)",
+      "scope": "Exit routes must be free and unobstructed."
+    },
+    {
+      "id": "OSHA_HAZCOM",
+      "title": "29 CFR 1910.1200 Hazard Communication",
+      "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.1200",
+      "locator": "1910.1200(f)(6)",
+      "scope": "Workplace containers of hazardous chemicals must be identified; the brief does not infer a chemical identity from appearance."
+    },
+    {
+      "id": "FDA_FOOD",
+      "title": "FDA Food Code 2022",
+      "url": "https://www.fda.gov/media/184685/download",
+      "locator": "7-201.11 Separation",
+      "scope": "Poisonous or toxic materials must be stored so they cannot contaminate food, equipment, utensils, linens, or single-use articles, including not above them."
+    },
+    {
+      "id": "OSHA_ELEC",
+      "title": "29 CFR 1910.334 Use of equipment",
+      "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.334",
+      "locator": "1910.334(a)(2) and (a)(4)",
+      "scope": "Damaged cord-and-plug equipment must be removed from service; equipment used where water contact is likely must be approved for that location."
+    },
+    {
+      "id": "OSHA_LADDER",
+      "title": "29 CFR 1910.23 Ladders",
+      "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.23",
+      "locator": "1910.23(b) and (c)",
+      "scope": "Ladders must be inspected, used only on stable and level surfaces unless secured or stabilized, and used according to their design."
+    },
+    {
+      "id": "NIOSH_MMH",
+      "title": "NIOSH Ergonomic Guidelines for Manual Material Handling",
+      "url": "https://www.cdc.gov/niosh/docs/2007-131/pdfs/2007-131.pdf",
+      "locator": "material-handling risk factors and mechanical-aid guidance",
+      "scope": "Use only broad handling, stability, visibility, and mechanical-aid concepts; do not imply one universal lifting technique."
+    }
+  ],
+  "toolCandidates": [
+    {
+      "candidateId": "v2t001",
+      "conceptId": "tool.adjustable-wrench",
+      "canonicalTerm": "Adjustable wrench",
+      "viewId": "matched-profile-jaws-open",
+      "viewPurpose": "Expose the smooth parallel jaws and worm gear in a strict matched comparison view.",
+      "evidenceSources": [
+        "docs/TAXONOMY.md#adjustable-wrench",
+        "content/authoring/visuals/briefs/tools/pilot.json"
+      ],
+      "sharedPrompt": "isolatedTool",
+      "mustShow": [
+        "strict orthographic side profile",
+        "fixed jaw and movable jaw with smooth parallel gripping faces",
+        "clearly visible worm gear beneath the movable jaw",
+        "open jaw and complete handle"
+      ],
+      "mustNotShow": [
+        "serrated gripping teeth",
+        "offset hook jaw",
+        "pipe-wrench heel jaw",
+        "multiple adjustment channels"
+      ],
+      "promptBody": "Primary request: create one generic adjustable wrench in a strict orthographic side profile, handle horizontal and jaws facing left, with the jaws moderately open.\nMust show: a fixed jaw and movable jaw with smooth parallel gripping faces; a clearly visible worm gear directly beneath the movable jaw; a complete plain handle; mechanically coherent jaw travel.\nMust not show: serrated teeth, an offset hook jaw, a pipe-wrench heel jaw, multiple adjustment channels, or decorative product contours.\nPairing constraint: match the framing, scale, horizontal orientation, and jaw-facing direction requested for candidate v2t002, while preserving the adjustable wrench's own decisive geometry.",
+      "requestedOutputCount": 1,
+      "requestedDimensions": "native built-in square output; measure after generation",
+      "candidatePath": "content/assets/candidates/visual-pilot-v2/v2t001.png"
+    },
+    {
+      "candidateId": "v2t002",
+      "conceptId": "tool.pipe-wrench",
+      "canonicalTerm": "Pipe wrench",
+      "viewId": "matched-profile-jaws-open",
+      "viewPurpose": "Expose the serrated offset hook and heel jaws in a strict matched comparison view.",
+      "evidenceSources": [
+        "docs/TAXONOMY.md#pipe-wrench",
+        "content/authoring/visuals/briefs/tools/pilot.json"
+      ],
+      "sharedPrompt": "isolatedTool",
+      "mustShow": [
+        "strict orthographic side profile",
+        "offset curved hook jaw",
+        "opposing heel jaw",
+        "visible serrated tooth rows on both gripping surfaces",
+        "knurled adjustment nut and complete handle"
+      ],
+      "mustNotShow": [
+        "smooth parallel adjustable-wrench jaws",
+        "crescent-wrench worm gear directly under a movable jaw",
+        "pliers handles",
+        "closed throat"
+      ],
+      "promptBody": "Primary request: create one generic straight pipe wrench in a strict orthographic side profile, handle horizontal and jaws facing left, with the throat moderately open.\nMust show: a clearly offset curved hook jaw; an opposing heel jaw; distinct serrated tooth rows on both gripping surfaces; a visible knurled adjustment nut; a complete heavy straight handle; mechanically coherent jaw geometry.\nMust not show: smooth parallel adjustable-wrench jaws, a crescent-wrench worm gear directly under a movable jaw, pliers handles, a closed throat, or decorative product contours.\nPairing constraint: match the framing, scale, horizontal orientation, and jaw-facing direction requested for candidate v2t001, while preserving the pipe wrench's own decisive geometry.",
+      "requestedOutputCount": 1,
+      "requestedDimensions": "native built-in square output; measure after generation",
+      "candidatePath": "content/assets/candidates/visual-pilot-v2/v2t002.png"
+    },
+    {
+      "candidateId": "v2t003",
+      "conceptId": "tool.plunger.cup",
+      "canonicalTerm": "Cup plunger",
+      "viewId": "matched-low-underside",
+      "viewPurpose": "Reveal the simple uninterrupted cup opening and absence of a toilet flange.",
+      "evidenceSources": [
+        "docs/TAXONOMY.md#plunger--cup",
+        "content/authoring/visuals/briefs/tools/pilot.json"
+      ],
+      "sharedPrompt": "isolatedTool",
+      "mustShow": [
+        "complete handle and rubber cup",
+        "low underside three-quarter view into the open mouth",
+        "one simple uninterrupted cup rim",
+        "empty center beneath the handle socket"
+      ],
+      "mustNotShow": [
+        "extended lower flange",
+        "inner sleeve or folded toilet flange",
+        "flat accordion bellows",
+        "toilet or sink context"
+      ],
+      "promptBody": "Primary request: create one generic cup plunger in a low underside three-quarter view. Tilt the complete tool diagonally so the viewer can look into the rubber cup's open mouth while the full handle remains visible.\nMust show: one simple bell-shaped rubber cup; a continuous uninterrupted open rim; an empty center beneath the handle socket; a complete plain handle.\nMust not show: an extended lower flange, inner sleeve, folded toilet flange, accordion bellows, toilet, sink, drain, water, or use context.\nPairing constraint: match the framing, scale, handle tilt, and underside camera angle requested for candidate v2t004.",
+      "requestedOutputCount": 1,
+      "requestedDimensions": "native built-in square output; measure after generation",
+      "candidatePath": "content/assets/candidates/visual-pilot-v2/v2t003.png"
+    },
+    {
+      "candidateId": "v2t004",
+      "conceptId": "tool.plunger.flange",
+      "canonicalTerm": "Flange toilet plunger",
+      "viewId": "matched-low-underside",
+      "viewPurpose": "Reveal the extended lower toilet flange beneath the outer cup.",
+      "evidenceSources": [
+        "docs/TAXONOMY.md#plunger--flange",
+        "content/authoring/visuals/briefs/tools/pilot.json"
+      ],
+      "sharedPrompt": "isolatedTool",
+      "mustShow": [
+        "complete handle and outer rubber cup",
+        "low underside three-quarter view",
+        "distinct narrower rubber flange or sleeve extending below the center of the outer cup",
+        "clear separation between outer cup rim and lower flange"
+      ],
+      "mustNotShow": [
+        "plain cup with empty center",
+        "flange folded invisibly inside the cup",
+        "flat accordion bellows",
+        "toilet or sink context"
+      ],
+      "promptBody": "Primary request: create one generic flange toilet plunger in a low underside three-quarter view. Tilt the complete tool diagonally so the viewer can see beneath the outer rubber cup while the full handle remains visible.\nMust show: one outer bell-shaped rubber cup; a distinct narrower cylindrical rubber flange or sleeve extending well below the center of that cup; a clear visible gap and shape transition between the outer cup rim and the lower flange; a complete plain handle.\nMust not show: a plain cup with an empty center, a flange folded invisibly inside the cup, accordion bellows, toilet, sink, drain, water, or use context.\nPairing constraint: match the framing, scale, handle tilt, and underside camera angle requested for candidate v2t003.",
+      "requestedOutputCount": 1,
+      "requestedDimensions": "native built-in square output; measure after generation",
+      "candidatePath": "content/assets/candidates/visual-pilot-v2/v2t004.png"
+    },
+    {
+      "candidateId": "v2t005",
+      "conceptId": "tool.pliers.slip-joint",
+      "canonicalTerm": "Slip-joint pliers",
+      "viewId": "matched-face-pivot-open",
+      "viewPurpose": "Expose the simple two-position slip pivot without perspective hiding the joint.",
+      "evidenceSources": [
+        "docs/TAXONOMY.md#slip-joint-pliers",
+        "content/authoring/visuals/briefs/tools/pilot.json"
+      ],
+      "sharedPrompt": "isolatedTool",
+      "mustShow": [
+        "strict top-down face view",
+        "handles moderately open",
+        "one simple elongated two-position slip-joint slot",
+        "ordinary opposing serrated gripping jaws"
+      ],
+      "mustNotShow": [
+        "multiple tongue-and-groove channels",
+        "long needle-nose jaws",
+        "diagonal cutting edges",
+        "locking linkage"
+      ],
+      "promptBody": "Primary request: create one generic pair of slip-joint pliers in a strict top-down face view, jaws facing left and handles moderately open.\nMust show: one simple elongated pivot slot with exactly two usable pivot positions; the pivot pin visibly seated in one position; ordinary opposing serrated gripping jaws; two complete handles.\nMust not show: multiple arcing adjustment channels, a tongue-and-groove rack, long needle-nose jaws, diagonal cutting edges, locking linkage, or pipe-wrench jaws.\nPairing constraint: match the framing, scale, orientation, handle opening, and jaw-facing direction requested for candidate v2t006.",
+      "requestedOutputCount": 1,
+      "requestedDimensions": "native built-in square output; measure after generation",
+      "candidatePath": "content/assets/candidates/visual-pilot-v2/v2t005.png"
+    },
+    {
+      "candidateId": "v2t006",
+      "conceptId": "tool.pliers.tongue-groove",
+      "canonicalTerm": "Tongue-and-groove pliers",
+      "viewId": "matched-face-pivot-open",
+      "viewPurpose": "Expose the multi-position adjustment channel and offset curved jaws without perspective hiding the joint.",
+      "evidenceSources": [
+        "docs/TAXONOMY.md#tongue-and-groove-pliers",
+        "content/authoring/visuals/briefs/tools/pilot.json"
+      ],
+      "sharedPrompt": "isolatedTool",
+      "mustShow": [
+        "strict top-down face view",
+        "handles moderately open",
+        "clearly visible series of at least five adjustment grooves",
+        "offset curved serrated jaws"
+      ],
+      "mustNotShow": [
+        "only one two-position slip slot",
+        "long needle-nose jaws",
+        "diagonal cutting edges",
+        "locking linkage"
+      ],
+      "promptBody": "Primary request: create one generic pair of tongue-and-groove pliers in a strict top-down face view, jaws facing left and handles moderately open.\nMust show: a clearly visible multi-position tongue-and-groove adjustment channel with at least five distinct grooves; the pivot seated in one groove; offset curved serrated jaws for larger irregular objects; two complete handles.\nMust not show: only one elongated two-position slip slot, long needle-nose jaws, diagonal cutting edges, locking linkage, or pipe-wrench jaws.\nPairing constraint: match the framing, scale, orientation, handle opening, and jaw-facing direction requested for candidate v2t005.",
+      "requestedOutputCount": 1,
+      "requestedDimensions": "native built-in square output; measure after generation",
+      "candidatePath": "content/assets/candidates/visual-pilot-v2/v2t006.png"
+    }
+  ],
+  "sceneCandidates": [
+    {
+      "candidateId": "v2s001",
+      "sceneId": "scene.chemical.closet-unidentified-container",
+      "candidateRole": "style-normalized replacement candidate",
+      "replacementFor": {
+        "opaqueAssetId": "s005",
+        "path": "content/assets/masters/scenes/s005.png",
+        "sha256": "5358f246b72323505707abebe123ba6abc98152c5a8b9a2052e1bf88775c785b"
+      },
+      "sourceIds": ["OSHA_HAZCOM"],
+      "sharedPrompt": "hazardScene",
+      "claim": "A workplace container holding a transferred chemical must be identified.",
+      "targets": [
+        {
+          "id": "target-1",
+          "condition": "plain secondary spray bottle visibly holding liquid with a wholly blank body and no identification panel",
+          "correction": "identify the working container according to the hazard-communication program"
+        }
+      ],
+      "decoys": [
+        {
+          "id": "decoy-1",
+          "condition": "closed generic supply jugs upright in low containment trays with clear nonreadable identification panels",
+          "safeBecause": "they are closed, upright, contained, and visually distinguished from the wholly blank secondary bottle"
+        }
+      ],
+      "safeBackground": ["mop clipped in wall rack", "empty service sink", "dry clear floor"],
+      "requiredCues": ["horizontal liquid level visible inside the secondary bottle", "secondary bottle body wholly blank", "other containers closed, stable, and visibly identified without readable text"],
+      "forbiddenCues": ["readable chemical names", "pseudo-text", "open or leaking containers", "mixed liquids", "food or drink container", "missing PPE claim", "photorealism", "color"],
+      "unauthoredHazardPolicy": "Reject any visible hazard outside the authored chemical target.",
+      "promptBody": "Primary request: create a wide landscape custodial closet from an original eye-level composition. On a middle shelf, place one transparent-outline trigger spray bottle visibly half-filled with liquid, using a clear horizontal liquid line and sparse hatching below it. The entire smooth bottle body must be blank: no panel, symbol, writing, or mark. On a separate lower shelf, show several closed generic supply jugs standing upright in low containment trays; each jug has one large bordered identification panel filled only with uniform diagonal hatching, never letters or symbols. A mop is clipped securely into a wall rack, the service sink is empty, the doorway is clear, and the floor is completely dry.\nMeaning constraint: the blank half-filled spray bottle is the only hazard. Keep all other containers closed, stable, and contained.",
+      "requestedOutputCount": 1,
+      "requestedDimensions": "native built-in wide landscape output; measure after generation",
+      "candidatePath": "content/assets/candidates/visual-pilot-v2/v2s001.png"
+    },
+    {
+      "candidateId": "v2s002",
+      "sceneId": "scene.chemical.kitchen-chemicals-over-foodware",
+      "candidateRole": "style-normalized replacement candidate",
+      "replacementFor": {
+        "opaqueAssetId": "s006",
+        "path": "content/assets/masters/scenes/s006.png",
+        "sha256": "45f3e40548c6e584e1bda054c4a75f9d034f173a6dc7a962eeb4beaab4c9b4bd"
+      },
+      "sourceIds": ["FDA_FOOD"],
+      "sharedPrompt": "hazardScene",
+      "claim": "Cleaning chemicals must be stored so they cannot contaminate food, utensils, or food-contact articles, including not above them.",
+      "targets": [
+        {
+          "id": "target-1",
+          "condition": "closed generic cleaning-supply bottles on an open shelf directly above uncovered clean bowls and food-preparation utensils",
+          "correction": "separate chemical storage from and below or protected away from food and utensils"
+        }
+      ],
+      "decoys": [
+        {
+          "id": "decoy-1",
+          "condition": "clean pans stored inverted on a separate rack",
+          "safeBecause": "they are protected and away from chemical storage"
+        }
+      ],
+      "safeBackground": ["stable open metal shelving", "clean tiled wall", "dry floor"],
+      "requiredCues": ["vertical alignment clearly places supply bottles above uncovered bowls and utensils", "all containers closed", "separate inverted-pan rack clearly visible"],
+      "forbiddenCues": ["open food packages", "spilled chemicals", "readable labels", "pseudo-text", "people handling food", "photorealism", "color"],
+      "unauthoredHazardPolicy": "Reject any visible hazard outside the authored chemical-storage target.",
+      "promptBody": "Primary request: create a wide landscape school-kitchen storage area from an original straight-on composition. On one stable open metal shelving unit, place several closed generic cleaning-supply bottles on the upper shelf. Give each bottle one large bordered identification panel filled only with uniform diagonal hatching, never letters or symbols. Directly beneath those bottles, on the next shelf in the same vertical column, place uncovered clean mixing bowls and food-preparation utensils. On a clearly separate rack several feet away, store clean pans inverted. Keep the tiled wall clean, the floor dry, and every shelf stable.\nMeaning constraint: the only hazard is the chemical-storage relationship directly above the uncovered bowls and utensils. No bottle is open or leaking.",
+      "requestedOutputCount": 1,
+      "requestedDimensions": "native built-in wide landscape output; measure after generation",
+      "candidatePath": "content/assets/candidates/visual-pilot-v2/v2s002.png"
+    },
+    {
+      "candidateId": "v2s003",
+      "sceneId": "scene.zero.classroom-orderly",
+      "candidateRole": "style-normalized replacement candidate",
+      "replacementFor": {
+        "opaqueAssetId": "s017",
+        "path": "content/assets/masters/scenes/s017.png",
+        "sha256": "888bd553461e6bc986d50e2489684b3b570ee726b45cc997af43a1234bcc4e27"
+      },
+      "sourceIds": ["OSHA_FLOOR", "OSHA_ELEC", "OSHA_LADDER"],
+      "sharedPrompt": "hazardScene",
+      "claim": "Zero-hazard control: all suspicious details are safe as depicted.",
+      "targets": [],
+      "decoys": [
+        {
+          "id": "decoy-1",
+          "condition": "stepladder fully open on dry level floor with spreaders locked and no person on it",
+          "safeBecause": "it is stable, unused, correctly opened, and well away from the doorway"
+        },
+        {
+          "id": "decoy-2",
+          "condition": "undamaged cord fully covered by a low-profile protector along the wall edge",
+          "safeBecause": "it is secured outside the central route"
+        },
+        {
+          "id": "decoy-3",
+          "condition": "portable fan with complete close-spaced front and rear guards",
+          "safeBecause": "the blades are fully guarded"
+        }
+      ],
+      "safeBackground": ["chairs tucked beneath desks", "dry unobstructed central aisle", "closed supply cabinet", "clear doorway"],
+      "requiredCues": ["all ladder feet flat and both spreaders visibly locked", "ladder well separated from doorway", "cord protector clearly covers cord", "fan guard complete", "central aisle clear"],
+      "forbiddenCues": ["spill", "raised mat", "damaged cord", "open cabinet", "person on ladder", "blocked doorway", "photorealism", "color"],
+      "unauthoredHazardPolicy": "Reject any visible hazard; this is a zero-target control.",
+      "promptBody": "Primary request: create a wide landscape orderly school classroom with zero hazards from an original corner viewpoint. Keep a broad, completely dry central aisle unobstructed from foreground to the clear doorway at far left. Against the far-right side wall, well separated from the doorway, place a fully open stepladder with all four feet flat and both spreaders visibly locked; no person is present. Along that same wall edge, place an undamaged cord fully beneath a low-profile cord protector that never enters the aisle. A portable fan on a low cabinet has complete close-spaced front and rear guards. Desks are orderly, chairs tucked in, and a supply cabinet is closed.\nMeaning constraint: every suspicious detail is safe as depicted. This scene has zero hazards.",
+      "requestedOutputCount": 1,
+      "requestedDimensions": "native built-in wide landscape output; measure after generation",
+      "candidatePath": "content/assets/candidates/visual-pilot-v2/v2s003.png"
+    },
+    {
+      "candidateId": "v2s004",
+      "sceneId": "scene.slip.gym-hose-across-walkway",
+      "candidateRole": "new positive scene",
+      "sourceIds": ["OSHA_FLOOR"],
+      "sharedPrompt": "hazardScene",
+      "claim": "A loose hose crossing a walking route is a trip condition needing correction.",
+      "targets": [
+        {
+          "id": "target-1",
+          "condition": "thick ribbed vacuum hose stretched diagonally across the central gym-side walking lane",
+          "correction": "remove or reroute and secure the hose so the walking route is clear"
+        }
+      ],
+      "decoys": [
+        {
+          "id": "decoy-1",
+          "condition": "wheeled wet/dry vacuum parked fully against the side wall with brakes set and body outside the lane",
+          "safeBecause": "the machine is stable and outside the walking route; only its loose hose crosses the lane"
+        }
+      ],
+      "safeBackground": ["dry gym floor", "closed equipment-room door outside the lane", "folded mats stacked flat on a low wall rack"],
+      "requiredCues": ["hose visibly ribbed and attached to the vacuum", "hose spans the full walking lane with clearance visible beneath its arch", "floor dry", "machine outside route"],
+      "forbiddenCues": ["power cord crossing the route", "wet floor", "raised mat", "blocked exit", "unstable equipment", "people", "photorealism", "color"],
+      "unauthoredHazardPolicy": "Reject any visible hazard outside the authored hose trip target.",
+      "promptBody": "Primary request: create a wide landscape gym-side walking lane beside a school gym. A wheeled wet/dry vacuum is parked fully against the side wall, stable and outside the lane. Its thick ribbed suction hose remains attached but stretches diagonally across the entire central walking lane, with a clearly visible raised arch and open floor beneath it that makes the trip condition unmistakable. No electrical cord crosses the lane. The floor is completely dry. Folded gym mats are stacked flat on a low wall rack, and a closed equipment-room door remains outside the walking route.\nMeaning constraint: the loose ribbed hose across the lane is the only hazard.",
+      "requestedOutputCount": 1,
+      "requestedDimensions": "native built-in wide landscape output; measure after generation",
+      "candidatePath": "content/assets/candidates/visual-pilot-v2/v2s004.png"
+    },
+    {
+      "candidateId": "v2s005",
+      "sceneId": "scene.chemical.cafeteria-chemical-with-cups",
+      "candidateRole": "new positive scene",
+      "sourceIds": ["FDA_FOOD"],
+      "sharedPrompt": "hazardScene",
+      "claim": "Cleaning chemicals must be stored so they cannot contaminate single-use articles.",
+      "targets": [
+        {
+          "id": "target-1",
+          "condition": "closed identified cleaning spray bottle stored inside the same open tote as uncovered disposable cups",
+          "correction": "separate chemical storage from and protect it away from single-use articles"
+        }
+      ],
+      "decoys": [
+        {
+          "id": "decoy-1",
+          "condition": "separate closed cleaning jug upright in a containment tray inside a closed lower cabinet",
+          "safeBecause": "it is contained and physically separated from the cups"
+        }
+      ],
+      "safeBackground": ["clean cafeteria back counter", "dry floor", "empty sink", "closed cabinet doors except the one deliberately showing the safe decoy"],
+      "requiredCues": ["spray bottle and uncovered cups visibly share the same tote", "spray bottle closed and identified with a nonreadable hatched panel", "safe jug separated inside containment"],
+      "forbiddenCues": ["open or leaking chemical container", "food spill", "readable labels", "pseudo-text", "people", "broken cups", "photorealism", "color"],
+      "unauthoredHazardPolicy": "Reject any visible hazard outside the authored chemical-separation target.",
+      "promptBody": "Primary request: create a wide landscape school-cafeteria back counter. On the counter, place one open rectangular supply tote containing a neat stack of uncovered disposable cups and one closed generic trigger spray bottle pressed beside them in the same tote. The spray bottle has one large bordered identification panel filled only with uniform diagonal hatching, never letters or symbols. In a separate lower cabinet compartment several feet away, show one closed cleaning jug upright inside a low containment tray; the cabinet opening exists only to make this safe separated storage visible. The sink is empty, the counter clean, and the floor completely dry.\nMeaning constraint: the only hazard is storing the closed cleaning spray bottle in the same open tote as the uncovered cups. No container leaks.",
+      "requestedOutputCount": 1,
+      "requestedDimensions": "native built-in wide landscape output; measure after generation",
+      "candidatePath": "content/assets/candidates/visual-pilot-v2/v2s005.png"
+    },
+    {
+      "candidateId": "v2s006",
+      "sceneId": "scene.electrical.gym-fan-damaged-cord",
+      "candidateRole": "new positive scene",
+      "sourceIds": ["OSHA_ELEC"],
+      "sharedPrompt": "hazardScene",
+      "claim": "Cord-and-plug equipment with visible damage that may expose a worker to injury must be removed from service.",
+      "targets": [
+        {
+          "id": "target-1",
+          "condition": "portable floor fan power-cord outer jacket split open near the fan housing with two inner insulated conductors visible while plugged in",
+          "correction": "disconnect and remove the damaged fan from service for proper repair and testing"
+        }
+      ],
+      "decoys": [
+        {
+          "id": "decoy-1",
+          "condition": "fan blades enclosed by complete close-spaced front and rear guards",
+          "safeBecause": "the guard is intact; the authored hazard is the damaged cord"
+        }
+      ],
+      "safeBackground": ["dry gym floor", "clear wall-side route", "folded mats stacked flat on a low rack"],
+      "requiredCues": ["large visible split in outer jacket", "two inner insulated conductors visible but not bare copper", "plug remains connected", "fan guard complete", "cord kept along wall outside route"],
+      "forbiddenCues": ["missing fan guard", "wet floor", "cord crossing route", "sparks", "smoke", "unstable stack", "people", "photorealism", "color"],
+      "unauthoredHazardPolicy": "Reject any visible hazard outside the authored damaged-cord target.",
+      "promptBody": "Primary request: create a wide landscape school gym wall area. In the foreground against the wall, place one portable floor fan with complete close-spaced front and rear guards. Its cord follows a short route tight along the wall to a receptacle and never enters the walking lane. Near the point where the cord exits the fan housing, show a large split in the outer jacket with two inner insulated conductors clearly visible, while the plug remains connected. No bare copper, sparks, or smoke. Folded mats are stacked flat on a low rack. The floor is dry and the route clear.\nMeaning constraint: the damaged cord is the only hazard; the fan guard is complete and safe as depicted.",
+      "requestedOutputCount": 1,
+      "requestedDimensions": "native built-in wide landscape output; measure after generation",
+      "candidatePath": "content/assets/candidates/visual-pilot-v2/v2s006.png"
+    },
+    {
+      "candidateId": "v2s007",
+      "sceneId": "scene.zero.loading-area-orderly",
+      "candidateRole": "new zero-hazard control",
+      "sourceIds": ["OSHA_FLOOR", "OSHA_EGRESS", "NIOSH_MMH"],
+      "sharedPrompt": "hazardScene",
+      "claim": "Zero-hazard control: stored loads, equipment, floor, and doorway are safe as depicted.",
+      "targets": [],
+      "decoys": [
+        {
+          "id": "decoy-1",
+          "condition": "uniform cartons stacked squarely in short interlocking rows on an intact pallet with no lean or overhang",
+          "safeBecause": "the load is low, stable, and fully supported"
+        },
+        {
+          "id": "decoy-2",
+          "condition": "empty hand truck secured upright in a wall bracket outside the route",
+          "safeBecause": "it cannot roll or fall into the route"
+        },
+        {
+          "id": "decoy-3",
+          "condition": "closed service door with a broad unobstructed approach",
+          "safeBecause": "the route and doorway are clear"
+        }
+      ],
+      "safeBackground": ["completely dry level floor", "clear marked walking lane without text", "closed low storage cabinet"],
+      "requiredCues": ["cartons aligned with no lean or overhang", "pallet intact", "hand truck visibly secured in bracket", "door approach broad and clear", "floor dry"],
+      "forbiddenCues": ["unstable or tall stack", "crushed carton", "pallet damage", "loose hand truck", "blocked door", "spill", "cord", "sharp debris", "people", "photorealism", "color"],
+      "unauthoredHazardPolicy": "Reject any visible hazard; this is a zero-target control.",
+      "promptBody": "Primary request: create a wide landscape orderly school loading/service area with zero hazards. On one side, place uniform sealed cartons stacked squarely in short interlocking rows on an intact pallet; no carton leans, overhangs, bulges, or appears crushed. On the opposite wall, secure an empty hand truck upright in a clearly visible wall bracket outside the route. A closed service door has a broad completely unobstructed approach. The level floor is entirely dry, a low storage cabinet is closed, and no cord or debris is present.\nMeaning constraint: every suspicious detail is safe as depicted. This scene has zero hazards.",
+      "requestedOutputCount": 1,
+      "requestedDimensions": "native built-in wide landscape output; measure after generation",
+      "candidatePath": "content/assets/candidates/visual-pilot-v2/v2s007.png"
+    }
+  ]
+}

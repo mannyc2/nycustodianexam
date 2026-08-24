@@ -1,0 +1,1641 @@
+[
+  {
+    "sceneId": "scene.slip.hallway-wet-floor",
+    "opaqueAssetId": "s001",
+    "neutralPreAnswer": {
+      "overview": "A school hallway with doors, a side alcove, and a long tiled walking surface.",
+      "zones": [
+        {
+          "order": 1,
+          "label": "rear hallway",
+          "description": "The rear hallway is visible within the hallway/common area setting."
+        },
+        {
+          "order": 2,
+          "label": "left wall and alcove",
+          "description": "The left wall and alcove is visible within the hallway/common area setting."
+        },
+        {
+          "order": 3,
+          "label": "central floor",
+          "description": "The central floor is visible within the hallway/common area setting."
+        },
+        {
+          "order": 4,
+          "label": "right wall",
+          "description": "The right wall is visible within the hallway/common area setting."
+        }
+      ],
+      "policy": "Does not state target or decoy counts and does not identify the answer."
+    },
+    "fullPostAnswer": {
+      "claim": "A wet walking surface without a visible control is a condition needing correction.",
+      "targets": [
+        {
+          "condition": "wide shallow wet patch across the central walking path with no warning control present",
+          "correction": "control the area and promptly clean/dry the walking surface",
+          "sourceIds": [
+            "OSHA_FLOOR"
+          ]
+        }
+      ],
+      "decoys": [
+        {
+          "condition": "fixed metal conduit running tightly along the base of the right wall",
+          "safeBecause": "it is fixed outside the walking route"
+        }
+      ],
+      "safeBackground": [
+        "closed classroom doors",
+        "wall-mounted bulletin frame with blank interior",
+        "janitor cart fully inside a side alcove"
+      ],
+      "sources": [
+        {
+          "id": "OSHA_FLOOR",
+          "title": "29 CFR 1910.22 General requirements",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.22",
+          "locator": "1910.22(a)(1)-(3)",
+          "scope": "Walking-working surfaces must be kept clean, orderly, sanitary, and free of hazards such as sharp or protruding objects, loose boards, corrosion, leaks, spills, snow, and ice."
+        }
+      ]
+    },
+    "nonvisualZonedEquivalent": [
+      {
+        "zone": "central floor",
+        "role": "target",
+        "statement": "wide shallow wet patch across the central walking path with no warning control present"
+      },
+      {
+        "zone": "right wall",
+        "role": "decoy",
+        "statement": "fixed metal conduit running tightly along the base of the right wall; it is fixed outside the walking route."
+      },
+      {
+        "zone": "rear hallway",
+        "role": "safe-background",
+        "statement": "closed classroom doors"
+      },
+      {
+        "zone": "right wall",
+        "role": "safe-background",
+        "statement": "wall-mounted bulletin frame with blank interior"
+      },
+      {
+        "zone": "left wall and alcove",
+        "role": "safe-background",
+        "statement": "janitor cart fully inside a side alcove"
+      }
+    ]
+  },
+  {
+    "sceneId": "scene.slip.lobby-raised-mat",
+    "opaqueAssetId": "s002",
+    "neutralPreAnswer": {
+      "overview": "A school entrance lobby with double doors, a floor mat, a wall bench, and an umbrella stand.",
+      "zones": [
+        {
+          "order": 1,
+          "label": "entrance doors",
+          "description": "The entrance doors is visible within the entrance/lobby setting."
+        },
+        {
+          "order": 2,
+          "label": "left wall and bench",
+          "description": "The left wall and bench is visible within the entrance/lobby setting."
+        },
+        {
+          "order": 3,
+          "label": "central mat and floor",
+          "description": "The central mat and floor is visible within the entrance/lobby setting."
+        },
+        {
+          "order": 4,
+          "label": "right-side stand",
+          "description": "The right-side stand is visible within the entrance/lobby setting."
+        }
+      ],
+      "policy": "Does not state target or decoy counts and does not identify the answer."
+    },
+    "fullPostAnswer": {
+      "claim": "A raised or buckled floor-mat edge in a walking route is a trip condition needing correction.",
+      "targets": [
+        {
+          "condition": "one entrance-mat corner visibly curled several inches upward in the walking route",
+          "correction": "flatten, reposition, or remove the mat so the walking surface is even",
+          "sourceIds": [
+            "OSHA_FLOOR"
+          ]
+        }
+      ],
+      "decoys": [
+        {
+          "condition": "stable umbrella stand outside the travel lane",
+          "safeBecause": "it is upright and outside the route"
+        }
+      ],
+      "safeBackground": [
+        "closed double entrance doors",
+        "dry tile floor",
+        "bench set against wall"
+      ],
+      "sources": [
+        {
+          "id": "OSHA_FLOOR",
+          "title": "29 CFR 1910.22 General requirements",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.22",
+          "locator": "1910.22(a)(1)-(3)",
+          "scope": "Walking-working surfaces must be kept clean, orderly, sanitary, and free of hazards such as sharp or protruding objects, loose boards, corrosion, leaks, spills, snow, and ice."
+        }
+      ]
+    },
+    "nonvisualZonedEquivalent": [
+      {
+        "zone": "central mat and floor",
+        "role": "target",
+        "statement": "one entrance-mat corner visibly curled several inches upward in the walking route"
+      },
+      {
+        "zone": "right-side stand",
+        "role": "decoy",
+        "statement": "stable umbrella stand outside the travel lane; it is upright and outside the route."
+      },
+      {
+        "zone": "entrance doors",
+        "role": "safe-background",
+        "statement": "closed double entrance doors"
+      },
+      {
+        "zone": "central mat and floor",
+        "role": "safe-background",
+        "statement": "dry tile floor"
+      },
+      {
+        "zone": "left wall and bench",
+        "role": "safe-background",
+        "statement": "bench set against wall"
+      }
+    ]
+  },
+  {
+    "sceneId": "scene.egress.stairwell-boxes",
+    "opaqueAssetId": "s003",
+    "neutralPreAnswer": {
+      "overview": "An enclosed school stairwell with two flights, a landing, wall handrails, and several boxes.",
+      "zones": [
+        {
+          "order": 1,
+          "label": "upper flight",
+          "description": "The upper flight is visible within the stairwell setting."
+        },
+        {
+          "order": 2,
+          "label": "central landing",
+          "description": "The central landing is visible within the stairwell setting."
+        },
+        {
+          "order": 3,
+          "label": "lower flight",
+          "description": "The lower flight is visible within the stairwell setting."
+        },
+        {
+          "order": 4,
+          "label": "wall fixtures",
+          "description": "The wall fixtures is visible within the stairwell setting."
+        }
+      ],
+      "policy": "Does not state target or decoy counts and does not identify the answer."
+    },
+    "fullPostAnswer": {
+      "claim": "Exit routes must remain free and unobstructed.",
+      "targets": [
+        {
+          "condition": "several closed boxes occupy most of the stair landing and narrow the route",
+          "correction": "remove stored material from the exit route",
+          "sourceIds": [
+            "OSHA_EGRESS"
+          ]
+        }
+      ],
+      "decoys": [
+        {
+          "condition": "handrail securely mounted along the wall",
+          "safeBecause": "it is a normal stair safety feature"
+        }
+      ],
+      "safeBackground": [
+        "dry intact steps",
+        "closed utility door outside the stair path",
+        "ceiling light fixture"
+      ],
+      "sources": [
+        {
+          "id": "OSHA_EGRESS",
+          "title": "29 CFR 1910.37 Exit routes",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.37",
+          "locator": "1910.37(a)(3)",
+          "scope": "Exit routes must be free and unobstructed."
+        }
+      ]
+    },
+    "nonvisualZonedEquivalent": [
+      {
+        "zone": "central landing",
+        "role": "target",
+        "statement": "several closed boxes occupy most of the stair landing and narrow the route"
+      },
+      {
+        "zone": "wall fixtures",
+        "role": "decoy",
+        "statement": "handrail securely mounted along the wall; it is a normal stair safety feature."
+      },
+      {
+        "zone": "upper and lower flights",
+        "role": "safe-background",
+        "statement": "dry intact steps"
+      },
+      {
+        "zone": "lower level",
+        "role": "safe-background",
+        "statement": "closed utility door outside the stair path"
+      },
+      {
+        "zone": "ceiling",
+        "role": "safe-background",
+        "statement": "ceiling light fixture"
+      }
+    ]
+  },
+  {
+    "sceneId": "scene.egress.gym-exit-obstruction",
+    "opaqueAssetId": "s004",
+    "neutralPreAnswer": {
+      "overview": "A school gym with a clear court, rear double doors, folded mats, and equipment storage.",
+      "zones": [
+        {
+          "order": 1,
+          "label": "left court storage",
+          "description": "The left court storage is visible within the gym setting."
+        },
+        {
+          "order": 2,
+          "label": "rear doors and equipment",
+          "description": "The rear doors and equipment is visible within the gym setting."
+        },
+        {
+          "order": 3,
+          "label": "central court",
+          "description": "The central court is visible within the gym setting."
+        },
+        {
+          "order": 4,
+          "label": "right wall storage",
+          "description": "The right wall storage is visible within the gym setting."
+        }
+      ],
+      "policy": "Does not state target or decoy counts and does not identify the answer."
+    },
+    "fullPostAnswer": {
+      "claim": "An exit route and exit doorway must remain unobstructed.",
+      "targets": [
+        {
+          "condition": "folded gym mats and an equipment cart parked directly in front of double exit doors",
+          "correction": "move equipment away and restore the full route",
+          "sourceIds": [
+            "OSHA_EGRESS"
+          ]
+        }
+      ],
+      "decoys": [
+        {
+          "condition": "basketball rack parked against a side wall",
+          "safeBecause": "it is stable and outside the exit path"
+        }
+      ],
+      "safeBackground": [
+        "clear court floor",
+        "retracted bleachers",
+        "wall padding"
+      ],
+      "sources": [
+        {
+          "id": "OSHA_EGRESS",
+          "title": "29 CFR 1910.37 Exit routes",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.37",
+          "locator": "1910.37(a)(3)",
+          "scope": "Exit routes must be free and unobstructed."
+        }
+      ]
+    },
+    "nonvisualZonedEquivalent": [
+      {
+        "zone": "rear doors and equipment",
+        "role": "target",
+        "statement": "folded gym mats and an equipment cart parked directly in front of double exit doors"
+      },
+      {
+        "zone": "right wall storage",
+        "role": "decoy",
+        "statement": "basketball rack parked against a side wall; it is stable and outside the exit path."
+      },
+      {
+        "zone": "central court",
+        "role": "safe-background",
+        "statement": "clear court floor"
+      },
+      {
+        "zone": "left court storage",
+        "role": "safe-background",
+        "statement": "retracted bleachers"
+      },
+      {
+        "zone": "rear wall",
+        "role": "safe-background",
+        "statement": "wall padding"
+      }
+    ]
+  },
+  {
+    "sceneId": "scene.chemical.closet-unidentified-container",
+    "opaqueAssetId": "s005",
+    "neutralPreAnswer": {
+      "overview": "A custodial closet with shelving, a service sink, stored containers, a spray bottle, and secured cleaning tools.",
+      "zones": [
+        {
+          "order": 1,
+          "label": "upper wall and shelving",
+          "description": "The upper wall and shelving is visible within the custodial closet setting."
+        },
+        {
+          "order": 2,
+          "label": "middle shelving",
+          "description": "The middle shelving is visible within the custodial closet setting."
+        },
+        {
+          "order": 3,
+          "label": "service sink",
+          "description": "The service sink is visible within the custodial closet setting."
+        },
+        {
+          "order": 4,
+          "label": "lower floor",
+          "description": "The lower floor is visible within the custodial closet setting."
+        }
+      ],
+      "policy": "Does not state target or decoy counts and does not identify the answer."
+    },
+    "fullPostAnswer": {
+      "claim": "A workplace container holding a transferred chemical must be identified.",
+      "targets": [
+        {
+          "condition": "plain secondary spray bottle holding liquid with a completely blank smooth body and no identification area",
+          "correction": "identify the working container according to the hazard-communication program",
+          "sourceIds": [
+            "OSHA_HAZCOM"
+          ]
+        }
+      ],
+      "decoys": [
+        {
+          "condition": "closed generic supply jugs stored upright in a low containment tray",
+          "safeBecause": "they are closed, upright, and contained; their exact contents are not inferred"
+        }
+      ],
+      "safeBackground": [
+        "mop held in wall rack",
+        "empty service sink",
+        "dry floor"
+      ],
+      "sources": [
+        {
+          "id": "OSHA_HAZCOM",
+          "title": "29 CFR 1910.1200 Hazard Communication",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.1200",
+          "locator": "1910.1200(f)(6)",
+          "scope": "Workplace containers of hazardous chemicals must be identified; brief does not infer a chemical identity from appearance."
+        }
+      ]
+    },
+    "nonvisualZonedEquivalent": [
+      {
+        "zone": "middle shelving",
+        "role": "target",
+        "statement": "plain secondary spray bottle holding liquid with a completely blank smooth body and no identification area"
+      },
+      {
+        "zone": "upper and lower shelving",
+        "role": "decoy",
+        "statement": "closed generic supply jugs stored upright in a low containment tray; they are closed, upright, and contained; their exact contents are not inferred."
+      },
+      {
+        "zone": "upper wall",
+        "role": "safe-background",
+        "statement": "mop held in wall rack"
+      },
+      {
+        "zone": "service sink",
+        "role": "safe-background",
+        "statement": "empty service sink"
+      },
+      {
+        "zone": "lower floor",
+        "role": "safe-background",
+        "statement": "dry floor"
+      }
+    ]
+  },
+  {
+    "sceneId": "scene.chemical.kitchen-chemicals-over-foodware",
+    "opaqueAssetId": "s006",
+    "neutralPreAnswer": {
+      "overview": "A school kitchen storage area with open metal shelving, closed marked supply bottles, uncovered bowls and utensils, and inverted pans.",
+      "zones": [
+        {
+          "order": 1,
+          "label": "upper bottle shelf",
+          "description": "The upper bottle shelf is visible within the kitchen setting."
+        },
+        {
+          "order": 2,
+          "label": "center bowl-and-utensil shelf",
+          "description": "The center bowl-and-utensil shelf is visible within the kitchen setting."
+        },
+        {
+          "order": 3,
+          "label": "lower bowl shelf",
+          "description": "The lower bowl shelf is visible within the kitchen setting."
+        },
+        {
+          "order": 4,
+          "label": "separate pan rack",
+          "description": "The separate pan rack is visible within the kitchen setting."
+        }
+      ],
+      "policy": "Does not state target or decoy counts and does not identify the answer."
+    },
+    "fullPostAnswer": {
+      "claim": "Cleaning chemicals must be stored so they cannot contaminate food, utensils, or food-contact articles, including not above them.",
+      "targets": [
+        {
+          "condition": "closed cleaning-supply bottles stored on an open shelf directly above uncovered clean bowls and food-preparation utensils",
+          "correction": "separate chemical storage from and below/protected away from food and utensils",
+          "sourceIds": [
+            "FDA_FOOD"
+          ]
+        }
+      ],
+      "decoys": [
+        {
+          "condition": "clean pans stored inverted on a separate rack",
+          "safeBecause": "they are protected and away from chemical storage"
+        }
+      ],
+      "safeBackground": [
+        "stable open metal shelving",
+        "clean tiled wall",
+        "dry floor"
+      ],
+      "sources": [
+        {
+          "id": "FDA_FOOD",
+          "title": "FDA Food Code 2022",
+          "url": "https://www.fda.gov/media/184685/download",
+          "locator": "7-201.11 Separation",
+          "scope": "Poisonous or toxic materials must be stored so they cannot contaminate food, equipment, utensils, linens, or single-use articles, including not above them. Model-code scope is recorded and not represented as an exam weighting."
+        }
+      ]
+    },
+    "nonvisualZonedEquivalent": [
+      {
+        "zone": "upper and center shelves",
+        "role": "target",
+        "statement": "closed cleaning-supply bottles stored on an open shelf directly above uncovered clean bowls and food-preparation utensils"
+      },
+      {
+        "zone": "separate pan rack",
+        "role": "decoy",
+        "statement": "clean pans stored inverted on a separate rack; they are protected and away from chemical storage."
+      },
+      {
+        "zone": "both shelving units",
+        "role": "safe-background",
+        "statement": "stable open metal shelving"
+      },
+      {
+        "zone": "rear tiled wall",
+        "role": "safe-background",
+        "statement": "clean tiled wall"
+      },
+      {
+        "zone": "lower floor",
+        "role": "safe-background",
+        "statement": "dry floor"
+      }
+    ]
+  },
+  {
+    "sceneId": "scene.electrical.utility-damaged-cord",
+    "opaqueAssetId": "s007",
+    "neutralPreAnswer": {
+      "overview": "A dry mechanical room with a portable work light, wall storage, a connected power cord, and a coiled spare cord.",
+      "zones": [
+        {
+          "order": 1,
+          "label": "left wall storage",
+          "description": "The left wall storage is visible within the mechanical/utility area setting."
+        },
+        {
+          "order": 2,
+          "label": "center work light",
+          "description": "The center work light is visible within the mechanical/utility area setting."
+        },
+        {
+          "order": 3,
+          "label": "right wall connection",
+          "description": "The right wall connection is visible within the mechanical/utility area setting."
+        },
+        {
+          "order": 4,
+          "label": "lower floor",
+          "description": "The lower floor is visible within the mechanical/utility area setting."
+        }
+      ],
+      "policy": "Does not state target or decoy counts and does not identify the answer."
+    },
+    "fullPostAnswer": {
+      "claim": "Cord-and-plug equipment with damage that may expose a worker to injury must be removed from service.",
+      "targets": [
+        {
+          "condition": "power-cord outer jacket split open near the plug with inner conductors visible while connected to a wall receptacle",
+          "correction": "disconnect and remove the damaged item from service for proper repair/testing",
+          "sourceIds": [
+            "OSHA_ELEC"
+          ]
+        }
+      ],
+      "decoys": [
+        {
+          "condition": "unused coiled extension cord hanging on a proper wall hook",
+          "safeBecause": "it is undamaged and stored without crossing a route"
+        }
+      ],
+      "safeBackground": [
+        "closed utility cabinet",
+        "dry floor",
+        "portable work light standing upright"
+      ],
+      "sources": [
+        {
+          "id": "OSHA_ELEC",
+          "title": "29 CFR 1910.334 Use of equipment",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.334",
+          "locator": "1910.334(a)(2) and (a)(4)",
+          "scope": "Damaged cord-and-plug equipment must be removed from service; equipment used where water contact is likely must be approved for that location."
+        }
+      ]
+    },
+    "nonvisualZonedEquivalent": [
+      {
+        "zone": "right wall connection",
+        "role": "target",
+        "statement": "power-cord outer jacket split open near the plug with inner conductors visible while connected to a wall receptacle"
+      },
+      {
+        "zone": "left wall storage",
+        "role": "decoy",
+        "statement": "unused coiled extension cord hanging on a proper wall hook; it is undamaged and stored without crossing a route."
+      },
+      {
+        "zone": "left wall storage",
+        "role": "safe-background",
+        "statement": "closed utility cabinet"
+      },
+      {
+        "zone": "lower floor",
+        "role": "safe-background",
+        "statement": "dry floor"
+      },
+      {
+        "zone": "center work light",
+        "role": "safe-background",
+        "statement": "portable work light standing upright"
+      }
+    ]
+  },
+  {
+    "sceneId": "scene.electrical.classroom-wet-power-strip",
+    "opaqueAssetId": "s008",
+    "neutralPreAnswer": {
+      "overview": "A classroom with orderly desks, a teacher table, a dry aisle, and electrical equipment near one wall.",
+      "zones": [
+        {
+          "order": 1,
+          "label": "teacher desk",
+          "description": "The teacher desk is visible within the classroom setting."
+        },
+        {
+          "order": 2,
+          "label": "student desks",
+          "description": "The student desks is visible within the classroom setting."
+        },
+        {
+          "order": 3,
+          "label": "right wall equipment",
+          "description": "The right wall equipment is visible within the classroom setting."
+        },
+        {
+          "order": 4,
+          "label": "central aisle",
+          "description": "The central aisle is visible within the classroom setting."
+        }
+      ],
+      "policy": "Does not state target or decoy counts and does not identify the answer."
+    },
+    "fullPostAnswer": {
+      "claim": "Ordinary portable electrical equipment must not be used in a wet conductive location unless approved for that location.",
+      "targets": [
+        {
+          "condition": "connected power strip lying within a shallow puddle beside a classroom wall",
+          "correction": "keep ordinary cord-and-plug equipment out of water and remove wet/damaged equipment from use",
+          "sourceIds": [
+            "OSHA_ELEC"
+          ]
+        }
+      ],
+      "decoys": [
+        {
+          "condition": "closed laptop on a dry teacher desk",
+          "safeBecause": "it is dry, stable, and not part of the wet connection"
+        }
+      ],
+      "safeBackground": [
+        "chairs pushed under desks",
+        "dry central aisle",
+        "closed window"
+      ],
+      "sources": [
+        {
+          "id": "OSHA_ELEC",
+          "title": "29 CFR 1910.334 Use of equipment",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.334",
+          "locator": "1910.334(a)(2) and (a)(4)",
+          "scope": "Damaged cord-and-plug equipment must be removed from service; equipment used where water contact is likely must be approved for that location."
+        }
+      ]
+    },
+    "nonvisualZonedEquivalent": [
+      {
+        "zone": "right wall equipment",
+        "role": "target",
+        "statement": "connected power strip lying within a shallow puddle beside a classroom wall"
+      },
+      {
+        "zone": "teacher desk",
+        "role": "decoy",
+        "statement": "closed laptop on a dry teacher desk; it is dry, stable, and not part of the wet connection."
+      },
+      {
+        "zone": "student desks",
+        "role": "safe-background",
+        "statement": "chairs pushed under desks"
+      },
+      {
+        "zone": "central aisle",
+        "role": "safe-background",
+        "statement": "dry central aisle"
+      },
+      {
+        "zone": "left wall window",
+        "role": "safe-background",
+        "statement": "closed window"
+      }
+    ]
+  },
+  {
+    "sceneId": "scene.sharps.restroom-broken-glass",
+    "opaqueAssetId": "s009",
+    "neutralPreAnswer": {
+      "overview": "A school restroom with a sink, intact wall mirror, stall, waste bin, and several objects on the tile floor.",
+      "zones": [
+        {
+          "order": 1,
+          "label": "sink and mirror",
+          "description": "The sink and mirror is visible within the restroom setting."
+        },
+        {
+          "order": 2,
+          "label": "stall",
+          "description": "The stall is visible within the restroom setting."
+        },
+        {
+          "order": 3,
+          "label": "central floor",
+          "description": "The central floor is visible within the restroom setting."
+        },
+        {
+          "order": 4,
+          "label": "waste-bin side",
+          "description": "The waste-bin side is visible within the restroom setting."
+        }
+      ],
+      "policy": "Does not state target or decoy counts and does not identify the answer."
+    },
+    "fullPostAnswer": {
+      "claim": "Walking-working surfaces must be kept free of sharp-object hazards.",
+      "targets": [
+        {
+          "condition": "several large broken glass shards exposed on the restroom floor",
+          "correction": "isolate and remove sharp debris with suitable tools/PPE and containment",
+          "sourceIds": [
+            "OSHA_FLOOR"
+          ]
+        }
+      ],
+      "decoys": [
+        {
+          "condition": "intact wall mirror with rounded frame",
+          "safeBecause": "it is undamaged and securely mounted"
+        }
+      ],
+      "safeBackground": [
+        "closed stall door",
+        "empty lidded waste bin",
+        "dry floor outside the shard area"
+      ],
+      "sources": [
+        {
+          "id": "OSHA_FLOOR",
+          "title": "29 CFR 1910.22 General requirements",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.22",
+          "locator": "1910.22(a)(1)-(3)",
+          "scope": "Walking-working surfaces must be kept clean, orderly, sanitary, and free of hazards such as sharp or protruding objects, loose boards, corrosion, leaks, spills, snow, and ice."
+        }
+      ]
+    },
+    "nonvisualZonedEquivalent": [
+      {
+        "zone": "central floor",
+        "role": "target",
+        "statement": "several large broken glass shards exposed on the restroom floor"
+      },
+      {
+        "zone": "sink and mirror",
+        "role": "decoy",
+        "statement": "intact wall mirror with rounded frame; it is undamaged and securely mounted."
+      },
+      {
+        "zone": "stall",
+        "role": "safe-background",
+        "statement": "closed stall door"
+      },
+      {
+        "zone": "waste-bin side",
+        "role": "safe-background",
+        "statement": "empty lidded waste bin"
+      },
+      {
+        "zone": "central floor outside the objects",
+        "role": "safe-background",
+        "statement": "dry floor outside the shard area"
+      }
+    ]
+  },
+  {
+    "sceneId": "scene.sharps.grounds-broken-bottle",
+    "opaqueAssetId": "s010",
+    "neutralPreAnswer": {
+      "overview": "An exterior school walkway beside a building, with a planting bed, a blank closed collection bin, and small objects near the pavement edge.",
+      "zones": [
+        {
+          "order": 1,
+          "label": "building and planting edge",
+          "description": "The building and planting edge is visible within the exterior/grounds setting."
+        },
+        {
+          "order": 2,
+          "label": "central walkway",
+          "description": "The central walkway is visible within the exterior/grounds setting."
+        },
+        {
+          "order": 3,
+          "label": "lower-left objects",
+          "description": "The lower-left objects is visible within the exterior/grounds setting."
+        },
+        {
+          "order": 4,
+          "label": "right-side collection pad",
+          "description": "The right-side collection pad is visible within the exterior/grounds setting."
+        }
+      ],
+      "policy": "Does not state target or decoy counts and does not identify the answer."
+    },
+    "fullPostAnswer": {
+      "claim": "Outdoor walking surfaces should be kept free of exposed sharp-object hazards.",
+      "targets": [
+        {
+          "condition": "broken bottle base and exposed shards beside a paved school walkway",
+          "correction": "secure the area and remove/contain sharp debris with suitable tools and PPE",
+          "sourceIds": [
+            "OSHA_FLOOR"
+          ]
+        }
+      ],
+      "decoys": [
+        {
+          "condition": "blank closed intact collection bin set on a concrete pad",
+          "safeBecause": "it is stable, closed, and outside the walking line"
+        }
+      ],
+      "safeBackground": [
+        "level dry walkway",
+        "trimmed planting bed",
+        "parked grounds cart outside path"
+      ],
+      "sources": [
+        {
+          "id": "OSHA_FLOOR",
+          "title": "29 CFR 1910.22 General requirements",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.22",
+          "locator": "1910.22(a)(1)-(3)",
+          "scope": "Walking-working surfaces must be kept clean, orderly, sanitary, and free of hazards such as sharp or protruding objects, loose boards, corrosion, leaks, spills, snow, and ice."
+        }
+      ]
+    },
+    "nonvisualZonedEquivalent": [
+      {
+        "zone": "lower-left objects",
+        "role": "target",
+        "statement": "broken bottle base and exposed shards beside a paved school walkway"
+      },
+      {
+        "zone": "right-side collection pad",
+        "role": "decoy",
+        "statement": "blank closed intact collection bin set on a concrete pad; it is stable, closed, and outside the walking line."
+      },
+      {
+        "zone": "central walkway",
+        "role": "safe-background",
+        "statement": "level dry walkway"
+      },
+      {
+        "zone": "building and planting edge",
+        "role": "safe-background",
+        "statement": "trimmed planting bed"
+      },
+      {
+        "zone": "right-side grass",
+        "role": "safe-background",
+        "statement": "parked grounds cart outside path"
+      }
+    ]
+  },
+  {
+    "sceneId": "scene.material.loading-unstable-stack",
+    "opaqueAssetId": "s011",
+    "neutralPreAnswer": {
+      "overview": "A school loading area with a platform dolly, a low pallet, a hand truck, boxes, and a loading door.",
+      "zones": [
+        {
+          "order": 1,
+          "label": "loading door",
+          "description": "The loading door is visible within the loading/service area setting."
+        },
+        {
+          "order": 2,
+          "label": "left dolly and boxes",
+          "description": "The left dolly and boxes is visible within the loading/service area setting."
+        },
+        {
+          "order": 3,
+          "label": "center pallet and boxes",
+          "description": "The center pallet and boxes is visible within the loading/service area setting."
+        },
+        {
+          "order": 4,
+          "label": "right wall storage",
+          "description": "The right wall storage is visible within the loading/service area setting."
+        }
+      ],
+      "policy": "Does not state target or decoy counts and does not identify the answer."
+    },
+    "fullPostAnswer": {
+      "claim": "Material should not be moved or stored in an unstable arrangement likely to fall.",
+      "targets": [
+        {
+          "condition": "very tall box stack on a small platform dolly, visibly leaning with large heavy boxes above smaller crushed boxes",
+          "correction": "restack a stable load within equipment capacity or split the load/use suitable assistance",
+          "sourceIds": [
+            "NIOSH_MMH"
+          ]
+        }
+      ],
+      "decoys": [
+        {
+          "condition": "separate low pallet with evenly aligned boxes",
+          "safeBecause": "the stack is low, supported, and stable as depicted"
+        }
+      ],
+      "safeBackground": [
+        "clear loading door",
+        "parked hand truck upright against wall",
+        "dry floor"
+      ],
+      "sources": [
+        {
+          "id": "NIOSH_MMH",
+          "title": "NIOSH Ergonomic Guidelines for Manual Material Handling",
+          "url": "https://www.cdc.gov/niosh/docs/2007-131/pdfs/2007-131.pdf",
+          "locator": "material-handling risk factors and mechanical-aid guidance",
+          "scope": "Use source-backed broad handling and visibility concepts; do not imply one universal lifting technique."
+        }
+      ]
+    },
+    "nonvisualZonedEquivalent": [
+      {
+        "zone": "left dolly and boxes",
+        "role": "target",
+        "statement": "very tall box stack on a small platform dolly, visibly leaning with large heavy boxes above smaller crushed boxes"
+      },
+      {
+        "zone": "center pallet and boxes",
+        "role": "decoy",
+        "statement": "separate low pallet with evenly aligned boxes; the stack is low, supported, and stable as depicted."
+      },
+      {
+        "zone": "loading door",
+        "role": "safe-background",
+        "statement": "clear loading door"
+      },
+      {
+        "zone": "right wall storage",
+        "role": "safe-background",
+        "statement": "parked hand truck upright against wall"
+      },
+      {
+        "zone": "lower floor",
+        "role": "safe-background",
+        "statement": "dry floor"
+      }
+    ]
+  },
+  {
+    "sceneId": "scene.material.cafeteria-obscured-vision",
+    "opaqueAssetId": "s012",
+    "neutralPreAnswer": {
+      "overview": "A cafeteria with orderly tables, a clear aisle, a person carrying boxes, and an empty platform cart.",
+      "zones": [
+        {
+          "order": 1,
+          "label": "serving counter",
+          "description": "The serving counter is visible within the cafeteria setting."
+        },
+        {
+          "order": 2,
+          "label": "left dining tables",
+          "description": "The left dining tables is visible within the cafeteria setting."
+        },
+        {
+          "order": 3,
+          "label": "center person and boxes",
+          "description": "The center person and boxes is visible within the cafeteria setting."
+        },
+        {
+          "order": 4,
+          "label": "right wall cart",
+          "description": "The right wall cart is visible within the cafeteria setting."
+        }
+      ],
+      "policy": "Does not state target or decoy counts and does not identify the answer."
+    },
+    "fullPostAnswer": {
+      "claim": "A load should not be carried in a way that obstructs the carrier's view of the route; mechanical aid or a smaller load should be used where appropriate.",
+      "targets": [
+        {
+          "condition": "person carrying a tall stack of closed boxes above eye level so the route ahead is hidden",
+          "correction": "reduce the load or use the nearby suitable cart/assistance while keeping the route visible",
+          "sourceIds": [
+            "NIOSH_MMH"
+          ]
+        }
+      ],
+      "decoys": [
+        {
+          "condition": "empty platform cart parked parallel to a wall",
+          "safeBecause": "it is stable and outside the walking route"
+        }
+      ],
+      "safeBackground": [
+        "tables with chairs tucked in",
+        "clear dry aisle",
+        "closed serving counter"
+      ],
+      "sources": [
+        {
+          "id": "NIOSH_MMH",
+          "title": "NIOSH Ergonomic Guidelines for Manual Material Handling",
+          "url": "https://www.cdc.gov/niosh/docs/2007-131/pdfs/2007-131.pdf",
+          "locator": "material-handling risk factors and mechanical-aid guidance",
+          "scope": "Use source-backed broad handling and visibility concepts; do not imply one universal lifting technique."
+        }
+      ]
+    },
+    "nonvisualZonedEquivalent": [
+      {
+        "zone": "center person and boxes",
+        "role": "target",
+        "statement": "person carrying a tall stack of closed boxes above eye level so the route ahead is hidden"
+      },
+      {
+        "zone": "right wall cart",
+        "role": "decoy",
+        "statement": "empty platform cart parked parallel to a wall; it is stable and outside the walking route."
+      },
+      {
+        "zone": "left dining tables",
+        "role": "safe-background",
+        "statement": "tables with chairs tucked in"
+      },
+      {
+        "zone": "central aisle",
+        "role": "safe-background",
+        "statement": "clear dry aisle"
+      },
+      {
+        "zone": "serving counter",
+        "role": "safe-background",
+        "statement": "closed serving counter"
+      }
+    ]
+  },
+  {
+    "sceneId": "scene.biological.restroom-bare-hand-cleaning",
+    "opaqueAssetId": "s013",
+    "neutralPreAnswer": {
+      "overview": "A restroom with a sink, cleaning cart, toilet, a person holding a cloth, and a toilet brush in a holder.",
+      "zones": [
+        {
+          "order": 1,
+          "label": "sink",
+          "description": "The sink is visible within the restroom setting."
+        },
+        {
+          "order": 2,
+          "label": "right cleaning cart",
+          "description": "The right cleaning cart is visible within the restroom setting."
+        },
+        {
+          "order": 3,
+          "label": "center person and fixture",
+          "description": "The center person and fixture is visible within the restroom setting."
+        },
+        {
+          "order": 4,
+          "label": "right tool holder and floor",
+          "description": "The right tool holder and floor is visible within the restroom setting."
+        }
+      ],
+      "policy": "Does not state target or decoy counts and does not identify the answer."
+    },
+    "fullPostAnswer": {
+      "claim": "Protective gloves and task-appropriate PPE should be used when cleaning a potentially infectious body-fluid or toilet-area contamination condition.",
+      "targets": [
+        {
+          "condition": "person's visibly bare ungloved hand holding a cloth inside a toilet bowl during cleaning",
+          "correction": "stop and use task-appropriate protective gloves/PPE and the facility procedure",
+          "sourceIds": [
+            "CDC_BODY_FLUID"
+          ]
+        }
+      ],
+      "decoys": [
+        {
+          "condition": "unused toilet brush standing upright in its holder",
+          "safeBecause": "it is contained and not being handled"
+        }
+      ],
+      "safeBackground": [
+        "dry floor",
+        "closed cleaning bottle on cart",
+        "empty sink"
+      ],
+      "sources": [
+        {
+          "id": "CDC_BODY_FLUID",
+          "title": "CDC Infection Control — Summary of Recommendations",
+          "url": "https://www.cdc.gov/infection-control/hcp/environmental-control/summary-recommendations.html",
+          "locator": "E.II Cleaning Spills of Blood and Body Substances",
+          "scope": "Promptly clean and decontaminate spills using protective gloves and task-appropriate PPE. Healthcare guidance is used only for the broad exposure-control concept."
+        }
+      ]
+    },
+    "nonvisualZonedEquivalent": [
+      {
+        "zone": "center person and fixture",
+        "role": "target",
+        "statement": "person's visibly bare ungloved hand holding a cloth inside a toilet bowl during cleaning"
+      },
+      {
+        "zone": "right tool holder",
+        "role": "decoy",
+        "statement": "unused toilet brush standing upright in its holder; it is contained and not being handled."
+      },
+      {
+        "zone": "lower floor",
+        "role": "safe-background",
+        "statement": "dry floor"
+      },
+      {
+        "zone": "right cleaning cart",
+        "role": "safe-background",
+        "statement": "closed cleaning bottle on cart"
+      },
+      {
+        "zone": "sink",
+        "role": "safe-background",
+        "statement": "empty sink"
+      }
+    ]
+  },
+  {
+    "sceneId": "scene.biological.cafeteria-mop-on-table",
+    "opaqueAssetId": "s014",
+    "neutralPreAnswer": {
+      "overview": "A cafeteria with dining tables, tucked chairs, a janitor cart, a mop and bucket, and a folded cloth in a storage bin.",
+      "zones": [
+        {
+          "order": 1,
+          "label": "left dining area",
+          "description": "The left dining area is visible within the cafeteria setting."
+        },
+        {
+          "order": 2,
+          "label": "central table and mop",
+          "description": "The central table and mop is visible within the cafeteria setting."
+        },
+        {
+          "order": 3,
+          "label": "right janitor cart",
+          "description": "The right janitor cart is visible within the cafeteria setting."
+        },
+        {
+          "order": 4,
+          "label": "rear serving area",
+          "description": "The rear serving area is visible within the cafeteria setting."
+        }
+      ],
+      "policy": "Does not state target or decoy counts and does not identify the answer."
+    },
+    "fullPostAnswer": {
+      "claim": "A used floor-cleaning implement should not contact a food or dining surface because cleaning materials can transfer contamination.",
+      "targets": [
+        {
+          "condition": "visibly used damp string-mop head laid directly across the top of a cafeteria dining table",
+          "correction": "keep floor-cleaning tools away from food-contact/dining surfaces and clean/sanitize affected surfaces according to procedure",
+          "sourceIds": [
+            "FDA_WIPING"
+          ]
+        }
+      ],
+      "decoys": [
+        {
+          "condition": "clean folded microfiber cloth stored inside a closed cart bin",
+          "safeBecause": "it is contained and separated from surfaces"
+        }
+      ],
+      "safeBackground": [
+        "chairs tucked under other tables",
+        "mop bucket upright on cart",
+        "dry floor"
+      ],
+      "sources": [
+        {
+          "id": "FDA_WIPING",
+          "title": "FDA Allergen Removal and Transfer Using Wiping and Cleaning Methods",
+          "url": "https://www.fda.gov/food/retail-food-protection/allergen-removal-and-transfer-using-wiping-and-cleaning-methods-retail-food-establishments",
+          "locator": "Key findings",
+          "scope": "Used wiping materials can transfer contamination; full cleaning minimizes transfer. The scene uses only the broad food-contact cross-contamination concept."
+        }
+      ]
+    },
+    "nonvisualZonedEquivalent": [
+      {
+        "zone": "central table and mop",
+        "role": "target",
+        "statement": "visibly used damp string-mop head laid directly across the top of a cafeteria dining table"
+      },
+      {
+        "zone": "right janitor cart cabinet",
+        "role": "decoy",
+        "statement": "clean folded microfiber cloth stored inside a closed cart bin; it is contained and separated from surfaces."
+      },
+      {
+        "zone": "left and rear dining area",
+        "role": "safe-background",
+        "statement": "chairs tucked under other tables"
+      },
+      {
+        "zone": "right janitor cart",
+        "role": "safe-background",
+        "statement": "mop bucket upright on cart"
+      },
+      {
+        "zone": "lower floor",
+        "role": "safe-background",
+        "statement": "dry floor"
+      }
+    ]
+  },
+  {
+    "sceneId": "scene.machine.gym-unguarded-fan",
+    "opaqueAssetId": "s015",
+    "neutralPreAnswer": {
+      "overview": "A school gym with two portable floor fans, folded bleachers, wall padding, and a clear court.",
+      "zones": [
+        {
+          "order": 1,
+          "label": "left wall fan",
+          "description": "The left wall fan is visible within the gym setting."
+        },
+        {
+          "order": 2,
+          "label": "central court",
+          "description": "The central court is visible within the gym setting."
+        },
+        {
+          "order": 3,
+          "label": "rear wall fan",
+          "description": "The rear wall fan is visible within the gym setting."
+        },
+        {
+          "order": 4,
+          "label": "rear bleachers",
+          "description": "The rear bleachers is visible within the gym setting."
+        }
+      ],
+      "policy": "Does not state target or decoy counts and does not identify the answer."
+    },
+    "fullPostAnswer": {
+      "claim": "A floor-level portable fan must have a guard over exposed blades.",
+      "targets": [
+        {
+          "condition": "portable floor fan connected to power with its entire front protective grille missing and blades fully exposed",
+          "correction": "remove the fan from service until an adequate secured guard is present",
+          "sourceIds": [
+            "OSHA_GUARD"
+          ]
+        }
+      ],
+      "decoys": [
+        {
+          "condition": "second portable fan with intact close-spaced front and rear guards, unplugged and stored against wall",
+          "safeBecause": "its blades are guarded and it is stored outside the route"
+        }
+      ],
+      "safeBackground": [
+        "clear court floor",
+        "folded bleachers",
+        "wall padding"
+      ],
+      "sources": [
+        {
+          "id": "OSHA_GUARD",
+          "title": "29 CFR 1910.212 General requirements for all machines",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.212",
+          "locator": "1910.212(a)(1), (a)(3), and (a)(5)",
+          "scope": "Moving parts and exposed fan blades below seven feet require guarding; portable power tools are included among machines commonly requiring point-of-operation guarding."
+        }
+      ]
+    },
+    "nonvisualZonedEquivalent": [
+      {
+        "zone": "left wall fan",
+        "role": "target",
+        "statement": "portable floor fan connected to power with its entire front protective grille missing and blades fully exposed"
+      },
+      {
+        "zone": "rear wall fan",
+        "role": "decoy",
+        "statement": "second portable fan with intact close-spaced front and rear guards, unplugged and stored against wall; its blades are guarded and it is stored outside the route."
+      },
+      {
+        "zone": "central court",
+        "role": "safe-background",
+        "statement": "clear court floor"
+      },
+      {
+        "zone": "rear bleachers",
+        "role": "safe-background",
+        "statement": "folded bleachers"
+      },
+      {
+        "zone": "wall padding",
+        "role": "safe-background",
+        "statement": "wall padding"
+      }
+    ]
+  },
+  {
+    "sceneId": "scene.machine.utility-saw-guard",
+    "opaqueAssetId": "s016",
+    "neutralPreAnswer": {
+      "overview": "A mechanical-room workbench with a portable circular saw, a disconnected plug, wall tool storage, and an intact drill in a cradle.",
+      "zones": [
+        {
+          "order": 1,
+          "label": "left wall tool storage",
+          "description": "The left wall tool storage is visible within the mechanical/utility area setting."
+        },
+        {
+          "order": 2,
+          "label": "left workbench",
+          "description": "The left workbench is visible within the mechanical/utility area setting."
+        },
+        {
+          "order": 3,
+          "label": "center-right saw",
+          "description": "The center-right saw is visible within the mechanical/utility area setting."
+        },
+        {
+          "order": 4,
+          "label": "lower area",
+          "description": "The lower area is visible within the mechanical/utility area setting."
+        }
+      ],
+      "policy": "Does not state target or decoy counts and does not identify the answer."
+    },
+    "fullPostAnswer": {
+      "claim": "A portable power saw whose point of operation exposes a person to injury requires guarding; a jammed-retracted lower blade guard is a condition needing correction.",
+      "targets": [
+        {
+          "condition": "unplugged portable circular saw resting stably on its motor-housing side on a workbench with its lower blade guard visibly jammed fully retracted, leaving most of the blade exposed above and clear of the solid tabletop",
+          "correction": "remove the tool from service until the guard functions correctly",
+          "sourceIds": [
+            "OSHA_GUARD"
+          ]
+        }
+      ],
+      "decoys": [
+        {
+          "condition": "unplugged drill secured in a fitted wall cradle with its cord contained",
+          "safeBecause": "it is intact and securely stored"
+        }
+      ],
+      "safeBackground": [
+        "clear workbench around the saw",
+        "saw power plug visibly disconnected and resting on bench",
+        "dry floor"
+      ],
+      "sources": [
+        {
+          "id": "OSHA_GUARD",
+          "title": "29 CFR 1910.212 General requirements for all machines",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.212",
+          "locator": "1910.212(a)(1), (a)(3), and (a)(5)",
+          "scope": "Moving parts and exposed fan blades below seven feet require guarding; portable power tools are included among machines commonly requiring point-of-operation guarding."
+        }
+      ]
+    },
+    "nonvisualZonedEquivalent": [
+      {
+        "zone": "center-right saw",
+        "role": "target",
+        "statement": "unplugged portable circular saw resting stably on its motor-housing side on a workbench with its lower blade guard visibly jammed fully retracted, leaving most of the blade exposed above and clear of the solid tabletop"
+      },
+      {
+        "zone": "left wall tool storage",
+        "role": "decoy",
+        "statement": "unplugged drill secured in a fitted wall cradle with its cord contained; it is intact and securely stored."
+      },
+      {
+        "zone": "left and center workbench",
+        "role": "safe-background",
+        "statement": "clear workbench around the saw"
+      },
+      {
+        "zone": "right workbench plug",
+        "role": "safe-background",
+        "statement": "saw power plug visibly disconnected and resting on bench"
+      },
+      {
+        "zone": "lower area",
+        "role": "safe-background",
+        "statement": "dry floor"
+      }
+    ]
+  },
+  {
+    "sceneId": "scene.zero.classroom-orderly",
+    "opaqueAssetId": "s017",
+    "neutralPreAnswer": {
+      "overview": "A classroom with desks, a wall-side ladder, a wall-edge cord channel, a portable fan, and a teacher cabinet.",
+      "zones": [
+        {
+          "order": 1,
+          "label": "teacher wall",
+          "description": "The teacher wall is visible within the classroom setting."
+        },
+        {
+          "order": 2,
+          "label": "student desks",
+          "description": "The student desks is visible within the classroom setting."
+        },
+        {
+          "order": 3,
+          "label": "right-side ladder",
+          "description": "The right-side ladder is visible within the classroom setting."
+        },
+        {
+          "order": 4,
+          "label": "wall-side cord and fan",
+          "description": "The wall-side cord and fan is visible within the classroom setting."
+        }
+      ],
+      "policy": "Does not state target or decoy counts and does not identify the answer."
+    },
+    "fullPostAnswer": {
+      "claim": "Zero-hazard control: all suspicious details are safe as depicted.",
+      "targets": [],
+      "decoys": [
+        {
+          "condition": "stepladder fully open on dry level floor with spreaders locked and no person on it",
+          "safeBecause": "it is stable, unused, and correctly opened"
+        },
+        {
+          "condition": "extension cord covered by a low-profile floor cord protector at the wall edge",
+          "safeBecause": "it is undamaged, secured, and outside the central route"
+        },
+        {
+          "condition": "portable fan with intact close-spaced guard",
+          "safeBecause": "the blades are fully guarded"
+        }
+      ],
+      "safeBackground": [
+        "chairs tucked under desks",
+        "dry unobstructed aisle",
+        "closed supply cabinet"
+      ],
+      "sources": [
+        {
+          "id": "OSHA_FLOOR",
+          "title": "29 CFR 1910.22 General requirements",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.22",
+          "locator": "1910.22(a)(1)-(3)",
+          "scope": "Walking-working surfaces must be kept clean, orderly, sanitary, and free of hazards such as sharp or protruding objects, loose boards, corrosion, leaks, spills, snow, and ice."
+        },
+        {
+          "id": "OSHA_ELEC",
+          "title": "29 CFR 1910.334 Use of equipment",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.334",
+          "locator": "1910.334(a)(2) and (a)(4)",
+          "scope": "Damaged cord-and-plug equipment must be removed from service; equipment used where water contact is likely must be approved for that location."
+        },
+        {
+          "id": "OSHA_LADDER",
+          "title": "29 CFR 1910.23 Ladders",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.23",
+          "locator": "1910.23(b) and (c)",
+          "scope": "Ladders must be inspected, used only on stable and level surfaces unless secured/stabilized, and used according to their design."
+        }
+      ]
+    },
+    "nonvisualZonedEquivalent": [
+      {
+        "zone": "right-side ladder",
+        "role": "decoy",
+        "statement": "stepladder fully open on dry level floor with spreaders locked and no person on it; it is stable, unused, and correctly opened."
+      },
+      {
+        "zone": "wall-side cord",
+        "role": "decoy",
+        "statement": "extension cord covered by a low-profile floor cord protector at the wall edge; it is undamaged, secured, and outside the central route."
+      },
+      {
+        "zone": "wall-side fan",
+        "role": "decoy",
+        "statement": "portable fan with intact close-spaced guard; the blades are fully guarded."
+      },
+      {
+        "zone": "student desks",
+        "role": "safe-background",
+        "statement": "chairs tucked under desks"
+      },
+      {
+        "zone": "central aisle",
+        "role": "safe-background",
+        "statement": "dry unobstructed aisle"
+      },
+      {
+        "zone": "teacher wall",
+        "role": "safe-background",
+        "statement": "closed supply cabinet"
+      }
+    ]
+  },
+  {
+    "sceneId": "scene.zero.closet-contained",
+    "opaqueAssetId": "s018",
+    "neutralPreAnswer": {
+      "overview": "A custodial closet with shelving, bottles, long-handled tools, a service sink, a folded floor sign, and an open doorway.",
+      "zones": [
+        {
+          "order": 1,
+          "label": "left sink and cabinet",
+          "description": "The left sink and cabinet is visible within the custodial closet setting."
+        },
+        {
+          "order": 2,
+          "label": "center bottle shelf",
+          "description": "The center bottle shelf is visible within the custodial closet setting."
+        },
+        {
+          "order": 3,
+          "label": "center-right tool rack",
+          "description": "The center-right tool rack is visible within the custodial closet setting."
+        },
+        {
+          "order": 4,
+          "label": "right doorway and wall hook",
+          "description": "The right doorway and wall hook is visible within the custodial closet setting."
+        }
+      ],
+      "policy": "Does not state target or decoy counts and does not identify the answer."
+    },
+    "fullPostAnswer": {
+      "claim": "Zero-hazard control: stored supplies and tools are stable, contained, and separated as depicted.",
+      "targets": [],
+      "decoys": [
+        {
+          "condition": "closed supply bottles upright on a low shelf inside a containment tray",
+          "safeBecause": "they are closed, low, stable, and contained"
+        },
+        {
+          "condition": "mop and broom handles individually clipped into a wall rack",
+          "safeBecause": "they cannot fall into the route"
+        },
+        {
+          "condition": "folded wet-floor sign stored closed on a high wall hook",
+          "safeBecause": "it is secured storage, not a missing control for a dry floor"
+        }
+      ],
+      "safeBackground": [
+        "empty service sink",
+        "dry floor",
+        "clear doorway",
+        "closed lower cabinet"
+      ],
+      "sources": [
+        {
+          "id": "OSHA_FLOOR",
+          "title": "29 CFR 1910.22 General requirements",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.22",
+          "locator": "1910.22(a)(1)-(3)",
+          "scope": "Walking-working surfaces must be kept clean, orderly, sanitary, and free of hazards such as sharp or protruding objects, loose boards, corrosion, leaks, spills, snow, and ice."
+        },
+        {
+          "id": "OSHA_HAZCOM",
+          "title": "29 CFR 1910.1200 Hazard Communication",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.1200",
+          "locator": "1910.1200(f)(6)",
+          "scope": "Workplace containers of hazardous chemicals must be identified; brief does not infer a chemical identity from appearance."
+        }
+      ]
+    },
+    "nonvisualZonedEquivalent": [
+      {
+        "zone": "center bottle shelf",
+        "role": "decoy",
+        "statement": "closed supply bottles upright on a low shelf inside a containment tray; they are closed, low, stable, and contained."
+      },
+      {
+        "zone": "center-right tool rack",
+        "role": "decoy",
+        "statement": "mop and broom handles individually clipped into a wall rack; they cannot fall into the route."
+      },
+      {
+        "zone": "right wall hook",
+        "role": "decoy",
+        "statement": "folded wet-floor sign stored closed on a high wall hook; it is secured storage, not a missing control for a dry floor."
+      },
+      {
+        "zone": "left sink",
+        "role": "safe-background",
+        "statement": "empty service sink"
+      },
+      {
+        "zone": "lower floor",
+        "role": "safe-background",
+        "statement": "dry floor"
+      },
+      {
+        "zone": "right doorway",
+        "role": "safe-background",
+        "statement": "clear doorway"
+      },
+      {
+        "zone": "left cabinet",
+        "role": "safe-background",
+        "statement": "closed lower cabinet"
+      }
+    ]
+  }
+]

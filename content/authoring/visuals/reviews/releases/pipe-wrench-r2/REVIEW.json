@@ -1,0 +1,106 @@
+{
+  "reviewId": "pipe-wrench-r2-production-integration-2026-08-23",
+  "date": "2026-08-23",
+  "status": "pass",
+  "releaseBinding": {
+    "conceptId": "tool.pipe-wrench",
+    "opaqueAssetId": "t037",
+    "assetRevision": 2,
+    "candidateId": "v2t002-b5",
+    "candidatePath": "content/assets/candidates/visual-pilot-v2/v2t002-b5.png",
+    "candidateSha256": "334044fb3c25f5e14be4c47e0df0512961ce8dce08e568e0d91b021faa8f1e99",
+    "masterPath": "content/assets/masters/tools/t037.png",
+    "masterSha256": "334044fb3c25f5e14be4c47e0df0512961ce8dce08e568e0d91b021faa8f1e99",
+    "releaseRecord": "content/authoring/visuals/releases/tools.json#t037",
+    "sourceReview": "content/authoring/visuals/reviews/visual-pilot-v2/pipe-wrench-bakeoff/REVIEW.json"
+  },
+  "delivery": [
+    {
+      "profile": "phone",
+      "releasePath": "content/assets/derivatives/tools/t037-phone.png",
+      "publicPath": "/content/tools/t037-phone.png",
+      "dimensions": "320x320 RGB PNG",
+      "sha256": "1030db9971d5bcee354dda2a70317c90a1db963f5578827e6efbecb39ae20770"
+    },
+    {
+      "profile": "web",
+      "releasePath": "content/assets/derivatives/tools/t037-web.png",
+      "publicPath": "/content/tools/t037-web.png",
+      "dimensions": "960x960 RGB PNG",
+      "sha256": "9ce65a4d631109d876db256bda81c7218ede652abc3fb8b896e7ec7b32b89b5a"
+    },
+    {
+      "profile": "print",
+      "releasePath": "content/assets/derivatives/tools/t037-print.png",
+      "publicPath": "/content/tools/t037-print.png",
+      "dimensions": "640x640 grayscale PNG",
+      "sha256": "29ded9744a7fa55a405ad376c97a3a23de56b99c21d0286dd7ce34680d852ec6"
+    }
+  ],
+  "route": {
+    "url": "/atlas/tool/pipe-wrench/",
+    "builtHtmlPath": "apps/site/dist/atlas/tool/pipe-wrench/index.html",
+    "builtHtmlSha256": "da7821448399543bf5e19738130fa322dced47ca3e1069467f63067943041c9f",
+    "builtCssPath": "apps/site/dist/styles.css",
+    "builtCssSha256": "9bd04abff1702cfcd4d5bd095ab67a998eaf437d204945e33ada5b6dbdfaa7a5",
+    "behavior": "Static runtime-free atlas page uses responsive phone/web srcset and a print source. All three assets are included in the offline shell.",
+    "accessibility": "The atlas image has a concise feature description. The image is not included in the pre-answer question closure; the existing nonvisual item remains the equivalent scored path."
+  },
+  "renderEnvironment": {
+    "browser": "Google Chrome 151.0.7922.108",
+    "server": "Vite preview bound to 127.0.0.1:4173 against apps/site/dist",
+    "commonFlags": [
+      "--headless=new",
+      "--no-sandbox",
+      "--disable-gpu",
+      "--disable-dev-shm-usage",
+      "--hide-scrollbars",
+      "--run-all-compositor-stages-before-draw",
+      "--virtual-time-budget=1000",
+      "--font-render-hinting=none",
+      "--window-size=390,844"
+    ]
+  },
+  "renders": [
+    {
+      "density": 1,
+      "cssViewport": "390x844",
+      "rasterDimensions": "390x844",
+      "path": "content/authoring/visuals/reviews/releases/pipe-wrench-r2/atlas-mobile-390x844-dpr1.png",
+      "sha256": "71fa63d4ffc31ab8d2694cdccf812cbf069051d2a3f0212d55958adab64b3a51",
+      "verdict": "pass"
+    },
+    {
+      "density": 2,
+      "cssViewport": "390x844",
+      "rasterDimensions": "780x1688",
+      "path": "content/authoring/visuals/reviews/releases/pipe-wrench-r2/atlas-mobile-390x844-dpr2.png",
+      "sha256": "a33eb7869ad1b52755e79e223f3798b93b482079a754c9d32797d95d5c686c83",
+      "verdict": "pass"
+    }
+  ],
+  "visualFindings": [
+    "The complete tool remains inside the bordered image region with even white space and no crop at both densities.",
+    "The opposed toothed jaws, single adjustment nut, threaded shank, and full handle remain legible in the mobile layout.",
+    "Typography, caption, image border, and the single-column breakpoint remain coherent without overlap or horizontal scrolling.",
+    "The 2x render preserves fine jaw, thread, and knurl detail without a density-specific layout shift."
+  ],
+  "history": {
+    "ledger": "content/authoring/visuals/releases/tool-release-history.json",
+    "ledgerSha256": "e4117d6125f28a743f62dd12979069f447f0d93457ef4a1f3cb2c1ff531263e6",
+    "preservedRecords": [
+      "tool:t037:0f2e1e00b8b16e4472f117e80b6e8819b798aaa3f6c7eae9d2aa1bbbfdbe9c89",
+      "comparison:p002:137165bfa97db346c3000f85f054caf59422ae43a42090f3ef816422a291a78c"
+    ]
+  },
+  "validation": [
+    "node content/authoring/visuals/reviews/build-library-review.mjs",
+    "node content/authoring/visuals/releases/build-tool-release.mjs",
+    "sha256sum -c content/assets/TOOL-CANDIDATES.sha256",
+    "sha256sum -c content/assets/TOOL-MANIFEST.sha256",
+    "bun run --filter @nycustodian/site build",
+    "bun run verify:artifacts",
+    "bun run verify — expected toolchain gate stopped at installed Bun 1.3.14 because package.json pins Bun 1.4.0; typecheck and all 20 tests had passed before the gate",
+    "NYCUSTODIAN_ALLOW_UNSUPPORTED_BUN=1 bun run verify — deliberate local compatibility run passed typecheck, 20 tests, content build, site build, and artifact verification"
+  ]
+}

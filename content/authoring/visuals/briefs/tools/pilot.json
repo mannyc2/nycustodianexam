@@ -1,0 +1,858 @@
+[
+  {
+    "briefId": "pilot-tool-01",
+    "briefVersion": 1,
+    "conceptId": "tool.dustpan",
+    "canonicalTerm": "Dustpan",
+    "taxonomyRevision": "004f405",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.dustpan"
+    ],
+    "mustShow": [
+      "single handheld shallow debris pan",
+      "broad flat leading lip",
+      "raised rear and side walls",
+      "short integrated handle"
+    ],
+    "mustNotShow": [
+      "deep shovel or scoop bowl",
+      "long upright handle",
+      "brush or broom"
+    ],
+    "desiredView": "three-quarter view slightly above the pan",
+    "crop": "single complete object centered, approximately 70% canvas occupancy, generous even padding",
+    "aspectRatio": "1:1",
+    "background": "pure white",
+    "styleReference": {
+      "kind": "high-level visual-language reference only",
+      "title": "NYS DCS Custodians/Janitors Entry-Level Test Guide",
+      "url": "https://www.cs.ny.gov/testing/test_guides/Custodians_Janitors_EntryLevel_TestGuide.pdf",
+      "restrictions": "Do not reproduce its subject, composition, choices, labels, or any particular drawing."
+    },
+    "prohibited": [
+      "text or pseudo-text",
+      "letters, numbers, labels, arrows, circles, answer marks",
+      "logos, trademarks, brand-specific trade dress, watermarks",
+      "hands, people, surrounding room, floor plane, props",
+      "drop shadows, gray background, decorative border",
+      "cropped object, duplicated parts, floating parts, impossible joints"
+    ],
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "prompt": "Use case: scientific-educational\nAsset type: isolated exam-prep tool-recognition illustration\nPrimary request: Create one original illustration of a generic Dustpan.\nScene/backdrop: pure white background with no floor plane and no shadow.\nSubject: Dustpan.\nStyle/medium: Original black monochrome technical line illustration on pure white, plain civil-service test-booklet visual language: confident medium contour weight, sparse functional hatching, restrained interior detail, high whitespace, generic unbranded construction. Original geometry and composition; do not copy any particular official sample drawing.\nComposition/framing: three-quarter view slightly above the pan; center the single complete object; fill roughly 70% of the square canvas; generous even padding.\nMust show: single handheld shallow debris pan; broad flat leading lip; raised rear and side walls; short integrated handle.\nMust not show: deep shovel or scoop bowl; long upright handle; brush or broom.\nConstraints: text or pseudo-text; letters, numbers, labels, arrows, circles, answer marks; logos, trademarks, brand-specific trade dress, watermarks; hands, people, surrounding room, floor plane, props; drop shadows, gray background, decorative border; cropped object, duplicated parts, floating parts, impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "pilot-tool-02",
+    "briefVersion": 1,
+    "conceptId": "tool.mallet.rubber",
+    "canonicalTerm": "Rubber mallet",
+    "taxonomyRevision": "004f405",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.mallet.rubber"
+    ],
+    "mustShow": [
+      "straight handle",
+      "single double-faced dark rubber head",
+      "two broad nonmetal striking faces",
+      "mechanically plausible head-to-handle connection"
+    ],
+    "mustNotShow": [
+      "split claw",
+      "hemispherical peen",
+      "metal hammer head",
+      "separate replaceable caps"
+    ],
+    "desiredView": "clean three-quarter side view",
+    "crop": "single complete object centered, approximately 70% canvas occupancy, generous even padding",
+    "aspectRatio": "1:1",
+    "background": "pure white",
+    "styleReference": {
+      "kind": "high-level visual-language reference only",
+      "title": "NYS DCS Custodians/Janitors Entry-Level Test Guide",
+      "url": "https://www.cs.ny.gov/testing/test_guides/Custodians_Janitors_EntryLevel_TestGuide.pdf",
+      "restrictions": "Do not reproduce its subject, composition, choices, labels, or any particular drawing."
+    },
+    "prohibited": [
+      "text or pseudo-text",
+      "letters, numbers, labels, arrows, circles, answer marks",
+      "logos, trademarks, brand-specific trade dress, watermarks",
+      "hands, people, surrounding room, floor plane, props",
+      "drop shadows, gray background, decorative border",
+      "cropped object, duplicated parts, floating parts, impossible joints"
+    ],
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "prompt": "Use case: scientific-educational\nAsset type: isolated exam-prep tool-recognition illustration\nPrimary request: Create one original illustration of a generic Rubber mallet.\nScene/backdrop: pure white background with no floor plane and no shadow.\nSubject: Rubber mallet.\nStyle/medium: Original black monochrome technical line illustration on pure white, plain civil-service test-booklet visual language: confident medium contour weight, sparse functional hatching, restrained interior detail, high whitespace, generic unbranded construction. Original geometry and composition; do not copy any particular official sample drawing.\nComposition/framing: clean three-quarter side view; center the single complete object; fill roughly 70% of the square canvas; generous even padding.\nMust show: straight handle; single double-faced dark rubber head; two broad nonmetal striking faces; mechanically plausible head-to-handle connection.\nMust not show: split claw; hemispherical peen; metal hammer head; separate replaceable caps.\nConstraints: text or pseudo-text; letters, numbers, labels, arrows, circles, answer marks; logos, trademarks, brand-specific trade dress, watermarks; hands, people, surrounding room, floor plane, props; drop shadows, gray background, decorative border; cropped object, duplicated parts, floating parts, impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "pilot-tool-03",
+    "briefVersion": 1,
+    "conceptId": "ppe.safety-glasses",
+    "canonicalTerm": "Generic safety glasses",
+    "taxonomyRevision": "004f405",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#ppe.safety-glasses",
+      "https://www.osha.gov/laws-regs/regulations/standardnumber/1926/1926.102",
+      "https://www.osha.gov/sites/default/files/2021-07/Teacher%26%23039%3Bs%20Notes%20%26amp%3B%20Script.pdf"
+    ],
+    "mustShow": [
+      "clear protective lens area for both eyes",
+      "temple arms",
+      "visible wraparound or side-shield protection",
+      "generic occupational protective-eyewear form"
+    ],
+    "mustNotShow": [
+      "ordinary fashion spectacles with no side protection",
+      "sealed goggle body with elastic strap",
+      "tinted sunglasses",
+      "face shield"
+    ],
+    "desiredView": "front three-quarter view showing side coverage",
+    "crop": "single complete object centered, approximately 70% canvas occupancy, generous even padding",
+    "aspectRatio": "1:1",
+    "background": "pure white",
+    "styleReference": {
+      "kind": "high-level visual-language reference only",
+      "title": "NYS DCS Custodians/Janitors Entry-Level Test Guide",
+      "url": "https://www.cs.ny.gov/testing/test_guides/Custodians_Janitors_EntryLevel_TestGuide.pdf",
+      "restrictions": "Do not reproduce its subject, composition, choices, labels, or any particular drawing."
+    },
+    "prohibited": [
+      "text or pseudo-text",
+      "letters, numbers, labels, arrows, circles, answer marks",
+      "logos, trademarks, brand-specific trade dress, watermarks",
+      "hands, people, surrounding room, floor plane, props",
+      "drop shadows, gray background, decorative border",
+      "cropped object, duplicated parts, floating parts, impossible joints"
+    ],
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "prompt": "Use case: scientific-educational\nAsset type: isolated exam-prep tool-recognition illustration\nPrimary request: Create one original illustration of a generic Generic safety glasses.\nScene/backdrop: pure white background with no floor plane and no shadow.\nSubject: Generic safety glasses.\nStyle/medium: Original black monochrome technical line illustration on pure white, plain civil-service test-booklet visual language: confident medium contour weight, sparse functional hatching, restrained interior detail, high whitespace, generic unbranded construction. Original geometry and composition; do not copy any particular official sample drawing.\nComposition/framing: front three-quarter view showing side coverage; center the single complete object; fill roughly 70% of the square canvas; generous even padding.\nMust show: clear protective lens area for both eyes; temple arms; visible wraparound or side-shield protection; generic occupational protective-eyewear form.\nMust not show: ordinary fashion spectacles with no side protection; sealed goggle body with elastic strap; tinted sunglasses; face shield.\nConstraints: text or pseudo-text; letters, numbers, labels, arrows, circles, answer marks; logos, trademarks, brand-specific trade dress, watermarks; hands, people, surrounding room, floor plane, props; drop shadows, gray background, decorative border; cropped object, duplicated parts, floating parts, impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "pilot-tool-04",
+    "briefVersion": 1,
+    "conceptId": "tool.adjustable-wrench",
+    "canonicalTerm": "Adjustable wrench",
+    "taxonomyRevision": "004f405",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.adjustable-wrench",
+      "https://www.iso.org/standard/71911.html"
+    ],
+    "mustShow": [
+      "smooth parallel jaw faces",
+      "one movable jaw",
+      "clearly visible worm adjustment gear",
+      "open-ended wrench head",
+      "mechanically plausible guide"
+    ],
+    "mustNotShow": [
+      "serrated gripping teeth",
+      "hook jaw",
+      "heel jaw",
+      "pipe-wrench adjustment nut"
+    ],
+    "desiredView": "feature-revealing three-quarter side view with open jaw",
+    "crop": "single complete object centered, approximately 70% canvas occupancy, generous even padding",
+    "aspectRatio": "1:1",
+    "background": "pure white",
+    "styleReference": {
+      "kind": "high-level visual-language reference only",
+      "title": "NYS DCS Custodians/Janitors Entry-Level Test Guide",
+      "url": "https://www.cs.ny.gov/testing/test_guides/Custodians_Janitors_EntryLevel_TestGuide.pdf",
+      "restrictions": "Do not reproduce its subject, composition, choices, labels, or any particular drawing."
+    },
+    "prohibited": [
+      "text or pseudo-text",
+      "letters, numbers, labels, arrows, circles, answer marks",
+      "logos, trademarks, brand-specific trade dress, watermarks",
+      "hands, people, surrounding room, floor plane, props",
+      "drop shadows, gray background, decorative border",
+      "cropped object, duplicated parts, floating parts, impossible joints"
+    ],
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "prompt": "Use case: scientific-educational\nAsset type: isolated exam-prep tool-recognition illustration\nPrimary request: Create one original illustration of a generic Adjustable wrench.\nScene/backdrop: pure white background with no floor plane and no shadow.\nSubject: Adjustable wrench.\nStyle/medium: Original black monochrome technical line illustration on pure white, plain civil-service test-booklet visual language: confident medium contour weight, sparse functional hatching, restrained interior detail, high whitespace, generic unbranded construction. Original geometry and composition; do not copy any particular official sample drawing.\nComposition/framing: feature-revealing three-quarter side view with open jaw; center the single complete object; fill roughly 70% of the square canvas; generous even padding.\nMust show: smooth parallel jaw faces; one movable jaw; clearly visible worm adjustment gear; open-ended wrench head; mechanically plausible guide.\nMust not show: serrated gripping teeth; hook jaw; heel jaw; pipe-wrench adjustment nut.\nConstraints: text or pseudo-text; letters, numbers, labels, arrows, circles, answer marks; logos, trademarks, brand-specific trade dress, watermarks; hands, people, surrounding room, floor plane, props; drop shadows, gray background, decorative border; cropped object, duplicated parts, floating parts, impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "pilot-tool-05",
+    "briefVersion": 1,
+    "conceptId": "tool.pipe-wrench",
+    "canonicalTerm": "Straight pipe wrench",
+    "taxonomyRevision": "004f405",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.pipe-wrench",
+      "research/v2/tool-geometry-audit/REPORT.md:76-84"
+    ],
+    "mustShow": [
+      "offset hook jaw",
+      "opposing heel jaw",
+      "clearly visible serrated gripping faces",
+      "round-work opening",
+      "adjusting nut",
+      "heavy straight handle"
+    ],
+    "mustNotShow": [
+      "smooth parallel adjustable-wrench jaws",
+      "crescent-style worm gear",
+      "closed plier handles"
+    ],
+    "desiredView": "feature-revealing three-quarter side view with open throat",
+    "crop": "single complete object centered, approximately 70% canvas occupancy, generous even padding",
+    "aspectRatio": "1:1",
+    "background": "pure white",
+    "styleReference": {
+      "kind": "high-level visual-language reference only",
+      "title": "NYS DCS Custodians/Janitors Entry-Level Test Guide",
+      "url": "https://www.cs.ny.gov/testing/test_guides/Custodians_Janitors_EntryLevel_TestGuide.pdf",
+      "restrictions": "Do not reproduce its subject, composition, choices, labels, or any particular drawing."
+    },
+    "prohibited": [
+      "text or pseudo-text",
+      "letters, numbers, labels, arrows, circles, answer marks",
+      "logos, trademarks, brand-specific trade dress, watermarks",
+      "hands, people, surrounding room, floor plane, props",
+      "drop shadows, gray background, decorative border",
+      "cropped object, duplicated parts, floating parts, impossible joints"
+    ],
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "prompt": "Use case: scientific-educational\nAsset type: isolated exam-prep tool-recognition illustration\nPrimary request: Create one original illustration of a generic Straight pipe wrench.\nScene/backdrop: pure white background with no floor plane and no shadow.\nSubject: Straight pipe wrench.\nStyle/medium: Original black monochrome technical line illustration on pure white, plain civil-service test-booklet visual language: confident medium contour weight, sparse functional hatching, restrained interior detail, high whitespace, generic unbranded construction. Original geometry and composition; do not copy any particular official sample drawing.\nComposition/framing: feature-revealing three-quarter side view with open throat; center the single complete object; fill roughly 70% of the square canvas; generous even padding.\nMust show: offset hook jaw; opposing heel jaw; clearly visible serrated gripping faces; round-work opening; adjusting nut; heavy straight handle.\nMust not show: smooth parallel adjustable-wrench jaws; crescent-style worm gear; closed plier handles.\nConstraints: text or pseudo-text; letters, numbers, labels, arrows, circles, answer marks; logos, trademarks, brand-specific trade dress, watermarks; hands, people, surrounding room, floor plane, props; drop shadows, gray background, decorative border; cropped object, duplicated parts, floating parts, impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "pilot-tool-06",
+    "briefVersion": 1,
+    "conceptId": "tool.plunger.cup",
+    "canonicalTerm": "Cup plunger",
+    "taxonomyRevision": "004f405",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.plunger.cup",
+      "research/v2/tool-geometry-audit/REPORT.md:86-95"
+    ],
+    "mustShow": [
+      "straight handle entering a flexible rubber cup",
+      "simple broad cup",
+      "plain open rim clearly visible"
+    ],
+    "mustNotShow": [
+      "extended lower toilet flange",
+      "accordion bellows",
+      "toilet or sink context"
+    ],
+    "desiredView": "low three-quarter view revealing the underside rim",
+    "crop": "single complete object centered, approximately 70% canvas occupancy, generous even padding",
+    "aspectRatio": "1:1",
+    "background": "pure white",
+    "styleReference": {
+      "kind": "high-level visual-language reference only",
+      "title": "NYS DCS Custodians/Janitors Entry-Level Test Guide",
+      "url": "https://www.cs.ny.gov/testing/test_guides/Custodians_Janitors_EntryLevel_TestGuide.pdf",
+      "restrictions": "Do not reproduce its subject, composition, choices, labels, or any particular drawing."
+    },
+    "prohibited": [
+      "text or pseudo-text",
+      "letters, numbers, labels, arrows, circles, answer marks",
+      "logos, trademarks, brand-specific trade dress, watermarks",
+      "hands, people, surrounding room, floor plane, props",
+      "drop shadows, gray background, decorative border",
+      "cropped object, duplicated parts, floating parts, impossible joints"
+    ],
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "prompt": "Use case: scientific-educational\nAsset type: isolated exam-prep tool-recognition illustration\nPrimary request: Create one original illustration of a generic Cup plunger.\nScene/backdrop: pure white background with no floor plane and no shadow.\nSubject: Cup plunger.\nStyle/medium: Original black monochrome technical line illustration on pure white, plain civil-service test-booklet visual language: confident medium contour weight, sparse functional hatching, restrained interior detail, high whitespace, generic unbranded construction. Original geometry and composition; do not copy any particular official sample drawing.\nComposition/framing: low three-quarter view revealing the underside rim; center the single complete object; fill roughly 70% of the square canvas; generous even padding.\nMust show: straight handle entering a flexible rubber cup; simple broad cup; plain open rim clearly visible.\nMust not show: extended lower toilet flange; accordion bellows; toilet or sink context.\nConstraints: text or pseudo-text; letters, numbers, labels, arrows, circles, answer marks; logos, trademarks, brand-specific trade dress, watermarks; hands, people, surrounding room, floor plane, props; drop shadows, gray background, decorative border; cropped object, duplicated parts, floating parts, impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "pilot-tool-07",
+    "briefVersion": 1,
+    "conceptId": "tool.plunger.flange",
+    "canonicalTerm": "Flange toilet plunger",
+    "taxonomyRevision": "004f405",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.plunger.flange",
+      "https://libman.com/products/premium-toilet-plunger",
+      "research/v2/tool-geometry-audit/REPORT.md:97-105"
+    ],
+    "mustShow": [
+      "straight handle entering flexible cup",
+      "main cup body",
+      "distinct narrower extended lower flange projecting beneath cup"
+    ],
+    "mustNotShow": [
+      "plain cup-only rim",
+      "accordion bellows",
+      "toilet context"
+    ],
+    "desiredView": "low three-quarter view clearly revealing the lower flange",
+    "crop": "single complete object centered, approximately 70% canvas occupancy, generous even padding",
+    "aspectRatio": "1:1",
+    "background": "pure white",
+    "styleReference": {
+      "kind": "high-level visual-language reference only",
+      "title": "NYS DCS Custodians/Janitors Entry-Level Test Guide",
+      "url": "https://www.cs.ny.gov/testing/test_guides/Custodians_Janitors_EntryLevel_TestGuide.pdf",
+      "restrictions": "Do not reproduce its subject, composition, choices, labels, or any particular drawing."
+    },
+    "prohibited": [
+      "text or pseudo-text",
+      "letters, numbers, labels, arrows, circles, answer marks",
+      "logos, trademarks, brand-specific trade dress, watermarks",
+      "hands, people, surrounding room, floor plane, props",
+      "drop shadows, gray background, decorative border",
+      "cropped object, duplicated parts, floating parts, impossible joints"
+    ],
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "prompt": "Use case: scientific-educational\nAsset type: isolated exam-prep tool-recognition illustration\nPrimary request: Create one original illustration of a generic Flange toilet plunger.\nScene/backdrop: pure white background with no floor plane and no shadow.\nSubject: Flange toilet plunger.\nStyle/medium: Original black monochrome technical line illustration on pure white, plain civil-service test-booklet visual language: confident medium contour weight, sparse functional hatching, restrained interior detail, high whitespace, generic unbranded construction. Original geometry and composition; do not copy any particular official sample drawing.\nComposition/framing: low three-quarter view clearly revealing the lower flange; center the single complete object; fill roughly 70% of the square canvas; generous even padding.\nMust show: straight handle entering flexible cup; main cup body; distinct narrower extended lower flange projecting beneath cup.\nMust not show: plain cup-only rim; accordion bellows; toilet context.\nConstraints: text or pseudo-text; letters, numbers, labels, arrows, circles, answer marks; logos, trademarks, brand-specific trade dress, watermarks; hands, people, surrounding room, floor plane, props; drop shadows, gray background, decorative border; cropped object, duplicated parts, floating parts, impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "pilot-tool-08",
+    "briefVersion": 1,
+    "conceptId": "tool.hammer.claw",
+    "canonicalTerm": "Claw hammer",
+    "taxonomyRevision": "004f405",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.hammer.claw"
+    ],
+    "mustShow": [
+      "straight handle",
+      "flat circular striking face",
+      "curved split nail-pulling claw on opposite end",
+      "coherent metal head"
+    ],
+    "mustNotShow": [
+      "hemispherical ball peen",
+      "rubber head",
+      "unsplit straight pick"
+    ],
+    "desiredView": "side three-quarter view",
+    "crop": "single complete object centered, approximately 70% canvas occupancy, generous even padding",
+    "aspectRatio": "1:1",
+    "background": "pure white",
+    "styleReference": {
+      "kind": "high-level visual-language reference only",
+      "title": "NYS DCS Custodians/Janitors Entry-Level Test Guide",
+      "url": "https://www.cs.ny.gov/testing/test_guides/Custodians_Janitors_EntryLevel_TestGuide.pdf",
+      "restrictions": "Do not reproduce its subject, composition, choices, labels, or any particular drawing."
+    },
+    "prohibited": [
+      "text or pseudo-text",
+      "letters, numbers, labels, arrows, circles, answer marks",
+      "logos, trademarks, brand-specific trade dress, watermarks",
+      "hands, people, surrounding room, floor plane, props",
+      "drop shadows, gray background, decorative border",
+      "cropped object, duplicated parts, floating parts, impossible joints"
+    ],
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "prompt": "Use case: scientific-educational\nAsset type: isolated exam-prep tool-recognition illustration\nPrimary request: Create one original illustration of a generic Claw hammer.\nScene/backdrop: pure white background with no floor plane and no shadow.\nSubject: Claw hammer.\nStyle/medium: Original black monochrome technical line illustration on pure white, plain civil-service test-booklet visual language: confident medium contour weight, sparse functional hatching, restrained interior detail, high whitespace, generic unbranded construction. Original geometry and composition; do not copy any particular official sample drawing.\nComposition/framing: side three-quarter view; center the single complete object; fill roughly 70% of the square canvas; generous even padding.\nMust show: straight handle; flat circular striking face; curved split nail-pulling claw on opposite end; coherent metal head.\nMust not show: hemispherical ball peen; rubber head; unsplit straight pick.\nConstraints: text or pseudo-text; letters, numbers, labels, arrows, circles, answer marks; logos, trademarks, brand-specific trade dress, watermarks; hands, people, surrounding room, floor plane, props; drop shadows, gray background, decorative border; cropped object, duplicated parts, floating parts, impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "pilot-tool-09",
+    "briefVersion": 1,
+    "conceptId": "tool.hammer.ball-peen",
+    "canonicalTerm": "Ball-peen hammer",
+    "taxonomyRevision": "004f405",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.hammer.ball-peen"
+    ],
+    "mustShow": [
+      "straight handle",
+      "flat circular striking face",
+      "rounded hemispherical ball peen on opposite end",
+      "coherent metal head"
+    ],
+    "mustNotShow": [
+      "split nail-pulling claw",
+      "rubber head",
+      "pointed pick"
+    ],
+    "desiredView": "side three-quarter view",
+    "crop": "single complete object centered, approximately 70% canvas occupancy, generous even padding",
+    "aspectRatio": "1:1",
+    "background": "pure white",
+    "styleReference": {
+      "kind": "high-level visual-language reference only",
+      "title": "NYS DCS Custodians/Janitors Entry-Level Test Guide",
+      "url": "https://www.cs.ny.gov/testing/test_guides/Custodians_Janitors_EntryLevel_TestGuide.pdf",
+      "restrictions": "Do not reproduce its subject, composition, choices, labels, or any particular drawing."
+    },
+    "prohibited": [
+      "text or pseudo-text",
+      "letters, numbers, labels, arrows, circles, answer marks",
+      "logos, trademarks, brand-specific trade dress, watermarks",
+      "hands, people, surrounding room, floor plane, props",
+      "drop shadows, gray background, decorative border",
+      "cropped object, duplicated parts, floating parts, impossible joints"
+    ],
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "prompt": "Use case: scientific-educational\nAsset type: isolated exam-prep tool-recognition illustration\nPrimary request: Create one original illustration of a generic Ball-peen hammer.\nScene/backdrop: pure white background with no floor plane and no shadow.\nSubject: Ball-peen hammer.\nStyle/medium: Original black monochrome technical line illustration on pure white, plain civil-service test-booklet visual language: confident medium contour weight, sparse functional hatching, restrained interior detail, high whitespace, generic unbranded construction. Original geometry and composition; do not copy any particular official sample drawing.\nComposition/framing: side three-quarter view; center the single complete object; fill roughly 70% of the square canvas; generous even padding.\nMust show: straight handle; flat circular striking face; rounded hemispherical ball peen on opposite end; coherent metal head.\nMust not show: split nail-pulling claw; rubber head; pointed pick.\nConstraints: text or pseudo-text; letters, numbers, labels, arrows, circles, answer marks; logos, trademarks, brand-specific trade dress, watermarks; hands, people, surrounding room, floor plane, props; drop shadows, gray background, decorative border; cropped object, duplicated parts, floating parts, impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "pilot-tool-10",
+    "briefVersion": 1,
+    "conceptId": "access.stepladder",
+    "canonicalTerm": "Open stepladder",
+    "taxonomyRevision": "004f405",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#access.stepladder",
+      "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.23"
+    ],
+    "mustShow": [
+      "self-supporting open A-frame",
+      "front climbing steps",
+      "rear support legs",
+      "visible spreader braces",
+      "top cap/platform"
+    ],
+    "mustNotShow": [
+      "overlapping telescoping ladder sections",
+      "single straight ladder frame",
+      "wall support",
+      "person standing on ladder"
+    ],
+    "desiredView": "three-quarter view showing front and rear frames",
+    "crop": "single complete object centered, approximately 70% canvas occupancy, generous even padding",
+    "aspectRatio": "1:1",
+    "background": "pure white",
+    "styleReference": {
+      "kind": "high-level visual-language reference only",
+      "title": "NYS DCS Custodians/Janitors Entry-Level Test Guide",
+      "url": "https://www.cs.ny.gov/testing/test_guides/Custodians_Janitors_EntryLevel_TestGuide.pdf",
+      "restrictions": "Do not reproduce its subject, composition, choices, labels, or any particular drawing."
+    },
+    "prohibited": [
+      "text or pseudo-text",
+      "letters, numbers, labels, arrows, circles, answer marks",
+      "logos, trademarks, brand-specific trade dress, watermarks",
+      "hands, people, surrounding room, floor plane, props",
+      "drop shadows, gray background, decorative border",
+      "cropped object, duplicated parts, floating parts, impossible joints"
+    ],
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "prompt": "Use case: scientific-educational\nAsset type: isolated exam-prep tool-recognition illustration\nPrimary request: Create one original illustration of a generic Open stepladder.\nScene/backdrop: pure white background with no floor plane and no shadow.\nSubject: Open stepladder.\nStyle/medium: Original black monochrome technical line illustration on pure white, plain civil-service test-booklet visual language: confident medium contour weight, sparse functional hatching, restrained interior detail, high whitespace, generic unbranded construction. Original geometry and composition; do not copy any particular official sample drawing.\nComposition/framing: three-quarter view showing front and rear frames; center the single complete object; fill roughly 70% of the square canvas; generous even padding.\nMust show: self-supporting open A-frame; front climbing steps; rear support legs; visible spreader braces; top cap/platform.\nMust not show: overlapping telescoping ladder sections; single straight ladder frame; wall support; person standing on ladder.\nConstraints: text or pseudo-text; letters, numbers, labels, arrows, circles, answer marks; logos, trademarks, brand-specific trade dress, watermarks; hands, people, surrounding room, floor plane, props; drop shadows, gray background, decorative border; cropped object, duplicated parts, floating parts, impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "pilot-tool-11",
+    "briefVersion": 1,
+    "conceptId": "access.extension-ladder",
+    "canonicalTerm": "Two-section extension ladder",
+    "taxonomyRevision": "004f405",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#access.extension-ladder",
+      "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.23"
+    ],
+    "mustShow": [
+      "two straight overlapping rail-and-rung sections",
+      "visible extended overlap",
+      "extension locks or guides",
+      "non-self-supporting straight geometry"
+    ],
+    "mustNotShow": [
+      "rear support frame",
+      "A-frame",
+      "spreader braces",
+      "platform top",
+      "wall or person"
+    ],
+    "desiredView": "slight three-quarter view of the full ladder",
+    "crop": "single complete object centered, approximately 70% canvas occupancy, generous even padding",
+    "aspectRatio": "1:1",
+    "background": "pure white",
+    "styleReference": {
+      "kind": "high-level visual-language reference only",
+      "title": "NYS DCS Custodians/Janitors Entry-Level Test Guide",
+      "url": "https://www.cs.ny.gov/testing/test_guides/Custodians_Janitors_EntryLevel_TestGuide.pdf",
+      "restrictions": "Do not reproduce its subject, composition, choices, labels, or any particular drawing."
+    },
+    "prohibited": [
+      "text or pseudo-text",
+      "letters, numbers, labels, arrows, circles, answer marks",
+      "logos, trademarks, brand-specific trade dress, watermarks",
+      "hands, people, surrounding room, floor plane, props",
+      "drop shadows, gray background, decorative border",
+      "cropped object, duplicated parts, floating parts, impossible joints"
+    ],
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "prompt": "Use case: scientific-educational\nAsset type: isolated exam-prep tool-recognition illustration\nPrimary request: Create one original illustration of a generic Two-section extension ladder.\nScene/backdrop: pure white background with no floor plane and no shadow.\nSubject: Two-section extension ladder.\nStyle/medium: Original black monochrome technical line illustration on pure white, plain civil-service test-booklet visual language: confident medium contour weight, sparse functional hatching, restrained interior detail, high whitespace, generic unbranded construction. Original geometry and composition; do not copy any particular official sample drawing.\nComposition/framing: slight three-quarter view of the full ladder; center the single complete object; fill roughly 70% of the square canvas; generous even padding.\nMust show: two straight overlapping rail-and-rung sections; visible extended overlap; extension locks or guides; non-self-supporting straight geometry.\nMust not show: rear support frame; A-frame; spreader braces; platform top; wall or person.\nConstraints: text or pseudo-text; letters, numbers, labels, arrows, circles, answer marks; logos, trademarks, brand-specific trade dress, watermarks; hands, people, surrounding room, floor plane, props; drop shadows, gray background, decorative border; cropped object, duplicated parts, floating parts, impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "pilot-tool-12",
+    "briefVersion": 1,
+    "conceptId": "equipment.floor-machine.low-speed",
+    "canonicalTerm": "Representative low-speed rotary floor machine",
+    "taxonomyRevision": "004f405",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#equipment.floor-machine.low-speed",
+      "https://www.tennantco.com/en_us/1/machines/burnishers-and-floor-machines/product.fm-20-ds.dual-speed-floor-machine.2213536.html"
+    ],
+    "mustShow": [
+      "walk-behind upright handle",
+      "low circular floor-contact deck",
+      "motor/gear housing above the deck",
+      "power cord",
+      "small transport wheels",
+      "generic conventional floor-machine configuration"
+    ],
+    "mustNotShow": [
+      "speed number or label",
+      "brand-specific housing",
+      "ride-on chassis",
+      "rectangular orbital head",
+      "claim of universal silhouette"
+    ],
+    "desiredView": "three-quarter operator-side product view",
+    "crop": "single complete object centered, approximately 70% canvas occupancy, generous even padding",
+    "aspectRatio": "1:1",
+    "background": "pure white",
+    "styleReference": {
+      "kind": "high-level visual-language reference only",
+      "title": "NYS DCS Custodians/Janitors Entry-Level Test Guide",
+      "url": "https://www.cs.ny.gov/testing/test_guides/Custodians_Janitors_EntryLevel_TestGuide.pdf",
+      "restrictions": "Do not reproduce its subject, composition, choices, labels, or any particular drawing."
+    },
+    "prohibited": [
+      "text or pseudo-text",
+      "letters, numbers, labels, arrows, circles, answer marks",
+      "logos, trademarks, brand-specific trade dress, watermarks",
+      "hands, people, surrounding room, floor plane, props",
+      "drop shadows, gray background, decorative border",
+      "cropped object, duplicated parts, floating parts, impossible joints"
+    ],
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "prompt": "Use case: scientific-educational\nAsset type: isolated exam-prep tool-recognition illustration\nPrimary request: Create one original illustration of a generic Representative low-speed rotary floor machine.\nScene/backdrop: pure white background with no floor plane and no shadow.\nSubject: Representative low-speed rotary floor machine.\nStyle/medium: Original black monochrome technical line illustration on pure white, plain civil-service test-booklet visual language: confident medium contour weight, sparse functional hatching, restrained interior detail, high whitespace, generic unbranded construction. Original geometry and composition; do not copy any particular official sample drawing.\nComposition/framing: three-quarter operator-side product view; center the single complete object; fill roughly 70% of the square canvas; generous even padding.\nMust show: walk-behind upright handle; low circular floor-contact deck; motor/gear housing above the deck; power cord; small transport wheels; generic conventional floor-machine configuration.\nMust not show: speed number or label; brand-specific housing; ride-on chassis; rectangular orbital head; claim of universal silhouette.\nConstraints: text or pseudo-text; letters, numbers, labels, arrows, circles, answer marks; logos, trademarks, brand-specific trade dress, watermarks; hands, people, surrounding room, floor plane, props; drop shadows, gray background, decorative border; cropped object, duplicated parts, floating parts, impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "pilot-tool-13",
+    "briefVersion": 1,
+    "conceptId": "equipment.burnisher.high-speed",
+    "canonicalTerm": "Representative walk-behind high-speed burnisher",
+    "taxonomyRevision": "004f405",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#equipment.burnisher.high-speed",
+      "https://www.tennantco.com/content/dam/tennant/tennantco/products/machines/burnishers%20and%20floor%20machines/BR-1600-NDC/BR-1600-NDC-brochure-en-apac.pdf"
+    ],
+    "mustShow": [
+      "walk-behind adjustable handle",
+      "broad circular pad shroud",
+      "low-profile balanced machine body",
+      "rear transport wheels",
+      "power cord",
+      "generic representative burnisher configuration"
+    ],
+    "mustNotShow": [
+      "speed number or label",
+      "brand-specific housing",
+      "ride-on chassis",
+      "rectangular scrub head",
+      "claim of universal silhouette"
+    ],
+    "desiredView": "three-quarter operator-side product view",
+    "crop": "single complete object centered, approximately 70% canvas occupancy, generous even padding",
+    "aspectRatio": "1:1",
+    "background": "pure white",
+    "styleReference": {
+      "kind": "high-level visual-language reference only",
+      "title": "NYS DCS Custodians/Janitors Entry-Level Test Guide",
+      "url": "https://www.cs.ny.gov/testing/test_guides/Custodians_Janitors_EntryLevel_TestGuide.pdf",
+      "restrictions": "Do not reproduce its subject, composition, choices, labels, or any particular drawing."
+    },
+    "prohibited": [
+      "text or pseudo-text",
+      "letters, numbers, labels, arrows, circles, answer marks",
+      "logos, trademarks, brand-specific trade dress, watermarks",
+      "hands, people, surrounding room, floor plane, props",
+      "drop shadows, gray background, decorative border",
+      "cropped object, duplicated parts, floating parts, impossible joints"
+    ],
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "prompt": "Use case: scientific-educational\nAsset type: isolated exam-prep tool-recognition illustration\nPrimary request: Create one original illustration of a generic Representative walk-behind high-speed burnisher.\nScene/backdrop: pure white background with no floor plane and no shadow.\nSubject: Representative walk-behind high-speed burnisher.\nStyle/medium: Original black monochrome technical line illustration on pure white, plain civil-service test-booklet visual language: confident medium contour weight, sparse functional hatching, restrained interior detail, high whitespace, generic unbranded construction. Original geometry and composition; do not copy any particular official sample drawing.\nComposition/framing: three-quarter operator-side product view; center the single complete object; fill roughly 70% of the square canvas; generous even padding.\nMust show: walk-behind adjustable handle; broad circular pad shroud; low-profile balanced machine body; rear transport wheels; power cord; generic representative burnisher configuration.\nMust not show: speed number or label; brand-specific housing; ride-on chassis; rectangular scrub head; claim of universal silhouette.\nConstraints: text or pseudo-text; letters, numbers, labels, arrows, circles, answer marks; logos, trademarks, brand-specific trade dress, watermarks; hands, people, surrounding room, floor plane, props; drop shadows, gray background, decorative border; cropped object, duplicated parts, floating parts, impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "pilot-tool-14",
+    "briefVersion": 1,
+    "conceptId": "tool.pliers.slip-joint",
+    "canonicalTerm": "Slip-joint pliers",
+    "taxonomyRevision": "004f405",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.pliers.slip-joint"
+    ],
+    "mustShow": [
+      "two handles",
+      "short serrated gripping jaws",
+      "simple two-position slip-joint pivot slot",
+      "plausible crossed linkage"
+    ],
+    "mustNotShow": [
+      "long multi-groove tongue-and-groove channel",
+      "locking adjustment screw",
+      "needle-nose jaws",
+      "cutting-only jaws"
+    ],
+    "desiredView": "feature-revealing side three-quarter view with handles slightly open",
+    "crop": "single complete object centered, approximately 70% canvas occupancy, generous even padding",
+    "aspectRatio": "1:1",
+    "background": "pure white",
+    "styleReference": {
+      "kind": "high-level visual-language reference only",
+      "title": "NYS DCS Custodians/Janitors Entry-Level Test Guide",
+      "url": "https://www.cs.ny.gov/testing/test_guides/Custodians_Janitors_EntryLevel_TestGuide.pdf",
+      "restrictions": "Do not reproduce its subject, composition, choices, labels, or any particular drawing."
+    },
+    "prohibited": [
+      "text or pseudo-text",
+      "letters, numbers, labels, arrows, circles, answer marks",
+      "logos, trademarks, brand-specific trade dress, watermarks",
+      "hands, people, surrounding room, floor plane, props",
+      "drop shadows, gray background, decorative border",
+      "cropped object, duplicated parts, floating parts, impossible joints"
+    ],
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "prompt": "Use case: scientific-educational\nAsset type: isolated exam-prep tool-recognition illustration\nPrimary request: Create one original illustration of a generic Slip-joint pliers.\nScene/backdrop: pure white background with no floor plane and no shadow.\nSubject: Slip-joint pliers.\nStyle/medium: Original black monochrome technical line illustration on pure white, plain civil-service test-booklet visual language: confident medium contour weight, sparse functional hatching, restrained interior detail, high whitespace, generic unbranded construction. Original geometry and composition; do not copy any particular official sample drawing.\nComposition/framing: feature-revealing side three-quarter view with handles slightly open; center the single complete object; fill roughly 70% of the square canvas; generous even padding.\nMust show: two handles; short serrated gripping jaws; simple two-position slip-joint pivot slot; plausible crossed linkage.\nMust not show: long multi-groove tongue-and-groove channel; locking adjustment screw; needle-nose jaws; cutting-only jaws.\nConstraints: text or pseudo-text; letters, numbers, labels, arrows, circles, answer marks; logos, trademarks, brand-specific trade dress, watermarks; hands, people, surrounding room, floor plane, props; drop shadows, gray background, decorative border; cropped object, duplicated parts, floating parts, impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "pilot-tool-15",
+    "briefVersion": 1,
+    "conceptId": "tool.pliers.tongue-groove",
+    "canonicalTerm": "Tongue-and-groove pliers",
+    "taxonomyRevision": "004f405",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.pliers.tongue-groove"
+    ],
+    "mustShow": [
+      "long handles",
+      "angled serrated gripping jaws",
+      "clearly visible multi-position tongue-and-groove adjustment channel",
+      "plausible crossed linkage"
+    ],
+    "mustNotShow": [
+      "simple two-position slip-joint pivot",
+      "locking adjustment screw",
+      "pipe-wrench hook jaw",
+      "needle-nose jaws"
+    ],
+    "desiredView": "feature-revealing side three-quarter view with jaws open",
+    "crop": "single complete object centered, approximately 70% canvas occupancy, generous even padding",
+    "aspectRatio": "1:1",
+    "background": "pure white",
+    "styleReference": {
+      "kind": "high-level visual-language reference only",
+      "title": "NYS DCS Custodians/Janitors Entry-Level Test Guide",
+      "url": "https://www.cs.ny.gov/testing/test_guides/Custodians_Janitors_EntryLevel_TestGuide.pdf",
+      "restrictions": "Do not reproduce its subject, composition, choices, labels, or any particular drawing."
+    },
+    "prohibited": [
+      "text or pseudo-text",
+      "letters, numbers, labels, arrows, circles, answer marks",
+      "logos, trademarks, brand-specific trade dress, watermarks",
+      "hands, people, surrounding room, floor plane, props",
+      "drop shadows, gray background, decorative border",
+      "cropped object, duplicated parts, floating parts, impossible joints"
+    ],
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "prompt": "Use case: scientific-educational\nAsset type: isolated exam-prep tool-recognition illustration\nPrimary request: Create one original illustration of a generic Tongue-and-groove pliers.\nScene/backdrop: pure white background with no floor plane and no shadow.\nSubject: Tongue-and-groove pliers.\nStyle/medium: Original black monochrome technical line illustration on pure white, plain civil-service test-booklet visual language: confident medium contour weight, sparse functional hatching, restrained interior detail, high whitespace, generic unbranded construction. Original geometry and composition; do not copy any particular official sample drawing.\nComposition/framing: feature-revealing side three-quarter view with jaws open; center the single complete object; fill roughly 70% of the square canvas; generous even padding.\nMust show: long handles; angled serrated gripping jaws; clearly visible multi-position tongue-and-groove adjustment channel; plausible crossed linkage.\nMust not show: simple two-position slip-joint pivot; locking adjustment screw; pipe-wrench hook jaw; needle-nose jaws.\nConstraints: text or pseudo-text; letters, numbers, labels, arrows, circles, answer marks; logos, trademarks, brand-specific trade dress, watermarks; hands, people, surrounding room, floor plane, props; drop shadows, gray background, decorative border; cropped object, duplicated parts, floating parts, impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "pilot-tool-16",
+    "briefVersion": 1,
+    "conceptId": "tool.floor-squeegee",
+    "canonicalTerm": "Floor squeegee",
+    "taxonomyRevision": "004f405",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.floor-squeegee"
+    ],
+    "mustShow": [
+      "long straight handle",
+      "broad wide floor head",
+      "single straight rubber blade spanning the head",
+      "reinforced handle-to-head socket"
+    ],
+    "mustNotShow": [
+      "short handheld grip",
+      "small window-cleaning channel",
+      "sponge washer sleeve",
+      "mop fibers"
+    ],
+    "desiredView": "three-quarter view showing the entire long handle and head",
+    "crop": "single complete object centered, approximately 70% canvas occupancy, generous even padding",
+    "aspectRatio": "1:1",
+    "background": "pure white",
+    "styleReference": {
+      "kind": "high-level visual-language reference only",
+      "title": "NYS DCS Custodians/Janitors Entry-Level Test Guide",
+      "url": "https://www.cs.ny.gov/testing/test_guides/Custodians_Janitors_EntryLevel_TestGuide.pdf",
+      "restrictions": "Do not reproduce its subject, composition, choices, labels, or any particular drawing."
+    },
+    "prohibited": [
+      "text or pseudo-text",
+      "letters, numbers, labels, arrows, circles, answer marks",
+      "logos, trademarks, brand-specific trade dress, watermarks",
+      "hands, people, surrounding room, floor plane, props",
+      "drop shadows, gray background, decorative border",
+      "cropped object, duplicated parts, floating parts, impossible joints"
+    ],
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "prompt": "Use case: scientific-educational\nAsset type: isolated exam-prep tool-recognition illustration\nPrimary request: Create one original illustration of a generic Floor squeegee.\nScene/backdrop: pure white background with no floor plane and no shadow.\nSubject: Floor squeegee.\nStyle/medium: Original black monochrome technical line illustration on pure white, plain civil-service test-booklet visual language: confident medium contour weight, sparse functional hatching, restrained interior detail, high whitespace, generic unbranded construction. Original geometry and composition; do not copy any particular official sample drawing.\nComposition/framing: three-quarter view showing the entire long handle and head; center the single complete object; fill roughly 70% of the square canvas; generous even padding.\nMust show: long straight handle; broad wide floor head; single straight rubber blade spanning the head; reinforced handle-to-head socket.\nMust not show: short handheld grip; small window-cleaning channel; sponge washer sleeve; mop fibers.\nConstraints: text or pseudo-text; letters, numbers, labels, arrows, circles, answer marks; logos, trademarks, brand-specific trade dress, watermarks; hands, people, surrounding room, floor plane, props; drop shadows, gray background, decorative border; cropped object, duplicated parts, floating parts, impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "pilot-tool-17",
+    "briefVersion": 1,
+    "conceptId": "tool.window-squeegee",
+    "canonicalTerm": "Handheld window squeegee",
+    "taxonomyRevision": "004f405",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.window-squeegee"
+    ],
+    "mustShow": [
+      "short ergonomic hand grip",
+      "narrow straight channel",
+      "single rubber wiping blade",
+      "compact handheld proportions"
+    ],
+    "mustNotShow": [
+      "long floor handle",
+      "broad floor head",
+      "sponge washer sleeve",
+      "mop fibers"
+    ],
+    "desiredView": "three-quarter view showing the full compact tool",
+    "crop": "single complete object centered, approximately 70% canvas occupancy, generous even padding",
+    "aspectRatio": "1:1",
+    "background": "pure white",
+    "styleReference": {
+      "kind": "high-level visual-language reference only",
+      "title": "NYS DCS Custodians/Janitors Entry-Level Test Guide",
+      "url": "https://www.cs.ny.gov/testing/test_guides/Custodians_Janitors_EntryLevel_TestGuide.pdf",
+      "restrictions": "Do not reproduce its subject, composition, choices, labels, or any particular drawing."
+    },
+    "prohibited": [
+      "text or pseudo-text",
+      "letters, numbers, labels, arrows, circles, answer marks",
+      "logos, trademarks, brand-specific trade dress, watermarks",
+      "hands, people, surrounding room, floor plane, props",
+      "drop shadows, gray background, decorative border",
+      "cropped object, duplicated parts, floating parts, impossible joints"
+    ],
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "prompt": "Use case: scientific-educational\nAsset type: isolated exam-prep tool-recognition illustration\nPrimary request: Create one original illustration of a generic Handheld window squeegee.\nScene/backdrop: pure white background with no floor plane and no shadow.\nSubject: Handheld window squeegee.\nStyle/medium: Original black monochrome technical line illustration on pure white, plain civil-service test-booklet visual language: confident medium contour weight, sparse functional hatching, restrained interior detail, high whitespace, generic unbranded construction. Original geometry and composition; do not copy any particular official sample drawing.\nComposition/framing: three-quarter view showing the full compact tool; center the single complete object; fill roughly 70% of the square canvas; generous even padding.\nMust show: short ergonomic hand grip; narrow straight channel; single rubber wiping blade; compact handheld proportions.\nMust not show: long floor handle; broad floor head; sponge washer sleeve; mop fibers.\nConstraints: text or pseudo-text; letters, numbers, labels, arrows, circles, answer marks; logos, trademarks, brand-specific trade dress, watermarks; hands, people, surrounding room, floor plane, props; drop shadows, gray background, decorative border; cropped object, duplicated parts, floating parts, impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "pilot-tool-18",
+    "briefVersion": 1,
+    "conceptId": "tool.pipe-reamer",
+    "canonicalTerm": "Manual ratchet pipe reamer",
+    "taxonomyRevision": "004f405",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#tool.pipe-reamer",
+      "https://www.ridgid.com/us/en/pipe-reamers"
+    ],
+    "mustShow": [
+      "hand-operated ratchet body and handle",
+      "tapered conical reamer head",
+      "clearly visible straight or spiral cutting flutes",
+      "coherent pressure plate/ratchet connection"
+    ],
+    "mustNotShow": [
+      "drill bit",
+      "pipe extractor",
+      "tube cutter wheel",
+      "powered motor",
+      "generic screwdriver"
+    ],
+    "desiredView": "feature-revealing three-quarter side view",
+    "crop": "single complete object centered, approximately 70% canvas occupancy, generous even padding",
+    "aspectRatio": "1:1",
+    "background": "pure white",
+    "styleReference": {
+      "kind": "high-level visual-language reference only",
+      "title": "NYS DCS Custodians/Janitors Entry-Level Test Guide",
+      "url": "https://www.cs.ny.gov/testing/test_guides/Custodians_Janitors_EntryLevel_TestGuide.pdf",
+      "restrictions": "Do not reproduce its subject, composition, choices, labels, or any particular drawing."
+    },
+    "prohibited": [
+      "text or pseudo-text",
+      "letters, numbers, labels, arrows, circles, answer marks",
+      "logos, trademarks, brand-specific trade dress, watermarks",
+      "hands, people, surrounding room, floor plane, props",
+      "drop shadows, gray background, decorative border",
+      "cropped object, duplicated parts, floating parts, impossible joints"
+    ],
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "prompt": "Use case: scientific-educational\nAsset type: isolated exam-prep tool-recognition illustration\nPrimary request: Create one original illustration of a generic Manual ratchet pipe reamer.\nScene/backdrop: pure white background with no floor plane and no shadow.\nSubject: Manual ratchet pipe reamer.\nStyle/medium: Original black monochrome technical line illustration on pure white, plain civil-service test-booklet visual language: confident medium contour weight, sparse functional hatching, restrained interior detail, high whitespace, generic unbranded construction. Original geometry and composition; do not copy any particular official sample drawing.\nComposition/framing: feature-revealing three-quarter side view; center the single complete object; fill roughly 70% of the square canvas; generous even padding.\nMust show: hand-operated ratchet body and handle; tapered conical reamer head; clearly visible straight or spiral cutting flutes; coherent pressure plate/ratchet connection.\nMust not show: drill bit; pipe extractor; tube cutter wheel; powered motor; generic screwdriver.\nConstraints: text or pseudo-text; letters, numbers, labels, arrows, circles, answer marks; logos, trademarks, brand-specific trade dress, watermarks; hands, people, surrounding room, floor plane, props; drop shadows, gray background, decorative border; cropped object, duplicated parts, floating parts, impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  },
+  {
+    "briefId": "pilot-tool-19",
+    "briefVersion": 1,
+    "conceptId": "equipment.steam-cleaner",
+    "canonicalTerm": "Compact professional steam-cleaning machine",
+    "taxonomyRevision": "004f405",
+    "evidenceSources": [
+      "docs/TAXONOMY.md#equipment.steam-cleaner",
+      "https://www.kaercher.com/us/commercial/steam-cleaners/sg-4-4-steam-cleaner-10928050.html"
+    ],
+    "mustShow": [
+      "compact wheelless or small-base boiler/tank machine body",
+      "carrying handle",
+      "power cord",
+      "flexible steam hose with hand gun",
+      "two extension tubes and a floor nozzle represented without clutter"
+    ],
+    "mustNotShow": [
+      "upright vacuum bag",
+      "carpet extractor recovery tank",
+      "pressure washer wand",
+      "visible steam cloud",
+      "chemical bottle",
+      "brand-specific body"
+    ],
+    "desiredView": "three-quarter product view with one hose and floor nozzle arranged clearly",
+    "crop": "single complete object centered, approximately 70% canvas occupancy, generous even padding",
+    "aspectRatio": "1:1",
+    "background": "pure white",
+    "styleReference": {
+      "kind": "high-level visual-language reference only",
+      "title": "NYS DCS Custodians/Janitors Entry-Level Test Guide",
+      "url": "https://www.cs.ny.gov/testing/test_guides/Custodians_Janitors_EntryLevel_TestGuide.pdf",
+      "restrictions": "Do not reproduce its subject, composition, choices, labels, or any particular drawing."
+    },
+    "prohibited": [
+      "text or pseudo-text",
+      "letters, numbers, labels, arrows, circles, answer marks",
+      "logos, trademarks, brand-specific trade dress, watermarks",
+      "hands, people, surrounding room, floor plane, props",
+      "drop shadows, gray background, decorative border",
+      "cropped object, duplicated parts, floating parts, impossible joints"
+    ],
+    "requestedOutputCount": 1,
+    "requestedDimensions": "native built-in output; dimensions must be measured, not assumed",
+    "prompt": "Use case: scientific-educational\nAsset type: isolated exam-prep tool-recognition illustration\nPrimary request: Create one original illustration of a generic Compact professional steam-cleaning machine.\nScene/backdrop: pure white background with no floor plane and no shadow.\nSubject: Compact professional steam-cleaning machine.\nStyle/medium: Original black monochrome technical line illustration on pure white, plain civil-service test-booklet visual language: confident medium contour weight, sparse functional hatching, restrained interior detail, high whitespace, generic unbranded construction. Original geometry and composition; do not copy any particular official sample drawing.\nComposition/framing: three-quarter product view with one hose and floor nozzle arranged clearly; center the single complete object; fill roughly 70% of the square canvas; generous even padding.\nMust show: compact wheelless or small-base boiler/tank machine body; carrying handle; power cord; flexible steam hose with hand gun; two extension tubes and a floor nozzle represented without clutter.\nMust not show: upright vacuum bag; carpet extractor recovery tank; pressure washer wand; visible steam cloud; chemical bottle; brand-specific body.\nConstraints: text or pseudo-text; letters, numbers, labels, arrows, circles, answer marks; logos, trademarks, brand-specific trade dress, watermarks; hands, people, surrounding room, floor plane, props; drop shadows, gray background, decorative border; cropped object, duplicated parts, floating parts, impossible joints.\nOutput intent: one native raster candidate; do not add explanatory text.",
+    "status": "ready"
+  }
+]

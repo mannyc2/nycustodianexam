@@ -1,0 +1,42 @@
+{
+  "briefId": "visual-pilot-v2-pipe-wrench-in-use-v2",
+  "briefVersion": 2,
+  "date": "2026-08-23",
+  "status": "generation-authorized; candidate-only; independent blind-QA correction",
+  "conceptId": "pipe-wrench",
+  "variantId": "pipe-wrench-in-use",
+  "supersedesBrief": {
+    "path": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-in-use-v1.json",
+    "reason": "Independent review blocked v2t002-u2 because the lower heel-jaw contact was not explicit at 320 pixels and its recessed handle, oblong end hole, and diagonal presentation repeated forbidden nonmechanical reference conventions."
+  },
+  "generatorSurface": "Codex built-in image_gen",
+  "generationMode": "reference-guided generation from scratch",
+  "outputRequest": {
+    "count": 1,
+    "candidateId": "v2t002-u3",
+    "candidatePath": "content/assets/candidates/visual-pilot-v2/v2t002-u3.png",
+    "nativeDimensions": "one native square raster at generator-selected dimensions; preserve original bytes"
+  },
+  "referencedImages": [
+    {
+      "path": "content/authoring/visuals/references/pipe-wrench/straight-pipe-wrench-assembled-packshot.jpg",
+      "sha256": "bd312c12650c81ee62667937cf90d03baf2cd2dbe4fb2560c04e8cc6a0302984",
+      "role": "sole anatomy reference for assembled topology only; do not use its composition, angle, handle decoration, end hole, exact contours, proportions, surface details, brand, color, or trade dress"
+    }
+  ],
+  "mustShow": [
+    "exactly one generic traditional pipe wrench and one short round cylindrical metal fitting",
+    "both the upper hook-jaw and lower fixed-heel-jaw serrated faces visibly tangent to opposite sides of the fitting",
+    "one hook jaw continuing into one straight threaded shank engaging exactly one plain knurled adjustment nut",
+    "one complete plain solid handle with no inset panel, recess, groove, cutout, or hanging hole",
+    "a near-profile composition with the handle descending almost vertically, materially different from the diagonal reference and prior candidate",
+    "original monochrome instructional line art on opaque pure white, readable at 320 by 320"
+  ],
+  "mustNotShow": [
+    "hidden, ambiguous, gapped, fused, or penetrating jaw contact",
+    "a second rack, loop, return, fork, duplicate nut, worm gear, smooth adjustable-wrench jaws, or hexagonal workpiece",
+    "a recessed handle panel, decorative handle groove, oblong or round hanging hole, branded silhouette, or copied source trade dress",
+    "a hand, person, cheater bar, hammer, force arrow, motion mark, text, pseudo-text, logo, watermark, color, scenery, or cast shadow"
+  ],
+  "prompt": "Use case: scientific-educational.\nAsset type: one square in-use tool-recognition illustration for a custodial-training image library.\nInput image: Image 1 is an anatomy-only reference for the basic assembled topology of a traditional straight pipe wrench. Generate a new original illustration from scratch; do not edit, trace, restyle, or reproduce the photographed product. Do not borrow its brand, lettering, color, camera angle, composition, exact contours, proportions, surface details, handle recess, end hole, or trade dress.\n\nPrimary request: Draw exactly one generic traditional straight pipe wrench correctly seated on exactly one short round cylindrical steel pipe coupling. No hand or person appears. Show a safe static grip that communicates use without arrows or text.\n\nContact geometry: Use a feature-revealing near-side profile. The cylindrical fitting runs almost horizontally across the upper third of the square, with a small elliptical end rim or circumferential band proving that it is round rather than hexagonal. Place the upper serrated hook-jaw face visibly tangent to the top of the cylinder and the lower serrated fixed heel-jaw face visibly tangent to its underside. Leave both contact points fully exposed outside the body silhouette and large enough to remain obvious at 320 by 320. There must be no daylight at either contact, no overlap through the metal, and no housing occlusion over either tangent point.\n\nMechanism: One curved movable hook jaw continues directly into the only straight threaded shank. That single shank passes through exactly one plain knurled adjustment nut and terminates shortly afterward on the same axis. One fixed heel jaw is integral to the body. No loop, U-shaped rack, return bend, second rail, duplicate rod, fork, second nut, or adjustable-wrench worm gear.\n\nOriginal handle design: Use one complete ordinary-length plain solid forged handle descending almost vertically downward with a slight lean to the left, creating a materially different whole-tool pose from the anatomy reference and the previous diagonal candidate. Give the handle a simple undecorated solid silhouette and a softly rounded solid end. Absolutely no inset panel, long recess, groove, cutout, stamped channel, hanging hole, oblong opening, or decorative product contour anywhere on the handle.\n\nStyle and framing: original black-and-white educational technical line art on an opaque pure-white square canvas; crisp graphite-black contours, consistent medium interior lines, sparse functional hatching, and restrained pale-gray form wash only where it clarifies the cylinder. Enlarge the wrench head and two jaw contacts while keeping the complete handle inside generous even padding. No floor, room, bench, border, shadow, or extra prop.\n\nAvoid: crescent-wrench geometry; smooth parallel jaws; hex nut or bolt head; square stock; duplicate or detached parts; unsafe force multiplier; photorealism; product-shot gloss; branding; lettering; numerals; pseudo-text; labels; arrows; motion lines; watermark; color; copied contours or trade dress."
+}

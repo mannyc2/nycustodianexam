@@ -1,0 +1,50 @@
+{
+  "referenceSetId": "next-weak-tools-broom-brush-2026-08-23",
+  "date": "2026-08-23",
+  "status": "authoring references only; never learner-facing",
+  "selectionBasis": "The accepted phone contact sheet makes the head geometry of long-handled implements relatively small. Push broom and deck brush form a maintained confusable pair, so matched feature-revealing views have high recognition value.",
+  "usageRule": "Supply exactly one manufacturer image to each generation call as anatomy-only evidence. Express composition and library style only in text. Do not reproduce branding, labels, packaging, color, trade dress, exact proprietary contours, or source composition.",
+  "references": [
+    {
+      "referenceId": "push-broom-assembled-anatomy",
+      "localPath": "content/authoring/visuals/references/next-weak-tools/push-broom-assembled-alt.jpg",
+      "sha256": "5404ecac1fbc19b9eef99e95e1e5d3772b484f8258fd53e9a832de442c1d85dd",
+      "sourceTitle": "Rubbermaid Commercial assembled push broom product image",
+      "sourcePageUrl": "https://www.rubbermaidcommercial.com/cleaning/brooms/assembled-push-brooms/?sku=2040051",
+      "sourceImageUrl": "https://assets.rcp.structpim.com/7241.jpg",
+      "allowedRole": "Generic assembled anatomy only: a long handle attaches centrally to a much wider rectangular broom block, with support braces and a long continuous row of flexible sweeping bristles.",
+      "forbiddenRole": "Do not reproduce the logo badge, colors, wood grain, exact brace contour, handle grip, product proportions, surface finish, camera angle, or trade dress."
+    },
+    {
+      "referenceId": "deck-brush-head-anatomy",
+      "localPath": "content/authoring/visuals/references/next-weak-tools/deck-scrub-head.jpg",
+      "sha256": "44cb12773e5e59a103fc4871344414d1ccb3e5e00b69298f109302657a912a48",
+      "sourceTitle": "Carlisle Flo-Pac stiff polypropylene deck scrub 3617514",
+      "sourcePageUrl": "https://www.carlislefsp.com/floor-brushes-and-brooms/floor-deck-and-baseboard-scrub-brushes/3617514",
+      "sourceImageUrl": "https://catalog.carlislefsp.com/images/full/345533.jpg",
+      "allowedRole": "Generic head anatomy only: a compact thick rectangular hardwood block carries dense, short, stiff, straight bristle tufts intended for scrubbing; a long handle connects at the block center.",
+      "forbiddenRole": "Do not reproduce blue color, wood grain, tuft layout, exact block rounding, product proportions, close macro crop, surface finish, or trade dress."
+    }
+  ],
+  "baselineAssets": [
+    {
+      "conceptId": "tool.push-broom",
+      "path": "content/assets/masters/tools/t004.png",
+      "role": "Accepted baseline for before/after phone-readability review only; not a generation input."
+    },
+    {
+      "conceptId": "tool.deck-brush",
+      "path": "content/assets/masters/tools/t010.png",
+      "role": "Accepted baseline for before/after phone-readability review only; not a generation input."
+    }
+  ],
+  "excludedReferenceInputs": [
+    {
+      "path": "content/authoring/visuals/references/next-weak-tools/push-broom-assembled.jpg",
+      "sha256": "3000531af89d7eaf5ca4dc586712e9d5b2f6419211b931f16c10e0ced1891ac4",
+      "sourcePageUrl": "https://www.rubbermaidcommercial.com/cleaning/brooms/brute-smooth-surface-push-broom-with-wood-handle/?sku=2255459",
+      "sourceImageUrl": "https://assets.rcp.structpim.com/23903.jpg",
+      "reason": "Preserved for provenance but excluded from generation because the large attached retail label and product marks could contaminate content."
+    }
+  ]
+}

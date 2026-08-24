@@ -1,0 +1,5 @@
+*.jpeg -text -diff
+*.jpg -text -diff
+*.png -text -diff
+*.webp -text -diff
+*.zip -text -diff

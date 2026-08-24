@@ -1,0 +1,114 @@
+{
+  "reviewId": "visual-pilot-v2-pipe-wrench-in-use-v1-review",
+  "date": "2026-08-23",
+  "status": "complete but superseded; u2 remained provisional; later v5 review independently selected u6; candidate-only; no master overwritten",
+  "supersededBy": "content/authoring/visuals/reviews/visual-pilot-v2/pipe-wrench-in-use-v5/REVIEW.json",
+  "brief": {
+    "path": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-in-use-v1.json",
+    "sha256": "6688efd0e19a56c8935619a4df4923ff7236dc46df594369b5ed33d3078970eb"
+  },
+  "generator": {
+    "surface": "Codex built-in image_gen",
+    "mode": "reference-guided generation from scratch",
+    "callCount": 2,
+    "callPolicy": "Exactly one initial candidate plus one targeted retry after a fatal topology defect. No further generation was performed."
+  },
+  "referenceInput": {
+    "path": "content/authoring/visuals/references/pipe-wrench/straight-pipe-wrench-assembled-packshot.jpg",
+    "sha256": "bd312c12650c81ee62667937cf90d03baf2cd2dbe4fb2560c04e8cc6a0302984",
+    "role": "sole anatomy-only reference; composition, in-use pose, monochrome style, and genericization were controlled by text",
+    "rightsBoundary": "Do not reproduce source color, brand, lettering, camera angle, exact contours, proportions, surface details, hang-hole shape, or trade dress."
+  },
+  "selected": {
+    "candidateId": "v2t002-u2",
+    "path": "content/assets/candidates/visual-pilot-v2/v2t002-u2.png",
+    "sha256": "085a9f8ae2d6c0a5bb746dce5416e669575fdc79c66153ba3e75721bd1fe705f",
+    "dimensions": "1254x1254 RGB PNG",
+    "generatedSource": "/home/cjpher/.codex/generated_images/01a0306e-dc29-7d90-aa7e-6a2ef44121f9/exec-8cd7d648-88a1-4f95-bb50-458d928a7cbe.png",
+    "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-in-use-v1.json#targetedRetry.prompt",
+    "decision": "provisional-selected",
+    "decisionBasis": "The targeted retry removes the fatal looped rack and shows one straight threaded shank passing through one knurled nut, one wrench safely enclosing one clearly cylindrical fitting, no person or unsafe force multiplier, and strong 320-pixel recognition. It is not a final production pass because the fixed heel jaw's tangent contact is partly hidden by the body at 320 pixels and the handle recess/hang-hole treatment remains too close to anatomy-reference product conventions for an unqualified originality decision."
+  },
+  "attempts": [
+    {
+      "candidateId": "v2t002-u1",
+      "path": "content/assets/candidates/visual-pilot-v2/v2t002-u1.png",
+      "sha256": "3ab1413f9ef241946ddfedd569b8884c6cbcba891a51baa34e189e125e22d4fc",
+      "dimensions": "1254x1254 RGB PNG",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a0306e-dc29-7d90-aa7e-6a2ef44121f9/exec-9db26200-9041-45e2-84a9-d5f1484f2ded.png",
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-in-use-v1.json#prompt",
+      "finalVerdict": "reject",
+      "finding": "The round-fitting scene, monochrome treatment, and safe no-person context are clear, but the adjusting nut engages a separate curved U-shaped looped rack instead of one straight shank continuous with the movable hook jaw. This visible contradictory mechanism is fatal."
+    },
+    {
+      "candidateId": "v2t002-u2",
+      "path": "content/assets/candidates/visual-pilot-v2/v2t002-u2.png",
+      "sha256": "085a9f8ae2d6c0a5bb746dce5416e669575fdc79c66153ba3e75721bd1fe705f",
+      "dimensions": "1254x1254 RGB PNG",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a0306e-dc29-7d90-aa7e-6a2ef44121f9/exec-8cd7d648-88a1-4f95-bb50-458d928a7cbe.png",
+      "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-in-use-v1.json#targetedRetry.prompt",
+      "finalVerdict": "provisional-selected",
+      "finding": "The straight single-shank correction succeeds and the working grip reads clearly. The lower fixed-jaw contact is partly occluded at phone size, while the handle recess and hanging-hole convention require an additional rights/similarity judgment before master promotion."
+    }
+  ],
+  "qa": {
+    "nativeReview": {
+      "v2t002-u1": {
+        "verdict": "reject",
+        "subjectAndCount": "pass: one complete wrench and one cylindrical fitting; no person or extra prop",
+        "jawContact": "pass: the scene reads as jaws seated around the round fitting",
+        "mechanicalTopology": "fail: a separate looped rack appears behind the adjustment nut",
+        "safety": "pass: no cheater bar, hammer, hand, body, or unsafe pose",
+        "styleAndSecurity": "pass: monochrome line art, no text, arrows, brand, logo, watermark, or answer cue"
+      },
+      "v2t002-u2": {
+        "verdict": "provisional",
+        "subjectAndCount": "pass: one complete wrench and one clearly round cylindrical fitting; no person or extra prop",
+        "jawContact": "provisional: upper hook-jaw contact is visible and plausible; lower fixed-heel contact is partly hidden by the body",
+        "mechanicalTopology": "pass under the corrected assembled-anatomy gate: one straight threaded shank passes through one nut with no loop, fork, duplicate rack, or second nut; opaque body occlusion hides the hook-jaw junction without visible contradiction",
+        "safety": "pass: ordinary unextended handle; no cheater bar, hammer, impact, hand, body, or unsafe pose",
+        "styleAndSecurity": "pass: original-seeming monochrome line art on white with no text, arrows, brand, logo, watermark, or answer cue",
+        "rightsSimilarity": "provisional: no source marks or color remain, but the long inset handle recess and rounded hanging hole are close enough to common packshot/product conventions to require final reviewer sign-off"
+      }
+    },
+    "phoneReview": {
+      "dimensions": "320x320 RGB PNG per candidate",
+      "v2t002-u1": "The wrench-on-round-fitting action remains readable, but the looped rack remains unmistakably wrong.",
+      "v2t002-u2": "The round fitting, pipe-wrench silhouette, toothed hook jaw, single nut, complete handle, and safe context remain clear. The lower tooth-to-fitting tangent point is not fully explicit at this size."
+    },
+    "accessibilityDraft": {
+      "neutralAttemptDescription": "A monochrome line drawing shows a long-handled gripping tool positioned around a short round metal fitting.",
+      "fullLearningDescription": "A traditional pipe wrench is shown seated around the outside of a cylindrical metal fitting, with its serrated hook jaw and fixed heel jaw opposing one another and its ordinary handle left unextended.",
+      "answerLeak": "No learner-facing accessibility record was installed; these descriptions remain inside the candidate-only review receipt."
+    }
+  },
+  "reviewDerivatives": {
+    "phoneContactSheet": {
+      "path": "content/authoring/visuals/reviews/visual-pilot-v2/pipe-wrench-in-use-v1/PHONE-CONTACT-SHEET.png",
+      "sha256": "3ff2984cdfd09bed2c8df81034d9e92b63dae923eac63a97652e384f975e7486",
+      "dimensions": "640x320 RGB PNG",
+      "order": [
+        "left: v2t002-u1 rejected",
+        "right: v2t002-u2 provisional-selected"
+      ]
+    },
+    "phoneCandidates": [
+      {
+        "candidateId": "v2t002-u1",
+        "path": "content/authoring/visuals/reviews/visual-pilot-v2/pipe-wrench-in-use-v1/phone/v2t002-u1.png",
+        "sha256": "b3b0b38cb29734d779cfd25057fde2d7dd5bce0ad7b70aea909f3d03d2609c2d"
+      },
+      {
+        "candidateId": "v2t002-u2",
+        "path": "content/authoring/visuals/reviews/visual-pilot-v2/pipe-wrench-in-use-v1/phone/v2t002-u2.png",
+        "sha256": "f17670c39ac12d2c436501dd3ae0dfc6813875bb32a9c9db07c5515fe29994ad"
+      }
+    ],
+    "nativeHeadReview": {
+      "path": "content/authoring/visuals/reviews/visual-pilot-v2/pipe-wrench-in-use-v1/v2t002-u2-head-review.png",
+      "sha256": "b50ab7f5ffa400c3a82f884f2aea411b70f2497b2d04da4758cc17f88eea833c",
+      "purpose": "review-only enlarged crop; never a delivery asset"
+    }
+  },
+  "masterImpact": "None. Existing accepted masters and their manifests were not changed."
+}

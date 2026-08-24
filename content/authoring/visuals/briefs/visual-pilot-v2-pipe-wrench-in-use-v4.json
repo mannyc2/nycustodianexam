@@ -1,0 +1,39 @@
+{
+  "briefId": "visual-pilot-v2-pipe-wrench-in-use-v4",
+  "briefVersion": 4,
+  "date": "2026-08-23",
+  "status": "generation-authorized; candidate-only; minimal-edit topology lock",
+  "conceptId": "pipe-wrench",
+  "variantId": "pipe-wrench-in-use",
+  "supersedesBrief": {
+    "path": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-in-use-v3.json",
+    "reason": "v2t002-u4 again separated the hook jaw from the threaded shank. The next operation locks the accepted project-owned wrench and adds only the workpiece."
+  },
+  "generatorSurface": "Codex built-in image_gen",
+  "generationMode": "minimal edit of project-owned accepted artwork",
+  "outputRequest": {
+    "count": 1,
+    "candidateId": "v2t002-u5",
+    "candidatePath": "content/assets/candidates/visual-pilot-v2/v2t002-u5.png",
+    "nativeDimensions": "one native square raster at generator-selected dimensions; preserve original bytes"
+  },
+  "referencedImages": [
+    {
+      "path": "content/assets/masters/tools/t037.png",
+      "sha256": "334044fb3c25f5e14be4c47e0df0512961ce8dce08e568e0d91b021faa8f1e99",
+      "role": "project-owned accepted base image; keep the entire wrench, mechanism, handle, viewpoint, style, and framing unchanged"
+    }
+  ],
+  "mustShow": [
+    "the accepted wrench retained without redesign",
+    "one small round hollow steel coupling viewed almost end-on inside the jaw gap",
+    "left and right opposed serrated faces visibly tangent to opposite sides of the coupling",
+    "monochrome line art on opaque white, readable at 320 by 320"
+  ],
+  "mustNotShow": [
+    "any changed, added, removed, duplicated, or disconnected wrench part",
+    "a second tool, second workpiece, hex fitting, gap at a contact, or teeth passing through metal",
+    "hands, people, arrows, text, branding, watermark, scenery, shadow, or color"
+  ],
+  "prompt": "Edit Image 1 with the smallest possible change. Image 1 is project-owned accepted generic pipe-wrench artwork. Preserve the existing wrench exactly as drawn: same complete silhouette, same hook jaw, same single threaded shank, same single adjustment nut, same fixed heel jaw, same handle, same horizontal viewpoint, same line weights, same monochrome shading, same white background, same scale, and same framing. Do not redraw, simplify, rotate, redesign, decorate, crop, or alter any part of the wrench.\n\nAdd only one workpiece inside the existing open jaw gap: a small hollow round steel pipe coupling viewed almost directly end-on, so it reads as a circular metal ring with a restrained inner opening and very slight cylindrical rim depth. Size and position the coupling so the existing left hook-jaw serrations visibly touch its left outer circumference and the existing right fixed-heel serrations visibly touch its right outer circumference. Both opposed tangent contact points must be explicit and readable at 320 by 320. No daylight at either contact and no teeth passing through the metal. The coupling must remain fully inside the jaw opening and must not be hexagonal.\n\nMatch the existing original black-and-white technical line-art treatment. Keep an opaque pure-white canvas. Add nothing else: no second pipe, no second tool, no hand or person, no cheater bar, no arrows, motion marks, text, pseudo-text, numerals, logo, brand, watermark, floor, room, bench, border, cast shadow, or color. Most important: do not invent or change any wrench mechanism; the only edit is the one round coupling between the already accepted jaws."
+}

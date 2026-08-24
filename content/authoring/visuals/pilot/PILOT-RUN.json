@@ -1,0 +1,42 @@
+{
+  "runId": "plan-001-tool-pilot-2026-08-23",
+  "status": "checkpoint-awaiting-maintainer-review",
+  "sourceSha": "004f405",
+  "taxonomyRevision": "004f405",
+  "policy": "illustration/VISUAL_AUTHORING_POLICY.md",
+  "generatorSurface": "Codex built-in image_gen",
+  "modelIdentifier": "not exposed before generation",
+  "operator": "Codex /root",
+  "maintainerApprovalRequiredAtCheckpoint": true,
+  "styleReference": {
+    "kind": "high-level visual-language reference only",
+    "title": "NYS DCS Custodians/Janitors Entry-Level Test Guide",
+    "url": "https://www.cs.ny.gov/testing/test_guides/Custodians_Janitors_EntryLevel_TestGuide.pdf",
+    "restrictions": "Do not reproduce its subject, composition, choices, labels, or any particular drawing."
+  },
+  "briefIds": [
+    "pilot-tool-01",
+    "pilot-tool-02",
+    "pilot-tool-03",
+    "pilot-tool-04",
+    "pilot-tool-05",
+    "pilot-tool-06",
+    "pilot-tool-07",
+    "pilot-tool-08",
+    "pilot-tool-09",
+    "pilot-tool-10",
+    "pilot-tool-11",
+    "pilot-tool-12",
+    "pilot-tool-13",
+    "pilot-tool-14",
+    "pilot-tool-15",
+    "pilot-tool-16",
+    "pilot-tool-17",
+    "pilot-tool-18",
+    "pilot-tool-19"
+  ],
+  "expectedCandidateCount": 19,
+  "generationMode": "one image per native canvas",
+  "batchTrialStatus": "complete; single-image default retained",
+  "createdAtUtc": "2026-08-23T03:02:35.509Z"
+}

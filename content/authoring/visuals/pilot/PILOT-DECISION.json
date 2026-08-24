@@ -1,0 +1,75 @@
+{
+  "runId": "plan-001-tool-pilot-2026-08-23",
+  "status": "maintainer-approved-with-corrections",
+  "maintainerDecisionDate": "2026-08-23",
+  "nativeSingleImageProfile": {
+    "format": "PNG",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGB",
+    "metadataKeysObserved": [
+      "caBX (JUMBF/C2PA content-credential provenance chunk; no exposed text fields observed)"
+    ],
+    "selectedCount": 19,
+    "firstPassRate": 0.9474,
+    "objectFootprintAreaRatioRange": [
+      0.287,
+      0.8392
+    ]
+  },
+  "batchTrial": {
+    "file": "content/assets/candidates/pilot/batch-trial-01.png",
+    "sha256": "27d1f58d1acc09480b0d7c575d2acf2a278678dcc2c033a416a4270326ebcde5",
+    "nativeWidth": 1254,
+    "nativeHeight": 1254,
+    "grid": "2x2",
+    "deterministicCropWidth": 627,
+    "deterministicCropHeight": 627,
+    "perTileCanvasAreaVersusSingle": 0.25,
+    "subjects": [
+      "Dustpan",
+      "Rubber mallet",
+      "Adjustable wrench",
+      "Pipe wrench"
+    ],
+    "visualVerdict": "PASS — four correct, separated, crop-safe subjects with no observed feature bleed",
+    "productionVerdict": "REJECTED AS DEFAULT",
+    "rationale": [
+      "Each tile receives one quarter of the native canvas area.",
+      "Hard-tool details are smaller than their single-image equivalents.",
+      "Every tile requires deterministic crop and separate downstream review.",
+      "The trial does not establish that rejection and cleanup labor are no worse at scale."
+    ]
+  },
+  "productionDecision": {
+    "generationMode": "one image per native canvas",
+    "batchPolicy": "Do not use batch generation for the remaining library without a later measured revision.",
+    "masterPolicy": "Preserve selected native PNG bytes unchanged after approval.",
+    "phoneReviewDerivative": "320x320 PNG, Lanczos scaling, review-only",
+    "grayscalePrintReviewDerivative": "320x320 grayscale PNG, Lanczos scaling, review-only",
+    "backgroundPolicy": "Resolve exact-white normalization before master promotion; any visible change creates new hashes and repeats affected review."
+  },
+  "approvalGate": {
+    "approved": true,
+    "requiredFrom": "maintainer",
+    "independentReviewRequired": true,
+    "approvalScope": "Approved one-image-per-canvas production profile and continuation through all 65 candidate concepts; not final master or scored-comparison approval."
+  },
+  "correctionsAfterApprovalReview": {
+    "equipment.floor-machine.low-speed": {
+      "selectedCandidate": "content/assets/candidates/pilot/c012-r3.png",
+      "supersedes": "content/assets/candidates/pilot/c012.png",
+      "reason": "Added unmistakable motor-over-deck geometry, visible scrub-brush bristles, and a complete cord with visible plug."
+    },
+    "equipment.burnisher.high-speed": {
+      "selectedCandidate": "content/assets/candidates/pilot/c013-r3.png",
+      "supersedes": "content/assets/candidates/pilot/c013.png",
+      "reason": "Added rearward horizontal motor mass, large transport wheels, smooth pad edge, and a complete cord with visible plug."
+    },
+    "equipment.steam-cleaner": {
+      "selectedCandidate": "content/assets/candidates/pilot/c019-r2.png",
+      "supersedes": "content/assets/candidates/pilot/c019.png",
+      "reason": "Replaced the detached accessory layout with a continuous body-to-hose-to-gun-to-tubes-to-nozzle chain."
+    }
+  }
+}

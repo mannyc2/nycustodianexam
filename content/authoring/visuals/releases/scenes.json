@@ -1,0 +1,2875 @@
+[
+  {
+    "sceneId": "scene.slip.hallway-wet-floor",
+    "opaqueAssetId": "s001",
+    "slot": 1,
+    "kind": "positive",
+    "hazardFamily": "slip-trip-fall",
+    "environment": "hallway/common area",
+    "productionStatus": "accepted",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "independentReviewStatus": "pass",
+    "semanticManifest": {
+      "claim": "A wet walking surface without a visible control is a condition needing correction.",
+      "sources": [
+        {
+          "id": "OSHA_FLOOR",
+          "title": "29 CFR 1910.22 General requirements",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.22",
+          "locator": "1910.22(a)(1)-(3)",
+          "scope": "Walking-working surfaces must be kept clean, orderly, sanitary, and free of hazards such as sharp or protruding objects, loose boards, corrosion, leaks, spills, snow, and ice."
+        }
+      ],
+      "targets": [
+        {
+          "id": "target-1",
+          "condition": "wide shallow wet patch across the central walking path with no warning control present",
+          "correction": "control the area and promptly clean/dry the walking surface"
+        }
+      ],
+      "decoys": [
+        {
+          "id": "decoy-1",
+          "condition": "fixed metal conduit running tightly along the base of the right wall",
+          "safeBecause": "it is fixed outside the walking route"
+        }
+      ],
+      "safeBackground": [
+        "closed classroom doors",
+        "wall-mounted bulletin frame with blank interior",
+        "janitor cart fully inside a side alcove"
+      ],
+      "structuralBackground": [
+        "hallway/common area",
+        "far hallway",
+        "left wall and alcove",
+        "central walking surface",
+        "right wall"
+      ],
+      "negativeInventory": [
+        {
+          "family": "slip-trip-fall",
+          "authoredPositiveTarget": true,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "egress",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "chemical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "electrical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "sharps-broken-material",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "material-handling-storage",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "biological-sanitation",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "machine-tool-safety",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        }
+      ],
+      "requiredCues": [
+        "wet patch visibly reflective by contour and hatch, not color",
+        "patch large enough to recognize at phone size",
+        "unobstructed view of the dry surrounding floor"
+      ],
+      "forbiddenCues": [
+        "warning sign or cone",
+        "person falling",
+        "other clutter or raised edges",
+        "cord crossing walkway"
+      ]
+    },
+    "master": {
+      "kind": "accepted-native-master",
+      "path": "content/assets/masters/scenes/s001.png",
+      "bytes": 2083834,
+      "sha256": "5648c401bd764f44b1f23e1dbaa5aac3e79c4292990e68c98f1d47947037ff0d",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "settings": "Byte-identical copy of the selected generated PNG; C2PA provenance retained."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/scenes/s001-web.png",
+        "bytes": 1150512,
+        "sha256": "17ebe760cec6465213b5a2f12f34d5291060174273862cf7f24618638a970ad3",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "1200x800 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/scenes/s001-phone.png",
+        "bytes": 412605,
+        "sha256": "39a7fb59d35b2ff5848a6294205200e34f6b78ec6dd4e11f72614d3eab0a9dd3",
+        "dimensions": {
+          "width": 720,
+          "height": 480,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "720x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/scenes/s001-print.png",
+        "bytes": 495492,
+        "sha256": "6ec56211e35f1ec1a01371a77c6ee73343860c2d4257932aed2bf9cdcc4c071e",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "gray"
+        },
+        "settings": "1200x800 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "regionRecord": "content/authoring/visuals/releases/regions.json",
+    "accessibilityRecord": "content/authoring/visuals/releases/accessibility.json",
+    "qaRecord": "content/authoring/visuals/releases/scene-qa-ledger.json",
+    "publicationGate": null
+  },
+  {
+    "sceneId": "scene.slip.lobby-raised-mat",
+    "opaqueAssetId": "s002",
+    "slot": 2,
+    "kind": "positive",
+    "hazardFamily": "slip-trip-fall",
+    "environment": "entrance/lobby",
+    "productionStatus": "accepted",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "independentReviewStatus": "pass",
+    "semanticManifest": {
+      "claim": "A raised or buckled floor-mat edge in a walking route is a trip condition needing correction.",
+      "sources": [
+        {
+          "id": "OSHA_FLOOR",
+          "title": "29 CFR 1910.22 General requirements",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.22",
+          "locator": "1910.22(a)(1)-(3)",
+          "scope": "Walking-working surfaces must be kept clean, orderly, sanitary, and free of hazards such as sharp or protruding objects, loose boards, corrosion, leaks, spills, snow, and ice."
+        }
+      ],
+      "targets": [
+        {
+          "id": "target-1",
+          "condition": "one entrance-mat corner visibly curled several inches upward in the walking route",
+          "correction": "flatten, reposition, or remove the mat so the walking surface is even"
+        }
+      ],
+      "decoys": [
+        {
+          "id": "decoy-1",
+          "condition": "stable umbrella stand outside the travel lane",
+          "safeBecause": "it is upright and outside the route"
+        }
+      ],
+      "safeBackground": [
+        "closed double entrance doors",
+        "dry tile floor",
+        "bench set against wall"
+      ],
+      "structuralBackground": [
+        "entrance/lobby",
+        "entrance doors",
+        "left wall furnishings",
+        "central mat and floor",
+        "right-side stand"
+      ],
+      "negativeInventory": [
+        {
+          "family": "slip-trip-fall",
+          "authoredPositiveTarget": true,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "egress",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "chemical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "electrical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "sharps-broken-material",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "material-handling-storage",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "biological-sanitation",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "machine-tool-safety",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        }
+      ],
+      "requiredCues": [
+        "clearly raised mat corner with visible gap and shadow line",
+        "dry surrounding floor",
+        "open walking route except for the mat edge"
+      ],
+      "forbiddenCues": [
+        "wet floor",
+        "loose cords",
+        "blocked door",
+        "person tripping"
+      ]
+    },
+    "master": {
+      "kind": "accepted-native-master",
+      "path": "content/assets/masters/scenes/s002.png",
+      "bytes": 1970799,
+      "sha256": "d692813cd7f4a25a8dcfbe5867f3d63e8c0738de48e55203f856214f463958f7",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "settings": "Byte-identical copy of the selected generated PNG; C2PA provenance retained."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/scenes/s002-web.png",
+        "bytes": 1093973,
+        "sha256": "e74e4e94b9fd0a81c28b91e856dbd51921f0250a18cf93a4c3a54132adb6463f",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "1200x800 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/scenes/s002-phone.png",
+        "bytes": 400157,
+        "sha256": "cee8d91348600b592bf0c7ac89449c4f30dedf6c83a36d96e107262f518ea0ef",
+        "dimensions": {
+          "width": 720,
+          "height": 480,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "720x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/scenes/s002-print.png",
+        "bytes": 434499,
+        "sha256": "6d46ff3b4acfe29af00469baa645b3df43aff3b7918178dc5d404eb4c853d89b",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "gray"
+        },
+        "settings": "1200x800 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "regionRecord": "content/authoring/visuals/releases/regions.json",
+    "accessibilityRecord": "content/authoring/visuals/releases/accessibility.json",
+    "qaRecord": "content/authoring/visuals/releases/scene-qa-ledger.json",
+    "publicationGate": null
+  },
+  {
+    "sceneId": "scene.egress.stairwell-boxes",
+    "opaqueAssetId": "s003",
+    "slot": 3,
+    "kind": "positive",
+    "hazardFamily": "egress-fire",
+    "environment": "stairwell",
+    "productionStatus": "accepted",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "independentReviewStatus": "pass",
+    "semanticManifest": {
+      "claim": "Exit routes must remain free and unobstructed.",
+      "sources": [
+        {
+          "id": "OSHA_EGRESS",
+          "title": "29 CFR 1910.37 Exit routes",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.37",
+          "locator": "1910.37(a)(3)",
+          "scope": "Exit routes must be free and unobstructed."
+        }
+      ],
+      "targets": [
+        {
+          "id": "target-1",
+          "condition": "several closed boxes occupy most of the stair landing and narrow the route",
+          "correction": "remove stored material from the exit route"
+        }
+      ],
+      "decoys": [
+        {
+          "id": "decoy-1",
+          "condition": "handrail securely mounted along the wall",
+          "safeBecause": "it is a normal stair safety feature"
+        }
+      ],
+      "safeBackground": [
+        "dry intact steps",
+        "closed utility door outside the stair path",
+        "ceiling light fixture"
+      ],
+      "structuralBackground": [
+        "stairwell",
+        "upper flight",
+        "landing",
+        "lower flight",
+        "wall fixtures"
+      ],
+      "negativeInventory": [
+        {
+          "family": "slip-trip-fall",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "egress",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "chemical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "electrical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "sharps-broken-material",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "material-handling-storage",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "biological-sanitation",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "machine-tool-safety",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        }
+      ],
+      "requiredCues": [
+        "boxes visibly reduce usable landing width",
+        "continuous stair route visible around the obstruction",
+        "boxes stable and closed so the target is obstruction, not falling objects"
+      ],
+      "forbiddenCues": [
+        "wet stairs",
+        "damaged handrail",
+        "leaning stack",
+        "readable exit text"
+      ]
+    },
+    "master": {
+      "kind": "accepted-native-master",
+      "path": "content/assets/masters/scenes/s003.png",
+      "bytes": 1289485,
+      "sha256": "4562c968a15c57d039cfdf9d95091da596c5ebf1068f7b6952ddccfac69d1a30",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "settings": "Byte-identical copy of the selected generated PNG; C2PA provenance retained."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/scenes/s003-web.png",
+        "bytes": 672719,
+        "sha256": "2695f3e9ab0bc53d7e5bc1aa39c4da58414c8551d976e3e784453ae36ffc242b",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "1200x800 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/scenes/s003-phone.png",
+        "bytes": 260693,
+        "sha256": "4213808a50ec91260499d7e409d22211479cb071a5643e935aa98cb37d054171",
+        "dimensions": {
+          "width": 720,
+          "height": 480,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "720x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/scenes/s003-print.png",
+        "bytes": 284460,
+        "sha256": "69b3952d515745f5727ae37a0f46ec64eb3a6a490a9d3dfd8a8212d4003c8d42",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "gray"
+        },
+        "settings": "1200x800 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "regionRecord": "content/authoring/visuals/releases/regions.json",
+    "accessibilityRecord": "content/authoring/visuals/releases/accessibility.json",
+    "qaRecord": "content/authoring/visuals/releases/scene-qa-ledger.json",
+    "publicationGate": null
+  },
+  {
+    "sceneId": "scene.egress.gym-exit-obstruction",
+    "opaqueAssetId": "s004",
+    "slot": 4,
+    "kind": "positive",
+    "hazardFamily": "egress-fire",
+    "environment": "gym",
+    "productionStatus": "accepted",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "independentReviewStatus": "pass",
+    "semanticManifest": {
+      "claim": "An exit route and exit doorway must remain unobstructed.",
+      "sources": [
+        {
+          "id": "OSHA_EGRESS",
+          "title": "29 CFR 1910.37 Exit routes",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.37",
+          "locator": "1910.37(a)(3)",
+          "scope": "Exit routes must be free and unobstructed."
+        }
+      ],
+      "targets": [
+        {
+          "id": "target-1",
+          "condition": "folded gym mats and an equipment cart parked directly in front of double exit doors",
+          "correction": "move equipment away and restore the full route"
+        }
+      ],
+      "decoys": [
+        {
+          "id": "decoy-1",
+          "condition": "basketball rack parked against a side wall",
+          "safeBecause": "it is stable and outside the exit path"
+        }
+      ],
+      "safeBackground": [
+        "clear court floor",
+        "retracted bleachers",
+        "wall padding"
+      ],
+      "structuralBackground": [
+        "gym",
+        "left court",
+        "rear double doors",
+        "doorway obstruction",
+        "right wall storage"
+      ],
+      "negativeInventory": [
+        {
+          "family": "slip-trip-fall",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "egress",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "chemical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "electrical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "sharps-broken-material",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "material-handling-storage",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "biological-sanitation",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "machine-tool-safety",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        }
+      ],
+      "requiredCues": [
+        "panic-bar double doors visually recognizable without text",
+        "obstruction directly overlaps door swing and approach",
+        "side storage clearly outside travel route"
+      ],
+      "forbiddenCues": [
+        "readable EXIT sign",
+        "unstable stacks",
+        "damaged cart",
+        "people using equipment"
+      ]
+    },
+    "master": {
+      "kind": "accepted-native-master",
+      "path": "content/assets/masters/scenes/s004.png",
+      "bytes": 1819450,
+      "sha256": "26acf87611e08ad3e23046801bf64bd3d1335dfa1704206c072ec19c0a855796",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "settings": "Byte-identical copy of the selected generated PNG; C2PA provenance retained."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/scenes/s004-web.png",
+        "bytes": 963976,
+        "sha256": "4b1cb4614a0a49f497b0945be95abd6041e724d2abc5d4860b80f594c0c269d7",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "1200x800 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/scenes/s004-phone.png",
+        "bytes": 354178,
+        "sha256": "2b23ac4ad603aa550aa10946d23c7175953afe4b7c8708c1ed44a9cf41689e9b",
+        "dimensions": {
+          "width": 720,
+          "height": 480,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "720x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/scenes/s004-print.png",
+        "bytes": 419095,
+        "sha256": "4bd539daafd85a4b1a02362aaac74e3a8b69a3e609ad42712ff56b9e2715ad5e",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "gray"
+        },
+        "settings": "1200x800 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "regionRecord": "content/authoring/visuals/releases/regions.json",
+    "accessibilityRecord": "content/authoring/visuals/releases/accessibility.json",
+    "qaRecord": "content/authoring/visuals/releases/scene-qa-ledger.json",
+    "publicationGate": null
+  },
+  {
+    "sceneId": "scene.chemical.closet-unidentified-container",
+    "opaqueAssetId": "s005",
+    "slot": 5,
+    "kind": "positive",
+    "hazardFamily": "chemical",
+    "environment": "custodial closet",
+    "productionStatus": "accepted",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "independentReviewStatus": "pass",
+    "semanticManifest": {
+      "claim": "A workplace container holding a transferred chemical must be identified.",
+      "sources": [
+        {
+          "id": "OSHA_HAZCOM",
+          "title": "29 CFR 1910.1200 Hazard Communication",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.1200",
+          "locator": "1910.1200(f)(6)",
+          "scope": "Workplace containers of hazardous chemicals must be identified; brief does not infer a chemical identity from appearance."
+        }
+      ],
+      "targets": [
+        {
+          "id": "target-1",
+          "condition": "plain secondary spray bottle holding liquid with a completely blank smooth body and no identification area",
+          "correction": "identify the working container according to the hazard-communication program"
+        }
+      ],
+      "decoys": [
+        {
+          "id": "decoy-1",
+          "condition": "closed generic supply jugs stored upright in a low containment tray",
+          "safeBecause": "they are closed, upright, and contained; their exact contents are not inferred"
+        }
+      ],
+      "safeBackground": [
+        "mop held in wall rack",
+        "empty service sink",
+        "dry floor"
+      ],
+      "structuralBackground": [
+        "custodial closet",
+        "upper wall rack",
+        "left shelving",
+        "service sink",
+        "lower floor"
+      ],
+      "negativeInventory": [
+        {
+          "family": "slip-trip-fall",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "egress",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "chemical",
+          "authoredPositiveTarget": true,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "electrical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "sharps-broken-material",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "material-handling-storage",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "biological-sanitation",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "machine-tool-safety",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        }
+      ],
+      "requiredCues": [
+        "secondary bottle visibly contains liquid",
+        "bottle body wholly blank with no label panel or symbol",
+        "other containers closed and stable"
+      ],
+      "forbiddenCues": [
+        "readable chemical names",
+        "open or leaking containers",
+        "mixed liquids",
+        "food or drink container",
+        "missing PPE claim"
+      ]
+    },
+    "master": {
+      "kind": "accepted-native-master",
+      "path": "content/assets/masters/scenes/s005.png",
+      "bytes": 2325444,
+      "sha256": "5358f246b72323505707abebe123ba6abc98152c5a8b9a2052e1bf88775c785b",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "settings": "Byte-identical copy of the selected generated PNG; C2PA provenance retained."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/scenes/s005-web.png",
+        "bytes": 1965074,
+        "sha256": "cd827ca9d88d6f39433884c66285a8497aab4421b3ede4f63904d323506f2ef3",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "1200x800 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/scenes/s005-phone.png",
+        "bytes": 704239,
+        "sha256": "f06e915daa79316f57f63462175a008ca5a9c503bb4eec289d1ca5eb765ae467",
+        "dimensions": {
+          "width": 720,
+          "height": 480,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "720x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/scenes/s005-print.png",
+        "bytes": 674733,
+        "sha256": "b4906d7463a20f10cfecd42cdc0b47d79d7887514d34db1fc551d371685e425d",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "gray"
+        },
+        "settings": "1200x800 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "regionRecord": "content/authoring/visuals/releases/regions.json",
+    "accessibilityRecord": "content/authoring/visuals/releases/accessibility.json",
+    "qaRecord": "content/authoring/visuals/releases/scene-qa-ledger.json",
+    "publicationGate": null
+  },
+  {
+    "sceneId": "scene.chemical.kitchen-chemicals-over-foodware",
+    "opaqueAssetId": "s006",
+    "slot": 6,
+    "kind": "positive",
+    "hazardFamily": "chemical",
+    "environment": "kitchen",
+    "productionStatus": "accepted",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "independentReviewStatus": "pass",
+    "semanticManifest": {
+      "claim": "Cleaning chemicals must be stored so they cannot contaminate food, utensils, or food-contact articles, including not above them.",
+      "sources": [
+        {
+          "id": "FDA_FOOD",
+          "title": "FDA Food Code 2022",
+          "url": "https://www.fda.gov/media/184685/download",
+          "locator": "7-201.11 Separation",
+          "scope": "Poisonous or toxic materials must be stored so they cannot contaminate food, equipment, utensils, linens, or single-use articles, including not above them. Model-code scope is recorded and not represented as an exam weighting."
+        }
+      ],
+      "targets": [
+        {
+          "id": "target-1",
+          "condition": "closed cleaning-supply bottles stored on an open shelf directly above uncovered clean bowls and food-preparation utensils",
+          "correction": "separate chemical storage from and below/protected away from food and utensils"
+        }
+      ],
+      "decoys": [
+        {
+          "id": "decoy-1",
+          "condition": "clean pans stored inverted on a separate rack",
+          "safeBecause": "they are protected and away from chemical storage"
+        }
+      ],
+      "safeBackground": [
+        "stable open metal shelving",
+        "clean tiled wall",
+        "dry floor"
+      ],
+      "structuralBackground": [
+        "kitchen",
+        "upper chemical shelf",
+        "center utensil shelf",
+        "lower bowl shelf",
+        "separate pan rack"
+      ],
+      "negativeInventory": [
+        {
+          "family": "slip-trip-fall",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "egress",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "chemical",
+          "authoredPositiveTarget": true,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "electrical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "sharps-broken-material",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "material-handling-storage",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "biological-sanitation",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "machine-tool-safety",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        }
+      ],
+      "requiredCues": [
+        "vertical alignment clearly puts chemical bottles above uncovered bowls and utensils",
+        "containers closed so leakage is not another target",
+        "separate safe rack visible"
+      ],
+      "forbiddenCues": [
+        "open food packages",
+        "spilled chemicals",
+        "unreadable pseudo-labels",
+        "people handling food"
+      ]
+    },
+    "master": {
+      "kind": "accepted-native-master",
+      "path": "content/assets/masters/scenes/s006.png",
+      "bytes": 2430926,
+      "sha256": "45f3e40548c6e584e1bda054c4a75f9d034f173a6dc7a962eeb4beaab4c9b4bd",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "settings": "Byte-identical copy of the selected generated PNG; C2PA provenance retained."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/scenes/s006-web.png",
+        "bytes": 1993461,
+        "sha256": "ab4b948a3422c75a77531857d9017d2c1d031634d83234305bb32f2380ba34b3",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "1200x800 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/scenes/s006-phone.png",
+        "bytes": 731354,
+        "sha256": "df8ae36763300a6ce67f72493ca0e9aaf8bbc06dbc2c39047b7d374fe3b3c450",
+        "dimensions": {
+          "width": 720,
+          "height": 480,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "720x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/scenes/s006-print.png",
+        "bytes": 672803,
+        "sha256": "5d54fa2f593b6a1fd1d5ea3cddeabe58946bc1d30a4a9eeab172fd2e9866b1fb",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "gray"
+        },
+        "settings": "1200x800 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "regionRecord": "content/authoring/visuals/releases/regions.json",
+    "accessibilityRecord": "content/authoring/visuals/releases/accessibility.json",
+    "qaRecord": "content/authoring/visuals/releases/scene-qa-ledger.json",
+    "publicationGate": null
+  },
+  {
+    "sceneId": "scene.electrical.utility-damaged-cord",
+    "opaqueAssetId": "s007",
+    "slot": 7,
+    "kind": "positive",
+    "hazardFamily": "electrical",
+    "environment": "mechanical/utility area",
+    "productionStatus": "accepted",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "independentReviewStatus": "pass",
+    "semanticManifest": {
+      "claim": "Cord-and-plug equipment with damage that may expose a worker to injury must be removed from service.",
+      "sources": [
+        {
+          "id": "OSHA_ELEC",
+          "title": "29 CFR 1910.334 Use of equipment",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.334",
+          "locator": "1910.334(a)(2) and (a)(4)",
+          "scope": "Damaged cord-and-plug equipment must be removed from service; equipment used where water contact is likely must be approved for that location."
+        }
+      ],
+      "targets": [
+        {
+          "id": "target-1",
+          "condition": "power-cord outer jacket split open near the plug with inner conductors visible while connected to a wall receptacle",
+          "correction": "disconnect and remove the damaged item from service for proper repair/testing"
+        }
+      ],
+      "decoys": [
+        {
+          "id": "decoy-1",
+          "condition": "unused coiled extension cord hanging on a proper wall hook",
+          "safeBecause": "it is undamaged and stored without crossing a route"
+        }
+      ],
+      "safeBackground": [
+        "closed utility cabinet",
+        "dry floor",
+        "portable work light standing upright"
+      ],
+      "structuralBackground": [
+        "mechanical/utility area",
+        "wall storage",
+        "work light",
+        "connected cord and receptacle",
+        "floor"
+      ],
+      "negativeInventory": [
+        {
+          "family": "slip-trip-fall",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "egress",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "chemical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "electrical",
+          "authoredPositiveTarget": true,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "sharps-broken-material",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "material-handling-storage",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "biological-sanitation",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "machine-tool-safety",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        }
+      ],
+      "requiredCues": [
+        "split jacket and inner wires large enough to see",
+        "plug visibly seated in outlet",
+        "damage isolated from other clutter"
+      ],
+      "forbiddenCues": [
+        "water",
+        "overloaded power strip",
+        "trip-route cord",
+        "sparks or dramatic effects"
+      ]
+    },
+    "master": {
+      "kind": "accepted-native-master",
+      "path": "content/assets/masters/scenes/s007.png",
+      "bytes": 2369866,
+      "sha256": "aff208b2f56d1155d56fddb3f3b98428e6a7f622deaa770e1283b5d37f605c1f",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "settings": "Byte-identical copy of the selected generated PNG; C2PA provenance retained."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/scenes/s007-web.png",
+        "bytes": 1197164,
+        "sha256": "91914856c21fc7413e85a1ef8ddb614a2de48a5bbcc4128641155d30b10542ad",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "1200x800 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/scenes/s007-phone.png",
+        "bytes": 407149,
+        "sha256": "40166c202122bb5aa5e701c7b7f458fd4ecdfd404ce591cc35e47e846c1f94d1",
+        "dimensions": {
+          "width": 720,
+          "height": 480,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "720x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/scenes/s007-print.png",
+        "bytes": 507898,
+        "sha256": "8f22dd3f0e5870be9d7e263287d4361efa5667f2f5d955a0bdde2ac7718b6572",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "gray"
+        },
+        "settings": "1200x800 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "regionRecord": "content/authoring/visuals/releases/regions.json",
+    "accessibilityRecord": "content/authoring/visuals/releases/accessibility.json",
+    "qaRecord": "content/authoring/visuals/releases/scene-qa-ledger.json",
+    "publicationGate": null
+  },
+  {
+    "sceneId": "scene.electrical.classroom-wet-power-strip",
+    "opaqueAssetId": "s008",
+    "slot": 8,
+    "kind": "positive",
+    "hazardFamily": "electrical",
+    "environment": "classroom",
+    "productionStatus": "accepted",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "independentReviewStatus": "pass",
+    "semanticManifest": {
+      "claim": "Ordinary portable electrical equipment must not be used in a wet conductive location unless approved for that location.",
+      "sources": [
+        {
+          "id": "OSHA_ELEC",
+          "title": "29 CFR 1910.334 Use of equipment",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.334",
+          "locator": "1910.334(a)(2) and (a)(4)",
+          "scope": "Damaged cord-and-plug equipment must be removed from service; equipment used where water contact is likely must be approved for that location."
+        }
+      ],
+      "targets": [
+        {
+          "id": "target-1",
+          "condition": "connected power strip lying within a shallow puddle beside a classroom wall",
+          "correction": "keep ordinary cord-and-plug equipment out of water and remove wet/damaged equipment from use"
+        }
+      ],
+      "decoys": [
+        {
+          "id": "decoy-1",
+          "condition": "closed laptop on a dry teacher desk",
+          "safeBecause": "it is dry, stable, and not part of the wet connection"
+        }
+      ],
+      "safeBackground": [
+        "chairs pushed under desks",
+        "dry central aisle",
+        "closed window"
+      ],
+      "structuralBackground": [
+        "classroom",
+        "teacher desk",
+        "student desks",
+        "right wall connection",
+        "central aisle"
+      ],
+      "negativeInventory": [
+        {
+          "family": "slip-trip-fall",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "egress",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "chemical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "electrical",
+          "authoredPositiveTarget": true,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "sharps-broken-material",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "material-handling-storage",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "biological-sanitation",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "machine-tool-safety",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        }
+      ],
+      "requiredCues": [
+        "power strip visibly connected",
+        "water contour surrounds strip body",
+        "central aisle dry so the puddle is part of the electrical target rather than a separate walking-surface target"
+      ],
+      "forbiddenCues": [
+        "person touching equipment",
+        "damaged cord",
+        "overloaded sockets",
+        "cord crossing aisle"
+      ]
+    },
+    "master": {
+      "kind": "accepted-native-master",
+      "path": "content/assets/masters/scenes/s008.png",
+      "bytes": 1374707,
+      "sha256": "0e1b3b2b164b244d1690a72fd4e936940a3c913bebf2516424fc387e9ddb84b7",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "settings": "Byte-identical copy of the selected generated PNG; C2PA provenance retained."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/scenes/s008-web.png",
+        "bytes": 728063,
+        "sha256": "2b7f2768ce568623a25df69579e290c47070f0c0af50bd73b5a01bec2c94c6b9",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "1200x800 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/scenes/s008-phone.png",
+        "bytes": 281712,
+        "sha256": "5c9baf1012aa80a741e45572e0a61486ae11b9608525759617a8b00f87149b2b",
+        "dimensions": {
+          "width": 720,
+          "height": 480,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "720x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/scenes/s008-print.png",
+        "bytes": 320252,
+        "sha256": "34d4c7a706dfd229c58e36ce5168ddb78de39daca41155c333e2d2287db4f12a",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "gray"
+        },
+        "settings": "1200x800 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "regionRecord": "content/authoring/visuals/releases/regions.json",
+    "accessibilityRecord": "content/authoring/visuals/releases/accessibility.json",
+    "qaRecord": "content/authoring/visuals/releases/scene-qa-ledger.json",
+    "publicationGate": null
+  },
+  {
+    "sceneId": "scene.sharps.restroom-broken-glass",
+    "opaqueAssetId": "s009",
+    "slot": 9,
+    "kind": "positive",
+    "hazardFamily": "sharps-broken-material",
+    "environment": "restroom",
+    "productionStatus": "accepted",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "independentReviewStatus": "pass",
+    "semanticManifest": {
+      "claim": "Walking-working surfaces must be kept free of sharp-object hazards.",
+      "sources": [
+        {
+          "id": "OSHA_FLOOR",
+          "title": "29 CFR 1910.22 General requirements",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.22",
+          "locator": "1910.22(a)(1)-(3)",
+          "scope": "Walking-working surfaces must be kept clean, orderly, sanitary, and free of hazards such as sharp or protruding objects, loose boards, corrosion, leaks, spills, snow, and ice."
+        }
+      ],
+      "targets": [
+        {
+          "id": "target-1",
+          "condition": "several large broken glass shards exposed on the restroom floor",
+          "correction": "isolate and remove sharp debris with suitable tools/PPE and containment"
+        }
+      ],
+      "decoys": [
+        {
+          "id": "decoy-1",
+          "condition": "intact wall mirror with rounded frame",
+          "safeBecause": "it is undamaged and securely mounted"
+        }
+      ],
+      "safeBackground": [
+        "closed stall door",
+        "empty lidded waste bin",
+        "dry floor outside the shard area"
+      ],
+      "structuralBackground": [
+        "restroom",
+        "sink and mirror",
+        "stall",
+        "central floor",
+        "waste bin"
+      ],
+      "negativeInventory": [
+        {
+          "family": "slip-trip-fall",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "egress",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "chemical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "electrical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "sharps-broken-material",
+          "authoredPositiveTarget": true,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "material-handling-storage",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "biological-sanitation",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "machine-tool-safety",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        }
+      ],
+      "requiredCues": [
+        "recognizable irregular shards with sharp points",
+        "shards large enough for phone review",
+        "no person handling them"
+      ],
+      "forbiddenCues": [
+        "wet floor",
+        "overflowing trash",
+        "broken wall fixture",
+        "blood or body-fluid cue"
+      ]
+    },
+    "master": {
+      "kind": "accepted-native-master",
+      "path": "content/assets/masters/scenes/s009.png",
+      "bytes": 1344107,
+      "sha256": "958ad83f58746da23cea3db6a9125517369de117f2bb8e954856b974c1b61b69",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "settings": "Byte-identical copy of the selected generated PNG; C2PA provenance retained."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/scenes/s009-web.png",
+        "bytes": 720142,
+        "sha256": "056bac05a48eb844ea6747493ea041b3e1927479b78f89661ee4bcac62b43cc8",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "1200x800 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/scenes/s009-phone.png",
+        "bytes": 277833,
+        "sha256": "b8ed8646a78b6e047f47c0750e859a13fa91e53a6a0a4b51d26d5a76acb019a6",
+        "dimensions": {
+          "width": 720,
+          "height": 480,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "720x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/scenes/s009-print.png",
+        "bytes": 308884,
+        "sha256": "59a63e84b3370c27d0e77d5e87719980709e5aa5cefa90695bf2a8ca52e59df4",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "gray"
+        },
+        "settings": "1200x800 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "regionRecord": "content/authoring/visuals/releases/regions.json",
+    "accessibilityRecord": "content/authoring/visuals/releases/accessibility.json",
+    "qaRecord": "content/authoring/visuals/releases/scene-qa-ledger.json",
+    "publicationGate": null
+  },
+  {
+    "sceneId": "scene.sharps.grounds-broken-bottle",
+    "opaqueAssetId": "s010",
+    "slot": 10,
+    "kind": "positive",
+    "hazardFamily": "sharps-broken-material",
+    "environment": "exterior/grounds",
+    "productionStatus": "accepted",
+    "generatorOperator": "Codex /root — independent-review remediation thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "accidentalHazardReviewer": "Codex /root/scene_review_07_12 — independent visual reviewer",
+    "independentReviewStatus": "pass",
+    "semanticManifest": {
+      "claim": "Outdoor walking surfaces should be kept free of exposed sharp-object hazards.",
+      "sources": [
+        {
+          "id": "OSHA_FLOOR",
+          "title": "29 CFR 1910.22 General requirements",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.22",
+          "locator": "1910.22(a)(1)-(3)",
+          "scope": "Walking-working surfaces must be kept clean, orderly, sanitary, and free of hazards such as sharp or protruding objects, loose boards, corrosion, leaks, spills, snow, and ice."
+        }
+      ],
+      "targets": [
+        {
+          "id": "target-1",
+          "condition": "broken bottle base and exposed shards beside a paved school walkway",
+          "correction": "secure the area and remove/contain sharp debris with suitable tools and PPE"
+        }
+      ],
+      "decoys": [
+        {
+          "id": "decoy-1",
+          "condition": "blank closed intact collection bin set on a concrete pad",
+          "safeBecause": "it is stable, closed, and outside the walking line"
+        }
+      ],
+      "safeBackground": [
+        "level dry walkway",
+        "trimmed planting bed",
+        "parked grounds cart outside path"
+      ],
+      "structuralBackground": [
+        "exterior/grounds",
+        "building edge",
+        "walkway",
+        "shard area",
+        "collection-bin pad and planting bed"
+      ],
+      "negativeInventory": [
+        {
+          "family": "slip-trip-fall",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "egress",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "chemical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "electrical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "sharps-broken-material",
+          "authoredPositiveTarget": true,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "material-handling-storage",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "biological-sanitation",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "machine-tool-safety",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        }
+      ],
+      "requiredCues": [
+        "broken bottle shape and separate sharp shards visible",
+        "debris adjacent to and encroaching on the walkway",
+        "all other ground even and dry"
+      ],
+      "forbiddenCues": [
+        "snow or ice",
+        "raised pavement",
+        "unstable cart",
+        "open waste bin"
+      ]
+    },
+    "master": {
+      "kind": "accepted-native-master",
+      "path": "content/assets/masters/scenes/s010.png",
+      "bytes": 3445755,
+      "sha256": "40191790c92181821514ec9cc366aefb3975d0e7b6c3d8fa20ca6dc003b40e1c",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "settings": "Byte-identical copy of the selected generated PNG; C2PA provenance retained."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/scenes/s010-web.png",
+        "bytes": 1727100,
+        "sha256": "c949fe64a8a921aab4ad3a360f761c8ef14a6edb34a35423bb2b47110e70be56",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "1200x800 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/scenes/s010-phone.png",
+        "bytes": 586824,
+        "sha256": "1afde143a99143fde0fafe05ec1c9de642a86563c03805817f67ea2ebbbb89f8",
+        "dimensions": {
+          "width": 720,
+          "height": 480,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "720x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/scenes/s010-print.png",
+        "bytes": 695942,
+        "sha256": "311bfb18ba7590d07287a064bec666163a0340c9396cbbc8b0db15b680af9840",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "gray"
+        },
+        "settings": "1200x800 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "regionRecord": "content/authoring/visuals/releases/regions.json",
+    "accessibilityRecord": "content/authoring/visuals/releases/accessibility.json",
+    "qaRecord": "content/authoring/visuals/releases/scene-qa-ledger.json",
+    "publicationGate": null
+  },
+  {
+    "sceneId": "scene.material.loading-unstable-stack",
+    "opaqueAssetId": "s011",
+    "slot": 11,
+    "kind": "positive",
+    "hazardFamily": "material-handling-storage",
+    "environment": "loading/service area",
+    "productionStatus": "accepted",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "independentReviewStatus": "pass",
+    "semanticManifest": {
+      "claim": "Material should not be moved or stored in an unstable arrangement likely to fall.",
+      "sources": [
+        {
+          "id": "NIOSH_MMH",
+          "title": "NIOSH Ergonomic Guidelines for Manual Material Handling",
+          "url": "https://www.cdc.gov/niosh/docs/2007-131/pdfs/2007-131.pdf",
+          "locator": "material-handling risk factors and mechanical-aid guidance",
+          "scope": "Use source-backed broad handling and visibility concepts; do not imply one universal lifting technique."
+        }
+      ],
+      "targets": [
+        {
+          "id": "target-1",
+          "condition": "very tall box stack on a small platform dolly, visibly leaning with large heavy boxes above smaller crushed boxes",
+          "correction": "restack a stable load within equipment capacity or split the load/use suitable assistance"
+        }
+      ],
+      "decoys": [
+        {
+          "id": "decoy-1",
+          "condition": "separate low pallet with evenly aligned boxes",
+          "safeBecause": "the stack is low, supported, and stable as depicted"
+        }
+      ],
+      "safeBackground": [
+        "clear loading door",
+        "parked hand truck upright against wall",
+        "dry floor"
+      ],
+      "structuralBackground": [
+        "loading/service area",
+        "loading door",
+        "unstable dolly load",
+        "stable pallet",
+        "wall storage"
+      ],
+      "negativeInventory": [
+        {
+          "family": "slip-trip-fall",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "egress",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "chemical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "electrical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "sharps-broken-material",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "material-handling-storage",
+          "authoredPositiveTarget": true,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "biological-sanitation",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "machine-tool-safety",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        }
+      ],
+      "requiredCues": [
+        "leaning centerline obvious",
+        "bottom boxes compressed or offset",
+        "large boxes at top",
+        "dolly fully visible"
+      ],
+      "forbiddenCues": [
+        "blocked door",
+        "person beneath stack",
+        "damaged dolly",
+        "loose floor debris"
+      ]
+    },
+    "master": {
+      "kind": "accepted-native-master",
+      "path": "content/assets/masters/scenes/s011.png",
+      "bytes": 2183156,
+      "sha256": "3ee76f0487fb823e11d6965d6954fe259db4fa2d8f1826732a4459f863e62f3d",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "settings": "Byte-identical copy of the selected generated PNG; C2PA provenance retained."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/scenes/s011-web.png",
+        "bytes": 1142852,
+        "sha256": "2628b8c5d6c8725194995e593c2ca876f967971caa8e49ccfb7055e5b88f9ec3",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "1200x800 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/scenes/s011-phone.png",
+        "bytes": 400141,
+        "sha256": "e908069300050faddd4ad9e9e14d3fb3f4a5533f96de4cbede29fe324cd4cfcc",
+        "dimensions": {
+          "width": 720,
+          "height": 480,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "720x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/scenes/s011-print.png",
+        "bytes": 495994,
+        "sha256": "a3ed450837a342c7332953f31e890c7ec5c8a05c3f294c02151198f34538f25c",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "gray"
+        },
+        "settings": "1200x800 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "regionRecord": "content/authoring/visuals/releases/regions.json",
+    "accessibilityRecord": "content/authoring/visuals/releases/accessibility.json",
+    "qaRecord": "content/authoring/visuals/releases/scene-qa-ledger.json",
+    "publicationGate": null
+  },
+  {
+    "sceneId": "scene.material.cafeteria-obscured-vision",
+    "opaqueAssetId": "s012",
+    "slot": 12,
+    "kind": "positive",
+    "hazardFamily": "material-handling-storage",
+    "environment": "cafeteria",
+    "productionStatus": "accepted",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "independentReviewStatus": "pass",
+    "semanticManifest": {
+      "claim": "A load should not be carried in a way that obstructs the carrier's view of the route; mechanical aid or a smaller load should be used where appropriate.",
+      "sources": [
+        {
+          "id": "NIOSH_MMH",
+          "title": "NIOSH Ergonomic Guidelines for Manual Material Handling",
+          "url": "https://www.cdc.gov/niosh/docs/2007-131/pdfs/2007-131.pdf",
+          "locator": "material-handling risk factors and mechanical-aid guidance",
+          "scope": "Use source-backed broad handling and visibility concepts; do not imply one universal lifting technique."
+        }
+      ],
+      "targets": [
+        {
+          "id": "target-1",
+          "condition": "person carrying a tall stack of closed boxes above eye level so the route ahead is hidden",
+          "correction": "reduce the load or use the nearby suitable cart/assistance while keeping the route visible"
+        }
+      ],
+      "decoys": [
+        {
+          "id": "decoy-1",
+          "condition": "empty platform cart parked parallel to a wall",
+          "safeBecause": "it is stable and outside the walking route"
+        }
+      ],
+      "safeBackground": [
+        "tables with chairs tucked in",
+        "clear dry aisle",
+        "closed serving counter"
+      ],
+      "structuralBackground": [
+        "cafeteria",
+        "serving counter",
+        "dining tables",
+        "person and carried load",
+        "wall-side cart"
+      ],
+      "negativeInventory": [
+        {
+          "family": "slip-trip-fall",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "egress",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "chemical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "electrical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "sharps-broken-material",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "material-handling-storage",
+          "authoredPositiveTarget": true,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "biological-sanitation",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "machine-tool-safety",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        }
+      ],
+      "requiredCues": [
+        "full body and both feet visible",
+        "boxes cover the person's face and forward view",
+        "aisle otherwise clear",
+        "empty cart visible nearby"
+      ],
+      "forbiddenCues": [
+        "awkward exaggerated anatomy",
+        "falling boxes",
+        "wet floor",
+        "blocked exit"
+      ]
+    },
+    "master": {
+      "kind": "accepted-native-master",
+      "path": "content/assets/masters/scenes/s012.png",
+      "bytes": 2312996,
+      "sha256": "3a5df0d37df6e6ef3660104458a91d940938fb34f068cc4518c7a695aa5a54f8",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "settings": "Byte-identical copy of the selected generated PNG; C2PA provenance retained."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/scenes/s012-web.png",
+        "bytes": 1337561,
+        "sha256": "9d8d958b19ce054783eeb70627ef183f2729d141de2ddaa73423d59a20c1d237",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "1200x800 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/scenes/s012-phone.png",
+        "bytes": 466738,
+        "sha256": "4d08488c018c2250309a9ae6f48103369b890195d1ca6ec3c568cb31d777eaff",
+        "dimensions": {
+          "width": 720,
+          "height": 480,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "720x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/scenes/s012-print.png",
+        "bytes": 557335,
+        "sha256": "7312384f16195b1c9678e97017a12f512cdaa1396188e8ebf0656ccc289ff5cd",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "gray"
+        },
+        "settings": "1200x800 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "regionRecord": "content/authoring/visuals/releases/regions.json",
+    "accessibilityRecord": "content/authoring/visuals/releases/accessibility.json",
+    "qaRecord": "content/authoring/visuals/releases/scene-qa-ledger.json",
+    "publicationGate": null
+  },
+  {
+    "sceneId": "scene.biological.restroom-bare-hand-cleaning",
+    "opaqueAssetId": "s013",
+    "slot": 13,
+    "kind": "positive",
+    "hazardFamily": "biological-sanitation",
+    "environment": "restroom",
+    "productionStatus": "accepted",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "independentReviewStatus": "pass",
+    "semanticManifest": {
+      "claim": "Protective gloves and task-appropriate PPE should be used when cleaning a potentially infectious body-fluid or toilet-area contamination condition.",
+      "sources": [
+        {
+          "id": "CDC_BODY_FLUID",
+          "title": "CDC Infection Control — Summary of Recommendations",
+          "url": "https://www.cdc.gov/infection-control/hcp/environmental-control/summary-recommendations.html",
+          "locator": "E.II Cleaning Spills of Blood and Body Substances",
+          "scope": "Promptly clean and decontaminate spills using protective gloves and task-appropriate PPE. Healthcare guidance is used only for the broad exposure-control concept."
+        }
+      ],
+      "targets": [
+        {
+          "id": "target-1",
+          "condition": "person's visibly bare ungloved hand holding a cloth inside a toilet bowl during cleaning",
+          "correction": "stop and use task-appropriate protective gloves/PPE and the facility procedure"
+        }
+      ],
+      "decoys": [
+        {
+          "id": "decoy-1",
+          "condition": "unused toilet brush standing upright in its holder",
+          "safeBecause": "it is contained and not being handled"
+        }
+      ],
+      "safeBackground": [
+        "dry floor",
+        "closed cleaning bottle on cart",
+        "empty sink"
+      ],
+      "structuralBackground": [
+        "restroom",
+        "sink",
+        "cleaning cart",
+        "person and toilet",
+        "tool holder and floor"
+      ],
+      "negativeInventory": [
+        {
+          "family": "slip-trip-fall",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "egress",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "chemical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "electrical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "sharps-broken-material",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "material-handling-storage",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "biological-sanitation",
+          "authoredPositiveTarget": true,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "machine-tool-safety",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        }
+      ],
+      "requiredCues": [
+        "bare fingers and wrist clearly visible",
+        "cloth visibly contacts inside of toilet bowl",
+        "person pose mechanically plausible",
+        "no splash"
+      ],
+      "forbiddenCues": [
+        "blood",
+        "chemical mixing",
+        "wet walkway",
+        "open cleaning bottle",
+        "glove on target hand"
+      ]
+    },
+    "master": {
+      "kind": "accepted-native-master",
+      "path": "content/assets/masters/scenes/s013.png",
+      "bytes": 2168357,
+      "sha256": "5955ab3d871a6cd7dd54cdbda9c0f1976d6ba549a2144ddd6e9ca36adb936ba8",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "settings": "Byte-identical copy of the selected generated PNG; C2PA provenance retained."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/scenes/s013-web.png",
+        "bytes": 1143414,
+        "sha256": "6f8be7bce1270d8f0073f37342c0e7b63988fd3a0a861ca434edb1b84115f697",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "1200x800 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/scenes/s013-phone.png",
+        "bytes": 401830,
+        "sha256": "fa7f9d6d9bde67e3f68c6877b4d9428168a0dddb72cc3a4a6918e516c0b436f9",
+        "dimensions": {
+          "width": 720,
+          "height": 480,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "720x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/scenes/s013-print.png",
+        "bytes": 478676,
+        "sha256": "9dcb9df3067c995b4b18a72238c9003e3fd2a60288ff7d6ac3c2c76eb72fb69b",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "gray"
+        },
+        "settings": "1200x800 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "regionRecord": "content/authoring/visuals/releases/regions.json",
+    "accessibilityRecord": "content/authoring/visuals/releases/accessibility.json",
+    "qaRecord": "content/authoring/visuals/releases/scene-qa-ledger.json",
+    "publicationGate": null
+  },
+  {
+    "sceneId": "scene.biological.cafeteria-mop-on-table",
+    "opaqueAssetId": "s014",
+    "slot": 14,
+    "kind": "positive",
+    "hazardFamily": "biological-sanitation",
+    "environment": "cafeteria",
+    "productionStatus": "accepted",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "independentReviewStatus": "pass",
+    "semanticManifest": {
+      "claim": "A used floor-cleaning implement should not contact a food or dining surface because cleaning materials can transfer contamination.",
+      "sources": [
+        {
+          "id": "FDA_WIPING",
+          "title": "FDA Allergen Removal and Transfer Using Wiping and Cleaning Methods",
+          "url": "https://www.fda.gov/food/retail-food-protection/allergen-removal-and-transfer-using-wiping-and-cleaning-methods-retail-food-establishments",
+          "locator": "Key findings",
+          "scope": "Used wiping materials can transfer contamination; full cleaning minimizes transfer. The scene uses only the broad food-contact cross-contamination concept."
+        }
+      ],
+      "targets": [
+        {
+          "id": "target-1",
+          "condition": "visibly used damp string-mop head laid directly across the top of a cafeteria dining table",
+          "correction": "keep floor-cleaning tools away from food-contact/dining surfaces and clean/sanitize affected surfaces according to procedure"
+        }
+      ],
+      "decoys": [
+        {
+          "id": "decoy-1",
+          "condition": "clean folded microfiber cloth stored inside a closed cart bin",
+          "safeBecause": "it is contained and separated from surfaces"
+        }
+      ],
+      "safeBackground": [
+        "chairs tucked under other tables",
+        "mop bucket upright on cart",
+        "dry floor"
+      ],
+      "structuralBackground": [
+        "cafeteria",
+        "left dining tables",
+        "central target table",
+        "janitor cart",
+        "right dining area"
+      ],
+      "negativeInventory": [
+        {
+          "family": "slip-trip-fall",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "egress",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "chemical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "electrical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "sharps-broken-material",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "material-handling-storage",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "biological-sanitation",
+          "authoredPositiveTarget": true,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "machine-tool-safety",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        }
+      ],
+      "requiredCues": [
+        "string mop head visibly damp and used by dark functional hatching",
+        "mop strands spread directly on tabletop",
+        "handle remains connected",
+        "cart and bucket stable"
+      ],
+      "forbiddenCues": [
+        "food present",
+        "chemical spill",
+        "wet floor",
+        "person using mop",
+        "color-only dirt cue"
+      ]
+    },
+    "master": {
+      "kind": "accepted-native-master",
+      "path": "content/assets/masters/scenes/s014.png",
+      "bytes": 2401478,
+      "sha256": "a289ca419858bf088b43329b4e379e896c8cf7a65f64ce44d7d6ab5554f072ac",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "settings": "Byte-identical copy of the selected generated PNG; C2PA provenance retained."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/scenes/s014-web.png",
+        "bytes": 1359377,
+        "sha256": "156168524760c8521c80c0a04d4db50b9139e9d28b6c36724153ffc69cfcdf7c",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "1200x800 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/scenes/s014-phone.png",
+        "bytes": 484900,
+        "sha256": "1601ee3276071b75f6c7e377fb04b14142790ac48bcc7f81dd03cbb02c74eab9",
+        "dimensions": {
+          "width": 720,
+          "height": 480,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "720x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/scenes/s014-print.png",
+        "bytes": 579005,
+        "sha256": "b5b523584eb7bb424b63225bb0c8773eeef55564f7525c0ca54cee6a0d34e355",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "gray"
+        },
+        "settings": "1200x800 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "regionRecord": "content/authoring/visuals/releases/regions.json",
+    "accessibilityRecord": "content/authoring/visuals/releases/accessibility.json",
+    "qaRecord": "content/authoring/visuals/releases/scene-qa-ledger.json",
+    "publicationGate": null
+  },
+  {
+    "sceneId": "scene.machine.gym-unguarded-fan",
+    "opaqueAssetId": "s015",
+    "slot": 15,
+    "kind": "positive",
+    "hazardFamily": "machine-tool-safety",
+    "environment": "gym",
+    "productionStatus": "accepted",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "independentReviewStatus": "pass",
+    "semanticManifest": {
+      "claim": "A floor-level portable fan must have a guard over exposed blades.",
+      "sources": [
+        {
+          "id": "OSHA_GUARD",
+          "title": "29 CFR 1910.212 General requirements for all machines",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.212",
+          "locator": "1910.212(a)(1), (a)(3), and (a)(5)",
+          "scope": "Moving parts and exposed fan blades below seven feet require guarding; portable power tools are included among machines commonly requiring point-of-operation guarding."
+        }
+      ],
+      "targets": [
+        {
+          "id": "target-1",
+          "condition": "portable floor fan connected to power with its entire front protective grille missing and blades fully exposed",
+          "correction": "remove the fan from service until an adequate secured guard is present"
+        }
+      ],
+      "decoys": [
+        {
+          "id": "decoy-1",
+          "condition": "second portable fan with intact close-spaced front and rear guards, unplugged and stored against wall",
+          "safeBecause": "its blades are guarded and it is stored outside the route"
+        }
+      ],
+      "safeBackground": [
+        "clear court floor",
+        "folded bleachers",
+        "wall padding"
+      ],
+      "structuralBackground": [
+        "gym",
+        "left wall storage",
+        "clear court",
+        "unguarded fan",
+        "intact stored fan"
+      ],
+      "negativeInventory": [
+        {
+          "family": "slip-trip-fall",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "egress",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "chemical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "electrical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "sharps-broken-material",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "material-handling-storage",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "biological-sanitation",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "machine-tool-safety",
+          "authoredPositiveTarget": true,
+          "unauthoredConditionPolicy": "reject candidate"
+        }
+      ],
+      "requiredCues": [
+        "exposed blades unmistakable",
+        "missing front grille with rear housing still plausible",
+        "power plug visibly connected",
+        "comparison decoy guard intact"
+      ],
+      "forbiddenCues": [
+        "cord across walking route",
+        "wet floor",
+        "person touching fan",
+        "broken blades",
+        "motion lines"
+      ]
+    },
+    "master": {
+      "kind": "accepted-native-master",
+      "path": "content/assets/masters/scenes/s015.png",
+      "bytes": 1484784,
+      "sha256": "e16a3596d90b417917361983485fe18cf76fea2e78d201ef294fe72580dddb04",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "settings": "Byte-identical copy of the selected generated PNG; C2PA provenance retained."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/scenes/s015-web.png",
+        "bytes": 813390,
+        "sha256": "3f6f17f4c44b9cd5438a8d343cc765b1ba55828e0a7c540743f656b68ad04c99",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "1200x800 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/scenes/s015-phone.png",
+        "bytes": 309829,
+        "sha256": "cc00f6cb74686c875500c7bbcba2d0b1f8aa05d9044da93da4bce89eaca2cdc0",
+        "dimensions": {
+          "width": 720,
+          "height": 480,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "720x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/scenes/s015-print.png",
+        "bytes": 341172,
+        "sha256": "019462ed284ac7c01404ce7b130ed3a5868bfcd1cd7f786dd13663fd38a0df65",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "gray"
+        },
+        "settings": "1200x800 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "regionRecord": "content/authoring/visuals/releases/regions.json",
+    "accessibilityRecord": "content/authoring/visuals/releases/accessibility.json",
+    "qaRecord": "content/authoring/visuals/releases/scene-qa-ledger.json",
+    "publicationGate": null
+  },
+  {
+    "sceneId": "scene.machine.utility-saw-guard",
+    "opaqueAssetId": "s016",
+    "slot": 16,
+    "kind": "positive",
+    "hazardFamily": "machine-tool-safety",
+    "environment": "mechanical/utility area",
+    "productionStatus": "accepted",
+    "generatorOperator": "Codex /root — independent-review remediation thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "accidentalHazardReviewer": "Codex /root/scene_review_13_18 — independent visual reviewer",
+    "independentReviewStatus": "pass",
+    "semanticManifest": {
+      "claim": "A portable power saw whose point of operation exposes a person to injury requires guarding; a jammed-retracted lower blade guard is a condition needing correction.",
+      "sources": [
+        {
+          "id": "OSHA_GUARD",
+          "title": "29 CFR 1910.212 General requirements for all machines",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.212",
+          "locator": "1910.212(a)(1), (a)(3), and (a)(5)",
+          "scope": "Moving parts and exposed fan blades below seven feet require guarding; portable power tools are included among machines commonly requiring point-of-operation guarding."
+        }
+      ],
+      "targets": [
+        {
+          "id": "target-1",
+          "condition": "unplugged portable circular saw resting stably on its motor-housing side on a workbench with its lower blade guard visibly jammed fully retracted, leaving most of the blade exposed above and clear of the solid tabletop",
+          "correction": "remove the tool from service until the guard functions correctly"
+        }
+      ],
+      "decoys": [
+        {
+          "id": "decoy-1",
+          "condition": "unplugged drill secured in a fitted wall cradle with its cord contained",
+          "safeBecause": "it is intact and securely stored"
+        }
+      ],
+      "safeBackground": [
+        "clear workbench around the saw",
+        "saw power plug visibly disconnected and resting on bench",
+        "dry floor"
+      ],
+      "structuralBackground": [
+        "mechanical/utility area",
+        "wall tool storage",
+        "workbench left",
+        "saw and exposed blade",
+        "lower floor"
+      ],
+      "negativeInventory": [
+        {
+          "family": "slip-trip-fall",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "egress",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "chemical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "electrical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "sharps-broken-material",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "material-handling-storage",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "biological-sanitation",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "machine-tool-safety",
+          "authoredPositiveTarget": true,
+          "unauthoredConditionPolicy": "reject candidate"
+        }
+      ],
+      "requiredCues": [
+        "saw unplugged so guard failure is the sole target",
+        "lower spring guard visibly pulled back from the lower blade",
+        "blade teeth large enough to inspect",
+        "saw supported by its motor housing with the exposed blade visibly clear of the solid tabletop"
+      ],
+      "forbiddenCues": [
+        "person operating saw",
+        "damaged cord",
+        "wet area",
+        "cluttered bench",
+        "missing upper fixed housing"
+      ]
+    },
+    "master": {
+      "kind": "accepted-native-master",
+      "path": "content/assets/masters/scenes/s016.png",
+      "bytes": 2952987,
+      "sha256": "31a9de7f24626de9f7b61bd33c20fddd128d1254881d88bd3871ad60aad80c9d",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "settings": "Byte-identical copy of the selected generated PNG; C2PA provenance retained."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/scenes/s016-web.png",
+        "bytes": 1547128,
+        "sha256": "0adcd1fbba9de78b1e04d96e1f58f9a14af7b3b29a88bd5586ce6df4def63b76",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "1200x800 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/scenes/s016-phone.png",
+        "bytes": 508569,
+        "sha256": "d485f02a24b6391af629fa4c74b46a3ac3d364ec67acb9209139d66f02912b41",
+        "dimensions": {
+          "width": 720,
+          "height": 480,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "720x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/scenes/s016-print.png",
+        "bytes": 651358,
+        "sha256": "9f551ab09937adb4d8869c8749165fba53f5fa19228a69c947f92db4e8388a7b",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "gray"
+        },
+        "settings": "1200x800 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "regionRecord": "content/authoring/visuals/releases/regions.json",
+    "accessibilityRecord": "content/authoring/visuals/releases/accessibility.json",
+    "qaRecord": "content/authoring/visuals/releases/scene-qa-ledger.json",
+    "publicationGate": null
+  },
+  {
+    "sceneId": "scene.zero.classroom-orderly",
+    "opaqueAssetId": "s017",
+    "slot": 17,
+    "kind": "zero-hazard",
+    "hazardFamily": null,
+    "environment": "classroom",
+    "productionStatus": "accepted",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "independentReviewStatus": "pass",
+    "semanticManifest": {
+      "claim": "Zero-hazard control: all suspicious details are safe as depicted.",
+      "sources": [
+        {
+          "id": "OSHA_FLOOR",
+          "title": "29 CFR 1910.22 General requirements",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.22",
+          "locator": "1910.22(a)(1)-(3)",
+          "scope": "Walking-working surfaces must be kept clean, orderly, sanitary, and free of hazards such as sharp or protruding objects, loose boards, corrosion, leaks, spills, snow, and ice."
+        },
+        {
+          "id": "OSHA_ELEC",
+          "title": "29 CFR 1910.334 Use of equipment",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.334",
+          "locator": "1910.334(a)(2) and (a)(4)",
+          "scope": "Damaged cord-and-plug equipment must be removed from service; equipment used where water contact is likely must be approved for that location."
+        },
+        {
+          "id": "OSHA_LADDER",
+          "title": "29 CFR 1910.23 Ladders",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.23",
+          "locator": "1910.23(b) and (c)",
+          "scope": "Ladders must be inspected, used only on stable and level surfaces unless secured/stabilized, and used according to their design."
+        }
+      ],
+      "targets": [],
+      "decoys": [
+        {
+          "id": "decoy-1",
+          "condition": "stepladder fully open on dry level floor with spreaders locked and no person on it",
+          "safeBecause": "it is stable, unused, and correctly opened"
+        },
+        {
+          "id": "decoy-2",
+          "condition": "extension cord covered by a low-profile floor cord protector at the wall edge",
+          "safeBecause": "it is undamaged, secured, and outside the central route"
+        },
+        {
+          "id": "decoy-3",
+          "condition": "portable fan with intact close-spaced guard",
+          "safeBecause": "the blades are fully guarded"
+        }
+      ],
+      "safeBackground": [
+        "chairs tucked under desks",
+        "dry unobstructed aisle",
+        "closed supply cabinet"
+      ],
+      "structuralBackground": [
+        "classroom",
+        "teacher area",
+        "student desks",
+        "wall-side ladder",
+        "wall-side cord and fan"
+      ],
+      "negativeInventory": [
+        {
+          "family": "slip-trip-fall",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "egress",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "chemical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "electrical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "sharps-broken-material",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "material-handling-storage",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "biological-sanitation",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "machine-tool-safety",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        }
+      ],
+      "requiredCues": [
+        "ladder feet flat and spreaders visibly locked",
+        "cord protector clearly covers cord",
+        "fan guard complete",
+        "central aisle clear"
+      ],
+      "forbiddenCues": [
+        "any spill",
+        "raised mat",
+        "damaged cord",
+        "open cabinet",
+        "person on ladder",
+        "blocked doorway"
+      ]
+    },
+    "master": {
+      "kind": "accepted-native-master",
+      "path": "content/assets/masters/scenes/s017.png",
+      "bytes": 2269640,
+      "sha256": "888bd553461e6bc986d50e2489684b3b570ee726b45cc997af43a1234bcc4e27",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "settings": "Byte-identical copy of the selected generated PNG; C2PA provenance retained."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/scenes/s017-web.png",
+        "bytes": 1805884,
+        "sha256": "652f7b366679a14ac573d981e9f0ac66c443d870743adbb3679c754af9881da3",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "1200x800 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/scenes/s017-phone.png",
+        "bytes": 647469,
+        "sha256": "3e8631c261e8a7b82936811d2a55be4e3f428f750fe539e103ba2374240ec471",
+        "dimensions": {
+          "width": 720,
+          "height": 480,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "720x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/scenes/s017-print.png",
+        "bytes": 609516,
+        "sha256": "0b7c454371ea821fbdcd91eff2de4105afc7a4b1bd01cd48419e5508f336c56b",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "gray"
+        },
+        "settings": "1200x800 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "regionRecord": "content/authoring/visuals/releases/regions.json",
+    "accessibilityRecord": "content/authoring/visuals/releases/accessibility.json",
+    "qaRecord": "content/authoring/visuals/releases/scene-qa-ledger.json",
+    "publicationGate": null
+  },
+  {
+    "sceneId": "scene.zero.closet-contained",
+    "opaqueAssetId": "s018",
+    "slot": 18,
+    "kind": "zero-hazard",
+    "hazardFamily": null,
+    "environment": "custodial closet",
+    "productionStatus": "accepted",
+    "generatorOperator": "Codex /root — completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+    "accidentalHazardReviewer": "Codex /root — independent visual reviewer thread 01a02f88-7d50-7930-9648-9373a1f3ae1b",
+    "independentReviewStatus": "pass",
+    "semanticManifest": {
+      "claim": "Zero-hazard control: stored supplies and tools are stable, contained, and separated as depicted.",
+      "sources": [
+        {
+          "id": "OSHA_FLOOR",
+          "title": "29 CFR 1910.22 General requirements",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.22",
+          "locator": "1910.22(a)(1)-(3)",
+          "scope": "Walking-working surfaces must be kept clean, orderly, sanitary, and free of hazards such as sharp or protruding objects, loose boards, corrosion, leaks, spills, snow, and ice."
+        },
+        {
+          "id": "OSHA_HAZCOM",
+          "title": "29 CFR 1910.1200 Hazard Communication",
+          "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.1200",
+          "locator": "1910.1200(f)(6)",
+          "scope": "Workplace containers of hazardous chemicals must be identified; brief does not infer a chemical identity from appearance."
+        }
+      ],
+      "targets": [],
+      "decoys": [
+        {
+          "id": "decoy-1",
+          "condition": "closed supply bottles upright on a low shelf inside a containment tray",
+          "safeBecause": "they are closed, low, stable, and contained"
+        },
+        {
+          "id": "decoy-2",
+          "condition": "mop and broom handles individually clipped into a wall rack",
+          "safeBecause": "they cannot fall into the route"
+        },
+        {
+          "id": "decoy-3",
+          "condition": "folded wet-floor sign stored closed on a high wall hook",
+          "safeBecause": "it is secured storage, not a missing control for a dry floor"
+        }
+      ],
+      "safeBackground": [
+        "empty service sink",
+        "dry floor",
+        "clear doorway",
+        "closed lower cabinet"
+      ],
+      "structuralBackground": [
+        "custodial closet",
+        "upper wall storage",
+        "left shelf and containment",
+        "service sink",
+        "floor and doorway"
+      ],
+      "negativeInventory": [
+        {
+          "family": "slip-trip-fall",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "egress",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "chemical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "electrical",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "sharps-broken-material",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "material-handling-storage",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "biological-sanitation",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        },
+        {
+          "family": "machine-tool-safety",
+          "authoredPositiveTarget": false,
+          "unauthoredConditionPolicy": "reject candidate"
+        }
+      ],
+      "requiredCues": [
+        "all caps and closures intact",
+        "containment tray lip visible",
+        "handles secured separately",
+        "sign folded and hooked",
+        "floor dry"
+      ],
+      "forbiddenCues": [
+        "blank secondary bottle",
+        "leak or spill",
+        "open container",
+        "unstable overhead item",
+        "clutter in doorway"
+      ]
+    },
+    "master": {
+      "kind": "accepted-native-master",
+      "path": "content/assets/masters/scenes/s018.png",
+      "bytes": 2366064,
+      "sha256": "6392d4f0575647918acacda18d1593d714408e5e1321a7b12787afd127790bbf",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024,
+        "pixelFormat": "rgb24"
+      },
+      "settings": "Byte-identical copy of the selected generated PNG; C2PA provenance retained."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/scenes/s018-web.png",
+        "bytes": 1445114,
+        "sha256": "0af0bb4fa7bd631124647a1e9008eecb3c5cb1f0381839ce9ff87ca3f567d3ec",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "1200x800 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/scenes/s018-phone.png",
+        "bytes": 498564,
+        "sha256": "e1c417ecc5ba204075a58f4a15dbeeea7a5107c58ce4c482aa95a152760a4e63",
+        "dimensions": {
+          "width": 720,
+          "height": 480,
+          "pixelFormat": "rgb24"
+        },
+        "settings": "720x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/scenes/s018-print.png",
+        "bytes": 568573,
+        "sha256": "d240600319334f22f17d0223e8dbc73a2147f4950851c81e346576efd347639e",
+        "dimensions": {
+          "width": 1200,
+          "height": 800,
+          "pixelFormat": "gray"
+        },
+        "settings": "1200x800 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "regionRecord": "content/authoring/visuals/releases/regions.json",
+    "accessibilityRecord": "content/authoring/visuals/releases/accessibility.json",
+    "qaRecord": "content/authoring/visuals/releases/scene-qa-ledger.json",
+    "publicationGate": null
+  }
+]

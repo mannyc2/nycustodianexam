@@ -1,0 +1,928 @@
+[
+  {
+    "id": "comparison.floor-machine-burnisher",
+    "opaqueAssetId": "p001",
+    "assetRevision": 1,
+    "memberIds": [
+      "equipment.floor-machine.low-speed",
+      "equipment.burnisher.high-speed"
+    ],
+    "memberMasterHashes": [
+      {
+        "conceptId": "equipment.floor-machine.low-speed",
+        "sha256": "de34e4a745063d286e1e97ee8ed51ee2f15519d9fdd190e1c54dcebda9401236"
+      },
+      {
+        "conceptId": "equipment.burnisher.high-speed",
+        "sha256": "e2eb9525d58be5296185ef762509ddeb7f38b5264dfb3f5b19a31293c847c659"
+      }
+    ],
+    "decisiveDistinction": "Representative body/handle/pad geometry only; never imply a universal silhouette or RPM cutoff.",
+    "status": "accepted",
+    "master": {
+      "kind": "comparison-master",
+      "path": "content/assets/masters/comparisons/p001.png",
+      "bytes": 558874,
+      "sha256": "e46e68c6be96745a82dfab17c2c4fdf870aa9a58809bdfbaae430187884f68b7",
+      "settings": "Deterministic 2-member composition from accepted masters; no labels and no regenerated pixels."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/comparisons/p001-web.png",
+        "bytes": 356333,
+        "sha256": "4affa4bfa4303aee0abac8df15334a93945ddb4b6cd95cecadb7d925742f3105",
+        "settings": "960x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/comparisons/p001-phone.png",
+        "bytes": 147023,
+        "sha256": "b2b13aa07a1878a005b305ba79be910bc1bae32b1b12603f6e2f73cb5158214e",
+        "settings": "640x320 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/comparisons/p001-print.png",
+        "bytes": 146961,
+        "sha256": "49e86cfc7926aa279927faaf585db9d59be06948d2b4f9770dec6df88302f58e",
+        "settings": "960x480 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "review": {
+      "reviewer": {
+        "identity": "Codex /root — independent completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+        "relationship": "Separate thread from generator/operator thread 01a02c6a-2460-7640-894a-be8ad5ac723c",
+        "date": "2026-08-23"
+      },
+      "acceptedMasterInputsOnly": true,
+      "noFeatureBorrowing": true,
+      "comparableFraming": true,
+      "phone": "pass",
+      "print": "pass",
+      "checksum": "pass"
+    },
+    "scoredUseGate": [
+      "Before scored floor-machine versus burnisher comparison use, obtain specialist comparative signoff; accessory and chassis geometry are representative, not universal."
+    ]
+  },
+  {
+    "id": "comparison.pipe-adjustable-wrench",
+    "opaqueAssetId": "p002",
+    "assetRevision": 2,
+    "memberIds": [
+      "tool.pipe-wrench",
+      "tool.adjustable-wrench"
+    ],
+    "memberMasterHashes": [
+      {
+        "conceptId": "tool.pipe-wrench",
+        "sha256": "334044fb3c25f5e14be4c47e0df0512961ce8dce08e568e0d91b021faa8f1e99"
+      },
+      {
+        "conceptId": "tool.adjustable-wrench",
+        "sha256": "edb1f4e907926fd83ed55aaa11668d285bf85a181f98e0aeeb8b845dbc0b192d"
+      }
+    ],
+    "supersedes": {
+      "assetRevision": 1,
+      "masterSha256": "137165bfa97db346c3000f85f054caf59422ae43a42090f3ef816422a291a78c",
+      "historyRecord": "content/authoring/visuals/releases/tool-release-history.json#comparison:p002:137165bfa97db346c3000f85f054caf59422ae43a42090f3ef816422a291a78c"
+    },
+    "decisiveDistinction": "Serrated offset hook/heel jaws versus smooth parallel jaws and visible worm gear.",
+    "status": "accepted",
+    "master": {
+      "kind": "comparison-master",
+      "path": "content/assets/masters/comparisons/p002.png",
+      "bytes": 478689,
+      "sha256": "2600432cd471a2d00a374927a4ad87d52d1e29a48dd38b49e23a2136dd64ce11",
+      "settings": "Deterministic 2-member composition from accepted masters; no labels and no regenerated pixels."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/comparisons/p002-web.png",
+        "bytes": 300773,
+        "sha256": "0119b11a13991253c2eacf06e996f0c46f9bea63f863e686a261b5c7277ed9c2",
+        "settings": "960x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/comparisons/p002-phone.png",
+        "bytes": 123286,
+        "sha256": "55c25683fc23737094d36010ac883851b12b47dc62d75eb1df32f63bb45fae08",
+        "settings": "640x320 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/comparisons/p002-print.png",
+        "bytes": 127320,
+        "sha256": "a6ddd9d5e77bba06070225bd91fc5bc9fb656678ce3b2ea69dc4e679beff1a6f",
+        "settings": "960x480 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "review": {
+      "reviewer": {
+        "identity": "Codex release reconciliation using hash-bound candidate review receipts",
+        "relationship": "Composes the original library review with replacement-specific independent review evidence",
+        "date": "2026-08-23"
+      },
+      "acceptedMasterInputsOnly": true,
+      "noFeatureBorrowing": true,
+      "comparableFraming": true,
+      "phone": "pass",
+      "print": "pass",
+      "checksum": "pass"
+    },
+    "scoredUseGate": []
+  },
+  {
+    "id": "comparison.cup-flange-plunger",
+    "opaqueAssetId": "p003",
+    "assetRevision": 1,
+    "memberIds": [
+      "tool.plunger.cup",
+      "tool.plunger.flange"
+    ],
+    "memberMasterHashes": [
+      {
+        "conceptId": "tool.plunger.cup",
+        "sha256": "104cc6d101dc34b0b7839faeb0ca6917d5674ba4648188c534e15efe7e518bbb"
+      },
+      {
+        "conceptId": "tool.plunger.flange",
+        "sha256": "990b2fb2508ddd67cfc3c915b9fbc46c933cf771989d08aa9cabea87accd3fa5"
+      }
+    ],
+    "decisiveDistinction": "Plain cup rim versus extended lower toilet flange.",
+    "status": "accepted",
+    "master": {
+      "kind": "comparison-master",
+      "path": "content/assets/masters/comparisons/p003.png",
+      "bytes": 521688,
+      "sha256": "d4a1a8769dca82def52d2051f3058efe02e36caff1d15cd0e1a7d144b4f90d7b",
+      "settings": "Deterministic 2-member composition from accepted masters; no labels and no regenerated pixels."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/comparisons/p003-web.png",
+        "bytes": 332068,
+        "sha256": "250ff3e197f9f4e131d0c5170425ebfd4cbb8fa3a31c9a44cb48785d1c012c41",
+        "settings": "960x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/comparisons/p003-phone.png",
+        "bytes": 137663,
+        "sha256": "e99df1d2ef091154abb42cfcf75bc34a9222155f4a26634e901f8ec2f00c03b4",
+        "settings": "640x320 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/comparisons/p003-print.png",
+        "bytes": 134792,
+        "sha256": "964265fe8e9d8058fcd3fc2c68f9e69c6b1143bfa7b7345c87a6ee752e472f03",
+        "settings": "960x480 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "review": {
+      "reviewer": {
+        "identity": "Codex /root — independent completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+        "relationship": "Separate thread from generator/operator thread 01a02c6a-2460-7640-894a-be8ad5ac723c",
+        "date": "2026-08-23"
+      },
+      "acceptedMasterInputsOnly": true,
+      "noFeatureBorrowing": true,
+      "comparableFraming": true,
+      "phone": "pass",
+      "print": "pass",
+      "checksum": "pass"
+    },
+    "scoredUseGate": []
+  },
+  {
+    "id": "comparison.crosscut-rip-saw",
+    "opaqueAssetId": "p004",
+    "assetRevision": 1,
+    "memberIds": [
+      "tool.saw.crosscut",
+      "tool.saw.rip"
+    ],
+    "memberMasterHashes": [
+      {
+        "conceptId": "tool.saw.crosscut",
+        "sha256": "4005bafca4faf322472ca7ef604132b5b79ee1dd6f4fa0642d36c778d34dcad7"
+      },
+      {
+        "conceptId": "tool.saw.rip",
+        "sha256": "98e5370dc861b948accea80c61fc5cb06abdbd1c0f1db65f132a6f22432a7b09"
+      }
+    ],
+    "decisiveDistinction": "Use tooth-pattern distinction only when it remains accurately visible.",
+    "status": "accepted",
+    "master": {
+      "kind": "comparison-master",
+      "path": "content/assets/masters/comparisons/p004.png",
+      "bytes": 420654,
+      "sha256": "635f1ff0b07a434556d1c14a6c740f3d3ce34edb85291f2e4e667c1e711eed4f",
+      "settings": "Deterministic 2-member composition from accepted masters; no labels and no regenerated pixels."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/comparisons/p004-web.png",
+        "bytes": 268915,
+        "sha256": "4ec9a86262031e304a69a3114e1257bba66bbbd30a1b01a7ca621b3ad0e0600d",
+        "settings": "960x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/comparisons/p004-phone.png",
+        "bytes": 111034,
+        "sha256": "c02baabfed7352aabb8759930313fd75aab1ac420fa3d75ce08c6eb351f37267",
+        "settings": "640x320 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/comparisons/p004-print.png",
+        "bytes": 115975,
+        "sha256": "cec7da4fbeec43ef9eaaa882e4d553632ae36e6f13c57fee1320349144d09bf3",
+        "settings": "960x480 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "review": {
+      "reviewer": {
+        "identity": "Codex /root — independent completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+        "relationship": "Separate thread from generator/operator thread 01a02c6a-2460-7640-894a-be8ad5ac723c",
+        "date": "2026-08-23"
+      },
+      "acceptedMasterInputsOnly": true,
+      "noFeatureBorrowing": true,
+      "comparableFraming": true,
+      "phone": "pass",
+      "print": "pass",
+      "checksum": "pass"
+    },
+    "scoredUseGate": [
+      "Crosscut/rip scored comparison remains gated on specialist tooth-geometry review at native and 320 px sizes."
+    ]
+  },
+  {
+    "id": "comparison.claw-ball-peen-hammer",
+    "opaqueAssetId": "p005",
+    "assetRevision": 1,
+    "memberIds": [
+      "tool.hammer.claw",
+      "tool.hammer.ball-peen"
+    ],
+    "memberMasterHashes": [
+      {
+        "conceptId": "tool.hammer.claw",
+        "sha256": "397e47e84fe86fe7ebe1c79cd88a3b2cd6c5e7f4469aaa2ea0cbacb927ca299c"
+      },
+      {
+        "conceptId": "tool.hammer.ball-peen",
+        "sha256": "eeb77736078900f6ab5ba1ef054c08a92f355d9173cc3a30b4de6cc90bdda73a"
+      }
+    ],
+    "decisiveDistinction": "Split claw versus rounded hemispherical peen.",
+    "status": "accepted",
+    "master": {
+      "kind": "comparison-master",
+      "path": "content/assets/masters/comparisons/p005.png",
+      "bytes": 414214,
+      "sha256": "d4563ad53663b86ced242d9261d76d42f554f55e18dc59e84c5f3f6a1a2c4623",
+      "settings": "Deterministic 2-member composition from accepted masters; no labels and no regenerated pixels."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/comparisons/p005-web.png",
+        "bytes": 262507,
+        "sha256": "f94b459f1a96ffc0ac8dfd5ccbcdfb654d4099dc4d79c8ea5cd7a966b2f70e32",
+        "settings": "960x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/comparisons/p005-phone.png",
+        "bytes": 113150,
+        "sha256": "771ab90a6bddb33ac86f442b6e2b4346da4891b4c45308b158aa3fbb906c1249",
+        "settings": "640x320 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/comparisons/p005-print.png",
+        "bytes": 126001,
+        "sha256": "5c63b069a3c1ed21ed955d6e00cfefbf5ddb7d05a261dc9cce18e7aacfe1b96b",
+        "settings": "960x480 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "review": {
+      "reviewer": {
+        "identity": "Codex /root — independent completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+        "relationship": "Separate thread from generator/operator thread 01a02c6a-2460-7640-894a-be8ad5ac723c",
+        "date": "2026-08-23"
+      },
+      "acceptedMasterInputsOnly": true,
+      "noFeatureBorrowing": true,
+      "comparableFraming": true,
+      "phone": "pass",
+      "print": "pass",
+      "checksum": "pass"
+    },
+    "scoredUseGate": []
+  },
+  {
+    "id": "comparison.step-extension-ladder",
+    "opaqueAssetId": "p006",
+    "assetRevision": 1,
+    "memberIds": [
+      "access.stepladder",
+      "access.extension-ladder"
+    ],
+    "memberMasterHashes": [
+      {
+        "conceptId": "access.stepladder",
+        "sha256": "b46f6f6f880239ed23f96b947f3674840adf20187b1976cc67e8a76150e67ec9"
+      },
+      {
+        "conceptId": "access.extension-ladder",
+        "sha256": "50d98e31affe85aa449cbbeef1e252bd530febb69966be356147fcee7e9fb948"
+      }
+    ],
+    "decisiveDistinction": "Self-supporting A-frame/spreaders versus overlapping non-self-supporting rails.",
+    "status": "accepted",
+    "master": {
+      "kind": "comparison-master",
+      "path": "content/assets/masters/comparisons/p006.png",
+      "bytes": 496096,
+      "sha256": "457eb078be13a821c6251b96fb44ebaf854b2345f3b2a0fd067999547d1dbf10",
+      "settings": "Deterministic 2-member composition from accepted masters; no labels and no regenerated pixels."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/comparisons/p006-web.png",
+        "bytes": 313249,
+        "sha256": "167e8d16a5dfb90182357426957e8ae7b913d51d8dbdae05c703900d0ed94154",
+        "settings": "960x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/comparisons/p006-phone.png",
+        "bytes": 128802,
+        "sha256": "814b9ce794ec70ac52d426435c17d4a1669c1e23b9f5174a7b2d880142db6621",
+        "settings": "640x320 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/comparisons/p006-print.png",
+        "bytes": 130269,
+        "sha256": "e0a176a81a03d17d6cb8916bee38bbda7b22202cdb567a6d8761e45af777e141",
+        "settings": "960x480 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "review": {
+      "reviewer": {
+        "identity": "Codex /root — independent completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+        "relationship": "Separate thread from generator/operator thread 01a02c6a-2460-7640-894a-be8ad5ac723c",
+        "date": "2026-08-23"
+      },
+      "acceptedMasterInputsOnly": true,
+      "noFeatureBorrowing": true,
+      "comparableFraming": true,
+      "phone": "pass",
+      "print": "pass",
+      "checksum": "pass"
+    },
+    "scoredUseGate": []
+  },
+  {
+    "id": "comparison.dust-wet-mop",
+    "opaqueAssetId": "p007",
+    "assetRevision": 1,
+    "memberIds": [
+      "tool.dust-mop",
+      "tool.wet-mop"
+    ],
+    "memberMasterHashes": [
+      {
+        "conceptId": "tool.dust-mop",
+        "sha256": "e614f74f1f8556a8fb8bb55629cb98ba8a65cb685c25ff6376a9e26cab5e384f"
+      },
+      {
+        "conceptId": "tool.wet-mop",
+        "sha256": "4e81e3cedeca4c8cb29c7ea74aff9b475055f4df7ce7599942410bb04f946560"
+      }
+    ],
+    "decisiveDistinction": "Frame/head form and material.",
+    "status": "accepted",
+    "master": {
+      "kind": "comparison-master",
+      "path": "content/assets/masters/comparisons/p007.png",
+      "bytes": 506823,
+      "sha256": "e61e320a4424d601fd2abdb54b55e43fb1b2f9bfbaa96f8a07af6d3bcec6dee2",
+      "settings": "Deterministic 2-member composition from accepted masters; no labels and no regenerated pixels."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/comparisons/p007-web.png",
+        "bytes": 315831,
+        "sha256": "4de14b2dc04337397e79d13ff3529a67670aa578dcd259e8714c260278ea9a91",
+        "settings": "960x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/comparisons/p007-phone.png",
+        "bytes": 129858,
+        "sha256": "a057ea617fe553dcd373e2454db3e0a0220a8877275ca8507cecdab25f55e933",
+        "settings": "640x320 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/comparisons/p007-print.png",
+        "bytes": 135467,
+        "sha256": "750973fe4054c134fdbb45a0816fc496d536ef8c1745c69ebf1e905d271a8148",
+        "settings": "960x480 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "review": {
+      "reviewer": {
+        "identity": "Codex /root — independent completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+        "relationship": "Separate thread from generator/operator thread 01a02c6a-2460-7640-894a-be8ad5ac723c",
+        "date": "2026-08-23"
+      },
+      "acceptedMasterInputsOnly": true,
+      "noFeatureBorrowing": true,
+      "comparableFraming": true,
+      "phone": "pass",
+      "print": "pass",
+      "checksum": "pass"
+    },
+    "scoredUseGate": []
+  },
+  {
+    "id": "comparison.floor-window-squeegee",
+    "opaqueAssetId": "p008",
+    "assetRevision": 1,
+    "memberIds": [
+      "tool.floor-squeegee",
+      "tool.window-squeegee"
+    ],
+    "memberMasterHashes": [
+      {
+        "conceptId": "tool.floor-squeegee",
+        "sha256": "71b5d47efb7d7275239e3fb5580eab7f150949ff1f3ae759a03a23e2a2b9334a"
+      },
+      {
+        "conceptId": "tool.window-squeegee",
+        "sha256": "8b676a848a4eb92278a944b1cedf73f9a4c1e76e77fc6b3582b94c5c22cafc2b"
+      }
+    ],
+    "decisiveDistinction": "Long-handled broad floor head versus short-handled window channel.",
+    "status": "accepted",
+    "master": {
+      "kind": "comparison-master",
+      "path": "content/assets/masters/comparisons/p008.png",
+      "bytes": 422490,
+      "sha256": "e503badafde3cf5d00b044b367b5070f0c1ce55aba9495880262bee22d8dcea0",
+      "settings": "Deterministic 2-member composition from accepted masters; no labels and no regenerated pixels."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/comparisons/p008-web.png",
+        "bytes": 267785,
+        "sha256": "0363021e9ae7dd4dfc91e0b4d80174dafe661c4b0d7c02ae5d56c6463edf3bb8",
+        "settings": "960x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/comparisons/p008-phone.png",
+        "bytes": 110928,
+        "sha256": "040995a4cd5827d00d524840bd14feeae0d90d67018cfa9128171228f7e9c576",
+        "settings": "640x320 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/comparisons/p008-print.png",
+        "bytes": 118596,
+        "sha256": "7cb7eb204bfc199f326fd5d245e385b3d04c6e5e3a5f4d0bb5246c118982eb51",
+        "settings": "960x480 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "review": {
+      "reviewer": {
+        "identity": "Codex /root — independent completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+        "relationship": "Separate thread from generator/operator thread 01a02c6a-2460-7640-894a-be8ad5ac723c",
+        "date": "2026-08-23"
+      },
+      "acceptedMasterInputsOnly": true,
+      "noFeatureBorrowing": true,
+      "comparableFraming": true,
+      "phone": "pass",
+      "print": "pass",
+      "checksum": "pass"
+    },
+    "scoredUseGate": []
+  },
+  {
+    "id": "comparison.upright-vacuum-carpet-extractor",
+    "opaqueAssetId": "p009",
+    "assetRevision": 1,
+    "memberIds": [
+      "equipment.vacuum.upright",
+      "equipment.carpet-extractor"
+    ],
+    "memberMasterHashes": [
+      {
+        "conceptId": "equipment.vacuum.upright",
+        "sha256": "44813420af51f4acef844ee152701ea4427fb378d8f77bae69fa861d68b997af"
+      },
+      {
+        "conceptId": "equipment.carpet-extractor",
+        "sha256": "7af38b58c9f88e7901f3a6c5a147c6af0b763877b36bdec823b8f710d9a52006"
+      }
+    ],
+    "decisiveDistinction": "Representative configuration and task context; do not claim one universal silhouette.",
+    "status": "accepted",
+    "master": {
+      "kind": "comparison-master",
+      "path": "content/assets/masters/comparisons/p009.png",
+      "bytes": 483621,
+      "sha256": "9bfaa1006f522545a0786e86ddfb6b3e3ef23d74c3a46cfe01a352dd7eeb4abe",
+      "settings": "Deterministic 2-member composition from accepted masters; no labels and no regenerated pixels."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/comparisons/p009-web.png",
+        "bytes": 307815,
+        "sha256": "59ede480db676996e38df1cddefacf52d39873daac1e74693be83be0b1826999",
+        "settings": "960x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/comparisons/p009-phone.png",
+        "bytes": 127649,
+        "sha256": "9fa175662a672f9ec2f7ea9b5f5a30cdcd71e4170df45630b6c3cf97f312e38d",
+        "settings": "640x320 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/comparisons/p009-print.png",
+        "bytes": 129016,
+        "sha256": "6c9051d0928d4f913db21c4b5d2545c41ea25b139031982ce063ca635753c6a2",
+        "settings": "960x480 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "review": {
+      "reviewer": {
+        "identity": "Codex /root — independent completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+        "relationship": "Separate thread from generator/operator thread 01a02c6a-2460-7640-894a-be8ad5ac723c",
+        "date": "2026-08-23"
+      },
+      "acceptedMasterInputsOnly": true,
+      "noFeatureBorrowing": true,
+      "comparableFraming": true,
+      "phone": "pass",
+      "print": "pass",
+      "checksum": "pass"
+    },
+    "scoredUseGate": [
+      "Before scored upright-vacuum versus carpet-extractor comparison use, obtain specialist comparative signoff; the selected drawings represent specific generic configurations, not universal silhouettes."
+    ]
+  },
+  {
+    "id": "comparison.slip-joint-tongue-groove-pliers",
+    "opaqueAssetId": "p010",
+    "assetRevision": 1,
+    "memberIds": [
+      "tool.pliers.slip-joint",
+      "tool.pliers.tongue-groove"
+    ],
+    "memberMasterHashes": [
+      {
+        "conceptId": "tool.pliers.slip-joint",
+        "sha256": "1026ed8ce9150ba63bb62d07a2c3baade75ea4db0ee91b2fe592c3b6e36799c3"
+      },
+      {
+        "conceptId": "tool.pliers.tongue-groove",
+        "sha256": "1e920e0887275aae1043db05dd5232c0cf913401a3abe75b225d5bb6b032e6dd"
+      }
+    ],
+    "decisiveDistinction": "Two-position slip pivot versus multi-position tongue-and-groove channel.",
+    "status": "accepted",
+    "master": {
+      "kind": "comparison-master",
+      "path": "content/assets/masters/comparisons/p010.png",
+      "bytes": 472392,
+      "sha256": "674a0e8385d1ec3f0eba551b3e597f6198aa942509587a9efd5e3fd832ae1bda",
+      "settings": "Deterministic 2-member composition from accepted masters; no labels and no regenerated pixels."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/comparisons/p010-web.png",
+        "bytes": 301564,
+        "sha256": "ccd88806bcddfdeeed6ee25b21fbea8e55e1e0393feb1035c03dd8ca76d16b9d",
+        "settings": "960x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/comparisons/p010-phone.png",
+        "bytes": 128120,
+        "sha256": "6d42ec7b2176c0bfedcda49206ac4afc0577aed9cdca37be5bfe382d585e9c5b",
+        "settings": "640x320 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/comparisons/p010-print.png",
+        "bytes": 133533,
+        "sha256": "5e6243233ba060b37740f9f9352877f242584d77a1294fdd009e341fcd19ab04",
+        "settings": "960x480 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "review": {
+      "reviewer": {
+        "identity": "Codex /root — independent completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+        "relationship": "Separate thread from generator/operator thread 01a02c6a-2460-7640-894a-be8ad5ac723c",
+        "date": "2026-08-23"
+      },
+      "acceptedMasterInputsOnly": true,
+      "noFeatureBorrowing": true,
+      "comparableFraming": true,
+      "phone": "pass",
+      "print": "pass",
+      "checksum": "pass"
+    },
+    "scoredUseGate": []
+  },
+  {
+    "id": "comparison.needle-nose-diagonal-pliers",
+    "opaqueAssetId": "p011",
+    "assetRevision": 1,
+    "memberIds": [
+      "tool.pliers.needle-nose",
+      "tool.pliers.diagonal-cutting"
+    ],
+    "memberMasterHashes": [
+      {
+        "conceptId": "tool.pliers.needle-nose",
+        "sha256": "042df1a3981f4b77734a30abaf00dafdd9315d91a591f6d43283605ae95d0d5b"
+      },
+      {
+        "conceptId": "tool.pliers.diagonal-cutting",
+        "sha256": "58b0278edf8e93f4cc5c6f99044d38649f788651092153999fd33195dc16622b"
+      }
+    ],
+    "decisiveDistinction": "Long gripping jaws versus opposed cutting edges.",
+    "status": "accepted",
+    "master": {
+      "kind": "comparison-master",
+      "path": "content/assets/masters/comparisons/p011.png",
+      "bytes": 446106,
+      "sha256": "7dec66259445c3cec0969143654359b2f06efccebfa2bfe66ad0f61c70c7728e",
+      "settings": "Deterministic 2-member composition from accepted masters; no labels and no regenerated pixels."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/comparisons/p011-web.png",
+        "bytes": 285267,
+        "sha256": "9e63bfcdb3e472989c82dca689644380e98915bf3cfe34fa0b09c05d8a10eb32",
+        "settings": "960x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/comparisons/p011-phone.png",
+        "bytes": 121810,
+        "sha256": "cbd0fcc8a5937da958c5f0f477284f7585d521af2f1048444feb8efe4f8dde4e",
+        "settings": "640x320 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/comparisons/p011-print.png",
+        "bytes": 127604,
+        "sha256": "3c30e225164638f0016b6b1c1f56748958b3d8e3f7b1fdbb8e75240674bad69d",
+        "settings": "960x480 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "review": {
+      "reviewer": {
+        "identity": "Codex /root — independent completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+        "relationship": "Separate thread from generator/operator thread 01a02c6a-2460-7640-894a-be8ad5ac723c",
+        "date": "2026-08-23"
+      },
+      "acceptedMasterInputsOnly": true,
+      "noFeatureBorrowing": true,
+      "comparableFraming": true,
+      "phone": "pass",
+      "print": "pass",
+      "checksum": "pass"
+    },
+    "scoredUseGate": []
+  },
+  {
+    "id": "comparison.putty-knife-paint-scraper",
+    "opaqueAssetId": "p012",
+    "assetRevision": 1,
+    "memberIds": [
+      "tool.putty-knife",
+      "tool.paint-scraper"
+    ],
+    "memberMasterHashes": [
+      {
+        "conceptId": "tool.putty-knife",
+        "sha256": "d63e5b144821608016d9c5a009e78525c0c7b4cb4663caf150325523fb957923"
+      },
+      {
+        "conceptId": "tool.paint-scraper",
+        "sha256": "c4b339d16ad76a9e93115e64ef488fed48ed0795487bc3bf2f62150fb21b08d4"
+      }
+    ],
+    "decisiveDistinction": "Flexible spreading blade versus scraping blade/handle geometry where supported.",
+    "status": "accepted",
+    "master": {
+      "kind": "comparison-master",
+      "path": "content/assets/masters/comparisons/p012.png",
+      "bytes": 413304,
+      "sha256": "550dade9530569ecdd07cc65b0988135235b8e8c29ec275d96e94f38bc37cddb",
+      "settings": "Deterministic 2-member composition from accepted masters; no labels and no regenerated pixels."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/comparisons/p012-web.png",
+        "bytes": 261706,
+        "sha256": "07f56877e6085a259d6246a8b976bce1a997491930f5aea74cdd33ec77894299",
+        "settings": "960x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/comparisons/p012-phone.png",
+        "bytes": 111681,
+        "sha256": "425fb19eb1d053812354a45ec98c70763945c163a88fc3969f9f73952ca92ef0",
+        "settings": "640x320 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/comparisons/p012-print.png",
+        "bytes": 125052,
+        "sha256": "5676df17f8024698a95173c141eb7860424bf02ed9b896a3a65b3b474e1dc502",
+        "settings": "960x480 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "review": {
+      "reviewer": {
+        "identity": "Codex /root — independent completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+        "relationship": "Separate thread from generator/operator thread 01a02c6a-2460-7640-894a-be8ad5ac723c",
+        "date": "2026-08-23"
+      },
+      "acceptedMasterInputsOnly": true,
+      "noFeatureBorrowing": true,
+      "comparableFraming": true,
+      "phone": "pass",
+      "print": "pass",
+      "checksum": "pass"
+    },
+    "scoredUseGate": []
+  },
+  {
+    "id": "comparison.c-clamp-locking-bar-clamp",
+    "opaqueAssetId": "p013",
+    "assetRevision": 1,
+    "memberIds": [
+      "tool.clamp.c",
+      "tool.pliers.locking",
+      "tool.clamp.bar"
+    ],
+    "memberMasterHashes": [
+      {
+        "conceptId": "tool.clamp.c",
+        "sha256": "616b2e4872ab57260314d6989da10d40ec237d1c11356c8b28cd08e7c084ea48"
+      },
+      {
+        "conceptId": "tool.pliers.locking",
+        "sha256": "a4f0cd2f30074ee242144cc7b46d5f65e1a90729f42b6696a7838f560dfce51d"
+      },
+      {
+        "conceptId": "tool.clamp.bar",
+        "sha256": "0296b4791c1cfc61486b1be662a46510ac4e042c9f049c322f0d286b43ee0d16"
+      }
+    ],
+    "decisiveDistinction": "Context-dependent comparison: screw frame versus locking linkage or sliding bar.",
+    "status": "accepted",
+    "master": {
+      "kind": "comparison-master",
+      "path": "content/assets/masters/comparisons/p013.png",
+      "bytes": 321744,
+      "sha256": "6ecdba26afe6781a09be4b0a4f383796fc95731ac67561c833b3e7c10b805a65",
+      "settings": "Deterministic 3-member composition from accepted masters; no labels and no regenerated pixels."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/comparisons/p013-web.png",
+        "bytes": 196561,
+        "sha256": "02a0055cbc6dcea17ea0f7d295c3c44b999091c794f3fcc7f7ca91340ee88803",
+        "settings": "960x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/comparisons/p013-phone.png",
+        "bytes": 77128,
+        "sha256": "a97705e7f55a2171649745542206e0996566a037aa0802adda8611884ee5def2",
+        "settings": "640x320 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/comparisons/p013-print.png",
+        "bytes": 80543,
+        "sha256": "049a5ebf51742062050668a0687c7595543b1a40f2350927749a7d18173c8161",
+        "settings": "960x480 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "review": {
+      "reviewer": {
+        "identity": "Codex /root — independent completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+        "relationship": "Separate thread from generator/operator thread 01a02c6a-2460-7640-894a-be8ad5ac723c",
+        "date": "2026-08-23"
+      },
+      "acceptedMasterInputsOnly": true,
+      "noFeatureBorrowing": true,
+      "comparableFraming": true,
+      "phone": "pass",
+      "print": "pass",
+      "checksum": "pass"
+    },
+    "scoredUseGate": []
+  },
+  {
+    "id": "comparison.push-broom-deck-brush",
+    "opaqueAssetId": "p014",
+    "assetRevision": 1,
+    "memberIds": [
+      "tool.push-broom",
+      "tool.deck-brush"
+    ],
+    "memberMasterHashes": [
+      {
+        "conceptId": "tool.push-broom",
+        "sha256": "c3a9d7849c8e411bea78259354e0aaa24acbb601549e6c4b292396a25ff30763"
+      },
+      {
+        "conceptId": "tool.deck-brush",
+        "sha256": "efc9bfad5684a3dc15102e6f5e62099445959cd10cb662b5c6d89eb90581fdda"
+      }
+    ],
+    "decisiveDistinction": "Sweeping head versus stiff scrubbing-brush geometry.",
+    "status": "accepted",
+    "master": {
+      "kind": "comparison-master",
+      "path": "content/assets/masters/comparisons/p014.png",
+      "bytes": 392767,
+      "sha256": "b9fcbf490a6fd338bdc21b74526d180d5c5620391ca2437457b9b03004327722",
+      "settings": "Deterministic 2-member composition from accepted masters; no labels and no regenerated pixels."
+    },
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/comparisons/p014-web.png",
+        "bytes": 244047,
+        "sha256": "95ae2ee79670e3b6ffc502b5ccb25c23ae5161e20524b51b0eed44d0ff30ea0e",
+        "settings": "960x480 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/comparisons/p014-phone.png",
+        "bytes": 101460,
+        "sha256": "d11f8afb742e9640036b23737d08b32733de46863cabd11376da9e456e2f0273",
+        "settings": "640x320 PNG, Lanczos, RGB24, metadata stripped"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/comparisons/p014-print.png",
+        "bytes": 118693,
+        "sha256": "a1f4abe8651c1be26fa9fb15312456897f07b89da901113dbd47f44a3d0175f3",
+        "settings": "960x480 grayscale PNG, Lanczos, metadata stripped"
+      }
+    ],
+    "review": {
+      "reviewer": {
+        "identity": "Codex /root — independent completion thread 01a02ead-53bb-7412-b7d0-dc365a3e8fad",
+        "relationship": "Separate thread from generator/operator thread 01a02c6a-2460-7640-894a-be8ad5ac723c",
+        "date": "2026-08-23"
+      },
+      "acceptedMasterInputsOnly": true,
+      "noFeatureBorrowing": true,
+      "comparableFraming": true,
+      "phone": "pass",
+      "print": "pass",
+      "checksum": "pass"
+    },
+    "scoredUseGate": []
+  }
+]

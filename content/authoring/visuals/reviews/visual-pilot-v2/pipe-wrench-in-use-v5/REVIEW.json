@@ -1,0 +1,142 @@
+{
+  "reviewId": "visual-pilot-v2-pipe-wrench-in-use-v5-review",
+  "date": "2026-08-23",
+  "status": "complete; u6 independently passed and selected as the candidate-only different-angle in-use view; no master overwritten",
+  "briefChain": [
+    {
+      "path": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-in-use-v1.json",
+      "sha256": "6688efd0e19a56c8935619a4df4923ff7236dc46df594369b5ed33d3078970eb",
+      "outputs": ["v2t002-u1", "v2t002-u2"]
+    },
+    {
+      "path": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-in-use-v2.json",
+      "sha256": "03ac4b755a5c48a85d71309e979d4b09ac81d96d827ac438c38a7fff8232cdc4",
+      "outputs": ["v2t002-u3"]
+    },
+    {
+      "path": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-in-use-v3.json",
+      "sha256": "6111eecb73487cc88d347625a1324542d4a8d975d23db25d738fb46533f4a0cb",
+      "outputs": ["v2t002-u4"]
+    },
+    {
+      "path": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-in-use-v4.json",
+      "sha256": "f3bd6831fe8de04ef2136de5c16ca7c00888e668c3171634b2fff181a0c96d23",
+      "outputs": ["v2t002-u5"]
+    },
+    {
+      "path": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-in-use-v5.json",
+      "sha256": "7a7a9e84ebc131dc44ccdc232a7e343f0ea5190d22e5610e3523a2932219a0ae",
+      "outputs": ["v2t002-u6"]
+    }
+  ],
+  "generator": {
+    "surface": "Codex built-in image_gen",
+    "totalCallCount": 6,
+    "workflowFinding": "The successful sequence moved from anatomy-reference generation to project-owned reference transformations. A minimal edit of the accepted master produced the safest contact view, then a controlled edit of the promising diagonal candidate produced the selected different-angle view.",
+    "preservation": "Every native output was preserved under a unique candidate path and hash. No failed or provisional candidate was overwritten."
+  },
+  "selected": {
+    "candidateId": "v2t002-u6",
+    "role": "different-angle supplemental in-use view",
+    "path": "content/assets/candidates/visual-pilot-v2/v2t002-u6.png",
+    "sha256": "07f9551fd2de61d3171be09310b99008f90d1ccaa4f2e1d9579f534d35ef48aa",
+    "dimensions": "1254x1254 RGB PNG",
+    "generatedSource": "/home/cjpher/.codex/generated_images/01a02fc9-7789-74a1-9b74-dcd8ce448059/exec-67cdaa71-bcd3-4297-944e-3777507b49f1.png",
+    "promptRecord": "content/authoring/visuals/briefs/visual-pilot-v2-pipe-wrench-in-use-v5.json#prompt",
+    "decision": "pass-select-candidate-only",
+    "decisionBasis": "The diagonal three-quarter pose is materially different from the accepted master. Exactly one wrench grips one hollow cylindrical fitting; the upper hook teeth and short exposed lower fixed-heel tooth row visibly meet opposite sides at native and 320 pixels. One straight shank, one nut, and no loop or second mechanism remain. The handle is plain, solid, rounded, recess-free, and hole-free."
+  },
+  "fallback": {
+    "candidateId": "v2t002-u5",
+    "role": "side-profile supplemental contact view",
+    "path": "content/assets/candidates/visual-pilot-v2/v2t002-u5.png",
+    "sha256": "0372e758f906d832e250b78dde107f5c8a183ec551cde5ca0a3f67fde9bdcb59",
+    "dimensions": "1254x1254 RGB PNG",
+    "generatedSource": "/home/cjpher/.codex/generated_images/01a02fc9-7789-74a1-9b74-dcd8ce448059/exec-b121da65-e9c7-491f-962d-cb42f6a78e16.png",
+    "decision": "pass-retain-fallback-candidate-only",
+    "decisionBasis": "A project-owned accepted master was transformed by adding one end-on hollow round workpiece. Both opposed contacts and the accepted mechanism remain clear at 320 pixels. It is pedagogically useful but not a genuinely different whole-tool angle.",
+    "editCaveat": "The generator globally rerendered minor line and texture pixels rather than making a byte-local edit; reviewer comparison measured PSNR 24.255 and SSIM 0.9627 against t037. No meaning-bearing mechanism change was found, so this remains a distinct candidate and hash."
+  },
+  "attempts": [
+    {
+      "candidateId": "v2t002-u1",
+      "path": "content/assets/candidates/visual-pilot-v2/v2t002-u1.png",
+      "sha256": "3ab1413f9ef241946ddfedd569b8884c6cbcba891a51baa34e189e125e22d4fc",
+      "dimensions": "1254x1254 RGB PNG",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a0306e-dc29-7d90-aa7e-6a2ef44121f9/exec-9db26200-9041-45e2-84a9-d5f1484f2ded.png",
+      "verdict": "reject",
+      "finding": "Fatal detached U-shaped toothed rack after the adjustment nut."
+    },
+    {
+      "candidateId": "v2t002-u2",
+      "path": "content/assets/candidates/visual-pilot-v2/v2t002-u2.png",
+      "sha256": "085a9f8ae2d6c0a5bb746dce5416e669575fdc79c66153ba3e75721bd1fe705f",
+      "dimensions": "1254x1254 RGB PNG",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a0306e-dc29-7d90-aa7e-6a2ef44121f9/exec-8cd7d648-88a1-4f95-bb50-458d928a7cbe.png",
+      "verdict": "provisional-superseded",
+      "finding": "One-shank topology and safe round-fitting context passed, but lower contact was not explicit at 320 pixels and the recessed handle plus oblong end hole repeated forbidden reference conventions."
+    },
+    {
+      "candidateId": "v2t002-u3",
+      "path": "content/assets/candidates/visual-pilot-v2/v2t002-u3.png",
+      "sha256": "8cfc2d83e0d49dd358bc5e695918fe224c53b281d4a12311e831db40e05828cd",
+      "dimensions": "1254x1254 RGB PNG",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a02fc9-7789-74a1-9b74-dcd8ce448059/exec-5f28e91e-88df-4ea6-af32-d71db36a2de5.png",
+      "verdict": "reject",
+      "finding": "Both contacts improved, but a separate threaded mechanism and U-shaped return remained behind the nut."
+    },
+    {
+      "candidateId": "v2t002-u4",
+      "path": "content/assets/candidates/visual-pilot-v2/v2t002-u4.png",
+      "sha256": "d8d6ea5f3affd9f026bccf4cb1ef0b4e348b1ef967c4aa514aaa071bdd818238",
+      "dimensions": "1254x1254 RGB PNG",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a02fc9-7789-74a1-9b74-dcd8ce448059/exec-b0caec54-df7d-44ec-9063-05e0405f1efe.png",
+      "verdict": "reject",
+      "finding": "Shank continuity remained opaque or bolt-like and a long recessed handle panel violated the brief."
+    },
+    {
+      "candidateId": "v2t002-u5",
+      "path": "content/assets/candidates/visual-pilot-v2/v2t002-u5.png",
+      "sha256": "0372e758f906d832e250b78dde107f5c8a183ec551cde5ca0a3f67fde9bdcb59",
+      "dimensions": "1254x1254 RGB PNG",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a02fc9-7789-74a1-9b74-dcd8ce448059/exec-b121da65-e9c7-491f-962d-cb42f6a78e16.png",
+      "verdict": "pass-fallback",
+      "finding": "Safest topology and clearest contact view, but it retains the accepted master angle."
+    },
+    {
+      "candidateId": "v2t002-u6",
+      "path": "content/assets/candidates/visual-pilot-v2/v2t002-u6.png",
+      "sha256": "07f9551fd2de61d3171be09310b99008f90d1ccaa4f2e1d9579f534d35ef48aa",
+      "dimensions": "1254x1254 RGB PNG",
+      "generatedSource": "/home/cjpher/.codex/generated_images/01a02fc9-7789-74a1-9b74-dcd8ce448059/exec-67cdaa71-bcd3-4297-944e-3777507b49f1.png",
+      "verdict": "pass-select"
+    }
+  ],
+  "independentBlindReview": {
+    "status": "complete",
+    "method": "Separate read-only reviewers inspected native images and fresh 320-pixel Lanczos reductions, did not trust filenames or self-review, and evaluated part count, contact geometry, topology, safety, text and branding, answer cues, and rights similarity.",
+    "u6": "Pass: exactly one wrench and one hollow cylindrical fitting; both serrated contacts discernible and gap-free at 320 pixels; one shank and one nut; integral fixed heel; plain solid handle; safe generic monochrome art with no answer cue.",
+    "selection": "u6 supersedes u5 for the requested different-angle role; retain u5 only as the simpler side-profile contact-view fallback."
+  },
+  "phoneReview": {
+    "selectedDimensions": "320x320 RGB PNG",
+    "selectedTemporarySha256": "7256679405431348e3aeeb7908718b462a6e0c7c9f6d5d71832446ca690fae11",
+    "selectedFinding": "The complete diagonal silhouette, hollow fitting, upper contact, short lower contact, one nut, and plain solid handle remain readable. The lower contact is small but discernible and gap-free.",
+    "contactSheet": {
+      "path": "content/authoring/visuals/reviews/visual-pilot-v2/pipe-wrench-in-use-v5/PHONE-CONTACT-SHEET.png",
+      "sha256": "817c9a1f3f89c132f00f229a0e346e4503bb2b2ce87ba0cbdecb400651792cd7",
+      "dimensions": "960x320 RGB PNG",
+      "order": [
+        "left: u2 provisional and superseded",
+        "center: u5 passed side-profile fallback",
+        "right: u6 passed and selected different-angle view"
+      ]
+    }
+  },
+  "accessibilityDraft": {
+    "neutralAttemptDescription": "A monochrome line drawing shows a long-handled gripping tool positioned diagonally around a short round metal fitting.",
+    "fullLearningDescription": "A traditional pipe wrench is shown at a three-quarter angle gripping a cylindrical metal fitting between its serrated hook jaw and fixed heel jaw, with an ordinary unextended solid handle.",
+    "answerLeak": "No learner-facing accessibility record was installed; the full description remains post-answer review metadata."
+  },
+  "masterImpact": "None. u6 and u5 are candidate-only supplemental views. The accepted t037 master, app route, derivatives, and release manifests remain unchanged by this variant review."
+}
