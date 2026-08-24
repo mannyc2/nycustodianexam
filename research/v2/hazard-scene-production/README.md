@@ -1,57 +1,57 @@
-# R2.9 — Hazard-scene production research
+# Hazard-scene semantics and QA synthesis
 
-**Research status:** complete.
+**Status:** accepted historical conclusions from R2.9, consolidated 2026-08-24.
+This note is supporting evidence, not product or production authority.
 
-**Maintained decision:** the original mixed deterministic-first authoring-route
-recommendation is superseded by
-`../../../illustration/VISUAL_AUTHORING_POLICY.md`. Codex-native image generation
-is the production-art route for hazard scenes and isolated tools.
+The original R2.9 reports, matrices, fixtures, and receipts are recoverable at
+immutable pre-cleanup commit
+[`6701e83290c56d9c5f04275a30fc6ada6bd40435`](https://github.com/mannyc2/nycustodianexam/tree/6701e83290c56d9c5f04275a30fc6ada6bd40435/research/v2/hazard-scene-production).
 
-This is the maintainer-reviewed reconciliation that the earlier R2.90 draft said
-was required. No further reconciliation PR is needed before the Codex visual
-pilot.
+## Current authority and released bank
 
-## What remains authoritative/useful
+[`illustration/VISUAL_AUTHORING_POLICY.md`](../../../illustration/VISUAL_AUTHORING_POLICY.md)
+controls production and supersedes R2.9's mixed deterministic-first SVG/3D
+authoring recommendation. The accepted 18-scene bank, exact-pixel identity,
+lineage, regions, accessibility records, and review closure live in maintained
+[scene briefs](../../../content/authoring/visuals/briefs/scenes/),
+[release records](../../../content/authoring/visuals/releases/scenes.json), and
+the [scene release receipt](../../../content/authoring/visuals/releases/SCENE-RELEASE-RECEIPT.md).
 
-R2.9 correctly separated scene meaning, visible pixels, and marker geometry.
-Production retains:
+## Retained semantic contract
 
-- a source-backed semantic scene brief authored before generation;
-- explicit target, decoy, safe-background, and negative-hazard inventories;
-- one exact unannotated accepted static image per scored view;
-- zero unresolved accidental hazards or unsafe decoys;
-- human-authored normalized target/decoy regions after image acceptance;
-- stable zone order shared by visual feedback, nonvisual equivalents, and print;
-- neutral pre-answer and full post-answer descriptions;
-- immutable versioning for scenes, pixels, regions, descriptions, and item refs;
-- opaque delivery metadata with no pre-answer leakage; and
-- phone, print, offline, rights/similarity, and accessibility review.
+A scene begins with a source-backed semantic brief written before image
+generation. The brief defines:
 
-## What is superseded
+- supported hazard claim and task;
+- target hazards, plausible decoys, safe-background elements, and explicit
+  negative-hazard inventory;
+- stable target/decoy zone order and composition constraints; and
+- prohibited ambiguity, accidental hazards, unsafe decoys, answer emphasis,
+  invented text/signage, and impossible meaning-bearing geometry.
 
-Do not carry forward these R2.9 authoring-route conclusions:
+The accepted final pixels control what is actually visible. Review must close
+every declared target and decoy against those pixels and find zero unresolved
+accidental hazards. Human-authored normalized regions bind to the accepted
+image; neutral space is not silently treated as a target or decoy. A pixel
+change requires affected region, description, and review closure to run again.
 
-- modular SVG as the preferred simple-scene route;
-- Blender/3D blocking as the preferred geometry-critical route;
-- human cleanup as the normal complex-scene route;
-- exclusion of text-to-image from controlling production;
-- a deterministic render as the mandatory controlling/fallback image; or
-- the 24-candidate multi-route comparison as a prerequisite to generation.
+## Accessibility and nonvisual equivalence
 
-Those findings remain historical research in `REPORT.md`, the original receipt,
-and comparison/cost tables. They do not override maintained illustration policy.
+Pre-answer descriptions remain neutral and do not disclose correctness.
+Post-answer descriptions may explain the complete target/decoy result. The
+nonvisual task uses the same scene revision, target/decoy inventory, order,
+scoring intent, feedback, and review lifecycle as the visual task; it is not an
+easier answer list or a separate content truth.
 
-## Current production handoff
+## Identity and QA boundaries
 
-- `GENERATIVE-BOUNDARY.md` — current Codex generation and security boundary.
-- `SCENE-ASSET-ARCHITECTURE.md` — current semantic/final-pixel/region contract.
-- `PILOT-PLAN.md` — current Codex-native tool-and-scene pilot.
-- `DECISION-MATRIX.csv` — reconciled decisions.
-- `OPEN-QUESTIONS.csv` — only unresolved implementation measurements.
-- `QA-FAILURE-CATALOG.csv` — reusable release-blocking failure codes.
-- `ZONE-HOTSPOT-CONTRACT.md` — reusable region/interaction rules.
-- `ACCESSIBILITY-AUTHORING.md` — reusable description/equivalent rules.
-- `VERSIONING-CONTRACT.md` — reusable immutable identity/change semantics.
+Scene pixels, semantic records, regions, descriptions, item references, and
+review decisions are immutable, versioned coordinates. Release review covers
+content meaning, accidental hazards and decoys, rights/similarity, security and
+answer leakage, accessibility/nonvisual equivalence, phone readability, print,
+offline delivery, and exact hashes. A batching or generation technique never
+substitutes for final-pixel review.
 
-All Tier A/B concepts remain launch scope. The pilot selects production settings
-and batching; it does not cut the content inventory.
+No unresolved R2.9 research question controls the released scene bank. Future
+scene revisions still require the maintained per-scene production and release
+gates.

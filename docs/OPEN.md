@@ -132,51 +132,32 @@ Status: standing legal/editorial caution. Any future item text obtained through 
 
 ### P16 — Final application architecture
 
-**Resolved constraints:**
+**Status:** SECOND-PASS RESEARCH RECONCILED / IMPLEMENTATION GATES OPEN.
 
-- standards-first semantic HTML/CSS presentation;
-- no Next.js;
-- latest available Effect v4 is mandatory for new architecture and implementation work;
-- Effect v3 is historical/migration/regression evidence only, not a production fallback;
-- Bun is the package-management, workspace, and primary TypeScript tooling direction;
-- Bun workspaces with top-level `apps/` and `packages/`;
-- Vite remains the preferred browser build/development direction unless stronger second-pass evidence changes it;
-- Cloudflare Workers Static Assets remains the initial deployment direction;
-- no Worker script merely to serve static files;
-- static acquisition/reference pages remain useful and indexable without a client-rendered SPA shell;
-- no UI renderer is preselected;
-- normal persistent answer commitment requires the authoritative IndexedDB transaction to complete before reveal.
+R2.1–R2.10 and the R2.90 synthesis are complete. Accepted architecture now
+lives in `../product/ARCHITECTURE_CONSTRAINTS.md`; the complete historical
+research corpus is recoverable at immutable commit
+[`6701e83290c56d9c5f04275a30fc6ada6bd40435`](https://github.com/mannyc2/nycustodianexam/tree/6701e83290c56d9c5f04275a30fc6ada6bd40435/research).
 
-**Effect learning/governance rule:** the intended skill is the official `Effect-TS/skills` `skills/effect-ts/SKILL.md`. Once the exact v4 package is installed, agents must read `node_modules/effect/AGENTS.md` completely, follow relevant package-local documentation, and inspect installed Effect/platform source where needed.
+**Resolved architecture:** standards-first static HTML; no Next.js; one exact
+Effect v4 cohort and Bun workspace; initial `apps/site`,
+`apps/content-compiler`, and `packages/content` graph; Schema plus explicit
+publication gates and manifest-last output; cohesive runtime-specific services
+and roots; strict IndexedDB commit-before-reveal; staged pack activation; native
+service-worker HTTP caching; a provisional lazy direct-DOM first slice; Vite;
+Cloudflare Static Assets; distinct Bun/Effect/real-browser/accessibility/leak/
+print verification; local diagnostics and no mandatory behavioral tracking.
 
-**Effect architecture rule:** use current v4-native services, focused Layers, Schema models/tagged errors, Scope, structured concurrency, runtime-root composition, and testing patterns where they fit. Keep pure deterministic logic plain. Do not impose generic `domain/application/ports/adapters/ui`, service-per-function, package-per-service, giant application-service, or universal-core structures.
+**Open implementation evidence:** clean frozen workspace execution; JSONC
+location adapter; canonical JSON profile; real-browser IndexedDB/provider,
+migration, failure, cross-tab, and offline/update proof; production route
+closures and numeric budgets; exact browser/assistive-technology release matrix;
+generated-artifact retention policy; current Vite/Cloudflare preview; and full
+validated Tier A/B source/claim/question/asset completeness.
 
-**Bun workspace rule:** expect a private root package, root catalog for one exact coordinated Effect cohort, explicit workspace/runtime dependencies, isolated installs unless measured incompatibility requires otherwise, committed `bun.lock`, frozen CI installs, minimal reviewed lifecycle-script trust, and runtime-specific TypeScript boundaries. Browser/service-worker/workerd code does not become Bun-runtime code merely because Bun owns the workspace.
-
-**Curated second-pass program:** see `../research/prompt-curation/` and `../prompts/research-v2/`. Every lane must use an immutable source SHA, connected `@GitHub`, an early receipt/branch/draft PR, exact raw reports/evidence/fixtures/lockfiles, incremental pushes, and final branch/head/PR receipts.
-
-**Still open and delegated to the second pass:**
-
-- exact Effect v4 cohort to lock after lane-start verification;
-- exact Bun version and root workspace configuration;
-- exact package graph below `apps/` and `packages/`;
-- service/Layer/runtime topology;
-- current v4 Platform/browser/Bun/Cloudflare choices;
-- content compiler workspace and Schema model;
-- IndexedDB provider and transaction API;
-- service-worker/cache/version ownership;
-- v4 reactivity and UI renderer choice;
-- Vite chunk boundaries and measured bundle budgets;
-- Cloudflare routing/configuration and optional Worker API;
-- testing/accessibility/performance/observability tooling;
-- CSS/design-token organization;
-- correction endpoint implementation/storage;
-- first-party analytics/observability policy;
-- custom domain/canonical host.
-
-Decision criteria remain: indexable static HTML; installable/offline PWA; explicit versioned content packs; local-first progress; deterministic print and simulations; WCAG behavior; no pre-answer leakage; low operating cost; minimal backend.
-
-**Status:** CURATED / READY FOR SECOND-PASS RESEARCH. The prompt suite must be stamped with the immutable post-curation source SHA before lanes run.
+No backend is authorized. A correction endpoint remains deferred until its
+product, privacy, idempotency, rate, abuse, and workerd contract is approved.
+The custom domain/canonical host remains P17.
 
 ### P17 — Domain / canonical host
 Preferred naming direction: NYCustodianExam / NY Custodian Exam. Domain registration/canonical production host not established in corpus.
