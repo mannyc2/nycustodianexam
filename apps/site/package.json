@@ -1,0 +1,35 @@
+{
+  "name": "@nycustodian/site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "bun run generate && vite build && bun run scripts/finalize-service-worker.ts",
+    "dev": "bun run generate && vite",
+    "generate": "bun run scripts/generate-pages.tsx",
+    "test": "node node_modules/vitest/vitest.mjs run",
+    "test:browser": "playwright test --config playwright.config.ts",
+    "test:browser:chromium": "playwright test --config playwright.config.ts --project=chromium",
+    "typecheck": "tsc -p tsconfig.json",
+    "typecheck:browser": "tsc -p browser-tests/tsconfig.json",
+    "preview:cloudflare": "wrangler dev --config scripts/wrangler-preview.jsonc --ip 127.0.0.1 --port 8787 --show-interactive-dev-session=false"
+  },
+  "dependencies": {
+    "@nycustodian/content": "workspace:*",
+    "effect": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "catalog:",
+    "@effect/vitest": "catalog:",
+    "@playwright/test": "catalog:",
+    "@types/bun": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:",
+    "wrangler": "catalog:"
+  }
+}

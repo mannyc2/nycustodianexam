@@ -1,0 +1,53 @@
+{
+  "name": "@nycustodian/root",
+  "private": true,
+  "type": "module",
+  "packageManager": "bun@1.4.0",
+  "engines": {
+    "node": "22.22.0"
+  },
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "packages/*"
+    ],
+    "catalog": {
+      "@axe-core/playwright": "4.13.0",
+      "@effect/vitest": "4.0.0-rc.111",
+      "@playwright/test": "1.62.1",
+      "@types/bun": "1.3.11",
+      "@types/node": "22.20.1",
+      "@types/react": "19.2.2",
+      "@types/react-dom": "19.2.2",
+      "effect": "4.0.0-rc.111",
+      "react": "19.2.8",
+      "react-dom": "19.2.8",
+      "typescript": "5.9.2",
+      "vite": "8.2.1",
+      "vitest": "4.1.10",
+      "wrangler": "4.125.0"
+    }
+  },
+  "scripts": {
+    "build": "bun run check:toolchain && bun run content:build && bun run site:build && bun run verify:artifacts",
+    "check:boundaries": "bun run scripts/check-module-boundaries.ts",
+    "check:layout": "bun run scripts/check-maintained-layout.ts",
+    "check:toolchain": "bun run scripts/check-toolchain.ts",
+    "content:build": "bun run --filter @nycustodian/content-compiler build",
+    "site:build": "bun run --filter @nycustodian/site build",
+    "dev": "bun run content:build && bun run --filter @nycustodian/site dev",
+    "test": "node --experimental-strip-types scripts/run-workspaces.ts test",
+    "test:browser": "bun run --filter @nycustodian/site test:browser",
+    "test:browser:chromium": "bun run --filter @nycustodian/site test:browser:chromium",
+    "typecheck": "node --experimental-strip-types scripts/run-workspaces.ts typecheck",
+    "typecheck:browser": "bun run --filter @nycustodian/site typecheck:browser",
+    "verify": "bun run check:toolchain && bun run check:layout && bun run check:boundaries && bun run verify:visuals && bun run content:build && bun run typecheck && bun run typecheck:browser && bun run test && bun run site:build && bun run verify:artifacts",
+    "verify:artifacts": "bun run scripts/verify-artifacts.ts",
+    "verify:visuals": "bun content/authoring/visuals/releases/verify-visual-release.mjs"
+  },
+  "devDependencies": {
+    "@types/bun": "catalog:",
+    "effect": "catalog:",
+    "typescript": "catalog:"
+  }
+}

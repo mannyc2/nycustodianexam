@@ -130,21 +130,39 @@ Status: standing legal/editorial caution. Any future item text obtained through 
 
 ## Product / SEO open decisions
 
-### P16 — Final application architecture
+### P16 — Final application architecture baseline
 
 **Resolved constraints:**
 
 - standards-first semantic HTML/CSS presentation;
 - no Next.js;
+- no SPA router; generated acquisition/reference routes remain useful without
+  JavaScript;
 - latest available Effect v4 is mandatory for new architecture and implementation work;
 - Effect v3 is historical/migration/regression evidence only, not a production fallback;
 - Bun is the package-management, workspace, and primary TypeScript tooling direction;
-- Bun workspaces with top-level `apps/` and `packages/`;
-- Vite remains the preferred browser build/development direction unless stronger second-pass evidence changes it;
+- Bun `1.4.0` is the first scaffold target, gated by the full current install and
+  lock verification;
+- the accepted initial graph is `apps/site`, `apps/content-compiler`, and
+  `packages/content`;
+- Vite is the browser build/development direction;
 - Cloudflare Workers Static Assets remains the initial deployment direction;
 - no Worker script merely to serve static files;
-- static acquisition/reference pages remain useful and indexable without a client-rendered SPA shell;
-- no UI renderer is preselected;
+- React 19 is selected for lazy interactive islands;
+- immutable renderer-neutral `ScreenSnapshot` values, semantic commands, and
+  state/actions/meta provider contracts remain the application/view boundary;
+- one long-lived browser `ManagedRuntime` is created at the site application
+  root, not per render or event;
+- component APIs use compound composition, lifted shared state, children, and
+  explicit variants instead of behavioral boolean-prop proliferation;
+- the direct-DOM-first R2.90 choice remains evidence/baseline and a possible
+  measured fallback, but is superseded as the first-slice renderer; there is no
+  dual-renderer compatibility layer;
+- all 21 destination families now have canonical route IDs/paths, indexability,
+  static/island ownership, offline behavior, parent navigation, error behavior,
+  and milestones in `../product/ROUTES.md`;
+- their legal state transitions, recovery, focus, history, persistence, and
+  offline semantics are defined in `../product/SCREEN_STATES.md`; and
 - normal persistent answer commitment requires the authoritative IndexedDB transaction to complete before reveal.
 
 **Effect learning/governance rule:** the intended skill is the official `Effect-TS/skills` `skills/effect-ts/SKILL.md`. Once the exact v4 package is installed, agents must read `node_modules/effect/AGENTS.md` completely, follow relevant package-local documentation, and inspect installed Effect/platform source where needed.
@@ -153,30 +171,81 @@ Status: standing legal/editorial caution. Any future item text obtained through 
 
 **Bun workspace rule:** expect a private root package, root catalog for one exact coordinated Effect cohort, explicit workspace/runtime dependencies, isolated installs unless measured incompatibility requires otherwise, committed `bun.lock`, frozen CI installs, minimal reviewed lifecycle-script trust, and runtime-specific TypeScript boundaries. Browser/service-worker/workerd code does not become Bun-runtime code merely because Bun owns the workspace.
 
-**Curated second-pass program:** see `../research/prompt-curation/` and `../prompts/research-v2/`. Every lane must use an immutable source SHA, connected `@GitHub`, an early receipt/branch/draft PR, exact raw reports/evidence/fixtures/lockfiles, incremental pushes, and final branch/head/PR receipts.
+**Completed second-pass program:** R2.1–R2.10 and the reconciled R2.90 synthesis
+are complete under `../research/v2/`. The launch program and provenance remain
+under `../prompts/research-v2/`. The maintained architecture accepts R2.90 except
+for its direct-DOM-first renderer, which the later maintainer React 19 decision
+supersedes without discarding the renderer-neutral contracts or measurements.
 
-**Still open and delegated to the second pass:**
+**Recorded evidence for the earlier vertical slice (2026-08-23):**
 
-- exact Effect v4 cohort to lock after lane-start verification;
-- exact Bun version and root workspace configuration;
-- exact package graph below `apps/` and `packages/`;
-- service/Layer/runtime topology;
-- current v4 Platform/browser/Bun/Cloudflare choices;
-- content compiler workspace and Schema model;
-- IndexedDB provider and transaction API;
-- service-worker/cache/version ownership;
-- v4 reactivity and UI renderer choice;
-- Vite chunk boundaries and measured bundle budgets;
-- Cloudflare routing/configuration and optional Worker API;
-- testing/accessibility/performance/observability tooling;
-- CSS/design-token organization;
-- correction endpoint implementation/storage;
-- first-party analytics/observability policy;
+- exact React 19, Effect v4 RC, TypeScript, Vite, Vitest, and Effect-test cohort
+  pinned through one Bun catalog and committed text lock;
+- isolated `apps/site`, `apps/content-compiler`, and `packages/content`
+  workspaces with explicit runtime and `workspace:*` edges;
+- Schema-backed authored/precommit/postcommit models, deterministic split
+  compilation, staged activation, and content/compiler tests;
+- a scoped IndexedDB `StudyPersistence` Layer, one browser `ManagedRuntime`,
+  renderer-neutral question controller, semantic commands, and a React
+  `state/actions/meta` adapter using compound components;
+- generated static and island routes with canonical/robots metadata, a stable
+  service-worker asset closure, maintained CSS tokens, responsive/print rules,
+  and a no-JavaScript question fallback; and
+- passing typecheck/unit/build gates, commit-before-fetch Effect test,
+  static-route runtime isolation, answer-leak scan, 300k/100k/90k
+  raw/gzip/Brotli budgets, plus real-Chrome IndexedDB commit/reveal, reload
+  reconciliation, service-worker activation, and controlled offline reload; and
+- target-toolchain proof on 2026-08-23 with the checksum-verified official Bun
+  `1.4.0` Linux x64 release: an isolated-linker clean install completed with
+  `--frozen-lockfile`, preserved `bun.lock` byte-for-byte, and passed the full
+  `bun run verify` suite without the unsupported-version override. Vitest
+  and workspace orchestration remain specialist tools on exact Node `22.22.0`,
+  as allowed by the runtime-boundary policy; publication/compiler commands
+  themselves execute under Bun.
+
+Those results belong to the then-current one-question slice. They remain useful
+historical evidence, but do not constitute final verification of the expanded
+revision.
+
+**Current M1–M3 implementation evidence (2026-08-23):**
+
+- the validated packs generate a closed set of 58 documents, including two
+  question routes, 18 visual hazard routes, 18 nonvisual hazard routes, and four
+  public tool pages;
+- destination families without reviewed machine-readable content are
+  intentionally omitted instead of being represented by placeholder pages; and
+- the exact local deterministic gate passes on Bun `1.4.0` and Node `22.22.0`,
+  including maintained-layout and module-boundary checks, 396 visual hashes,
+  three-workspace typechecks, 165 unit tests, the 58-document/92-safe-shell-URL
+  production build, artifact closure and answer-leak verification, and a frozen
+  offline install that preserves `bun.lock` byte-for-byte; while
+- browser CI is configured, but the current revision has not run locally in
+  real browsers because loopback escalation is unavailable, and has not run
+  remotely because the branch has not been pushed.
+
+**Implementation evidence still open:**
+
+- current-v4 IndexedDB failure/quota/disposal proof and commit/reconciliation
+  coverage across the remaining supported real-browser matrix;
+- service-worker version/eviction/update behavior, remaining-browser offline
+  coverage, and explicit pack lifecycle proof;
+- automated accessibility, zoom/reflow, keyboard, performance, and complete
+  offline gates;
+- M4/M5 simulation, complete print output, explicit content-pack lifecycle,
+  settings, and corrections flows;
+- sitemap generation, Cloudflare preview/deployment configuration, and any
+  separately authorized future Worker API;
+- first-party analytics/observability policy; and
 - custom domain/canonical host.
 
 Decision criteria remain: indexable static HTML; installable/offline PWA; explicit versioned content packs; local-first progress; deterministic print and simulations; WCAG behavior; no pre-answer leakage; low operating cost; minimal backend.
 
-**Status:** CURATED / READY FOR SECOND-PASS RESEARCH. The prompt suite must be stamped with the immutable post-curation source SHA before lanes run.
+**Status:** RESOLVED BASELINE / CONTROLLED M1–M3 IMPLEMENTATION PROOF, NOT A
+RELEASE. Local deterministic verification passes; browser execution for this
+revision, M4/M5, the canonical host, sitemap, deployment, and release
+certification remain open. P16 remains in this ledger for provenance; failures
+in the scaffold may reopen a bounded implementation decision, but do not
+silently restore superseded defaults.
 
 ### P17 — Domain / canonical host
 Preferred naming direction: NYCustodianExam / NY Custodian Exam. Domain registration/canonical production host not established in corpus.
@@ -228,6 +297,9 @@ Status: optional / deferred.
 - SUPERSEDED: “prefer Effect v3 until v4 GA.” The maintained project constraint is now latest available Effect v4; unstable surfaces remain individually evidence-gated.
 - RESOLVED: package-manager/workspace direction — Bun, Bun workspaces, top-level `apps/` and `packages/`.
 - RESOLVED: intended Effect `SKILL.md` identity and installed-package learning rule.
-- CURATED P16: latest Effect v4 + Bun workspaces + standards-first HTML/CSS + Vite/Workers Static Assets direction; exact package/runtime/UI/storage/build choices remain assigned to the second-pass research program.
+- RESOLVED P16 BASELINE: latest Effect v4 + Bun `1.4.0` three-workspace scaffold
+  + generated semantic documents + React 19 islands + Vite/Workers Static Assets
+  direction; runtime/storage/bundle/accessibility claims remain subject to
+  implementation proof.
 
 Keep this file as the single queue of unresolved truth claims. When an item is resolved, update the relevant canonical document and retain a short resolution note here if the former conflict is important to provenance.

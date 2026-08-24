@@ -1,12 +1,18 @@
 # Architecture constraints and decisions
 
-**Status:** maintained constraints, updated 2026-08-23 after normalizing the initial research pass, curating the second-pass Effect v4/Bun research foundation, and resolving visual authoring. This file records accepted direction and explicit research gates. It does not replace the product behavior contract or the exam-fact corpus.
+**Status:** maintained constraints, updated 2026-08-23 after the reconciled R2.90
+architecture synthesis, visual-authoring resolution, canonical route/state
+planning, and the maintainer's React 19 composition decision. This file records
+accepted direction and explicit implementation gates. It does not replace the
+product behavior contract or the exam-fact corpus.
 
 Supporting material:
 
 - first-pass raw and normalized research: `../research/initial-pass/`;
 - prompt-curation report and source ledger: `../research/prompt-curation/`;
-- second-pass research program: `../prompts/research-v2/`.
+- completed second-pass synthesis: `../research/v2/architecture-synthesis/`;
+- canonical routes and screen states: `ROUTES.md` and `SCREEN_STATES.md`;
+- preserved second-pass research program/provenance: `../prompts/research-v2/`.
 
 ## Resolved constraints
 
@@ -34,7 +40,7 @@ skills/effect-ts/SKILL.md
 
 Its package-manager-neutral intent is maintained here and adapted to Bun.
 
-When the real Bun workspace is created:
+In the Bun workspace:
 
 - install the exact selected `effect` v4 package as a root development dependency so agents can access package-local guidance and source;
 - require every workspace that imports Effect at runtime to declare its own explicit runtime dependency, normally through the Bun catalog;
@@ -54,7 +60,8 @@ Research fixtures created before the root workspace exists must be private Bun p
 
 Effect owns behavior with meaningful failure, dependency, lifecycle, resource, concurrency, retry, validation, persistence, time, randomness, or observability semantics.
 
-Current package guidance establishes defaults the second pass must verify at its exact selected coordinate, including where applicable:
+The completed second pass established these defaults. Implementation must still
+verify them against the exact installed cohort, including where applicable:
 
 - `Effect.gen` for effectful workflows;
 - named `Effect.fn` for effect-returning functions;
@@ -142,7 +149,13 @@ Bun manages the workspace but does not make every runtime a Bun runtime:
 - the Bun content compiler/tooling may use Bun APIs when justified;
 - Vite, Wrangler, Playwright, and specialist non-TypeScript tools remain when they earn their role.
 
-The exact Bun version remains a dependency-lock decision and a lane-start evidence coordinate. At curation time the official Bun site identified `1.3.14` as current.
+R2.90 selected Bun `1.4.0` for the first scaffold. Its target-toolchain gate
+passed on 2026-08-23 using the checksum-verified official Linux x64 release: a
+clean isolated-linker `--frozen-lockfile` install preserved the committed lock
+byte-for-byte, the direct workspace imports were backed by explicit dependency
+edges, and the full verifier passed without a version override. Vitest remains
+Node-hosted on exact Node `22.22.0` under the specialist-tool exception; Bun owns installation,
+workspace orchestration, content compilation, and Bun-authored scripts.
 
 ### Top-level monorepo shape
 
@@ -153,7 +166,20 @@ apps/
 packages/
 ```
 
-The exact children are intentionally not frozen. A workspace is justified by at least one real boundary:
+R2.90 selected the smallest earned initial graph:
+
+```text
+apps/
+  site/                  # generated static documents plus React 19 islands
+  content-compiler/      # finite Bun publication/compiler executable
+
+packages/
+  content/               # Schema, registries, publication gates, safe outputs
+```
+
+Study policy and React integration begin inside `apps/site`; a separate shared
+package is earned only by a second real consumer. A future workspace is
+justified by at least one real boundary:
 
 - executable/deployable runtime;
 - separately buildable or publishable artifact;
@@ -162,33 +188,15 @@ The exact children are intentionally not frozen. A workspace is justified by at 
 - runtime-specific implementation;
 - independent testing or release requirement.
 
-Likely responsibilities to evaluate include:
-
-```text
-apps/
-  site/                  # generated/static HTML plus interactive study application
-  content-compiler/      # Bun build-time publication/compiler executable, if an app is justified
-  worker/                # optional Cloudflare Worker only after a server capability exists
-
-packages/
-  reviewed content/schema/compiler capabilities
-  shared application capabilities
-  browser persistence/platform implementation
-  optional Cloudflare implementation
-  renderer/view integration after renderer selection
-  shared test support only when genuinely reused
-```
-
-Those are illustrative responsibilities, not accepted names.
-
 Do not create:
 
 - a package for every service;
 - mirrored `ports` and `adapters` packages without a concrete runtime substitution need;
-- framework-specific packages before renderer selection;
+- a React/component package before reuse, ownership, build, or publication needs
+  earn that boundary;
 - an empty Worker app merely because Cloudflare is planned.
 
-### Standards-first HTML and CSS remain the presentation foundation
+### Standards-first documents with React 19 interactive islands
 
 Do **not** use Next.js.
 
@@ -197,17 +205,42 @@ Do **not** use Next.js.
 - Indexable pages do not depend on a SPA router.
 - Business/application state is not inferred by scraping the DOM.
 - Static pages should not import the Effect study runtime unless a real interactive capability requires it.
-- CSS and static page generation remain independent of the interactive renderer choice.
+- CSS and static page generation remain independent of React.
 
-No renderer is selected yet. The current-v4 UI lane must evaluate direct DOM, current v4 reactivity/Atom APIs and bindings, Web Components, small declarative renderers, and candidate view libraries against one representative player spike.
+**React 19 is the selected renderer for interactive islands.** This is a
+maintainer requirement for a composable component architecture, not permission
+to create a client-rendered shell, adopt a SPA router, or move static/reference
+documents into React.
 
-A UI library may be adopted for interactive islands if it materially improves correctness, accessibility, lifecycle ownership, keyed-list/state synchronization, or maintainability. That does not authorize converting acquisition pages into a client-rendered SPA.
+The application boundary remains renderer-neutral:
+
+- immutable `ScreenSnapshot` values contain only presentation-safe state;
+- semantic commands express learner intent;
+- snapshot `meta` requests focus, live-region, history, and viewport effects;
+- providers adapt the application/controller to React without owning durable
+  truth; and
+- one long-lived browser `ManagedRuntime` is constructed at the site application
+  root and disposed there, never per component, render, or event.
+
+React component APIs follow composition-first rules: compound components,
+generic state/actions/meta provider interfaces, lifted shared state, children
+over `renderX` props, and explicit named variants instead of accumulating
+behavioral boolean props. React 19 code accepts `ref` as a prop and uses `use()`
+for context; do not introduce `forwardRef` or legacy `useContext` patterns in new
+code without a documented interop reason.
+
+R2.90's direct-DOM-first player is preserved as evidence, a bundle/behavior
+baseline, and a fallback evaluation if React cannot pass the same acceptance
+gates. It is superseded as the first-slice renderer. Do not build a compatibility
+layer or dual renderer. A fallback decision requires a measured matched spike
+and a maintained-constraint change.
 
 Effect does not become the renderer.
 
 ### Vite and Cloudflare remain the preferred web-delivery direction
 
-Use Vite as browser build/development tooling unless the v4/Bun research produces stronger evidence for another small tool.
+Use Vite as browser build/development tooling. Recheck and lock its exact
+coordinate at scaffold time.
 
 Use Cloudflare Workers Static Assets as the preferred deployment direction. Do not add Worker code merely to serve static files.
 
@@ -222,7 +255,10 @@ Bun workspace
   -> optional narrow Worker only for justified server capabilities
 ```
 
-Exact Vite, Cloudflare plugin, Wrangler, routing, caching, headers, service-worker, preview-deployment, and optional Worker HTTP configuration remains open until the second pass.
+Exact Vite/Cloudflare/Wrangler versions, caching/headers, service-worker details,
+preview configuration, and any future Worker HTTP surface remain implementation
+locks and measurements. `ROUTES.md` now controls public path and indexability
+semantics; no SPA router is introduced.
 
 ### Research prose is not runtime content
 
@@ -252,8 +288,9 @@ isolated tools, confusable comparisons, and hazard scenes.
 - Image generation is outside the application/runtime build. The content
   compiler consumes pinned image bytes and deterministically emits reviewed web,
   print, and offline derivatives.
-- All Tier A/B taxonomy concepts remain launch scope. A pilot determines native
-  dimensions, prompt/reference packaging, and safe batch size, not scope.
+- All Tier A/B taxonomy concepts remain launch scope. The completed pilot
+  established native dimensions, prompt/reference packaging, and
+  one-image-per-canvas generation as the default; it did not redefine scope.
 
 ## Maintained product invariants
 
@@ -265,7 +302,9 @@ The architecture must preserve:
 - explicit offline content packs rather than accidental cache-only behavior;
 - deterministic simulation and print outputs;
 - WCAG 2.2 behavior and first-class nonvisual equivalents;
-- no answer/reveal leakage through DOM, accessibility data, filenames, source maps, manifests, SVG/GLB metadata, or static assets before commitment;
+- no answer/reveal leakage through the precommit DOM, accessibility tree,
+  initial executable closure, service-worker precache, or answer-bearing public
+  filenames/metadata before commitment;
 - original or independently rights-cleared assets;
 - no third-party behavioral advertising/tracking requirement;
 - a minimal or absent backend until a concrete feature requires one.
@@ -285,9 +324,21 @@ Do not reveal after only an in-memory commit while durable persistence has faile
 
 A separately labeled nonpersistent mode may exist only after explicit learner acknowledgment and must define its own truthful commit semantics.
 
-## Required second-pass research discipline
+This is a presentation and application-order boundary, not DRM or a claim that
+original practice answers are confidential. As `FEATURE_SPEC.md` states, an
+offline pack necessarily contains keys. Static delivery may therefore publish
+opaque, item-scoped postcommit objects, but the initial document/chunks and safe
+precache must contain no answer-bearing bytes, public names/metadata must not
+encode the answer, and application code must not request or read an item's
+postcommit object until its durable attempt succeeds. A user who deliberately
+fetches a public postcommit object outside the application is outside this
+boundary; secure exam content is prohibited from the repository altogether.
 
-Every lane under `prompts/research-v2/` must:
+## Research provenance and future reruns
+
+R2.1–R2.10 and the reconciled R2.90 synthesis are complete. Their reports remain
+evidence; this maintained file controls accepted implementation direction. Any
+future rerun or new lane under `prompts/research-v2/` must:
 
 1. use the exact immutable source SHA stamped after this curation PR is merged;
 2. target latest Effect v4 explicitly;
@@ -295,7 +346,8 @@ Every lane under `prompts/research-v2/` must:
 4. read the installed `node_modules/effect/AGENTS.md` completely before code-level Effect work;
 5. inspect installed source when package guidance is insufficient;
 6. require Bun and Bun-workspace analysis;
-7. assume top-level `apps/` and `packages/` without preselecting the child package graph;
+7. start from the accepted three-workspace graph and identify evidence for any
+   proposed boundary change;
 8. ask for Effect-native patterns rather than generic ports/adapters architecture;
 9. use the connected `@GitHub` capability;
 10. create a branch, initial receipt commit/push, and draft PR before extended research;
@@ -303,7 +355,7 @@ Every lane under `prompts/research-v2/` must:
 12. push incrementally and return final branch/head/PR receipts;
 13. stop when GitHub writes are unavailable.
 
-## Curated research program
+## Completed curated research program
 
 ### P0 architecture-critical lanes
 
@@ -324,28 +376,48 @@ Every lane under `prompts/research-v2/` must:
 - hazard-scene production architecture;
 - deterministic geometry evidence/POC audit.
 
-A final synthesis lane proposes maintained decisions and the first implementation vertical slice. It does not implement the application.
+A reconciled R2.90 synthesis proposed the accepted initial graph, runtime roots,
+content compiler, storage/offline boundary, delivery/test direction, and first
+vertical slice. The maintainer's later React 19 selection supersedes only its
+direct-DOM-first renderer choice; the renderer-neutral contracts and acceptance
+baseline remain controlling evidence.
 
-## Still open
+## Implementation locks and evidence
 
-- exact Effect v4 cohort to lock after lane-start verification;
-- exact Bun version and root workspace configuration;
-- exact workspace/package graph below `apps/` and `packages/`;
-- service and Layer topology per runtime;
-- current v4 Platform/browser/Cloudflare choices;
-- content compiler workspace and concrete Schema model;
-- IndexedDB provider and transaction API under v4;
-- service-worker ownership/cache/version protocol;
-- UI state/reactivity and renderer choice;
-- exact Vite/Bun chunk boundaries and measured budgets;
-- Cloudflare configuration and optional Worker API architecture;
-- test runner responsibilities and browser/accessibility tooling;
-- CSS organization/design tokens;
+Implemented by the first scaffold:
+
+- one exact coordinated React 19 / Effect v4 RC / TypeScript / Vite / Vitest
+  catalog and text `bun.lock`;
+- isolated root workspaces and exact root configuration;
+- concrete Schema content models and deterministic split compiler diagnostics;
+- scoped IndexedDB service/Layer modules, one browser `ManagedRuntime`, and a
+  renderer-neutral question controller with semantic commands;
+- generated static/island route closures, canonical/robots output,
+  service-worker asset closure, and maintained design tokens; and
+- automated typecheck, unit, commit-before-fetch, static-isolation,
+  answer-leak, and raw/gzip/Brotli budget gates plus a headless-Chrome
+  commit/reveal, reload-reconciliation, and service-worker-controlled offline
+  reload smoke; and
+- the measured one-image-per-canvas visual profile plus production approval of
+  65 tool/PPE masters, 14 deterministic comparisons, and 18 hazard scenes,
+  each bound to maintained review records and checksums.
+
+Evidence still open:
+
+- evidence for any graph beyond `apps/site`, `apps/content-compiler`, and
+  `packages/content`;
+- exact current v4 Platform/browser provider behavior at the locked cohort;
+- remaining-browser IndexedDB commit/reload plus cross-browser
+  failure/quota/disposal proof;
+- service-worker version/eviction/update, remaining-browser offline, and
+  explicit-pack proof;
+- Cloudflare configuration and any separately authorized Worker endpoint;
+- executed Playwright, accessibility, zoom/reflow, keyboard, performance, and
+  complete offline gates;
 - first-party observability/analytics choice, if any;
 - correction endpoint implementation/storage;
-- custom-domain/canonical-host configuration;
-- exact native Codex output dimensions and safe multi-image tile grid after the
-  visual pilot;
-- production approval of each exact generated image and scene.
+- custom-domain/canonical-host configuration.
 
-Resolve these through the curated second-pass program and implementation evidence, not by carrying first-pass defaults forward.
+Resolve these through implementation evidence and, only where evidence exposes a
+new research gap, a provenance-complete follow-up lane. Do not carry superseded
+first-pass or direct-DOM defaults forward silently.

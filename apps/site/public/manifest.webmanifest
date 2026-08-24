@@ -1,0 +1,9 @@
+{
+  "name": "NY Custodian Exam Study",
+  "short_name": "Custodian Study",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fbfcf8",
+  "theme_color": "#0b6747",
+  "icons": []
+}

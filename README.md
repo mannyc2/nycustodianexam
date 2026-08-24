@@ -19,7 +19,17 @@ The site is independent and unofficial. It does not solicit, reconstruct, buy, p
 ### `product/` — behavior and current architecture constraints
 
 - `FEATURE_SPEC.md` — maintained buildable product specification: page states, atlas, practice, hazards, review, simulation, print, data model, offline, accessibility, privacy, corrections, QA, and release gates.
-- `ARCHITECTURE_CONSTRAINTS.md` — maintained latest-v4/Bun implementation direction and the research gates remaining before scaffolding.
+- `ARCHITECTURE_CONSTRAINTS.md` — maintained latest-v4/Bun/React 19
+  implementation decisions and remaining implementation evidence gates.
+- `ROUTES.md` — canonical route IDs, paths, indexability, static/island
+  ownership, navigation, offline behavior, and milestones for all 21 destination
+  families.
+- `SCREEN_STATES.md` — legal route states/transitions plus recovery, focus,
+  history, persistence, and offline semantics.
+- `COMPONENT_ARCHITECTURE.md` — composition-first React 19 families, providers,
+  explicit variants, primitives, and page recipes.
+- `DESIGN_SYSTEM.md` — maintained tokens, responsive layout, shell, focus,
+  forced-color, reduced-motion, state-presentation, and print rules.
 
 ### `research/initial-pass/` — normalized first parallel research batch
 
@@ -59,9 +69,9 @@ Key files:
 
 The official Effect skill’s operational rule is now explicit: after the exact v4 package is installed, agents must read `node_modules/effect/AGENTS.md` completely, follow relevant package-local docs, and inspect installed source when needed.
 
-### `prompts/research-v2/` — second-pass parallel research program
+### `prompts/research-v2/` — preserved second-pass research program
 
-The curated program contains:
+The completed program and its launch provenance contain:
 
 - `LAUNCH-CONTRACT.md` — launch-time immutable-SHA semantics and minimal launch-message form;
 - `00-SHARED-RESEARCH-CONTRACT.md` — common GitHub/Effect/Bun/evidence contract;
@@ -82,11 +92,17 @@ Every lane requires:
 
 The `{{POST_CURATION_SOURCE_SHA}}` token appearing in lane templates is a **launch-time variable**, not a repository-edit requirement. Each launch message supplies the exact immutable source SHA explicitly. Researchers must verify it with `@GitHub` and stop on drift.
 
-R2.1 through R2.10 have disjoint output paths and may run in parallel. A lane may inspect sibling PRs that already exist, but it must not wait or poll for them. R2.90 runs only after the intended architecture lanes are complete or explicitly missing and reads their PR branches directly.
+R2.1 through R2.10 and the reconciled R2.90 synthesis are complete. Their
+accepted results are maintained in `product/ARCHITECTURE_CONSTRAINTS.md`; exact
+reports, fixtures, ledgers, and the final synthesis remain under `research/v2/`.
+The launch instructions continue to govern any provenance-complete rerun, but
+they are not the current implementation queue.
 
 ### `illustration/` — visual production
 
-- `TOOL_GEOMETRY_PIPELINE.md` — maintained source-of-truth pipeline for isolated tool assets: evidence/measurements → deterministic project geometry → validation → STEP AP242 → static hidden-line SVG, with optional atlas-only GLB.
+- `VISUAL_AUTHORING_POLICY.md` — current Codex-native raster production authority.
+- `TOOL_GEOMETRY_PIPELINE.md` — retired deterministic CAD/SVG route retained as
+  supporting research and reference material.
 - `PIPELINE_SPEC.md` — recovered earlier AI-assisted/visual-QA pipeline; its AI-first tool-source assumption is superseded, while hazard, accessibility, rights, and QA material remains useful.
 - `RECOVERED_ASSET_MANIFEST.md` — integrity record for historical matrices/schema/prompts/templates.
 - `examples/` — historical SVG prototypes, not approved assets.
@@ -95,7 +111,9 @@ R2.1 through R2.10 have disjoint output paths and may run in parallel. A lane ma
 
 For scored questions, one exact static asset revision controls the authored view. Interactive rotation is atlas-only because another angle may reveal an answer-bearing feature.
 
-No production tool illustration is approved.
+The first visual release is approved: 65 tool/PPE masters, 14 deterministic
+comparisons, and 18 hazard scenes are bound to exact review records and
+checksums under `content/authoring/visuals/releases/` and `content/assets/`.
 
 ### Other `research/`
 
@@ -111,7 +129,7 @@ Earlier reusable research instructions. Prompts are not evidence.
 
 ## Current implementation direction
 
-The architecture program targets:
+The implementation uses:
 
 - **latest available Effect v4**;
 - **Bun** package management/tooling;
@@ -120,17 +138,26 @@ The architecture program targets:
 - Effect-native service, Layer, Schema, typed-error, Scope, concurrency, runtime, platform, reactivity, and testing patterns;
 - standards-first semantic HTML/CSS;
 - no Next.js;
-- Vite browser tooling unless stronger evidence changes it;
+- Vite browser tooling;
 - Cloudflare Workers Static Assets initially;
-- no UI renderer selected until current-v4 research and a representative player spike.
+- React 19 lazy interactive islands over immutable renderer-neutral snapshots
+  and semantic commands;
+- no SPA router, with acquisition/reference pages generated as useful semantic
+  documents; and
+- one long-lived browser `ManagedRuntime` at the site application root.
 
 Effect v3 recommendations in the initial raw reports are historical only and must not be implemented as fallback architecture.
 
-The exact workspace/package graph remains open. It should be small and capability/runtime-oriented, not a generic `domain/application/ports/adapters/ui` tree, one package per service, or a universal `packages/core`.
+The accepted initial graph is `apps/site`, `apps/content-compiler`, and
+`packages/content`. It stays capability/runtime-oriented, not a generic
+`domain/application/ports/adapters/ui` tree, one package per service, or a
+universal `packages/core`. A later package must earn a real second consumer,
+runtime, build, ownership, or publication boundary.
 
 ### Effect learning workflow
 
-The selected skill is the official `Effect-TS/skills` Effect setup skill. In the eventual Bun workspace:
+The selected skill is the official `Effect-TS/skills` Effect setup skill. In the
+Bun workspace:
 
 - the exact selected v4 package is available as a root development dependency for installed guidance/source access;
 - each runtime workspace still declares its own explicit runtime dependency, normally through a Bun catalog;
@@ -139,8 +166,9 @@ The selected skill is the official `Effect-TS/skills` Effect setup skill. In the
 
 ### Bun workspace baseline
 
-The second pass evaluates and later implementation is expected to use:
+The scaffold is required to use and verify:
 
+- exact Bun `1.4.0` and specialist-tool Node `22.22.0` runtimes;
 - private root package;
 - `apps/*` and `packages/*` workspaces;
 - Bun catalog for one exact coordinated Effect cohort;
@@ -151,7 +179,10 @@ The second pass evaluates and later implementation is expected to use:
 - minimal reviewed lifecycle-script trust;
 - runtime-specific TypeScript configuration.
 
-Bun owns package management and scripts; it does not turn browser, service-worker, or Cloudflare workerd code into Bun-runtime code or automatically replace Vite, Wrangler, Playwright, and specialist tooling.
+Bun owns package management and scripts; Node `22.22.0` hosts the locked Vitest
+and workspace-orchestration boundary. Neither runtime turns browser,
+service-worker, or Cloudflare workerd code into server-runtime code or replaces
+Vite, Wrangler, and Playwright.
 
 ### Durable answer commitment
 
@@ -192,8 +223,30 @@ Never replace an unknown fact with an inference.
 
 ## Current status
 
-The repository remains docs/product-spec first. No Bun workspace or application code has been scaffolded.
+Product planning now includes a canonical route registry, legal page-state
+machines, a composition-first React component architecture, and a maintained
+design system. The Bun workspace at `apps/site`, `apps/content-compiler`, and
+`packages/content` is now a controlled M1–M3 implementation proof, not a
+release or release certification.
 
-The initial mixed-version research is normalized, the maintained Effect v4/Bun prompt foundation is curated, the official Effect skill is identified/adapted, and the v2 launch contract is finalized. The next action is to launch the individual R2.1–R2.10 research lanes from one explicitly supplied immutable reconciliation SHA, with every result published through GitHub from the beginning.
+The initial mixed-version research is normalized and the Effect v4/Bun R2.1–R2.10
+program plus reconciled R2.90 synthesis are complete. From the currently
+validated packs, the generator emits 58 documents, including two question
+routes, 18 visual and 18 nonvisual hazard routes, and four public tool pages.
+Destination families for which reviewed machine-readable content is not
+available are intentionally omitted; they are not represented by placeholder
+pages.
+
+M4/M5 work remains open, including simulation, complete print output, and the
+explicit content-pack lifecycle, settings, and corrections flows. Sitemap and
+canonical-host decisions and deployment also remain open. The exact local
+deterministic gate passes on Bun `1.4.0` and Node `22.22.0`: maintained-layout
+and module-boundary checks, all 396 visual hashes, three-workspace typechecks,
+165 unit tests, the 58-document production build, and artifact closure and
+answer-leak verification. A frozen offline install also preserves `bun.lock`
+byte-for-byte. Browser CI is configured, but this revision has not run locally
+in real browsers because loopback escalation is unavailable, and it cannot run
+remotely until the branch is pushed. Browser and release certification therefore
+remain pending.
 
 See [`AGENTS.md`](AGENTS.md) and [`CONTRIBUTING.md`](CONTRIBUTING.md).

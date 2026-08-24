@@ -2,3 +2,29 @@
 .env
 .env.*
 !.env.example
+
+# Bun workspace dependencies
+node_modules/
+apps/*/node_modules/
+packages/*/node_modules/
+
+# Deterministic generated artifacts
+apps/site/dist/
+apps/site/index.html
+apps/site/404.html
+apps/site/atlas/
+apps/site/exams/
+apps/site/hazards/
+apps/site/ny/
+apps/site/practice/
+apps/site/review/
+apps/site/status/
+apps/site/transparency/
+apps/site/public/content/
+apps/site/public/styles.css
+content/releases/vertical-slice/
+
+# Local tool output
+coverage/
+.wrangler/
+*.tsbuildinfo

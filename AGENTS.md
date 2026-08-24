@@ -18,6 +18,14 @@ These files control exam truth and scope.
 
 - `product/FEATURE_SPEC.md` — maintained product/UX behavior contract.
 - `product/ARCHITECTURE_CONSTRAINTS.md` — current implementation constraints and research gates.
+- `product/ROUTES.md` — canonical route IDs, paths, indexability, ownership,
+  navigation, offline behavior, and milestones.
+- `product/SCREEN_STATES.md` — legal route states, transitions, recovery,
+  focus, history, and offline semantics.
+- `product/COMPONENT_ARCHITECTURE.md` — React 19 compound-component families,
+  provider contracts, variants, and composition rules.
+- `product/DESIGN_SYSTEM.md` — shared visual tokens, responsive/print layout,
+  focus, controls, state presentation, and accessibility adaptations.
 
 Current direction:
 
@@ -25,14 +33,15 @@ Current direction:
 - Bun package management, scripts, and workspaces;
 - top-level `apps/` and `packages/` monorepo shape;
 - standards-first semantic HTML/CSS;
-- Vite for browser tooling unless later evidence changes it;
+- Vite for browser tooling;
 - Cloudflare Workers Static Assets initially;
 - no Next.js;
-- no UI renderer selected yet.
+- React 19 for lazy interactive islands, with generated semantic HTML for
+  acquisition/reference documents and no SPA router.
 
 Do not use Effect v3 as a production fallback. Older v3 research is historical, migration, or regression evidence only.
 
-### Prompt foundation and second-pass research
+### Completed second-pass research and future research
 
 Before conducting architecture research, read:
 
@@ -43,6 +52,11 @@ Before conducting architecture research, read:
 - `prompts/research-v2/LANE-INDEX.csv`;
 - the applicable lane prompt under `prompts/research-v2/`;
 - `research/initial-pass/` for raw evidence, supersession records, and redo requirements.
+
+Before implementation, also read the reconciled decisions under
+`research/v2/architecture-synthesis/`. R2.1–R2.10 and R2.90 are complete; their
+direct-DOM-first choice is retained as evidence/baseline but is superseded by the
+maintainer's React 19 island decision in `product/ARCHITECTURE_CONSTRAINTS.md`.
 
 Every launch message supplies one exact immutable source SHA. Treat `{{POST_CURATION_SOURCE_SHA}}` in a lane template as that launch-time value; do not infer a moving branch head or edit the repository merely to substitute it. Stop if the launch message omits the SHA or `@GitHub` shows source drift.
 
@@ -112,6 +126,14 @@ Officially published sample material may be discussed only in its lawful/public 
 - Pre-answer UI, accessibility data, filenames, manifests, source maps, SVG metadata, and GLB metadata must not leak the correct answer.
 - Reviewed translations preserve canonical English terminology and must not imply a bilingual official exam.
 
+The split static release enforces a presentation/order boundary, not answer
+confidentiality or DRM. Opaque item-scoped postcommit objects and explicit
+offline packs necessarily contain original-practice keys. They must not be in
+the initial document, executable closure, or safe precache, and application
+code must not request/read one before durable commitment. Public paths,
+manifests, and asset metadata may identify an opaque postcommit object but may
+not encode its answer. Secure exam content remains prohibited entirely.
+
 ## Learning and verifying Effect
 
 The intended `SKILL.md` is the official Effect setup skill at:
@@ -123,7 +145,11 @@ skills/effect-ts/SKILL.md
 
 Apply its intent using Bun.
 
-When the Bun workspace is scaffolded, the exact selected Effect v4 package must be available as a root development dependency so its package guidance and source are inspectable. Runtime workspaces that import Effect must still declare their own explicit runtime dependency, normally through the root Bun catalog; do not rely on hoisting or phantom dependencies.
+In the Bun workspace, the exact selected Effect v4 package must be available as a
+root development dependency so its package guidance and source are inspectable.
+Runtime workspaces that import Effect must still declare their own explicit
+runtime dependency, normally through the root Bun catalog; do not rely on
+hoisting or phantom dependencies.
 
 Before writing or reviewing Effect code:
 
@@ -168,6 +194,11 @@ Avoid:
 - Promise/Effect bouncing without a real boundary reason;
 - hand-written runtime type guards already provided by Effect Predicate utilities.
 
+For browser islands, construct one long-lived `ManagedRuntime` at the site
+application root and dispose it there. React providers adapt renderer-neutral
+`ScreenSnapshot` state, semantic actions, and effect metadata; they do not own
+durable state or construct runtimes/Layers during render.
+
 ### Durable commit-before-reveal
 
 Normal persistent study behavior is:
@@ -183,7 +214,7 @@ Do not reveal after an in-memory-only commit when persistence failed. Retry must
 
 ## Bun and workspace rules
 
-The future implementation uses Bun workspaces with top-level:
+The implementation uses Bun workspaces with top-level:
 
 ```text
 apps/
@@ -192,6 +223,7 @@ packages/
 
 Current workspace doctrine:
 
+- exact Bun `1.4.0` plus Node `22.22.0` for the locked specialist-tool boundary;
 - private root package;
 - Bun workspaces and explicit `workspace:*` dependencies;
 - root Bun catalog for the exact coordinated Effect v4 cohort and other deliberately shared versions;
@@ -203,9 +235,17 @@ Current workspace doctrine:
 - runtime-specific TypeScript configurations and types;
 - filtered/dependency-aware scripts where current Bun semantics fit.
 
-Do not introduce pnpm/npm/yarn workspace assumptions. Bun manages dependencies and scripts; it does not make browser, service-worker, or Cloudflare workerd code Bun-runtime code. Keep Vite, Wrangler, Playwright, and specialist non-TypeScript tools when they have a justified role.
+Do not introduce pnpm/npm/yarn workspace assumptions. Bun manages dependencies
+and scripts; Node `22.22.0` hosts the locked Vitest/workspace boundary. Neither
+runtime makes browser, service-worker, or Cloudflare workerd code server-runtime
+code. Keep Vite, Wrangler, Playwright, and specialist non-TypeScript tools when
+they have a justified role.
 
-Do not freeze exact package names before the v4/Bun architecture research is reviewed. Do not create one package per service, a universal `packages/core`, framework-specific packages before renderer selection, or an empty Worker app.
+The accepted initial graph is `apps/site`, `apps/content-compiler`, and
+`packages/content`. Do not create one package per service, a universal
+`packages/core`, a speculative shared React package, or an empty Worker app.
+Earn later boundaries through a real runtime, build, ownership, reuse, or
+publication need.
 
 ## GitHub publication rule for research
 
@@ -251,4 +291,9 @@ When reconciling research:
 
 ## Implementation status
 
-Application code and the Bun workspace have not yet been scaffolded. The second-pass Effect v4/Bun research foundation is finalized. R2.1 through R2.10 are independently launchable with an exact source SHA supplied by the launch message; R2.90 runs after the intended lanes are complete or explicitly missing. Do not implement from superseded v3 recommendations.
+The first implementation scaffold now lives at the repository root with
+`apps/site`, `apps/content-compiler`, and `packages/content`. It is an in-progress
+vertical-slice proof, not evidence that the release gates have passed. The
+second-pass Effect v4/Bun program and reconciled R2.90 synthesis are complete.
+Do not implement from superseded v3 or direct-DOM-first recommendations where
+they conflict with maintained constraints.
