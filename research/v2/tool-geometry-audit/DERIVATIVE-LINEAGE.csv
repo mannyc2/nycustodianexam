@@ -1,5 +1,0 @@
-poc_id,stage,claimed_input,claimed_output,expected_hash_record,source_present,output_present,lineage_verifiable,status,notes
-adjustable-wrench,complete chain,parameters + source record + build_poc.py,"B-rep -> STEP/STL/GLB/SVG/PNG/WebP",poc-build-a/SHA256SUMS,yes,yes,yes,OBSERVED_PASS,Historical and two fresh builds match all 79 shared files.
-pipe-wrench,complete chain,parameters + source record + build_poc.py,"B-rep -> STEP/STL/GLB/SVG/PNG/WebP",poc-build-a/SHA256SUMS,yes,yes,yes,OBSERVED_PASS,Historical and two fresh builds match all 79 shared files.
-cup-plunger,complete chain,parameters + source record + build_poc.py,"B-rep -> STEP/STL/GLB/SVG/PNG/WebP",poc-build-a/SHA256SUMS,yes,yes,yes,OBSERVED_WITH_REWORK,Exact lineage passes; combined review mesh and weak full views are recorded defects.
-flange-plunger,complete chain,parameters + source record + build_poc.py,"B-rep -> STEP/STL/GLB/SVG/PNG/WebP",poc-build-a/SHA256SUMS,yes,yes,yes,OBSERVED_WITH_REWORK,Exact lineage passes; weak full views and rigid flexible-form assumptions are recorded defects.

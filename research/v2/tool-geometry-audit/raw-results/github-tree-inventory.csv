@@ -1,9 +1,0 @@
-path,kind,git_object_sha,size_bytes,observation
-research/initial-pass/raw/tool-geometry/README.md,file,af757e16ff067d3633e14dd3b88cde7e5c263932,1586,present
-research/initial-pass/raw/tool-geometry/asset-manifest.schema.json,file,45cb90652271ddd98174e665ce32e2b37a731946,8261,present
-research/initial-pass/raw/tool-geometry/report,tree,8a9bb1e233e174e7ec20d0954e6c2796b28c8f67,0,present directory
-research/initial-pass/raw/tool-geometry/report/part-01.md,file,6be7dc485b4c8998bee2fb5c880e68292ba9c1f9,14794,present
-research/initial-pass/raw/tool-geometry/report/part-02.md,file,3be7e246c9ad70de8eb621dd7a84054ea1c4367a3,11286,present
-research/initial-pass/raw/tool-geometry/report/part-03.md,file,0f8464ad92f7b3a09d3501aee19ca4bba3eb53e0,10940,present
-research/initial-pass/raw/tool-geometry/report/part-04.md,file,782e36a17d2e35a9744d42099f5afac6fb2c6642,8724,present
-research/initial-pass/raw/tool-geometry/report/part-05.md,file,510cbba0fffa07c41a5ffd52b7613869b4a74352,1784,present
