@@ -8,7 +8,7 @@ This directory is the implementation-facing product contract recovered and norma
 2. **Current implementation constraints:** `ARCHITECTURE_CONSTRAINTS.md`.
 3. **Product behavior and UX:** `FEATURE_SPEC.md`.
 4. **Illustration production:** `../illustration/`.
-5. **Supporting investigations:** `../research/`.
+5. **Supporting investigations:** [`../research/README.md`](../research/README.md).
 6. **Recovery bookkeeping:** `../recovery/CORPUS_RECOVERY.md`.
 
 A lower layer must never silently promote an unknown exam fact into a product claim.

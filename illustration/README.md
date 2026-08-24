@@ -40,12 +40,12 @@ site must not imply official affiliation.
   lineage, and prompt guidance from the recovered image-first pipeline; current
   policy overrides its old SVG and sample-reference restrictions.
 - `examples/` contains historical SVG prototypes, not production assets.
-- `../research/v2/tool-geometry-audit/` verifies the four recovered CAD/SVG POCs
-  and records their retirement as production-art candidates.
-- `../research/v2/hazard-scene-production/` preserves R2.9 contracts and its
-  superseded deterministic-first recommendation. Its semantic, hotspot,
-  accessibility, QA, and versioning contracts remain useful where they do not
-  conflict with current policy.
+- [`../research/v2/tool-geometry-audit/REPORT.md`](../research/v2/tool-geometry-audit/REPORT.md)
+  verifies the four recovered CAD/SVG POCs and records their retirement as
+  production-art candidates.
+- [`../research/v2/hazard-scene-production/README.md`](../research/v2/hazard-scene-production/README.md)
+  preserves the accepted R2.9 semantic, region, accessibility, QA, and
+  versioning conclusions while clearly retiring its former authoring route.
 
 ## Release boundary
 

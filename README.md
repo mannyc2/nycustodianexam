@@ -1,199 +1,111 @@
 # NY Custodian Exam
 
-Provenance-tracked research, product, and content-production repository for a free study site covering the New York **Entry-Level Custodians and Janitors** civil-service written-test series, with a Nassau County logistics layer and evidence-gated expansion to other same-plan jurisdictions.
+Provenance-tracked product, content, and supporting-research repository for a
+free study site covering New York's **Entry-Level Custodians and Janitors**
+civil-service written-test series, with a Nassau County logistics layer and
+evidence-gated expansion to other same-plan jurisdictions.
 
-The site is independent and unofficial. It does not solicit, reconstruct, buy, publish, or represent secure examination content as practice material.
+The site is independent and unofficial. It does not solicit, reconstruct, buy,
+publish, or represent secure examination content as practice material.
 
 ## Repository map
 
-### `docs/` — exam truth and scope authority
-
-| File | Role |
+| Path | Role |
 |---|---|
-| `FACTBASE.md` | Established exam, format, scoring, logistics, legal, title, and jurisdiction facts |
-| `SCOPE.md` | Source-backed testable facts that constrain original study content |
-| `TAXONOMY.md` | Tool, equipment, hazard, confusion-set, and evidence-tier taxonomy |
-| `LANDSCAPE.md` | Competitive, learning, accessibility, design, and product evidence |
-| `OPEN.md` | Unresolved truth claims, conflicts, recovery targets, and architecture/product decisions |
+| [`docs/`](docs/README.md) | Exam truth, scope, taxonomy, landscape evidence, and unresolved factual/implementation questions. |
+| [`product/`](product/README.md) | Maintained product behavior and reconciled implementation constraints. |
+| [`illustration/`](illustration/README.md) | Visual-authoring authority, supporting historical methods, and non-production prototypes. |
+| [`content/`](content/README.md) | Reviewed visual inventories, briefs, exact assets, lineage, reviews, and release records. |
+| [`research/`](research/README.md) | Four-file map of unique supporting evidence. Committing research does not make it authority. |
+| [`prompts/research-v2/`](prompts/research-v2/README.md) | Archived records for the closed/reconciled R2.1–R2.10/R2.90 program, including blocked evidence; prompts are not authority. |
+| [`recovery/`](recovery/CORPUS_RECOVERY.md) | Recovery/disposition ledger for prior durable artifacts and unavailable work. |
+| [`plans/`](plans/README.md) | Dated execution plans and their recorded status. |
 
-### `product/` — behavior and current architecture constraints
+Deleted research reports, raw results, fixtures, receipts, and recovered
+archives remain auditable at immutable pre-normalization commit
+[`6701e83290c56d9c5f04275a30fc6ada6bd40435`](https://github.com/mannyc2/nycustodianexam/tree/6701e83290c56d9c5f04275a30fc6ada6bd40435/research).
 
-- `FEATURE_SPEC.md` — maintained buildable product specification: page states, atlas, practice, hazards, review, simulation, print, data model, offline, accessibility, privacy, corrections, QA, and release gates.
-- `ARCHITECTURE_CONSTRAINTS.md` — maintained latest-v4/Bun implementation direction and the research gates remaining before scaffolding.
-
-### `research/initial-pass/` — normalized first parallel research batch
-
-The first parallel Effect research pass was completed mostly outside GitHub and used mixed assumptions. It is preserved and normalized here.
-
-This directory contains:
-
-- exact raw reports and recovered evidence;
-- reusable findings;
-- duplicate/supersession analysis;
-- v3-era recommendations quarantined from current authority;
-- conflicts such as the rejected in-memory-commit-before-reveal behavior;
-- latest-v4/Bun redo requirements;
-- raw deterministic tool-geometry research and POC evidence.
-
-Start with:
-
-1. `research/initial-pass/README.md`
-2. `CURRENT-CONSTRAINTS.md`
-3. `NORMALIZATION.md`
-4. `DUPLICATION-AND-SUPERSESSION.md`
-5. `REDO-REQUIRED.md`
-6. `DECISION-MATRIX.csv`
-
-### `research/prompt-curation/` — Effect v4 and Bun research doctrine
-
-This directory identifies and adapts the official Effect `SKILL.md`, pins the upstream coordinates inspected during curation, and defines the maintained doctrine for the second architecture pass.
-
-Key files:
-
-- `REPORT.md` — curation findings and resulting research program;
-- `EFFECT-SKILL-ADAPTATION.md` — Bun adaptation of the official Effect setup skill;
-- `EFFECT-V4-BUN-RESEARCH-DOCTRINE.md` — shared Effect-native and Bun-workspace rules;
-- `SOURCE-LEDGER.md` — official Effect/Bun/project evidence coordinates;
-- `DECISION-MATRIX.csv` — fixed constraints versus still-open decisions;
-- `LAUNCH-READINESS.md` — finalized launch model, parallelism, and remaining research scope.
-
-The official Effect skill’s operational rule is now explicit: after the exact v4 package is installed, agents must read `node_modules/effect/AGENTS.md` completely, follow relevant package-local docs, and inspect installed source when needed.
-
-### `prompts/research-v2/` — second-pass parallel research program
-
-The curated program contains:
-
-- `LAUNCH-CONTRACT.md` — launch-time immutable-SHA semantics and minimal launch-message form;
-- `00-SHARED-RESEARCH-CONTRACT.md` — common GitHub/Effect/Bun/evidence contract;
-- `LANE-INDEX.csv` — lane branches, allowed paths, prior-research pointers, dependencies, and overlap ownership;
-- ten independent research lanes;
-- one final synthesis lane.
-
-Every lane requires:
-
-1. immutable source-SHA verification;
-2. immediate `@GitHub` branch creation;
-3. an initial receipt commit and push;
-4. an early draft PR;
-5. exact raw reports, source ledgers, fixtures, `package.json`, `bun.lock`, raw measurements, and checksums where applicable;
-6. incremental pushes;
-7. final branch/head/PR receipts;
-8. stopping when GitHub writes are unavailable.
-
-The `{{POST_CURATION_SOURCE_SHA}}` token appearing in lane templates is a **launch-time variable**, not a repository-edit requirement. Each launch message supplies the exact immutable source SHA explicitly. Researchers must verify it with `@GitHub` and stop on drift.
-
-R2.1 through R2.10 have disjoint output paths and may run in parallel. A lane may inspect sibling PRs that already exist, but it must not wait or poll for them. R2.90 runs only after the intended architecture lanes are complete or explicitly missing and reads their PR branches directly.
-
-### `illustration/` — visual production
-
-- `TOOL_GEOMETRY_PIPELINE.md` — maintained source-of-truth pipeline for isolated tool assets: evidence/measurements → deterministic project geometry → validation → STEP AP242 → static hidden-line SVG, with optional atlas-only GLB.
-- `PIPELINE_SPEC.md` — recovered earlier AI-assisted/visual-QA pipeline; its AI-first tool-source assumption is superseded, while hazard, accessibility, rights, and QA material remains useful.
-- `RECOVERED_ASSET_MANIFEST.md` — integrity record for historical matrices/schema/prompts/templates.
-- `examples/` — historical SVG prototypes, not approved assets.
-
-`docs/TAXONOMY.md` controls which concepts are in scope and which decisive features are required. External CAD, old matrices, and prototypes cannot override it.
-
-For scored questions, one exact static asset revision controls the authored view. Interactive rotation is atlas-only because another angle may reveal an answer-bearing feature.
-
-No production tool illustration is approved.
-
-### Other `research/`
-
-Supporting investigations and provenance. A report does not become maintained authority merely because it is committed.
-
-### `recovery/`
-
-`CORPUS_RECOVERY.md` records prior-chat/Library artifacts that were recovered, integrated, superseded, unavailable, or pending human review.
-
-### Other `prompts/`
-
-Earlier reusable research instructions. Prompts are not evidence.
-
-## Current implementation direction
-
-The architecture program targets:
-
-- **latest available Effect v4**;
-- **Bun** package management/tooling;
-- **Bun workspaces**;
-- top-level **`apps/` and `packages/`**;
-- Effect-native service, Layer, Schema, typed-error, Scope, concurrency, runtime, platform, reactivity, and testing patterns;
-- standards-first semantic HTML/CSS;
-- no Next.js;
-- Vite browser tooling unless stronger evidence changes it;
-- Cloudflare Workers Static Assets initially;
-- no UI renderer selected until current-v4 research and a representative player spike.
-
-Effect v3 recommendations in the initial raw reports are historical only and must not be implemented as fallback architecture.
-
-The exact workspace/package graph remains open. It should be small and capability/runtime-oriented, not a generic `domain/application/ports/adapters/ui` tree, one package per service, or a universal `packages/core`.
-
-### Effect learning workflow
-
-The selected skill is the official `Effect-TS/skills` Effect setup skill. In the eventual Bun workspace:
-
-- the exact selected v4 package is available as a root development dependency for installed guidance/source access;
-- each runtime workspace still declares its own explicit runtime dependency, normally through a Bun catalog;
-- before Effect code is written, `node_modules/effect/AGENTS.md` is read completely;
-- linked package-local docs and installed source are used instead of stale copied examples.
-
-### Bun workspace baseline
-
-The second pass evaluates and later implementation is expected to use:
-
-- private root package;
-- `apps/*` and `packages/*` workspaces;
-- Bun catalog for one exact coordinated Effect cohort;
-- explicit `workspace:*` dependencies;
-- isolated installs unless a measured incompatibility requires an exception;
-- committed text `bun.lock`;
-- `bun ci`/frozen installs;
-- minimal reviewed lifecycle-script trust;
-- runtime-specific TypeScript configuration.
-
-Bun owns package management and scripts; it does not turn browser, service-worker, or Cloudflare workerd code into Bun-runtime code or automatically replace Vite, Wrangler, Playwright, and specialist tooling.
-
-### Durable answer commitment
-
-Normal persistent study mode follows:
-
-```text
-select
-  -> explicit commit
-  -> authoritative IndexedDB transaction succeeds
-  -> reveal correctness and explanation
-```
-
-An in-memory-only commit does not authorize reveal after persistence failure.
-
-## Authority rule
+## Authority order
 
 When documents disagree:
 
-1. current `docs/` controls exam facts/scope;
-2. `product/ARCHITECTURE_CONSTRAINTS.md` controls current implementation constraints;
-3. `product/FEATURE_SPEC.md` controls UX/product behavior;
-4. current illustration decisions control production mechanics;
-5. research/recovery artifacts provide evidence/history and may be marked superseded.
+1. current `docs/` controls exam facts and allowed scope;
+2. `product/ARCHITECTURE_CONSTRAINTS.md` controls implementation constraints;
+3. `product/FEATURE_SPEC.md` controls user-visible behavior where it does not
+   contradict exam truth;
+4. current illustration policy and accepted release records control visual
+   production; and
+5. research and recovery material supplies evidence/history but does not
+   silently override maintained authority.
 
-Never replace an unknown fact with an inference.
+Unknown facts remain unknown until controlling evidence resolves them.
 
-## Provenance and security rules
+## Current architecture direction
 
-- Preserve source tier, locator, date, exact version/ref, and artifact checksum.
-- Prefer newer controlling official evidence to older official evidence; official evidence to commercial/anecdotal material.
-- Keep contradictions visible until resolved.
+The closed/reconciled second-pass program established this implementation
+direction; requested runtime proof that did not complete remains an explicit
+implementation gate:
+
+- one exact synchronized Effect v4 cohort and Bun workspace;
+- initial `apps/site`, `apps/content-compiler`, and `packages/content` graph;
+- standards-first semantic HTML/CSS and no Next.js;
+- Schema plus explicit whole-corpus publication gates and manifest-last output;
+- cohesive runtime-specific Effect services and one root per host;
+- strict IndexedDB commit-before-reveal and staged offline-pack activation;
+- native service-worker ownership of HTTP bytes, with IndexedDB owning logical
+  pack and learner truth;
+- a provisional lazy direct-DOM first interactive slice behind a
+  renderer-neutral snapshot/command boundary;
+- Vite and Cloudflare Workers Static Assets, with no Worker until an endpoint is
+  authorized; and
+- separate Bun, Effect, real-browser, accessibility, print, artifact, leak, and
+  clean-build verification responsibilities.
+
+Exact implementation and release gates are maintained in
+[`product/ARCHITECTURE_CONSTRAINTS.md`](product/ARCHITECTURE_CONSTRAINTS.md) and
+[`docs/OPEN.md`](docs/OPEN.md). Effect v3, pnpm, generic
+`domain/application/ports/adapters/ui`, optimistic reveal, and a universal
+runtime Layer are historical/superseded directions.
+
+## Visual production status
+
+[`illustration/VISUAL_AUTHORING_POLICY.md`](illustration/VISUAL_AUTHORING_POLICY.md)
+selects Codex-native image generation. The exact accepted reviewed raster bytes,
+not a prompt, seed, SVG, CAD model, or claimed regeneration, are the visual
+source of truth.
+
+The accepted release contains:
+
+- 65 tool/PPE masters;
+- 14 comparison layouts; and
+- 18 hazard scenes.
+
+Their inventories, exact hashes, lineage, accessibility, rights/similarity,
+security, phone/print, and independent review records live under
+`content/authoring/visuals/` and `content/assets/`. The four recovered
+CadQuery/OCCT prototypes are closed historical evidence and retired
+production-art candidates.
+
+## Provenance and security
+
+- Preserve evidence tier, source locator, observation date, exact version/ref,
+  artifact checksum, limitations, and conflicts.
 - Nothing enters scored content without source support and review.
-- No secure, remembered, reconstructed, photographed, review-session, or purported “actual” exam item content.
-- Practice content and illustrations are original or independently rights-cleared.
-- Downloadable supplier/community CAD is reference material unless mechanical suitability and redistribution/modification rights both pass review.
-- Matching build hashes establish reproducibility, not mechanical correctness.
-- Entry-level and high-level series remain separate unless explicit evidence says otherwise.
+- Practice questions, scenes, and illustrations are original or independently
+  rights-cleared.
+- Never ingest secure, remembered, reconstructed, photographed, review-session,
+  or purported “actual” exam questions, drawings, choices, or keys.
+- Public official samples may guide high-level visual style only under the
+  maintained policy; they may not supply item content or a composition to copy.
+- Entry-level and high-level series remain separate unless explicit evidence
+  establishes compatibility.
 
-## Current status
+## Current repository status
 
-The repository remains docs/product-spec first. No Bun workspace or application code has been scaffolded.
+The exam/product corpus, completed architecture research synthesis, and accepted
+visual releases are present. At this immutable normalization base the Bun
+application workspace has not yet been scaffolded; implementation must satisfy
+the maintained gates rather than resurrect deleted research instructions.
 
-The initial mixed-version research is normalized, the maintained Effect v4/Bun prompt foundation is curated, the official Effect skill is identified/adapted, and the v2 launch contract is finalized. The next action is to launch the individual R2.1–R2.10 research lanes from one explicitly supplied immutable reconciliation SHA, with every result published through GitHub from the beginning.
-
-See [`AGENTS.md`](AGENTS.md) and [`CONTRIBUTING.md`](CONTRIBUTING.md).
+See [`AGENTS.md`](AGENTS.md) and [`CONTRIBUTING.md`](CONTRIBUTING.md) before
+making changes.

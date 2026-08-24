@@ -16,6 +16,9 @@ Do not infer project truth from filenames alone. Read the relevant document's st
 
 ## Derived material
 
-Files in `../research/` are research outputs or proposals. They do not become canonical merely by being committed. Accepted findings should be reconciled into the documents above.
+[`../research/README.md`](../research/README.md) is the complete map of retained
+supporting evidence and the immutable historical archive coordinate. Research
+does not become canonical merely by being committed; accepted findings belong
+once in the maintained documents above.
 
 The prompts in `../prompts/` are reusable research instructions and likewise are not evidence themselves.

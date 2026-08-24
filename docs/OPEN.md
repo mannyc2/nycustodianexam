@@ -134,9 +134,11 @@ Status: standing legal/editorial caution. Any future item text obtained through 
 
 **Status:** SECOND-PASS RESEARCH RECONCILED / IMPLEMENTATION GATES OPEN.
 
-R2.1–R2.10 and the R2.90 synthesis are complete. Accepted architecture now
-lives in `../product/ARCHITECTURE_CONSTRAINTS.md`; the complete historical
-research corpus is recoverable at immutable commit
+The R2.1–R2.10/R2.90 program is closed and reconciled. Its receipts retain
+blocked or incomplete execution evidence, notably the missing R2.5 Bun/Vite
+measurements; those needs are represented by the implementation gates below.
+Accepted architecture now lives in `../product/ARCHITECTURE_CONSTRAINTS.md`;
+the complete historical research corpus is recoverable at immutable commit
 [`6701e83290c56d9c5f04275a30fc6ada6bd40435`](https://github.com/mannyc2/nycustodianexam/tree/6701e83290c56d9c5f04275a30fc6ada6bd40435/research).
 
 **Resolved architecture:** standards-first static HTML; no Next.js; one exact
@@ -209,6 +211,6 @@ Status: optional / deferred.
 - SUPERSEDED: “prefer Effect v3 until v4 GA.” The maintained project constraint is now latest available Effect v4; unstable surfaces remain individually evidence-gated.
 - RESOLVED: package-manager/workspace direction — Bun, Bun workspaces, top-level `apps/` and `packages/`.
 - RESOLVED: intended Effect `SKILL.md` identity and installed-package learning rule.
-- CURATED P16: latest Effect v4 + Bun workspaces + standards-first HTML/CSS + Vite/Workers Static Assets direction; exact package/runtime/UI/storage/build choices remain assigned to the second-pass research program.
+- RECONCILED P16: latest Effect v4 + Bun workspaces + standards-first HTML/CSS + Vite/Workers Static Assets, with accepted package/runtime/UI/storage/build direction in the architecture constraints and unclosed execution evidence in the P16 implementation-gate list above.
 
 Keep this file as the single queue of unresolved truth claims. When an item is resolved, update the relevant canonical document and retain a short resolution note here if the former conflict is important to provenance.

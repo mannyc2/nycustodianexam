@@ -1,14 +1,14 @@
 # Architecture constraints and decisions
 
 **Status:** maintained constraints, updated 2026-08-24 after reconciling the
-completed R2.1–R2.10 program and the accepted visual releases. This file records
+closed R2.1–R2.10/R2.90 program and the accepted visual releases. This file records
 accepted direction and explicit implementation gates. It does not replace the
 product behavior contract or the exam-fact corpus.
 
 Supporting evidence is historical and does not override this file. The complete
 pre-normalization research corpus is recoverable at immutable commit
 [`6701e83290c56d9c5f04275a30fc6ada6bd40435`](https://github.com/mannyc2/nycustodianexam/tree/6701e83290c56d9c5f04275a30fc6ada6bd40435/research);
-the completed lane prompts remain under `../prompts/research-v2/`.
+the archived lane records remain under `../prompts/research-v2/`.
 
 ## Resolved constraints
 
@@ -242,7 +242,8 @@ Keep distinct:
 - `docs/` — human-readable factual research and scope authority;
 - machine-readable publication data — reviewed profiles, claims, tools, questions, scenes, translations, sources, geometry records, and pack manifests;
 - application/build code — compiler, validation, rendering, interaction, persistence, print, and offline behavior;
-- `research/` — raw evidence and proposals.
+- `research/` — concise unique supporting evidence or unresolved proposals,
+  with superseded/raw history recoverable at the documented immutable SHA.
 
 Mutable announcement facts and scored content must not exist only as handwritten page prose.
 
@@ -298,8 +299,9 @@ A separately labeled nonpersistent mode may exist only after explicit learner ac
 
 ## Reconciled second-pass decisions
 
-The R2.1–R2.10 program and R2.90 synthesis are complete. Their accepted
-conclusions are maintained here; deleted reports remain historical evidence at
+The R2.1–R2.10/R2.90 program is closed and reconciled. Its accepted conclusions
+are maintained here; blocked or incomplete execution evidence remains in the
+implementation gates below, and deleted reports remain historical evidence at
 the immutable pre-normalization coordinate above.
 
 ### First workspace and runtime roots
