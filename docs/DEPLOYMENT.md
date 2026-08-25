@@ -13,21 +13,32 @@ The repository has three deliberately separate delivery layers:
    `DEPLOY`, and waits on the protected `production` GitHub Environment before
    deploying Static Assets to the configured apex custom domain.
 
-## GitHub configuration still required
+## GitHub configuration status and remaining credentials
 
-Create `cloudflare-preview` and `production` Environments. Restrict both
-Environments' deployment branches to `main`. Put these secrets in each
-environment rather than in repository variables or source:
+The repository-side Environment boundary was configured on 2026-08-25:
+
+- `cloudflare-preview` exists and accepts deployments only from `main`;
+- `production` exists, accepts deployments only from `main`, and requires
+  approval from the repository owner `mannyc2`; and
+- neither Environment contains a secret or variable, so both remote workflows
+  remain inert.
+
+The Cloudflare coordinates are still intentionally unconfigured. After the
+account and owned canonical domain are selected, put these secrets in **each**
+Environment rather than in repository variables, workflow files, issues, chat,
+or source:
 
 - `CLOUDFLARE_ACCOUNT_ID`
 - `CLOUDFLARE_API_TOKEN`
 
 Scope the API token to the one target Cloudflare account and only the Worker and
-zone permissions needed for version upload/deployment. After the domain is
-selected, configure `CANONICAL_DOMAIN` as a non-secret variable on both
-Environments, with the same bare apex hostname in each. Add required reviewers
-to `production` and do not approve its first run until the manual certification
-record is complete.
+zone permissions needed for version upload/deployment. Configure
+`CANONICAL_DOMAIN` as a non-secret variable on both Environments, with the same
+bare apex hostname in each. Do not approve the first production run until the
+manual certification record is complete. Domain registration, Cloudflare
+account/project selection, token creation, secret insertion, and the first
+remote-preview dispatch remain operator actions; none occurred during the
+repository-side setup.
 
 Both remote-preview and production builds receive
 `NYCUSTODIAN_CANONICAL_ORIGIN` as `https://<CANONICAL_DOMAIN>`, so the manually
