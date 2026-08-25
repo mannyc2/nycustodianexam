@@ -57,7 +57,9 @@ export default defineConfig({
         ...devices["Desktop Chrome"],
         launchOptions: {
           ignoreDefaultArgs: ["--disable-back-forward-cache"],
-          ...(chromiumExecutable === undefined ? {} : { executablePath: chromiumExecutable })
+          ...(chromiumExecutable === undefined
+            ? { channel: "chromium" }
+            : { executablePath: chromiumExecutable })
         }
       }
     },
