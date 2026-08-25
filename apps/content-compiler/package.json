@@ -1,0 +1,19 @@
+{
+  "name": "@nycustodian/content-compiler",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "bun run src/main.ts",
+    "test": "node node_modules/vitest/vitest.mjs run",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@nycustodian/content": "workspace:*",
+    "effect": "catalog:"
+  },
+  "devDependencies": {
+    "@types/bun": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

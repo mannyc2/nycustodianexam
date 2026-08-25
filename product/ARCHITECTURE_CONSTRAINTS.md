@@ -1,14 +1,17 @@
 # Architecture constraints and decisions
 
-**Status:** maintained constraints, updated 2026-08-24 after reconciling the
-closed R2.1–R2.10/R2.90 program and the accepted visual releases. This file records
-accepted direction and explicit implementation gates. It does not replace the
-product behavior contract or the exam-fact corpus.
+**Status:** maintained constraints, updated 2026-08-25 after reconciling the
+closed R2.1–R2.10/R2.90 program, the accepted visual releases, canonical
+route/state planning, the React 19 composition decision, and the controlled
+M1–M3 implementation proof. This file records accepted direction and explicit
+implementation gates. It does not replace the product behavior contract or the
+exam-fact corpus.
 
 Supporting evidence is historical and does not override this file. The complete
 pre-normalization research corpus is recoverable at immutable commit
 [`6701e83290c56d9c5f04275a30fc6ada6bd40435`](https://github.com/mannyc2/nycustodianexam/tree/6701e83290c56d9c5f04275a30fc6ada6bd40435/research);
-the archived lane records remain under `../prompts/research-v2/`.
+the archived lane records remain under `../prompts/research-v2/`, and canonical
+routes and screen states remain in `ROUTES.md` and `SCREEN_STATES.md`.
 
 ## Resolved constraints
 
@@ -36,7 +39,7 @@ skills/effect-ts/SKILL.md
 
 Its package-manager-neutral intent is maintained here and adapted to Bun.
 
-When the real Bun workspace is created:
+In the Bun workspace:
 
 - install the exact selected `effect` v4 package as a root development dependency so agents can access package-local guidance and source;
 - require every workspace that imports Effect at runtime to declare its own explicit runtime dependency, normally through the Bun catalog;
@@ -56,7 +59,8 @@ Research fixtures created before the root workspace exists must be private Bun p
 
 Effect owns behavior with meaningful failure, dependency, lifecycle, resource, concurrency, retry, validation, persistence, time, randomness, or observability semantics.
 
-Current package guidance establishes defaults the second pass must verify at its exact selected coordinate, including where applicable:
+The completed second pass established these defaults. Implementation must still
+verify them against the exact installed cohort, including where applicable:
 
 - `Effect.gen` for effectful workflows;
 - named `Effect.fn` for effect-returning functions;
@@ -144,18 +148,37 @@ Bun manages the workspace but does not make every runtime a Bun runtime:
 - the Bun content compiler/tooling may use Bun APIs when justified;
 - Vite, Wrangler, Playwright, and specialist non-TypeScript tools remain when they earn their role.
 
-The exact Bun version remains a dependency-lock decision and a lane-start evidence coordinate. At curation time the official Bun site identified `1.3.14` as current.
+R2.90 selected Bun `1.4.0` for the first scaffold. Its target-toolchain gate
+passed on 2026-08-23 using the checksum-verified official Linux x64 release: a
+clean isolated-linker `--frozen-lockfile` install preserved the committed lock
+byte-for-byte, the direct workspace imports were backed by explicit dependency
+edges, and the full verifier passed without a version override. Vitest remains
+Node-hosted on exact Node `22.22.0` under the specialist-tool exception; Bun owns installation,
+workspace orchestration, content compilation, and Bun-authored scripts.
 
 ### Top-level monorepo shape
 
-The implementation repository will use:
+The implementation repository uses:
 
 ```text
 apps/
 packages/
 ```
 
-The exact children are intentionally not frozen. A workspace is justified by at least one real boundary:
+R2.90 selected the smallest earned initial graph:
+
+```text
+apps/
+  site/                  # generated static documents plus React 19 islands
+  content-compiler/      # finite Bun publication/compiler executable
+
+packages/
+  content/               # Schema, registries, publication gates, safe outputs
+```
+
+Study policy and React integration begin inside `apps/site`; a separate shared
+package is earned only by a second real consumer. A future workspace is
+justified by at least one real boundary:
 
 - executable/deployable runtime;
 - separately buildable or publishable artifact;
@@ -164,33 +187,15 @@ The exact children are intentionally not frozen. A workspace is justified by at 
 - runtime-specific implementation;
 - independent testing or release requirement.
 
-Likely responsibilities to evaluate include:
-
-```text
-apps/
-  site/                  # generated/static HTML plus interactive study application
-  content-compiler/      # Bun build-time publication/compiler executable, if an app is justified
-  worker/                # optional Cloudflare Worker only after a server capability exists
-
-packages/
-  reviewed content/schema/compiler capabilities
-  shared application capabilities
-  browser persistence/platform implementation
-  optional Cloudflare implementation
-  renderer/view integration after renderer selection
-  shared test support only when genuinely reused
-```
-
-Those are illustrative responsibilities, not accepted names.
-
 Do not create:
 
 - a package for every service;
 - mirrored `ports` and `adapters` packages without a concrete runtime substitution need;
-- framework-specific packages before renderer selection;
+- a React/component package before reuse, ownership, build, or publication needs
+  earn that boundary;
 - an empty Worker app merely because Cloudflare is planned.
 
-### Standards-first HTML and CSS remain the presentation foundation
+### Standards-first documents with React 19 interactive islands
 
 Do **not** use Next.js.
 
@@ -199,16 +204,35 @@ Do **not** use Next.js.
 - Indexable pages do not depend on a SPA router.
 - Business/application state is not inferred by scraping the DOM.
 - Static pages should not import the Effect study runtime unless a real interactive capability requires it.
-- CSS and static page generation remain independent of the interactive renderer choice.
+- CSS and static page generation remain independent of React.
 
-R2.90 provisionally selects a lazy direct-DOM interactive island for the first
-question-player slice. Its input is an immutable renderer-neutral screen
-snapshot and its output is a semantic command. High-frequency hazard pointer
-scratch remains renderer-local. Adopt another small renderer only when measured
-focus, keyed-list, lifecycle, or maintainability complexity triggers a matched
-spike; static acquisition pages must remain renderer-independent.
+**React 19 is the selected renderer for interactive islands.** This is a
+maintainer requirement for a composable component architecture, not permission
+to create a client-rendered shell, adopt a SPA router, or move static/reference
+documents into React.
 
-A UI library may be adopted for interactive islands if it materially improves correctness, accessibility, lifecycle ownership, keyed-list/state synchronization, or maintainability. That does not authorize converting acquisition pages into a client-rendered SPA.
+The application boundary remains renderer-neutral:
+
+- immutable `ScreenSnapshot` values contain only presentation-safe state;
+- semantic commands express learner intent;
+- snapshot `meta` requests focus, live-region, history, and viewport effects;
+- providers adapt the application/controller to React without owning durable
+  truth; and
+- one long-lived browser `ManagedRuntime` is constructed at the site application
+  root and disposed there, never per component, render, or event.
+
+React component APIs follow composition-first rules: compound components,
+generic state/actions/meta provider interfaces, lifted shared state, children
+over `renderX` props, and explicit named variants instead of accumulating
+behavioral boolean props. React 19 code accepts `ref` as a prop and uses `use()`
+for context; do not introduce `forwardRef` or legacy `useContext` patterns in new
+code without a documented interop reason.
+
+R2.90's direct-DOM-first player is preserved as evidence, a bundle/behavior
+baseline, and a fallback evaluation if React cannot pass the same acceptance
+gates. It is superseded as the first-slice renderer. Do not build a compatibility
+layer or dual renderer. A fallback decision requires a measured matched spike
+and a maintained-constraint change.
 
 Effect does not become the renderer.
 
@@ -232,8 +256,10 @@ Bun workspace
 ```
 
 Exact Vite/Cloudflare coordinates, routing, caching, headers, service-worker
-behavior, and preview deployment must be proven in the implementation slice.
-An optional Worker remains deferred until a concrete endpoint is authorized.
+behavior, and preview deployment are implementation locks and measurements.
+`ROUTES.md` controls public path and indexability semantics; no SPA router is
+introduced. An optional Worker remains deferred until a concrete endpoint is
+authorized.
 
 ### Research prose is not runtime content
 
@@ -264,8 +290,9 @@ isolated tools, confusable comparisons, and hazard scenes.
 - Image generation is outside the application/runtime build. The content
   compiler consumes pinned image bytes and deterministically emits reviewed web,
   print, and offline derivatives.
-- All Tier A/B taxonomy concepts remain launch scope. A pilot determines native
-  dimensions, prompt/reference packaging, and safe batch size, not scope.
+- All Tier A/B taxonomy concepts remain launch scope. The completed pilot
+  established native dimensions, prompt/reference packaging, and
+  one-image-per-canvas generation as the default; it did not redefine scope.
 
 ## Maintained product invariants
 
@@ -277,7 +304,9 @@ The architecture must preserve:
 - explicit offline content packs rather than accidental cache-only behavior;
 - deterministic simulation and print outputs;
 - WCAG 2.2 behavior and first-class nonvisual equivalents;
-- no answer/reveal leakage through DOM, accessibility data, filenames, source maps, manifests, SVG/GLB metadata, or static assets before commitment;
+- no answer/reveal leakage through the precommit DOM, accessibility tree,
+  initial executable closure, service-worker precache, or answer-bearing public
+  filenames/metadata before commitment;
 - original or independently rights-cleared assets;
 - no third-party behavioral advertising/tracking requirement;
 - a minimal or absent backend until a concrete feature requires one.
@@ -297,6 +326,16 @@ Do not reveal after only an in-memory commit while durable persistence has faile
 
 A separately labeled nonpersistent mode may exist only after explicit learner acknowledgment and must define its own truthful commit semantics.
 
+This is a presentation and application-order boundary, not DRM or a claim that
+original practice answers are confidential. As `FEATURE_SPEC.md` states, an
+offline pack necessarily contains keys. Static delivery may therefore publish
+opaque, item-scoped postcommit objects, but the initial document/chunks and safe
+precache must contain no answer-bearing bytes, public names/metadata must not
+encode the answer, and application code must not request or read an item's
+postcommit object until its durable attempt succeeds. A user who deliberately
+fetches a public postcommit object outside the application is outside this
+boundary; secure exam content is prohibited from the repository altogether.
+
 ## Reconciled second-pass decisions
 
 The R2.1–R2.10/R2.90 program is closed and reconciled. Its accepted conclusions
@@ -306,16 +345,18 @@ the immutable pre-normalization coordinate above.
 
 ### First workspace and runtime roots
 
-- Recheck and then lock one synchronized Effect `4.0.0-rc.111` cohort and Bun
-  `1.4.0` for the first scaffold. Upgrade the Effect cohort atomically if a newer
-  controlling v4 coordinate is selected at lock time.
-- Begin with `apps/site`, `apps/content-compiler`, and `packages/content`.
+- The scaffold locks one synchronized Effect `4.0.0-rc.111` cohort and Bun
+  `1.4.0`. Upgrade the Effect cohort atomically if a newer controlling v4
+  coordinate is selected.
+- The implemented first graph is `apps/site`, `apps/content-compiler`, and
+  `packages/content`.
   Defer `packages/study` until a second consumer or real ownership boundary
   earns it; do not create `apps/worker` without an authorized endpoint.
-- Run the finite compiler through `BunRuntime.runMain`, create one browser
-  `ManagedRuntime` per application/island owner, keep service-worker listeners
+- Keep the finite compiler at one Bun runtime root, create one browser
+  `ManagedRuntime` at the site application root, keep service-worker listeners
   native and event-owned, and give a future Cloudflare Worker its own narrow
-  workerd root.
+  workerd root. The full `BunRuntime.runMain` platform integration remains a
+  gate beyond the proof's current Bun-hosted top-level Effect program.
 - Services represent cohesive host I/O, failure, lifecycle, concurrency, or
   substitution capabilities. Schemas, reducers, scoring, scheduling,
   registries, canonicalization, and publication gates remain pure functions.
@@ -357,6 +398,59 @@ failures. JSON Schema is an authoring aid, not publication authority.
   IndexedDB owns logical content-pack state and learner truth. In-memory worker
   state or finalizers cannot be correctness authority.
 
+A reconciled R2.90 synthesis proposed the accepted initial graph, runtime roots,
+content compiler, storage/offline boundary, delivery/test direction, and first
+vertical slice. The maintainer's later React 19 selection supersedes only its
+direct-DOM-first renderer choice; the renderer-neutral contracts and acceptance
+baseline remain controlling evidence.
+
+## Implementation locks and evidence
+
+Implemented by the first scaffold:
+
+- one exact coordinated React 19 / Effect v4 RC / TypeScript / Vite / Vitest
+  catalog and text `bun.lock`;
+- isolated root workspaces and exact root configuration;
+- concrete Schema content models and deterministic split compiler diagnostics;
+- one private scoped IndexedDB `AppDatabase` Layer, injected feature persistence
+  capabilities, one browser `ManagedRuntime`, and renderer-neutral question,
+  hazard, and review controllers with semantic commands;
+- generated static/island route closures, canonical/robots output,
+  service-worker asset closure, and maintained design tokens; and
+- automated typecheck, unit, commit-before-fetch, static-isolation,
+  answer-leak, and raw/gzip/Brotli budget gates plus a headless-Chrome
+  commit/reveal, reload-reconciliation, and service-worker-controlled offline
+  reload smoke; and
+- the measured one-image-per-canvas visual profile plus production approval of
+  65 tool/PPE masters, 14 deterministic comparisons, and 18 hazard scenes,
+  each bound to maintained review records and checksums.
+
+Evidence still open:
+
+- evidence for any graph beyond `apps/site`, `apps/content-compiler`, and
+  `packages/content`;
+- the full Bun platform runtime root for the finite compiler;
+- exact current v4 Platform/browser provider behavior at the locked cohort;
+- remaining-browser IndexedDB commit/reload plus cross-browser
+  failure/quota/disposal proof;
+- service-worker version/eviction/update, remaining-browser offline, and
+  explicit-pack proof;
+- a complete location-preserving JSONC adapter and canonical JSON profile with
+  duplicate-key, multibyte, comment, range, number, Unicode, and escaping proof;
+- the generated-release artifact retention policy and full Tier A/B content
+  completeness derived from validated registries and review states;
+- Cloudflare configuration and any separately authorized Worker endpoint;
+- the complete Playwright browser/accessibility/zoom/reflow/keyboard,
+  performance, and offline matrix beyond the targeted Chromium
+  application-database contracts;
+- first-party observability/analytics choice, if any;
+- correction endpoint implementation/storage;
+- custom-domain/canonical-host configuration.
+
+Resolve these through implementation evidence and, only where evidence exposes a
+new research gap, a provenance-complete follow-up lane. Do not carry superseded
+first-pass or direct-DOM defaults forward silently.
+
 ### Delivery, verification, and privacy
 
 - Static/reference routes contain useful semantic HTML and no Effect closure.
@@ -372,27 +466,3 @@ failures. JSON Schema is an authoring aid, not publication authority.
   consented, allowlisted, redacted, bounded, and must never contain question or
   rationale text, source excerpts, free-form corrections, exact searches, or
   security-sensitive leak values.
-
-## Implementation gates still open
-
-- execute the clean isolated Bun/Effect workspace, frozen-lock, filter/script,
-  and phantom-dependency gates;
-- select a location-preserving JSONC adapter and prove malformed,
-  duplicate-key, multibyte, comment, and range behavior;
-- adopt RFC 8785 or freeze a complete canonical JSON profile with cross-runtime
-  number, Unicode, and escaping vectors;
-- run the IndexedDB provider, migration, abort, quota, race, uncertain-result,
-  cross-tab, eviction, and offline/update contract in real browsers;
-- establish production raw/gzip/Brotli route closures before adopting numeric
-  budgets;
-- execute the exact browser, assistive-technology, keyboard, zoom, forced-color,
-  phone, and print release matrix;
-- choose the generated-release artifact retention policy before content scale;
-- prove current Vite/Cloudflare coordinates and a Static Assets preview;
-- authorize and specify any correction endpoint before adding a backend;
-- keep the custom domain/canonical host decision open; and
-- derive full Tier A/B content completeness from validated registries and review
-  states rather than prose estimates.
-
-These are implementation and release gates, not reasons to recreate the deleted
-research lanes.

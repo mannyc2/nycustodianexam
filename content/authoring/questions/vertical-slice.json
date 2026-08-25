@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "id": "tool-selection-001",
+  "profileId": "nyc-school-custodian",
+  "prompt": "Which tool is designed to grip and turn round pipe and fittings?",
+  "options": [
+    {
+      "id": "adjustable-wrench",
+      "label": "Adjustable wrench"
+    },
+    {
+      "id": "combination-wrench",
+      "label": "Combination wrench"
+    },
+    {
+      "id": "pipe-wrench",
+      "label": "Pipe wrench"
+    },
+    {
+      "id": "slip-joint-pliers",
+      "label": "Slip-joint pliers"
+    }
+  ],
+  "correctOptionId": "pipe-wrench",
+  "rationales": [
+    {
+      "optionId": "adjustable-wrench",
+      "message": "An adjustable wrench turns nuts and bolts with smooth jaws; it is not the purpose-built choice for round pipe."
+    },
+    {
+      "optionId": "combination-wrench",
+      "message": "A combination wrench matches nuts and bolts rather than gripping round pipe."
+    },
+    {
+      "optionId": "pipe-wrench",
+      "message": "Correct. A pipe wrench has serrated jaws designed to grip and turn round pipe and fittings."
+    },
+    {
+      "optionId": "slip-joint-pliers",
+      "message": "Slip-joint pliers can grip varied objects within their limits, but the pipe wrench is the tool designed for this task."
+    }
+  ],
+  "sources": [
+    {
+      "id": "taxonomy-hand-tools",
+      "label": "Recovered hand-tool taxonomy",
+      "locator": "docs/TAXONOMY.md#L120-L130"
+    }
+  ]
+}

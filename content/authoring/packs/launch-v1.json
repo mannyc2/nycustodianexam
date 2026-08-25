@@ -1,0 +1,241 @@
+{
+  "schemaVersion": 1,
+  "packId": "launch-v1",
+  "version": 1,
+  "locale": "en",
+  "sources": [
+    {
+      "id": "scope.entry-level",
+      "title": "Entry-level custodians and janitors content scope",
+      "locator": "docs/SCOPE.md#L5-L15",
+      "scope": "The three-part New York entry-level series permits original tool-recognition, tool-use, and workplace hazard practice."
+    },
+    {
+      "id": "taxonomy.hand-tools",
+      "title": "Recovered hand-tool taxonomy",
+      "locator": "docs/TAXONOMY.md#L120-L133",
+      "scope": "Supported uses and distinctions for adjustable, pipe, fixed, and slip-joint hand tools."
+    }
+  ],
+  "profiles": [
+    {
+      "id": "nys-entry-level-custodians-janitors",
+      "label": "New York Entry-Level Custodians and Janitors",
+      "jurisdiction": "New York State series with a Nassau County operational audience",
+      "series": "entry-level-custodians-janitors",
+      "compatibilityKey": "nys-entry-level-custodians-janitors-v1",
+      "disclaimer": "Original practice content only; this pack does not reproduce secure, recalled, or official exam questions.",
+      "sourceIds": [
+        "scope.entry-level"
+      ]
+    }
+  ],
+  "tools": [
+    {
+      "conceptId": "tool.adjustable-wrench",
+      "family": "wrenches",
+      "sourceIds": [
+        "taxonomy.hand-tools"
+      ],
+      "useSummary": "Turns compatible nuts and bolts with adjustable smooth jaws.",
+      "distinguishingFeatures": [
+        "adjustable jaw opening",
+        "smooth jaws"
+      ],
+      "confusableConceptIds": [
+        "tool.pipe-wrench"
+      ],
+      "neutralDescription": "A hand tool with a movable jaw and an open head.",
+      "fullDescription": "An adjustable wrench has smooth jaws whose opening changes to fit compatible nuts and bolts.",
+      "practiceEligibility": "text-question"
+    },
+    {
+      "conceptId": "tool.pipe-wrench",
+      "family": "wrenches",
+      "sourceIds": [
+        "taxonomy.hand-tools"
+      ],
+      "useSummary": "Grips and turns pipe and round fittings with serrated jaws.",
+      "distinguishingFeatures": [
+        "serrated jaws",
+        "angled jaw assembly"
+      ],
+      "confusableConceptIds": [
+        "tool.adjustable-wrench"
+      ],
+      "neutralDescription": "A long-handled hand tool with an adjustable angled jaw assembly.",
+      "fullDescription": "A pipe wrench uses serrated angled jaws to grip and turn round pipe and fittings.",
+      "practiceEligibility": "text-question"
+    },
+    {
+      "conceptId": "tool.wrench.fixed",
+      "family": "wrenches",
+      "sourceIds": [
+        "taxonomy.hand-tools"
+      ],
+      "useSummary": "Turns matching nuts and bolts with a fixed-size open or box end.",
+      "distinguishingFeatures": [
+        "fixed-size opening",
+        "open or enclosed box end"
+      ],
+      "confusableConceptIds": [
+        "tool.adjustable-wrench"
+      ],
+      "neutralDescription": "A fixed-size hand tool with an open, enclosed, or combination end.",
+      "fullDescription": "A combination, open-end, or box wrench turns nuts and bolts that match its fixed size.",
+      "practiceEligibility": "text-question"
+    },
+    {
+      "conceptId": "tool.pliers.slip-joint",
+      "family": "pliers",
+      "sourceIds": [
+        "taxonomy.hand-tools"
+      ],
+      "useSummary": "Grips and turns varied objects within the tool's limits.",
+      "distinguishingFeatures": [
+        "sliding pivot",
+        "two jaw-opening positions"
+      ],
+      "confusableConceptIds": [],
+      "neutralDescription": "A hinged gripping tool with a pivot that can move between positions.",
+      "fullDescription": "Slip-joint pliers change jaw opening at the sliding pivot and grip varied objects within their limits.",
+      "practiceEligibility": "text-question"
+    }
+  ],
+  "questions": [
+    {
+      "id": "tool-selection-001",
+      "profileIds": [
+        "nys-entry-level-custodians-janitors"
+      ],
+      "prompt": "Which tool is designed to grip and turn round pipe and fittings?",
+      "options": [
+        {
+          "id": "adjustable-wrench",
+          "label": "Adjustable wrench",
+          "conceptId": "tool.adjustable-wrench"
+        },
+        {
+          "id": "combination-wrench",
+          "label": "Combination wrench",
+          "conceptId": "tool.wrench.fixed"
+        },
+        {
+          "id": "pipe-wrench",
+          "label": "Pipe wrench",
+          "conceptId": "tool.pipe-wrench"
+        },
+        {
+          "id": "slip-joint-pliers",
+          "label": "Slip-joint pliers",
+          "conceptId": "tool.pliers.slip-joint"
+        }
+      ],
+      "correctOptionId": "pipe-wrench",
+      "rationales": [
+        {
+          "optionId": "adjustable-wrench",
+          "message": "An adjustable wrench turns nuts and bolts with smooth jaws; it is not the purpose-built choice for round pipe."
+        },
+        {
+          "optionId": "combination-wrench",
+          "message": "A combination wrench matches nuts and bolts rather than gripping round pipe."
+        },
+        {
+          "optionId": "pipe-wrench",
+          "message": "Correct. A pipe wrench has serrated jaws designed to grip and turn round pipe and fittings."
+        },
+        {
+          "optionId": "slip-joint-pliers",
+          "message": "Slip-joint pliers can grip varied objects within their limits, but the pipe wrench is the tool designed for this task."
+        }
+      ],
+      "sourceIds": [
+        "taxonomy.hand-tools"
+      ],
+      "originalContentAttestation": true,
+      "review": {
+        "content": "passed",
+        "security": "passed",
+        "accessibility": "passed"
+      }
+    },
+    {
+      "id": "tool-selection-002",
+      "profileIds": [
+        "nys-entry-level-custodians-janitors"
+      ],
+      "prompt": "Which tool uses adjustable smooth jaws to turn compatible nuts and bolts?",
+      "options": [
+        {
+          "id": "pipe-wrench",
+          "label": "Pipe wrench",
+          "conceptId": "tool.pipe-wrench"
+        },
+        {
+          "id": "slip-joint-pliers",
+          "label": "Slip-joint pliers",
+          "conceptId": "tool.pliers.slip-joint"
+        },
+        {
+          "id": "adjustable-wrench",
+          "label": "Adjustable wrench",
+          "conceptId": "tool.adjustable-wrench"
+        },
+        {
+          "id": "combination-wrench",
+          "label": "Combination wrench",
+          "conceptId": "tool.wrench.fixed"
+        }
+      ],
+      "correctOptionId": "adjustable-wrench",
+      "rationales": [
+        {
+          "optionId": "pipe-wrench",
+          "message": "A pipe wrench has serrated jaws for gripping round pipe and fittings, not smooth jaws for compatible nuts and bolts."
+        },
+        {
+          "optionId": "slip-joint-pliers",
+          "message": "Slip-joint pliers grip varied objects within their limits, but they are not the smooth-jaw adjustable wrench described."
+        },
+        {
+          "optionId": "adjustable-wrench",
+          "message": "Correct. An adjustable wrench uses adjustable smooth jaws to turn compatible nuts and bolts."
+        },
+        {
+          "optionId": "combination-wrench",
+          "message": "A combination wrench turns matching nuts and bolts with fixed-size ends rather than adjustable jaws."
+        }
+      ],
+      "sourceIds": [
+        "taxonomy.hand-tools"
+      ],
+      "originalContentAttestation": true,
+      "review": {
+        "content": "passed",
+        "security": "passed",
+        "accessibility": "passed"
+      }
+    }
+  ],
+  "sceneIds": [
+    "scene.slip.hallway-wet-floor",
+    "scene.slip.lobby-raised-mat",
+    "scene.egress.stairwell-boxes",
+    "scene.egress.gym-exit-obstruction",
+    "scene.chemical.closet-unidentified-container",
+    "scene.chemical.kitchen-chemicals-over-foodware",
+    "scene.electrical.utility-damaged-cord",
+    "scene.electrical.classroom-wet-power-strip",
+    "scene.sharps.restroom-broken-glass",
+    "scene.sharps.grounds-broken-bottle",
+    "scene.material.loading-unstable-stack",
+    "scene.material.cafeteria-obscured-vision",
+    "scene.biological.restroom-bare-hand-cleaning",
+    "scene.biological.cafeteria-mop-on-table",
+    "scene.machine.gym-unguarded-fan",
+    "scene.machine.utility-saw-guard",
+    "scene.zero.classroom-orderly",
+    "scene.zero.closet-contained"
+  ]
+}

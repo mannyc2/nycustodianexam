@@ -25,6 +25,123 @@ Deleted research reports, raw results, fixtures, receipts, and recovered
 archives remain auditable at immutable pre-normalization commit
 [`6701e83290c56d9c5f04275a30fc6ada6bd40435`](https://github.com/mannyc2/nycustodianexam/tree/6701e83290c56d9c5f04275a30fc6ada6bd40435/research).
 
+### Maintained product contracts
+
+- [`product/FEATURE_SPEC.md`](product/FEATURE_SPEC.md) — maintained buildable product specification: page states, atlas, practice, hazards, review, simulation, print, data model, offline, accessibility, privacy, corrections, QA, and release gates.
+- [`product/ARCHITECTURE_CONSTRAINTS.md`](product/ARCHITECTURE_CONSTRAINTS.md) — maintained latest-v4/Bun/React 19
+  implementation decisions and remaining implementation evidence gates.
+- [`product/ROUTES.md`](product/ROUTES.md) — canonical route IDs, paths, indexability, static/island
+  ownership, navigation, offline behavior, and milestones for all 21 destination
+  families.
+- [`product/SCREEN_STATES.md`](product/SCREEN_STATES.md) — legal route states/transitions plus recovery, focus,
+  history, persistence, and offline semantics.
+- [`product/COMPONENT_ARCHITECTURE.md`](product/COMPONENT_ARCHITECTURE.md) — composition-first React 19 families, providers,
+  explicit variants, primitives, and page recipes.
+- [`product/DESIGN_SYSTEM.md`](product/DESIGN_SYSTEM.md) — maintained tokens, responsive layout, shell, focus,
+  forced-color, reduced-motion, state-presentation, and print rules.
+
+### `illustration/` — visual production
+
+- `VISUAL_AUTHORING_POLICY.md` — current Codex-native raster production authority.
+- `TOOL_GEOMETRY_PIPELINE.md` — retired deterministic CAD/SVG route retained as
+  supporting research and reference material.
+- `PIPELINE_SPEC.md` — recovered earlier AI-assisted/visual-QA pipeline; its AI-first tool-source assumption is superseded, while hazard, accessibility, rights, and QA material remains useful.
+- `RECOVERED_ASSET_MANIFEST.md` — integrity record for historical matrices/schema/prompts/templates.
+- `examples/` — historical SVG prototypes, not approved assets.
+
+`docs/TAXONOMY.md` controls which concepts are in scope and which decisive features are required. External CAD, old matrices, and prototypes cannot override it.
+
+For scored questions, one exact static asset revision controls the authored view. Interactive rotation is atlas-only because another angle may reveal an answer-bearing feature.
+
+The first visual release is approved: 65 tool/PPE masters, 14 deterministic
+comparisons, and 18 hazard scenes are bound to exact review records and
+checksums under `content/authoring/visuals/releases/` and `content/assets/`.
+
+### Other `research/`
+
+Supporting investigations and provenance. A report does not become maintained authority merely because it is committed.
+
+### `recovery/`
+
+`CORPUS_RECOVERY.md` records prior-chat/Library artifacts that were recovered, integrated, superseded, unavailable, or pending human review.
+
+### Other `prompts/`
+
+Earlier reusable research instructions. Prompts are not evidence.
+
+## Current implementation direction
+
+The implementation uses:
+
+- **latest available Effect v4**;
+- **Bun** package management/tooling;
+- **Bun workspaces**;
+- top-level **`apps/` and `packages/`**;
+- Effect-native service, Layer, Schema, typed-error, Scope, concurrency, runtime, platform, reactivity, and testing patterns;
+- standards-first semantic HTML/CSS;
+- no Next.js;
+- Vite browser tooling;
+- Cloudflare Workers Static Assets initially;
+- React 19 lazy interactive islands over immutable renderer-neutral snapshots
+  and semantic commands;
+- no SPA router, with acquisition/reference pages generated as useful semantic
+  documents; and
+- one long-lived browser `ManagedRuntime` at the site application root.
+
+Effect v3 recommendations in the initial raw reports are historical only and must not be implemented as fallback architecture.
+
+The accepted initial graph is `apps/site`, `apps/content-compiler`, and
+`packages/content`. It stays capability/runtime-oriented, not a generic
+`domain/application/ports/adapters/ui` tree, one package per service, or a
+universal `packages/core`. A later package must earn a real second consumer,
+runtime, build, ownership, or publication boundary.
+
+### Effect learning workflow
+
+The selected skill is the official `Effect-TS/skills` Effect setup skill. In the
+Bun workspace:
+
+- the exact selected v4 package is available as a root development dependency for installed guidance/source access;
+- each runtime workspace still declares its own explicit runtime dependency, normally through a Bun catalog;
+- before Effect code is written, `node_modules/effect/AGENTS.md` is read completely;
+- linked package-local docs and installed source are used instead of stale copied examples.
+
+### Bun workspace baseline
+
+The scaffold is required to use and verify:
+
+- exact Bun `1.4.0` and specialist-tool Node `22.22.0` runtimes;
+- private root package;
+- `apps/*` and `packages/*` workspaces;
+- Bun catalog for one exact coordinated Effect cohort;
+- explicit `workspace:*` dependencies;
+- isolated installs unless a measured incompatibility requires an exception;
+- committed text `bun.lock`;
+- `bun ci`/frozen installs;
+- minimal reviewed lifecycle-script trust;
+- runtime-specific TypeScript configuration.
+
+Bun owns package management and scripts; Node `22.22.0` hosts the locked Vitest
+and workspace-orchestration boundary. Neither runtime turns browser,
+service-worker, or Cloudflare workerd code into server-runtime code or replaces
+Vite, Wrangler, and Playwright.
+
+### Durable answer commitment
+
+Normal persistent study mode follows:
+
+```text
+select
+  -> explicit commit
+  -> authoritative IndexedDB transaction succeeds
+  -> reveal correctness and explanation
+```
+
+An in-memory-only commit does not authorize reveal after persistence failure.
+Question, hazard, and review state share one private application database and
+one scoped connection owner; feature persistence capabilities do not open or
+version independent databases.
+
 ## Authority order
 
 When documents disagree:
@@ -54,8 +171,9 @@ implementation gate:
 - strict IndexedDB commit-before-reveal and staged offline-pack activation;
 - native service-worker ownership of HTTP bytes, with IndexedDB owning logical
   pack and learner truth;
-- a provisional lazy direct-DOM first interactive slice behind a
-  renderer-neutral snapshot/command boundary;
+- React 19 lazy interactive islands behind a renderer-neutral
+  snapshot/command boundary, with the archived direct-DOM slice retained only
+  as a measurement baseline;
 - Vite and Cloudflare Workers Static Assets, with no Worker until an endpoint is
   authorized; and
 - separate Bun, Effect, real-browser, accessibility, print, artifact, leak, and
@@ -102,10 +220,33 @@ production-art candidates.
 
 ## Current repository status
 
-The exam/product corpus, completed architecture research synthesis, and accepted
-visual releases are present. At this immutable normalization base the Bun
-application workspace has not yet been scaffolded; implementation must satisfy
-the maintained gates rather than resurrect deleted research instructions.
+Product planning now includes a canonical route registry, legal page-state
+machines, a composition-first React component architecture, and a maintained
+design system. The Bun workspace at `apps/site`, `apps/content-compiler`, and
+`packages/content` is now a controlled M1–M3 implementation proof, not a
+release or release certification.
+
+The Effect v4/Bun R2.1–R2.10 program plus reconciled R2.90 synthesis are closed,
+their accepted conclusions are promoted, and the pre-normalization corpus is
+recoverable at the immutable archive coordinate above. From the currently
+validated packs, the generator emits 58 documents, including two question
+routes, 18 visual and 18 nonvisual hazard routes, and four public tool pages.
+Destination families for which reviewed machine-readable content is not
+available are intentionally omitted; they are not represented by placeholder
+pages.
+
+M4/M5 work remains open, including simulation, complete print output, and the
+explicit content-pack lifecycle, settings, and corrections flows. Sitemap and
+canonical-host decisions and deployment also remain open. The exact local
+deterministic gate passes on Bun `1.4.0` and Node `22.22.0`: maintained-layout
+and module-boundary checks, all 396 visual hashes, three-workspace typechecks,
+165 unit tests, the 58-document production build, and artifact closure and
+answer-leak verification. A frozen offline install also preserves `bun.lock`
+byte-for-byte. Browser CI is configured, and the exact pinned Chromium revision
+passes all 27 standard Vite-preview cases plus all three Cloudflare-preview
+delivery cases locally, including the true-BFCache contracts. The Firefox and
+WebKit browser binaries are absent locally, so the complete cross-browser
+matrix and release certification remain separate CI/release gates.
 
 See [`AGENTS.md`](AGENTS.md) and [`CONTRIBUTING.md`](CONTRIBUTING.md) before
 making changes.

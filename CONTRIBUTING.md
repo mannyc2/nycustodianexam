@@ -5,7 +5,8 @@ This repository contains the provenance corpus, product contract, architecture c
 ## Know which layer you are changing
 
 - `docs/` — exam facts, scope, taxonomy, evidence, and unresolved truth claims.
-- `product/` — user-visible behavior and current architecture constraints.
+- `product/` — user-visible behavior, canonical routes/states/components, and
+  current architecture constraints.
 - `illustration/` — maintained production mechanics and reviewed asset evidence.
 - `research/README.md` — complete reduced map of unique supporting evidence;
   research is never authority merely because it is committed.
@@ -33,6 +34,11 @@ Read:
 
 - `product/FEATURE_SPEC.md`;
 - `product/ARCHITECTURE_CONSTRAINTS.md`;
+- `product/ROUTES.md`;
+- `product/SCREEN_STATES.md`;
+- `product/COMPONENT_ARCHITECTURE.md` for view/component work;
+- `product/DESIGN_SYSTEM.md` for tokens, responsive behavior, focus, controls,
+  state presentation, and print;
 - `docs/OPEN.md`;
 - `research/README.md`;
 - relevant canonical fact/scope documents.
@@ -44,8 +50,10 @@ Current hard direction:
 - top-level `apps/` and `packages/`;
 - standards-first semantic HTML/CSS;
 - no Next.js;
-- Vite and Cloudflare Workers Static Assets;
-- a provisional lazy direct-DOM first slice behind a renderer-neutral boundary.
+- Vite and Cloudflare Static Assets delivery direction;
+- React 19 only for lazy interactive islands over generated semantic documents;
+- no SPA router; and
+- one long-lived browser `ManagedRuntime` at the site application root.
 
 Do not implement Effect v3 as a fallback. Do not translate v3 APIs and directory structures mechanically into the new codebase.
 
@@ -60,7 +68,10 @@ Once a Bun workspace or lane fixture has installed the exact selected Effect v4 
 3. inspect `node_modules/effect/src` and installed platform-package source when needed;
 4. use the exact installed package as the source of truth.
 
-At the future monorepo root, the exact selected `effect` package should be available as a development dependency for source/guidance access. Every runtime workspace that imports Effect must still declare an explicit runtime dependency through the Bun catalog; root installation is not permission for phantom imports.
+At the monorepo root, the exact selected `effect` package is available as a
+development dependency for source/guidance access. Every runtime workspace that
+imports Effect must still declare an explicit runtime dependency through the Bun
+catalog; root installation is not permission for phantom imports.
 
 ### Effect architecture expectations
 
@@ -72,6 +83,12 @@ At the future monorepo root, the exact selected `effect` package should be avail
 - Keep runtime execution at application boundaries.
 - Preserve provider cancellation and transaction truth rather than overstating what fiber interruption guarantees.
 - Keep application/use-case state independent from DOM construction.
+- Keep immutable `ScreenSnapshot`, semantic actions, and state/action/meta
+  provider interfaces renderer-neutral. React providers adapt them; they do not
+  own durable truth or construct runtimes/Layers during render.
+- Prefer compound components, lifted shared state, children composition, and
+  explicit named variants. Do not grow mode behavior through boolean props or
+  `renderX` prop families.
 - Record the status, isolation boundary, reason, and migration risk of every unstable v4 API.
 - Do not use Effect as a home-grown renderer.
 
@@ -81,15 +98,16 @@ Normal persistent mode must not reveal correctness until the authoritative attem
 
 ## Before changing Bun/workspace structure
 
-The future monorepo uses:
+The monorepo uses:
 
 ```text
 apps/
 packages/
 ```
 
-Expected baseline for research and later implementation:
+Current implementation baseline:
 
+- exact Bun `1.4.0` and Node `22.22.0` toolchains;
 - private root package;
 - Bun workspaces;
 - root Bun catalog for one exact coordinated Effect v4 cohort;
@@ -111,7 +129,65 @@ Do not:
 - assume generic Clean Architecture folders are Effect best practice;
 - expose Bun globals to browser, service-worker, or workerd packages merely because Bun owns the workspace.
 
-Bun does not replace specialist tools by decree. Vite, Wrangler, Playwright, and justified non-TypeScript tooling may remain.
+The accepted initial graph is exactly `apps/site`, `apps/content-compiler`, and
+`packages/content`. Do not add a shared React/study package until a real second
+consumer or separate runtime/build/ownership boundary earns it.
+
+### Maintained code layout and naming
+
+The automated layout contract covers workspace-root configuration, maintained
+code under `apps/*/{src,scripts,test,browser-tests}/` and
+`packages/*/{src,test}/`, root `scripts/`, `.github/workflows/`, and active
+`.mjs` authoring commands under `content/authoring/visuals/`. Generated site
+trees and non-executable evidence/content corpora are deliberately outside this
+mechanical naming check.
+
+- Use lowercase kebab-case for maintained directory names and file stems.
+- Preserve tool-standard names such as `package.json`, `tsconfig.json`, and
+  `vite.config.ts`.
+- Name commands with a verb and object, such as `check-toolchain.ts`.
+- Name unit tests after their subject with `.test.ts` or `.test.tsx`; use
+  `.pw.ts` or `.pw.tsx` for Playwright specifications and `-fixtures.ts` for
+  browser-test support owned by a specific capability.
+- Inside a tightly scoped feature, role names such as `state.ts`,
+  `controller.ts`, `persistence.ts`, and `bootstrap.tsx` are acceptable. Do not
+  introduce broad `types`, `utils`, `helpers`, `common`, `contract`,
+  `components`, or `family` stems; name the owned concept instead.
+- Keep renderer-neutral feature code at the feature root and place React-only
+  adapters under a `react/` directory.
+- Root `scripts/` owns cross-workspace orchestration. App-specific generation
+  and release commands belong to that app.
+
+Run `bun run check:layout` before submitting a structural change. The check
+includes committed and non-ignored untracked files so a new violation cannot
+hide outside the current Git index.
+
+Public package entrypoints are explicit compatibility facades. Extracted
+modules point to narrower internal owners and must not import those facades
+backward. Run `bun run check:boundaries` when splitting a package; the root
+verification gate runs both structural checks. Renderer-neutral `.ts` modules
+also may not import a React `.tsx` adapter.
+
+The site has one physical private IndexedDB, owned by
+`apps/site/src/study-storage/app-database.ts` and its private sibling directory.
+Feature persistence capabilities may transact through the injected connection,
+but must not open or version their own databases. Private database modules do
+not import backward through the public facade, outside modules cannot import
+those internals, and the boundary check reserves direct access to the global
+IndexedDB factory for this owner.
+
+The temporary hazard/review databases are read-only migration sources. The app
+rescans them on startup because a one-shot completion marker cannot prove that
+an older open tab has stopped writing. Schema-valid missing records are added,
+matching records are idempotent, and malformed or conflicting records are kept
+in `migration-quarantine` without overwriting canonical data. Do not introduce
+a terminal migration receipt until old writers have an enforced retirement
+boundary. The shared connection closes on `pagehide` and reopens on persisted
+`pageshow` or the next operation so IndexedDB does not defeat back/forward cache.
+
+Bun does not replace specialist tools by decree. Node `22.22.0` hosts the
+locked Vitest/workspace boundary; Vite, Wrangler, Playwright, and justified
+non-TypeScript tooling may remain.
 
 ## Before changing illustration production
 
@@ -211,6 +287,10 @@ Before importing a recovered artifact, classify it in `recovery/CORPUS_RECOVERY.
 
 ## Code
 
-At this normalization base, application code and Bun workspace configuration
-have not yet been scaffolded. Add concrete format/test/build commands only when
-the reviewed toolchain actually exists.
+The initial Bun workspace and vertical-slice code are scaffolded under
+`apps/site`, `apps/content-compiler`, and `packages/content`. Typecheck, unit,
+compiler, static-closure, answer-leak, bundle-budget, and headless-Chrome
+commit/reload/offline checks are implemented; treat the scaffold as an
+implementation proof until the remaining multi-browser failure/update,
+accessibility, and preview gates pass. Add or change commands only when they
+execute against the reviewed locked toolchain.

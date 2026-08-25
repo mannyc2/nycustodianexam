@@ -18,6 +18,14 @@ These files control exam truth and scope.
 
 - `product/FEATURE_SPEC.md` — maintained product/UX behavior contract.
 - `product/ARCHITECTURE_CONSTRAINTS.md` — current implementation constraints and research gates.
+- `product/ROUTES.md` — canonical route IDs, paths, indexability, ownership,
+  navigation, offline behavior, and milestones.
+- `product/SCREEN_STATES.md` — legal route states, transitions, recovery,
+  focus, history, and offline semantics.
+- `product/COMPONENT_ARCHITECTURE.md` — React 19 compound-component families,
+  provider contracts, variants, and composition rules.
+- `product/DESIGN_SYSTEM.md` — shared visual tokens, responsive/print layout,
+  focus, controls, state presentation, and accessibility adaptations.
 
 Current direction:
 
@@ -25,10 +33,11 @@ Current direction:
 - Bun package management, scripts, and workspaces;
 - top-level `apps/` and `packages/` monorepo shape;
 - standards-first semantic HTML/CSS;
-- Vite for browser tooling unless later evidence changes it;
+- Vite for browser tooling;
 - Cloudflare Workers Static Assets initially;
 - no Next.js;
-- a provisional lazy direct-DOM first slice behind a renderer-neutral boundary.
+- React 19 for lazy interactive islands, with generated semantic HTML for
+  acquisition/reference documents and no SPA router.
 
 Do not use Effect v3 as a production fallback. Older v3 research is historical, migration, or regression evidence only.
 
@@ -43,6 +52,10 @@ instructions, not runnable current launch contracts or authority.
 Any new research task must define a fresh scope, exact immutable source SHA,
 canonical consumer, and output branch. Verify those coordinates with connected
 GitHub before extended work and stop on source drift.
+
+The archived R2 direct-DOM-first choice remains historical evidence and a
+measurement baseline, but the maintained React 19 island decision supersedes it
+as the implementation renderer.
 
 ### Illustration production — `illustration/`
 
@@ -112,6 +125,14 @@ Officially published sample material may be discussed only in its lawful/public 
 - Pre-answer UI, accessibility data, filenames, manifests, source maps, SVG metadata, and GLB metadata must not leak the correct answer.
 - Reviewed translations preserve canonical English terminology and must not imply a bilingual official exam.
 
+The split static release enforces a presentation/order boundary, not answer
+confidentiality or DRM. Opaque item-scoped postcommit objects and explicit
+offline packs necessarily contain original-practice keys. They must not be in
+the initial document, executable closure, or safe precache, and application
+code must not request/read one before durable commitment. Public paths,
+manifests, and asset metadata may identify an opaque postcommit object but may
+not encode its answer. Secure exam content remains prohibited entirely.
+
 ## Learning and verifying Effect
 
 The intended `SKILL.md` is the official Effect setup skill at:
@@ -123,7 +144,11 @@ skills/effect-ts/SKILL.md
 
 Apply its intent using Bun.
 
-When the Bun workspace is scaffolded, the exact selected Effect v4 package must be available as a root development dependency so its package guidance and source are inspectable. Runtime workspaces that import Effect must still declare their own explicit runtime dependency, normally through the root Bun catalog; do not rely on hoisting or phantom dependencies.
+In the Bun workspace, the exact selected Effect v4 package must be available as a
+root development dependency so its package guidance and source are inspectable.
+Runtime workspaces that import Effect must still declare their own explicit
+runtime dependency, normally through the root Bun catalog; do not rely on
+hoisting or phantom dependencies.
 
 Before writing or reviewing Effect code:
 
@@ -168,6 +193,11 @@ Avoid:
 - Promise/Effect bouncing without a real boundary reason;
 - hand-written runtime type guards already provided by Effect Predicate utilities.
 
+For browser islands, construct one long-lived `ManagedRuntime` at the site
+application root and dispose it there. React providers adapt renderer-neutral
+`ScreenSnapshot` state, semantic actions, and effect metadata; they do not own
+durable state or construct runtimes/Layers during render.
+
 ### Durable commit-before-reveal
 
 Normal persistent study behavior is:
@@ -183,7 +213,7 @@ Do not reveal after an in-memory-only commit when persistence failed. Retry must
 
 ## Bun and workspace rules
 
-The future implementation uses Bun workspaces with top-level:
+The implementation uses Bun workspaces with top-level:
 
 ```text
 apps/
@@ -192,6 +222,7 @@ packages/
 
 Current workspace doctrine:
 
+- exact Bun `1.4.0` plus Node `22.22.0` for the locked specialist-tool boundary;
 - private root package;
 - Bun workspaces and explicit `workspace:*` dependencies;
 - root Bun catalog for the exact coordinated Effect v4 cohort and other deliberately shared versions;
@@ -203,12 +234,17 @@ Current workspace doctrine:
 - runtime-specific TypeScript configurations and types;
 - filtered/dependency-aware scripts where current Bun semantics fit.
 
-Do not introduce pnpm/npm/yarn workspace assumptions. Bun manages dependencies and scripts; it does not make browser, service-worker, or Cloudflare workerd code Bun-runtime code. Keep Vite, Wrangler, Playwright, and specialist non-TypeScript tools when they have a justified role.
+Do not introduce pnpm/npm/yarn workspace assumptions. Bun manages dependencies
+and scripts; Node `22.22.0` hosts the locked Vitest/workspace boundary. Neither
+runtime makes browser, service-worker, or Cloudflare workerd code server-runtime
+code. Keep Vite, Wrangler, Playwright, and specialist non-TypeScript tools when
+they have a justified role.
 
-The reconciled first graph is `apps/site`, `apps/content-compiler`, and
-`packages/content`; later packages must earn a real runtime, consumer, ownership,
-build, or publication boundary. Do not create one package per service, a
-universal `packages/core`, speculative renderer packages, or an empty Worker app.
+The implemented initial graph is `apps/site`, `apps/content-compiler`, and
+`packages/content`; later packages must earn a real runtime, consumer,
+ownership, build, reuse, or publication boundary. Do not create one package per
+service, a universal `packages/core`, speculative renderer packages, or an
+empty Worker app.
 
 ## GitHub publication rule for research
 
@@ -260,10 +296,12 @@ When reconciling research:
 
 ## Implementation status
 
-At this normalization base, application code and the Bun workspace have not yet
-been scaffolded. The R2.1–R2.10/R2.90 program is closed and reconciled; accepted
-conclusions live in maintained product/illustration documents, blocked or
-incomplete execution gates live in `docs/OPEN.md`, and the original corpus is archived
-at immutable commit `6701e83290c56d9c5f04275a30fc6ada6bd40435`.
-Do not relaunch the archived prompts or implement from superseded v3
-recommendations.
+The first implementation scaffold now lives at the repository root with
+`apps/site`, `apps/content-compiler`, and `packages/content`. It is an in-progress
+M1–M3 proof, not evidence that the release gates have passed. The
+R2.1–R2.10/R2.90 program is closed and reconciled; accepted conclusions live in
+maintained product/illustration documents, blocked or incomplete gates live in
+`docs/OPEN.md`, and the original corpus is archived at immutable commit
+`6701e83290c56d9c5f04275a30fc6ada6bd40435`. Do not relaunch archived prompts
+or implement from superseded v3 or direct-DOM-first recommendations where they
+conflict with maintained constraints.

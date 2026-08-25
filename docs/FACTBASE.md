@@ -1,6 +1,10 @@
 # FACTBASE.md
 Established facts: exam, format, scoring, logistics, legal framework, titles, jurisdiction.
-Current through research cutoff 2026-08-17. Exams 60112026 / 61012026 (scheduled 2026-08-22) not yet administered.
+Current through factual refresh 2026-08-25. The announcements for exams
+60112026 / 61012026 list 2026-08-22 as the exam date. That date has passed, but
+no official post-administration notice or result/list record was located in the
+2026-08-25 read-only refresh, so actual administration status remains
+unconfirmed.
 [v4 ingested 2026-08: class-spec provenance revised (most detailed specs are union mirrors); NYS Cleaner/Janitor standards added as corroborative; general-guide facts added; v4's 2017/2021/2026-only cadence REJECTED — 2024 administration retained on better sourcing.]
 
 ## Exam identity & series
@@ -32,9 +36,9 @@ Current through research cutoff 2026-08-17. Exams 60112026 / 61012026 (scheduled
 - OC 9505D: filing 2020-03-05→03-25; scheduled 2020-05-02, postponed, administered 2021-05-01; fee $50. List dates not located. [OFFICIAL]
 - OC 40272024: final announcement RECOVERED (NEOGOV posting 4517184, accessed 2026-08-17) — filing 2024-07-18→08-07 (closed 11:59 p.m. ET); test 2024-09-21; fee $50; jurisdictions: Nassau school districts, school-district libraries, BOCES, villages, and special districts; minimum quals due BY THE FILING DEADLINE (same three routes as 2026); three subject headings verbatim-identical to 2017/2026; bulletin directs employed Cleaners to file separately for promotion 41282024. No amendment located (≠ none existed). List established 2025-02-04 (board records). C3 RESOLVED for OC; v4's cadence table omitting 2024 remains rejected (C5). [OFFICIAL] (announcement 40272024, recovered v5)
 - Promotion 41282024: existence, same-date (2024-09-21) administration, and exam number confirmed via the OC bulletin; list established 2025-02-04 (Valley Stream No. 24 board agenda; appointment eff. 2025-02-27). Final promotional bulletin and amendments NOT located — filing dates, fee, participating jurisdictions, exact 2024 quals/subject wording cannot be attributed. Caution: NEOGOV posting 4517184 is the OC bulletin only; never cite it as the 41282024 bulletin. [OFFICIAL, partial]
-- OC 60112026: announced 2026-06-11; filing →07-01; scheduled 2026-08-22; fee $50; school districts, district libraries, BOCES, villages, special districts (latter two unenumerated). [OFFICIAL]
-- Promotion 61012026: filing →07-05 (amended); scheduled 2026-08-22; fee $50; 43 jurisdictions. 5339570 = posting ID only. [OFFICIAL]
-- Cadence: 2017-04-01 → 2021-05-01 (≈4y1m; intended ≈3 yrs pre-pandemic) → 2024-09-21 (≈3y5m) → 2026-08-22 (≈1y11m). Irregular; no published schedule; do not forecast. 2017 = start of continuous online archive, not proven first exam. [OFFICIAL dates; INFERRED conclusion]
+- OC 60112026: announced 2026-06-11; filing →07-01; announcement exam date 2026-08-22; fee $50; school districts, district libraries, BOCES, villages, special districts (latter two unenumerated). The announcement remains available, but actual administration was not independently confirmed in the 2026-08-25 refresh. [OFFICIAL announcement; OPEN administration status]
+- Promotion 61012026: filing →07-05 (amended); announcement exam date 2026-08-22; fee $50; 43 jurisdictions. 5339570 = posting ID only. The announcement remains available, but actual administration was not independently confirmed in the 2026-08-25 refresh. [OFFICIAL announcement; OPEN administration status]
+- Announced-date sequence: 2017-04-01 → 2021-05-01 (≈4y1m; intended ≈3 yrs pre-pandemic) → 2024-09-21 (≈3y5m) → 2026-08-22 (≈1y11m). Irregular; no published schedule; do not forecast. The first three administrations are confirmed; 2026-08-22 is the still-unconfirmed announced date. 2017 = start of continuous online archive, not proven first exam. [OFFICIAL dates; INFERRED conclusion; 2026 status OPEN]
 - Fee history: 2017 $40; 2020/21, 2024, 2026 $50 per exam number (2024 now announcement-confirmed). [OFFICIAL]
 - Pre-2017 false lead REJECTED: an Oct 2021 Valley Stream minute pairs a Custodian appointment with exam "26-536," but official sources (Nassau bulletin posting 2225917; Chief's listing; a second Valley Stream agenda pairing 26-536 with the other title and 7010D with Custodian) identify 26-536 as Director of Facilities III — probable clerical error; NOT evidence of a pre-2017 Custodian exam. [OFFICIAL basis]
 - 2016 Assistant Head Custodian PROMOTIONAL bulletin located (posting 1555261) — high-level series history only; does not resolve pre-2017 entry-level history. [OFFICIAL]
