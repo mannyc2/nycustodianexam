@@ -46,8 +46,8 @@ jobs:
           test "$(git rev-parse HEAD)" = "$(git rev-parse origin/main)"
       - name: Install the committed dependency graph
         run: bun install --frozen-lockfile
-      - name: Require commit-bound production certification
-        run: bun run scripts/check-production-certification.ts --expected-commit "$GITHUB_SHA"
+      - name: Require candidate-bound production certification attestation
+        run: bun run scripts/check-production-certification.ts --deploy-commit "$GITHUB_SHA"
       - name: Build for the approved canonical origin
         env:
           NYCUSTODIAN_CANONICAL_ORIGIN: https://${{ vars.CANONICAL_DOMAIN }}

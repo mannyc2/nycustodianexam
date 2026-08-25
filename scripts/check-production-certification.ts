@@ -1,4 +1,6 @@
+import { execFileSync, spawnSync } from "node:child_process"
 import { readFile } from "node:fs/promises"
+import { fileURLToPath } from "node:url"
 import { Schema } from "effect"
 
 const CertificationChecks = Schema.Struct({
@@ -19,9 +21,9 @@ const CertificationChecks = Schema.Struct({
 })
 
 const ProductionCertification = Schema.Struct({
-  schemaVersion: Schema.Literal(1),
+  schemaVersion: Schema.Literal(2),
   status: Schema.Literals(["blocked", "certified"]),
-  commitSha: Schema.NullOr(Schema.String),
+  candidateCommitSha: Schema.NullOr(Schema.String),
   reviewedAt: Schema.NullOr(Schema.String),
   checks: CertificationChecks,
   gaps: Schema.Array(Schema.String),
@@ -29,32 +31,34 @@ const ProductionCertification = Schema.Struct({
   notes: Schema.Array(Schema.String)
 })
 
-type Certification = typeof ProductionCertification.Type
+export type ProductionCertificationValue = typeof ProductionCertification.Type
 
 const recordUrl = new URL("../docs/certification/production-v1.json", import.meta.url)
+const repositoryRoot = fileURLToPath(new URL("../", import.meta.url))
+export const certificationRecordPath = "docs/certification/production-v1.json"
 const commitPattern = /^[0-9a-f]{40}$/
 
 const parseArguments = (arguments_: readonly string[]) => {
   const allowBlocked = arguments_.includes("--allow-blocked")
-  const expectedCommitIndex = arguments_.indexOf("--expected-commit")
-  const expectedCommit =
-    expectedCommitIndex === -1 ? undefined : arguments_[expectedCommitIndex + 1]
+  const deployCommitIndex = arguments_.indexOf("--deploy-commit")
+  const deployCommit =
+    deployCommitIndex === -1 ? undefined : arguments_[deployCommitIndex + 1]
 
-  if (expectedCommitIndex !== -1 && expectedCommit === undefined) {
-    throw new Error("--expected-commit requires a 40-character lowercase Git SHA")
+  if (deployCommitIndex !== -1 && deployCommit === undefined) {
+    throw new Error("--deploy-commit requires a 40-character lowercase Git SHA")
   }
-  if (expectedCommit !== undefined && !commitPattern.test(expectedCommit)) {
-    throw new Error(`Invalid expected commit SHA: ${JSON.stringify(expectedCommit)}`)
+  if (deployCommit !== undefined && !commitPattern.test(deployCommit)) {
+    throw new Error(`Invalid deploy commit SHA: ${JSON.stringify(deployCommit)}`)
   }
   const recognized = new Set([
     "--allow-blocked",
-    "--expected-commit",
-    ...(expectedCommit === undefined ? [] : [expectedCommit])
+    "--deploy-commit",
+    ...(deployCommit === undefined ? [] : [deployCommit])
   ])
   const unknown = arguments_.filter((argument) => !recognized.has(argument))
   if (unknown.length > 0) throw new Error(`Unknown arguments: ${unknown.join(", ")}`)
 
-  return { allowBlocked, expectedCommit }
+  return { allowBlocked, deployCommit }
 }
 
 const assertNonEmptyStrings = (values: readonly string[], label: string): void => {
@@ -63,16 +67,39 @@ const assertNonEmptyStrings = (values: readonly string[], label: string): void =
   }
 }
 
-const assertCertified = (record: Certification, expectedCommit: string | undefined): void => {
-  if (expectedCommit === undefined) {
-    throw new Error("Production certification requires --expected-commit")
+export interface CertificationGitEvidence {
+  readonly candidateIsAncestor: boolean
+  readonly changedPaths: ReadonlyArray<string>
+}
+
+export const assertCertified = (
+  record: ProductionCertificationValue,
+  deployCommit: string | undefined,
+  git: CertificationGitEvidence
+): void => {
+  if (deployCommit === undefined) {
+    throw new Error("Production certification requires --deploy-commit")
   }
   if (record.status !== "certified") {
     throw new Error("Production is blocked: certification status is not certified")
   }
-  if (record.commitSha !== expectedCommit) {
+  if (record.candidateCommitSha === null || !commitPattern.test(record.candidateCommitSha)) {
+    throw new Error("A certified record requires a 40-character candidateCommitSha")
+  }
+  if (!git.candidateIsAncestor) {
     throw new Error(
-      `Certification commit ${JSON.stringify(record.commitSha)} does not match ${expectedCommit}`
+      `Certified candidate ${record.candidateCommitSha} is not an ancestor of deploy commit ${deployCommit}`
+    )
+  }
+  const evidencePrefix = `docs/certification/evidence/${record.candidateCommitSha}/`
+  const invalidPaths = git.changedPaths.filter(
+    (path) => path !== certificationRecordPath && !path.startsWith(evidencePrefix)
+  )
+  if (!git.changedPaths.includes(certificationRecordPath) || invalidPaths.length > 0) {
+    throw new Error(
+      "Only the production certification record and candidate-scoped evidence may differ " +
+      "from the manually tested candidate; " +
+      `changed paths: ${git.changedPaths.length === 0 ? "none" : git.changedPaths.join(", ")}`
     )
   }
   if (record.reviewedAt === null || Number.isNaN(Date.parse(record.reviewedAt))) {
@@ -96,8 +123,39 @@ const assertCertified = (record: Certification, expectedCommit: string | undefin
   }
 }
 
+const gitEvidence = (
+  candidateCommit: string,
+  deployCommit: string
+): CertificationGitEvidence => {
+  const ancestor = spawnSync(
+    "git",
+    ["merge-base", "--is-ancestor", candidateCommit, deployCommit],
+    { cwd: repositoryRoot, stdio: "ignore" }
+  )
+  if (ancestor.error !== undefined) throw ancestor.error
+  if (ancestor.status !== 0 && ancestor.status !== 1) {
+    throw new Error("Git could not resolve the candidate/deploy ancestry")
+  }
+  const output = execFileSync(
+    "git",
+    ["diff", "--name-only", "-z", candidateCommit, deployCommit],
+    { cwd: repositoryRoot }
+  )
+  const changedPaths = output
+    .toString("utf8")
+    .split("\0")
+    .filter((path) => path.length > 0)
+  return { candidateIsAncestor: ancestor.status === 0, changedPaths }
+}
+
+const currentHead = (): string => execFileSync(
+  "git",
+  ["rev-parse", "HEAD"],
+  { cwd: repositoryRoot, encoding: "utf8" }
+).trim()
+
 const main = async (): Promise<void> => {
-  const { allowBlocked, expectedCommit } = parseArguments(process.argv.slice(2))
+  const { allowBlocked, deployCommit } = parseArguments(process.argv.slice(2))
   const raw = JSON.parse(await readFile(recordUrl, "utf8"))
   const record = Schema.decodeUnknownSync(ProductionCertification)(raw, {
     onExcessProperty: "error"
@@ -106,19 +164,32 @@ const main = async (): Promise<void> => {
   assertNonEmptyStrings(record.gaps, "Gap")
   assertNonEmptyStrings(record.evidence, "Evidence")
   assertNonEmptyStrings(record.notes, "Note")
-  if (record.commitSha !== null && !commitPattern.test(record.commitSha)) {
-    throw new Error("commitSha must be null or a 40-character lowercase Git SHA")
+  if (record.candidateCommitSha !== null && !commitPattern.test(record.candidateCommitSha)) {
+    throw new Error("candidateCommitSha must be null or a 40-character lowercase Git SHA")
   }
 
-  if (!allowBlocked) assertCertified(record, expectedCommit)
+  const validateCertified = !allowBlocked || record.status === "certified"
+  const effectiveDeployCommit = deployCommit ?? (validateCertified ? currentHead() : undefined)
+  if (validateCertified) {
+    if (effectiveDeployCommit === undefined || record.candidateCommitSha === null) {
+      throw new Error("Certified production validation requires candidate and deploy commits")
+    }
+    assertCertified(
+      record,
+      effectiveDeployCommit,
+      gitEvidence(record.candidateCommitSha, effectiveDeployCommit)
+    )
+  }
   console.log(
-    allowBlocked
+    allowBlocked && record.status === "blocked"
       ? `Production certification record is valid and ${record.status}.`
-      : `Production certification is complete for ${expectedCommit}.`
+      : `Production certification binds tested candidate ${record.candidateCommitSha} to deploy commit ${effectiveDeployCommit}.`
   )
 }
 
-main().catch((error: unknown) => {
-  console.error(error instanceof Error ? error.message : error)
-  process.exitCode = 1
-})
+if (import.meta.main) {
+  main().catch((error: unknown) => {
+    console.error(error instanceof Error ? error.message : error)
+    process.exitCode = 1
+  })
+}
