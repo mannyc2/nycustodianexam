@@ -1,6 +1,7 @@
 import { readdirSync } from "node:fs"
 import { relative, resolve } from "node:path"
-import { defineConfig } from "vite"
+import { defineConfig, type Connect } from "vite"
+import { localProductShellPath } from "./src/asset-router.ts"
 
 const excludedDirectories = new Set(["dist", "node_modules", "public"])
 
@@ -31,7 +32,35 @@ export const discoverHtmlInputs = (root: string): Readonly<Record<string, string
 
 const root = import.meta.dirname
 
+export const scopedLocalSessionShell = (
+  method: string | undefined,
+  url: string | undefined
+): string | undefined => {
+  if (method !== "GET" && method !== "HEAD") return undefined
+  const pathname = url?.split(/[?#]/, 1)[0]
+  return pathname === undefined ? undefined : localProductShellPath(pathname)
+}
+
+const installScopedSessionShells = (server: {
+  readonly middlewares: Connect.Server
+}): void => {
+  server.middlewares.use((request, _response, next) => {
+    const shell = scopedLocalSessionShell(request.method, request.url)
+    if (shell !== undefined) request.url = shell
+    next()
+  })
+}
+
 export default defineConfig(({ command }) => ({
+  plugins: [{
+    name: "nycustodian-scoped-local-session-shells",
+    configureServer(server) {
+      installScopedSessionShells(server)
+    },
+    configurePreviewServer(server) {
+      installScopedSessionShells(server)
+    }
+  }],
   build: {
     outDir: "dist",
     emptyOutDir: true,

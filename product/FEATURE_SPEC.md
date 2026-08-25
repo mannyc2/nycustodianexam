@@ -638,4 +638,7 @@ The recovered product contract points to a vertical-slice implementation order r
 9. correction endpoint only when static/local functionality is stable;
 10. optional research telemetry only after privacy contract and core UX are proven.
 
-The exact build tooling and Cloudflare deployment architecture are intentionally delegated to `ARCHITECTURE_CONSTRAINTS.md` and a forthcoming current-source architecture research pass.
+The exact build tooling and Cloudflare deployment architecture are delegated to
+`ARCHITECTURE_CONSTRAINTS.md`. The current-source R2 architecture program is
+complete and reconciled; remaining work is implementation and release evidence,
+not a forthcoming architecture research pass.

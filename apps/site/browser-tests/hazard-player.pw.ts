@@ -56,6 +56,18 @@ interface StoredHazardAttempt {
   readonly committedAt: number
   readonly receipt: StoredHazardReceipt
   readonly allowedZoneOrders: ReadonlyArray<number>
+  readonly evaluation?: {
+    readonly payload: { readonly opaqueAssetId: string }
+    readonly postcommitBase64: string
+    readonly retainedVisualAsset: {
+      readonly receipt: {
+        readonly path: string
+        readonly bytes: number
+        readonly sha256: string
+      }
+      readonly dataUrl: string
+    } | null
+  }
 }
 
 const gotoReadyVisualHazard = async (page: Page): Promise<void> => {
@@ -129,6 +141,43 @@ for (const failure of ["missing", "corrupt"] as const) {
   })
 }
 
+test("phone and keyboard users can pan a zoomed scene and reset the whole-image view", async ({
+  page
+}) => {
+  await page.setViewportSize({ height: 720, width: 320 })
+  await gotoReadyVisualHazard(page)
+
+  const viewport = page.locator(".hazard-player__viewport")
+  const panRight = page.getByRole("button", { name: "Pan right" })
+  const panDown = page.getByRole("button", { name: "Pan down" })
+  await expect(panRight).toBeDisabled()
+  await expect(panDown).toBeDisabled()
+
+  await page.getByRole("button", { name: "Zoom in" }).focus()
+  await page.keyboard.press("Enter")
+  await expect(page.getByText("125% view", { exact: true })).toBeVisible()
+  await expect(panRight).toBeEnabled()
+  await expect(panDown).toBeEnabled()
+
+  await panRight.focus()
+  await page.keyboard.press("Enter")
+  await expect.poll(() => viewport.evaluate((element) => element.scrollLeft)).toBeGreaterThan(0)
+  await panDown.focus()
+  await page.keyboard.press("Space")
+  await expect.poll(() => viewport.evaluate((element) => element.scrollTop)).toBeGreaterThan(0)
+  await expect(page.getByText("No markers placed.", { exact: true })).toBeVisible()
+
+  await page.getByRole("button", { name: "Reset view" }).focus()
+  await page.keyboard.press("Enter")
+  await expect(page.getByText("100% view", { exact: true })).toBeVisible()
+  await expect.poll(() => viewport.evaluate((element) => ({
+    fitsHorizontally: element.scrollWidth <= element.clientWidth + 1,
+    fitsVertically: element.scrollHeight <= element.clientHeight + 1,
+    left: element.scrollLeft,
+    top: element.scrollTop
+  }))).toEqual({ fitsHorizontally: true, fitsVertically: true, left: 0, top: 0 })
+})
+
 test("visual markers are durable before feedback fetch and restore exactly", async ({
   context,
   page
@@ -158,14 +207,62 @@ test("visual markers are durable before feedback fetch and restore exactly", asy
     receipt: hazardReceipt("visual"),
     allowedZoneOrders: [1, 2, 3, 4]
   })
+  expect(attemptObservedAtFetch?.evaluation).toBeUndefined()
   const committed = await readHazardAttempt(page, visualAttemptId)
   expect(committed?.committedAt).toEqual(expect.any(Number))
+  expect(committed?.evaluation).toMatchObject({
+    payload: { opaqueAssetId: "s001" },
+    retainedVisualAsset: {
+      receipt: { path: visualImagePath }
+    }
+  })
+  expect(committed?.evaluation?.retainedVisualAsset?.dataUrl).toMatch(
+    /^data:image\/png;base64,/
+  )
+  await expect(page.getByText("Reviewed scene overlay.", { exact: false })).toBeVisible()
+  await expect(page.locator(".hazard-result-overlay img")).toHaveAttribute(
+    "src",
+    /^data:image\/png;base64,/
+  )
+  await expect(page.locator("[data-marker-kind]")).toHaveCount(1)
+  await expect(page.locator("[data-marker-kind]")).toHaveAttribute(
+    "data-marker-kind",
+    "false_positive"
+  )
+  await expect(page.locator("[data-marker-kind]")).toHaveAttribute("data-marker-x", "0.5")
+  await expect(page.locator("[data-marker-kind]")).toHaveAttribute("data-marker-y", "0.5")
   expect(postcommitRequests).toBe(1)
 
+  await page.evaluate(async () => {
+    await Promise.all((await caches.keys()).map((cacheName) => caches.delete(cacheName)))
+    await Promise.all(
+      (await navigator.serviceWorker.getRegistrations()).map((registration) =>
+        registration.unregister()
+      )
+    )
+  })
+  let removedVisualRequests = 0
+  let removedPostcommitRequests = 0
+  await context.route(`**${visualImagePath}`, async (route) => {
+    removedVisualRequests += 1
+    await route.fulfill({ body: "removed", status: 404 })
+  })
+  await context.route(`**${postcommitPath}`, async (route) => {
+    removedPostcommitRequests += 1
+    await route.fulfill({ body: "removed", status: 404 })
+  })
   await page.reload()
   await expect(page).toHaveURL(visualPath)
   await expect(page.getByRole("heading", { name: "Scene response recorded" })).toBeFocused()
+  await expect(page.getByRole("heading", { name: "Released scene image unavailable" }))
+    .toHaveCount(0)
   expect(await readHazardAttempt(page, visualAttemptId)).toEqual(committed)
+  await expect(page.locator(".hazard-result-overlay img")).toHaveAttribute(
+    "src",
+    committed?.evaluation?.retainedVisualAsset?.dataUrl ?? ""
+  )
+  expect(removedVisualRequests).toBe(0)
+  expect(removedPostcommitRequests).toBe(0)
 })
 
 test("the verified visual Blob URL survives BFCache and is revoked on true unload", async ({
@@ -365,6 +462,13 @@ test("keyboard-only nonvisual zone selection commits before feedback", async ({ 
     zeroHazardsConfirmed: false,
     receipt: hazardReceipt("nonvisual"),
     allowedZoneOrders: [1, 2, 3, 4]
+  })
+  expect(attemptObservedAtFetch?.evaluation).toBeUndefined()
+  expect(await readHazardAttempt(page, nonvisualAttemptId)).toMatchObject({
+    evaluation: {
+      payload: { opaqueAssetId: "s001" },
+      retainedVisualAsset: null
+    }
   })
   await expect(page.getByRole("heading", { name: "Complete zoned text equivalent" })).toBeVisible()
   expect(postcommitRequests).toBe(1)

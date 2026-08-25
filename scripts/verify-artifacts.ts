@@ -21,6 +21,8 @@ import {
   QuestionAttemptReceipt
 } from "../apps/site/src/attempt-receipt.ts"
 import { ReviewQueueBootstrap } from "../apps/site/src/review/model.ts"
+import { SimulationBootstrap } from "../apps/site/src/simulation/model.ts"
+import { PrintBuilderBootstrap } from "../apps/site/src/print/model.ts"
 import { AssetContentReceipt } from "../apps/site/src/verified-content.ts"
 import {
   assertSafeBuildPaths,
@@ -565,6 +567,23 @@ export const verify = async (): Promise<void> => {
     { canonicalPath: "/ny/", robots: "index,follow", routeId: "profile" },
     { canonicalPath: "/practice/", robots: "index,follow", routeId: "study-hub" },
     { canonicalPath: "/review/", robots: "noindex,follow", routeId: "review-queue" },
+    { canonicalPath: "/simulations/", robots: "index,follow", routeId: "simulation-setup" },
+    {
+      canonicalPath: "/simulations/session/sim-shell0000/question/1/",
+      robots: "noindex,follow",
+      routeId: "simulation-player"
+    },
+    {
+      canonicalPath: "/simulations/session/sim-shell0000/results/",
+      robots: "noindex,follow",
+      routeId: "simulation-results"
+    },
+    { canonicalPath: "/print/", robots: "index,follow", routeId: "print-center" },
+    {
+      canonicalPath: "/print/preview/print-shell0000/",
+      robots: "noindex,follow",
+      routeId: "print-preview"
+    },
     { canonicalPath: "/atlas/", robots: "index,follow", routeId: "atlas-index" },
     { canonicalPath: "/hazards/", robots: "index,follow", routeId: "hazards-index" },
     { canonicalPath: "/status/", robots: "noindex,follow", routeId: "status" },
@@ -728,6 +747,17 @@ export const verify = async (): Promise<void> => {
   ).join("\n")
   const bundleReports = new Map<string, Awaited<ReturnType<typeof bundleMeasurement>>>()
   const referencedAssets = new Set<string>()
+  const interactiveRouteIds = new Set([
+    "question-player",
+    "review-player",
+    "review-queue",
+    "hazard-player",
+    "simulation-setup",
+    "simulation-player",
+    "simulation-results",
+    "print-center",
+    "print-preview"
+  ])
 
   for (const route of expectedRoutes) {
     const html = await text(routeDocument(route.canonicalPath))
@@ -749,11 +779,7 @@ export const verify = async (): Promise<void> => {
       }
     }
 
-    const interactive =
-      route.routeId === "question-player" ||
-      route.routeId === "review-player" ||
-      route.routeId === "review-queue" ||
-      route.routeId === "hazard-player"
+    const interactive = interactiveRouteIds.has(route.routeId)
     if (!interactive && (/<script\b/i.test(html) || /react|effect/i.test(html))) {
       throw new Error(`Runtime-free static route includes an interactive runtime: ${route.canonicalPath}`)
     }
@@ -765,6 +791,133 @@ export const verify = async (): Promise<void> => {
     const closure = await collectJavaScriptClosure(html, allJavaScriptPaths)
     const family = route.routeId
     if (!bundleReports.has(family)) bundleReports.set(family, await bundleMeasurement(closure))
+
+    if (route.routeId === "simulation-setup") {
+      const rawBootstrap = extractEmbeddedJson(html, "simulation-bootstrap-data")
+      assertNoAnswerBearingStructuredFields(rawBootstrap, "Simulation setup bootstrap")
+      const bootstrap = Schema.decodeUnknownSync(SimulationBootstrap)(rawBootstrap)
+      if (
+        !html.includes("data-simulation-setup") ||
+        bootstrap.releaseId !== manifest.releaseId ||
+        bootstrap.packVersion !== manifest.packVersion ||
+        bootstrap.profiles.length !== catalog.profiles.length ||
+        bootstrap.profiles.some((profile, index) => {
+          const expected = catalog.profiles[index]
+          return expected === undefined ||
+            profile.id !== expected.id ||
+            profile.label !== expected.label ||
+            profile.version !== manifest.packVersion ||
+            profile.jurisdiction !== expected.jurisdiction ||
+            profile.compatibilityKey !== expected.compatibilityKey ||
+            profile.disclaimer !== expected.disclaimer
+        }) ||
+        bootstrap.inventory.length !== questions.length ||
+        bootstrap.inventory.some((item, index) => {
+          const expected = questions[index]?.value
+          const artifact = expected === undefined
+            ? undefined
+            : questionPostcommitById.get(expected.id)
+          return expected === undefined || artifact === undefined ||
+            item.question.id !== expected.id ||
+            item.profileIds.length === 0 ||
+            item.profileIds.some((profileId) =>
+              !bootstrap.profiles.some((profile) => profile.id === profileId)
+            ) ||
+            item.receipt.questionId !== expected.id ||
+            item.receipt.postcommitPath !== `/content/vertical-slice/${artifact.path}` ||
+            item.receipt.postcommitBytes !== artifact.bytes ||
+            item.receipt.postcommitSha256 !== artifact.sha256
+        })
+      ) {
+        throw new Error("Simulation setup bootstrap or capacity closure is incomplete")
+      }
+      continue
+    }
+
+    if (route.routeId === "simulation-player" || route.routeId === "simulation-results") {
+      const requiredMount = route.routeId === "simulation-player"
+        ? "data-simulation-player"
+        : "data-simulation-results"
+      if (!html.includes(requiredMount)) {
+        throw new Error(`Simulation route shell is incomplete: ${route.canonicalPath}`)
+      }
+      for (const field of ["correctOptionId", "rationales", "sources"]) {
+        if (html.includes(`\"${field}\"`)) {
+          throw new Error(`Simulation route shell exposes ${field}: ${route.canonicalPath}`)
+        }
+      }
+      continue
+    }
+
+    if (route.routeId === "print-center") {
+      const rawBootstrap = extractEmbeddedJson(html, "print-builder-data")
+      assertNoAnswerBearingStructuredFields(rawBootstrap, "Print builder bootstrap")
+      const bootstrap = Schema.decodeUnknownSync(PrintBuilderBootstrap)(rawBootstrap)
+      const releasedTools = catalog.tools.filter((tool) => tool.publicationGate === null)
+      if (
+        !html.includes("data-print-builder") ||
+        bootstrap.releaseId !== manifest.releaseId ||
+        bootstrap.contentVersion !== manifest.packVersion ||
+        bootstrap.profiles.length !== catalog.profiles.length ||
+        bootstrap.profiles.some((profile, index) => {
+          const expected = catalog.profiles[index]
+          return expected === undefined ||
+            profile.id !== expected.id ||
+            profile.label !== expected.label ||
+            profile.jurisdiction !== expected.jurisdiction ||
+            profile.compatibilityKey !== expected.compatibilityKey ||
+            profile.disclaimer !== expected.disclaimer
+        }) ||
+        bootstrap.questions.length !== questions.length ||
+        bootstrap.questions.some((item, index) => {
+          const expected = questions[index]?.value
+          const artifact = expected === undefined
+            ? undefined
+            : questionPostcommitById.get(expected.id)
+          return expected === undefined || artifact === undefined ||
+            item.id !== expected.id ||
+            item.answerReceipt?.postcommitPath !== `/content/vertical-slice/${artifact.path}` ||
+            item.answerReceipt.postcommitBytes !== artifact.bytes ||
+            item.answerReceipt.postcommitSha256 !== artifact.sha256
+        }) ||
+        bootstrap.tools.length !== releasedTools.length ||
+        bootstrap.tools.some((item, index) => {
+          const expected = releasedTools[index]
+          const print = expected?.asset.derivatives.find((asset) => asset.kind === "print")
+          return expected === undefined || print === undefined ||
+            item.id !== expected.conceptId ||
+            item.family !== expected.family ||
+            item.asset.path !== `/${print.path}` ||
+            item.asset.bytes !== print.bytes ||
+            item.asset.sha256 !== print.sha256
+        }) ||
+        bootstrap.scenes.length !== scenes.length ||
+        bootstrap.scenes.some((item, index) => {
+          const expected = scenes[index]?.value
+          const print = expected?.asset.derivatives.find((asset) => asset.kind === "print")
+          const answer = expected === undefined ? undefined : scenePostcommitById.get(expected.id)
+          return expected === undefined || print === undefined || answer === undefined ||
+            item.id !== expected.id ||
+            item.neutralOverview !== expected.neutralPreAnswer.overview ||
+            item.asset.path !== `/${print.path}` ||
+            item.asset.bytes !== print.bytes ||
+            item.asset.sha256 !== print.sha256 ||
+            item.answerReceipt.postcommitPath !== `/content/vertical-slice/${answer.path}` ||
+            item.answerReceipt.postcommitBytes !== answer.bytes ||
+            item.answerReceipt.postcommitSha256 !== answer.sha256
+        })
+      ) {
+        throw new Error("Print builder bootstrap or receipt closure is incomplete")
+      }
+      continue
+    }
+
+    if (route.routeId === "print-preview") {
+      if (!html.includes("data-print-preview") || html.includes('type="application/json"')) {
+        throw new Error("Print preview shell must load only its opaque local job")
+      }
+      continue
+    }
 
     if (route.routeId === "review-queue") {
       const rawBootstrap = extractEmbeddedJson(html, "review-bootstrap-data")
@@ -991,6 +1144,7 @@ export const verify = async (): Promise<void> => {
     "404.html",
     "offline.html",
     "manifest.webmanifest",
+    "print-bootstrap.json",
     ...(canonicalOrigin === undefined ? [] : ["sitemap.xml"]),
     "styles.css",
     "sw.js",
@@ -1008,6 +1162,10 @@ export const verify = async (): Promise<void> => {
     JSON.parse(packPrecommitText) as unknown,
     "Consolidated precommit pack"
   )
+  const printBootstrap = Schema.decodeUnknownSync(PrintBuilderBootstrap)(
+    JSON.parse(await text(new URL("print-bootstrap.json", distRoot)))
+  )
+  assertNoAnswerBearingStructuredFields(printBootstrap, "Standalone print bootstrap")
 
   const secretMaterial: string[] = []
   for (const record of manifest.artifacts) {
@@ -1042,13 +1200,7 @@ export const verify = async (): Promise<void> => {
   const playerHtml = (
     await Promise.all(
       expectedRoutes
-        .filter(
-          (route) =>
-            route.routeId === "question-player" ||
-            route.routeId === "review-player" ||
-            route.routeId === "review-queue" ||
-            route.routeId === "hazard-player"
-        )
+        .filter((route) => interactiveRouteIds.has(route.routeId))
         .map((route) => text(routeDocument(route.canonicalPath)))
       )
   ).join("\n")
@@ -1083,6 +1235,7 @@ export const verify = async (): Promise<void> => {
       "/404.html",
       "/offline.html",
       "/manifest.webmanifest",
+      "/print-bootstrap.json",
       "/styles.css",
       "/content/vertical-slice/manifest.json",
       ...deliveryManifest.artifacts
@@ -1093,8 +1246,9 @@ export const verify = async (): Promise<void> => {
   )
 
   // The interactive entries share the framework/runtime and verified-content chunks. These
-  // ceilings leave a small deterministic margin above the largest measured M1-M3 closure.
-  const bundleBudgets = { raw: 350_000, gzip: 110_000, brotli: 95_000 } as const
+  // M4 adds shared durable-session and print services to the single application runtime.
+  // These ceilings retain a deterministic margin above the measured multi-product closure.
+  const bundleBudgets = { raw: 420_000, gzip: 130_000, brotli: 115_000 } as const
   for (const [family, measurement] of bundleReports) {
     for (const format of ["raw", "gzip", "brotli"] as const) {
       if (measurement[format] > bundleBudgets[format]) {

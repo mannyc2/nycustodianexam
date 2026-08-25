@@ -202,6 +202,16 @@
           "order": 4,
           "label": "wall fixtures",
           "description": "The wall fixtures is visible within the stairwell setting."
+        },
+        {
+          "order": 5,
+          "label": "lower level",
+          "description": "The lower level is visible within the stairwell setting."
+        },
+        {
+          "order": 6,
+          "label": "ceiling",
+          "description": "The ceiling is visible within the stairwell setting."
         }
       ],
       "policy": "Does not state target or decoy counts and does not identify the answer."
@@ -224,7 +234,8 @@
         }
       ],
       "safeBackground": [
-        "dry intact steps",
+        "dry intact steps on the upper flight",
+        "dry intact steps on the lower flight",
         "closed utility door outside the stair path",
         "ceiling light fixture"
       ],
@@ -250,9 +261,14 @@
         "statement": "handrail securely mounted along the wall; it is a normal stair safety feature."
       },
       {
-        "zone": "upper and lower flights",
+        "zone": "upper flight",
         "role": "safe-background",
-        "statement": "dry intact steps"
+        "statement": "dry intact steps on the upper flight"
+      },
+      {
+        "zone": "lower flight",
+        "role": "safe-background",
+        "statement": "dry intact steps on the lower flight"
       },
       {
         "zone": "lower level",
@@ -291,6 +307,11 @@
           "order": 4,
           "label": "right wall storage",
           "description": "The right wall storage is visible within the gym setting."
+        },
+        {
+          "order": 5,
+          "label": "rear wall",
+          "description": "The rear wall is visible within the gym setting."
         }
       ],
       "policy": "Does not state target or decoy counts and does not identify the answer."
@@ -423,12 +444,12 @@
         "statement": "plain secondary spray bottle holding liquid with a completely blank smooth body and no identification area"
       },
       {
-        "zone": "upper and lower shelving",
+        "zone": "upper wall and shelving",
         "role": "decoy",
         "statement": "closed generic supply jugs stored upright in a low containment tray; they are closed, upright, and contained; their exact contents are not inferred."
       },
       {
-        "zone": "upper wall",
+        "zone": "upper wall and shelving",
         "role": "safe-background",
         "statement": "mop held in wall rack"
       },
@@ -452,23 +473,28 @@
       "zones": [
         {
           "order": 1,
-          "label": "upper bottle shelf",
-          "description": "The upper bottle shelf is visible within the kitchen setting."
+          "label": "upper and center shelves",
+          "description": "The upper and center shelves is visible within the kitchen setting."
         },
         {
           "order": 2,
-          "label": "center bowl-and-utensil shelf",
-          "description": "The center bowl-and-utensil shelf is visible within the kitchen setting."
-        },
-        {
-          "order": 3,
           "label": "lower bowl shelf",
           "description": "The lower bowl shelf is visible within the kitchen setting."
         },
         {
-          "order": 4,
+          "order": 3,
           "label": "separate pan rack",
           "description": "The separate pan rack is visible within the kitchen setting."
+        },
+        {
+          "order": 4,
+          "label": "rear tiled wall",
+          "description": "The rear tiled wall is visible within the kitchen setting."
+        },
+        {
+          "order": 5,
+          "label": "lower floor",
+          "description": "The lower floor is visible within the kitchen setting."
         }
       ],
       "policy": "Does not state target or decoy counts and does not identify the answer."
@@ -491,7 +517,8 @@
         }
       ],
       "safeBackground": [
-        "stable open metal shelving",
+        "stable open metal shelving at the upper and center shelves",
+        "stable open metal shelving at the lower bowl shelf",
         "clean tiled wall",
         "dry floor"
       ],
@@ -517,9 +544,14 @@
         "statement": "clean pans stored inverted on a separate rack; they are protected and away from chemical storage."
       },
       {
-        "zone": "both shelving units",
+        "zone": "upper and center shelves",
         "role": "safe-background",
-        "statement": "stable open metal shelving"
+        "statement": "stable open metal shelving at the upper and center shelves"
+      },
+      {
+        "zone": "lower bowl shelf",
+        "role": "safe-background",
+        "statement": "stable open metal shelving at the lower bowl shelf"
       },
       {
         "zone": "rear tiled wall",
@@ -647,6 +679,11 @@
           "order": 4,
           "label": "central aisle",
           "description": "The central aisle is visible within the classroom setting."
+        },
+        {
+          "order": 5,
+          "label": "left wall window",
+          "description": "The left wall window is visible within the classroom setting."
         }
       ],
       "policy": "Does not state target or decoy counts and does not identify the answer."
@@ -794,7 +831,7 @@
         "statement": "empty lidded waste bin"
       },
       {
-        "zone": "central floor outside the objects",
+        "zone": "central floor",
         "role": "safe-background",
         "statement": "dry floor outside the shard area"
       }
@@ -825,6 +862,11 @@
           "order": 4,
           "label": "right-side collection pad",
           "description": "The right-side collection pad is visible within the exterior/grounds setting."
+        },
+        {
+          "order": 5,
+          "label": "right-side grass",
+          "description": "The right-side grass is visible within the exterior/grounds setting."
         }
       ],
       "policy": "Does not state target or decoy counts and does not identify the answer."
@@ -914,6 +956,11 @@
           "order": 4,
           "label": "right wall storage",
           "description": "The right wall storage is visible within the loading/service area setting."
+        },
+        {
+          "order": 5,
+          "label": "lower floor",
+          "description": "The lower floor is visible within the loading/service area setting."
         }
       ],
       "policy": "Does not state target or decoy counts and does not identify the answer."
@@ -1003,6 +1050,11 @@
           "order": 4,
           "label": "right wall cart",
           "description": "The right wall cart is visible within the cafeteria setting."
+        },
+        {
+          "order": 5,
+          "label": "central aisle",
+          "description": "The central aisle is visible within the cafeteria setting."
         }
       ],
       "policy": "Does not state target or decoy counts and does not identify the answer."
@@ -1135,12 +1187,12 @@
         "statement": "person's visibly bare ungloved hand holding a cloth inside a toilet bowl during cleaning"
       },
       {
-        "zone": "right tool holder",
+        "zone": "right tool holder and floor",
         "role": "decoy",
         "statement": "unused toilet brush standing upright in its holder; it is contained and not being handled."
       },
       {
-        "zone": "lower floor",
+        "zone": "right tool holder and floor",
         "role": "safe-background",
         "statement": "dry floor"
       },
@@ -1179,8 +1231,8 @@
         },
         {
           "order": 4,
-          "label": "rear serving area",
-          "description": "The rear serving area is visible within the cafeteria setting."
+          "label": "lower floor",
+          "description": "The lower floor is visible within the cafeteria setting."
         }
       ],
       "policy": "Does not state target or decoy counts and does not identify the answer."
@@ -1203,7 +1255,7 @@
         }
       ],
       "safeBackground": [
-        "chairs tucked under other tables",
+        "chairs tucked under tables in the left dining area",
         "mop bucket upright on cart",
         "dry floor"
       ],
@@ -1224,14 +1276,14 @@
         "statement": "visibly used damp string-mop head laid directly across the top of a cafeteria dining table"
       },
       {
-        "zone": "right janitor cart cabinet",
+        "zone": "right janitor cart",
         "role": "decoy",
         "statement": "clean folded microfiber cloth stored inside a closed cart bin; it is contained and separated from surfaces."
       },
       {
-        "zone": "left and rear dining area",
+        "zone": "left dining area",
         "role": "safe-background",
-        "statement": "chairs tucked under other tables"
+        "statement": "chairs tucked under tables in the left dining area"
       },
       {
         "zone": "right janitor cart",
@@ -1270,6 +1322,11 @@
           "order": 4,
           "label": "rear bleachers",
           "description": "The rear bleachers is visible within the gym setting."
+        },
+        {
+          "order": 5,
+          "label": "wall padding",
+          "description": "The wall padding is visible within the gym setting."
         }
       ],
       "policy": "Does not state target or decoy counts and does not identify the answer."
@@ -1352,8 +1409,8 @@
         },
         {
           "order": 3,
-          "label": "center-right saw",
-          "description": "The center-right saw is visible within the mechanical/utility area setting."
+          "label": "center-right saw and plug",
+          "description": "The center-right saw and plug is visible within the mechanical/utility area setting."
         },
         {
           "order": 4,
@@ -1381,7 +1438,8 @@
         }
       ],
       "safeBackground": [
-        "clear workbench around the saw",
+        "clear left workbench",
+        "clear center workbench around the saw",
         "saw power plug visibly disconnected and resting on bench",
         "dry floor"
       ],
@@ -1397,7 +1455,7 @@
     },
     "nonvisualZonedEquivalent": [
       {
-        "zone": "center-right saw",
+        "zone": "center-right saw and plug",
         "role": "target",
         "statement": "unplugged portable circular saw resting stably on its motor-housing side on a workbench with its lower blade guard visibly jammed fully retracted, leaving most of the blade exposed above and clear of the solid tabletop"
       },
@@ -1407,12 +1465,17 @@
         "statement": "unplugged drill secured in a fitted wall cradle with its cord contained; it is intact and securely stored."
       },
       {
-        "zone": "left and center workbench",
+        "zone": "left workbench",
         "role": "safe-background",
-        "statement": "clear workbench around the saw"
+        "statement": "clear left workbench"
       },
       {
-        "zone": "right workbench plug",
+        "zone": "center-right saw and plug",
+        "role": "safe-background",
+        "statement": "clear center workbench around the saw"
+      },
+      {
+        "zone": "center-right saw and plug",
         "role": "safe-background",
         "statement": "saw power plug visibly disconnected and resting on bench"
       },
@@ -1448,6 +1511,11 @@
           "order": 4,
           "label": "wall-side cord and fan",
           "description": "The wall-side cord and fan is visible within the classroom setting."
+        },
+        {
+          "order": 5,
+          "label": "central aisle",
+          "description": "The central aisle is visible within the classroom setting."
         }
       ],
       "policy": "Does not state target or decoy counts and does not identify the answer."
@@ -1505,12 +1573,12 @@
         "statement": "stepladder fully open on dry level floor with spreaders locked and no person on it; it is stable, unused, and correctly opened."
       },
       {
-        "zone": "wall-side cord",
+        "zone": "wall-side cord and fan",
         "role": "decoy",
         "statement": "extension cord covered by a low-profile floor cord protector at the wall edge; it is undamaged, secured, and outside the central route."
       },
       {
-        "zone": "wall-side fan",
+        "zone": "wall-side cord and fan",
         "role": "decoy",
         "statement": "portable fan with intact close-spaced guard; the blades are fully guarded."
       },
@@ -1556,6 +1624,11 @@
           "order": 4,
           "label": "right doorway and wall hook",
           "description": "The right doorway and wall hook is visible within the custodial closet setting."
+        },
+        {
+          "order": 5,
+          "label": "lower floor",
+          "description": "The lower floor is visible within the custodial closet setting."
         }
       ],
       "policy": "Does not state target or decoy counts and does not identify the answer."
@@ -1612,12 +1685,12 @@
         "statement": "mop and broom handles individually clipped into a wall rack; they cannot fall into the route."
       },
       {
-        "zone": "right wall hook",
+        "zone": "right doorway and wall hook",
         "role": "decoy",
         "statement": "folded wet-floor sign stored closed on a high wall hook; it is secured storage, not a missing control for a dry floor."
       },
       {
-        "zone": "left sink",
+        "zone": "left sink and cabinet",
         "role": "safe-background",
         "statement": "empty service sink"
       },
@@ -1627,12 +1700,12 @@
         "statement": "dry floor"
       },
       {
-        "zone": "right doorway",
+        "zone": "right doorway and wall hook",
         "role": "safe-background",
         "statement": "clear doorway"
       },
       {
-        "zone": "left cabinet",
+        "zone": "left sink and cabinet",
         "role": "safe-background",
         "statement": "closed lower cabinet"
       }

@@ -223,30 +223,36 @@ production-art candidates.
 Product planning now includes a canonical route registry, legal page-state
 machines, a composition-first React component architecture, and a maintained
 design system. The Bun workspace at `apps/site`, `apps/content-compiler`, and
-`packages/content` is now a controlled M1–M3 implementation proof, not a
+`packages/content` is now a controlled M1–M4 implementation proof, not a
 release or release certification.
 
 The Effect v4/Bun R2.1–R2.10 program plus reconciled R2.90 synthesis are closed,
 their accepted conclusions are promoted, and the pre-normalization corpus is
 recoverable at the immutable archive coordinate above. From the currently
-validated packs, the generator emits 58 documents, including two question
-routes, 18 visual and 18 nonvisual hazard routes, and four public tool pages.
+validated packs, the generator emits 63 documents, including two question
+routes, 18 visual and 18 nonvisual hazard routes, four public tool pages, and
+five simulation/print setup and opaque local-shell documents.
 Destination families for which reviewed machine-readable content is not
 available are intentionally omitted; they are not represented by placeholder
 pages.
 
-M4/M5 work remains open, including simulation, complete print output, and the
-explicit content-pack lifecycle, settings, and corrections flows. Sitemap and
+M4 now includes selectable question, visual-hazard, and nonvisual-hazard
+simulations plus deterministic local print jobs and exact local preview routes.
+Evaluated simulations retain their validated feedback independently of later
+pack-cache removal. M5 remains open, including the explicit content-pack
+lifecycle, site settings, and corrections flows. Sitemap and
 canonical-host decisions and deployment also remain open. The exact local
 deterministic gate passes on Bun `1.4.0` and Node `22.22.0`: maintained-layout
 and module-boundary checks, all 396 visual hashes, three-workspace typechecks,
-165 unit tests, the 58-document production build, and artifact closure and
-answer-leak verification. A frozen offline install also preserves `bun.lock`
-byte-for-byte. Browser CI is configured, and the exact pinned Chromium revision
+236 unit tests, the 63-document/106-safe-shell-URL production build, and artifact
+closure and answer-leak verification. A frozen offline install also preserves `bun.lock`
+byte-for-byte. The targeted M4 simulation/print matrix passes 42 cases across
+Chromium, Firefox, and WebKit, plus the local Cloudflare/workerd method-routing
+case. Browser CI is configured, and the exact pinned Chromium revision
 passes all 27 standard Vite-preview cases plus all three Cloudflare-preview
-delivery cases locally, including the true-BFCache contracts. The Firefox and
-WebKit browser binaries are absent locally, so the complete cross-browser
-matrix and release certification remain separate CI/release gates.
+delivery cases locally, including the true-BFCache contracts. The complete
+repository browser matrix and manual release certification remain separate
+release gates.
 
 See [`AGENTS.md`](AGENTS.md) and [`CONTRIBUTING.md`](CONTRIBUTING.md) before
 making changes.

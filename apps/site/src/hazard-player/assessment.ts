@@ -174,6 +174,11 @@ const exactSet = (left: ReadonlyArray<string>, right: ReadonlyArray<string>): bo
     left.every((value) => rightSet.has(value))
 }
 
+const sameOrderedStrings = (
+  left: ReadonlyArray<string>,
+  right: ReadonlyArray<string>
+): boolean => left.length === right.length && left.every((value, index) => value === right[index])
+
 const isAbsoluteHttpsUrl = (value: string): boolean => {
   try {
     const parsed = new URL(value)
@@ -202,6 +207,9 @@ export const hasValidPostcommitClosure = (
   )
   const decoyStatements = payload.nonvisualZonedEquivalent.filter(
     (statement) => statement.role === "decoy"
+  )
+  const safeBackgroundStatements = payload.nonvisualZonedEquivalent.filter(
+    (statement) => statement.role === "safe-background"
   )
   const semanticTargetSignatures = payload.targets.map(
     (target) => `${target.condition}\u0000${target.correction}`
@@ -240,6 +248,9 @@ export const hasValidPostcommitClosure = (
   const targetSourceIdsAreUnique = payload.fullPostAnswer.targets.every(
     (target) => new Set(target.sourceIds).size === target.sourceIds.length
   )
+  const statementZoneLabels = [...new Set(
+    payload.nonvisualZonedEquivalent.map((statement) => statement.zone)
+  )]
 
   return payload.opaqueAssetId === scene.asset.opaqueAssetId &&
     exactSet(targetIds, targetRegionIds) &&
@@ -247,14 +258,25 @@ export const hasValidPostcommitClosure = (
     exactSet(payload.sourceIds, sourceIds) &&
     new Set(zoneLabels).size === zoneLabels.length &&
     new Set(zoneOrders).size === zoneOrders.length &&
+    statementZoneLabels.every((label) => zoneLabels.includes(label)) &&
     payload.nonvisualZonedEquivalent.every((statement) =>
       statement.zone.trim().length > 0 && statement.statement.trim().length > 0
     ) &&
     payload.fullPostAnswer.claim === payload.claim &&
     exactSet(semanticTargetSignatures, fullTargetSignatures) &&
     exactSet(semanticDecoySignatures, fullDecoySignatures) &&
-    targetStatements.length === payload.targets.length &&
-    decoyStatements.length === payload.decoys.length &&
+    sameOrderedStrings(
+      targetStatements.map((statement) => statement.statement),
+      payload.targets.map((target) => target.condition)
+    ) &&
+    sameOrderedStrings(
+      decoyStatements.map((statement) => statement.statement),
+      payload.decoys.map((decoy) => `${decoy.condition}; ${decoy.safeBecause}.`)
+    ) &&
+    sameOrderedStrings(
+      safeBackgroundStatements.map((statement) => statement.statement),
+      payload.fullPostAnswer.safeBackground
+    ) &&
     targetSourceIdsClose &&
     targetSourceIdsAreUnique &&
     sourceUrlsAreHttps &&

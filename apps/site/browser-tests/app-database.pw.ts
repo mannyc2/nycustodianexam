@@ -8,7 +8,7 @@ import {
 const visualHazardPath = "/hazards/session/launch-v1/scene/1/"
 const nonvisualHazardPath = "/hazards/session/launch-v1-nonvisual/scene/1/"
 const previousAppDatabaseVersion = 2
-const currentAppDatabaseVersion = 3
+const currentAppDatabaseVersion = 4
 
 interface DatabaseSeed {
   readonly databaseName: string
@@ -176,19 +176,39 @@ test("upgrades the pre-quarantine database and resumably imports valid legacy re
     zeroHazardsConfirmed: false,
     committedAt: 2
   }
+  const invalidTimestampHazardAttempt = {
+    ...hazardAttempt,
+    id: "legacy-hazard-invalid-time",
+    committedAt: -1
+  }
+  const invalidCoordinateHazardAttempt = {
+    ...hazardAttempt,
+    id: "legacy-hazard-invalid-point",
+    markers: [{ id: "marker-invalid", x: 1.01, y: 0.5 }]
+  }
+  const invalidHazardSession = {
+    id: "invalid-time",
+    latestAttemptId: hazardAttempt.id,
+    updatedAt: -1
+  }
   await seedDatabase(page, {
     databaseName: legacyAppDatabaseNames.hazard,
     version: 1,
     stores: {
       [appDatabaseStores.hazardAttempts]: [
         hazardAttempt,
+        invalidTimestampHazardAttempt,
+        invalidCoordinateHazardAttempt,
         { id: "malformed-hazard", unexpected: true }
       ],
-      [appDatabaseStores.hazardSessions]: [{
-        id: "active",
-        latestAttemptId: hazardAttempt.id,
-        updatedAt: 2
-      }]
+      [appDatabaseStores.hazardSessions]: [
+        {
+          id: "active",
+          latestAttemptId: hazardAttempt.id,
+          updatedAt: 2
+        },
+        invalidHazardSession
+      ]
     }
   })
 
@@ -199,11 +219,20 @@ test("upgrades the pre-quarantine database and resumably imports valid legacy re
     reasonIds: ["reason-1"],
     acknowledgedAt: 3
   }
+  const invalidReviewAcknowledgement = {
+    ...reviewAcknowledgement,
+    id: "review:14:item-bad-clock:9:attempt-1:8:reason-1",
+    itemId: "item-bad-clock",
+    acknowledgedAt: -1
+  }
   await seedDatabase(page, {
     databaseName: legacyAppDatabaseNames.review,
     version: 1,
     stores: {
-      [appDatabaseStores.reviewAcknowledgements]: [reviewAcknowledgement]
+      [appDatabaseStores.reviewAcknowledgements]: [
+        reviewAcknowledgement,
+        invalidReviewAcknowledgement
+      ]
     }
   })
 
@@ -230,6 +259,20 @@ test("upgrades the pre-quarantine database and resumably imports valid legacy re
       legacyRecord: { id: "malformed-hazard", unexpected: true }
     })
   )
+  for (const [sourceStore, legacyRecord] of [
+    [appDatabaseStores.hazardAttempts, invalidTimestampHazardAttempt],
+    [appDatabaseStores.hazardAttempts, invalidCoordinateHazardAttempt],
+    [appDatabaseStores.hazardSessions, invalidHazardSession],
+    [appDatabaseStores.reviewAcknowledgements, invalidReviewAcknowledgement]
+  ] as const) {
+    expect(await readStore(page, appDatabaseStores.migrationQuarantine)).toContainEqual(
+      expect.objectContaining({
+        sourceStore,
+        reason: "invalid-source-record",
+        legacyRecord
+      })
+    )
+  }
 
   const lateHazardAttempt = {
     ...hazardAttempt,

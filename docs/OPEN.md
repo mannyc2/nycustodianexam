@@ -156,8 +156,13 @@ Status: standing legal/editorial caution. Any future item text obtained through 
 - the implemented initial graph is `apps/site`, `apps/content-compiler`, and
   `packages/content`;
 - Vite is the browser build/development direction;
-- Cloudflare Workers Static Assets remains the initial deployment direction;
-- no Worker script merely to serve static files;
+- Cloudflare Workers Static Assets remains the initial deployment direction and
+  response authority;
+- the only current Worker exception is a no-data/no-user-state regex router for
+  the settled opaque local simulation/result and print-preview routes that
+  Static Assets redirects cannot constrain; it delegates responses to `ASSETS`;
+- a correction or other application Worker remains separate and dormant until
+  explicitly authorized;
 - React 19 is selected for lazy interactive islands;
 - immutable renderer-neutral `ScreenSnapshot` values, semantic commands, and
   state/actions/meta provider contracts remain the application/view boundary;
@@ -236,23 +241,26 @@ Those results belong to the then-current one-question slice. They remain useful
 historical evidence, but do not constitute final verification of the expanded
 revision.
 
-**Current M1–M3 implementation evidence (2026-08-25):**
+**Current M1–M4 implementation evidence (2026-08-25):**
 
-- the validated packs generate a closed set of 58 documents, including two
-  question routes, 18 visual hazard routes, 18 nonvisual hazard routes, and four
-  public tool pages;
+- the validated packs generate a closed set of 63 documents, including two
+  question routes, 18 visual hazard routes, 18 nonvisual hazard routes, four
+  public tool pages, and five simulation/print setup and opaque local-shell
+  documents;
 - destination families without reviewed machine-readable content are
   intentionally omitted instead of being represented by placeholder pages; and
 - the exact local deterministic gate passes on Bun `1.4.0` and Node `22.22.0`,
   including maintained-layout and module-boundary checks, 396 visual hashes,
-  three-workspace typechecks, 165 unit tests, the 58-document/92-safe-shell-URL
+  three-workspace typechecks, 236 unit tests, the 63-document/106-safe-shell-URL
   production build, artifact closure and answer-leak verification, and a frozen
   offline install that preserves `bun.lock` byte-for-byte; while
 - browser CI is configured, and the exact pinned Chromium revision passes all
   27 standard Vite-preview cases plus all three Cloudflare-preview delivery
   cases locally, including application-database, offline/service-worker,
-  accessibility, and true-BFCache contracts; the complete cross-browser matrix
-  and release certification remain separate gates beyond that local evidence.
+  accessibility, and true-BFCache contracts; the targeted M4 simulation/print
+  slice also passes 42 Chromium/Firefox/WebKit cases plus its local workerd
+  routing case; the complete repository matrix and release certification remain
+  separate gates beyond that local evidence.
 
 **Implementation evidence still open:**
 
@@ -264,8 +272,7 @@ revision.
   release-artifact retention policy for content at scale;
 - complete cross-browser accessibility, zoom/reflow, keyboard, performance,
   and remaining-browser offline gates;
-- M4/M5 simulation, complete print output, explicit content-pack lifecycle,
-  settings, and corrections flows;
+- M5 explicit content-pack lifecycle, site settings, and corrections flows;
 - sitemap generation, remote Cloudflare preview/deployment configuration, and
   any separately authorized future Worker API;
 - first-party analytics/observability policy; and
@@ -273,10 +280,11 @@ revision.
 
 Decision criteria remain: indexable static HTML; installable/offline PWA; explicit versioned content packs; local-first progress; deterministic print and simulations; WCAG behavior; no pre-answer leakage; low operating cost; minimal backend.
 
-**Status:** RESOLVED BASELINE / CONTROLLED M1–M3 IMPLEMENTATION PROOF, NOT A
-RELEASE. Local deterministic verification and the complete pinned-Chromium
-browser gates pass; the complete browser matrix, M4/M5, the
-canonical host, sitemap, deployment, and release certification remain open. P16
+**Status:** RESOLVED BASELINE / CONTROLLED M1–M4 IMPLEMENTATION PROOF, NOT A
+RELEASE. M4 deterministic question/visual/nonvisual simulations and exact-ID
+local print jobs pass focused unit, Chromium/Firefox/WebKit, artifact-closure,
+and local workerd route-method gates. M5, the complete repository browser and
+manual certification matrices, canonical host, sitemap, and deployment remain open. P16
 remains in this ledger for provenance; failures in the scaffold may reopen a
 bounded implementation decision, but do not silently restore superseded
 defaults.

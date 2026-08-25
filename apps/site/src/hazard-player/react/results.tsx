@@ -6,6 +6,7 @@ import {
 } from "../assessment.ts"
 import type { PostcommitScene } from "../attempt.ts"
 import { draftFromState } from "../state.ts"
+import { AnnotatedHazardScene } from "./annotated-scene.tsx"
 import { useHazardPlayer } from "./context.tsx"
 
 const markerFeedback = (
@@ -55,13 +56,30 @@ const markerFeedback = (
   )
 }
 
-const VisualResults = ({ payload }: { readonly payload: PostcommitScene }) => {
+const VisualResults = ({
+  imageUrl,
+  payload,
+  sceneAlt
+}: {
+  readonly imageUrl: string | null
+  readonly payload: PostcommitScene
+  readonly sceneAlt: string
+}) => {
   const { state } = useHazardPlayer()
-  const assessment = assessVisualMarkers(draftFromState(state).markers, payload)
+  const markers = draftFromState(state).markers
+  const assessment = assessVisualMarkers(markers, payload)
 
   return (
     <section aria-labelledby="visual-marker-feedback-heading">
       <h3 id="visual-marker-feedback-heading">Marker feedback</h3>
+      {imageUrl === null
+        ? <p role="alert">The retained reviewed scene image is unavailable.</p>
+        : <AnnotatedHazardScene
+            alt={sceneAlt}
+            imageUrl={imageUrl}
+            markers={markers}
+            payload={payload}
+          />}
       {assessment.markers.length === 0 ? (
         <p>You submitted no markers.</p>
       ) : (
@@ -203,7 +221,7 @@ const FullFeedback = ({ payload }: { readonly payload: PostcommitScene }) => (
 )
 
 export const HazardResults = () => {
-  const { meta, mode, state } = useHazardPlayer()
+  const { meta, mode, scene, state } = useHazardPlayer()
   if (state.tag !== "revealed") return null
 
   return (
@@ -211,7 +229,11 @@ export const HazardResults = () => {
       <h2 ref={meta.outcomeHeadingRef} tabIndex={-1}>Scene response recorded</h2>
       <p>Your response was durably saved before this feedback loaded.</p>
       {mode === "visual"
-        ? <VisualResults payload={state.payload} />
+        ? <VisualResults
+            imageUrl={state.retainedVisualAsset?.dataUrl ?? null}
+            payload={state.payload}
+            sceneAlt={scene.neutralPreAnswer.overview}
+          />
         : <NonvisualResults payload={state.payload} />}
       <FullFeedback payload={state.payload} />
     </section>

@@ -50,8 +50,8 @@ export const reviewReasonId = (reason: ReviewReason): string => {
   switch (reason.tag) {
     case "flag":
       return "flag"
-    case "directional_confusion":
-      return `directional-confusion:${reason.correctConceptId}:${reason.selectedConceptId}`
+    case "incorrect_answer":
+      return "incorrect-answer"
     case "hazard_miss":
       return `hazard-miss:${reason.inventoryId}`
     case "decoy_false_positive":
@@ -118,20 +118,7 @@ export const deriveQuestionReviewItem = Effect.fn(
   if (attempt.reviewIntent === "flagged") reasons.push({ tag: "flag" })
 
   if (attempt.selectedOptionId !== payload.correctOptionId) {
-    const selected = mappings.find((mapping) => mapping.optionId === attempt.selectedOptionId)
-    const correct = mappings.find((mapping) => mapping.optionId === payload.correctOptionId)
-    if (selected === undefined || correct === undefined) {
-      return yield* projectionError(
-        "content",
-        "Saved question feedback cannot identify the selected and correct concepts.",
-        { attemptId: attempt.id, questionId: source.id }
-      )
-    }
-    reasons.push({
-      tag: "directional_confusion",
-      correctConceptId: correct.conceptId,
-      selectedConceptId: selected.conceptId
-    })
+    reasons.push({ tag: "incorrect_answer" })
   }
 
   if (reasons.length === 0) return undefined
