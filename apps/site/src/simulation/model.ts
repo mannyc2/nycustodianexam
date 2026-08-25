@@ -1,8 +1,9 @@
 import {
-  PostcommitQuestion,
   PostcommitScene,
   PrecommitQuestion,
-  PrecommitScene
+  PrecommitScene,
+  ReleasedPostcommitQuestion,
+  ReleasedPrecommitQuestion
 } from "@nycustodian/content/model"
 import { Schema } from "effect"
 import { HazardAttemptReceipt, QuestionAttemptReceipt } from "../attempt-receipt.ts"
@@ -87,8 +88,7 @@ export class SimulationInventoryItem extends Schema.Class<SimulationInventoryIte
 )({
   question: PrecommitQuestion,
   receipt: QuestionAttemptReceipt,
-  profileIds: UniqueStrings,
-  category: Schema.NonEmptyString
+  profileIds: UniqueStrings
 }) {}
 
 export class SimulationHazardInventoryItem extends Schema.Class<SimulationHazardInventoryItem>(
@@ -105,7 +105,7 @@ export class SimulationHazardInventoryItem extends Schema.Class<SimulationHazard
 export class SimulationBootstrap extends Schema.Class<SimulationBootstrap>(
   "@nycustodian/site/SimulationBootstrap"
 )({
-  schemaVersion: Schema.Literal(1),
+  schemaVersion: Schema.Literal(2),
   releaseId: Schema.NonEmptyString,
   packVersion: PositiveInt,
   profiles: Schema.NonEmptyArray(SimulationProfile),
@@ -134,7 +134,7 @@ export class SimulationSessionItem extends Schema.Class<SimulationSessionItem>(
   "@nycustodian/site/SimulationSessionItem"
 )({
   position: PositiveInt,
-  question: PrecommitQuestion,
+  question: ReleasedPrecommitQuestion,
   receipt: QuestionAttemptReceipt,
   profileIds: UniqueStrings,
   optionOrder: UniqueStrings,
@@ -249,7 +249,7 @@ export class SimulationQuestionResult extends Schema.Class<SimulationQuestionRes
   postcommitBase64: Schema.String.check(
     Schema.isPattern(/^[A-Za-z0-9+/]*={0,2}$/, { expected: "canonical base64 postcommit bytes" })
   ),
-  postcommit: PostcommitQuestion
+  postcommit: ReleasedPostcommitQuestion
 }) {}
 
 export class SimulationHazardResult extends Schema.Class<SimulationHazardResult>(
@@ -313,7 +313,7 @@ export interface EvaluateSimulationInput {
   readonly submission: SimulationSubmissionRecord
   readonly postcommit: ReadonlyArray<
     Readonly<{
-      readonly payload: typeof PostcommitQuestion.Type | typeof PostcommitScene.Type
+      readonly payload: ReleasedPostcommitQuestion | typeof PostcommitScene.Type
       readonly postcommitBase64: string
     }>
   >

@@ -597,7 +597,7 @@ V1 is not releasable until all of these are demonstrably true:
 15. Source/correction/security surfaces are available.
 16. No ads, paywall, or required account are present.
 
-Testing must cover known/unknown/conflicting/superseded profiles; multiple bank sizes including small uneven inventories; different option counts; visual/nonvisual items; hazard/decoy/zero-hazard cases; retired content; unavailable external sources with cached excerpts; quota/network failures; and imports with unknown references.
+Testing must cover verified/not-published/unverified/conflicting/superseded/not-applicable profile facts; multiple bank sizes including small uneven inventories; different option counts; visual/nonvisual items; hazard/decoy/zero-hazard cases; retired content; unavailable external sources with cached excerpts; quota/network failures; and imports with unknown references.
 
 A screenshot alone is insufficient for interactive-state acceptance: tests must also assert storage events, focus behavior, accessibility announcements, and reveal-boundary content.
 

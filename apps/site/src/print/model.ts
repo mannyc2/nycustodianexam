@@ -11,6 +11,7 @@ import {
   decodeDurableTimestamp
 } from "../durable-values.ts"
 import { printJobIdPattern, printPreviewPathPattern } from "./identity.ts"
+import { SafeQuestionMembership } from "@nycustodian/content/model"
 
 const UniqueStrings = Schema.Array(Schema.NonEmptyString).check(
   Schema.makeFilter((values) =>
@@ -98,6 +99,31 @@ export class PrintSourceReference extends Schema.Class<PrintSourceReference>(
   locator: Schema.NonEmptyString
 }) {}
 
+export const PrintEvidenceTier = Schema.Literals([
+  "official-primary",
+  "official-primary-synthesis",
+  "maintained-editorial-synthesis",
+  "accepted-release-record"
+])
+
+export const PrintSourceLineReceipt = Schema.Struct({
+  id: Schema.NonEmptyString,
+  sourceId: Schema.NonEmptyString,
+  title: Schema.NonEmptyString,
+  publisher: Schema.NonEmptyString,
+  evidenceTier: PrintEvidenceTier,
+  version: Schema.NonEmptyString,
+  rightsNotes: Schema.NonEmptyString,
+  locator: Schema.NonEmptyString,
+  excerpt: Schema.NonEmptyString,
+  language: Schema.Literals(["en", "es"]),
+  verifiedOn: Schema.String.check(
+    Schema.isPattern(/^\d{4}-\d{2}-\d{2}$/, { expected: "an ISO calendar date" })
+  ),
+  supportedClaimIds: Schema.NonEmptyArray(Schema.NonEmptyString),
+  url: Schema.optionalKey(Schema.NonEmptyString)
+})
+
 const SourceBoundAnnouncementValue = Schema.Struct({
   id: Schema.NonEmptyString,
   label: Schema.NonEmptyString,
@@ -119,8 +145,8 @@ const SourceBoundAnnouncementChange = Schema.Struct({
   sourceReferences: Schema.NonEmptyArray(PrintSourceReference)
 })
 
-export class PrintAnnouncementProfileFactSheet extends Schema.Class<PrintAnnouncementProfileFactSheet>(
-  "@nycustodian/site/print/PrintAnnouncementProfileFactSheet"
+export class LegacyPrintAnnouncementProfileFactSheet extends Schema.Class<LegacyPrintAnnouncementProfileFactSheet>(
+  "@nycustodian/site/print/LegacyPrintAnnouncementProfileFactSheet"
 )({
   schemaVersion: Schema.Literal(1),
   version: PositiveSafeInteger,
@@ -132,9 +158,108 @@ export class PrintAnnouncementProfileFactSheet extends Schema.Class<PrintAnnounc
   changeHistory: Schema.NonEmptyArray(SourceBoundAnnouncementChange)
 }) {}
 
+export const PrintAnnouncementProfileFactState = Schema.Literals([
+  "verified",
+  "not_published",
+  "unverified",
+  "conflicting",
+  "superseded",
+  "not_applicable"
+])
+
+export const PrintAnnouncementProfileFactKind = Schema.Literals([
+  "filing_period",
+  "exam_date",
+  "fee",
+  "jurisdictions",
+  "qualifications",
+  "subjects",
+  "medium",
+  "counts",
+  "weights",
+  "scoring",
+  "review",
+  "form_identity",
+  "seniority_credit",
+  "preparer_identity",
+  "administration_status"
+])
+
+export const PrintAnnouncementProfileConflictValue = Schema.Struct({
+  value: Schema.NonEmptyString,
+  sourceLineIds: Schema.NonEmptyArray(Schema.NonEmptyString)
+})
+
+export const PrintAnnouncementProfileFact = Schema.Struct({
+  id: Schema.NonEmptyString,
+  category: PrintAnnouncementProfileFactKind,
+  label: Schema.NonEmptyString,
+  state: PrintAnnouncementProfileFactState,
+  appliesToExamNumbers: Schema.NonEmptyArray(Schema.NonEmptyString),
+  value: Schema.NullOr(Schema.NonEmptyString),
+  detail: Schema.NullOr(Schema.NonEmptyString),
+  reviewedOn: Schema.String.check(
+    Schema.isPattern(/^\d{4}-\d{2}-\d{2}$/, { expected: "an ISO calendar date" })
+  ),
+  effectiveFrom: Schema.NullOr(Schema.String.check(
+    Schema.isPattern(/^\d{4}-\d{2}-\d{2}$/, { expected: "an ISO calendar date" })
+  )),
+  effectiveThrough: Schema.NullOr(Schema.String.check(
+    Schema.isPattern(/^\d{4}-\d{2}-\d{2}$/, { expected: "an ISO calendar date" })
+  )),
+  sourceLineIds: Schema.Array(Schema.NonEmptyString),
+  conflictingValues: Schema.Array(PrintAnnouncementProfileConflictValue),
+  supersededByFactId: Schema.NullOr(Schema.NonEmptyString)
+})
+
+export const PrintAnnouncementProfileChange = Schema.Struct({
+  version: PositiveSafeInteger,
+  changedOn: Schema.String.check(
+    Schema.isPattern(/^\d{4}-\d{2}-\d{2}$/, { expected: "an ISO calendar date" })
+  ),
+  summary: Schema.NonEmptyString,
+  sourceLineIds: Schema.NonEmptyArray(Schema.NonEmptyString)
+})
+
+export class PrintAnnouncementProfileFactSheet extends Schema.Class<PrintAnnouncementProfileFactSheet>(
+  "@nycustodian/site/print/PrintAnnouncementProfileFactSheet"
+)({
+  schemaVersion: Schema.Literal(2),
+  version: PositiveSafeInteger,
+  lastReviewedOn: Schema.String.check(
+    Schema.isPattern(/^\d{4}-\d{2}-\d{2}$/, { expected: "an ISO calendar date" })
+  ),
+  controllingDocumentNotice: Schema.NonEmptyString,
+  seriesScopeDisclaimer: Schema.NonEmptyString,
+  facts: Schema.NonEmptyArray(PrintAnnouncementProfileFact),
+  sourceLines: Schema.NonEmptyArray(PrintSourceLineReceipt),
+  changeHistory: Schema.NonEmptyArray(PrintAnnouncementProfileChange)
+}) {}
+
+export const ReleasedPrintAnnouncementProfileFactSheet = Schema.Union([
+  LegacyPrintAnnouncementProfileFactSheet,
+  PrintAnnouncementProfileFactSheet
+])
+
+export type ReleasedPrintAnnouncementProfileFactSheet =
+  typeof ReleasedPrintAnnouncementProfileFactSheet.Type
+
+export class LegacyPrintProfile extends Schema.Class<LegacyPrintProfile>(
+  "@nycustodian/site/print/LegacyPrintProfile"
+)({
+  id: Schema.NonEmptyString,
+  label: Schema.NonEmptyString,
+  version: PositiveSafeInteger,
+  jurisdiction: Schema.NonEmptyString,
+  compatibilityKey: Schema.NonEmptyString,
+  disclaimer: Schema.NonEmptyString,
+  announcementFactSheet: Schema.NullOr(LegacyPrintAnnouncementProfileFactSheet)
+}) {}
+
 export class PrintProfile extends Schema.Class<PrintProfile>(
   "@nycustodian/site/print/PrintProfile"
 )({
+  schemaVersion: Schema.Literal(2),
   id: Schema.NonEmptyString,
   label: Schema.NonEmptyString,
   version: PositiveSafeInteger,
@@ -144,8 +269,15 @@ export class PrintProfile extends Schema.Class<PrintProfile>(
   announcementFactSheet: Schema.NullOr(PrintAnnouncementProfileFactSheet)
 }) {}
 
-export class PrintQuestionAnswer extends Schema.Class<PrintQuestionAnswer>(
-  "@nycustodian/site/print/PrintQuestionAnswer"
+export const ReleasedPrintProfile = Schema.Union([
+  LegacyPrintProfile,
+  PrintProfile
+])
+
+export type ReleasedPrintProfile = typeof ReleasedPrintProfile.Type
+
+export class LegacyPrintQuestionAnswer extends Schema.Class<LegacyPrintQuestionAnswer>(
+  "@nycustodian/site/print/LegacyPrintQuestionAnswer"
 )({
   questionId: Schema.NonEmptyString,
   correctOptionId: Schema.NonEmptyString,
@@ -156,12 +288,44 @@ export class PrintQuestionAnswer extends Schema.Class<PrintQuestionAnswer>(
   sources: Schema.Array(PrintSourceReference)
 }) {}
 
+export const PrintQuestionClaim = Schema.Struct({
+  id: Schema.NonEmptyString,
+  text: Schema.NonEmptyString,
+  sourceLineIds: Schema.NonEmptyArray(Schema.NonEmptyString),
+  evidenceTier: PrintEvidenceTier,
+  caveat: Schema.NullOr(Schema.NonEmptyString)
+})
+
+export const PrintQuestionSourceLineReceipt = PrintSourceLineReceipt
+
+export class PrintQuestionAnswer extends Schema.Class<PrintQuestionAnswer>(
+  "@nycustodian/site/print/PrintQuestionAnswer"
+)({
+  schemaVersion: Schema.Literal(2),
+  questionId: Schema.NonEmptyString,
+  correctOptionId: Schema.NonEmptyString,
+  rationales: Schema.Array(Schema.Struct({
+    optionId: Schema.NonEmptyString,
+    message: Schema.NonEmptyString,
+    claimIds: Schema.NonEmptyArray(Schema.NonEmptyString)
+  })),
+  claims: Schema.NonEmptyArray(PrintQuestionClaim),
+  sources: Schema.NonEmptyArray(PrintQuestionSourceLineReceipt)
+}) {}
+
+export const ReleasedPrintQuestionAnswer = Schema.Union([
+  LegacyPrintQuestionAnswer,
+  PrintQuestionAnswer
+])
+
+export type ReleasedPrintQuestionAnswer = typeof ReleasedPrintQuestionAnswer.Type
+
 export class PrintQuestionSource extends Schema.Class<PrintQuestionSource>(
   "@nycustodian/site/print/PrintQuestionSource"
 )({
   id: Schema.NonEmptyString,
   profileIds: UniqueNonEmptyStrings,
-  category: Schema.NonEmptyString,
+  memberships: Schema.Array(SafeQuestionMembership),
   prompt: Schema.NonEmptyString,
   options: Schema.Array(PrintQuestionOption).check(
     Schema.makeFilter((options) => {
@@ -255,7 +419,7 @@ export class PrintRetainedAsset extends Schema.Class<PrintRetainedAsset>(
 export class PrintBuilderBootstrap extends Schema.Class<PrintBuilderBootstrap>(
   "@nycustodian/site/print/PrintBuilderBootstrap"
 )({
-  schemaVersion: Schema.Literal(1),
+  schemaVersion: Schema.Literal(2),
   releaseId: Schema.NonEmptyString,
   contentVersion: PositiveSafeInteger,
   profiles: Schema.Array(PrintProfile),
@@ -297,10 +461,7 @@ export class PrintDistributionEntry extends Schema.Class<PrintDistributionEntry>
   count: PositiveSafeInteger
 }) {}
 
-export class PrintJobManifest extends Schema.Class<PrintJobManifest>(
-  "@nycustodian/site/print/PrintJobManifest"
-)({
-  schemaVersion: Schema.Literal(1),
+const printJobManifestFields = {
   algorithmId: Schema.Literal("print-v1-fnv1a32-xorshift32"),
   fingerprint: Schema.String.check(
     Schema.isPattern(/^[a-f0-9]{16}$/, { expected: "a 16-character manifest fingerprint" })
@@ -310,7 +471,6 @@ export class PrintJobManifest extends Schema.Class<PrintJobManifest>(
   )),
   releaseId: Schema.NonEmptyString,
   contentVersion: PositiveSafeInteger,
-  profile: PrintProfile,
   settings: PrintSettings,
   questions: Schema.Array(PrintQuestionCoordinate),
   itemIds: UniqueNonEmptyStrings,
@@ -318,104 +478,188 @@ export class PrintJobManifest extends Schema.Class<PrintJobManifest>(
   actualLength: PositiveSafeInteger,
   actualDistribution: Schema.Array(PrintDistributionEntry),
   pageCount: PositiveSafeInteger
+} as const
+
+export class LegacyPrintJobManifest extends Schema.Class<LegacyPrintJobManifest>(
+  "@nycustodian/site/print/LegacyPrintJobManifest"
+)({
+  schemaVersion: Schema.Literal(1),
+  ...printJobManifestFields,
+  profile: LegacyPrintProfile
 }) {}
 
-export const PrintPacketSection = Schema.Union([
-  Schema.Struct({
-    tag: Schema.Literal("answer-sheet"),
-    questionNumbers: Schema.Array(PositiveSafeInteger),
-    optionLabels: Schema.Array(Schema.NonEmptyString)
-  }),
-  Schema.Struct({
-    tag: Schema.Literal("questions"),
-    questions: Schema.Array(Schema.Struct({
-      number: PositiveSafeInteger,
+export class PrintJobManifest extends Schema.Class<PrintJobManifest>(
+  "@nycustodian/site/print/PrintJobManifest"
+)({
+  schemaVersion: Schema.Literal(2),
+  ...printJobManifestFields,
+  profile: PrintProfile
+}) {}
+
+export const ReleasedPrintJobManifest = Schema.Union([
+  LegacyPrintJobManifest,
+  PrintJobManifest
+])
+
+export type ReleasedPrintJobManifest = typeof ReleasedPrintJobManifest.Type
+
+const PrintAnswerSheetSection = Schema.Struct({
+  tag: Schema.Literal("answer-sheet"),
+  questionNumbers: Schema.Array(PositiveSafeInteger),
+  optionLabels: Schema.Array(Schema.NonEmptyString)
+})
+
+const PrintQuestionsSection = Schema.Struct({
+  tag: Schema.Literal("questions"),
+  questions: Schema.Array(Schema.Struct({
+    number: PositiveSafeInteger,
+    id: Schema.NonEmptyString,
+    prompt: Schema.NonEmptyString,
+    options: Schema.Array(Schema.Struct({
       id: Schema.NonEmptyString,
-      prompt: Schema.NonEmptyString,
-      options: Schema.Array(Schema.Struct({
-        id: Schema.NonEmptyString,
-        label: Schema.NonEmptyString,
-        text: Schema.NonEmptyString
-      }))
+      label: Schema.NonEmptyString,
+      text: Schema.NonEmptyString
     }))
-  }),
-  Schema.Struct({
-    tag: Schema.Literal("answer-key"),
-    answers: Schema.Array(Schema.Struct({
-      number: PositiveSafeInteger,
-      optionLabel: Schema.NonEmptyString
-    }))
-  }),
-  Schema.Struct({
-    tag: Schema.Literal("explanations"),
-    explanations: Schema.Array(Schema.Struct({
-      number: PositiveSafeInteger,
-      correctOptionLabel: Schema.NonEmptyString,
-      rationales: Schema.Array(Schema.Struct({
-        optionLabel: Schema.NonEmptyString,
-        message: Schema.NonEmptyString
-      })),
-      sources: Schema.Array(PrintSourceReference)
-    }))
-  }),
-  Schema.Struct({
-    tag: Schema.Literal("tool-family-cards"),
-    families: Schema.NonEmptyArray(Schema.Struct({
-      family: Schema.NonEmptyString,
-      tools: Schema.NonEmptyArray(Schema.Struct({
-        id: Schema.NonEmptyString,
-        canonicalTerm: Schema.NonEmptyString,
-        useSummary: Schema.NonEmptyString,
-        distinguishingFeatures: Schema.NonEmptyArray(Schema.NonEmptyString),
-        neutralDescription: Schema.NonEmptyString,
-        asset: Schema.NullOr(PrintRetainedAsset)
-      }))
-    }))
-  }),
-  Schema.Struct({
-    tag: Schema.Literal("hazard-worksheet"),
-    scenes: Schema.NonEmptyArray(Schema.Struct({
+  }))
+})
+
+const PrintAnswerKeySection = Schema.Struct({
+  tag: Schema.Literal("answer-key"),
+  answers: Schema.Array(Schema.Struct({
+    number: PositiveSafeInteger,
+    optionLabel: Schema.NonEmptyString
+  }))
+})
+
+const LegacyPrintExplanationsSection = Schema.Struct({
+  tag: Schema.Literal("explanations"),
+  explanations: Schema.Array(Schema.Struct({
+    number: PositiveSafeInteger,
+    correctOptionLabel: Schema.NonEmptyString,
+    rationales: Schema.Array(Schema.Struct({
+      optionLabel: Schema.NonEmptyString,
+      message: Schema.NonEmptyString
+    })),
+    sources: Schema.Array(PrintSourceReference)
+  }))
+})
+
+const PrintExplanationsSectionV2 = Schema.Struct({
+  tag: Schema.Literal("explanations"),
+  explanations: Schema.Array(Schema.Struct({
+    number: PositiveSafeInteger,
+    correctOptionLabel: Schema.NonEmptyString,
+    rationales: Schema.Array(Schema.Struct({
+      optionLabel: Schema.NonEmptyString,
+      message: Schema.NonEmptyString,
+      claimIds: Schema.NonEmptyArray(Schema.NonEmptyString)
+    })),
+    claims: Schema.NonEmptyArray(PrintQuestionClaim),
+    sources: Schema.Array(PrintQuestionSourceLineReceipt)
+  }))
+})
+
+const PrintToolFamilyCardsSection = Schema.Struct({
+  tag: Schema.Literal("tool-family-cards"),
+  families: Schema.NonEmptyArray(Schema.Struct({
+    family: Schema.NonEmptyString,
+    tools: Schema.NonEmptyArray(Schema.Struct({
       id: Schema.NonEmptyString,
-      environment: Schema.NonEmptyString,
-      neutralOverview: Schema.NonEmptyString,
-      neutralZones: Schema.NonEmptyArray(Schema.Struct({
-        order: PositiveSafeInteger,
-        label: Schema.NonEmptyString,
-        description: Schema.NonEmptyString
-      })),
+      canonicalTerm: Schema.NonEmptyString,
+      useSummary: Schema.NonEmptyString,
+      distinguishingFeatures: Schema.NonEmptyArray(Schema.NonEmptyString),
+      neutralDescription: Schema.NonEmptyString,
       asset: Schema.NullOr(PrintRetainedAsset)
     }))
-  }),
-  Schema.Struct({
-    tag: Schema.Literal("annotated-hazard-answers"),
-    scenes: Schema.NonEmptyArray(Schema.Struct({
-      id: Schema.NonEmptyString,
-      environment: Schema.NonEmptyString,
-      asset: Schema.NullOr(PrintRetainedAsset),
-      answer: PrintSceneAnswer
-    }))
-  }),
-  Schema.Struct({
-    tag: Schema.Literal("text-equivalent-scenes"),
-    scenes: Schema.NonEmptyArray(Schema.Struct({
-      id: Schema.NonEmptyString,
-      environment: Schema.NonEmptyString,
-      answer: PrintSceneAnswer
-    }))
-  }),
-  Schema.Struct({
-    tag: Schema.Literal("announcement-profile-fact-sheet"),
-    profileLabel: Schema.NonEmptyString,
-    jurisdiction: Schema.NonEmptyString,
-    factSheet: PrintAnnouncementProfileFactSheet
-  }),
-  Schema.Struct({
-    tag: Schema.Literal("correction-change-log-excerpt"),
-    corrections: Schema.NonEmptyArray(PrintCorrectionSource)
-  })
+  }))
+})
+
+const PrintHazardWorksheetSection = Schema.Struct({
+  tag: Schema.Literal("hazard-worksheet"),
+  scenes: Schema.NonEmptyArray(Schema.Struct({
+    id: Schema.NonEmptyString,
+    environment: Schema.NonEmptyString,
+    neutralOverview: Schema.NonEmptyString,
+    neutralZones: Schema.NonEmptyArray(Schema.Struct({
+      order: PositiveSafeInteger,
+      label: Schema.NonEmptyString,
+      description: Schema.NonEmptyString
+    })),
+    asset: Schema.NullOr(PrintRetainedAsset)
+  }))
+})
+
+const PrintAnnotatedHazardAnswersSection = Schema.Struct({
+  tag: Schema.Literal("annotated-hazard-answers"),
+  scenes: Schema.NonEmptyArray(Schema.Struct({
+    id: Schema.NonEmptyString,
+    environment: Schema.NonEmptyString,
+    asset: Schema.NullOr(PrintRetainedAsset),
+    answer: PrintSceneAnswer
+  }))
+})
+
+const PrintTextEquivalentScenesSection = Schema.Struct({
+  tag: Schema.Literal("text-equivalent-scenes"),
+  scenes: Schema.NonEmptyArray(Schema.Struct({
+    id: Schema.NonEmptyString,
+    environment: Schema.NonEmptyString,
+    answer: PrintSceneAnswer
+  }))
+})
+
+const LegacyPrintAnnouncementProfileFactSheetSection = Schema.Struct({
+  tag: Schema.Literal("announcement-profile-fact-sheet"),
+  profileLabel: Schema.NonEmptyString,
+  jurisdiction: Schema.NonEmptyString,
+  factSheet: LegacyPrintAnnouncementProfileFactSheet
+})
+
+const PrintAnnouncementProfileFactSheetSectionV2 = Schema.Struct({
+  tag: Schema.Literal("announcement-profile-fact-sheet"),
+  profileLabel: Schema.NonEmptyString,
+  jurisdiction: Schema.NonEmptyString,
+  factSheet: PrintAnnouncementProfileFactSheet
+})
+
+const PrintCorrectionChangeLogExcerptSection = Schema.Struct({
+  tag: Schema.Literal("correction-change-log-excerpt"),
+  corrections: Schema.NonEmptyArray(PrintCorrectionSource)
+})
+
+const commonPacketSections = [
+  PrintAnswerSheetSection,
+  PrintQuestionsSection,
+  PrintAnswerKeySection,
+  PrintToolFamilyCardsSection,
+  PrintHazardWorksheetSection,
+  PrintAnnotatedHazardAnswersSection,
+  PrintTextEquivalentScenesSection,
+  PrintCorrectionChangeLogExcerptSection
+] as const
+
+export const PrintPacketSection = Schema.Union([
+  ...commonPacketSections,
+  LegacyPrintAnnouncementProfileFactSheetSection,
+  LegacyPrintExplanationsSection
 ])
 
 export type PrintPacketSection = typeof PrintPacketSection.Type
+
+export const PrintPacketSectionV2 = Schema.Union([
+  ...commonPacketSections,
+  PrintAnnouncementProfileFactSheetSectionV2,
+  PrintExplanationsSectionV2
+])
+
+export type PrintPacketSectionV2 = typeof PrintPacketSectionV2.Type
+
+export const ReleasedPrintPacketSection = Schema.Union([
+  PrintPacketSection,
+  PrintPacketSectionV2
+])
+
+export type ReleasedPrintPacketSection = typeof ReleasedPrintPacketSection.Type
 
 export class PrintPacket extends Schema.Class<PrintPacket>(
   "@nycustodian/site/print/PrintPacket"
@@ -430,12 +674,32 @@ export class PrintPacket extends Schema.Class<PrintPacket>(
   warnings: Schema.Array(Schema.NonEmptyString)
 }) {}
 
+export class PrintPacketV2 extends Schema.Class<PrintPacketV2>(
+  "@nycustodian/site/print/PrintPacketV2"
+)({
+  schemaVersion: Schema.Literal(2),
+  fingerprint: Schema.String.check(
+    Schema.isPattern(/^[a-f0-9]{16}$/, { expected: "a 16-character print-packet fingerprint" })
+  ),
+  title: Schema.NonEmptyString,
+  statement: Schema.Literal("Original practice — not an official or past exam"),
+  sections: Schema.Array(PrintPacketSectionV2),
+  warnings: Schema.Array(Schema.NonEmptyString)
+}) {}
+
+export const ReleasedPrintPacket = Schema.Union([
+  PrintPacket,
+  PrintPacketV2
+])
+
+export type ReleasedPrintPacket = typeof ReleasedPrintPacket.Type
+
 export class PrintJobRecord extends Schema.Class<PrintJobRecord>(
   "@nycustodian/site/print/PrintJobRecord"
 )({
   id: PrintJobId,
-  manifest: PrintJobManifest,
-  packet: PrintPacket,
+  manifest: ReleasedPrintJobManifest,
+  packet: ReleasedPrintPacket,
   status: Schema.Literals(["preview-ready", "stale", "system-print-requested"]),
   updatedAt: PrintTimestamp
 }) {}

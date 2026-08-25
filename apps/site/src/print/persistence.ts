@@ -7,11 +7,13 @@ import {
 import {
   decodePrintJobId,
   decodePrintTimestamp,
-  PrintJobManifest,
   PrintJobRecord,
-  PrintPacket,
+  ReleasedPrintJobManifest,
+  ReleasedPrintPacket,
+  type PrintAnnouncementProfileFactSheet,
+  type ReleasedPrintJobManifest as ReleasedPrintJobManifestValue,
   type PrintRetainedAsset,
-  type PrintPacketSection,
+  type ReleasedPrintPacketSection,
   type PrintJobRecord as PrintJobRecordValue
 } from "./model.ts"
 import {
@@ -37,8 +39,8 @@ export class PrintPersistenceError extends Schema.TaggedError<PrintPersistenceEr
 
 export interface SavePrintJobInput {
   readonly id: string
-  readonly manifest: typeof PrintJobManifest.Type
-  readonly packet: typeof PrintPacket.Type
+  readonly manifest: ReleasedPrintJobManifestValue
+  readonly packet: ReleasedPrintPacket
 }
 
 export class PrintPersistence extends Context.Service<
@@ -92,7 +94,7 @@ const questionProducts = new Set([
   "explanations-and-sources"
 ])
 
-const expectedSectionTags = (manifest: typeof PrintJobManifest.Type): ReadonlyArray<string> => {
+const expectedSectionTags = (manifest: ReleasedPrintJobManifestValue): ReadonlyArray<string> => {
   switch (manifest.settings.product) {
     case "blank-answer-sheet": return ["answer-sheet"]
     case "multiple-choice-questions":
@@ -120,7 +122,7 @@ const exactSequence = (
 ): boolean => JSON.stringify(received) === JSON.stringify(expected)
 
 const expectedQuestionNumbers = (
-  manifest: typeof PrintJobManifest.Type
+  manifest: ReleasedPrintJobManifestValue
 ): ReadonlyArray<number> => Array.from(
   { length: manifest.actualLength },
   (_, index) => index + 1
@@ -130,8 +132,8 @@ const optionLabels = (optionIds: ReadonlyArray<string>): ReadonlyArray<string> =
   optionIds.map((_, index) => printOptionLabel(index))
 
 const validateQuestionSection = (
-  manifest: typeof PrintJobManifest.Type,
-  section: Extract<PrintPacketSection, { readonly tag: "questions" }>
+  manifest: ReleasedPrintJobManifestValue,
+  section: Extract<ReleasedPrintPacketSection, { readonly tag: "questions" }>
 ): void => {
   for (const [index, question] of section.questions.entries()) {
     const coordinate = manifest.questions[index]
@@ -151,8 +153,8 @@ const validateQuestionSection = (
 }
 
 const validateAnswerSheetSection = (
-  manifest: typeof PrintJobManifest.Type,
-  section: Extract<PrintPacketSection, { readonly tag: "answer-sheet" }>
+  manifest: ReleasedPrintJobManifestValue,
+  section: Extract<ReleasedPrintPacketSection, { readonly tag: "answer-sheet" }>
 ): void => {
   const maximumOptions = Math.max(...manifest.questions.map((question) => question.optionIds.length))
   if (
@@ -167,8 +169,8 @@ const validateAnswerSheetSection = (
 }
 
 const validateAnswerKeySection = (
-  manifest: typeof PrintJobManifest.Type,
-  section: Extract<PrintPacketSection, { readonly tag: "answer-key" }>
+  manifest: ReleasedPrintJobManifestValue,
+  section: Extract<ReleasedPrintPacketSection, { readonly tag: "answer-key" }>
 ): void => {
   for (const [index, answer] of section.answers.entries()) {
     const coordinate = manifest.questions[index]
@@ -183,8 +185,9 @@ const validateAnswerKeySection = (
 }
 
 const validateExplanationSection = (
-  manifest: typeof PrintJobManifest.Type,
-  section: Extract<PrintPacketSection, { readonly tag: "explanations" }>
+  manifest: ReleasedPrintJobManifestValue,
+  section: Extract<ReleasedPrintPacketSection, { readonly tag: "explanations" }>,
+  packetSchemaVersion: 1 | 2
 ): void => {
   for (const [index, explanation] of section.explanations.entries()) {
     const coordinate = manifest.questions[index]
@@ -200,12 +203,158 @@ const validateExplanationSection = (
     ) {
       throw new Error("Saved explanations are outside the exact manifest coordinate closure")
     }
+    if (packetSchemaVersion === 2) {
+      if (!("claims" in explanation)) {
+        throw new Error("A v2 print packet is missing its source-line evidence closure")
+      }
+      const claimIds = explanation.claims.map((claim) => claim.id)
+      const claimIdSet = new Set(claimIds)
+      const citedClaimIds = explanation.rationales.flatMap((rationale) =>
+        "claimIds" in rationale ? rationale.claimIds : []
+      )
+      if (
+        claimIdSet.size !== claimIds.length ||
+        new Set(citedClaimIds).size !== claimIdSet.size ||
+        citedClaimIds.some((claimId) => !claimIdSet.has(claimId)) ||
+        explanation.rationales.some((rationale) =>
+          !("claimIds" in rationale) ||
+          new Set(rationale.claimIds).size !== rationale.claimIds.length ||
+          rationale.claimIds.some((claimId) => !claimIdSet.has(claimId))
+        )
+      ) {
+        throw new Error("Saved explanations have an invalid claim closure")
+      }
+      if (manifest.settings.includeSources) {
+        const sourceIds = explanation.sources.map((source) => source.id)
+        const sourceIdSet = new Set(sourceIds)
+        if (
+          sourceIds.length === 0 ||
+          sourceIdSet.size !== sourceIds.length ||
+          explanation.claims.some((claim) =>
+            claim.sourceLineIds.some((sourceLineId) => {
+              const source = explanation.sources.find((candidate) => candidate.id === sourceLineId)
+              return source === undefined || !source.supportedClaimIds.includes(claim.id)
+            })
+          )
+        ) {
+          throw new Error("Saved explanations have an invalid source-line receipt closure")
+        }
+      }
+    }
+  }
+}
+
+const sameMembers = (
+  left: ReadonlyArray<string>,
+  right: ReadonlyArray<string>
+): boolean => left.length === right.length && left.every((value) => right.includes(value))
+
+const validateCurrentAnnouncementFactSheet = (
+  factSheet: PrintAnnouncementProfileFactSheet
+): void => {
+  const factIds = factSheet.facts.map((fact) => fact.id)
+  const sourceLineIds = factSheet.sourceLines.map((sourceLine) => sourceLine.id)
+  const referencedSourceLineIds = factSheet.facts.flatMap((fact) => [
+    ...fact.sourceLineIds,
+    ...fact.conflictingValues.flatMap((candidate) => candidate.sourceLineIds)
+  ]).concat(factSheet.changeHistory.flatMap((change) => change.sourceLineIds))
+  if (
+    new Set(factIds).size !== factIds.length ||
+    new Set(sourceLineIds).size !== sourceLineIds.length ||
+    !sameMembers([...new Set(referencedSourceLineIds)], sourceLineIds)
+  ) {
+    throw new Error("Saved announcement facts have an invalid source-line receipt closure")
+  }
+  for (const fact of factSheet.facts) {
+    const factSourceLineIds = [
+      ...fact.sourceLineIds,
+      ...fact.conflictingValues.flatMap((candidate) => candidate.sourceLineIds)
+    ]
+    const conflictValues = fact.conflictingValues.map((candidate) => candidate.value)
+    if (
+      new Set(fact.appliesToExamNumbers).size !== fact.appliesToExamNumbers.length ||
+      new Set(factSourceLineIds).size !== factSourceLineIds.length ||
+      new Set(conflictValues).size !== conflictValues.length ||
+      fact.reviewedOn > factSheet.lastReviewedOn
+    ) {
+      throw new Error(`Saved announcement fact ${fact.id} has an invalid evidence or review closure`)
+    }
+    const hasValue = fact.value !== null
+    const hasDetail = fact.detail !== null
+    const hasDirectEvidence = fact.sourceLineIds.length > 0
+    const hasConflicts = fact.conflictingValues.length > 0
+    const hasSupersedingFact = fact.supersededByFactId !== null
+    const hasEffectiveStart = fact.effectiveFrom !== null
+    const hasEffectiveEnd = fact.effectiveThrough !== null
+    const validForState = (() => {
+      switch (fact.state) {
+        case "verified":
+          return hasValue && !hasDetail && hasDirectEvidence && !hasConflicts &&
+            !hasSupersedingFact && hasEffectiveStart && !hasEffectiveEnd
+        case "not_published":
+        case "unverified":
+        case "not_applicable":
+          return !hasValue && hasDetail && !hasConflicts && !hasSupersedingFact &&
+            !hasEffectiveStart && !hasEffectiveEnd
+        case "conflicting":
+          return !hasValue && hasDetail && !hasDirectEvidence &&
+            fact.conflictingValues.length >= 2 && !hasSupersedingFact &&
+            !hasEffectiveStart && !hasEffectiveEnd
+        case "superseded":
+          return hasValue && hasDetail && hasDirectEvidence && !hasConflicts &&
+            hasSupersedingFact && hasEffectiveStart && hasEffectiveEnd &&
+            fact.effectiveFrom! <= fact.effectiveThrough!
+      }
+    })()
+    if (!validForState) {
+      throw new Error(`Saved announcement fact ${fact.id} violates its ${fact.state} state contract`)
+    }
+    if (fact.state === "superseded") {
+      const successor = factSheet.facts.find(
+        (candidate) => candidate.id === fact.supersededByFactId
+      )
+      if (
+        successor === undefined ||
+        successor.category !== fact.category ||
+        !sameMembers(successor.appliesToExamNumbers, fact.appliesToExamNumbers) ||
+        !["superseded", "verified"].includes(successor.state) ||
+        successor.effectiveFrom === null ||
+        successor.effectiveFrom <= fact.effectiveThrough!
+      ) {
+        throw new Error(`Saved announcement fact ${fact.id} has an invalid successor closure`)
+      }
+    }
+  }
+  for (let leftIndex = 0; leftIndex < factSheet.facts.length; leftIndex += 1) {
+    const left = factSheet.facts[leftIndex]!
+    if (left.effectiveFrom === null) continue
+    for (let rightIndex = leftIndex + 1; rightIndex < factSheet.facts.length; rightIndex += 1) {
+      const right = factSheet.facts[rightIndex]!
+      if (
+        right.effectiveFrom === null ||
+        left.category !== right.category ||
+        !left.appliesToExamNumbers.some((examNumber) =>
+          right.appliesToExamNumbers.includes(examNumber)
+        )
+      ) continue
+      const overlaps =
+        (left.effectiveThrough === null || right.effectiveFrom <= left.effectiveThrough) &&
+        (right.effectiveThrough === null || left.effectiveFrom <= right.effectiveThrough)
+      if (overlaps) throw new Error("Saved announcement facts have overlapping effective history")
+    }
+  }
+  if (factSheet.changeHistory.some((change, index) =>
+    change.version !== index + 1 ||
+    change.changedOn > factSheet.lastReviewedOn ||
+    (index > 0 && change.changedOn < factSheet.changeHistory[index - 1]!.changedOn)
+  ) || factSheet.changeHistory.at(-1)?.version !== factSheet.version) {
+    throw new Error("Saved announcement facts have an invalid change-history closure")
   }
 }
 
 const validateNonQuestionSection = (
-  manifest: typeof PrintJobManifest.Type,
-  section: PrintPacketSection
+  manifest: ReleasedPrintJobManifestValue,
+  section: ReleasedPrintPacketSection
 ): void => {
   const expectedIds = manifest.itemIds
   switch (section.tag) {
@@ -232,9 +381,15 @@ const validateNonQuestionSection = (
       if (
         !exactSequence(expectedIds, [manifest.profile.id]) ||
         section.profileLabel !== manifest.profile.label ||
-        section.jurisdiction !== manifest.profile.jurisdiction
+        section.jurisdiction !== manifest.profile.jurisdiction ||
+        manifest.profile.announcementFactSheet === null ||
+        JSON.stringify(section.factSheet) !==
+          JSON.stringify(manifest.profile.announcementFactSheet)
       ) {
         throw new Error("Saved announcement profile is outside the exact manifest item closure")
+      }
+      if (section.factSheet.schemaVersion === 2) {
+        validateCurrentAnnouncementFactSheet(section.factSheet)
       }
       return
     case "correction-change-log-excerpt":
@@ -251,7 +406,7 @@ const validateNonQuestionSection = (
 }
 
 const retainedPacketAssets = (
-  sections: ReadonlyArray<PrintPacketSection>
+  sections: ReadonlyArray<ReleasedPrintPacketSection>
 ): ReadonlyArray<PrintRetainedAsset> => sections.flatMap((section) => {
   switch (section.tag) {
     case "tool-family-cards":
@@ -267,7 +422,13 @@ const retainedPacketAssets = (
 })
 
 export const validatePrintJobRecord = (value: unknown): PrintJobRecordValue => {
-  const record = Schema.decodeUnknownSync(PrintJobRecord)(value)
+  const record = Schema.decodeUnknownSync(
+    PrintJobRecord,
+    { onExcessProperty: "error" }
+  )(value)
+  if (record.manifest.schemaVersion !== record.packet.schemaVersion) {
+    throw new Error("Saved print manifest and packet use incompatible schema versions")
+  }
   const retainedAssets = retainedPacketAssets(record.packet.sections)
   if (
     retainedAssets.length !== record.manifest.assets.length ||
@@ -345,7 +506,7 @@ export const validatePrintJobRecord = (value: unknown): PrintJobRecordValue => {
         validateAnswerKeySection(record.manifest, section)
         break
       case "explanations":
-        validateExplanationSection(record.manifest, section)
+        validateExplanationSection(record.manifest, section, record.packet.schemaVersion)
         break
       default:
         validateNonQuestionSection(record.manifest, section)
@@ -379,8 +540,14 @@ const save = Effect.fn("PrintPersistence.savePrintJob")(function*(
     try: async () => {
       decodePrintJobId(input.id)
       const effectiveUpdatedAt = decodePrintTimestamp(updatedAt)
-      Schema.decodeUnknownSync(PrintJobManifest)(input.manifest)
-      Schema.decodeUnknownSync(PrintPacket)(input.packet)
+      Schema.decodeUnknownSync(
+        ReleasedPrintJobManifest,
+        { onExcessProperty: "error" }
+      )(input.manifest)
+      Schema.decodeUnknownSync(
+        ReleasedPrintPacket,
+        { onExcessProperty: "error" }
+      )(input.packet)
       const candidate = await validatePrintJobRecordIntegrity(new PrintJobRecord({
         id: input.id,
         manifest: input.manifest,

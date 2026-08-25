@@ -492,18 +492,96 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
   await expect(page.getByRole("heading", { name: "Create a site-designed practice simulation." })).toBeVisible()
   await expect(page.getByLabel("Profile")).toHaveValue("nys-entry-level-custodians-janitors")
   await expect(page.getByLabel("Profile").locator("option")).not.toHaveCount(0)
-  const bootstrap = await page.locator("#simulation-bootstrap-data").textContent()
-  expect(bootstrap).not.toContain("correctOptionId")
-  expect(bootstrap).not.toContain("rationales")
-  expect(bootstrap).not.toContain('"sources"')
+  const serializedBootstrap = await page.locator("#simulation-bootstrap-data").textContent()
+  if (serializedBootstrap === null) throw new Error("Simulation bootstrap was unavailable")
+  expect(serializedBootstrap).not.toContain("correctOptionId")
+  expect(serializedBootstrap).not.toContain("rationales")
+  expect(serializedBootstrap).not.toContain('"sources"')
+  const bootstrap = JSON.parse(serializedBootstrap) as {
+    readonly schemaVersion: number
+    readonly advertisedLengths: ReadonlyArray<number>
+    readonly inventory: ReadonlyArray<{ readonly question: { readonly id: string } }>
+    readonly profiles: ReadonlyArray<{
+      readonly id: string
+      readonly version: number
+      readonly compatibilityKey: string
+    }>
+  }
+  expect(bootstrap.schemaVersion).toBe(2)
+  expect(bootstrap.advertisedLengths).toEqual([45, 60, 90])
+  expect(bootstrap.inventory).toHaveLength(90)
+  expect(new Set(bootstrap.inventory.map(({ question }) => question.id)).size).toBe(90)
+  const selectedProfile = bootstrap.profiles.find(
+    ({ id }) => id === "nys-entry-level-custodians-janitors"
+  )
+  if (selectedProfile === undefined) throw new Error("Default simulation profile was unavailable")
   const activePackClaim = await primeSimulationResultCache(page)
-  await expect(page.getByLabel(/45 items/)).toBeDisabled()
-  await expect(page.getByLabel(/60 items/)).toBeDisabled()
-  await expect(page.getByLabel(/90 items/)).toBeDisabled()
+  const lengthGroup = page.getByRole("group", { name: "Site-designed set length" })
+  for (const advertisedLength of bootstrap.advertisedLengths) {
+    await expect(lengthGroup.getByRole("radio", {
+      name: new RegExp(`^${advertisedLength} items`)
+    })).toBeEnabled()
+  }
+  await expect(lengthGroup.getByRole("radio", { name: /^90 items/ })).toBeChecked()
   await expect(page.getByRole("radio", { name: "Visual hazard scenes" })).toBeEnabled()
   await expect(page.getByRole("radio", { name: "Nonvisual zoned hazard equivalents" })).toBeEnabled()
-  const category = page.getByLabel(/Tool selection \(2 unique items\)/)
+
+  const contentMix = page.getByRole("group", { name: "Content mix" })
+  const categoryOptions = (await contentMix.getByRole("checkbox").evaluateAll((elements) =>
+    elements.map((element) => {
+      const input = element as HTMLInputElement
+      return {
+        checked: input.checked,
+        label: input.labels?.[0]?.textContent?.replace(/\s+/g, " ").trim() ?? ""
+      }
+    })
+  )).map(({ checked, label }) => {
+    const match = label.match(/^(.+) \((\d+) unique items?\)$/)
+    if (match?.[1] === undefined || match[2] === undefined) {
+      throw new Error(`Unexpected simulation category label: ${label}`)
+    }
+    return {
+      accessibleName: label,
+      category: match[1],
+      checked,
+      count: Number(match[2])
+    }
+  })
+  expect(categoryOptions).not.toHaveLength(0)
+  expect(categoryOptions.every(({ checked }) => checked)).toBe(true)
+  expect(categoryOptions.reduce((total, { count }) => total + count, 0)).toBe(90)
+  const smallestAdvertisedLength = Math.min(...bootstrap.advertisedLengths)
+  const filteredCategory = [...categoryOptions]
+    .filter(({ count }) => count < smallestAdvertisedLength)
+    .sort((left, right) => left.count - right.count || left.category.localeCompare(right.category))[0]
+  if (filteredCategory === undefined) {
+    throw new Error("No category below the smallest advertised simulation length was available")
+  }
+  for (const option of categoryOptions) {
+    if (option.accessibleName !== filteredCategory.accessibleName) {
+      await contentMix.getByRole("checkbox", {
+        name: option.accessibleName,
+        exact: true
+      }).uncheck()
+    }
+  }
+  const category = contentMix.getByRole("checkbox", {
+    name: filteredCategory.accessibleName,
+    exact: true
+  })
   await expect(category).toBeChecked()
+  await expect(contentMix).toContainText(
+    `Available unique items for selected mix: ${filteredCategory.count}`
+  )
+  for (const advertisedLength of bootstrap.advertisedLengths) {
+    await expect(lengthGroup.getByRole("radio", {
+      name: new RegExp(`^${advertisedLength} items`)
+    })).toBeDisabled()
+  }
+  await expect(lengthGroup.getByRole("radio", {
+    name: new RegExp(`^${filteredCategory.count} items`)
+  })).toBeChecked()
+
   await category.uncheck()
   await expect(page.getByText("Select at least one content category to create a simulation.")).toBeVisible()
   await expect(page.getByRole("button", { name: "Start site-designed simulation" })).toBeDisabled()
@@ -522,7 +600,8 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
     localStorage.getItem("simulation-durable-states-at-postcommit-fetch"))).toBeNull()
   expect(await page.evaluate(() =>
     localStorage.getItem("simulation-durable-states-at-postcommit-read"))).toBeNull()
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Which tool")
+  const firstPrompt = (await page.getByRole("heading", { level: 1 }).textContent())?.trim()
+  expect(firstPrompt).toBeTruthy()
   await expect(page.getByText(/^Correct answer:/)).toHaveCount(0)
   await expect(page.getByText(/Rationale/)).toHaveCount(0)
   await expect(page.locator("[data-simulation-timer-hidden]")).toBeVisible()
@@ -536,14 +615,23 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
   await expect(page.getByText(/Answers remain editable because strict auto-submit is off/)).toBeVisible()
   expect(await readStore(page, appDatabaseStores.simulationSubmissions)).toHaveLength(0)
 
-  await page.getByLabel("Pipe wrench", { exact: true }).check()
+  const firstOption = page.locator('.question-card input[type="radio"]').first()
+  const selectedOption = await firstOption.evaluate((element) => ({
+    id: (element as HTMLInputElement).value,
+    label: (element as HTMLInputElement).labels?.[0]?.textContent
+      ?.replace(/\s+/g, " ").trim() ?? ""
+  }))
+  expect(selectedOption.id).not.toBe("")
+  expect(selectedOption.label).not.toBe("")
+  await firstOption.check()
   await expect(page.getByText("Saved on this device")).toBeVisible()
   await page.getByRole("button", { name: "Flag this question" }).click()
   await expect(page.getByText("Saved on this device")).toBeVisible()
   await expect(page.getByRole("button", { name: "Flagged for review" })).toHaveAttribute("aria-pressed", "true")
 
   await page.reload()
-  await expect(page.getByLabel("Pipe wrench", { exact: true })).toBeChecked()
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(firstPrompt ?? "")
+  await expect(page.getByLabel(selectedOption.label, { exact: true })).toBeChecked()
   await expect(page.getByRole("button", { name: "Flagged for review" })).toHaveAttribute("aria-pressed", "true")
 
   const sessionRecords = await readStore(page, appDatabaseStores.simulationSessions)
@@ -551,15 +639,20 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
   expect(sessionRecords[0]).toMatchObject({
     schemaVersion: 2,
     status: "active",
-    actualLength: 2,
-    advertisedLength: 2,
+    actualLength: filteredCategory.count,
+    advertisedLength: filteredCategory.count,
     seed: "browser-restoration-seed",
     profile: {
       id: "nys-entry-level-custodians-janitors",
-      version: 1,
-      compatibilityKey: "nys-entry-level-custodians-janitors-v1"
+      version: selectedProfile.version,
+      compatibilityKey: selectedProfile.compatibilityKey
     },
-    selectedCategories: ["Tool selection"],
+    selectedCategories: [filteredCategory.category],
+    distribution: [{ label: filteredCategory.category, count: filteredCategory.count }],
+    responses: [{
+      selectedOptionId: selectedOption.id,
+      reviewIntent: "flagged"
+    }],
     timing: {
       mode: "timed",
       durationSeconds: 1,
@@ -591,13 +684,13 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
   await expect(page.getByText(/not an official converted score or pass prediction/i)).toBeVisible()
   await expect(page.getByText(/Elapsed time \d+ min \d+ sec/)).toBeVisible()
   await expect(page.getByRole("heading", { name: "Actual generated distribution" })).toBeVisible()
-  await page.getByRole("link", { name: "Review item 1" }).click()
+  await page.getByRole("link", { name: "Review item 1", exact: true }).click()
   await expect(page).toHaveURL(/#result-question-1$/)
   await expect(page.locator("#result-question-1")).toBeFocused()
   const observedDurableStates = await page.evaluate(() => JSON.parse(
     localStorage.getItem("simulation-durable-states-at-postcommit-read") ?? "[]"
   ) as Array<boolean>)
-  expect(observedDurableStates).toHaveLength(2)
+  expect(observedDurableStates).toHaveLength(filteredCategory.count)
   expect(observedDurableStates.every(Boolean)).toBe(true)
   expect(postcommitRequests).toEqual([])
   expect(await page.evaluate(() =>
@@ -608,7 +701,7 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
   )
   await expect(page.locator("[data-simulation-profile-version]")).toHaveAttribute(
     "data-simulation-profile-version",
-    "1"
+    String(selectedProfile.version)
   )
 
   const submissions = await readStore(page, appDatabaseStores.simulationSubmissions)

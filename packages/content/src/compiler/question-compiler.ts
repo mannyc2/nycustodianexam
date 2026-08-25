@@ -55,7 +55,10 @@ const validateLegacyQuestion = (question: AuthoredQuestion): void => {
   if (firstDuplicate(optionIds) !== undefined) throw new Error("option ids must be unique")
   if (firstDuplicate(rationaleIds) !== undefined) throw new Error("rationale option ids must be unique")
   if (firstDuplicate(question.sources.map((source) => source.id)) !== undefined) {
-    throw new Error("source ids must be unique")
+    throw new Error("source-line receipt ids must be unique")
+  }
+  if (firstDuplicate(question.claims.map((claim) => claim.id)) !== undefined) {
+    throw new Error("claim ids must be unique")
   }
   if (!optionIds.includes(question.correctOptionId)) {
     throw new Error("correctOptionId must reference an option")
@@ -74,10 +77,43 @@ const validateLegacyQuestion = (question: AuthoredQuestion): void => {
   }
   if (
     question.sources.some((source) =>
-      [source.id, source.label, source.locator].some(isBlank)
+      [
+        source.id,
+        source.sourceId,
+        source.title,
+        source.publisher,
+        source.version,
+        source.rightsNotes,
+        source.locator,
+        source.excerpt
+      ].some(isBlank)
     )
   ) {
     throw new Error("source receipt fields must not be blank")
+  }
+  const claimIds = question.claims.map((claim) => claim.id)
+  if (question.rationales.some((rationale) =>
+    rationale.claimIds.some((claimId) => !claimIds.includes(claimId))
+  )) {
+    throw new Error("rationale claim ids must reference question claims")
+  }
+  if (!sameMembers(
+    claimIds,
+    [...new Set(question.rationales.flatMap((rationale) => rationale.claimIds))]
+  )) {
+    throw new Error("rationale claims must collectively cover every question claim")
+  }
+  const sourceLineIds = question.sources.map((source) => source.id)
+  for (const claim of question.claims) {
+    if (claim.sourceLineIds.some((sourceLineId) => !sourceLineIds.includes(sourceLineId))) {
+      throw new Error("claim source-line ids must reference question source receipts")
+    }
+    for (const sourceLineId of claim.sourceLineIds) {
+      const receipt = question.sources.find((source) => source.id === sourceLineId)!
+      if (!receipt.supportedClaimIds.includes(claim.id)) {
+        throw new Error("question claim and source receipt evidence edges must be bidirectional")
+      }
+    }
   }
 }
 
@@ -91,17 +127,20 @@ export const compileQuestion = (unknownInput: unknown): CompiledQuestion => {
 
   return {
     precommit: new PrecommitQuestion({
-      schemaVersion: 1,
+      schemaVersion: 2,
       id: question.id,
+      version: question.version,
       profileId: question.profileId,
       prompt: question.prompt,
       options: question.options
     }),
     postcommit: new PostcommitQuestion({
-      schemaVersion: 1,
+      schemaVersion: 2,
       id: question.id,
+      version: question.version,
       correctOptionId: question.correctOptionId,
       rationales: question.rationales,
+      claims: question.claims,
       sources: [firstSource, ...remainingSources]
     })
   }

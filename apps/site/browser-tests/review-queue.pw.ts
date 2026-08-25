@@ -12,10 +12,10 @@ import {
 } from "./question-player-fixtures.ts"
 
 const optionIds = [
-  "adjustable-wrench",
-  "combination-wrench",
-  "pipe-wrench",
-  "slip-joint-pliers"
+  "a",
+  "b",
+  "c",
+  "d"
 ] as const
 
 const seedQuestionAttempt = (page: Page, attempt: StoredAttempt): Promise<void> =>
@@ -64,7 +64,7 @@ test("an exact receipt mismatch is quarantined without loading or substituting f
   const mismatchedAttempt: StoredAttempt = {
     id: attemptId,
     questionId: questionReceipt.questionId,
-    selectedOptionId: "adjustable-wrench",
+    selectedOptionId: "a",
     reviewIntent: "flagged",
     committedAt: 1,
     receipt: {

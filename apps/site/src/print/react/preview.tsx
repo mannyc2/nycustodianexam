@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react"
 import type { PrintPreviewController, PrintPreviewState } from "../controller.ts"
-import type { PrintJobRecord, PrintPacketSection } from "../model.ts"
+import type { PrintJobRecord, ReleasedPrintPacketSection } from "../model.ts"
 
-const packetSection = (section: PrintPacketSection) => {
+const packetSection = (section: ReleasedPrintPacketSection) => {
   switch (section.tag) {
     case "answer-sheet":
       return (
@@ -44,8 +44,19 @@ const packetSection = (section: PrintPacketSection) => {
           {section.explanations.map((explanation) => (
             <article className="print-explanation" key={explanation.number}>
               <h3>Question {explanation.number}: choice {explanation.correctOptionLabel}</h3>
-              <dl>{explanation.rationales.map((rationale) => <div key={rationale.optionLabel}><dt>Choice {rationale.optionLabel}</dt><dd>{rationale.message}</dd></div>)}</dl>
-              {explanation.sources.length > 0 ? <><h4>Source references</h4><ul>{explanation.sources.map((source) => <li key={source.id}>{source.label} — {source.locator}</li>)}</ul></> : null}
+              <dl>{explanation.rationales.map((rationale) => <div key={rationale.optionLabel}>
+                <dt>Choice {rationale.optionLabel}</dt><dd>{rationale.message}</dd>
+                {"claimIds" in rationale ? <dd>Supported claims: {rationale.claimIds.join(", ")}</dd> : null}
+              </div>)}</dl>
+              {"claims" in explanation ? <><h4>Supported claims</h4><ul>{explanation.claims.map((claim) => <li key={claim.id}>
+                {claim.text} <span>({claim.evidenceTier})</span>
+                {claim.caveat === null ? null : <> <strong>Caveat:</strong> {claim.caveat}</>}
+              </li>)}</ul></> : null}
+              {explanation.sources.length > 0 ? <><h4>{"claims" in explanation ? "Source-line receipts" : "Source references"}</h4><ul>{explanation.sources.map((source) => <li key={source.id}>
+                {"title" in source
+                  ? <><strong>{source.title}</strong> — {source.publisher}, {source.version}; {source.locator}. <q>{source.excerpt}</q></>
+                  : <>{source.label} — {source.locator}</>}
+              </li>)}</ul></> : null}
             </article>
           ))}
         </section>
@@ -124,31 +135,79 @@ const packetSection = (section: PrintPacketSection) => {
           </article>)}
         </section>
       )
-    case "announcement-profile-fact-sheet":
+    case "announcement-profile-fact-sheet": {
+      const factSheet = section.factSheet
+      if (factSheet.schemaVersion === 1) {
+        return (
+          <section className="print-section print-profile-fact-sheet" aria-labelledby="profile-fact-sheet-heading">
+            <h2 id="profile-fact-sheet-heading">Announcement-profile fact sheet</h2>
+            <p><strong>{section.profileLabel}</strong> — {section.jurisdiction}</p>
+            <p>Historical fact-sheet format · version {factSheet.version}; last reviewed {factSheet.lastReviewedOn}.</p>
+            <p>{factSheet.controllingDocumentNotice}</p>
+            <p>{factSheet.seriesScopeDisclaimer}</p>
+            <h3>Verified facts</h3>
+            <dl>{factSheet.verifiedFacts.map((fact) => <div key={fact.id}>
+              <dt>{fact.label}</dt><dd>{fact.value}</dd>
+              <dd><strong>Sources:</strong> {fact.sourceReferences.map((source) => `${source.label} — ${source.locator}`).join("; ")}</dd>
+            </div>)}</dl>
+            <h3>Explicit unknowns</h3>
+            <dl>{factSheet.explicitUnknowns.map((fact) => <div key={fact.id}>
+              <dt>{fact.label}</dt><dd>{fact.detail}</dd>
+              <dd><strong>Sources:</strong> {fact.sourceReferences.map((source) => `${source.label} — ${source.locator}`).join("; ")}</dd>
+            </div>)}</dl>
+            <h3>Change history</h3>
+            <ol>{factSheet.changeHistory.map((change) => <li key={`${change.version}-${change.changedOn}`}>
+              Version {change.version}, {change.changedOn}: {change.summary}<br />
+              <strong>Sources:</strong> {change.sourceReferences.map((source) => `${source.label} — ${source.locator}`).join("; ")}
+            </li>)}</ol>
+          </section>
+        )
+      }
+      const sourceLineById = new Map(
+        factSheet.sourceLines.map((sourceLine) => [sourceLine.id, sourceLine] as const)
+      )
+      const receipts = (sourceLineIds: ReadonlyArray<string>) => (
+        <ul>{sourceLineIds.map((sourceLineId) => {
+          const source = sourceLineById.get(sourceLineId)
+          if (source === undefined) return <li key={sourceLineId}>Missing source-line receipt {sourceLineId}</li>
+          return <li key={source.id}>
+            <strong>{source.title}</strong> — {source.publisher}, {source.version}; {source.locator}. <q>{source.excerpt}</q>
+            <br />Evidence tier: {source.evidenceTier}; verified {source.verifiedOn}; language {source.language}; rights: {source.rightsNotes}.
+            {source.url === undefined ? null : <><br />Public source: {source.url}</>}
+          </li>
+        })}</ul>
+      )
       return (
         <section className="print-section print-profile-fact-sheet" aria-labelledby="profile-fact-sheet-heading">
           <h2 id="profile-fact-sheet-heading">Announcement-profile fact sheet</h2>
           <p><strong>{section.profileLabel}</strong> — {section.jurisdiction}</p>
-          <p>Fact-sheet version {section.factSheet.version}; last reviewed {section.factSheet.lastReviewedOn}.</p>
-          <p>{section.factSheet.controllingDocumentNotice}</p>
-          <p>{section.factSheet.seriesScopeDisclaimer}</p>
-          <h3>Verified facts</h3>
-          <dl>{section.factSheet.verifiedFacts.map((fact) => <div key={fact.id}>
-            <dt>{fact.label}</dt><dd>{fact.value}</dd>
-            <dd><strong>Sources:</strong> {fact.sourceReferences.map((source) => `${source.label} — ${source.locator}`).join("; ")}</dd>
-          </div>)}</dl>
-          <h3>Explicit unknowns</h3>
-          <dl>{section.factSheet.explicitUnknowns.map((fact) => <div key={fact.id}>
-            <dt>{fact.label}</dt><dd>{fact.detail}</dd>
-            <dd><strong>Sources:</strong> {fact.sourceReferences.map((source) => `${source.label} — ${source.locator}`).join("; ")}</dd>
-          </div>)}</dl>
+          <p>Fact-sheet version {factSheet.version}; last reviewed {factSheet.lastReviewedOn}.</p>
+          <p>{factSheet.controllingDocumentNotice}</p>
+          <p>{factSheet.seriesScopeDisclaimer}</p>
+          <h3>Facts by explicit publication state</h3>
+          {factSheet.facts.map((fact) => <article key={fact.id} data-fact-state={fact.state}>
+            <h4>{fact.label}</h4>
+            <p><strong>Status:</strong> {fact.state.replaceAll("_", " ")}. <strong>Category:</strong> {fact.category.replaceAll("_", " ")}.</p>
+            {fact.value === null ? null : <p><strong>Recorded value:</strong> {fact.value}</p>}
+            {fact.detail === null ? null : <p><strong>Detail:</strong> {fact.detail}</p>}
+            <p><strong>Applies to exam numbers:</strong> {fact.appliesToExamNumbers.join(", ")}. <strong>Reviewed:</strong> {fact.reviewedOn}.</p>
+            <p><strong>Effective interval:</strong> {fact.effectiveFrom === null
+              ? "none asserted"
+              : `${fact.effectiveFrom} through ${fact.effectiveThrough ?? "current"}`}.</p>
+            {fact.supersededByFactId === null ? null : <p><strong>Superseded by:</strong> {fact.supersededByFactId}</p>}
+            {fact.conflictingValues.length === 0 ? null : <><h5>Published conflicting values</h5><ol>{fact.conflictingValues.map((candidate) => <li key={candidate.value}>
+              <strong>{candidate.value}</strong>{receipts(candidate.sourceLineIds)}
+            </li>)}</ol></>}
+            {fact.sourceLineIds.length === 0 ? null : <><h5>Direct source-line receipts</h5>{receipts(fact.sourceLineIds)}</>}
+          </article>)}
           <h3>Change history</h3>
-          <ol>{section.factSheet.changeHistory.map((change) => <li key={`${change.version}-${change.changedOn}`}>
-            Version {change.version}, {change.changedOn}: {change.summary}<br />
-            <strong>Sources:</strong> {change.sourceReferences.map((source) => `${source.label} — ${source.locator}`).join("; ")}
+          <ol>{factSheet.changeHistory.map((change) => <li key={`${change.version}-${change.changedOn}`}>
+            Version {change.version}, {change.changedOn}: {change.summary}
+            {receipts(change.sourceLineIds)}
           </li>)}</ol>
         </section>
       )
+    }
     case "correction-change-log-excerpt":
       return (
         <section className="print-section print-correction-excerpt" aria-labelledby="correction-excerpt-heading">

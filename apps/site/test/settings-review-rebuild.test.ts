@@ -54,18 +54,39 @@ const attempt = new QuestionAttemptRecord({
 })
 
 const feedback = Schema.decodeUnknownSync(PostcommitQuestion)({
-  schemaVersion: 1,
+  schemaVersion: 2,
   id: receipt.questionId,
+  version: 1,
   optionConceptIds: [
     { optionId: "a", conceptId: "tool-a" },
     { optionId: "b", conceptId: "tool-b" }
   ],
   correctOptionId: "b",
   rationales: [
-    { optionId: "a", message: "Distractor rationale" },
-    { optionId: "b", message: "Correct rationale" }
+    { optionId: "a", message: "Distractor rationale", claimIds: ["claim-1"] },
+    { optionId: "b", message: "Correct rationale", claimIds: ["claim-1"] }
   ],
-  sources: [{ id: "source-1", label: "Source", locator: "section 1" }]
+  claims: [{
+    id: "claim-1",
+    text: "The current feedback claim is supported by the source receipt.",
+    sourceLineIds: ["line-1"],
+    evidenceTier: "maintained-editorial-synthesis",
+    caveat: null
+  }],
+  sources: [{
+    id: "line-1",
+    sourceId: "source-1",
+    title: "Source",
+    publisher: "Publisher",
+    evidenceTier: "maintained-editorial-synthesis",
+    version: "1",
+    rightsNotes: "Project-authored test source.",
+    locator: "section 1",
+    excerpt: "The current feedback claim is supported by the source receipt.",
+    language: "en",
+    verifiedOn: "2026-08-25",
+    supportedClaimIds: ["claim-1"]
+  }]
 })
 
 interface Counters {

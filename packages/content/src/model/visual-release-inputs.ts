@@ -34,6 +34,28 @@ export class AcceptedToolRelease extends Schema.Class<AcceptedToolRelease>(
 
 export const AcceptedToolReleaseLedger = Schema.Array(AcceptedToolRelease)
 
+export const AcceptedComparisonMemberHash = Schema.Struct({
+  conceptId: Schema.NonEmptyString,
+  sha256: Sha256
+})
+
+export class AcceptedComparisonRelease extends Schema.Class<AcceptedComparisonRelease>(
+  "@nycustodian/content/AcceptedComparisonRelease"
+)({
+  id: ArtifactPathSegment,
+  opaqueAssetId: ArtifactPathSegment,
+  assetRevision: Schema.Int,
+  memberIds: Schema.NonEmptyArray(Schema.NonEmptyString),
+  memberMasterHashes: Schema.NonEmptyArray(AcceptedComparisonMemberHash),
+  decisiveDistinction: Schema.NonEmptyString,
+  status: Schema.Literal("accepted"),
+  master: ReleasedMasterAsset,
+  derivatives: Schema.NonEmptyArray(ReleasedDerivativeAsset),
+  scoredUseGate: Schema.Array(Schema.NonEmptyString)
+}) {}
+
+export const AcceptedComparisonReleaseLedger = Schema.Array(AcceptedComparisonRelease)
+
 export const AcceptedSceneSource = Schema.Struct({
   id: Schema.NonEmptyString,
   title: Schema.NonEmptyString,

@@ -86,7 +86,7 @@ const registry = decodeTrustedReleaseContentRegistry({
 })
 
 const simulationBootstrap = Schema.decodeUnknownSync(SimulationBootstrap)({
-  schemaVersion: 1,
+  schemaVersion: 2,
   releaseId: "release-1",
   packVersion: 1,
   profiles: [{
@@ -99,14 +99,19 @@ const simulationBootstrap = Schema.decodeUnknownSync(SimulationBootstrap)({
   }],
   inventory: [{
     question: {
-      schemaVersion: 1,
+      schemaVersion: 2,
       id: "q1",
+      version: 1,
       profileId: "profile-1",
       prompt: "Question one",
       options: [
         { id: "a", label: "A" },
         { id: "b", label: "B" }
-      ]
+      ],
+      memberships: [{
+        filterKind: "domain",
+        filterValue: "cleaning-tools-and-uses"
+      }]
     },
     receipt: {
       releaseId: "release-1",
@@ -118,8 +123,7 @@ const simulationBootstrap = Schema.decodeUnknownSync(SimulationBootstrap)({
       postcommitSha256: "a".repeat(64),
       questionId: "q1"
     },
-    profileIds: ["profile-1"],
-    category: "Tools"
+    profileIds: ["profile-1"]
   }],
   hazards: [],
   advertisedLengths: [1]
@@ -131,7 +135,7 @@ const activeSimulation = (): SimulationSessionRecord => assembleSimulation({
   profileId: "profile-1",
   length: 1,
   seed: "transfer",
-  selectedCategories: ["Tools"],
+  selectedCategories: ["Cleaning tools and uses"],
   timing: new SimulationTimingSettings({
     mode: "untimed",
     durationSeconds: null,

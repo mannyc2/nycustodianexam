@@ -13,14 +13,35 @@ import {
 } from "../src/verified-content.ts"
 
 const postcommitPayload = (id = "q-1") => ({
-  schemaVersion: 1,
+  schemaVersion: 2,
   id,
+  version: 1,
   correctOptionId: "b",
   rationales: [
-    { optionId: "a", message: "No" },
-    { optionId: "b", message: "Yes" }
+    { optionId: "a", message: "No", claimIds: ["claim-1"] },
+    { optionId: "b", message: "Yes", claimIds: ["claim-1"] }
   ],
-  sources: [{ id: "s-1", label: "Source", locator: "docs/source.md#L1" }]
+  claims: [{
+    id: "claim-1",
+    text: "Supported claim.",
+    sourceLineIds: ["line-1"],
+    evidenceTier: "maintained-editorial-synthesis",
+    caveat: null
+  }],
+  sources: [{
+    id: "line-1",
+    sourceId: "source-1",
+    title: "Source",
+    publisher: "Publisher",
+    evidenceTier: "maintained-editorial-synthesis",
+    version: "1",
+    rightsNotes: "Project-authored test source.",
+    locator: "docs/source.md#L1",
+    excerpt: "Supported claim.",
+    language: "en",
+    verifiedOn: "2026-08-25",
+    supportedClaimIds: ["claim-1"]
+  }]
 })
 
 const noAttempts = () => Effect.succeed([])
@@ -147,7 +168,7 @@ it.effect("fails closed when rationale references do not close over the availabl
     verifiedLayer({
       loadJson: () => ({
         ...postcommitPayload(),
-        rationales: [{ optionId: "b", message: "Yes" }]
+        rationales: [{ optionId: "b", message: "Yes", claimIds: ["claim-1"] }]
       })
     }),
     Layer.succeed(
@@ -155,6 +176,46 @@ it.effect("fails closed when rationale references do not close over the availabl
       QuestionPersistence.of({
         commitAttempt: (input) =>
           Effect.succeed(attempt(input)),
+        findAttempt: () => Effect.succeed(undefined),
+        listAttempts: noAttempts
+      })
+    )
+  )
+
+  return Effect.gen(function*() {
+    const result = yield* commitSelectionAndReveal({
+      receipt,
+      optionIds: ["a", "b"],
+      selectedOptionId: "b",
+      reviewIntent: "unflagged"
+    }).pipe(Effect.provide(testLayer))
+
+    strictEqual(result.tag, "reveal_failed")
+    if (result.tag === "reveal_failed") {
+      strictEqual(result.error._tag, "RevealContentMismatch")
+      strictEqual(
+        result.error.detail,
+        "The saved explanation was incomplete or did not match the available answer choices."
+      )
+    }
+  })
+})
+
+it.effect("fails closed when a rationale source receipt is dangling or incomplete", () => {
+  const testLayer = Layer.mergeAll(
+    verifiedLayer({
+      loadJson: () => ({
+        ...postcommitPayload(),
+        rationales: [
+          { optionId: "a", message: "No", claimIds: ["claim-1"] },
+          { optionId: "b", message: "Yes", claimIds: ["claim-missing"] }
+        ]
+      })
+    }),
+    Layer.succeed(
+      QuestionPersistence,
+      QuestionPersistence.of({
+        commitAttempt: (input) => Effect.succeed(attempt(input)),
         findAttempt: () => Effect.succeed(undefined),
         listAttempts: noAttempts
       })

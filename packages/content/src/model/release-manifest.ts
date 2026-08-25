@@ -9,7 +9,7 @@ import {
 
 export const AssetManifestRecord = Schema.Struct({
   opaqueAssetId: ArtifactPathSegment,
-  usage: Schema.Literals(["tool-atlas", "hazard-scene"]),
+  usage: Schema.Literals(["tool-atlas", "tool-comparison", "hazard-scene"]),
   kind: Schema.Literals(["web", "phone", "print"]),
   path: RepositoryContentPath,
   sha256: Sha256,
@@ -54,6 +54,7 @@ export class ReleaseManifest extends Schema.Class<ReleaseManifest>(
   profileCount: Schema.Natural,
   sourceCount: Schema.Natural,
   toolCount: Schema.Natural,
+  comparisonCount: Schema.Natural,
   questionCount: Schema.Natural,
   hazardSceneCount: Schema.Natural,
   artifacts: Schema.NonEmptyArray(ArtifactManifestRecord),

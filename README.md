@@ -222,38 +222,37 @@ production-art candidates.
 
 Product planning now includes a canonical route registry, legal page-state
 machines, a composition-first React component architecture, and a maintained
-design system. The Bun workspace, shared correction contract, and dormant
-correction Worker are now a controlled integrated M1–M5 implementation proof,
-not a release or release certification.
+design system. The Bun workspace, shared correction contract, dormant
+correction Worker, and reviewed English launch corpus now form a controlled
+integrated M1–M5 release candidate—not a production release or certification.
 
 The Effect v4/Bun R2.1–R2.10 program plus reconciled R2.90 synthesis are closed,
 their accepted conclusions are promoted, and the pre-normalization corpus is
-recoverable at the immutable archive coordinate above. From the currently
-validated packs, the generator emits 70 documents, including two question
-routes, 18 visual and 18 nonvisual hazard routes, four public tool pages, and
-the simulation, print, offline, settings, reporting, and recovery surfaces.
-Destination families for which reviewed machine-readable content is not
-available are intentionally omitted; they are not represented by placeholder
-pages.
+recoverable at the immutable archive coordinate above. The compiled v2 pack
+contains 65 accepted tool/PPE atlas records, 14 accepted comparison releases,
+90 unique original source-backed questions, all 18 accepted hazard scenes, and
+two profile layers. The Nassau route is backed by a versioned machine-readable
+fact sheet covering all six maintained fact states and effective-dated history.
 
-M4 now includes selectable question, visual-hazard, and nonvisual-hazard
-simulations plus deterministic local print jobs and exact local preview routes.
-Evaluated simulations retain their validated feedback independently of later
-pack-cache removal. M5 adds an exact receipt-bound pack lifecycle, trusted
-retirement, local settings/import/export/reset/rebuild flows, local-first
-correction drafts, and a separately owned correction Worker that is implemented
-but intentionally dormant. The canonical host, Cloudflare credentials, remote
-preview, production deployment, and manual certification remain open. The exact local
-deterministic gate passes on Bun `1.4.0` and Node `22.22.0`: maintained-layout
-and module-boundary checks, all 396 visual hashes, five-workspace typechecks,
-324 unit tests, the 70-document/46-safe-shell-URL production build, and artifact
-closure and answer-leak verification. A frozen offline install also preserves `bun.lock`
-byte-for-byte. The complete CI-parity browser suite passes 166 cases across
+Advertised 45/60/90 whole-bank sets contain no hidden repeats. Every filtered
+inventory is currently below 45 and therefore truthfully disables all
+advertised lengths. Twelve gated/watchlist concepts remain atlas-only and
+cannot appear as scored options. M4 supplies deterministic question,
+visual-hazard, and nonvisual-hazard simulations plus immutable local print jobs;
+M5 supplies exact pack claims and retirement, settings and portable-data flows,
+review rebuild, local correction drafts, and a separately owned correction
+Worker that remains dormant and unbound.
+
+The integrated candidate passes the exact Bun `1.4.0` / Node `22.22.0`
+deterministic gate: 352 unit tests, 396 visual hashes, five workspace
+typechecks plus the browser harness typecheck, a 526-document/46-safe-shell-URL
+production build, and exact artifact, bundle-budget, answer-leak, and retained-
+asset closure. The complete two-worker browser matrix passes 172 cases across
 Chromium, Firefox, and WebKit with 26 intentional project-specific skips. Local
-workerd smokes also pass for Static Assets terminal routing and the disabled
-correction boundary. Browser CI and guarded, credential-free remote-preview and
-production workflows are configured; the manual release matrix remains a
-production blocker.
+workerd smokes pass for both Static Assets terminal routing and the dormant
+correction boundary. The canonical host, Cloudflare credentials, remote
+preview, production deployment, and manual certification remain open;
+automated evidence does not replace the manual production matrix.
 
 See [`AGENTS.md`](AGENTS.md) and [`CONTRIBUTING.md`](CONTRIBUTING.md) before
 making changes.

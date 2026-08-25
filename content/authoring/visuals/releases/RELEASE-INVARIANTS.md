@@ -31,3 +31,10 @@ The tool builder invokes its gate after writing release records and manifests;
 the scene builder does the same once independent review is fully accepted.
 Pending scene-review packets remain buildable. The tool builder also rejects
 lifecycle fields in inventories before touching release output.
+
+The launch content compiler consumes all 14 accepted comparison records. It
+requires every panel member and recorded member-master hash to close exactly
+over the active accepted tool releases, publishes the ledger's exact
+`scoredUseGate`, and includes the accepted comparison derivatives in the
+delivery asset manifest. A comparison with a nonempty scored-use gate remains a
+crawlable atlas reference but cannot authorize a scored distinction question.

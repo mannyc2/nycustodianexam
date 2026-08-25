@@ -131,6 +131,25 @@ const generatedLaunchDescriptor = async (): Promise<OfflinePackDescriptor> => {
   return decodeOfflinePackDescriptor(descriptor)
 }
 
+const decodeGeneratedAttribute = (value: string): string => value
+  .replaceAll("&quot;", "\"")
+  .replaceAll("&#39;", "'")
+  .replaceAll("&lt;", "<")
+  .replaceAll("&gt;", ">")
+  .replaceAll("&amp;", "&")
+
+const generatedAtlasImageAlternative = async (atlasPath: string): Promise<string> => {
+  const atlasHtml = await readFile(
+    fileURLToPath(new URL(`../dist${atlasPath}index.html`, import.meta.url)),
+    "utf8"
+  )
+  const encodedAlternative = atlasHtml.match(/<img\b[^>]*\balt="([^"]+)"/)?.[1]
+  if (encodedAlternative === undefined) {
+    throw new Error(`Generated atlas page ${atlasPath} has no image alternative`)
+  }
+  return decodeGeneratedAttribute(encodedAlternative)
+}
+
 const routeOfflineDescriptor = async (
   page: Page,
   current: () => OfflinePackDescriptor
@@ -1393,6 +1412,7 @@ test("an already-offline pack request performs no work and succeeds only after e
 }) => {
   test.skip(browserName !== "chromium", "The Cache API mutation proof is Chromium-only")
   test.setTimeout(300_000)
+  const currentDescriptor = await generatedLaunchDescriptor()
 
   await page.goto("/settings/")
   await expect(page.getByText(/Default preferences are shown/)).toBeVisible()
@@ -1506,7 +1526,8 @@ test("an already-offline pack request performs no work and succeeds only after e
   await expect(completion).not.toBeFocused()
   const packs = await readPacks(page)
   expect(packs.find((pack) => pack.id === prior.id)?.status).toBe("active")
-  expect(packs.some((pack) => pack.packId === "launch-v1-v1-en" && pack.status === "staged"))
+  expect(packs.some((pack) =>
+    pack.packId === currentDescriptor.id && pack.status === "staged"))
     .toBe(true)
   expect((await readStoreRecords(page, appDatabaseStores.meta))
     .find((record) => record.id === "active-offline-pack")).toMatchObject({
@@ -1960,6 +1981,9 @@ test("a staged pack is rehashed before activation and serves atlas navigation an
 }) => {
   test.skip(browserName !== "chromium", "Playwright exposes service-worker inspection only in Chromium")
   test.setTimeout(300_000)
+  const currentDescriptor = await generatedLaunchDescriptor()
+  const atlasPath = "/atlas/tool/pipe-wrench/"
+  const atlasImageAlternative = await generatedAtlasImageAlternative(atlasPath)
 
   await page.goto("/settings/")
   await expect(page.getByText(/Default preferences are shown/)).toBeVisible()
@@ -1995,7 +2019,7 @@ test("a staged pack is rehashed before activation and serves atlas navigation an
 
   let packs = await readPacks(page)
   const currentClaim = packs.find((pack) =>
-    pack.packId === "launch-v1-v1-en" && pack.status === "staged"
+    pack.packId === currentDescriptor.id && pack.status === "staged"
   )
   const currentCacheName = currentClaim?.cacheName
   if (typeof currentCacheName !== "string") throw new Error("Staged pack has no cache namespace")
@@ -2023,7 +2047,7 @@ test("a staged pack is rehashed before activation and serves atlas navigation an
   await expect(completion).not.toBeFocused()
   packs = await readPacks(page)
   const replacement = packs.find((pack) =>
-    pack.packId === "launch-v1-v1-en" && pack.status === "staged"
+    pack.packId === currentDescriptor.id && pack.status === "staged"
   )
   const replacementCacheName = replacement?.cacheName
   if (typeof replacementCacheName !== "string") throw new Error("Restaged pack has no cache namespace")
@@ -2124,9 +2148,9 @@ test("a staged pack is rehashed before activation and serves atlas navigation an
   await page.reload()
   await expect.poll(() => page.evaluate(() => navigator.serviceWorker.controller !== null)).toBe(true)
   await context.setOffline(true)
-  await page.goto("/atlas/tool/pipe-wrench/", { waitUntil: "domcontentloaded" })
+  await page.goto(atlasPath, { waitUntil: "domcontentloaded" })
   await expect(page.getByRole("heading", { name: "Pipe wrench", exact: true })).toBeVisible()
-  const image = page.getByRole("img", { name: /long-handled hand tool/ })
+  const image = page.getByRole("img", { name: atlasImageAlternative, exact: true })
   await expect(image).toBeVisible()
   expect(await image.evaluate((element: HTMLImageElement) => element.naturalWidth)).toBeGreaterThan(0)
 })

@@ -2,6 +2,7 @@ import { createHash } from "node:crypto"
 import { createElement } from "react"
 import { readFileSync } from "node:fs"
 import {
+  LegacyPostcommitQuestion,
   PostcommitQuestion,
   PostcommitScene,
   PrecommitScene,
@@ -91,7 +92,7 @@ const withPostcommitReceipts = (
 })
 
 const bootstrap = Schema.decodeUnknownSync(SimulationBootstrap)({
-  schemaVersion: 1,
+  schemaVersion: 2,
   releaseId: "release-1",
   packVersion: 1,
   profiles: [{
@@ -141,14 +142,20 @@ const bootstrap = Schema.decodeUnknownSync(SimulationBootstrap)({
   }],
   inventory: ["q1", "q2"].map((id, index) => ({
     question: {
-      schemaVersion: 1,
+      schemaVersion: 2,
       id,
+      version: 1,
       profileId: "profile-1",
+      profileIds: ["profile-1"],
       prompt: `Prompt ${id}`,
       options: [
         { id: `${id}-a`, label: `Option A ${id}` },
         { id: `${id}-b`, label: `Option B ${id}` }
-      ]
+      ],
+      memberships: [{
+        filterKind: "domain",
+        filterValue: "cleaning-tools-and-uses"
+      }]
     },
     profileIds: ["profile-1"],
     receipt: {
@@ -160,8 +167,7 @@ const bootstrap = Schema.decodeUnknownSync(SimulationBootstrap)({
       postcommitBytes: 10,
       postcommitSha256: sha,
       questionId: id
-    },
-    category: "Tools"
+    }
   }))
 })
 
@@ -177,7 +183,7 @@ const sessionFixture = (autoSubmit = true): SimulationSessionRecord => assembleS
   profileId: "profile-1",
   length: 2,
   seed: "controller",
-  selectedCategories: ["Tools"],
+  selectedCategories: ["Cleaning tools and uses"],
   timing: new SimulationTimingSettings({
     mode: "timed",
     durationSeconds: 1,
@@ -467,11 +473,15 @@ describe("simulation player controller", () => {
   })
 
   it("retains an optimistic answer and flag after failure and retries the exact save", async () => {
+    const base = sessionFixture(false)
+    const current = questionItems(base)[0]
+    if (current === undefined) throw new Error("Expected a current question")
+    const selectedOptionId = current.optionOrder[0]!
     let session = new SimulationSessionRecord({
-      ...sessionFixture(false),
+      ...base,
       responses: [{
-        questionId: "q1",
-        selectedOptionId: "q1-a",
+        questionId: current.question.id,
+        selectedOptionId,
         reviewIntent: "unflagged",
         updatedAt: 0
       }]
@@ -507,7 +517,11 @@ describe("simulation player controller", () => {
       saving: false,
       recoverableError: { kind: "response", detail: "Injected local save failure" },
       session: {
-        responses: [{ questionId: "q1", selectedOptionId: "q1-a", reviewIntent: "flagged" }]
+        responses: [{
+          questionId: current.question.id,
+          selectedOptionId,
+          reviewIntent: "flagged"
+        }]
       }
     }))
     expect(controller.getSnapshot().focusRequest?.target).toBe("recoverable-error")
@@ -518,12 +532,16 @@ describe("simulation player controller", () => {
       saving: false,
       recoverableError: null,
       session: {
-        responses: [{ questionId: "q1", selectedOptionId: "q1-a", reviewIntent: "flagged" }]
+        responses: [{
+          questionId: current.question.id,
+          selectedOptionId,
+          reviewIntent: "flagged"
+        }]
       }
     }))
     expect(saveCalls).toBe(2)
     expect(session.responses[0]).toMatchObject({
-      selectedOptionId: "q1-a",
+      selectedOptionId,
       reviewIntent: "flagged"
     })
   })
@@ -675,7 +693,7 @@ describe("self-contained evaluated simulation restoration", () => {
   it("restores question rationales and sources after answer-pack cache removal", async () => {
     const initial = sessionFixture(false)
     const payloads = questionItems(initial).map((item) => Schema.decodeUnknownSync(
-      PostcommitQuestion
+      LegacyPostcommitQuestion
     )({
       schemaVersion: 1,
       id: item.question.id,
@@ -716,6 +734,69 @@ describe("self-contained evaluated simulation restoration", () => {
     expect(html).toContain("Durable source")
     expect(html).toContain("Why this answer is correct")
     expect(html).toContain("Open the separate local review queue")
+  })
+
+  it("restores v2 claims, caveats, and source-line excerpts from immutable results", async () => {
+    const initial = sessionFixture(false)
+    const payloads = questionItems(initial).map((item) => {
+      const rationales = item.question.options.map((option) => ({
+        optionId: option.id,
+        message: `Rich rationale for ${option.id}`,
+        claimIds: [`claim-${item.question.id}`] as const
+      }))
+      const firstRationale = rationales[0]
+      if (firstRationale === undefined) throw new Error("Question fixture needs a rationale")
+      return new PostcommitQuestion({
+      schemaVersion: 2,
+      id: item.question.id,
+      version: 2,
+      correctOptionId: item.optionOrder[0]!,
+      rationales: [firstRationale, ...rationales.slice(1)],
+      claims: [{
+        id: `claim-${item.question.id}`,
+        text: `Supported claim for ${item.question.id}`,
+        sourceLineIds: [`line-${item.question.id}`],
+        evidenceTier: "maintained-editorial-synthesis",
+        caveat: "Site-designed application context."
+      }],
+      sources: [{
+        id: `line-${item.question.id}`,
+        sourceId: `source-${item.question.id}`,
+        title: `Rich source ${item.question.id}`,
+        publisher: "Fixture publisher",
+        evidenceTier: "maintained-editorial-synthesis",
+        version: "fixture revision 2",
+        rightsNotes: "Project-authored test source.",
+        locator: `section ${item.position}`,
+        excerpt: `Exact source-line excerpt for ${item.question.id}`,
+        language: "en",
+        verifiedOn: "2026-08-25",
+        supportedClaimIds: [`claim-${item.question.id}`]
+      }]
+      })
+    })
+    const postcommit = payloads.map((payload) => postcommitArtifact(payload))
+    const active = withPostcommitReceipts(initial, postcommit)
+    const final = submitted(active)
+    const evaluated = evaluateSimulation({ session: active, submission: final, postcommit })
+    const session = new SimulationSessionRecord({
+      ...active,
+      status: "evaluated",
+      updatedAt: 3
+    })
+    const submission = Schema.decodeUnknownSync(SimulationSubmissionRecord)({
+      ...final,
+      status: "evaluated",
+      evaluatedAt: 3,
+      results: evaluated.results,
+      correctCount: evaluated.correctCount
+    })
+
+    const html = await restoreTwice(session, submission)
+    expect(html).toContain("Supported claim for")
+    expect(html).toContain("Site-designed application context.")
+    expect(html).toContain("Exact source-line excerpt for")
+    expect(html).toContain("Source-line receipts")
   })
 
   it("restores hazard corrections, full descriptions, and sources after pack removal", async () => {
@@ -845,7 +926,10 @@ describe("simulation local-content closure", () => {
     await runtimeFor(persistence, verifiedContent(events)).runPromise(
       createLocallyClosedSimulation(session)
     )
-    expect(events).toEqual(["available:q1", "available:q2", "create"])
+    expect(events).toEqual([
+      ...questionItems(session).map((item) => `available:${item.question.id}`),
+      "create"
+    ])
   })
 
   it("does not create a session when a selected receipt identity mismatches", async () => {
@@ -920,11 +1004,15 @@ describe("simulation local-content closure", () => {
 
 describe("recoverable simulation UI", () => {
   it("renders a focused alert, exact retry action, and the retained editable response", () => {
+    const base = sessionFixture(false)
+    const current = questionItems(base)[0]
+    if (current === undefined) throw new Error("Expected a current question")
+    const selectedOptionId = current.optionOrder[0]!
     const session = new SimulationSessionRecord({
-      ...sessionFixture(false),
+      ...base,
       responses: [{
-        questionId: "q1",
-        selectedOptionId: "q1-a",
+        questionId: current.question.id,
+        selectedOptionId,
         reviewIntent: "flagged",
         updatedAt: 1
       }]
@@ -964,7 +1052,7 @@ describe("recoverable simulation UI", () => {
     expect(html).toContain("Response not saved")
     expect(html).toContain("Retry this exact local save")
     expect(html).toContain('aria-pressed="true"')
-    expect(html).toMatch(/<input[^>]+checked=""[^>]+value="q1-a"/)
+    expect(html).toMatch(new RegExp(`<input[^>]+checked=""[^>]+value="${selectedOptionId}"`))
     expect(html).not.toContain("<fieldset disabled")
   })
 })

@@ -20,6 +20,9 @@ const readJson = async (path: string): Promise<unknown> =>
 const loadInput = async (): Promise<CompileContentPackInput> => ({
   authoredPack: await readJson("content/authoring/packs/launch-v1.json"),
   acceptedTools: await readJson("content/authoring/visuals/releases/tools.json"),
+  acceptedComparisons: await readJson(
+    "content/authoring/visuals/releases/comparisons.json"
+  ),
   acceptedScenes: await readJson("content/authoring/visuals/releases/scenes.json"),
   acceptedSceneRegions: await readJson("content/authoring/visuals/releases/regions.json"),
   acceptedSceneAccessibility: await readJson(

@@ -1,5 +1,11 @@
 import { Schema } from "effect"
 import { ArtifactPathSegment } from "./content-primitives.ts"
+import {
+  AuthoredQuestionTags,
+  QuestionFactKind,
+  SafeQuestionMembership
+} from "./question-metadata.ts"
+import { SourceReceipt, SupportedClaim } from "./source-evidence.ts"
 
 export class QuestionOption extends Schema.Class<QuestionOption>(
   "@nycustodian/content/QuestionOption"
@@ -12,7 +18,25 @@ export class QuestionRationale extends Schema.Class<QuestionRationale>(
   "@nycustodian/content/QuestionRationale"
 )({
   optionId: Schema.NonEmptyString,
+  message: Schema.NonEmptyString,
+  claimIds: Schema.NonEmptyArray(ArtifactPathSegment)
+}) {}
+
+/** Exact question feedback shape published before source-line evidence was added. */
+export class LegacyQuestionRationale extends Schema.Class<LegacyQuestionRationale>(
+  "@nycustodian/content/LegacyQuestionRationale"
+)({
+  optionId: Schema.NonEmptyString,
   message: Schema.NonEmptyString
+}) {}
+
+/** Exact source reference shape embedded in the first M4 durable records. */
+export class LegacyQuestionSourceReceipt extends Schema.Class<LegacyQuestionSourceReceipt>(
+  "@nycustodian/content/LegacyQuestionSourceReceipt"
+)({
+  id: Schema.NonEmptyString,
+  label: Schema.NonEmptyString,
+  locator: Schema.NonEmptyString
 }) {}
 
 export const QuestionOptionConcept = Schema.Struct({
@@ -39,29 +63,25 @@ export const QuestionOptionConceptMappings = Schema.NonEmptyArray(
   })
 )
 
-export class SourceReceipt extends Schema.Class<SourceReceipt>(
-  "@nycustodian/content/SourceReceipt"
-)({
-  id: Schema.NonEmptyString,
-  label: Schema.NonEmptyString,
-  locator: Schema.NonEmptyString
-}) {}
+export { SourceReceipt } from "./source-evidence.ts"
 
 export class AuthoredQuestion extends Schema.Class<AuthoredQuestion>(
   "@nycustodian/content/AuthoredQuestion"
 )({
-  schemaVersion: Schema.Literal(1),
+  schemaVersion: Schema.Literal(2),
   id: ArtifactPathSegment,
+  version: Schema.Int,
   profileId: Schema.NonEmptyString,
   prompt: Schema.NonEmptyString,
   options: Schema.NonEmptyArray(QuestionOption),
   correctOptionId: Schema.NonEmptyString,
   rationales: Schema.NonEmptyArray(QuestionRationale),
+  claims: Schema.NonEmptyArray(SupportedClaim),
   sources: Schema.Array(SourceReceipt)
 }) {}
 
-export class PrecommitQuestion extends Schema.Class<PrecommitQuestion>(
-  "@nycustodian/content/PrecommitQuestion"
+export class LegacyPrecommitQuestion extends Schema.Class<LegacyPrecommitQuestion>(
+  "@nycustodian/content/LegacyPrecommitQuestion"
 )({
   schemaVersion: Schema.Literal(1),
   id: ArtifactPathSegment,
@@ -70,13 +90,57 @@ export class PrecommitQuestion extends Schema.Class<PrecommitQuestion>(
   options: Schema.NonEmptyArray(QuestionOption)
 }) {}
 
-export class PostcommitQuestion extends Schema.Class<PostcommitQuestion>(
-  "@nycustodian/content/PostcommitQuestion"
+export class PrecommitQuestion extends Schema.Class<PrecommitQuestion>(
+  "@nycustodian/content/PrecommitQuestion"
+)({
+  schemaVersion: Schema.Literal(2),
+  id: ArtifactPathSegment,
+  version: Schema.Int,
+  profileId: Schema.NonEmptyString,
+  profileIds: Schema.optionalKey(Schema.NonEmptyArray(Schema.NonEmptyString)),
+  prompt: Schema.NonEmptyString,
+  options: Schema.NonEmptyArray(QuestionOption),
+  memberships: Schema.optionalKey(Schema.Array(SafeQuestionMembership))
+}) {}
+
+export const ReleasedPrecommitQuestion = Schema.Union([
+  LegacyPrecommitQuestion,
+  PrecommitQuestion
+])
+
+export type ReleasedPrecommitQuestion = typeof ReleasedPrecommitQuestion.Type
+
+export class LegacyPostcommitQuestion extends Schema.Class<LegacyPostcommitQuestion>(
+  "@nycustodian/content/LegacyPostcommitQuestion"
 )({
   schemaVersion: Schema.Literal(1),
   id: ArtifactPathSegment,
   optionConceptIds: Schema.optionalKey(QuestionOptionConceptMappings),
   correctOptionId: Schema.NonEmptyString,
-  rationales: Schema.NonEmptyArray(QuestionRationale),
-  sources: Schema.NonEmptyArray(SourceReceipt)
+  rationales: Schema.NonEmptyArray(LegacyQuestionRationale),
+  sources: Schema.NonEmptyArray(LegacyQuestionSourceReceipt)
 }) {}
+
+export class PostcommitQuestion extends Schema.Class<PostcommitQuestion>(
+  "@nycustodian/content/PostcommitQuestion"
+)({
+  schemaVersion: Schema.Literal(2),
+  id: ArtifactPathSegment,
+  version: Schema.Int,
+  optionConceptIds: Schema.optionalKey(QuestionOptionConceptMappings),
+  correctOptionId: Schema.NonEmptyString,
+  rationales: Schema.NonEmptyArray(QuestionRationale),
+  claims: Schema.NonEmptyArray(SupportedClaim),
+  sources: Schema.NonEmptyArray(SourceReceipt),
+  tags: Schema.optionalKey(AuthoredQuestionTags),
+  objectiveId: Schema.optionalKey(ArtifactPathSegment),
+  equivalenceGroupId: Schema.optionalKey(ArtifactPathSegment),
+  factKind: Schema.optionalKey(QuestionFactKind)
+}) {}
+
+export const ReleasedPostcommitQuestion = Schema.Union([
+  LegacyPostcommitQuestion,
+  PostcommitQuestion
+])
+
+export type ReleasedPostcommitQuestion = typeof ReleasedPostcommitQuestion.Type

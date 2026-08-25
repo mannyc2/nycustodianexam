@@ -274,12 +274,29 @@ Those results belong to the then-current one-question slice. They remain useful
 historical evidence, but do not constitute final verification of the expanded
 revision.
 
-**Current integrated M1–M5 implementation evidence (2026-08-25):**
+**Current integrated English M1–M5 release-candidate evidence
+(2026-08-25):**
 
-- the validated packs generate a closed set of 70 documents, including two
-  question routes, 18 visual hazard routes, 18 nonvisual hazard routes, four
-  public tool pages, and the simulation, print, offline, settings, reporting,
-  correction, and recovery surfaces;
+- the compiled v2 pack closes over 65 accepted tool/PPE atlas records, all 14
+  accepted comparison releases, 90 unique original source-backed questions,
+  all 18 accepted hazard scenes, and two profile layers;
+- the Nassau jurisdiction profile has a versioned machine-readable fact sheet
+  whose verified, not-published, unverified, conflicting, superseded, and
+  not-applicable facts, exact source-line receipts, and effective-dated change
+  history are compiler-closed and rendered as substantive static content;
+- 12 gated/watchlist concepts remain atlas-only and are mechanically excluded
+  from scored options;
+- the generator emits 526 closed canonical documents and 46 safe opaque shell
+  URLs, including every tool route, all 14 accepted comparison panels at unique
+  anchors across nine owning family routes, both profile routes, 36
+  visual/nonvisual hazard routes, 90 review item routes, deterministic practice
+  routes, and the simulation, print, offline, settings, reporting, correction,
+  and recovery surfaces;
+- advertised 45/60/90 whole-bank sets contain no hidden repeats; every filtered
+  pool is currently below 45 and truthfully disables all advertised lengths;
+- every option explanation closes through claims to exact source-line receipts
+  preserved through authored, postcommit, UI, simulation, and print-visible
+  feedback boundaries;
 - deterministic M4 question/visual/nonvisual simulations and immutable local
   print jobs use exact validated pack claims, retain evaluated feedback, and
   restore from their opaque local URLs without substituting current content;
@@ -304,17 +321,21 @@ revision.
   and for the disabled correction Worker; and
 - the exact Bun `1.4.0` / Node `22.22.0` gate passes maintained-layout and
   module-boundary checks, 396 visual hashes, five workspace typechecks, browser
-  harness typecheck, 324 unit tests, the 70-document/46-safe-shell-URL build,
-  artifact closure, and answer-leak verification. At CI's two-worker cap, the
-  complete browser suite passes 166 Chromium/Firefox/WebKit cases with 26
-  intentional project-specific skips.
+  harness typecheck, 352 unit tests, exact artifact and answer-leak verification
+  over 220 published item-scoped artifacts and 291 byte-identical delivery
+  assets, and all maintained route-family bundle budgets. The largest measured
+  closure is Settings at 468355 B raw / 139994 B gzip / 118248 B brotli. At
+  CI's two-worker cap, the complete 198-case browser matrix passes 172 cases
+  across Chromium, Firefox, and WebKit with 26 intentional project-specific
+  skips.
+
+The automated integrated closure is proved on this candidate revision. The
+manual matrix remains mandatory before production certification.
 
 **Implementation evidence still open:**
 
 - a complete location-preserving JSONC/canonical-JSON profile and generated
   release-artifact retention policy for content at scale;
-- the accepted English Tier A/B atlas and source-backed question-bank expansion
-  required for the no-repeat 45/60/90 launch inventory;
 - the manual assistive-technology, true-400%-zoom, device, US Letter/A4, and
   grayscale physical-print certification matrix;
 - broader performance and long-duration storage stress evidence beyond the
@@ -325,14 +346,12 @@ revision.
 
 Decision criteria remain: indexable static HTML; installable/offline PWA; explicit versioned content packs; local-first progress; deterministic print and simulations; WCAG behavior; no pre-answer leakage; low operating cost; minimal backend.
 
-**Status:** RESOLVED BASELINE / VERIFIED M1–M5 IMPLEMENTATION, NOT A RELEASE.
-The integrated database, transfer, reset, pack-race, service-worker, terminal,
-and complete automated browser gates pass on this revision. Launch-content
-expansion is staged separately. Manual certification, the canonical host,
-credentials, remote preview, and production deployment remain open. P16
-remains in this ledger for provenance; failures in the scaffold may reopen a
-bounded implementation decision, but do not silently restore superseded
-defaults.
+**Status:** RESOLVED BASELINE / INTEGRATED ENGLISH M1–M5 RELEASE CANDIDATE, NOT
+A RELEASE. The combined deterministic, real-browser, and local-workerd closures
+pass on this revision. Manual certification, the canonical host, credentials,
+remote preview, and production deployment remain open. P16 remains in this
+ledger for provenance; failures in the scaffold may reopen a bounded
+implementation decision, but do not silently restore superseded defaults.
 
 Correction-endpoint implementation is authorized and exists only as a dormant
 workerd root. Activation/data collection remain forbidden until storage,
@@ -348,9 +367,14 @@ project, credentials/token, canonical apex/`www` redirect, and production
 authority are pending. Do not purchase or deploy from this ledger entry.
 
 ### P18 — Spanish launch depth
-Architecture supports a future Spanish surface. V1 is resolved as English-only
-for the statewide entry-level series with the Nassau layer. Indexable Spanish
-pages remain deferred until substantive professional/reviewed translation exists.
+Architecture should support Spanish from the outset. Indexable Spanish pages should launch only after substantive professional/reviewed translation exists.
+
+Decision: v1 is English-only for the statewide entry-level series and Nassau
+layer. Spanish-ready modeling remains required, but Spanish routes and content
+are deferred until substantive professional/reviewed translation exists. Do
+not publish shallow doorway translations.
+
+Status: RESOLVED FOR V1 / SPANISH DEFERRED.
 
 ### P19 — High-level series launch timing
 Higher-level series is a valuable adjacent cluster, but mixing it into entry-level content is prohibited. Separate bank/hub can follow after entry-level corpus is sufficiently strong.

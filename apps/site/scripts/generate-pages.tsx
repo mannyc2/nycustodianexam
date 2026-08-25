@@ -28,6 +28,11 @@ import { PrintBuilderBootstrap } from "../src/print/model.ts"
 import { decodeSettingsBootstrap } from "../src/settings/model.ts"
 import { decodeTrustedReleaseContentRegistry } from "../src/trusted-release-content.ts"
 import { trustedCurrentShellNavigation } from "../src/shell-route-policy.ts"
+import {
+  assertCanonicalRouteId,
+  type RouteId
+} from "../src/route-registry.ts"
+import { derivePracticeSessions } from "./practice-sessions.ts"
 
 export { isPublicReleaseArtifact } from "../src/delivery-manifest.ts"
 
@@ -37,6 +42,7 @@ const releaseRoot = new URL("content/releases/vertical-slice/", repositoryRoot)
 
 type Catalog = typeof CatalogArtifact.Type
 type CatalogTool = Catalog["tools"][number]
+type CatalogComparison = Catalog["comparisons"][number]
 type ContentSource = Catalog["sources"][number]
 type Manifest = typeof ReleaseManifest.Type
 type ManifestArtifact = Manifest["artifacts"][number]
@@ -64,61 +70,6 @@ const questionProfileIds = (question: Question): ReadonlyArray<string> => {
   }
   throw new Error(`Question ${question.id} has no profile compatibility coordinate`)
 }
-
-const AnnouncementProfileFactSheetContract = Schema.Struct({
-  schemaVersion: Schema.Literal(1),
-  version: Schema.Int,
-  lastReviewedOn: Schema.NonEmptyString,
-  controllingDocumentNotice: Schema.NonEmptyString,
-  seriesScopeDisclaimer: Schema.NonEmptyString,
-  verifiedFacts: Schema.NonEmptyArray(Schema.Struct({
-    id: Schema.NonEmptyString,
-    label: Schema.NonEmptyString,
-    value: Schema.NonEmptyString,
-    sourceIds: Schema.NonEmptyArray(Schema.NonEmptyString)
-  })),
-  explicitUnknowns: Schema.NonEmptyArray(Schema.Struct({
-    id: Schema.NonEmptyString,
-    label: Schema.NonEmptyString,
-    detail: Schema.NonEmptyString,
-    sourceIds: Schema.NonEmptyArray(Schema.NonEmptyString)
-  })),
-  changeHistory: Schema.NonEmptyArray(Schema.Struct({
-    version: Schema.Int,
-    changedOn: Schema.NonEmptyString,
-    summary: Schema.NonEmptyString,
-    sourceIds: Schema.NonEmptyArray(Schema.NonEmptyString)
-  }))
-})
-
-type RouteId =
-  | "atlas-family"
-  | "atlas-index"
-  | "atlas-tool"
-  | "exam-selector"
-  | "hazards-index"
-  | "hazard-player"
-  | "home"
-  | "offline-packs"
-  | "settings"
-  | "correction-submit"
-  | "corrections"
-  | "foil"
-  | "privacy"
-  | "security"
-  | "profile"
-  | "print-center"
-  | "print-preview"
-  | "question-player"
-  | "review-player"
-  | "review-queue"
-  | "simulation-player"
-  | "simulation-results"
-  | "simulation-setup"
-  | "source"
-  | "status"
-  | "study-hub"
-  | "transparency-index"
 
 type NavSection = "atlas" | "exams" | "hazards" | "home" | "practice" | "transparency" | "utility"
 
@@ -305,9 +256,12 @@ const breadcrumb = (items: readonly { readonly href?: string; readonly label: st
     <ol>${items.map((item) => `<li>${item.href === undefined ? `<span aria-current="page">${escapeHtml(item.label)}</span>` : `<a href="${item.href}">${escapeHtml(item.label)}</a>`}</li>`).join("")}</ol>
   </nav>`
 
-const derivativePath = (tool: CatalogTool | Scene, kind: "phone" | "print" | "web"): string => {
-  const derivative = tool.asset.derivatives.find((candidate) => candidate.kind === kind)
-  if (derivative === undefined) throw new Error(`${tool.asset.opaqueAssetId} has no ${kind} derivative`)
+const derivativePath = (
+  item: CatalogTool | CatalogComparison | Scene,
+  kind: "phone" | "print" | "web"
+): string => {
+  const derivative = item.asset.derivatives.find((candidate) => candidate.kind === kind)
+  if (derivative === undefined) throw new Error(`${item.asset.opaqueAssetId} has no ${kind} derivative`)
   return `/${derivative.path}`
 }
 
@@ -342,6 +296,52 @@ const sourceLinks = (sourceIds: readonly string[], sourceById: ReadonlyMap<strin
     return `<li><a href="/transparency/sources/${slugify(source.id)}/">${escapeHtml(source.title)}</a></li>`
   }).join("")}</ul>`
 
+const sourceLineLinks = (
+  sourceLineIds: readonly string[],
+  sourceLineById: ReadonlyMap<string, Catalog["sourceLines"][number]>,
+  sourceById: ReadonlyMap<string, ContentSource>
+): string => `
+  <ul class="link-list">${sourceLineIds.map((sourceLineId) => {
+    const line = sourceLineById.get(sourceLineId)
+    if (line === undefined) throw new Error(`Profile references missing source line ${sourceLineId}`)
+    const source = sourceById.get(line.sourceId)
+    if (source === undefined) throw new Error(`Source line ${sourceLineId} references missing source`)
+    return `<li><a href="/transparency/sources/${slugify(source.id)}/">${escapeHtml(source.title)}</a><span><code>${escapeHtml(line.locator)}</code> — ${escapeHtml(line.excerpt)}</span></li>`
+  }).join("")}</ul>`
+
+const factStateLabel = (
+  state: "conflicting" | "not_applicable" | "not_published" | "superseded" | "unverified" | "verified"
+): string => ({
+  verified: "Verified",
+  not_published: "Not published",
+  unverified: "Unverified",
+  conflicting: "Conflicting",
+  superseded: "Superseded",
+  not_applicable: "Not applicable"
+})[state]
+
+export const renderProfileFact = (
+  fact: NonNullable<Catalog["profiles"][number]["announcementFactSheet"]>["facts"][number],
+  profileVersion: number,
+  factSheetVersion: number,
+  sourceLineById: ReadonlyMap<string, Catalog["sourceLines"][number]>,
+  sourceById: ReadonlyMap<string, ContentSource>
+): string => {
+  const directEvidence = fact.sourceLineIds.length === 0
+    ? ""
+    : sourceLineLinks(fact.sourceLineIds, sourceLineById, sourceById)
+  const conflictingEvidence = fact.conflictingValues.length === 0
+    ? ""
+    : `<ol class="link-list">${fact.conflictingValues.map((candidate) => `<li><strong>${escapeHtml(candidate.value)}</strong>${sourceLineLinks(candidate.sourceLineIds, sourceLineById, sourceById)}</li>`).join("")}</ol>`
+  const effectiveWindow = fact.effectiveFrom === null
+    ? "No effective interval asserted."
+    : fact.effectiveThrough === null
+      ? `Effective from ${escapeHtml(fact.effectiveFrom)}.`
+      : `Effective ${escapeHtml(fact.effectiveFrom)} through ${escapeHtml(fact.effectiveThrough)}.`
+  const appliesTo = fact.appliesToExamNumbers.join(", ")
+  return `<dt>${escapeHtml(fact.label)}</dt><dd data-fact-state="${fact.state}"><p><span class="fact-state fact-state-${fact.state}">Status: ${factStateLabel(fact.state)}</span></p><p>${escapeHtml(fact.value ?? fact.detail ?? "No value asserted.")}</p>${conflictingEvidence}${directEvidence}<p class="source-note">Exam ${escapeHtml(appliesTo)} · reviewed ${escapeHtml(fact.reviewedOn)} · profile version ${profileVersion} · fact-sheet version ${factSheetVersion} · ${effectiveWindow}${fact.supersededByFactId === null ? "" : ` Replaced by <code>${escapeHtml(fact.supersededByFactId)}</code>.`}</p></dd>`
+}
+
 const externalSourceLink = (source: ContentSource): string => {
   if (source.url === undefined) return ""
   try {
@@ -353,47 +353,93 @@ const externalSourceLink = (source: ContentSource): string => {
   }
 }
 
-const printAnnouncementFactSheet = (
+export const printAnnouncementFactSheet = (
   profile: Catalog["profiles"][number],
+  sourceLineById: ReadonlyMap<string, Catalog["sourceLines"][number]>,
   sourceById: ReadonlyMap<string, ContentSource>
 ) => {
-  const raw = (profile as unknown as { readonly announcementFactSheet?: unknown })
-    .announcementFactSheet
-  if (raw === undefined || raw === null) return null
-  const factSheet = Schema.decodeUnknownSync(AnnouncementProfileFactSheetContract)(raw)
-  const resolveSources = (sourceIds: ReadonlyArray<string>) => sourceIds.map((sourceId) => {
-    const source = sourceById.get(sourceId)
-    if (source === undefined) {
-      throw new Error(`Announcement profile fact sheet references missing source ${sourceId}`)
+  const factSheet = profile.announcementFactSheet
+  if (factSheet === null) return null
+  const referencedSourceLineIds = [
+    ...factSheet.facts.flatMap((fact) => [
+      ...fact.sourceLineIds,
+      ...fact.conflictingValues.flatMap((candidate) => candidate.sourceLineIds)
+    ]),
+    ...factSheet.changeHistory.flatMap((change) => change.sourceLineIds)
+  ].filter((sourceLineId, index, values) => values.indexOf(sourceLineId) === index)
+  const sourceLines = referencedSourceLineIds.map((sourceLineId) => {
+    const sourceLine = sourceLineById.get(sourceLineId)
+    if (sourceLine === undefined) {
+      throw new Error(`Announcement profile fact sheet references missing source line ${sourceLineId}`)
     }
-    return { id: source.id, label: source.title, locator: source.locator }
+    const source = sourceById.get(sourceLine.sourceId)
+    if (source === undefined) {
+      throw new Error(`Announcement profile fact sheet references missing source ${sourceLine.sourceId}`)
+    }
+    return {
+      id: sourceLine.id,
+      sourceId: source.id,
+      title: source.title,
+      publisher: source.publisher,
+      evidenceTier: source.evidenceTier,
+      version: source.version,
+      rightsNotes: source.rightsNotes,
+      locator: sourceLine.locator,
+      excerpt: sourceLine.excerpt,
+      language: sourceLine.language,
+      verifiedOn: sourceLine.verifiedOn,
+      supportedClaimIds: sourceLine.supportedClaimIds,
+      ...(source.url === undefined ? {} : { url: source.url })
+    }
   })
   return {
-    schemaVersion: factSheet.schemaVersion,
+    schemaVersion: 2 as const,
     version: factSheet.version,
     lastReviewedOn: factSheet.lastReviewedOn,
     controllingDocumentNotice: factSheet.controllingDocumentNotice,
     seriesScopeDisclaimer: factSheet.seriesScopeDisclaimer,
-    verifiedFacts: factSheet.verifiedFacts.map((fact) => ({
+    facts: factSheet.facts.map((fact) => ({
       id: fact.id,
+      category: fact.category,
       label: fact.label,
+      state: fact.state,
+      appliesToExamNumbers: fact.appliesToExamNumbers,
       value: fact.value,
-      sourceReferences: resolveSources(fact.sourceIds)
-    })),
-    explicitUnknowns: factSheet.explicitUnknowns.map((fact) => ({
-      id: fact.id,
-      label: fact.label,
       detail: fact.detail,
-      sourceReferences: resolveSources(fact.sourceIds)
+      reviewedOn: fact.reviewedOn,
+      effectiveFrom: fact.effectiveFrom,
+      effectiveThrough: fact.effectiveThrough,
+      sourceLineIds: fact.sourceLineIds,
+      conflictingValues: fact.conflictingValues.map((candidate) => ({
+        value: candidate.value,
+        sourceLineIds: candidate.sourceLineIds
+      })),
+      supersededByFactId: fact.supersededByFactId
     })),
+    sourceLines,
     changeHistory: factSheet.changeHistory.map((change) => ({
       version: change.version,
       changedOn: change.changedOn,
       summary: change.summary,
-      sourceReferences: resolveSources(change.sourceIds)
+      sourceLineIds: change.sourceLineIds
     }))
   }
 }
+
+export const printProfileBootstrap = (
+  profile: Catalog["profiles"][number],
+  sourceLineById: ReadonlyMap<string, Catalog["sourceLines"][number]>,
+  sourceById: ReadonlyMap<string, ContentSource>
+) => ({
+  schemaVersion: 2 as const,
+  id: profile.id,
+  label: profile.label,
+  version: profile.version,
+  jurisdiction: profile.jurisdiction,
+  compatibilityKey: profile.compatibilityKey,
+  disclaimer: profile.disclaimer,
+  announcementFactSheet: printAnnouncementFactSheet(profile, sourceLineById, sourceById)
+})
 
 const renderQuestionFallback = (question: Question, position: number, count: number): string => `
       <article class="question-card" aria-labelledby="question-heading">
@@ -565,6 +611,7 @@ const loadRelease = async (): Promise<{
     manifest.packVersion !== catalog.version ||
     manifest.packVersion !== pack.version ||
     manifest.toolCount !== catalog.tools.length ||
+    manifest.comparisonCount !== catalog.comparisons.length ||
     manifest.questionCount !== questions.length ||
     manifest.hazardSceneCount !== scenes.length
   ) {
@@ -584,11 +631,30 @@ const buildPages = ({
   readonly printBootstrap: PrintBuilderBootstrap
 } => {
   const sourceById = new Map(catalog.sources.map((source) => [source.id, source]))
+  const sourceLineById = new Map(catalog.sourceLines.map((line) => [line.id, line]))
   const toolById = new Map(catalog.tools.map((tool) => [tool.conceptId, tool]))
-  const releasedTools = catalog.tools.filter((tool) => tool.publicationGate === null)
+  const releasedTools = catalog.tools
+  const scoredTools = catalog.tools.filter(
+    (tool) => tool.practiceEligibility === "text-question" && tool.publicationGate === null
+  )
   const toolEntries = releasedTools.map((tool) => ({ id: tool.conceptId, slug: slugify(tool.canonicalTerm), tool }))
+  const comparisonEntries = catalog.comparisons.map((comparison) => {
+    const owner = toolById.get(comparison.memberIds[0])
+    if (owner === undefined) {
+      throw new Error(`Comparison ${comparison.id} has no canonical family owner`)
+    }
+    const slug = slugify(comparison.id.replace(/^comparison\./, ""))
+    return {
+      id: comparison.id,
+      slug,
+      ownerFamily: owner.family,
+      canonicalPath: `/atlas/family/${slugify(owner.family)}/#comparison-${slug}`,
+      comparison
+    }
+  })
   const sourceEntries = catalog.sources.map((source) => ({ id: source.id, slug: slugify(source.id), source }))
   assertUniqueSlugs(toolEntries)
+  assertUniqueSlugs(comparisonEntries)
   assertUniqueSlugs(sourceEntries)
 
   const families = new Map<string, CatalogTool[]>()
@@ -613,11 +679,12 @@ const buildPages = ({
   const questionReceipt = (
     artifact: ManifestArtifact,
     questionId: string,
-    position: number
+    position: number,
+    sessionId = manifest.releaseId
   ): QuestionAttemptReceipt => ({
     releaseId: manifest.releaseId,
     packVersion: manifest.packVersion,
-    sessionId: manifest.releaseId,
+    sessionId,
     position,
     postcommitPath: `/content/vertical-slice/${artifact.path}`,
     postcommitBytes: artifact.bytes,
@@ -728,26 +795,25 @@ const buildPages = ({
     })
   } as const
   const simulationBootstrap = Schema.decodeUnknownSync(SimulationBootstrap)({
-    schemaVersion: 1,
+    schemaVersion: 2,
     releaseId: manifest.releaseId,
     packVersion: manifest.packVersion,
     profiles: catalog.profiles.map((profile) => ({
       id: profile.id,
       label: profile.label,
-      version: manifest.packVersion,
+      version: profile.version,
       jurisdiction: profile.jurisdiction,
       compatibilityKey: profile.compatibilityKey,
       disclaimer: profile.disclaimer
     })),
-    advertisedLengths: [45, 60, 90],
+    advertisedLengths: catalog.practiceCapacity.advertisedSetLengths,
     inventory: questions.map(({ value: question }, index) => {
       const artifact = questionPostcommitById.get(question.id)
       if (artifact === undefined) throw new Error(`Question ${question.id} has no simulation receipt`)
       return {
         question,
         receipt: questionReceipt(artifact, question.id, index + 1),
-        profileIds: questionProfileIds(question),
-        category: "Tool selection"
+        profileIds: questionProfileIds(question)
       }
     }),
     hazards: scenes.map(({ value: scene }, index) => {
@@ -764,24 +830,18 @@ const buildPages = ({
     })
   })
   const printBootstrap = Schema.decodeUnknownSync(PrintBuilderBootstrap)({
-    schemaVersion: 1,
+    schemaVersion: 2,
     releaseId: manifest.releaseId,
     contentVersion: manifest.packVersion,
-    profiles: catalog.profiles.map((profile) => ({
-      id: profile.id,
-      label: profile.label,
-      version: manifest.packVersion,
-      jurisdiction: profile.jurisdiction,
-      compatibilityKey: profile.compatibilityKey,
-      disclaimer: profile.disclaimer,
-      announcementFactSheet: printAnnouncementFactSheet(profile, sourceById)
-    })),
+    profiles: catalog.profiles.map((profile) =>
+      printProfileBootstrap(profile, sourceLineById, sourceById)
+    ),
     questions: questions.map(({ value: question }) => {
       const artifact = questionPostcommitById.get(question.id)
       return {
         id: question.id,
         profileIds: questionProfileIds(question),
-        category: "Tool selection",
+        memberships: question.memberships ?? [],
         prompt: question.prompt,
         options: question.options,
         answerReceipt: artifact === undefined
@@ -822,6 +882,30 @@ const buildPages = ({
     }),
     corrections: []
   })
+
+  const capacityProfile = catalog.profiles.find((profile) => profile.layer === "jurisdiction")
+    ?? catalog.profiles[0]
+  if (capacityProfile === undefined) throw new Error("Release requires a practice profile")
+  const capacityRecords = catalog.practiceCapacity.records.filter(
+    (record) => record.profileId === capacityProfile.id
+  )
+  const questionSessions = derivePracticeSessions({
+    releaseId: manifest.releaseId,
+    packVersion: manifest.packVersion,
+    profile: {
+      id: capacityProfile.id,
+      version: capacityProfile.version,
+      compatibilityKey: capacityProfile.compatibilityKey
+    },
+    questions,
+    records: catalog.practiceCapacity.records
+  })
+  const sessionByCapacity = new Map(
+    questionSessions.map((session) => [
+      `${session.record.filterKind}:${session.record.filterValue}:${session.length}`,
+      session
+    ])
+  )
 
   const pages: PageDefinition[] = []
   pages.push({
@@ -991,26 +1075,54 @@ const buildPages = ({
     body: `
   <main class="page-shell" id="main-content" tabindex="-1">
     ${breadcrumb([{ label: "Exam profiles" }])}
-    <section class="hero"><p class="eyebrow">Released profiles</p><h1>Choose a truthful study profile.</h1><p>One reviewed launch profile is available. It identifies compatibility and scope without claiming official exam status.</p></section>
-    <section class="card-grid" aria-label="Available profiles">${catalog.profiles.map((profile) => `<article class="card"><p class="eyebrow">${escapeHtml(profile.series)}</p><h2>${escapeHtml(profile.label)}</h2><p>${escapeHtml(profile.jurisdiction)}</p><p>${escapeHtml(profile.disclaimer)}</p><a href="/ny/">View this profile</a></article>`).join("")}</section>
+    <section class="hero"><p class="eyebrow">${catalog.profiles.length} released profile layers</p><h1>Choose a truthful study profile.</h1><p>The statewide series and its source-bound Nassau layer identify compatibility and limits without claiming official exam status.</p></section>
+    <section class="card-grid" aria-label="Available profiles">${catalog.profiles.map((profile) => `<article class="card"><p class="eyebrow">${escapeHtml(profile.layer)}</p><h2>${escapeHtml(profile.label)}</h2><p>${escapeHtml(profile.audience)}</p><p>${escapeHtml(profile.disclaimer)}</p><a href="${profile.canonicalPath}">View this profile</a></article>`).join("")}</section>
   </main>`
   })
 
-  pages.push({
-    relativePath: "ny/index.html",
-    canonicalPath: "/ny/",
-    title: `${catalog.profiles[0]?.label ?? "New York profile"} — Study profile`,
-    description: "Scope, compatibility, and released study materials for the current New York launch profile.",
-    robots: "index,follow",
-    routeId: "profile",
-    section: "exams",
-    body: `
+  for (const profile of catalog.profiles) {
+    const factSheet = profile.announcementFactSheet
+    const parentProfile = profile.parentProfileId === null
+      ? undefined
+      : catalog.profiles.find((candidate) => candidate.id === profile.parentProfileId)
+    const childProfiles = catalog.profiles.filter(
+      (candidate) => candidate.parentProfileId === profile.id
+    )
+    const factSheetBody = factSheet === null ? "" : `
+      <section class="section-gap" aria-labelledby="profile-fact-states">
+        <h2 id="profile-fact-states">Announcement fact states</h2>
+        <p>Every mutable fact remains labeled with its exact state. Unpublished or unresolved values are not replaced with guesses.</p>
+        <dl class="fact-list">${factSheet.facts.map((fact) => renderProfileFact(fact, profile.version, factSheet.version, sourceLineById, sourceById)).join("")}</dl>
+      </section>
+      <section class="section-gap" aria-labelledby="profile-history">
+        <h2 id="profile-history">Fact-sheet change history</h2>
+        <ol class="link-list">${factSheet.changeHistory.map((change) => `<li><strong>Version ${change.version} · ${escapeHtml(change.changedOn)}</strong><span>${escapeHtml(change.summary)}</span>${sourceLineLinks(change.sourceLineIds, sourceLineById, sourceById)}</li>`).join("")}</ol>
+      </section>`
+    pages.push({
+      relativePath: `${profile.canonicalPath.slice(1)}index.html`,
+      canonicalPath: profile.canonicalPath,
+      title: `${profile.label} — Study profile`,
+      description: `Scope, compatibility, and source-bound limits for ${profile.label}.`,
+      robots: "index,follow",
+      routeId: "profile",
+      section: "exams",
+      body: `
   <main class="page-shell" id="main-content" tabindex="-1">
-    ${breadcrumb([{ href: "/exams/", label: "Exam profiles" }, { label: "New York" }])}
-    <section class="hero"><p class="eyebrow">Launch profile · pack version ${catalog.version}</p><h1>${escapeHtml(catalog.profiles[0]?.label ?? "New York entry-level custodian study")}</h1><p>${escapeHtml(catalog.profiles[0]?.jurisdiction ?? "New York")}</p></section>
-    <div class="reference-layout section-gap"><article><h2>What is released</h2><dl class="fact-list"><dt>Tool references</dt><dd>${releasedTools.length}</dd><dt>Practice questions</dt><dd>${questions.length}</dd><dt>Hazard scenes</dt><dd>${scenes.length}</dd><dt>Compatibility key</dt><dd><code>${escapeHtml(catalog.profiles[0]?.compatibilityKey ?? "not published")}</code></dd></dl><p class="source-note"><strong>Important:</strong> ${escapeHtml(catalog.profiles[0]?.disclaimer ?? "Original study content only.")}</p></article><aside class="reference-card"><h2>Start with references</h2><p>Learn the published terms before opening scored practice.</p><a class="button button-primary" href="/atlas/">Open the atlas</a></aside></div>
-  </main>`
-  })
+    ${breadcrumb([
+      { href: "/exams/", label: "Exam profiles" },
+      ...(parentProfile === undefined ? [] : [{ href: parentProfile.canonicalPath, label: parentProfile.label }]),
+      { label: profile.label }
+    ])}
+    <section class="hero"><p class="eyebrow">${escapeHtml(profile.layer)} · profile version ${profile.version} · pack version ${catalog.version}</p><h1>${escapeHtml(profile.label)}</h1><p>${escapeHtml(profile.audience)}</p></section>
+    <div class="reference-layout section-gap"><article><h2>Scope and released coverage</h2><ul>${profile.scopeNotes.map((note) => `<li>${escapeHtml(note)}</li>`).join("")}</ul><dl class="fact-list"><dt>Series level</dt><dd>${escapeHtml(profile.seriesLevel)}</dd><dt>Exam identity state</dt><dd><span class="fact-state fact-state-${profile.examIdentityState}">${factStateLabel(profile.examIdentityState)}</span>${profile.examIdentities.length === 0 ? "<p>No exam number applies at this statewide series layer.</p>" : `<ul>${profile.examIdentities.map((identity) => `<li><strong>${escapeHtml(identity.examNumber)}</strong> · ${escapeHtml(identity.title)} · ${escapeHtml(identity.competitionType)}${sourceLineLinks(identity.sourceLineIds, sourceLineById, sourceById)}</li>`).join("")}</ul>`}</dd><dt>Competition type state</dt><dd><span class="fact-state fact-state-${profile.competitionTypeState}">${factStateLabel(profile.competitionTypeState)}</span>${profile.competitionTypes.length === 0 ? "<p>Competition type belongs to a controlling announcement, not this series layer.</p>" : `<p>${profile.competitionTypes.map(escapeHtml).join(", ")}</p>`}</dd><dt>Test-plan compatibility</dt><dd><strong>${escapeHtml(profile.testPlanCompatibility.status)}</strong><p>${escapeHtml(profile.testPlanCompatibility.detail)}</p>${sourceLineLinks(profile.testPlanCompatibility.sourceLineIds, sourceLineById, sourceById)}</dd><dt>Content availability</dt><dd><strong>${escapeHtml(profile.contentAvailability.status)}</strong><p>${escapeHtml(profile.contentAvailability.detail)}</p><p>Verified ${escapeHtml(profile.contentAvailability.lastVerifiedOn)}.</p></dd><dt>Accepted atlas tools</dt><dd>${releasedTools.length}</dd><dt>Scored-practice eligible tools</dt><dd>${scoredTools.length}</dd><dt>Original questions</dt><dd>${questions.length}</dd><dt>Hazard scenes</dt><dd>${scenes.length}</dd><dt>Compatibility key</dt><dd><code>${escapeHtml(profile.compatibilityKey)}</code></dd></dl><p class="source-note"><strong>Important:</strong> ${escapeHtml(profile.disclaimer)}</p></article><aside class="reference-card"><h2>Controlling boundary</h2><p>${escapeHtml(factSheet?.controllingDocumentNotice ?? profile.disclaimer)}</p><a class="button button-primary" href="/atlas/">Open the atlas</a></aside></div>
+    ${factSheet === null ? "" : `<section class="source-note section-gap"><h2>Series and scope disclaimer</h2><p>${escapeHtml(factSheet.seriesScopeDisclaimer)}</p><p>Fact-sheet version ${factSheet.version}; reviewed ${escapeHtml(factSheet.lastReviewedOn)}.</p></section>`}
+    ${factSheetBody}
+    <section class="section-gap"><h2>Profile source registry</h2>${sourceLinks(profile.sourceIds, sourceById)}</section>
+    ${childProfiles.length === 0 ? "" : `<section class="section-gap"><h2>Jurisdiction layers</h2><ul class="link-list">${childProfiles.map((child) => `<li><a href="${child.canonicalPath}">${escapeHtml(child.label)}</a><span>${escapeHtml(child.audience)}</span></li>`).join("")}</ul></section>`}
+  </main>
+  <script id="announcement-profile-data" type="application/json">${escapeJsonForHtml(profile)}</script>`
+    })
+  }
 
   pages.push({
     relativePath: "practice/index.html",
@@ -1023,7 +1135,20 @@ const buildPages = ({
     body: `
   <main class="page-shell" id="main-content" tabindex="-1">
     ${breadcrumb([{ label: "Practice" }])}
-    <section class="hero"><p class="eyebrow">Original practice</p><h1>Retrieve what you learned.</h1><p>This ${questions.length}-question session stores each selection before requesting answer feedback. It does not reproduce recalled or official questions.</p><div class="question-controls"><a class="button button-primary" href="/practice/session/${manifest.releaseId}/question/1/">Start question 1</a><a class="button button-secondary" href="/simulations/">Build a simulation</a><a class="button button-secondary" href="/print/">Open print center</a></div></section>
+    <section class="hero"><p class="eyebrow">${questions.length} reviewed original questions</p><h1>Choose a set the bank can actually supply.</h1><p>Every enabled set is sampled without repeats from the current reviewed inventory. The ${catalog.practiceCapacity.advertisedSetLengths.join(", ")} lengths and every displayed distribution are site-designed—not official exam counts or weights.</p><div class="question-controls"><a class="button button-secondary" href="/simulations/">Build a simulation</a><a class="button button-secondary" href="/print/">Open print center</a></div></section>
+    <section class="card-grid" aria-label="Available whole-bank practice lengths">${catalog.practiceCapacity.advertisedSetLengths.map((length) => {
+      const session = sessionByCapacity.get(`all:all:${length}`)
+      return session === undefined
+        ? `<article class="card"><h2>${length} questions</h2><p>Unavailable: the filtered bank cannot supply this length without repeats.</p><button class="button button-secondary" disabled type="button">${length} unavailable</button></article>`
+        : `<article class="card"><h2>${length} questions</h2><p>Site-designed set of ${session.questions.length} distinct reviewed objectives for ${escapeHtml(capacityProfile.label)}.</p><a class="button button-primary" href="/practice/session/${session.id}/question/1/">Start ${length}</a></article>`
+    }).join("")}</section>
+    <section class="section-gap" aria-labelledby="capacity-heading"><h2 id="capacity-heading">Filtered inventory capacity</h2><p>Each row is computed only from answer-independent memberships shared by every displayed option in release ${escapeHtml(manifest.releaseId)}. A disabled length means that exact filter cannot supply enough distinct reviewed objectives.</p><div class="comparison-table-wrap"><table class="comparison-table"><caption>Available site-designed set lengths by filter</caption><thead><tr><th scope="col">Filter</th><th scope="col">Reviewed objectives</th>${catalog.practiceCapacity.advertisedSetLengths.map((length) => `<th scope="col">${length}</th>`).join("")}</tr></thead><tbody>${capacityRecords.map((record) => `<tr><th scope="row">${escapeHtml(record.filterKind === "all" ? "All questions" : `${record.filterKind}: ${record.filterValue}`)}</th><td>${record.questionCount}</td>${catalog.practiceCapacity.advertisedSetLengths.map((length) => {
+      const session = sessionByCapacity.get(`${record.filterKind}:${record.filterValue}:${length}`)
+      return session === undefined
+        ? `<td><button disabled type="button">Unavailable</button></td>`
+        : `<td><a href="/practice/session/${session.id}/question/1/">Start ${length}</a></td>`
+    }).join("")}</tr>`).join("")}</tbody></table></div></section>
+    <p class="source-note"><strong>Scoring boundary:</strong> Practice accuracy is not an official converted score or pass prediction. Answers and source-bound explanations load only after each selection is committed locally.</p>
   </main>`
   })
 
@@ -1031,21 +1156,30 @@ const buildPages = ({
     relativePath: "atlas/index.html",
     canonicalPath: "/atlas/",
     title: "Tool atlas — NY Custodian Exam Study",
-    description: `Illustrated, source-backed reference pages for ${releasedTools.length} released hand tools.`,
+    description: `Illustrated, source-backed reference pages for ${releasedTools.length} accepted tools and ${catalog.comparisons.length} comparison panels.`,
     robots: "index,follow",
     routeId: "atlas-index",
     section: "atlas",
     body: `
   <main class="page-shell" id="main-content" tabindex="-1">
     ${breadcrumb([{ label: "Tool atlas" }])}
-    <section class="hero"><p class="eyebrow">${releasedTools.length} released tools</p><h1>Recognize a tool by use and construction.</h1><p>Each page names the supported use, distinguishing features, nearby confusions, and source record.</p></section>
-    <section class="tool-grid" aria-label="Released tools">${toolEntries.map(({ slug, tool }) => `<article class="tool-card"><img src="${derivativePath(tool, "phone")}" width="320" height="320" alt="${escapeHtml(tool.neutralDescription)}"><div><p class="eyebrow">${escapeHtml(tool.family)}</p><h2><a href="/atlas/tool/${slug}/">${escapeHtml(tool.canonicalTerm)}</a></h2><p>${escapeHtml(tool.useSummary)}</p></div></article>`).join("")}</section>
+    <section class="hero"><p class="eyebrow">${releasedTools.length} accepted tools · ${catalog.comparisons.length} accepted panels</p><h1>Recognize a tool by use and construction.</h1><p>The atlas includes every accepted Tier A/B release plus explicitly restricted watchlist or gated entries. Reference publication never silently makes a concept eligible for scored practice.</p></section>
+    <section class="tool-grid" aria-label="Accepted tools">${toolEntries.map(({ slug, tool }) => `<article class="tool-card"><img src="${derivativePath(tool, "phone")}" width="320" height="320" alt="${escapeHtml(tool.neutralDescription)}"><div><p class="eyebrow">${escapeHtml(tool.family)} · Tier ${escapeHtml(tool.evidenceTier)}</p><h2><a href="/atlas/tool/${slug}/">${escapeHtml(tool.canonicalTerm)}</a></h2><p>${escapeHtml(tool.useSummary)}</p>${tool.practiceEligibility === "atlas-only" ? '<p class="source-note"><strong>Atlas-only:</strong> excluded from scored practice.</p>' : ""}</div></article>`).join("")}</section>
+    <section class="section-gap"><h2>Accepted comparison panels</h2><p>Each panel has one canonical anchor on its owning tool-family page and preserves its release-ledger scored-use restriction.</p><ul class="link-list">${comparisonEntries.map(({ canonicalPath, comparison }) => {
+      const names = comparison.memberIds.map((id) => toolById.get(id)?.canonicalTerm ?? id)
+      return `<li><a href="${canonicalPath}">${escapeHtml(names.join(" vs. "))}</a><span>${comparison.scoredUseGate.length === 0 ? "Eligible distinction" : "Reference-only scored-use gate"}</span></li>`
+    }).join("")}</ul></section>
     ${comparableFamilies.length === 0 ? "" : `<section class="section-gap"><h2>Compare a tool family</h2><ul class="link-list">${comparableFamilies.map(([family, tools]) => `<li><a href="/atlas/family/${slugify(family)}/">${escapeHtml(family)} (${tools.length} tools)</a></li>`).join("")}</ul></section>`}
   </main>`
   })
 
   for (const [family, tools] of comparableFamilies) {
     const familySlug = slugify(family)
+    const familyComparisons = comparisonEntries.filter(({ comparison }) =>
+      comparison.memberIds.length > 0
+    ).filter(({ ownerFamily }) =>
+      ownerFamily === family
+    )
     pages.push({
       relativePath: `atlas/family/${familySlug}/index.html`,
       canonicalPath: `/atlas/family/${familySlug}/`,
@@ -1057,8 +1191,17 @@ const buildPages = ({
       body: `
   <main class="page-shell" id="main-content" tabindex="-1">
     ${breadcrumb([{ href: "/atlas/", label: "Tool atlas" }, { label: family }])}
-    <section class="hero"><p class="eyebrow">Tool family</p><h1>Compare ${escapeHtml(family)}.</h1><p>Use both the job and the jaw or end construction to separate these nearby choices.</p></section>
+    <section class="hero"><p class="eyebrow">Tool family</p><h1>Compare ${escapeHtml(family)}.</h1><p>Use the supported task and the released recognition cues together. Scope and scored-use restrictions remain attached to each entry.</p></section>
     <div class="comparison-table-wrap"><table class="comparison-table"><caption>${escapeHtml(family)} comparison</caption><thead><tr><th scope="col">Tool</th><th scope="col">Supported use</th><th scope="col">Recognition cues</th></tr></thead><tbody>${tools.map((tool) => `<tr><th scope="row"><a href="/atlas/tool/${slugify(tool.canonicalTerm)}/">${escapeHtml(tool.canonicalTerm)}</a></th><td>${escapeHtml(tool.useSummary)}</td><td>${tool.distinguishingFeatures.map(escapeHtml).join("; ")}</td></tr>`).join("")}</tbody></table></div>
+    ${familyComparisons.length === 0 ? "" : `<section class="section-gap"><h2>Accepted comparison panels</h2>${familyComparisons.map(({ slug, comparison }) => {
+      const members = comparison.memberIds.map((memberId) => {
+        const member = toolById.get(memberId)
+        if (member === undefined) throw new Error(`Comparison ${comparison.id} has missing member ${memberId}`)
+        return member
+      })
+      const memberNames = members.map((member) => member.canonicalTerm)
+      return `<article class="reference-card section-gap" id="comparison-${slug}"><p class="eyebrow">Accepted comparison panel</p><h3>${escapeHtml(memberNames.join(" vs. "))}</h3><p>${escapeHtml(comparison.decisiveDistinction)}</p><figure class="tool-figure comparison-figure"><picture><source media="print" srcset="${derivativePath(comparison, "print")}"><img src="${derivativePath(comparison, "phone")}" srcset="${derivativePath(comparison, "phone")} 640w, ${derivativePath(comparison, "web")} 960w" sizes="(max-width: 58rem) calc(100vw - 4rem), 58rem" width="960" height="480" alt="Original side-by-side line-art comparison of ${escapeHtml(memberNames.join(" and "))}."></picture><figcaption>Composed from the hash-bound accepted member masters.</figcaption></figure><section class="source-note" aria-labelledby="comparison-status-${slug}"><h4 id="comparison-status-${slug}">Scored-use status</h4>${comparison.scoredUseGate.length === 0 ? "<p>This accepted distinction has no scored-use gate. Questions remain site-designed and original.</p>" : `<p><strong>Atlas-only comparison:</strong> excluded from scored practice until every release-ledger gate is cleared.</p><ul>${comparison.scoredUseGate.map((gate) => `<li>${escapeHtml(gate)}</li>`).join("")}</ul>`}</section><div class="comparison-table-wrap"><table class="comparison-table"><caption>Member uses and recognition cues</caption><thead><tr><th scope="col">Member</th><th scope="col">Supported use</th><th scope="col">Recognition cues</th><th scope="col">Practice status</th></tr></thead><tbody>${members.map((member) => `<tr><th scope="row"><a href="/atlas/tool/${slugify(member.canonicalTerm)}/">${escapeHtml(member.canonicalTerm)}</a></th><td>${escapeHtml(member.useSummary)}</td><td>${member.distinguishingFeatures.map(escapeHtml).join("; ")}</td><td>${member.practiceEligibility === "text-question" ? "Eligible" : "Atlas-only"}</td></tr>`).join("")}</tbody></table></div><h4>Source trail</h4>${sourceLinks(comparison.sourceIds, sourceById)}</article>`
+    }).join("")}</section>`}
   </main>`
     })
   }
@@ -1066,8 +1209,11 @@ const buildPages = ({
   for (const { slug, tool } of toolEntries) {
     const confusables = tool.confusableConceptIds.flatMap((conceptId) => {
       const candidate = toolById.get(conceptId)
-      return candidate?.publicationGate === null ? [candidate] : []
+      return candidate === undefined ? [] : [candidate]
     })
+    const toolComparisons = comparisonEntries.filter(({ comparison }) =>
+      comparison.memberIds.includes(tool.conceptId)
+    )
     pages.push({
       relativePath: `atlas/tool/${slug}/index.html`,
       canonicalPath: `/atlas/tool/${slug}/`,
@@ -1085,10 +1231,11 @@ const buildPages = ({
         <h1>${escapeHtml(tool.canonicalTerm)}</h1>
         <p class="lead-copy">${escapeHtml(tool.fullDescription)}</p>
         <figure class="tool-figure"><picture><source media="print" srcset="${derivativePath(tool, "print")}"><img src="${derivativePath(tool, "phone")}" srcset="${derivativePath(tool, "phone")} 320w, ${derivativePath(tool, "web")} 960w" sizes="(max-width: 46rem) calc(100vw - 4rem), 38rem" width="960" height="960" alt="${escapeHtml(tool.neutralDescription)}"></picture><figcaption>${escapeHtml(tool.neutralDescription)}</figcaption></figure>
-        <dl class="fact-list"><dt>Primary use</dt><dd>${escapeHtml(tool.useSummary)}</dd><dt>Recognition cues</dt><dd>${tool.distinguishingFeatures.map(escapeHtml).join("; ")}</dd><dt>Practice status</dt><dd>${tool.practiceEligibility === "text-question" ? "Eligible for the released text-question format." : "Reference-only in this release."}</dd></dl>
+        <dl class="fact-list"><dt>Primary use</dt><dd>${escapeHtml(tool.useSummary)}</dd><dt>Recognition cues</dt><dd>${tool.distinguishingFeatures.map(escapeHtml).join("; ")}</dd><dt>Evidence tier</dt><dd>${escapeHtml(tool.evidenceTier)}</dd><dt>Scope status</dt><dd>${escapeHtml(tool.scopeStatus)}</dd><dt>Practice status</dt><dd>${tool.practiceEligibility === "text-question" ? "Eligible for the released text-question format." : "Atlas-only; excluded from scored practice."}</dd></dl>
+        ${tool.publicationGate === null ? tool.practiceEligibility === "atlas-only" ? `<section class="source-note section-gap"><h2>Watchlist restriction</h2><p>This accepted visual remains atlas-only because its evidence tier includes a watchlist or operational-scope caution. It is never selected as a scored option.</p></section>` : "" : `<section class="source-note section-gap"><h2>Publication-gate restriction</h2><p><strong>Atlas-only:</strong> ${escapeHtml(tool.publicationGate)}</p><p>The restriction is copied from the accepted release ledger and this tool is never selected as a scored option while it remains.</p></section>`}
         <section class="section-gap"><h2>Source trail</h2>${sourceLinks(tool.sourceIds, sourceById)}</section>
       </article>
-      <aside class="reference-card"><h2>${confusables.length === 0 ? "Related study" : "Commonly confused"}</h2>${confusables.length === 0 ? "<p>Return to the atlas to compare other hand tools.</p>" : `<ul class="link-list">${confusables.map((candidate) => `<li><a href="/atlas/tool/${slugify(candidate.canonicalTerm)}/">${escapeHtml(candidate.canonicalTerm)}</a><span>${escapeHtml(candidate.useSummary)}</span></li>`).join("")}</ul>`}<a class="button button-primary" href="/practice/">Practice retrieval</a></aside>
+      <aside class="reference-card"><h2>${confusables.length === 0 ? "Related study" : "Commonly confused"}</h2>${confusables.length === 0 ? "<p>Return to the atlas to compare other tools and equipment.</p>" : `<ul class="link-list">${confusables.map((candidate) => `<li><a href="/atlas/tool/${slugify(candidate.canonicalTerm)}/">${escapeHtml(candidate.canonicalTerm)}</a><span>${escapeHtml(candidate.useSummary)}</span></li>`).join("")}</ul>`}${toolComparisons.length === 0 ? "" : `<h3>Accepted panels</h3><ul class="link-list">${toolComparisons.map(({ canonicalPath, comparison }) => `<li><a href="${canonicalPath}">${escapeHtml(comparison.memberIds.map((id) => toolById.get(id)?.canonicalTerm ?? id).join(" vs. "))}</a></li>`).join("")}</ul>`}${tool.practiceEligibility === "text-question" ? '<a class="button button-primary" href="/practice/">Practice retrieval</a>' : '<p class="source-note">No scored-practice link is offered for this atlas-only concept.</p>'}</aside>
     </div>
   </main>`
     })
@@ -1144,6 +1291,21 @@ const buildPages = ({
 
   for (const { slug, source } of sourceEntries) {
     const citedTools = releasedTools.filter((tool) => tool.sourceIds.includes(source.id))
+    const citedProfiles = catalog.profiles.filter((profile) => profile.sourceIds.includes(source.id))
+    const citedComparisons = comparisonEntries.filter(({ comparison }) =>
+      comparison.sourceIds.includes(source.id)
+    )
+    const publicUses = [
+      ...citedProfiles.map((profile) =>
+        `<li><a href="${profile.canonicalPath}">${escapeHtml(profile.label)}</a><span>Study profile</span></li>`
+      ),
+      ...citedTools.map((tool) =>
+        `<li><a href="/atlas/tool/${slugify(tool.canonicalTerm)}/">${escapeHtml(tool.canonicalTerm)}</a><span>Tool atlas</span></li>`
+      ),
+      ...citedComparisons.map(({ canonicalPath, comparison }) =>
+        `<li><a href="${canonicalPath}">${escapeHtml(comparison.memberIds.map((id) => toolById.get(id)?.canonicalTerm ?? id).join(" vs. "))}</a><span>Comparison panel</span></li>`
+      )
+    ]
     pages.push({
       relativePath: `transparency/sources/${slug}/index.html`,
       canonicalPath: `/transparency/sources/${slug}/`,
@@ -1155,8 +1317,26 @@ const buildPages = ({
       body: `
   <main class="page-shell" id="main-content" tabindex="-1">
     ${breadcrumb([{ href: "/transparency/", label: "Transparency" }, { href: "/transparency/sources/", label: "Sources" }, { label: source.title }])}
-    <article class="reference-card source-record"><p class="eyebrow">Source record</p><h1>${escapeHtml(source.title)}</h1><dl class="fact-list">${source.publisher === undefined ? "" : `<dt>Publisher</dt><dd>${escapeHtml(source.publisher)}</dd>`}<dt>Locator</dt><dd><code>${escapeHtml(source.locator)}</code></dd><dt>Supported scope</dt><dd>${escapeHtml(source.scope)}</dd></dl>${externalSourceLink(source)}<section class="section-gap"><h2>Public pages using this record</h2>${citedTools.length === 0 ? "<p>This record supports the launch profile rather than a single tool page.</p>" : `<ul class="link-list">${citedTools.map((tool) => `<li><a href="/atlas/tool/${slugify(tool.canonicalTerm)}/">${escapeHtml(tool.canonicalTerm)}</a></li>`).join("")}</ul>`}</section></article>
+    <article class="reference-card source-record"><p class="eyebrow">Source record</p><h1>${escapeHtml(source.title)}</h1><dl class="fact-list">${source.publisher === undefined ? "" : `<dt>Publisher</dt><dd>${escapeHtml(source.publisher)}</dd>`}<dt>Locator</dt><dd><code>${escapeHtml(source.locator)}</code></dd><dt>Supported scope</dt><dd>${escapeHtml(source.scope)}</dd></dl>${externalSourceLink(source)}<section class="section-gap"><h2>Public pages using this record</h2>${publicUses.length === 0 ? "<p>No current indexable page cites this record directly.</p>" : `<ul class="link-list">${publicUses.join("")}</ul>`}</section></article>
   </main>`
+    })
+  }
+
+  for (const session of questionSessions) {
+    session.questions.forEach(({ value: question }, index) => {
+      const position = index + 1
+      const base = `/practice/session/${session.id}/question/`
+      const artifact = questionPostcommitById.get(question.id)
+      if (artifact === undefined) throw new Error(`Question ${question.id} has no postcommit record`)
+      pages.push(questionPage({
+        canonicalPath: `${base}${position}/`,
+        count: session.questions.length,
+        position,
+        receipt: questionReceipt(artifact, question.id, position, session.id),
+        ...(position < session.questions.length ? { nextPath: `${base}${position + 1}/` } : {}),
+        ...(position > 1 ? { previousPath: `${base}${position - 1}/` } : {}),
+        question
+      }))
     })
   }
 
@@ -1412,6 +1592,7 @@ const buildPages = ({
   const paths = new Set<string>()
   const canonicals = new Set<string>()
   for (const page of pages) {
+    assertCanonicalRouteId(page.routeId)
     if (paths.has(page.relativePath) || canonicals.has(page.canonicalPath)) {
       throw new Error(`Duplicate generated route: ${page.canonicalPath}`)
     }

@@ -1,4 +1,7 @@
-import { PostcommitQuestion, PostcommitScene } from "@nycustodian/content/model"
+import {
+  PostcommitScene,
+  ReleasedPostcommitQuestion
+} from "@nycustodian/content/model"
 import { Effect, Schema } from "effect"
 import { VerifiedContent, type VerifiedContentError } from "../verified-content.ts"
 import {
@@ -31,7 +34,10 @@ const loadOnePrintAnswer = Effect.fn("PrintAnswers.loadOne")(function*(
   }
   const verifiedContent = yield* VerifiedContent
   const unknown = yield* verifiedContent.loadCachedJson(question.answerReceipt)
-  const answer = yield* Schema.decodeUnknownEffect(PostcommitQuestion)(unknown).pipe(
+  const answer = yield* Schema.decodeUnknownEffect(
+    ReleasedPostcommitQuestion,
+    { onExcessProperty: "error" }
+  )(unknown).pipe(
     Effect.mapError((cause) => new PrintAnswerMismatchError({
       questionId: question.id,
       detail: "The exact reviewed answer object did not match the expected schema.",
@@ -45,10 +51,19 @@ const loadOnePrintAnswer = Effect.fn("PrintAnswers.loadOne")(function*(
       cause: new Error(`Expected ${question.id}; received ${answer.id}`)
     })
   }
+  if (answer.schemaVersion === 1) {
+    return yield* new PrintAnswerMismatchError({
+      questionId: question.id,
+      detail: "This historical answer format can only be restored from its existing immutable print packet.",
+      cause: new Error("Legacy answer material is not rewritten into a new packet")
+    })
+  }
   return new PrintQuestionAnswer({
+    schemaVersion: 2,
     questionId: answer.id,
     correctOptionId: answer.correctOptionId,
     rationales: answer.rationales,
+    claims: answer.claims,
     sources: answer.sources
   })
 })

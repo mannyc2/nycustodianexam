@@ -1,17 +1,25 @@
 import { Schema } from "effect"
 import {
   PrintJobManifest,
-  PrintPacket,
+  PrintPacketV2,
   PrintSettings,
   type PrintBuilderBootstrap,
-  type PrintPacketSection,
+  type PrintPacketSectionV2,
   type PrintProduct,
   type PrintProductAvailability,
   type PrintQuestionAnswer,
+  type ReleasedPrintJobManifest,
+  type ReleasedPrintPacket,
+  type ReleasedPrintPacketSection,
   type PrintRetainedAsset,
   type PrintSceneAnswer,
   type SupportedPrintProduct
 } from "./model.ts"
+import { questionCategoryFromSafeMetadata } from "../question-category.ts"
+
+const printQuestionCategory = (
+  question: PrintBuilderBootstrap["questions"][number]
+): string => questionCategoryFromSafeMetadata(question)
 
 export const printAlgorithmId = "print-v1-fnv1a32-xorshift32" as const
 
@@ -48,7 +56,11 @@ const eligibleContrastFamilies = (
   }
   return [...families]
     .filter(([, members]) => members.length >= 2)
-    .map(([family, members]) => ({ id: family, family, members }))
+    .map(([family, members]) => ({
+      id: family,
+      family,
+      members: [...members].sort(compareIds)
+    }))
 }
 
 export const printProductCapacity = (
@@ -60,7 +72,7 @@ export const printProductCapacity = (
   const selected = new Set(filters)
   if (questionProducts.has(product)) {
     return compatible(bootstrap.questions, profileId)
-      .filter((question) => selected.size === 0 || selected.has(question.category)).length
+      .filter((question) => selected.size === 0 || selected.has(printQuestionCategory(question))).length
   }
   if (product === "tool-family-contrast-cards") {
     return eligibleContrastFamilies(bootstrap, profileId)
@@ -85,7 +97,7 @@ export const printProductFilterOptions = (
   profileId: string
 ): ReadonlyArray<string> => {
   const values = questionProducts.has(product)
-    ? compatible(bootstrap.questions, profileId).map((question) => question.category)
+    ? compatible(bootstrap.questions, profileId).map(printQuestionCategory)
     : product === "tool-family-contrast-cards"
       ? eligibleContrastFamilies(bootstrap, profileId).map((family) => family.family)
       : hazardProducts.has(product)
@@ -196,7 +208,7 @@ export const printOptionLabel = (index: number): string => {
 }
 
 type PrintPairingFingerprintInput = Pick<
-  PrintJobManifest,
+  ReleasedPrintJobManifest,
   "releaseId" | "contentVersion" | "profile" | "settings" | "questions"
 >
 
@@ -217,7 +229,7 @@ export const computePrintPairingFingerprint = (
   : null
 
 type PrintManifestFingerprintInput = Pick<
-  PrintJobManifest,
+  ReleasedPrintJobManifest,
   | "schemaVersion"
   | "algorithmId"
   | "pairingFingerprint"
@@ -251,10 +263,13 @@ export const computePrintManifestFingerprint = (
   pageCount: manifest.pageCount
 }))
 
-type PrintPacketFingerprintInput = Pick<
-  PrintPacket,
-  "schemaVersion" | "title" | "statement" | "sections" | "warnings"
->
+interface PrintPacketFingerprintInput {
+  readonly schemaVersion: 1 | 2
+  readonly title: string
+  readonly statement: "Original practice — not an official or past exam"
+  readonly sections: ReadonlyArray<ReleasedPrintPacketSection>
+  readonly warnings: ReadonlyArray<string>
+}
 
 export const computePrintPacketFingerprint = (
   packet: PrintPacketFingerprintInput
@@ -307,7 +322,7 @@ export interface GeneratePrintJobInput {
 
 export interface GeneratedPrintJob {
   readonly manifest: PrintJobManifest
-  readonly packet: PrintPacket
+  readonly packet: ReleasedPrintPacket
 }
 
 export class PrintGenerationError extends Error {
@@ -321,7 +336,7 @@ const sourceInventory = (
   const filters = new Set(settings.filters)
   if (questionProducts.has(settings.product)) {
     return compatible(bootstrap.questions, settings.profileId)
-      .filter((question) => filters.size === 0 || filters.has(question.category))
+      .filter((question) => filters.size === 0 || filters.has(printQuestionCategory(question)))
   }
   if (settings.product === "tool-family-contrast-cards") {
     return eligibleContrastFamilies(bootstrap, settings.profileId)
@@ -407,7 +422,12 @@ export const generatePrintManifest = ({
       : hazardProducts.has(settings.product)
         ? bootstrap.scenes.find((scene) => scene.id === id)?.environment ?? "Hazard scene"
         : questionProducts.has(settings.product)
-          ? bootstrap.questions.find((question) => question.id === id)?.category ?? "Original multiple-choice"
+          ? (() => {
+              const question = bootstrap.questions.find((candidate) => candidate.id === id)
+              return question === undefined
+                ? "Original multiple-choice"
+                : printQuestionCategory(question)
+            })()
           : settings.product === "announcement-profile-fact-sheet"
             ? "Source-bound announcement profile"
             : "Published corrections"
@@ -430,7 +450,7 @@ export const generatePrintManifest = ({
         : []
     : []
   const withoutPairingFingerprint = {
-    schemaVersion: 1 as const,
+    schemaVersion: 2 as const,
     algorithmId: printAlgorithmId,
     releaseId: bootstrap.releaseId,
     contentVersion: bootstrap.contentVersion,
@@ -473,7 +493,7 @@ export const makePrintPacket = (
   answers: ReadonlyArray<PrintQuestionAnswer> = [],
   sceneAnswers: ReadonlyArray<PrintSceneAnswer> = [],
   retainedAssets: ReadonlyArray<PrintRetainedAsset> = []
-): PrintPacket => {
+): PrintPacketV2 => {
   const questionById = new Map(bootstrap.questions.map((question) => [question.id, question]))
   const answerById = new Map(answers.map((answer) => [answer.questionId, answer]))
   const sceneById = new Map(bootstrap.scenes.map((scene) => [scene.id, scene]))
@@ -499,7 +519,7 @@ export const makePrintPacket = (
       })
     }
   })
-  const answerKeySection = (): PrintPacketSection => ({
+  const answerKeySection = (): PrintPacketSectionV2 => ({
     tag: "answer-key",
     answers: orderedQuestions.map(({ question, options }, index) => {
       const answer = answerById.get(question.id)
@@ -509,7 +529,7 @@ export const makePrintPacket = (
       return { number: index + 1, optionLabel: printOptionLabel(answerIndex) }
     })
   })
-  const explanationSection = (): PrintPacketSection => ({
+  const explanationSection = (): PrintPacketSectionV2 => ({
     tag: "explanations",
     explanations: orderedQuestions.map(({ question, options }, index) => {
       const answer = answerById.get(question.id)
@@ -522,14 +542,19 @@ export const makePrintPacket = (
         rationales: options.map((option, optionIndex) => {
           const rationale = answer.rationales.find((candidate) => candidate.optionId === option.id)
           if (rationale === undefined) throw new PrintGenerationError("Reviewed rationale unavailable.")
-          return { optionLabel: printOptionLabel(optionIndex), message: rationale.message }
+          return {
+            optionLabel: printOptionLabel(optionIndex),
+            message: rationale.message,
+            claimIds: rationale.claimIds
+          }
         }),
+        claims: answer.claims,
         sources: manifest.settings.includeSources ? answer.sources : []
       }
     })
   })
-  let section: PrintPacketSection
-  const appendedSections: Array<PrintPacketSection> = []
+  let section: PrintPacketSectionV2
+  const appendedSections: Array<PrintPacketSectionV2> = []
   let title: string
   switch (manifest.settings.product) {
     case "blank-answer-sheet": {
@@ -572,11 +597,12 @@ export const makePrintPacket = (
       break
     case "tool-family-contrast-cards": {
       const familyValues = manifest.itemIds.map((family) => {
-        const tools = compatible(bootstrap.tools, manifest.profile.id)
-          .filter((tool) => tool.family === family)
-          .sort(compareIds)
-        if (tools.length < 2) throw new PrintGenerationError("Pinned contrast family is incomplete.")
-        const values = tools.map((tool) => ({
+        const members = eligibleContrastFamilies(bootstrap, manifest.profile.id)
+          .find((candidate) => candidate.id === family)?.members
+        if (members === undefined) {
+          throw new PrintGenerationError("Pinned contrast family is incomplete.")
+        }
+        const values = members.map((tool) => ({
           id: tool.id,
           canonicalTerm: tool.canonicalTerm,
           useSummary: tool.useSummary,
@@ -689,7 +715,7 @@ export const makePrintPacket = (
   }
 
   const withoutFingerprint = {
-    schemaVersion: 1,
+    schemaVersion: 2,
     title,
     statement: "Original practice — not an official or past exam",
     sections: [section, ...appendedSections],
@@ -700,7 +726,7 @@ export const makePrintPacket = (
         : [])
     ]
   } as const
-  return new PrintPacket({
+  return new PrintPacketV2({
     ...withoutFingerprint,
     fingerprint: computePrintPacketFingerprint(withoutFingerprint)
   })

@@ -2,10 +2,10 @@
 
 **Status:** maintained constraints, updated 2026-08-25 after reconciling the
 closed R2.1–R2.10/R2.90 program, the accepted visual releases, canonical
-route/state planning, the React 19 composition decision, and the verified
-integrated M1–M5 implementation. This file records accepted direction and explicit
-implementation gates. It does not replace the product behavior contract or the
-exam-fact corpus.
+route/state planning, the React 19 composition decision, the verified M1–M5
+platform, and the controlled English launch-content implementation. This file
+records accepted direction and explicit implementation gates. It does not
+replace the product behavior contract or the exam-fact corpus.
 
 Supporting evidence is historical and does not override this file. The complete
 pre-normalization research corpus is recoverable at immutable commit
@@ -452,8 +452,8 @@ Evidence still open:
   the passing release-wide Chromium/Firefox/WebKit functional matrix;
 - a complete location-preserving JSONC adapter and canonical JSON profile with
   duplicate-key, multibyte, comment, range, number, Unicode, and escaping proof;
-- the generated-release artifact retention policy and full Tier A/B content
-  completeness derived from validated registries and review states;
+- the generated-release artifact retention policy (full accepted-atlas and
+  English launch-question completeness are now compiler-closed);
 - remote Cloudflare preview/production credentials and canonical-domain values;
 - the manual accessibility/true-zoom, device/physical-print, and performance
   certification matrix;
