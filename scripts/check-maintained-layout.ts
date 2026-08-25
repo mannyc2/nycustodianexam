@@ -21,7 +21,7 @@ interface MaintainedPath {
   readonly path: string
   readonly workspaceName?: string
   readonly relativePath: string
-  readonly area: "source" | "test" | "browser-test" | "script" | "workflow"
+  readonly area: "source" | "test" | "browser-test" | "script" | "workflow" | "config"
 }
 
 const classifyMaintainedPath = (path: string): MaintainedPath | undefined => {
@@ -33,6 +33,20 @@ const classifyMaintainedPath = (path: string): MaintainedPath | undefined => {
       path,
       relativePath: path.slice(".github/workflows/".length),
       area: "workflow"
+    }
+  }
+
+  const visualScriptMatch = /^content\/authoring\/visuals\/(.+\.mjs)$/.exec(path)
+  const visualScriptPath = visualScriptMatch?.[1]
+  if (visualScriptPath !== undefined) {
+    return { path, relativePath: visualScriptPath, area: "script" }
+  }
+
+  const workspaceRootMatch = /^(apps|packages)\/([^/]+)\/([^/]+)$/.exec(path)
+  if (workspaceRootMatch !== null) {
+    const [, , workspaceName, relativePath] = workspaceRootMatch
+    if (workspaceName !== undefined && relativePath !== undefined) {
+      return { path, workspaceName, relativePath, area: "config" }
     }
   }
 
@@ -118,6 +132,13 @@ for (const path of repositoryFiles) {
     !/-fixtures\.tsx?$/.test(fileName)
   ) {
     problems.push(`${path}: browser tests must end in .pw.ts or .pw.tsx`)
+  }
+  if (
+    maintained.area === "source" &&
+    fileName.endsWith(".tsx") &&
+    !segments.includes("react")
+  ) {
+    problems.push(`${path}: React source must live below a react directory`)
   }
   if (/^apps\/[^/]+\/src\/.+\/runtime\.ts$/.test(path)) {
     problems.push(`${path}: feature code must import the application runtime directly`)

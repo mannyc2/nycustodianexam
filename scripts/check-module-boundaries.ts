@@ -1,5 +1,5 @@
 import { readdirSync, readFileSync } from "node:fs"
-import { join, relative, sep } from "node:path"
+import { dirname, join, relative, resolve, sep } from "node:path"
 import { fileURLToPath } from "node:url"
 
 const repositoryRoot = fileURLToPath(new URL("../", import.meta.url))
@@ -12,8 +12,9 @@ const appDatabaseFacadePath = join(siteSourceRoot, "study-storage/app-database.t
 const appDatabaseInternalRoot = join(siteSourceRoot, "study-storage/app-database")
 const facadeImport = /from\s+["'](?:(?:\.\.\/)+(?:compiler|model)\.ts|@nycustodian\/content\/(?:compiler|model))["']/g
 const appDatabaseFacadeImport = /from\s+["'](?:\.\.\/)+app-database\.ts["']/g
+const moduleSpecifierImport = /(?:\bfrom\s*|\bimport\s*(?:\(\s*)?)["']([^"']+)["']/g
 const reactModuleImport = /from\s+["'][^"']+\.tsx["']/g
-const indexedDbOpen = /\bindexedDB\.open\s*\(/g
+const indexedDbFactoryReference = /\bindexedDB\b/g
 
 const isInside = (root: string, path: string): boolean => {
   const child = relative(root, path)
@@ -65,6 +66,20 @@ for (const path of siteSourceFiles) {
       )
     }
   }
+  if (path !== appDatabaseFacadePath && !isInside(appDatabaseInternalRoot, path)) {
+    for (const match of source.matchAll(moduleSpecifierImport)) {
+      const specifier = match[1]
+      if (specifier === undefined || !specifier.startsWith(".")) continue
+      const target = resolve(dirname(path), specifier)
+      if (target !== appDatabaseInternalRoot && !isInside(appDatabaseInternalRoot, target)) {
+        continue
+      }
+      const line = source.slice(0, match.index ?? 0).split("\n").length
+      problems.push(
+        `${relative(repositoryRoot, path)}:${line}: import AppDatabase through study-storage/app-database.ts, not its private internals`
+      )
+    }
+  }
   if (path.endsWith(".ts")) {
     for (const match of source.matchAll(reactModuleImport)) {
       const line = source.slice(0, match.index ?? 0).split("\n").length
@@ -74,10 +89,10 @@ for (const path of siteSourceFiles) {
     }
   }
   if (path !== appDatabaseFacadePath && !isInside(appDatabaseInternalRoot, path)) {
-    for (const match of source.matchAll(indexedDbOpen)) {
+    for (const match of source.matchAll(indexedDbFactoryReference)) {
       const line = source.slice(0, match.index ?? 0).split("\n").length
       problems.push(
-        `${relative(repositoryRoot, path)}:${line}: only the study-storage/app-database owner may open IndexedDB`
+        `${relative(repositoryRoot, path)}:${line}: only the study-storage/app-database owner may access the global IndexedDB factory`
       )
     }
   }
