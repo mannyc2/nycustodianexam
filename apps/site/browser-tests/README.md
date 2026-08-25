@@ -1,11 +1,12 @@
-# M1–M3 browser evidence boundary
+# M1–M3 browser evidence plus targeted M5 boundary
 
 This directory contains the configured real-browser evidence suite for the
-controlled M1–M3 implementation proof. It does not certify a release. The
-generator currently emits 58 documents from validated packs, including two
-question routes, 18 visual and 18 nonvisual hazard routes, and four public tool
-pages. Planned destination families without reviewed machine-readable content
-are intentionally omitted rather than represented by placeholders.
+controlled M1–M3 implementation proof plus targeted M5 local-data evidence. It
+does not certify a release. The generator currently emits 65 documents from
+validated packs, including two question routes, 18 visual and 18 nonvisual
+hazard routes, and four public tool pages. Planned destination families without
+reviewed machine-readable content are intentionally omitted rather than
+represented by placeholders.
 
 It is intentionally separate from `apps/site/test`, whose Vitest suites remain
 deterministic unit and worker-harness checks.
@@ -13,14 +14,14 @@ deterministic unit and worker-harness checks.
 ## Current execution status
 
 Browser CI is configured as the complete cross-browser gate. On this revision,
-browser TypeScript and Playwright discovery pass locally for 84 configured
-executions across seven test files: 81 standard Vite-preview configurations
-across Chromium, Firefox, and WebKit, plus three Cloudflare-preview Chromium
-configurations. The exact pinned Chromium revision passes all 27 standard cases
-and all three Cloudflare-preview cases locally, including the app-database,
-offline/service-worker, accessibility, and true-BFCache contracts. The Firefox
-and WebKit browser binaries are not installed locally, so the complete
-cross-browser matrix remains a separate CI/release gate.
+browser TypeScript and Playwright discovery include 105 configured executions:
+102 standard Vite-preview configurations across Chromium, Firefox, and WebKit,
+plus three Cloudflare-preview Chromium configurations. All 34 standard Chromium
+cases pass locally on this revision, including 27 M1–M3 cases and seven targeted
+M5 cases. All three Cloudflare-preview cases passed locally on the earlier exact
+pinned delivery revision. The Firefox and WebKit browser binaries are not
+installed locally, so the complete cross-browser matrix remains a separate
+CI/release gate.
 
 ## Configured automated coverage
 
@@ -37,6 +38,20 @@ cross-browser matrix remains a separate CI/release gate.
   hazard Blob survival across BFCache with true-unload revocation, and
   fail-closed quarantine of a review attempt whose receipt differs from the
   released bootstrap.
+- M5 local-data contracts: correction drafts write only after explicit save,
+  restore on reload, and never POST while intake is dormant; a remotely accepted
+  report whose local receipt write fails disables network resubmission and can
+  retry only the local write; IndexedDB preferences remain authoritative when
+  the fast mirror fails and otherwise apply on reload/across tabs; reset reports
+  the committing transaction count; portable import rejects semantically invalid
+  durable records, previews without writing, quarantines unknown references,
+  rechecks parent/dependent records at apply time, commits atomically without
+  overwrite, and exports a checked envelope; staged-pack corruption quarantines
+  and deletes that generation without displacing the prior active pack; an
+  explicit restage activates under a new cache namespace, exposes retained-pack
+  actions, preserves historical attempts/latest projections during confirmed
+  pack removal, and serves atlas navigation and imagery offline. Completion and
+  failure focus targets are asserted for these asynchronous operations.
 - Local Cloudflare Workers Static Assets preview: nested-route
   identity/canonical behavior, truthful unknown-route status, static-atlas
   runtime isolation, and precommit answer-leak checks. These delivery-only
@@ -63,8 +78,9 @@ adding a production-only update endpoint.
   transaction. The blocked-upgrade contract covers one uncooperative prior-v2
   tab; real quota exhaustion, eviction, other multi-tab aborts, and disposal
   races remain uncertified.
-- The M1–M3 proof is not the product's complete explicit
-  download/verify/activate/rollback content-pack lifecycle.
+- Explicit pack lifecycle has targeted Chromium proof; Firefox/WebKit service-
+  worker lifecycle and full release-wide update/removal/eviction certification
+  remain open.
 - Print media hides screen chrome and retains revealed feedback, but the current
   route has no generated question packet, separate answer key, print manifest,
   deterministic pagination, large-print mode, or automated PDF inspection.
@@ -74,8 +90,9 @@ adding a production-only update endpoint.
   deployment credentials, response-header policy, custom domain, canonical host,
   and any future Worker endpoint remain unconfigured.
 - Sitemap generation also remains open.
-- M4/M5 simulation, complete print output, settings, and corrections flows are
-  outside this suite and remain open.
+- M4 simulation/complete print output and the v4→v5 simulation/print portable-
+  data integration proof remain open. The complete M5 cross-browser/manual
+  certification matrix remains open beyond the targeted cases above.
 - No lab/field performance run is introduced here; configured deterministic
   bundle budgets pass locally and remain the only automated performance evidence
   until this revision completes real-browser and release certification.

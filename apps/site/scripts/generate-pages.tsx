@@ -19,6 +19,10 @@ import {
   isPublicReleaseArtifact
 } from "../src/delivery-manifest.ts"
 import type { AssetContentReceipt } from "../src/verified-content.ts"
+import {
+  OfflinePackDescriptor,
+  assertClosedOfflinePackDescriptor
+} from "../src/offline-packs/model.ts"
 
 export { isPublicReleaseArtifact } from "../src/delivery-manifest.ts"
 
@@ -42,6 +46,13 @@ type RouteId =
   | "hazards-index"
   | "hazard-player"
   | "home"
+  | "offline-packs"
+  | "settings"
+  | "correction-submit"
+  | "corrections"
+  | "foil"
+  | "privacy"
+  | "security"
   | "profile"
   | "question-player"
   | "review-player"
@@ -51,7 +62,7 @@ type RouteId =
   | "study-hub"
   | "transparency-index"
 
-type NavSection = "atlas" | "exams" | "hazards" | "home" | "practice" | "transparency"
+type NavSection = "atlas" | "exams" | "hazards" | "home" | "practice" | "transparency" | "utility"
 
 interface PageDefinition {
   readonly body: string
@@ -141,7 +152,9 @@ const header = (section: NavSection): string => `
         <a${currentPage(section, "atlas")} href="/atlas/">Tool atlas</a>
         <a${currentPage(section, "practice")} href="/practice/">Practice</a>
         <a${currentPage(section, "hazards")} href="/hazards/">Hazards</a>
-        <a${currentPage(section, "transparency")} href="/transparency/">Sources</a>
+        <a${currentPage(section, "transparency")} href="/transparency/">Transparency</a>
+        <a href="/offline/">Offline packs</a>
+        <a href="/settings/">Settings</a>
       </nav>
     </div>
   </header>`
@@ -150,6 +163,7 @@ const footer = `
   <footer class="site-footer">
     <div class="site-footer-inner">
       <p>Independent study project. Not affiliated with or endorsed by New York City or New York State.</p>
+      <nav aria-label="Site policies"><a href="/report/">Report a correction</a> · <a href="/transparency/privacy/">Privacy</a> · <a href="/transparency/security/">Security</a></nav>
     </div>
   </footer>`
 
@@ -170,6 +184,7 @@ const document = ({
   <meta name="robots" content="${robots}">
   <!--__CANONICAL__${canonicalPath}-->
   <link rel="manifest" href="/manifest.webmanifest">
+  <script type="module" src="/src/settings/preferences-boot.ts"></script>
   <link rel="stylesheet" href="/styles.css">
   <title>${escapeHtml(title)}</title>
 </head>
@@ -193,6 +208,7 @@ const statusRecovery = (heading: string, detail: string): string => `
       <article class="card"><h2>Return home</h2><p>Use the published navigation rather than guessing another address.</p><a href="/">Open the study home</a></article>
       <article class="card"><h2>Continue studying</h2><p>Open the current practice and reference entry points.</p><a href="/practice/">Open practice</a></article>
       <article class="card"><h2>Check sources</h2><p>Review what the current release supports and where it came from.</p><a href="/transparency/">Open transparency</a></article>
+      <article class="card"><h2>Offline and settings</h2><p>Manage explicit offline packs or export local study data.</p><a href="/offline/">Open offline packs</a> · <a href="/settings/">Open settings</a></article>
     </section>
   </main>`
 
@@ -738,7 +754,7 @@ const buildPages = ({
   <main class="page-shell" id="main-content" tabindex="-1">
     ${breadcrumb([{ label: "Transparency" }])}
     <section class="hero"><p class="eyebrow">Release ${escapeHtml(manifest.releaseId)} · version ${manifest.packVersion}</p><h1>Know what supports the study material.</h1><p>The public atlas cites ${catalog.sources.length} catalog source records. Interactive exercises embed neutral prompts and request one item’s reviewed feedback only after a durable local commitment.</p></section>
-    <section class="card-grid"><article class="card"><h2>Source registry</h2><p>Review titles, exact locators, scope notes, and publishers where available.</p><a href="/transparency/sources/">Browse sources</a></article><article class="card"><h2>Release boundary</h2><p>${manifest.toolCount} tools, ${manifest.questionCount} questions, and ${manifest.hazardSceneCount} scenes are hash-bound in the release manifest. A consolidated answer pack is not published to the site.</p></article></section>
+    <section class="card-grid"><article class="card"><h2>Source registry</h2><p>Review titles, exact locators, scope notes, and publishers where available.</p><a href="/transparency/sources/">Browse sources</a></article><article class="card"><h2>Corrections</h2><p>Review the correction boundary and save a structured local draft.</p><a href="/transparency/corrections/">Read the correction policy</a></article><article class="card"><h2>Security</h2><p>Do not submit secure or recalled exam material.</p><a href="/transparency/security/">Read the security policy</a></article><article class="card"><h2>Privacy</h2><p>Study progress and diagnostics stay local. Launch analytics are disabled.</p><a href="/transparency/privacy/">Read the privacy policy</a></article><article class="card"><h2>FOIL research</h2><p>No outreach or FOIL request is implied by this site.</p><a href="/transparency/foil/">Review the research boundary</a></article><article class="card"><h2>Release boundary</h2><p>${manifest.toolCount} tools, ${manifest.questionCount} questions, and ${manifest.hazardSceneCount} scenes are hash-bound in the release manifest. A consolidated answer pack is not published to the site.</p></article></section>
   </main>`
   })
 
@@ -854,6 +870,176 @@ const buildPages = ({
     }))
   })
 
+  const baselineNavigation = new Set(["/", "/status/", "/transparency/"])
+  const packReceiptRecords = [
+    ...manifest.artifacts.filter(isPublicReleaseArtifact).map((artifact) => ({
+      kind: "artifact" as const,
+      path: `/content/vertical-slice/${artifact.path}`,
+      bytes: artifact.bytes,
+      sha256: artifact.sha256
+    })),
+    ...manifest.assets.map((asset) => ({
+      kind: "asset" as const,
+      path: `/${asset.path}`,
+      bytes: asset.bytes,
+      sha256: asset.sha256
+    }))
+  ]
+  const firstPackReceipt = packReceiptRecords[0]
+  if (firstPackReceipt === undefined) throw new Error("Offline pack has no public byte receipts")
+  const packReceipts = [firstPackReceipt, ...packReceiptRecords.slice(1)] as const
+  const compatibilityRecords = catalog.profiles.map((profile) => ({
+    profileId: profile.id,
+    label: profile.label,
+    compatibilityKey: profile.compatibilityKey
+  }))
+  const firstCompatibility = compatibilityRecords[0]
+  if (firstCompatibility === undefined) throw new Error("Offline pack has no compatible profile")
+  const packNavigationRecords = [
+    ...new Set(
+      pages
+        .map((page) => page.canonicalPath)
+        .filter((path) => !baselineNavigation.has(path))
+    )
+  ]
+  const firstPackNavigation = packNavigationRecords[0]
+  if (firstPackNavigation === undefined) throw new Error("Offline pack has no navigation closure")
+  const offlinePackDescriptor = assertClosedOfflinePackDescriptor(
+    new OfflinePackDescriptor({
+      schemaVersion: 1,
+      id: `${manifest.releaseId}-v${manifest.packVersion}-${manifest.locale}`,
+      releaseId: manifest.releaseId,
+      packVersion: manifest.packVersion,
+      locale: manifest.locale,
+      label: `${catalog.profiles[0]?.label ?? "New York entry-level study"} offline pack`,
+      lifecycle: "preview",
+      publicationTime: null,
+      compatibility: [firstCompatibility, ...compatibilityRecords.slice(1)],
+      counts: {
+        profiles: manifest.profileCount,
+        sources: manifest.sourceCount,
+        tools: manifest.toolCount,
+        questions: manifest.questionCount,
+        hazardScenes: manifest.hazardSceneCount
+      },
+      totalBytes: packReceipts.reduce((sum, receipt) => sum + receipt.bytes, 0),
+      receipts: packReceipts,
+      applicationShellManifestPath: "/offline-pack-shell-manifest.json",
+      applicationShellManifestReceipt: null,
+      applicationShellBytes: null,
+      estimatedDownloadBytes: null,
+      requiredNavigation: [firstPackNavigation, ...packNavigationRecords.slice(1)]
+    })
+  )
+
+  pages.push({
+    relativePath: "offline/index.html",
+    canonicalPath: "/offline/",
+    title: "Offline packs — NY Custodian Exam Study",
+    description: "Explicitly download, verify, activate, retain, and remove local study packs.",
+    robots: "noindex,follow",
+    routeId: "offline-packs",
+    section: "utility",
+    body: `
+  <main class="page-shell" id="main-content" tabindex="-1">
+    ${breadcrumb([{ label: "Offline packs" }])}
+    <section class="hero"><p class="eyebrow">Explicit local content</p><h1>Control every offline-pack transition.</h1><p>No study pack downloads on page load. A requested pack is staged, checksum-verified, and then waits for a separate activation action. Failed updates leave the prior active pack unchanged.</p></section>
+    <div data-offline-pack-manager data-island="offline-pack-manager"><p>JavaScript and available browser storage are required to manage explicit packs. No download has started.</p></div>
+    <noscript><p class="source-note">Pack management requires JavaScript. Static references remain available online.</p></noscript>
+  </main>
+  <script id="offline-pack-descriptor" type="application/json">${escapeJsonForHtml(offlinePackDescriptor)}</script>
+  <script type="module" src="/src/offline-packs/react/bootstrap.tsx"></script>`
+  })
+
+  const settingsBootstrap = {
+    schemaVersion: 1,
+    questionIds: questions.map(({ value }) => value.id),
+    sceneIds: scenes.map(({ value }) => value.id)
+  } as const
+  pages.push({
+    relativePath: "settings/index.html",
+    canonicalPath: "/settings/",
+    title: "Local settings and data — NY Custodian Exam Study",
+    description: "Manage local preferences, validated export/import, quarantine, and scoped reset.",
+    robots: "noindex,follow",
+    routeId: "settings",
+    section: "utility",
+    body: `
+  <main class="page-shell" id="main-content" tabindex="-1">
+    ${breadcrumb([{ label: "Settings" }])}
+    <section class="hero"><p class="eyebrow">Local-first controls</p><h1>Keep local data understandable and portable.</h1><p>Preferences, export, import preview, quarantine, and scoped reset work without an account. Offline-pack removal stays on its own page so version pins cannot be bypassed.</p></section>
+    <div data-settings data-island="settings"><p>JavaScript and IndexedDB are required to inspect local settings. Nothing is changed while this view loads.</p></div>
+  </main>
+  <script id="settings-bootstrap-data" type="application/json">${escapeJsonForHtml(settingsBootstrap)}</script>
+  <script type="module" src="/src/settings/react/bootstrap.tsx"></script>`
+  })
+
+  pages.push({
+    relativePath: "report/index.html",
+    canonicalPath: "/report/",
+    title: "Report a correction — NY Custodian Exam Study",
+    description: "Save a structured correction draft locally and submit only when intake is separately activated.",
+    robots: "noindex,follow",
+    routeId: "correction-submit",
+    section: "utility",
+    body: `
+  <main class="page-shell" id="main-content" tabindex="-1">
+    ${breadcrumb([{ href: "/transparency/", label: "Transparency" }, { label: "Report a correction" }])}
+    <section class="hero"><p class="eyebrow">Structured text only · no attachments</p><h1>Report a content, access, rights, or security concern.</h1><p>Do not include secure questions, answer options, reconstructed drawings, photographs, or review-session notes. Local drafting works offline. Going online never submits or retries a draft automatically.</p></section>
+    <aside class="local-data-warning"><h2>Online intake is not activated</h2><p>The endpoint implementation is committed dormant. Until privacy, storage, retention, triage, abuse handling, domain routing, and production authority receive separate approval, this page can only retain local drafts truthfully.</p></aside>
+    <div data-correction-form data-island="correction-form"><p>JavaScript and IndexedDB are required to save a local draft. Nothing has been submitted.</p></div>
+  </main>
+  <script type="module" src="/src/corrections/react/bootstrap.tsx"></script>`
+  })
+
+  pages.push({
+    relativePath: "transparency/corrections/index.html",
+    canonicalPath: "/transparency/corrections/",
+    title: "Corrections policy — NY Custodian Exam Study",
+    description: "How corrections preserve history and remain separate from secure exam material.",
+    robots: "index,follow",
+    routeId: "corrections",
+    section: "transparency",
+    body: `
+  <main class="page-shell" id="main-content" tabindex="-1">${breadcrumb([{ href: "/transparency/", label: "Transparency" }, { label: "Corrections" }])}<article class="reference-card"><p class="eyebrow">Corrections</p><h1>Corrections do not silently rewrite history.</h1><p>Reports may cover facts, original questions, explanations, images, accessibility, translation, rights, or security. A report is not publication. Accepted changes retain stable identities and correction history where applicable.</p><p>No attachments are accepted in v1. Suspected secure material must not be reproduced and, after any future activation, would enter a nonpublic hold without confirming whether it is genuine.</p><a class="button button-primary" href="/report/">Open the local-first report form</a></article></main>`
+  })
+
+  pages.push({
+    relativePath: "transparency/privacy/index.html",
+    canonicalPath: "/transparency/privacy/",
+    title: "Privacy — NY Custodian Exam Study",
+    description: "Local-first study privacy and the dormant correction-intake boundary.",
+    robots: "index,follow",
+    routeId: "privacy",
+    section: "transparency",
+    body: `
+  <main class="page-shell" id="main-content" tabindex="-1">${breadcrumb([{ href: "/transparency/", label: "Transparency" }, { label: "Privacy" }])}<article class="reference-card"><p class="eyebrow">Launch privacy</p><h1>Progress and diagnostics stay on this device.</h1><p>No account, name, email, employer, applicant ID, or admission number is required. There is no launch analytics, ad profiling, cross-site tracking, data sale, or advertising audience creation.</p><p>Correction drafts stay local unless a learner explicitly submits after a future separately approved activation. The committed production configuration has no correction database, rate-limit binding, route, preview URL, logging, or data collection.</p><p>Exports exclude free-form correction drafts unless the learner explicitly includes them.</p></article></main>`
+  })
+
+  pages.push({
+    relativePath: "transparency/security/index.html",
+    canonicalPath: "/transparency/security/",
+    title: "Security policy — NY Custodian Exam Study",
+    description: "A non-reproduction boundary for secure and recalled exam material.",
+    robots: "index,follow",
+    routeId: "security",
+    section: "transparency",
+    body: `
+  <main class="page-shell" id="main-content" tabindex="-1">${breadcrumb([{ href: "/transparency/", label: "Transparency" }, { label: "Security" }])}<article class="reference-card"><p class="eyebrow">Test security</p><h1>Do not reproduce secure exam material.</h1><p>Do not submit remembered questions, answer choices, reconstructed diagrams, photographs, admission notices, or review-session notes. This project publishes original study tasks and public-source references only.</p><p>The report contract returns a generic receipt and never confirms whether suspected secure material is genuine. There is no attachment handling or automatic public posting.</p><a href="/report/">Report a security concern without reproducing material</a></article></main>`
+  })
+
+  pages.push({
+    relativePath: "transparency/foil/index.html",
+    canonicalPath: "/transparency/foil/",
+    title: "FOIL research boundary — NY Custodian Exam Study",
+    description: "The current public-record research boundary and unresolved external actions.",
+    robots: "index,follow",
+    routeId: "foil",
+    section: "transparency",
+    body: `
+  <main class="page-shell" id="main-content" tabindex="-1">${breadcrumb([{ href: "/transparency/", label: "Transparency" }, { label: "FOIL research" }])}<article class="reference-card"><p class="eyebrow">Research operations</p><h1>No external outreach is implied.</h1><p>Read-only official-source research and factual refreshes may inform the site. No FOIL request, email, records purchase, or other outreach is sent without separate authorization. Open facts remain labeled unresolved rather than guessed.</p></article></main>`
+  })
+
   const paths = new Set<string>()
   const canonicals = new Set<string>()
   for (const page of pages) {
@@ -907,8 +1093,11 @@ export const generateSite = async (): Promise<void> => {
     "exams",
     "hazards",
     "ny",
+    "offline",
     "practice",
+    "report",
     "review",
+    "settings",
     "status",
     "transparency"
   ]

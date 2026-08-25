@@ -1,4 +1,5 @@
 import { readFile, readdir, writeFile } from "node:fs/promises"
+import { createHash } from "node:crypto"
 import { dirname, relative, resolve } from "node:path"
 import { isDeepStrictEqual } from "node:util"
 import { ReleaseManifest } from "@nycustodian/content/model"
@@ -8,6 +9,10 @@ import {
   derivePublicDeliveryManifest,
   type PublicDeliveryManifest
 } from "../src/delivery-manifest.ts"
+import {
+  OfflineShellManifest,
+  decodeGeneratedOfflinePackDescriptor
+} from "../src/offline-packs/model.ts"
 import {
   cacheVersionFor,
   finalizeServiceWorker
@@ -25,11 +30,20 @@ const internalManifestUrl = new URL(
 )
 
 const safePrecacheArtifactKinds = new Set([
-  "catalog",
-  "pack-precommit",
-  "question-precommit",
-  "scene-precommit",
-  "legacy-question-precommit"
+  "catalog"
+])
+
+const baselineNavigation = new Set([
+  "/",
+  "/offline/",
+  "/report/",
+  "/settings/",
+  "/status/",
+  "/transparency/",
+  "/transparency/corrections/",
+  "/transparency/foil/",
+  "/transparency/privacy/",
+  "/transparency/security/"
 ])
 
 const answerBearingFileSegment =
@@ -176,6 +190,7 @@ const assertClosedBuildTree = (
     "404.html",
     "offline.html",
     "manifest.webmanifest",
+    "offline-pack-shell-manifest.json",
     "styles.css",
     "sw.js",
     "content/vertical-slice/manifest.json",
@@ -184,6 +199,87 @@ const assertClosedBuildTree = (
     ...builtAssets.map((path) => path.slice(1))
   ])
   assertEqualPathSets(actual, expected, "Public build tree")
+}
+
+const sha256 = (bytes: Uint8Array): string =>
+  createHash("sha256").update(bytes).digest("hex")
+
+const buildPathForPublicPath = (path: string): string => {
+  if (path === "/") return resolve(distRoot.pathname, "index.html")
+  if (path.endsWith("/")) return resolve(distRoot.pathname, `${path.slice(1)}index.html`)
+  return resolve(distRoot.pathname, path.slice(1))
+}
+
+export const writeOfflineShellManifest = async (
+  builtAssets: ReadonlyArray<string>
+): Promise<OfflineShellManifest> => {
+  const offlineDocument = await readFile(resolve(distRoot.pathname, "offline/index.html"), "utf8")
+  const match = offlineDocument.match(
+    /<script id="offline-pack-descriptor" type="application\/json">([\s\S]*?)<\/script>/
+  )
+  if (match?.[1] === undefined) {
+    throw new Error("Built offline page has no pack descriptor")
+  }
+  const descriptor = decodeGeneratedOfflinePackDescriptor(JSON.parse(match[1]) as unknown)
+  const paths = [
+    ...new Set([
+      ...descriptor.requiredNavigation,
+      "/offline.html",
+      "/manifest.webmanifest",
+      "/styles.css",
+      ...builtAssets
+    ])
+  ].sort()
+  const requiredNavigation = new Set(descriptor.requiredNavigation)
+  const receipts = await Promise.all(paths.map(async (path) => {
+    const value = new Uint8Array(await readFile(buildPathForPublicPath(path)))
+    return {
+      kind: requiredNavigation.has(path) ? "navigation" as const : "application-asset" as const,
+      path,
+      bytes: value.byteLength,
+      sha256: sha256(value)
+    }
+  }))
+  const first = receipts[0]
+  if (first === undefined) throw new Error("Offline application-shell manifest is empty")
+  const manifest = new OfflineShellManifest({
+    schemaVersion: 1,
+    scope: "offline-application-shell",
+    packId: descriptor.id,
+    releaseId: descriptor.releaseId,
+    packVersion: descriptor.packVersion,
+    receipts: [first, ...receipts.slice(1)]
+  })
+  await writeFile(
+    resolve(distRoot.pathname, "offline-pack-shell-manifest.json"),
+    `${JSON.stringify(manifest, null, 2)}\n`
+  )
+  const manifestBytes = new Uint8Array(
+    await readFile(resolve(distRoot.pathname, "offline-pack-shell-manifest.json"))
+  )
+  const rootedDescriptor = {
+    ...descriptor,
+    applicationShellManifestReceipt: {
+      path: descriptor.applicationShellManifestPath,
+      bytes: manifestBytes.byteLength,
+      sha256: sha256(manifestBytes)
+    },
+    applicationShellBytes: manifestBytes.byteLength + manifest.receipts.reduce(
+      (sum, receipt) => sum + receipt.bytes,
+      0
+    ),
+    estimatedDownloadBytes: descriptor.totalBytes + manifestBytes.byteLength +
+      manifest.receipts.reduce((sum, receipt) => sum + receipt.bytes, 0)
+  }
+  const rootedJson = JSON.stringify(rootedDescriptor)
+    .replaceAll("<", "\\u003c")
+    .replaceAll("\u2028", "\\u2028")
+    .replaceAll("\u2029", "\\u2029")
+  await writeFile(
+    resolve(distRoot.pathname, "offline/index.html"),
+    offlineDocument.replace(match[1], rootedJson)
+  )
+  return manifest
 }
 
 export const canonicalizeGeneratedDocuments = async (
@@ -248,6 +344,11 @@ export const finalizeBuild = async (): Promise<void> => {
   }
   await writeFile(builtManifestUrl, serializePublicDeliveryManifest(internalManifest))
 
+  const provisionalBuildFiles = await collectFiles(distRoot.pathname)
+  const htmlPaths = provisionalBuildFiles.filter((path) => path.endsWith(".html"))
+  const builtAssets = await collectReferencedBuildAssets(distRoot.pathname, htmlPaths)
+  await writeOfflineShellManifest(builtAssets)
+
   const buildFiles = await collectFiles(distRoot.pathname)
   const relativeBuildFiles = buildFiles.map((path) => normalizedRelativePath(distRoot.pathname, path))
   assertSafeBuildPaths(relativeBuildFiles)
@@ -260,17 +361,16 @@ export const finalizeBuild = async (): Promise<void> => {
       normalizedRelativePath(publicAssetRoot.pathname, path)
     )
   )
-  const htmlPaths = buildFiles.filter((path) => path.endsWith(".html"))
-  const builtAssets = await collectReferencedBuildAssets(distRoot.pathname, htmlPaths)
   assertClosedBuildTree(buildFiles, canonicalPaths, manifest, builtAssets)
   const safeContent = manifest.artifacts
     .filter((artifact) => safePrecacheArtifactKinds.has(artifact.kind))
     .map((artifact) => `/content/vertical-slice/${artifact.path}`)
 
   const shellUrls = [
-    ...canonicalPaths,
+    ...canonicalPaths.filter((path) => baselineNavigation.has(path)),
     "/404.html",
     "/offline.html",
+    "/offline-pack-shell-manifest.json",
     "/manifest.webmanifest",
     "/styles.css",
     "/content/vertical-slice/manifest.json",

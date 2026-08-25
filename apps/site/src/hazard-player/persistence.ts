@@ -224,7 +224,7 @@ const commitAttempt = Effect.fn("HazardPersistence.commitAttempt")(function*(
               })
               attempts.put(committed)
             } else {
-              const existing = Schema.decodeUnknownSync(HazardAttemptRecord)(getRequest.result)
+              const existing = decodeStoredHazardAttempt(getRequest.result)
               if (!sameCommittedInput(existing, input)) {
                 transaction.abort()
                 reject(new Error("This hazard attempt already has a different committed response"))
@@ -280,9 +280,7 @@ const findAttempt = Effect.fn("HazardPersistence.findAttempt")(function*(
               resolve(undefined)
               return
             }
-            const attempt = validateStoredAttempt(
-              Schema.decodeUnknownSync(HazardAttemptRecord)(request.result)
-            )
+            const attempt = decodeStoredHazardAttempt(request.result)
             if (!matchesExpectation(attempt, input)) {
               reject(new Error("The saved hazard attempt does not match this release receipt"))
               return
@@ -300,7 +298,17 @@ const findAttempt = Effect.fn("HazardPersistence.findAttempt")(function*(
   })
 })
 
-const validateStoredAttempt = (attempt: HazardAttemptRecord): HazardAttemptRecord => {
+export const decodeStoredHazardAttempt = (record: unknown): HazardAttemptRecord => {
+  const attempt = Schema.decodeUnknownSync(
+    HazardAttemptRecord,
+    { onExcessProperty: "error" }
+  )(record)
+  if (!Number.isFinite(attempt.committedAt) || attempt.committedAt < 0) {
+    throw new Error("A saved hazard attempt has an invalid commit time")
+  }
+  if ((attempt.receipt === undefined) !== (attempt.allowedZoneOrders === undefined)) {
+    throw new Error("A saved hazard attempt has a partial release receipt closure")
+  }
   const selectedCount = attempt.mode === "visual"
     ? attempt.markers.length
     : attempt.selectedZoneOrders.length
@@ -354,7 +362,7 @@ const listAttempts = Effect.fn("HazardPersistence.listAttempts")(function*(
           try {
             decoded = request.result
               .map((record) =>
-                validateStoredAttempt(Schema.decodeUnknownSync(HazardAttemptRecord)(record))
+                decodeStoredHazardAttempt(record)
               )
               .sort((left, right) =>
                 left.committedAt - right.committedAt || left.id.localeCompare(right.id)
@@ -388,8 +396,7 @@ export const hazardPersistenceLive = Layer.effect(
         {
           sourceStore: attemptsStore,
           targetStore: attemptsStore,
-          decodeRecord: (record) =>
-            validateStoredAttempt(Schema.decodeUnknownSync(HazardAttemptRecord)(record))
+          decodeRecord: decodeStoredHazardAttempt
         },
         {
           sourceStore: sessionsStore,

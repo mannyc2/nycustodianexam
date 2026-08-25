@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Manage local preferences, validated export/import, quarantine, and scoped reset.">
+  <meta name="robots" content="noindex,follow">
+  <!--__CANONICAL__/settings/-->
+  <link rel="manifest" href="/manifest.webmanifest">
+  <script type="module" src="/src/settings/preferences-boot.ts"></script>
+  <link rel="stylesheet" href="/styles.css">
+  <title>Local settings and data — NY Custodian Exam Study</title>
+</head>
+<body data-route-id="settings">
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand" href="/">NY Custodian Exam</a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/exams/">Exam profile</a>
+        <a href="/atlas/">Tool atlas</a>
+        <a href="/practice/">Practice</a>
+        <a href="/hazards/">Hazards</a>
+        <a href="/transparency/">Transparency</a>
+        <a href="/offline/">Offline packs</a>
+        <a href="/settings/">Settings</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-shell" id="main-content" tabindex="-1">
+    
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol><li><span aria-current="page">Settings</span></li></ol>
+  </nav>
+    <section class="hero"><p class="eyebrow">Local-first controls</p><h1>Keep local data understandable and portable.</h1><p>Preferences, export, import preview, quarantine, and scoped reset work without an account. Offline-pack removal stays on its own page so version pins cannot be bypassed.</p></section>
+    <div data-settings data-island="settings"><p>JavaScript and IndexedDB are required to inspect local settings. Nothing is changed while this view loads.</p></div>
+  </main>
+  <script id="settings-bootstrap-data" type="application/json">{"schemaVersion":1,"questionIds":["tool-selection-001","tool-selection-002"],"sceneIds":["s001","s002","s003","s004","s005","s006","s007","s008","s009","s010","s011","s012","s013","s014","s015","s016","s017","s018"]}</script>
+  <script type="module" src="/src/settings/react/bootstrap.tsx"></script>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <p>Independent study project. Not affiliated with or endorsed by New York City or New York State.</p>
+      <nav aria-label="Site policies"><a href="/report/">Report a correction</a> · <a href="/transparency/privacy/">Privacy</a> · <a href="/transparency/security/">Security</a></nav>
+    </div>
+  </footer>
+</body>
+</html>

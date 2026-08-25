@@ -77,6 +77,11 @@ test("known-offline partial start blocks commitment when exact feedback is absen
 
   await gotoReadyQuestion(page)
   await waitForActiveServiceWorker(page)
+  // Study navigation now belongs to explicit packs rather than the baseline
+  // shell. Cache this exact document through one controlled online navigation
+  // so the test isolates missing verified feedback, not missing navigation.
+  await page.reload()
+  await expect(page.getByRole("radio", { name: "Pipe wrench" })).toBeEnabled()
   await page.goto("/practice/")
   await expect.poll(() => page.evaluate(() => navigator.serviceWorker.controller !== null)).toBe(true)
   expect(await page.evaluate((cacheName) => caches.delete(cacheName), verifiedContentCacheName))

@@ -8,7 +8,7 @@ import {
 const visualHazardPath = "/hazards/session/launch-v1/scene/1/"
 const nonvisualHazardPath = "/hazards/session/launch-v1-nonvisual/scene/1/"
 const previousAppDatabaseVersion = 2
-const currentAppDatabaseVersion = 3
+const currentAppDatabaseVersion = 5
 
 interface DatabaseSeed {
   readonly databaseName: string

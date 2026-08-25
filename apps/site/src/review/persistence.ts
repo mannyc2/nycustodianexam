@@ -88,10 +88,16 @@ export const reviewAcknowledgementId = (input: AcknowledgeReviewInput): string =
 const sameStrings = (left: ReadonlyArray<string>, right: ReadonlyArray<string>): boolean =>
   left.length === right.length && left.every((value, index) => value === right[index])
 
-const validateStoredAcknowledgement = (
+export const decodeStoredReviewAcknowledgement = (
   record: unknown
 ): ReviewAcknowledgementRecord => {
-  const decoded = Schema.decodeUnknownSync(ReviewAcknowledgementRecord)(record)
+  const decoded = Schema.decodeUnknownSync(
+    ReviewAcknowledgementRecord,
+    { onExcessProperty: "error" }
+  )(record)
+  if (!Number.isFinite(decoded.acknowledgedAt) || decoded.acknowledgedAt < 0) {
+    throw new Error("A saved review acknowledgement has an invalid acknowledgement time")
+  }
   const reasonIds = normalizeReasonIds(decoded.reasonIds)
   const expectedId = reviewAcknowledgementId({
     itemId: decoded.itemId,
@@ -133,7 +139,7 @@ const acknowledge = Effect.fn("ReviewPersistence.acknowledge")(function*(
               return
             }
 
-            const existing = Schema.decodeUnknownSync(ReviewAcknowledgementRecord)(request.result)
+            const existing = decodeStoredReviewAcknowledgement(request.result)
             if (
               existing.itemId !== input.itemId ||
               existing.attemptId !== input.attemptId ||
@@ -178,7 +184,7 @@ const listAcknowledgements = Effect.fn("ReviewPersistence.listAcknowledgements")
         request.onsuccess = () => {
           try {
             decoded = request.result
-              .map(validateStoredAcknowledgement)
+              .map(decodeStoredReviewAcknowledgement)
               .sort((left, right) =>
                 left.acknowledgedAt - right.acknowledgedAt || left.id.localeCompare(right.id)
               )
@@ -210,7 +216,7 @@ export const reviewPersistenceLive = Layer.effect(
       stores: [{
         sourceStore: acknowledgementStore,
         targetStore: acknowledgementStore,
-        decodeRecord: validateStoredAcknowledgement
+        decodeRecord: decodeStoredReviewAcknowledgement
       }]
     }).pipe(Effect.mapError(databasePersistenceError))
     const connection = appDatabase.connection.pipe(

@@ -1,7 +1,14 @@
 import { Context, Effect, Schema } from "effect"
 
 export const appDatabaseName = "nycustodian-study-v1"
-export const appDatabaseVersion = 3
+// M4 owns version 4. M5 deliberately advances to version 5 so users who have
+// already opened the M4 database receive every M5 store on their next visit.
+// Integration must make this map the exact union of M4's simulation/session/
+// submission/print-job stores and the M5 stores below. A real-browser v4 -> v5
+// seed must preserve those M4 records while creating every M5 store. The
+// upgrade owner creates every declared missing store, so direct older -> v5
+// upgrades remain complete after that rebase.
+export const appDatabaseVersion = 5
 
 export const appDatabaseStores = {
   meta: "meta",
@@ -10,7 +17,12 @@ export const appDatabaseStores = {
   hazardAttempts: "hazard-attempts",
   hazardSessions: "hazard-sessions",
   reviewAcknowledgements: "review-events",
-  migrationQuarantine: "migration-quarantine"
+  migrationQuarantine: "migration-quarantine",
+  preferences: "preferences",
+  correctionDrafts: "correction-drafts",
+  offlinePacks: "offline-packs",
+  offlinePackOperations: "offline-pack-operations",
+  transferQuarantine: "transfer-quarantine"
 } as const
 
 export const legacyAppDatabaseNames = {

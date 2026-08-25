@@ -140,6 +140,38 @@ Status: standing legal/editorial caution. Any future item text obtained through 
 
 ## Product / SEO open decisions
 
+### Accepted launch and operational decisions — 2026-08-25
+
+- **V1 content scope:** English-only statewide entry-level Custodians and
+  Janitors series with the Nassau layer. The data and route architecture stays
+  Spanish-ready, but Spanish pages, higher-level series, NYC, and other-county
+  expansion are deferred until their own reviewed content gates pass.
+- **V1 content threshold:** publish the complete accepted Tier A/B atlas and
+  comparisons plus all 18 reviewed hazard scenes. Advertised 45/60/90 question
+  sets require enough original items to avoid hidden repeats; filtered setups
+  must disable any length their compatible inventory cannot satisfy. All
+  distributions and results remain labeled site-designed, never official.
+- **Corrections:** implementation of a narrow first-party endpoint is
+  authorized. Activation and user-data collection are not. The checked-in
+  Worker must remain dormant and unbound until storage, retention, triage,
+  privacy, abuse handling, ephemeral per-client plus global rate limiting,
+  production routing, and operator authority receive separate approval. Local
+  correction drafts remain the truthful launch behavior.
+- **Analytics:** no launch analytics. Diagnostics remain local; any later
+  opt-in first-party analytics proposal requires separate approval.
+- **Certification:** the complete automated Chromium/Firefox/WebKit gate plus
+  manual NVDA+Firefox (Windows), VoiceOver+Safari (macOS/iOS), TalkBack+Chrome
+  (Android), JAWS smoke when licensed, true 400% zoom in Chrome/Firefox/Safari,
+  US Letter+A4 normal/large print, and one grayscale physical-print inspection
+  block production. Missing hardware means preview only with exact gaps stated.
+- **Deployment:** Cloudflare Workers Static Assets remains selected. Remote
+  preview precedes production from merged `main`; exact domain, account/project,
+  credentials/token, canonical-host redirects, and production authority remain
+  pending. Local CI/CD implementation does not require committing a token.
+- **External actions:** read-only official-source research and factual refreshes
+  are allowed. Domain purchase, FOIL requests, email/outreach, analytics, and
+  correction-data collection require separate authorization.
+
 ### P16 — Final application architecture baseline
 
 **Status:** SECOND-PASS RESEARCH RECONCILED / IMPLEMENTATION GATES OPEN.
@@ -153,16 +185,17 @@ Status: standing legal/editorial caution. Any future item text obtained through 
 - Bun is the package-management, workspace, and primary TypeScript tooling direction;
 - Bun `1.4.0` is the locked scaffold toolchain and its frozen-install/lock gate
   has passed;
-- the implemented initial graph is `apps/site`, `apps/content-compiler`, and
-  `packages/content`;
+- the initial graph is `apps/site`, `apps/content-compiler`, and
+  `packages/content`; M5 adds the shared `packages/correction-intake` contract
+  and dormant, separately owned `apps/correction-worker` root;
 - Vite is the browser build/development direction;
 - Cloudflare Workers Static Assets remains the initial deployment direction;
 - no Worker script merely to serve static files;
 - React 19 is selected for lazy interactive islands;
 - immutable renderer-neutral `ScreenSnapshot` values, semantic commands, and
   state/actions/meta provider contracts remain the application/view boundary;
-- one long-lived browser `ManagedRuntime` is created at the site application
-  root, not per render or event;
+- one long-lived browser `ManagedRuntime` is created for each interactive
+  document's smallest cohesive service graph, not per render or event;
 - component APIs use compound composition, lifted shared state, children, and
   explicit variants instead of behavioral boolean-prop proliferation;
 - the direct-DOM-first R2.90 choice remains evidence/baseline and a possible
@@ -254,46 +287,118 @@ revision.
   accessibility, and true-BFCache contracts; the complete cross-browser matrix
   and release certification remain separate gates beyond that local evidence.
 
+**Current isolated M5 implementation evidence (2026-08-25):**
+
+- the generator emits the new offline, settings, report, corrections, FOIL,
+  privacy, and security documents without placeholder content;
+- explicit pack stage/verify/activate/retain/remove state is receipt-bound;
+  every stage uses a unique cache generation plus deterministic immutable-record
+  fingerprint; exact external shell-manifest bytes live only at a fixed
+  non-servable origin key; full descriptor/root/child verification precedes
+  bulk runtime promotion; failed stage/activation removes only the losing
+  generation and its unshared promotions; and final activation is an exact
+  generation/fingerprint CAS that cannot displace the prior active pack after
+  corruption;
+- strict durable semantic decoders, checksummed portable transfer/quarantine,
+  apply-time parent/dependent reclassification in one transaction,
+  transaction-counted scoped reset, authoritative IndexedDB preferences, and
+  explicit local correction drafts/accepted receipts are implemented;
+- a strict, idempotent correction Worker contract exists dormant with no
+  production bindings or routes; and
+- all five workspace typechecks, browser-test typecheck, 210 unit tests, the
+  65-document production build and closed artifact/root verifier pass locally;
+  all 34 standard Chromium cases pass on this exact revision, including seven
+  M5 cases for correction truthfulness, mirror failure/cross-tab preferences,
+  reset, semantic portable import and apply-time drift, generation quarantine/
+  restage, stored-pack actions, historical-attempt preservation, and active-pack
+  offline atlas navigation/image delivery.
+
+This lane does not close M5 yet: M4 owns IndexedDB v4. Integration must make v5
+the exact union, preserve seeded M4 simulation/submission/print records, include
+those substantive records in transfer/reset, quarantine a simulation record
+whole when any question reference is unknown, and pass the full release matrix.
+
+**Blocking M4→M5 integration checklist (do not approximate after merge):**
+
+1. Rebase `appDatabaseStores` onto the exact M4 v4 store identifiers, then add
+   the M5 stores without aliases or replacement stores. A real-browser v4→v5
+   seed must preserve byte-equivalent simulation sessions, submissions, and
+   immutable print jobs while creating every missing M5 store.
+2. Put the exact offline-pack `id`, `generation`, immutable descriptor
+   fingerprint, `releaseId`, and `packVersion` on every resumable simulation
+   session. Create that pin in the same read-write transaction that verifies the
+   pack is still active and not `removing`.
+3. Extend the removal-claim transaction—not its preview—to include the M4
+   simulation-session store. It must recheck active and submitted-but-pending
+   session pins before changing the exact generation to `removing`. If session
+   pin creation commits first, removal must reject; if removal claims first,
+   session creation must reject. Add deterministic browser tests for both commit
+   orders. Completed simulation results are historical impact, not active pins.
+4. Preserve the M5 historical-attempt rule: question/hazard `active` session
+   rows are latest-attempt projections, not live-session proof. The removal
+   claim transaction must still reread question/hazard attempts. If a matching
+   attempt appears after a zero-impact preview, an unconfirmed claim rejects
+   with confirmation required; an already confirmed claim may proceed. Keep
+   both race-order regression tests.
+5. Extend the portable envelope, strict durable decoders, semantic validation,
+   export validation, import preview, apply-time recomputation, and one atomic
+   apply transaction to simulation sessions/submissions and immutable print
+   jobs. Any unknown or conflicting question reference quarantines the entire
+   dependent simulation closure; no partial session, result, acknowledgement,
+   or print record may commit.
+6. Extend reset scopes/counts and documentation to the exact M4 stores. Preview
+   and apply must keep their existing transaction-counted semantics and must not
+   silently omit simulation/submission/print data.
+7. Re-run source/browser typechecks, the real v4→v5 preservation seed, portable
+   semantic-invalid and dependent-record TOCTOU tests, both session-pin/removal
+   order tests, historical-attempt preview/claim races, scoped reset, pack
+   activation rollback, and offline navigation before calling M5 integrated.
+
 **Implementation evidence still open:**
 
 - current-v4 IndexedDB failure/quota/disposal proof and commit/reconciliation
   coverage across the remaining supported real-browser matrix;
-- service-worker version/eviction/update behavior, remaining-browser offline
-  coverage, and explicit pack lifecycle proof;
+- service-worker version/eviction/update behavior and remaining-browser offline
+  coverage;
 - a complete location-preserving JSONC/canonical-JSON profile and generated
   release-artifact retention policy for content at scale;
 - complete cross-browser accessibility, zoom/reflow, keyboard, performance,
   and remaining-browser offline gates;
-- M4/M5 simulation, complete print output, explicit content-pack lifecycle,
-  settings, and corrections flows;
+- M4 simulation and complete print output, plus M4→M5 database/portable-data
+  integration proof for simulation sessions/submissions and immutable print jobs;
+- the complete release-wide M5 browser/certification matrix beyond the targeted
+  Chromium pack/settings/correction evidence;
 - sitemap generation, remote Cloudflare preview/deployment configuration, and
-  any separately authorized future Worker API;
-- first-party analytics/observability policy; and
+  separately authorized correction-Worker activation bindings; and
 - custom domain/canonical host.
 
 Decision criteria remain: indexable static HTML; installable/offline PWA; explicit versioned content packs; local-first progress; deterministic print and simulations; WCAG behavior; no pre-answer leakage; low operating cost; minimal backend.
 
-**Status:** RESOLVED BASELINE / CONTROLLED M1–M3 IMPLEMENTATION PROOF, NOT A
+**Status:** RESOLVED BASELINE / CONTROLLED M1–M3 PLUS ISOLATED M5 IMPLEMENTATION PROOF, NOT A
 RELEASE. Local deterministic verification and the complete pinned-Chromium
-browser gates pass; the complete browser matrix, M4/M5, the
+M1–M3 browser gates pass; the complete browser matrix, M4, M4/M5 integration, the
 canonical host, sitemap, deployment, and release certification remain open. P16
 remains in this ledger for provenance; failures in the scaffold may reopen a
 bounded implementation decision, but do not silently restore superseded
 defaults.
 
-No backend is authorized. A correction endpoint remains deferred until its
-product, privacy, idempotency, rate, abuse, and workerd contract is approved.
+Correction-endpoint implementation is authorized and exists only as a dormant
+workerd root. Activation/data collection remain forbidden until storage,
+retention, triage, privacy, abuse handling, ephemeral per-client and global
+rate-limit bindings, routing, and production authority are separately approved.
 The custom domain/canonical host remains P17.
 
 ### P17 — Domain / canonical host
 Preferred naming direction: NYCustodianExam / NY Custodian Exam. Domain registration/canonical production host not established in corpus.
 
-Status: OPEN operational decision.
+Status: OPEN operational decision. Exact owned domain, Cloudflare account and
+project, credentials/token, canonical apex/`www` redirect, and production
+authority are pending. Do not purchase or deploy from this ledger entry.
 
 ### P18 — Spanish launch depth
-Architecture should support Spanish from the outset. Indexable Spanish pages should launch only after substantive professional/reviewed translation exists.
-
-Open: launch with statewide hub + priority atlas subset versus larger initial translation set.
+Architecture supports a future Spanish surface. V1 is resolved as English-only
+for the statewide entry-level series with the Nassau layer. Indexable Spanish
+pages remain deferred until substantive professional/reviewed translation exists.
 
 ### P19 — High-level series launch timing
 Higher-level series is a valuable adjacent cluster, but mixing it into entry-level content is prohibited. Separate bank/hub can follow after entry-level corpus is sufficiently strong.

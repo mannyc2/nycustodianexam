@@ -125,7 +125,17 @@ const validateCommitInput = (input: CommitAttemptInput): QuestionPersistenceErro
   return undefined
 }
 
-const validateStoredAttempt = (attempt: QuestionAttemptRecord): QuestionAttemptRecord => {
+export const decodeStoredQuestionAttempt = (record: unknown): QuestionAttemptRecord => {
+  const attempt = Schema.decodeUnknownSync(
+    QuestionAttemptRecord,
+    { onExcessProperty: "error" }
+  )(record)
+  if (!Number.isFinite(attempt.committedAt) || attempt.committedAt < 0) {
+    throw new Error("A saved question attempt has an invalid commit time")
+  }
+  if ((attempt.receipt === undefined) !== (attempt.optionIds === undefined)) {
+    throw new Error("A saved question attempt has a partial release receipt closure")
+  }
   if (attempt.optionIds !== undefined) {
     Schema.decodeUnknownSync(OptionIds)(attempt.optionIds)
     if (!attempt.optionIds.includes(attempt.selectedOptionId)) {
@@ -177,9 +187,7 @@ const commitAttempt = Effect.fn("QuestionPersistence.commitAttempt")(function*(
           try {
             const stored = getRequest.result as unknown
             if (stored !== undefined) {
-              const existing = validateStoredAttempt(
-                Schema.decodeUnknownSync(QuestionAttemptRecord)(stored)
-              )
+              const existing = decodeStoredQuestionAttempt(stored)
               if (!sameCommittedInput(existing, input)) {
                 transaction.abort()
                 reject(new Error("This question attempt already has different immutable data"))
@@ -242,9 +250,7 @@ const findAttempt = Effect.fn("QuestionPersistence.findAttempt")(function*(
               resolve(undefined)
               return
             }
-            const attempt = validateStoredAttempt(
-              Schema.decodeUnknownSync(QuestionAttemptRecord)(request.result)
-            )
+            const attempt = decodeStoredQuestionAttempt(request.result)
             if (!matchesExpectation(attempt, input)) {
               reject(new Error("The saved question attempt does not match this release receipt"))
               return
@@ -275,7 +281,7 @@ const listAttempts = Effect.fn("QuestionPersistence.listAttempts")(function*(
           try {
             decoded = request.result
               .map((record) =>
-                validateStoredAttempt(Schema.decodeUnknownSync(QuestionAttemptRecord)(record))
+                decodeStoredQuestionAttempt(record)
               )
               .sort((left, right) =>
                 left.committedAt - right.committedAt || left.id.localeCompare(right.id)

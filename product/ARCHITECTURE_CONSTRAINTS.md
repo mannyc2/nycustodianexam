@@ -348,13 +348,16 @@ the immutable pre-normalization coordinate above.
 - The scaffold locks one synchronized Effect `4.0.0-rc.111` cohort and Bun
   `1.4.0`. Upgrade the Effect cohort atomically if a newer controlling v4
   coordinate is selected.
-- The implemented first graph is `apps/site`, `apps/content-compiler`, and
-  `packages/content`.
+- The initial graph was `apps/site`, `apps/content-compiler`, and
+  `packages/content`. M5 adds the narrowly owned
+  `packages/correction-intake` contract and dormant `apps/correction-worker`
+  workerd root; neither addition authorizes a production route or data collection.
   Defer `packages/study` until a second consumer or real ownership boundary
   earns it; do not create `apps/worker` without an authorized endpoint.
-- Keep the finite compiler at one Bun runtime root, create one browser
-  `ManagedRuntime` at the site application root, keep service-worker listeners
-  native and event-owned, and give a future Cloudflare Worker its own narrow
+- Keep the finite compiler at one Bun runtime root, create one long-lived
+  browser `ManagedRuntime` for each interactive document's smallest cohesive
+  service graph (never per render or event), keep service-worker listeners
+  native and event-owned, and keep correction intake in its own narrow dormant
   workerd root. The full `BunRuntime.runMain` platform integration remains a
   gate beyond the proof's current Bun-hosted top-level Effect program.
 - Services represent cohesive host I/O, failure, lifecycle, concurrency, or
@@ -397,6 +400,13 @@ failures. JSON Schema is an authoring aid, not publication authority.
 - Native service-worker code owns HTTP shell and immutable response caching.
   IndexedDB owns logical content-pack state and learner truth. In-memory worker
   state or finalizers cannot be correctness authority.
+- The trusted-current-app `/offline/` loader belongs to the baseline
+  service-worker shell and is deliberately excluded from the pack-managed shell
+  closure. Its build-finalized embedded descriptor contains the exact byte
+  length and SHA-256 root receipt for the external application-shell manifest.
+  Pack staging verifies that root before decoding the manifest, then hashes
+  every listed navigation/application object both at stage time and immediately
+  before activation. There is no self-hash or unrooted manifest trust.
 
 A reconciled R2.90 synthesis proposed the accepted initial graph, runtime roots,
 content compiler, storage/offline boundary, delivery/test direction, and first
@@ -413,8 +423,8 @@ Implemented by the first scaffold:
 - isolated root workspaces and exact root configuration;
 - concrete Schema content models and deterministic split compiler diagnostics;
 - one private scoped IndexedDB `AppDatabase` Layer, injected feature persistence
-  capabilities, one browser `ManagedRuntime`, and renderer-neutral question,
-  hazard, and review controllers with semantic commands;
+  capabilities, document-scoped browser `ManagedRuntime` roots, and
+  renderer-neutral question, hazard, and review controllers with semantic commands;
 - generated static/island route closures, canonical/robots output,
   service-worker asset closure, and maintained design tokens; and
 - automated typecheck, unit, commit-before-fetch, static-isolation,
@@ -427,24 +437,24 @@ Implemented by the first scaffold:
 
 Evidence still open:
 
-- evidence for any graph beyond `apps/site`, `apps/content-compiler`, and
-  `packages/content`;
+- post-M4 proof that IndexedDB v5 is the exact v4+M5 store union, preserves
+  seeded simulation session/submission and print-job records, and includes
+  those records in portable transfer and the documented reset scopes;
 - the full Bun platform runtime root for the finite compiler;
 - exact current v4 Platform/browser provider behavior at the locked cohort;
 - remaining-browser IndexedDB commit/reload plus cross-browser
   failure/quota/disposal proof;
-- service-worker version/eviction/update, remaining-browser offline, and
-  explicit-pack proof;
+- service-worker version/eviction/update and remaining-browser offline proof;
 - a complete location-preserving JSONC adapter and canonical JSON profile with
   duplicate-key, multibyte, comment, range, number, Unicode, and escaping proof;
 - the generated-release artifact retention policy and full Tier A/B content
   completeness derived from validated registries and review states;
-- Cloudflare configuration and any separately authorized Worker endpoint;
-- the complete Playwright browser/accessibility/zoom/reflow/keyboard,
-  performance, and offline matrix beyond the targeted Chromium
-  application-database contracts;
-- first-party observability/analytics choice, if any;
-- correction endpoint implementation/storage;
+- remote Cloudflare configuration and correction-intake activation authority;
+- the Firefox/WebKit and manual Playwright-adjacent accessibility/true-zoom,
+  device/print, performance, and remaining-browser offline matrix beyond the
+  complete local Chromium run;
+- the separately approved correction storage, retention, triage, privacy,
+  abuse-handling, ephemeral rate-key, routing, and production-binding contract;
 - custom-domain/canonical-host configuration.
 
 Resolve these through implementation evidence and, only where evidence exposes a
@@ -455,14 +465,18 @@ first-pass or direct-DOM defaults forward silently.
 
 - Static/reference routes contain useful semantic HTML and no Effect closure.
   Interactive study islands load independently through Vite.
-- Cloudflare Workers Static Assets is the initial host. Do not add a Worker just
-  to serve files; a future correction endpoint requires explicit product,
-  privacy, idempotency, rate, abuse, and workerd verification.
+- Cloudflare Workers Static Assets is the initial host. The correction Worker is
+  implemented as a dormant separate root and checked in with no routes, D1,
+  rate-limit bindings, secret, preview URL, workers.dev URL, or logging. It must
+  remain disabled until storage, retention, triage, privacy, abuse handling,
+  ephemeral network-key derivation, global limiting, routing, and production
+  authority are separately approved and configured.
 - Use Bun test for pure/Bun-host work, `@effect/vitest` for Effect behavior, and
   real Chromium, Firefox, and WebKit for browser semantics. Artifact/leak scans,
   automated accessibility checks, manual assistive-technology review, print
   review, failure injection, and two clean builds have separate responsibilities.
-- Diagnostics remain local by default. Any telemetry must be first-party,
-  consented, allowlisted, redacted, bounded, and must never contain question or
-  rationale text, source excerpts, free-form corrections, exact searches, or
+- Launch analytics are disabled. Diagnostics remain local. Any later telemetry
+  requires a separate opt-in first-party decision and must be consented,
+  allowlisted, redacted, bounded, and must never contain question or rationale
+  text, source excerpts, free-form corrections, exact searches, or
   security-sensitive leak values.

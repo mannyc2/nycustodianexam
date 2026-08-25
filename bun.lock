@@ -22,10 +22,24 @@
         "vitest": "catalog:",
       },
     },
+    "apps/correction-worker": {
+      "name": "@nycustodian/correction-worker",
+      "dependencies": {
+        "@nycustodian/correction-intake": "workspace:*",
+        "effect": "catalog:",
+      },
+      "devDependencies": {
+        "@types/node": "catalog:",
+        "typescript": "catalog:",
+        "vitest": "catalog:",
+        "wrangler": "catalog:",
+      },
+    },
     "apps/site": {
       "name": "@nycustodian/site",
       "dependencies": {
         "@nycustodian/content": "workspace:*",
+        "@nycustodian/correction-intake": "workspace:*",
         "effect": "catalog:",
         "react": "catalog:",
         "react-dom": "catalog:",
@@ -50,6 +64,17 @@
         "effect": "catalog:",
       },
       "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
+      },
+    },
+    "packages/correction-intake": {
+      "name": "@nycustodian/correction-intake",
+      "dependencies": {
+        "effect": "catalog:",
+      },
+      "devDependencies": {
+        "@types/node": "catalog:",
         "typescript": "catalog:",
         "vitest": "catalog:",
       },
@@ -221,6 +246,10 @@
     "@nycustodian/content": ["@nycustodian/content@workspace:packages/content"],
 
     "@nycustodian/content-compiler": ["@nycustodian/content-compiler@workspace:apps/content-compiler"],
+
+    "@nycustodian/correction-intake": ["@nycustodian/correction-intake@workspace:packages/correction-intake"],
+
+    "@nycustodian/correction-worker": ["@nycustodian/correction-worker@workspace:apps/correction-worker"],
 
     "@nycustodian/site": ["@nycustodian/site@workspace:apps/site"],
 

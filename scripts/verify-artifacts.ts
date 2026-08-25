@@ -23,6 +23,10 @@ import {
 import { ReviewQueueBootstrap } from "../apps/site/src/review/model.ts"
 import { AssetContentReceipt } from "../apps/site/src/verified-content.ts"
 import {
+  decodeOfflinePackDescriptor,
+  decodeOfflineShellManifest
+} from "../apps/site/src/offline-packs/model.ts"
+import {
   assertSafeBuildPaths,
   collectReferencedBuildAssets
 } from "../apps/site/scripts/finalize-service-worker.ts"
@@ -36,11 +40,20 @@ type Manifest = typeof ReleaseManifest.Type
 type ManifestArtifact = Manifest["artifacts"][number]
 
 const safePrecacheArtifactKinds = new Set<ManifestArtifact["kind"]>([
-  "catalog",
-  "pack-precommit",
-  "question-precommit",
-  "scene-precommit",
-  "legacy-question-precommit"
+  "catalog"
+])
+
+const baselineNavigation = new Set([
+  "/",
+  "/offline/",
+  "/report/",
+  "/settings/",
+  "/status/",
+  "/transparency/",
+  "/transparency/corrections/",
+  "/transparency/foil/",
+  "/transparency/privacy/",
+  "/transparency/security/"
 ])
 
 const slugify = (value: string): string => {
@@ -100,6 +113,12 @@ const routeDocument = (canonicalPath: string): URL =>
   canonicalPath === "/"
     ? new URL("index.html", distRoot)
     : new URL(`${canonicalPath.slice(1)}index.html`, distRoot)
+
+const publicPathDocument = (path: string): URL => {
+  if (path === "/") return new URL("index.html", distRoot)
+  if (path.endsWith("/")) return new URL(`${path.slice(1)}index.html`, distRoot)
+  return new URL(path.slice(1), distRoot)
+}
 
 const extractAttribute = (html: string, expression: RegExp, label: string): string => {
   const matches = [...html.matchAll(expression)]
@@ -565,10 +584,33 @@ export const verify = async (): Promise<void> => {
     { canonicalPath: "/atlas/", robots: "index,follow", routeId: "atlas-index" },
     { canonicalPath: "/hazards/", robots: "index,follow", routeId: "hazards-index" },
     { canonicalPath: "/status/", robots: "noindex,follow", routeId: "status" },
+    { canonicalPath: "/offline/", robots: "noindex,follow", routeId: "offline-packs" },
+    { canonicalPath: "/settings/", robots: "noindex,follow", routeId: "settings" },
+    { canonicalPath: "/report/", robots: "noindex,follow", routeId: "correction-submit" },
     {
       canonicalPath: "/transparency/",
       robots: "index,follow",
       routeId: "transparency-index"
+    },
+    {
+      canonicalPath: "/transparency/corrections/",
+      robots: "index,follow",
+      routeId: "corrections"
+    },
+    {
+      canonicalPath: "/transparency/foil/",
+      robots: "index,follow",
+      routeId: "foil"
+    },
+    {
+      canonicalPath: "/transparency/privacy/",
+      robots: "index,follow",
+      routeId: "privacy"
+    },
+    {
+      canonicalPath: "/transparency/security/",
+      robots: "index,follow",
+      routeId: "security"
     },
     {
       canonicalPath: "/transparency/sources/",
@@ -692,6 +734,63 @@ export const verify = async (): Promise<void> => {
   }
 
   const referencedBuildAssets = await collectReferencedBuildAssets(distRoot.pathname, htmlFiles)
+  const offlinePackHtml = await text(routeDocument("/offline/"))
+  const offlinePackDescriptor = decodeOfflinePackDescriptor(
+    extractEmbeddedJson(offlinePackHtml, "offline-pack-descriptor")
+  )
+  const shellManifestReceipt = offlinePackDescriptor.applicationShellManifestReceipt
+  if (shellManifestReceipt === null) {
+    throw new Error("Finalized offline pack descriptor has no application-shell root receipt")
+  }
+  const shellManifestBytes = await bytes(
+    publicPathDocument(offlinePackDescriptor.applicationShellManifestPath)
+  )
+  if (
+    shellManifestBytes.byteLength !== shellManifestReceipt.bytes ||
+    digest(shellManifestBytes) !== shellManifestReceipt.sha256
+  ) {
+    throw new Error("Offline application-shell manifest does not match its embedded root receipt")
+  }
+  // The external manifest is untrusted until its exact receipt above has been verified.
+  const shellManifest = decodeOfflineShellManifest(
+    JSON.parse(new TextDecoder().decode(shellManifestBytes)) as unknown,
+    offlinePackDescriptor
+  )
+  const expectedApplicationShellBytes = shellManifestBytes.byteLength +
+    shellManifest.receipts.reduce((sum, receipt) => sum + receipt.bytes, 0)
+  if (
+    offlinePackDescriptor.applicationShellBytes !== expectedApplicationShellBytes ||
+    offlinePackDescriptor.estimatedDownloadBytes !==
+      offlinePackDescriptor.totalBytes + expectedApplicationShellBytes
+  ) {
+    throw new Error("Offline pack pre-download byte estimate is not closed over every request")
+  }
+  const expectedShellReceiptPaths = new Set([
+    ...offlinePackDescriptor.requiredNavigation,
+    "/offline.html",
+    "/manifest.webmanifest",
+    "/styles.css",
+    ...referencedBuildAssets
+  ])
+  assertEqualSets(
+    new Set(shellManifest.receipts.map((receipt) => receipt.path)),
+    expectedShellReceiptPaths,
+    "Offline application-shell manifest receipts"
+  )
+  if (
+    shellManifest.receipts.some((receipt) => receipt.path === "/offline/") ||
+    !baselineNavigation.has("/offline/")
+  ) {
+    throw new Error(
+      "The trusted-current-app offline loader must be baseline shell, not pack-managed closure"
+    )
+  }
+  for (const receipt of shellManifest.receipts) {
+    const value = await bytes(publicPathDocument(receipt.path))
+    if (value.byteLength !== receipt.bytes || digest(value) !== receipt.sha256) {
+      throw new Error(`Offline application-shell receipt mismatch: ${receipt.path}`)
+    }
+  }
   const allJavaScriptPaths = new Set(
     referencedBuildAssets
       .filter((path) => path.endsWith(".js"))
@@ -727,9 +826,25 @@ export const verify = async (): Promise<void> => {
       route.routeId === "question-player" ||
       route.routeId === "review-player" ||
       route.routeId === "review-queue" ||
-      route.routeId === "hazard-player"
-    if (!interactive && (/<script\b/i.test(html) || /react|effect/i.test(html))) {
-      throw new Error(`Runtime-free static route includes an interactive runtime: ${route.canonicalPath}`)
+      route.routeId === "hazard-player" ||
+      route.routeId === "offline-packs" ||
+      route.routeId === "settings" ||
+      route.routeId === "correction-submit"
+    if (!interactive) {
+      const bootScripts = [...html.matchAll(
+        /<script type="module"[^>]+src="(\/assets\/preferences-boot-[^"]+\.js)"[^>]*>/g
+      )]
+      if (bootScripts.length !== 1 || occurrenceCount(html, "<script") !== 1) {
+        throw new Error(
+          `Static route must include only the minimal preference boot module: ${route.canonicalPath}`
+        )
+      }
+      const bootClosure = await collectJavaScriptClosure(html, allJavaScriptPaths)
+      if (bootClosure.length !== 1) {
+        throw new Error(
+          `Static preference boot module imports an interactive runtime: ${route.canonicalPath}`
+        )
+      }
     }
     if (!interactive && !/<main\b[\s\S]*<h1\b/i.test(html)) {
       throw new Error(`Static route is not a substantive document: ${route.canonicalPath}`)
@@ -840,6 +955,26 @@ export const verify = async (): Promise<void> => {
         if (html.includes(`"${field}"`)) {
           throw new Error(`Review queue exposes ${field} before reading durable attempts`)
         }
+      }
+      continue
+    }
+
+    if (
+      route.routeId === "offline-packs" ||
+      route.routeId === "settings" ||
+      route.routeId === "correction-submit"
+    ) {
+      const marker = route.routeId === "offline-packs"
+        ? "data-offline-pack-manager"
+        : route.routeId === "settings"
+        ? "data-settings"
+        : "data-correction-form"
+      if (
+        !html.includes(marker) ||
+        !/<script type="module"[^>]+src="\/assets\/[^"]+\.js"/.test(html) ||
+        !/<main\b[\s\S]*<h1\b/i.test(html)
+      ) {
+        throw new Error(`Local-data route bootstrap mismatch: ${route.canonicalPath}`)
       }
       continue
     }
@@ -964,6 +1099,7 @@ export const verify = async (): Promise<void> => {
     ),
     "404.html",
     "offline.html",
+    "offline-pack-shell-manifest.json",
     "manifest.webmanifest",
     "styles.css",
     "sw.js",
@@ -1052,9 +1188,12 @@ export const verify = async (): Promise<void> => {
   assertProtectedServiceWorkerPolicy(
     serviceWorker,
     new Set([
-      ...expectedRoutes.map((route) => route.canonicalPath),
+      ...expectedRoutes
+        .map((route) => route.canonicalPath)
+        .filter((path) => baselineNavigation.has(path)),
       "/404.html",
       "/offline.html",
+      "/offline-pack-shell-manifest.json",
       "/manifest.webmanifest",
       "/styles.css",
       "/content/vertical-slice/manifest.json",
@@ -1066,8 +1205,8 @@ export const verify = async (): Promise<void> => {
   )
 
   // The interactive entries share the framework/runtime and verified-content chunks. These
-  // ceilings leave a small deterministic margin above the largest measured M1-M3 closure.
-  const bundleBudgets = { raw: 350_000, gzip: 110_000, brotli: 95_000 } as const
+  // ceilings leave a small deterministic margin above the largest measured M1-M5 closure.
+  const bundleBudgets = { raw: 360_000, gzip: 112_000, brotli: 95_000 } as const
   for (const [family, measurement] of bundleReports) {
     for (const format of ["raw", "gzip", "brotli"] as const) {
       if (measurement[format] > bundleBudgets[format]) {

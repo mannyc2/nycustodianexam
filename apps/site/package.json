@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@nycustodian/content": "workspace:*",
+    "@nycustodian/correction-intake": "workspace:*",
     "effect": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:"

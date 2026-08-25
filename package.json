@@ -34,6 +34,7 @@
     "check:layout": "bun run scripts/check-maintained-layout.ts",
     "check:toolchain": "bun run scripts/check-toolchain.ts",
     "content:build": "bun run --filter @nycustodian/content-compiler build",
+    "correction-worker:test": "bun run --filter @nycustodian/correction-worker test",
     "site:build": "bun run --filter @nycustodian/site build",
     "dev": "bun run content:build && bun run --filter @nycustodian/site dev",
     "test": "node --experimental-strip-types scripts/run-workspaces.ts test",

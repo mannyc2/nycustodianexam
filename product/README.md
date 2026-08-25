@@ -56,27 +56,34 @@ than emerging ad hoc in `apps/site`.
 
 ## Implementation status
 
-The accepted graph at `../apps/site`, `../apps/content-compiler`, and
-`../packages/content` is a controlled M1–M3 implementation proof, not a release
-or release certification. From the validated packs, its generator emits 58
+The accepted graph began at `../apps/site`, `../apps/content-compiler`, and
+`../packages/content`. The M5 lane adds `../packages/correction-intake` and the
+dormant `../apps/correction-worker`; it is a controlled implementation proof,
+not a release or release certification. From the validated packs, its generator emits 65
 documents: two question routes, 18 visual hazard routes, 18 nonvisual hazard
-routes, four public tool pages, and the supporting documents needed to make up
+routes, four public tool pages, offline/settings/report and policy routes, and the supporting documents needed to make up
 that closed output.
 
 Other planned destination families are intentionally absent when reviewed
 machine-readable content is unavailable; the implementation does not substitute
-placeholder pages for missing editorial inputs. M4/M5 remain open, including
-simulation, complete print output, and explicit content-pack lifecycle,
-settings, and corrections flows. Sitemap generation, the canonical production
-host, and deployment are also unresolved.
+placeholder pages for missing editorial inputs. M4 simulation/print remains
+open. M5 now implements explicit receipt-rooted pack lifecycle, local
+preferences, checksummed export/import/quarantine, scoped reset, local-first
+correction drafts, and a dormant correction endpoint. M5 cannot close until the
+M4 v4→v5 store/transfer/reset integration proof and complete release matrix pass.
+Sitemap generation, the canonical production host, and deployment are also unresolved.
 
-Browser CI is configured, and four targeted Chromium application-database
-migration/lifecycle contracts pass locally with the installed system Chrome.
-That targeted local run does not replace the complete cross-browser matrix or
-release certification. The exact local deterministic gate passes on Bun `1.4.0`
-and Node `22.22.0`, including all 165 unit tests, the 58-document production
-build, artifact closure and answer-leak verification, and a frozen offline
-install that leaves `bun.lock` unchanged. `ARCHITECTURE_CONSTRAINTS.md` and the
-acceptance sections of the planning documents define the remaining evidence.
+Browser CI is configured. On the current isolated M5 revision, all five
+workspace typechecks, browser-test typecheck, 210 unit tests, the 65-document
+production build, maintained-layout/module-boundary gates, artifact closure,
+answer-leak checks, and all 34 standard Chromium cases pass locally. The seven
+M5 browser cases cover dormant and accepted-but-locally-unpersisted correction
+flows, authoritative preferences with mirror failure/cross-tab propagation,
+transaction-counted reset, semantic portable import/apply-time drift,
+generation-specific pack quarantine/restage, retained/removal actions, and
+offline atlas navigation/image delivery from the active pack. This does not
+replace Firefox/WebKit, manual accessibility/device/print certification, the
+post-M4 integration gates, or release certification. Historical Bun `1.4.0`
+frozen-install evidence remains recorded separately in `../docs/OPEN.md`.
 
 A separately authored print-system deliverable discussed in an earlier chat was **not located** as a durable Library artifact during this pass. The recovered feature specification contains the durable print contract; chat-only recollections are not silently promoted into this repository.

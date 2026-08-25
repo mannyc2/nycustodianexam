@@ -104,6 +104,74 @@ describe("service-worker activation", () => {
 
 describe("service-worker fetch", () => {
   it.each([
+    {
+      label: "an explicit no-store pack fetch",
+      request: new Request("https://study.example/content/releases/new/object.json", {
+        cache: "no-store"
+      })
+    },
+    {
+      label: "the correction status API",
+      request: new Request("https://study.example/api/corrections/status")
+    }
+  ])("bypasses every application cache for $label", async ({ request }) => {
+    type FetchHarnessEvent = {
+      readonly request: Request
+      readonly respondWith: (promise: Promise<Response>) => void
+      readonly waitUntil: (promise: PromiseLike<unknown>) => void
+    }
+    type Listener = (event: FetchHarnessEvent) => void
+
+    const source = await readFile(new URL("../public/sw.js", import.meta.url), "utf8")
+    const listeners = new Map<string, Listener>()
+    let cacheTouches = 0
+    let networkRequests = 0
+    let responsePromise: Promise<Response> | undefined
+    let lifetimeRegistered = false
+    const cacheStorage = {
+      has: async (): Promise<boolean> => {
+        cacheTouches += 1
+        return false
+      },
+      open: async (): Promise<never> => {
+        cacheTouches += 1
+        throw new Error("A cache-bypassing request must not open application caches")
+      },
+      keys: async (): Promise<readonly string[]> => [],
+      delete: async (): Promise<boolean> => true
+    }
+    const serviceWorkerGlobal = {
+      location: { origin: "https://study.example" },
+      addEventListener: (type: string, listener: Listener): void => {
+        listeners.set(type, listener)
+      }
+    }
+    const networkFetch = async (): Promise<Response> => {
+      networkRequests += 1
+      return new Response("fresh-network-response", {
+        headers: { "cache-control": "no-store" }
+      })
+    }
+    const evaluate = new Function("self", "caches", "fetch", "Response", source)
+    evaluate(serviceWorkerGlobal, cacheStorage, networkFetch, globalThis.Response)
+
+    listeners.get("fetch")?.({
+      request,
+      respondWith: (promise) => {
+        responsePromise = promise
+      },
+      waitUntil: () => {
+        lifetimeRegistered = true
+      }
+    })
+
+    expect(await responsePromise?.then((response) => response.text())).toBe("fresh-network-response")
+    expect(networkRequests).toBe(1)
+    expect(cacheTouches).toBe(0)
+    expect(lifetimeRegistered).toBe(false)
+  })
+
+  it.each([
     "/content/vertical-slice/questions/q-1.postcommit.json",
     "/content/assets/derivatives/scenes/s001-web.png"
   ])("leaves app-verified content out of generic caches: %s", async (path) => {
@@ -121,6 +189,7 @@ describe("service-worker fetch", () => {
     let responsePromise: Promise<Response> | undefined
     let lifetimeRegistered = false
     const cacheStorage = {
+      has: async (): Promise<boolean> => false,
       open: async () => {
         cacheOpens += 1
         throw new Error("Protected content must not enter a generic cache")
@@ -191,6 +260,7 @@ describe("service-worker fetch", () => {
       }
     }
     const cacheStorage = {
+      has: async (): Promise<boolean> => false,
       open: async (name: string) => {
         opened.push(name)
         return name.startsWith("nycustodian-shell-") ? shell : runtime
@@ -243,5 +313,58 @@ describe("service-worker fetch", () => {
     finishWrite?.()
     await lifetimePromise
     expect(lifetimeSettled).toBe(true)
+  })
+
+  it("does not runtime-cache a same-origin response marked no-store", async () => {
+    type FetchHarnessEvent = {
+      readonly request: Request
+      readonly respondWith: (promise: Promise<Response>) => void
+      readonly waitUntil: (promise: PromiseLike<unknown>) => void
+    }
+    type Listener = (event: FetchHarnessEvent) => void
+
+    const source = await readFile(new URL("../public/sw.js", import.meta.url), "utf8")
+    const listeners = new Map<string, Listener>()
+    let writes = 0
+    let responsePromise: Promise<Response> | undefined
+    let lifetimePromise: PromiseLike<unknown> | undefined
+    const cacheStorage = {
+      has: async (): Promise<boolean> => false,
+      open: async (name: string) => name.startsWith("nycustodian-shell-")
+        ? { match: async (): Promise<Response | undefined> => undefined }
+        : {
+            match: async (): Promise<Response | undefined> => undefined,
+            put: async (): Promise<void> => {
+              writes += 1
+            }
+          },
+      keys: async (): Promise<readonly string[]> => [],
+      delete: async (): Promise<boolean> => true
+    }
+    const serviceWorkerGlobal = {
+      location: { origin: "https://study.example" },
+      addEventListener: (type: string, listener: Listener): void => {
+        listeners.set(type, listener)
+      }
+    }
+    const networkFetch = async (): Promise<Response> => new Response("uncacheable", {
+      headers: { "cache-control": "private, no-store" }
+    })
+    const evaluate = new Function("self", "caches", "fetch", "Response", source)
+    evaluate(serviceWorkerGlobal, cacheStorage, networkFetch, globalThis.Response)
+
+    listeners.get("fetch")?.({
+      request: new Request("https://study.example/runtime-uncacheable.json"),
+      respondWith: (promise) => {
+        responsePromise = promise
+      },
+      waitUntil: (promise) => {
+        lifetimePromise = promise
+      }
+    })
+
+    expect(await responsePromise?.then((response) => response.text())).toBe("uncacheable")
+    await lifetimePromise
+    expect(writes).toBe(0)
   })
 })

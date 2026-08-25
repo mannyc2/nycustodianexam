@@ -1,0 +1,18 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "nycustodian-correction-intake-dormant",
+  "main": "src/worker.ts",
+  "compatibility_date": "2026-08-23",
+  "workers_dev": false,
+  "preview_urls": false,
+  "observability": {
+    "enabled": false,
+    "logs": {
+      "enabled": false
+    }
+  },
+  "vars": {
+    "CORRECTION_INTAKE_MODE": "disabled",
+    "CORRECTION_RATE_LIMIT_IDENTITY_MODE": "disabled"
+  }
+}
