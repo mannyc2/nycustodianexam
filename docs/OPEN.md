@@ -84,11 +84,21 @@ This ledger contains unresolved research questions, contradictions, recovery tar
 ### C9 — Admission notice / medium / exact test-site logistics
 **Question:** What exact medium, reporting time, site, prohibited-device wording, and other administration-specific instructions apply to 60112026/61012026?
 
-**Known:** General guide supports paper booklet + machine-scored answer sheet as the standard and gives ID/pencil/security rules; announcement/admission notice controls administration-specific details.
+**Known:** The announcements list 2026-08-22 as the exam date, which has now
+passed. General guide supports paper booklet + machine-scored answer sheet as
+the standard and gives ID/pencil/security rules; announcement/admission notice
+controls administration-specific details. A read-only official-source refresh
+on 2026-08-25 found the announcements still available but did not locate an
+official post-administration notice, result/list record, or other confirmation
+that establishes whether the administration occurred as announced.
 
-**Resolve with:** actual official admission notice or contemporaneous official candidate instruction page.
+**Resolve with:** actual official admission notice, contemporaneous official
+candidate instruction page, official post-administration notice, or a later
+result/list record that confirms administration.
 
-**Status:** OPEN until notice is available. Product may teach general paper-answer-transfer rehearsal while labeling it as rehearsal, not a guarantee of current medium.
+**Status:** OPEN. The announced date has passed; actual administration and exact
+logistics remain unconfirmed. Product may teach general paper-answer-transfer
+rehearsal while labeling it as rehearsal, not a claim about the 2026 medium.
 
 ## Content-scope and question-bank open items
 
