@@ -725,7 +725,9 @@ test("strict practice auto-submit occurs only after explicit opt-in", async ({ p
   await expect(page).toHaveURL(/\/simulations\/session\/sim-[a-z0-9-]+\/question\/1\/$/)
 
   await expireSimulationTimer(page, true)
-  await page.reload({ waitUntil: "commit" })
+  await page.evaluate(() => {
+    window.setTimeout(() => window.location.reload(), 0)
+  })
   await expect(page).toHaveURL(/\/simulations\/session\/sim-[a-z0-9-]+\/results\/$/)
   await expect(page.getByRole("heading", { name: /Raw practice accuracy:/ })).toBeVisible()
   await page.reload()

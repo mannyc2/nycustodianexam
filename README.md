@@ -244,7 +244,7 @@ lifecycle, site settings, and corrections flows. Sitemap and
 canonical-host decisions and deployment also remain open. The exact local
 deterministic gate passes on Bun `1.4.0` and Node `22.22.0`: maintained-layout
 and module-boundary checks, all 396 visual hashes, three-workspace typechecks,
-230 unit tests, the 63-document/106-safe-shell-URL production build, and artifact
+236 unit tests, the 63-document/106-safe-shell-URL production build, and artifact
 closure and answer-leak verification. A frozen offline install also preserves `bun.lock`
 byte-for-byte. The targeted M4 simulation/print matrix passes 42 cases across
 Chromium, Firefox, and WebKit, plus the local Cloudflare/workerd method-routing

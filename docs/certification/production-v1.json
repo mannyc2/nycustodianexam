@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 2,
+  "status": "blocked",
+  "candidateCommitSha": null,
+  "reviewedAt": null,
+  "checks": {
+    "automatedChromiumFirefoxWebKit": false,
+    "nvdaFirefoxWindows": false,
+    "voiceOverSafariMacOS": false,
+    "voiceOverSafariiOS": false,
+    "talkBackChromeAndroid": false,
+    "jawsSmoke": "pending",
+    "zoom400Chrome": false,
+    "zoom400Firefox": false,
+    "zoom400Safari": false,
+    "printUsLetterNormal": false,
+    "printUsLetterLarge": false,
+    "printA4Normal": false,
+    "printA4Large": false,
+    "grayscalePhysicalPrint": false
+  },
+  "gaps": [
+    "The production candidate commit has not been selected.",
+    "The required assistive-technology, device, zoom, and physical-print matrix has not been completed."
+  ],
+  "evidence": [],
+  "notes": [
+    "This checked-in blocked record is intentional. Remote preview may proceed after Cloudflare credentials are configured; production may not."
+  ]
+}

@@ -9,7 +9,11 @@ import {
   isPublicReleaseArtifact,
   slugify
 } from "../scripts/generate-pages.tsx"
-import { canonicalizeGeneratedDocuments } from "../scripts/finalize-service-worker.ts"
+import {
+  canonicalizeGeneratedDocuments,
+  normalizeCanonicalOrigin,
+  renderSitemap
+} from "../scripts/finalize-service-worker.ts"
 import { discoverHtmlInputs, scopedLocalSessionShell } from "../vite.config.ts"
 import {
   decodeAndAssertHazardAssetReceipt,
@@ -201,6 +205,35 @@ describe("dynamic document discovery", () => {
     } finally {
       await rm(root, { recursive: true, force: true })
     }
+  })
+
+  it("uses an approved HTTPS origin for production canonicals and sitemap entries", async () => {
+    const root = await mkdtemp(join(tmpdir(), "nycustodian-canonical-origin-"))
+    try {
+      await mkdir(join(root, "atlas"), { recursive: true })
+      await writeFile(
+        join(root, "atlas", "index.html"),
+        '<body data-route-id="atlas-index"><!--__CANONICAL__/atlas/--></body>'
+      )
+
+      await expect(
+        canonicalizeGeneratedDocuments(root, "https://study.example")
+      ).resolves.toEqual(["/atlas/"])
+      expect(await readFile(join(root, "atlas", "index.html"), "utf8")).toContain(
+        '<link rel="canonical" href="https://study.example/atlas/">'
+      )
+      expect(renderSitemap(["/", "/atlas/"], "https://study.example")).toContain(
+        "<loc>https://study.example/atlas/</loc>"
+      )
+    } finally {
+      await rm(root, { recursive: true, force: true })
+    }
+  })
+
+  it("rejects a canonical URL that is not an exact HTTPS origin", () => {
+    expect(() => normalizeCanonicalOrigin("http://example.test")).toThrow(/HTTPS origin/)
+    expect(() => normalizeCanonicalOrigin("https://example.test/path")).toThrow(/HTTPS origin/)
+    expect(normalizeCanonicalOrigin("https://example.test/")).toBe("https://example.test")
   })
 
   it("rejects any routed non-canonical document except the root status page", async () => {

@@ -251,7 +251,7 @@ revision.
   intentionally omitted instead of being represented by placeholder pages; and
 - the exact local deterministic gate passes on Bun `1.4.0` and Node `22.22.0`,
   including maintained-layout and module-boundary checks, 396 visual hashes,
-  three-workspace typechecks, 230 unit tests, the 63-document/106-safe-shell-URL
+  three-workspace typechecks, 236 unit tests, the 63-document/106-safe-shell-URL
   production build, artifact closure and answer-leak verification, and a frozen
   offline install that preserves `bun.lock` byte-for-byte; while
 - browser CI is configured, and the exact pinned Chromium revision passes all

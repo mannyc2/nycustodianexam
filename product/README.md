@@ -82,7 +82,7 @@ the installed system Chrome. These automated results do not replace the manual
 assistive-technology, device, true-zoom, and physical-print release matrix. The
 targeted M4 simulation/print matrix passes 42 cases across Chromium, Firefox,
 and WebKit plus its local Cloudflare/workerd method-routing case. The exact M4
-verification passes on Bun `1.4.0` and Node `22.22.0`, including 230 unit tests,
+verification passes on Bun `1.4.0` and Node `22.22.0`, including 236 unit tests,
 the 63-document/106-safe-shell-URL production build, and
 artifact-closure/answer-leak verification. The earlier
 frozen offline install evidence still leaves `bun.lock` unchanged.

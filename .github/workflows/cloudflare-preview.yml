@@ -1,0 +1,71 @@
+name: Cloudflare remote preview
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cloudflare-preview-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  preflight:
+    name: Require the exact current merged main commit
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+      - name: Reject non-main or superseded dispatches before environment approval
+        shell: bash
+        run: |
+          test "$GITHUB_REF" = "refs/heads/main"
+          git fetch --no-tags origin main
+          test "$(git rev-parse HEAD)" = "$(git rev-parse origin/main)"
+
+  certification:
+    needs: preflight
+    uses: ./.github/workflows/certification.yml
+
+  upload-preview:
+    name: Upload an inactive preview version
+    needs: [preflight, certification]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: cloudflare-preview
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22.22.0
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.4.0
+      - name: Install the committed dependency graph
+        run: bun install --frozen-lockfile
+      - name: Build the verified release for the production canonical origin
+        env:
+          CANONICAL_DOMAIN: ${{ vars.CANONICAL_DOMAIN }}
+          NYCUSTODIAN_CANONICAL_ORIGIN: https://${{ vars.CANONICAL_DOMAIN }}
+        shell: bash
+        run: |
+          test -n "$CANONICAL_DOMAIN"
+          bun run build
+      - name: Upload a version without activating production traffic
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        shell: bash
+        run: |
+          test -n "$CLOUDFLARE_ACCOUNT_ID"
+          test -n "$CLOUDFLARE_API_TOKEN"
+          git fetch --no-tags origin main
+          test "$GITHUB_REF" = "refs/heads/main"
+          test "$(git rev-parse HEAD)" = "$(git rev-parse origin/main)"
+          preview_alias="main-${GITHUB_SHA:0:12}"
+          bun run --cwd apps/site wrangler versions upload --config wrangler.jsonc --strict --preview-alias "$preview_alias" --message "Verified main ${GITHUB_SHA}"
