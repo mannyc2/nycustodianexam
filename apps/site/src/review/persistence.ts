@@ -5,6 +5,7 @@ import {
   legacyAppDatabaseNames,
   type AppDatabaseError
 } from "../study-storage/app-database.ts"
+import { DurableTimestamp } from "../durable-values.ts"
 
 export class ReviewAcknowledgementRecord extends Schema.Class<ReviewAcknowledgementRecord>(
   "@nycustodian/site/review/ReviewAcknowledgementRecord"
@@ -13,7 +14,7 @@ export class ReviewAcknowledgementRecord extends Schema.Class<ReviewAcknowledgem
   itemId: Schema.NonEmptyString,
   attemptId: Schema.NonEmptyString,
   reasonIds: Schema.NonEmptyArray(Schema.NonEmptyString),
-  acknowledgedAt: Schema.Number
+  acknowledgedAt: DurableTimestamp
 }) {}
 
 export class ReviewPersistenceError extends Schema.TaggedError<ReviewPersistenceError>()(

@@ -17,11 +17,14 @@ apps/site/exams/
 apps/site/hazards/
 apps/site/ny/
 apps/site/practice/
+apps/site/print/
 apps/site/review/
+apps/site/simulations/
 apps/site/status/
 apps/site/transparency/
 apps/site/public/content/
 apps/site/public/styles.css
+apps/site/public/print-bootstrap.json
 content/releases/vertical-slice/
 
 # Local tool output

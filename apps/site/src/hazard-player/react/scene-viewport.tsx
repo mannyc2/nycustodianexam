@@ -1,5 +1,6 @@
 import {
   useCallback,
+  useRef,
   useState,
   type MouseEvent as ReactMouseEvent,
   type ReactNode
@@ -35,8 +36,24 @@ export const HazardPrompt = () => {
 export const HazardSceneViewport = () => {
   const { actions, meta, scene, state, visualAssetUrl } = useHazardPlayer()
   const [zoom, setZoom] = useState(1)
+  const viewportRef = useRef<HTMLDivElement>(null)
   const editable = isEditableHazardState(state)
   const draft = draftFromState(state)
+
+  const panViewport = useCallback((horizontal: -1 | 0 | 1, vertical: -1 | 0 | 1) => {
+    const viewport = viewportRef.current
+    if (viewport === null) return
+    viewport.scrollBy({
+      behavior: "auto",
+      left: horizontal * Math.max(44, viewport.clientWidth * 0.4),
+      top: vertical * Math.max(44, viewport.clientHeight * 0.4)
+    })
+  }, [])
+
+  const resetView = useCallback(() => {
+    setZoom(1)
+    viewportRef.current?.scrollTo({ behavior: "auto", left: 0, top: 0 })
+  }, [])
 
   const addPointerMarker = useCallback(
     (event: ReactMouseEvent<HTMLDivElement>) => {
@@ -52,6 +69,10 @@ export const HazardSceneViewport = () => {
   )
 
   if (visualAssetUrl === null) {
+    if (state.tag === "restoring") {
+      return <p role="status">Loading the exact released scene…</p>
+    }
+    if (state.tag !== "asset_unavailable") return null
     return (
       <section className="feedback feedback-error" role="alert">
         <h2 ref={meta.errorHeadingRef} tabIndex={-1}>Released scene image unavailable</h2>
@@ -81,9 +102,45 @@ export const HazardSceneViewport = () => {
           Zoom in
         </button>
         <button
+          aria-controls={`${meta.instanceId}-scene-viewport`}
+          className="button button-secondary"
+          disabled={zoom <= 1}
+          onClick={() => panViewport(-1, 0)}
+          type="button"
+        >
+          Pan left
+        </button>
+        <button
+          aria-controls={`${meta.instanceId}-scene-viewport`}
+          className="button button-secondary"
+          disabled={zoom <= 1}
+          onClick={() => panViewport(1, 0)}
+          type="button"
+        >
+          Pan right
+        </button>
+        <button
+          aria-controls={`${meta.instanceId}-scene-viewport`}
+          className="button button-secondary"
+          disabled={zoom <= 1}
+          onClick={() => panViewport(0, -1)}
+          type="button"
+        >
+          Pan up
+        </button>
+        <button
+          aria-controls={`${meta.instanceId}-scene-viewport`}
+          className="button button-secondary"
+          disabled={zoom <= 1}
+          onClick={() => panViewport(0, 1)}
+          type="button"
+        >
+          Pan down
+        </button>
+        <button
           className="button button-secondary"
           disabled={zoom === 1}
-          onClick={() => setZoom(1)}
+          onClick={resetView}
           type="button"
         >
           Reset view
@@ -92,11 +149,22 @@ export const HazardSceneViewport = () => {
       </div>
       <p id="scene-pointer-instructions">
         Pointer users may place a marker on the image. Keyboard and touch users can add a
-        centered marker, then move it with the controls below.
+        centered marker, then move it with the controls below. Use the directional pan
+        controls to inspect a zoomed scene without dragging.
       </p>
       <div
+        aria-label="Pannable hazard scene"
         className="hazard-player__viewport"
-        style={{ maxWidth: "100%", overflow: "auto" }}
+        id={`${meta.instanceId}-scene-viewport`}
+        ref={viewportRef}
+        role="region"
+        style={{
+          aspectRatio: "3 / 2",
+          maxWidth: "100%",
+          overflow: "auto",
+          overscrollBehavior: "contain"
+        }}
+        tabIndex={0}
       >
         <div
           aria-describedby="scene-pointer-instructions"

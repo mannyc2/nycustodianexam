@@ -118,8 +118,13 @@ const sceneFeedback: typeof PostcommitScene.Type = {
     ]
   },
   nonvisualZonedEquivalent: [
-    { zone: "walking route", role: "target", statement: "liquid crosses the route" },
-    { zone: "wall edge", role: "decoy", statement: "conduit remains beside the route" }
+    { zone: "floor", role: "target", statement: "liquid across the walking route" },
+    {
+      zone: "wall",
+      role: "decoy",
+      statement: "fixed conduit beside the route; it does not enter the walking surface."
+    },
+    { zone: "wall", role: "safe-background", statement: "closed door" }
   ]
 }
 
@@ -251,6 +256,7 @@ const layerFor = (input?: {
       HazardPersistence.of({
         commitAttempt: () => Effect.die("not used"),
         findAttempt: () => Effect.succeed(undefined),
+        completeAttempt: () => Effect.die("not used"),
         listAttempts: () => Effect.succeed(input?.hazardAttempts ?? [])
       })
     ),
@@ -277,6 +283,9 @@ const layerFor = (input?: {
         ensureAvailable: (receipt) =>
           Effect.succeed({ path: receipt.postcommitPath, source: "network-required" as const }),
         loadAssetBlob: () => Effect.die("not used"),
+        loadCachedAssetBlob: () => Effect.die("not used"),
+        loadCachedJson: () => Effect.die("not used"),
+        loadJsonArtifact: () => Effect.die("not used"),
         loadJson: (receipt) =>
           Effect.sync(() => {
             requestedUrls.push(receipt.postcommitPath)
@@ -307,11 +316,7 @@ describe("review projection", () => {
       ])
       expect(projection.items[0]?.reasons).toEqual([
         { tag: "flag" },
-        {
-          tag: "directional_confusion",
-          correctConceptId: "tool.pipe-wrench",
-          selectedConceptId: "tool.adjustable-wrench"
-        }
+        { tag: "incorrect_answer" }
       ])
       expect(projection.items[1]?.reasons.map((reason) => reason.tag)).toEqual([
         "hazard_miss",
@@ -397,7 +402,7 @@ describe("review projection", () => {
     )
   })
 
-  it.effect("keeps opposite directional confusions as distinct correct-to-selected events", () =>
+  it.effect("records incorrect answers without inventing directional concept relations", () =>
     Effect.gen(function*() {
       const forward = yield* deriveQuestionReviewItem(
         questionAttempt,
@@ -415,22 +420,14 @@ describe("review projection", () => {
         questionFeedback(true, "a")
       )
       const forwardReason = forward?.reasons.find(
-        (reason) => reason.tag === "directional_confusion"
+        (reason) => reason.tag === "incorrect_answer"
       )
       const inverseReason = inverse?.reasons.find(
-        (reason) => reason.tag === "directional_confusion"
+        (reason) => reason.tag === "incorrect_answer"
       )
-      expect(forwardReason).toEqual({
-        tag: "directional_confusion",
-        correctConceptId: "tool.pipe-wrench",
-        selectedConceptId: "tool.adjustable-wrench"
-      })
-      expect(inverseReason).toEqual({
-        tag: "directional_confusion",
-        correctConceptId: "tool.adjustable-wrench",
-        selectedConceptId: "tool.pipe-wrench"
-      })
-      expect(forwardReason === undefined ? undefined : reviewReasonId(forwardReason)).not.toBe(
+      expect(forwardReason).toEqual({ tag: "incorrect_answer" })
+      expect(inverseReason).toEqual({ tag: "incorrect_answer" })
+      expect(forwardReason === undefined ? undefined : reviewReasonId(forwardReason)).toBe(
         inverseReason === undefined ? undefined : reviewReasonId(inverseReason)
       )
     })

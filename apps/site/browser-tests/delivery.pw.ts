@@ -38,6 +38,7 @@ test("@cloudflare returns the truthful noindex status document for an unknown pa
 }) => {
   const response = await page.goto("/definitely-not-a-published-study-page/")
   expect(response?.status()).toBe(404)
+  expect(new URL(page.url()).pathname).toBe("/definitely-not-a-published-study-page/")
   await expect(page.locator("body")).toHaveAttribute("data-route-id", "status")
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex,follow")
   await expect(page.locator('link[rel="canonical"]')).toHaveCount(0)

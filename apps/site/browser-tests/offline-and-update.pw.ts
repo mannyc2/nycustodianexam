@@ -64,8 +64,116 @@ test("a committed question reloads from the controlled service worker while offl
   await page.reload({ waitUntil: "domcontentloaded" })
 
   await expect(page).toHaveURL(questionPath)
+  await expect(page.locator("[data-connectivity-notice]")).toBeVisible()
+  await expect(page.locator("html")).toHaveAttribute("data-freshness", "offline-stale")
   await expect(page.getByRole("heading", { name: "Correct", exact: true })).toBeFocused()
   expect(await readStoredAttempt(page)).toEqual(committed)
+
+  await context.setOffline(false)
+  await expect(page.locator("html")).toHaveAttribute("data-connectivity", "online")
+  await expect(page.locator("html")).toHaveAttribute("data-freshness", "offline-stale")
+  await expect(page.locator('[data-connectivity-message="stale-online"]')).toBeVisible()
+
+  await page.reload({ waitUntil: "domcontentloaded" })
+  await expect.poll(() => page.locator("html").getAttribute("data-freshness")).toBeNull()
+  await expect(page.locator("[data-connectivity-notice]")).toBeHidden()
+  expect(await readStoredAttempt(page)).toEqual(committed)
+})
+
+test("cached profile and source facts remain readable with truthful stale state", async ({
+  browserName,
+  context,
+  page
+}) => {
+  test.skip(browserName !== "chromium", "Playwright exposes service workers only in Chromium")
+
+  const profilePath = "/ny/"
+  const sourcePath = "/transparency/sources/taxonomy-hand-tools/"
+  await gotoReadyQuestion(page)
+  await waitForActiveServiceWorker(page)
+  await page.reload()
+  await expect.poll(() => page.evaluate(() => navigator.serviceWorker.controller !== null))
+    .toBe(true)
+
+  await page.goto(profilePath)
+  await expect(page.getByRole("heading", {
+    name: "New York Entry-Level Custodians and Janitors"
+  })).toBeVisible()
+  await page.goto(sourcePath)
+  await expect(page.getByRole("heading", { name: "Recovered hand-tool taxonomy" }))
+    .toBeVisible()
+  await expect
+    .poll(() => page.evaluate(async (paths) => {
+      const cacheNames = (await caches.keys()).filter((name) =>
+        name.startsWith("nycustodian-runtime-")
+      )
+      const hits = await Promise.all(paths.map(async (path) => {
+        for (const cacheName of cacheNames) {
+          if (await (await caches.open(cacheName)).match(path)) return true
+        }
+        return false
+      }))
+      return hits.every(Boolean)
+    }, [profilePath, sourcePath]))
+    .toBe(true)
+
+  await context.setOffline(true)
+  await page.goto(profilePath, { waitUntil: "domcontentloaded" })
+  await expect(page).toHaveURL(profilePath)
+  await expect(page.getByRole("heading", {
+    name: "New York Entry-Level Custodians and Janitors"
+  })).toBeVisible()
+  await expect(page.getByText("Tool references", { exact: true })).toBeVisible()
+  await expect(page.locator("html")).toHaveAttribute("data-freshness", "offline-stale")
+
+  await page.goto(sourcePath, { waitUntil: "domcontentloaded" })
+  await expect(page).toHaveURL(sourcePath)
+  await expect(page.getByRole("heading", { name: "Recovered hand-tool taxonomy" }))
+    .toBeVisible()
+  await expect(page.getByText(
+    "Supported uses and distinctions for adjustable, pipe, fixed, and slip-joint hand tools."
+  )).toBeVisible()
+  await expect(page.locator("html")).toHaveAttribute("data-freshness", "offline-stale")
+})
+
+test("an uncached offline navigation renders its requested path as inert text", async ({
+  browserName,
+  context,
+  page
+}) => {
+  test.skip(browserName !== "chromium", "Playwright exposes service workers only in Chromium")
+
+  const requestedPath = "/never-cached-%3Cimg%20src=x%20onerror=alert(1)%3E/"
+  await gotoReadyQuestion(page)
+  await waitForActiveServiceWorker(page)
+  await page.reload()
+  await expect.poll(() => page.evaluate(() => navigator.serviceWorker.controller !== null))
+    .toBe(true)
+  await page.evaluate(async (path) => {
+    for (const cacheName of await caches.keys()) {
+      await (await caches.open(cacheName)).delete(path)
+    }
+  }, requestedPath)
+
+  await context.setOffline(true)
+  await page.goto(requestedPath, { waitUntil: "domcontentloaded" })
+
+  await expect(page).toHaveURL(requestedPath)
+  await expect(page.locator("body")).toHaveAttribute("data-offline-route", "status")
+  await expect(page.locator("body")).toHaveAttribute(
+    "data-status-kind",
+    "offline-unavailable"
+  )
+  await expect(page.locator("[data-requested-target]")).toHaveText(requestedPath)
+  await expect(page.locator("main img")).toHaveCount(0)
+  await expect(page.locator("[onerror]")).toHaveCount(0)
+  await expect(page.locator('[data-recovery-link="retry-requested-path"]'))
+    .toHaveAttribute("href", "")
+  await expect(page.locator('[data-recovery-link="offline-packs"]'))
+    .toHaveAttribute("href", "/offline/")
+  await expect(page.locator('[data-recovery-link="settings"]'))
+    .toHaveAttribute("href", "/settings/")
+  await expect(page.locator('[data-recovery-link="home"]')).toHaveAttribute("href", "/")
 })
 
 test("known-offline partial start blocks commitment when exact feedback is absent", async ({

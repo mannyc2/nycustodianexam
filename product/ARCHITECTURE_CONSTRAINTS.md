@@ -2,8 +2,8 @@
 
 **Status:** maintained constraints, updated 2026-08-25 after reconciling the
 closed R2.1–R2.10/R2.90 program, the accepted visual releases, canonical
-route/state planning, the React 19 composition decision, and the controlled
-M1–M3 implementation proof. This file records accepted direction and explicit
+route/state planning, the React 19 composition decision, and the verified
+integrated M1–M5 implementation. This file records accepted direction and explicit
 implementation gates. It does not replace the product behavior contract or the
 exam-fact corpus.
 
@@ -242,7 +242,14 @@ Use Vite as browser build/development tooling. Measure the actual first-slice
 route closures before setting numeric budgets; static routes have an immediate
 budget of zero Effect closure.
 
-Use Cloudflare Workers Static Assets as the preferred deployment direction. Do not add Worker code merely to serve static files.
+Use Cloudflare Workers Static Assets as the preferred deployment direction.
+Static Assets and its `ASSETS` binding remain the response authority. One
+narrow exception is implemented for settled opaque local simulation/result and
+print-preview URLs: a no-data, no-user-state Worker applies exact pathname
+regular expressions for `GET`/`HEAD`, maps valid coordinates to generated shell
+assets, and delegates every response to `ASSETS`. This exists because Static
+Assets redirects cannot constrain these dynamic patterns precisely; it is not
+an application backend or a general static-file server.
 
 The intended shape remains:
 
@@ -252,14 +259,16 @@ Bun workspace
   -> semantic HTML + CSS
   -> Vite-built interactive chunks
   -> Cloudflare Workers Static Assets
-  -> optional narrow Worker only for justified server capabilities
+  -> regex-only local-shell router delegating to ASSETS
+  -> optional separate narrow Worker only for authorized server capabilities
 ```
 
 Exact Vite/Cloudflare coordinates, routing, caching, headers, service-worker
 behavior, and preview deployment are implementation locks and measurements.
 `ROUTES.md` controls public path and indexability semantics; no SPA router is
-introduced. An optional Worker remains deferred until a concrete endpoint is
-authorized.
+introduced. The local-shell router owns no data or user state. A correction or
+other application endpoint remains a separate dormant capability until its
+product and operational contract is authorized.
 
 ### Research prose is not runtime content
 
@@ -437,24 +446,21 @@ Implemented by the first scaffold:
 
 Evidence still open:
 
-- post-M4 proof that IndexedDB v5 is the exact v4+M5 store union, preserves
-  seeded simulation session/submission and print-job records, and includes
-  those records in portable transfer and the documented reset scopes;
 - the full Bun platform runtime root for the finite compiler;
 - exact current v4 Platform/browser provider behavior at the locked cohort;
-- remaining-browser IndexedDB commit/reload plus cross-browser
-  failure/quota/disposal proof;
-- service-worker version/eviction/update and remaining-browser offline proof;
+- broader performance and long-duration browser-storage stress evidence beyond
+  the passing release-wide Chromium/Firefox/WebKit functional matrix;
 - a complete location-preserving JSONC adapter and canonical JSON profile with
   duplicate-key, multibyte, comment, range, number, Unicode, and escaping proof;
 - the generated-release artifact retention policy and full Tier A/B content
   completeness derived from validated registries and review states;
-- remote Cloudflare configuration and correction-intake activation authority;
-- the Firefox/WebKit and manual Playwright-adjacent accessibility/true-zoom,
-  device/print, performance, and remaining-browser offline matrix beyond the
-  complete local Chromium run;
-- the separately approved correction storage, retention, triage, privacy,
-  abuse-handling, ephemeral rate-key, routing, and production-binding contract;
+- remote Cloudflare preview/production credentials and canonical-domain values;
+- the manual accessibility/true-zoom, device/physical-print, and performance
+  certification matrix;
+- correction-intake activation authority and the separately approved storage,
+  retention, triage, privacy, abuse-handling, ephemeral rate-key, routing, and
+  production-binding contract;
+- first-party observability/analytics choice, if any;
 - custom-domain/canonical-host configuration.
 
 Resolve these through implementation evidence and, only where evidence exposes a
@@ -465,12 +471,14 @@ first-pass or direct-DOM defaults forward silently.
 
 - Static/reference routes contain useful semantic HTML and no Effect closure.
   Interactive study islands load independently through Vite.
-- Cloudflare Workers Static Assets is the initial host. The correction Worker is
-  implemented as a dormant separate root and checked in with no routes, D1,
-  rate-limit bindings, secret, preview URL, workers.dev URL, or logging. It must
-  remain disabled until storage, retention, triage, privacy, abuse handling,
-  ephemeral network-key derivation, global limiting, routing, and production
-  authority are separately approved and configured.
+- Cloudflare Workers Static Assets is the initial host. The regex-only
+  local-shell router is the documented no-data exception and delegates all
+  responses to `ASSETS`; do not broaden it into a file server or application
+  backend. The correction Worker is implemented as a dormant separate root with
+  no routes, D1/rate-limit/secret bindings, preview URL, workers.dev URL, or
+  logging. It must remain disabled until storage, retention, triage, privacy,
+  abuse handling, ephemeral network-key derivation, global limiting, routing,
+  production authority, and workerd verification are separately approved.
 - Use Bun test for pure/Bun-host work, `@effect/vitest` for Effect behavior, and
   real Chromium, Firefox, and WebKit for browser semantics. Artifact/leak scans,
   automated accessibility checks, manual assistive-technology review, print

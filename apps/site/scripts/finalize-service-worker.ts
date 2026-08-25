@@ -13,6 +13,7 @@ import {
   OfflineShellManifest,
   decodeGeneratedOfflinePackDescriptor
 } from "../src/offline-packs/model.ts"
+import { trustedCurrentShellNavigation } from "../src/shell-route-policy.ts"
 import {
   cacheVersionFor,
   finalizeServiceWorker
@@ -31,19 +32,6 @@ const internalManifestUrl = new URL(
 
 const safePrecacheArtifactKinds = new Set([
   "catalog"
-])
-
-const baselineNavigation = new Set([
-  "/",
-  "/offline/",
-  "/report/",
-  "/settings/",
-  "/status/",
-  "/transparency/",
-  "/transparency/corrections/",
-  "/transparency/foil/",
-  "/transparency/privacy/",
-  "/transparency/security/"
 ])
 
 const answerBearingFileSegment =
@@ -178,11 +166,47 @@ export const collectReferencedBuildAssets = async (
 const documentPath = (canonicalPath: string): string =>
   canonicalPath === "/" ? "index.html" : `${canonicalPath.slice(1)}index.html`
 
+export const normalizeCanonicalOrigin = (value: string | undefined): string | undefined => {
+  if (value === undefined || value.trim().length === 0) return undefined
+  const parsed = new URL(value)
+  if (
+    parsed.protocol !== "https:" ||
+    parsed.username.length > 0 ||
+    parsed.password.length > 0 ||
+    parsed.pathname !== "/" ||
+    parsed.search.length > 0 ||
+    parsed.hash.length > 0
+  ) {
+    throw new Error("NYCUSTODIAN_CANONICAL_ORIGIN must be an HTTPS origin without credentials, path, query, or fragment")
+  }
+  return parsed.origin
+}
+
+const canonicalHref = (canonicalPath: string, origin: string | undefined): string =>
+  origin === undefined ? canonicalPath : new URL(canonicalPath, `${origin}/`).href
+
+const escapeXml = (value: string): string =>
+  value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&apos;")
+
+export const renderSitemap = (canonicalPaths: readonly string[], origin: string): string =>
+  `<?xml version="1.0" encoding="UTF-8"?>\n` +
+  `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
+  canonicalPaths
+    .map((path) => `  <url><loc>${escapeXml(canonicalHref(path, origin))}</loc></url>`)
+    .join("\n") +
+  `\n</urlset>\n`
+
 const assertClosedBuildTree = (
   buildFiles: readonly string[],
   canonicalPaths: readonly string[],
   manifest: PublicDeliveryManifest,
-  builtAssets: readonly string[]
+  builtAssets: readonly string[],
+  hasSitemap: boolean
 ): void => {
   const actual = new Set(buildFiles.map((path) => normalizedRelativePath(distRoot.pathname, path)))
   const expected = new Set([
@@ -191,6 +215,8 @@ const assertClosedBuildTree = (
     "offline.html",
     "manifest.webmanifest",
     "offline-pack-shell-manifest.json",
+    "print-bootstrap.json",
+    ...(hasSitemap ? ["sitemap.xml"] : []),
     "styles.css",
     "sw.js",
     "content/vertical-slice/manifest.json",
@@ -283,7 +309,8 @@ export const writeOfflineShellManifest = async (
 }
 
 export const canonicalizeGeneratedDocuments = async (
-  root: string
+  root: string,
+  origin = normalizeCanonicalOrigin(process.env.NYCUSTODIAN_CANONICAL_ORIGIN)
 ): Promise<readonly string[]> => {
   const htmlPaths = (await collectFiles(root)).filter((path) => path.endsWith(".html"))
   const canonicalPaths: string[] = []
@@ -317,7 +344,10 @@ export const canonicalizeGeneratedDocuments = async (
     canonicalPaths.push(canonicalPath)
     await writeFile(
       path,
-      html.replace(markers[0][0], `<link rel="canonical" href="${canonicalPath}">`)
+      html.replace(
+        markers[0][0],
+        `<link rel="canonical" href="${canonicalHref(canonicalPath, origin)}">`
+      )
     )
   }
 
@@ -325,7 +355,23 @@ export const canonicalizeGeneratedDocuments = async (
 }
 
 export const finalizeBuild = async (): Promise<void> => {
-  const canonicalPaths = await canonicalizeGeneratedDocuments(distRoot.pathname)
+  const canonicalOrigin = normalizeCanonicalOrigin(process.env.NYCUSTODIAN_CANONICAL_ORIGIN)
+  const canonicalPaths = await canonicalizeGeneratedDocuments(distRoot.pathname, canonicalOrigin)
+  let hasSitemap = false
+  if (canonicalOrigin !== undefined) {
+    const indexablePaths: string[] = []
+    for (const canonicalPath of canonicalPaths) {
+      const html = await readFile(resolve(distRoot.pathname, documentPath(canonicalPath)), "utf8")
+      if (html.includes('<meta name="robots" content="index,follow">')) {
+        indexablePaths.push(canonicalPath)
+      }
+    }
+    await writeFile(
+      resolve(distRoot.pathname, "sitemap.xml"),
+      renderSitemap(indexablePaths.sort(), canonicalOrigin)
+    )
+    hasSitemap = true
+  }
   const builtManifestUrl = new URL("manifest.json", publicReleaseRoot)
   const rawBuiltManifest = JSON.parse(await Bun.file(builtManifestUrl).text()) as unknown
   const stagedManifest = decodePublicDeliveryManifest(rawBuiltManifest)
@@ -361,17 +407,18 @@ export const finalizeBuild = async (): Promise<void> => {
       normalizedRelativePath(publicAssetRoot.pathname, path)
     )
   )
-  assertClosedBuildTree(buildFiles, canonicalPaths, manifest, builtAssets)
+  assertClosedBuildTree(buildFiles, canonicalPaths, manifest, builtAssets, hasSitemap)
   const safeContent = manifest.artifacts
     .filter((artifact) => safePrecacheArtifactKinds.has(artifact.kind))
     .map((artifact) => `/content/vertical-slice/${artifact.path}`)
 
   const shellUrls = [
-    ...canonicalPaths.filter((path) => baselineNavigation.has(path)),
+    ...canonicalPaths.filter((path) => trustedCurrentShellNavigation.has(path)),
     "/404.html",
     "/offline.html",
     "/offline-pack-shell-manifest.json",
     "/manifest.webmanifest",
+    "/print-bootstrap.json",
     "/styles.css",
     "/content/vertical-slice/manifest.json",
     ...safeContent,

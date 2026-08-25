@@ -1,6 +1,5 @@
-import { Schema } from "effect"
 import { createRoot } from "react-dom/client"
-import { SettingsBootstrap } from "../model.ts"
+import { decodeSettingsBootstrap } from "../model.ts"
 import { disposeSettingsRuntime, settingsRuntime } from "../../settings-runtime.ts"
 import { SettingsIsland } from "./settings.tsx"
 
@@ -10,13 +9,7 @@ if (mount === null || data?.textContent === null || data?.textContent === undefi
   throw new Error("Settings bootstrap contract is incomplete")
 }
 
-const bootstrap = Schema.decodeUnknownSync(SettingsBootstrap)(JSON.parse(data.textContent))
-if (
-  new Set(bootstrap.questionIds).size !== bootstrap.questionIds.length ||
-  new Set(bootstrap.sceneIds).size !== bootstrap.sceneIds.length
-) {
-  throw new Error("Settings bootstrap contains duplicate content references")
-}
+const bootstrap = decodeSettingsBootstrap(JSON.parse(data.textContent))
 
 const root = createRoot(mount)
 root.render(<SettingsIsland bootstrap={bootstrap} runtime={settingsRuntime} />)

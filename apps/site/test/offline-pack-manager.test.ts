@@ -13,13 +13,17 @@ import {
   OfflineShellManifest,
   decodeOfflinePackRecord,
   offlinePackCacheName,
-  offlinePackImmutableFingerprintSource,
-  offlinePackRootManifestCacheKey
+  offlinePackClaimId,
+  offlinePackContentFingerprintSource,
+  offlinePackRootManifestCacheKey,
+  offlinePackShellBuildFingerprintSource
 } from "../src/offline-packs/model.ts"
 import {
   OfflinePackPersistence,
   OfflinePackPersistenceError,
-  OfflinePackRemovalClaimBlocked
+  OfflinePackRemovalClaimBlocked,
+  OfflinePackRetiredClaimConflict,
+  OfflinePackStageClaimConflict
 } from "../src/offline-packs/persistence.ts"
 import {
   verifiedContentCacheKey,
@@ -36,12 +40,17 @@ const keyFor = (input: RequestInfo | URL): string =>
 class MemoryCache {
   readonly entries = new Map<string, Response>()
 
+  constructor(readonly putFailure?: (key: string) => unknown) {}
+
   async match(input: RequestInfo | URL): Promise<Response | undefined> {
     return this.entries.get(keyFor(input))?.clone()
   }
 
   async put(input: RequestInfo | URL, response: Response): Promise<void> {
-    this.entries.set(keyFor(input), response.clone())
+    const key = keyFor(input)
+    const failure = this.putFailure?.(key)
+    if (failure !== undefined) throw failure
+    this.entries.set(key, response.clone())
   }
 
   async delete(input: RequestInfo | URL): Promise<boolean> {
@@ -58,13 +67,15 @@ const response = (value: Uint8Array, contentType: string): Response => {
   })
 }
 
-const fixture = (version: number) => {
+const fixture = (version: number, shellBuild = "default") => {
   const releaseId = `release-v${version}`
   const packId = `${releaseId}-en`
   const contentPath = `/content/questions/release-v${version}.postcommit.json`
-  const navigationPath = `/atlas/v${version}/`
+  const navigationPath = shellBuild === "default"
+    ? `/atlas/v${version}/`
+    : `/atlas/v${version}-${shellBuild}/`
   const content = encoded(JSON.stringify({ version }))
-  const navigation = encoded(`<main><h1>Version ${version}</h1></main>`)
+  const navigation = encoded(`<main><h1>Version ${version}, shell ${shellBuild}</h1></main>`)
   const shellManifest = new OfflineShellManifest({
     schemaVersion: 1,
     scope: "offline-application-shell",
@@ -86,7 +97,7 @@ const fixture = (version: number) => {
     releaseId,
     packVersion: version,
     locale: "en",
-    label: `Release ${version}`,
+    label: shellBuild === "default" ? `Release ${version}` : `Release ${version}, ${shellBuild}`,
     lifecycle: "published",
     publicationTime: "2026-08-25T00:00:00.000Z",
     compatibility: [{ profileId: "profile", label: "Profile", compatibilityKey: "profile-v1" }],
@@ -118,17 +129,20 @@ const fixture = (version: number) => {
   }
 }
 
-const fingerprint = (descriptor: OfflinePackDescriptor, generation: string): string =>
-  sha256(encoded(offlinePackImmutableFingerprintSource(descriptor, generation)))
+const fingerprints = (descriptor: OfflinePackDescriptor) => ({
+  contentFingerprint: sha256(encoded(offlinePackContentFingerprintSource(descriptor))),
+  shellBuildFingerprint: sha256(encoded(offlinePackShellBuildFingerprintSource(descriptor)))
+})
 
 const completeRecord = (
   descriptor: OfflinePackDescriptor,
   generation: string,
   status: "staged" | "active" | "retained" = "staged"
 ): OfflinePackRecord => decodeOfflinePackRecord(new OfflinePackRecord({
-  id: descriptor.id,
+  id: offlinePackClaimId(descriptor.id, generation),
+  packId: descriptor.id,
   generation,
-  immutableFingerprint: fingerprint(descriptor, generation),
+  ...fingerprints(descriptor),
   descriptor,
   status,
   cacheName: offlinePackCacheName(descriptor, generation),
@@ -142,35 +156,71 @@ const completeRecord = (
 const persistenceFailure = (operation: string, detail: string) =>
   new OfflinePackPersistenceError({ operation, detail, cause: new Error(detail) })
 
+const stageClaimFailure = (detail: string) => new OfflinePackPersistenceError({
+  operation: "begin-stage",
+  detail,
+  cause: new OfflinePackStageClaimConflict(detail)
+})
+
+const hasExactClaim = (
+  pack: OfflinePackRecord | undefined,
+  generation: string,
+  contentFingerprint: string,
+  shellBuildFingerprint: string
+): pack is OfflinePackRecord =>
+  pack !== undefined &&
+  pack.generation === generation &&
+  pack.contentFingerprint === contentFingerprint &&
+  pack.shellBuildFingerprint === shellBuildFingerprint
+
 const memoryPersistence = (
   packs: Map<string, OfflinePackRecord>,
   hooks: {
     activate?: () => void
     removalImpact?: () => { readonly activeSessionPins: number; readonly historicalAttempts: number }
   } = {}
-): OfflinePackPersistence["Service"] => OfflinePackPersistence.of({
-  beginActivation: (packId, generation, immutableFingerprint) => Effect.gen(function*() {
-    const current = packs.get(packId)
+): OfflinePackPersistence["Service"] => {
+  const retiredPackIds = new Set<string>()
+  return OfflinePackPersistence.of({
+  beginActivation: (
+    claimId,
+    generation,
+    contentFingerprint,
+    shellBuildFingerprint
+  ) => Effect.gen(function*() {
+    const current = packs.get(claimId)
+    if (current !== undefined && retiredPackIds.has(current.packId)) {
+      const conflict = new OfflinePackRetiredClaimConflict("retired pack")
+      return yield* new OfflinePackPersistenceError({
+        operation: "begin-activation",
+        detail: conflict.message,
+        cause: conflict
+      })
+    }
     if (
-      current === undefined ||
+      !hasExactClaim(current, generation, contentFingerprint, shellBuildFingerprint) ||
       (current.status !== "staged" && current.status !== "retained") ||
-      current.generation !== generation ||
-      current.immutableFingerprint !== immutableFingerprint
+      current.id !== claimId
     ) return yield* persistenceFailure("begin-activation", "activation claim conflict")
     const claimed = decodeOfflinePackRecord(new OfflinePackRecord({
       ...current,
       status: "activating"
     }))
-    packs.set(packId, claimed)
+    packs.set(claimId, claimed)
     return claimed
   }),
-  beginRemoval: (packId, generation, immutableFingerprint, confirmedHistoricalImpact) => Effect.gen(function*() {
-    const current = packs.get(packId)
+  beginRemoval: (
+    claimId,
+    generation,
+    contentFingerprint,
+    shellBuildFingerprint,
+    confirmedHistoricalImpact
+  ) => Effect.gen(function*() {
+    const current = packs.get(claimId)
     if (
-      current === undefined ||
-      !["staged", "retained", "quarantined"].includes(current.status) ||
-      current.generation !== generation ||
-      current.immutableFingerprint !== immutableFingerprint
+      !hasExactClaim(current, generation, contentFingerprint, shellBuildFingerprint) ||
+      !["staged", "active", "retained", "quarantined"].includes(current.status) ||
+      current.id !== claimId
     ) return yield* persistenceFailure("begin-removal", "removal claim conflict")
     const impact = hooks.removalImpact?.() ?? { activeSessionPins: 0, historicalAttempts: 0 }
     if (impact.activeSessionPins > 0 || (!confirmedHistoricalImpact && impact.historicalAttempts > 0)) {
@@ -185,13 +235,32 @@ const memoryPersistence = (
       })
     }
     const claimed = decodeOfflinePackRecord(new OfflinePackRecord({ ...current, status: "removing" }))
-    packs.set(packId, claimed)
+    packs.set(claimId, claimed)
     return claimed
   }),
   beginStage: (pack) => Effect.gen(function*() {
-    const current = packs.get(pack.id)
-    if (current !== undefined && current.status !== "quarantined") {
-      return yield* persistenceFailure("begin-stage", "stage claim conflict")
+    const current = [...packs.values()]
+    if (retiredPackIds.has(pack.packId)) {
+      const conflict = new OfflinePackRetiredClaimConflict("retired pack")
+      return yield* new OfflinePackPersistenceError({
+        operation: "begin-stage",
+        detail: conflict.message,
+        cause: conflict
+      })
+    }
+    if (
+      packs.has(pack.id) ||
+      current.some((candidate) =>
+        candidate.packId === pack.packId &&
+        candidate.contentFingerprint !== pack.contentFingerprint
+      ) ||
+      current.some((candidate) =>
+        candidate.packId === pack.packId &&
+        candidate.status !== "quarantined" &&
+        candidate.shellBuildFingerprint === pack.shellBuildFingerprint
+      )
+    ) {
+      return yield* stageClaimFailure("stage claim conflict")
     }
     packs.set(pack.id, pack)
   }),
@@ -199,68 +268,108 @@ const memoryPersistence = (
     const current = packs.get(pack.id)
     if (
       current?.status !== "verifying" ||
-      current.generation !== pack.generation ||
-      current.immutableFingerprint !== pack.immutableFingerprint
+      !hasExactClaim(
+        current,
+        pack.generation,
+        pack.contentFingerprint,
+        pack.shellBuildFingerprint
+      )
     ) return yield* persistenceFailure("complete-stage", "stage completion conflict")
     packs.set(pack.id, pack)
     return pack
   }),
-  activate: (packId, generation, immutableFingerprint) => Effect.gen(function*() {
+  activate: (
+    claimId,
+    generation,
+    contentFingerprint,
+    shellBuildFingerprint
+  ) => Effect.gen(function*() {
     hooks.activate?.()
-    const current = packs.get(packId)
+    const current = packs.get(claimId)
     if (
       current?.status !== "activating" ||
-      current.generation !== generation ||
-      current.immutableFingerprint !== immutableFingerprint
+      !hasExactClaim(current, generation, contentFingerprint, shellBuildFingerprint)
     ) return yield* persistenceFailure("activate", "activation CAS conflict")
     for (const [id, pack] of packs) {
       packs.set(id, decodeOfflinePackRecord(new OfflinePackRecord({
         ...pack,
-        status: id === packId ? "active" : pack.status === "active" ? "retained" : pack.status,
-        ...(id === packId ? { activatedAt: 20 } : {})
+        status: id === claimId ? "active" : pack.status === "active" ? "retained" : pack.status,
+        ...(id === claimId ? { activatedAt: 20 } : {})
       })))
     }
     return [...packs.values()]
   }),
-  failActivation: (packId, generation, immutableFingerprint, operation) => Effect.gen(function*() {
-    const current = packs.get(packId)
+  failActivation: (
+    claimId,
+    generation,
+    contentFingerprint,
+    shellBuildFingerprint,
+    operation
+  ) => Effect.gen(function*() {
+    const current = packs.get(claimId)
     if (
       current?.status !== "activating" ||
-      current.generation !== generation ||
-      current.immutableFingerprint !== immutableFingerprint ||
+      !hasExactClaim(current, generation, contentFingerprint, shellBuildFingerprint) ||
       operation.detail === null
     ) return yield* persistenceFailure("fail-activation", "activation quarantine conflict")
-    packs.set(packId, decodeOfflinePackRecord(new OfflinePackRecord({
+    packs.set(claimId, decodeOfflinePackRecord(new OfflinePackRecord({
       ...current,
       status: "quarantined",
       detail: operation.detail
     })))
   }),
-  find: (packId) => Effect.sync(() => packs.get(packId)),
+  find: (claimId) => Effect.sync(() => packs.get(claimId)),
   list: () => Effect.sync(() => [...packs.values()]),
+  listOrphanCaches: () => Effect.succeed([]),
   previewRemoval: () => Effect.sync(() =>
     hooks.removalImpact?.() ?? { activeSessionPins: 0, historicalAttempts: 0 }),
   putOperation: () => Effect.succeed(undefined),
   putPack: (pack) => Effect.gen(function*() {
     const current = packs.get(pack.id)
     if (
-      current === undefined ||
-      current.generation !== pack.generation ||
-      current.immutableFingerprint !== pack.immutableFingerprint
+      !hasExactClaim(
+        current,
+        pack.generation,
+        pack.contentFingerprint,
+        pack.shellBuildFingerprint
+      )
     ) return yield* persistenceFailure("put-pack", "pack update conflict")
     packs.set(pack.id, pack)
   }),
+  forgetOrphanCache: () => Effect.succeed(undefined),
   reconcile: () => Effect.sync(() => [...packs.values()]),
-  removePack: (packId, generation, immutableFingerprint) => Effect.gen(function*() {
-    const current = packs.get(packId)
+  retire: (descriptor) => Effect.sync(() => {
+    retiredPackIds.add(descriptor.id)
+    for (const [id, pack] of packs) {
+      if (pack.packId !== descriptor.id) continue
+      packs.set(id, decodeOfflinePackRecord(new OfflinePackRecord({
+        ...pack,
+        status: pack.status === "active" ? "retained" :
+          ["staging", "verifying", "staged", "activating"].includes(pack.status)
+            ? "quarantined"
+            : pack.status,
+        detail: ["staging", "verifying", "staged", "activating"].includes(pack.status)
+          ? "This release was retired before the local operation could remain usable."
+          : pack.detail
+      })))
+    }
+    return [...packs.values()]
+  }),
+  removePack: (
+    claimId,
+    generation,
+    contentFingerprint,
+    shellBuildFingerprint
+  ) => Effect.gen(function*() {
+    const current = packs.get(claimId)
     if (
       current?.status !== "removing" ||
-      current.generation !== generation ||
-      current.immutableFingerprint !== immutableFingerprint
+      !hasExactClaim(current, generation, contentFingerprint, shellBuildFingerprint)
     ) return yield* persistenceFailure("remove", "removal CAS conflict")
-    packs.delete(packId)
+    packs.delete(claimId)
   })
 })
+}
 
 const harness = (
   network: Map<string, { readonly bytes: Uint8Array; readonly type: string }>,
@@ -269,7 +378,8 @@ const harness = (
   hooks: {
     activate?: () => void
     removalImpact?: () => { readonly activeSessionPins: number; readonly historicalAttempts: number }
-  } = {}
+  } = {},
+  cachePutFailure?: (cacheName: string, key: string) => unknown
 ) => {
   const cacheStorage = new Map<string, MemoryCache>()
   let now = 10
@@ -283,7 +393,9 @@ const harness = (
     },
     now: () => now++,
     openCache: async (name) => {
-      const cache = cacheStorage.get(name) ?? new MemoryCache()
+      const cache = cacheStorage.get(name) ?? new MemoryCache((key) =>
+        cachePutFailure?.(name, key)
+      )
       cacheStorage.set(name, cache)
       return cache as unknown as Cache
     },
@@ -319,7 +431,8 @@ describe("offline pack staging and activation", () => {
   it("retains exact root bytes only under the non-servable key and revalidates them before activation", async () => {
     const old = fixture(1)
     const next = fixture(2)
-    const packs = new Map([[old.descriptor.id, completeRecord(old.descriptor, "old-generation", "active")]])
+    const oldRecord = completeRecord(old.descriptor, "old-generation", "active")
+    const packs = new Map([[oldRecord.id, oldRecord]])
     const { cacheStorage, manager } = harness(
       networkFor(next),
       ["next-generation-a", "next-generation-b"],
@@ -333,21 +446,116 @@ describe("offline pack staging and activation", () => {
       .toEqual(next.shellManifestBytes)
 
     await stagedCache?.put(offlinePackRootManifestCacheKey, new Response("tampered root"))
-    await expect(Effect.runPromise(manager.activate(next.descriptor.id))).rejects.toMatchObject({
+    await expect(Effect.runPromise(manager.activate(staged.id))).rejects.toMatchObject({
       reason: "integrity-failure"
     })
-    expect(packs.get(old.descriptor.id)?.status).toBe("active")
-    expect(packs.get(next.descriptor.id)?.status).toBe("quarantined")
+    expect(packs.get(oldRecord.id)?.status).toBe("active")
+    expect(packs.get(staged.id)?.status).toBe("quarantined")
     expect(cacheStorage.has(staged.cacheName)).toBe(false)
 
     const restaged = await Effect.runPromise(manager.stage(next.descriptor))
     expect(restaged.generation).toBe("next-generation-b")
-    const activated = await Effect.runPromise(manager.activate(next.descriptor.id))
-    expect(activated.find((pack) => pack.id === old.descriptor.id)?.status).toBe("retained")
-    expect(activated.find((pack) => pack.id === next.descriptor.id)?.status).toBe("active")
+    const activated = await Effect.runPromise(manager.activate(restaged.id))
+    expect(activated.find((pack) => pack.id === oldRecord.id)?.status).toBe("retained")
+    expect(activated.find((pack) => pack.id === restaged.id)?.status).toBe("active")
     const pointer = cacheStorage.get(offlinePackPointerCacheName)
     expect(await (await pointer?.match(new URL(offlinePackPointerPath, origin)))?.text())
       .toBe(restaged.cacheName)
+  })
+
+  it("stages a content-equal shell build without displacing the old active claim", async () => {
+    const original = fixture(1, "shell-a")
+    const refreshed = fixture(1, "shell-b")
+    const originalRecord = completeRecord(original.descriptor, "original-generation", "active")
+    const packs = new Map([[originalRecord.id, originalRecord]])
+    const { cacheStorage, manager } = harness(
+      networkFor(refreshed),
+      ["refreshed-generation"],
+      packs
+    )
+
+    const staged = await Effect.runPromise(manager.stage(refreshed.descriptor))
+    expect(staged.packId).toBe(originalRecord.packId)
+    expect(staged.contentFingerprint).toBe(originalRecord.contentFingerprint)
+    expect(staged.shellBuildFingerprint).not.toBe(originalRecord.shellBuildFingerprint)
+    expect(packs.get(originalRecord.id)?.status).toBe("active")
+    expect(packs.get(staged.id)?.status).toBe("staged")
+
+    const activated = await Effect.runPromise(manager.activate(staged.id))
+    expect(activated.find((pack) => pack.id === originalRecord.id)?.status).toBe("retained")
+    expect(activated.find((pack) => pack.id === staged.id)?.status).toBe("active")
+    const pointer = cacheStorage.get(offlinePackPointerCacheName)
+    expect(await (await pointer?.match(new URL(offlinePackPointerPath, origin)))?.text())
+      .toBe(staged.cacheName)
+  })
+
+  it("rejects portable content drift under an already claimed stable pack ID", async () => {
+    const current = fixture(1)
+    const currentRecord = completeRecord(current.descriptor, "current-generation", "active")
+    const packs = new Map([[currentRecord.id, currentRecord]])
+    const drifted = new OfflinePackDescriptor({
+      ...current.descriptor,
+      receipts: [{
+        ...current.descriptor.receipts[0],
+        sha256: "f".repeat(64)
+      }, ...current.descriptor.receipts.slice(1)]
+    })
+    const { manager } = harness(new Map(), ["drifted-generation"], packs)
+
+    await expect(Effect.runPromise(manager.stage(drifted))).rejects.toMatchObject({
+      reason: "state-conflict"
+    })
+    expect(packs.get(currentRecord.id)?.status).toBe("active")
+    expect(packs.size).toBe(1)
+  })
+
+  it("keeps retired descriptors historical instead of staging or reactivating them", async () => {
+    const current = fixture(1)
+    const retiredDescriptor = new OfflinePackDescriptor({
+      ...current.descriptor,
+      lifecycle: "retired",
+      publicationTime: null
+    })
+    const retiredRecord = completeRecord(
+      retiredDescriptor,
+      "retired-generation",
+      "retained"
+    )
+    const packs = new Map([[retiredRecord.id, retiredRecord]])
+    const { manager } = harness(new Map(), ["must-not-be-used"], packs)
+
+    await expect(Effect.runPromise(manager.stage(retiredDescriptor))).rejects.toMatchObject({
+      reason: "state-conflict"
+    })
+    await expect(Effect.runPromise(manager.activate(retiredRecord.id))).rejects.toMatchObject({
+      reason: "state-conflict"
+    })
+    expect(packs.get(retiredRecord.id)?.status).toBe("retained")
+  })
+
+  it("propagates a trusted retirement to an already-active published generation", async () => {
+    const current = fixture(1)
+    const active = completeRecord(current.descriptor, "published-before-retirement", "active")
+    const packs = new Map([[active.id, active]])
+    const { cacheStorage, manager } = harness(new Map(), ["stale-page-stage"], packs)
+    await Effect.runPromise(manager.list())
+
+    const retired = new OfflinePackDescriptor({
+      ...current.descriptor,
+      lifecycle: "retired"
+    })
+    const reconciled = await Effect.runPromise(manager.reconcileDescriptor(retired))
+
+    expect(reconciled.find((pack) => pack.id === active.id)?.status).toBe("retained")
+    expect(await cacheStorage.get(offlinePackPointerCacheName)?.match(
+      new URL(offlinePackPointerPath, origin)
+    )).toBeUndefined()
+    await expect(Effect.runPromise(manager.stage(current.descriptor))).rejects.toMatchObject({
+      reason: "state-conflict"
+    })
+    await expect(Effect.runPromise(manager.activate(active.id))).rejects.toMatchObject({
+      reason: "state-conflict"
+    })
   })
 
   it("deletes a failed generation cache and leaves no partially promoted runtime object", async () => {
@@ -359,12 +567,34 @@ describe("offline pack staging and activation", () => {
     await expect(Effect.runPromise(manager.stage(next.descriptor))).rejects.toMatchObject({
       reason: "network-failure"
     })
-    const quarantined = packs.get(next.descriptor.id)
+    const quarantined = [...packs.values()].find((pack) => pack.generation === "failed-generation")
     expect(quarantined?.status).toBe("quarantined")
     expect(cacheStorage.has(offlinePackCacheName(next.descriptor, "failed-generation"))).toBe(false)
     const runtime = cacheStorage.get(verifiedContentCacheName)
     expect(await runtime?.match(verifiedContentCacheKey(origin, next.descriptor.receipts[0]!)))
       .toBeUndefined()
+  })
+
+  it("classifies Cache API quota failure as quota-limited and quarantines only that generation", async () => {
+    const next = fixture(2)
+    const { cacheStorage, manager, packs } = harness(
+      networkFor(next),
+      ["quota-generation"],
+      new Map(),
+      {},
+      (cacheName, key) =>
+        cacheName.includes("quota-generation") && key.endsWith(next.contentPath)
+          ? new DOMException("quota exhausted", "QuotaExceededError")
+          : undefined
+    )
+
+    await expect(Effect.runPromise(manager.stage(next.descriptor))).rejects.toMatchObject({
+      reason: "quota-limited",
+      cause: expect.objectContaining({ name: "QuotaExceededError" })
+    })
+    const quarantined = [...packs.values()].find((pack) => pack.generation === "quota-generation")
+    expect(quarantined?.status).toBe("quarantined")
+    expect(cacheStorage.has(offlinePackCacheName(next.descriptor, "quota-generation"))).toBe(false)
   })
 
   it("CAS-rejects a restaged generation without deleting or mutating its cache", async () => {
@@ -378,7 +608,9 @@ describe("offline pack staging and activation", () => {
       packs,
       {
         activate: () => {
-          packs.set(next.descriptor.id, replacement)
+          const activating = [...packs.values()].find((pack) => pack.status === "activating")
+          if (activating !== undefined) packs.delete(activating.id)
+          packs.set(replacement.id, replacement)
           replacementCache = new MemoryCache()
           replacementCache.entries.set(new URL("/replacement-marker", origin).href, new Response("intact"))
           cacheStorage.set(replacement.cacheName, replacementCache)
@@ -387,16 +619,16 @@ describe("offline pack staging and activation", () => {
     )
     const staged = await Effect.runPromise(manager.stage(next.descriptor))
 
-    await expect(Effect.runPromise(manager.activate(next.descriptor.id))).rejects.toMatchObject({
+    await expect(Effect.runPromise(manager.activate(staged.id))).rejects.toMatchObject({
       reason: "state-conflict"
     })
-    expect(packs.get(next.descriptor.id)?.generation).toBe("replacement-generation")
-    expect(packs.get(next.descriptor.id)?.status).toBe("staged")
+    expect(packs.get(replacement.id)?.generation).toBe("replacement-generation")
+    expect(packs.get(replacement.id)?.status).toBe("staged")
     expect(cacheStorage.has(staged.cacheName)).toBe(false)
     expect(await (await replacementCache?.match("/replacement-marker"))?.text()).toBe("intact")
   })
 
-  it("rejects an IDB-edited immutable descriptor even when its child bytes remain intact", async () => {
+  it("rejects IDB-edited shell metadata even when its child bytes remain intact", async () => {
     const next = fixture(2)
     const { manager, packs } = harness(networkFor(next), ["fingerprinted-generation"])
     const staged = await Effect.runPromise(manager.stage(next.descriptor))
@@ -413,11 +645,12 @@ describe("offline pack staging and activation", () => {
 
   it("requires confirmation when a historical attempt commits after removal preview", async () => {
     const current = fixture(1)
-    const packs = new Map([[current.descriptor.id, completeRecord(
+    const currentRecord = completeRecord(
       current.descriptor,
       "historical-race-generation",
       "retained"
-    )]])
+    )
+    const packs = new Map([[currentRecord.id, currentRecord]])
     let reads = 0
     const { manager } = harness(new Map(), [], packs, {
       removalImpact: () => ({
@@ -426,18 +659,19 @@ describe("offline pack staging and activation", () => {
       })
     })
 
-    await expect(Effect.runPromise(manager.remove(current.descriptor.id, false)))
+    await expect(Effect.runPromise(manager.remove(currentRecord.id, false)))
       .rejects.toMatchObject({ reason: "confirmation-required" })
-    expect(packs.get(current.descriptor.id)?.status).toBe("retained")
+    expect(packs.get(currentRecord.id)?.status).toBe("retained")
   })
 
   it("allows a confirmed removal when the historical-attempt count grows after preview", async () => {
     const current = fixture(1)
-    const packs = new Map([[current.descriptor.id, completeRecord(
+    const currentRecord = completeRecord(
       current.descriptor,
       "confirmed-historical-race-generation",
       "retained"
-    )]])
+    )
+    const packs = new Map([[currentRecord.id, currentRecord]])
     let reads = 0
     const { manager } = harness(new Map(), [], packs, {
       removalImpact: () => ({
@@ -446,7 +680,22 @@ describe("offline pack staging and activation", () => {
       })
     })
 
-    await expect(Effect.runPromise(manager.remove(current.descriptor.id, true))).resolves.toBeUndefined()
-    expect(packs.has(current.descriptor.id)).toBe(false)
+    await expect(Effect.runPromise(manager.remove(currentRecord.id, true))).resolves.toBeUndefined()
+    expect(packs.has(currentRecord.id)).toBe(false)
+  })
+
+  it("removes the sole active pack when no live session pin requires it", async () => {
+    const current = fixture(1)
+    const active = completeRecord(current.descriptor, "sole-active-generation", "active")
+    const packs = new Map([[active.id, active]])
+    const { cacheStorage, manager } = harness(new Map(), [], packs)
+    await Effect.runPromise(manager.list())
+
+    await expect(Effect.runPromise(manager.remove(active.id, false))).resolves.toBeUndefined()
+
+    expect(packs.has(active.id)).toBe(false)
+    expect(await cacheStorage.get(offlinePackPointerCacheName)?.match(
+      new URL(offlinePackPointerPath, origin)
+    )).toBeUndefined()
   })
 })

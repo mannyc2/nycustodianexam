@@ -1,7 +1,15 @@
 import { PostcommitScene as PostcommitSceneSchema } from "@nycustodian/content/model"
 import { Effect, Schema } from "effect"
 import type { HazardAttemptReceipt } from "../attempt-receipt.ts"
-import { VerifiedContent } from "../verified-content.ts"
+import {
+  encodeCanonicalBase64,
+  retainImageBlob,
+  type RetainedImageAsset
+} from "../retained-image.ts"
+import {
+  VerifiedContent,
+  type AssetContentReceipt
+} from "../verified-content.ts"
 import { hasValidPostcommitClosure } from "./assessment.ts"
 import {
   HazardPersistence,
@@ -45,7 +53,7 @@ const loadPostcommit = Effect.fn("HazardWorkflow.loadPostcommit")(function*(
   scene: PrecommitScene
 ) {
   const verifiedContent = yield* VerifiedContent
-  const unknownPayload = yield* verifiedContent.loadJson(receipt).pipe(
+  const artifact = yield* verifiedContent.loadJsonArtifact(receipt).pipe(
     Effect.mapError(
       (cause) =>
       new HazardRevealError({
@@ -55,7 +63,7 @@ const loadPostcommit = Effect.fn("HazardWorkflow.loadPostcommit")(function*(
     )
   )
 
-  const payload = yield* Schema.decodeUnknownEffect(PostcommitSceneSchema)(unknownPayload).pipe(
+  const payload = yield* Schema.decodeUnknownEffect(PostcommitSceneSchema)(artifact.value).pipe(
     Effect.mapError(
       (cause) =>
         new HazardRevealError({
@@ -73,7 +81,7 @@ const loadPostcommit = Effect.fn("HazardWorkflow.loadPostcommit")(function*(
     })
   }
 
-  return payload
+  return { payload, postcommitBase64: encodeCanonicalBase64(artifact.bytes) }
 })
 
 const nextMarkerNumber = (markers: ReadonlyArray<HazardMarker>): number => {
@@ -98,8 +106,11 @@ const receiptMatchesScene = (
   scene: PrecommitScene,
   mode: HazardInputMode
 ): boolean => {
+  const expectedPostcommitPath =
+    `/content/vertical-slice/scenes/${encodeURIComponent(scene.asset.opaqueAssetId)}.postcommit.json`
   return receipt.sceneId === scene.id &&
     receipt.mode === mode &&
+    receipt.postcommitPath === expectedPostcommitPath &&
     receipt.assetRevision === scene.asset.revision &&
     receipt.assetMasterSha256 === scene.asset.masterSha256
 }
@@ -121,12 +132,85 @@ const commitInput = (
   }
 }
 
+const completeHazardFeedback = Effect.fn("HazardWorkflow.completeHazardFeedback")(
+  function*(input: {
+    readonly attempt: HazardAttemptRecord
+    readonly receipt: HazardAttemptReceipt
+    readonly scene: PrecommitScene
+    readonly mode: HazardInputMode
+    readonly visualAssetReceipt: AssetContentReceipt | null
+    readonly retainedVisualAsset?: RetainedImageAsset | null
+    readonly payload: typeof PostcommitSceneSchema.Type
+    readonly postcommitBase64: string
+  }) {
+    let retainedVisualAsset = input.retainedVisualAsset ?? null
+    if (input.mode === "visual") {
+      if (input.visualAssetReceipt === null) {
+        return yield* new HazardRevealError({
+          detail: "The exact released scene image receipt was unavailable.",
+          cause: new Error("Missing visual asset receipt")
+        })
+      }
+      if (retainedVisualAsset === null) {
+        const visualAssetReceipt = input.visualAssetReceipt
+        const verifiedContent = yield* VerifiedContent
+        const blob = yield* verifiedContent.loadAssetBlob(visualAssetReceipt).pipe(
+          Effect.mapError((cause) => new HazardRevealError({
+            detail: "The exact released scene image could not be retained with this feedback.",
+            cause
+          }))
+        )
+        retainedVisualAsset = yield* Effect.tryPromise({
+          try: () => retainImageBlob(visualAssetReceipt, blob),
+          catch: (cause) => new HazardRevealError({
+            detail: "The exact released scene image failed retained-asset verification.",
+            cause
+          })
+        })
+      }
+    } else if (input.visualAssetReceipt !== null || retainedVisualAsset !== null) {
+      return yield* new HazardRevealError({
+        detail: "A nonvisual scene cannot retain a visual asset.",
+        cause: new Error("Unexpected visual asset receipt")
+      })
+    }
+
+    const persistence = yield* HazardPersistence
+    const completed = yield* persistence.completeAttempt({
+      attempt: input.attempt,
+      receipt: input.receipt,
+      allowedZoneOrders: input.scene.neutralPreAnswer.zones.map((zone) => zone.order),
+      scene: input.scene,
+      visualAssetReceipt: input.visualAssetReceipt,
+      payload: input.payload,
+      postcommitBase64: input.postcommitBase64,
+      retainedVisualAsset
+    })
+    return {
+      attempt: completed,
+      payload: input.payload,
+      retainedVisualAsset
+    }
+  }
+)
+
+const durableEvaluation = (attempt: HazardAttemptRecord) =>
+  attempt.evaluation === undefined
+    ? undefined
+    : {
+        attempt,
+        payload: attempt.evaluation.payload,
+        retainedVisualAsset: attempt.evaluation.retainedVisualAsset
+      }
+
 export const commitHazardAndReveal = Effect.fn("HazardWorkflow.commitHazardAndReveal")(
   function*(input: {
     readonly receipt: HazardAttemptReceipt
     readonly scene: PrecommitScene
     readonly mode: HazardInputMode
     readonly draft: HazardDraft
+    readonly visualAssetReceipt: AssetContentReceipt | null
+    readonly retainedVisualAsset?: RetainedImageAsset | null
   }) {
     if (!receiptMatchesScene(input.receipt, input.scene, input.mode)) {
       return yield* new HazardAttemptMismatch({
@@ -148,9 +232,19 @@ export const commitHazardAndReveal = Effect.fn("HazardWorkflow.commitHazardAndRe
       commitInput(input.receipt, input.scene, input.mode, input.draft)
     )
     return yield* loadPostcommit(input.receipt, input.scene).pipe(
+      Effect.flatMap(({ payload, postcommitBase64 }) => completeHazardFeedback({
+        attempt,
+        receipt: input.receipt,
+        scene: input.scene,
+        mode: input.mode,
+        visualAssetReceipt: input.visualAssetReceipt,
+        retainedVisualAsset: input.retainedVisualAsset ?? null,
+        payload,
+        postcommitBase64
+      })),
       Effect.match({
         onFailure: (error) => ({ tag: "reveal_failed", attempt, error }) as const,
-        onSuccess: (payload) => ({ tag: "revealed", attempt, payload }) as const
+        onSuccess: (completed) => ({ tag: "revealed", ...completed }) as const
       })
     )
   }
@@ -161,6 +255,8 @@ export const restoreHazardAndReveal = Effect.fn("HazardWorkflow.restoreHazardAnd
     readonly receipt: HazardAttemptReceipt
     readonly scene: PrecommitScene
     readonly mode: HazardInputMode
+    readonly visualAssetReceipt: AssetContentReceipt | null
+    readonly retainedVisualAsset?: RetainedImageAsset | null
   }) {
     if (!receiptMatchesScene(input.receipt, input.scene, input.mode)) {
       return yield* new HazardAttemptMismatch({
@@ -171,7 +267,9 @@ export const restoreHazardAndReveal = Effect.fn("HazardWorkflow.restoreHazardAnd
     const persistence = yield* HazardPersistence
     const attempt = yield* persistence.findAttempt({
       receipt: input.receipt,
-      allowedZoneOrders: input.scene.neutralPreAnswer.zones.map((zone) => zone.order)
+      allowedZoneOrders: input.scene.neutralPreAnswer.zones.map((zone) => zone.order),
+      scene: input.scene,
+      visualAssetReceipt: input.visualAssetReceipt
     })
     if (attempt === undefined) {
       const verifiedContent = yield* VerifiedContent
@@ -182,10 +280,22 @@ export const restoreHazardAndReveal = Effect.fn("HazardWorkflow.restoreHazardAnd
         })
       )
     }
+    const evaluated = durableEvaluation(attempt)
+    if (evaluated !== undefined) return { tag: "revealed", ...evaluated } as const
     return yield* loadPostcommit(input.receipt, input.scene).pipe(
+      Effect.flatMap(({ payload, postcommitBase64 }) => completeHazardFeedback({
+        attempt,
+        receipt: input.receipt,
+        scene: input.scene,
+        mode: input.mode,
+        visualAssetReceipt: input.visualAssetReceipt,
+        retainedVisualAsset: input.retainedVisualAsset ?? null,
+        payload,
+        postcommitBase64
+      })),
       Effect.match({
         onFailure: (error) => ({ tag: "reveal_failed", attempt, error }) as const,
-        onSuccess: (payload) => ({ tag: "revealed", attempt, payload }) as const
+        onSuccess: (completed) => ({ tag: "revealed", ...completed }) as const
       })
     )
   }
@@ -196,6 +306,8 @@ export const retryHazardReveal = Effect.fn("HazardWorkflow.retryHazardReveal")(
     readonly receipt: HazardAttemptReceipt
     readonly scene: PrecommitScene
     readonly mode: HazardInputMode
+    readonly visualAssetReceipt: AssetContentReceipt | null
+    readonly retainedVisualAsset?: RetainedImageAsset | null
   }) {
     if (!receiptMatchesScene(input.receipt, input.scene, input.mode)) {
       return yield* new HazardAttemptMismatch({
@@ -206,7 +318,9 @@ export const retryHazardReveal = Effect.fn("HazardWorkflow.retryHazardReveal")(
     const persistence = yield* HazardPersistence
     const attempt = yield* persistence.findAttempt({
       receipt: input.receipt,
-      allowedZoneOrders: input.scene.neutralPreAnswer.zones.map((zone) => zone.order)
+      allowedZoneOrders: input.scene.neutralPreAnswer.zones.map((zone) => zone.order),
+      scene: input.scene,
+      visualAssetReceipt: input.visualAssetReceipt
     })
     if (attempt === undefined) {
       return yield* new HazardAttemptMismatch({
@@ -214,6 +328,18 @@ export const retryHazardReveal = Effect.fn("HazardWorkflow.retryHazardReveal")(
         attemptId: "missing"
       })
     }
-    return yield* loadPostcommit(input.receipt, input.scene)
+    const evaluated = durableEvaluation(attempt)
+    if (evaluated !== undefined) return evaluated
+    const { payload, postcommitBase64 } = yield* loadPostcommit(input.receipt, input.scene)
+    return yield* completeHazardFeedback({
+      attempt,
+      receipt: input.receipt,
+      scene: input.scene,
+      mode: input.mode,
+      visualAssetReceipt: input.visualAssetReceipt,
+      retainedVisualAsset: input.retainedVisualAsset ?? null,
+      payload,
+      postcommitBase64
+    })
   }
 )

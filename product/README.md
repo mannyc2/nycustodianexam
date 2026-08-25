@@ -56,34 +56,21 @@ than emerging ad hoc in `apps/site`.
 
 ## Implementation status
 
-The accepted graph began at `../apps/site`, `../apps/content-compiler`, and
-`../packages/content`. The M5 lane adds `../packages/correction-intake` and the
-dormant `../apps/correction-worker`; it is a controlled implementation proof,
-not a release or release certification. From the validated packs, its generator emits 65
-documents: two question routes, 18 visual hazard routes, 18 nonvisual hazard
-routes, four public tool pages, offline/settings/report and policy routes, and the supporting documents needed to make up
-that closed output.
+The accepted graph at `../apps/site`, `../apps/content-compiler`,
+`../packages/content`, and `../packages/correction-intake`, plus the dormant
+`../apps/correction-worker`, is a controlled M1–M5 integration candidate—not a
+release or release certification. The generated closed site combines M4's
+deterministic question/visual/nonvisual simulations and exact-ID print products
+with M5's receipt-rooted pack lifecycle, authoritative local preferences,
+checksummed transfer/quarantine, scoped reset, and local-first correction drafts.
 
 Other planned destination families are intentionally absent when reviewed
 machine-readable content is unavailable; the implementation does not substitute
-placeholder pages for missing editorial inputs. M4 simulation/print remains
-open. M5 now implements explicit receipt-rooted pack lifecycle, local
-preferences, checksummed export/import/quarantine, scoped reset, local-first
-correction drafts, and a dormant correction endpoint. M5 cannot close until the
-M4 v4→v5 store/transfer/reset integration proof and complete release matrix pass.
-Sitemap generation, the canonical production host, and deployment are also unresolved.
-
-Browser CI is configured. On the current isolated M5 revision, all five
-workspace typechecks, browser-test typecheck, 210 unit tests, the 65-document
-production build, maintained-layout/module-boundary gates, artifact closure,
-answer-leak checks, and all 34 standard Chromium cases pass locally. The seven
-M5 browser cases cover dormant and accepted-but-locally-unpersisted correction
-flows, authoritative preferences with mirror failure/cross-tab propagation,
-transaction-counted reset, semantic portable import/apply-time drift,
-generation-specific pack quarantine/restage, retained/removal actions, and
-offline atlas navigation/image delivery from the active pack. This does not
-replace Firefox/WebKit, manual accessibility/device/print certification, the
-post-M4 integration gates, or release certification. Historical Bun `1.4.0`
-frozen-install evidence remains recorded separately in `../docs/OPEN.md`.
+placeholder pages for missing editorial inputs. The correction Worker remains
+dormant with no production bindings, routes, or data collection. The exact M4
+v4→v5 preservation, transfer/reset integration, pack-claim race ordering, and
+complete two-worker Chromium/Firefox/WebKit matrix pass on this combined
+revision. Manual certification, the canonical production host, credentials,
+and remote preview/deployment remain unresolved.
 
 A separately authored print-system deliverable discussed in an earlier chat was **not located** as a durable Library artifact during this pass. The recovered feature specification contains the durable print contract; chat-only recollections are not silently promoted into this repository.

@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "test": "node node_modules/vitest/vitest.mjs run",
+    "test:workerd": "node --experimental-strip-types scripts/workerd-smoke.ts",
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {

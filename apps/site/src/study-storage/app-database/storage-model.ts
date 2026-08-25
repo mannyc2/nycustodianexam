@@ -1,13 +1,12 @@
 import { Context, Effect, Schema } from "effect"
+import { DurableTimestamp } from "../../durable-values.ts"
 
 export const appDatabaseName = "nycustodian-study-v1"
 // M4 owns version 4. M5 deliberately advances to version 5 so users who have
 // already opened the M4 database receive every M5 store on their next visit.
-// Integration must make this map the exact union of M4's simulation/session/
-// submission/print-job stores and the M5 stores below. A real-browser v4 -> v5
-// seed must preserve those M4 records while creating every M5 store. The
-// upgrade owner creates every declared missing store, so direct older -> v5
-// upgrades remain complete after that rebase.
+// This map is the exact union of M4's simulation/session/submission/print-job
+// stores and the M5 stores below. The upgrade owner creates every declared
+// missing store, so direct older -> v5 upgrades remain complete.
 export const appDatabaseVersion = 5
 
 export const appDatabaseStores = {
@@ -16,6 +15,9 @@ export const appDatabaseStores = {
   questionSessions: "sessions",
   hazardAttempts: "hazard-attempts",
   hazardSessions: "hazard-sessions",
+  simulationSessions: "simulation-sessions",
+  simulationSubmissions: "simulation-submissions",
+  printJobs: "print-jobs",
   reviewAcknowledgements: "review-events",
   migrationQuarantine: "migration-quarantine",
   preferences: "preferences",
@@ -33,7 +35,7 @@ export const legacyAppDatabaseNames = {
 export const StudySessionRecord = Schema.Struct({
   id: Schema.NonEmptyString,
   latestAttemptId: Schema.NonEmptyString,
-  updatedAt: Schema.Number
+  updatedAt: DurableTimestamp
 })
 
 export type AppDatabaseStore =

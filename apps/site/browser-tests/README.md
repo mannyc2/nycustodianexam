@@ -1,27 +1,25 @@
-# M1–M3 browser evidence plus targeted M5 boundary
+# M1–M5 browser evidence boundary
 
 This directory contains the configured real-browser evidence suite for the
-controlled M1–M3 implementation proof plus targeted M5 local-data evidence. It
-does not certify a release. The generator currently emits 65 documents from
-validated packs, including two question routes, 18 visual and 18 nonvisual
-hazard routes, and four public tool pages. Planned destination families without
-reviewed machine-readable content are intentionally omitted rather than
-represented by placeholders.
+controlled M1–M5 implementation candidate. It does not certify a release. The
+closed generated site includes the validated question, visual/nonvisual hazard,
+tool, simulation, print, offline-pack, settings, reporting, and correction-draft
+surfaces. Planned destination families without reviewed machine-readable content
+are intentionally omitted rather than represented by placeholders.
 
 It is intentionally separate from `apps/site/test`, whose Vitest suites remain
 deterministic unit and worker-harness checks.
 
 ## Current execution status
 
-Browser CI is configured as the complete cross-browser gate. On this revision,
-browser TypeScript and Playwright discovery include 105 configured executions:
-102 standard Vite-preview configurations across Chromium, Firefox, and WebKit,
-plus three Cloudflare-preview Chromium configurations. All 34 standard Chromium
-cases pass locally on this revision, including 27 M1–M3 cases and seven targeted
-M5 cases. All three Cloudflare-preview cases passed locally on the earlier exact
-pinned delivery revision. The Firefox and WebKit browser binaries are not
-installed locally, so the complete cross-browser matrix remains a separate
-CI/release gate.
+Browser CI is configured as the complete cross-browser gate. The targeted M4
+simulation/print slice passes 42 cases across Chromium, Firefox, and WebKit on
+the merged M4 revision. Targeted standalone M5 cases also passed on their source
+revision. This integrated candidate must rerun the complete repository matrix,
+including the exact v4-to-v5 preservation and portable-data closure, before the
+document can record integrated browser evidence. Local Cloudflare/workerd cases
+separately prove constrained opaque-shell GET/HEAD routing and reject mutation
+methods.
 
 ## Configured automated coverage
 
@@ -32,6 +30,10 @@ CI/release gate.
   selection/submission, focus transfer, live region mutations, axe WCAG A/AA
   checks, 320 CSS-pixel reflow, minimum target sizing, forced colors, reduced
   motion, and print-media visibility.
+- Chromium, Firefox, and WebKit: deterministic question/visual/nonvisual
+  simulation creation, autosave/restoration, durable-submit-before-answer-read,
+  self-contained evaluated-result restoration after verified-pack removal, and
+  deterministic exact-ID print generation/regeneration/product separation.
 - Chromium: service-worker-controlled offline reload after a committed answer,
   update waiting while a session client is active, deterministic cache namespace
   rollover, owned-cache eviction, preservation of unrelated caches, verified
@@ -81,18 +83,17 @@ adding a production-only update endpoint.
 - Explicit pack lifecycle has targeted Chromium proof; Firefox/WebKit service-
   worker lifecycle and full release-wide update/removal/eviction certification
   remain open.
-- Print media hides screen chrome and retains revealed feedback, but the current
-  route has no generated question packet, separate answer key, print manifest,
-  deterministic pagination, large-print mode, or automated PDF inspection.
+- Deterministic print packets, separate keys, manifests, page-break rules, and
+  large-print mode are automated. Browser “Save as PDF,” physical Letter/A4,
+  grayscale, clipping, and pagination inspection remain manual certification.
 - Axe is an automated ruleset, not a complete WCAG or assistive-technology
   certification. Grayscale print review is also still visual/manual.
 - Wrangler preview proves local workerd/static-asset routing only. Remote preview,
   deployment credentials, response-header policy, custom domain, canonical host,
   and any future Worker endpoint remain unconfigured.
-- Sitemap generation also remains open.
-- M4 simulation/complete print output and the v4→v5 simulation/print portable-
-  data integration proof remain open. The complete M5 cross-browser/manual
-  certification matrix remains open beyond the targeted cases above.
+- The v4→v5 simulation/print preservation and portable-data integration proof,
+  plus the complete M5 cross-browser/manual certification matrix, remain open
+  until this integration candidate passes those exact gates.
 - No lab/field performance run is introduced here; configured deterministic
   bundle budgets pass locally and remain the only automated performance evidence
   until this revision completes real-browser and release certification.

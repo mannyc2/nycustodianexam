@@ -1,0 +1,83 @@
+name: Cloudflare production deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: Type DEPLOY to request the protected production deployment.
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cloudflare-production
+  cancel-in-progress: false
+
+jobs:
+  preflight:
+    name: Require explicit confirmation and current merged main
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+      - name: Reject invalid dispatches before environment approval
+        env:
+          DEPLOYMENT_CONFIRMATION: ${{ inputs.confirmation }}
+        shell: bash
+        run: |
+          test "$DEPLOYMENT_CONFIRMATION" = "DEPLOY"
+          test "$GITHUB_REF" = "refs/heads/main"
+          git fetch --no-tags origin main
+          test "$(git rev-parse HEAD)" = "$(git rev-parse origin/main)"
+
+  certification:
+    needs: preflight
+    uses: ./.github/workflows/certification.yml
+
+  deploy:
+    name: Deploy the certified main commit
+    needs: [preflight, certification]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22.22.0
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.4.0
+      - name: Install the committed dependency graph
+        run: bun install --frozen-lockfile
+      - name: Require candidate-bound production certification attestation
+        run: bun run scripts/check-production-certification.ts --deploy-commit "$GITHUB_SHA"
+      - name: Build for the approved canonical origin
+        env:
+          CANONICAL_DOMAIN: ${{ vars.CANONICAL_DOMAIN }}
+          NYCUSTODIAN_CANONICAL_ORIGIN: https://${{ vars.CANONICAL_DOMAIN }}
+          NYCUSTODIAN_REQUIRE_PUBLISHED_RELEASE: "1"
+        shell: bash
+        run: |
+          test -n "$CANONICAL_DOMAIN"
+          bun run build
+      - name: Deploy Static Assets to the approved apex domain
+        env:
+          CANONICAL_DOMAIN: ${{ vars.CANONICAL_DOMAIN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        shell: bash
+        run: |
+          test -n "$CANONICAL_DOMAIN"
+          test -n "$CLOUDFLARE_ACCOUNT_ID"
+          test -n "$CLOUDFLARE_API_TOKEN"
+          git fetch --no-tags origin main
+          test "$GITHUB_REF" = "refs/heads/main"
+          test "$(git rev-parse HEAD)" = "$(git rev-parse origin/main)"
+          bun run --cwd apps/site wrangler deploy --config wrangler.jsonc --strict --domain "$CANONICAL_DOMAIN" --message "Production ${GITHUB_SHA}"

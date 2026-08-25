@@ -42,9 +42,9 @@
       ],
       "structuralBackground": [
         "hallway/common area",
-        "far hallway",
+        "rear hallway",
         "left wall and alcove",
-        "central walking surface",
+        "central floor",
         "right wall"
       ],
       "negativeInventory": [
@@ -200,7 +200,7 @@
       "structuralBackground": [
         "entrance/lobby",
         "entrance doors",
-        "left wall furnishings",
+        "left wall and bench",
         "central mat and floor",
         "right-side stand"
       ],
@@ -350,16 +350,19 @@
         }
       ],
       "safeBackground": [
-        "dry intact steps",
+        "dry intact steps on the upper flight",
+        "dry intact steps on the lower flight",
         "closed utility door outside the stair path",
         "ceiling light fixture"
       ],
       "structuralBackground": [
         "stairwell",
         "upper flight",
-        "landing",
+        "central landing",
         "lower flight",
-        "wall fixtures"
+        "wall fixtures",
+        "lower level",
+        "ceiling"
       ],
       "negativeInventory": [
         {
@@ -513,10 +516,11 @@
       ],
       "structuralBackground": [
         "gym",
-        "left court",
-        "rear double doors",
-        "doorway obstruction",
-        "right wall storage"
+        "left court storage",
+        "rear doors and equipment",
+        "central court",
+        "right wall storage",
+        "rear wall"
       ],
       "negativeInventory": [
         {
@@ -670,8 +674,8 @@
       ],
       "structuralBackground": [
         "custodial closet",
-        "upper wall rack",
-        "left shelving",
+        "upper wall and shelving",
+        "middle shelving",
         "service sink",
         "lower floor"
       ],
@@ -822,16 +826,18 @@
         }
       ],
       "safeBackground": [
-        "stable open metal shelving",
+        "stable open metal shelving at the upper and center shelves",
+        "stable open metal shelving at the lower bowl shelf",
         "clean tiled wall",
         "dry floor"
       ],
       "structuralBackground": [
         "kitchen",
-        "upper chemical shelf",
-        "center utensil shelf",
+        "upper and center shelves",
         "lower bowl shelf",
-        "separate pan rack"
+        "separate pan rack",
+        "rear tiled wall",
+        "lower floor"
       ],
       "negativeInventory": [
         {
@@ -985,10 +991,10 @@
       ],
       "structuralBackground": [
         "mechanical/utility area",
-        "wall storage",
-        "work light",
-        "connected cord and receptacle",
-        "floor"
+        "left wall storage",
+        "center work light",
+        "right wall connection",
+        "lower floor"
       ],
       "negativeInventory": [
         {
@@ -1144,8 +1150,9 @@
         "classroom",
         "teacher desk",
         "student desks",
-        "right wall connection",
-        "central aisle"
+        "right wall equipment",
+        "central aisle",
+        "left wall window"
       ],
       "negativeInventory": [
         {
@@ -1302,7 +1309,7 @@
         "sink and mirror",
         "stall",
         "central floor",
-        "waste bin"
+        "waste-bin side"
       ],
       "negativeInventory": [
         {
@@ -1456,10 +1463,11 @@
       ],
       "structuralBackground": [
         "exterior/grounds",
-        "building edge",
-        "walkway",
-        "shard area",
-        "collection-bin pad and planting bed"
+        "building and planting edge",
+        "central walkway",
+        "lower-left objects",
+        "right-side collection pad",
+        "right-side grass"
       ],
       "negativeInventory": [
         {
@@ -1614,9 +1622,10 @@
       "structuralBackground": [
         "loading/service area",
         "loading door",
-        "unstable dolly load",
-        "stable pallet",
-        "wall storage"
+        "left dolly and boxes",
+        "center pallet and boxes",
+        "right wall storage",
+        "lower floor"
       ],
       "negativeInventory": [
         {
@@ -1772,9 +1781,10 @@
       "structuralBackground": [
         "cafeteria",
         "serving counter",
-        "dining tables",
-        "person and carried load",
-        "wall-side cart"
+        "left dining tables",
+        "center person and boxes",
+        "right wall cart",
+        "central aisle"
       ],
       "negativeInventory": [
         {
@@ -1930,9 +1940,9 @@
       "structuralBackground": [
         "restroom",
         "sink",
-        "cleaning cart",
-        "person and toilet",
-        "tool holder and floor"
+        "right cleaning cart",
+        "center person and fixture",
+        "right tool holder and floor"
       ],
       "negativeInventory": [
         {
@@ -2082,16 +2092,16 @@
         }
       ],
       "safeBackground": [
-        "chairs tucked under other tables",
+        "chairs tucked under tables in the left dining area",
         "mop bucket upright on cart",
         "dry floor"
       ],
       "structuralBackground": [
         "cafeteria",
-        "left dining tables",
-        "central target table",
-        "janitor cart",
-        "right dining area"
+        "left dining area",
+        "central table and mop",
+        "right janitor cart",
+        "lower floor"
       ],
       "negativeInventory": [
         {
@@ -2247,10 +2257,11 @@
       ],
       "structuralBackground": [
         "gym",
-        "left wall storage",
-        "clear court",
-        "unguarded fan",
-        "intact stored fan"
+        "left wall fan",
+        "central court",
+        "rear wall fan",
+        "rear bleachers",
+        "wall padding"
       ],
       "negativeInventory": [
         {
@@ -2400,16 +2411,17 @@
         }
       ],
       "safeBackground": [
-        "clear workbench around the saw",
+        "clear left workbench",
+        "clear center workbench around the saw",
         "saw power plug visibly disconnected and resting on bench",
         "dry floor"
       ],
       "structuralBackground": [
         "mechanical/utility area",
-        "wall tool storage",
-        "workbench left",
-        "saw and exposed blade",
-        "lower floor"
+        "left wall tool storage",
+        "left workbench",
+        "center-right saw and plug",
+        "lower area"
       ],
       "negativeInventory": [
         {
@@ -2583,10 +2595,11 @@
       ],
       "structuralBackground": [
         "classroom",
-        "teacher area",
+        "teacher wall",
         "student desks",
-        "wall-side ladder",
-        "wall-side cord and fan"
+        "right-side ladder",
+        "wall-side cord and fan",
+        "central aisle"
       ],
       "negativeInventory": [
         {
@@ -2755,10 +2768,11 @@
       ],
       "structuralBackground": [
         "custodial closet",
-        "upper wall storage",
-        "left shelf and containment",
-        "service sink",
-        "floor and doorway"
+        "left sink and cabinet",
+        "center bottle shelf",
+        "center-right tool rack",
+        "right doorway and wall hook",
+        "lower floor"
       ],
       "negativeInventory": [
         {

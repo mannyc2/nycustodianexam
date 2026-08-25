@@ -12,14 +12,18 @@ import {
   decodeOfflinePackRecord,
   decodeOfflineShellManifest,
   offlinePackCacheName,
-  offlinePackImmutableFingerprintSource,
+  offlinePackClaimId,
+  offlinePackContentFingerprintSource,
   offlinePackOperationId,
   offlinePackRootManifestCacheKey,
+  offlinePackShellBuildFingerprintSource,
   type OfflinePackRemovalImpact
 } from "./model.ts"
 import {
   OfflinePackPersistence,
-  OfflinePackRemovalClaimBlocked
+  OfflinePackRemovalClaimBlocked,
+  OfflinePackRetiredClaimConflict,
+  OfflinePackStageClaimConflict
 } from "./persistence.ts"
 
 export class OfflinePackManagerError extends Schema.TaggedError<OfflinePackManagerError>()(
@@ -31,6 +35,7 @@ export class OfflinePackManagerError extends Schema.TaggedError<OfflinePackManag
       "confirmation-required",
       "integrity-failure",
       "network-failure",
+      "quota-limited",
       "storage-failure",
       "state-conflict"
     ]),
@@ -73,14 +78,17 @@ export class OfflinePackManager extends Context.Service<
   OfflinePackManager,
   {
     readonly activate: (
-      packId: string
+      claimId: string
     ) => Effect.Effect<ReadonlyArray<OfflinePackRecord>, OfflinePackManagerError>
     readonly list: () => Effect.Effect<ReadonlyArray<OfflinePackRecord>, OfflinePackManagerError>
     readonly previewRemoval: (
-      packId: string
+      claimId: string
     ) => Effect.Effect<OfflinePackRemovalImpact, OfflinePackManagerError>
+    readonly reconcileDescriptor: (
+      descriptor: OfflinePackDescriptor
+    ) => Effect.Effect<ReadonlyArray<OfflinePackRecord>, OfflinePackManagerError>
     readonly remove: (
-      packId: string,
+      claimId: string,
       confirmedHistoricalImpact: boolean
     ) => Effect.Effect<void, OfflinePackManagerError>
     readonly stage: (
@@ -106,6 +114,28 @@ const bytesToResponse = (source: Response, bytes: ArrayBuffer): Response => {
   const contentType = source.headers.get("content-type")
   if (contentType !== null) headers.set("content-type", contentType)
   return new Response(bytes.slice(0), { status: 200, headers })
+}
+
+const putPackCacheResponse = async (
+  cache: Cache,
+  key: RequestInfo | URL,
+  response: Response,
+  detail: string
+): Promise<void> => {
+  try {
+    await cache.put(key, response)
+  } catch (cause) {
+    const quotaLimited = typeof cause === "object" && cause !== null &&
+      "name" in cause && cause.name === "QuotaExceededError"
+    throw managerError(
+      "stage",
+      quotaLimited ? "quota-limited" : "storage-failure",
+      quotaLimited
+        ? `${detail} Browser storage reported that its quota is exhausted.`
+        : detail,
+      cause
+    )
+  }
 }
 
 const fetchVerifiedReceipt = async (
@@ -146,7 +176,12 @@ const fetchVerifiedReceipt = async (
     )
   }
   const contentType = response.headers.get("content-type") ?? "application/octet-stream"
-  await cache.put(receipt.path, bytesToResponse(response, bytes))
+  await putPackCacheResponse(
+    cache,
+    receipt.path,
+    bytesToResponse(response, bytes),
+    `The downloaded pack object could not be retained in browser storage: ${receipt.path}`
+  )
   return { buffer: bytes, contentType }
 }
 
@@ -201,9 +236,11 @@ const fetchShellManifest = async (
   }
   const json = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(bytes)) as unknown
   const manifest = decodeOfflineShellManifest(json, descriptor)
-  await cache.put(
+  await putPackCacheResponse(
+    cache,
     offlinePackRootManifestCacheKey,
-    bytesToResponse(response, bytes)
+    bytesToResponse(response, bytes),
+    "The verified application-shell manifest could not be retained in browser storage."
   )
   return manifest
 }
@@ -233,13 +270,15 @@ const promoteVerifiedContent = async (
     }
     const key = verifiedContentCacheKey(platform.origin(), receipt)
     const existing = await cache.match(key)
-    await cache.put(
+    await putPackCacheResponse(
+      cache,
       key,
       verifiedContentResponseForCache(
         { ...receipt, kind: receipt.kind === "asset" ? "asset" : "postcommit" },
         verified.buffer,
         verified.contentType
-      )
+      ),
+      `A verified runtime object could not be retained in browser storage: ${receipt.path}`
     )
     if (existing === undefined) insertedKeys.push(key)
   }
@@ -249,12 +288,12 @@ const purgeUnsharedPromotions = async (
   platform: OfflinePackPlatform,
   insertedKeys: ReadonlyArray<string>,
   packs: ReadonlyArray<OfflinePackRecord>,
-  excludedGeneration: string
+  excludedClaimId: string
 ): Promise<void> => {
   if (insertedKeys.length === 0) return
   const protectedKeys = new Set(
     packs
-      .filter((pack) => pack.generation !== excludedGeneration && pack.status !== "quarantined")
+      .filter((pack) => pack.id !== excludedClaimId && pack.status !== "quarantined")
       .flatMap((pack) => pack.descriptor.receipts)
       .filter(isPromotableReceipt)
       .map((receipt) => verifiedContentCacheKey(platform.origin(), receipt))
@@ -266,16 +305,21 @@ const purgeUnsharedPromotions = async (
 }
 
 const operation = (
-  pack: Pick<OfflinePackRecord, "id" | "generation" | "immutableFingerprint">,
+  pack: Pick<
+    OfflinePackRecord,
+    "id" | "packId" | "generation" | "contentFingerprint" | "shellBuildFingerprint"
+  >,
   kind: OfflinePackOperationRecord["kind"],
   phase: OfflinePackOperationRecord["phase"],
   now: number,
   detail: string | null = null
 ): OfflinePackOperationRecord => new OfflinePackOperationRecord({
-  id: offlinePackOperationId(kind, pack.id, pack.generation),
-  packId: pack.id,
+  id: offlinePackOperationId(kind, pack.id),
+  claimId: pack.id,
+  packId: pack.packId,
   generation: pack.generation,
-  immutableFingerprint: pack.immutableFingerprint,
+  contentFingerprint: pack.contentFingerprint,
+  shellBuildFingerprint: pack.shellBuildFingerprint,
   kind,
   phase,
   startedAt: now,
@@ -301,25 +345,46 @@ export const makeOfflinePackManager = (
         cause
       )
     }
-    const fingerprint = yield* Effect.tryPromise({
+    const contentFingerprint = yield* Effect.tryPromise({
       try: async () => platform.sha256(
         new TextEncoder().encode(
-          offlinePackImmutableFingerprintSource(pack.descriptor, pack.generation)
+          offlinePackContentFingerprintSource(pack.descriptor)
         )
       ),
       catch: (cause) => managerError(
         "verify",
         "integrity-failure",
-        "The immutable pack fingerprint could not be recalculated.",
+        "The portable content fingerprint could not be recalculated.",
         cause
       )
     })
-    if (fingerprint !== pack.immutableFingerprint) {
+    if (contentFingerprint !== pack.contentFingerprint) {
       return yield* managerError(
         "verify",
         "integrity-failure",
-        "The persisted pack descriptor changed after its generation was claimed.",
-        new Error("immutable pack fingerprint mismatch")
+        "The persisted portable content descriptor changed after its generation was claimed.",
+        new Error("portable content fingerprint mismatch")
+      )
+    }
+    const shellBuildFingerprint = yield* Effect.tryPromise({
+      try: async () => platform.sha256(
+        new TextEncoder().encode(
+          offlinePackShellBuildFingerprintSource(pack.descriptor)
+        )
+      ),
+      catch: (cause) => managerError(
+        "verify",
+        "integrity-failure",
+        "The application-shell build fingerprint could not be recalculated.",
+        cause
+      )
+    })
+    if (shellBuildFingerprint !== pack.shellBuildFingerprint) {
+      return yield* managerError(
+        "verify",
+        "integrity-failure",
+        "The persisted application-shell build descriptor changed after its generation was claimed.",
+        new Error("application-shell build fingerprint mismatch")
       )
     }
     const cache = yield* Effect.tryPromise({
@@ -396,7 +461,7 @@ export const makeOfflinePackManager = (
               .filter(isPromotableReceipt)
               .map((receipt) => verifiedContentCacheKey(platform.origin(), receipt)),
             packs,
-            pack.generation
+            pack.id
           )
         },
         catch: (cause) => managerError(
@@ -406,6 +471,28 @@ export const makeOfflinePackManager = (
           cause
         )
       })
+    }
+    const protectedCacheNames = new Set(packs.map((pack) => pack.cacheName))
+    const orphanCaches = yield* persistence.listOrphanCaches().pipe(
+      Effect.mapError((cause) => managerError("list", "storage-failure", cause.detail, cause))
+    )
+    for (const orphan of orphanCaches) {
+      yield* Effect.tryPromise({
+        try: async () => {
+          if (!protectedCacheNames.has(orphan.cacheName)) {
+            await platform.deleteCache(orphan.cacheName)
+          }
+        },
+        catch: (cause) => managerError(
+          "list",
+          "storage-failure",
+          `An orphaned offline-pack cache could not be cleared: ${orphan.cacheName}`,
+          cause
+        )
+      })
+      yield* persistence.forgetOrphanCache(orphan.cacheName).pipe(
+        Effect.mapError((cause) => managerError("list", "storage-failure", cause.detail, cause))
+      )
     }
     yield* Effect.tryPromise({
       try: () => synchronizeActivePointer(platform, packs),
@@ -417,6 +504,45 @@ export const makeOfflinePackManager = (
       )
     })
     return packs
+  })
+
+  const reconcileDescriptor = Effect.fn("OfflinePackManager.reconcileDescriptor")(function*(
+    input: OfflinePackDescriptor
+  ) {
+    let descriptor: OfflinePackDescriptor
+    try {
+      descriptor = decodeOfflinePackDescriptor(input)
+    } catch (cause) {
+      return yield* managerError(
+        "reconcile-descriptor",
+        "integrity-failure",
+        "The trusted offline-pack descriptor could not be reconciled.",
+        cause
+      )
+    }
+    if (descriptor.lifecycle !== "retired") return yield* list()
+
+    // Reconcile malformed/interrupted records before applying the trusted
+    // retirement marker, without first re-publishing a CacheStorage pointer.
+    // The retirement transaction then atomically writes the tombstone,
+    // demotes the active record, and clears the IDB pointer.
+    yield* persistence.reconcile().pipe(
+      Effect.mapError((cause) => managerError(
+        "retire",
+        "storage-failure",
+        cause.detail,
+        cause
+      ))
+    )
+    yield* persistence.retire(descriptor, platform.now()).pipe(
+      Effect.mapError((cause) => managerError(
+        "retire",
+        "storage-failure",
+        "The trusted retirement could not be recorded on this device.",
+        cause
+      ))
+    )
+    return yield* list()
   })
 
   const stage = Effect.fn("OfflinePackManager.stage")(function*(input: OfflinePackDescriptor) {
@@ -431,37 +557,46 @@ export const makeOfflinePackManager = (
         cause
       )
     }
-
-    const existing = yield* persistence.find(descriptor.id).pipe(
-      Effect.mapError((cause) => managerError("stage", "storage-failure", cause.detail, cause))
-    )
-    if (existing !== undefined && existing.status !== "quarantined") {
+    if (descriptor.lifecycle === "retired") {
       return yield* managerError(
         "stage",
         "state-conflict",
-        "Another durable lifecycle state already owns this exact pack ID.",
-        new Error(existing.status)
+        "A retired offline pack is historical and cannot be downloaded for a new session.",
+        new Error("retired pack")
       )
     }
 
     const now = platform.now()
     const generation = platform.randomUUID()
     const cacheName = offlinePackCacheName(descriptor, generation)
-    const immutableFingerprint = yield* Effect.tryPromise({
+    const contentFingerprint = yield* Effect.tryPromise({
       try: () => platform.sha256(new TextEncoder().encode(
-        offlinePackImmutableFingerprintSource(descriptor, generation)
+        offlinePackContentFingerprintSource(descriptor)
       )),
       catch: (cause) => managerError(
         "stage",
         "integrity-failure",
-        "The immutable pack fingerprint could not be created.",
+        "The portable content fingerprint could not be created.",
+        cause
+      )
+    })
+    const shellBuildFingerprint = yield* Effect.tryPromise({
+      try: () => platform.sha256(new TextEncoder().encode(
+        offlinePackShellBuildFingerprintSource(descriptor)
+      )),
+      catch: (cause) => managerError(
+        "stage",
+        "integrity-failure",
+        "The application-shell build fingerprint could not be created.",
         cause
       )
     })
     let record = decodeOfflinePackRecord(new OfflinePackRecord({
-      id: descriptor.id,
+      id: offlinePackClaimId(descriptor.id, generation),
+      packId: descriptor.id,
       generation,
-      immutableFingerprint,
+      contentFingerprint,
+      shellBuildFingerprint,
       descriptor,
       status: "staging",
       cacheName,
@@ -473,7 +608,15 @@ export const makeOfflinePackManager = (
     }))
     const started = operation(record, "stage", "running", now)
     yield* persistence.beginStage(record, started).pipe(
-      Effect.mapError((cause) => managerError("stage", "storage-failure", cause.detail, cause))
+      Effect.mapError((cause) => managerError(
+        "stage",
+        cause.cause instanceof OfflinePackStageClaimConflict ||
+          cause.cause instanceof OfflinePackRetiredClaimConflict
+          ? "state-conflict"
+          : "storage-failure",
+        cause.detail,
+        cause
+      ))
     )
 
     const insertedPromotionKeys: string[] = []
@@ -505,12 +648,14 @@ export const makeOfflinePackManager = (
 
       const shellManifest = yield* Effect.tryPromise({
         try: () => fetchShellManifest(platform, cache, descriptor),
-        catch: (cause) => managerError(
-          "stage",
-          "integrity-failure",
-          "The build-finalized application-shell receipt manifest is unavailable or invalid.",
-          cause
-        )
+        catch: (cause) => cause instanceof OfflinePackManagerError
+          ? cause
+          : managerError(
+              "stage",
+              "integrity-failure",
+              "The build-finalized application-shell receipt manifest is unavailable or invalid.",
+              cause
+            )
       })
       for (const receipt of shellManifest.receipts) {
         yield* Effect.tryPromise({
@@ -532,12 +677,14 @@ export const makeOfflinePackManager = (
       const verifiedContent = yield* verifyCompletePack(record)
       yield* Effect.tryPromise({
         try: () => promoteVerifiedContent(platform, verifiedContent, insertedPromotionKeys),
-        catch: (cause) => managerError(
-          "verify",
-          "storage-failure",
-          "The fully verified pack could not be promoted into the runtime cache.",
-          cause
-        )
+        catch: (cause) => cause instanceof OfflinePackManagerError
+          ? cause
+          : managerError(
+              "verify",
+              "storage-failure",
+              "The fully verified pack could not be promoted into the runtime cache.",
+              cause
+            )
       })
 
       const verifiedAt = platform.now()
@@ -566,7 +713,7 @@ export const makeOfflinePackManager = (
               platform,
               insertedPromotionKeys,
               durablePacks,
-              generation
+              record.id
             )
           },
           catch: () => managerError(
@@ -594,8 +741,8 @@ export const makeOfflinePackManager = (
     return result
   })
 
-  const activate = Effect.fn("OfflinePackManager.activate")(function*(packId: string) {
-    const pack = yield* persistence.find(packId).pipe(
+  const activate = Effect.fn("OfflinePackManager.activate")(function*(claimId: string) {
+    const pack = yield* persistence.find(claimId).pipe(
       Effect.mapError((cause) => managerError("activate", "storage-failure", cause.detail, cause))
     )
     if (pack === undefined || (pack.status !== "staged" && pack.status !== "retained")) {
@@ -606,35 +753,55 @@ export const makeOfflinePackManager = (
         new Error(pack?.status ?? "missing")
       )
     }
+    if (pack.descriptor.lifecycle === "retired") {
+      return yield* managerError(
+        "activate",
+        "state-conflict",
+        "A retired offline pack may remain for history but cannot be activated for a new session.",
+        new Error("retired pack")
+      )
+    }
     const now = platform.now()
     const started = operation(pack, "activate", "running", now)
     const claimed = yield* persistence.beginActivation(
       pack.id,
       pack.generation,
-      pack.immutableFingerprint,
+      pack.contentFingerprint,
+      pack.shellBuildFingerprint,
       started
     ).pipe(
-      Effect.mapError((cause) => managerError("activate", "storage-failure", cause.detail, cause))
+      Effect.mapError((cause) => managerError(
+        "activate",
+        cause.cause instanceof OfflinePackRetiredClaimConflict
+          ? "state-conflict"
+          : "storage-failure",
+        cause.detail,
+        cause
+      ))
     )
     const insertedPromotionKeys: string[] = []
     const activated = yield* Effect.gen(function*() {
-      // Freshly decode and rehash the non-servable root, descriptor fingerprint,
-      // content closure, and shell closure after claiming this exact generation.
+      // Freshly decode and rehash the non-servable root, portable content
+      // fingerprint, shell-build fingerprint, and both receipt closures after
+      // claiming this exact device-local generation.
       const verifiedContent = yield* verifyCompletePack(claimed)
       yield* Effect.tryPromise({
         try: () => promoteVerifiedContent(platform, verifiedContent, insertedPromotionKeys),
-        catch: (cause) => managerError(
-          "activate",
-          "storage-failure",
-          "Verified runtime objects could not be reconciled before activation.",
-          cause
-        )
+        catch: (cause) => cause instanceof OfflinePackManagerError
+          ? cause
+          : managerError(
+              "activate",
+              "storage-failure",
+              "Verified runtime objects could not be reconciled before activation.",
+              cause
+            )
       })
       const completedAt = platform.now()
       return yield* persistence.activate(
         pack.id,
         pack.generation,
-        pack.immutableFingerprint,
+        pack.contentFingerprint,
+        pack.shellBuildFingerprint,
         new OfflinePackOperationRecord({
           ...started,
           phase: "complete",
@@ -657,7 +824,7 @@ export const makeOfflinePackManager = (
               platform,
               [...insertedPromotionKeys, ...promotionKeys],
               durablePacks,
-              claimed.generation
+              claimed.id
             )
           },
           catch: () => cause
@@ -665,7 +832,8 @@ export const makeOfflinePackManager = (
         yield* persistence.failActivation(
           claimed.id,
           claimed.generation,
-          claimed.immutableFingerprint,
+          claimed.contentFingerprint,
+          claimed.shellBuildFingerprint,
           new OfflinePackOperationRecord({
             ...started,
             phase: "failed",
@@ -688,27 +856,19 @@ export const makeOfflinePackManager = (
     return activated
   })
 
-  const previewRemoval = (packId: string) => persistence.previewRemoval(packId).pipe(
+  const previewRemoval = (claimId: string) => persistence.previewRemoval(claimId).pipe(
     Effect.mapError((cause) => managerError("preview-removal", "storage-failure", cause.detail, cause))
   )
 
   const remove = Effect.fn("OfflinePackManager.remove")(function*(
-    packId: string,
+    claimId: string,
     confirmedHistoricalImpact: boolean
   ) {
-    const pack = yield* persistence.find(packId).pipe(
+    const pack = yield* persistence.find(claimId).pipe(
       Effect.mapError((cause) => managerError("remove", "storage-failure", cause.detail, cause))
     )
     if (pack === undefined) return
-    if (pack.status === "active") {
-      return yield* managerError(
-        "remove",
-        "state-conflict",
-        "Activate another verified pack before removing the current active pack.",
-        new Error("active")
-      )
-    }
-    const impact = yield* previewRemoval(packId)
+    const impact = yield* previewRemoval(claimId)
     if (impact.activeSessionPins > 0) {
       return yield* managerError(
         "remove",
@@ -731,7 +891,8 @@ export const makeOfflinePackManager = (
     const claimed = yield* persistence.beginRemoval(
       pack.id,
       pack.generation,
-      pack.immutableFingerprint,
+      pack.contentFingerprint,
+      pack.shellBuildFingerprint,
       confirmedHistoricalImpact,
       started
     ).pipe(Effect.mapError((cause) => {
@@ -743,7 +904,7 @@ export const makeOfflinePackManager = (
 
     const remaining = (yield* persistence.list().pipe(
       Effect.mapError((cause) => managerError("remove", "storage-failure", cause.detail, cause))
-    )).filter((candidate) => candidate.id !== packId)
+    )).filter((candidate) => candidate.id !== claimId)
     const retainedReceipts = new Set(
       remaining.flatMap((candidate) =>
         candidate.descriptor.receipts.map((receipt) => `${receipt.path}:${receipt.sha256}`)
@@ -767,7 +928,8 @@ export const makeOfflinePackManager = (
     yield* persistence.removePack(
       claimed.id,
       claimed.generation,
-      claimed.immutableFingerprint
+      claimed.contentFingerprint,
+      claimed.shellBuildFingerprint
     ).pipe(
       Effect.mapError((cause) => managerError("remove", "storage-failure", cause.detail, cause))
     )
@@ -789,7 +951,14 @@ export const makeOfflinePackManager = (
     })
   })
 
-  return OfflinePackManager.of({ activate, list, previewRemoval, remove, stage })
+  return OfflinePackManager.of({
+    activate,
+    list,
+    previewRemoval,
+    reconcileDescriptor,
+    remove,
+    stage
+  })
 }
 
 const bytesToHex = (bytes: Uint8Array): string =>

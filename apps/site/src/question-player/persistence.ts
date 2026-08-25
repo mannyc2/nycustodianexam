@@ -10,6 +10,7 @@ import {
   appDatabaseStores,
   type AppDatabaseError
 } from "../study-storage/app-database.ts"
+import { DurableTimestamp } from "../durable-values.ts"
 
 const OptionIds = Schema.Array(Schema.NonEmptyString).check(
   Schema.makeFilter((optionIds) =>
@@ -26,7 +27,7 @@ export class QuestionAttemptRecord extends Schema.Class<QuestionAttemptRecord>(
   questionId: Schema.NonEmptyString,
   selectedOptionId: Schema.NonEmptyString,
   reviewIntent: Schema.Union([Schema.Literal("unflagged"), Schema.Literal("flagged")]),
-  committedAt: Schema.Number,
+  committedAt: DurableTimestamp,
   receipt: Schema.optionalKey(QuestionAttemptReceipt),
   optionIds: Schema.optionalKey(OptionIds)
 }) {}

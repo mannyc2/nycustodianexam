@@ -6,8 +6,8 @@ const reasonLabel = (reason: ReviewReason): string => {
   switch (reason.tag) {
     case "flag":
       return "You explicitly flagged this question for review."
-    case "directional_confusion":
-      return `Directional confusion: correct ${reason.correctConceptId} → selected ${reason.selectedConceptId}.`
+    case "incorrect_answer":
+      return "This answer was incorrect; no directional concept relationship is inferred."
     case "hazard_miss":
       return `Missed authored hazard: ${reason.inventoryId}.`
     case "decoy_false_positive":

@@ -6,8 +6,10 @@ import {
 } from "../src/study-storage/app-database.ts"
 
 const visualHazardPath = "/hazards/session/launch-v1/scene/1/"
+const migrationProbeHazardPath = "/hazards/session/launch-v1/scene/2/"
 const nonvisualHazardPath = "/hazards/session/launch-v1-nonvisual/scene/1/"
 const previousAppDatabaseVersion = 2
+const m4AppDatabaseVersion = 4
 const currentAppDatabaseVersion = 5
 
 interface DatabaseSeed {
@@ -142,6 +144,116 @@ const openStorageOrigin = async (page: Page): Promise<void> => {
   await page.goto("/content/release/current.json")
 }
 
+test("upgrades the exact M4 store union to v5 without rewriting durable M4 records", async ({
+  page
+}) => {
+  await openStorageOrigin(page)
+
+  const activeVisualSimulation = {
+    id: "sim-v4active",
+    schemaVersion: 1,
+    status: "active",
+    format: "visual-hazards",
+    preservationMarker: "active visual simulation"
+  }
+  const submittedNonvisualSimulation = {
+    id: "sim-v4submitted",
+    schemaVersion: 1,
+    status: "submitted",
+    format: "nonvisual-hazards",
+    preservationMarker: "submitted nonvisual simulation"
+  }
+  const evaluatedQuestionSimulation = {
+    id: "sim-v4evaluated",
+    schemaVersion: 1,
+    status: "evaluated",
+    format: "questions",
+    preservationMarker: "evaluated question simulation"
+  }
+  const submittedNonvisualResult = {
+    id: "sim-v4submitted:final",
+    schemaVersion: 1,
+    sessionId: submittedNonvisualSimulation.id,
+    status: "submitted",
+    preservationMarker: "submitted nonvisual result"
+  }
+  const evaluatedQuestionResult = {
+    id: "sim-v4evaluated:final",
+    schemaVersion: 1,
+    sessionId: evaluatedQuestionSimulation.id,
+    status: "evaluated",
+    preservationMarker: "evaluated question result"
+  }
+  const immutablePrintJob = {
+    id: "print-v4fixture",
+    status: "preview-ready",
+    preservationMarker: "immutable print packet"
+  }
+  const lateEvaluatedHazard = {
+    id: "launch-v1:v1:launch-v1:hazard-visual:1",
+    sceneId: "s001",
+    mode: "visual",
+    markers: [{ id: "marker-v4", x: 0.5, y: 0.5 }],
+    selectedZoneOrders: [],
+    zeroHazardsConfirmed: false,
+    committedAt: 4,
+    evaluation: {
+      postcommitBase64: "e30=",
+      retainedVisualAsset: null,
+      payload: { preservationMarker: "late hazard evaluation" }
+    }
+  }
+  const m4Stores: DatabaseSeed["stores"] = {
+    [appDatabaseStores.meta]: [],
+    [appDatabaseStores.questionAttempts]: [],
+    [appDatabaseStores.questionSessions]: [],
+    [appDatabaseStores.hazardAttempts]: [lateEvaluatedHazard],
+    [appDatabaseStores.hazardSessions]: [],
+    [appDatabaseStores.simulationSessions]: [
+      activeVisualSimulation,
+      evaluatedQuestionSimulation,
+      submittedNonvisualSimulation
+    ],
+    [appDatabaseStores.simulationSubmissions]: [
+      evaluatedQuestionResult,
+      submittedNonvisualResult
+    ],
+    [appDatabaseStores.printJobs]: [immutablePrintJob],
+    [appDatabaseStores.reviewAcknowledgements]: [],
+    [appDatabaseStores.migrationQuarantine]: []
+  }
+  await seedDatabase(page, {
+    databaseName: appDatabaseName,
+    version: m4AppDatabaseVersion,
+    stores: m4Stores
+  })
+
+  // Open v5 through an island whose attempt key cannot collide with the raw
+  // M4 preservation fixture above. The fixture is intentionally not decoded
+  // or rewritten as part of this database-shape migration assertion.
+  await page.goto(migrationProbeHazardPath)
+  await expect(page.getByRole("button", { name: "Add marker at center" })).toBeEnabled()
+
+  expect(await readAppDatabaseMetadata(page)).toEqual({
+    version: currentAppDatabaseVersion,
+    stores: [...Object.values(appDatabaseStores)].sort()
+  })
+  for (const [store, records] of Object.entries(m4Stores)) {
+    const preserved = await readStore(page, store)
+    expect(preserved).toEqual(records)
+    expect(JSON.stringify(preserved)).toBe(JSON.stringify(records))
+  }
+  for (const store of [
+    appDatabaseStores.preferences,
+    appDatabaseStores.correctionDrafts,
+    appDatabaseStores.offlinePacks,
+    appDatabaseStores.offlinePackOperations,
+    appDatabaseStores.transferQuarantine
+  ]) {
+    expect(await readStore(page, store)).toEqual([])
+  }
+})
+
 test("upgrades the pre-quarantine database and resumably imports valid legacy records", async ({
   page
 }) => {
@@ -176,19 +288,39 @@ test("upgrades the pre-quarantine database and resumably imports valid legacy re
     zeroHazardsConfirmed: false,
     committedAt: 2
   }
+  const invalidTimestampHazardAttempt = {
+    ...hazardAttempt,
+    id: "legacy-hazard-invalid-time",
+    committedAt: -1
+  }
+  const invalidCoordinateHazardAttempt = {
+    ...hazardAttempt,
+    id: "legacy-hazard-invalid-point",
+    markers: [{ id: "marker-invalid", x: 1.01, y: 0.5 }]
+  }
+  const invalidHazardSession = {
+    id: "invalid-time",
+    latestAttemptId: hazardAttempt.id,
+    updatedAt: -1
+  }
   await seedDatabase(page, {
     databaseName: legacyAppDatabaseNames.hazard,
     version: 1,
     stores: {
       [appDatabaseStores.hazardAttempts]: [
         hazardAttempt,
+        invalidTimestampHazardAttempt,
+        invalidCoordinateHazardAttempt,
         { id: "malformed-hazard", unexpected: true }
       ],
-      [appDatabaseStores.hazardSessions]: [{
-        id: "active",
-        latestAttemptId: hazardAttempt.id,
-        updatedAt: 2
-      }]
+      [appDatabaseStores.hazardSessions]: [
+        {
+          id: "active",
+          latestAttemptId: hazardAttempt.id,
+          updatedAt: 2
+        },
+        invalidHazardSession
+      ]
     }
   })
 
@@ -199,11 +331,20 @@ test("upgrades the pre-quarantine database and resumably imports valid legacy re
     reasonIds: ["reason-1"],
     acknowledgedAt: 3
   }
+  const invalidReviewAcknowledgement = {
+    ...reviewAcknowledgement,
+    id: "review:14:item-bad-clock:9:attempt-1:8:reason-1",
+    itemId: "item-bad-clock",
+    acknowledgedAt: -1
+  }
   await seedDatabase(page, {
     databaseName: legacyAppDatabaseNames.review,
     version: 1,
     stores: {
-      [appDatabaseStores.reviewAcknowledgements]: [reviewAcknowledgement]
+      [appDatabaseStores.reviewAcknowledgements]: [
+        reviewAcknowledgement,
+        invalidReviewAcknowledgement
+      ]
     }
   })
 
@@ -230,6 +371,20 @@ test("upgrades the pre-quarantine database and resumably imports valid legacy re
       legacyRecord: { id: "malformed-hazard", unexpected: true }
     })
   )
+  for (const [sourceStore, legacyRecord] of [
+    [appDatabaseStores.hazardAttempts, invalidTimestampHazardAttempt],
+    [appDatabaseStores.hazardAttempts, invalidCoordinateHazardAttempt],
+    [appDatabaseStores.hazardSessions, invalidHazardSession],
+    [appDatabaseStores.reviewAcknowledgements, invalidReviewAcknowledgement]
+  ] as const) {
+    expect(await readStore(page, appDatabaseStores.migrationQuarantine)).toContainEqual(
+      expect.objectContaining({
+        sourceStore,
+        reason: "invalid-source-record",
+        legacyRecord
+      })
+    )
+  }
 
   const lateHazardAttempt = {
     ...hazardAttempt,

@@ -5,6 +5,7 @@ import {
   type CorrectionReportValue
 } from "@nycustodian/correction-intake"
 import { Schema } from "effect"
+import { DurableTimestamp } from "../durable-values.ts"
 
 const DraftText = Schema.String.check(
   Schema.makeFilter((value) =>
@@ -34,8 +35,8 @@ export class CorrectionDraftRecord extends Schema.Class<CorrectionDraftRecord>(
   publicSourceUrl: DraftText,
   affirmsNoSecureExamMaterial: Schema.Boolean,
   submissionState: Schema.Literals(["draft", "accepted"]),
-  updatedAt: Schema.Number,
-  acceptedAt: Schema.Union([Schema.Number, Schema.Null])
+  updatedAt: DurableTimestamp,
+  acceptedAt: Schema.Union([DurableTimestamp, Schema.Null])
 }) {}
 
 export const decodeStoredCorrectionDraft = (record: unknown): CorrectionDraftRecord => {

@@ -46,30 +46,40 @@ const matchActivePack = async (request) => {
   }
 }
 
-const matchCurrentCaches = async (request) => {
-  const packResponse = await matchActivePack(request)
-  if (packResponse) return packResponse
-
+const matchCurrentShell = async (request) => {
   const shell = await caches.open(shellCache)
   // Vite and some CDNs vary module responses on Origin. Precache requests do
   // not carry the later module request's Origin header, but the shell closure
   // is already restricted to exact same-origin URLs verified at build time.
-  const shellResponse = await shell.match(request, { ignoreVary: true })
-  if (shellResponse) return shellResponse
+  return shell.match(request, { ignoreVary: true })
+}
 
+const matchCurrentRuntime = async (request) => {
   const runtime = await caches.open(runtimeCache)
   return runtime.match(request)
 }
 
-const isAppVerifiedContent = (request) => {
+const localSessionShell = (request) => {
+  if (request.mode !== "navigate") return undefined
   const url = new URL(request.url)
-  return url.origin === self.location.origin &&
-    (url.pathname.endsWith(".postcommit.json") || url.pathname.startsWith("/content/assets/"))
+  if (url.origin !== self.location.origin) return undefined
+  if (/^\/simulations\/session\/sim-[a-z0-9][a-z0-9-]{7,63}\/question\/[1-9][0-9]*\/$/.test(url.pathname)) {
+    return "/simulations/session/sim-shell0000/question/1/"
+  }
+  if (/^\/simulations\/session\/sim-[a-z0-9][a-z0-9-]{7,63}\/results\/$/.test(url.pathname)) {
+    return "/simulations/session/sim-shell0000/results/"
+  }
+  if (/^\/print\/preview\/print-[a-z0-9][a-z0-9-]{7,63}\/$/.test(url.pathname)) {
+    return "/print/preview/print-shell0000/"
+  }
+  return undefined
 }
 
-const isActivePackAsset = (request) => {
+const isPackManagedContent = (request) => {
   const url = new URL(request.url)
-  return url.origin === self.location.origin && url.pathname.startsWith("/content/assets/")
+  return url.origin === self.location.origin &&
+    (url.pathname.startsWith("/content/vertical-slice/") ||
+      url.pathname.startsWith("/content/assets/"))
 }
 
 const bypassesApplicationCaches = (request) => {
@@ -89,22 +99,31 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(fetch(event.request))
     return
   }
-  // Answer payloads and assessed scene assets are cached only after the app has
-  // checked their manifest byte length and digest. A generic cache-first write
-  // here could make one corrupt HTTP 200 permanently poison later retries.
-  if (isActivePackAsset(event.request)) {
+  // Release artifacts and assessed scene assets enter a pack cache only after
+  // the pack manager verifies their receipt. They never enter the generic
+  // runtime cache. An explicitly active, exact pack is authoritative for these
+  // URLs; callers can still request cache: "no-store" to require the network.
+  if (isPackManagedContent(event.request)) {
+    event.respondWith(matchActivePack(event.request).then(
+      (cached) => cached ?? fetch(event.request)
+    ))
+    return
+  }
+  const sessionShell = localSessionShell(event.request)
+  if (sessionShell !== undefined) {
     event.respondWith(
-      matchActivePack(event.request).then((cached) => cached ?? fetch(event.request))
+      matchCurrentShell(sessionShell).then((cached) => cached ??
+        fetch(sessionShell).catch(() =>
+          matchCurrentShell("/offline.html").then(
+            (fallback) => fallback ?? Response.error()
+          )
+        ))
     )
     return
   }
-  if (isAppVerifiedContent(event.request)) {
-    event.respondWith(fetch(event.request))
-    return
-  }
   let cacheWrite = Promise.resolve()
-  const response = matchCurrentCaches(event.request).then((cached) => {
-    if (cached) return cached
+  const response = matchCurrentShell(event.request).then((currentShellResponse) => {
+    if (currentShellResponse) return currentShellResponse
     return fetch(event.request)
       .then((networkResponse) => {
         if (
@@ -119,13 +138,20 @@ self.addEventListener("fetch", (event) => {
         }
         return networkResponse
       })
-      .catch(() =>
-        event.request.mode === "navigate"
-          ? matchCurrentCaches("/offline.html").then(
-              (fallback) => fallback ?? Response.error()
-            )
-          : Response.error()
-      )
+      .catch(async () => {
+        const currentRuntimeResponse = await matchCurrentRuntime(event.request)
+        if (currentRuntimeResponse) return currentRuntimeResponse
+
+        // A retained pack is only an offline fallback for app/navigation URLs;
+        // it must never mask the freshly installed shell or an online response.
+        const packResponse = await matchActivePack(event.request)
+        if (packResponse) return packResponse
+
+        if (event.request.mode === "navigate") {
+          return (await matchCurrentShell("/offline.html")) ?? Response.error()
+        }
+        return Response.error()
+      })
   })
 
   event.respondWith(response)

@@ -1,7 +1,8 @@
 import type { Effect } from "effect"
 import type { HazardAttemptReceipt } from "../attempt-receipt.ts"
 import { makeScreenStore, type ScreenSnapshot } from "../screen/store.ts"
-import type { VerifiedContent } from "../verified-content.ts"
+import type { AssetContentReceipt, VerifiedContent } from "../verified-content.ts"
+import type { RetainedImageAsset } from "../retained-image.ts"
 import type { HazardPersistence } from "./persistence.ts"
 import {
   addMarker,
@@ -71,6 +72,11 @@ export interface HazardController {
   readonly dispose: () => void
 }
 
+export interface LoadedHazardVisualAsset {
+  readonly url: string
+  readonly retained: RetainedImageAsset
+}
+
 const restoringState: HazardScreenState = { tag: "restoring" }
 
 export const createHazardController = (input: {
@@ -78,7 +84,9 @@ export const createHazardController = (input: {
   readonly mode: HazardInputMode
   readonly receipt: HazardAttemptReceipt
   readonly runtime: HazardEffectRunner
-  readonly visualAssetUrl: string | null
+  readonly visualAssetReceipt: AssetContentReceipt | null
+  readonly loadVisualAsset: () => Promise<LoadedHazardVisualAsset | null>
+  readonly releaseVisualAssetUrl: (url: string) => void
 }): HazardController => {
   const screen = makeScreenStore<HazardScreenState, HazardFocusRequest["target"]>({
     initialState: restoringState,
@@ -88,6 +96,25 @@ export const createHazardController = (input: {
     input.scene.neutralPreAnswer.zones.map((zone) => zone.order)
   )
   const publish = screen.publish
+  let visualAsset: LoadedHazardVisualAsset | null = null
+  let visualAssetLoad: Promise<LoadedHazardVisualAsset | null> | null = null
+  let disposed = false
+
+  const loadVisualAsset = (): Promise<LoadedHazardVisualAsset | null> => {
+    if (input.mode !== "visual") return Promise.resolve(null)
+    if (visualAsset !== null) return Promise.resolve(visualAsset)
+    if (visualAssetLoad !== null) return visualAssetLoad
+    visualAssetLoad = input.loadVisualAsset().then((loaded) => {
+      if (loaded === null) return null
+      if (disposed) {
+        input.releaseVisualAssetUrl(loaded.url)
+        return null
+      }
+      visualAsset = loaded
+      return loaded
+    })
+    return visualAssetLoad
+  }
 
   const restore = (): void => {
     publish(restoringState, { announce: "Checking this device for a saved scene response." })
@@ -96,11 +123,37 @@ export const createHazardController = (input: {
         restoreHazardAndReveal({
           receipt: input.receipt,
           scene: input.scene,
-          mode: input.mode
+          mode: input.mode,
+          visualAssetReceipt: input.visualAssetReceipt,
+          retainedVisualAsset: visualAsset?.retained ?? null
         })
       )
       .then((restored) => {
         if (restored === undefined) {
+          if (input.mode === "visual") {
+            void loadVisualAsset().then((loaded) => {
+              if (disposed) return
+              if (loaded === null) {
+                publish(
+                  hazardAssetUnavailable(
+                    "This activity cannot accept visual markers without its exact released image."
+                  ),
+                  { focus: "commit-error" }
+                )
+                return
+              }
+              publish(initialHazardState())
+            }).catch(() => {
+              if (disposed) return
+              publish(
+                hazardAssetUnavailable(
+                  "This activity cannot accept visual markers without its exact released image."
+                ),
+                { focus: "commit-error" }
+              )
+            })
+            return
+          }
           publish(initialHazardState())
           return
         }
@@ -115,7 +168,10 @@ export const createHazardController = (input: {
         }
         const draft = draftFromAttempt(restored.attempt)
         if (restored.tag === "revealed") {
-          publish(revealHazard(draft, restored.payload), { focus: "outcome" })
+          publish(
+            revealHazard(draft, restored.payload, restored.retainedVisualAsset),
+            { focus: "outcome" }
+          )
           return
         }
         publish(hazardRevealFailed(screen.getSnapshot().state, draft, restored.error.detail), {
@@ -140,7 +196,9 @@ export const createHazardController = (input: {
           receipt: input.receipt,
           scene: input.scene,
           mode: input.mode,
-          draft
+          draft,
+          visualAssetReceipt: input.visualAssetReceipt,
+          retainedVisualAsset: visualAsset?.retained ?? null
         })
       )
       .then((result) => {
@@ -155,7 +213,11 @@ export const createHazardController = (input: {
         }
         const committedDraft = draftFromAttempt(result.attempt)
         if (result.tag === "revealed") {
-          publish(revealHazard(committedDraft, result.payload), {
+          publish(revealHazard(
+            committedDraft,
+            result.payload,
+            result.retainedVisualAsset
+          ), {
             focus: "outcome",
             announce: "Scene response saved and feedback is available."
           })
@@ -212,10 +274,15 @@ export const createHazardController = (input: {
       .runPromise(retryHazardReveal({
         receipt: input.receipt,
         scene: input.scene,
-        mode: input.mode
+        mode: input.mode,
+        visualAssetReceipt: input.visualAssetReceipt,
+        retainedVisualAsset: visualAsset?.retained ?? null
       }))
-      .then((payload) => {
-        publish(revealHazard(draft, payload), { focus: "outcome" })
+      .then((completed) => {
+        publish(
+          revealHazard(draft, completed.payload, completed.retainedVisualAsset),
+          { focus: "outcome" }
+        )
       })
       .catch(() => {
         publish(
@@ -232,7 +299,9 @@ export const createHazardController = (input: {
   return {
     scene: input.scene,
     mode: input.mode,
-    visualAssetUrl: input.visualAssetUrl,
+    get visualAssetUrl() {
+      return visualAsset?.url ?? null
+    },
     getSnapshot: screen.getSnapshot,
     getHydrationSnapshot: screen.getHydrationSnapshot,
     subscribe: screen.subscribe,
@@ -292,18 +361,15 @@ export const createHazardController = (input: {
       }
     },
     acknowledgeViewRequest: screen.acknowledgeRequest,
-    start: () => screen.start(() => {
-      if (input.mode === "visual" && input.visualAssetUrl === null) {
-        publish(
-          hazardAssetUnavailable(
-            "This activity cannot accept visual markers without its exact released image."
-          ),
-          { focus: "commit-error" }
-        )
-        return
+    start: () => screen.start(restore),
+    dispose: () => {
+      if (disposed) return
+      disposed = true
+      screen.dispose()
+      if (visualAsset !== null) {
+        input.releaseVisualAssetUrl(visualAsset.url)
+        visualAsset = null
       }
-      restore()
-    }),
-    dispose: screen.dispose
+    }
   }
 }

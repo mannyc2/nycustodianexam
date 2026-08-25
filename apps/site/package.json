@@ -9,6 +9,7 @@
     "test": "node node_modules/vitest/vitest.mjs run",
     "test:browser": "playwright test --config playwright.config.ts",
     "test:browser:chromium": "playwright test --config playwright.config.ts --project=chromium",
+    "test:terminal-workerd": "bun run build && node --experimental-strip-types scripts/terminal-edge-workerd-smoke.ts",
     "typecheck": "tsc -p tsconfig.json",
     "typecheck:browser": "tsc -p browser-tests/tsconfig.json",
     "preview:cloudflare": "wrangler dev --config scripts/wrangler-preview.jsonc --ip 127.0.0.1 --port 8787 --show-interactive-dev-session=false"

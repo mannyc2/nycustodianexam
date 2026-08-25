@@ -507,21 +507,55 @@ export const compileContentPack = Effect.fn("Content.compileContentPack")(
       const decoyStatements = accessibility.nonvisualZonedEquivalent.filter(
         (statement) => statement.role === "decoy"
       )
+      const safeBackgroundStatements = accessibility.nonvisualZonedEquivalent.filter(
+        (statement) => statement.role === "safe-background"
+      )
       if (
-        targetStatements.length !== scene.semanticManifest.targets.length ||
-        decoyStatements.length !== scene.semanticManifest.decoys.length
+        !sameOrderedValues(
+          targetStatements.map((statement) => statement.statement),
+          scene.semanticManifest.targets.map((target) => target.condition)
+        ) ||
+        !sameOrderedValues(
+          decoyStatements.map((statement) => statement.statement),
+          scene.semanticManifest.decoys.map(
+            (decoy) => `${decoy.condition}; ${decoy.safeBecause}.`
+          )
+        ) ||
+        !sameOrderedValues(
+          safeBackgroundStatements.map((statement) => statement.statement),
+          scene.semanticManifest.safeBackground
+        )
       ) {
         return yield* closureError(
-          `scene ${sceneId} nonvisual equivalent does not cover every target and decoy`,
+          `scene ${sceneId} nonvisual equivalent does not exactly cover semantic inventories`,
           sceneId
         )
       }
       const zoneOrders = accessibility.neutralPreAnswer.zones.map((zone) => zone.order)
+      const zoneLabels = accessibility.neutralPreAnswer.zones.map((zone) => zone.label)
+      const zoneCoordinates = accessibility.neutralPreAnswer.zones.map(
+        (zone) => `${zone.order}\n${zone.label}`
+      )
       if (
         firstDuplicate(zoneOrders.map(String)) !== undefined ||
-        !sameOrderedValues(zoneOrders.map(String), regions.zoneOrder.map((zone) => String(zone.order)))
+        firstDuplicate(zoneLabels) !== undefined ||
+        !sameOrderedValues(
+          zoneCoordinates,
+          regions.zoneOrder.map((zone) => `${zone.order}\n${zone.label}`)
+        )
       ) {
-        return yield* closureError(`scene ${sceneId} neutral zones do not match region order`, sceneId)
+        return yield* closureError(
+          `scene ${sceneId} neutral zone labels and orders do not match regions`,
+          sceneId
+        )
+      }
+      if (!accessibility.nonvisualZonedEquivalent.every(
+        (statement) => zoneLabels.includes(statement.zone)
+      )) {
+        return yield* closureError(
+          `scene ${sceneId} nonvisual statements reference an unknown neutral zone`,
+          sceneId
+        )
       }
       for (const region of [...regions.targetRegions, ...regions.decoyRegions]) {
         for (const polygon of region.polygons) {

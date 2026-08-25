@@ -79,15 +79,16 @@ const savePreferences = (
   transaction.onabort = () => reject(transaction.error ?? new Error("Preference write aborted"))
 })
 
-const storesForScope = (scope: ResetScope): ReadonlyArray<string> => {
+export const storesForResetScope = (scope: ResetScope): ReadonlyArray<string> => {
   const study = [
     appDatabaseStores.questionAttempts,
     appDatabaseStores.questionSessions,
     appDatabaseStores.hazardAttempts,
     appDatabaseStores.hazardSessions,
-    appDatabaseStores.reviewAcknowledgements
-    // M4 integration requirement: simulation sessions/submissions and immutable
-    // print jobs belong to both study-events and all-portable-data resets.
+    appDatabaseStores.reviewAcknowledgements,
+    appDatabaseStores.simulationSessions,
+    appDatabaseStores.simulationSubmissions,
+    appDatabaseStores.printJobs
   ]
   switch (scope) {
     case "study-events": return study
@@ -105,7 +106,7 @@ const storesForScope = (scope: ResetScope): ReadonlyArray<string> => {
 
 const previewReset = (database: IDBDatabase, scope: ResetScope): Promise<ResetPreview> =>
   new Promise((resolve, reject) => {
-    const stores = storesForScope(scope)
+    const stores = storesForResetScope(scope)
     const transaction = database.transaction(stores, "readonly")
     const counts = new Map<string, number>()
     for (const store of stores) {
@@ -127,7 +128,7 @@ const previewReset = (database: IDBDatabase, scope: ResetScope): Promise<ResetPr
 
 const reset = (database: IDBDatabase, preview: ResetPreview): Promise<ResetPreview> =>
   new Promise((resolve, reject) => {
-    const expectedStores = storesForScope(preview.scope)
+    const expectedStores = storesForResetScope(preview.scope)
     if (
       !preview.excludesOfflinePacks ||
       expectedStores.length !== preview.stores.length ||

@@ -1,7 +1,11 @@
 import type { Effect as EffectType } from "effect"
 import { Effect } from "effect"
 import { useEffect, useRef, useState } from "react"
+import type { HazardPersistence } from "../../hazard-player/persistence.ts"
 import { localFailureDetail } from "../../local-failure-detail.ts"
+import type { QuestionPersistence } from "../../question-player/persistence.ts"
+import type { ReviewPersistence } from "../../review/persistence.ts"
+import type { VerifiedContent } from "../../verified-content.ts"
 import {
   DataTransfer,
   serializeDataExport,
@@ -19,8 +23,24 @@ import {
   clearBootPreferences,
   saveBootPreferences
 } from "../preferences-boot.ts"
+import {
+  rebuildReviewProjection,
+  type ReviewRebuildReceipt
+} from "../review-rebuild.ts"
 
-type SettingsRequirements = SettingsPersistence | DataTransfer
+type SettingsRequirements =
+  | SettingsPersistence
+  | DataTransfer
+  | QuestionPersistence
+  | HazardPersistence
+  | ReviewPersistence
+  | VerifiedContent
+
+type ReviewRebuildState =
+  | { readonly tag: "idle" }
+  | { readonly tag: "pending" }
+  | { readonly tag: "complete"; readonly receipt: ReviewRebuildReceipt }
+  | { readonly tag: "recoverable_error"; readonly detail: string }
 
 interface SettingsEffectRunner {
   readonly runPromise: <A, E>(
@@ -36,6 +56,7 @@ export const SettingsIsland = ({
   readonly runtime: SettingsEffectRunner
 }) => {
   const [preferences, setPreferences] = useState(defaultSitePreferences)
+  const lastAuthoritativePreferences = useRef(preferences)
   const [includeDrafts, setIncludeDrafts] = useState(false)
   const [importText, setImportText] = useState<string | null>(null)
   const [importPlan, setImportPlan] = useState<ImportPlan | null>(null)
@@ -43,6 +64,7 @@ export const SettingsIsland = ({
   const [resetScope, setResetScope] = useState<ResetScope>("study-events")
   const [resetPreview, setResetPreview] = useState<ResetPreview | null>(null)
   const [resetConfirmed, setResetConfirmed] = useState(false)
+  const [reviewRebuild, setReviewRebuild] = useState<ReviewRebuildState>({ tag: "idle" })
   const [busy, setBusy] = useState(false)
   const [notice, setNotice] = useState("Loading local settings…")
   const [problem, setProblem] = useState<string | null>(null)
@@ -50,6 +72,8 @@ export const SettingsIsland = ({
   const problemHeading = useRef<HTMLHeadingElement>(null)
   const resultHeading = useRef<HTMLHeadingElement>(null)
   const resetResultHeading = useRef<HTMLHeadingElement>(null)
+  const rebuildErrorHeading = useRef<HTMLHeadingElement>(null)
+  const rebuildResultHeading = useRef<HTMLHeadingElement>(null)
   const completionHeading = useRef<HTMLHeadingElement>(null)
 
   const synchronizeBootMirror = (stored: SitePreferencesRecord): string | null => {
@@ -70,6 +94,7 @@ export const SettingsIsland = ({
       return yield* settings.loadPreferences()
     })).then((stored) => {
       if (!active) return
+      lastAuthoritativePreferences.current = stored
       setPreferences(stored)
       const mirrorDetail = synchronizeBootMirror(stored)
       setNotice((stored.updatedAt === 0
@@ -100,6 +125,11 @@ export const SettingsIsland = ({
     if (completion !== null) completionHeading.current?.focus()
   }, [completion])
 
+  useEffect(() => {
+    if (reviewRebuild.tag === "recoverable_error") rebuildErrorHeading.current?.focus()
+    if (reviewRebuild.tag === "complete") rebuildResultHeading.current?.focus()
+  }, [reviewRebuild])
+
   const savePreferences = async (): Promise<void> => {
     setBusy(true)
     setProblem(null)
@@ -109,6 +139,7 @@ export const SettingsIsland = ({
         const settings = yield* SettingsPersistence
         return yield* settings.savePreferences(preferences)
       }))
+      lastAuthoritativePreferences.current = saved
       setPreferences(saved)
       const mirror = saveBootPreferences({
         schemaVersion: 1,
@@ -120,7 +151,39 @@ export const SettingsIsland = ({
         : `Preferences saved in IndexedDB and applied in this tab. ${mirror.detail} Cross-tab and early reload application may be delayed.`)
       setCompletion("Preferences saved")
     } catch (cause) {
-      setProblem(localFailureDetail(cause, "The local-data operation failed."))
+      const writeFailure = localFailureDetail(cause, "The local-data operation failed.")
+      try {
+        const stored = await runtime.runPromise(Effect.gen(function*() {
+          const settings = yield* SettingsPersistence
+          return yield* settings.loadPreferences()
+        }))
+        lastAuthoritativePreferences.current = stored
+        setPreferences(stored)
+        const mirrorDetail = synchronizeBootMirror(stored)
+        setProblem(
+          `${writeFailure} The unsaved choices were discarded; controls and applied preferences ` +
+          "were restored from authoritative IndexedDB storage." +
+          (mirrorDetail === null
+            ? ""
+            : ` ${mirrorDetail} The IndexedDB preference remains authoritative.`)
+        )
+      } catch (restoreCause) {
+        const stored = lastAuthoritativePreferences.current
+        setPreferences(stored)
+        const mirrorDetail = synchronizeBootMirror(stored)
+        setProblem(
+          `${writeFailure} ` +
+          localFailureDetail(
+            restoreCause,
+            "The authoritative IndexedDB preferences could not be restored."
+          ) +
+          " Controls and applied preferences were restored from the last known authoritative " +
+          "IndexedDB snapshot." +
+          (mirrorDetail === null
+            ? ""
+            : ` ${mirrorDetail} The last known IndexedDB preference remains authoritative.`)
+        )
+      }
     } finally {
       setBusy(false)
     }
@@ -176,10 +239,10 @@ export const SettingsIsland = ({
     try {
       const plan = await runtime.runPromise(Effect.gen(function*() {
         const transfer = yield* DataTransfer
-        return yield* transfer.previewImport(importText, {
-          questionIds: new Set(bootstrap.questionIds),
-          sceneIds: new Set(bootstrap.sceneIds)
-        })
+        return yield* transfer.previewImport(
+          importText,
+          bootstrap.trustedReleaseContentRegistry
+        )
       }))
       setImportPlan(plan)
       setImportConfirmed(false)
@@ -200,7 +263,10 @@ export const SettingsIsland = ({
     try {
       const result = await runtime.runPromise(Effect.gen(function*() {
         const transfer = yield* DataTransfer
-        return yield* transfer.applyImport(importPlan)
+        return yield* transfer.applyImport(
+          importPlan,
+          bootstrap.trustedReleaseContentRegistry
+        )
       }))
       setNotice(`Import committed atomically: ${result.imported} inserted, ${result.matched} matched, ${result.quarantined} quarantined. No existing record was overwritten.`)
       setImportPlan(null)
@@ -210,6 +276,7 @@ export const SettingsIsland = ({
         const settings = yield* SettingsPersistence
         return yield* settings.loadPreferences()
       }))
+      lastAuthoritativePreferences.current = loaded
       setPreferences(loaded)
       const mirrorDetail = synchronizeBootMirror(loaded)
       if (mirrorDetail !== null) {
@@ -218,6 +285,26 @@ export const SettingsIsland = ({
       setCompletion("Portable import complete")
     } catch (cause) {
       setProblem(localFailureDetail(cause, "The local-data operation failed."))
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  const rebuildReviewQueue = async (): Promise<void> => {
+    setBusy(true)
+    setProblem(null)
+    setCompletion(null)
+    setReviewRebuild({ tag: "pending" })
+    try {
+      const receipt = await runtime.runPromise(
+        rebuildReviewProjection(bootstrap.reviewQueue)
+      )
+      setReviewRebuild({ tag: "complete", receipt })
+    } catch (cause) {
+      setReviewRebuild({
+        tag: "recoverable_error",
+        detail: localFailureDetail(cause, "The review projection could not be rebuilt.")
+      })
     } finally {
       setBusy(false)
     }
@@ -256,7 +343,9 @@ export const SettingsIsland = ({
       setResetPreview(null)
       setResetConfirmed(false)
       if (resetPreview.scope === "preferences" || resetPreview.scope === "all-portable-data") {
-        setPreferences(defaultSitePreferences())
+        const defaults = defaultSitePreferences()
+        lastAuthoritativePreferences.current = defaults
+        setPreferences(defaults)
         const mirror = clearBootPreferences()
         if (!mirror.mirrored) {
           setNotice((current) => `${current} ${mirror.detail} Defaults were applied in this tab.`)
@@ -317,7 +406,7 @@ export const SettingsIsland = ({
         </fieldset>
       </section>
 
-      <section className="reference-card" aria-labelledby="export-heading">
+      <section id="export-local-data" className="reference-card" aria-labelledby="export-heading">
         <h2 id="export-heading">Export portable local data</h2>
         <p>Exports append-only study/review events and preferences with a schema version and SHA-256 checksum. Rebuildable session projections and offline-pack bytes are excluded.</p>
         <fieldset className="form-field-group">
@@ -366,6 +455,62 @@ export const SettingsIsland = ({
             </div>
           )}
         </fieldset>
+      </section>
+
+      <section
+        id="rebuild-review-projection"
+        className="reference-card"
+        aria-labelledby="review-rebuild-heading"
+      >
+        <h2 id="review-rebuild-heading">Rebuild the local review projection</h2>
+        <p>
+          Derive the due queue again from validated, append-only attempts and explicit review
+          acknowledgements. This read-only recovery does not edit study history or mark anything
+          reviewed.
+        </p>
+        <button
+          className="button button-secondary"
+          disabled={busy}
+          onClick={() => void rebuildReviewQueue()}
+          type="button"
+        >
+          {reviewRebuild.tag === "pending"
+            ? "Rebuilding review queue…"
+            : "Rebuild review queue"}
+        </button>
+        {reviewRebuild.tag === "pending" ? (
+          <p role="status" aria-live="polite" aria-atomic="true">
+            Rebuilding the review projection from saved local events…
+          </p>
+        ) : null}
+        {reviewRebuild.tag === "recoverable_error" ? (
+          <section
+            className="local-data-error"
+            role="alert"
+            aria-labelledby="review-rebuild-error-heading"
+          >
+            <h3
+              id="review-rebuild-error-heading"
+              ref={rebuildErrorHeading}
+              tabIndex={-1}
+            >
+              Review queue rebuild stopped
+            </h3>
+            <p>{reviewRebuild.detail}</p>
+            <p>No saved attempt or review acknowledgement was changed. The rebuild control is available again.</p>
+          </section>
+        ) : null}
+        {reviewRebuild.tag === "complete" ? (
+          <div className="operation-preview">
+            <h3 ref={rebuildResultHeading} tabIndex={-1}>Review queue rebuild complete</h3>
+            <p role="status" aria-live="polite" aria-atomic="true">
+              Read {reviewRebuild.receipt.attemptsRead} validated attempt(s), derived {" "}
+              {reviewRebuild.receipt.dueItems} due item(s), and classified {" "}
+              {reviewRebuild.receipt.quarantinedAttempts} unavailable or inconsistent attempt(s)
+              for truthful review recovery. No study event or acknowledgement was written.
+            </p>
+          </div>
+        ) : null}
       </section>
 
       <section className="reference-card" aria-labelledby="reset-heading">

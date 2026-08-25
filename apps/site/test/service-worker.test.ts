@@ -297,7 +297,6 @@ describe("service-worker fetch", () => {
     expect(await response?.text()).toBe("network")
     expect(opened).toEqual([
       "nycustodian-shell-__NYCUSTODIAN_CACHE_VERSION__",
-      "nycustodian-runtime-__NYCUSTODIAN_CACHE_VERSION__",
       "nycustodian-runtime-__NYCUSTODIAN_CACHE_VERSION__"
     ])
     expect(shellIgnoreVary).toEqual([true])
@@ -366,5 +365,268 @@ describe("service-worker fetch", () => {
     expect(await responsePromise?.then((response) => response.text())).toBe("uncacheable")
     await lifetimePromise
     expect(writes).toBe(0)
+  })
+
+  it("keeps the current application shell ahead of an active older pack", async () => {
+    type FetchHarnessEvent = {
+      readonly request: Request
+      readonly respondWith: (promise: Promise<Response>) => void
+      readonly waitUntil: (promise: PromiseLike<unknown>) => void
+    }
+    type Listener = (event: FetchHarnessEvent) => void
+
+    const source = await readFile(new URL("../public/sw.js", import.meta.url), "utf8")
+    const listeners = new Map<string, Listener>()
+    let pointerTouches = 0
+    let networkRequests = 0
+    let responsePromise: Promise<Response> | undefined
+    let lifetimePromise: PromiseLike<unknown> | undefined
+    const cacheStorage = {
+      has: async (): Promise<boolean> => {
+        pointerTouches += 1
+        return true
+      },
+      open: async (name: string) => {
+        if (name.startsWith("nycustodian-shell-")) {
+          return {
+            match: async (): Promise<Response> => new Response("current-shell")
+          }
+        }
+        throw new Error(`Unexpected cache open: ${name}`)
+      },
+      keys: async (): Promise<readonly string[]> => [],
+      delete: async (): Promise<boolean> => true
+    }
+    const serviceWorkerGlobal = {
+      location: { origin: "https://study.example" },
+      addEventListener: (type: string, listener: Listener): void => {
+        listeners.set(type, listener)
+      }
+    }
+    const networkFetch = async (): Promise<Response> => {
+      networkRequests += 1
+      return new Response("network")
+    }
+    const evaluate = new Function("self", "caches", "fetch", "Response", source)
+    evaluate(serviceWorkerGlobal, cacheStorage, networkFetch, globalThis.Response)
+
+    listeners.get("fetch")?.({
+      request: new Request("https://study.example/settings/"),
+      respondWith: (promise) => {
+        responsePromise = promise
+      },
+      waitUntil: (promise) => {
+        lifetimePromise = promise
+      }
+    })
+
+    expect(await responsePromise?.then((response) => response.text())).toBe("current-shell")
+    await lifetimePromise
+    expect(networkRequests).toBe(0)
+    expect(pointerTouches).toBe(0)
+  })
+
+  it("serves exact pack-managed content from the active verified pack", async () => {
+    type FetchHarnessEvent = {
+      readonly request: Request
+      readonly respondWith: (promise: Promise<Response>) => void
+      readonly waitUntil: (promise: PromiseLike<unknown>) => void
+    }
+    type Listener = (event: FetchHarnessEvent) => void
+
+    const source = await readFile(new URL("../public/sw.js", import.meta.url), "utf8")
+    const listeners = new Map<string, Listener>()
+    const opened: string[] = []
+    let networkRequests = 0
+    let responsePromise: Promise<Response> | undefined
+    const cacheStorage = {
+      has: async (name: string): Promise<boolean> => name === "nycustodian-pack-pointer-v1",
+      open: async (name: string) => {
+        opened.push(name)
+        if (name === "nycustodian-pack-pointer-v1") {
+          return {
+            match: async (): Promise<Response> => new Response("nycustodian-pack-release-generation")
+          }
+        }
+        if (name === "nycustodian-pack-release-generation") {
+          return {
+            match: async (): Promise<Response> => new Response("verified-pack-content")
+          }
+        }
+        throw new Error(`Unexpected cache open: ${name}`)
+      },
+      keys: async (): Promise<readonly string[]> => [],
+      delete: async (): Promise<boolean> => true
+    }
+    const serviceWorkerGlobal = {
+      location: { origin: "https://study.example" },
+      addEventListener: (type: string, listener: Listener): void => {
+        listeners.set(type, listener)
+      }
+    }
+    const networkFetch = async (): Promise<Response> => {
+      networkRequests += 1
+      return new Response("network")
+    }
+    const evaluate = new Function("self", "caches", "fetch", "Response", source)
+    evaluate(serviceWorkerGlobal, cacheStorage, networkFetch, globalThis.Response)
+
+    listeners.get("fetch")?.({
+      request: new Request(
+        "https://study.example/content/vertical-slice/questions/q-1.postcommit.json"
+      ),
+      respondWith: (promise) => {
+        responsePromise = promise
+      },
+      waitUntil: () => {
+        throw new Error("Pack-managed reads do not write generic runtime caches")
+      }
+    })
+
+    expect(await responsePromise?.then((response) => response.text())).toBe(
+      "verified-pack-content"
+    )
+    expect(opened).toEqual([
+      "nycustodian-pack-pointer-v1",
+      "nycustodian-pack-release-generation"
+    ])
+    expect(networkRequests).toBe(0)
+  })
+
+  it("uses current runtime state before an active pack only after the network fails", async () => {
+    type FetchHarnessEvent = {
+      readonly request: Request
+      readonly respondWith: (promise: Promise<Response>) => void
+      readonly waitUntil: (promise: PromiseLike<unknown>) => void
+    }
+    type Listener = (event: FetchHarnessEvent) => void
+
+    const source = await readFile(new URL("../public/sw.js", import.meta.url), "utf8")
+    const listeners = new Map<string, Listener>()
+    const opened: string[] = []
+    let pointerTouches = 0
+    let networkRequests = 0
+    let responsePromise: Promise<Response> | undefined
+    let lifetimePromise: PromiseLike<unknown> | undefined
+    const cacheStorage = {
+      has: async (): Promise<boolean> => {
+        pointerTouches += 1
+        return true
+      },
+      open: async (name: string) => {
+        opened.push(name)
+        if (name.startsWith("nycustodian-shell-")) {
+          return { match: async (): Promise<Response | undefined> => undefined }
+        }
+        if (name.startsWith("nycustodian-runtime-")) {
+          return { match: async (): Promise<Response> => new Response("current-runtime") }
+        }
+        throw new Error(`Unexpected cache open: ${name}`)
+      },
+      keys: async (): Promise<readonly string[]> => [],
+      delete: async (): Promise<boolean> => true
+    }
+    const serviceWorkerGlobal = {
+      location: { origin: "https://study.example" },
+      addEventListener: (type: string, listener: Listener): void => {
+        listeners.set(type, listener)
+      }
+    }
+    const networkFetch = async (): Promise<Response> => {
+      networkRequests += 1
+      throw new TypeError("offline")
+    }
+    const evaluate = new Function("self", "caches", "fetch", "Response", source)
+    evaluate(serviceWorkerGlobal, cacheStorage, networkFetch, globalThis.Response)
+
+    listeners.get("fetch")?.({
+      request: new Request("https://study.example/atlas/"),
+      respondWith: (promise) => {
+        responsePromise = promise
+      },
+      waitUntil: (promise) => {
+        lifetimePromise = promise
+      }
+    })
+
+    expect(await responsePromise?.then((response) => response.text())).toBe("current-runtime")
+    await lifetimePromise
+    expect(opened).toEqual([
+      "nycustodian-shell-__NYCUSTODIAN_CACHE_VERSION__",
+      "nycustodian-runtime-__NYCUSTODIAN_CACHE_VERSION__"
+    ])
+    expect(networkRequests).toBe(1)
+    expect(pointerTouches).toBe(0)
+  })
+
+  it("maps opaque local session URLs only to the current fixed shell", async () => {
+    type SessionRequest = Pick<Request, "cache" | "method" | "mode" | "url">
+    type FetchHarnessEvent = {
+      readonly request: SessionRequest
+      readonly respondWith: (promise: Promise<Response>) => void
+      readonly waitUntil: (promise: PromiseLike<unknown>) => void
+    }
+    type Listener = (event: FetchHarnessEvent) => void
+
+    const source = await readFile(new URL("../public/sw.js", import.meta.url), "utf8")
+    const listeners = new Map<string, Listener>()
+    let pointerTouches = 0
+    let responsePromise: Promise<Response> | undefined
+    const matched: Array<RequestInfo | URL> = []
+    const cacheStorage = {
+      has: async (): Promise<boolean> => {
+        pointerTouches += 1
+        return true
+      },
+      open: async (name: string) => {
+        if (!name.startsWith("nycustodian-shell-")) {
+          throw new Error(`Unexpected cache open: ${name}`)
+        }
+        return {
+          match: async (request: RequestInfo | URL): Promise<Response> => {
+            matched.push(request)
+            return new Response("current-session-shell")
+          }
+        }
+      },
+      keys: async (): Promise<readonly string[]> => [],
+      delete: async (): Promise<boolean> => true
+    }
+    const serviceWorkerGlobal = {
+      location: { origin: "https://study.example" },
+      addEventListener: (type: string, listener: Listener): void => {
+        listeners.set(type, listener)
+      }
+    }
+    const evaluate = new Function("self", "caches", "fetch", "Response", source)
+    evaluate(
+      serviceWorkerGlobal,
+      cacheStorage,
+      async (): Promise<Response> => {
+        throw new Error("The fixed current shell should already be precached")
+      },
+      globalThis.Response
+    )
+
+    listeners.get("fetch")?.({
+      request: {
+        cache: "default",
+        method: "GET",
+        mode: "navigate",
+        url: "https://study.example/simulations/session/sim-12345678/question/7/"
+      },
+      respondWith: (promise) => {
+        responsePromise = promise
+      },
+      waitUntil: () => {
+        throw new Error("Fixed shell reads do not write runtime caches")
+      }
+    })
+
+    expect(await responsePromise?.then((response) => response.text())).toBe(
+      "current-session-shell"
+    )
+    expect(matched).toEqual(["/simulations/session/sim-shell0000/question/1/"])
+    expect(pointerTouches).toBe(0)
   })
 })

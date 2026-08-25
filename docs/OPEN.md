@@ -189,8 +189,13 @@ Status: standing legal/editorial caution. Any future item text obtained through 
   `packages/content`; M5 adds the shared `packages/correction-intake` contract
   and dormant, separately owned `apps/correction-worker` root;
 - Vite is the browser build/development direction;
-- Cloudflare Workers Static Assets remains the initial deployment direction;
-- no Worker script merely to serve static files;
+- Cloudflare Workers Static Assets remains the initial deployment direction and
+  response authority;
+- the only current Worker exception is a no-data/no-user-state regex router for
+  the settled opaque local simulation/result and print-preview routes that
+  Static Assets redirects cannot constrain; it delegates responses to `ASSETS`;
+- a correction or other application Worker remains separate and dormant until
+  explicitly authorized;
 - React 19 is selected for lazy interactive islands;
 - immutable renderer-neutral `ScreenSnapshot` values, semantic commands, and
   state/actions/meta provider contracts remain the application/view boundary;
@@ -269,115 +274,62 @@ Those results belong to the then-current one-question slice. They remain useful
 historical evidence, but do not constitute final verification of the expanded
 revision.
 
-**Current M1–M3 implementation evidence (2026-08-25):**
+**Current integrated M1–M5 implementation evidence (2026-08-25):**
 
-- the validated packs generate a closed set of 58 documents, including two
-  question routes, 18 visual hazard routes, 18 nonvisual hazard routes, and four
-  public tool pages;
-- destination families without reviewed machine-readable content are
-  intentionally omitted instead of being represented by placeholder pages; and
-- the exact local deterministic gate passes on Bun `1.4.0` and Node `22.22.0`,
-  including maintained-layout and module-boundary checks, 396 visual hashes,
-  three-workspace typechecks, 165 unit tests, the 58-document/92-safe-shell-URL
-  production build, artifact closure and answer-leak verification, and a frozen
-  offline install that preserves `bun.lock` byte-for-byte; while
-- browser CI is configured, and the exact pinned Chromium revision passes all
-  27 standard Vite-preview cases plus all three Cloudflare-preview delivery
-  cases locally, including application-database, offline/service-worker,
-  accessibility, and true-BFCache contracts; the complete cross-browser matrix
-  and release certification remain separate gates beyond that local evidence.
-
-**Current isolated M5 implementation evidence (2026-08-25):**
-
-- the generator emits the new offline, settings, report, corrections, FOIL,
-  privacy, and security documents without placeholder content;
-- explicit pack stage/verify/activate/retain/remove state is receipt-bound;
-  every stage uses a unique cache generation plus deterministic immutable-record
-  fingerprint; exact external shell-manifest bytes live only at a fixed
-  non-servable origin key; full descriptor/root/child verification precedes
-  bulk runtime promotion; failed stage/activation removes only the losing
-  generation and its unshared promotions; and final activation is an exact
-  generation/fingerprint CAS that cannot displace the prior active pack after
-  corruption;
-- strict durable semantic decoders, checksummed portable transfer/quarantine,
-  apply-time parent/dependent reclassification in one transaction,
-  transaction-counted scoped reset, authoritative IndexedDB preferences, and
-  explicit local correction drafts/accepted receipts are implemented;
-- a strict, idempotent correction Worker contract exists dormant with no
-  production bindings or routes; and
-- all five workspace typechecks, browser-test typecheck, 210 unit tests, the
-  65-document production build and closed artifact/root verifier pass locally;
-  all 34 standard Chromium cases pass on this exact revision, including seven
-  M5 cases for correction truthfulness, mirror failure/cross-tab preferences,
-  reset, semantic portable import and apply-time drift, generation quarantine/
-  restage, stored-pack actions, historical-attempt preservation, and active-pack
-  offline atlas navigation/image delivery.
-
-This lane does not close M5 yet: M4 owns IndexedDB v4. Integration must make v5
-the exact union, preserve seeded M4 simulation/submission/print records, include
-those substantive records in transfer/reset, quarantine a simulation record
-whole when any question reference is unknown, and pass the full release matrix.
-
-**Blocking M4→M5 integration checklist (do not approximate after merge):**
-
-1. Rebase `appDatabaseStores` onto the exact M4 v4 store identifiers, then add
-   the M5 stores without aliases or replacement stores. A real-browser v4→v5
-   seed must preserve byte-equivalent simulation sessions, submissions, and
-   immutable print jobs while creating every missing M5 store.
-2. Put the exact offline-pack `id`, `generation`, immutable descriptor
-   fingerprint, `releaseId`, and `packVersion` on every resumable simulation
-   session. Create that pin in the same read-write transaction that verifies the
-   pack is still active and not `removing`.
-3. Extend the removal-claim transaction—not its preview—to include the M4
-   simulation-session store. It must recheck active and submitted-but-pending
-   session pins before changing the exact generation to `removing`. If session
-   pin creation commits first, removal must reject; if removal claims first,
-   session creation must reject. Add deterministic browser tests for both commit
-   orders. Completed simulation results are historical impact, not active pins.
-4. Preserve the M5 historical-attempt rule: question/hazard `active` session
-   rows are latest-attempt projections, not live-session proof. The removal
-   claim transaction must still reread question/hazard attempts. If a matching
-   attempt appears after a zero-impact preview, an unconfirmed claim rejects
-   with confirmation required; an already confirmed claim may proceed. Keep
-   both race-order regression tests.
-5. Extend the portable envelope, strict durable decoders, semantic validation,
-   export validation, import preview, apply-time recomputation, and one atomic
-   apply transaction to simulation sessions/submissions and immutable print
-   jobs. Any unknown or conflicting question reference quarantines the entire
-   dependent simulation closure; no partial session, result, acknowledgement,
-   or print record may commit.
-6. Extend reset scopes/counts and documentation to the exact M4 stores. Preview
-   and apply must keep their existing transaction-counted semantics and must not
-   silently omit simulation/submission/print data.
-7. Re-run source/browser typechecks, the real v4→v5 preservation seed, portable
-   semantic-invalid and dependent-record TOCTOU tests, both session-pin/removal
-   order tests, historical-attempt preview/claim races, scoped reset, pack
-   activation rollback, and offline navigation before calling M5 integrated.
+- the validated packs generate a closed set of 70 documents, including two
+  question routes, 18 visual hazard routes, 18 nonvisual hazard routes, four
+  public tool pages, and the simulation, print, offline, settings, reporting,
+  correction, and recovery surfaces;
+- deterministic M4 question/visual/nonvisual simulations and immutable local
+  print jobs use exact validated pack claims, retain evaluated feedback, and
+  restore from their opaque local URLs without substituting current content;
+- IndexedDB v5 is the exact M4+M5 store union. A real-browser v4→v5 seed
+  preserves byte-equivalent simulation sessions, submissions, and print jobs;
+  portable transfer, reset, and quarantine include those records atomically;
+- resumable simulations pin the exact claim identity in the same transaction
+  that revalidates active/non-removing pack state. Deterministic browser tests
+  prove both pin/removal commit orders and the historical-attempt claim races;
+- explicit pack stage/verify/activate/retain/remove state is receipt-bound and
+  generation-specific. Corrupt rows and orphan caches reconcile durably,
+  trusted retirement writes a tombstone and blocks new work while preserving
+  pinned history, and removing the sole active pack clears its pointer safely;
+- strict durable decoders, checksummed portable transfer/quarantine, apply-time
+  dependency reclassification, transaction-counted scoped reset, authoritative
+  IndexedDB preferences, review-projection rebuild, and local correction drafts
+  and receipts are implemented;
+- the narrow correction Worker is strict and idempotent but dormant: it has no
+  production route, binding, secret, preview URL, data collection, or logging;
+- the no-data Static Assets router serves only exact opaque local shells and
+  deterministic 410/503 terminals. Local workerd smokes pass for that boundary
+  and for the disabled correction Worker; and
+- the exact Bun `1.4.0` / Node `22.22.0` gate passes maintained-layout and
+  module-boundary checks, 396 visual hashes, five workspace typechecks, browser
+  harness typecheck, 324 unit tests, the 70-document/46-safe-shell-URL build,
+  artifact closure, and answer-leak verification. At CI's two-worker cap, the
+  complete browser suite passes 166 Chromium/Firefox/WebKit cases with 26
+  intentional project-specific skips.
 
 **Implementation evidence still open:**
 
-- current-v4 IndexedDB failure/quota/disposal proof and commit/reconciliation
-  coverage across the remaining supported real-browser matrix;
-- service-worker version/eviction/update behavior and remaining-browser offline
-  coverage;
 - a complete location-preserving JSONC/canonical-JSON profile and generated
   release-artifact retention policy for content at scale;
-- complete cross-browser accessibility, zoom/reflow, keyboard, performance,
-  and remaining-browser offline gates;
-- M4 simulation and complete print output, plus M4→M5 database/portable-data
-  integration proof for simulation sessions/submissions and immutable print jobs;
-- the complete release-wide M5 browser/certification matrix beyond the targeted
-  Chromium pack/settings/correction evidence;
-- sitemap generation, remote Cloudflare preview/deployment configuration, and
+- the accepted English Tier A/B atlas and source-backed question-bank expansion
+  required for the no-repeat 45/60/90 launch inventory;
+- the manual assistive-technology, true-400%-zoom, device, US Letter/A4, and
+  grayscale physical-print certification matrix;
+- broader performance and long-duration storage stress evidence beyond the
+  passing release-wide automated functional matrix;
+- remote Cloudflare preview/deployment credentials and
   separately authorized correction-Worker activation bindings; and
 - custom domain/canonical host.
 
 Decision criteria remain: indexable static HTML; installable/offline PWA; explicit versioned content packs; local-first progress; deterministic print and simulations; WCAG behavior; no pre-answer leakage; low operating cost; minimal backend.
 
-**Status:** RESOLVED BASELINE / CONTROLLED M1–M3 PLUS ISOLATED M5 IMPLEMENTATION PROOF, NOT A
-RELEASE. Local deterministic verification and the complete pinned-Chromium
-M1–M3 browser gates pass; the complete browser matrix, M4, M4/M5 integration, the
-canonical host, sitemap, deployment, and release certification remain open. P16
+**Status:** RESOLVED BASELINE / VERIFIED M1–M5 IMPLEMENTATION, NOT A RELEASE.
+The integrated database, transfer, reset, pack-race, service-worker, terminal,
+and complete automated browser gates pass on this revision. Launch-content
+expansion is staged separately. Manual certification, the canonical host,
+credentials, remote preview, and production deployment remain open. P16
 remains in this ledger for provenance; failures in the scaffold may reopen a
 bounded implementation decision, but do not silently restore superseded
 defaults.

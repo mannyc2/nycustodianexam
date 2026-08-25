@@ -1,4 +1,5 @@
 import { Schema } from "effect"
+import { DurableTimestamp } from "../durable-values.ts"
 
 const Sha256 = Schema.String.check(
   Schema.isPattern(/^[a-f0-9]{64}$/, { expected: "a lowercase SHA-256 digest" })
@@ -115,15 +116,17 @@ export class OfflinePackRecord extends Schema.Class<OfflinePackRecord>(
   "@nycustodian/site/offline-packs/OfflinePackRecord"
 )({
   id: Schema.NonEmptyString,
+  packId: Schema.NonEmptyString,
   generation: Schema.NonEmptyString,
-  immutableFingerprint: Sha256,
+  contentFingerprint: Sha256,
+  shellBuildFingerprint: Sha256,
   descriptor: OfflinePackDescriptor,
   status: OfflinePackStatus,
   cacheName: Schema.NonEmptyString,
   downloadedBytes: Schema.Natural,
-  stagedAt: Schema.Natural,
-  verifiedAt: Schema.Union([Schema.Natural, Schema.Null]),
-  activatedAt: Schema.Union([Schema.Natural, Schema.Null]),
+  stagedAt: DurableTimestamp,
+  verifiedAt: Schema.Union([DurableTimestamp, Schema.Null]),
+  activatedAt: Schema.Union([DurableTimestamp, Schema.Null]),
   detail: Schema.Union([Schema.NonEmptyString, Schema.Null])
 }) {}
 
@@ -131,14 +134,36 @@ export class OfflinePackOperationRecord extends Schema.Class<OfflinePackOperatio
   "@nycustodian/site/offline-packs/OfflinePackOperationRecord"
 )({
   id: Schema.NonEmptyString,
+  claimId: Schema.NonEmptyString,
   packId: Schema.NonEmptyString,
   generation: Schema.NonEmptyString,
-  immutableFingerprint: Sha256,
+  contentFingerprint: Sha256,
+  shellBuildFingerprint: Sha256,
   kind: Schema.Literals(["stage", "activate", "remove"]),
   phase: Schema.Literals(["running", "complete", "failed"]),
-  startedAt: Schema.Natural,
-  updatedAt: Schema.Natural,
+  startedAt: DurableTimestamp,
+  updatedAt: DurableTimestamp,
   detail: Schema.Union([Schema.NonEmptyString, Schema.Null])
+}) {}
+
+export class OfflinePackRetirementRecord extends Schema.Class<OfflinePackRetirementRecord>(
+  "@nycustodian/site/offline-packs/OfflinePackRetirementRecord"
+)({
+  id: Schema.NonEmptyString,
+  packId: Schema.NonEmptyString,
+  releaseId: Schema.NonEmptyString,
+  packVersion: Schema.Natural,
+  lifecycle: Schema.Literal("retired"),
+  observedAt: DurableTimestamp
+}) {}
+
+export class OfflinePackOrphanCacheRecord extends Schema.Class<OfflinePackOrphanCacheRecord>(
+  "@nycustodian/site/offline-packs/OfflinePackOrphanCacheRecord"
+)({
+  id: Schema.NonEmptyString,
+  cacheName: Schema.NonEmptyString,
+  sourceKey: Schema.NonEmptyString,
+  recordedAt: DurableTimestamp
 }) {}
 
 export interface OfflinePackRemovalImpact {
@@ -155,6 +180,73 @@ export const offlinePackCacheName = (
 ): string =>
   `nycustodian-pack-${encodeURIComponent(descriptor.id)}-${encodeURIComponent(descriptor.releaseId)}-${descriptor.packVersion}-${descriptor.locale}-${encodeURIComponent(generation)}`
 
+export const offlinePackClaimId = (
+  packId: string,
+  generation: string
+): string => `claim:${encodeURIComponent(packId)}:${encodeURIComponent(generation)}`
+
+export const offlinePackRetirementId = (
+  packId: string
+): string => `offline-pack-retirement:${encodeURIComponent(packId)}`
+
+export const offlinePackOrphanCacheId = (
+  cacheName: string
+): string => `offline-pack-orphan-cache:${encodeURIComponent(cacheName)}`
+
+export const decodeOfflinePackOrphanCacheRecord = (
+  value: unknown
+): OfflinePackOrphanCacheRecord => {
+  const record = Schema.decodeUnknownSync(
+    OfflinePackOrphanCacheRecord,
+    { onExcessProperty: "error" }
+  )(value)
+  if (
+    !record.cacheName.startsWith("nycustodian-pack-") ||
+    record.id !== offlinePackOrphanCacheId(record.cacheName)
+  ) {
+    throw new Error("An orphan offline-pack cache record has an invalid owned namespace")
+  }
+  return record
+}
+
+export const decodeOfflinePackRetirementRecord = (
+  value: unknown
+): OfflinePackRetirementRecord => {
+  const record = Schema.decodeUnknownSync(
+    OfflinePackRetirementRecord,
+    { onExcessProperty: "error" }
+  )(value)
+  if (record.id !== offlinePackRetirementId(record.packId)) {
+    throw new Error("An offline-pack retirement record has an invalid durable identity")
+  }
+  return record
+}
+
+export const OfflinePackGenerationClaim = Schema.Struct({
+  claimId: Schema.NonEmptyString,
+  packId: Schema.NonEmptyString,
+  generation: Schema.NonEmptyString,
+  contentFingerprint: Sha256,
+  shellBuildFingerprint: Sha256,
+  releaseId: Schema.NonEmptyString,
+  packVersion: Schema.Natural
+}).check(
+  Schema.makeFilter((claim) =>
+    claim.claimId === offlinePackClaimId(claim.packId, claim.generation)
+      ? undefined
+      : "an exact device-local offline-pack generation claim"
+  )
+)
+
+export type OfflinePackGenerationClaim = typeof OfflinePackGenerationClaim.Type
+
+export const decodeOfflinePackGenerationClaim = (
+  value: unknown
+): OfflinePackGenerationClaim => Schema.decodeUnknownSync(
+  OfflinePackGenerationClaim,
+  { onExcessProperty: "error" }
+)(value)
+
 const canonicalize = (value: unknown): unknown => {
   if (Array.isArray(value)) return value.map(canonicalize)
   if (value !== null && typeof value === "object") {
@@ -168,26 +260,69 @@ const canonicalize = (value: unknown): unknown => {
   return value
 }
 
-export const offlinePackImmutableFingerprintSource = (
-  descriptor: OfflinePackDescriptor,
-  generation: string
+export const offlinePackContentFingerprintSource = (
+  descriptor: OfflinePackDescriptor
 ): string => JSON.stringify(canonicalize({
   schemaVersion: 1,
-  id: descriptor.id,
-  generation,
-  cacheName: offlinePackCacheName(descriptor, generation),
-  descriptor
+  scope: "portable-offline-content",
+  packId: descriptor.id,
+  releaseId: descriptor.releaseId,
+  packVersion: descriptor.packVersion,
+  locale: descriptor.locale,
+  compatibility: descriptor.compatibility.map(({ profileId, compatibilityKey }) => ({
+    profileId,
+    compatibilityKey
+  })),
+  counts: descriptor.counts,
+  totalBytes: descriptor.totalBytes,
+  receipts: descriptor.receipts
+}))
+
+export const offlinePackShellBuildFingerprintSource = (
+  descriptor: OfflinePackDescriptor
+): string => JSON.stringify(canonicalize({
+  schemaVersion: 1,
+  scope: "offline-application-shell-build",
+  packId: descriptor.id,
+  releaseId: descriptor.releaseId,
+  packVersion: descriptor.packVersion,
+  locale: descriptor.locale,
+  presentation: {
+    label: descriptor.label,
+    lifecycle: descriptor.lifecycle,
+    publicationTime: descriptor.publicationTime,
+    compatibility: descriptor.compatibility
+  },
+  applicationShellManifestPath: descriptor.applicationShellManifestPath,
+  applicationShellManifestReceipt: descriptor.applicationShellManifestReceipt,
+  applicationShellBytes: descriptor.applicationShellBytes,
+  estimatedDownloadBytes: descriptor.estimatedDownloadBytes,
+  requiredNavigation: descriptor.requiredNavigation
 }))
 
 export const offlinePackOperationId = (
   kind: OfflinePackOperationRecord["kind"],
-  packId: string,
-  generation: string
-): string => `${kind}:${encodeURIComponent(packId)}:${encodeURIComponent(generation)}`
+  claimId: string
+): string => `${kind}:${encodeURIComponent(claimId)}`
 
 export const assertClosedOfflinePackDescriptor = (
   descriptor: OfflinePackDescriptor
 ): OfflinePackDescriptor => {
+  if (
+    (descriptor.lifecycle === "preview" && descriptor.publicationTime !== null) ||
+    (descriptor.lifecycle === "published" && descriptor.publicationTime === null)
+  ) {
+    throw new Error("Offline pack lifecycle and publication time disagree")
+  }
+  if (descriptor.publicationTime !== null) {
+    const publicationTime = new Date(descriptor.publicationTime)
+    if (
+      !Number.isFinite(publicationTime.getTime()) ||
+      publicationTime.toISOString() !== descriptor.publicationTime
+    ) {
+      throw new Error("Offline pack publication time is not canonical UTC")
+    }
+  }
   const paths = descriptor.receipts.map((receipt) => receipt.path)
   if (new Set(paths).size !== paths.length) {
     throw new Error("Offline pack contains duplicate receipt paths")
@@ -224,12 +359,22 @@ export const assertClosedOfflinePackDescriptor = (
   return descriptor
 }
 
-export const decodeOfflinePackDescriptor = (value: unknown): OfflinePackDescriptor =>
+export const decodeHistoricalOfflinePackDescriptor = (value: unknown): OfflinePackDescriptor =>
   assertActivatableOfflinePackDescriptor(
     assertClosedOfflinePackDescriptor(
       Schema.decodeUnknownSync(OfflinePackDescriptor, { onExcessProperty: "error" })(value)
     )
   )
+
+export const decodeAvailableOfflinePackDescriptor = (value: unknown): OfflinePackDescriptor => {
+  const descriptor = decodeHistoricalOfflinePackDescriptor(value)
+  if (descriptor.lifecycle === "retired") {
+    throw new Error("A retired offline pack is historical and cannot be staged for a new session")
+  }
+  return descriptor
+}
+
+export const decodeOfflinePackDescriptor = decodeHistoricalOfflinePackDescriptor
 
 export const assertActivatableOfflinePackDescriptor = (
   descriptor: OfflinePackDescriptor
@@ -315,10 +460,19 @@ export const assertOfflinePackRecordInvariants = (
     throw new Error("A persisted offline pack must have a finalized byte estimate")
   }
   if (
-    record.id !== descriptor.id ||
+    record.packId !== descriptor.id ||
+    record.id !== offlinePackClaimId(record.packId, record.generation) ||
     record.cacheName !== offlinePackCacheName(descriptor, record.generation)
   ) {
     throw new Error("A persisted offline pack has an invalid durable identity or cache namespace")
+  }
+  if (
+    descriptor.lifecycle === "retired" &&
+    record.status !== "retained" &&
+    record.status !== "quarantined" &&
+    record.status !== "removing"
+  ) {
+    throw new Error("A retired offline pack must remain historical")
   }
   if (record.downloadedBytes > estimatedBytes) {
     throw new Error("A persisted offline pack exceeds its finalized byte estimate")
@@ -387,9 +541,9 @@ export const assertOfflinePackOperationInvariants = (
   if (
     operation.id !== offlinePackOperationId(
       operation.kind,
-      operation.packId,
-      operation.generation
+      operation.claimId
     ) ||
+    operation.claimId !== offlinePackClaimId(operation.packId, operation.generation) ||
     operation.updatedAt < operation.startedAt
   ) {
     throw new Error("An offline-pack operation has an invalid durable identity or timeline")

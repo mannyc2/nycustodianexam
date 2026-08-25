@@ -3,12 +3,16 @@ import { Effect, Schema } from "effect"
 import { createRoot } from "react-dom/client"
 import { HazardAttemptReceipt } from "../../attempt-receipt.ts"
 import { appRuntime, disposeAppRuntime } from "../../app-runtime.ts"
+import { retainImageBlob } from "../../retained-image.ts"
 import { installSessionNavigation } from "../../session-navigation.ts"
 import {
   AssetContentReceipt,
   VerifiedContent
 } from "../../verified-content.ts"
-import { createHazardController } from "../controller.ts"
+import {
+  createHazardController,
+  type LoadedHazardVisualAsset
+} from "../controller.ts"
 import {
   HazardPlayer,
   NonvisualHazardPractice,
@@ -57,7 +61,8 @@ const visualAssetReceipt = (() => {
   const decoded = Schema.decodeUnknownSync(AssetContentReceipt)(
     JSON.parse(assetReceiptData.textContent)
   )
-  const webDerivative = scene.asset.derivatives.find((candidate) => candidate.kind === "web")
+  const webDerivatives = scene.asset.derivatives.filter((candidate) => candidate.kind === "web")
+  const webDerivative = webDerivatives.length === 1 ? webDerivatives[0] : undefined
   if (
     webDerivative === undefined ||
     decoded.path !== `/${webDerivative.path}` ||
@@ -81,47 +86,39 @@ const imageCanDecode = (url: string): Promise<void> =>
     image.src = url
   })
 
-const loadVisualAssetUrl = async (): Promise<string | null> => {
+const loadVisualAsset = async (): Promise<LoadedHazardVisualAsset | null> => {
   if (visualAssetReceipt === null) return null
+  let url: string | null = null
   try {
     const blob = await appRuntime.runPromise(
       Effect.flatMap(VerifiedContent, (content) => content.loadAssetBlob(visualAssetReceipt))
     )
-    const url = URL.createObjectURL(blob)
-    try {
-      await imageCanDecode(url)
-      return url
-    } catch {
-      URL.revokeObjectURL(url)
-      return null
-    }
+    const retained = await retainImageBlob(visualAssetReceipt, blob)
+    url = URL.createObjectURL(blob)
+    await imageCanDecode(url)
+    return { url, retained }
   } catch {
+    if (url !== null) URL.revokeObjectURL(url)
     return null
   }
 }
 
-let discarded = false
 let cleanup: (() => void) | undefined
 
 window.addEventListener("pagehide", (event) => {
   if (event.persisted) return
-  discarded = true
   cleanup?.()
 })
 
-const bootstrap = async (): Promise<void> => {
-  const visualAssetUrl = await loadVisualAssetUrl()
-  if (discarded) {
-    if (visualAssetUrl !== null) URL.revokeObjectURL(visualAssetUrl)
-    void disposeAppRuntime()
-    return
-  }
+const bootstrap = (): void => {
   const controller = createHazardController({
     scene,
     mode,
     receipt,
     runtime: appRuntime,
-    visualAssetUrl
+    visualAssetReceipt,
+    loadVisualAsset,
+    releaseVisualAssetUrl: (url) => URL.revokeObjectURL(url)
   })
   const root = createRoot(mount)
   const removeSessionNavigation = installSessionNavigation()
@@ -141,12 +138,11 @@ const bootstrap = async (): Promise<void> => {
     removeSessionNavigation()
     root.unmount()
     controller.dispose()
-    if (visualAssetUrl !== null) URL.revokeObjectURL(visualAssetUrl)
     void disposeAppRuntime()
   }
 }
 
-void bootstrap()
+bootstrap()
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {

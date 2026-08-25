@@ -21,6 +21,8 @@ import {
   QuestionAttemptReceipt
 } from "../apps/site/src/attempt-receipt.ts"
 import { ReviewQueueBootstrap } from "../apps/site/src/review/model.ts"
+import { SimulationBootstrap } from "../apps/site/src/simulation/model.ts"
+import { PrintBuilderBootstrap } from "../apps/site/src/print/model.ts"
 import { AssetContentReceipt } from "../apps/site/src/verified-content.ts"
 import {
   decodeOfflinePackDescriptor,
@@ -28,8 +30,11 @@ import {
 } from "../apps/site/src/offline-packs/model.ts"
 import {
   assertSafeBuildPaths,
-  collectReferencedBuildAssets
+  collectReferencedBuildAssets,
+  normalizeCanonicalOrigin,
+  renderSitemap
 } from "../apps/site/scripts/finalize-service-worker.ts"
+import { trustedCurrentShellNavigation } from "../apps/site/src/shell-route-policy.ts"
 import { Schema } from "effect"
 
 const repositoryRoot = new URL("../", import.meta.url)
@@ -41,19 +46,6 @@ type ManifestArtifact = Manifest["artifacts"][number]
 
 const safePrecacheArtifactKinds = new Set<ManifestArtifact["kind"]>([
   "catalog"
-])
-
-const baselineNavigation = new Set([
-  "/",
-  "/offline/",
-  "/report/",
-  "/settings/",
-  "/status/",
-  "/transparency/",
-  "/transparency/corrections/",
-  "/transparency/foil/",
-  "/transparency/privacy/",
-  "/transparency/security/"
 ])
 
 const slugify = (value: string): string => {
@@ -413,20 +405,31 @@ export const assertProtectedServiceWorkerPolicy = (
     throw new Error("Service worker references the consolidated postcommit pack")
   }
   const protectedMatcher =
-    /const isAppVerifiedContent = \(request\) => \{[\s\S]*?url\.pathname\.endsWith\("\.postcommit\.json"\)[\s\S]*?\n\}/
+    /const isPackManagedContent = \(request\) => \{[\s\S]*?url\.pathname\.startsWith\("\/content\/vertical-slice\/"\)[\s\S]*?url\.pathname\.startsWith\("\/content\/assets\/"\)[\s\S]*?\n\}/
   const protectedMatches = [...source.matchAll(new RegExp(protectedMatcher.source, "g"))]
   if (
     protectedMatches.length !== 1 ||
-    occurrenceCount(source, ".postcommit.json") !== 1 ||
-    !/if \(isAppVerifiedContent\(event\.request\)\) \{\s*event\.respondWith\(fetch\(event\.request\)\)\s*return\s*\}/.test(source)
+    occurrenceCount(source, ".postcommit.json") !== 0 ||
+    !/if \(isPackManagedContent\(event\.request\)\) \{\s*event\.respondWith\(matchActivePack\(event\.request\)\.then\(\s*\(cached\) => cached \?\? fetch\(event\.request\)\s*\)\)\s*return\s*\}/.test(source)
   ) {
     throw new Error(
-      "Service worker may mention .postcommit.json only in its verified-content network bypass"
+      "Service worker must keep the entire verified release/content namespace out of generic caches"
     )
   }
 }
 
+export const assertProductionPackPublication = (
+  descriptor: Readonly<{ readonly lifecycle: string; readonly publicationTime: string | null }>,
+  required: boolean
+): void => {
+  if (!required) return
+  if (descriptor.lifecycle !== "published" || descriptor.publicationTime === null) {
+    throw new Error("Production deployment requires an explicitly published offline release")
+  }
+}
+
 export const verify = async (): Promise<void> => {
+  const canonicalOrigin = normalizeCanonicalOrigin(process.env.NYCUSTODIAN_CANONICAL_ORIGIN)
   const sourceManifestText = await text(new URL("manifest.json", releaseRoot))
   const manifest = Schema.decodeUnknownSync(ReleaseManifest)(JSON.parse(sourceManifestText))
   const builtManifestUrl = new URL("content/vertical-slice/manifest.json", distRoot)
@@ -581,6 +584,23 @@ export const verify = async (): Promise<void> => {
     { canonicalPath: "/ny/", robots: "index,follow", routeId: "profile" },
     { canonicalPath: "/practice/", robots: "index,follow", routeId: "study-hub" },
     { canonicalPath: "/review/", robots: "noindex,follow", routeId: "review-queue" },
+    { canonicalPath: "/simulations/", robots: "index,follow", routeId: "simulation-setup" },
+    {
+      canonicalPath: "/simulations/session/sim-shell0000/question/1/",
+      robots: "noindex,follow",
+      routeId: "simulation-player"
+    },
+    {
+      canonicalPath: "/simulations/session/sim-shell0000/results/",
+      robots: "noindex,follow",
+      routeId: "simulation-results"
+    },
+    { canonicalPath: "/print/", robots: "index,follow", routeId: "print-center" },
+    {
+      canonicalPath: "/print/preview/print-shell0000/",
+      robots: "noindex,follow",
+      routeId: "print-preview"
+    },
     { canonicalPath: "/atlas/", robots: "index,follow", routeId: "atlas-index" },
     { canonicalPath: "/hazards/", robots: "index,follow", routeId: "hazards-index" },
     { canonicalPath: "/status/", robots: "noindex,follow", routeId: "status" },
@@ -713,9 +733,32 @@ export const verify = async (): Promise<void> => {
   )
   assertEqualSets(
     actualRoutePaths,
-    new Set(expectedRoutes.map((route) => route.canonicalPath)),
+    new Set(
+      expectedRoutes.map((route) =>
+        canonicalOrigin === undefined
+          ? route.canonicalPath
+          : new URL(route.canonicalPath, `${canonicalOrigin}/`).href
+      )
+    ),
     "Generated HTML routes"
   )
+  const sitemapUrl = new URL("sitemap.xml", distRoot)
+  if (canonicalOrigin === undefined) {
+    if (await Bun.file(sitemapUrl).exists()) {
+      throw new Error("A host-specific sitemap was generated without an approved canonical origin")
+    }
+  } else {
+    const expectedSitemap = renderSitemap(
+      expectedRoutes
+        .filter((route) => route.robots === "index,follow")
+        .map((route) => route.canonicalPath)
+        .sort(),
+      canonicalOrigin
+    )
+    if (!(await Bun.file(sitemapUrl).exists()) || await text(sitemapUrl) !== expectedSitemap) {
+      throw new Error("The production sitemap does not match the closed indexable route set")
+    }
+  }
   const statusHtml = await text(new URL("404.html", distRoot))
   if (
     extractAttribute(statusHtml, /<body data-route-id="([^"]+)">/g, "status route identity") !==
@@ -738,6 +781,11 @@ export const verify = async (): Promise<void> => {
   const offlinePackDescriptor = decodeOfflinePackDescriptor(
     extractEmbeddedJson(offlinePackHtml, "offline-pack-descriptor")
   )
+  const publicationGate = process.env.NYCUSTODIAN_REQUIRE_PUBLISHED_RELEASE
+  if (publicationGate !== undefined && publicationGate !== "0" && publicationGate !== "1") {
+    throw new Error("NYCUSTODIAN_REQUIRE_PUBLISHED_RELEASE must be 0, 1, or unset")
+  }
+  assertProductionPackPublication(offlinePackDescriptor, publicationGate === "1")
   const shellManifestReceipt = offlinePackDescriptor.applicationShellManifestReceipt
   if (shellManifestReceipt === null) {
     throw new Error("Finalized offline pack descriptor has no application-shell root receipt")
@@ -779,7 +827,7 @@ export const verify = async (): Promise<void> => {
   )
   if (
     shellManifest.receipts.some((receipt) => receipt.path === "/offline/") ||
-    !baselineNavigation.has("/offline/")
+    !trustedCurrentShellNavigation.has("/offline/")
   ) {
     throw new Error(
       "The trusted-current-app offline loader must be baseline shell, not pack-managed closure"
@@ -801,6 +849,20 @@ export const verify = async (): Promise<void> => {
   ).join("\n")
   const bundleReports = new Map<string, Awaited<ReturnType<typeof bundleMeasurement>>>()
   const referencedAssets = new Set<string>()
+  const interactiveRouteIds = new Set([
+    "question-player",
+    "review-player",
+    "review-queue",
+    "hazard-player",
+    "simulation-setup",
+    "simulation-player",
+    "simulation-results",
+    "print-center",
+    "print-preview",
+    "offline-packs",
+    "settings",
+    "correction-submit"
+  ])
 
   for (const route of expectedRoutes) {
     const html = await text(routeDocument(route.canonicalPath))
@@ -822,14 +884,7 @@ export const verify = async (): Promise<void> => {
       }
     }
 
-    const interactive =
-      route.routeId === "question-player" ||
-      route.routeId === "review-player" ||
-      route.routeId === "review-queue" ||
-      route.routeId === "hazard-player" ||
-      route.routeId === "offline-packs" ||
-      route.routeId === "settings" ||
-      route.routeId === "correction-submit"
+    const interactive = interactiveRouteIds.has(route.routeId)
     if (!interactive) {
       const bootScripts = [...html.matchAll(
         /<script type="module"[^>]+src="(\/assets\/preferences-boot-[^"]+\.js)"[^>]*>/g
@@ -854,6 +909,133 @@ export const verify = async (): Promise<void> => {
     const closure = await collectJavaScriptClosure(html, allJavaScriptPaths)
     const family = route.routeId
     if (!bundleReports.has(family)) bundleReports.set(family, await bundleMeasurement(closure))
+
+    if (route.routeId === "simulation-setup") {
+      const rawBootstrap = extractEmbeddedJson(html, "simulation-bootstrap-data")
+      assertNoAnswerBearingStructuredFields(rawBootstrap, "Simulation setup bootstrap")
+      const bootstrap = Schema.decodeUnknownSync(SimulationBootstrap)(rawBootstrap)
+      if (
+        !html.includes("data-simulation-setup") ||
+        bootstrap.releaseId !== manifest.releaseId ||
+        bootstrap.packVersion !== manifest.packVersion ||
+        bootstrap.profiles.length !== catalog.profiles.length ||
+        bootstrap.profiles.some((profile, index) => {
+          const expected = catalog.profiles[index]
+          return expected === undefined ||
+            profile.id !== expected.id ||
+            profile.label !== expected.label ||
+            profile.version !== manifest.packVersion ||
+            profile.jurisdiction !== expected.jurisdiction ||
+            profile.compatibilityKey !== expected.compatibilityKey ||
+            profile.disclaimer !== expected.disclaimer
+        }) ||
+        bootstrap.inventory.length !== questions.length ||
+        bootstrap.inventory.some((item, index) => {
+          const expected = questions[index]?.value
+          const artifact = expected === undefined
+            ? undefined
+            : questionPostcommitById.get(expected.id)
+          return expected === undefined || artifact === undefined ||
+            item.question.id !== expected.id ||
+            item.profileIds.length === 0 ||
+            item.profileIds.some((profileId) =>
+              !bootstrap.profiles.some((profile) => profile.id === profileId)
+            ) ||
+            item.receipt.questionId !== expected.id ||
+            item.receipt.postcommitPath !== `/content/vertical-slice/${artifact.path}` ||
+            item.receipt.postcommitBytes !== artifact.bytes ||
+            item.receipt.postcommitSha256 !== artifact.sha256
+        })
+      ) {
+        throw new Error("Simulation setup bootstrap or capacity closure is incomplete")
+      }
+      continue
+    }
+
+    if (route.routeId === "simulation-player" || route.routeId === "simulation-results") {
+      const requiredMount = route.routeId === "simulation-player"
+        ? "data-simulation-player"
+        : "data-simulation-results"
+      if (!html.includes(requiredMount)) {
+        throw new Error(`Simulation route shell is incomplete: ${route.canonicalPath}`)
+      }
+      for (const field of ["correctOptionId", "rationales", "sources"]) {
+        if (html.includes(`\"${field}\"`)) {
+          throw new Error(`Simulation route shell exposes ${field}: ${route.canonicalPath}`)
+        }
+      }
+      continue
+    }
+
+    if (route.routeId === "print-center") {
+      const rawBootstrap = extractEmbeddedJson(html, "print-builder-data")
+      assertNoAnswerBearingStructuredFields(rawBootstrap, "Print builder bootstrap")
+      const bootstrap = Schema.decodeUnknownSync(PrintBuilderBootstrap)(rawBootstrap)
+      const releasedTools = catalog.tools.filter((tool) => tool.publicationGate === null)
+      if (
+        !html.includes("data-print-builder") ||
+        bootstrap.releaseId !== manifest.releaseId ||
+        bootstrap.contentVersion !== manifest.packVersion ||
+        bootstrap.profiles.length !== catalog.profiles.length ||
+        bootstrap.profiles.some((profile, index) => {
+          const expected = catalog.profiles[index]
+          return expected === undefined ||
+            profile.id !== expected.id ||
+            profile.label !== expected.label ||
+            profile.jurisdiction !== expected.jurisdiction ||
+            profile.compatibilityKey !== expected.compatibilityKey ||
+            profile.disclaimer !== expected.disclaimer
+        }) ||
+        bootstrap.questions.length !== questions.length ||
+        bootstrap.questions.some((item, index) => {
+          const expected = questions[index]?.value
+          const artifact = expected === undefined
+            ? undefined
+            : questionPostcommitById.get(expected.id)
+          return expected === undefined || artifact === undefined ||
+            item.id !== expected.id ||
+            item.answerReceipt?.postcommitPath !== `/content/vertical-slice/${artifact.path}` ||
+            item.answerReceipt.postcommitBytes !== artifact.bytes ||
+            item.answerReceipt.postcommitSha256 !== artifact.sha256
+        }) ||
+        bootstrap.tools.length !== releasedTools.length ||
+        bootstrap.tools.some((item, index) => {
+          const expected = releasedTools[index]
+          const print = expected?.asset.derivatives.find((asset) => asset.kind === "print")
+          return expected === undefined || print === undefined ||
+            item.id !== expected.conceptId ||
+            item.family !== expected.family ||
+            item.asset.path !== `/${print.path}` ||
+            item.asset.bytes !== print.bytes ||
+            item.asset.sha256 !== print.sha256
+        }) ||
+        bootstrap.scenes.length !== scenes.length ||
+        bootstrap.scenes.some((item, index) => {
+          const expected = scenes[index]?.value
+          const print = expected?.asset.derivatives.find((asset) => asset.kind === "print")
+          const answer = expected === undefined ? undefined : scenePostcommitById.get(expected.id)
+          return expected === undefined || print === undefined || answer === undefined ||
+            item.id !== expected.id ||
+            item.neutralOverview !== expected.neutralPreAnswer.overview ||
+            item.asset.path !== `/${print.path}` ||
+            item.asset.bytes !== print.bytes ||
+            item.asset.sha256 !== print.sha256 ||
+            item.answerReceipt.postcommitPath !== `/content/vertical-slice/${answer.path}` ||
+            item.answerReceipt.postcommitBytes !== answer.bytes ||
+            item.answerReceipt.postcommitSha256 !== answer.sha256
+        })
+      ) {
+        throw new Error("Print builder bootstrap or receipt closure is incomplete")
+      }
+      continue
+    }
+
+    if (route.routeId === "print-preview") {
+      if (!html.includes("data-print-preview") || html.includes('type="application/json"')) {
+        throw new Error("Print preview shell must load only its opaque local job")
+      }
+      continue
+    }
 
     if (route.routeId === "review-queue") {
       const rawBootstrap = extractEmbeddedJson(html, "review-bootstrap-data")
@@ -1101,6 +1283,8 @@ export const verify = async (): Promise<void> => {
     "offline.html",
     "offline-pack-shell-manifest.json",
     "manifest.webmanifest",
+    "print-bootstrap.json",
+    ...(canonicalOrigin === undefined ? [] : ["sitemap.xml"]),
     "styles.css",
     "sw.js",
     "content/vertical-slice/manifest.json",
@@ -1117,6 +1301,10 @@ export const verify = async (): Promise<void> => {
     JSON.parse(packPrecommitText) as unknown,
     "Consolidated precommit pack"
   )
+  const printBootstrap = Schema.decodeUnknownSync(PrintBuilderBootstrap)(
+    JSON.parse(await text(new URL("print-bootstrap.json", distRoot)))
+  )
+  assertNoAnswerBearingStructuredFields(printBootstrap, "Standalone print bootstrap")
 
   const secretMaterial: string[] = []
   for (const record of manifest.artifacts) {
@@ -1151,13 +1339,7 @@ export const verify = async (): Promise<void> => {
   const playerHtml = (
     await Promise.all(
       expectedRoutes
-        .filter(
-          (route) =>
-            route.routeId === "question-player" ||
-            route.routeId === "review-player" ||
-            route.routeId === "review-queue" ||
-            route.routeId === "hazard-player"
-        )
+        .filter((route) => interactiveRouteIds.has(route.routeId))
         .map((route) => text(routeDocument(route.canonicalPath)))
       )
   ).join("\n")
@@ -1190,11 +1372,12 @@ export const verify = async (): Promise<void> => {
     new Set([
       ...expectedRoutes
         .map((route) => route.canonicalPath)
-        .filter((path) => baselineNavigation.has(path)),
+        .filter((path) => trustedCurrentShellNavigation.has(path)),
       "/404.html",
       "/offline.html",
       "/offline-pack-shell-manifest.json",
       "/manifest.webmanifest",
+      "/print-bootstrap.json",
       "/styles.css",
       "/content/vertical-slice/manifest.json",
       ...deliveryManifest.artifacts
@@ -1205,8 +1388,11 @@ export const verify = async (): Promise<void> => {
   )
 
   // The interactive entries share the framework/runtime and verified-content chunks. These
-  // ceilings leave a small deterministic margin above the largest measured M1-M5 closure.
-  const bundleBudgets = { raw: 360_000, gzip: 112_000, brotli: 95_000 } as const
+  // M4 and M5 share durable-session, print, pack, settings, correction, and the
+  // canonical review-projection rebuild services in the application runtime.
+  // The largest measured closure is Settings at 455062 raw / 134907 gzip /
+  // 115567 brotli; these ceilings retain a small deterministic margin.
+  const bundleBudgets = { raw: 470_000, gzip: 140_000, brotli: 120_000 } as const
   for (const [family, measurement] of bundleReports) {
     for (const format of ["raw", "gzip", "brotli"] as const) {
       if (measurement[format] > bundleBudgets[format]) {
