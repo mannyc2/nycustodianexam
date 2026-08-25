@@ -41,6 +41,22 @@ const matchCurrentCaches = async (request) => {
   return runtime.match(request)
 }
 
+const localSessionShell = (request) => {
+  if (request.mode !== "navigate") return undefined
+  const url = new URL(request.url)
+  if (url.origin !== self.location.origin) return undefined
+  if (/^\/simulations\/session\/sim-[a-z0-9][a-z0-9-]{7,63}\/question\/[1-9][0-9]*\/$/.test(url.pathname)) {
+    return "/simulations/session/sim-shell0000/question/1/"
+  }
+  if (/^\/simulations\/session\/sim-[a-z0-9][a-z0-9-]{7,63}\/results\/$/.test(url.pathname)) {
+    return "/simulations/session/sim-shell0000/results/"
+  }
+  if (/^\/print\/preview\/print-[a-z0-9][a-z0-9-]{7,63}\/$/.test(url.pathname)) {
+    return "/print/preview/print-shell0000/"
+  }
+  return undefined
+}
+
 const isAppVerifiedContent = (request) => {
   const url = new URL(request.url)
   return url.origin === self.location.origin &&
@@ -54,6 +70,19 @@ self.addEventListener("fetch", (event) => {
   // here could make one corrupt HTTP 200 permanently poison later retries.
   if (isAppVerifiedContent(event.request)) {
     event.respondWith(fetch(event.request))
+    return
+  }
+  const sessionShell = localSessionShell(event.request)
+  if (sessionShell !== undefined) {
+    event.respondWith(
+      matchCurrentCaches(sessionShell).then((cached) =>
+        cached ?? fetch(event.request).catch(() =>
+          matchCurrentCaches("/offline.html").then(
+            (fallback) => fallback ?? Response.error()
+          )
+        )
+      )
+    )
     return
   }
   let cacheWrite = Promise.resolve()

@@ -1,7 +1,8 @@
 import { Context, Effect, Schema } from "effect"
+import { DurableTimestamp } from "../../durable-values.ts"
 
 export const appDatabaseName = "nycustodian-study-v1"
-export const appDatabaseVersion = 3
+export const appDatabaseVersion = 4
 
 export const appDatabaseStores = {
   meta: "meta",
@@ -9,6 +10,9 @@ export const appDatabaseStores = {
   questionSessions: "sessions",
   hazardAttempts: "hazard-attempts",
   hazardSessions: "hazard-sessions",
+  simulationSessions: "simulation-sessions",
+  simulationSubmissions: "simulation-submissions",
+  printJobs: "print-jobs",
   reviewAcknowledgements: "review-events",
   migrationQuarantine: "migration-quarantine"
 } as const
@@ -21,7 +25,7 @@ export const legacyAppDatabaseNames = {
 export const StudySessionRecord = Schema.Struct({
   id: Schema.NonEmptyString,
   latestAttemptId: Schema.NonEmptyString,
-  updatedAt: Schema.Number
+  updatedAt: DurableTimestamp
 })
 
 export type AppDatabaseStore =

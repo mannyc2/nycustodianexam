@@ -1,9 +1,15 @@
 {
   "$schema": "../node_modules/wrangler/config-schema.json",
   "name": "nycustodianexam-preview",
+  "main": "../src/asset-router.ts",
   "compatibility_date": "2026-08-23",
   "assets": {
     "directory": "../dist",
+    "binding": "ASSETS",
+    "run_worker_first": [
+      "/simulations/session/*",
+      "/print/preview/*"
+    ],
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page"
   }

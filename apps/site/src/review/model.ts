@@ -54,11 +54,7 @@ export type ReviewSceneSource = typeof ReviewSceneBootstrap.Type
 
 export type ReviewReason =
   | { readonly tag: "flag" }
-  | {
-      readonly tag: "directional_confusion"
-      readonly correctConceptId: string
-      readonly selectedConceptId: string
-    }
+  | { readonly tag: "incorrect_answer" }
   | { readonly tag: "hazard_miss"; readonly inventoryId: string }
   | { readonly tag: "decoy_false_positive"; readonly inventoryId: string }
   | { readonly tag: "general_false_positive"; readonly markerId: string }

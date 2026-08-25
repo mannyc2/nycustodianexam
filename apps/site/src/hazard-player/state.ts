@@ -1,4 +1,5 @@
 import type { HazardDraft, HazardMarker, PostcommitScene } from "./attempt.ts"
+import type { RetainedImageAsset } from "../retained-image.ts"
 
 export type HazardScreenState =
   | ({ readonly tag: "ready" } & HazardDraft)
@@ -21,7 +22,11 @@ export type HazardScreenState =
   | ({ readonly tag: "committing" } & HazardDraft)
   | ({ readonly tag: "commit_failed"; readonly message: string } & HazardDraft)
   | ({ readonly tag: "reveal_failed"; readonly message: string } & HazardDraft)
-  | ({ readonly tag: "revealed"; readonly payload: PostcommitScene } & HazardDraft)
+  | ({
+      readonly tag: "revealed"
+      readonly payload: PostcommitScene
+      readonly retainedVisualAsset: RetainedImageAsset | null
+    } & HazardDraft)
 
 const emptyDraft = (): HazardDraft => ({
   markers: [],
@@ -185,5 +190,6 @@ export const hazardAssetUnavailable = (message: string): HazardScreenState => ({
 
 export const revealHazard = (
   draft: HazardDraft,
-  payload: PostcommitScene
-): HazardScreenState => ({ tag: "revealed", ...draft, payload })
+  payload: PostcommitScene,
+  retainedVisualAsset: RetainedImageAsset | null
+): HazardScreenState => ({ tag: "revealed", ...draft, payload, retainedVisualAsset })

@@ -19,6 +19,8 @@ import {
   isPublicReleaseArtifact
 } from "../src/delivery-manifest.ts"
 import type { AssetContentReceipt } from "../src/verified-content.ts"
+import { SimulationBootstrap } from "../src/simulation/model.ts"
+import { PrintBuilderBootstrap } from "../src/print/model.ts"
 
 export { isPublicReleaseArtifact } from "../src/delivery-manifest.ts"
 
@@ -34,6 +36,54 @@ type ManifestArtifact = Manifest["artifacts"][number]
 type Question = typeof PrecommitQuestion.Type
 type Scene = typeof PrecommitScene.Type
 
+// M4 accepts the current compiler's singular compatibility field while keeping
+// the bootstrap boundary ready for the authored multi-profile question model.
+const questionProfileIds = (question: Question): ReadonlyArray<string> => {
+  const compatibility = question as unknown as {
+    readonly profileId?: unknown
+    readonly profileIds?: unknown
+  }
+  if (
+    Array.isArray(compatibility.profileIds) &&
+    compatibility.profileIds.length > 0 &&
+    compatibility.profileIds.every((value): value is string =>
+      typeof value === "string" && value.length > 0
+    )
+  ) {
+    return [...new Set(compatibility.profileIds)]
+  }
+  if (typeof compatibility.profileId === "string" && compatibility.profileId.length > 0) {
+    return [compatibility.profileId]
+  }
+  throw new Error(`Question ${question.id} has no profile compatibility coordinate`)
+}
+
+const AnnouncementProfileFactSheetContract = Schema.Struct({
+  schemaVersion: Schema.Literal(1),
+  version: Schema.Int,
+  lastReviewedOn: Schema.NonEmptyString,
+  controllingDocumentNotice: Schema.NonEmptyString,
+  seriesScopeDisclaimer: Schema.NonEmptyString,
+  verifiedFacts: Schema.NonEmptyArray(Schema.Struct({
+    id: Schema.NonEmptyString,
+    label: Schema.NonEmptyString,
+    value: Schema.NonEmptyString,
+    sourceIds: Schema.NonEmptyArray(Schema.NonEmptyString)
+  })),
+  explicitUnknowns: Schema.NonEmptyArray(Schema.Struct({
+    id: Schema.NonEmptyString,
+    label: Schema.NonEmptyString,
+    detail: Schema.NonEmptyString,
+    sourceIds: Schema.NonEmptyArray(Schema.NonEmptyString)
+  })),
+  changeHistory: Schema.NonEmptyArray(Schema.Struct({
+    version: Schema.Int,
+    changedOn: Schema.NonEmptyString,
+    summary: Schema.NonEmptyString,
+    sourceIds: Schema.NonEmptyArray(Schema.NonEmptyString)
+  }))
+})
+
 type RouteId =
   | "atlas-family"
   | "atlas-index"
@@ -43,9 +93,14 @@ type RouteId =
   | "hazard-player"
   | "home"
   | "profile"
+  | "print-center"
+  | "print-preview"
   | "question-player"
   | "review-player"
   | "review-queue"
+  | "simulation-player"
+  | "simulation-results"
+  | "simulation-setup"
   | "source"
   | "status"
   | "study-hub"
@@ -242,6 +297,18 @@ const visualAssetReceipt = (scene: Scene): AssetContentReceipt => {
   }
 }
 
+const printAssetReceipt = (value: CatalogTool | Scene): AssetContentReceipt => {
+  const derivative = value.asset.derivatives.find((candidate) => candidate.kind === "print")
+  if (derivative === undefined) {
+    throw new Error(`${value.asset.opaqueAssetId} has no exact print derivative receipt`)
+  }
+  return {
+    path: `/${derivative.path}`,
+    bytes: derivative.bytes,
+    sha256: derivative.sha256
+  }
+}
+
 const sourceLinks = (sourceIds: readonly string[], sourceById: ReadonlyMap<string, ContentSource>): string => `
   <ul class="link-list">${sourceIds.map((sourceId) => {
     const source = sourceById.get(sourceId)
@@ -257,6 +324,48 @@ const externalSourceLink = (source: ContentSource): string => {
     return `<p><a href="${escapeHtml(parsed.href)}" rel="external noopener">Open the public source</a></p>`
   } catch {
     return ""
+  }
+}
+
+const printAnnouncementFactSheet = (
+  profile: Catalog["profiles"][number],
+  sourceById: ReadonlyMap<string, ContentSource>
+) => {
+  const raw = (profile as unknown as { readonly announcementFactSheet?: unknown })
+    .announcementFactSheet
+  if (raw === undefined || raw === null) return null
+  const factSheet = Schema.decodeUnknownSync(AnnouncementProfileFactSheetContract)(raw)
+  const resolveSources = (sourceIds: ReadonlyArray<string>) => sourceIds.map((sourceId) => {
+    const source = sourceById.get(sourceId)
+    if (source === undefined) {
+      throw new Error(`Announcement profile fact sheet references missing source ${sourceId}`)
+    }
+    return { id: source.id, label: source.title, locator: source.locator }
+  })
+  return {
+    schemaVersion: factSheet.schemaVersion,
+    version: factSheet.version,
+    lastReviewedOn: factSheet.lastReviewedOn,
+    controllingDocumentNotice: factSheet.controllingDocumentNotice,
+    seriesScopeDisclaimer: factSheet.seriesScopeDisclaimer,
+    verifiedFacts: factSheet.verifiedFacts.map((fact) => ({
+      id: fact.id,
+      label: fact.label,
+      value: fact.value,
+      sourceReferences: resolveSources(fact.sourceIds)
+    })),
+    explicitUnknowns: factSheet.explicitUnknowns.map((fact) => ({
+      id: fact.id,
+      label: fact.label,
+      detail: fact.detail,
+      sourceReferences: resolveSources(fact.sourceIds)
+    })),
+    changeHistory: factSheet.changeHistory.map((change) => ({
+      version: change.version,
+      changedOn: change.changedOn,
+      summary: change.summary,
+      sourceReferences: resolveSources(change.sourceIds)
+    }))
   }
 }
 
@@ -444,7 +553,10 @@ const buildPages = ({
   manifest,
   questions,
   scenes
-}: Awaited<ReturnType<typeof loadRelease>>): readonly PageDefinition[] => {
+}: Awaited<ReturnType<typeof loadRelease>>): {
+  readonly pages: ReadonlyArray<PageDefinition>
+  readonly printBootstrap: PrintBuilderBootstrap
+} => {
   const sourceById = new Map(catalog.sources.map((source) => [source.id, source]))
   const toolById = new Map(catalog.tools.map((tool) => [tool.conceptId, tool]))
   const releasedTools = catalog.tools.filter((tool) => tool.publicationGate === null)
@@ -532,6 +644,101 @@ const buildPages = ({
       }
     })
   } as const
+  const simulationBootstrap = Schema.decodeUnknownSync(SimulationBootstrap)({
+    schemaVersion: 1,
+    releaseId: manifest.releaseId,
+    packVersion: manifest.packVersion,
+    profiles: catalog.profiles.map((profile) => ({
+      id: profile.id,
+      label: profile.label,
+      version: manifest.packVersion,
+      jurisdiction: profile.jurisdiction,
+      compatibilityKey: profile.compatibilityKey,
+      disclaimer: profile.disclaimer
+    })),
+    advertisedLengths: [45, 60, 90],
+    inventory: questions.map(({ value: question }, index) => {
+      const artifact = questionPostcommitById.get(question.id)
+      if (artifact === undefined) throw new Error(`Question ${question.id} has no simulation receipt`)
+      return {
+        question,
+        receipt: questionReceipt(artifact, question.id, index + 1),
+        profileIds: questionProfileIds(question),
+        category: "Tool selection"
+      }
+    }),
+    hazards: scenes.map(({ value: scene }, index) => {
+      const artifact = scenePostcommitById.get(scene.id)
+      if (artifact === undefined) throw new Error(`Scene ${scene.id} has no simulation receipt`)
+      return {
+        scene,
+        visualReceipt: hazardReceipt(artifact, scene, "visual", index + 1),
+        nonvisualReceipt: hazardReceipt(artifact, scene, "nonvisual", index + 1),
+        visualAsset: visualAssetReceipt(scene),
+        profileIds: catalog.profiles.map((profile) => profile.id),
+        category: scene.environment
+      }
+    })
+  })
+  const printBootstrap = Schema.decodeUnknownSync(PrintBuilderBootstrap)({
+    schemaVersion: 1,
+    releaseId: manifest.releaseId,
+    contentVersion: manifest.packVersion,
+    profiles: catalog.profiles.map((profile) => ({
+      id: profile.id,
+      label: profile.label,
+      version: manifest.packVersion,
+      jurisdiction: profile.jurisdiction,
+      compatibilityKey: profile.compatibilityKey,
+      disclaimer: profile.disclaimer,
+      announcementFactSheet: printAnnouncementFactSheet(profile, sourceById)
+    })),
+    questions: questions.map(({ value: question }) => {
+      const artifact = questionPostcommitById.get(question.id)
+      return {
+        id: question.id,
+        profileIds: questionProfileIds(question),
+        category: "Tool selection",
+        prompt: question.prompt,
+        options: question.options,
+        answerReceipt: artifact === undefined
+          ? null
+          : {
+              postcommitPath: `/content/vertical-slice/${artifact.path}`,
+              postcommitBytes: artifact.bytes,
+              postcommitSha256: artifact.sha256
+            }
+      }
+    }),
+    tools: releasedTools.map((tool) => ({
+      id: tool.conceptId,
+      profileIds: catalog.profiles.map((profile) => profile.id),
+      canonicalTerm: tool.canonicalTerm,
+      family: tool.family,
+      useSummary: tool.useSummary,
+      distinguishingFeatures: tool.distinguishingFeatures,
+      neutralDescription: tool.neutralDescription,
+      asset: printAssetReceipt(tool)
+    })),
+    scenes: scenes.map(({ value: scene }) => {
+      const artifact = scenePostcommitById.get(scene.id)
+      if (artifact === undefined) throw new Error(`Scene ${scene.id} has no print answer receipt`)
+      return {
+        id: scene.id,
+        profileIds: catalog.profiles.map((profile) => profile.id),
+        environment: scene.environment,
+        neutralOverview: scene.neutralPreAnswer.overview,
+        neutralZones: scene.neutralPreAnswer.zones,
+        asset: printAssetReceipt(scene),
+        answerReceipt: {
+          postcommitPath: `/content/vertical-slice/${artifact.path}`,
+          postcommitBytes: artifact.bytes,
+          postcommitSha256: artifact.sha256
+        }
+      }
+    }),
+    corrections: []
+  })
 
   const pages: PageDefinition[] = []
   pages.push({
@@ -580,6 +787,100 @@ const buildPages = ({
   </main>
   <script id="review-bootstrap-data" type="application/json">${escapeJsonForHtml(reviewBootstrap)}</script>
   <script type="module" src="/src/review/react/bootstrap.tsx"></script>`
+  })
+
+  pages.push({
+    relativePath: "print/index.html",
+    canonicalPath: "/print/",
+    title: "Print center — NY Custodian Exam Study",
+    description: "Build deterministic semantic print packets from the current original-question release.",
+    robots: "index,follow",
+    routeId: "print-center",
+    section: "practice",
+    body: `
+  <main class="page-shell" id="main-content" tabindex="-1">
+    ${breadcrumb([{ href: "/practice/", label: "Practice" }, { label: "Print center" }])}
+    <section class="hero"><p class="eyebrow">Semantic browser print</p><h1>Build a deterministic practice packet.</h1><p>Every packet identifies release ${escapeHtml(manifest.releaseId)}, version ${manifest.packVersion}, its actual site-designed distribution, and that it is original practice—not an official or past exam. Use the browser print dialog or Save as PDF after inspecting the preview.</p></section>
+    <div data-print-builder data-island="print-builder-bootstrap">
+      <section class="review-state"><h2>Loading printable inventory</h2><p>JavaScript and available local study storage are required to create a retained preview. No answer bytes are embedded in this page.</p></section>
+    </div>
+  </main>
+  <script id="print-builder-data" type="application/json">${escapeJsonForHtml(printBootstrap)}</script>
+  <script type="module" src="/src/print/react/builder-bootstrap.tsx"></script>`
+  })
+
+  pages.push({
+    relativePath: "print/preview/print-shell0000/index.html",
+    canonicalPath: "/print/preview/print-shell0000/",
+    title: "Print preview — NY Custodian Exam Study",
+    description: "A deterministic semantic print preview restored from local storage.",
+    robots: "noindex,follow",
+    routeId: "print-preview",
+    section: "practice",
+    body: `
+  <main class="page-shell print-page-shell" id="main-content" tabindex="-1">
+    <div class="screen-only">${breadcrumb([{ href: "/print/", label: "Print center" }, { label: "Preview" }])}</div>
+    <div data-print-preview data-island="print-preview-bootstrap">
+      <section class="review-state"><h1>Restoring the saved print preview</h1><p>The opaque local print-job manifest is authoritative. No different content is substituted if it is unavailable.</p></section>
+    </div>
+  </main>
+  <script type="module" src="/src/print/react/preview-bootstrap.tsx"></script>`
+  })
+
+  pages.push({
+    relativePath: "simulations/index.html",
+    canonicalPath: "/simulations/",
+    title: "Practice simulation — NY Custodian Exam Study",
+    description: "Create a deterministic, local-first, site-designed question or hazard simulation.",
+    robots: "index,follow",
+    routeId: "simulation-setup",
+    section: "practice",
+    body: `
+  <main class="page-shell" id="main-content" tabindex="-1">
+    ${breadcrumb([{ href: "/practice/", label: "Practice" }, { label: "Simulation" }])}
+    <section class="hero"><p class="eyebrow">Original practice · not an official exam</p><h1>Create a site-designed practice simulation.</h1><p>Build a multiple-choice, visual hazard, or nonvisual zoned set from release ${escapeHtml(manifest.releaseId)}, version ${manifest.packVersion}. Official exam length, content distribution, score conversion, and passing-score prediction are not claimed.</p></section>
+    <div data-simulation-setup data-island="simulation-setup-bootstrap">
+      <section class="review-state"><h2>Loading simulation capacity</h2><p>JavaScript and available local study storage are required. No answer key is embedded in this setup page.</p></section>
+    </div>
+  </main>
+  <script id="simulation-bootstrap-data" type="application/json">${escapeJsonForHtml(simulationBootstrap)}</script>
+  <script type="module" src="/src/simulation/react/bootstrap-setup.tsx"></script>`
+  })
+
+  pages.push({
+    relativePath: "simulations/session/sim-shell0000/question/1/index.html",
+    canonicalPath: "/simulations/session/sim-shell0000/question/1/",
+    title: "Practice simulation — NY Custodian Exam Study",
+    description: "A locally restored site-designed question or hazard simulation with editable responses.",
+    robots: "noindex,follow",
+    routeId: "simulation-player",
+    section: "practice",
+    body: `
+  <main class="page-shell" id="main-content" tabindex="-1">
+    ${breadcrumb([{ href: "/simulations/", label: "Simulation setup" }, { label: "Item" }])}
+    <div data-simulation-player data-island="simulation-player-bootstrap">
+      <section class="review-state"><h1>Restoring your simulation</h1><p>JavaScript and the pinned local session manifest are required. No answer or rationale is embedded in this route shell.</p></section>
+    </div>
+  </main>
+  <script type="module" src="/src/simulation/react/bootstrap-player.tsx"></script>`
+  })
+
+  pages.push({
+    relativePath: "simulations/session/sim-shell0000/results/index.html",
+    canonicalPath: "/simulations/session/sim-shell0000/results/",
+    title: "Practice simulation results — NY Custodian Exam Study",
+    description: "Practice-only results calculated after a durable final simulation submission.",
+    robots: "noindex,follow",
+    routeId: "simulation-results",
+    section: "practice",
+    body: `
+  <main class="page-shell" id="main-content" tabindex="-1">
+    ${breadcrumb([{ href: "/simulations/", label: "Simulation setup" }, { label: "Results" }])}
+    <div data-simulation-results data-island="simulation-results-bootstrap">
+      <section class="review-state"><h1>Reconciling your final submission</h1><p>The local final snapshot must be read before any verified answer content is requested.</p></section>
+    </div>
+  </main>
+  <script type="module" src="/src/simulation/react/bootstrap-results.tsx"></script>`
   })
 
   pages.push({
@@ -639,7 +940,7 @@ const buildPages = ({
     body: `
   <main class="page-shell" id="main-content" tabindex="-1">
     ${breadcrumb([{ label: "Practice" }])}
-    <section class="hero"><p class="eyebrow">Original practice</p><h1>Retrieve what you learned.</h1><p>This ${questions.length}-question session stores each selection before requesting answer feedback. It does not reproduce recalled or official questions.</p><a class="button button-primary" href="/practice/session/${manifest.releaseId}/question/1/">Start question 1</a></section>
+    <section class="hero"><p class="eyebrow">Original practice</p><h1>Retrieve what you learned.</h1><p>This ${questions.length}-question session stores each selection before requesting answer feedback. It does not reproduce recalled or official questions.</p><div class="question-controls"><a class="button button-primary" href="/practice/session/${manifest.releaseId}/question/1/">Start question 1</a><a class="button button-secondary" href="/simulations/">Build a simulation</a><a class="button button-secondary" href="/print/">Open print center</a></div></section>
   </main>`
   })
 
@@ -863,7 +1164,7 @@ const buildPages = ({
     paths.add(page.relativePath)
     canonicals.add(page.canonicalPath)
   }
-  return pages
+  return { pages, printBootstrap }
 }
 
 const writePage = async (page: PageDefinition): Promise<void> => {
@@ -908,7 +1209,9 @@ export const generateSite = async (): Promise<void> => {
     "hazards",
     "ny",
     "practice",
+    "print",
     "review",
+    "simulations",
     "status",
     "transparency"
   ]
@@ -922,10 +1225,14 @@ export const generateSite = async (): Promise<void> => {
     rm(new URL("404.html", siteRoot), { force: true })
   ])
 
-  const pages = buildPages(release)
+  const { pages, printBootstrap } = buildPages(release)
   await Promise.all(pages.map(writePage))
   await Bun.write(new URL("404.html", siteRoot), notFoundDocument())
   await publishRelease(release.manifest)
+  await Bun.write(
+    new URL("public/print-bootstrap.json", siteRoot),
+    `${JSON.stringify(printBootstrap)}\n`
+  )
   await cp(new URL("src/styles.css", siteRoot), new URL("public/styles.css", siteRoot))
 
   console.log(

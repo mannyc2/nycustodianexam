@@ -63,6 +63,9 @@ const verifiedLayer = (input: {
         : Effect.fail(input.unavailable)
     },
     loadAssetBlob: () => Effect.die("not used"),
+    loadCachedAssetBlob: () => Effect.die("not used"),
+    loadCachedJson: () => Effect.die("not used"),
+    loadJsonArtifact: () => Effect.die("not used"),
     loadJson: () => Effect.sync(input.loadJson)
   })
 )

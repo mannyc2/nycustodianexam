@@ -298,7 +298,7 @@ When reconciling research:
 
 The first implementation scaffold now lives at the repository root with
 `apps/site`, `apps/content-compiler`, and `packages/content`. It is an in-progress
-M1–M3 proof, not evidence that the release gates have passed. The
+M1–M4 proof, not evidence that the release gates have passed. The
 R2.1–R2.10/R2.90 program is closed and reconciled; accepted conclusions live in
 maintained product/illustration documents, blocked or incomplete gates live in
 `docs/OPEN.md`, and the original corpus is archived at immutable commit

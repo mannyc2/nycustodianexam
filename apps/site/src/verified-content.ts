@@ -62,6 +62,7 @@ export class VerifiedContentUnavailable extends Schema.TaggedError<VerifiedConte
   {
     reason: Schema.Literals([
       "cache-failure",
+      "verified-cache-miss",
       "known-offline-miss",
       "network-failure",
       "verification-failure"
@@ -103,6 +104,11 @@ export type ContentAvailability = Readonly<{
   path: string
   source: "network-required" | "verified-cache"
 }>
+
+export interface VerifiedJsonArtifact {
+  readonly bytes: Uint8Array
+  readonly value: unknown
+}
 
 export interface VerifiedContentCache {
   readonly delete: (key: string) => Promise<boolean>
@@ -435,6 +441,21 @@ export const makeVerifiedContent = (
     return network
   })
 
+  const loadCachedBytes = Effect.fn("VerifiedContent.loadCachedBytes")(function*(
+    receipt: NormalizedReceipt
+  ) {
+    const key = yield* cacheKey(receipt)
+    const cache = yield* openCache(receipt.path)
+    const cached = yield* readCached(cache, key, receipt)
+    if (cached !== undefined) return cached
+    return yield* unavailable(
+      "verified-cache-miss",
+      receipt.path,
+      "This exact verified content is not retained in the required local closure.",
+      new Error("Verified cache entry is unavailable")
+    )
+  })
+
   const availability = Effect.fn("VerifiedContent.ensureAvailableInternal")(function*(
     receipt: NormalizedReceipt
   ) {
@@ -479,11 +500,37 @@ export const makeVerifiedContent = (
     return yield* availability(yield* assetReceipt(input))
   })
 
-  const loadJson = Effect.fn("VerifiedContent.loadJson")(function*(
+  const loadJsonArtifact = Effect.fn("VerifiedContent.loadJsonArtifact")(function*(
     input: PostcommitContentReceipt
   ) {
     const receipt = yield* postcommitReceipt(input)
     const verified = yield* loadBytes(receipt)
+    return yield* Effect.try({
+      try: () => {
+        const bytes = new Uint8Array(verified.buffer.slice(0))
+        const text = new TextDecoder("utf-8", { fatal: true }).decode(bytes)
+        return { bytes, value: JSON.parse(text) as unknown } satisfies VerifiedJsonArtifact
+      },
+      catch: (cause) =>
+        new VerifiedContentDecodeError({
+          detail: "Verified postcommit bytes were not valid UTF-8 JSON.",
+          path: receipt.path,
+          cause
+        })
+    })
+  })
+
+  const loadJson = Effect.fn("VerifiedContent.loadJson")(function*(
+    input: PostcommitContentReceipt
+  ) {
+    return (yield* loadJsonArtifact(input)).value
+  })
+
+  const loadCachedJson = Effect.fn("VerifiedContent.loadCachedJson")(function*(
+    input: PostcommitContentReceipt
+  ) {
+    const receipt = yield* postcommitReceipt(input)
+    const verified = yield* loadCachedBytes(receipt)
     return yield* Effect.try({
       try: () => JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(verified.buffer)) as unknown,
       catch: (cause) =>
@@ -503,11 +550,22 @@ export const makeVerifiedContent = (
     return new Blob([verified.buffer.slice(0)], { type: verified.contentType })
   })
 
+  const loadCachedAssetBlob = Effect.fn("VerifiedContent.loadCachedAssetBlob")(function*(
+    input: AssetContentReceipt
+  ) {
+    const receipt = yield* assetReceipt(input)
+    const verified = yield* loadCachedBytes(receipt)
+    return new Blob([verified.buffer.slice(0)], { type: verified.contentType })
+  })
+
   return VerifiedContent.of({
     ensureAssetAvailable,
     ensureAvailable,
     loadAssetBlob,
-    loadJson
+    loadCachedAssetBlob,
+    loadCachedJson,
+    loadJson,
+    loadJsonArtifact
   })
 }
 
@@ -523,9 +581,18 @@ export class VerifiedContent extends Context.Service<
     readonly loadAssetBlob: (
       receipt: AssetContentReceipt
     ) => Effect.Effect<Blob, VerifiedContentError>
+    readonly loadCachedAssetBlob: (
+      receipt: AssetContentReceipt
+    ) => Effect.Effect<Blob, VerifiedContentError>
+    readonly loadCachedJson: (
+      receipt: PostcommitContentReceipt
+    ) => Effect.Effect<unknown, VerifiedContentError>
     readonly loadJson: (
       receipt: PostcommitContentReceipt
     ) => Effect.Effect<unknown, VerifiedContentError>
+    readonly loadJsonArtifact: (
+      receipt: PostcommitContentReceipt
+    ) => Effect.Effect<VerifiedJsonArtifact, VerifiedContentError>
   }
 >()("@nycustodian/site/VerifiedContent") {}
 

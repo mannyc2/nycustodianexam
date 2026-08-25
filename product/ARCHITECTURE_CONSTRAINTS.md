@@ -3,7 +3,7 @@
 **Status:** maintained constraints, updated 2026-08-25 after reconciling the
 closed R2.1–R2.10/R2.90 program, the accepted visual releases, canonical
 route/state planning, the React 19 composition decision, and the controlled
-M1–M3 implementation proof. This file records accepted direction and explicit
+M1–M4 implementation proof. This file records accepted direction and explicit
 implementation gates. It does not replace the product behavior contract or the
 exam-fact corpus.
 
@@ -242,7 +242,14 @@ Use Vite as browser build/development tooling. Measure the actual first-slice
 route closures before setting numeric budgets; static routes have an immediate
 budget of zero Effect closure.
 
-Use Cloudflare Workers Static Assets as the preferred deployment direction. Do not add Worker code merely to serve static files.
+Use Cloudflare Workers Static Assets as the preferred deployment direction.
+Static Assets and its `ASSETS` binding remain the response authority. One
+narrow exception is implemented for settled opaque local simulation/result and
+print-preview URLs: a no-data, no-user-state Worker applies exact pathname
+regular expressions for `GET`/`HEAD`, maps valid coordinates to generated shell
+assets, and delegates every response to `ASSETS`. This exists because Static
+Assets redirects cannot constrain these dynamic patterns precisely; it is not
+an application backend or a general static-file server.
 
 The intended shape remains:
 
@@ -252,14 +259,16 @@ Bun workspace
   -> semantic HTML + CSS
   -> Vite-built interactive chunks
   -> Cloudflare Workers Static Assets
-  -> optional narrow Worker only for justified server capabilities
+  -> regex-only local-shell router delegating to ASSETS
+  -> optional separate narrow Worker only for authorized server capabilities
 ```
 
 Exact Vite/Cloudflare coordinates, routing, caching, headers, service-worker
 behavior, and preview deployment are implementation locks and measurements.
 `ROUTES.md` controls public path and indexability semantics; no SPA router is
-introduced. An optional Worker remains deferred until a concrete endpoint is
-authorized.
+introduced. The local-shell router owns no data or user state. A correction or
+other application endpoint remains a separate dormant capability until its
+product and operational contract is authorized.
 
 ### Research prose is not runtime content
 
@@ -439,7 +448,8 @@ Evidence still open:
   duplicate-key, multibyte, comment, range, number, Unicode, and escaping proof;
 - the generated-release artifact retention policy and full Tier A/B content
   completeness derived from validated registries and review states;
-- Cloudflare configuration and any separately authorized Worker endpoint;
+- remote Cloudflare preview/production configuration and any separately
+  authorized application Worker endpoint beyond the no-data local-shell router;
 - the complete Playwright browser/accessibility/zoom/reflow/keyboard,
   performance, and offline matrix beyond the targeted Chromium
   application-database contracts;
@@ -455,9 +465,11 @@ first-pass or direct-DOM defaults forward silently.
 
 - Static/reference routes contain useful semantic HTML and no Effect closure.
   Interactive study islands load independently through Vite.
-- Cloudflare Workers Static Assets is the initial host. Do not add a Worker just
-  to serve files; a future correction endpoint requires explicit product,
-  privacy, idempotency, rate, abuse, and workerd verification.
+- Cloudflare Workers Static Assets is the initial host. The regex-only
+  local-shell router is the documented no-data exception and delegates all
+  responses to `ASSETS`; do not broaden it into a file server or application
+  backend. A future correction endpoint remains separate and requires explicit
+  product, privacy, idempotency, rate, abuse, and workerd verification.
 - Use Bun test for pure/Bun-host work, `@effect/vitest` for Effect behavior, and
   real Chromium, Firefox, and WebKit for browser semantics. Artifact/leak scans,
   automated accessibility checks, manual assistive-technology review, print

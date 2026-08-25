@@ -1,11 +1,14 @@
+import { createHash } from "node:crypto"
 import { it } from "@effect/vitest"
 import { deepStrictEqual, strictEqual } from "@effect/vitest/utils"
 import { Effect, Layer } from "effect"
 import { hazardAttemptId, type HazardAttemptReceipt } from "../src/attempt-receipt.ts"
 import {
   HazardAttemptRecord,
+  HazardEvaluationRecord,
   HazardPersistence,
-  HazardPersistenceError
+  HazardPersistenceError,
+  validateHazardEvaluation
 } from "../src/hazard-player/persistence.ts"
 import type {
   HazardDraft,
@@ -22,11 +25,27 @@ import {
   restoreHazardAndReveal
 } from "../src/hazard-player/commit-and-reveal.ts"
 import {
+  type AssetContentReceipt,
   VerifiedContent,
   VerifiedContentUnavailable
 } from "../src/verified-content.ts"
+import {
+  RetainedImageAsset,
+  encodeCanonicalBase64,
+  retainImageBlob
+} from "../src/retained-image.ts"
 
 const sha = "a".repeat(64)
+const retainedPngBase64 =
+  "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII="
+const retainedPngSha256 = "431ced6916a2a21a156e38701afe55bbd7f88969fbbfc56d7fe099d47f265460"
+const retainedPngBytes = Uint8Array.from(atob(retainedPngBase64), (value) => value.charCodeAt(0))
+const visualAssetReceipt: AssetContentReceipt = {
+  path: "/content/assets/derivatives/scenes/s001-web.png",
+  bytes: retainedPngBytes.byteLength,
+  sha256: retainedPngSha256
+}
+const visualAssetBlob = (): Blob => new Blob([retainedPngBytes], { type: "image/png" })
 
 const precommitScene = (): PrecommitScene => ({
   id: "s001",
@@ -39,8 +58,8 @@ const precommitScene = (): PrecommitScene => ({
       {
         kind: "web",
         path: "content/assets/derivatives/scenes/s001-web.png",
-        bytes: 100,
-        sha256: sha
+        bytes: visualAssetReceipt.bytes,
+        sha256: visualAssetReceipt.sha256
       }
     ]
   },
@@ -55,7 +74,7 @@ const precommitScene = (): PrecommitScene => ({
 })
 
 const postcommitScene = (opaqueAssetId = "s001"): PostcommitScene => ({
-  id: "scene.original.hallway",
+  id: "s001",
   opaqueAssetId,
   kind: "positive",
   hazardFamily: "slip-trip-fall",
@@ -114,10 +133,21 @@ const postcommitScene = (opaqueAssetId = "s001"): PostcommitScene => ({
     ]
   },
   nonvisualZonedEquivalent: [
-    { zone: "floor", role: "target", statement: "liquid crosses the route" },
-    { zone: "wall", role: "decoy", statement: "conduit remains beside the route" }
+    { zone: "floor", role: "target", statement: "liquid across the walking route" },
+    {
+      zone: "wall",
+      role: "decoy",
+      statement: "fixed conduit beside the route; it does not enter the walking surface."
+    },
+    { zone: "wall", role: "safe-background", statement: "closed door" }
   ]
 })
+
+const postcommitBytes = (opaqueAssetId = "s001"): Uint8Array =>
+  new TextEncoder().encode(JSON.stringify(postcommitScene(opaqueAssetId)))
+
+const postcommitDigest = (bytes: Uint8Array): string =>
+  createHash("sha256").update(bytes).digest("hex")
 
 const visualDraft: HazardDraft = {
   markers: [{ id: "marker-1", x: 0.2, y: 0.2 }],
@@ -133,7 +163,26 @@ const verifiedLayer = Layer.succeed(
     ensureAssetAvailable: () => Effect.die("not used"),
     ensureAvailable: (current) =>
       Effect.succeed({ path: current.postcommitPath, source: "network-required" as const }),
-    loadAssetBlob: () => Effect.die("not used"),
+    loadAssetBlob: () => Effect.succeed(visualAssetBlob()),
+    loadCachedAssetBlob: () => Effect.succeed(visualAssetBlob()),
+    loadCachedJson: () => Effect.die("not used"),
+    loadJsonArtifact: (current) =>
+      Effect.tryPromise({
+        try: async () => {
+          const response = await fetch(current.postcommitPath)
+          if (!response.ok) throw new Error(`Feedback returned HTTP ${response.status}`)
+          const bytes = new Uint8Array(await response.arrayBuffer())
+          const value = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(bytes)) as unknown
+          return { bytes, value }
+        },
+        catch: (cause) =>
+          new VerifiedContentUnavailable({
+            reason: "network-failure",
+            detail: "test feedback unavailable",
+            path: current.postcommitPath,
+            cause
+          })
+      }),
     loadJson: (current) =>
       Effect.tryPromise({
         try: async () => {
@@ -152,14 +201,17 @@ const verifiedLayer = Layer.succeed(
   })
 )
 
-const receipt = (mode: "visual" | "nonvisual"): HazardAttemptReceipt => ({
+const receipt = (
+  mode: "visual" | "nonvisual",
+  bytes = postcommitBytes()
+): HazardAttemptReceipt => ({
   releaseId: "release-1",
   packVersion: 1,
   sessionId: mode === "visual" ? "release-1" : "release-1-nonvisual",
   position: 1,
   postcommitPath: "/content/vertical-slice/scenes/s001.postcommit.json",
-  postcommitBytes: 100,
-  postcommitSha256: "b".repeat(64),
+  postcommitBytes: bytes.byteLength,
+  postcommitSha256: postcommitDigest(bytes),
   sceneId: "s001",
   mode,
   assetRevision: 1,
@@ -182,8 +234,19 @@ const attempt = (
     allowedZoneOrders: [...input.allowedZoneOrders]
   })
 
+const completedAttempt = (
+  input: Parameters<HazardPersistence["Service"]["completeAttempt"]>[0]
+): HazardAttemptRecord => new HazardAttemptRecord({
+  ...input.attempt,
+  evaluation: new HazardEvaluationRecord({
+    payload: input.payload,
+    postcommitBase64: input.postcommitBase64,
+    retainedVisualAsset: input.retainedVisualAsset
+  })
+})
+
 it.effect("persists the complete marker response before requesting feedback", () => {
-  const sequence: Array<"commit" | "fetch"> = []
+  const sequence: Array<"commit" | "fetch" | "complete"> = []
   const originalFetch = globalThis.fetch
   const layer = Layer.succeed(
     HazardPersistence,
@@ -196,6 +259,10 @@ it.effect("persists the complete marker response before requesting feedback", ()
           return attempt(input)
         }),
       findAttempt: () => Effect.succeed(undefined),
+      completeAttempt: (input) => Effect.sync(() => {
+        sequence.push("complete")
+        return completedAttempt(input)
+      }),
       listAttempts: noAttempts
     })
   )
@@ -216,11 +283,12 @@ it.effect("persists the complete marker response before requesting feedback", ()
       receipt: receipt("visual"),
       scene: precommitScene(),
       mode: "visual",
-      draft: visualDraft
+      draft: visualDraft,
+      visualAssetReceipt
     }).pipe(Effect.provide(Layer.merge(layer, verifiedLayer)))
 
     strictEqual(result.tag, "revealed")
-    deepStrictEqual(sequence, ["commit", "fetch"])
+    deepStrictEqual(sequence, ["commit", "fetch", "complete"])
   }).pipe(
     Effect.ensuring(
       Effect.sync(() => {
@@ -231,7 +299,7 @@ it.effect("persists the complete marker response before requesting feedback", ()
 })
 
 it.effect("persists explicit zero-zone confirmation before feedback", () => {
-  const sequence: Array<"commit" | "fetch"> = []
+  const sequence: Array<"commit" | "fetch" | "complete"> = []
   const originalFetch = globalThis.fetch
   const layer = Layer.succeed(
     HazardPersistence,
@@ -245,6 +313,10 @@ it.effect("persists explicit zero-zone confirmation before feedback", () => {
           return attempt(input)
         }),
       findAttempt: () => Effect.succeed(undefined),
+      completeAttempt: (input) => Effect.sync(() => {
+        sequence.push("complete")
+        return completedAttempt(input)
+      }),
       listAttempts: noAttempts
     })
   )
@@ -265,11 +337,12 @@ it.effect("persists explicit zero-zone confirmation before feedback", () => {
       receipt: receipt("nonvisual"),
       scene: precommitScene(),
       mode: "nonvisual",
-      draft: { markers: [], selectedZoneOrders: [], nextMarkerNumber: 1 }
+      draft: { markers: [], selectedZoneOrders: [], nextMarkerNumber: 1 },
+      visualAssetReceipt: null
     }).pipe(Effect.provide(Layer.merge(layer, verifiedLayer)))
 
     strictEqual(result.tag, "revealed")
-    deepStrictEqual(sequence, ["commit", "fetch"])
+    deepStrictEqual(sequence, ["commit", "fetch", "complete"])
   }).pipe(
     Effect.ensuring(
       Effect.sync(() => {
@@ -294,6 +367,7 @@ it.effect("does not request feedback when durable persistence fails", () => {
           })
         ),
       findAttempt: () => Effect.succeed(undefined),
+      completeAttempt: (input) => Effect.succeed(completedAttempt(input)),
       listAttempts: noAttempts
     })
   )
@@ -311,7 +385,8 @@ it.effect("does not request feedback when durable persistence fails", () => {
       receipt: receipt("visual"),
       scene: precommitScene(),
       mode: "visual",
-      draft: visualDraft
+      draft: visualDraft,
+      visualAssetReceipt
     }).pipe(
       Effect.provide(Layer.merge(layer, verifiedLayer)),
       Effect.match({ onFailure: () => "failed" as const, onSuccess: () => "succeeded" as const })
@@ -328,6 +403,54 @@ it.effect("does not request feedback when durable persistence fails", () => {
   )
 })
 
+it.effect("keeps the response durable when the immutable feedback completion write fails", () => {
+  const originalFetch = globalThis.fetch
+  let durableAttempt: HazardAttemptRecord | undefined
+  const layer = Layer.succeed(
+    HazardPersistence,
+    HazardPersistence.of({
+      commitAttempt: (input) => Effect.sync(() => {
+        durableAttempt = attempt(input)
+        return durableAttempt
+      }),
+      findAttempt: () => Effect.succeed(durableAttempt),
+      completeAttempt: () => Effect.fail(new HazardPersistenceError({
+        operation: "complete-attempt",
+        detail: "feedback completion unavailable",
+        cause: new Error("feedback completion unavailable")
+      })),
+      listAttempts: noAttempts
+    })
+  )
+
+  return Effect.gen(function*() {
+    globalThis.fetch = Object.assign(
+      async () => new Response(JSON.stringify(postcommitScene()), {
+        status: 200,
+        headers: { "content-type": "application/json" }
+      }),
+      { preconnect: originalFetch.preconnect }
+    )
+
+    const result = yield* commitHazardAndReveal({
+      receipt: receipt("visual"),
+      scene: precommitScene(),
+      mode: "visual",
+      draft: visualDraft,
+      visualAssetReceipt
+    }).pipe(Effect.provide(Layer.merge(layer, verifiedLayer)))
+
+    if (result.tag !== "reveal_failed") throw new Error("Expected feedback completion failure")
+    strictEqual(result.attempt, durableAttempt)
+    strictEqual(result.error._tag, "HazardPersistenceError")
+    strictEqual(durableAttempt?.evaluation, undefined)
+  }).pipe(
+    Effect.ensuring(Effect.sync(() => {
+      globalThis.fetch = originalFetch
+    }))
+  )
+})
+
 it.effect("does not request postcommit content while restoring an unanswered scene", () => {
   let fetchCount = 0
   const originalFetch = globalThis.fetch
@@ -336,6 +459,7 @@ it.effect("does not request postcommit content while restoring an unanswered sce
     HazardPersistence.of({
       commitAttempt: (input) => Effect.succeed(attempt(input)),
       findAttempt: () => Effect.succeed(undefined),
+      completeAttempt: (input) => Effect.succeed(completedAttempt(input)),
       listAttempts: noAttempts
     })
   )
@@ -352,7 +476,8 @@ it.effect("does not request postcommit content while restoring an unanswered sce
     const restored = yield* restoreHazardAndReveal({
       receipt: receipt("visual"),
       scene: precommitScene(),
-      mode: "visual"
+      mode: "visual",
+      visualAssetReceipt
     }).pipe(Effect.provide(Layer.merge(layer, verifiedLayer)))
 
     strictEqual(restored, undefined)
@@ -366,6 +491,313 @@ it.effect("does not request postcommit content while restoring an unanswered sce
   )
 })
 
+it.effect("restores completed visual feedback after current verified content and cache are gone", () =>
+  Effect.gen(function*() {
+    const currentReceipt = receipt("visual")
+    const committed = attempt({
+      receipt: currentReceipt,
+      allowedZoneOrders: [1, 2],
+      markers: visualDraft.markers,
+      selectedZoneOrders: [],
+      zeroHazardsConfirmed: false
+    })
+    const retainedVisualAsset = yield* Effect.promise(() =>
+      retainImageBlob(visualAssetReceipt, visualAssetBlob())
+    )
+    const evaluated = new HazardAttemptRecord({
+      ...committed,
+      evaluation: new HazardEvaluationRecord({
+        payload: postcommitScene(),
+        postcommitBase64: encodeCanonicalBase64(postcommitBytes()),
+        retainedVisualAsset
+      })
+    })
+    let verifiedContentReads = 0
+    const countUnexpectedRead = <A>(): Effect.Effect<A> => Effect.sync(() => {
+      verifiedContentReads += 1
+      throw new Error("Historical restore must not read current verified content")
+    })
+    const persistenceLayer = Layer.succeed(
+      HazardPersistence,
+      HazardPersistence.of({
+        commitAttempt: () => Effect.die("not used"),
+        findAttempt: () => Effect.succeed(evaluated),
+        completeAttempt: () => Effect.die("not used"),
+        listAttempts: noAttempts
+      })
+    )
+    const removedContentLayer = Layer.succeed(
+      VerifiedContent,
+      VerifiedContent.of({
+        ensureAssetAvailable: countUnexpectedRead,
+        ensureAvailable: countUnexpectedRead,
+        loadAssetBlob: countUnexpectedRead,
+        loadCachedAssetBlob: countUnexpectedRead,
+        loadCachedJson: countUnexpectedRead,
+        loadJsonArtifact: countUnexpectedRead,
+        loadJson: countUnexpectedRead
+      })
+    )
+
+    const restored = yield* restoreHazardAndReveal({
+      receipt: currentReceipt,
+      scene: precommitScene(),
+      mode: "visual",
+      visualAssetReceipt
+    }).pipe(Effect.provide(Layer.merge(persistenceLayer, removedContentLayer)))
+
+    strictEqual(restored?.tag, "revealed")
+    if (restored?.tag === "revealed") {
+      strictEqual(restored.retainedVisualAsset?.dataUrl, retainedVisualAsset.dataUrl)
+      strictEqual(restored.payload.opaqueAssetId, "s001")
+    }
+    strictEqual(verifiedContentReads, 0)
+  })
+)
+
+it.effect("rejects a payload-only mutation when the retained postcommit bytes are unchanged", () =>
+  Effect.gen(function*() {
+    const payload = postcommitScene()
+    const mutatedPayload: PostcommitScene = {
+      ...payload,
+      fullPostAnswer: {
+        ...payload.fullPostAnswer,
+        safeBackground: ["different safe background"]
+      }
+    }
+    const outcome = yield* Effect.tryPromise({
+      try: () => validateHazardEvaluation({
+        receipt: receipt("nonvisual"),
+        scene: precommitScene(),
+        visualAssetReceipt: null,
+        evaluation: new HazardEvaluationRecord({
+          payload: mutatedPayload,
+          postcommitBase64: encodeCanonicalBase64(postcommitBytes()),
+          retainedVisualAsset: null
+        })
+      }),
+      catch: (cause) => cause
+    }).pipe(Effect.match({
+      onFailure: () => "rejected" as const,
+      onSuccess: () => "accepted" as const
+    }))
+
+    strictEqual(outcome, "rejected")
+  })
+)
+
+it.effect("rejects a same-length postcommit-byte mutation against the receipt digest", () =>
+  Effect.gen(function*() {
+    const originalBytes = postcommitBytes()
+    const originalText = new TextDecoder().decode(originalBytes)
+    const mutatedBytes = new TextEncoder().encode(originalText.replace("section 1", "section 2"))
+    strictEqual(mutatedBytes.byteLength, originalBytes.byteLength)
+    const outcome = yield* Effect.tryPromise({
+      try: () => validateHazardEvaluation({
+        receipt: receipt("nonvisual", originalBytes),
+        scene: precommitScene(),
+        visualAssetReceipt: null,
+        evaluation: new HazardEvaluationRecord({
+          payload: postcommitScene(),
+          postcommitBase64: encodeCanonicalBase64(mutatedBytes),
+          retainedVisualAsset: null
+        })
+      }),
+      catch: (cause) => cause
+    }).pipe(Effect.match({
+      onFailure: () => "rejected" as const,
+      onSuccess: () => "accepted" as const
+    }))
+
+    strictEqual(outcome, "rejected")
+  })
+)
+
+it.effect("rejects postcommit bytes and digest receipt mutations", () =>
+  Effect.gen(function*() {
+    const exactReceipt = receipt("nonvisual")
+    const evaluation = new HazardEvaluationRecord({
+      payload: postcommitScene(),
+      postcommitBase64: encodeCanonicalBase64(postcommitBytes()),
+      retainedVisualAsset: null
+    })
+    const mutatedReceipts: ReadonlyArray<HazardAttemptReceipt> = [
+      { ...exactReceipt, postcommitBytes: exactReceipt.postcommitBytes + 1 },
+      { ...exactReceipt, postcommitSha256: "0".repeat(64) },
+      { ...exactReceipt, postcommitPath: "/content/vertical-slice/scenes/s999.postcommit.json" }
+    ]
+
+    for (const mutatedReceipt of mutatedReceipts) {
+      const outcome = yield* Effect.tryPromise({
+        try: () => validateHazardEvaluation({
+          receipt: mutatedReceipt,
+          scene: precommitScene(),
+          visualAssetReceipt: null,
+          evaluation
+        }),
+        catch: (cause) => cause
+      }).pipe(Effect.match({
+        onFailure: () => "rejected" as const,
+        onSuccess: () => "accepted" as const
+      }))
+      strictEqual(outcome, "rejected")
+    }
+  })
+)
+
+it.effect("accepts an exact BOM-bearing postcommit artifact", () =>
+  Effect.gen(function*() {
+    const jsonBytes = postcommitBytes()
+    const bomBytes = new Uint8Array(jsonBytes.byteLength + 3)
+    bomBytes.set([0xef, 0xbb, 0xbf])
+    bomBytes.set(jsonBytes, 3)
+    const postcommitBase64 = encodeCanonicalBase64(bomBytes)
+    const validated = yield* Effect.promise(() => validateHazardEvaluation({
+      receipt: receipt("nonvisual", bomBytes),
+      scene: precommitScene(),
+      visualAssetReceipt: null,
+      evaluation: new HazardEvaluationRecord({
+        payload: postcommitScene(),
+        postcommitBase64,
+        retainedVisualAsset: null
+      })
+    }))
+
+    strictEqual(validated.postcommitBase64, postcommitBase64)
+    deepStrictEqual(validated.payload, postcommitScene())
+  })
+)
+
+it.effect("rejects a same-length retained-image bit flip against its durable digest", () =>
+  Effect.gen(function*() {
+    const retained = yield* Effect.promise(() =>
+      retainImageBlob(visualAssetReceipt, visualAssetBlob())
+    )
+    const comma = retained.dataUrl.indexOf(",")
+    const mutationIndex = comma + 12
+    const original = retained.dataUrl[mutationIndex]
+    if (original === undefined) throw new Error("Expected retained image base64 payload")
+    const corrupted = new RetainedImageAsset({
+      receipt: retained.receipt,
+      dataUrl: `${retained.dataUrl.slice(0, mutationIndex)}${original === "A" ? "B" : "A"}${retained.dataUrl.slice(mutationIndex + 1)}`
+    })
+    const result = yield* Effect.tryPromise({
+      try: () => validateHazardEvaluation({
+        receipt: receipt("visual"),
+        scene: precommitScene(),
+        visualAssetReceipt,
+        evaluation: new HazardEvaluationRecord({
+          payload: postcommitScene(),
+          postcommitBase64: encodeCanonicalBase64(postcommitBytes()),
+          retainedVisualAsset: corrupted
+        })
+      }),
+      catch: (cause) => cause
+    }).pipe(Effect.match({
+      onFailure: () => "rejected" as const,
+      onSuccess: () => "accepted" as const
+    }))
+    strictEqual(result, "rejected")
+  })
+)
+
+it.effect("rejects a scene-valid receipt whose postcommit path names another asset", () => {
+  let commitCount = 0
+  const persistenceLayer = Layer.succeed(
+    HazardPersistence,
+    HazardPersistence.of({
+      commitAttempt: (input) => Effect.sync(() => {
+        commitCount += 1
+        return attempt(input)
+      }),
+      findAttempt: () => Effect.succeed(undefined),
+      completeAttempt: (input) => Effect.succeed(completedAttempt(input)),
+      listAttempts: noAttempts
+    })
+  )
+
+  return Effect.gen(function*() {
+    const outcome = yield* commitHazardAndReveal({
+      receipt: {
+        ...receipt("visual"),
+        postcommitPath: "/content/vertical-slice/scenes/s999.postcommit.json"
+      },
+      scene: precommitScene(),
+      mode: "visual",
+      draft: visualDraft,
+      visualAssetReceipt
+    }).pipe(
+      Effect.provide(Layer.merge(persistenceLayer, verifiedLayer)),
+      Effect.match({
+        onFailure: (error) => error._tag,
+        onSuccess: () => "unexpected-success"
+      })
+    )
+
+    strictEqual(outcome, "HazardAttemptMismatch")
+    strictEqual(commitCount, 0)
+  })
+})
+
+it.effect("completes a response-only attempt through exact network asset fallback", () => {
+  const currentReceipt = receipt("visual")
+  const committed = attempt({
+    receipt: currentReceipt,
+    allowedZoneOrders: [1, 2],
+    markers: visualDraft.markers,
+    selectedZoneOrders: [],
+    zeroHazardsConfirmed: false
+  })
+  let networkAssetReads = 0
+  let cachedAssetReads = 0
+  const persistenceLayer = Layer.succeed(
+    HazardPersistence,
+    HazardPersistence.of({
+      commitAttempt: () => Effect.die("not used"),
+      findAttempt: () => Effect.succeed(committed),
+      completeAttempt: (input) => Effect.succeed(completedAttempt(input)),
+      listAttempts: noAttempts
+    })
+  )
+  const cacheEvictedContentLayer = Layer.succeed(
+    VerifiedContent,
+    VerifiedContent.of({
+      ensureAssetAvailable: () => Effect.die("not used"),
+      ensureAvailable: () => Effect.die("not used"),
+      loadAssetBlob: () => Effect.sync(() => {
+        networkAssetReads += 1
+        return visualAssetBlob()
+      }),
+      loadCachedAssetBlob: () => Effect.sync(() => {
+        cachedAssetReads += 1
+        throw new Error("The verified cache was evicted")
+      }),
+      loadCachedJson: () => Effect.die("not used"),
+      loadJson: () => Effect.die("not used"),
+      loadJsonArtifact: () => Effect.succeed({
+        bytes: postcommitBytes(),
+        value: postcommitScene()
+      })
+    })
+  )
+
+  return Effect.gen(function*() {
+    const restored = yield* restoreHazardAndReveal({
+      receipt: currentReceipt,
+      scene: precommitScene(),
+      mode: "visual",
+      visualAssetReceipt
+    }).pipe(Effect.provide(Layer.merge(persistenceLayer, cacheEvictedContentLayer)))
+
+    strictEqual(restored?.tag, "revealed")
+    strictEqual(networkAssetReads, 1)
+    strictEqual(cachedAssetReads, 0)
+    if (restored?.tag === "revealed") {
+      strictEqual(restored.retainedVisualAsset?.receipt.path, visualAssetReceipt.path)
+    }
+  })
+})
+
 it.effect("fails closed after commit when the feedback asset identity differs", () => {
   const originalFetch = globalThis.fetch
   const layer = Layer.succeed(
@@ -373,6 +805,7 @@ it.effect("fails closed after commit when the feedback asset identity differs", 
     HazardPersistence.of({
       commitAttempt: (input) => Effect.succeed(attempt(input)),
       findAttempt: () => Effect.succeed(undefined),
+      completeAttempt: (input) => Effect.succeed(completedAttempt(input)),
       listAttempts: noAttempts
     })
   )
@@ -391,7 +824,8 @@ it.effect("fails closed after commit when the feedback asset identity differs", 
       receipt: receipt("visual"),
       scene: precommitScene(),
       mode: "visual",
-      draft: visualDraft
+      draft: visualDraft,
+      visualAssetReceipt
     }).pipe(Effect.provide(Layer.merge(layer, verifiedLayer)))
 
     strictEqual(result.tag, "reveal_failed")
@@ -424,6 +858,9 @@ it.effect("does not persist when exact scene feedback is unavailable before comm
           })
         ),
       loadAssetBlob: () => Effect.die("not used"),
+      loadCachedAssetBlob: () => Effect.die("not used"),
+      loadCachedJson: () => Effect.die("not used"),
+      loadJsonArtifact: () => Effect.die("must not load"),
       loadJson: () => Effect.die("must not load")
     })
   )
@@ -435,6 +872,7 @@ it.effect("does not persist when exact scene feedback is unavailable before comm
         return attempt(input)
       }),
       findAttempt: () => Effect.succeed(undefined),
+      completeAttempt: (input) => Effect.succeed(completedAttempt(input)),
       listAttempts: noAttempts
     })
   )
@@ -444,7 +882,8 @@ it.effect("does not persist when exact scene feedback is unavailable before comm
       receipt: currentReceipt,
       scene: precommitScene(),
       mode: "visual",
-      draft: visualDraft
+      draft: visualDraft,
+      visualAssetReceipt
     }).pipe(Effect.provide(Layer.merge(persistenceLayer, unavailableLayer)))
 
     strictEqual(result.tag, "content_unavailable")
@@ -480,6 +919,11 @@ it.effect("rejects incomplete or contradictory postcommit closure", () =>
         }]
       }
     }
+    const zeroStatements = payload.nonvisualZonedEquivalent.filter(
+      (statement) => statement.role !== "target"
+    )
+    const firstZeroStatement = zeroStatements[0]
+    if (firstZeroStatement === undefined) throw new Error("Expected a zero-scene statement")
     const validZero: PostcommitScene = {
       ...payload,
       kind: "zero-hazard",
@@ -487,7 +931,7 @@ it.effect("rejects incomplete or contradictory postcommit closure", () =>
       targets: [],
       targetRegions: [],
       fullPostAnswer: { ...payload.fullPostAnswer, targets: [] },
-      nonvisualZonedEquivalent: [decoyStatement]
+      nonvisualZonedEquivalent: [firstZeroStatement, ...zeroStatements.slice(1)]
     }
     const invalidZeroFamily: PostcommitScene = {
       ...validZero,
@@ -500,6 +944,43 @@ it.effect("rejects incomplete or contradictory postcommit closure", () =>
         polygons: [[[1.2, 0.1], [1.4, 0.1], [1.4, 0.4], [1.2, 0.4]]]
       }]
     }
+    const unknownZoneStatements = payload.nonvisualZonedEquivalent.map((statement, index) =>
+      index === 0 ? { ...statement, zone: "unreleased zone" } : statement
+    )
+    const firstUnknownZoneStatement = unknownZoneStatements[0]
+    if (firstUnknownZoneStatement === undefined) throw new Error("Expected a zone statement")
+    const unknownZone: PostcommitScene = {
+      ...payload,
+      nonvisualZonedEquivalent: [firstUnknownZoneStatement, ...unknownZoneStatements.slice(1)]
+    }
+    const contradictoryStatementValues = payload.nonvisualZonedEquivalent.map((statement) =>
+      statement.role === "target"
+        ? { ...statement, statement: "the floor is dry and clear" }
+        : statement.role === "decoy"
+          ? { ...statement, statement: "the conduit blocks the route" }
+          : statement
+    )
+    const firstContradictoryStatement = contradictoryStatementValues[0]
+    if (firstContradictoryStatement === undefined) {
+      throw new Error("Expected a contradictory statement fixture")
+    }
+    const contradictoryStatements: PostcommitScene = {
+      ...payload,
+      nonvisualZonedEquivalent: [
+        firstContradictoryStatement,
+        ...contradictoryStatementValues.slice(1)
+      ]
+    }
+    const sceneWithUnusedNeutralZone: PrecommitScene = {
+      ...scene,
+      neutralPreAnswer: {
+        ...scene.neutralPreAnswer,
+        zones: [
+          ...scene.neutralPreAnswer.zones,
+          { order: 3, label: "doorway", description: "A clear doorway." }
+        ]
+      }
+    }
 
     strictEqual(hasValidPostcommitClosure(scene, missingFullTarget), false)
     strictEqual(hasValidPostcommitClosure(scene, missingTargetStatement), false)
@@ -507,6 +988,9 @@ it.effect("rejects incomplete or contradictory postcommit closure", () =>
     strictEqual(hasValidPostcommitClosure(scene, validZero), true)
     strictEqual(hasValidPostcommitClosure(scene, invalidZeroFamily), false)
     strictEqual(hasValidPostcommitClosure(scene, invalidRegion), false)
+    strictEqual(hasValidPostcommitClosure(scene, unknownZone), false)
+    strictEqual(hasValidPostcommitClosure(scene, contradictoryStatements), false)
+    strictEqual(hasValidPostcommitClosure(sceneWithUnusedNeutralZone, payload), true)
   })
 )
 

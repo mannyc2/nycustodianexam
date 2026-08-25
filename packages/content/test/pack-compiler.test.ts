@@ -300,7 +300,7 @@ describe("compileContentPack", () => {
     })
   })
 
-  it("rejects dangling rationale, master-region, and nonvisual target relations", async () => {
+  it("rejects dangling rationale, master-region, zone-label, and nonvisual target relations", async () => {
     const missingRationale = structuredClone(input.authoredPack) as {
       questions: Array<{ rationales: Array<unknown> }>
     }
@@ -325,6 +325,59 @@ describe("compileContentPack", () => {
       detail: expect.stringContaining("another master hash")
     })
 
+    const wrongZoneLabel = structuredClone(input.acceptedSceneRegions) as Array<{
+      zoneOrder: Array<{ order: number; label: string }>
+    }>
+    const firstZone = wrongZoneLabel[0]?.zoneOrder[0]
+    if (firstZone !== undefined) firstZone.label = "same order, different label"
+    await expect(
+      Effect.runPromise(compileContentPack({ ...input, acceptedSceneRegions: wrongZoneLabel }))
+    ).rejects.toMatchObject({
+      _tag: "ContentValidationError",
+      stage: "closure",
+      detail: expect.stringContaining("zone labels and orders")
+    })
+
+    const duplicateNeutralLabelAccessibility = structuredClone(
+      input.acceptedSceneAccessibility
+    ) as Array<{ neutralPreAnswer: { zones: Array<{ order: number; label: string }> } }>
+    const duplicateNeutralLabelRegions = structuredClone(
+      input.acceptedSceneRegions
+    ) as Array<{ zoneOrder: Array<{ order: number; label: string }> }>
+    const firstLabel = duplicateNeutralLabelAccessibility[0]?.neutralPreAnswer.zones[0]?.label
+    if (
+      firstLabel !== undefined &&
+      duplicateNeutralLabelAccessibility[0]?.neutralPreAnswer.zones[1] !== undefined &&
+      duplicateNeutralLabelRegions[0]?.zoneOrder[1] !== undefined
+    ) {
+      duplicateNeutralLabelAccessibility[0].neutralPreAnswer.zones[1].label = firstLabel
+      duplicateNeutralLabelRegions[0].zoneOrder[1].label = firstLabel
+    }
+    await expect(Effect.runPromise(compileContentPack({
+      ...input,
+      acceptedSceneAccessibility: duplicateNeutralLabelAccessibility,
+      acceptedSceneRegions: duplicateNeutralLabelRegions
+    }))).rejects.toMatchObject({
+      _tag: "ContentValidationError",
+      stage: "closure",
+      detail: expect.stringContaining("zone labels and orders")
+    })
+
+    const unknownStatementZone = structuredClone(input.acceptedSceneAccessibility) as Array<{
+      nonvisualZonedEquivalent: Array<{ zone: string }>
+    }>
+    if (unknownStatementZone[0]?.nonvisualZonedEquivalent[0] !== undefined) {
+      unknownStatementZone[0].nonvisualZonedEquivalent[0].zone = "unknown released zone"
+    }
+    await expect(Effect.runPromise(compileContentPack({
+      ...input,
+      acceptedSceneAccessibility: unknownStatementZone
+    }))).rejects.toMatchObject({
+      _tag: "ContentValidationError",
+      stage: "closure",
+      detail: expect.stringContaining("unknown neutral zone")
+    })
+
     const missingNonvisualTarget = structuredClone(input.acceptedSceneAccessibility) as Array<{
       nonvisualZonedEquivalent: Array<{ role: string }>
     }>
@@ -341,6 +394,25 @@ describe("compileContentPack", () => {
       _tag: "ContentValidationError",
       stage: "closure",
       detail: expect.stringContaining("nonvisual equivalent")
+    })
+
+    const contradictoryNonvisual = structuredClone(
+      input.acceptedSceneAccessibility
+    ) as Array<{
+      nonvisualZonedEquivalent: Array<{ role: string; statement: string }>
+    }>
+    const targetStatement = contradictoryNonvisual[0]?.nonvisualZonedEquivalent.find(
+      (statement) => statement.role === "target"
+    )
+    if (targetStatement !== undefined) targetStatement.statement = "contradictory safe text"
+    await expect(
+      Effect.runPromise(
+        compileContentPack({ ...input, acceptedSceneAccessibility: contradictoryNonvisual })
+      )
+    ).rejects.toMatchObject({
+      _tag: "ContentValidationError",
+      stage: "closure",
+      detail: expect.stringContaining("exactly cover semantic inventories")
     })
   })
 })

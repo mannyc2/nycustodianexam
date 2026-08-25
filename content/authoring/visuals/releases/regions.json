@@ -12,7 +12,7 @@
     "zoneOrder": [
       {
         "order": 1,
-        "label": "far hallway"
+        "label": "rear hallway"
       },
       {
         "order": 2,
@@ -20,7 +20,7 @@
       },
       {
         "order": 3,
-        "label": "central walking surface"
+        "label": "central floor"
       },
       {
         "order": 4,
@@ -122,7 +122,7 @@
       },
       {
         "order": 2,
-        "label": "left wall furnishings"
+        "label": "left wall and bench"
       },
       {
         "order": 3,
@@ -210,7 +210,7 @@
       },
       {
         "order": 2,
-        "label": "landing"
+        "label": "central landing"
       },
       {
         "order": 3,
@@ -219,6 +219,14 @@
       {
         "order": 4,
         "label": "wall fixtures"
+      },
+      {
+        "order": 5,
+        "label": "lower level"
+      },
+      {
+        "order": 6,
+        "label": "ceiling"
       }
     ],
     "targetRegions": [
@@ -294,19 +302,23 @@
     "zoneOrder": [
       {
         "order": 1,
-        "label": "left court"
+        "label": "left court storage"
       },
       {
         "order": 2,
-        "label": "rear double doors"
+        "label": "rear doors and equipment"
       },
       {
         "order": 3,
-        "label": "doorway obstruction"
+        "label": "central court"
       },
       {
         "order": 4,
         "label": "right wall storage"
+      },
+      {
+        "order": 5,
+        "label": "rear wall"
       }
     ],
     "targetRegions": [
@@ -382,11 +394,11 @@
     "zoneOrder": [
       {
         "order": 1,
-        "label": "upper wall rack"
+        "label": "upper wall and shelving"
       },
       {
         "order": 2,
-        "label": "left shelving"
+        "label": "middle shelving"
       },
       {
         "order": 3,
@@ -488,19 +500,23 @@
     "zoneOrder": [
       {
         "order": 1,
-        "label": "upper chemical shelf"
+        "label": "upper and center shelves"
       },
       {
         "order": 2,
-        "label": "center utensil shelf"
-      },
-      {
-        "order": 3,
         "label": "lower bowl shelf"
       },
       {
-        "order": 4,
+        "order": 3,
         "label": "separate pan rack"
+      },
+      {
+        "order": 4,
+        "label": "rear tiled wall"
+      },
+      {
+        "order": 5,
+        "label": "lower floor"
       }
     ],
     "targetRegions": [
@@ -576,19 +592,19 @@
     "zoneOrder": [
       {
         "order": 1,
-        "label": "wall storage"
+        "label": "left wall storage"
       },
       {
         "order": 2,
-        "label": "work light"
+        "label": "center work light"
       },
       {
         "order": 3,
-        "label": "connected cord and receptacle"
+        "label": "right wall connection"
       },
       {
         "order": 4,
-        "label": "floor"
+        "label": "lower floor"
       }
     ],
     "targetRegions": [
@@ -672,11 +688,15 @@
       },
       {
         "order": 3,
-        "label": "right wall connection"
+        "label": "right wall equipment"
       },
       {
         "order": 4,
         "label": "central aisle"
+      },
+      {
+        "order": 5,
+        "label": "left wall window"
       }
     ],
     "targetRegions": [
@@ -764,7 +784,7 @@
       },
       {
         "order": 4,
-        "label": "waste bin"
+        "label": "waste-bin side"
       }
     ],
     "targetRegions": [
@@ -840,19 +860,23 @@
     "zoneOrder": [
       {
         "order": 1,
-        "label": "building edge"
+        "label": "building and planting edge"
       },
       {
         "order": 2,
-        "label": "walkway"
+        "label": "central walkway"
       },
       {
         "order": 3,
-        "label": "shard area"
+        "label": "lower-left objects"
       },
       {
         "order": 4,
-        "label": "collection-bin pad and planting bed"
+        "label": "right-side collection pad"
+      },
+      {
+        "order": 5,
+        "label": "right-side grass"
       }
     ],
     "targetRegions": [
@@ -932,15 +956,19 @@
       },
       {
         "order": 2,
-        "label": "unstable dolly load"
+        "label": "left dolly and boxes"
       },
       {
         "order": 3,
-        "label": "stable pallet"
+        "label": "center pallet and boxes"
       },
       {
         "order": 4,
-        "label": "wall storage"
+        "label": "right wall storage"
+      },
+      {
+        "order": 5,
+        "label": "lower floor"
       }
     ],
     "targetRegions": [
@@ -1020,15 +1048,19 @@
       },
       {
         "order": 2,
-        "label": "dining tables"
+        "label": "left dining tables"
       },
       {
         "order": 3,
-        "label": "person and carried load"
+        "label": "center person and boxes"
       },
       {
         "order": 4,
-        "label": "wall-side cart"
+        "label": "right wall cart"
+      },
+      {
+        "order": 5,
+        "label": "central aisle"
       }
     ],
     "targetRegions": [
@@ -1108,15 +1140,15 @@
       },
       {
         "order": 2,
-        "label": "cleaning cart"
+        "label": "right cleaning cart"
       },
       {
         "order": 3,
-        "label": "person and toilet"
+        "label": "center person and fixture"
       },
       {
         "order": 4,
-        "label": "tool holder and floor"
+        "label": "right tool holder and floor"
       }
     ],
     "targetRegions": [
@@ -1192,19 +1224,19 @@
     "zoneOrder": [
       {
         "order": 1,
-        "label": "left dining tables"
+        "label": "left dining area"
       },
       {
         "order": 2,
-        "label": "central target table"
+        "label": "central table and mop"
       },
       {
         "order": 3,
-        "label": "janitor cart"
+        "label": "right janitor cart"
       },
       {
         "order": 4,
-        "label": "right dining area"
+        "label": "lower floor"
       }
     ],
     "targetRegions": [
@@ -1280,19 +1312,23 @@
     "zoneOrder": [
       {
         "order": 1,
-        "label": "left wall storage"
+        "label": "left wall fan"
       },
       {
         "order": 2,
-        "label": "clear court"
+        "label": "central court"
       },
       {
         "order": 3,
-        "label": "unguarded fan"
+        "label": "rear wall fan"
       },
       {
         "order": 4,
-        "label": "intact stored fan"
+        "label": "rear bleachers"
+      },
+      {
+        "order": 5,
+        "label": "wall padding"
       }
     ],
     "targetRegions": [
@@ -1368,19 +1404,19 @@
     "zoneOrder": [
       {
         "order": 1,
-        "label": "wall tool storage"
+        "label": "left wall tool storage"
       },
       {
         "order": 2,
-        "label": "workbench left"
+        "label": "left workbench"
       },
       {
         "order": 3,
-        "label": "saw and exposed blade"
+        "label": "center-right saw and plug"
       },
       {
         "order": 4,
-        "label": "lower floor"
+        "label": "lower area"
       }
     ],
     "targetRegions": [
@@ -1456,7 +1492,7 @@
     "zoneOrder": [
       {
         "order": 1,
-        "label": "teacher area"
+        "label": "teacher wall"
       },
       {
         "order": 2,
@@ -1464,11 +1500,15 @@
       },
       {
         "order": 3,
-        "label": "wall-side ladder"
+        "label": "right-side ladder"
       },
       {
         "order": 4,
         "label": "wall-side cord and fan"
+      },
+      {
+        "order": 5,
+        "label": "central aisle"
       }
     ],
     "targetRegions": [],
@@ -1566,19 +1606,23 @@
     "zoneOrder": [
       {
         "order": 1,
-        "label": "upper wall storage"
+        "label": "left sink and cabinet"
       },
       {
         "order": 2,
-        "label": "left shelf and containment"
+        "label": "center bottle shelf"
       },
       {
         "order": 3,
-        "label": "service sink"
+        "label": "center-right tool rack"
       },
       {
         "order": 4,
-        "label": "floor and doorway"
+        "label": "right doorway and wall hook"
+      },
+      {
+        "order": 5,
+        "label": "lower floor"
       }
     ],
     "targetRegions": [],

@@ -10,7 +10,7 @@ import {
   slugify
 } from "../scripts/generate-pages.tsx"
 import { canonicalizeGeneratedDocuments } from "../scripts/finalize-service-worker.ts"
-import { discoverHtmlInputs } from "../vite.config.ts"
+import { discoverHtmlInputs, scopedLocalSessionShell } from "../vite.config.ts"
 import {
   decodeAndAssertHazardAssetReceipt,
   decodeAndAssertHazardReceipt,
@@ -148,6 +148,19 @@ describe("static-site generator boundaries", () => {
 })
 
 describe("dynamic document discovery", () => {
+  it("keeps local Vite shell mapping at the Worker GET/HEAD-only boundary", () => {
+    const path = "/simulations/session/sim-abcdefgh/question/2/?local=1"
+    expect(scopedLocalSessionShell("GET", path)).toBe(
+      "/simulations/session/sim-shell0000/question/1/"
+    )
+    expect(scopedLocalSessionShell("HEAD", path)).toBe(
+      "/simulations/session/sim-shell0000/question/1/"
+    )
+    for (const method of ["POST", "PUT", "PATCH", "DELETE", "OPTIONS"]) {
+      expect(scopedLocalSessionShell(method, path), method).toBeUndefined()
+    }
+  })
+
   it("finds nested generated documents while excluding public and dist copies", async () => {
     const root = await mkdtemp(join(tmpdir(), "nycustodian-html-"))
     try {

@@ -1,3 +1,7 @@
+import {
+  PostcommitScene,
+  PrecommitScene as PrecommitSceneSchema
+} from "@nycustodian/content/model"
 import { Clock, Context, Effect, Layer, Schema } from "effect"
 import {
   HazardAttemptReceipt,
@@ -12,11 +16,26 @@ import {
   legacyAppDatabaseNames,
   type AppDatabaseError
 } from "../study-storage/app-database.ts"
-import type { HazardInputMode, HazardMarker } from "./attempt.ts"
-
-const NormalizedCoordinate = Schema.Number.check(
-  Schema.isBetween({ minimum: 0, maximum: 1 })
-)
+import {
+  AssetContentReceipt,
+  type AssetContentReceipt as AssetContentReceiptValue
+} from "../verified-content.ts"
+import { DurableTimestamp, NormalizedCoordinate } from "../durable-values.ts"
+import {
+  RetainedImageAsset,
+  decodeCanonicalBase64,
+  decodeRetainedImage,
+  sameAssetReceipt,
+  sha256Bytes,
+  validateRetainedImage
+} from "../retained-image.ts"
+import { hasValidPostcommitClosure } from "./assessment.ts"
+import type {
+  HazardInputMode,
+  HazardMarker,
+  PostcommitScene as PostcommitSceneValue,
+  PrecommitScene
+} from "./attempt.ts"
 
 const ZoneOrders = Schema.Array(Schema.Natural).check(
   Schema.makeFilter((orders) =>
@@ -30,6 +49,16 @@ export const PersistedHazardMarker = Schema.Struct({
   y: NormalizedCoordinate
 })
 
+export class HazardEvaluationRecord extends Schema.Class<HazardEvaluationRecord>(
+  "@nycustodian/site/hazard-player/HazardEvaluationRecord"
+)({
+  payload: PostcommitScene,
+  postcommitBase64: Schema.String.check(
+    Schema.isPattern(/^[A-Za-z0-9+/]*={0,2}$/, { expected: "canonical base64 postcommit bytes" })
+  ),
+  retainedVisualAsset: Schema.NullOr(RetainedImageAsset)
+}) {}
+
 export class HazardAttemptRecord extends Schema.Class<HazardAttemptRecord>(
   "@nycustodian/site/hazard-player/HazardAttemptRecord"
 )({
@@ -39,9 +68,10 @@ export class HazardAttemptRecord extends Schema.Class<HazardAttemptRecord>(
   markers: Schema.Array(PersistedHazardMarker),
   selectedZoneOrders: Schema.Array(Schema.Natural),
   zeroHazardsConfirmed: Schema.Boolean,
-  committedAt: Schema.Number,
+  committedAt: DurableTimestamp,
   receipt: Schema.optionalKey(HazardAttemptReceipt),
-  allowedZoneOrders: Schema.optionalKey(ZoneOrders)
+  allowedZoneOrders: Schema.optionalKey(ZoneOrders),
+  evaluation: Schema.optionalKey(HazardEvaluationRecord)
 }) {}
 
 export class HazardPersistenceError extends Schema.TaggedError<HazardPersistenceError>()(
@@ -64,6 +94,15 @@ export interface CommitHazardAttemptInput {
 export interface FindHazardAttemptInput {
   readonly receipt: HazardAttemptReceiptValue
   readonly allowedZoneOrders: ReadonlyArray<number>
+  readonly scene: PrecommitScene
+  readonly visualAssetReceipt: AssetContentReceiptValue | null
+}
+
+export interface CompleteHazardAttemptInput extends FindHazardAttemptInput {
+  readonly attempt: HazardAttemptRecord
+  readonly payload: PostcommitSceneValue
+  readonly postcommitBase64: string
+  readonly retainedVisualAsset: RetainedImageAsset | null
 }
 
 export class HazardPersistence extends Context.Service<
@@ -75,6 +114,9 @@ export class HazardPersistence extends Context.Service<
     readonly findAttempt: (
       input: FindHazardAttemptInput
     ) => Effect.Effect<HazardAttemptRecord | undefined, HazardPersistenceError>
+    readonly completeAttempt: (
+      input: CompleteHazardAttemptInput
+    ) => Effect.Effect<HazardAttemptRecord, HazardPersistenceError>
     readonly listAttempts: () => Effect.Effect<
       ReadonlyArray<HazardAttemptRecord>,
       HazardPersistenceError
@@ -117,6 +159,11 @@ const sameMarkers = (
 const sameNumbers = (left: ReadonlyArray<number>, right: ReadonlyArray<number>): boolean =>
   left.length === right.length && left.every((value, index) => value === right[index])
 
+type HazardAttemptCoordinate = Pick<
+  FindHazardAttemptInput,
+  "receipt" | "allowedZoneOrders"
+>
+
 export const hasBoundHazardReceipt = (
   attempt: HazardAttemptRecord
 ): attempt is HazardAttemptRecord & {
@@ -126,7 +173,7 @@ export const hasBoundHazardReceipt = (
 
 const matchesExpectation = (
   existing: HazardAttemptRecord,
-  input: FindHazardAttemptInput
+  input: HazardAttemptCoordinate
 ): boolean =>
   hasBoundHazardReceipt(existing) &&
   sameHazardReceipt(existing.receipt, input.receipt) &&
@@ -140,6 +187,114 @@ const sameCommittedInput = (
   existing.zeroHazardsConfirmed === input.zeroHazardsConfirmed &&
   sameMarkers(existing.markers, input.markers) &&
   sameNumbers(existing.selectedZoneOrders, input.selectedZoneOrders)
+
+const sameAttemptResponse = (
+  left: HazardAttemptRecord,
+  right: HazardAttemptRecord
+): boolean =>
+  left.id === right.id &&
+  left.sceneId === right.sceneId &&
+  left.mode === right.mode &&
+  left.zeroHazardsConfirmed === right.zeroHazardsConfirmed &&
+  left.committedAt === right.committedAt &&
+  sameMarkers(left.markers, right.markers) &&
+  sameNumbers(left.selectedZoneOrders, right.selectedZoneOrders) &&
+  left.receipt !== undefined &&
+  right.receipt !== undefined &&
+  sameHazardReceipt(left.receipt, right.receipt) &&
+  left.allowedZoneOrders !== undefined &&
+  right.allowedZoneOrders !== undefined &&
+  sameNumbers(left.allowedZoneOrders, right.allowedZoneOrders)
+
+const sameEvaluation = (
+  left: HazardEvaluationRecord,
+  right: HazardEvaluationRecord
+): boolean => JSON.stringify(left) === JSON.stringify(right)
+
+const visualReceiptForScene = (
+  scene: PrecommitScene
+): AssetContentReceiptValue | undefined => {
+  const webDerivatives = scene.asset.derivatives.filter((derivative) => derivative.kind === "web")
+  const webDerivative = webDerivatives.length === 1 ? webDerivatives[0] : undefined
+  return webDerivative === undefined
+    ? undefined
+    : Schema.decodeUnknownSync(AssetContentReceipt)({
+        path: `/${webDerivative.path}`,
+        bytes: webDerivative.bytes,
+        sha256: webDerivative.sha256
+      })
+}
+
+const expectedPostcommitPath = (opaqueAssetId: string): string =>
+  `/content/vertical-slice/scenes/${encodeURIComponent(opaqueAssetId)}.postcommit.json`
+
+const validatePostcommitBinding = async (input: {
+  readonly receipt: unknown
+  readonly evaluation: unknown
+}): Promise<{
+  readonly receipt: HazardAttemptReceiptValue
+  readonly evaluation: HazardEvaluationRecord
+  readonly payload: PostcommitSceneValue
+}> => {
+  const receipt = Schema.decodeUnknownSync(HazardAttemptReceipt)(input.receipt)
+  const evaluation = Schema.decodeUnknownSync(HazardEvaluationRecord)(input.evaluation)
+  const postcommitBytes = decodeCanonicalBase64(evaluation.postcommitBase64)
+  if (
+    postcommitBytes.byteLength !== receipt.postcommitBytes ||
+    await sha256Bytes(postcommitBytes) !== receipt.postcommitSha256
+  ) {
+    throw new Error("The saved hazard feedback bytes do not match their release receipt")
+  }
+  const payload = Schema.decodeUnknownSync(PostcommitScene)(
+    JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(postcommitBytes)) as unknown
+  )
+  if (
+    JSON.stringify(payload) !== JSON.stringify(evaluation.payload) ||
+    receipt.postcommitPath !== expectedPostcommitPath(payload.opaqueAssetId)
+  ) {
+    throw new Error("The saved hazard feedback payload does not match its release receipt")
+  }
+  return { receipt, evaluation, payload }
+}
+
+export const validateHazardEvaluation = async (input: {
+  readonly receipt: HazardAttemptReceiptValue
+  readonly scene: PrecommitScene
+  readonly visualAssetReceipt: AssetContentReceiptValue | null
+  readonly evaluation: unknown
+}): Promise<HazardEvaluationRecord> => {
+  const scene = Schema.decodeUnknownSync(PrecommitSceneSchema)(input.scene)
+  const sceneVisualReceipt = visualReceiptForScene(scene)
+  const { evaluation, payload, receipt } = await validatePostcommitBinding(input)
+  if (
+    receipt.sceneId !== scene.id ||
+    receipt.postcommitPath !== expectedPostcommitPath(scene.asset.opaqueAssetId) ||
+    receipt.assetRevision !== scene.asset.revision ||
+    receipt.assetMasterSha256 !== scene.asset.masterSha256 ||
+    !hasValidPostcommitClosure(scene, payload)
+  ) {
+    throw new Error("The saved hazard evaluation is outside its released scene closure")
+  }
+  if (receipt.mode === "visual") {
+    if (
+      sceneVisualReceipt === undefined ||
+      input.visualAssetReceipt === null ||
+      !sameAssetReceipt(input.visualAssetReceipt, sceneVisualReceipt) ||
+      evaluation.retainedVisualAsset === null ||
+      !sameAssetReceipt(evaluation.retainedVisualAsset.receipt, sceneVisualReceipt)
+    ) {
+      throw new Error("The saved hazard image is outside its released derivative closure")
+    }
+    decodeRetainedImage(evaluation.retainedVisualAsset)
+    await validateRetainedImage(evaluation.retainedVisualAsset)
+  } else if (
+    input.visualAssetReceipt !== null ||
+    evaluation.retainedVisualAsset !== null
+  ) {
+    throw new Error("A nonvisual hazard evaluation cannot retain a visual asset")
+  }
+  return evaluation
+}
 
 const validateCommitInput = (
   input: CommitHazardAttemptInput
@@ -259,6 +414,91 @@ const commitAttempt = Effect.fn("HazardPersistence.commitAttempt")(function*(
   })
 })
 
+const completeAttempt = Effect.fn("HazardPersistence.completeAttempt")(function*(
+  database: IDBDatabase,
+  input: CompleteHazardAttemptInput
+) {
+  const evaluation = yield* Effect.tryPromise({
+    try: async () => {
+      const attempt = validateStoredAttempt(
+        Schema.decodeUnknownSync(HazardAttemptRecord)(input.attempt)
+      )
+      if (!matchesExpectation(attempt, input)) {
+        throw new Error("The hazard completion coordinate does not match its committed response")
+      }
+      return validateHazardEvaluation({
+        receipt: input.receipt,
+        scene: input.scene,
+        visualAssetReceipt: input.visualAssetReceipt,
+        evaluation: new HazardEvaluationRecord({
+          payload: input.payload,
+          postcommitBase64: input.postcommitBase64,
+          retainedVisualAsset: input.retainedVisualAsset
+        })
+      })
+    },
+    catch: (cause) => persistenceError("validate-completion", cause)
+  })
+
+  return yield* Effect.tryPromise({
+    try: () =>
+      new Promise<HazardAttemptRecord>((resolve, reject) => {
+        const transaction = database.transaction(attemptsStore, "readwrite")
+        const attempts = transaction.objectStore(attemptsStore)
+        const request = attempts.get(hazardAttemptId(input.receipt))
+        let completed: HazardAttemptRecord | undefined
+
+        request.onsuccess = () => {
+          try {
+            if (request.result === undefined) {
+              transaction.abort()
+              reject(new Error("No durable hazard response exists to complete"))
+              return
+            }
+            const existing = validateStoredAttempt(
+              Schema.decodeUnknownSync(HazardAttemptRecord)(request.result)
+            )
+            if (
+              !matchesExpectation(existing, input) ||
+              !sameAttemptResponse(existing, input.attempt)
+            ) {
+              transaction.abort()
+              reject(new Error("The stored hazard response changed before completion"))
+              return
+            }
+            if (
+              existing.evaluation !== undefined &&
+              !sameEvaluation(existing.evaluation, evaluation)
+            ) {
+              transaction.abort()
+              reject(new Error("This hazard attempt already has different durable feedback"))
+              return
+            }
+            completed = existing.evaluation === undefined
+              ? new HazardAttemptRecord({ ...existing, evaluation })
+              : existing
+            if (existing.evaluation === undefined) attempts.put(completed)
+          } catch (cause) {
+            transaction.abort()
+            reject(cause)
+          }
+        }
+        request.onerror = () => reject(request.error)
+        transaction.oncomplete = () => {
+          if (completed === undefined) {
+            reject(new Error("Hazard completion transaction ended without a record"))
+            return
+          }
+          resolve(completed)
+        }
+        transaction.onerror = () => reject(transaction.error)
+        transaction.onabort = () =>
+          reject(transaction.error ?? new Error("Hazard completion transaction aborted"))
+      }),
+    catch: (cause) => persistenceError("complete-attempt", cause)
+  })
+})
+
 const findAttempt = Effect.fn("HazardPersistence.findAttempt")(function*(
   database: IDBDatabase,
   input: FindHazardAttemptInput
@@ -270,8 +510,8 @@ const findAttempt = Effect.fn("HazardPersistence.findAttempt")(function*(
     return yield* persistenceError("validate-attempt-coordinate", cause)
   }
   return yield* Effect.tryPromise({
-    try: () =>
-      new Promise<HazardAttemptRecord | undefined>((resolve, reject) => {
+    try: async () => {
+      const attempt = await new Promise<HazardAttemptRecord | undefined>((resolve, reject) => {
         const transaction = database.transaction(attemptsStore, "readonly")
         const request = transaction.objectStore(attemptsStore).get(hazardAttemptId(input.receipt))
         request.onsuccess = () => {
@@ -295,7 +535,17 @@ const findAttempt = Effect.fn("HazardPersistence.findAttempt")(function*(
         request.onerror = () => reject(request.error)
         transaction.onabort = () =>
           reject(transaction.error ?? new Error("Hazard attempt read transaction aborted"))
-      }),
+      })
+      if (attempt?.evaluation !== undefined) {
+        await validateHazardEvaluation({
+          receipt: input.receipt,
+          scene: input.scene,
+          visualAssetReceipt: input.visualAssetReceipt,
+          evaluation: attempt.evaluation
+        })
+      }
+      return attempt
+    },
     catch: (cause) => persistenceError("find-attempt", cause)
   })
 })
@@ -337,6 +587,21 @@ const validateStoredAttempt = (attempt: HazardAttemptRecord): HazardAttemptRecor
   } else if (!/^[a-zA-Z0-9._:-]{1,256}$/.test(attempt.id)) {
     throw new Error("A legacy hazard attempt has an invalid durable identity")
   }
+  if (attempt.evaluation !== undefined) {
+    if (!hasBoundHazardReceipt(attempt)) {
+      throw new Error("A saved hazard evaluation is missing its release coordinate")
+    }
+    if (
+      attempt.mode === "visual"
+        ? attempt.evaluation.retainedVisualAsset === null
+        : attempt.evaluation.retainedVisualAsset !== null
+    ) {
+      throw new Error("A saved hazard evaluation has invalid mode/image closure")
+    }
+    if (attempt.evaluation.retainedVisualAsset !== null) {
+      decodeRetainedImage(attempt.evaluation.retainedVisualAsset)
+    }
+  }
   return attempt
 }
 
@@ -344,8 +609,8 @@ const listAttempts = Effect.fn("HazardPersistence.listAttempts")(function*(
   database: IDBDatabase
 ) {
   return yield* Effect.tryPromise({
-    try: () =>
-      new Promise<ReadonlyArray<HazardAttemptRecord>>((resolve, reject) => {
+    try: async () => {
+      const attempts = await new Promise<ReadonlyArray<HazardAttemptRecord>>((resolve, reject) => {
         const transaction = database.transaction(attemptsStore, "readonly")
         const request = transaction.objectStore(attemptsStore).getAll()
         let decoded: ReadonlyArray<HazardAttemptRecord> | undefined
@@ -373,7 +638,26 @@ const listAttempts = Effect.fn("HazardPersistence.listAttempts")(function*(
         }
         transaction.onabort = () =>
           reject(transaction.error ?? new Error("Hazard attempt list transaction aborted"))
-      }),
+      })
+      await Promise.all(attempts.flatMap((attempt) => {
+        if (attempt.evaluation === undefined) return []
+        if (!hasBoundHazardReceipt(attempt)) {
+          return [Promise.reject(new Error(
+            "A saved hazard evaluation is missing its release coordinate"
+          ))]
+        }
+        return [Promise.all([
+          validatePostcommitBinding({
+            receipt: attempt.receipt,
+            evaluation: attempt.evaluation
+          }),
+          attempt.evaluation.retainedVisualAsset === null
+            ? Promise.resolve(null)
+            : validateRetainedImage(attempt.evaluation.retainedVisualAsset)
+        ])]
+      }))
+      return attempts
+    },
     catch: (cause) => persistenceError("list-attempts", cause)
   })
 })
@@ -411,6 +695,10 @@ export const hazardPersistenceLive = Layer.effect(
       findAttempt: Effect.fn("HazardPersistence.findAttempt.live")(function*(input) {
         const database = yield* connection
         return yield* findAttempt(database, input)
+      }),
+      completeAttempt: Effect.fn("HazardPersistence.completeAttempt.live")(function*(input) {
+        const database = yield* connection
+        return yield* completeAttempt(database, input)
       }),
       listAttempts: Effect.fn("HazardPersistence.listAttempts.live")(function*() {
         const database = yield* connection
