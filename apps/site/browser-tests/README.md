@@ -1,11 +1,10 @@
-# M1–M4 browser evidence boundary
+# M1–M5 browser evidence boundary
 
 This directory contains the configured real-browser evidence suite for the
-controlled M1–M4 implementation proof. It does not certify a release. The
-generator currently emits 63 documents from validated packs, including two
-question routes, 18 visual and 18 nonvisual hazard routes, four public tool
-pages, and the simulation/print setup and opaque local shell routes. Planned
-destination families without reviewed machine-readable content
+controlled M1–M5 implementation candidate. It does not certify a release. The
+closed generated site includes the validated question, visual/nonvisual hazard,
+tool, simulation, print, offline-pack, settings, reporting, and correction-draft
+surfaces. Planned destination families without reviewed machine-readable content
 are intentionally omitted rather than represented by placeholders.
 
 It is intentionally separate from `apps/site/test`, whose Vitest suites remain
@@ -15,11 +14,12 @@ deterministic unit and worker-harness checks.
 
 Browser CI is configured as the complete cross-browser gate. The targeted M4
 simulation/print slice passes 42 cases across Chromium, Firefox, and WebKit on
-this revision. Its local Cloudflare/workerd case separately proves constrained
-opaque-shell GET/HEAD routing and rejection of mutation methods. Earlier
-application-database, offline/service-worker, accessibility, and true-BFCache
-evidence remains part of the wider configured suite; that complete repository
-matrix is still a separate release gate.
+the merged M4 revision. Targeted standalone M5 cases also passed on their source
+revision. This integrated candidate must rerun the complete repository matrix,
+including the exact v4-to-v5 preservation and portable-data closure, before the
+document can record integrated browser evidence. Local Cloudflare/workerd cases
+separately prove constrained opaque-shell GET/HEAD routing and reject mutation
+methods.
 
 ## Configured automated coverage
 
@@ -40,6 +40,20 @@ matrix is still a separate release gate.
   hazard Blob survival across BFCache with true-unload revocation, and
   fail-closed quarantine of a review attempt whose receipt differs from the
   released bootstrap.
+- M5 local-data contracts: correction drafts write only after explicit save,
+  restore on reload, and never POST while intake is dormant; a remotely accepted
+  report whose local receipt write fails disables network resubmission and can
+  retry only the local write; IndexedDB preferences remain authoritative when
+  the fast mirror fails and otherwise apply on reload/across tabs; reset reports
+  the committing transaction count; portable import rejects semantically invalid
+  durable records, previews without writing, quarantines unknown references,
+  rechecks parent/dependent records at apply time, commits atomically without
+  overwrite, and exports a checked envelope; staged-pack corruption quarantines
+  and deletes that generation without displacing the prior active pack; an
+  explicit restage activates under a new cache namespace, exposes retained-pack
+  actions, preserves historical attempts/latest projections during confirmed
+  pack removal, and serves atlas navigation and imagery offline. Completion and
+  failure focus targets are asserted for these asynchronous operations.
 - Local Cloudflare Workers Static Assets preview: nested-route
   identity/canonical behavior, truthful unknown-route status, static-atlas
   runtime isolation, and precommit answer-leak checks. These delivery-only
@@ -66,8 +80,9 @@ adding a production-only update endpoint.
   transaction. The blocked-upgrade contract covers one uncooperative prior-v2
   tab; real quota exhaustion, eviction, other multi-tab aborts, and disposal
   races remain uncertified.
-- The M1–M4 proof is not the product's complete explicit
-  download/verify/activate/rollback content-pack lifecycle.
+- Explicit pack lifecycle has targeted Chromium proof; Firefox/WebKit service-
+  worker lifecycle and full release-wide update/removal/eviction certification
+  remain open.
 - Deterministic print packets, separate keys, manifests, page-break rules, and
   large-print mode are automated. Browser “Save as PDF,” physical Letter/A4,
   grayscale, clipping, and pagination inspection remain manual certification.
@@ -76,8 +91,9 @@ adding a production-only update endpoint.
 - Wrangler preview proves local workerd/static-asset routing only. Remote preview,
   deployment credentials, response-header policy, custom domain, canonical host,
   and any future Worker endpoint remain unconfigured.
-- Sitemap generation also remains open.
-- M5 content-pack lifecycle, site settings, and corrections flows remain open.
+- The v4→v5 simulation/print preservation and portable-data integration proof,
+  plus the complete M5 cross-browser/manual certification matrix, remain open
+  until this integration candidate passes those exact gates.
 - No lab/field performance run is introduced here; configured deterministic
   bundle budgets pass locally and remain the only automated performance evidence
   until this revision completes real-browser and release certification.

@@ -4,6 +4,7 @@ import {
   assertNoAnswerBearingFileNames,
   assertNoAnswerBearingStructuredFields,
   assertNoAnswerBearingText,
+  assertProductionPackPublication,
   assertProtectedServiceWorkerPolicy,
   decodeAndAssertHazardAssetReceipt,
   decodeAndAssertHazardReceipt,
@@ -13,14 +14,17 @@ import {
 
 const serviceWorker = `
 const shellUrls = ["/", "/styles.css"]
-const isAppVerifiedContent = (request) => {
+const isPackManagedContent = (request) => {
   const url = new URL(request.url)
   return url.origin === self.location.origin &&
-    (url.pathname.endsWith(".postcommit.json") || url.pathname.startsWith("/content/assets/"))
+    (url.pathname.startsWith("/content/vertical-slice/") ||
+      url.pathname.startsWith("/content/assets/"))
 }
 self.addEventListener("fetch", (event) => {
-  if (isAppVerifiedContent(event.request)) {
-    event.respondWith(fetch(event.request))
+  if (isPackManagedContent(event.request)) {
+    event.respondWith(matchActivePack(event.request).then(
+      (cached) => cached ?? fetch(event.request)
+    ))
     return
   }
 })
@@ -220,15 +224,15 @@ describe("embedded runtime receipt bindings", () => {
   })
 })
 
-describe("service-worker postcommit boundary", () => {
-  it("allows the suffix only in the protected network bypass", () => {
+describe("service-worker release-content boundary", () => {
+  it("keeps the complete release and asset namespaces in the verified-pack path", () => {
     expect(extractServiceWorkerShellUrls(serviceWorker)).toEqual(["/", "/styles.css"])
     expect(() =>
       assertProtectedServiceWorkerPolicy(serviceWorker, new Set(["/", "/styles.css"]))
     ).not.toThrow()
   })
 
-  it("rejects postcommit precaching and any second postcommit reference", () => {
+  it("rejects postcommit precaching and answer-bearing filename matching", () => {
     expect(() =>
       assertProtectedServiceWorkerPolicy(
         serviceWorker.replace(
@@ -243,6 +247,23 @@ describe("service-worker postcommit boundary", () => {
         `${serviceWorker}\n// another .postcommit.json reference`,
         new Set(["/", "/styles.css"])
       )
-    ).toThrow(/only in its verified-content network bypass/)
+    ).toThrow(/entire verified release\/content namespace/)
+  })
+})
+
+describe("production release-state gate", () => {
+  it("allows preview verification but requires explicit publication for production", () => {
+    expect(() => assertProductionPackPublication(
+      { lifecycle: "preview", publicationTime: null },
+      false
+    )).not.toThrow()
+    expect(() => assertProductionPackPublication(
+      { lifecycle: "preview", publicationTime: null },
+      true
+    )).toThrow(/explicitly published/)
+    expect(() => assertProductionPackPublication(
+      { lifecycle: "published", publicationTime: "2026-08-25T00:00:00.000Z" },
+      true
+    )).not.toThrow()
   })
 })

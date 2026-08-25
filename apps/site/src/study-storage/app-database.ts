@@ -8,6 +8,7 @@ export {
   AppDatabaseError,
   appDatabaseName,
   appDatabaseStores,
+  appDatabaseVersion,
   legacyAppDatabaseNames,
   StudySessionRecord
 } from "./app-database/storage-model.ts"

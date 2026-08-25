@@ -9,6 +9,7 @@ import { HazardAttemptReceipt, QuestionAttemptReceipt } from "../attempt-receipt
 import { DeterministicSeed } from "../deterministic-seed.ts"
 import { AssetContentReceipt } from "../verified-content.ts"
 import { RetainedImageAsset } from "../retained-image.ts"
+import { OfflinePackGenerationClaim } from "../offline-packs/model.ts"
 import {
   DurableTimestamp,
   NormalizedCoordinate,
@@ -180,7 +181,8 @@ export class SimulationResponse extends Schema.Class<SimulationResponse>(
 export class SimulationSessionRecord extends Schema.Class<SimulationSessionRecord>(
   "@nycustodian/site/SimulationSessionRecord"
 )({
-  schemaVersion: Schema.Literal(1),
+  schemaVersion: Schema.Literals([1, 2]),
+  packClaim: Schema.optionalKey(OfflinePackGenerationClaim),
   id: SimulationId,
   status: Schema.Literals(["active", "submitted", "evaluated"]),
   algorithm: Schema.Literal(simulationAlgorithm),
@@ -200,6 +202,29 @@ export class SimulationSessionRecord extends Schema.Class<SimulationSessionRecor
   createdAt: SimulationTimestamp,
   updatedAt: SimulationTimestamp
 }) {}
+
+export const decodeSimulationSessionRecordShape = (
+  value: unknown
+): SimulationSessionRecord => {
+  const session = Schema.decodeUnknownSync(
+    SimulationSessionRecord,
+    { onExcessProperty: "error" }
+  )(value)
+  if (
+    (session.schemaVersion === 1 && session.packClaim !== undefined) ||
+    (session.schemaVersion === 2 && session.packClaim === undefined)
+  ) {
+    throw new Error("Simulation session schema and offline-pack claim disagree")
+  }
+  if (
+    session.packClaim !== undefined &&
+    (session.packClaim.releaseId !== session.releaseId ||
+      session.packClaim.packVersion !== session.packVersion)
+  ) {
+    throw new Error("Simulation session release is outside its offline-pack claim")
+  }
+  return session
+}
 
 export class SimulationSubmittedAnswer extends Schema.Class<SimulationSubmittedAnswer>(
   "@nycustodian/site/SimulationSubmittedAnswer"

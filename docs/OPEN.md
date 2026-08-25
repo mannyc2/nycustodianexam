@@ -140,6 +140,38 @@ Status: standing legal/editorial caution. Any future item text obtained through 
 
 ## Product / SEO open decisions
 
+### Accepted launch and operational decisions — 2026-08-25
+
+- **V1 content scope:** English-only statewide entry-level Custodians and
+  Janitors series with the Nassau layer. The data and route architecture stays
+  Spanish-ready, but Spanish pages, higher-level series, NYC, and other-county
+  expansion are deferred until their own reviewed content gates pass.
+- **V1 content threshold:** publish the complete accepted Tier A/B atlas and
+  comparisons plus all 18 reviewed hazard scenes. Advertised 45/60/90 question
+  sets require enough original items to avoid hidden repeats; filtered setups
+  must disable any length their compatible inventory cannot satisfy. All
+  distributions and results remain labeled site-designed, never official.
+- **Corrections:** implementation of a narrow first-party endpoint is
+  authorized. Activation and user-data collection are not. The checked-in
+  Worker must remain dormant and unbound until storage, retention, triage,
+  privacy, abuse handling, ephemeral per-client plus global rate limiting,
+  production routing, and operator authority receive separate approval. Local
+  correction drafts remain the truthful launch behavior.
+- **Analytics:** no launch analytics. Diagnostics remain local; any later
+  opt-in first-party analytics proposal requires separate approval.
+- **Certification:** the complete automated Chromium/Firefox/WebKit gate plus
+  manual NVDA+Firefox (Windows), VoiceOver+Safari (macOS/iOS), TalkBack+Chrome
+  (Android), JAWS smoke when licensed, true 400% zoom in Chrome/Firefox/Safari,
+  US Letter+A4 normal/large print, and one grayscale physical-print inspection
+  block production. Missing hardware means preview only with exact gaps stated.
+- **Deployment:** Cloudflare Workers Static Assets remains selected. Remote
+  preview precedes production from merged `main`; exact domain, account/project,
+  credentials/token, canonical-host redirects, and production authority remain
+  pending. Local CI/CD implementation does not require committing a token.
+- **External actions:** read-only official-source research and factual refreshes
+  are allowed. Domain purchase, FOIL requests, email/outreach, analytics, and
+  correction-data collection require separate authorization.
+
 ### P16 — Final application architecture baseline
 
 **Status:** SECOND-PASS RESEARCH RECONCILED / IMPLEMENTATION GATES OPEN.
@@ -153,8 +185,9 @@ Status: standing legal/editorial caution. Any future item text obtained through 
 - Bun is the package-management, workspace, and primary TypeScript tooling direction;
 - Bun `1.4.0` is the locked scaffold toolchain and its frozen-install/lock gate
   has passed;
-- the implemented initial graph is `apps/site`, `apps/content-compiler`, and
-  `packages/content`;
+- the initial graph is `apps/site`, `apps/content-compiler`, and
+  `packages/content`; M5 adds the shared `packages/correction-intake` contract
+  and dormant, separately owned `apps/correction-worker` root;
 - Vite is the browser build/development direction;
 - Cloudflare Workers Static Assets remains the initial deployment direction and
   response authority;
@@ -166,8 +199,8 @@ Status: standing legal/editorial caution. Any future item text obtained through 
 - React 19 is selected for lazy interactive islands;
 - immutable renderer-neutral `ScreenSnapshot` values, semantic commands, and
   state/actions/meta provider contracts remain the application/view boundary;
-- one long-lived browser `ManagedRuntime` is created at the site application
-  root, not per render or event;
+- one long-lived browser `ManagedRuntime` is created for each interactive
+  document's smallest cohesive service graph, not per render or event;
 - component APIs use compound composition, lifted shared state, children, and
   explicit variants instead of behavioral boolean-prop proliferation;
 - the direct-DOM-first R2.90 choice remains evidence/baseline and a possible
@@ -241,67 +274,83 @@ Those results belong to the then-current one-question slice. They remain useful
 historical evidence, but do not constitute final verification of the expanded
 revision.
 
-**Current M1–M4 implementation evidence (2026-08-25):**
+**Current integrated M1–M5 implementation evidence (2026-08-25):**
 
-- the validated packs generate a closed set of 63 documents, including two
+- the validated packs generate a closed set of 70 documents, including two
   question routes, 18 visual hazard routes, 18 nonvisual hazard routes, four
-  public tool pages, and five simulation/print setup and opaque local-shell
-  documents;
-- destination families without reviewed machine-readable content are
-  intentionally omitted instead of being represented by placeholder pages; and
-- the exact local deterministic gate passes on Bun `1.4.0` and Node `22.22.0`,
-  including maintained-layout and module-boundary checks, 396 visual hashes,
-  three-workspace typechecks, 236 unit tests, the 63-document/106-safe-shell-URL
-  production build, artifact closure and answer-leak verification, and a frozen
-  offline install that preserves `bun.lock` byte-for-byte; while
-- browser CI is configured, and the exact pinned Chromium revision passes all
-  27 standard Vite-preview cases plus all three Cloudflare-preview delivery
-  cases locally, including application-database, offline/service-worker,
-  accessibility, and true-BFCache contracts; the targeted M4 simulation/print
-  slice also passes 42 Chromium/Firefox/WebKit cases plus its local workerd
-  routing case; the complete repository matrix and release certification remain
-  separate gates beyond that local evidence.
+  public tool pages, and the simulation, print, offline, settings, reporting,
+  correction, and recovery surfaces;
+- deterministic M4 question/visual/nonvisual simulations and immutable local
+  print jobs use exact validated pack claims, retain evaluated feedback, and
+  restore from their opaque local URLs without substituting current content;
+- IndexedDB v5 is the exact M4+M5 store union. A real-browser v4→v5 seed
+  preserves byte-equivalent simulation sessions, submissions, and print jobs;
+  portable transfer, reset, and quarantine include those records atomically;
+- resumable simulations pin the exact claim identity in the same transaction
+  that revalidates active/non-removing pack state. Deterministic browser tests
+  prove both pin/removal commit orders and the historical-attempt claim races;
+- explicit pack stage/verify/activate/retain/remove state is receipt-bound and
+  generation-specific. Corrupt rows and orphan caches reconcile durably,
+  trusted retirement writes a tombstone and blocks new work while preserving
+  pinned history, and removing the sole active pack clears its pointer safely;
+- strict durable decoders, checksummed portable transfer/quarantine, apply-time
+  dependency reclassification, transaction-counted scoped reset, authoritative
+  IndexedDB preferences, review-projection rebuild, and local correction drafts
+  and receipts are implemented;
+- the narrow correction Worker is strict and idempotent but dormant: it has no
+  production route, binding, secret, preview URL, data collection, or logging;
+- the no-data Static Assets router serves only exact opaque local shells and
+  deterministic 410/503 terminals. Local workerd smokes pass for that boundary
+  and for the disabled correction Worker; and
+- the exact Bun `1.4.0` / Node `22.22.0` gate passes maintained-layout and
+  module-boundary checks, 396 visual hashes, five workspace typechecks, browser
+  harness typecheck, 324 unit tests, the 70-document/46-safe-shell-URL build,
+  artifact closure, and answer-leak verification. At CI's two-worker cap, the
+  complete browser suite passes 166 Chromium/Firefox/WebKit cases with 26
+  intentional project-specific skips.
 
 **Implementation evidence still open:**
 
-- current-v4 IndexedDB failure/quota/disposal proof and commit/reconciliation
-  coverage across the remaining supported real-browser matrix;
-- service-worker version/eviction/update behavior, remaining-browser offline
-  coverage, and explicit pack lifecycle proof;
 - a complete location-preserving JSONC/canonical-JSON profile and generated
   release-artifact retention policy for content at scale;
-- complete cross-browser accessibility, zoom/reflow, keyboard, performance,
-  and remaining-browser offline gates;
-- M5 explicit content-pack lifecycle, site settings, and corrections flows;
-- sitemap generation, remote Cloudflare preview/deployment configuration, and
-  any separately authorized future Worker API;
-- first-party analytics/observability policy; and
+- the accepted English Tier A/B atlas and source-backed question-bank expansion
+  required for the no-repeat 45/60/90 launch inventory;
+- the manual assistive-technology, true-400%-zoom, device, US Letter/A4, and
+  grayscale physical-print certification matrix;
+- broader performance and long-duration storage stress evidence beyond the
+  passing release-wide automated functional matrix;
+- remote Cloudflare preview/deployment credentials and
+  separately authorized correction-Worker activation bindings; and
 - custom domain/canonical host.
 
 Decision criteria remain: indexable static HTML; installable/offline PWA; explicit versioned content packs; local-first progress; deterministic print and simulations; WCAG behavior; no pre-answer leakage; low operating cost; minimal backend.
 
-**Status:** RESOLVED BASELINE / CONTROLLED M1–M4 IMPLEMENTATION PROOF, NOT A
-RELEASE. M4 deterministic question/visual/nonvisual simulations and exact-ID
-local print jobs pass focused unit, Chromium/Firefox/WebKit, artifact-closure,
-and local workerd route-method gates. M5, the complete repository browser and
-manual certification matrices, canonical host, sitemap, and deployment remain open. P16
+**Status:** RESOLVED BASELINE / VERIFIED M1–M5 IMPLEMENTATION, NOT A RELEASE.
+The integrated database, transfer, reset, pack-race, service-worker, terminal,
+and complete automated browser gates pass on this revision. Launch-content
+expansion is staged separately. Manual certification, the canonical host,
+credentials, remote preview, and production deployment remain open. P16
 remains in this ledger for provenance; failures in the scaffold may reopen a
 bounded implementation decision, but do not silently restore superseded
 defaults.
 
-No backend is authorized. A correction endpoint remains deferred until its
-product, privacy, idempotency, rate, abuse, and workerd contract is approved.
+Correction-endpoint implementation is authorized and exists only as a dormant
+workerd root. Activation/data collection remain forbidden until storage,
+retention, triage, privacy, abuse handling, ephemeral per-client and global
+rate-limit bindings, routing, and production authority are separately approved.
 The custom domain/canonical host remains P17.
 
 ### P17 — Domain / canonical host
 Preferred naming direction: NYCustodianExam / NY Custodian Exam. Domain registration/canonical production host not established in corpus.
 
-Status: OPEN operational decision.
+Status: OPEN operational decision. Exact owned domain, Cloudflare account and
+project, credentials/token, canonical apex/`www` redirect, and production
+authority are pending. Do not purchase or deploy from this ledger entry.
 
 ### P18 — Spanish launch depth
-Architecture should support Spanish from the outset. Indexable Spanish pages should launch only after substantive professional/reviewed translation exists.
-
-Open: launch with statewide hub + priority atlas subset versus larger initial translation set.
+Architecture supports a future Spanish surface. V1 is resolved as English-only
+for the statewide entry-level series with the Nassau layer. Indexable Spanish
+pages remain deferred until substantive professional/reviewed translation exists.
 
 ### P19 — High-level series launch timing
 Higher-level series is a valuable adjacent cluster, but mixing it into entry-level content is prohibited. Separate bank/hub can follow after entry-level corpus is sufficiently strong.

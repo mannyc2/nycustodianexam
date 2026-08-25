@@ -74,7 +74,9 @@ export const readStoredAttempt = (page: Page): Promise<StoredAttempt | undefined
 
 export const installAnnouncementRecorder = (page: Page): Promise<void> =>
   page.evaluate(() => {
-    const status = document.querySelector<HTMLElement>('[aria-live="polite"]')
+    const status = document.querySelector<HTMLElement>(
+      '[data-question-player] [aria-live="polite"]'
+    )
     if (status === null) throw new Error("Question status live region is missing")
 
     const messages: string[] = []

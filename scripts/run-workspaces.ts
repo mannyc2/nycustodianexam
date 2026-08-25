@@ -7,7 +7,13 @@ if (command !== "test" && command !== "typecheck") {
   process.exit(2)
 }
 
-const workspaces = ["packages/content", "apps/content-compiler", "apps/site"] as const
+const workspaces = [
+  "packages/content",
+  "packages/correction-intake",
+  "apps/content-compiler",
+  "apps/correction-worker",
+  "apps/site"
+] as const
 const repositoryRoot = new URL("../", import.meta.url)
 
 for (const workspace of workspaces) {

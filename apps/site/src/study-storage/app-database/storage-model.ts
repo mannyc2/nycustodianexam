@@ -2,7 +2,12 @@ import { Context, Effect, Schema } from "effect"
 import { DurableTimestamp } from "../../durable-values.ts"
 
 export const appDatabaseName = "nycustodian-study-v1"
-export const appDatabaseVersion = 4
+// M4 owns version 4. M5 deliberately advances to version 5 so users who have
+// already opened the M4 database receive every M5 store on their next visit.
+// This map is the exact union of M4's simulation/session/submission/print-job
+// stores and the M5 stores below. The upgrade owner creates every declared
+// missing store, so direct older -> v5 upgrades remain complete.
+export const appDatabaseVersion = 5
 
 export const appDatabaseStores = {
   meta: "meta",
@@ -14,7 +19,12 @@ export const appDatabaseStores = {
   simulationSubmissions: "simulation-submissions",
   printJobs: "print-jobs",
   reviewAcknowledgements: "review-events",
-  migrationQuarantine: "migration-quarantine"
+  migrationQuarantine: "migration-quarantine",
+  preferences: "preferences",
+  correctionDrafts: "correction-drafts",
+  offlinePacks: "offline-packs",
+  offlinePackOperations: "offline-pack-operations",
+  transferQuarantine: "transfer-quarantine"
 } as const
 
 export const legacyAppDatabaseNames = {

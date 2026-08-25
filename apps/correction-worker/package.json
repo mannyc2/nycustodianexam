@@ -1,0 +1,20 @@
+{
+  "name": "@nycustodian/correction-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node node_modules/vitest/vitest.mjs run",
+    "test:workerd": "node --experimental-strip-types scripts/workerd-smoke.ts",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@nycustodian/correction-intake": "workspace:*",
+    "effect": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "wrangler": "catalog:"
+  }
+}

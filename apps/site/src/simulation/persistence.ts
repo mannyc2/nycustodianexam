@@ -8,6 +8,7 @@ import {
 import {
   SimulationSessionRecord,
   SimulationSubmissionRecord,
+  decodeSimulationSessionRecordShape,
   decodeSimulationTimestamp,
   simulationItemId,
   simulationSubmissionId,
@@ -16,6 +17,14 @@ import {
   type SimulationResult,
   type SimulationSubmittedAnswer
 } from "./model.ts"
+import {
+  decodeOfflinePackGenerationClaim,
+  decodeOfflinePackRecord,
+  decodeOfflinePackRetirementRecord,
+  offlinePackRetirementId,
+  type OfflinePackGenerationClaim,
+  type OfflinePackRecord
+} from "../offline-packs/model.ts"
 import {
   evaluateHazardAnswer,
   hasValidQuestionPostcommitClosure
@@ -164,7 +173,7 @@ const validateResponseForItem = (
 }
 
 export const validateSimulationSession = (value: unknown): SimulationSessionRecord => {
-  const session = Schema.decodeUnknownSync(SimulationSessionRecord)(value)
+  const session = decodeSimulationSessionRecordShape(value)
   if (session.updatedAt < session.createdAt) {
     throw new Error("Session update time precedes its durable creation time")
   }
@@ -460,6 +469,162 @@ const validateSessionSubmissionStatus = (
   }
 }
 
+const activePackMetaKeys = [
+  "activatedAt",
+  "claimId",
+  "contentFingerprint",
+  "generation",
+  "id",
+  "packId",
+  "packVersion",
+  "releaseId",
+  "shellBuildFingerprint"
+] as const
+
+const decodeActivePackClaim = (value: unknown): OfflinePackGenerationClaim => {
+  if (typeof value !== "object" || value === null || Array.isArray(value)) {
+    throw new Error("The active offline-pack pointer is unavailable")
+  }
+  const record = value as Record<string, unknown>
+  const keys = Object.keys(record).sort()
+  if (
+    record.id !== "active-offline-pack" ||
+    JSON.stringify(keys) !== JSON.stringify(activePackMetaKeys)
+  ) {
+    throw new Error("The active offline-pack pointer has an invalid durable shape")
+  }
+  decodeSimulationTimestamp(record.activatedAt)
+  return decodeOfflinePackGenerationClaim({
+    claimId: record.claimId,
+    packId: record.packId,
+    generation: record.generation,
+    contentFingerprint: record.contentFingerprint,
+    shellBuildFingerprint: record.shellBuildFingerprint,
+    releaseId: record.releaseId,
+    packVersion: record.packVersion
+  })
+}
+
+export const simulationPackClaimForRecord = (
+  pack: OfflinePackRecord
+): OfflinePackGenerationClaim => decodeOfflinePackGenerationClaim({
+  claimId: pack.id,
+  packId: pack.packId,
+  generation: pack.generation,
+  contentFingerprint: pack.contentFingerprint,
+  shellBuildFingerprint: pack.shellBuildFingerprint,
+  releaseId: pack.descriptor.releaseId,
+  packVersion: pack.descriptor.packVersion
+})
+
+const sameGenerationClaim = (
+  left: OfflinePackGenerationClaim,
+  right: OfflinePackGenerationClaim
+): boolean =>
+  left.claimId === right.claimId &&
+  left.packId === right.packId &&
+  left.generation === right.generation &&
+  left.contentFingerprint === right.contentFingerprint &&
+  left.shellBuildFingerprint === right.shellBuildFingerprint &&
+  left.releaseId === right.releaseId &&
+  left.packVersion === right.packVersion
+
+export const assertOfflinePackSupportsSimulationSession = (
+  pack: OfflinePackRecord,
+  claim: OfflinePackGenerationClaim,
+  session: SimulationSessionRecord,
+  allowedStatuses: ReadonlySet<OfflinePackRecord["status"]>
+): void => {
+  if (
+    !allowedStatuses.has(pack.status) ||
+    !sameGenerationClaim(simulationPackClaimForRecord(pack), claim) ||
+    claim.releaseId !== session.releaseId ||
+    claim.packVersion !== session.packVersion ||
+    !pack.descriptor.compatibility.some((compatibility) =>
+      compatibility.profileId === session.profile.id &&
+      compatibility.compatibilityKey === session.profile.compatibilityKey
+    )
+  ) {
+    throw new Error("The exact offline-pack generation is not usable for this simulation")
+  }
+  const receipts = new Map(
+    pack.descriptor.receipts.map((receipt) => [receipt.path, receipt])
+  )
+  for (const item of session.items) {
+    const postcommit = receipts.get(item.receipt.postcommitPath)
+    if (
+      postcommit?.kind !== "artifact" ||
+      postcommit.bytes !== item.receipt.postcommitBytes ||
+      postcommit.sha256 !== item.receipt.postcommitSha256
+    ) {
+      throw new Error("The exact offline-pack generation does not close over every result receipt")
+    }
+    if (!("question" in item) && item.visualAsset !== null) {
+      const asset = receipts.get(item.visualAsset.path)
+      if (
+        asset?.kind !== "asset" ||
+        asset.bytes !== item.visualAsset.bytes ||
+        asset.sha256 !== item.visualAsset.sha256
+      ) {
+        throw new Error("The exact offline-pack generation does not close over every scene asset")
+      }
+    }
+  }
+}
+
+const readClaimedPack = async (
+  transaction: IDBTransaction,
+  claim: OfflinePackGenerationClaim,
+  session: SimulationSessionRecord,
+  allowedStatuses: ReadonlySet<OfflinePackRecord["status"]>
+): Promise<OfflinePackRecord> => {
+  const value = await requestValue(
+    transaction.objectStore(appDatabaseStores.offlinePacks).get(claim.claimId)
+  )
+  if (value === undefined) {
+    throw new Error("The exact offline-pack generation is no longer stored on this device")
+  }
+  const pack = decodeOfflinePackRecord(value)
+  assertOfflinePackSupportsSimulationSession(pack, claim, session, allowedStatuses)
+  return pack
+}
+
+const readActivePackClaim = async (
+  transaction: IDBTransaction,
+  session: SimulationSessionRecord
+): Promise<OfflinePackGenerationClaim> => {
+  const value = await requestValue(
+    transaction.objectStore(appDatabaseStores.meta).get("active-offline-pack")
+  )
+  const claim = decodeActivePackClaim(value)
+  const retirementValue = await requestValue(
+    transaction.objectStore(appDatabaseStores.meta).get(
+      offlinePackRetirementId(claim.packId)
+    )
+  )
+  if (retirementValue !== undefined) {
+    decodeOfflinePackRetirementRecord(retirementValue)
+    throw new Error("The active offline-pack release has been retired for new sessions")
+  }
+  await readClaimedPack(transaction, claim, session, new Set(["active"]))
+  return claim
+}
+
+const bindSimulationSession = (
+  session: SimulationSessionRecord,
+  claim: OfflinePackGenerationClaim
+): SimulationSessionRecord => validateSimulationSession(new SimulationSessionRecord({
+  ...session,
+  schemaVersion: 2,
+  packClaim: claim
+}))
+
+const requireResumablePackPin = (session: SimulationSessionRecord): void => {
+  if (session.status !== "evaluated" && session.schemaVersion !== 2) {
+    throw new Error("This legacy simulation must be rebound to an exact local pack before it can change")
+  }
+}
+
 const createSession = Effect.fn("SimulationPersistence.createSession")(function*(
   database: IDBDatabase,
   session: SimulationSessionRecord
@@ -467,21 +632,34 @@ const createSession = Effect.fn("SimulationPersistence.createSession")(function*
   const validated = validateSimulationSession(session)
   return yield* Effect.tryPromise({
     try: async () => {
-      const transaction = database.transaction(sessionsStore, "readwrite")
+      const transaction = database.transaction([
+        appDatabaseStores.meta,
+        appDatabaseStores.offlinePacks,
+        sessionsStore
+      ], "readwrite")
+      const claim = validated.packClaim ?? await readActivePackClaim(transaction, validated)
+      if (validated.packClaim !== undefined) {
+        const activeClaim = await readActivePackClaim(transaction, validated)
+        if (!sameGenerationClaim(activeClaim, validated.packClaim)) {
+          transaction.abort()
+          throw new Error("The prepared simulation pack generation is no longer active")
+        }
+      }
+      const candidate = bindSimulationSession(validated, claim)
       const store = transaction.objectStore(sessionsStore)
-      const existingValue = await requestValue(store.get(validated.id))
+      const existingValue = await requestValue(store.get(candidate.id))
       if (existingValue !== undefined) {
         const existing = validateSimulationSession(existingValue)
-        if (JSON.stringify(existing) !== JSON.stringify(validated)) {
+        if (JSON.stringify(existing) !== JSON.stringify(candidate)) {
           transaction.abort()
           throw new Error("The simulation id already belongs to different immutable settings")
         }
         await transactionDone(transaction)
         return existing
       }
-      store.add(validated)
+      store.add(candidate)
       await transactionDone(transaction)
-      return validated
+      return candidate
     },
     catch: (cause) => persistenceError("create-session", cause)
   })
@@ -493,10 +671,36 @@ const findSession = Effect.fn("SimulationPersistence.findSession")(function*(
 ) {
   return yield* Effect.tryPromise({
     try: async () => {
-      const transaction = database.transaction(sessionsStore, "readonly")
-      const value = await requestValue(transaction.objectStore(sessionsStore).get(sessionId))
+      const transaction = database.transaction([
+        appDatabaseStores.meta,
+        appDatabaseStores.offlinePacks,
+        sessionsStore
+      ], "readwrite")
+      const store = transaction.objectStore(sessionsStore)
+      const value = await requestValue(store.get(sessionId))
+      if (value === undefined) {
+        await transactionDone(transaction)
+        return undefined
+      }
+      let session = validateSimulationSession(value)
+      if (session.status !== "evaluated") {
+        if (session.packClaim === undefined) {
+          session = bindSimulationSession(
+            session,
+            await readActivePackClaim(transaction, session)
+          )
+          store.put(session)
+        } else {
+          await readClaimedPack(
+            transaction,
+            session.packClaim,
+            session,
+            new Set(["active", "retained"])
+          )
+        }
+      }
       await transactionDone(transaction)
-      return value === undefined ? undefined : validateSimulationSession(value)
+      return session
     },
     catch: (cause) => persistenceError("find-session", cause)
   })
@@ -518,6 +722,7 @@ const updateSession = Effect.fn("SimulationPersistence.updateSession")(function*
       const value = await requestValue(store.get(sessionId))
       if (value === undefined) throw new Error("The local simulation session was not found")
       const existing = validateSimulationSession(value)
+      requireResumablePackPin(existing)
       const effectiveUpdatedAt = monotonicSimulationTimestamp(
         updatedAt,
         existing.createdAt,
@@ -548,6 +753,7 @@ const submit = Effect.fn("SimulationPersistence.submit")(function*(
       const sessionValue = await requestValue(sessions.get(sessionId))
       if (sessionValue === undefined) throw new Error("The local simulation session was not found")
       const session = validateSimulationSession(sessionValue)
+      requireResumablePackPin(session)
       const id = simulationSubmissionId(sessionId)
       const existingValue = await requestValue(submissions.get(id))
       if (existingValue !== undefined) {
@@ -622,6 +828,7 @@ const findSubmission = Effect.fn("SimulationPersistence.findSubmission")(functio
         throw new Error("A durable simulation submission has no matching session")
       }
       const session = validateSimulationSession(sessionValue)
+      requireResumablePackPin(session)
       const submission = await validateSimulationSubmissionIntegrity(session, submissionValue)
       validateSessionSubmissionStatus(session, submission)
       return submission
@@ -646,6 +853,7 @@ const complete = Effect.fn("SimulationPersistence.complete")(function*(
         throw new Error("Durable simulation session truth is unavailable")
       }
       const validationSession = validateSimulationSession(validationSessionValue)
+      requireResumablePackPin(validationSession)
       await validateSimulationResultArtifactsIntegrity(validationSession, input.results)
       const transaction = database.transaction([sessionsStore, submissionsStore], "readwrite")
       const sessions = transaction.objectStore(sessionsStore)
@@ -658,6 +866,7 @@ const complete = Effect.fn("SimulationPersistence.complete")(function*(
         throw new Error("Durable submission truth is unavailable")
       }
       const session = validateSimulationSession(sessionValue)
+      requireResumablePackPin(session)
       if (JSON.stringify(session) !== JSON.stringify(validationSession)) {
         transaction.abort()
         throw new Error("The pinned simulation receipt closure changed during evaluation")

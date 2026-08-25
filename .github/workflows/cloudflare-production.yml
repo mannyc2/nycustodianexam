@@ -62,6 +62,7 @@ jobs:
         env:
           CANONICAL_DOMAIN: ${{ vars.CANONICAL_DOMAIN }}
           NYCUSTODIAN_CANONICAL_ORIGIN: https://${{ vars.CANONICAL_DOMAIN }}
+          NYCUSTODIAN_REQUIRE_PUBLISHED_RELEASE: "1"
         shell: bash
         run: |
           test -n "$CANONICAL_DOMAIN"

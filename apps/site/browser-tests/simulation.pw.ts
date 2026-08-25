@@ -1,8 +1,10 @@
+import { createHash } from "node:crypto"
 import { readFile } from "node:fs/promises"
 import { fileURLToPath } from "node:url"
 import { expect, test, type BrowserContext, type Page } from "@playwright/test"
 import {
   appDatabaseName,
+  appDatabaseVersion,
   appDatabaseStores
 } from "../src/study-storage/app-database.ts"
 import {
@@ -10,6 +12,14 @@ import {
   verifiedContentCacheName
 } from "../src/verified-content.ts"
 import { retainedImageMimeType } from "../src/retained-image.ts"
+import {
+  decodeGeneratedOfflinePackDescriptor,
+  offlinePackCacheName,
+  offlinePackClaimId,
+  offlinePackContentFingerprintSource,
+  offlinePackRetirementId,
+  offlinePackShellBuildFingerprintSource
+} from "../src/offline-packs/model.ts"
 
 interface SimulationResultReceipt {
   readonly postcommitPath: string
@@ -23,7 +33,127 @@ interface SimulationAssetReceipt {
   readonly sha256: string
 }
 
-const primeSimulationResultCache = async (page: Page): Promise<void> => {
+interface SeededSimulationPackClaim {
+  readonly claimId: string
+  readonly packId: string
+  readonly generation: string
+  readonly releaseId: string
+  readonly packVersion: number
+}
+
+const seedActiveSimulationPack = async (
+  page: Page
+): Promise<SeededSimulationPackClaim> => {
+  const offlineHtml = await readFile(
+    fileURLToPath(new URL("../dist/offline/index.html", import.meta.url)),
+    "utf8"
+  )
+  const serialized = offlineHtml.match(
+    /<script id="offline-pack-descriptor" type="application\/json">([\s\S]*?)<\/script>/
+  )?.[1]
+  if (serialized === undefined) throw new Error("Generated offline pack descriptor is unavailable")
+  const descriptor = decodeGeneratedOfflinePackDescriptor(JSON.parse(serialized) as unknown)
+  if (descriptor.estimatedDownloadBytes === null) {
+    throw new Error("Generated offline pack descriptor is not finalized")
+  }
+  const generation = "browser-simulation-generation-v1"
+  const claimId = offlinePackClaimId(descriptor.id, generation)
+  const cacheName = offlinePackCacheName(descriptor, generation)
+  const contentFingerprint = createHash("sha256")
+    .update(offlinePackContentFingerprintSource(descriptor))
+    .digest("hex")
+  const shellBuildFingerprint = createHash("sha256")
+    .update(offlinePackShellBuildFingerprintSource(descriptor))
+    .digest("hex")
+  const activatedAt = 1_700_000_000_000
+  await page.evaluate(async ({
+    activatedAt,
+    cacheName,
+    claimId,
+    contentFingerprint,
+    databaseName,
+    databaseVersion,
+    descriptor,
+    generation,
+    packStore,
+    shellBuildFingerprint,
+    storeNames,
+    metaStore
+  }) => {
+    await new Promise<void>((resolve, reject) => {
+      const request = indexedDB.open(databaseName, databaseVersion)
+      request.onupgradeneeded = () => {
+        for (const storeName of storeNames) {
+          if (!request.result.objectStoreNames.contains(storeName)) {
+            request.result.createObjectStore(storeName, { keyPath: "id" })
+          }
+        }
+      }
+      request.onerror = () => reject(request.error)
+      request.onsuccess = () => {
+        const database = request.result
+        const transaction = database.transaction([metaStore, packStore], "readwrite")
+        transaction.objectStore(packStore).put({
+          id: claimId,
+          packId: descriptor.id,
+          generation,
+          contentFingerprint,
+          shellBuildFingerprint,
+          descriptor,
+          status: "active",
+          cacheName,
+          downloadedBytes: descriptor.estimatedDownloadBytes,
+          stagedAt: activatedAt,
+          verifiedAt: activatedAt,
+          activatedAt,
+          detail: null
+        })
+        transaction.objectStore(metaStore).put({
+          id: "active-offline-pack",
+          claimId,
+          packId: descriptor.id,
+          generation,
+          contentFingerprint,
+          shellBuildFingerprint,
+          releaseId: descriptor.releaseId,
+          packVersion: descriptor.packVersion,
+          activatedAt
+        })
+        transaction.oncomplete = () => {
+          database.close()
+          resolve()
+        }
+        transaction.onerror = () => reject(transaction.error)
+        transaction.onabort = () => reject(transaction.error)
+      }
+    })
+    await caches.open(cacheName)
+  }, {
+    activatedAt,
+    cacheName,
+    claimId,
+    contentFingerprint,
+    databaseName: appDatabaseName,
+    databaseVersion: appDatabaseVersion,
+    descriptor,
+    generation,
+    packStore: appDatabaseStores.offlinePacks,
+    shellBuildFingerprint,
+    storeNames: Object.values(appDatabaseStores),
+    metaStore: appDatabaseStores.meta
+  })
+  return {
+    claimId,
+    packId: descriptor.id,
+    generation,
+    releaseId: descriptor.releaseId,
+    packVersion: descriptor.packVersion
+  }
+}
+
+const primeSimulationResultCache = async (
+  page: Page
+): Promise<SeededSimulationPackClaim> => {
   const raw = await page.locator("#simulation-bootstrap-data").textContent()
   if (raw === null) throw new Error("Simulation bootstrap was unavailable")
   const bootstrap = JSON.parse(raw) as {
@@ -63,9 +193,12 @@ const primeSimulationResultCache = async (page: Page): Promise<void> => {
       }))
     }))
   }, { cacheName: verifiedContentCacheName, entries })
+  return seedActiveSimulationPack(page)
 }
 
-const primeSimulationHazardClosure = async (page: Page): Promise<void> => {
+const primeSimulationHazardClosure = async (
+  page: Page
+): Promise<SeededSimulationPackClaim> => {
   const raw = await page.locator("#simulation-bootstrap-data").textContent()
   if (raw === null) throw new Error("Simulation bootstrap was unavailable")
   const bootstrap = JSON.parse(raw) as {
@@ -131,6 +264,7 @@ const primeSimulationHazardClosure = async (page: Page): Promise<void> => {
       }))
     }))
   }, { cacheName: verifiedContentCacheName, entries })
+  return seedActiveSimulationPack(page)
 }
 
 const readStore = (
@@ -153,6 +287,50 @@ const readStore = (
     }),
     { databaseName: appDatabaseName, storeName }
   )
+
+const retireActiveSimulationPack = (page: Page): Promise<void> => page.evaluate(
+  ({ databaseName, metaStore, packStore }) => new Promise<void>((resolve, reject) => {
+    const request = indexedDB.open(databaseName)
+    request.onerror = () => reject(request.error)
+    request.onsuccess = () => {
+      const database = request.result
+      const transaction = database.transaction([metaStore, packStore], "readwrite")
+      const packs = transaction.objectStore(packStore)
+      const records = packs.getAll()
+      records.onerror = () => reject(records.error)
+      records.onsuccess = () => {
+        const active = records.result.find((record) => record.status === "active")
+        if (active === undefined) {
+          transaction.abort()
+          reject(new Error("No active simulation pack was available to retire"))
+          return
+        }
+        packs.put({ ...active, status: "retained" })
+        const meta = transaction.objectStore(metaStore)
+        meta.put({
+          id: `offline-pack-retirement:${encodeURIComponent(active.packId)}`,
+          packId: active.packId,
+          releaseId: active.descriptor.releaseId,
+          packVersion: active.descriptor.packVersion,
+          lifecycle: "retired",
+          observedAt: Date.now()
+        })
+        meta.delete("active-offline-pack")
+      }
+      transaction.oncomplete = () => {
+        database.close()
+        resolve()
+      }
+      transaction.onerror = () => reject(transaction.error)
+      transaction.onabort = () => reject(transaction.error ?? new Error("Retirement aborted"))
+    }
+  }),
+  {
+    databaseName: appDatabaseName,
+    metaStore: appDatabaseStores.meta,
+    packStore: appDatabaseStores.offlinePacks
+  }
+)
 
 const expireSimulationTimer = (
   page: Page,
@@ -318,7 +496,7 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
   expect(bootstrap).not.toContain("correctOptionId")
   expect(bootstrap).not.toContain("rationales")
   expect(bootstrap).not.toContain('"sources"')
-  await primeSimulationResultCache(page)
+  const activePackClaim = await primeSimulationResultCache(page)
   await expect(page.getByLabel(/45 items/)).toBeDisabled()
   await expect(page.getByLabel(/60 items/)).toBeDisabled()
   await expect(page.getByLabel(/90 items/)).toBeDisabled()
@@ -371,6 +549,7 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
   const sessionRecords = await readStore(page, appDatabaseStores.simulationSessions)
   expect(sessionRecords).toHaveLength(1)
   expect(sessionRecords[0]).toMatchObject({
+    schemaVersion: 2,
     status: "active",
     actualLength: 2,
     advertisedLength: 2,
@@ -386,8 +565,22 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
       durationSeconds: 1,
       timerVisible: true,
       autoSubmit: false
+    },
+    packClaim: {
+      packId: activePackClaim.packId,
+      generation: activePackClaim.generation,
+      releaseId: activePackClaim.releaseId,
+      packVersion: activePackClaim.packVersion
     }
   })
+  const durablePackClaim = sessionRecords[0]?.packClaim as {
+    readonly claimId?: unknown
+    readonly contentFingerprint?: unknown
+    readonly shellBuildFingerprint?: unknown
+  } | undefined
+  expect(durablePackClaim?.claimId).toBe(activePackClaim.claimId)
+  expect(durablePackClaim?.contentFingerprint).toMatch(/^[a-f0-9]{64}$/)
+  expect(durablePackClaim?.shellBuildFingerprint).toMatch(/^[a-f0-9]{64}$/)
 
   await page.getByRole("button", { name: "Review and submit simulation" }).click()
   expect(postcommitRequests).toEqual([])
@@ -427,6 +620,43 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
     await page.reload()
     await expect(page.getByRole("heading", { name: /Raw practice accuracy:/ })).toBeVisible()
   }
+})
+
+test("trusted retirement preserves a pinned simulation but blocks every new session", async ({
+  page
+}) => {
+  await page.goto("/simulations/")
+  const activePackClaim = await primeSimulationResultCache(page)
+  await page.getByLabel("Deterministic set seed").fill("before-retirement")
+  await page.getByRole("button", { name: "Start site-designed simulation" }).click()
+  await expect(page).toHaveURL(/\/simulations\/session\/sim-[a-z0-9-]+\/question\/1\/$/)
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible()
+
+  await retireActiveSimulationPack(page)
+  await page.reload()
+
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible()
+  const packs = await readStore(page, appDatabaseStores.offlinePacks)
+  expect(packs).toHaveLength(1)
+  expect(packs[0]?.status).toBe("retained")
+  const meta = await readStore(page, appDatabaseStores.meta)
+  expect(meta.some((record) => record.id === "active-offline-pack")).toBe(false)
+  expect(meta).toContainEqual(expect.objectContaining({
+    id: offlinePackRetirementId(activePackClaim.packId),
+    lifecycle: "retired",
+    packId: activePackClaim.packId,
+    releaseId: activePackClaim.releaseId,
+    packVersion: activePackClaim.packVersion
+  }))
+
+  await page.goto("/simulations/")
+  await page.getByLabel("Deterministic set seed").fill("after-retirement")
+  await page.getByRole("button", { name: "Start site-designed simulation" }).click()
+
+  await expect(page.getByRole("heading", { name: "Simulation was not created" }))
+    .toBeFocused()
+  await expect(page.getByRole("alert")).toContainText(/active offline-pack pointer is unavailable/i)
+  expect(await readStore(page, appDatabaseStores.simulationSessions)).toHaveLength(1)
 })
 
 test("restores a visual hazard simulation and keeps evaluated feedback after pack removal", async ({

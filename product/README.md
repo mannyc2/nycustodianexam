@@ -56,37 +56,21 @@ than emerging ad hoc in `apps/site`.
 
 ## Implementation status
 
-The accepted graph at `../apps/site`, `../apps/content-compiler`, and
-`../packages/content` is a controlled M1–M4 implementation proof, not a release
-or release certification. From the validated packs, its generator emits 63
-documents: two question routes, 18 visual hazard routes, 18 nonvisual hazard
-routes, four public tool pages, five simulation/print setup and opaque local
-shell documents, and the supporting documents needed to make up that closed
-output.
+The accepted graph at `../apps/site`, `../apps/content-compiler`,
+`../packages/content`, and `../packages/correction-intake`, plus the dormant
+`../apps/correction-worker`, is a controlled M1–M5 integration candidate—not a
+release or release certification. The generated closed site combines M4's
+deterministic question/visual/nonvisual simulations and exact-ID print products
+with M5's receipt-rooted pack lifecycle, authoritative local preferences,
+checksummed transfer/quarantine, scoped reset, and local-first correction drafts.
 
 Other planned destination families are intentionally absent when reviewed
 machine-readable content is unavailable; the implementation does not substitute
-placeholder pages for missing editorial inputs. M4 adds deterministic
-question/visual/nonvisual simulations and the print center. Its evaluated simulation
-records retain validated self-contained feedback, and its deterministic print
-jobs remain exact-ID-bound local records. M5 remains open, including explicit
-content-pack lifecycle, site settings, and corrections flows. Sitemap generation,
-the canonical production host, and deployment are also unresolved.
-
-Browser CI is configured. On the corrected PR #28 head, the exact pinned
-Chromium revision passed all 27 standard Vite-preview cases and all three local
-Cloudflare/workerd preview cases; the GitHub certification job also passed the
-configured Chromium, Firefox, and WebKit matrix. Four additional targeted
-Chromium application-database migration/lifecycle contracts pass locally with
-the installed system Chrome. These automated results do not replace the manual
-assistive-technology, device, true-zoom, and physical-print release matrix. The
-targeted M4 simulation/print matrix passes 42 cases across Chromium, Firefox,
-and WebKit plus its local Cloudflare/workerd method-routing case. The exact M4
-verification passes on Bun `1.4.0` and Node `22.22.0`, including 236 unit tests,
-the 63-document/106-safe-shell-URL production build, and
-artifact-closure/answer-leak verification. The earlier
-frozen offline install evidence still leaves `bun.lock` unchanged.
-`ARCHITECTURE_CONSTRAINTS.md` and the acceptance sections of the planning
-documents define the remaining evidence.
+placeholder pages for missing editorial inputs. The correction Worker remains
+dormant with no production bindings, routes, or data collection. The exact M4
+v4→v5 preservation, transfer/reset integration, pack-claim race ordering, and
+complete two-worker Chromium/Firefox/WebKit matrix pass on this combined
+revision. Manual certification, the canonical production host, credentials,
+and remote preview/deployment remain unresolved.
 
 A separately authored print-system deliverable discussed in an earlier chat was **not located** as a durable Library artifact during this pass. The recovered feature specification contains the durable print contract; chat-only recollections are not silently promoted into this repository.

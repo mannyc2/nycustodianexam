@@ -174,7 +174,7 @@ test("keyboard selection drives focus and polite status announcements", async ({
       ])
     )
 
-  const liveRegion = page.locator('[aria-live="polite"]')
+  const liveRegion = page.locator('[data-question-player] [aria-live="polite"]')
   await expect(liveRegion).toHaveAttribute("aria-atomic", "true")
   await expect(page.getByRole("group", { name: "Answer choices" })).toHaveAttribute(
     "aria-describedby",

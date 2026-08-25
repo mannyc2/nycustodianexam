@@ -1,15 +1,30 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-connectivity="offline" data-freshness="offline-stale">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Offline — NY Custodian Exam Study</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; script-src 'sha256-owMMxfn35PoVop8YLD3/at0uDGMNqzNAM7EAAq21yg0='; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; manifest-src 'self'; form-action 'none'">
+  <meta name="robots" content="noindex,follow">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/styles.css">
+  <title>Content unavailable offline — NY Custodian Exam Study</title>
 </head>
-<body>
-  <main>
-    <h1>This page is not in your offline pack</h1>
-    <p>Your saved study history is still on this device. Reconnect to download this page, or return to a page you opened previously.</p>
-    <p><a href="/">Return home</a></p>
+<body data-offline-route="status" data-status-kind="offline-unavailable">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <main class="page-shell" id="main-content" tabindex="-1">
+    <section class="hero">
+      <p class="eyebrow">Offline unavailable</p>
+      <h1>This study page is not available from the current local cache.</h1>
+      <p>Requested path: <code data-requested-target>the path shown in the address bar</code>.</p>
+      <p>The requested address remains in your browser. Your saved study history is still on this device; no substitute page or newer content was inferred.</p>
+    </section>
+    <section class="card-grid" aria-label="Recovery options">
+      <article class="card"><h2>Reconnect and retry</h2><p>Reconnect, then request the exact same address again.</p><a data-recovery-link="retry-requested-path" href="">Retry requested path</a></article>
+      <article class="card"><h2>Manage offline content</h2><p>Inspect already verified packs or remove an inactive pack to free space.</p><a data-recovery-link="offline-packs" href="/offline/">Open offline packs</a></article>
+      <article class="card"><h2>Use local settings</h2><p>Export or reset local study data without sending it anywhere.</p><a data-recovery-link="settings" href="/settings/">Open settings</a></article>
+      <article class="card"><h2>Return to a cached entry point</h2><p>Only links already present in the current shell or active pack will work offline.</p><a data-recovery-link="home" href="/">Return home</a></article>
+    </section>
   </main>
+  <script>(()=>{const target=document.querySelector("[data-requested-target]");if(target instanceof HTMLElement)target.textContent=window.location.pathname})()</script>
 </body>
 </html>

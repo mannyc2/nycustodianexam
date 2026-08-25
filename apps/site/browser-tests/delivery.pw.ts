@@ -16,13 +16,16 @@ test("@cloudflare serves canonical nested documents with the intended route iden
   }
 })
 
-test("@cloudflare keeps the static atlas runtime-free and the initial question closure answer-free", async ({
+test("@cloudflare keeps the static atlas free of interactive runtime and the initial question closure answer-free", async ({
   request
 }) => {
   const atlas = await request.get("/atlas/tool/pipe-wrench/")
   const atlasHtml = await atlas.text()
   expect(atlas.status()).toBe(200)
-  expect(atlasHtml).not.toMatch(/<script\b/i)
+  const atlasScripts = [...atlasHtml.matchAll(/<script\b[^>]*>/gi)].map(([script]) => script)
+  expect(atlasScripts).toHaveLength(1)
+  expect(atlasScripts[0]).toMatch(/type="module"/)
+  expect(atlasScripts[0]).toMatch(/src="\/assets\/preferences-boot-[^"]+\.js"/)
   expect(atlasHtml).not.toMatch(/react|effect/i)
 
   const question = await request.get(questionPath)
@@ -38,6 +41,7 @@ test("@cloudflare returns the truthful noindex status document for an unknown pa
 }) => {
   const response = await page.goto("/definitely-not-a-published-study-page/")
   expect(response?.status()).toBe(404)
+  expect(new URL(page.url()).pathname).toBe("/definitely-not-a-published-study-page/")
   await expect(page.locator("body")).toHaveAttribute("data-route-id", "status")
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex,follow")
   await expect(page.locator('link[rel="canonical"]')).toHaveCount(0)

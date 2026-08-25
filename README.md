@@ -222,16 +222,16 @@ production-art candidates.
 
 Product planning now includes a canonical route registry, legal page-state
 machines, a composition-first React component architecture, and a maintained
-design system. The Bun workspace at `apps/site`, `apps/content-compiler`, and
-`packages/content` is now a controlled M1–M4 implementation proof, not a
-release or release certification.
+design system. The Bun workspace, shared correction contract, and dormant
+correction Worker are now a controlled integrated M1–M5 implementation proof,
+not a release or release certification.
 
 The Effect v4/Bun R2.1–R2.10 program plus reconciled R2.90 synthesis are closed,
 their accepted conclusions are promoted, and the pre-normalization corpus is
 recoverable at the immutable archive coordinate above. From the currently
-validated packs, the generator emits 63 documents, including two question
+validated packs, the generator emits 70 documents, including two question
 routes, 18 visual and 18 nonvisual hazard routes, four public tool pages, and
-five simulation/print setup and opaque local-shell documents.
+the simulation, print, offline, settings, reporting, and recovery surfaces.
 Destination families for which reviewed machine-readable content is not
 available are intentionally omitted; they are not represented by placeholder
 pages.
@@ -239,20 +239,21 @@ pages.
 M4 now includes selectable question, visual-hazard, and nonvisual-hazard
 simulations plus deterministic local print jobs and exact local preview routes.
 Evaluated simulations retain their validated feedback independently of later
-pack-cache removal. M5 remains open, including the explicit content-pack
-lifecycle, site settings, and corrections flows. Sitemap and
-canonical-host decisions and deployment also remain open. The exact local
+pack-cache removal. M5 adds an exact receipt-bound pack lifecycle, trusted
+retirement, local settings/import/export/reset/rebuild flows, local-first
+correction drafts, and a separately owned correction Worker that is implemented
+but intentionally dormant. The canonical host, Cloudflare credentials, remote
+preview, production deployment, and manual certification remain open. The exact local
 deterministic gate passes on Bun `1.4.0` and Node `22.22.0`: maintained-layout
-and module-boundary checks, all 396 visual hashes, three-workspace typechecks,
-236 unit tests, the 63-document/106-safe-shell-URL production build, and artifact
+and module-boundary checks, all 396 visual hashes, five-workspace typechecks,
+324 unit tests, the 70-document/46-safe-shell-URL production build, and artifact
 closure and answer-leak verification. A frozen offline install also preserves `bun.lock`
-byte-for-byte. The targeted M4 simulation/print matrix passes 42 cases across
-Chromium, Firefox, and WebKit, plus the local Cloudflare/workerd method-routing
-case. Browser CI is configured, and the exact pinned Chromium revision
-passes all 27 standard Vite-preview cases plus all three Cloudflare-preview
-delivery cases locally, including the true-BFCache contracts. The complete
-repository browser matrix and manual release certification remain separate
-release gates.
+byte-for-byte. The complete CI-parity browser suite passes 166 cases across
+Chromium, Firefox, and WebKit with 26 intentional project-specific skips. Local
+workerd smokes also pass for Static Assets terminal routing and the disabled
+correction boundary. Browser CI and guarded, credential-free remote-preview and
+production workflows are configured; the manual release matrix remains a
+production blocker.
 
 See [`AGENTS.md`](AGENTS.md) and [`CONTRIBUTING.md`](CONTRIBUTING.md) before
 making changes.

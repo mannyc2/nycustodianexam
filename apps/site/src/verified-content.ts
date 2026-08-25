@@ -225,6 +225,17 @@ const responseForCache = (
   return new Response(verified.buffer.slice(0), { headers, status: 200 })
 }
 
+export const verifiedContentResponseForCache = (
+  receipt: {
+    readonly bytes: number
+    readonly kind: "asset" | "postcommit"
+    readonly path: string
+    readonly sha256: string
+  },
+  buffer: ArrayBuffer,
+  contentType: string
+): Response => responseForCache({ buffer, contentType }, receipt)
+
 const unavailable = (
   reason: VerifiedContentUnavailable["reason"],
   path: string,
