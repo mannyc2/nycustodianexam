@@ -196,6 +196,9 @@ select
 ```
 
 An in-memory-only commit does not authorize reveal after persistence failure.
+Question, hazard, and review state share one private application database and
+one scoped connection owner; feature persistence capabilities do not open or
+version independent databases.
 
 ## Authority rule
 
@@ -244,9 +247,10 @@ deterministic gate passes on Bun `1.4.0` and Node `22.22.0`: maintained-layout
 and module-boundary checks, all 396 visual hashes, three-workspace typechecks,
 165 unit tests, the 58-document production build, and artifact closure and
 answer-leak verification. A frozen offline install also preserves `bun.lock`
-byte-for-byte. Browser CI is configured, but this revision has not run locally
-in real browsers because loopback escalation is unavailable, and it cannot run
-remotely until the branch is pushed. Browser and release certification therefore
-remain pending.
+byte-for-byte. Browser CI is configured, and the four targeted Chromium
+app-database migration/lifecycle contracts pass locally. The complete matrix
+has not run: Playwright-managed browser binaries are absent, the installed
+system Chrome disables true BFCache by command line, and remote execution waits
+for a branch push. Browser and release certification therefore remain pending.
 
 See [`AGENTS.md`](AGENTS.md) and [`CONTRIBUTING.md`](CONTRIBUTING.md).

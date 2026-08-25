@@ -15,7 +15,7 @@ import {
   HazardAttemptRecord,
   HazardPersistence
 } from "../src/hazard-player/persistence.ts"
-import { AttemptRecord, StudyPersistence } from "../src/question-player/persistence.ts"
+import { QuestionAttemptRecord, QuestionPersistence } from "../src/question-player/persistence.ts"
 import { ReviewQueueBootstrap } from "../src/review/model.ts"
 import { VerifiedContent } from "../src/verified-content.ts"
 import {
@@ -192,7 +192,7 @@ const bootstrap = Schema.decodeUnknownSync(ReviewQueueBootstrap)({
   ]
 })
 
-const questionAttempt = new AttemptRecord({
+const questionAttempt = new QuestionAttemptRecord({
   id: questionAttemptId(questionReceipt),
   questionId: "q-1",
   selectedOptionId: "a",
@@ -232,15 +232,15 @@ const nonvisualAttempt = new HazardAttemptRecord({
 const layerFor = (input?: {
   readonly acknowledgements?: ReadonlyArray<ReviewAcknowledgementRecord>
   readonly hazardAttempts?: ReadonlyArray<HazardAttemptRecord>
-  readonly questionAttempts?: ReadonlyArray<AttemptRecord>
+  readonly questionAttempts?: ReadonlyArray<QuestionAttemptRecord>
   readonly requestedUrls?: Array<string>
 }) => {
   const acknowledgements = input?.acknowledgements ?? []
   const requestedUrls = input?.requestedUrls ?? []
   return Layer.mergeAll(
     Layer.succeed(
-      StudyPersistence,
-      StudyPersistence.of({
+      QuestionPersistence,
+      QuestionPersistence.of({
         commitAttempt: () => Effect.die("not used"),
         findAttempt: () => Effect.succeed(undefined),
         listAttempts: () => Effect.succeed(input?.questionAttempts ?? [])
@@ -346,7 +346,7 @@ describe("review projection", () => {
       postcommitPath: "/content/vertical-slice/questions/q-retired.postcommit.json",
       postcommitSha256: "d".repeat(64)
     }
-    const unavailableAttempt = new AttemptRecord({
+    const unavailableAttempt = new QuestionAttemptRecord({
       id: questionAttemptId(retiredReceipt),
       questionId: "q-retired",
       selectedOptionId: "a",
@@ -380,7 +380,7 @@ describe("review projection", () => {
       packVersion: 2,
       postcommitSha256: "e".repeat(64)
     }
-    const replacedAttempt = new AttemptRecord({
+    const replacedAttempt = new QuestionAttemptRecord({
       ...questionAttempt,
       id: questionAttemptId(replacedReceipt),
       receipt: replacedReceipt
@@ -404,7 +404,7 @@ describe("review projection", () => {
         bootstrap.questions[0]!,
         questionFeedback()
       )
-      const inverseAttempt = new AttemptRecord({
+      const inverseAttempt = new QuestionAttemptRecord({
         ...questionAttempt,
         selectedOptionId: "b",
         reviewIntent: "unflagged"

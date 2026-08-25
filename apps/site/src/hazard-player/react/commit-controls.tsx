@@ -22,8 +22,12 @@ export const HazardCommitControls = () => {
       <section className="feedback feedback-error" role="alert">
         <h2 ref={meta.errorHeadingRef} tabIndex={-1}>Study storage is unavailable</h2>
         <p>{state.message}</p>
-        <button className="button button-primary" onClick={actions.retryRestore} type="button">
-          Retry storage
+        <button
+          className="button button-primary"
+          onClick={() => window.location.reload()}
+          type="button"
+        >
+          Reload scene
         </button>
       </section>
     )

@@ -2,7 +2,7 @@ import { it } from "@effect/vitest"
 import { deepStrictEqual, strictEqual } from "@effect/vitest/utils"
 import { Effect, Layer } from "effect"
 import { questionAttemptId, type QuestionAttemptReceipt } from "../src/attempt-receipt.ts"
-import { AttemptRecord, StudyPersistence } from "../src/question-player/persistence.ts"
+import { QuestionAttemptRecord, QuestionPersistence } from "../src/question-player/persistence.ts"
 import {
   commitSelectionAndReveal,
   restoreSelectionAndReveal
@@ -37,8 +37,8 @@ const receipt: QuestionAttemptReceipt = {
 }
 
 const attempt = (
-  input: Parameters<StudyPersistence["Service"]["commitAttempt"]>[0]
-): AttemptRecord => new AttemptRecord({
+  input: Parameters<QuestionPersistence["Service"]["commitAttempt"]>[0]
+): QuestionAttemptRecord => new QuestionAttemptRecord({
   id: questionAttemptId(input.receipt),
   questionId: input.receipt.questionId,
   selectedOptionId: input.selectedOptionId,
@@ -78,16 +78,16 @@ it.effect("loads answer material only after the durable commit settles", () => {
       }
     }),
     Layer.succeed(
-    StudyPersistence,
-    StudyPersistence.of({
-      commitAttempt: (input) =>
-        Effect.sync(() => {
-          sequence.push("commit")
-          return attempt(input)
-        }),
-      findAttempt: () => Effect.succeed(undefined),
-      listAttempts: noAttempts
-    })
+      QuestionPersistence,
+      QuestionPersistence.of({
+        commitAttempt: (input) =>
+          Effect.sync(() => {
+            sequence.push("commit")
+            return attempt(input)
+          }),
+        findAttempt: () => Effect.succeed(undefined),
+        listAttempts: noAttempts
+      })
     )
   )
 
@@ -109,16 +109,16 @@ it.effect("fails closed when the answer payload belongs to another question", ()
   const testLayer = Layer.mergeAll(
     verifiedLayer({ loadJson: () => postcommitPayload("q-other") }),
     Layer.succeed(
-    StudyPersistence,
-    StudyPersistence.of({
-      commitAttempt: (input) =>
-        Effect.sync(() => {
-          commitCount += 1
-          return attempt(input)
-        }),
-      findAttempt: () => Effect.succeed(undefined),
-      listAttempts: noAttempts
-    })
+      QuestionPersistence,
+      QuestionPersistence.of({
+        commitAttempt: (input) =>
+          Effect.sync(() => {
+            commitCount += 1
+            return attempt(input)
+          }),
+        findAttempt: () => Effect.succeed(undefined),
+        listAttempts: noAttempts
+      })
     )
   )
 
@@ -148,13 +148,13 @@ it.effect("fails closed when rationale references do not close over the availabl
       })
     }),
     Layer.succeed(
-    StudyPersistence,
-    StudyPersistence.of({
-      commitAttempt: (input) =>
-        Effect.succeed(attempt(input)),
-      findAttempt: () => Effect.succeed(undefined),
-      listAttempts: noAttempts
-    })
+      QuestionPersistence,
+      QuestionPersistence.of({
+        commitAttempt: (input) =>
+          Effect.succeed(attempt(input)),
+        findAttempt: () => Effect.succeed(undefined),
+        listAttempts: noAttempts
+      })
     )
   )
 
@@ -195,8 +195,8 @@ it.effect("does not persist when the exact feedback becomes unavailable before c
       unavailable
     }),
     Layer.succeed(
-      StudyPersistence,
-      StudyPersistence.of({
+      QuestionPersistence,
+      QuestionPersistence.of({
         commitAttempt: (input) => Effect.sync(() => {
           commitCount += 1
           return attempt(input)
@@ -235,8 +235,8 @@ it.effect("preflights an unanswered restore without loading answer bytes", () =>
       }
     }),
     Layer.succeed(
-      StudyPersistence,
-      StudyPersistence.of({
+      QuestionPersistence,
+      QuestionPersistence.of({
         commitAttempt: (input) => Effect.succeed(attempt(input)),
         findAttempt: () => Effect.succeed(undefined),
         listAttempts: noAttempts

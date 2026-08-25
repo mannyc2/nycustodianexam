@@ -1,7 +1,7 @@
 import { Context, Effect, Schema } from "effect"
 
 export const appDatabaseName = "nycustodian-study-v1"
-export const appDatabaseVersion = 2
+export const appDatabaseVersion = 3
 
 export const appDatabaseStores = {
   meta: "meta",

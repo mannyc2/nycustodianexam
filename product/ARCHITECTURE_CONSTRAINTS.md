@@ -390,8 +390,9 @@ Implemented by the first scaffold:
   catalog and text `bun.lock`;
 - isolated root workspaces and exact root configuration;
 - concrete Schema content models and deterministic split compiler diagnostics;
-- scoped IndexedDB service/Layer modules, one browser `ManagedRuntime`, and a
-  renderer-neutral question controller with semantic commands;
+- one private scoped IndexedDB `AppDatabase` Layer, injected feature persistence
+  capabilities, one browser `ManagedRuntime`, and renderer-neutral question,
+  hazard, and review controllers with semantic commands;
 - generated static/island route closures, canonical/robots output,
   service-worker asset closure, and maintained design tokens; and
 - automated typecheck, unit, commit-before-fetch, static-isolation,
@@ -412,8 +413,9 @@ Evidence still open:
 - service-worker version/eviction/update, remaining-browser offline, and
   explicit-pack proof;
 - Cloudflare configuration and any separately authorized Worker endpoint;
-- executed Playwright, accessibility, zoom/reflow, keyboard, performance, and
-  complete offline gates;
+- the complete Playwright browser/accessibility/zoom/reflow/keyboard,
+  performance, and offline matrix beyond the targeted Chromium
+  application-database contracts;
 - first-party observability/analytics choice, if any;
 - correction endpoint implementation/storage;
 - custom-domain/canonical-host configuration.

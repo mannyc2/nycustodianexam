@@ -1,12 +1,12 @@
 import { Layer, ManagedRuntime } from "effect"
 import { hazardPersistenceLive } from "./hazard-player/persistence.ts"
-import { studyPersistenceLive } from "./question-player/persistence.ts"
+import { questionPersistenceLive } from "./question-player/persistence.ts"
 import { reviewPersistenceLive } from "./review/persistence.ts"
 import { appDatabaseLive } from "./study-storage/app-database.ts"
 import { liveVerifiedContent } from "./verified-content.ts"
 
 const persistenceLayer = Layer.mergeAll(
-  studyPersistenceLive,
+  questionPersistenceLive,
   hazardPersistenceLive,
   reviewPersistenceLive
 ).pipe(Layer.provide(appDatabaseLive))

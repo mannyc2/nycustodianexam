@@ -207,7 +207,7 @@ Those results belong to the then-current one-question slice. They remain useful
 historical evidence, but do not constitute final verification of the expanded
 revision.
 
-**Current M1–M3 implementation evidence (2026-08-23):**
+**Current M1–M3 implementation evidence (2026-08-25):**
 
 - the validated packs generate a closed set of 58 documents, including two
   question routes, 18 visual hazard routes, 18 nonvisual hazard routes, and four
@@ -219,9 +219,10 @@ revision.
   three-workspace typechecks, 165 unit tests, the 58-document/92-safe-shell-URL
   production build, artifact closure and answer-leak verification, and a frozen
   offline install that preserves `bun.lock` byte-for-byte; while
-- browser CI is configured, but the current revision has not run locally in
-  real browsers because loopback escalation is unavailable, and has not run
-  remotely because the branch has not been pushed.
+- browser CI is configured, and four targeted Chromium application-database
+  migration/lifecycle contracts pass locally with the installed system Chrome;
+  the complete browser matrix has not run locally, and no remote browser run
+  exists because the branch has not been pushed.
 
 **Implementation evidence still open:**
 
@@ -241,11 +242,12 @@ revision.
 Decision criteria remain: indexable static HTML; installable/offline PWA; explicit versioned content packs; local-first progress; deterministic print and simulations; WCAG behavior; no pre-answer leakage; low operating cost; minimal backend.
 
 **Status:** RESOLVED BASELINE / CONTROLLED M1–M3 IMPLEMENTATION PROOF, NOT A
-RELEASE. Local deterministic verification passes; browser execution for this
-revision, M4/M5, the canonical host, sitemap, deployment, and release
-certification remain open. P16 remains in this ledger for provenance; failures
-in the scaffold may reopen a bounded implementation decision, but do not
-silently restore superseded defaults.
+RELEASE. Local deterministic verification and the targeted Chromium
+application-database contracts pass; the complete browser matrix, M4/M5, the
+canonical host, sitemap, deployment, and release certification remain open. P16
+remains in this ledger for provenance; failures in the scaffold may reopen a
+bounded implementation decision, but do not silently restore superseded
+defaults.
 
 ### P17 — Domain / canonical host
 Preferred naming direction: NYCustodianExam / NY Custodian Exam. Domain registration/canonical production host not established in corpus.

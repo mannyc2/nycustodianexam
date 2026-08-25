@@ -12,19 +12,25 @@ deterministic unit and worker-harness checks.
 
 ## Current execution status
 
-Browser CI is configured, but this revision has not been run locally because
-the required loopback escalation is unavailable. It has not run remotely
-because the branch has not been pushed. The cases below describe configured
-coverage, not passing runtime evidence for the current revision. Browser
-TypeScript and Playwright discovery pass locally for 87 cases across seven test
-files.
+Browser CI is configured, but the branch has not been pushed and the complete
+matrix has not run remotely. On this revision, browser TypeScript and Playwright
+discovery pass locally for 90 cases across seven test files. The four targeted
+Chromium app-database contracts pass with the installed system Chrome:
+pre-quarantine v2 upgrade plus resumable import, missing-legacy-database safety,
+bounded blocked-upgrade reload recovery, and persisted page-lifecycle reconnect. The
+installed Chrome is launched with BFCache disabled by command line, and the
+Playwright-managed browser binaries are not installed, so true BFCache and the
+complete browser matrix remain open.
 
 ## Configured automated coverage
 
 - Chromium, Firefox, and WebKit: IndexedDB commit, reload reconciliation,
-  injected write failure, keyboard selection/submission, focus transfer, live
-  region mutations, axe WCAG A/AA checks, 320 CSS-pixel reflow, minimum target
-  sizing, forced colors, reduced motion, and print-media visibility.
+  shared-database upgrade, bounded failure and reload recovery when an older tab
+  blocks that upgrade, validated resumable legacy import, migration quarantine,
+  page-lifecycle reconnect, injected write failure, keyboard
+  selection/submission, focus transfer, live region mutations, axe WCAG A/AA
+  checks, 320 CSS-pixel reflow, minimum target sizing, forced colors, reduced
+  motion, and print-media visibility.
 - Chromium: service-worker-controlled offline reload after a committed answer,
   update waiting while a session client is active, deterministic cache namespace
   rollover, owned-cache eviction, preservation of unrelated caches, verified
@@ -53,8 +59,9 @@ adding a production-only update endpoint.
   IndexedDB question behavior here, but their service-worker/offline/update
   lifecycle remains a separate real-browser gate.
 - The injected failure proves commit-before-reveal for a thrown read-write
-  transaction. Real quota exhaustion, eviction, blocked upgrades, multi-tab
-  aborts, and disposal races are not certified by that injection.
+  transaction. The blocked-upgrade contract covers one uncooperative prior-v2
+  tab; real quota exhaustion, eviction, other multi-tab aborts, and disposal
+  races remain uncertified.
 - The M1–M3 proof is not the product's complete explicit
   download/verify/activate/rollback content-pack lifecycle.
 - Print media hides screen chrome and retains revealed feedback, but the current

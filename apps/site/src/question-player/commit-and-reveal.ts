@@ -3,7 +3,7 @@ import { Effect, Schema } from "effect"
 import type { QuestionAttemptReceipt } from "../attempt-receipt.ts"
 import { VerifiedContent } from "../verified-content.ts"
 import type { ReviewIntent } from "./state.ts"
-import { StudyPersistence } from "./persistence.ts"
+import { QuestionPersistence } from "./persistence.ts"
 
 export class RevealError extends Schema.TaggedError<RevealError>()("RevealError", {
   detail: Schema.String,
@@ -92,7 +92,7 @@ export const commitSelectionAndReveal = Effect.fn("QuestionWorkflow.commitSelect
   )
   if (availability.tag === "content_unavailable") return availability
 
-  const persistence = yield* StudyPersistence
+  const persistence = yield* QuestionPersistence
   const attempt = yield* persistence.commitAttempt({
     receipt: input.receipt,
     optionIds: input.optionIds,
@@ -117,7 +117,7 @@ export const restoreSelectionAndReveal = Effect.fn("QuestionWorkflow.restoreSele
     readonly optionIds: readonly string[]
   }
 ) {
-  const persistence = yield* StudyPersistence
+  const persistence = yield* QuestionPersistence
   const attempt = yield* persistence.findAttempt(input)
   if (attempt === undefined) {
     const verifiedContent = yield* VerifiedContent
@@ -146,7 +146,7 @@ export const retryReveal = Effect.fn("QuestionWorkflow.retryReveal")(function*(
     readonly optionIds: readonly string[]
   }
 ) {
-  const persistence = yield* StudyPersistence
+  const persistence = yield* QuestionPersistence
   const attempt = yield* persistence.findAttempt(input)
   if (attempt === undefined) {
     return yield* new RevealError({

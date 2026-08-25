@@ -19,7 +19,9 @@ const OptionIds = Schema.Array(Schema.NonEmptyString).check(
   )
 )
 
-export class AttemptRecord extends Schema.Class<AttemptRecord>("AttemptRecord")({
+export class QuestionAttemptRecord extends Schema.Class<QuestionAttemptRecord>(
+  "QuestionAttemptRecord"
+)({
   id: Schema.NonEmptyString,
   questionId: Schema.NonEmptyString,
   selectedOptionId: Schema.NonEmptyString,
@@ -29,11 +31,14 @@ export class AttemptRecord extends Schema.Class<AttemptRecord>("AttemptRecord")(
   optionIds: Schema.optionalKey(OptionIds)
 }) {}
 
-export class PersistenceError extends Schema.TaggedError<PersistenceError>()("PersistenceError", {
-  operation: Schema.String,
-  detail: Schema.String,
-  cause: Schema.Unknown
-}) {}
+export class QuestionPersistenceError extends Schema.TaggedError<QuestionPersistenceError>()(
+  "QuestionPersistenceError",
+  {
+    operation: Schema.String,
+    detail: Schema.String,
+    cause: Schema.Unknown
+  }
+) {}
 
 export interface CommitAttemptInput {
   readonly receipt: QuestionAttemptReceiptValue
@@ -47,31 +52,34 @@ export interface FindAttemptInput {
   readonly optionIds: ReadonlyArray<string>
 }
 
-export class StudyPersistence extends Context.Service<
-  StudyPersistence,
+export class QuestionPersistence extends Context.Service<
+  QuestionPersistence,
   {
     readonly commitAttempt: (
       input: CommitAttemptInput
-    ) => Effect.Effect<AttemptRecord, PersistenceError>
+    ) => Effect.Effect<QuestionAttemptRecord, QuestionPersistenceError>
     readonly findAttempt: (
       input: FindAttemptInput
-    ) => Effect.Effect<AttemptRecord | undefined, PersistenceError>
-    readonly listAttempts: () => Effect.Effect<ReadonlyArray<AttemptRecord>, PersistenceError>
+    ) => Effect.Effect<QuestionAttemptRecord | undefined, QuestionPersistenceError>
+    readonly listAttempts: () => Effect.Effect<
+      ReadonlyArray<QuestionAttemptRecord>,
+      QuestionPersistenceError
+    >
   }
->()("@nycustodian/site/StudyPersistence") {}
+>()("@nycustodian/site/QuestionPersistence") {}
 
 const attemptsStore = appDatabaseStores.questionAttempts
 const sessionsStore = appDatabaseStores.questionSessions
 
-const persistenceError = (operation: string, cause: unknown): PersistenceError =>
-  new PersistenceError({
+const persistenceError = (operation: string, cause: unknown): QuestionPersistenceError =>
+  new QuestionPersistenceError({
     operation,
     detail: cause instanceof Error ? cause.message : "IndexedDB operation failed",
     cause
   })
 
-const databasePersistenceError = (cause: AppDatabaseError): PersistenceError =>
-  new PersistenceError({
+const databasePersistenceError = (cause: AppDatabaseError): QuestionPersistenceError =>
+  new QuestionPersistenceError({
     operation: cause.operation,
     detail: cause.detail,
     cause
@@ -81,15 +89,15 @@ const sameStrings = (left: ReadonlyArray<string>, right: ReadonlyArray<string>):
   left.length === right.length && left.every((value, index) => value === right[index])
 
 export const hasBoundQuestionReceipt = (
-  attempt: AttemptRecord
-): attempt is AttemptRecord & {
+  attempt: QuestionAttemptRecord
+): attempt is QuestionAttemptRecord & {
   readonly receipt: QuestionAttemptReceiptValue
   readonly optionIds: ReadonlyArray<string>
 } => attempt.receipt !== undefined && attempt.optionIds !== undefined
 
 const validateExpectation = (
   input: FindAttemptInput
-): PersistenceError | undefined => {
+): QuestionPersistenceError | undefined => {
   try {
     Schema.decodeUnknownSync(QuestionAttemptReceipt)(input.receipt)
     Schema.decodeUnknownSync(OptionIds)(input.optionIds)
@@ -105,7 +113,7 @@ const validateExpectation = (
   return undefined
 }
 
-const validateCommitInput = (input: CommitAttemptInput): PersistenceError | undefined => {
+const validateCommitInput = (input: CommitAttemptInput): QuestionPersistenceError | undefined => {
   const invalidExpectation = validateExpectation(input)
   if (invalidExpectation !== undefined) return invalidExpectation
   if (!input.optionIds.includes(input.selectedOptionId)) {
@@ -117,7 +125,7 @@ const validateCommitInput = (input: CommitAttemptInput): PersistenceError | unde
   return undefined
 }
 
-const validateStoredAttempt = (attempt: AttemptRecord): AttemptRecord => {
+const validateStoredAttempt = (attempt: QuestionAttemptRecord): QuestionAttemptRecord => {
   if (attempt.optionIds !== undefined) {
     Schema.decodeUnknownSync(OptionIds)(attempt.optionIds)
     if (!attempt.optionIds.includes(attempt.selectedOptionId)) {
@@ -137,17 +145,17 @@ const validateStoredAttempt = (attempt: AttemptRecord): AttemptRecord => {
   return attempt
 }
 
-const matchesExpectation = (attempt: AttemptRecord, input: FindAttemptInput): boolean =>
+const matchesExpectation = (attempt: QuestionAttemptRecord, input: FindAttemptInput): boolean =>
   hasBoundQuestionReceipt(attempt) &&
   sameQuestionReceipt(attempt.receipt, input.receipt) &&
   sameStrings(attempt.optionIds, input.optionIds)
 
-const sameCommittedInput = (attempt: AttemptRecord, input: CommitAttemptInput): boolean =>
+const sameCommittedInput = (attempt: QuestionAttemptRecord, input: CommitAttemptInput): boolean =>
   matchesExpectation(attempt, input) &&
   attempt.selectedOptionId === input.selectedOptionId &&
   attempt.reviewIntent === input.reviewIntent
 
-const commitAttempt = Effect.fn("StudyPersistence.commitAttempt")(function*(
+const commitAttempt = Effect.fn("QuestionPersistence.commitAttempt")(function*(
   database: IDBDatabase,
   input: CommitAttemptInput,
   committedAt: number
@@ -157,19 +165,21 @@ const commitAttempt = Effect.fn("StudyPersistence.commitAttempt")(function*(
 
   return yield* Effect.tryPromise({
     try: () =>
-      new Promise<AttemptRecord>((resolve, reject) => {
+      new Promise<QuestionAttemptRecord>((resolve, reject) => {
         const transaction = database.transaction([attemptsStore, sessionsStore], "readwrite")
         const attempts = transaction.objectStore(attemptsStore)
         const sessions = transaction.objectStore(sessionsStore)
         const id = questionAttemptId(input.receipt)
-        let committed: AttemptRecord | undefined
+        let committed: QuestionAttemptRecord | undefined
         const getRequest = attempts.get(id)
 
         getRequest.onsuccess = () => {
           try {
             const stored = getRequest.result as unknown
             if (stored !== undefined) {
-              const existing = validateStoredAttempt(Schema.decodeUnknownSync(AttemptRecord)(stored))
+              const existing = validateStoredAttempt(
+                Schema.decodeUnknownSync(QuestionAttemptRecord)(stored)
+              )
               if (!sameCommittedInput(existing, input)) {
                 transaction.abort()
                 reject(new Error("This question attempt already has different immutable data"))
@@ -177,7 +187,7 @@ const commitAttempt = Effect.fn("StudyPersistence.commitAttempt")(function*(
               }
               committed = existing
             } else {
-              committed = new AttemptRecord({
+              committed = new QuestionAttemptRecord({
                 id,
                 questionId: input.receipt.questionId,
                 selectedOptionId: input.selectedOptionId,
@@ -214,7 +224,7 @@ const commitAttempt = Effect.fn("StudyPersistence.commitAttempt")(function*(
   })
 })
 
-const findAttempt = Effect.fn("StudyPersistence.findAttempt")(function*(
+const findAttempt = Effect.fn("QuestionPersistence.findAttempt")(function*(
   database: IDBDatabase,
   input: FindAttemptInput
 ) {
@@ -223,7 +233,7 @@ const findAttempt = Effect.fn("StudyPersistence.findAttempt")(function*(
 
   return yield* Effect.tryPromise({
     try: () =>
-      new Promise<AttemptRecord | undefined>((resolve, reject) => {
+      new Promise<QuestionAttemptRecord | undefined>((resolve, reject) => {
         const transaction = database.transaction(attemptsStore, "readonly")
         const request = transaction.objectStore(attemptsStore).get(questionAttemptId(input.receipt))
         request.onsuccess = () => {
@@ -233,7 +243,7 @@ const findAttempt = Effect.fn("StudyPersistence.findAttempt")(function*(
               return
             }
             const attempt = validateStoredAttempt(
-              Schema.decodeUnknownSync(AttemptRecord)(request.result)
+              Schema.decodeUnknownSync(QuestionAttemptRecord)(request.result)
             )
             if (!matchesExpectation(attempt, input)) {
               reject(new Error("The saved question attempt does not match this release receipt"))
@@ -251,21 +261,21 @@ const findAttempt = Effect.fn("StudyPersistence.findAttempt")(function*(
   })
 })
 
-const listAttempts = Effect.fn("StudyPersistence.listAttempts")(function*(
+const listAttempts = Effect.fn("QuestionPersistence.listAttempts")(function*(
   database: IDBDatabase
 ) {
   return yield* Effect.tryPromise({
     try: () =>
-      new Promise<ReadonlyArray<AttemptRecord>>((resolve, reject) => {
+      new Promise<ReadonlyArray<QuestionAttemptRecord>>((resolve, reject) => {
         const transaction = database.transaction(attemptsStore, "readonly")
         const request = transaction.objectStore(attemptsStore).getAll()
-        let decoded: ReadonlyArray<AttemptRecord> | undefined
+        let decoded: ReadonlyArray<QuestionAttemptRecord> | undefined
 
         request.onsuccess = () => {
           try {
             decoded = request.result
               .map((record) =>
-                validateStoredAttempt(Schema.decodeUnknownSync(AttemptRecord)(record))
+                validateStoredAttempt(Schema.decodeUnknownSync(QuestionAttemptRecord)(record))
               )
               .sort((left, right) =>
                 left.committedAt - right.committedAt || left.id.localeCompare(right.id)
@@ -289,25 +299,25 @@ const listAttempts = Effect.fn("StudyPersistence.listAttempts")(function*(
   })
 })
 
-export const studyPersistenceLive = Layer.effect(
-  StudyPersistence,
+export const questionPersistenceLive = Layer.effect(
+  QuestionPersistence,
   Effect.gen(function*() {
     const appDatabase = yield* AppDatabase
     const connection = appDatabase.connection.pipe(
       Effect.mapError(databasePersistenceError)
     )
 
-    return StudyPersistence.of({
-      commitAttempt: Effect.fn("StudyPersistence.commitAttempt.live")(function*(input) {
+    return QuestionPersistence.of({
+      commitAttempt: Effect.fn("QuestionPersistence.commitAttempt.live")(function*(input) {
         const database = yield* connection
         const committedAt = yield* Clock.currentTimeMillis
         return yield* commitAttempt(database, input, committedAt)
       }),
-      findAttempt: Effect.fn("StudyPersistence.findAttempt.live")(function*(input) {
+      findAttempt: Effect.fn("QuestionPersistence.findAttempt.live")(function*(input) {
         const database = yield* connection
         return yield* findAttempt(database, input)
       }),
-      listAttempts: Effect.fn("StudyPersistence.listAttempts.live")(function*() {
+      listAttempts: Effect.fn("QuestionPersistence.listAttempts.live")(function*() {
         const database = yield* connection
         return yield* listAttempts(database)
       })

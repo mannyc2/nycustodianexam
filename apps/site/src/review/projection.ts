@@ -13,8 +13,8 @@ import {
 } from "../hazard-player/persistence.ts"
 import {
   hasBoundQuestionReceipt,
-  StudyPersistence,
-  type AttemptRecord
+  QuestionPersistence,
+  type QuestionAttemptRecord
 } from "../question-player/persistence.ts"
 import { loadReviewContent } from "./content.ts"
 import type {
@@ -91,7 +91,7 @@ const itemWithReasons = (
 export const deriveQuestionReviewItem = Effect.fn(
   "ReviewProjection.deriveQuestionReviewItem"
 )(function*(
-  attempt: AttemptRecord,
+  attempt: QuestionAttemptRecord,
   source: ReviewQuestionSource,
   payload: PostcommitQuestion
 ) {
@@ -204,7 +204,7 @@ export const deriveVisualHazardReviewItem = Effect.fn(
 })
 
 const loadQuestionItem = Effect.fn("ReviewProjection.loadQuestionItem")(function*(
-  attempt: AttemptRecord,
+  attempt: QuestionAttemptRecord,
   source: ReviewQuestionSource
 ) {
   const unknownPayload = yield* loadReviewContent(source.receipt).pipe(
@@ -271,14 +271,14 @@ const containAttemptFailure = <Requirements>(
 export const buildReviewQueue = Effect.fn("ReviewProjection.buildReviewQueue")(function*(
   bootstrap: ReviewQueueBootstrap
 ) {
-  const study = yield* StudyPersistence
-  const hazards = yield* HazardPersistence
-  const reviews = yield* ReviewPersistence
+  const questionPersistence = yield* QuestionPersistence
+  const hazardPersistence = yield* HazardPersistence
+  const reviewPersistence = yield* ReviewPersistence
 
   const [questionAttempts, hazardAttempts, acknowledgements] = yield* Effect.all([
-    study.listAttempts(),
-    hazards.listAttempts(),
-    reviews.listAcknowledgements()
+    questionPersistence.listAttempts(),
+    hazardPersistence.listAttempts(),
+    reviewPersistence.listAcknowledgements()
   ]).pipe(
     Effect.mapError((error) =>
       projectionError(

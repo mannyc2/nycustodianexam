@@ -140,9 +140,11 @@ consumer or separate runtime/build/ownership boundary earns it.
 
 ### Maintained code layout and naming
 
-The automated layout contract covers maintained code under `apps/*/{src,scripts,test,browser-tests}/`,
-`packages/*/{src,test}/`, root `scripts/`, and `.github/workflows/`. Generated
-site trees and the evidence/content corpora are deliberately outside this
+The automated layout contract covers workspace-root configuration, maintained
+code under `apps/*/{src,scripts,test,browser-tests}/` and
+`packages/*/{src,test}/`, root `scripts/`, `.github/workflows/`, and active
+`.mjs` authoring commands under `content/authoring/visuals/`. Generated site
+trees and non-executable evidence/content corpora are deliberately outside this
 mechanical naming check.
 
 - Use lowercase kebab-case for maintained directory names and file stems.
@@ -175,8 +177,18 @@ The site has one physical private IndexedDB, owned by
 `apps/site/src/study-storage/app-database.ts` and its private sibling directory.
 Feature persistence capabilities may transact through the injected connection,
 but must not open or version their own databases. Private database modules do
-not import backward through the public facade, and the boundary check rejects
-additional `indexedDB.open` calls under site source.
+not import backward through the public facade, outside modules cannot import
+those internals, and the boundary check reserves direct access to the global
+IndexedDB factory for this owner.
+
+The temporary hazard/review databases are read-only migration sources. The app
+rescans them on startup because a one-shot completion marker cannot prove that
+an older open tab has stopped writing. Schema-valid missing records are added,
+matching records are idempotent, and malformed or conflicting records are kept
+in `migration-quarantine` without overwriting canonical data. Do not introduce
+a terminal migration receipt until old writers have an enforced retirement
+boundary. The shared connection closes on `pagehide` and reopens on persisted
+`pageshow` or the next operation so IndexedDB does not defeat back/forward cache.
 
 Bun does not replace specialist tools by decree. Node `22.22.0` hosts the
 locked Vitest/workspace boundary; Vite, Wrangler, Playwright, and justified

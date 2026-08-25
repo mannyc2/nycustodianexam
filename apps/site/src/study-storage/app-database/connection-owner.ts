@@ -7,11 +7,29 @@ import {
   type AppDatabaseError
 } from "./storage-model.ts"
 
+const blockedUpgradeTimeoutMs = 3_000
+
 const openDatabase = (
   onVersionChange: (database: IDBDatabase) => void
 ): Promise<IDBDatabase> =>
   new Promise((resolve, reject) => {
     const request = indexedDB.open(appDatabaseName, appDatabaseVersion)
+    let blockedTimer: ReturnType<typeof setTimeout> | undefined
+    let abandoned = false
+    let settled = false
+
+    const clearBlockedTimer = () => {
+      if (blockedTimer === undefined) return
+      clearTimeout(blockedTimer)
+      blockedTimer = undefined
+    }
+    const rejectOnce = (cause: unknown) => {
+      if (settled) return
+      settled = true
+      clearBlockedTimer()
+      reject(cause)
+    }
+
     request.onupgradeneeded = () => {
       const database = request.result
       for (const store of Object.values(appDatabaseStores)) {
@@ -20,12 +38,29 @@ const openDatabase = (
         }
       }
     }
+    request.onblocked = () => {
+      if (settled || blockedTimer !== undefined) return
+      blockedTimer = setTimeout(() => {
+        abandoned = true
+        rejectOnce(
+          new Error(
+            "Another tab is preventing the study database update. Close other tabs and reload."
+          )
+        )
+      }, blockedUpgradeTimeoutMs)
+    }
     request.onsuccess = () => {
       const database = request.result
+      if (abandoned || settled) {
+        database.close()
+        return
+      }
+      settled = true
+      clearBlockedTimer()
       database.onversionchange = () => onVersionChange(database)
       resolve(database)
     }
-    request.onerror = () => reject(request.error)
+    request.onerror = () => rejectOnce(request.error)
   })
 
 class StalePageConnection extends Error {}

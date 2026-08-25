@@ -1,6 +1,6 @@
 import type { Effect } from "effect"
 import type { HazardPersistence } from "../hazard-player/persistence.ts"
-import type { StudyPersistence } from "../question-player/persistence.ts"
+import type { QuestionPersistence } from "../question-player/persistence.ts"
 import type { VerifiedContent } from "../verified-content.ts"
 import type {
   ReviewQueueBootstrap,
@@ -15,7 +15,7 @@ import {
 } from "./projection.ts"
 
 type ReviewRequirements =
-  | StudyPersistence
+  | QuestionPersistence
   | HazardPersistence
   | ReviewPersistence
   | VerifiedContent

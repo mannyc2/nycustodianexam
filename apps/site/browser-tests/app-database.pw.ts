@@ -6,12 +6,27 @@ import {
 } from "../src/study-storage/app-database.ts"
 
 const visualHazardPath = "/hazards/session/launch-v1/scene/1/"
+const nonvisualHazardPath = "/hazards/session/launch-v1-nonvisual/scene/1/"
+const previousAppDatabaseVersion = 2
+const currentAppDatabaseVersion = 3
 
 interface DatabaseSeed {
   readonly databaseName: string
   readonly version: number
   readonly stores: Readonly<Record<string, ReadonlyArray<Readonly<Record<string, unknown>>>>>
 }
+
+const previousAppDatabaseStores = (
+  questionAttempts: ReadonlyArray<Readonly<Record<string, unknown>>> = [],
+  questionSessions: ReadonlyArray<Readonly<Record<string, unknown>>> = []
+): DatabaseSeed["stores"] => ({
+  [appDatabaseStores.meta]: [],
+  [appDatabaseStores.questionAttempts]: questionAttempts,
+  [appDatabaseStores.questionSessions]: questionSessions,
+  [appDatabaseStores.hazardAttempts]: [],
+  [appDatabaseStores.hazardSessions]: [],
+  [appDatabaseStores.reviewAcknowledgements]: []
+})
 
 const seedDatabase = (page: Page, seed: DatabaseSeed): Promise<void> =>
   page.evaluate(
@@ -78,11 +93,56 @@ const readStore = (
     { databaseName: appDatabaseName, store: storeName }
   )
 
+const readAppDatabaseMetadata = (
+  page: Page
+): Promise<Readonly<{ readonly version: number; readonly stores: ReadonlyArray<string> }>> =>
+  page.evaluate(
+    (databaseName) =>
+      new Promise((resolve, reject) => {
+        const request = indexedDB.open(databaseName)
+        request.onerror = () => reject(request.error)
+        request.onsuccess = () => {
+          const database = request.result
+          resolve({
+            version: database.version,
+            stores: Array.from(database.objectStoreNames).sort()
+          })
+          database.close()
+        }
+      }),
+    appDatabaseName
+  )
+
+const holdAppDatabaseOpen = (page: Page): Promise<void> =>
+  page.evaluate(
+    ({ databaseName, version }) =>
+      new Promise<void>((resolve, reject) => {
+        const request = indexedDB.open(databaseName, version)
+        request.onerror = () => reject(request.error)
+        request.onsuccess = () => {
+          ;(window as typeof window & {
+            __nycustodianBlockingDatabase?: IDBDatabase
+          }).__nycustodianBlockingDatabase = request.result
+          resolve()
+        }
+      }),
+    { databaseName: appDatabaseName, version: previousAppDatabaseVersion }
+  )
+
+const closeHeldAppDatabase = (page: Page): Promise<void> =>
+  page.evaluate(() => {
+    const owner = window as typeof window & {
+      __nycustodianBlockingDatabase?: IDBDatabase
+    }
+    owner.__nycustodianBlockingDatabase?.close()
+    delete owner.__nycustodianBlockingDatabase
+  })
+
 const openStorageOrigin = async (page: Page): Promise<void> => {
   await page.goto("/content/release/current.json")
 }
 
-test("upgrades the question database and resumably imports valid legacy records", async ({
+test("upgrades the pre-quarantine database and resumably imports valid legacy records", async ({
   page
 }) => {
   await openStorageOrigin(page)
@@ -96,15 +156,15 @@ test("upgrades the question database and resumably imports valid legacy records"
   }
   await seedDatabase(page, {
     databaseName: appDatabaseName,
-    version: 1,
-    stores: {
-      [appDatabaseStores.questionAttempts]: [questionAttempt],
-      [appDatabaseStores.questionSessions]: [{
+    version: previousAppDatabaseVersion,
+    stores: previousAppDatabaseStores(
+      [questionAttempt],
+      [{
         id: "active",
         latestAttemptId: questionAttempt.id,
         updatedAt: 1
       }]
-    }
+    )
   })
 
   const hazardAttempt = {
@@ -153,6 +213,10 @@ test("upgrades the question database and resumably imports valid legacy records"
   expect(await readStore(page, appDatabaseStores.questionAttempts)).toContainEqual(
     questionAttempt
   )
+  expect(await readAppDatabaseMetadata(page)).toEqual({
+    version: currentAppDatabaseVersion,
+    stores: [...Object.values(appDatabaseStores)].sort()
+  })
   expect(await readStore(page, appDatabaseStores.hazardAttempts)).toEqual([hazardAttempt])
   expect(await readStore(page, appDatabaseStores.reviewAcknowledgements)).toEqual([
     reviewAcknowledgement
@@ -222,6 +286,41 @@ test("does not create absent legacy databases while checking for migration data"
   if (databaseNames !== undefined) {
     expect(databaseNames).not.toContain(legacyAppDatabaseNames.hazard)
     expect(databaseNames).not.toContain(legacyAppDatabaseNames.review)
+  }
+})
+
+test("fails closed and reloads after an older tab blocks the database upgrade", async ({
+  context,
+  page
+}) => {
+  await openStorageOrigin(page)
+  await seedDatabase(page, {
+    databaseName: appDatabaseName,
+    version: previousAppDatabaseVersion,
+    stores: previousAppDatabaseStores()
+  })
+
+  const blockingPage = await context.newPage()
+  await openStorageOrigin(blockingPage)
+  await holdAppDatabaseOpen(blockingPage)
+
+  try {
+    await page.goto(nonvisualHazardPath)
+    await expect(page.getByRole("heading", { name: "Study storage is unavailable" }))
+      .toBeVisible({ timeout: 8_000 })
+
+    await closeHeldAppDatabase(blockingPage)
+    await page.getByRole("button", { name: "Reload scene" }).click()
+    await expect(page.getByRole("checkbox").first()).toBeEnabled()
+    expect(await readAppDatabaseMetadata(page)).toEqual({
+      version: currentAppDatabaseVersion,
+      stores: [...Object.values(appDatabaseStores)].sort()
+    })
+  } finally {
+    if (!blockingPage.isClosed()) {
+      await closeHeldAppDatabase(blockingPage).catch(() => undefined)
+      await blockingPage.close()
+    }
   }
 })
 

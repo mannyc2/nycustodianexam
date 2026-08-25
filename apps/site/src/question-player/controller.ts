@@ -3,7 +3,7 @@ import type { Effect } from "effect"
 import type { QuestionAttemptReceipt } from "../attempt-receipt.ts"
 import { makeScreenStore, type ScreenSnapshot } from "../screen/store.ts"
 import type { VerifiedContent } from "../verified-content.ts"
-import type { StudyPersistence } from "./persistence.ts"
+import type { QuestionPersistence } from "./persistence.ts"
 import {
   beginCommit,
   commitFailed,
@@ -25,7 +25,7 @@ import {
 
 export interface EffectRunner {
   readonly runPromise: <A, E>(
-    effect: Effect.Effect<A, E, StudyPersistence | VerifiedContent>
+    effect: Effect.Effect<A, E, QuestionPersistence | VerifiedContent>
   ) => Promise<A>
 }
 
@@ -116,9 +116,13 @@ export const createQuestionController = (
       })
       .catch((cause: unknown) => {
         console.error("Unable to restore the saved question", cause)
-        publish(restoreFailed(screen.getSnapshot().state, safeErrorMessage(cause)), {
-          focus: "commit-error"
-        })
+        publish(
+          restoreFailed(
+            screen.getSnapshot().state,
+            "This question could not open study storage. Close other tabs if an update is blocked, then reload this question."
+          ),
+          { focus: "commit-error" }
+        )
       })
   }
 

@@ -53,7 +53,7 @@ export const QuestionForm = ({ children }: { readonly children: ReactNode }) => 
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (isRestoreRetry) {
-      actions.retryRestore()
+      window.location.reload()
     } else if (isRevealRetry) {
       actions.retryReveal()
     } else {
@@ -92,7 +92,7 @@ export const QuestionControls = () => {
           {state.tag === "committing"
             ? "Saving answer…"
             : isRestoreRetry
-              ? "Retry storage"
+              ? "Reload question"
               : isRevealRetry
               ? "Retry explanation"
               : "Commit answer"}

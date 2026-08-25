@@ -125,7 +125,7 @@ export const createHazardController = (input: {
       .catch(() => {
         publish(
           hazardRestoreFailed(
-            "This scene could not be restored from study storage. No feedback was revealed."
+            "This scene could not open study storage. Close other tabs if an update is blocked, then reload this scene. No feedback was revealed."
           ),
           { focus: "commit-error" }
         )
