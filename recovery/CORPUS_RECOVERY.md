@@ -1,107 +1,97 @@
 # Chat corpus recovery and reconciliation ledger
 
-**Initial recovery date:** 2026-08-19  
-**Updated:** 2026-08-21  
-**Current source branch:** `agent/chat-corpus-reconciliation`  
-**Purpose:** distinguish maintained authority, exact recovered artifacts, normalized research, superseded recommendations, prototypes, and unavailable work.
+**Initial recovery date:** 2026-08-19
+**Updated:** 2026-08-24
+**Purpose:** distinguish maintained authority, durable recovered artifacts,
+historical evidence, superseded recommendations, and work that was never
+located.
+
+The complete research tree before normalization is recoverable at immutable
+commit
+[`6701e83290c56d9c5f04275a30fc6ada6bd40435`](https://github.com/mannyc2/nycustodianexam/tree/6701e83290c56d9c5f04275a30fc6ada6bd40435/research).
+The reduced current evidence map is [`research/README.md`](../research/README.md).
 
 ## Status vocabulary
 
-- **CANONICAL-INTEGRATED** — accepted findings already live in maintained authority; do not merge again.
-- **RECOVERED-DURABLE** — substantive prior work was absent and is now represented in its proper domain.
-- **RECOVERED-RAW** — exact user-visible research/file bytes are preserved or byte-reconstructible from committed parts with checksums.
-- **RECOVERED-PROTOTYPE** — concrete prototype restored, but not production-approved.
-- **NORMALIZED-FIRST-PASS** — raw first-pass research has been deduplicated and classified into reusable, superseded, contradictory, and redo-required findings.
-- **DERIVATIVE / SUPERSEDED** — artifact remains useful history but is not current authority.
-- **NOT LOCATED** — known prior work without a durable recovered artifact.
-- **CURRENT CONSTRAINT** — later maintainer decision superseding an older recommendation.
-- **HUMAN-REVIEW-REQUIRED** — reproducibility or automated validation exists, but release approval does not.
+- **CANONICAL-INTEGRATED** — accepted conclusion lives in maintained authority;
+  do not merge it again from history.
+- **RECOVERED-DURABLE** — substantive prior work is represented in its proper
+  maintained domain.
+- **HISTORICAL-AT-SHA** — exact evidence is intentionally absent at HEAD and
+  recoverable from the immutable archive coordinate.
+- **RETAINED-HISTORICAL** — a concise unique synthesis or exact report remains
+  under `research/` but is not current authority.
+- **SUPERSEDED** — a later maintained decision controls.
+- **NOT LOCATED** — known prior work has no durable recovered artifact; do not
+  reconstruct it from a summary.
 
 ## Product and website corpus
 
-| Prior work | Status | Repository disposition | Reconciliation note |
-|---|---|---|---|
-| Buildable study-site feature specification, 2026-08-17 | **RECOVERED-DURABLE** | `product/FEATURE_SPEC.md` | Original 3,427-line specification normalized into one maintained behavior contract. |
-| Page/state/information architecture | **RECOVERED-DURABLE** | `product/FEATURE_SPEC.md` | Exam selector/profile, atlas, procedures, repair, practice, hazards, review, simulation, print, FAQ, sources, settings, offline, and errors. |
-| Question-player contract | **RECOVERED-DURABLE** | `product/FEATURE_SPEC.md` | Explicit commit boundary, no pre-reveal leakage, atomic persistence, rationales, sources, directional confusion tracking, keyboard/touch behavior. |
-| Hazard-scene contract | **RECOVERED-DURABLE** | `product/FEATURE_SPEC.md` | Mark-before-reveal, hit/miss/false-positive/decoy categories, zoned reveal, nonvisual equivalent, review scheduling. |
-| Offline/PWA/local-first design | **RECOVERED-DURABLE** | `product/FEATURE_SPEC.md` | Explicit versioned packs, local progress, update activation, pinned sessions, storage failure rules. |
-| Accessibility contract | **RECOVERED-DURABLE** | `product/FEATURE_SPEC.md` | WCAG 2.2 target, neutral/full descriptions, nonvisual equivalents, focus/zoom/touch/timer/print QA. |
-| Print behavior in feature spec | **RECOVERED-DURABLE** | `product/FEATURE_SPEC.md` | Deterministic low-ink sets, answer sheets, separate keys, tool/hazard/text-equivalent products. |
-| Standalone print-system deliverable | **NOT LOCATED** | no fabricated replacement | Dedicated chat is known, but no standalone exact file has been recovered. |
+| Prior work | Status | Current disposition |
+|---|---|---|
+| Buildable study-site feature specification, 2026-08-17 | **RECOVERED-DURABLE** | [`product/FEATURE_SPEC.md`](../product/FEATURE_SPEC.md) is the maintained normalized behavior contract. |
+| Page/state/information architecture | **CANONICAL-INTEGRATED** | Product feature specification. |
+| Question-player commit/reveal behavior | **CANONICAL-INTEGRATED** | Product specification and architecture constraints require durable IndexedDB commit before reveal. |
+| Hazard-scene behavior | **CANONICAL-INTEGRATED** | Product specification plus maintained scene content/release records. |
+| Offline/PWA/local-first behavior | **CANONICAL-INTEGRATED** | Product specification and architecture constraints. |
+| Accessibility and print behavior | **CANONICAL-INTEGRATED** | Product specification; implementation/release evidence remains tracked in [`docs/OPEN.md`](../docs/OPEN.md). |
+| Standalone print-system deliverable | **NOT LOCATED** | No fabricated replacement. The feature specification is the only durable print contract recovered. |
 
-## Initial Effect research pass
+## Effect/Bun research reconciliation
 
-The first parallel Effect pass was supplied on 2026-08-21 as archive:
+The supplied first-pass archive was:
 
 ```text
 8f7353c8-08fd-4677-bfeb-69a595dd0638.zip
 SHA-256: 40cfab3f2a0a6d26782b7e24776d4d595ba6cef86389836030134844c3aaeff5
 ```
 
-The archive contained nine Effect research outputs plus the deterministic geometry evidence tree.
+It contained nine mixed-version Effect reports and deterministic geometry
+evidence. Duplicate UI/core reports, Effect v3 and pnpm prescriptions, generic
+ports/adapters structure, and in-memory reveal were superseded. Generally useful
+typed-failure, runtime-boundary, renderer-neutral state, explicit validation,
+transaction, and offline-lifecycle findings were retested by the R2 program.
 
-| Research area | Status | Repository disposition | Reconciliation note |
-|---|---|---|---|
-| Effect UI/state report A | **NORMALIZED-FIRST-PASS / DUPLICATE FAMILY** | `research/initial-pass/` ledgers | Overlaps UI report B. Renderer-neutral state and spike criteria reusable; v3 API/file-structure recommendations require redo. |
-| Effect UI/state report B | **NORMALIZED-FIRST-PASS / DUPLICATE FAMILY** | `research/initial-pass/` ledgers | Same family; neither generic ports/adapters layout nor v3 recommendation is current authority. |
-| Effect core architecture report A | **NORMALIZED-FIRST-PASS / DUPLICATE FAMILY** | `research/initial-pass/` ledgers | Cohesive services, typed failures, runtime-at-edges, bounded concurrency reusable. Exact v3 architecture superseded. |
-| Effect core architecture report B | **NORMALIZED-FIRST-PASS / DUPLICATE FAMILY** | `research/initial-pass/` ledgers | Same family; used to cross-check rather than count duplicated conclusions twice. |
-| Effect browser bundling | **RECOVERED-RAW / PARTLY SUPERSEDED** | `research/initial-pass/raw/effect/02-effect-browser-bundling-findings.md` | Exact report committed. Measurement method and static-page boundary reusable; Effect v3/pnpm package recommendations superseded and must be rerun with latest v4+Bun. |
-| Effect v4 Schema/content registry | **RECOVERED-RAW / REUSABLE WITH REFRESH** | `research/initial-pass/raw/effect/05-effect-v4-schema-content-registry/` | Exact report preserved in concatenable parts. Structural decode + explicit relational validation is strongest reusable model; exact RC APIs/package layout need current-v4 refresh. |
-| Effect Platform/browser API fit | **RECOVERED-RAW / PARTLY SUPERSEDED** | `research/initial-pass/raw/effect/06-effect-platform-browser-web-api-fit/` | Exact report preserved in parts. Selective Platform/native boundary reusable; v3 package matrix must be redone for latest v4 and Cloudflare. |
-| Effect + IndexedDB/offline packs | **RECOVERED-RAW / REUSABLE WITH REFRESH** | `research/initial-pass/raw/effect/07-effect-indexeddb-offline-content-packs/` | Exact report preserved in parts. Transaction, staged activation, session pinning, cross-tab, and worker-lifecycle findings reusable; provider choice needs latest-v4 redo. |
-| Effect v4/Cloudflare correction | **RECOVERED-RAW / SUPERSEDING FIRST-PASS VERSION PREMISE** | `research/initial-pass/raw/effect/09-effect-v4-cloudflare-research-correction.md` | Corrects the earlier v3-first premise. Current maintainer direction goes further: latest v4 is mandatory. |
+The R2.1–R2.10/R2.90 program is closed and reconciled. Accepted conclusions now
+live once in
+[`product/ARCHITECTURE_CONSTRAINTS.md`](../product/ARCHITECTURE_CONSTRAINTS.md);
+blocked or incomplete execution evidence remains in `docs/OPEN.md`. Their reports,
+matrices, fixtures, raw results, receipts, and generated outputs are
+**HISTORICAL-AT-SHA**, not live launch dependencies. The prompt suite under
+`prompts/research-v2/` is an archived instruction record and must not be
+relaunched unchanged.
 
-Normalization outputs:
-
-- `research/initial-pass/NORMALIZATION.md`;
-- `REUSABLE-FINDINGS.md`;
-- `DUPLICATION-AND-SUPERSESSION.md`;
-- `REDO-REQUIRED.md`;
-- `DECISION-MATRIX.csv`;
-- `FILE-LEDGER.csv`.
-
-### Rejected first-pass behavior
-
-Two UI reports allowed correctness reveal after an in-memory commit when durable persistence failed.
-
-That is rejected. Normal persistent mode requires the IndexedDB attempt transaction to complete before reveal.
-
-### Current constraints superseding first-pass recommendations
-
-- latest Effect v4, not v3;
-- Bun and Bun workspaces;
-- top-level `apps/` and `packages/`;
-- Effect-native capability/service/Layer organization rather than generic ports/adapters ceremony;
-- mandatory `@GitHub` branch, commit, push, and draft PR for every future research lane.
-
-## Effect v4/Bun prompt curation
-
-The prompt foundation has been curated and is no longer an unresolved recovery input.
-
-| Work | Status | Repository disposition | Reconciliation note |
-|---|---|---|---|
-| Official Effect setup `SKILL.md` | **RECOVERED / CURRENT INPUT** | `research/prompt-curation/EFFECT-SKILL-ADAPTATION.md` + source ledger | Identified as `Effect-TS/skills/skills/effect-ts/SKILL.md`; adapted to Bun while preserving its installed `effect/AGENTS.md` and source-inspection workflow. |
-| Effect v4/Bun research doctrine | **CURRENT CONSTRAINT / CURATED** | `research/prompt-curation/EFFECT-V4-BUN-RESEARCH-DOCTRINE.md` | Latest-v4, Bun-workspace, Effect-native research discipline. |
-| V2 lane suite | **CURATED / READY TO LAUNCH** | `prompts/research-v2/` | R2.1–R2.10 use disjoint paths and may run in parallel; R2.90 is synthesis. Launch messages supply one exact immutable source SHA. |
-| Launch-time SHA contract | **CURATED / READY** | `prompts/research-v2/LAUNCH-CONTRACT.md`; `LANE-INDEX.csv` | Avoids self-referential prompt-file stamping; researchers verify the supplied SHA with `@GitHub` and stop on drift. |
+Current controlling architecture includes latest Effect v4, Bun workspaces,
+the initial `apps/site` + `apps/content-compiler` + `packages/content` graph,
+host-specific runtime roots, Schema plus explicit publication gates, strict
+commit-before-reveal, staged pack activation, native service-worker response
+caching, a provisional direct-DOM first slice, Vite, and Cloudflare Static
+Assets.
 
 ## Deterministic tool geometry
 
-| Artifact/work | Status | Repository disposition | Reconciliation note |
-|---|---|---|---|
-| Deterministic tool-geometry report | **RECOVERED-RAW** | `research/initial-pass/raw/tool-geometry/report/` | Exact 91,620-byte report preserved in five concatenable parts; SHA-256 recorded in its README. |
-| Asset manifest schema | **RECOVERED-RAW** | `research/initial-pass/raw/tool-geometry/asset-manifest.schema.json` | Proposal, not maintained compiler authority. |
-| Taxonomy inventory / confusion pairs / visual invariants / source ledger / summaries | **RECOVERED SOURCE ARCHIVE / GITHUB-REPRESENTED** | raw source archive + normalization ledgers | Compact evidence and checksums are represented in the recovered research corpus; no production approval follows from preservation. |
-| Four CadQuery/OCCT POCs | **RECOVERED / VERIFIED / RETIRED FROM PRODUCTION** | `research/v2/tool-geometry-audit/`; maintained decision in `illustration/VISUAL_AUTHORING_POLICY.md` | Adjustable wrench and pipe wrench are reproducible/reviewable; cup and flange plungers require model/view rework. All four are closed research evidence and retired production-art candidates, so no production mechanical/accessibility approval remains pending. |
-| STEP/STL/GLB/SVG/raster/WebP trees | **RECOVERED AND COMMITTED AS RESEARCH EVIDENCE** | `research/v2/tool-geometry-audit/recovered-input/research-bundle.zip` plus manifests/receipts | Exact nested bundle is committed at its recorded SHA-256. The derivatives are not production assets; Codex-native raster generation supplies replacements. |
+| Artifact/work | Status | Current disposition |
+|---|---|---|
+| Initial deterministic report and recovered evidence tree | **HISTORICAL-AT-SHA** | Exact pre-cleanup bytes remain at the immutable archive coordinate. |
+| Taxonomy inventory member | **CANONICAL-INTEGRATED** | Maintained provenance is [`content/authoring/visuals/inventory/taxonomy-inventory.provenance.json`](../content/authoring/visuals/inventory/taxonomy-inventory.provenance.json). |
+| Four CadQuery/OCCT POCs | **RETAINED-HISTORICAL / SUPERSEDED FOR PRODUCTION** | Exact final audit is [`research/v2/tool-geometry-audit/REPORT.md`](../research/v2/tool-geometry-audit/REPORT.md); adjustable/pipe wrench reproduce and are reviewable, cup/flange plunger require model/view rework, and all four are retired production-art candidates. |
+| Deterministic-first production recommendation | **SUPERSEDED** | [`illustration/VISUAL_AUTHORING_POLICY.md`](../illustration/VISUAL_AUTHORING_POLICY.md) selects Codex-native raster generation. |
 
-Nested research-bundle SHA-256:
+Recovered nested bundle:
 
 ```text
-a3dbdb262733be6527347e26cb5e6d8fdb612cf7ee6a09574730a7a6ad188b06
+research-bundle.zip
+bytes: 2,309,138
+SHA-256: a3dbdb262733be6527347e26cb5e6d8fdb612cf7ee6a09574730a7a6ad188b06
 ```
+
+Its `taxonomy-inventory.csv` member was 7,058 bytes with SHA-256
+`8a0eb561003f8b7fd6fd164680fdcda2d891118a2ad591ccf0aa1a6fa22560e2`.
+The maintained 65-row LF-normalized inventory is 6,992 bytes with SHA-256
+`d61197c0b7ed118fb0248cdd94d2be75a6e71120408577a532e85aa0659231cd`.
+The provenance record preserves the archive/member paths, hashes,
+normalization, row count, and 2026-08-20 observation date, so the ZIP is no
+longer a live dependency.
 
 POC evidence archive SHA-256:
 
@@ -109,34 +99,26 @@ POC evidence archive SHA-256:
 725f997229f7f708dfb00189b3790f8d7fa0f5e30ed3378fd0fd29f48ac5ee7d
 ```
 
-Current tool decision:
+Reproducibility is not mechanical certification. Matching builds did not make
+editorial geometry authoritative or grant production approval.
 
-- deterministic project-owned geometry or deterministic 2D construction controls mechanically meaningful tools;
-- STEP AP242 is neutral CAD interchange/master derivative;
-- static hidden-line SVG controls scored/print use;
-- GLB is optional atlas-only and user-invoked;
-- image generation does not create or restyle controlling mechanical geometry;
-- matching hashes prove reproducibility, not correctness;
-- no current POC is production-approved.
+## Illustration and hazard production
 
-## Earlier illustration work
-
-| Prior work | Status | Repository disposition | Reconciliation note |
-|---|---|---|---|
-| 2026-08-17 illustration pipeline | **RECOVERED-DURABLE / PARTLY SUPERSEDED** | `illustration/PIPELINE_SPEC.md` | Visual QA, accessibility, rights, failure, and hazard guidance retained; AI-first source assumption superseded for modeled tools. |
-| Historical 120-row tool matrix | **RECOVERED-DURABLE / STALE INVENTORY** | integrity in `illustration/RECOVERED_ASSET_MANIFEST.md` | Cannot override current taxonomy or later 65-asset audit. |
-| Historical 33-row hazard matrix | **RECOVERED-DURABLE / STALE INVENTORY** | manifest | Hazard pipeline still needs dedicated research. |
-| SVG examples | **RECOVERED-PROTOTYPE** | `illustration/examples/` | Historical prototypes, not source-of-truth geometry or approved assets. |
+| Prior work | Status | Current disposition |
+|---|---|---|
+| 2026-08-17 illustration pipeline | **RECOVERED-DURABLE / PARTLY SUPERSEDED** | [`illustration/PIPELINE_SPEC.md`](../illustration/PIPELINE_SPEC.md) retains applicable QA/accessibility/rights guidance; current policy controls conflicts. |
+| Historical tool/hazard matrices and SVG examples | **RECOVERED-DURABLE / HISTORICAL** | Integrity remains in `illustration/`; examples are not production assets or current inventory. |
+| R2.9 hazard production research | **RETAINED-HISTORICAL / PARTLY SUPERSEDED** | [`research/v2/hazard-scene-production/README.md`](../research/v2/hazard-scene-production/README.md) retains semantic/region/accessibility/version conclusions; its old authoring route is retired. |
+| Accepted visual corpus | **CANONICAL-INTEGRATED** | 65 tool/PPE masters, 14 comparisons, and 18 scenes are controlled by maintained inventories, exact assets, review records, manifests, and release receipts. |
 
 ## Other research
 
-| Prior work | Status | Repository disposition | Reconciliation note |
-|---|---|---|---|
-| Nassau question-bank research | **CANONICAL-INTEGRATED** | `research/question-bank/RECOVERY.md` plus current docs | Accepted findings already reconciled into TAXONOMY/SCOPE/OPEN. |
-| Records/FOIL passes | **CANONICAL-INTEGRATED** | FACTBASE/OPEN/SCOPE | Preserve canonical synthesis rather than duplicating reconstructed reports. |
-| SEO v2 | **CANONICAL-INTEGRATED / already present** | current SEO report | Repository-aware corrected pass. |
-| SEO v1 | **SUPERSEDED** | not maintained | Predates baseline-aware correction. |
-| LANDSCAPE_WITH_SEO derivative | **DERIVATIVE** | not canonical | Maintained sources remain LANDSCAPE + SEO v2. |
+| Prior work | Status | Current disposition |
+|---|---|---|
+| Nassau question-bank research | **CANONICAL-INTEGRATED** | Accepted facts are in `docs/FACTBASE.md`, `docs/SCOPE.md`, `docs/TAXONOMY.md`, and `docs/OPEN.md`; no secure item content is retained. |
+| Records/FOIL passes | **CANONICAL-INTEGRATED** | Maintained fact/scope/open documents; historical reports are not duplicated. |
+| SEO v2 | **CANONICAL-INTEGRATED** | [`docs/LANDSCAPE.md`](../docs/LANDSCAPE.md). |
+| SEO v1 / LANDSCAPE derivative | **SUPERSEDED** | Historical only. |
 
 ## Exact materialized/recovered checksums
 
@@ -151,26 +133,18 @@ Current tool decision:
 - Nassau question-bank report — `a2fc4f9704e1530c0e2f93a4e616e01b2fb9a148bffdf21152d37daa734758f4`
 - supplied first-pass archive — `40cfab3f2a0a6d26782b7e24776d4d595ba6cef86389836030134844c3aaeff5`
 
-## Normalization rules
+## Reconciliation rules
 
-1. Preserve exact raw evidence separately from maintained decisions.
-2. Do not count duplicate reports as independent corroboration.
-3. Later accepted constraints may supersede version/package recommendations while raw reports remain auditable.
-4. Effect v3 is not a fallback.
-5. Historical directory/package proposals do not become the Bun workspace architecture automatically.
-6. Reproducibility is not certification.
-7. Missing binary upload capability does not justify pretending binaries were committed.
-8. Unknown exam facts remain unknown.
-9. No secure/recalled/reconstructed item content is imported.
-10. Future research must publish through GitHub as it is completed.
+1. Maintained authority outranks recovery and research history.
+2. Exact historical evidence is recoverable at an immutable Git coordinate; it
+   need not remain duplicated at HEAD.
+3. Preserve coordinates, checksums, material limitations, and conflicts.
+4. Reproducibility is not certification, and a license is not mechanical truth.
+5. Unknown exam facts remain unknown.
+6. No secure, recalled, or reconstructed item content is imported.
+7. Promote accepted conclusions once, then remove duplicate, superseded,
+   generated, raw-noise, and archive-only working material.
 
-## Outstanding recovery/input gaps
-
-- standalone print-system artifact;
-- second-pass latest-v4/Bun research lanes R2.1–R2.10;
-- human mechanical review and later production approval for tool POCs;
-- dedicated hazard-scene production decision (R2.9).
-
-The Effect `SKILL.md`, first-pass raw research, geometry evidence, and v2 prompt foundation are no longer recovery gaps.
-
-Any future artifact should be classified here before altering maintained project state.
+The only known recovery artifact still not located is the standalone print
+system deliverable. Do not reconstruct it from chat recollection; the maintained
+feature specification remains the durable print contract.

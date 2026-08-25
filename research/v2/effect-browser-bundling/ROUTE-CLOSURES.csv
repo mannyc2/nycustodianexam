@@ -1,7 +1,0 @@
-route_id,probe_id,closure_kind,chunk_ids,raw_bytes,gzip9_bytes,brotli11_bytes,dynamic_bytes,status,notes
-static-reference,P01,initial,,,,,,BLOCKED,No manifest/build output.
-question-player-direct-dom,P10,initial,,,,,,BLOCKED,No manifest/build output.
-question-player-renderer,P11,initial,,,,,,BLOCKED,No manifest/build output.
-service-worker-native,P12,worker,,,,,,BLOCKED,No build output.
-service-worker-effect,P13,worker,,,,,,BLOCKED,No build output.
-optional-worker,P09,worker,,,,,,BLOCKED,No build output.

@@ -1,8 +1,0 @@
-question_id,status,question,evidence_needed,owner
-Q1,BLOCKED,"Does the exact future workspace install cleanly with isolated linking and no tool incompatibilities?","Run Bun 1.4.0 install/ci against the final scaffold and preserve raw output",implementation/R2.90
-Q2,BLOCKED,"Can the full selected Effect cohort be resolved as one exact registry/install tree at scaffold time?","Generate bun.lock; inspect dependency tree for duplicate/mismatched effect packages",implementation/R2.90
-Q3,BLOCKED,"Which dependencies require trusted lifecycle scripts?","Safe fixture/install with trust disabled then reviewed per-package enablement",implementation/security
-Q4,UNKNOWN,"Are Bun filters sufficient once workspace count grows?","Measure orchestration complexity and CI duration after real scaffold",future build review
-Q5,BLOCKED,"What numeric browser bundle budgets should CI enforce?","Successful R2.5 current production Vite measurements and route closures",R2.5/R2.90
-Q6,UNKNOWN,"Does packages/study justify an independent workspace after implementation begins?","Concrete consumer/import graph and ownership review",R2.90/implementation
-Q7,UNKNOWN,"Will a Cloudflare Worker workspace be needed?","Approved non-static server capability",product/R2.90

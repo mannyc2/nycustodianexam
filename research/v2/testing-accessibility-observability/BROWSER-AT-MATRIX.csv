@@ -1,8 +1,0 @@
-platform,browser,assistive_technology,coverage,automation,release_status
-Windows,Chromium current,NVDA current,question player commit/reveal; hazard nonvisual; navigation,Playwright plus manual AT,BLOCKED until executed
-Windows,Firefox current,NVDA current,question player commit/reveal; hazard nonvisual; navigation,Playwright plus manual AT,BLOCKED until executed
-macOS,Safari current,VoiceOver current,question player commit/reveal; hazard nonvisual; navigation,manual plus WebKit automation where useful,BLOCKED until executed
-iOS,Safari current,VoiceOver current,phone player; touch; focus; nonvisual equivalent,manual device test,BLOCKED until executed
-Windows,Chromium current,keyboard only,all required flows,Playwright plus manual,REQUIRED
-Windows,Firefox current,keyboard only,all required flows,Playwright plus manual,REQUIRED
-macOS,Safari current,keyboard only,all required flows,manual/automation,REQUIRED

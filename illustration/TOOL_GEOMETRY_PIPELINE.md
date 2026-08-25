@@ -59,5 +59,5 @@ The following formats may remain in research archives:
 - manifests comparing repeat builds.
 
 Their presence proves neither production correctness nor current architectural
-authority. Exact rebuild evidence for the recovered POCs is preserved under
-`../research/v2/tool-geometry-audit/`.
+authority. Exact rebuild evidence and final POC dispositions are preserved in
+[`../research/v2/tool-geometry-audit/REPORT.md`](../research/v2/tool-geometry-audit/REPORT.md).

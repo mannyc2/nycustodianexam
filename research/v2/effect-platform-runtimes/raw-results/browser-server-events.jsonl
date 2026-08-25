@@ -1,9 +1,0 @@
-{"event": "http_log", "message": "\"GET /index.html HTTP/1.1\" 200 -", "timestamp_ns": 1787356300000074039}
-{"event": "http_log", "message": "\"GET /probe.js HTTP/1.1\" 200 -", "timestamp_ns": 1787356300025511019}
-{"event": "http_log", "message": "code 404, message File not found", "timestamp_ns": 1787356300048308257}
-{"event": "http_log", "message": "\"GET /favicon.ico HTTP/1.1\" 404 -", "timestamp_ns": 1787356300048390089}
-{"event": "http_log", "message": "\"GET /worker.js HTTP/1.1\" 200 -", "timestamp_ns": 1787356300069889015}
-{"client": "127.0.0.1", "event": "slow_request_started", "timestamp_ns": 1787356300077181140}
-{"event": "http_log", "message": "\"GET /sw.js HTTP/1.1\" 200 -", "timestamp_ns": 1787356300155229392}
-{"event": "http_log", "message": "\"GET /slow HTTP/1.1\" 200 -", "timestamp_ns": 1787356301077492053}
-{"error": "BrokenPipeError", "event": "client_disconnect_observed", "timestamp_ns": 1787356301077791409}

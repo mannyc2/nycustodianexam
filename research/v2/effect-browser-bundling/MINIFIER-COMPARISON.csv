@@ -1,7 +1,0 @@
-probe_id,minifier,coordinate,raw_bytes,gzip9_bytes,brotli11_bytes,status,notes
-P01,oxc,Vite 8.2.2 default,,,,BLOCKED,Build not run.
-P01,terser,terser@5.50.0,,,,BLOCKED,Build not run.
-P10,oxc,Vite 8.2.2 default,,,,BLOCKED,Build not run.
-P10,terser,terser@5.50.0,,,,BLOCKED,Build not run.
-P11,oxc,Vite 8.2.2 default,,,,BLOCKED,Build not run.
-P11,terser,terser@5.50.0,,,,BLOCKED,Build not run.

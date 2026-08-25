@@ -1,8 +1,0 @@
-question_id,question,status,evidence_needed,owner
-Q01,Can the exact selected Effect v4 cohort plus @effect/vitest execute cleanly in the project Bun workspace?,BLOCKED,Pinned Bun install; committed bun.lock; installed effect/AGENTS.md review; executable tests,R2.8/implementation
-Q02,What numeric JS/route closure budgets should CI enforce?,BLOCKED,Final current-v4 R2.5 production measurements or implementation build baselines,R2.5/synthesis
-Q03,Does the selected IndexedDB provider pass the authoritative multi-browser failure suite?,BLOCKED,Unrestricted Chromium Firefox WebKit execution of R2.4/R2.8 browser contracts,R2.4/implementation
-Q04,Which exact browser/AT versions form the first release support matrix?,OPEN,Release-time platform inventory and manual execution results,Release QA
-Q05,Does a correction Worker actually need Effect HttpApi?,OPEN,Concrete endpoint implementation complexity and current-v4 measurement,Optional Worker implementation
-Q06,What retention periods are operationally sufficient after launch?,OPEN,Observed diagnostic needs and reviewed privacy policy,Product/privacy
-Q07,Which optional first-party analytics backend if any should be used?,OPEN,Privacy/security/operational evaluation after core product works,Synthesis/post-MVP

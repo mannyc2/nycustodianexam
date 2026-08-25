@@ -1,8 +1,0 @@
-runner,strengths,weaknesses,recommendation,status
-@effect/vitest,Effect-aware tests shared Layers scoped effects property tests integrates Vitest,requires Vitest and exact peer compatibility,Primary Effect service/use-case runner,CONFIRMED
-Bun test,fast Bun-native runner and correct place for Bun runtime behavior,not the official Effect testing integration and not a browser,Use for Bun-runtime integration and ordinary pure tests where suitable,CONFIRMED
-Playwright,real browser engines contexts pages service workers storage and accessibility-facing browser behavior,heavier and environment-sensitive,Required for browser/IDB/offline/multi-tab/renderer contracts,CONFIRMED
-axe-core/Playwright,automated WCAG rule detection integrated into browser flows,cannot certify WCAG or screen-reader usability,Use as automated accessibility gate plus manual matrix,CONFIRMED
-Cloudflare Vitest pool/workers tooling,workerd-backed Worker test environment with bindings,only relevant when Worker exists and exact current package must be pinned,Use for optional Worker integration,CONFIRMED
-jsdom/happy-dom,fast DOM-shaped unit environment,no authoritative IndexedDB/service-worker/layout/accessibility/runtime semantics,Use only for narrow DOM helpers if it earns its cost; never browser proof,INFERRED
-fake-indexeddb,fast deterministic IndexedDB-shaped secondary tests,not browser transaction/lifecycle implementation proof,Useful secondary adapter suite only,CONFIRMED
