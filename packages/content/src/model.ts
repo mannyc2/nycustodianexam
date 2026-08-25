@@ -9,27 +9,62 @@ export {
 
 export {
   AuthoredQuestion,
+  LegacyPostcommitQuestion,
+  LegacyPrecommitQuestion,
+  LegacyQuestionRationale,
+  LegacyQuestionSourceReceipt,
   PostcommitQuestion,
   PrecommitQuestion,
   QuestionOption,
   QuestionOptionConcept,
   QuestionOptionConceptMappings,
   QuestionRationale,
+  ReleasedPostcommitQuestion,
+  ReleasedPrecommitQuestion,
   SourceReceipt
 } from "./model/question-artifacts.ts"
 
 export {
+  ContentSource,
+  SourceEvidenceTier,
+  SourceLine,
+  SourceReceipt as EvidenceSourceReceipt,
+  SupportedClaim
+} from "./model/source-evidence.ts"
+
+export {
   AuthoredContentPack,
+  AnnouncementProfileChange,
+  AnnouncementProfileConflictValue,
+  AnnouncementProfileFact,
+  AnnouncementProfileFactKind,
+  AnnouncementProfileFactState,
+  AnnouncementProfileFactSheet,
+  AnnouncementProfileUnknown,
   AuthoredPackQuestion,
   AuthoredPackQuestionOption,
+  AuthoredQuestionCapacity,
+  AuthoredQuestionTags,
   AuthoredProfile,
   AuthoredTool,
-  ContentSource,
-  PassedQuestionReview
+  EditorialDifficulty,
+  PracticeSetLength,
+  ProfileCompetitionType,
+  ProfileContentAvailability,
+  ProfileCanonicalPath,
+  ProfileExamIdentity,
+  ProfileTestPlanCompatibility,
+  QuestionDomain,
+  QuestionFactKind,
+  QuestionReviewReceipt,
+  SafeQuestionMembership
 } from "./model/authored-pack.ts"
 
 export {
   AcceptedSceneAccessibility,
+  AcceptedComparisonMemberHash,
+  AcceptedComparisonRelease,
+  AcceptedComparisonReleaseLedger,
   AcceptedSceneAccessibilityLedger,
   AcceptedSceneDecoy,
   AcceptedSceneRegionLedger,
@@ -58,6 +93,8 @@ export {
 
 export {
   CatalogArtifact,
+  CatalogComparison,
+  CatalogPracticeCapacity,
   CatalogTool,
   CompiledVisualAsset,
   PostcommitPackArtifact,
@@ -66,6 +103,7 @@ export {
   PrecommitPackArtifact,
   PrecommitPackQuestion,
   PrecommitScene,
+  PracticeCapacityRecord,
   PublicProfile
 } from "./model/compiled-pack-artifacts.ts"
 

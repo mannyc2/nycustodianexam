@@ -165,16 +165,17 @@ Fact.Root
   Fact.ProfileVersion
 ```
 
-Named `VerifiedFact`, `UnknownFact`, `ConflictingFact`, `SupersededFact`, and
-`NotApplicableFact` compositions determine which pieces appear. No
-`isConflicting` or `showSource` API is allowed. Conflicting facts render every
-retained value and source; unknown facts never substitute guessed text.
+Named `VerifiedFact`, `NotPublishedFact`, `UnverifiedFact`, `ConflictingFact`,
+`SupersededFact`, and `NotApplicableFact` compositions determine which pieces
+appear. No `isConflicting` or `showSource` API is allowed. Conflicting facts
+render every retained value and source; unavailable states never substitute
+guessed text.
 
 ### Other shared compounds
 
 | Family | Principal pieces |
 | --- | --- |
-| `ProfileCard` | identity, series level, competition type when known, verified facts, content availability, last verification, and explicit select/details actions |
+| `ProfileCard` | identity, series level, competition type when known, six-state facts with effective history, content availability, last verification, and explicit select/details actions |
 | `SourceCitation` | tier, title, publisher, exact locator/date, retained excerpt, online link state, and supported-claim relationship |
 | `CorrectionNotice` | affected immutable version, correction summary, effective date, historical-result notice, and details action |
 | `SessionSummary` | pinned profile/pack versions, actual length/distribution, mode label, seed/manifest reference where exposed, and resume/start action |

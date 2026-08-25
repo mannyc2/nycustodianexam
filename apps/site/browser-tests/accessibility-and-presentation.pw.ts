@@ -15,7 +15,7 @@ test("ready and revealed states have no serious WCAG A/AA axe violations", async
   await gotoReadyQuestion(page)
   expect(await seriousAccessibilityViolations(page)).toEqual([])
 
-  await page.getByRole("radio", { name: "Adjustable wrench" }).check()
+  await page.getByRole("radio", { name: "Staple gun" }).check()
   await page.getByRole("button", { name: "Commit answer" }).click()
   await expect(page.getByRole("heading", { name: "Review this one" })).toBeFocused()
   expect(await seriousAccessibilityViolations(page)).toEqual([])
@@ -37,7 +37,7 @@ test("the question reflows without page-level horizontal scrolling at 320 CSS pi
   expect(dimensions.bodyScrollWidth).toBeLessThanOrEqual(dimensions.bodyClientWidth)
 
   for (const locator of [
-    page.getByText("Adjustable wrench", { exact: true }).locator(".."),
+    page.getByText("Staple gun", { exact: true }).locator(".."),
     page.getByRole("button", { name: "Flag for review" })
   ]) {
     const box = await locator.boundingBox()
@@ -50,10 +50,10 @@ test("the question reflows without page-level horizontal scrolling at 320 CSS pi
 test("forced colors preserves a non-color selected indicator", async ({ page }) => {
   await page.emulateMedia({ forcedColors: "active" })
   await gotoReadyQuestion(page)
-  await page.getByRole("radio", { name: "Pipe wrench" }).check()
+  await page.getByRole("radio", { name: "Scrub brush" }).check()
 
   const selectedStyle = await page
-    .getByText("Pipe wrench", { exact: true })
+    .getByText("Scrub brush", { exact: true })
     .locator("..")
     .evaluate((element) => {
       const style = getComputedStyle(element)
@@ -90,7 +90,7 @@ test("print media removes application chrome and controls while retaining feedba
   page
 }) => {
   await gotoReadyQuestion(page)
-  await page.getByRole("radio", { name: "Pipe wrench" }).check()
+  await page.getByRole("radio", { name: "Scrub brush" }).check()
   await page.getByRole("button", { name: "Commit answer" }).click()
   await expect(page.getByRole("heading", { name: "Correct", exact: true })).toBeVisible()
 

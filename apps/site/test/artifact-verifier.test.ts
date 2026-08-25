@@ -144,6 +144,27 @@ describe("artifact leak guards", () => {
       )
     ).toThrow(/filename embeds postcommit material/)
   })
+
+  it("does not relabel exact answer-free catalog prose as a postcommit leak", () => {
+    const reviewedPublicUse =
+      "Scrubs or washes an appropriate surface with a bristled working head."
+    expect(() =>
+      assertNoAnswerBearingText(
+        `<p>${reviewedPublicUse}</p>`,
+        [reviewedPublicUse],
+        "initial closure",
+        new Set([reviewedPublicUse])
+      )
+    ).not.toThrow()
+    expect(() =>
+      assertNoAnswerBearingText(
+        "<p>Only revealed after a durable answer commitment.</p>",
+        ["Only revealed after a durable answer commitment."],
+        "initial closure",
+        new Set([reviewedPublicUse])
+      )
+    ).toThrow(/embeds postcommit material/)
+  })
 })
 
 describe("embedded runtime receipt bindings", () => {

@@ -3,10 +3,10 @@ import { expect, type Page } from "@playwright/test"
 export const questionPath = "/practice/session/launch-v1/question/1/"
 export const databaseName = "nycustodian-study-v1"
 export const attemptsStore = "attempts"
-export const questionId = "tool-selection-001"
-export const attemptId = "launch-v1:v1:launch-v1:question:1"
+export const questionId = "q001"
+export const attemptId = "launch-v1:v2:launch-v1:question:1"
 export const questionPostcommitPath =
-  "/content/vertical-slice/questions/tool-selection-001.postcommit.json"
+  "/content/vertical-slice/questions/q001.postcommit.json"
 
 export interface StoredQuestionReceipt {
   readonly releaseId: string
@@ -21,12 +21,12 @@ export interface StoredQuestionReceipt {
 
 export const questionReceipt: StoredQuestionReceipt = {
   releaseId: "launch-v1",
-  packVersion: 1,
+  packVersion: 2,
   sessionId: "launch-v1",
   position: 1,
   postcommitPath: questionPostcommitPath,
-  postcommitBytes: 1_347,
-  postcommitSha256: "00268da6b592b55cc3393590f1e661b7398a71661879053acaeb883a7b45c04c",
+  postcommitBytes: 5_130,
+  postcommitSha256: "0f2dc85f12ebab72090dd2c8ba0d4c35f20d794009cb7997aa7d040a16496a51",
   questionId
 }
 
@@ -42,7 +42,7 @@ export interface StoredAttempt {
 
 export const gotoReadyQuestion = async (page: Page): Promise<void> => {
   await page.goto(questionPath)
-  await expect(page.getByRole("radio", { name: "Adjustable wrench" })).toBeEnabled()
+  await expect(page.getByRole("radio", { name: "Staple gun" })).toBeEnabled()
   await expect(page.getByRole("button", { name: "Commit answer" })).toBeVisible()
 }
 

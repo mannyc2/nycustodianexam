@@ -44,27 +44,63 @@ const loadPostcommit = Effect.fn("QuestionWorkflow.loadPostcommit")(function*(
       receivedQuestionId: payload.id
     })
   }
-
   const expectedOptions = new Set(expectedOptionIds)
   const rationaleIds = payload.rationales.map((rationale) => rationale.optionId)
   const rationaleOptions = new Set(rationaleIds)
-  const sourceIds = payload.sources.map((source) => source.id)
+  const sourceLineIds = payload.sources.map((source) => source.id)
+  const sourceLineIdSet = new Set(sourceLineIds)
+  const claimIds = payload.claims.map((claim) => claim.id)
+  const claimIdSet = new Set(claimIds)
+  const citedClaimIds = new Set(
+    payload.rationales.flatMap((rationale) => rationale.claimIds)
+  )
   const hasExactRationaleClosure =
     expectedOptions.size === expectedOptionIds.length &&
     rationaleOptions.size === rationaleIds.length &&
     rationaleOptions.size === expectedOptions.size &&
     rationaleIds.every((optionId) => expectedOptions.has(optionId)) &&
     payload.rationales.every((rationale) => rationale.message.trim().length > 0)
+  const hasRationaleClaimClosure =
+    payload.rationales.every(
+      (rationale) =>
+        rationale.claimIds.length > 0 &&
+        new Set(rationale.claimIds).size === rationale.claimIds.length &&
+        rationale.claimIds.every((claimId) => claimIdSet.has(claimId))
+    ) &&
+    citedClaimIds.size === claimIdSet.size &&
+    [...citedClaimIds].every((claimId) => claimIdSet.has(claimId))
+  const hasClaimSourceLineClosure =
+    new Set(claimIds).size === claimIds.length &&
+    payload.claims.every((claim) =>
+      claim.sourceLineIds.length > 0 &&
+      new Set(claim.sourceLineIds).size === claim.sourceLineIds.length &&
+      claim.sourceLineIds.every((sourceLineId) => {
+        const receipt = payload.sources.find((source) => source.id === sourceLineId)
+        return receipt !== undefined && receipt.supportedClaimIds.includes(claim.id)
+      })
+    ) &&
+    new Set(payload.claims.flatMap((claim) => claim.sourceLineIds)).size === sourceLineIdSet.size
   const hasCompleteSources =
     payload.sources.length > 0 &&
-    new Set(sourceIds).size === sourceIds.length &&
+    new Set(sourceLineIds).size === sourceLineIds.length &&
     payload.sources.every((source) =>
-      [source.id, source.label, source.locator].every((value) => value.trim().length > 0)
+      [
+        source.id,
+        source.sourceId,
+        source.title,
+        source.publisher,
+        source.version,
+        source.rightsNotes,
+        source.locator,
+        source.excerpt
+      ].every((value) => value.trim().length > 0)
     )
 
   if (
     !expectedOptions.has(payload.correctOptionId) ||
     !hasExactRationaleClosure ||
+    !hasRationaleClaimClosure ||
+    !hasClaimSourceLineClosure ||
     !hasCompleteSources
   ) {
     return yield* new RevealContentMismatch({

@@ -16,6 +16,7 @@ import {
 } from "./model.ts"
 import { DeterministicSeed } from "../deterministic-seed.ts"
 import { sameAssetReceipt } from "../retained-image.ts"
+import { questionCategoryFromSafeMetadata } from "../question-category.ts"
 
 const hashSeed = (value: string): number => {
   let hash = 0x811c9dc5
@@ -57,11 +58,13 @@ export const simulationCapacity = (
     ? inventory
     : inventory.filter((item) => item.profileIds.includes(profileId))
   const categories = new Set(
-    selectedCategories ?? [...new Set(compatibleInventory.map((item) => item.category))]
+    selectedCategories ?? [...new Set(compatibleInventory.map((item) =>
+      questionCategoryFromSafeMetadata(item.question)
+    ))]
   )
   return new Set(
     compatibleInventory
-      .filter((item) => categories.has(item.category))
+      .filter((item) => categories.has(questionCategoryFromSafeMetadata(item.question)))
       .map((item) => item.question.id)
   ).size
 }
@@ -73,9 +76,10 @@ export const simulationCategoryCapacities = (
   const counts = new Map<string, Set<string>>()
   for (const item of inventory) {
     if (profileId !== undefined && !item.profileIds.includes(profileId)) continue
-    const ids = counts.get(item.category) ?? new Set<string>()
+    const category = questionCategoryFromSafeMetadata(item.question)
+    const ids = counts.get(category) ?? new Set<string>()
     ids.add(item.question.id)
-    counts.set(item.category, ids)
+    counts.set(category, ids)
   }
   return [...counts]
     .sort(([left], [right]) => left.localeCompare(right))
@@ -128,7 +132,11 @@ export const assembleSimulation = (input: AssembleSimulationInput): SimulationSe
     (item) => item.profileIds.includes(profile.id)
   )
   const compatibleInventory = format === "questions" ? compatibleQuestions : compatibleHazards
-  const availableCategories = new Set(compatibleInventory.map((item) => item.category))
+  const availableCategories = new Set(compatibleInventory.map((item) =>
+    "question" in item
+      ? questionCategoryFromSafeMetadata(item.question)
+      : item.category
+  ))
   const selectedCategories = [...new Set(input.selectedCategories)].sort()
   if (
     selectedCategories.length === 0 ||
@@ -163,7 +171,9 @@ export const assembleSimulation = (input: AssembleSimulationInput): SimulationSe
   const items = format === "questions"
     ? (() => {
         const canonical = compatibleQuestions
-          .filter((item) => selectedCategories.includes(item.category))
+          .filter((item) => selectedCategories.includes(
+            questionCategoryFromSafeMetadata(item.question)
+          ))
           .sort((left, right) => left.question.id.localeCompare(right.question.id))
         if (canonical.some((item, index) =>
           index > 0 && item.question.id === canonical[index - 1]?.question.id
@@ -183,7 +193,7 @@ export const assembleSimulation = (input: AssembleSimulationInput): SimulationSe
             item.question.options.map((option) => option.id).sort(),
             random
           ),
-          category: item.category
+          category: questionCategoryFromSafeMetadata(item.question)
         }))
       })()
     : (() => {

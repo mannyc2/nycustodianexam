@@ -361,9 +361,13 @@ describe("trusted release-content registry", () => {
     if (embedded === undefined) throw new Error("Generated settings bootstrap is missing")
     const decoded = decodeSettingsBootstrap(JSON.parse(embedded))
 
-    expect(decoded.questionIds).toHaveLength(2)
-    expect(decoded.sceneIds).toHaveLength(18)
-    expect(decoded.trustedReleaseContentRegistry.entries).toHaveLength(38)
+    expect(decoded.questionIds).toEqual(
+      Array.from({ length: 90 }, (_, index) => `q${String(index + 1).padStart(3, "0")}`)
+    )
+    expect(decoded.sceneIds).toEqual(
+      Array.from({ length: 18 }, (_, index) => `s${String(index + 1).padStart(3, "0")}`)
+    )
+    expect(decoded.trustedReleaseContentRegistry.entries).toHaveLength(126)
     for (const answerBearingKey of [
       "correctOptionId",
       "rationales",

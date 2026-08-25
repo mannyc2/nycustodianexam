@@ -2,6 +2,8 @@ import { readFile, unlink, writeFile } from "node:fs/promises"
 import { fileURLToPath } from "node:url"
 import { expect, test } from "@playwright/test"
 import {
+  attemptsStore,
+  databaseName,
   gotoReadyQuestion,
   questionReceipt,
   questionPath,
@@ -17,6 +19,26 @@ import {
 const builtWorkerPath = fileURLToPath(new URL("../dist/sw.js", import.meta.url))
 const updateWorkerPath = fileURLToPath(new URL("../dist/sw-browser-update.js", import.meta.url))
 
+const readStoredAttemptAt = (page: import("@playwright/test").Page, id: string): Promise<unknown> =>
+  page.evaluate(({ expectedDatabaseName, expectedStore, expectedId }) =>
+    new Promise<unknown>((resolve, reject) => {
+      const open = indexedDB.open(expectedDatabaseName)
+      open.onerror = () => reject(open.error)
+      open.onsuccess = () => {
+        const database = open.result
+        const transaction = database.transaction(expectedStore, "readonly")
+        const request = transaction.objectStore(expectedStore).get(expectedId)
+        request.onerror = () => reject(request.error)
+        request.onsuccess = () => resolve(request.result)
+        transaction.oncomplete = () => database.close()
+        transaction.onabort = () => reject(transaction.error)
+      }
+    }), {
+    expectedDatabaseName: databaseName,
+    expectedStore: attemptsStore,
+    expectedId: id
+  })
+
 test("a committed question reloads from the controlled service worker while offline", async ({
   browserName,
   context,
@@ -27,10 +49,10 @@ test("a committed question reloads from the controlled service worker while offl
   await gotoReadyQuestion(page)
   await waitForActiveServiceWorker(page)
   await page.reload()
-  await expect(page.getByRole("radio", { name: "Pipe wrench" })).toBeEnabled()
+  await expect(page.getByRole("radio", { name: "Scrub brush" })).toBeEnabled()
   await expect.poll(() => page.evaluate(() => navigator.serviceWorker.controller !== null)).toBe(true)
 
-  await page.getByRole("radio", { name: "Pipe wrench" }).check()
+  await page.getByRole("radio", { name: "Scrub brush" }).check()
   await page.getByRole("button", { name: "Commit answer" }).click()
   await expect(page.getByRole("heading", { name: "Correct", exact: true })).toBeVisible()
 
@@ -88,7 +110,7 @@ test("cached profile and source facts remain readable with truthful stale state"
   test.skip(browserName !== "chromium", "Playwright exposes service workers only in Chromium")
 
   const profilePath = "/ny/"
-  const sourcePath = "/transparency/sources/taxonomy-hand-tools/"
+  const atlasPath = "/atlas/tool/pipe-wrench/"
   await gotoReadyQuestion(page)
   await waitForActiveServiceWorker(page)
   await page.reload()
@@ -99,9 +121,26 @@ test("cached profile and source facts remain readable with truthful stale state"
   await expect(page.getByRole("heading", {
     name: "New York Entry-Level Custodians and Janitors"
   })).toBeVisible()
+  const profileFactTerm = page.locator(".fact-list dt").first()
+  const profileFactLabel = (await profileFactTerm.innerText()).trim()
+  const profileFactValue = (await profileFactTerm
+    .locator("xpath=following-sibling::dd[1]").innerText()).trim()
+  expect(profileFactLabel.length).toBeGreaterThan(0)
+  expect(profileFactValue.length).toBeGreaterThan(0)
+  await page.goto(atlasPath)
+  const sourceTrail = page.getByRole("heading", { name: "Source trail" }).locator("..")
+  const currentSourceLink = sourceTrail.getByRole("link").first()
+  const sourceHeading = (await currentSourceLink.innerText()).trim()
+  const sourceHref = await currentSourceLink.getAttribute("href")
+  if (sourceHeading.length === 0 || sourceHref === null) {
+    throw new Error("The generated atlas has no current source receipt")
+  }
+  const sourcePath = new URL(sourceHref, page.url()).pathname
   await page.goto(sourcePath)
-  await expect(page.getByRole("heading", { name: "Recovered hand-tool taxonomy" }))
-    .toBeVisible()
+  await expect(page.getByRole("heading", { name: sourceHeading, exact: true })).toBeVisible()
+  const supportedScope = (await page.locator(".source-record .fact-list dd").nth(2).innerText())
+    .trim()
+  expect(supportedScope.length).toBeGreaterThan(0)
   await expect
     .poll(() => page.evaluate(async (paths) => {
       const cacheNames = (await caches.keys()).filter((name) =>
@@ -123,16 +162,16 @@ test("cached profile and source facts remain readable with truthful stale state"
   await expect(page.getByRole("heading", {
     name: "New York Entry-Level Custodians and Janitors"
   })).toBeVisible()
-  await expect(page.getByText("Tool references", { exact: true })).toBeVisible()
+  const offlineProfileFactTerm = page.locator(".fact-list dt").first()
+  await expect(offlineProfileFactTerm).toHaveText(profileFactLabel)
+  await expect(offlineProfileFactTerm.locator("xpath=following-sibling::dd[1]"))
+    .toHaveText(profileFactValue)
   await expect(page.locator("html")).toHaveAttribute("data-freshness", "offline-stale")
 
   await page.goto(sourcePath, { waitUntil: "domcontentloaded" })
   await expect(page).toHaveURL(sourcePath)
-  await expect(page.getByRole("heading", { name: "Recovered hand-tool taxonomy" }))
-    .toBeVisible()
-  await expect(page.getByText(
-    "Supported uses and distinctions for adjustable, pipe, fixed, and slip-joint hand tools."
-  )).toBeVisible()
+  await expect(page.getByRole("heading", { name: sourceHeading, exact: true })).toBeVisible()
+  await expect(page.getByText(supportedScope, { exact: true })).toBeVisible()
   await expect(page.locator("html")).toHaveAttribute("data-freshness", "offline-stale")
 })
 
@@ -185,18 +224,54 @@ test("known-offline partial start blocks commitment when exact feedback is absen
 
   await gotoReadyQuestion(page)
   await waitForActiveServiceWorker(page)
+  await page.goto("/practice/")
+  await expect.poll(() => page.evaluate(() => navigator.serviceWorker.controller !== null)).toBe(true)
+  const start90 = page
+    .getByLabel("Available whole-bank practice lengths")
+    .getByRole("link", { name: "Start 90" })
+  const sessionHref = await start90.getAttribute("href")
+  if (sessionHref === null) throw new Error("The generated 90-question session has no path")
+  const sessionPath = new URL(sessionHref, page.url()).pathname
+  await page.goto(sessionPath)
+  const currentOptionLabels = await page.locator("#question-data").evaluate((element) => {
+    const decoded = JSON.parse(element.textContent ?? "") as {
+      readonly options?: ReadonlyArray<{ readonly label?: unknown }>
+    }
+    const labels = decoded.options?.map((option) => option.label)
+    if (labels === undefined || labels.length !== 4 ||
+      labels.some((label) => typeof label !== "string")) {
+      throw new Error("The generated question bootstrap has no four-option label set")
+    }
+    return labels as ReadonlyArray<string>
+  })
+  const currentReceipt = await page.locator("#question-receipt-data").evaluate((element) => {
+    const decoded = JSON.parse(element.textContent ?? "") as {
+      readonly postcommitPath?: unknown
+    }
+    if (typeof decoded.postcommitPath !== "string") {
+      throw new Error("The generated question bootstrap has no postcommit receipt path")
+    }
+    return decoded.postcommitPath
+  })
+  const currentAttemptId = await page.locator("[data-question-attempt-id]")
+    .getAttribute("data-question-attempt-id")
+  if (currentAttemptId === null) {
+    throw new Error("The generated question bootstrap has no durable attempt identity")
+  }
   // Study navigation now belongs to explicit packs rather than the baseline
   // shell. Cache this exact document through one controlled online navigation
   // so the test isolates missing verified feedback, not missing navigation.
   await page.reload()
-  await expect(page.getByRole("radio", { name: "Pipe wrench" })).toBeEnabled()
+  for (const label of currentOptionLabels) {
+    await expect(page.getByRole("radio", { name: label, exact: true })).toBeEnabled()
+  }
   await page.goto("/practice/")
   await expect.poll(() => page.evaluate(() => navigator.serviceWorker.controller !== null)).toBe(true)
   expect(await page.evaluate((cacheName) => caches.delete(cacheName), verifiedContentCacheName))
     .toBe(true)
   let postcommitRequests = 0
   page.on("request", (request) => {
-    if (new URL(request.url()).pathname === questionPostcommitPath) postcommitRequests += 1
+    if (new URL(request.url()).pathname === currentReceipt) postcommitRequests += 1
   })
 
   // Chromium's CDP offline emulation can report navigator.onLine as true in a
@@ -210,8 +285,11 @@ test("known-offline partial start blocks commitment when exact feedback is absen
   })
   await context.setOffline(true)
   expect(await page.evaluate(() => navigator.onLine)).toBe(false)
-  await page.getByRole("link", { name: "Start question 1" }).click()
-  await expect(page).toHaveURL(questionPath)
+  await page
+    .getByLabel("Available whole-bank practice lengths")
+    .getByRole("link", { name: "Start 90" })
+    .click()
+  await expect(page).toHaveURL(sessionPath)
   expect(await page.evaluate(() => navigator.onLine)).toBe(false)
   await expect(page.getByRole("heading", { name: "Required study content is unavailable" }))
     .toBeVisible()
@@ -220,7 +298,7 @@ test("known-offline partial start blocks commitment when exact feedback is absen
   for (const choice of choices) await expect(choice).toBeDisabled()
   await expect(page.getByRole("button", { name: "Commit answer" })).toBeDisabled()
   expect(postcommitRequests).toBe(0)
-  expect(await readStoredAttempt(page)).toBeUndefined()
+  expect(await readStoredAttemptAt(page, currentAttemptId)).toBeUndefined()
 })
 
 test("an update waits for the active client, then evicts only stale owned cache namespaces", async ({

@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto"
 import { readFileSync } from "node:fs"
 import {
-  PostcommitQuestion,
+  LegacyPostcommitQuestion,
   PostcommitScene,
   PrecommitScene,
   ReleaseManifest
@@ -88,15 +88,23 @@ const releasedSceneAssetBytes = new Uint8Array(readFileSync(
 ))
 const question = (id: string, position: number) => ({
   question: {
-    schemaVersion: 1,
+    schemaVersion: 2,
     id,
+    version: 1,
     profileId: "profile-1",
+    profileIds: ["profile-1", "profile-2"],
     prompt: `Prompt ${id}`,
     options: [
       { id: `${id}-a`, label: "A" },
       { id: `${id}-b`, label: "B" },
       { id: `${id}-c`, label: "C" }
-    ]
+    ],
+    memberships: [{
+      filterKind: "domain",
+      filterValue: position === 1
+        ? "cleaning-tools-and-uses"
+        : "minor-maintenance-and-repair"
+    }]
   },
   profileIds: ["profile-1", "profile-2"],
   receipt: {
@@ -108,12 +116,11 @@ const question = (id: string, position: number) => ({
     postcommitBytes: 10,
     postcommitSha256: sha,
     questionId: id
-  },
-  category: position === 1 ? "Cleaning tools" : "Hand tools"
+  }
 })
 
 const bootstrap = (reverse = false) => Schema.decodeUnknownSync(SimulationBootstrap)({
-  schemaVersion: 1,
+  schemaVersion: 2,
   releaseId: "release-1",
   packVersion: 1,
   profiles: [{
@@ -167,7 +174,7 @@ const bindPostcommitReceipts = (
 const questionPostcommit = (
   item: SimulationSessionItem,
   rationalePrefix = "Reviewed rationale"
-): typeof PostcommitQuestion.Type => Schema.decodeUnknownSync(PostcommitQuestion)({
+): typeof LegacyPostcommitQuestion.Type => Schema.decodeUnknownSync(LegacyPostcommitQuestion)({
   schemaVersion: 1,
   id: item.question.id,
   correctOptionId: item.optionOrder[0],
@@ -180,7 +187,7 @@ const questionPostcommit = (
 
 const simulationSettings = {
   profileId: "profile-1",
-  selectedCategories: ["Cleaning tools", "Hand tools"],
+  selectedCategories: ["Cleaning tools and uses", "Minor maintenance and repair"],
   timing: new SimulationTimingSettings({
     mode: "untimed",
     durationSeconds: null,
@@ -600,7 +607,7 @@ describe("deterministic simulation generation", () => {
         { questionId: second?.question.id, selectedOptionId: null, reviewIntent: "flagged" }
       ]
     })
-    const answers = items.map((item, index) => Schema.decodeUnknownSync(PostcommitQuestion)({
+    const answers = items.map((item, index) => Schema.decodeUnknownSync(LegacyPostcommitQuestion)({
       schemaVersion: 1,
       id: item.question.id,
       correctOptionId: index === 0 ? item.optionOrder[0] : item.optionOrder[1],
@@ -640,7 +647,7 @@ describe("deterministic simulation generation", () => {
       submittedAt: 200,
       answers
     })
-    const postcommit = items.map((item, index) => Schema.decodeUnknownSync(PostcommitQuestion)({
+    const postcommit = items.map((item, index) => Schema.decodeUnknownSync(LegacyPostcommitQuestion)({
       schemaVersion: 1,
       id: item.question.id,
       correctOptionId: item.optionOrder[0],
@@ -817,7 +824,7 @@ describe("deterministic simulation generation", () => {
       submittedAt: 200,
       answers
     })
-    const postcommit = items.map((item) => Schema.decodeUnknownSync(PostcommitQuestion)({
+    const postcommit = items.map((item) => Schema.decodeUnknownSync(LegacyPostcommitQuestion)({
       schemaVersion: 1,
       id: item.question.id,
       correctOptionId: item.optionOrder[0],
@@ -883,7 +890,7 @@ describe("deterministic simulation generation", () => {
 
   it("filters the content mix before capacity and persists explicit timing settings", () => {
     const source = bootstrap()
-    expect(simulationCapacity(source.inventory, ["Cleaning tools"])).toBe(1)
+    expect(simulationCapacity(source.inventory, ["Cleaning tools and uses"])).toBe(1)
     const timing = new SimulationTimingSettings({
       mode: "timed",
       durationSeconds: 7_200,
@@ -896,13 +903,13 @@ describe("deterministic simulation generation", () => {
       profileId: "profile-1",
       length: 1,
       seed: "filtered",
-      selectedCategories: ["Cleaning tools"],
+      selectedCategories: ["Cleaning tools and uses"],
       timing,
       now: 1_000
     })
 
-    expect(session.items.map((item) => item.category)).toEqual(["Cleaning tools"])
-    expect(session.selectedCategories).toEqual(["Cleaning tools"])
+    expect(session.items.map((item) => item.category)).toEqual(["Cleaning tools and uses"])
+    expect(session.selectedCategories).toEqual(["Cleaning tools and uses"])
     expect(session.timing).toEqual(timing)
     expect(Schema.decodeUnknownSync(SimulationSessionRecord)(JSON.parse(JSON.stringify(session)))).toEqual(session)
     expect(() => assembleSimulation({
@@ -911,7 +918,7 @@ describe("deterministic simulation generation", () => {
       profileId: "profile-1",
       length: 1,
       seed: "invalid-timing",
-      selectedCategories: ["Cleaning tools"],
+      selectedCategories: ["Cleaning tools and uses"],
       timing: new SimulationTimingSettings({
         mode: "untimed",
         durationSeconds: null,
@@ -944,7 +951,7 @@ describe("deterministic simulation generation", () => {
       profileId: "profile-2",
       length: 2,
       seed: "nassau",
-      selectedCategories: ["Hand tools"],
+      selectedCategories: ["Minor maintenance and repair"],
       timing: simulationSettings.timing,
       now: 100
     })
@@ -975,7 +982,7 @@ describe("deterministic simulation generation", () => {
       profileId: "profile-1",
       length: 2,
       seed: "same-profile-settings",
-      selectedCategories: ["Cleaning tools", "Hand tools"],
+      selectedCategories: ["Cleaning tools and uses", "Minor maintenance and repair"],
       timing: simulationSettings.timing,
       now: 100
     })
@@ -985,7 +992,7 @@ describe("deterministic simulation generation", () => {
       profileId: "profile-2",
       length: 2,
       seed: "same-profile-settings",
-      selectedCategories: ["Cleaning tools", "Hand tools"],
+      selectedCategories: ["Cleaning tools and uses", "Minor maintenance and repair"],
       timing: simulationSettings.timing,
       now: 100
     })
@@ -1251,7 +1258,7 @@ describe("deterministic simulation generation", () => {
       const correctOptionId = index === 0
         ? answers[index]?.selectedOptionId ?? item.optionOrder[0]
         : item.optionOrder[0]
-      const postcommit = Schema.decodeUnknownSync(PostcommitQuestion)({
+      const postcommit = Schema.decodeUnknownSync(LegacyPostcommitQuestion)({
         schemaVersion: 1,
         id: item.question.id,
         correctOptionId,

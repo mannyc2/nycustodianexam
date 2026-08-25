@@ -1,50 +1,124 @@
 {
-  "schemaVersion": 1,
-  "id": "tool-selection-001",
-  "profileId": "nyc-school-custodian",
-  "prompt": "Which tool is designed to grip and turn round pipe and fittings?",
+  "schemaVersion": 2,
+  "id": "q001",
+  "version": 1,
+  "profileId": "nys-entry-level-custodians-janitors",
+  "prompt": "Which tool uses a bristled head to scrub or wash an appropriate surface?",
   "options": [
-    {
-      "id": "adjustable-wrench",
-      "label": "Adjustable wrench"
-    },
-    {
-      "id": "combination-wrench",
-      "label": "Combination wrench"
-    },
-    {
-      "id": "pipe-wrench",
-      "label": "Pipe wrench"
-    },
-    {
-      "id": "slip-joint-pliers",
-      "label": "Slip-joint pliers"
-    }
+    { "id": "a", "label": "Staple gun" },
+    { "id": "b", "label": "Scrub brush" },
+    { "id": "c", "label": "Protective gloves (generic)" },
+    { "id": "d", "label": "Dustpan" }
   ],
-  "correctOptionId": "pipe-wrench",
+  "correctOptionId": "b",
   "rationales": [
     {
-      "optionId": "adjustable-wrench",
-      "message": "An adjustable wrench turns nuts and bolts with smooth jaws; it is not the purpose-built choice for round pipe."
+      "optionId": "a",
+      "message": "Staple gun: Drives staples to fasten suitable materials.",
+      "claimIds": ["claim.use.t002"]
     },
     {
-      "optionId": "combination-wrench",
-      "message": "A combination wrench matches nuts and bolts rather than gripping round pipe."
+      "optionId": "b",
+      "message": "Scrub brush: Scrubs or washes an appropriate surface with a bristled working head.",
+      "claimIds": ["claim.use.t001"]
     },
     {
-      "optionId": "pipe-wrench",
-      "message": "Correct. A pipe wrench has serrated jaws designed to grip and turn round pipe and fittings."
+      "optionId": "c",
+      "message": "Protective gloves (generic): Provides task-appropriate hand protection selected for the hazard or product.",
+      "claimIds": ["claim.use.t003"]
     },
     {
-      "optionId": "slip-joint-pliers",
-      "message": "Slip-joint pliers can grip varied objects within their limits, but the pipe wrench is the tool designed for this task."
+      "optionId": "d",
+      "message": "Dustpan: Collects debris after it has been swept together.",
+      "claimIds": ["claim.use.t014"]
+    }
+  ],
+  "claims": [
+    {
+      "id": "claim.use.t001",
+      "text": "Scrubs or washes an appropriate surface with a bristled working head.",
+      "sourceLineIds": ["line.use.t001"],
+      "evidenceTier": "maintained-editorial-synthesis",
+      "caveat": null
+    },
+    {
+      "id": "claim.use.t002",
+      "text": "Drives staples to fasten suitable materials.",
+      "sourceLineIds": ["line.use.t002"],
+      "evidenceTier": "maintained-editorial-synthesis",
+      "caveat": null
+    },
+    {
+      "id": "claim.use.t003",
+      "text": "Provides task-appropriate hand protection selected for the hazard or product.",
+      "sourceLineIds": ["line.use.t003"],
+      "evidenceTier": "maintained-editorial-synthesis",
+      "caveat": null
+    },
+    {
+      "id": "claim.use.t014",
+      "text": "Collects debris after it has been swept together.",
+      "sourceLineIds": ["line.use.t014"],
+      "evidenceTier": "maintained-editorial-synthesis",
+      "caveat": null
     }
   ],
   "sources": [
     {
-      "id": "taxonomy-hand-tools",
-      "label": "Recovered hand-tool taxonomy",
-      "locator": "docs/TAXONOMY.md#L120-L130"
+      "id": "line.use.t001",
+      "sourceId": "editorial.tool-facts",
+      "title": "Reviewed launch tool facts and question blueprints",
+      "publisher": "NY Custodian Exam editorial project",
+      "evidenceTier": "maintained-editorial-synthesis",
+      "version": "launch-v1 reviewed 2026-08-25",
+      "rightsNotes": "Repository-authored educational synthesis.",
+      "locator": "toolFacts[0].useSummary (tool.scrub-brush)",
+      "excerpt": "Scrubs or washes an appropriate surface with a bristled working head.",
+      "language": "en",
+      "verifiedOn": "2026-08-25",
+      "supportedClaimIds": ["claim.use.t001"]
+    },
+    {
+      "id": "line.use.t002",
+      "sourceId": "editorial.tool-facts",
+      "title": "Reviewed launch tool facts and question blueprints",
+      "publisher": "NY Custodian Exam editorial project",
+      "evidenceTier": "maintained-editorial-synthesis",
+      "version": "launch-v1 reviewed 2026-08-25",
+      "rightsNotes": "Repository-authored educational synthesis.",
+      "locator": "toolFacts[1].useSummary (tool.staple-gun)",
+      "excerpt": "Drives staples to fasten suitable materials.",
+      "language": "en",
+      "verifiedOn": "2026-08-25",
+      "supportedClaimIds": ["claim.use.t002"]
+    },
+    {
+      "id": "line.use.t003",
+      "sourceId": "editorial.tool-facts",
+      "title": "Reviewed launch tool facts and question blueprints",
+      "publisher": "NY Custodian Exam editorial project",
+      "evidenceTier": "maintained-editorial-synthesis",
+      "version": "launch-v1 reviewed 2026-08-25",
+      "rightsNotes": "Repository-authored educational synthesis.",
+      "locator": "toolFacts[2].useSummary (ppe.protective-gloves)",
+      "excerpt": "Provides task-appropriate hand protection selected for the hazard or product.",
+      "language": "en",
+      "verifiedOn": "2026-08-25",
+      "supportedClaimIds": ["claim.use.t003"]
+    },
+    {
+      "id": "line.use.t014",
+      "sourceId": "editorial.tool-facts",
+      "title": "Reviewed launch tool facts and question blueprints",
+      "publisher": "NY Custodian Exam editorial project",
+      "evidenceTier": "maintained-editorial-synthesis",
+      "version": "launch-v1 reviewed 2026-08-25",
+      "rightsNotes": "Repository-authored educational synthesis.",
+      "locator": "toolFacts[13].useSummary (tool.dustpan)",
+      "excerpt": "Collects debris after it has been swept together.",
+      "language": "en",
+      "verifiedOn": "2026-08-25",
+      "supportedClaimIds": ["claim.use.t014"]
     }
   ]
 }

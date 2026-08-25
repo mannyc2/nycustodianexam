@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises"
 import { fileURLToPath } from "node:url"
 import { expect, test, type Page } from "@playwright/test"
 import { appDatabaseName, appDatabaseStores } from "../src/study-storage/app-database.ts"
+import type { PrintBuilderBootstrap } from "../src/print/model.ts"
 import {
   verifiedContentCacheKey,
   verifiedContentCacheName
@@ -15,29 +16,28 @@ interface PrintCacheReceipt {
   readonly kind: "asset" | "postcommit"
 }
 
-const primePrintLocalClosure = async (page: Page): Promise<void> => {
+const readPrintBootstrap = async (page: Page): Promise<PrintBuilderBootstrap> => {
   const raw = await page.locator("#print-builder-data").textContent()
   if (raw === null) throw new Error("Print bootstrap was unavailable")
-  const bootstrap = JSON.parse(raw) as {
-    readonly questions: ReadonlyArray<{
-      readonly answerReceipt: null | {
-        readonly postcommitPath: string
-        readonly postcommitBytes: number
-        readonly postcommitSha256: string
-      }
-    }>
-    readonly scenes: ReadonlyArray<{
-      readonly answerReceipt: {
-        readonly postcommitPath: string
-        readonly postcommitBytes: number
-        readonly postcommitSha256: string
-      }
-      readonly asset: { readonly path: string; readonly bytes: number; readonly sha256: string }
-    }>
-    readonly tools: ReadonlyArray<{
-      readonly asset: { readonly path: string; readonly bytes: number; readonly sha256: string }
-    }>
+  return JSON.parse(raw) as PrintBuilderBootstrap
+}
+
+const questionCategory = (
+  question: PrintBuilderBootstrap["questions"][number]
+): string => {
+  const domains = question.memberships.filter((membership) => membership.filterKind === "domain")
+  if (domains.length === 0) return "Mixed-domain and scenario questions"
+  if (domains.length > 1) throw new Error(`Question ${question.id} has multiple domain memberships`)
+  switch (domains[0]?.filterValue) {
+    case "cleaning-tools-and-uses": return "Cleaning tools and uses"
+    case "minor-maintenance-and-repair": return "Minor maintenance and repair"
+    case "health-and-safety": return "Health and safety"
+    default: throw new Error(`Question ${question.id} has an unsupported domain membership`)
   }
+}
+
+const primePrintLocalClosure = async (page: Page): Promise<void> => {
+  const bootstrap = await readPrintBootstrap(page)
   const receipts = [
     ...bootstrap.questions.flatMap(({ answerReceipt }) => answerReceipt === null ? [] : [{
       path: answerReceipt.postcommitPath,
@@ -115,6 +115,7 @@ const readPrintJobs = (
 
 test("generates, restores, and prints a separate deterministic question packet", async ({ page }) => {
   await page.goto("/print/")
+  const printBootstrap = await readPrintBootstrap(page)
   await expect(page.getByRole("heading", { name: "Build a deterministic print packet" })).toBeVisible()
   await expect(page.getByRole("radio", { name: "Blank hazard worksheet" })).toBeEnabled()
   await expect(page.getByRole("radio", { name: "Announcement-profile fact sheet" })).toBeDisabled()
@@ -135,7 +136,6 @@ test("generates, restores, and prints a separate deterministic question packet",
 
   await expect(page.getByRole("heading", { name: "Original multiple-choice practice" })).toBeFocused()
   await expect(page.getByText("Original practice — not an official or past exam")).toBeVisible()
-  await expect(page.getByText(/Site-designed distribution: Tool selection 2/)).toBeVisible()
   await expect(page.getByRole("heading", { name: "Questions", exact: true })).toBeVisible()
   await expect(page.getByRole("heading", { name: "Answer key" })).toHaveCount(0)
   await expect(page.getByText(/Rationale for/)).toHaveCount(0)
@@ -144,6 +144,29 @@ test("generates, restores, and prints a separate deterministic question packet",
   const beforeReload = await readPrintJobs(page)
   expect(beforeReload).toHaveLength(1)
   expect(beforeReload[0]).toMatchObject({ status: "preview-ready" })
+  const manifest = beforeReload[0]?.manifest as {
+    readonly actualDistribution: ReadonlyArray<{ readonly label: string; readonly count: number }>
+    readonly actualLength: number
+    readonly itemIds: ReadonlyArray<string>
+  }
+  const questionById = new Map(printBootstrap.questions.map((question) => [question.id, question]))
+  const distribution = new Map<string, number>()
+  for (const questionId of manifest.itemIds) {
+    const question = questionById.get(questionId)
+    if (question === undefined) throw new Error(`Printed question ${questionId} was absent from bootstrap`)
+    const category = questionCategory(question)
+    distribution.set(category, (distribution.get(category) ?? 0) + 1)
+  }
+  const expectedDistribution = [...distribution]
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(([label, count]) => ({ label, count }))
+  expect(manifest.actualLength).toBe(2)
+  expect(manifest.itemIds).toHaveLength(2)
+  expect(manifest.actualDistribution).toEqual(expectedDistribution)
+  await expect(page.getByText(
+    `Site-designed distribution: ${expectedDistribution.map(({ label, count }) => `${label} ${count}`).join(", ")}`,
+    { exact: true }
+  )).toBeVisible()
 
   await page.reload()
   await expect(page.locator("[data-print-fingerprint]")).toHaveAttribute("data-print-fingerprint", fingerprint ?? "")
@@ -169,6 +192,92 @@ test("generates, restores, and prints a separate deterministic question packet",
   await expect.poll(() => page.evaluate(() => (window as typeof window & { __printDialogRequested?: boolean }).__printDialogRequested)).toBe(true)
   await expect.poll(async () => (await readPrintJobs(page))[0]?.status).toBe("system-print-requested")
   await expect(page.getByText("System print was requested; completion is not confirmed.")).toBeVisible()
+})
+
+test("persists and restores the exact v2 announcement facts and source-line receipts", async ({
+  page
+}) => {
+  await page.goto("/print/")
+  const printBootstrap = await readPrintBootstrap(page)
+  const sourceBoundProfile = printBootstrap.profiles.find((profile) =>
+    profile.announcementFactSheet !== null
+  )
+  const factSheet = sourceBoundProfile?.announcementFactSheet
+  if (sourceBoundProfile === undefined || factSheet === null || factSheet === undefined) {
+    throw new Error("Print bootstrap had no source-bound announcement profile")
+  }
+  const referencedSourceLineIds = new Set([
+    ...factSheet.facts.flatMap((fact) => [
+      ...fact.sourceLineIds,
+      ...fact.conflictingValues.flatMap((candidate) => candidate.sourceLineIds)
+    ]),
+    ...factSheet.changeHistory.flatMap((change) => change.sourceLineIds)
+  ])
+  expect(referencedSourceLineIds.size).toBeGreaterThan(0)
+  for (const sourceLineId of referencedSourceLineIds) {
+    expect(factSheet.sourceLines.some((sourceLine) => sourceLine.id === sourceLineId)).toBe(true)
+  }
+  const sampleSourceLine = factSheet.sourceLines.find((sourceLine) =>
+    referencedSourceLineIds.has(sourceLine.id)
+  )
+  if (sampleSourceLine === undefined) throw new Error("Fact sheet had no referenced source-line receipt")
+
+  await page.getByLabel("Profile", { exact: true }).selectOption(sourceBoundProfile.id)
+  const product = page.getByRole("radio", { name: "Announcement-profile fact sheet" })
+  await expect(product).toBeEnabled()
+  await product.check()
+  await expect(page.getByLabel("Number of profiles")).toHaveValue("1")
+  await expect(page.getByText("Available profiles: 1")).toBeVisible()
+  await page.getByLabel("Deterministic seed").fill("browser-source-bound-facts")
+  await page.getByRole("button", { name: "Generate preview" }).click()
+
+  await expect(page.getByRole("heading", { level: 1, name: "Announcement-profile fact sheet" })).toBeFocused()
+  const factStateCounts = new Map<string, number>()
+  for (const fact of factSheet.facts) {
+    factStateCounts.set(fact.state, (factStateCounts.get(fact.state) ?? 0) + 1)
+  }
+  for (const [state, count] of factStateCounts) {
+    await expect(page.locator(`[data-fact-state="${state}"]`)).toHaveCount(count)
+  }
+  await expect(page.getByText(/Missing source-line receipt/)).toHaveCount(0)
+  const renderedReceipt = page.locator(".print-profile-fact-sheet li")
+    .filter({ hasText: sampleSourceLine.excerpt }).first()
+  await expect(renderedReceipt).toContainText(sampleSourceLine.title)
+  await expect(renderedReceipt).toContainText(sampleSourceLine.publisher)
+  await expect(renderedReceipt).toContainText(sampleSourceLine.version)
+  await expect(renderedReceipt).toContainText(sampleSourceLine.locator)
+  await expect(renderedReceipt).toContainText(sampleSourceLine.excerpt)
+  await expect(renderedReceipt).toContainText(
+    `Evidence tier: ${sampleSourceLine.evidenceTier}; verified ${sampleSourceLine.verifiedOn}; language ${sampleSourceLine.language}; rights: ${sampleSourceLine.rightsNotes}.`
+  )
+
+  const jobs = await readPrintJobs(page)
+  expect(jobs).toHaveLength(1)
+  const persisted = jobs[0] as {
+    readonly manifest: {
+      readonly fingerprint: string
+      readonly profile: { readonly announcementFactSheet: unknown }
+      readonly schemaVersion: number
+    }
+    readonly packet: {
+      readonly schemaVersion: number
+      readonly sections: ReadonlyArray<{ readonly tag: string; readonly factSheet?: unknown }>
+    }
+  }
+  expect(persisted.manifest.schemaVersion).toBe(2)
+  expect(persisted.packet.schemaVersion).toBe(2)
+  expect(persisted.manifest.profile.announcementFactSheet).toEqual(factSheet)
+  expect(persisted.packet.sections).toEqual([
+    expect.objectContaining({ tag: "announcement-profile-fact-sheet", factSheet })
+  ])
+
+  await page.reload()
+  await expect(page.locator("[data-print-fingerprint]")).toHaveAttribute(
+    "data-print-fingerprint",
+    persisted.manifest.fingerprint
+  )
+  await expect(page.locator(".print-profile-fact-sheet li")
+    .filter({ hasText: sampleSourceLine.excerpt }).first()).toContainText(sampleSourceLine.rightsNotes)
 })
 
 test("generates an answer key as its own product without question or rationale sections", async ({ page }) => {
@@ -327,9 +436,58 @@ test("pairs separate jobs and page-breaks an appended key with optional explanat
   expect(jobs).toHaveLength(3)
   const appended = jobs.find((job) =>
     (job.packet as { sections?: ReadonlyArray<unknown> }).sections?.length === 3)
-  expect((appended?.packet as { sections?: ReadonlyArray<{ tag?: string }> }).sections?.map(
+  const appendedPacket = appended?.packet as {
+    schemaVersion?: number
+    sections?: ReadonlyArray<{
+      tag?: string
+      explanations?: ReadonlyArray<{
+        claims: ReadonlyArray<{
+          id: string
+          sourceLineIds: ReadonlyArray<string>
+        }>
+        rationales: ReadonlyArray<{ claimIds: ReadonlyArray<string> }>
+        sources: ReadonlyArray<{
+          id: string
+          excerpt: string
+          publisher: string
+          rightsNotes: string
+          supportedClaimIds: ReadonlyArray<string>
+          title: string
+          version: string
+        }>
+      }>
+    }>
+  }
+  expect(appendedPacket.schemaVersion).toBe(2)
+  expect(appendedPacket.sections?.map(
     (section) => section.tag
   )).toEqual(["questions", "answer-key", "explanations"])
+  const explanations = appendedPacket.sections?.find((section) =>
+    section.tag === "explanations"
+  )?.explanations
+  expect(explanations).toHaveLength(2)
+  for (const explanation of explanations ?? []) {
+    expect(explanation.claims.length).toBeGreaterThan(0)
+    expect(explanation.sources.length).toBeGreaterThan(0)
+    const claimIds = new Set(explanation.claims.map((claim) => claim.id))
+    const sourceLineIds = new Set(explanation.sources.map((source) => source.id))
+    for (const rationale of explanation.rationales) {
+      expect(rationale.claimIds.length).toBeGreaterThan(0)
+      expect(rationale.claimIds.every((claimId) => claimIds.has(claimId))).toBe(true)
+    }
+    for (const claim of explanation.claims) {
+      expect(claim.sourceLineIds.length).toBeGreaterThan(0)
+      expect(claim.sourceLineIds.every((sourceLineId) => sourceLineIds.has(sourceLineId))).toBe(true)
+    }
+    for (const source of explanation.sources) {
+      expect(source.title).not.toBe("")
+      expect(source.publisher).not.toBe("")
+      expect(source.version).not.toBe("")
+      expect(source.excerpt).not.toBe("")
+      expect(source.rightsNotes).not.toBe("")
+      expect(source.supportedClaimIds.some((claimId) => claimIds.has(claimId))).toBe(true)
+    }
+  }
 })
 
 test("tool-family cards count complete families and retain exact verified images", async ({
@@ -338,30 +496,73 @@ test("tool-family cards count complete families and retain exact verified images
   page
 }) => {
   await page.goto("/print/")
+  const printBootstrap = await readPrintBootstrap(page)
+  const defaultProfile = printBootstrap.profiles[0]
+  if (defaultProfile === undefined) throw new Error("Print bootstrap had no default profile")
+  const compatibleTools = printBootstrap.tools.filter((tool) =>
+    tool.profileIds.includes(defaultProfile.id)
+  )
+  const toolsByFamily = new Map<string, Array<(typeof compatibleTools)[number]>>()
+  for (const tool of compatibleTools) {
+    toolsByFamily.set(tool.family, [...(toolsByFamily.get(tool.family) ?? []), tool])
+  }
+  const completeFamilies = [...toolsByFamily]
+    .filter(([, tools]) => tools.length >= 2)
+    .map(([family, tools]) => ({ family, tools: [...tools].sort((left, right) => left.id.localeCompare(right.id)) }))
+    .sort((left, right) => left.family.localeCompare(right.family))
+  const selectedFamily = completeFamilies.reduce((largest, candidate) =>
+    candidate.tools.length > largest.tools.length ? candidate : largest)
   await primePrintLocalClosure(page)
   await page.getByRole("radio", { name: "Tool-family contrast cards" }).check()
+  await expect(page.getByLabel("Number of families")).toHaveValue(
+    String(Math.min(10, completeFamilies.length))
+  )
+  await expect(page.getByText(`Available families: ${completeFamilies.length}`)).toBeVisible()
+  await expect(page.getByLabel("Content filter")).toHaveValue("")
+  await page.getByLabel("Content filter").selectOption(selectedFamily.family)
+  await expect(page.getByLabel("Content filter")).toHaveValue(selectedFamily.family)
   await expect(page.getByLabel("Number of families")).toHaveValue("1")
   await expect(page.getByText("Available families: 1")).toBeVisible()
-  await expect(page.getByLabel("Content filter")).toHaveValue("")
-  await page.getByLabel("Content filter").selectOption("wrenches")
   await page.getByLabel("Deterministic seed").fill("browser-tool-family")
   await page.getByRole("button", { name: "Generate preview" }).click()
 
   await expect(page.getByRole("heading", { level: 1, name: "Tool-family contrast cards" })).toBeVisible()
-  await expect(page.getByRole("heading", { level: 3, name: "wrenches" })).toBeVisible()
-  await expect(page.locator(".print-tool-grid > section")).toHaveCount(3)
-  await expect(page.locator(".print-tool-grid img")).toHaveCount(3)
+  await expect(page.getByRole("heading", { level: 3, name: selectedFamily.family })).toBeVisible()
+  await expect(page.locator(".print-tool-grid > section")).toHaveCount(selectedFamily.tools.length)
+  await expect(page.locator(".print-tool-grid img")).toHaveCount(selectedFamily.tools.length)
   for (const image of await page.locator(".print-tool-grid img").all()) {
     await expect(image).toHaveAttribute("src", /^data:image\/png;base64,/)
   }
   const jobs = await readPrintJobs(page)
   expect(jobs).toHaveLength(1)
   expect(jobs[0]).toMatchObject({
-    manifest: { actualLength: 1, itemIds: ["wrenches"] },
+    manifest: {
+      actualDistribution: [{ label: selectedFamily.family, count: 1 }],
+      actualLength: 1,
+      itemIds: [selectedFamily.family]
+    },
     packet: { sections: [{ tag: "tool-family-cards" }] }
   })
-  expect(((jobs[0]?.packet as { sections?: Array<{ families?: Array<{ tools?: unknown[] }> }> })
-    ?.sections?.[0]?.families?.[0]?.tools ?? [])).toHaveLength(3)
+  const retainedTools = ((jobs[0]?.packet as {
+    sections?: Array<{
+      families?: Array<{
+        tools?: Array<{
+          id: string
+          asset: null | {
+            dataUrl: string
+            receipt: { path: string; bytes: number; sha256: string; kind: "asset" }
+          }
+        }>
+      }>
+    }>
+  })?.sections?.[0]?.families?.[0]?.tools ?? [])
+  expect(retainedTools.map((tool) => tool.id)).toEqual(selectedFamily.tools.map((tool) => tool.id))
+  for (const retainedTool of retainedTools) {
+    const releasedTool = selectedFamily.tools.find((tool) => tool.id === retainedTool.id)
+    if (releasedTool === undefined) throw new Error(`Retained unknown tool ${retainedTool.id}`)
+    expect(retainedTool.asset?.receipt).toEqual(releasedTool.asset)
+    expect(retainedTool.asset?.dataUrl).toMatch(/^data:image\/png;base64,/)
+  }
 
   if (browserName === "chromium") {
     await waitForActiveServiceWorker(page)
@@ -370,7 +571,8 @@ test("tool-family cards count complete families and retain exact verified images
     await context.setOffline(true)
     await page.reload({ waitUntil: "domcontentloaded" })
     await expect(page.getByRole("heading", { level: 1, name: "Tool-family contrast cards" })).toBeVisible()
-    await expect(page.locator(".print-tool-grid img")).toHaveCount(3)
+    await expect(page.getByRole("heading", { level: 3, name: selectedFamily.family })).toBeVisible()
+    await expect(page.locator(".print-tool-grid img")).toHaveCount(selectedFamily.tools.length)
   }
 })
 

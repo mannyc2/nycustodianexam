@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "bun run src/main.ts",
+    "build": "node ../../content/authoring/packs/build-launch-v1.mjs --check && bun run src/main.ts",
     "test": "node node_modules/vitest/vitest.mjs run",
     "typecheck": "tsc -p tsconfig.json"
   },

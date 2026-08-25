@@ -16,8 +16,10 @@ import {
   PrintBuilderBootstrap,
   createPrintJobId,
   decodePrintJobId,
+  LegacyPrintJobManifest,
   PrintJobManifest,
   PrintJobRecord,
+  PrintPacket,
   PrintQuestionAnswer,
   PrintRetainedAsset,
   PrintSceneAnswer,
@@ -27,6 +29,10 @@ import {
   type SupportedPrintProduct
 } from "../src/print/model.ts"
 import { PrintPreview } from "../src/print/react/preview.tsx"
+import {
+  loadPrintAnswers,
+  PrintAnswerMismatchError
+} from "../src/print/answers.ts"
 import {
   createPrintPreviewController,
   type PrintEffectRunner,
@@ -62,7 +68,12 @@ const assetReceipt = (id: string) => ({
 const questions = ["q3", "q1", "q2"].map((id, questionIndex) => ({
   id,
   profileIds: ["profile-1"],
-  category: questionIndex === 0 ? "Cleaning tools" : "Tool selection",
+  memberships: [{
+    filterKind: "domain" as const,
+    filterValue: questionIndex === 0
+      ? "cleaning-tools-and-uses"
+      : "minor-maintenance-and-repair"
+  }],
   prompt: `Prompt ${id}`,
   options: ["d", "b", "a", "c"].map((optionId) => ({
     id: `${id}-${optionId}`,
@@ -72,10 +83,11 @@ const questions = ["q3", "q1", "q2"].map((id, questionIndex) => ({
 }))
 
 const bootstrap = new PrintBuilderBootstrap({
-  schemaVersion: 1,
+  schemaVersion: 2,
   releaseId: "release-7",
   contentVersion: 7,
   profiles: [{
+    schemaVersion: 2,
     id: "profile-1",
     label: "Statewide entry-level",
     version: 3,
@@ -156,13 +168,35 @@ const settings = (product: SupportedPrintProduct, count = 3) => new PrintSetting
 })
 
 const answers = questions.map((question) => new PrintQuestionAnswer({
+  schemaVersion: 2,
   questionId: question.id,
   correctOptionId: `${question.id}-c`,
   rationales: question.options.map((option) => ({
     optionId: option.id,
-    message: `Rationale ${option.id}`
+    message: `Rationale ${option.id}`,
+    claimIds: [`claim-${question.id}`]
   })),
-  sources: [{ id: `source-${question.id}`, label: `Source ${question.id}`, locator: `loc-${question.id}` }]
+  claims: [{
+    id: `claim-${question.id}`,
+    text: `Supported claim ${question.id}`,
+    sourceLineIds: [`line-${question.id}`],
+    evidenceTier: "maintained-editorial-synthesis",
+    caveat: question.id === "q3" ? "Site-designed application context." : null
+  }],
+  sources: [{
+    id: `line-${question.id}`,
+    sourceId: `source-${question.id}`,
+    title: `Source ${question.id}`,
+    publisher: "Fixture publisher",
+    evidenceTier: "maintained-editorial-synthesis",
+    version: "fixture revision 1",
+    rightsNotes: "Project-authored test source.",
+    locator: `loc-${question.id}`,
+    excerpt: `Exact source-line excerpt ${question.id}`,
+    language: "en",
+    verifiedOn: "2026-08-25",
+    supportedClaimIds: [`claim-${question.id}`]
+  }]
 }))
 
 const sceneAnswers = bootstrap.scenes.map((scene, index) => new PrintSceneAnswer({
@@ -239,8 +273,8 @@ describe("deterministic print generation", () => {
     expect(second).toEqual(first)
     expect(first.actualLength).toBe(3)
     expect(first.actualDistribution).toEqual([
-      { label: "Cleaning tools", count: 1 },
-      { label: "Tool selection", count: 2 }
+      { label: "Cleaning tools and uses", count: 1 },
+      { label: "Minor maintenance and repair", count: 2 }
     ])
     expect(Schema.decodeUnknownSync(PrintJobManifest)(JSON.parse(JSON.stringify(first)))).toEqual(first)
   })
@@ -308,7 +342,106 @@ describe("deterministic print generation", () => {
     expect(JSON.stringify(key.packet)).not.toContain("Rationale")
     expect(explanations.packet.sections).toHaveLength(1)
     expect(explanations.packet.sections[0]?.tag).toBe("explanations")
+    expect(explanations.packet.schemaVersion).toBe(2)
     expect(JSON.stringify(explanations.packet)).toContain("Rationale")
+    expect(JSON.stringify(explanations.packet)).toContain("Supported claim")
+    expect(JSON.stringify(explanations.packet)).toContain("Site-designed application context.")
+    expect(JSON.stringify(explanations.packet)).toContain("Exact source-line excerpt")
+  })
+
+  it("restores exact v1 print packets without rewriting or accepting v2 evidence under v1", () => {
+    const currentManifest = generatePrintManifest({
+      bootstrap,
+      settings: settings("explanations-and-sources", 2)
+    })
+    const {
+      fingerprint: _currentFingerprint,
+      schemaVersion: _currentManifestSchema,
+      profile: currentProfile,
+      ...manifestFields
+    } = currentManifest
+    const {
+      schemaVersion: _currentProfileSchema,
+      announcementFactSheet: _currentFactSheet,
+      ...legacyProfileFields
+    } = currentProfile
+    const legacyProfile = { ...legacyProfileFields, announcementFactSheet: null }
+    const legacyManifestWithoutFingerprint = {
+      schemaVersion: 1 as const,
+      ...manifestFields,
+      profile: legacyProfile
+    }
+    const manifest = new LegacyPrintJobManifest({
+      ...legacyManifestWithoutFingerprint,
+      fingerprint: computePrintManifestFingerprint(legacyManifestWithoutFingerprint)
+    })
+    const withoutFingerprint = {
+      schemaVersion: 1 as const,
+      title: "Historical explanations and source references",
+      statement: "Original practice — not an official or past exam" as const,
+      sections: [{
+        tag: "explanations" as const,
+        explanations: manifest.questions.map((coordinate, index) => ({
+          number: index + 1,
+          correctOptionLabel: "A",
+          rationales: coordinate.optionIds.map((_, optionIndex) => ({
+            optionLabel: String.fromCharCode(65 + optionIndex),
+            message: `Historical rationale ${optionIndex + 1}`
+          })),
+          sources: [{
+            id: `historical-source-${index + 1}`,
+            label: `Historical source ${index + 1}`,
+            locator: `section ${index + 1}`
+          }]
+        }))
+      }],
+      warnings: []
+    }
+    const packet = new PrintPacket({
+      ...withoutFingerprint,
+      fingerprint: computePrintPacketFingerprint(withoutFingerprint)
+    })
+    const record = new PrintJobRecord({
+      id: "print-legacy1234",
+      manifest,
+      packet,
+      status: "preview-ready",
+      updatedAt: 1
+    })
+    const encoded = JSON.parse(JSON.stringify(record))
+
+    expect(validatePrintJobRecord(encoded)).toEqual(record)
+    expect(encoded.manifest.schemaVersion).toBe(1)
+    expect(encoded.packet.schemaVersion).toBe(1)
+    const explanation = encoded.packet.sections[0].explanations[0]
+    const incompatibleWithoutFingerprint = {
+      ...encoded.packet,
+      sections: [{
+        ...encoded.packet.sections[0],
+        explanations: [{ ...explanation, claims: answers[0]?.claims },
+          ...encoded.packet.sections[0].explanations.slice(1)]
+      }]
+    }
+    expect(() => validatePrintJobRecord({
+      ...encoded,
+      packet: {
+        ...incompatibleWithoutFingerprint,
+        fingerprint: computePrintPacketFingerprint(incompatibleWithoutFingerprint)
+      }
+    })).toThrow()
+    expect(() => validatePrintJobRecord({
+      ...encoded,
+      manifest: currentManifest
+    })).toThrow(/incompatible schema versions/)
+    const currentPacket = generatePrintJob({
+      bootstrap,
+      settings: settings("explanations-and-sources", 2),
+      answers
+    }).packet
+    expect(() => validatePrintJobRecord({
+      ...encoded,
+      packet: currentPacket
+    })).toThrow(/incompatible schema versions/)
   })
 
   it("appends a page-separable key and optional explanations to a paired question packet", () => {
@@ -651,7 +784,7 @@ describe("deterministic print generation", () => {
     )
   })
 
-  it("counts and selects complete compatible tool families rather than individual tools", () => {
+  it("canonically orders an unsorted complete family across manifest assets and durable packet closure", async () => {
     expect(printProductCapacity("tool-family-contrast-cards", bootstrap, "profile-1")).toBe(1)
     const configured = new PrintSettings({
       ...settings("tool-family-contrast-cards", 1),
@@ -661,13 +794,33 @@ describe("deterministic print generation", () => {
 
     expect(generated.manifest.itemIds).toEqual(["wrenches"])
     expect(generated.manifest.actualLength).toBe(1)
-    expect(generated.manifest.assets).toHaveLength(3)
+    expect(generated.manifest.assets).toEqual([
+      assetReceipt("adjustable-wrench"),
+      assetReceipt("fixed-wrench"),
+      assetReceipt("pipe-wrench")
+    ])
     expect(generated.packet.sections[0]).toMatchObject({
       tag: "tool-family-cards",
       families: [{ family: "wrenches" }]
     })
     const section = generated.packet.sections[0]
-    expect(section?.tag === "tool-family-cards" ? section.families[0]?.tools : []).toHaveLength(3)
+    if (section?.tag !== "tool-family-cards") throw new Error("Expected tool-family cards")
+    const tools = section.families[0]?.tools ?? []
+    expect(tools.map((tool) => tool.id)).toEqual([
+      "adjustable-wrench",
+      "fixed-wrench",
+      "pipe-wrench"
+    ])
+    expect(tools.map((tool) => tool.asset?.receipt)).toEqual(generated.manifest.assets)
+
+    const durable = new PrintJobRecord({
+      id: "print-tools1234",
+      ...generated,
+      status: "preview-ready",
+      updatedAt: 100
+    })
+    expect(validatePrintJobRecord(durable)).toEqual(durable)
+    await expect(validatePrintJobRecordIntegrity(durable)).resolves.toEqual(durable)
   })
 
   it("keeps the blank hazard worksheet answer-free and receipt-binds retained images", () => {
@@ -724,58 +877,144 @@ describe("deterministic print generation", () => {
 
   it("applies published category filters before capacity and deterministic selection", () => {
     expect(printProductFilterOptions("multiple-choice-questions", bootstrap, "profile-1")).toEqual([
-      "Cleaning tools",
-      "Tool selection"
+      "Cleaning tools and uses",
+      "Minor maintenance and repair"
     ])
     expect(printProductCapacity(
       "multiple-choice-questions",
       bootstrap,
       "profile-1",
-      ["Cleaning tools"]
+      ["Cleaning tools and uses"]
     )).toBe(1)
     const filtered = new PrintSettings({
       ...settings("multiple-choice-questions", 1),
-      filters: ["Cleaning tools"]
+      filters: ["Cleaning tools and uses"]
     })
     const manifest = generatePrintManifest({ bootstrap, settings: filtered })
     expect(manifest.itemIds).toEqual(["q3"])
-    expect(manifest.actualDistribution).toEqual([{ label: "Cleaning tools", count: 1 }])
+    expect(manifest.actualDistribution).toEqual([{ label: "Cleaning tools and uses", count: 1 }])
   })
 
-  it("prints a source-bound announcement profile exactly when the selected profile supplies it", () => {
-    const sourceReference = {
-      id: "source-announcement",
-      label: "Civil service announcement",
-      locator: "announcement page 1"
-    }
+  it("prints every announcement fact state with exact source-line receipts", () => {
+    const sourceLine = (id: string, excerpt: string) => ({
+      id,
+      sourceId: "source-announcement",
+      title: "Civil service announcement",
+      publisher: "County civil service",
+      evidenceTier: "official-primary" as const,
+      version: "2026-01",
+      rightsNotes: "Public record excerpt retained for verification.",
+      locator: `announcement ${id}`,
+      excerpt,
+      language: "en" as const,
+      verifiedOn: "2026-08-25",
+      supportedClaimIds: [`claim-${id}`] as const,
+      url: "https://example.invalid/announcement"
+    })
+    const sourceLines = [
+      sourceLine("line-current", "The current fee is stated here."),
+      sourceLine("line-old", "The former fee was stated here."),
+      sourceLine("line-not-published", "No exam date is published."),
+      sourceLine("line-unverified", "An item count could not be verified."),
+      sourceLine("line-conflict-a", "One document states 40 percent."),
+      sourceLine("line-conflict-b", "Another document states 50 percent."),
+      sourceLine("line-not-applicable", "Seniority credit does not apply."),
+      sourceLine("line-history", "The profile was reviewed and updated.")
+    ] as const
     const sourceBound = new PrintBuilderBootstrap({
       ...bootstrap,
       profiles: [{
         ...bootstrap.profiles[0]!,
         announcementFactSheet: {
-          schemaVersion: 1,
+          schemaVersion: 2,
           version: 2,
           lastReviewedOn: "2026-08-25",
           controllingDocumentNotice: "The current controlling announcement governs.",
           seriesScopeDisclaimer: "This fact sheet applies only to the named series.",
-          verifiedFacts: [{
-            id: "filing-window",
-            label: "Filing window",
-            value: "January 2 through January 30",
-            sourceReferences: [sourceReference]
-          }],
-          explicitUnknowns: [{
-            id: "item-count",
-            label: "Official item count",
-            detail: "Not stated in the controlling announcement.",
-            sourceReferences: [sourceReference]
-          }],
-          changeHistory: [{
-            version: 2,
-            changedOn: "2026-08-25",
-            summary: "Reviewed against the current announcement.",
-            sourceReferences: [sourceReference]
-          }]
+          facts: [
+            {
+              id: "fee-current",
+              category: "fee",
+              label: "Current fee",
+              state: "verified",
+              appliesToExamNumbers: ["123"],
+              value: "$20",
+              detail: null,
+              reviewedOn: "2026-08-25",
+              effectiveFrom: "2026-02-01",
+              effectiveThrough: null,
+              sourceLineIds: ["line-current"],
+              conflictingValues: [],
+              supersededByFactId: null
+            },
+            {
+              id: "fee-old",
+              category: "fee",
+              label: "Former fee",
+              state: "superseded",
+              appliesToExamNumbers: ["123"],
+              value: "$15",
+              detail: "This historical value was replaced.",
+              reviewedOn: "2026-08-25",
+              effectiveFrom: "2026-01-01",
+              effectiveThrough: "2026-01-31",
+              sourceLineIds: ["line-old"],
+              conflictingValues: [],
+              supersededByFactId: "fee-current"
+            },
+            ...([
+              ["exam-date", "exam_date", "Exam date", "not_published", "No exam date is published.", "line-not-published"],
+              ["item-count", "counts", "Official item count", "unverified", "An official item count could not be verified.", "line-unverified"],
+              ["seniority", "seniority_credit", "Seniority credit", "not_applicable", "Seniority credit does not apply.", "line-not-applicable"]
+            ] as const).map(([id, category, label, state, detail, sourceLineId]) => ({
+              id,
+              category,
+              label,
+              state,
+              appliesToExamNumbers: ["123"] as [string],
+              value: null,
+              detail,
+              reviewedOn: "2026-08-25",
+              effectiveFrom: null,
+              effectiveThrough: null,
+              sourceLineIds: [sourceLineId],
+              conflictingValues: [],
+              supersededByFactId: null
+            })),
+            {
+              id: "weights-conflict",
+              category: "weights",
+              label: "Subject weights",
+              state: "conflicting",
+              appliesToExamNumbers: ["123"],
+              value: null,
+              detail: "Published documents disagree.",
+              reviewedOn: "2026-08-25",
+              effectiveFrom: null,
+              effectiveThrough: null,
+              sourceLineIds: [],
+              conflictingValues: [
+                { value: "40 percent", sourceLineIds: ["line-conflict-a"] },
+                { value: "50 percent", sourceLineIds: ["line-conflict-b"] }
+              ],
+              supersededByFactId: null
+            }
+          ],
+          sourceLines,
+          changeHistory: [
+            {
+              version: 1,
+              changedOn: "2026-08-24",
+              summary: "Created the source-bound profile.",
+              sourceLineIds: ["line-history"]
+            },
+            {
+              version: 2,
+              changedOn: "2026-08-25",
+              summary: "Reviewed against the current announcement.",
+              sourceLineIds: ["line-history"]
+            }
+          ]
         }
       }]
     })
@@ -789,10 +1028,198 @@ describe("deterministic print generation", () => {
       bootstrap: sourceBound,
       settings: settings("announcement-profile-fact-sheet", 1)
     })
+    const job = new PrintJobRecord({
+      id: "print-facts1234",
+      ...generated,
+      status: "preview-ready",
+      updatedAt: 1
+    })
+    const snapshot = {
+      state: { tag: "preview-ready" as const, job },
+      revision: 1,
+      focusRequest: null,
+      announcementRequest: null
+    }
+    const controller: PrintPreviewController = {
+      getSnapshot: () => snapshot,
+      getHydrationSnapshot: () => snapshot,
+      subscribe: () => () => undefined,
+      start: () => undefined,
+      retryRestore: () => undefined,
+      regenerate: () => undefined,
+      requestSystemPrint: () => undefined,
+      acknowledgeViewRequest: () => undefined,
+      dispose: () => undefined
+    }
+    const html = renderToStaticMarkup(createElement(PrintPreview, { controller }))
+
+    expect(generated.manifest.schemaVersion).toBe(2)
+    expect(generated.packet.schemaVersion).toBe(2)
     expect(generated.packet.sections[0]?.tag).toBe("announcement-profile-fact-sheet")
-    expect(JSON.stringify(generated.packet)).toContain("January 2 through January 30")
-    expect(JSON.stringify(generated.packet)).toContain("announcement page 1")
-    expect(JSON.stringify(generated.packet)).toContain("Not stated in the controlling announcement")
+    expect(new Set(sourceBound.profiles[0]?.announcementFactSheet?.facts.map(
+      (fact) => fact.state
+    ))).toEqual(new Set([
+      "verified",
+      "not_published",
+      "unverified",
+      "conflicting",
+      "superseded",
+      "not_applicable"
+    ]))
+    for (const state of [
+      "verified",
+      "not_published",
+      "unverified",
+      "conflicting",
+      "superseded",
+      "not_applicable"
+    ]) expect(html).toContain(`data-fact-state="${state}"`)
+    expect(html).toContain("The current fee is stated here.")
+    expect(html).toContain("One document states 40 percent.")
+    expect(html).toContain("Public record excerpt retained for verification.")
+    const encoded = JSON.parse(JSON.stringify(job))
+    expect(validatePrintJobRecord(encoded)).toEqual(job)
+    const invalidState = structuredClone(encoded)
+    const invalidManifestFact = invalidState.manifest.profile.announcementFactSheet.facts.find(
+      (fact: { id: string }) => fact.id === "weights-conflict"
+    )
+    const invalidPacketFact = invalidState.packet.sections[0].factSheet.facts.find(
+      (fact: { id: string }) => fact.id === "weights-conflict"
+    )
+    invalidManifestFact.state = "unverified"
+    invalidPacketFact.state = "unverified"
+    invalidState.manifest.fingerprint = computePrintManifestFingerprint(invalidState.manifest)
+    invalidState.packet.fingerprint = computePrintPacketFingerprint(invalidState.packet)
+    expect(() => validatePrintJobRecord(invalidState)).toThrow(/state contract/)
+  })
+
+  it("restores and renders the exact historical v1 announcement fact-sheet format", () => {
+    const sourceReference = {
+      id: "historical-line",
+      label: "Historical civil service announcement",
+      locator: "historical announcement page 1"
+    }
+    const legacyFactSheet = {
+      schemaVersion: 1 as const,
+      version: 1,
+      lastReviewedOn: "2025-08-25",
+      controllingDocumentNotice: "The retained historical announcement governed this record.",
+      seriesScopeDisclaimer: "Historical series scope.",
+      verifiedFacts: [{
+        id: "historical-filing-window",
+        label: "Filing window",
+        value: "January 2 through January 30",
+        sourceReferences: [sourceReference] as const
+      }] as const,
+      explicitUnknowns: [{
+        id: "historical-item-count",
+        label: "Official item count",
+        detail: "Not stated in the retained announcement.",
+        sourceReferences: [sourceReference] as const
+      }] as const,
+      changeHistory: [{
+        version: 1,
+        changedOn: "2025-08-25",
+        summary: "Created the retained historical fact sheet.",
+        sourceReferences: [sourceReference] as const
+      }] as const
+    }
+    const legacyProfile = {
+      id: "profile-1",
+      label: "Statewide entry-level",
+      version: 3,
+      jurisdiction: "New York State",
+      compatibilityKey: "profile-1-v1",
+      disclaimer: "Original practice only.",
+      announcementFactSheet: legacyFactSheet
+    }
+    const legacySettings = settings("announcement-profile-fact-sheet", 1)
+    const manifestWithoutFingerprint = {
+      schemaVersion: 1 as const,
+      algorithmId: "print-v1-fnv1a32-xorshift32" as const,
+      pairingFingerprint: null,
+      releaseId: "release-7",
+      contentVersion: 7,
+      profile: legacyProfile,
+      settings: legacySettings,
+      questions: [],
+      itemIds: ["profile-1"] as const,
+      assets: [],
+      actualLength: 1,
+      actualDistribution: [{ label: "Source-bound announcement profile", count: 1 }],
+      pageCount: 1
+    }
+    const manifest = new LegacyPrintJobManifest({
+      ...manifestWithoutFingerprint,
+      fingerprint: computePrintManifestFingerprint(manifestWithoutFingerprint)
+    })
+    const packetWithoutFingerprint = {
+      schemaVersion: 1 as const,
+      title: "Historical announcement-profile fact sheet",
+      statement: "Original practice — not an official or past exam" as const,
+      sections: [{
+        tag: "announcement-profile-fact-sheet" as const,
+        profileLabel: legacyProfile.label,
+        jurisdiction: legacyProfile.jurisdiction,
+        factSheet: legacyFactSheet
+      }] as const,
+      warnings: [] as const
+    }
+    const packet = new PrintPacket({
+      ...packetWithoutFingerprint,
+      fingerprint: computePrintPacketFingerprint(packetWithoutFingerprint)
+    })
+    const record = new PrintJobRecord({
+      id: "print-oldfacts12",
+      manifest,
+      packet,
+      status: "preview-ready",
+      updatedAt: 1
+    })
+    const encoded = JSON.parse(JSON.stringify(record))
+    expect(validatePrintJobRecord(encoded)).toEqual(record)
+
+    const snapshot = {
+      state: { tag: "preview-ready" as const, job: record },
+      revision: 1,
+      focusRequest: null,
+      announcementRequest: null
+    }
+    const controller: PrintPreviewController = {
+      getSnapshot: () => snapshot,
+      getHydrationSnapshot: () => snapshot,
+      subscribe: () => () => undefined,
+      start: () => undefined,
+      retryRestore: () => undefined,
+      regenerate: () => undefined,
+      requestSystemPrint: () => undefined,
+      acknowledgeViewRequest: () => undefined,
+      dispose: () => undefined
+    }
+    const html = renderToStaticMarkup(createElement(PrintPreview, { controller }))
+    expect(html).toContain("Historical fact-sheet format")
+    expect(html).toContain("January 2 through January 30")
+    expect(html).toContain("historical announcement page 1")
+
+    const incompatibleFactSheet = {
+      ...encoded.packet.sections[0].factSheet,
+      facts: [{ state: "verified" }],
+      sourceLines: [{ id: "hidden-rich-line" }]
+    }
+    const incompatiblePacketWithoutFingerprint = {
+      ...encoded.packet,
+      sections: [{
+        ...encoded.packet.sections[0],
+        factSheet: incompatibleFactSheet
+      }]
+    }
+    expect(() => validatePrintJobRecord({
+      ...encoded,
+      packet: {
+        ...incompatiblePacketWithoutFingerprint,
+        fingerprint: computePrintPacketFingerprint(incompatiblePacketWithoutFingerprint)
+      }
+    })).toThrow()
   })
 })
 
@@ -919,6 +1346,61 @@ describe("semantic print preview", () => {
     expect(html).toContain("print-size-normal")
     expect(html).not.toContain("Answer key")
     expect(html).not.toContain("Rationale")
+  })
+})
+
+describe("print question evidence loading", () => {
+  const contentWith = (payload: unknown) => VerifiedContent.of({
+    ensureAssetAvailable: () => Effect.die("not used"),
+    ensureAvailable: () => Effect.die("not used"),
+    loadAssetBlob: () => Effect.die("not used"),
+    loadCachedAssetBlob: () => Effect.die("not used"),
+    loadCachedJson: () => Effect.succeed(payload),
+    loadJsonArtifact: () => Effect.die("not used"),
+    loadJson: () => Effect.die("not used")
+  })
+
+  it("adapts v2 claims and exact source-line receipts without flattening them", async () => {
+    const expected = answers[0]
+    const question = bootstrap.questions[0]
+    if (expected === undefined || question === undefined) throw new Error("Missing print fixture")
+    const loaded = await Effect.runPromise(loadPrintAnswers([question]).pipe(
+      Effect.provideService(VerifiedContent, contentWith({
+        schemaVersion: 2,
+        id: question.id,
+        version: 2,
+        correctOptionId: expected.correctOptionId,
+        rationales: expected.rationales,
+        claims: expected.claims,
+        sources: expected.sources
+      }))
+    ))
+
+    expect(loaded).toEqual([expected])
+    expect(loaded[0]?.claims[0]?.caveat).toBe("Site-designed application context.")
+    expect(loaded[0]?.sources[0]?.excerpt).toContain("Exact source-line excerpt")
+  })
+
+  it("does not rewrite a legacy answer object into the v2 print packet model", async () => {
+    const question = bootstrap.questions[0]
+    if (question === undefined) throw new Error("Missing print fixture")
+    const failure = await Effect.runPromise(loadPrintAnswers([question]).pipe(
+      Effect.provideService(VerifiedContent, contentWith({
+        schemaVersion: 1,
+        id: question.id,
+        correctOptionId: question.options[0]?.id,
+        rationales: question.options.map((option) => ({
+          optionId: option.id,
+          message: "Historical rationale."
+        })),
+        sources: [{ id: "source", label: "Source", locator: "section 1" }]
+      }))
+    )).catch((cause: unknown) => cause)
+
+    expect(failure).toBeInstanceOf(PrintAnswerMismatchError)
+    expect(failure).toMatchObject({
+      detail: expect.stringMatching(/existing immutable print packet/)
+    })
   })
 })
 

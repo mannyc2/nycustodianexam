@@ -17,6 +17,39 @@ import {
 
 type ResultsController = ReturnType<typeof createSimulationResultsController>
 
+const QuestionEvidence = ({ result }: { readonly result: SimulationQuestionResult }) => {
+  const feedback = result.postcommit
+  if (feedback.schemaVersion === 1) {
+    return <details className="feedback-sources">
+      <summary>Source receipts</summary>
+      <p>This historical result preserves the source-reference format published with its release.</p>
+      <ul>{feedback.sources.map((source) => <li key={source.id}>
+        {source.label} <code>{source.locator}</code>
+      </li>)}</ul>
+    </details>
+  }
+
+  return <>
+    <section className="feedback-claims">
+      <h4>Supported claims</h4>
+      <ul>{feedback.claims.map((claim) => <li key={claim.id}>
+        <p>{claim.text}</p>
+        <p><strong>Evidence tier:</strong> {claim.evidenceTier}</p>
+        {claim.caveat === null ? null : <p><strong>Caveat:</strong> {claim.caveat}</p>}
+      </li>)}</ul>
+    </section>
+    <details className="feedback-sources">
+      <summary>Source-line receipts</summary>
+      <ul>{feedback.sources.map((source) => <li key={source.id}>
+        <p><strong>{source.title}</strong> — {source.publisher}, {source.version}</p>
+        <p><code>{source.locator}</code> · verified {source.verifiedOn}</p>
+        <blockquote>{source.excerpt}</blockquote>
+        {source.url === undefined ? null : <p><a href={source.url} rel="external noopener">Open the source</a></p>}
+      </li>)}</ul>
+    </details>
+  </>
+}
+
 const ResultActions = ({ flagged }: { readonly flagged: boolean }) => (
   <section>
     <h4>Review and source actions</h4>
@@ -57,6 +90,9 @@ const QuestionResultFeedback = ({
   const optionLabel = (optionId: string | null): string =>
     optionId === null ? "No answer" : optionLabels.get(optionId) ?? "Unavailable answer choice"
   const decisiveRule = rationales.get(result.correctOptionId)
+  const claimById = result.postcommit.schemaVersion === 2
+    ? new Map(result.postcommit.claims.map((claim) => [claim.id, claim]))
+    : new Map<string, never>()
 
   return <>
     <dl className="feedback-answer-summary">
@@ -73,6 +109,14 @@ const QuestionResultFeedback = ({
               ? "Your answer"
               : "Other answer"}: {optionLabel(optionId)}</h5>
           <p>{rationales.get(optionId) ?? "No rationale is available for this choice."}</p>
+          {result.postcommit.schemaVersion === 1 ? null : <ul>
+            {result.postcommit.rationales
+              .find((rationale) => rationale.optionId === optionId)?.claimIds
+              .map((claimId) => {
+                const claim = claimById.get(claimId)
+                return claim === undefined ? null : <li key={claimId}>{claim.text}</li>
+              })}
+          </ul>}
         </li>)}
       </ol>
     </section>
@@ -80,12 +124,7 @@ const QuestionResultFeedback = ({
       <h4>Why this answer is correct</h4>
       <p>{decisiveRule ?? "The reviewed correct-answer rationale is unavailable."}</p>
     </section>
-    <details className="feedback-sources">
-      <summary>Source receipts</summary>
-      <ul>{result.postcommit.sources.map((source) => <li key={source.id}>
-        {source.label} <code>{source.locator}</code>
-      </li>)}</ul>
-    </details>
+    <QuestionEvidence result={result} />
     <ResultActions flagged={answer.reviewIntent === "flagged"} />
   </>
 }

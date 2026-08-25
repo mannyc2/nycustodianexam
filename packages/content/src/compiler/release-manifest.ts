@@ -35,6 +35,7 @@ const validateManifestRelations = (
     manifest.profileCount !== compiled.precommit.profiles.length ||
     manifest.sourceCount !== compiled.postcommit.sources.length ||
     manifest.toolCount !== compiled.catalog.tools.length ||
+    manifest.comparisonCount !== compiled.catalog.comparisons.length ||
     manifest.questionCount !== compiled.precommit.questions.length ||
     manifest.hazardSceneCount !== compiled.precommit.scenes.length
   ) {
@@ -128,6 +129,7 @@ export const createReleaseManifest = Effect.fn("Content.createReleaseManifest")(
       profileCount: compiled.precommit.profiles.length,
       sourceCount: compiled.postcommit.sources.length,
       toolCount: compiled.catalog.tools.length,
+      comparisonCount: compiled.catalog.comparisons.length,
       questionCount: compiled.precommit.questions.length,
       hazardSceneCount: compiled.precommit.scenes.length,
       artifacts,

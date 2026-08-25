@@ -33,6 +33,7 @@ export interface CompiledSceneArtifacts {
 export interface CompileContentPackInput {
   readonly authoredPack: unknown
   readonly acceptedTools: unknown
+  readonly acceptedComparisons: unknown
   readonly acceptedScenes: unknown
   readonly acceptedSceneRegions: unknown
   readonly acceptedSceneAccessibility: unknown

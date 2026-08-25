@@ -21,27 +21,27 @@ test("commit is durable before feedback fetch and survives reload", async ({ con
     await route.continue()
   })
 
-  await page.getByRole("radio", { name: "Pipe wrench" }).check()
+  await page.getByRole("radio", { name: "Scrub brush" }).check()
   await page.getByRole("button", { name: "Commit answer" }).click()
 
   await expect(page.getByRole("heading", { name: "Correct", exact: true })).toBeFocused()
   expect(attemptObservedAtFetch).toMatchObject({
     id: attemptId,
-    questionId: "tool-selection-001",
-    selectedOptionId: "pipe-wrench",
+    questionId: "q001",
+    selectedOptionId: "b",
     receipt: questionReceipt,
     optionIds: [
-      "adjustable-wrench",
-      "combination-wrench",
-      "pipe-wrench",
-      "slip-joint-pliers"
+      "a",
+      "b",
+      "c",
+      "d"
     ]
   })
 
   const committed = await readStoredAttempt(page)
   expect(committed).toMatchObject({
     reviewIntent: "unflagged",
-    selectedOptionId: "pipe-wrench"
+    selectedOptionId: "b"
   })
   expect(committed?.committedAt).toEqual(expect.any(Number))
 
@@ -71,8 +71,8 @@ test("schema-valid bytes with the wrong digest stay unrevealed until a clean ret
     const response = await route.fetch()
     const originalBody = await response.text()
     const corruptBody = originalBody.replace(
-      "Recovered hand-tool taxonomy",
-      "Different hand-tool taxonomy"
+      "Scrubs or washes",
+      "Scrubs or rinses"
     )
     if (
       corruptBody === originalBody ||
@@ -88,15 +88,15 @@ test("schema-valid bytes with the wrong digest stay unrevealed until a clean ret
     })
   })
 
-  await page.getByRole("radio", { name: "Pipe wrench" }).check()
+  await page.getByRole("radio", { name: "Scrub brush" }).check()
   await page.getByRole("button", { name: "Commit answer" }).click()
 
   await expect(page.getByRole("heading", { name: "Your answer is saved" })).toBeFocused()
   await expect(page.getByRole("heading", { name: "Correct", exact: true })).toHaveCount(0)
-  await expect(page.getByText("Different hand-tool taxonomy")).toHaveCount(0)
+  await expect(page.getByText(/Scrubs or rinses/)).toHaveCount(0)
   expect(attemptObservedAtFetch).toMatchObject({
     id: attemptId,
-    selectedOptionId: "pipe-wrench",
+    selectedOptionId: "b",
     receipt: questionReceipt
   })
 
@@ -108,15 +108,20 @@ test("schema-valid bytes with the wrong digest stay unrevealed until a clean ret
 
 test("session start pushes history while Next replaces the current position", async ({ page }) => {
   await page.goto("/practice/")
-  await page.getByRole("link", { name: "Start question 1" }).click()
-  await expect(page).toHaveURL(questionPath)
+  await page
+    .getByLabel("Available whole-bank practice lengths")
+    .getByRole("link", { name: "Start 90" })
+    .click()
+  await expect(page).toHaveURL("/practice/session/ps-cf8ff13c279a2b624cf0be81/question/1/")
+  await expect(page.getByRole("radio").first()).toBeEnabled()
 
   await page.getByRole("link", { name: "Next question" }).click()
-  await expect(page).toHaveURL("/practice/session/launch-v1/question/2/")
+  await expect(page).toHaveURL("/practice/session/ps-cf8ff13c279a2b624cf0be81/question/2/")
 
   await page.goBack({ waitUntil: "commit" })
   await expect(page).toHaveURL("/practice/")
-  await expect(page.getByRole("heading", { name: "Retrieve what you learned." })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "Choose a set the bank can actually supply." }))
+    .toBeVisible()
 })
 
 test("an injected IndexedDB write failure never reveals or requests feedback", async ({ page }) => {
@@ -139,7 +144,7 @@ test("an injected IndexedDB write failure never reveals or requests feedback", a
     }
   })
 
-  await page.getByRole("radio", { name: "Pipe wrench" }).check()
+  await page.getByRole("radio", { name: "Scrub brush" }).check()
   await page.getByRole("button", { name: "Commit answer" }).click()
 
   const errorHeading = page.getByRole("heading", { name: "Your answer was not saved" })
@@ -154,11 +159,10 @@ test("keyboard selection drives focus and polite status announcements", async ({
   await gotoReadyQuestion(page)
   await installAnnouncementRecorder(page)
 
-  const firstOption = page.getByRole("radio", { name: "Adjustable wrench" })
+  const firstOption = page.getByRole("radio", { name: "Staple gun" })
   await firstOption.focus()
   await page.keyboard.press("ArrowDown")
-  await page.keyboard.press("ArrowDown")
-  await expect(page.getByRole("radio", { name: "Pipe wrench" })).toBeChecked()
+  await expect(page.getByRole("radio", { name: "Scrub brush" })).toBeChecked()
 
   await page.keyboard.press("Tab")
   await expect(page.getByRole("button", { name: "Commit answer" })).toBeFocused()
@@ -182,6 +186,36 @@ test("keyboard selection drives focus and polite status announcements", async ({
   )
 })
 
+test("revealed safety evidence keeps its scope caveat and exact source excerpt adjacent", async ({
+  page
+}) => {
+  await page.goto("/practice/session/launch-v1/question/90/")
+  await expect(page.getByRole("radio", {
+    name: "Remove the unsafe wrench from use and obtain a serviceable tool."
+  })).toBeEnabled()
+  await page.getByRole("radio", {
+    name: "Remove the unsafe wrench from use and obtain a serviceable tool."
+  }).check()
+  await page.getByRole("button", { name: "Commit answer" }).click()
+
+  await expect(page.getByRole("heading", { name: "Correct", exact: true })).toBeFocused()
+  const caveat = page.locator(".claim-caveat").first()
+  await expect(caveat).toContainText("Scope note:")
+  await expect(caveat).toContainText(
+    "29 CFR 1926.301(b) is a construction-industry provision cited as specific safety evidence"
+  )
+
+  await page.getByText("Source receipts", { exact: true }).click()
+  await expect(page.locator(".source-receipt-excerpt")).toContainText(
+    "Wrenches, including adjustable, pipe, end, and socket wrenches shall not be used when jaws are sprung to the point that slippage occurs."
+  )
+  await expect(page.getByText("Occupational Safety and Health Administration", {
+    exact: true
+  })).toBeVisible()
+  await expect(page.getByText("29 CFR 1926.301(b)", { exact: true }).last()).toBeVisible()
+  await expect(page.getByText("2026-08-25", { exact: true })).toBeVisible()
+})
+
 test("Chromium back-forward cache restores the live island without restarting it", async ({
   browserName,
   page
@@ -189,7 +223,7 @@ test("Chromium back-forward cache restores the live island without restarting it
   test.skip(browserName !== "chromium", "This regression exercises Chromium's BFCache path")
 
   await gotoReadyQuestion(page)
-  await page.getByRole("radio", { name: "Adjustable wrench" }).check()
+  await page.getByRole("radio", { name: "Staple gun" }).check()
   await page.evaluate((expectedPostcommitPath) => {
     const lifecycle = {
       pagehide: [] as boolean[],
@@ -228,7 +262,7 @@ test("Chromium back-forward cache restores the live island without restarting it
   await page.goBack({ waitUntil: "commit" })
 
   await expect(page).toHaveURL(questionPath)
-  await expect(page.getByRole("radio", { name: "Adjustable wrench" })).toBeChecked()
+  await expect(page.getByRole("radio", { name: "Staple gun" })).toBeChecked()
   const lifecycle = await page.evaluate(() =>
     (window as typeof window & {
       __nycustodianBfcacheLifecycle?: {
@@ -246,7 +280,7 @@ test("Chromium back-forward cache restores the live island without restarting it
     restoreTransactions: 0
   })
 
-  await page.getByRole("radio", { name: "Pipe wrench" }).check()
+  await page.getByRole("radio", { name: "Scrub brush" }).check()
   await page.getByRole("button", { name: "Commit answer" }).click()
   await expect(page.getByRole("heading", { name: "Correct", exact: true })).toBeFocused()
   await expect.poll(() => page.evaluate(() =>

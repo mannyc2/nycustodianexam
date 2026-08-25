@@ -10,8 +10,9 @@ import {
 import { initialQuestionState, type QuestionScreenState } from "../src/question-player/state.ts"
 
 const question = new PrecommitQuestion({
-  schemaVersion: 1,
+  schemaVersion: 2,
   id: "q-feedback",
+  version: 1,
   profileId: "profile-1",
   prompt: "Choose an answer.",
   options: [
@@ -23,16 +24,37 @@ const question = new PrecommitQuestion({
 })
 
 const payload = new PostcommitQuestion({
-  schemaVersion: 1,
+  schemaVersion: 2,
   id: question.id,
+  version: 1,
   correctOptionId: "c",
   rationales: [
-    { optionId: "a", message: "Rationale for A." },
-    { optionId: "d", message: "Rationale for D." },
-    { optionId: "c", message: "Rationale for C." },
-    { optionId: "b", message: "Rationale for B." }
+    { optionId: "a", message: "Rationale for A.", claimIds: ["claim-1"] },
+    { optionId: "d", message: "Rationale for D.", claimIds: ["claim-1"] },
+    { optionId: "c", message: "Rationale for C.", claimIds: ["claim-1"] },
+    { optionId: "b", message: "Rationale for B.", claimIds: ["claim-1"] }
   ],
-  sources: [{ id: "source-1", label: "Source one", locator: "docs/source.md#L1" }]
+  claims: [{
+    id: "claim-1",
+    text: "Supported claim one.",
+    sourceLineIds: ["line-1"],
+    evidenceTier: "maintained-editorial-synthesis",
+    caveat: "This construction-industry provision is cited as specific safety evidence."
+  }],
+  sources: [{
+    id: "line-1",
+    sourceId: "source-1",
+    title: "Source one",
+    publisher: "Publisher one",
+    evidenceTier: "maintained-editorial-synthesis",
+    version: "source revision 1",
+    rightsNotes: "Project-authored test source.",
+    locator: "docs/source.md#L1",
+    excerpt: "Exact offline source excerpt for supported claim one.",
+    language: "en",
+    verifiedOn: "2026-08-25",
+    supportedClaimIds: ["claim-1"]
+  }]
 })
 
 const renderFeedback = (state: QuestionScreenState): string => {
@@ -75,6 +97,8 @@ describe("question feedback", () => {
     expect(html).toBe("")
     expect(html).not.toContain("Rationale for")
     expect(html).not.toContain("Source receipt")
+    expect(html).not.toContain("construction-industry provision")
+    expect(html).not.toContain("Exact offline source excerpt")
   })
 
   it("renders every rationale once in the required order after an incorrect answer", () => {
@@ -103,6 +127,14 @@ describe("question feedback", () => {
     for (const optionId of ["A", "B", "C", "D"]) {
       expect(occurrenceCount(html, `Rationale for ${optionId}.`)).toBe(1)
     }
+    expect(occurrenceCount(html, 'aria-label="Claims and sources for this explanation"')).toBe(4)
+    expect(occurrenceCount(html, "line-1")).toBe(5)
+    expect(occurrenceCount(html, "docs/source.md#L1")).toBe(5)
+    expect(html).toContain("<strong>Scope note:</strong> This construction-industry provision")
+    expect(html).toContain("Exact offline source excerpt for supported claim one.")
+    expect(html).toContain("<dt>Publisher</dt><dd>Publisher one</dd>")
+    expect(html).toContain("<dt>Source version</dt><dd>source revision 1</dd>")
+    expect(html).toContain("<dt>Verified</dt><dd>2026-08-25</dd>")
   })
 
   it("does not duplicate the correct rationale when the learner chose it", () => {

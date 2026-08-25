@@ -38,8 +38,10 @@ export const QuestionFeedback = () => {
   const correct = state.selectedOptionId === state.payload.correctOptionId
   const optionLabels = new Map(question.options.map((option) => [option.id, option.label]))
   const rationales = new Map(
-    state.payload.rationales.map((rationale) => [rationale.optionId, rationale.message])
+    state.payload.rationales.map((rationale) => [rationale.optionId, rationale])
   )
+  const claims = new Map(state.payload.claims.map((claim) => [claim.id, claim]))
+  const sources = new Map(state.payload.sources.map((source) => [source.id, source]))
   const orderedRationaleIds = [
     state.payload.correctOptionId,
     ...(correct ? [] : [state.selectedOptionId]),
@@ -73,27 +75,75 @@ export const QuestionFeedback = () => {
       <section aria-labelledby={`${meta.instanceId}-rationales`} className="feedback-rationales">
         <h3 id={`${meta.instanceId}-rationales`}>Answer explanations</h3>
         <ol className="rationale-list">
-          {orderedRationaleIds.map((optionId) => (
-            <li key={optionId}>
-              <h4>
-                {optionId === state.payload.correctOptionId
-                  ? "Correct answer"
-                  : optionId === state.selectedOptionId
-                    ? "Your answer"
-                    : "Other answer"}
-                : {optionLabel(optionId)}
-              </h4>
-              <p>{rationales.get(optionId) ?? "No rationale is available for this choice."}</p>
-            </li>
-          ))}
+          {orderedRationaleIds.map((optionId) => {
+            const rationale = rationales.get(optionId)
+            return (
+              <li key={optionId}>
+                <h4>
+                  {optionId === state.payload.correctOptionId
+                    ? "Correct answer"
+                    : optionId === state.selectedOptionId
+                      ? "Your answer"
+                      : "Other answer"}
+                  : {optionLabel(optionId)}
+                </h4>
+                <p>{rationale?.message ?? "No rationale is available for this choice."}</p>
+                {rationale === undefined ? null : (
+                  <ul aria-label="Claims and sources for this explanation" className="rationale-sources">
+                    {rationale.claimIds.map((claimId) => {
+                      const claim = claims.get(claimId)
+                      return <li key={claimId}>
+                        {claim === undefined ? (
+                          <>Unavailable supported claim <code>{claimId}</code></>
+                        ) : (
+                          <>
+                            <span>{claim.text}</span>
+                            {claim.caveat === null ? null : (
+                              <p className="claim-caveat">
+                                <strong>Scope note:</strong> {claim.caveat}
+                              </p>
+                            )}
+                            <ul>
+                              {claim.sourceLineIds.map((sourceLineId) => {
+                                const source = sources.get(sourceLineId)
+                                return <li key={sourceLineId}>
+                                  {source === undefined
+                                    ? <>Unavailable source-line receipt <code>{sourceLineId}</code></>
+                                    : <><code>{source.id}</code> — {source.title} <code>{source.locator}</code></>}
+                                </li>
+                              })}
+                            </ul>
+                          </>
+                        )}
+                      </li>
+                    })}
+                  </ul>
+                )}
+              </li>
+            )
+          })}
         </ol>
       </section>
       <details className="feedback-sources">
-        <summary>Source receipt</summary>
-        <ul>
+        <summary>Source receipts</summary>
+        <ul className="source-receipt-list">
           {state.payload.sources.map((source) => (
             <li key={source.id}>
-              {source.label} <code>{source.locator}</code>
+              <p><code>{source.id}</code> — <strong>{source.title}</strong></p>
+              <dl className="source-receipt-context">
+                <div><dt>Publisher</dt><dd>{source.publisher}</dd></div>
+                <div><dt>Source version</dt><dd>{source.version}</dd></div>
+                <div><dt>Verified</dt><dd>{source.verifiedOn}</dd></div>
+                <div><dt>Locator</dt><dd><code>{source.locator}</code></dd></div>
+                <div><dt>Evidence</dt><dd>{source.evidenceTier}</dd></div>
+              </dl>
+              <blockquote className="source-receipt-excerpt">
+                <p>{source.excerpt}</p>
+              </blockquote>
+              <p className="source-receipt-rights">{source.rightsNotes}</p>
+              {source.url === undefined ? null : (
+                <p>Source URL: <code>{source.url}</code></p>
+              )}
             </li>
           ))}
         </ul>

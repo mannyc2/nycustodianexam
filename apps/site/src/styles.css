@@ -582,6 +582,46 @@
     margin-block-start: var(--space-2);
     color: var(--color-text);
   }
+  .rationale-sources {
+    display: grid;
+    gap: var(--space-1);
+    margin-block-start: var(--space-2);
+    padding-inline-start: var(--space-5);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+  .rationale-sources code { overflow-wrap: anywhere; }
+  .claim-caveat {
+    padding: var(--space-2) var(--space-3);
+    border-inline-start: 0.25rem solid var(--color-warning);
+    background: var(--color-warning-surface);
+  }
+  .source-receipt-list {
+    display: grid;
+    gap: var(--space-5);
+    margin-block: var(--space-4) var(--space-0);
+    padding-inline-start: var(--space-5);
+  }
+  .source-receipt-context {
+    display: grid;
+    gap: var(--space-2);
+    margin-block: var(--space-3);
+  }
+  .source-receipt-context > div {
+    display: grid;
+    grid-template-columns: minmax(7rem, 0.25fr) minmax(0, 1fr);
+    gap: var(--space-3);
+  }
+  .source-receipt-context dt { font-weight: var(--weight-bold); }
+  .source-receipt-context code,
+  .source-receipt-list > li > p code { overflow-wrap: anywhere; }
+  .source-receipt-excerpt {
+    margin: var(--space-3) var(--space-0);
+    padding-inline-start: var(--space-4);
+    border-inline-start: 0.25rem solid var(--color-border);
+  }
+  .source-receipt-excerpt p,
+  .source-receipt-rights { color: var(--color-text-muted); }
   .tool-figure {
     max-inline-size: 38rem;
     margin: var(--space-6) var(--space-0);
@@ -597,6 +637,8 @@
     border-radius: var(--radius-lg);
     background: var(--color-surface);
   }
+  .comparison-figure { max-inline-size: 58rem; }
+  .comparison-figure img { aspect-ratio: 2 / 1; }
   .tool-figure figcaption {
     margin-block-start: var(--space-3);
     color: var(--color-text-muted);
@@ -661,6 +703,21 @@
   .zone-list { display: grid; gap: var(--space-3); padding-inline-start: var(--space-6); }
   .zone-list span { display: block; color: var(--color-text-muted); }
   .source-record { max-inline-size: 52rem; margin-inline: auto; }
+  .fact-state {
+    display: inline-block;
+    padding: var(--space-1) var(--space-2);
+    border: var(--border-thin) solid currentColor;
+    border-radius: var(--radius-sm);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-bold);
+    letter-spacing: 0.02em;
+  }
+  .fact-state-verified { color: var(--color-success); }
+  .fact-state-not_published,
+  .fact-state-not_applicable,
+  .fact-state-unverified { color: var(--color-text-muted); }
+  .fact-state-conflicting,
+  .fact-state-superseded { color: var(--color-warning); }
   .comparison-table-wrap { margin-block-start: var(--space-6); overflow-x: auto; }
   .comparison-table { inline-size: 100%; border-collapse: collapse; background: var(--color-surface); }
   .comparison-table caption { padding: var(--space-3); font-weight: var(--weight-bold); text-align: start; }

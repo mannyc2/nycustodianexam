@@ -35,6 +35,11 @@ import {
   renderSitemap
 } from "../apps/site/scripts/finalize-service-worker.ts"
 import { trustedCurrentShellNavigation } from "../apps/site/src/shell-route-policy.ts"
+import { derivePracticeSessions } from "../apps/site/scripts/practice-sessions.ts"
+import {
+  assertCanonicalRouteId,
+  type RouteId
+} from "../apps/site/src/route-registry.ts"
 import { Schema } from "effect"
 
 const repositoryRoot = new URL("../", import.meta.url)
@@ -137,7 +142,8 @@ interface ExpectedRoute {
   readonly postcommitPath?: string
   readonly precommit?: typeof PrecommitQuestion.Type | typeof PrecommitScene.Type
   readonly robots: "index,follow" | "noindex,follow"
-  readonly routeId: string
+  readonly routeId: RouteId
+  readonly sessionId?: string
 }
 
 export type PublicItemArtifactBinding = Readonly<
@@ -211,14 +217,21 @@ const formatBytes = (value: number): string => `${value} B`
 
 const forbiddenStructuredFields = new Set([
   "claim",
+  "claimIds",
+  "claims",
+  "conceptId",
   "correctOptionId",
   "decoys",
+  "equivalenceGroupId",
+  "factKind",
   "fullPostAnswer",
   "hazardFamily",
   "nonvisualZonedEquivalent",
+  "objectiveId",
   "optionConceptIds",
   "rationales",
   "sources",
+  "tags",
   "targetRegions",
   "targets"
 ])
@@ -239,6 +252,142 @@ export const assertNoAnswerBearingStructuredFields = (
       throw new Error(`${label} exposes answer-bearing field ${key}`)
     }
     assertNoAnswerBearingStructuredFields(nested, `${label}.${key}`)
+  }
+}
+
+const normalizeSemanticCoordinate = (value: string): string =>
+  value
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "")
+
+const semanticNeedlesForQuestion = (
+  postcommit: typeof PostcommitQuestion.Type,
+  catalog: typeof CatalogArtifact.Type
+): ReadonlySet<string> => {
+  const toolByConceptId = new Map(
+    catalog.tools.map((tool) => [tool.conceptId, tool] as const)
+  )
+  const needles = new Set<string>()
+  for (const mapping of postcommit.optionConceptIds ?? []) {
+    const tool = toolByConceptId.get(mapping.conceptId)
+    for (const value of [
+      mapping.conceptId,
+      mapping.conceptId.replace(/^[^.]+\./, ""),
+      tool?.canonicalTerm
+    ]) {
+      if (value === undefined) continue
+      const normalized = normalizeSemanticCoordinate(value)
+      if (normalized.length >= 6) needles.add(normalized)
+    }
+  }
+  return needles
+}
+
+/**
+ * Verifies the standalone pre-answer question boundary. Public coordinates are
+ * deliberately supplied by the caller because paths, receipt ids, and session
+ * ids live outside the precommit document itself.
+ */
+export const assertNoQuestionSemanticLeak = (
+  rawPrecommit: unknown,
+  postcommit: typeof PostcommitQuestion.Type,
+  catalog: typeof CatalogArtifact.Type,
+  publicCoordinates: readonly string[] = []
+): typeof PrecommitQuestion.Type => {
+  assertNoAnswerBearingStructuredFields(rawPrecommit, `Question ${postcommit.id} precommit`)
+  const precommit = Schema.decodeUnknownSync(PrecommitQuestion)(rawPrecommit)
+  if (!/^q\d{3}$/.test(precommit.id) || precommit.id !== postcommit.id) {
+    throw new Error(`Question ${postcommit.id} does not use its opaque public question id`)
+  }
+  const expectedOptionIds = precommit.options.map((_, index) =>
+    String.fromCharCode("a".charCodeAt(0) + index)
+  )
+  const optionIds = precommit.options.map((option) => option.id)
+  if (!isDeepStrictEqual(optionIds, expectedOptionIds)) {
+    throw new Error(`Question ${precommit.id} does not use opaque ordinal option ids`)
+  }
+  const mappings = postcommit.optionConceptIds
+  if (
+    mappings === undefined ||
+    !isDeepStrictEqual(mappings.map((mapping) => mapping.optionId), optionIds)
+  ) {
+    throw new Error(`Question ${precommit.id} has no exact postcommit option mapping`)
+  }
+
+  const normalizedCoordinates = [precommit.id, ...optionIds, ...publicCoordinates]
+    .map(normalizeSemanticCoordinate)
+  for (const needle of semanticNeedlesForQuestion(postcommit, catalog)) {
+    if (normalizedCoordinates.some((coordinate) => coordinate.includes(needle))) {
+      throw new Error(`Question ${precommit.id} exposes semantic concept ${needle} in a public coordinate`)
+    }
+  }
+
+  const mappingConceptIds = mappings.map((mapping) => mapping.conceptId)
+  const toolByConceptId = new Map(
+    catalog.tools.map((tool) => [tool.conceptId, tool] as const)
+  )
+  const comparisonById = new Map(
+    catalog.comparisons.map((comparison) => [comparison.id, comparison] as const)
+  )
+  const memberships = precommit.memberships ?? []
+  if (
+    new Set(memberships.map(({ filterKind, filterValue }) => `${filterKind}:${filterValue}`)).size !==
+    memberships.length
+  ) {
+    throw new Error(`Question ${precommit.id} repeats a pre-answer filter membership`)
+  }
+  for (const membership of memberships) {
+    const sharedByEveryOption = (() => {
+      if (membership.filterKind === "domain") {
+        return mappingConceptIds.every(
+          (conceptId) => toolByConceptId.get(conceptId)?.domain === membership.filterValue
+        )
+      }
+      if (membership.filterKind === "family") {
+        return mappingConceptIds.every(
+          (conceptId) => toolByConceptId.get(conceptId)?.family === membership.filterValue
+        )
+      }
+      const comparison = comparisonById.get(membership.filterValue)
+      return comparison !== undefined && mappingConceptIds.every(
+        (conceptId) => comparison.memberIds.includes(conceptId)
+      )
+    })()
+    if (!sharedByEveryOption) {
+      throw new Error(
+        `Question ${precommit.id} exposes ${membership.filterKind}:${membership.filterValue}, ` +
+        "which is not shared by every displayed option"
+      )
+    }
+  }
+  return precommit
+}
+
+const assertNoAnswerPositionConvention = (
+  questions: readonly (typeof PostcommitQuestion.Type)[]
+): void => {
+  const fourOptionQuestions = questions.filter(
+    (question) => question.optionConceptIds?.length === 4
+  )
+  const correctPositionCounts = ["a", "b", "c", "d"].map(
+    (optionId) => fourOptionQuestions.filter((question) => question.correctOptionId === optionId).length
+  )
+  if (
+    fourOptionQuestions.length < 40 ||
+    correctPositionCounts.some((count) => count < 10)
+  ) {
+    throw new Error("Four-option answer positions are not independently distributed")
+  }
+  const rotationMatches = [0, 1, 2, 3].map((offset) =>
+    fourOptionQuestions.filter((question) => {
+      const ordinal = Number.parseInt(question.id.slice(1), 10) - 1
+      return question.correctOptionId === ["a", "b", "c", "d"][(ordinal + offset) % 4]
+    }).length
+  )
+  if (Math.max(...rotationMatches) / fourOptionQuestions.length >= 0.7) {
+    throw new Error("Correct-option placement follows a public question-id rotation")
   }
 }
 
@@ -340,9 +489,14 @@ const htmlEscaped = (value: string): string =>
 export const assertNoAnswerBearingText = (
   value: string,
   secrets: readonly string[],
-  label: string
+  label: string,
+  publicAnswerFreeStrings: ReadonlySet<string> = new Set()
 ): void => {
-  for (const secret of new Set(secrets.filter((candidate) => candidate.length >= 20))) {
+  for (const secret of new Set(
+    secrets.filter(
+      (candidate) => candidate.length >= 20 && !publicAnswerFreeStrings.has(candidate)
+    )
+  )) {
     const variants = new Set([
       secret,
       htmlEscaped(secret),
@@ -352,6 +506,21 @@ export const assertNoAnswerBearingText = (
       throw new Error(`${label} embeds postcommit material: ${secret}`)
     }
   }
+}
+
+const collectStringLeaves = (value: unknown, output: Set<string> = new Set()): Set<string> => {
+  if (typeof value === "string") {
+    output.add(value)
+    return output
+  }
+  if (Array.isArray(value)) {
+    for (const item of value) collectStringLeaves(item, output)
+    return output
+  }
+  if (value !== null && typeof value === "object") {
+    for (const nested of Object.values(value)) collectStringLeaves(nested, output)
+  }
+  return output
 }
 
 export const assertNoAnswerBearingFileNames = (
@@ -512,11 +681,161 @@ export const verify = async (): Promise<void> => {
     catalog.version !== manifest.packVersion ||
     pack.version !== manifest.packVersion ||
     catalog.tools.length !== manifest.toolCount ||
+    catalog.comparisons.length !== manifest.comparisonCount ||
     pack.questions.length !== manifest.questionCount ||
     pack.scenes.length !== manifest.hazardSceneCount
   ) {
     throw new Error("Published catalog/precommit pack does not close over the release manifest")
   }
+  if (
+    manifest.releaseId !== "launch-v1" ||
+    manifest.packVersion !== 2 ||
+    catalog.locale !== "en" ||
+    catalog.tools.length !== 65 ||
+    catalog.comparisons.length !== 14 ||
+    pack.questions.length !== 90 ||
+    pack.scenes.length !== 18
+  ) {
+    throw new Error("English launch-v1 minimum content contract is not satisfied")
+  }
+  const expectedProfilePaths = new Set(["/ny/", "/ny/nassau-county/custodian/"])
+  assertEqualSets(
+    new Set(catalog.profiles.map((profile) => profile.canonicalPath)),
+    expectedProfilePaths,
+    "English launch profile paths"
+  )
+  if (!isDeepStrictEqual(pack.profiles, catalog.profiles)) {
+    throw new Error("Precommit pack and catalog profile versions disagree")
+  }
+  const expectedProfiles = new Map([
+    ["nys-entry-level-custodians-janitors", {
+      version: 2,
+      compatibilityKey: "nys-entry-level-custodians-janitors-v2"
+    }],
+    ["nassau-county-custodian-entry-level", {
+      version: 2,
+      compatibilityKey: "nassau-county-custodian-entry-level-v2"
+    }]
+  ])
+  for (const profile of catalog.profiles) {
+    const expected = expectedProfiles.get(profile.id)
+    if (
+      expected === undefined ||
+      profile.version !== expected.version ||
+      profile.compatibilityKey !== expected.compatibilityKey
+    ) {
+      throw new Error(`Launch profile ${profile.id} has an unreviewed version boundary`)
+    }
+  }
+  const nassauProfile = catalog.profiles.find(
+    (profile) => profile.id === "nassau-county-custodian-entry-level"
+  )
+  if (
+    nassauProfile?.layer !== "jurisdiction" ||
+    nassauProfile.announcementFactSheet === null ||
+    nassauProfile.examIdentityState !== "verified" ||
+    nassauProfile.examIdentities.length !== 2 ||
+    nassauProfile.competitionTypeState !== "verified" ||
+    nassauProfile.testPlanCompatibility.status !== "compatible" ||
+    nassauProfile.contentAvailability.status !== "available" ||
+    !["verified", "not_published", "unverified", "superseded"].every(
+      (state) => nassauProfile.announcementFactSheet!.facts.some((fact) => fact.state === state)
+    ) ||
+    nassauProfile.announcementFactSheet.changeHistory.at(-1)?.version !==
+      nassauProfile.announcementFactSheet.version
+  ) {
+    throw new Error("Nassau launch profile is missing its versioned announcement fact sheet")
+  }
+  const catalogSourceIds = new Set(catalog.sources.map((source) => source.id))
+  const catalogSourceById = new Map(catalog.sources.map((source) => [source.id, source] as const))
+  for (const profile of catalog.profiles) {
+    const missingSource = profile.sourceIds.find((sourceId) => !catalogSourceIds.has(sourceId))
+    if (missingSource !== undefined) {
+      throw new Error(`Profile ${profile.id} has missing source receipt ${missingSource}`)
+    }
+  }
+  const nassauFactSheet = nassauProfile.announcementFactSheet
+  assertEqualSets(
+    new Set(nassauFactSheet.facts.map((fact) => fact.id)),
+    new Set([
+      "oc-filing-period",
+      "oc-exam-date",
+      "oc-fee",
+      "oc-jurisdictions",
+      "oc-qualifications",
+      "promo-filing-period",
+      "promo-exam-date",
+      "promo-fee",
+      "promo-jurisdictions-original",
+      "promo-jurisdictions-lynbrook",
+      "promo-jurisdictions-current",
+      "promo-qualifications",
+      "subject-plan",
+      "written-medium",
+      "official-item-count",
+      "official-subject-weights",
+      "official-score-conversion",
+      "current-review-procedure",
+      "current-form-identity",
+      "promo-seniority-credit",
+      "administration-status",
+      "preparer-identity"
+    ]),
+    "Nassau announcement fact-state wrappers"
+  )
+  const factSheetLineIds = new Set(catalog.profiles.flatMap((profile) => {
+    const factSheet = profile.announcementFactSheet
+    return [
+      ...profile.examIdentities.flatMap((identity) => identity.sourceLineIds),
+      ...profile.testPlanCompatibility.sourceLineIds,
+      ...(factSheet === null ? [] : [
+        ...factSheet.facts.flatMap((fact) => [
+          ...fact.sourceLineIds,
+          ...fact.conflictingValues.flatMap((value) => value.sourceLineIds)
+        ]),
+        ...factSheet.changeHistory.flatMap((change) => change.sourceLineIds)
+      ])
+    ]
+  }))
+  const catalogSourceLineById = new Map(
+    catalog.sourceLines.map((line) => [line.id, line] as const)
+  )
+  if (catalogSourceLineById.size !== catalog.sourceLines.length) {
+    throw new Error("Catalog profile source-line ids are not unique")
+  }
+  assertEqualSets(
+    new Set(catalog.sourceLines.map((line) => line.id)),
+    factSheetLineIds,
+    "Profile fact-state source lines"
+  )
+  for (const lineId of factSheetLineIds) {
+    if (catalogSourceLineById.get(lineId) === undefined) {
+      throw new Error(`Nassau fact sheet cites missing source line ${lineId}`)
+    }
+  }
+  assertEqualSets(
+    new Set(catalog.sourceLines.map((line) => line.sourceId)),
+    new Set(catalog.profiles.flatMap((profile) => profile.sourceIds)),
+    "Profile fact-state source receipts"
+  )
+  const atlasOnlyConceptIds = new Set(
+    catalog.tools
+      .filter((tool) => tool.practiceEligibility === "atlas-only")
+      .map((tool) => tool.conceptId)
+  )
+  if (
+    atlasOnlyConceptIds.size !== 12 ||
+    catalog.tools.some(
+      (tool) =>
+        (tool.publicationGate !== null || tool.evidenceTier === "C") &&
+        tool.practiceEligibility !== "atlas-only"
+    )
+  ) {
+    throw new Error("Gated/watchlist tools are not closed to atlas-only use")
+  }
+  const comparisonsById = new Map(
+    catalog.comparisons.map((comparison) => [comparison.id, comparison] as const)
+  )
 
   const questionRecords = manifest.artifacts.filter(
     (artifact) => artifact.kind === "question-precommit"
@@ -538,6 +857,7 @@ export const verify = async (): Promise<void> => {
       assertNoAnswerBearingStructuredFields(raw, `Question precommit ${record.path}`)
       return {
         record,
+        raw,
         value: Schema.decodeUnknownSync(PrecommitQuestion)(raw)
       }
     })
@@ -552,6 +872,154 @@ export const verify = async (): Promise<void> => {
       }
     })
   )
+  if (
+    new Set(questions.map(({ value }) => value.id)).size !== questions.length ||
+    new Set(
+      questions.map(({ value }) => value.prompt.trim().toLocaleLowerCase("en-US"))
+    ).size !== questions.length
+  ) {
+    throw new Error("Launch question IDs and normalized prompts must be unique")
+  }
+  const launchProfileIds = new Set(catalog.profiles.map((profile) => profile.id))
+  for (const { value } of questions) {
+    if (
+      value.profileIds === undefined ||
+      !value.profileIds.includes(value.profileId)
+    ) {
+      throw new Error(`Question ${value.id} lost its full profile compatibility metadata`)
+    }
+    assertEqualSets(
+      new Set(value.profileIds),
+      launchProfileIds,
+      `Question ${value.id} launch profiles`
+    )
+    const packed = pack.questions.find((question) => question.id === value.id)
+    if (
+      packed === undefined ||
+      !isDeepStrictEqual(packed, {
+        id: value.id,
+        version: value.version,
+        profileIds: value.profileIds,
+        prompt: value.prompt,
+        options: value.options,
+        memberships: value.memberships ?? []
+      })
+    ) {
+      throw new Error(`Question ${value.id} differs between item and pack precommit artifacts`)
+    }
+  }
+  const postcommitQuestions = await Promise.all(
+    questions.map(async ({ raw, record: precommitRecord, value }) => {
+      const record = questionPostcommitById.get(value.id)
+      if (record === undefined) throw new Error(`Question ${value.id} has no postcommit record`)
+      const postcommit = Schema.decodeUnknownSync(PostcommitQuestion)(
+        JSON.parse(await text(new URL(record.path, publishedReleaseRoot)))
+      )
+      if (
+        postcommit.id !== value.id ||
+        postcommit.version !== value.version ||
+        postcommit.objectiveId === undefined ||
+        postcommit.equivalenceGroupId === undefined ||
+        postcommit.factKind === undefined ||
+        postcommit.tags === undefined ||
+        postcommit.optionConceptIds === undefined
+      ) {
+        throw new Error(`Question ${value.id} is missing launch metadata after commitment`)
+      }
+      assertNoQuestionSemanticLeak(raw, postcommit, catalog, [
+        precommitRecord.itemId ?? "",
+        precommitRecord.path,
+        record.itemId ?? "",
+        record.path
+      ])
+      const receiptLineIds = postcommit.sources.map((source) => source.id)
+      const claimIds = postcommit.claims.map((claim) => claim.id)
+      if (
+        new Set(receiptLineIds).size !== receiptLineIds.length ||
+        new Set(claimIds).size !== claimIds.length
+      ) {
+        throw new Error(`Question ${value.id} repeats a claim or source-line receipt`)
+      }
+      for (const receipt of postcommit.sources) {
+        const catalogSource = catalogSourceById.get(receipt.sourceId)
+        if (
+          catalogSource === undefined ||
+          receipt.title !== catalogSource.title ||
+          receipt.publisher !== catalogSource.publisher ||
+          receipt.evidenceTier !== catalogSource.evidenceTier ||
+          receipt.version !== catalogSource.version ||
+          receipt.rightsNotes !== catalogSource.rightsNotes ||
+          receipt.url !== catalogSource.url
+        ) {
+          throw new Error(`Question ${value.id} has a source receipt outside the catalog`)
+        }
+        const expectedSupportedClaims = postcommit.claims
+          .filter((claim) => claim.sourceLineIds.includes(receipt.id))
+          .map((claim) => claim.id)
+        assertEqualSets(
+          new Set(receipt.supportedClaimIds),
+          new Set(expectedSupportedClaims),
+          `Question ${value.id} receipt ${receipt.id} claim closure`
+        )
+      }
+      for (const claim of postcommit.claims) {
+        if (claim.sourceLineIds.some((lineId) => !receiptLineIds.includes(lineId))) {
+          throw new Error(`Question ${value.id} claim ${claim.id} cites a missing source line`)
+        }
+      }
+      for (const rationale of postcommit.rationales) {
+        if (rationale.claimIds.some((claimId) => !claimIds.includes(claimId))) {
+          throw new Error(`Question ${value.id} rationale cites a missing claim`)
+        }
+      }
+      assertEqualSets(
+        new Set(postcommit.rationales.flatMap((rationale) => rationale.claimIds)),
+        new Set(claimIds),
+        `Question ${value.id} rationale-claim closure`
+      )
+      const atlasOnlyOption = postcommit.optionConceptIds.find((mapping) =>
+        atlasOnlyConceptIds.has(mapping.conceptId)
+      )
+      if (atlasOnlyOption !== undefined) {
+        throw new Error(
+          `Question ${value.id} scores atlas-only concept ${atlasOnlyOption.conceptId}`
+        )
+      }
+      const gatedComparison = postcommit.tags.confusionSetIds.find((comparisonId) => {
+        const comparison = comparisonsById.get(comparisonId)
+        return comparison === undefined || comparison.scoredUseGate.length > 0
+      })
+      if (gatedComparison !== undefined) {
+        throw new Error(
+          `Question ${value.id} scores unpublished or gated comparison ${gatedComparison}`
+        )
+      }
+      return postcommit
+    })
+  )
+  if (
+    new Set(postcommitQuestions.map((question) => question.objectiveId)).size !==
+      postcommitQuestions.length ||
+    new Set(postcommitQuestions.map((question) => question.equivalenceGroupId)).size !==
+      postcommitQuestions.length
+  ) {
+    throw new Error("Launch question objectives and equivalence groups must be unique")
+  }
+  assertNoAnswerPositionConvention(postcommitQuestions)
+  const factKindCounts = Object.fromEntries(
+    ["use", "recognition-feature", "comparison-distinction", "safety-application"].map((factKind) => [
+      factKind,
+      postcommitQuestions.filter((question) => question.factKind === factKind).length
+    ])
+  )
+  if (!isDeepStrictEqual(factKindCounts, {
+    use: 41,
+    "recognition-feature": 26,
+    "comparison-distinction": 11,
+    "safety-application": 12
+  })) {
+    throw new Error("Launch question fact-kind composition has drifted")
+  }
 
   const firstQuestionRecord = questionRecords[0]
   const firstQuestion = questions[0]
@@ -572,7 +1040,7 @@ export const verify = async (): Promise<void> => {
   }
 
   const toolsByFamily = new Map<string, Array<(typeof catalog.tools)[number]>>()
-  for (const tool of catalog.tools.filter((candidate) => candidate.publicationGate === null)) {
+  for (const tool of catalog.tools) {
     const family = toolsByFamily.get(tool.family) ?? []
     family.push(tool)
     toolsByFamily.set(tool.family, family)
@@ -581,7 +1049,11 @@ export const verify = async (): Promise<void> => {
   const expectedRoutes: ExpectedRoute[] = [
     { canonicalPath: "/", robots: "index,follow", routeId: "home" },
     { canonicalPath: "/exams/", robots: "index,follow", routeId: "exam-selector" },
-    { canonicalPath: "/ny/", robots: "index,follow", routeId: "profile" },
+    ...catalog.profiles.map((profile) => ({
+      canonicalPath: profile.canonicalPath,
+      robots: "index,follow" as const,
+      routeId: "profile" as const
+    })),
     { canonicalPath: "/practice/", robots: "index,follow", routeId: "study-hub" },
     { canonicalPath: "/review/", robots: "noindex,follow", routeId: "review-queue" },
     { canonicalPath: "/simulations/", robots: "index,follow", routeId: "simulation-setup" },
@@ -637,30 +1109,102 @@ export const verify = async (): Promise<void> => {
       robots: "index,follow",
       routeId: "source"
     },
-    ...catalog.tools
-      .filter((tool) => tool.publicationGate === null)
-      .map((tool) => ({
+    ...catalog.tools.map((tool) => ({
         canonicalPath: `/atlas/tool/${slugify(tool.canonicalTerm)}/`,
         robots: "index,follow" as const,
-        routeId: "atlas-tool"
+        routeId: "atlas-tool" as const
       })),
     ...[...toolsByFamily]
       .filter(([, tools]) => tools.length >= 2)
       .map(([family]) => ({
         canonicalPath: `/atlas/family/${slugify(family)}/`,
         robots: "index,follow" as const,
-        routeId: "atlas-family"
+        routeId: "atlas-family" as const
       })),
     ...catalog.sources.map((source) => ({
       canonicalPath: `/transparency/sources/${slugify(source.id)}/`,
       robots: "index,follow" as const,
-      routeId: "source"
+      routeId: "source" as const
     }))
   ]
+  for (const route of expectedRoutes) assertCanonicalRouteId(route.routeId)
 
-  questions.forEach(({ value }, index) => {
+  const capacityProfile = catalog.profiles.find((profile) => profile.layer === "jurisdiction")
+    ?? catalog.profiles[0]
+  if (capacityProfile === undefined) throw new Error("Published release has no practice profile")
+  const practiceSessions = derivePracticeSessions({
+    releaseId: manifest.releaseId,
+    packVersion: manifest.packVersion,
+    profile: {
+      id: capacityProfile.id,
+      version: capacityProfile.version,
+      compatibilityKey: capacityProfile.compatibilityKey
+    },
+    questions,
+    records: catalog.practiceCapacity.records
+  })
+  const wholeBankSessions = practiceSessions.filter(
+    (session) => session.record.filterKind === "all" && session.record.filterValue === "all"
+  )
+  if (
+    !isDeepStrictEqual(
+      wholeBankSessions.map((session) => session.length),
+      [45, 60, 90]
+    ) ||
+    practiceSessions.some(
+      (session) =>
+        new Set(session.questions.map(({ value }) => value.id)).size !== session.length
+    ) ||
+    catalog.practiceCapacity.records.some((record) =>
+      record.availableSetLengths.some((length) => length > record.questionCount)
+    )
+  ) {
+    throw new Error("Advertised practice sessions are incomplete, repeated, or over capacity")
+  }
+  const postcommitQuestionById = new Map(
+    postcommitQuestions.map((question) => [question.id, question] as const)
+  )
+  for (const session of practiceSessions) {
+    if (
+      session.profile.id !== capacityProfile.id ||
+      session.profile.version !== capacityProfile.version ||
+      session.profile.compatibilityKey !== capacityProfile.compatibilityKey ||
+      !/^ps-[a-f0-9]{24}$/.test(session.id)
+    ) {
+      throw new Error(`Practice session ${session.id} lost its opaque profile-version binding`)
+    }
+    session.questions.forEach(({ raw, value }, index) => {
+      const postcommit = questionPostcommitById.get(value.id)
+      const postcommitValue = postcommitQuestionById.get(value.id)
+      if (postcommit === undefined || postcommitValue === undefined) {
+        throw new Error(`Practice-set question ${value.id} has no postcommit artifact`)
+      }
+      const canonicalPath = `/practice/session/${session.id}/question/${index + 1}/`
+      assertNoQuestionSemanticLeak(raw, postcommitValue, catalog, [session.id, canonicalPath])
+      expectedRoutes.push({
+        canonicalPath,
+        position: index + 1,
+        postcommitArtifact: postcommit,
+        postcommitPath: `/content/vertical-slice/${postcommit.path}`,
+        precommit: value,
+        robots: "noindex,follow",
+        routeId: "question-player",
+        sessionId: session.id
+      })
+    })
+  }
+
+  questions.forEach(({ raw, value }, index) => {
     const postcommit = questionPostcommitById.get(value.id)
-    if (postcommit === undefined) throw new Error(`Question ${value.id} has no postcommit artifact`)
+    const postcommitValue = postcommitQuestionById.get(value.id)
+    if (postcommit === undefined || postcommitValue === undefined) {
+      throw new Error(`Question ${value.id} has no postcommit artifact`)
+    }
+    assertNoQuestionSemanticLeak(raw, postcommitValue, catalog, [
+      manifest.releaseId,
+      `/practice/session/${manifest.releaseId}/question/${index + 1}/`,
+      `/review/session/${manifest.releaseId}/item/${index + 1}/`
+    ])
     expectedRoutes.push({
       canonicalPath: `/practice/session/${manifest.releaseId}/question/${index + 1}/`,
       position: index + 1,
@@ -668,7 +1212,8 @@ export const verify = async (): Promise<void> => {
       postcommitPath: `/content/vertical-slice/${postcommit.path}`,
       precommit: value,
       robots: "noindex,follow",
-      routeId: "question-player"
+      routeId: "question-player",
+      sessionId: manifest.releaseId
     })
     expectedRoutes.push({
       canonicalPath: `/review/session/${manifest.releaseId}/item/${index + 1}/`,
@@ -677,7 +1222,8 @@ export const verify = async (): Promise<void> => {
       postcommitPath: `/content/vertical-slice/${postcommit.path}`,
       precommit: value,
       robots: "noindex,follow",
-      routeId: "review-player"
+      routeId: "review-player",
+      sessionId: manifest.releaseId
     })
   })
   expectedRoutes.push({
@@ -687,7 +1233,8 @@ export const verify = async (): Promise<void> => {
     postcommitPath: `/content/vertical-slice/${firstPostcommitRecord.path}`,
     precommit: firstQuestion.value,
     robots: "noindex,follow",
-    routeId: "question-player"
+    routeId: "question-player",
+    sessionId: manifest.releaseId
   })
   scenes.forEach(({ value }, index) => {
     const postcommit = scenePostcommitById.get(value.id)
@@ -713,6 +1260,8 @@ export const verify = async (): Promise<void> => {
       routeId: "hazard-player"
     })
   })
+
+  for (const route of expectedRoutes) assertCanonicalRouteId(route.routeId)
 
   const htmlFiles = buildFiles.filter((path) => path.endsWith(".html"))
   const offlineDocumentPath = new URL("offline.html", distRoot).pathname
@@ -742,6 +1291,25 @@ export const verify = async (): Promise<void> => {
     ),
     "Generated HTML routes"
   )
+  const routeHtml = await Promise.all(routeFiles.map((path) => Bun.file(path).text()))
+  if (routeHtml.some((html) => html.includes("/atlas/comparison/"))) {
+    throw new Error("Generated HTML still links to a non-canonical comparison route")
+  }
+  const toolByConceptId = new Map(
+    catalog.tools.map((tool) => [tool.conceptId, tool] as const)
+  )
+  for (const comparison of catalog.comparisons) {
+    const owner = toolByConceptId.get(comparison.memberIds[0] ?? "")
+    if (owner === undefined) {
+      throw new Error(`Comparison ${comparison.id} has no canonical family owner`)
+    }
+    const familyPath = `/atlas/family/${slugify(owner.family)}/`
+    const familyHtml = await text(routeDocument(familyPath))
+    const anchor = `id="comparison-${slugify(comparison.id.replace(/^comparison\./, ""))}"`
+    if (occurrenceCount(familyHtml, anchor) !== 1) {
+      throw new Error(`Comparison ${comparison.id} does not have exactly one canonical anchor`)
+    }
+  }
   const sitemapUrl = new URL("sitemap.xml", distRoot)
   if (canonicalOrigin === undefined) {
     if (await Bun.file(sitemapUrl).exists()) {
@@ -886,10 +1454,23 @@ export const verify = async (): Promise<void> => {
 
     const interactive = interactiveRouteIds.has(route.routeId)
     if (!interactive) {
+      const inertJsonScripts = [...html.matchAll(
+        /<script\b[^>]*type="application\/json"[^>]*>[\s\S]*?<\/script>/gi
+      )]
+      const expectedInertJsonScripts = route.routeId === "profile" ? 1 : 0
+      if (inertJsonScripts.length !== expectedInertJsonScripts) {
+        throw new Error(
+          `Static route has an unexpected inert JSON contract: ${route.canonicalPath}`
+        )
+      }
+      const withoutInertJson = html.replace(
+        /<script\b[^>]*type="application\/json"[^>]*>[\s\S]*?<\/script>/gi,
+        ""
+      )
       const bootScripts = [...html.matchAll(
         /<script type="module"[^>]+src="(\/assets\/preferences-boot-[^"]+\.js)"[^>]*>/g
       )]
-      if (bootScripts.length !== 1 || occurrenceCount(html, "<script") !== 1) {
+      if (bootScripts.length !== 1 || occurrenceCount(withoutInertJson, "<script") !== 1) {
         throw new Error(
           `Static route must include only the minimal preference boot module: ${route.canonicalPath}`
         )
@@ -904,7 +1485,26 @@ export const verify = async (): Promise<void> => {
     if (!interactive && !/<main\b[\s\S]*<h1\b/i.test(html)) {
       throw new Error(`Static route is not a substantive document: ${route.canonicalPath}`)
     }
-    if (!interactive) continue
+    if (!interactive) {
+      if (route.routeId === "profile") {
+        const expectedProfile = catalog.profiles.find(
+          (profile) => profile.canonicalPath === route.canonicalPath
+        )
+        const encodedProfile = expectedProfile === undefined
+          ? undefined
+          : JSON.parse(JSON.stringify(expectedProfile)) as unknown
+        if (
+          expectedProfile === undefined ||
+          !isDeepStrictEqual(
+            extractEmbeddedJson(html, "announcement-profile-data"),
+            encodedProfile
+          )
+        ) {
+          throw new Error(`Profile bootstrap does not match the catalog: ${route.canonicalPath}`)
+        }
+      }
+      continue
+    }
 
     const closure = await collectJavaScriptClosure(html, allJavaScriptPaths)
     const family = route.routeId
@@ -971,7 +1571,7 @@ export const verify = async (): Promise<void> => {
       const rawBootstrap = extractEmbeddedJson(html, "print-builder-data")
       assertNoAnswerBearingStructuredFields(rawBootstrap, "Print builder bootstrap")
       const bootstrap = Schema.decodeUnknownSync(PrintBuilderBootstrap)(rawBootstrap)
-      const releasedTools = catalog.tools.filter((tool) => tool.publicationGate === null)
+      const publishedTools = catalog.tools
       if (
         !html.includes("data-print-builder") ||
         bootstrap.releaseId !== manifest.releaseId ||
@@ -982,6 +1582,7 @@ export const verify = async (): Promise<void> => {
           return expected === undefined ||
             profile.id !== expected.id ||
             profile.label !== expected.label ||
+            profile.version !== expected.version ||
             profile.jurisdiction !== expected.jurisdiction ||
             profile.compatibilityKey !== expected.compatibilityKey ||
             profile.disclaimer !== expected.disclaimer
@@ -998,9 +1599,9 @@ export const verify = async (): Promise<void> => {
             item.answerReceipt.postcommitBytes !== artifact.bytes ||
             item.answerReceipt.postcommitSha256 !== artifact.sha256
         }) ||
-        bootstrap.tools.length !== releasedTools.length ||
+        bootstrap.tools.length !== publishedTools.length ||
         bootstrap.tools.some((item, index) => {
-          const expected = releasedTools[index]
+          const expected = publishedTools[index]
           const print = expected?.asset.derivatives.find((asset) => asset.kind === "print")
           return expected === undefined || print === undefined ||
             item.id !== expected.conceptId ||
@@ -1053,7 +1654,11 @@ export const verify = async (): Promise<void> => {
         throw new Error("Review queue bootstrap or static fallback is incomplete")
       }
       bootstrap.questions.forEach((source, index) => {
-        const expected = questions[index]?.value
+        const expectedQuestion = questions[index]
+        const expected = expectedQuestion?.value
+        const postcommitValue = expected === undefined
+          ? undefined
+          : postcommitQuestionById.get(expected.id)
         const postcommit = expected === undefined
           ? undefined
           : questionPostcommitById.get(expected.id)
@@ -1062,7 +1667,9 @@ export const verify = async (): Promise<void> => {
           : `/content/vertical-slice/${postcommit.path}`
         if (
           expected === undefined ||
+          expectedQuestion === undefined ||
           postcommit === undefined ||
+          postcommitValue === undefined ||
           source.id !== expected.id ||
           JSON.stringify(source.optionIds) !==
             JSON.stringify(expected.options.map((option) => option.id)) ||
@@ -1078,6 +1685,13 @@ export const verify = async (): Promise<void> => {
         ) {
           throw new Error(`Review question bootstrap mismatch at position ${index + 1}`)
         }
+        assertNoQuestionSemanticLeak(expectedQuestion.raw, postcommitValue, catalog, [
+          source.id,
+          ...source.optionIds,
+          source.itemUrl,
+          source.receipt.sessionId,
+          source.receipt.postcommitPath
+        ])
       })
       bootstrap.scenes.forEach((source, index) => {
         const expected = scenes[index]?.value
@@ -1122,7 +1736,13 @@ export const verify = async (): Promise<void> => {
         }
       })
       for (const field of [
+        "claimIds",
+        "claims",
+        "conceptId",
         "correctOptionId",
+        "equivalenceGroupId",
+        "factKind",
+        "objectiveId",
         "optionConceptIds",
         "rationales",
         "sources",
@@ -1181,26 +1801,47 @@ export const verify = async (): Promise<void> => {
       const decoded = Schema.decodeUnknownSync(PrecommitQuestion)(
         rawQuestion
       )
+      const postcommitValue = postcommitQuestionById.get(decoded.id)
       if (
-        decoded.id !== route.precommit.id ||
+        postcommitValue === undefined ||
+        !isDeepStrictEqual(decoded, route.precommit) ||
         !html.includes("data-question-player") ||
         !/<script type="module"[^>]+src="\/assets\/[^\"]+\.js"/.test(html)
       ) {
         throw new Error(`Question bootstrap contract mismatch: ${route.canonicalPath}`)
       }
-      decodeAndAssertQuestionReceipt(
-        extractEmbeddedJson(html, "question-receipt-data"),
+      const rawReceipt = extractEmbeddedJson(html, "question-receipt-data")
+      const receipt = decodeAndAssertQuestionReceipt(
+        rawReceipt,
         {
           artifact: route.postcommitArtifact,
           packVersion: deliveryManifest.packVersion,
           position: route.position,
           questionId: decoded.id,
           releaseId: deliveryManifest.releaseId,
-          sessionId: deliveryManifest.releaseId
+          sessionId: route.sessionId ?? deliveryManifest.releaseId
         },
         `Question receipt ${route.canonicalPath}`
       )
-      for (const field of ["correctOptionId", "rationales", "sources"]) {
+      assertNoQuestionSemanticLeak(rawQuestion, postcommitValue, catalog, [
+        route.canonicalPath,
+        receipt.sessionId,
+        receipt.postcommitPath,
+        receipt.questionId
+      ])
+      for (const field of [
+        "claimIds",
+        "claims",
+        "conceptId",
+        "correctOptionId",
+        "equivalenceGroupId",
+        "factKind",
+        "objectiveId",
+        "optionConceptIds",
+        "rationales",
+        "sources",
+        "tags"
+      ]) {
         if (html.includes(`"${field}"`)) {
           throw new Error(`Question page exposes ${field} before commitment: ${route.canonicalPath}`)
         }
@@ -1314,7 +1955,12 @@ export const verify = async (): Promise<void> => {
       )
       secretMaterial.push(
         ...payload.rationales.map((rationale) => rationale.message),
-        ...payload.sources.map((source) => source.locator)
+        ...payload.claims.flatMap((claim) => [claim.text, claim.caveat ?? ""]),
+        ...payload.sources.flatMap((source) => [
+          source.locator,
+          source.excerpt,
+          source.title
+        ])
       )
     }
     if (record.kind === "scene-postcommit") {
@@ -1353,7 +1999,12 @@ export const verify = async (): Promise<void> => {
   ).join("\n")
   const serviceWorker = await text(new URL("sw.js", distRoot))
   const initialInteractiveClosure = `${playerHtml}\n${allJavaScript}\n${allCss}\n${serviceWorker}`
-  assertNoAnswerBearingText(initialInteractiveClosure, secretMaterial, "Initial interactive closure")
+  assertNoAnswerBearingText(
+    initialInteractiveClosure,
+    secretMaterial,
+    "Initial interactive closure",
+    collectStringLeaves([catalog, pack])
+  )
   assertNoAnswerBearingFileNames(relativeBuildFiles, secretMaterial)
 
   const shellVersion = serviceWorker.match(/nycustodian-shell-([a-f0-9]{16})/)?.[1]
@@ -1387,11 +2038,10 @@ export const verify = async (): Promise<void> => {
     ])
   )
 
-  // The interactive entries share the framework/runtime and verified-content chunks. These
-  // M4 and M5 share durable-session, print, pack, settings, correction, and the
-  // canonical review-projection rebuild services in the application runtime.
-  // The largest measured closure is Settings at 455062 raw / 134907 gzip /
-  // 115567 brotli; these ceilings retain a small deterministic margin.
+  // The interactive entries share the framework/runtime and verified-content chunks. M4 and M5
+  // share durable-session, print, pack, settings, correction, and canonical review-projection
+  // services. The largest integrated closure is Settings at 468355 raw / 139994 gzip / 118248
+  // brotli; these ceilings retain a deliberately narrow deterministic margin.
   const bundleBudgets = { raw: 470_000, gzip: 140_000, brotli: 120_000 } as const
   for (const [family, measurement] of bundleReports) {
     for (const format of ["raw", "gzip", "brotli"] as const) {

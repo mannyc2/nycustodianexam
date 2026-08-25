@@ -22,6 +22,10 @@ const acceptedToolsUrl = new URL(
   "content/authoring/visuals/releases/tools.json",
   repositoryRoot
 )
+const acceptedComparisonsUrl = new URL(
+  "content/authoring/visuals/releases/comparisons.json",
+  repositoryRoot
+)
 const acceptedScenesUrl = new URL(
   "content/authoring/visuals/releases/scenes.json",
   repositoryRoot
@@ -112,6 +116,10 @@ const verifyAsset = Effect.fn("ContentCompiler.verifyAsset")(function*(asset: {
 const program = Effect.gen(function*() {
   const authoredPack = yield* readJson(authoredPackUrl, "authored content pack")
   const acceptedTools = yield* readJson(acceptedToolsUrl, "accepted tool ledger")
+  const acceptedComparisons = yield* readJson(
+    acceptedComparisonsUrl,
+    "accepted comparison ledger"
+  )
   const acceptedScenes = yield* readJson(acceptedScenesUrl, "accepted scene ledger")
   const acceptedSceneRegions = yield* readJson(
     acceptedSceneRegionsUrl,
@@ -125,6 +133,7 @@ const program = Effect.gen(function*() {
   const compiled = yield* compileContentPack({
     authoredPack,
     acceptedTools,
+    acceptedComparisons,
     acceptedScenes,
     acceptedSceneRegions,
     acceptedSceneAccessibility

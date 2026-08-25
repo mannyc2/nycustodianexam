@@ -1,4 +1,7 @@
-import { PostcommitQuestion, PostcommitScene } from "@nycustodian/content/model"
+import {
+  PostcommitScene,
+  ReleasedPostcommitQuestion
+} from "@nycustodian/content/model"
 import { Clock, Context, Effect, Layer, Schema } from "effect"
 import {
   AppDatabase,
@@ -288,7 +291,10 @@ const decodeBoundPostcommitBytes = (
     if (result.kind !== "question") {
       throw new Error("Evaluated question feedback does not match its pinned receipt")
     }
-    const payload = Schema.decodeUnknownSync(PostcommitQuestion)(unknownPayload)
+    const payload = Schema.decodeUnknownSync(
+      ReleasedPostcommitQuestion,
+      { onExcessProperty: "error" }
+    )(unknownPayload)
     if (JSON.stringify(payload) !== JSON.stringify(result.postcommit)) {
       throw new Error("Evaluated question feedback payload does not match its retained bytes")
     }
@@ -327,7 +333,10 @@ export const validateSimulationSubmission = (
   session: SimulationSessionRecord,
   value: unknown
 ): SimulationSubmissionRecord => {
-  const submission = Schema.decodeUnknownSync(SimulationSubmissionRecord)(value)
+  const submission = Schema.decodeUnknownSync(
+    SimulationSubmissionRecord,
+    { onExcessProperty: "error" }
+  )(value)
   if (
     submission.id !== simulationSubmissionId(session.id) ||
     submission.sessionId !== session.id ||

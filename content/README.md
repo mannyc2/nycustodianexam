@@ -41,6 +41,11 @@ release coordinates; it must not rewrite accepted pixels or published history.
 holds deterministic delivery forms. Release manifests and receipts bind these
 paths to exact checksums.
 
+The launch pack authoring boundary and regeneration workflow are documented in
+[`authoring/packs/README.md`](authoring/packs/README.md). Human-reviewed
+instructional text lives in the curated module; the builder only joins,
+formats, and validates it against accepted inventories and release ledgers.
+
 Candidate prompts, rejected attempts, overlays, full descriptions, answer
 regions, and other answer-bearing review data never enter pre-answer learner
 packs merely because they are tracked here.
