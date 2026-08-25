@@ -79,27 +79,33 @@ test("known-offline partial start blocks commitment when exact feedback is absen
   await waitForActiveServiceWorker(page)
   await page.goto("/practice/")
   await expect.poll(() => page.evaluate(() => navigator.serviceWorker.controller !== null)).toBe(true)
-  await page.evaluate((cacheName) => caches.delete(cacheName), verifiedContentCacheName)
+  expect(await page.evaluate((cacheName) => caches.delete(cacheName), verifiedContentCacheName))
+    .toBe(true)
   let postcommitRequests = 0
   page.on("request", (request) => {
     if (new URL(request.url()).pathname === questionPostcommitPath) postcommitRequests += 1
   })
 
+  // Chromium's CDP offline emulation can report navigator.onLine as true in a
+  // new document when its navigation is fulfilled by a service worker. Keep
+  // the network offline and pin the product's known-offline signal as well.
+  await page.addInitScript(() => {
+    Object.defineProperty(Navigator.prototype, "onLine", {
+      configurable: true,
+      get: () => false
+    })
+  })
   await context.setOffline(true)
+  expect(await page.evaluate(() => navigator.onLine)).toBe(false)
   await page.getByRole("link", { name: "Start question 1" }).click()
   await expect(page).toHaveURL(questionPath)
+  expect(await page.evaluate(() => navigator.onLine)).toBe(false)
   await expect(page.getByRole("heading", { name: "Required study content is unavailable" }))
     .toBeVisible()
-  expect(
-    await page.getByRole("radio").evaluateAll(
-      (controls) => controls.filter((control) => !(control as HTMLInputElement).disabled).length
-    )
-  ).toBe(0)
-  expect(
-    await page.getByRole("button", { name: "Commit answer" }).evaluateAll(
-      (controls) => controls.filter((control) => !(control as HTMLButtonElement).disabled).length
-    )
-  ).toBe(0)
+  const choices = await page.getByRole("radio").all()
+  expect(choices).toHaveLength(4)
+  for (const choice of choices) await expect(choice).toBeDisabled()
+  await expect(page.getByRole("button", { name: "Commit answer" })).toBeDisabled()
   expect(postcommitRequests).toBe(0)
   expect(await readStoredAttempt(page)).toBeUndefined()
 })

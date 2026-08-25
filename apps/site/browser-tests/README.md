@@ -13,14 +13,14 @@ deterministic unit and worker-harness checks.
 ## Current execution status
 
 Browser CI is configured as the complete cross-browser gate. On this revision,
-browser TypeScript and Playwright discovery pass locally for 90 cases across
-seven test files. The four targeted Chromium app-database contracts pass with
-the installed system Chrome:
-pre-quarantine v2 upgrade plus resumable import, missing-legacy-database safety,
-bounded blocked-upgrade reload recovery, and persisted page-lifecycle reconnect.
-The installed Chrome is launched with BFCache disabled by command line, and the
-Playwright-managed browser binaries are not installed, so true BFCache and the
-complete browser matrix remain separate CI/release gates.
+browser TypeScript and Playwright discovery pass locally for 84 configured
+executions across seven test files: 81 standard Vite-preview configurations
+across Chromium, Firefox, and WebKit, plus three Cloudflare-preview Chromium
+configurations. The exact pinned Chromium revision passes all 27 standard cases
+and all three Cloudflare-preview cases locally, including the app-database,
+offline/service-worker, accessibility, and true-BFCache contracts. The Firefox
+and WebKit browser binaries are not installed locally, so the complete
+cross-browser matrix remains a separate CI/release gate.
 
 ## Configured automated coverage
 
@@ -37,9 +37,10 @@ complete browser matrix remain separate CI/release gates.
   hazard Blob survival across BFCache with true-unload revocation, and
   fail-closed quarantine of a review attempt whose receipt differs from the
   released bootstrap.
-- Vite preview and local Cloudflare Workers Static Assets preview: nested-route
-  identity/canonical behavior, static-atlas runtime isolation, and precommit
-  answer-leak checks.
+- Local Cloudflare Workers Static Assets preview: nested-route
+  identity/canonical behavior, truthful unknown-route status, static-atlas
+  runtime isolation, and precommit answer-leak checks. These delivery-only
+  assertions are excluded from the ordinary Vite-preview matrix.
 
 The service-worker update fixture is generated from the finalized built worker,
 changes only its deterministic cache namespace, and is deleted after the test.

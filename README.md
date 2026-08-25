@@ -242,11 +242,11 @@ deterministic gate passes on Bun `1.4.0` and Node `22.22.0`: maintained-layout
 and module-boundary checks, all 396 visual hashes, three-workspace typechecks,
 165 unit tests, the 58-document production build, and artifact closure and
 answer-leak verification. A frozen offline install also preserves `bun.lock`
-byte-for-byte. Browser CI is configured, and the four targeted Chromium
-app-database migration/lifecycle contracts pass locally. Playwright-managed
-browser binaries are absent locally, and the installed system Chrome disables
-true BFCache by command line, so the complete cross-browser matrix and release
-certification remain separate CI/release gates.
+byte-for-byte. Browser CI is configured, and the exact pinned Chromium revision
+passes all 27 standard Vite-preview cases plus all three Cloudflare-preview
+delivery cases locally, including the true-BFCache contracts. The Firefox and
+WebKit browser binaries are absent locally, so the complete cross-browser
+matrix and release certification remain separate CI/release gates.
 
 See [`AGENTS.md`](AGENTS.md) and [`CONTRIBUTING.md`](CONTRIBUTING.md) before
 making changes.

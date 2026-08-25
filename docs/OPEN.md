@@ -238,10 +238,11 @@ revision.
   three-workspace typechecks, 165 unit tests, the 58-document/92-safe-shell-URL
   production build, artifact closure and answer-leak verification, and a frozen
   offline install that preserves `bun.lock` byte-for-byte; while
-- browser CI is configured, and four targeted Chromium application-database
-  migration/lifecycle contracts pass locally with the installed system Chrome;
-  the complete cross-browser matrix and release certification remain separate
-  gates beyond that targeted local evidence.
+- browser CI is configured, and the exact pinned Chromium revision passes all
+  27 standard Vite-preview cases plus all three Cloudflare-preview delivery
+  cases locally, including application-database, offline/service-worker,
+  accessibility, and true-BFCache contracts; the complete cross-browser matrix
+  and release certification remain separate gates beyond that local evidence.
 
 **Implementation evidence still open:**
 
@@ -251,20 +252,20 @@ revision.
   coverage, and explicit pack lifecycle proof;
 - a complete location-preserving JSONC/canonical-JSON profile and generated
   release-artifact retention policy for content at scale;
-- automated accessibility, zoom/reflow, keyboard, performance, and complete
-  offline gates;
+- complete cross-browser accessibility, zoom/reflow, keyboard, performance,
+  and remaining-browser offline gates;
 - M4/M5 simulation, complete print output, explicit content-pack lifecycle,
   settings, and corrections flows;
-- sitemap generation, Cloudflare preview/deployment configuration, and any
-  separately authorized future Worker API;
+- sitemap generation, remote Cloudflare preview/deployment configuration, and
+  any separately authorized future Worker API;
 - first-party analytics/observability policy; and
 - custom domain/canonical host.
 
 Decision criteria remain: indexable static HTML; installable/offline PWA; explicit versioned content packs; local-first progress; deterministic print and simulations; WCAG behavior; no pre-answer leakage; low operating cost; minimal backend.
 
 **Status:** RESOLVED BASELINE / CONTROLLED M1–M3 IMPLEMENTATION PROOF, NOT A
-RELEASE. Local deterministic verification and the targeted Chromium
-application-database contracts pass; the complete browser matrix, M4/M5, the
+RELEASE. Local deterministic verification and the complete pinned-Chromium
+browser gates pass; the complete browser matrix, M4/M5, the
 canonical host, sitemap, deployment, and release certification remain open. P16
 remains in this ledger for provenance; failures in the scaffold may reopen a
 bounded implementation decision, but do not silently restore superseded

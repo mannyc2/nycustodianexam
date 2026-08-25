@@ -31,13 +31,17 @@ export const discoverHtmlInputs = (root: string): Readonly<Record<string, string
 
 const root = import.meta.dirname
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   build: {
     outDir: "dist",
     emptyOutDir: true,
-    rollupOptions: {
-      input: discoverHtmlInputs(root)
-    },
+    ...(command === "build"
+      ? {
+          rollupOptions: {
+            input: discoverHtmlInputs(root)
+          }
+        }
+      : {}),
     target: "es2023"
   }
-})
+}))

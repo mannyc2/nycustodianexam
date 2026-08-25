@@ -168,13 +168,20 @@ describe("service-worker fetch", () => {
     const source = await readFile(new URL("../public/sw.js", import.meta.url), "utf8")
     const listeners = new Map<string, Listener>()
     const opened: string[] = []
+    const shellIgnoreVary: boolean[] = []
     const writes: string[] = []
     let finishWrite: (() => void) | undefined
     const writeBarrier = new Promise<void>((resolve) => {
       finishWrite = resolve
     })
     const shell = {
-      match: async (): Promise<Response | undefined> => undefined
+      match: async (
+        _request: Request,
+        options?: CacheQueryOptions
+      ): Promise<Response | undefined> => {
+        shellIgnoreVary.push(options?.ignoreVary ?? false)
+        return undefined
+      }
     }
     const runtime = {
       match: async (): Promise<Response | undefined> => undefined,
@@ -223,6 +230,7 @@ describe("service-worker fetch", () => {
       "nycustodian-runtime-__NYCUSTODIAN_CACHE_VERSION__",
       "nycustodian-runtime-__NYCUSTODIAN_CACHE_VERSION__"
     ])
+    expect(shellIgnoreVary).toEqual([true])
     expect(writes).toEqual(["https://study.example/content/runtime.json"])
 
     let lifetimeSettled = false

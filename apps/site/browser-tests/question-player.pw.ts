@@ -114,7 +114,7 @@ test("session start pushes history while Next replaces the current position", as
   await page.getByRole("link", { name: "Next question" }).click()
   await expect(page).toHaveURL("/practice/session/launch-v1/question/2/")
 
-  await page.goBack({ waitUntil: "domcontentloaded" })
+  await page.goBack({ waitUntil: "commit" })
   await expect(page).toHaveURL("/practice/")
   await expect(page.getByRole("heading", { name: "Retrieve what you learned." })).toBeVisible()
 })
@@ -225,7 +225,7 @@ test("Chromium back-forward cache restores the live island without restarting it
   await page.goto("/atlas/")
   await expect(page.getByRole("heading", { name: "Recognize a tool by use and construction." }))
     .toBeVisible()
-  await page.goBack()
+  await page.goBack({ waitUntil: "commit" })
 
   await expect(page).toHaveURL(questionPath)
   await expect(page.getByRole("radio", { name: "Adjustable wrench" })).toBeChecked()

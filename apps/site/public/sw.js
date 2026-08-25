@@ -31,7 +31,10 @@ self.addEventListener("activate", (event) => {
 
 const matchCurrentCaches = async (request) => {
   const shell = await caches.open(shellCache)
-  const shellResponse = await shell.match(request)
+  // Vite and some CDNs vary module responses on Origin. Precache requests do
+  // not carry the later module request's Origin header, but the shell closure
+  // is already restricted to exact same-origin URLs verified at build time.
+  const shellResponse = await shell.match(request, { ignoreVary: true })
   if (shellResponse) return shellResponse
 
   const runtime = await caches.open(runtimeCache)

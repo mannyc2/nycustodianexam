@@ -240,7 +240,7 @@ test("the verified visual Blob URL survives BFCache and is revoked on true unloa
   await page.goto("/atlas/")
   await expect(page.getByRole("heading", { name: "Recognize a tool by use and construction." }))
     .toBeVisible()
-  await page.goBack()
+  await page.goBack({ waitUntil: "commit" })
 
   await expect(page).toHaveURL(visualPath)
   await expect(sceneImage).toHaveAttribute("src", firstVisualAssetUrl ?? "")

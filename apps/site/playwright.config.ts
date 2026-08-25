@@ -27,6 +27,7 @@ const serverConfiguration = process.env.NYCUSTODIAN_PLAYWRIGHT_BASE_URL === unde
 export default defineConfig({
   testDir: "./browser-tests",
   testMatch: "**/*.pw.ts",
+  ...(cloudflarePreview ? {} : { grepInvert: /@cloudflare/ }),
   outputDir: "/tmp/nycustodian-playwright-results",
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
@@ -54,9 +55,10 @@ export default defineConfig({
       name: "chromium",
       use: {
         ...devices["Desktop Chrome"],
-        ...(chromiumExecutable === undefined
-          ? {}
-          : { launchOptions: { executablePath: chromiumExecutable } })
+        launchOptions: {
+          ignoreDefaultArgs: ["--disable-back-forward-cache"],
+          ...(chromiumExecutable === undefined ? {} : { executablePath: chromiumExecutable })
+        }
       }
     },
     {

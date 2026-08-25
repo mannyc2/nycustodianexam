@@ -86,10 +86,13 @@ test("an exact receipt mismatch is quarantined without loading or substituting f
   await expect(page.getByRole("heading", { name: "0 items to review" })).toBeVisible()
   await expect(page.getByRole("heading", { name: "Saved attempts needing attention" }))
     .toBeVisible()
-  await expect(page.getByText(
-    "A saved question receipt does not match this exact released item. It was not reinterpreted.",
-    { exact: true }
-  )).toBeVisible()
+  await expect(
+    page
+      .getByRole("complementary", { name: "Saved attempts needing attention" })
+      .getByRole("listitem")
+  ).toContainText(
+    "A saved question receipt does not match this exact released item. It was not reinterpreted."
+  )
   await expect(page.getByRole("link", { name: "Open saved feedback" })).toHaveCount(0)
   await expect(page.getByRole("button", { name: "Acknowledge review" })).toHaveCount(0)
   expect(postcommitRequests).toBe(0)
