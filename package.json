@@ -31,6 +31,7 @@
   "scripts": {
     "build": "bun run check:toolchain && bun run content:build && bun run site:build && bun run verify:artifacts",
     "check:boundaries": "bun run scripts/check-module-boundaries.ts",
+    "check:certification-record": "bun run scripts/check-production-certification.ts --allow-blocked",
     "check:layout": "bun run scripts/check-maintained-layout.ts",
     "check:toolchain": "bun run scripts/check-toolchain.ts",
     "content:build": "bun run --filter @nycustodian/content-compiler build",
@@ -41,7 +42,7 @@
     "test:browser:chromium": "bun run --filter @nycustodian/site test:browser:chromium",
     "typecheck": "node --experimental-strip-types scripts/run-workspaces.ts typecheck",
     "typecheck:browser": "bun run --filter @nycustodian/site typecheck:browser",
-    "verify": "bun run check:toolchain && bun run check:layout && bun run check:boundaries && bun run verify:visuals && bun run content:build && bun run typecheck && bun run typecheck:browser && bun run test && bun run site:build && bun run verify:artifacts",
+    "verify": "bun run check:toolchain && bun run check:layout && bun run check:boundaries && bun run check:certification-record && bun run verify:visuals && bun run content:build && bun run typecheck && bun run typecheck:browser && bun run test && bun run site:build && bun run verify:artifacts",
     "verify:artifacts": "bun run scripts/verify-artifacts.ts",
     "verify:visuals": "bun content/authoring/visuals/releases/verify-visual-release.mjs"
   },

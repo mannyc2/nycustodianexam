@@ -24,7 +24,9 @@ import { ReviewQueueBootstrap } from "../apps/site/src/review/model.ts"
 import { AssetContentReceipt } from "../apps/site/src/verified-content.ts"
 import {
   assertSafeBuildPaths,
-  collectReferencedBuildAssets
+  collectReferencedBuildAssets,
+  normalizeCanonicalOrigin,
+  renderSitemap
 } from "../apps/site/scripts/finalize-service-worker.ts"
 import { Schema } from "effect"
 
@@ -408,6 +410,7 @@ export const assertProtectedServiceWorkerPolicy = (
 }
 
 export const verify = async (): Promise<void> => {
+  const canonicalOrigin = normalizeCanonicalOrigin(process.env.NYCUSTODIAN_CANONICAL_ORIGIN)
   const sourceManifestText = await text(new URL("manifest.json", releaseRoot))
   const manifest = Schema.decodeUnknownSync(ReleaseManifest)(JSON.parse(sourceManifestText))
   const builtManifestUrl = new URL("content/vertical-slice/manifest.json", distRoot)
@@ -671,9 +674,32 @@ export const verify = async (): Promise<void> => {
   )
   assertEqualSets(
     actualRoutePaths,
-    new Set(expectedRoutes.map((route) => route.canonicalPath)),
+    new Set(
+      expectedRoutes.map((route) =>
+        canonicalOrigin === undefined
+          ? route.canonicalPath
+          : new URL(route.canonicalPath, `${canonicalOrigin}/`).href
+      )
+    ),
     "Generated HTML routes"
   )
+  const sitemapUrl = new URL("sitemap.xml", distRoot)
+  if (canonicalOrigin === undefined) {
+    if (await Bun.file(sitemapUrl).exists()) {
+      throw new Error("A host-specific sitemap was generated without an approved canonical origin")
+    }
+  } else {
+    const expectedSitemap = renderSitemap(
+      expectedRoutes
+        .filter((route) => route.robots === "index,follow")
+        .map((route) => route.canonicalPath)
+        .sort(),
+      canonicalOrigin
+    )
+    if (!(await Bun.file(sitemapUrl).exists()) || await text(sitemapUrl) !== expectedSitemap) {
+      throw new Error("The production sitemap does not match the closed indexable route set")
+    }
+  }
   const statusHtml = await text(new URL("404.html", distRoot))
   if (
     extractAttribute(statusHtml, /<body data-route-id="([^"]+)">/g, "status route identity") !==
@@ -965,6 +991,7 @@ export const verify = async (): Promise<void> => {
     "404.html",
     "offline.html",
     "manifest.webmanifest",
+    ...(canonicalOrigin === undefined ? [] : ["sitemap.xml"]),
     "styles.css",
     "sw.js",
     "content/vertical-slice/manifest.json",
