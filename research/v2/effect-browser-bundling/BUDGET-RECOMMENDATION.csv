@@ -1,6 +1,0 @@
-surface,basis,raw_budget_bytes,gzip_budget_bytes,brotli_budget_bytes,status,evidence,recommendation
-acquisition-reference-initial,initial route closure,,,,BLOCKED,No R2.5 bytes; do not reuse v3 budget.,Keep static/reference entrypoint free of Effect imports as a topology target; set budget only after rerun.
-interactive-question-player,lazy initial route closure,,,,BLOCKED,Direct DOM and renderer current-v4 closures unmeasured.,No numeric budget recommendation.
-service-worker-native,single worker bundle,,,,BLOCKED,Native baseline build unmeasured.,No numeric budget recommendation.
-service-worker-effect,single worker bundle,,,,BLOCKED,Effect comparison unmeasured.,Do not choose Effect in the service worker based on first-pass v3 data.
-optional-worker,Worker bundle/closure,,,,BLOCKED,Unstable HTTP/HttpApi + Cloudflare toolchain unmeasured.,No numeric budget recommendation.

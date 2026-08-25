@@ -10,7 +10,7 @@ This directory is the implementation-facing product contract recovered and norma
    `COMPONENT_ARCHITECTURE.md`, with presentation rules in `DESIGN_SYSTEM.md`.
 4. **Product behavior and UX:** `FEATURE_SPEC.md`.
 5. **Illustration production:** `../illustration/`.
-6. **Supporting investigations:** `../research/`.
+6. **Supporting investigations:** [`../research/README.md`](../research/README.md).
 7. **Recovery bookkeeping:** `../recovery/CORPUS_RECOVERY.md`.
 
 A lower layer must never silently promote an unknown exam fact into a product claim.
@@ -70,14 +70,13 @@ simulation, complete print output, and explicit content-pack lifecycle,
 settings, and corrections flows. Sitemap generation, the canonical production
 host, and deployment are also unresolved.
 
-Browser CI is configured, but the current revision has not been exercised
-locally because the required loopback escalation is unavailable, and it has not
-run remotely because the branch has not been pushed. The exact local
-deterministic gate passes on Bun `1.4.0` and Node `22.22.0`, including all 165
-unit tests, the 58-document production build, artifact closure and answer-leak
-verification, and a frozen offline install that leaves `bun.lock` unchanged.
-Browser and release certification remain pending. `ARCHITECTURE_CONSTRAINTS.md`
-and the acceptance sections of the planning documents define the remaining
-implementation evidence.
+Browser CI is configured, and four targeted Chromium application-database
+migration/lifecycle contracts pass locally with the installed system Chrome.
+That targeted local run does not replace the complete cross-browser matrix or
+release certification. The exact local deterministic gate passes on Bun `1.4.0`
+and Node `22.22.0`, including all 165 unit tests, the 58-document production
+build, artifact closure and answer-leak verification, and a frozen offline
+install that leaves `bun.lock` unchanged. `ARCHITECTURE_CONSTRAINTS.md` and the
+acceptance sections of the planning documents define the remaining evidence.
 
 A separately authored print-system deliverable discussed in an earlier chat was **not located** as a durable Library artifact during this pass. The recovered feature specification contains the durable print contract; chat-only recollections are not silently promoted into this repository.

@@ -1,102 +1,44 @@
 # NY Custodian Exam
 
-Provenance-tracked research, product, and content-production repository for a free study site covering the New York **Entry-Level Custodians and Janitors** civil-service written-test series, with a Nassau County logistics layer and evidence-gated expansion to other same-plan jurisdictions.
+Provenance-tracked product, content, and supporting-research repository for a
+free study site covering New York's **Entry-Level Custodians and Janitors**
+civil-service written-test series, with a Nassau County logistics layer and
+evidence-gated expansion to other same-plan jurisdictions.
 
-The site is independent and unofficial. It does not solicit, reconstruct, buy, publish, or represent secure examination content as practice material.
+The site is independent and unofficial. It does not solicit, reconstruct, buy,
+publish, or represent secure examination content as practice material.
 
 ## Repository map
 
-### `docs/` — exam truth and scope authority
-
-| File | Role |
+| Path | Role |
 |---|---|
-| `FACTBASE.md` | Established exam, format, scoring, logistics, legal, title, and jurisdiction facts |
-| `SCOPE.md` | Source-backed testable facts that constrain original study content |
-| `TAXONOMY.md` | Tool, equipment, hazard, confusion-set, and evidence-tier taxonomy |
-| `LANDSCAPE.md` | Competitive, learning, accessibility, design, and product evidence |
-| `OPEN.md` | Unresolved truth claims, conflicts, recovery targets, and architecture/product decisions |
+| [`docs/`](docs/README.md) | Exam truth, scope, taxonomy, landscape evidence, and unresolved factual/implementation questions. |
+| [`product/`](product/README.md) | Maintained product behavior and reconciled implementation constraints. |
+| [`illustration/`](illustration/README.md) | Visual-authoring authority, supporting historical methods, and non-production prototypes. |
+| [`content/`](content/README.md) | Reviewed visual inventories, briefs, exact assets, lineage, reviews, and release records. |
+| [`research/`](research/README.md) | Four-file map of unique supporting evidence. Committing research does not make it authority. |
+| [`prompts/research-v2/`](prompts/research-v2/README.md) | Archived records for the closed/reconciled R2.1–R2.10/R2.90 program, including blocked evidence; prompts are not authority. |
+| [`recovery/`](recovery/CORPUS_RECOVERY.md) | Recovery/disposition ledger for prior durable artifacts and unavailable work. |
+| [`plans/`](plans/README.md) | Dated execution plans and their recorded status. |
 
-### `product/` — behavior and current architecture constraints
+Deleted research reports, raw results, fixtures, receipts, and recovered
+archives remain auditable at immutable pre-normalization commit
+[`6701e83290c56d9c5f04275a30fc6ada6bd40435`](https://github.com/mannyc2/nycustodianexam/tree/6701e83290c56d9c5f04275a30fc6ada6bd40435/research).
 
-- `FEATURE_SPEC.md` — maintained buildable product specification: page states, atlas, practice, hazards, review, simulation, print, data model, offline, accessibility, privacy, corrections, QA, and release gates.
-- `ARCHITECTURE_CONSTRAINTS.md` — maintained latest-v4/Bun/React 19
+### Maintained product contracts
+
+- [`product/FEATURE_SPEC.md`](product/FEATURE_SPEC.md) — maintained buildable product specification: page states, atlas, practice, hazards, review, simulation, print, data model, offline, accessibility, privacy, corrections, QA, and release gates.
+- [`product/ARCHITECTURE_CONSTRAINTS.md`](product/ARCHITECTURE_CONSTRAINTS.md) — maintained latest-v4/Bun/React 19
   implementation decisions and remaining implementation evidence gates.
-- `ROUTES.md` — canonical route IDs, paths, indexability, static/island
+- [`product/ROUTES.md`](product/ROUTES.md) — canonical route IDs, paths, indexability, static/island
   ownership, navigation, offline behavior, and milestones for all 21 destination
   families.
-- `SCREEN_STATES.md` — legal route states/transitions plus recovery, focus,
+- [`product/SCREEN_STATES.md`](product/SCREEN_STATES.md) — legal route states/transitions plus recovery, focus,
   history, persistence, and offline semantics.
-- `COMPONENT_ARCHITECTURE.md` — composition-first React 19 families, providers,
+- [`product/COMPONENT_ARCHITECTURE.md`](product/COMPONENT_ARCHITECTURE.md) — composition-first React 19 families, providers,
   explicit variants, primitives, and page recipes.
-- `DESIGN_SYSTEM.md` — maintained tokens, responsive layout, shell, focus,
+- [`product/DESIGN_SYSTEM.md`](product/DESIGN_SYSTEM.md) — maintained tokens, responsive layout, shell, focus,
   forced-color, reduced-motion, state-presentation, and print rules.
-
-### `research/initial-pass/` — normalized first parallel research batch
-
-The first parallel Effect research pass was completed mostly outside GitHub and used mixed assumptions. It is preserved and normalized here.
-
-This directory contains:
-
-- exact raw reports and recovered evidence;
-- reusable findings;
-- duplicate/supersession analysis;
-- v3-era recommendations quarantined from current authority;
-- conflicts such as the rejected in-memory-commit-before-reveal behavior;
-- latest-v4/Bun redo requirements;
-- raw deterministic tool-geometry research and POC evidence.
-
-Start with:
-
-1. `research/initial-pass/README.md`
-2. `CURRENT-CONSTRAINTS.md`
-3. `NORMALIZATION.md`
-4. `DUPLICATION-AND-SUPERSESSION.md`
-5. `REDO-REQUIRED.md`
-6. `DECISION-MATRIX.csv`
-
-### `research/prompt-curation/` — Effect v4 and Bun research doctrine
-
-This directory identifies and adapts the official Effect `SKILL.md`, pins the upstream coordinates inspected during curation, and defines the maintained doctrine for the second architecture pass.
-
-Key files:
-
-- `REPORT.md` — curation findings and resulting research program;
-- `EFFECT-SKILL-ADAPTATION.md` — Bun adaptation of the official Effect setup skill;
-- `EFFECT-V4-BUN-RESEARCH-DOCTRINE.md` — shared Effect-native and Bun-workspace rules;
-- `SOURCE-LEDGER.md` — official Effect/Bun/project evidence coordinates;
-- `DECISION-MATRIX.csv` — fixed constraints versus still-open decisions;
-- `LAUNCH-READINESS.md` — finalized launch model, parallelism, and remaining research scope.
-
-The official Effect skill’s operational rule is now explicit: after the exact v4 package is installed, agents must read `node_modules/effect/AGENTS.md` completely, follow relevant package-local docs, and inspect installed source when needed.
-
-### `prompts/research-v2/` — preserved second-pass research program
-
-The completed program and its launch provenance contain:
-
-- `LAUNCH-CONTRACT.md` — launch-time immutable-SHA semantics and minimal launch-message form;
-- `00-SHARED-RESEARCH-CONTRACT.md` — common GitHub/Effect/Bun/evidence contract;
-- `LANE-INDEX.csv` — lane branches, allowed paths, prior-research pointers, dependencies, and overlap ownership;
-- ten independent research lanes;
-- one final synthesis lane.
-
-Every lane requires:
-
-1. immutable source-SHA verification;
-2. immediate `@GitHub` branch creation;
-3. an initial receipt commit and push;
-4. an early draft PR;
-5. exact raw reports, source ledgers, fixtures, `package.json`, `bun.lock`, raw measurements, and checksums where applicable;
-6. incremental pushes;
-7. final branch/head/PR receipts;
-8. stopping when GitHub writes are unavailable.
-
-The `{{POST_CURATION_SOURCE_SHA}}` token appearing in lane templates is a **launch-time variable**, not a repository-edit requirement. Each launch message supplies the exact immutable source SHA explicitly. Researchers must verify it with `@GitHub` and stop on drift.
-
-R2.1 through R2.10 and the reconciled R2.90 synthesis are complete. Their
-accepted results are maintained in `product/ARCHITECTURE_CONSTRAINTS.md`; exact
-reports, fixtures, ledgers, and the final synthesis remain under `research/v2/`.
-The launch instructions continue to govern any provenance-complete rerun, but
-they are not the current implementation queue.
 
 ### `illustration/` — visual production
 
@@ -200,31 +142,83 @@ Question, hazard, and review state share one private application database and
 one scoped connection owner; feature persistence capabilities do not open or
 version independent databases.
 
-## Authority rule
+## Authority order
 
 When documents disagree:
 
-1. current `docs/` controls exam facts/scope;
-2. `product/ARCHITECTURE_CONSTRAINTS.md` controls current implementation constraints;
-3. `product/FEATURE_SPEC.md` controls UX/product behavior;
-4. current illustration decisions control production mechanics;
-5. research/recovery artifacts provide evidence/history and may be marked superseded.
+1. current `docs/` controls exam facts and allowed scope;
+2. `product/ARCHITECTURE_CONSTRAINTS.md` controls implementation constraints;
+3. `product/FEATURE_SPEC.md` controls user-visible behavior where it does not
+   contradict exam truth;
+4. current illustration policy and accepted release records control visual
+   production; and
+5. research and recovery material supplies evidence/history but does not
+   silently override maintained authority.
 
-Never replace an unknown fact with an inference.
+Unknown facts remain unknown until controlling evidence resolves them.
 
-## Provenance and security rules
+## Current architecture direction
 
-- Preserve source tier, locator, date, exact version/ref, and artifact checksum.
-- Prefer newer controlling official evidence to older official evidence; official evidence to commercial/anecdotal material.
-- Keep contradictions visible until resolved.
+The closed/reconciled second-pass program established this implementation
+direction; requested runtime proof that did not complete remains an explicit
+implementation gate:
+
+- one exact synchronized Effect v4 cohort and Bun workspace;
+- initial `apps/site`, `apps/content-compiler`, and `packages/content` graph;
+- standards-first semantic HTML/CSS and no Next.js;
+- Schema plus explicit whole-corpus publication gates and manifest-last output;
+- cohesive runtime-specific Effect services and one root per host;
+- strict IndexedDB commit-before-reveal and staged offline-pack activation;
+- native service-worker ownership of HTTP bytes, with IndexedDB owning logical
+  pack and learner truth;
+- React 19 lazy interactive islands behind a renderer-neutral
+  snapshot/command boundary, with the archived direct-DOM slice retained only
+  as a measurement baseline;
+- Vite and Cloudflare Workers Static Assets, with no Worker until an endpoint is
+  authorized; and
+- separate Bun, Effect, real-browser, accessibility, print, artifact, leak, and
+  clean-build verification responsibilities.
+
+Exact implementation and release gates are maintained in
+[`product/ARCHITECTURE_CONSTRAINTS.md`](product/ARCHITECTURE_CONSTRAINTS.md) and
+[`docs/OPEN.md`](docs/OPEN.md). Effect v3, pnpm, generic
+`domain/application/ports/adapters/ui`, optimistic reveal, and a universal
+runtime Layer are historical/superseded directions.
+
+## Visual production status
+
+[`illustration/VISUAL_AUTHORING_POLICY.md`](illustration/VISUAL_AUTHORING_POLICY.md)
+selects Codex-native image generation. The exact accepted reviewed raster bytes,
+not a prompt, seed, SVG, CAD model, or claimed regeneration, are the visual
+source of truth.
+
+The accepted release contains:
+
+- 65 tool/PPE masters;
+- 14 comparison layouts; and
+- 18 hazard scenes.
+
+Their inventories, exact hashes, lineage, accessibility, rights/similarity,
+security, phone/print, and independent review records live under
+`content/authoring/visuals/` and `content/assets/`. The four recovered
+CadQuery/OCCT prototypes are closed historical evidence and retired
+production-art candidates.
+
+## Provenance and security
+
+- Preserve evidence tier, source locator, observation date, exact version/ref,
+  artifact checksum, limitations, and conflicts.
 - Nothing enters scored content without source support and review.
-- No secure, remembered, reconstructed, photographed, review-session, or purported “actual” exam item content.
-- Practice content and illustrations are original or independently rights-cleared.
-- Downloadable supplier/community CAD is reference material unless mechanical suitability and redistribution/modification rights both pass review.
-- Matching build hashes establish reproducibility, not mechanical correctness.
-- Entry-level and high-level series remain separate unless explicit evidence says otherwise.
+- Practice questions, scenes, and illustrations are original or independently
+  rights-cleared.
+- Never ingest secure, remembered, reconstructed, photographed, review-session,
+  or purported “actual” exam questions, drawings, choices, or keys.
+- Public official samples may guide high-level visual style only under the
+  maintained policy; they may not supply item content or a composition to copy.
+- Entry-level and high-level series remain separate unless explicit evidence
+  establishes compatibility.
 
-## Current status
+## Current repository status
 
 Product planning now includes a canonical route registry, legal page-state
 machines, a composition-first React component architecture, and a maintained
@@ -232,8 +226,9 @@ design system. The Bun workspace at `apps/site`, `apps/content-compiler`, and
 `packages/content` is now a controlled M1–M3 implementation proof, not a
 release or release certification.
 
-The initial mixed-version research is normalized and the Effect v4/Bun R2.1–R2.10
-program plus reconciled R2.90 synthesis are complete. From the currently
+The Effect v4/Bun R2.1–R2.10 program plus reconciled R2.90 synthesis are closed,
+their accepted conclusions are promoted, and the pre-normalization corpus is
+recoverable at the immutable archive coordinate above. From the currently
 validated packs, the generator emits 58 documents, including two question
 routes, 18 visual and 18 nonvisual hazard routes, and four public tool pages.
 Destination families for which reviewed machine-readable content is not
@@ -248,9 +243,10 @@ and module-boundary checks, all 396 visual hashes, three-workspace typechecks,
 165 unit tests, the 58-document production build, and artifact closure and
 answer-leak verification. A frozen offline install also preserves `bun.lock`
 byte-for-byte. Browser CI is configured, and the four targeted Chromium
-app-database migration/lifecycle contracts pass locally. The complete matrix
-has not run: Playwright-managed browser binaries are absent, the installed
-system Chrome disables true BFCache by command line, and remote execution waits
-for a branch push. Browser and release certification therefore remain pending.
+app-database migration/lifecycle contracts pass locally. Playwright-managed
+browser binaries are absent locally, and the installed system Chrome disables
+true BFCache by command line, so the complete cross-browser matrix and release
+certification remain separate CI/release gates.
 
-See [`AGENTS.md`](AGENTS.md) and [`CONTRIBUTING.md`](CONTRIBUTING.md).
+See [`AGENTS.md`](AGENTS.md) and [`CONTRIBUTING.md`](CONTRIBUTING.md) before
+making changes.

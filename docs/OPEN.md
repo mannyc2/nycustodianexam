@@ -132,7 +132,7 @@ Status: standing legal/editorial caution. Any future item text obtained through 
 
 ### P16 — Final application architecture baseline
 
-**Resolved constraints:**
+**Status:** SECOND-PASS RESEARCH RECONCILED / IMPLEMENTATION GATES OPEN.
 
 - standards-first semantic HTML/CSS presentation;
 - no Next.js;
@@ -141,9 +141,9 @@ Status: standing legal/editorial caution. Any future item text obtained through 
 - latest available Effect v4 is mandatory for new architecture and implementation work;
 - Effect v3 is historical/migration/regression evidence only, not a production fallback;
 - Bun is the package-management, workspace, and primary TypeScript tooling direction;
-- Bun `1.4.0` is the first scaffold target, gated by the full current install and
-  lock verification;
-- the accepted initial graph is `apps/site`, `apps/content-compiler`, and
+- Bun `1.4.0` is the locked scaffold toolchain and its frozen-install/lock gate
+  has passed;
+- the implemented initial graph is `apps/site`, `apps/content-compiler`, and
   `packages/content`;
 - Vite is the browser build/development direction;
 - Cloudflare Workers Static Assets remains the initial deployment direction;
@@ -165,17 +165,36 @@ Status: standing legal/editorial caution. Any future item text obtained through 
   offline semantics are defined in `../product/SCREEN_STATES.md`; and
 - normal persistent answer commitment requires the authoritative IndexedDB transaction to complete before reveal.
 
-**Effect learning/governance rule:** the intended skill is the official `Effect-TS/skills` `skills/effect-ts/SKILL.md`. Once the exact v4 package is installed, agents must read `node_modules/effect/AGENTS.md` completely, follow relevant package-local documentation, and inspect installed Effect/platform source where needed.
+The R2.1–R2.10/R2.90 program is closed and reconciled. Its archived outcomes
+retain blocked or incomplete execution evidence, notably the original missing
+R2.5 Bun/Vite probe; current implementation evidence below closes part of that
+gap, while the remaining needs stay explicit.
+Accepted architecture now lives in `../product/ARCHITECTURE_CONSTRAINTS.md`;
+the complete historical research corpus is recoverable at immutable commit
+[`6701e83290c56d9c5f04275a30fc6ada6bd40435`](https://github.com/mannyc2/nycustodianexam/tree/6701e83290c56d9c5f04275a30fc6ada6bd40435/research).
 
-**Effect architecture rule:** use current v4-native services, focused Layers, Schema models/tagged errors, Scope, structured concurrency, runtime-root composition, and testing patterns where they fit. Keep pure deterministic logic plain. Do not impose generic `domain/application/ports/adapters/ui`, service-per-function, package-per-service, giant application-service, or universal-core structures.
+**Resolved architecture:** standards-first static HTML; no Next.js; one exact
+Effect v4 cohort and Bun workspace; initial `apps/site`,
+`apps/content-compiler`, and `packages/content` graph; Schema plus explicit
+publication gates and manifest-last output; cohesive runtime-specific services
+and roots; strict IndexedDB commit-before-reveal; staged pack activation; native
+service-worker HTTP caching; React 19 lazy interactive islands over a
+renderer-neutral boundary; Vite; Cloudflare Static Assets; distinct
+Bun/Effect/real-browser/accessibility/leak/print verification; local diagnostics
+and no mandatory behavioral tracking. The archived direct-DOM slice remains a
+measurement baseline, not the selected renderer.
 
 **Bun workspace rule:** expect a private root package, root catalog for one exact coordinated Effect cohort, explicit workspace/runtime dependencies, isolated installs unless measured incompatibility requires otherwise, committed `bun.lock`, frozen CI installs, minimal reviewed lifecycle-script trust, and runtime-specific TypeScript boundaries. Browser/service-worker/workerd code does not become Bun-runtime code merely because Bun owns the workspace.
 
 **Completed second-pass program:** R2.1–R2.10 and the reconciled R2.90 synthesis
-are complete under `../research/v2/`. The launch program and provenance remain
-under `../prompts/research-v2/`. The maintained architecture accepts R2.90 except
-for its direct-DOM-first renderer, which the later maintainer React 19 decision
-supersedes without discarding the renderer-neutral contracts or measurements.
+are closed and reconciled. Accepted conclusions are promoted into maintained
+authorities, concise unique evidence is mapped by `../research/README.md`, and
+the complete pre-normalization corpus remains recoverable at immutable commit
+`6701e83290c56d9c5f04275a30fc6ada6bd40435`. The lane prompts remain archived
+records under `../prompts/research-v2/`, not current launch instructions. The
+maintained architecture accepts R2.90 except for its direct-DOM-first renderer,
+which the later React 19 decision supersedes without discarding the
+renderer-neutral contracts or measurements.
 
 **Recorded evidence for the earlier vertical slice (2026-08-23):**
 
@@ -221,8 +240,8 @@ revision.
   offline install that preserves `bun.lock` byte-for-byte; while
 - browser CI is configured, and four targeted Chromium application-database
   migration/lifecycle contracts pass locally with the installed system Chrome;
-  the complete browser matrix has not run locally, and no remote browser run
-  exists because the branch has not been pushed.
+  the complete cross-browser matrix and release certification remain separate
+  gates beyond that targeted local evidence.
 
 **Implementation evidence still open:**
 
@@ -230,6 +249,8 @@ revision.
   coverage across the remaining supported real-browser matrix;
 - service-worker version/eviction/update behavior, remaining-browser offline
   coverage, and explicit pack lifecycle proof;
+- a complete location-preserving JSONC/canonical-JSON profile and generated
+  release-artifact retention policy for content at scale;
 - automated accessibility, zoom/reflow, keyboard, performance, and complete
   offline gates;
 - M4/M5 simulation, complete print output, explicit content-pack lifecycle,
@@ -248,6 +269,10 @@ canonical host, sitemap, deployment, and release certification remain open. P16
 remains in this ledger for provenance; failures in the scaffold may reopen a
 bounded implementation decision, but do not silently restore superseded
 defaults.
+
+No backend is authorized. A correction endpoint remains deferred until its
+product, privacy, idempotency, rate, abuse, and workerd contract is approved.
+The custom domain/canonical host remains P17.
 
 ### P17 — Domain / canonical host
 Preferred naming direction: NYCustodianExam / NY Custodian Exam. Domain registration/canonical production host not established in corpus.
@@ -299,9 +324,10 @@ Status: optional / deferred.
 - SUPERSEDED: “prefer Effect v3 until v4 GA.” The maintained project constraint is now latest available Effect v4; unstable surfaces remain individually evidence-gated.
 - RESOLVED: package-manager/workspace direction — Bun, Bun workspaces, top-level `apps/` and `packages/`.
 - RESOLVED: intended Effect `SKILL.md` identity and installed-package learning rule.
-- RESOLVED P16 BASELINE: latest Effect v4 + Bun `1.4.0` three-workspace scaffold
-  + generated semantic documents + React 19 islands + Vite/Workers Static Assets
-  direction; runtime/storage/bundle/accessibility claims remain subject to
-  implementation proof.
+- RECONCILED P16 BASELINE: latest Effect v4 + Bun `1.4.0` three-workspace
+  scaffold + standards-first generated documents + React 19 islands +
+  Vite/Workers Static Assets direction; accepted conclusions live in the
+  architecture constraints and unclosed runtime/storage/browser/accessibility
+  evidence remains in the P16 implementation-gate list above.
 
 Keep this file as the single queue of unresolved truth claims. When an item is resolved, update the relevant canonical document and retain a short resolution note here if the former conflict is important to provenance.

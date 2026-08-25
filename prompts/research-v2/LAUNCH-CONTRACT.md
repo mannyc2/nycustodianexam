@@ -1,78 +1,41 @@
-# V2 research launch contract
+# Archived R2 launch contract
 
-This file defines how the second-pass research prompts are launched after prompt curation.
+**Historical status:** the R2.1–R2.10/R2.90 program is closed and reconciled;
+some requested runtime probes and measurements remained blocked or incomplete.
+This file records intended launch rules, not a current launch contract.
 
-## Launch-time immutable source
+The exact prior prompts, inputs, and outputs are recoverable at immutable
+pre-cleanup commit
+[`6701e83290c56d9c5f04275a30fc6ada6bd40435`](https://github.com/mannyc2/nycustodianexam/tree/6701e83290c56d9c5f04275a30fc6ada6bd40435).
+Accepted conclusions are maintained in
+[`product/ARCHITECTURE_CONSTRAINTS.md`](../../product/ARCHITECTURE_CONSTRAINTS.md),
+open implementation evidence in [`docs/OPEN.md`](../../docs/OPEN.md), and the
+reduced evidence map in [`research/README.md`](../../research/README.md).
 
-Every launch message MUST provide one exact immutable source SHA.
+## Historical launch semantics
 
-```text
-Repository:
-  mannyc2/nycustodianexam
+The contract required each original lane to receive one exact immutable source
+SHA in its launch message. The `{{POST_CURATION_SOURCE_SHA}}` token meant that
+supplied SHA; it never meant a moving branch head or a repository edit. The
+contract also required connected-GitHub verification, early branch/draft-PR
+publication, incremental pushes without force, and a stop on drift or missing
+writes.
 
-Source branch:
-  agent/chat-corpus-reconciliation
+Those requirements do not prove that every historical run complied. The exact
+archived receipts control actual execution history and limitations. R2.6 was
+later recovered from checked current main because its original placeholder was
+never populated; its receipt explicitly makes no retroactive-compliance claim.
 
-Required source SHA:
-  <supplied explicitly in the launch message>
-```
+The exact original lane files at the archive coordinate retain the source
+branch, output branches, path permissions, receipt requirements, fixtures, and
+raw-result layouts. The current synopses and `LANE-INDEX.csv` preserve only the
+question, branch/output coordinates, actual outcome, and current consumer. None
+of that history instructs recreation of deleted research trees at HEAD.
 
-The source SHA is a launch parameter, not a value that must be committed into the prompt files themselves.
+## Successor rule
 
-Where a lane prompt or the shared contract contains:
-
-```text
-{{POST_CURATION_SOURCE_SHA}}
-```
-
-read it as:
-
-```text
-<the exact Required source SHA supplied in the launch message>
-```
-
-No repository edit is required merely to substitute that token.
-
-If the launch message does not provide an exact source SHA, STOP. Do not infer the current branch head.
-
-At lane start, use the connected `@GitHub` capability to verify that `agent/chat-corpus-reconciliation` still resolves to the supplied SHA. Stop on drift.
-
-## Minimal launch-message form
-
-A valid individual launch message only needs to identify:
-
-1. this repository;
-2. the exact immutable source SHA;
-3. the lane prompt path;
-4. that `LAUNCH-CONTRACT.md` and `00-SHARED-RESEARCH-CONTRACT.md` are controlling;
-5. any lane-specific prerequisite PRs that must be read in addition to the prompt.
-
-Everything else—GitHub publication rules, Effect v4/Bun doctrine, allowed paths, output branch, required reading, probes, output files, security constraints, and final receipt—is already defined in the repository prompt suite.
-
-Do not duplicate the full shared contract into chat launch prompts.
-
-## GitHub completion rule
-
-Every lane must use `@GitHub` from the beginning. A lane is not complete unless its exact outputs are committed and pushed to its authorized branch and exposed through a draft PR.
-
-If GitHub writes are unavailable, the lane stops instead of producing a sandbox-only substitute.
-
-## Effect/Bun baseline
-
-All lanes inherit the maintained constraints already present in the source corpus:
-
-- latest available Effect v4 only for production-facing research;
-- Effect v3 only as historical, migration, or regression evidence;
-- current installed-package Effect guidance/source workflow;
-- Bun and Bun workspaces;
-- top-level `apps/` and `packages/`;
-- Effect-native services, Layers, Schema, error, Scope, runtime, concurrency, and testing patterns;
-- no generic `domain/application/ports/adapters/ui` package ontology;
-- no Effect-as-renderer assumption;
-- standards-first semantic HTML/CSS;
-- durable IndexedDB commit before reveal;
-- Cloudflare Workers Static Assets direction unless later evidence changes it.
-
-## Synthesis source
-
-The final synthesis lane may use the same immutable source SHA while reading completed research PR branches directly. It must not assume research PRs were merged into the source branch.
+A new research task needs a fresh question, canonical consumer, exact immutable
+source SHA, output branch, allowed mutation scope, and minimal durable evidence
+set. Start from current `AGENTS.md`, maintained authority, `docs/OPEN.md`, and
+`research/README.md`. Do not substitute this archived contract or relaunch an
+old R2 lane unchanged.

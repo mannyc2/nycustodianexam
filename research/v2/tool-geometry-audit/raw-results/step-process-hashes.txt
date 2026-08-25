@@ -1,2 +1,0 @@
-ba675a980ee7a2f38fe8a2a5de713ff7ca80a85db3cd3837d94157f8d13c90c9  raw-results/process-a/box.step
-b7e71adda886d6bbeccaec6367fef96e78a01eb87682d5d6fd8aa25660f0d258  raw-results/process-b/box.step

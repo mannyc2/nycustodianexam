@@ -1,18 +1,17 @@
 # Architecture constraints and decisions
 
-**Status:** maintained constraints, updated 2026-08-23 after the reconciled R2.90
-architecture synthesis, visual-authoring resolution, canonical route/state
-planning, and the maintainer's React 19 composition decision. This file records
-accepted direction and explicit implementation gates. It does not replace the
-product behavior contract or the exam-fact corpus.
+**Status:** maintained constraints, updated 2026-08-25 after reconciling the
+closed R2.1–R2.10/R2.90 program, the accepted visual releases, canonical
+route/state planning, the React 19 composition decision, and the controlled
+M1–M3 implementation proof. This file records accepted direction and explicit
+implementation gates. It does not replace the product behavior contract or the
+exam-fact corpus.
 
-Supporting material:
-
-- first-pass raw and normalized research: `../research/initial-pass/`;
-- prompt-curation report and source ledger: `../research/prompt-curation/`;
-- completed second-pass synthesis: `../research/v2/architecture-synthesis/`;
-- canonical routes and screen states: `ROUTES.md` and `SCREEN_STATES.md`;
-- preserved second-pass research program/provenance: `../prompts/research-v2/`.
+Supporting evidence is historical and does not override this file. The complete
+pre-normalization research corpus is recoverable at immutable commit
+[`6701e83290c56d9c5f04275a30fc6ada6bd40435`](https://github.com/mannyc2/nycustodianexam/tree/6701e83290c56d9c5f04275a30fc6ada6bd40435/research);
+the archived lane records remain under `../prompts/research-v2/`, and canonical
+routes and screen states remain in `ROUTES.md` and `SCREEN_STATES.md`.
 
 ## Resolved constraints
 
@@ -159,7 +158,7 @@ workspace orchestration, content compilation, and Bun-authored scripts.
 
 ### Top-level monorepo shape
 
-The implementation repository will use:
+The implementation repository uses:
 
 ```text
 apps/
@@ -239,8 +238,9 @@ Effect does not become the renderer.
 
 ### Vite and Cloudflare remain the preferred web-delivery direction
 
-Use Vite as browser build/development tooling. Recheck and lock its exact
-coordinate at scaffold time.
+Use Vite as browser build/development tooling. Measure the actual first-slice
+route closures before setting numeric budgets; static routes have an immediate
+budget of zero Effect closure.
 
 Use Cloudflare Workers Static Assets as the preferred deployment direction. Do not add Worker code merely to serve static files.
 
@@ -255,10 +255,11 @@ Bun workspace
   -> optional narrow Worker only for justified server capabilities
 ```
 
-Exact Vite/Cloudflare/Wrangler versions, caching/headers, service-worker details,
-preview configuration, and any future Worker HTTP surface remain implementation
-locks and measurements. `ROUTES.md` now controls public path and indexability
-semantics; no SPA router is introduced.
+Exact Vite/Cloudflare coordinates, routing, caching, headers, service-worker
+behavior, and preview deployment are implementation locks and measurements.
+`ROUTES.md` controls public path and indexability semantics; no SPA router is
+introduced. An optional Worker remains deferred until a concrete endpoint is
+authorized.
 
 ### Research prose is not runtime content
 
@@ -267,7 +268,8 @@ Keep distinct:
 - `docs/` — human-readable factual research and scope authority;
 - machine-readable publication data — reviewed profiles, claims, tools, questions, scenes, translations, sources, geometry records, and pack manifests;
 - application/build code — compiler, validation, rendering, interaction, persistence, print, and offline behavior;
-- `research/` — raw evidence and proposals.
+- `research/` — concise unique supporting evidence or unresolved proposals,
+  with superseded/raw history recoverable at the documented immutable SHA.
 
 Mutable announcement facts and scored content must not exist only as handwritten page prose.
 
@@ -334,47 +336,67 @@ postcommit object until its durable attempt succeeds. A user who deliberately
 fetches a public postcommit object outside the application is outside this
 boundary; secure exam content is prohibited from the repository altogether.
 
-## Research provenance and future reruns
+## Reconciled second-pass decisions
 
-R2.1–R2.10 and the reconciled R2.90 synthesis are complete. Their reports remain
-evidence; this maintained file controls accepted implementation direction. Any
-future rerun or new lane under `prompts/research-v2/` must:
+The R2.1–R2.10/R2.90 program is closed and reconciled. Its accepted conclusions
+are maintained here; blocked or incomplete execution evidence remains in the
+implementation gates below, and deleted reports remain historical evidence at
+the immutable pre-normalization coordinate above.
 
-1. use the exact immutable source SHA stamped after this curation PR is merged;
-2. target latest Effect v4 explicitly;
-3. establish exact current Effect and Bun coordinates at lane start;
-4. read the installed `node_modules/effect/AGENTS.md` completely before code-level Effect work;
-5. inspect installed source when package guidance is insufficient;
-6. require Bun and Bun-workspace analysis;
-7. start from the accepted three-workspace graph and identify evidence for any
-   proposed boundary change;
-8. ask for Effect-native patterns rather than generic ports/adapters architecture;
-9. use the connected `@GitHub` capability;
-10. create a branch, initial receipt commit/push, and draft PR before extended research;
-11. commit exact reports, source ledgers, fixtures, lockfiles, raw results, and checksums;
-12. push incrementally and return final branch/head/PR receipts;
-13. stop when GitHub writes are unavailable.
+### First workspace and runtime roots
 
-## Completed curated research program
+- The scaffold locks one synchronized Effect `4.0.0-rc.111` cohort and Bun
+  `1.4.0`. Upgrade the Effect cohort atomically if a newer controlling v4
+  coordinate is selected.
+- The implemented first graph is `apps/site`, `apps/content-compiler`, and
+  `packages/content`.
+  Defer `packages/study` until a second consumer or real ownership boundary
+  earns it; do not create `apps/worker` without an authorized endpoint.
+- Keep the finite compiler at one Bun runtime root, create one browser
+  `ManagedRuntime` at the site application root, keep service-worker listeners
+  native and event-owned, and give a future Cloudflare Worker its own narrow
+  workerd root. The full `BunRuntime.runMain` platform integration remains a
+  gate beyond the proof's current Bun-hosted top-level Effect program.
+- Services represent cohesive host I/O, failure, lifecycle, concurrency, or
+  substitution capabilities. Schemas, reducers, scoring, scheduling,
+  registries, canonicalization, and publication gates remain pure functions.
 
-### P0 architecture-critical lanes
+### Content compiler and publication
 
-- latest-v4 core architecture and Effect-native Bun workspace topology;
-- latest-v4 UI state/reactivity/lifecycle/renderer integration;
-- latest-v4 Platform/runtime capability matrix for browser, Bun, service worker, and Cloudflare;
-- latest-v4 IndexedDB/offline-pack architecture;
-- latest-v4 browser bundling under Bun workspaces.
+Use this boundary:
 
-### P1 supporting architecture lanes
+```text
+location-aware JSONC input
+  -> structural decode and one-hop migration
+  -> duplicate-preserving registry
+  -> relational, provenance, review, accessibility, and security gates
+  -> opaque validated corpus
+  -> canonical immutable outputs and recomputed closure
+  -> stage and verify bytes
+  -> promote the release manifest last
+```
 
-- latest-v4 Schema content compiler and relational publication gates;
-- Bun monorepo/build/CI discipline;
-- testing, accessibility, performance, and observability.
+`Schema-valid` is not `publication-valid`. `packages/content` owns portable
+schemas, migrations, diagnostics, registries, pure gates, canonical types, and
+generated decoders. `apps/content-compiler` owns location-aware parsing,
+filesystem/history access, hashing, staging, and publication. Diagnostics are
+stable sorted data; operational publication failures remain typed Effect
+failures. JSON Schema is an authoring aid, not publication authority.
 
-### P2 specialist lanes
+### Browser durability and offline ownership
 
-- hazard-scene production architecture;
-- deterministic geometry evidence/POC audit.
+- Project-owned persistence contracts hide the IndexedDB provider. Test the
+  first-party Effect provider against the complete real-browser contract and
+  retain `idb@8.0.3` as the ready fallback.
+- One strict native transaction writes the attempt event, derived projections,
+  and session checkpoint. Reveal follows successful commit or same-ID
+  reconciliation only.
+- Pack bytes stage and verify outside transactions; activation is a short
+  generation flip. BroadcastChannel and online events are advisory, never
+  durable truth.
+- Native service-worker code owns HTTP shell and immutable response caching.
+  IndexedDB owns logical content-pack state and learner truth. In-memory worker
+  state or finalizers cannot be correctness authority.
 
 A reconciled R2.90 synthesis proposed the accepted initial graph, runtime roots,
 content compiler, storage/offline boundary, delivery/test direction, and first
@@ -407,11 +429,16 @@ Evidence still open:
 
 - evidence for any graph beyond `apps/site`, `apps/content-compiler`, and
   `packages/content`;
+- the full Bun platform runtime root for the finite compiler;
 - exact current v4 Platform/browser provider behavior at the locked cohort;
 - remaining-browser IndexedDB commit/reload plus cross-browser
   failure/quota/disposal proof;
 - service-worker version/eviction/update, remaining-browser offline, and
   explicit-pack proof;
+- a complete location-preserving JSONC adapter and canonical JSON profile with
+  duplicate-key, multibyte, comment, range, number, Unicode, and escaping proof;
+- the generated-release artifact retention policy and full Tier A/B content
+  completeness derived from validated registries and review states;
 - Cloudflare configuration and any separately authorized Worker endpoint;
 - the complete Playwright browser/accessibility/zoom/reflow/keyboard,
   performance, and offline matrix beyond the targeted Chromium
@@ -423,3 +450,19 @@ Evidence still open:
 Resolve these through implementation evidence and, only where evidence exposes a
 new research gap, a provenance-complete follow-up lane. Do not carry superseded
 first-pass or direct-DOM defaults forward silently.
+
+### Delivery, verification, and privacy
+
+- Static/reference routes contain useful semantic HTML and no Effect closure.
+  Interactive study islands load independently through Vite.
+- Cloudflare Workers Static Assets is the initial host. Do not add a Worker just
+  to serve files; a future correction endpoint requires explicit product,
+  privacy, idempotency, rate, abuse, and workerd verification.
+- Use Bun test for pure/Bun-host work, `@effect/vitest` for Effect behavior, and
+  real Chromium, Firefox, and WebKit for browser semantics. Artifact/leak scans,
+  automated accessibility checks, manual assistive-technology review, print
+  review, failure injection, and two clean builds have separate responsibilities.
+- Diagnostics remain local by default. Any telemetry must be first-party,
+  consented, allowlisted, redacted, bounded, and must never contain question or
+  rationale text, source excerpts, free-form corrections, exact searches, or
+  security-sensitive leak values.

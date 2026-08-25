@@ -41,24 +41,21 @@ Current direction:
 
 Do not use Effect v3 as a production fallback. Older v3 research is historical, migration, or regression evidence only.
 
-### Completed second-pass research and future research
+### Architecture and future research
 
-Before conducting architecture research, read:
+The R2.1–R2.10/R2.90 program is closed and reconciled; some requested runtime
+proof remains open as implementation evidence. Before architecture or
+implementation work, read `product/ARCHITECTURE_CONSTRAINTS.md`, `docs/OPEN.md`, and
+`research/README.md`. The files under `prompts/research-v2/` are archived lane
+instructions, not runnable current launch contracts or authority.
 
-- `research/prompt-curation/EFFECT-V4-BUN-RESEARCH-DOCTRINE.md`;
-- `research/prompt-curation/EFFECT-SKILL-ADAPTATION.md`;
-- `prompts/research-v2/LAUNCH-CONTRACT.md`;
-- `prompts/research-v2/00-SHARED-RESEARCH-CONTRACT.md`;
-- `prompts/research-v2/LANE-INDEX.csv`;
-- the applicable lane prompt under `prompts/research-v2/`;
-- `research/initial-pass/` for raw evidence, supersession records, and redo requirements.
+Any new research task must define a fresh scope, exact immutable source SHA,
+canonical consumer, and output branch. Verify those coordinates with connected
+GitHub before extended work and stop on source drift.
 
-Before implementation, also read the reconciled decisions under
-`research/v2/architecture-synthesis/`. R2.1–R2.10 and R2.90 are complete; their
-direct-DOM-first choice is retained as evidence/baseline but is superseded by the
-maintainer's React 19 island decision in `product/ARCHITECTURE_CONSTRAINTS.md`.
-
-Every launch message supplies one exact immutable source SHA. Treat `{{POST_CURATION_SOURCE_SHA}}` in a lane template as that launch-time value; do not infer a moving branch head or edit the repository merely to substitute it. Stop if the launch message omits the SHA or `@GitHub` shows source drift.
+The archived R2 direct-DOM-first choice remains historical evidence and a
+measurement baseline, but the maintained React 19 island decision supersedes it
+as the implementation renderer.
 
 ### Illustration production — `illustration/`
 
@@ -80,9 +77,10 @@ candidates, not work awaiting repair or approval.
 
 ### Supporting evidence and recovery
 
-- `research/initial-pass/` — normalized first-pass research, raw inputs, supersession records, and redo requirements.
-- `research/prompt-curation/` — maintained Effect v4/Bun research doctrine and launch-readiness records.
-- other `research/` directories — investigations/provenance; committing a report does not make it authoritative.
+- `research/README.md` — complete map of unique retained supporting evidence;
+  committing a report does not make it authoritative.
+- immutable commit `6701e83290c56d9c5f04275a30fc6ada6bd40435` — historical
+  pre-normalization research archive.
 - `recovery/CORPUS_RECOVERY.md` — reconciliation ledger.
 - `prompts/` — instructions, never evidence.
 
@@ -107,7 +105,8 @@ Later accepted constraints may supersede an older research recommendation while 
 - Do not silently resolve contradictions.
 - Do not turn an editorial recommendation into an exam fact.
 - Unknown facts stay unknown.
-- Before re-researching, inspect the maintained corpus and `research/initial-pass/REDO-REQUIRED.md`.
+- Before re-researching, inspect the maintained corpus, `docs/OPEN.md`, and
+  `research/README.md`.
 - Do not claim an exact raw artifact was recovered when only a summary exists.
 
 ## Exam-security boundary
@@ -241,24 +240,25 @@ runtime makes browser, service-worker, or Cloudflare workerd code server-runtime
 code. Keep Vite, Wrangler, Playwright, and specialist non-TypeScript tools when
 they have a justified role.
 
-The accepted initial graph is `apps/site`, `apps/content-compiler`, and
-`packages/content`. Do not create one package per service, a universal
-`packages/core`, a speculative shared React package, or an empty Worker app.
-Earn later boundaries through a real runtime, build, ownership, reuse, or
-publication need.
+The implemented initial graph is `apps/site`, `apps/content-compiler`, and
+`packages/content`; later packages must earn a real runtime, consumer,
+ownership, build, reuse, or publication boundary. Do not create one package per
+service, a universal `packages/core`, speculative renderer packages, or an
+empty Worker app.
 
 ## GitHub publication rule for research
 
 Future research work must use the connected `@GitHub` capability directly.
 
-A research task is incomplete unless it:
+A new research task is incomplete unless it:
 
 1. verifies an immutable GitHub base;
 2. verifies the output branch does not already exist;
 3. creates the branch before extended research;
-4. commits and pushes an initial receipt;
+4. commits and pushes a truthful initial result;
 5. opens a draft PR early;
-6. commits exact raw reports, source ledgers, matrices, fixtures, manifests, lockfiles, and raw measurements under its authorized path;
+6. commits a concise result, source ledger, reproducibility inputs, and only
+   uniquely necessary evidence under its authorized path;
 7. pushes incrementally without force;
 8. returns branch, final head SHA, commits, and PR URL;
 9. stops and reports the blocker if GitHub write access is unavailable.
@@ -267,25 +267,30 @@ Do not leave the only durable copy in a chat sandbox.
 
 ## Research workflow
 
-Before a research pass:
+Before a new research pass:
 
 1. Read the relevant authority files.
-2. Read `prompts/research-v2/LAUNCH-CONTRACT.md`, the prompt doctrine, shared contract, and applicable lane prompt.
-3. Read the initial-pass normalization and redo ledger.
-4. Establish the actual current Effect v4, Bun, Vite, and Cloudflare versions/statuses where relevant.
-5. Read installed `node_modules/effect/AGENTS.md` completely before code-level Effect work.
-6. Identify what is reusable versus superseded.
-7. Search primary/official sources first for version-sensitive technical claims.
-8. Record genuine gaps rather than filling them with assumptions.
-9. Preserve raw output separately from synthesis.
-10. Publish incrementally to GitHub.
+2. Read `research/README.md` and `docs/OPEN.md`; archived R2 prompts are
+   historical inputs only.
+3. Establish the exact immutable repository and upstream coordinates relevant
+   to the new question.
+4. Read installed `node_modules/effect/AGENTS.md` completely before code-level
+   Effect work.
+5. Identify what is reusable versus superseded.
+6. Search primary/official sources first for version-sensitive technical claims.
+7. Record genuine gaps rather than filling them with assumptions.
+8. Keep transient raw output out of Git unless an active reproducibility or
+   evidence contract needs the exact bytes.
+9. Publish concise results incrementally to GitHub.
 
 When reconciling research:
 
 1. Diff against maintained authority.
 2. Merge one evidence input at a time.
-3. Preserve exact source files, coordinates, and checksums.
-4. Mark duplicate and superseded reports explicitly.
+3. Preserve exact coordinates and checksums; retain source files only when an
+   active consumer or reproducibility contract needs them at HEAD.
+4. Delete duplicate, superseded, generated, raw-noise, and archive-only material
+   after accepted conclusions are promoted.
 5. Update open decisions without silently promoting unreviewed recommendations.
 6. Keep research, implementation, runtime proof, and certification separate.
 
@@ -293,7 +298,10 @@ When reconciling research:
 
 The first implementation scaffold now lives at the repository root with
 `apps/site`, `apps/content-compiler`, and `packages/content`. It is an in-progress
-vertical-slice proof, not evidence that the release gates have passed. The
-second-pass Effect v4/Bun program and reconciled R2.90 synthesis are complete.
-Do not implement from superseded v3 or direct-DOM-first recommendations where
-they conflict with maintained constraints.
+M1–M3 proof, not evidence that the release gates have passed. The
+R2.1–R2.10/R2.90 program is closed and reconciled; accepted conclusions live in
+maintained product/illustration documents, blocked or incomplete gates live in
+`docs/OPEN.md`, and the original corpus is archived at immutable commit
+`6701e83290c56d9c5f04275a30fc6ada6bd40435`. Do not relaunch archived prompts
+or implement from superseded v3 or direct-DOM-first recommendations where they
+conflict with maintained constraints.

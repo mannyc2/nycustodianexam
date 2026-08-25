@@ -1,7 +1,0 @@
-option,status,workspace_count,graph,mechanics_assessment
-A,recommended,4,"apps/site; apps/content-compiler; packages/content; packages/study","Smallest current graph with real browser/Bun executable boundaries and one-way portable package dependencies"
-B,acceptable-minimal,3,"apps/site; apps/content-compiler; packages/content","Prefer if study has no independent consumer/ownership value and package indirection is not justified"
-C,defer,5,"Option A plus apps/worker","Add only after a concrete deployed backend responsibility exists"
-reject,rejected,variable,"packages/core or packages/shared dumping ground","Obscures dependency direction and invites runtime/type leakage"
-reject,rejected,variable,"package per service","Workspace count exceeds independent build/runtime/ownership needs"
-reject,rejected,variable,"separate service-worker workspace by convention","Keep in site until independent build/release/dependency semantics appear"

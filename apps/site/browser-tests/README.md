@@ -12,15 +12,15 @@ deterministic unit and worker-harness checks.
 
 ## Current execution status
 
-Browser CI is configured, but the branch has not been pushed and the complete
-matrix has not run remotely. On this revision, browser TypeScript and Playwright
-discovery pass locally for 90 cases across seven test files. The four targeted
-Chromium app-database contracts pass with the installed system Chrome:
+Browser CI is configured as the complete cross-browser gate. On this revision,
+browser TypeScript and Playwright discovery pass locally for 90 cases across
+seven test files. The four targeted Chromium app-database contracts pass with
+the installed system Chrome:
 pre-quarantine v2 upgrade plus resumable import, missing-legacy-database safety,
-bounded blocked-upgrade reload recovery, and persisted page-lifecycle reconnect. The
-installed Chrome is launched with BFCache disabled by command line, and the
+bounded blocked-upgrade reload recovery, and persisted page-lifecycle reconnect.
+The installed Chrome is launched with BFCache disabled by command line, and the
 Playwright-managed browser binaries are not installed, so true BFCache and the
-complete browser matrix remain open.
+complete browser matrix remain separate CI/release gates.
 
 ## Configured automated coverage
 
