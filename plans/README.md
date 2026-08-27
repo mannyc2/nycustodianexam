@@ -23,7 +23,7 @@ checkpoint inside production, not a separate project.
 | 002 | Generate and approve the launch hazard-scene bank | P1 | L | Plan 001 pilot checkpoint | DONE — 18 accepted scenes passed exact-pixel independent review, release verification, and checksum closure |
 | 003 | Normalize and reduce the research corpus through connected @GitHub | P1 | L | Plans 001 and 002 merged; exact post-visual `main` SHA | DONE — PR #27 merged; maintained authorities and the retained research map now own the reconciled result |
 | 004 | Establish the consumer-language boundary | P1 | L | —; coordinate vocabulary and recruitment with Plan 005 | TODO |
-| 005 | Rebuild navigation around learner tasks | P1 | L | — to start; Plan 004 before final first-click round and promotion | TODO |
+| 005 | Rebuild navigation around learner tasks | P1 | L | — to start; Plan 004 before final first-click round and promotion | BLOCKED — charter and complete fixed route-task inventory landed on `codex/uiux-task-navigation` (draft PR #38); Steps 3-13 need participant authorization, and the final round additionally needs Plan 004's accepted vocabulary, which is itself blocked |
 | 006 | Select a consumer visual system and route archetypes | P1 | L | Plans 004 and 005 | TODO |
 | 007 | Specify shared UI foundations and responsive route-family contracts | P1 | L | Plans 004, 005, and 006 | TODO |
 | 008 | Run integrated consumer UX and accessibility validation | P1 | L | Plans 004, 005, 006, and 007 | TODO |
