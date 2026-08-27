@@ -467,11 +467,21 @@ function recomputeRoundSnapshot(prototypeRoot, round) {
       `${label} declares an invalid prototype version ${version}`
     )
 
+    // The version marker lives inside the file, so bumping it always changes
+    // the normalized bytes. Cross-round version rules therefore compare a
+    // second hash taken over the content with that one line removed; only that
+    // comparison can distinguish "the copy changed" from "only the label did".
+    const contentOnly = text
+      .split("\n")
+      .filter((line) => !/^<!-- Prototype version: CL-[0-9]+ -->$/.test(line))
+      .join("\n")
+
     rows.set(proto.id, {
       id: proto.id,
       filename: proto.filename,
       version,
-      normalizedSha256: sha256Hex(normalized)
+      normalizedSha256: sha256Hex(normalized),
+      contentSha256: sha256Hex(Buffer.from(contentOnly, "utf8"))
     })
   }
   return rows
@@ -635,9 +645,10 @@ function assertManifestMatchesSnapshot(round, manifestRows, recomputed) {
 
 /**
  * Cross-round invariant: a prototype version is scoped to its prototype ID.
- * Identical normalized bytes keep the same CL-N; changed bytes need a strictly
- * larger N. Reusing a version for changed bytes, or bumping a version without
- * changed bytes, fails.
+ * Unchanged copy keeps the same CL-N; changed copy needs a strictly larger N.
+ * Reusing a version for changed copy, or bumping a version without changed
+ * copy, fails. Comparison uses the content hash (version marker excluded)
+ * because the marker itself is part of the file.
  */
 function assertCrossRoundVersions(r1Rows, r2Rows) {
   for (const proto of PROTOTYPES) {
@@ -646,15 +657,15 @@ function assertCrossRoundVersions(r1Rows, r2Rows) {
     require_(first !== undefined && second !== undefined, "missing round rows")
     const firstN = Number(PROTOTYPE_VERSION.exec(first.version)[1])
     const secondN = Number(PROTOTYPE_VERSION.exec(second.version)[1])
-    if (first.normalizedSha256 === second.normalizedSha256) {
+    if (first.contentSha256 === second.contentSha256) {
       require_(
         firstN === secondN,
-        `${proto.id} is byte-identical across rounds but changed version ${first.version} -> ${second.version}`
+        `${proto.id} has identical copy across rounds but changed version ${first.version} -> ${second.version}; a version bump must accompany a copy change`
       )
     } else {
       require_(
         secondN > firstN,
-        `${proto.id} changed bytes but its version did not increase (${first.version} -> ${second.version})`
+        `${proto.id} changed copy but its version did not increase (${first.version} -> ${second.version})`
       )
     }
   }

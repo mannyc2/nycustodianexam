@@ -90,10 +90,10 @@ owns code and content migration.
 | Phase | Method | State |
 |---|---|---|
 | Desk inventory | Classify every public copy family across all 27 implemented route IDs, every copy-bearing React family, every dynamic message sink, print output, PWA metadata, and fallbacks | Complete |
-| Benchmark study | 8–12 dated current products across consumer exam prep, trusted public-service tools, and no-account/offline consumer experiences | Pending |
-| Prototypes | Eight text-first local prototypes, piloted once, frozen per round under a locked normalization and manifest algorithm | Pending |
-| Round 1 | Moderated, 5–8 qualifying participants, nine locked tasks each | Not authorized |
-| Round 2 | Moderated, 5–8 new qualifying participants, every critical round-one issue retested | Not authorized |
+| Benchmark study | 8–12 dated current products across consumer exam prep, trusted public-service tools, and no-account/offline consumer experiences | **Partial** — 10 records across all three groups; three interaction criteria not evaluable by static retrieval |
+| Prototypes | Eight text-first local prototypes, piloted once, frozen per round under a locked normalization and manifest algorithm | **Authored, not piloted, not frozen** — piloting requires a person |
+| Round 1 | Moderated, 5–8 qualifying participants, nine locked tasks each | **Not authorized** |
+| Round 2 | Moderated, 5–8 new qualifying participants, every critical round-one issue retested | **Not authorized** |
 | Decision | Explicit owner selection bound to the tested R2 manifest | Pending |
 
 ## Privacy and security boundary
@@ -224,8 +224,90 @@ that judgment is not the executor's to make.
 
 ### Benchmark study
 
-Pending. No benchmark has been observed. Nothing may be written here from
-memory; benchmark claims require a direct URL and an observation date.
+**Partial.** Ten products observed on **2026-08-27**, covering all three
+required groups. No screenshots and no wholesale prose are retained.
+
+| Group | Product | URL |
+|---|---|---|
+| A. Exam prep / learning | Anki | <https://apps.ankiweb.net/> |
+| A | Mometrix Academy | <https://www.mometrix.com/academy/> |
+| A | Khan Academy (failure state only) | <https://www.khanacademy.org/> |
+| B. Public service / reference | GOV.UK | <https://www.gov.uk/> |
+| B | USA.gov | <https://www.usa.gov/> |
+| B | NYS Department of Civil Service | <https://www.cs.ny.gov/jobseeker/> |
+| B | U.S. Web Design System principles | <https://designsystem.digital.gov/design-principles/> |
+| C. No-account / offline / local data | Obsidian | <https://obsidian.md/> |
+| C | Joplin | <https://joplinapp.org/> |
+| C | W3C WAI, involving users | <https://www.w3.org/WAI/test-evaluate/involving-users/> |
+
+Four further products were attempted and are recorded as not retrievable rather
+than silently dropped: Duolingo and Excalidraw rendered no content without
+JavaScript; NYC DCAS "Take an exam" and Union Test Prep returned HTTP 403.
+
+**Why this is partial.** Observation was static document retrieval, not a driven
+interactive session. Three protocol criteria — question commitment and feedback
+behaviour, error and destructive-action language in situ, and advanced
+diagnostic disclosure behind an account — are therefore marked
+`not-evaluated (method)` for interactive products. They were **not** filled in
+from memory. A successor with a driven browser should complete them.
+
+**Findings that survive the limitation.**
+
+- *Disclaimer economy.* Mometrix, a direct commercial analogue, discharges the
+  entire unofficial-status obligation in one sentence, once: "provides
+  unofficial test preparation products … All trademarks are property of their
+  respective trademark owners." The audited product carries `DEFENSIVE_STACKING`
+  or `DUPLICATED_GUARDRAIL` on 8 families.
+- *Verifiability as a task.* USA.gov teaches the reader to check officialness
+  themselves — "A .gov website belongs to an official government organization" —
+  rather than asserting it repeatedly. GOV.UK does the same with "Check your
+  National Insurance record." An unofficial site can invert this: state the
+  negative once, show the reader how to check, stop.
+- *Local-first without storage nouns.* Obsidian, a more technical product with a
+  more technical audience, says "stores notes privately on your device," "plain
+  text," "even offline," "never locked in" — and no storage-engine noun at all.
+  The audited settings island surfaces append-only events, schema versions,
+  SHA-256 checksums, projections, and quarantine.
+- *Two consumer words for a scheduler.* Anki exposes its scheduling model as
+  *rate* and *review*, nothing more. Directly relevant to `FEATURE_SPEC.md:353`,
+  which reserves "due," "reviewed," and "practice history."
+- *Error structure.* Khan Academy's no-JavaScript state names the effect, offers
+  ordinary-language causes, and gives three concrete next actions, exposing no
+  exception text: "A required part of this site couldn't load … check your
+  connection, disable any ad blockers, or try using a different browser."
+- *The candidate's real vocabulary.* NYS Civil Service uses *examination*,
+  *announcement*, *eligibility*, *qualifications*, *official score*, *eligible
+  list*. This is the language a candidate arrives carrying and it must not be
+  "plain-languaged" away. The same page also shows the counter-pattern —
+  "ELMS," "Advisory Memo #89-02" — confirming that being official does not make
+  an acronym legible.
+
+### Candidate directions
+
+Three substantially different directions were defined and self-assessed against
+the AI-slop rubric, including the preferred one. None weakens a hard constraint;
+a direction that did would have been rejected rather than tested.
+
+- **CL-D1 "Plain task"** — task-first, minimum guardrail density, evidence one
+  disclosure away. Lowest `ABSTRACT`/`DEFENSIVE_STACKING` risk; carries the
+  opposite risk that a candidate who cannot find evidence doubts the site.
+- **CL-D2 "Open book"** — leads with independence and checkability, promotes
+  evidence to a peer of the explanation as publisher/title/date rather than IDs
+  and tiers. Strongest on `TRUST_REVERSAL`; residual `AI_CADENCE` risk.
+- **CL-D3 "Guided coach"** — warm and progress-led. Included so a genuine
+  alternative is tested, but flagged as sitting closest to two prohibitions:
+  `FEATURE_SPEC.md:135-142` forbids guilt and urgency and
+  `FEATURE_SPEC.md:353` prohibits premature "mastered" claims. Any CL-D3
+  prototype producing a streak, nudge, or implied readiness claim is rejected at
+  authoring time, not at testing time.
+
+Rejected before testing: "trust us" minimalism (deletes required provenance),
+officialese (invites the worst possible research outcome), and a mechanical
+banned-word list (forbidden by the plan's own maintenance notes; 24 inventory
+families are `KEEP`).
+
+**No direction is preferred on this evidence.** Ranking them is what the
+participant rounds exist to do.
 
 ### Round one
 
@@ -242,7 +324,36 @@ Pending.
 
 ### Prototype comparison outcomes
 
-Pending.
+None. No prototype has been shown to anyone.
+
+The eight required prototypes are **authored but neither piloted nor frozen**:
+`home`, `profile`, `practice-start`, `question-feedback`, `hazard-feedback`,
+`review`, `offline-data`, and `trust-recovery`. Each carries its locked ID and
+`CL-1` version marker, its source anchor, tested hypothesis, preserved
+constraint, and candidate layers, and each presents the current wording beside
+CL-D1 and CL-D2 candidates plus realistic loading, empty, error, offline, and
+destructive states. The `question-feedback` prototype includes three
+comparison-question rewrites, marked research-only; the curated module, the
+generated pack, and the review ledger are untouched.
+
+They are deliberately **not frozen as R1**. Plan 004 Step 6 requires the
+post-pilot bytes to be frozen, freezing is the gate to participant outreach, and
+the pilot requires a person. Freezing now would consume the R1 coordinate that
+the verifier will not let anyone reclaim. A successor should pilot the guide,
+revise, and then freeze.
+
+**The freeze machinery is proven.** The retained validator was exercised
+end-to-end against disposable snapshots, which were then deleted. It accepted
+valid freezes and refused: re-freezing an existing round, a file changed after
+freezing, a writable snapshot directory, a ninth file, a missing file, a
+symlinked file, changed copy without a version increase, and a version increase
+without changed copy. It also refused `operations`, `round-one`, `decision`, and
+`final` with no operator approval present, confirming that later phases cannot
+bypass the authorization gate.
+
+Testing the validator against synthetic fixtures is not participant evidence and
+was never recorded as such. The tracked aggregate contains no rounds, no
+issues, and no decision.
 
 ### Unresolved or contradictory evidence
 
@@ -286,5 +397,23 @@ Pending.
 | `docs/LANDSCAPE.md` | Maintained repository authority | Execution base | Positioning and prohibited claims |
 | `content/authoring/packs/README.md` | Maintained repository authority | Execution base | Authored-content review boundary |
 
-External benchmark sources will be appended here with direct URLs and
-observation dates when the benchmark study runs. None have been observed.
+External benchmark sources, all observed **2026-08-27**:
+
+| Source | Kind | Used for |
+|---|---|---|
+| <https://apps.ankiweb.net/> | Benchmark, group A | Review vocabulary economy |
+| <https://www.mometrix.com/academy/> | Benchmark, group A | Unofficial-status disclaimer economy |
+| <https://www.khanacademy.org/> | Benchmark, group A | Failure-state error structure |
+| <https://www.gov.uk/> | Benchmark, group B | Plain task labelling; provenance marks over prose |
+| <https://www.usa.gov/> | Benchmark, group B | Teaching the reader to verify officialness |
+| <https://www.cs.ny.gov/jobseeker/> | Benchmark, group B | The candidate's real exam vocabulary; acronym counter-pattern |
+| <https://designsystem.digital.gov/design-principles/> | Method guidance | "Trust has to be earned every time"; skim-and-scan |
+| <https://obsidian.md/> | Benchmark, group C | Local-first stated as user-visible consequence |
+| <https://joplinapp.org/> | Benchmark, group C | Local vs optional-cloud as a choice, not a lifecycle |
+| <https://www.w3.org/WAI/test-evaluate/involving-users/> | Method guidance | Small-sample reporting limits |
+| <https://www.gov.uk/service-manual/user-research/plan-user-research-for-your-service> | Method guidance | Round structure; 4–8 participants per qualitative round |
+
+Attempted and not retrievable, recorded so the set is not silently selective:
+<https://www.duolingo.com/> and <https://excalidraw.com/> (client-rendered, no
+content), <https://www.nyc.gov/site/dcas/employment/take-an-exam.page> and
+<https://uniontestprep.com/> (HTTP 403).

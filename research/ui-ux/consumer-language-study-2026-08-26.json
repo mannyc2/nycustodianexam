@@ -44,6 +44,27 @@
     "role": "Repository owner and product decision owner for mannyc2/nycustodianexam",
     "approvalChannel": "https://github.com/mannyc2/nycustodianexam/pull/37"
   },
+  "benchmarkStudy": {
+    "state": "partial",
+    "observedOn": "2026-08-27",
+    "records": 10,
+    "groupsCovered": 3,
+    "notRetrievable": 4,
+    "criteriaNotEvaluated": [
+      "question commitment and feedback behaviour",
+      "error and destructive-action language in situ",
+      "advanced diagnostic disclosure behind an account"
+    ],
+    "note": "Static document retrieval only. The three criteria above require a driven interactive session and were not filled in from memory."
+  },
+  "prototypeSet": {
+    "state": "authored-not-piloted-not-frozen",
+    "count": 8,
+    "version": "CL-1",
+    "reason": "Plan 004 Step 6 freezes post-pilot bytes, and freezing is the gate to participant outreach. The pilot requires a person and no recruitment or consent authority exists.",
+    "machineryProven": true,
+    "machineryNote": "The retained validator was exercised end-to-end against disposable snapshots that were then deleted. Testing the validator is not participant evidence and is not recorded as such."
+  },
   "operationsApproval": [],
   "rounds": [],
   "issueSummaries": [],
