@@ -69,7 +69,7 @@ Canonical consumers, updated only after the decision gate:
 | Identity | `mannyc2` |
 | GitHub handle | `mannyc2` |
 | Role | Repository owner and product decision owner for `mannyc2/nycustodianexam` |
-| Approval channel | This branch's open draft PR (bound in `research-summary.json`) |
+| Approval channel | <https://github.com/mannyc2/nycustodianexam/pull/38> (bound in `research-summary.json`) |
 
 **Approval artifact convention.** Every operation, sample-plan, deviation,
 exposure, candidate-decision, and promotion approval must be a structured,
