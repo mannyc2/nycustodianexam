@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "plannedAtSha": "e6f911901f7f18f6716204309fee8b103419a5e0",
+  "researchBaseSha": "115b91a3cce5a6ec4cdbe7981847f8d494e326eb",
+  "scopeBaseSha": "115b91a3cce5a6ec4cdbe7981847f8d494e326eb",
+  "status": "inventory complete; all participant phases unauthorized",
+  "retainedRecordPolicy": "Aggregate counts, predeclared thresholds, cryptographic coordinates, and dispositions only. Participant rows, contact data, raw notes, card-sort exports, and first-click exports are never stored here.",
+  "acceptedLanguageDependency": {
+    "plan004DoneCommitSha": null,
+    "contentDesignSha256": null,
+    "studySha256": null,
+    "reconciledOn": null,
+    "dependencyMergeCommitSha": null
+  },
+  "operationsApproval": [],
+  "artifactExposureApprovals": [],
+  "decisionOwner": {
+    "identity": "mannyc2",
+    "githubHandle": "mannyc2",
+    "role": "Repository owner and product decision owner for mannyc2/nycustodianexam",
+    "approvalChannel": null
+  },
+  "participantCounts": {
+    "openSort": 0,
+    "thresholdPilot": 0,
+    "treeTest": 0,
+    "firstClickRound1": 0,
+    "firstClickRound2": 0,
+    "accessStrategyParticipants": 0
+  },
+  "samplePlan": {
+    "status": "pending",
+    "approvedByIdentity": null,
+    "approvedByRole": null,
+    "approvedOn": null,
+    "approvalArtifact": null,
+    "approvalBodySha256": null,
+    "recommendedSha256": null,
+    "effectiveSha256": null,
+    "rationale": null,
+    "recommended": {
+      "openSort": { "min": 6, "max": 8 },
+      "thresholdPilot": { "min": 2, "max": 3 },
+      "treeTest": { "min": 15, "max": 20 },
+      "firstClickRound1": { "min": 5, "max": 8 },
+      "firstClickRound2": { "min": 5, "max": 8 },
+      "accessStrategyParticipants": { "min": 4 }
+    },
+    "effective": null,
+    "deviation": null
+  },
+  "decisionThresholds": {
+    "status": "pending",
+    "declaredBeforeFormalTesting": false,
+    "declaredOn": null,
+    "pilotEvidence": null,
+    "rationale": null,
+    "metrics": {
+      "treeDirectSuccessTopTasks": null,
+      "treeDirectSuccessSupportingTasks": null,
+      "treeDirectSuccessUtilityTasks": null,
+      "treeDirectSuccessTrustRecoveryTasks": null,
+      "firstClickSuccessTopTasks": null,
+      "firstClickSuccessSupportingTasks": null,
+      "firstClickSuccessUtilityTasks": null,
+      "firstClickSuccessTrustRecoveryTasks": null
+    },
+    "criticalFailureGate": {
+      "maxUnresolvedCriticalFailures": 0
+    }
+  },
+  "taskPriorities": {
+    "profile-fit": "top",
+    "quick-practice": "top",
+    "review-misses": "top",
+    "tool-lookup": "top",
+    "tool-comparison": "supporting",
+    "hazard-practice": "top",
+    "simulation": "supporting",
+    "print": "supporting",
+    "offline-download": "supporting",
+    "settings-data-control": "utility",
+    "source-support": "trust-recovery",
+    "correction-report": "utility",
+    "unavailable-recovery": "trust-recovery"
+  },
+  "candidateArtifactLocks": {
+    "status": "pending",
+    "lockedOn": null,
+    "candidate-a": null,
+    "candidate-b": null
+  },
+  "roundTwoArtifactLock": null,
+  "candidateProgression": null,
+  "aggregateResults": [],
+  "criticalFailures": [],
+  "decision": {
+    "status": "pending",
+    "note": "No candidate has been built, exposed, tested, or selected. The inventory mapping is an unvalidated desk hypothesis."
+  },
+  "canonicalPromotions": []
+}

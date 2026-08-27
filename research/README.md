@@ -32,9 +32,11 @@ and conclusions already maintained elsewhere do not belong here.
 | [`illustration/TOOL_GEOMETRY_PIPELINE_2026-08-20.md`](illustration/TOOL_GEOMETRY_PIPELINE_2026-08-20.md) | Accepted historical synthesis | Preserves the recovered bundle/inventory identity and the useful review conclusions behind the retired deterministic route. Production is controlled by [`illustration/VISUAL_AUTHORING_POLICY.md`](../illustration/VISUAL_AUTHORING_POLICY.md) and maintained visual inventory/release records. |
 | [`v2/hazard-scene-production/README.md`](v2/hazard-scene-production/README.md) | Accepted historical synthesis | Preserves target/decoy closure, region, accessibility/nonvisual, version, and QA boundaries. Production is controlled by the visual policy and the accepted 18-scene release records. |
 | [`v2/tool-geometry-audit/REPORT.md`](v2/tool-geometry-audit/REPORT.md) | Accepted historical evidence; byte-identical | Preserves exact POC dispositions, artifact-identity conflict, rights declaration, and stable line evidence consumed by the maintained tool pilot brief. The four POCs are retired production-art candidates. |
+| [`ui-ux/navigation-task-hierarchy/README.md`](ui-ux/navigation-task-hierarchy/README.md) | Active investigation | De-identified learner-task navigation research for Plan 005. The fixed route inventory is not reopened; accepted navigation conclusions will be promoted once to [`product/ROUTES.md`](../product/ROUTES.md), [`SCREEN_STATES.md`](../product/SCREEN_STATES.md), [`COMPONENT_ARCHITECTURE.md`](../product/COMPONENT_ARCHITECTURE.md), and [`DESIGN_SYSTEM.md`](../product/DESIGN_SYSTEM.md), not here. Its inventory, aggregate record, and retained verifier are [`route-task-inventory.json`](ui-ux/navigation-task-hierarchy/route-task-inventory.json), [`research-summary.json`](ui-ux/navigation-task-hierarchy/research-summary.json), and [`verify-research.mjs`](ui-ux/navigation-task-hierarchy/verify-research.mjs). |
 
-There is no unresolved research program in this reduced tree. Current exam
-unknowns and implementation/release gates are recorded in [`docs/OPEN.md`](../docs/OPEN.md).
+One unresolved research program is open in this tree: the Plan 005 learner-task
+navigation study above. Current exam unknowns and implementation/release gates
+are recorded in [`docs/OPEN.md`](../docs/OPEN.md).
 
 ## Deleted-family map
 
