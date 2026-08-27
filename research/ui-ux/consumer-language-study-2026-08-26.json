@@ -15,7 +15,7 @@
     "note": "Desk-audit severity ranks product reasoning only. It is not participant evidence and does not pre-empt the critical-issue rubric."
   },
   "plannedAtSha": "e6f911901f7f18f6716204309fee8b103419a5e0",
-  "executionBaseSha": "115b91a3cce5a6ec4cdbe7981847f8d494e326eb",
+  "executionBaseSha": "c8644c80c980a36699b526ed11d50758ee67e298",
   "retainedRecordPolicy": "Counts, dispositions, and cryptographic coordinates only. Participant rows, contact data, raw notes, quotations, and prototype markup are never stored here.",
   "prototypeIds": [
     "home",
@@ -72,5 +72,7 @@
   "decision": {
     "status": "pending",
     "note": "No direction has been researched, tested, or selected. The desk audit does not authorize a direction."
-  }
+  },
+  "originalExecutionBaseSha": "115b91a3cce5a6ec4cdbe7981847f8d494e326eb",
+  "executionBaseNote": "PR #36 merged 2026-08-27; the branch was merged forward onto the merged main head, closing the original base deviation. No force-push. Findings were collected at the original base."
 }

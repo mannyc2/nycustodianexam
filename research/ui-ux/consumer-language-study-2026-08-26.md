@@ -10,19 +10,27 @@ the evidence that fills them exists.
 | Coordinate | Value |
 |---|---|
 | Planning commit | `e6f911901f7f18f6716204309fee8b103419a5e0` |
-| Execution base | `115b91a3cce5a6ec4cdbe7981847f8d494e326eb` |
+| Original execution base | `115b91a3cce5a6ec4cdbe7981847f8d494e326eb` |
+| Reconciled execution base | `c8644c80c980a36699b526ed11d50758ee67e298` |
 | Output branch | `codex/uiux-consumer-language` |
 | Plan | [`plans/004-establish-consumer-language-boundary.md`](../../plans/004-establish-consumer-language-boundary.md) |
 
-The execution base is the commit that published the reviewed Plan 004 file and
-its `plans/README.md` row. Plan 004 requires an execution base that contains
-both; the planning coordinate `e6f9119` does not, because the plan program was
-published on `codex/uiux-research-program-plans` (draft PR #36) and has not been
-merged to `main`. The base is an immutable commit pushed to `origin` and a
-descendant of the planning coordinate. This deviation from the plan's literal
-`git rev-parse origin/main` step is recorded here rather than silently applied;
-if PR #36 merges, a successor executor should re-derive the base from the merged
-`main` head and record the new SHA.
+Plan 004 requires an execution base containing the reviewed Plan 004 file and
+its `plans/README.md` row. When this study started, `origin/main` (`e6f9119`)
+contained neither, because the plan program was still on
+`codex/uiux-research-program-plans` (PR #36, unmerged). The original base was
+therefore that plan-publication commit — immutable, pushed to `origin`, and a
+descendant of the planning coordinate — and the deviation from the plan's
+literal `git rev-parse origin/main` step was recorded rather than silently
+applied.
+
+PR #36 merged on 2026-08-27. `origin/main` now carries Plans 004-008 and their
+index rows, so the deviation is closed: this branch was merged forward onto the
+merged head `c8644c80c980a36699b526ed11d50758ee67e298`, which is the reconciled
+execution base and satisfies the plan's original requirement directly. The
+`plans/README.md` reconciliation preserved every plan's status row, and no
+force-push was used. All findings below were collected at the original base; the
+merge brought in plan and index text only and changed no audited path.
 
 ## Canonical consumer
 
