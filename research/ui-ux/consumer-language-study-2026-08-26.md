@@ -1,9 +1,9 @@
 # Consumer-language study (Plan 004)
 
-**Status**: `inventory pending`. No participant research has been conducted, no
-benchmark evidence has been gathered, and no direction has been selected. This
-document is a charter. Every result section below is explicitly empty until the
-evidence that fills it exists.
+**Status**: `decision pending`. The desk inventory is complete. No benchmark
+evidence has been gathered, no participant research has been conducted, and no
+direction has been selected. Result sections below are explicitly empty until
+the evidence that fills them exists.
 
 ## Source coordinates
 
@@ -89,7 +89,7 @@ owns code and content migration.
 
 | Phase | Method | State |
 |---|---|---|
-| Desk inventory | Classify every public copy family across all 27 implemented route IDs, every copy-bearing React family, every dynamic message sink, print output, PWA metadata, and fallbacks | Pending |
+| Desk inventory | Classify every public copy family across all 27 implemented route IDs, every copy-bearing React family, every dynamic message sink, print output, PWA metadata, and fallbacks | Complete |
 | Benchmark study | 8–12 dated current products across consumer exam prep, trusted public-service tools, and no-account/offline consumer experiences | Pending |
 | Prototypes | Eight text-first local prototypes, piloted once, frozen per round under a locked normalization and manifest algorithm | Pending |
 | Round 1 | Moderated, 5–8 qualifying participants, nine locked tasks each | Not authorized |
@@ -135,7 +135,92 @@ participant material into the repository.
 
 ### Desk inventory
 
-Pending.
+Complete. The raw matrices stay outside Git per `research/README.md`; this is the
+distilled result.
+
+**Baseline.** The execution base regenerates to **526 canonical documents** and
+**27 implemented route IDs**, matching the plan's expected planning-baseline
+count. `bun run verify` exits 0 at this base.
+
+**Coverage.** 120 classified copy families: every one of the 27 implemented
+route IDs, the 9 planned route IDs that have no generated copy yet, all 12
+copy-bearing React island families, print output, document/PWA metadata, the
+maintained public offline fallback, the no-JavaScript fallback family, and the
+authored comparison-question family.
+
+| Disposition | Families |
+|---|---:|
+| `REWRITE` | 79 |
+| `KEEP` | 24 |
+| `MOVE_TO_DETAILS` | 9 |
+| `INTERNAL_ONLY` | 5 |
+| `REQUIRES_CONTENT_REREVIEW` | 2 |
+| `RELOCATE_TO_SUPPORT` | 1 |
+
+| Severity | Families |
+|---|---:|
+| critical | 30 |
+| high | 39 |
+| medium | 28 |
+| low | 23 |
+
+Severity here ranks desk-audit product reasoning. It is **not** participant
+evidence and does not pre-empt the critical-issue rubric, which can only be
+applied to observed participant behavior.
+
+**Dynamic message sinks.** 847 candidate anchors were traced from the union of
+the plan's broad and narrow patterns; every one received a disposition,
+including 451 classified `not-public` with a rationale. 11 anchors are confirmed
+public render sites, and 205 more are indirect producers that feed them.
+
+**Single highest-value finding.** `apps/site/src/local-failure-detail.ts:1`
+returns `cause.detail`, then `cause.message`, and only then the safe fallback.
+Eleven public render sites across seven islands render that value. Every one of
+them is inside a `role="alert"` or `aria-live` region, and in
+`offline-packs`, `settings`, and `correction-submit` the surrounding heading
+also receives focus. An arbitrary internal exception string therefore reaches
+both the visible page and assistive technology at the moment a learner most
+needs to know what happened to their data. One typed-condition mapper closes all
+eleven. Implementing it belongs to the successor production plan.
+
+**Representative patterns, by rubric tag.**
+
+- `INTERNAL_MODEL` — the study hub's primary heading is "Choose a set the bank
+  can actually supply," and its capacity section explains sets are "computed
+  only from answer-independent memberships." The hazard results surface
+  describes a "visual-recognition construct" and "granular authored locations."
+  The review queue renders "directional concept relationship" and a "general
+  false-positive marker" in the learner's own due list.
+- `BUILD_RELEASE` — the home page's first line is the eyebrow "Source-backed ·
+  local-first"; the transparency landing page leads with "Release … · version
+  …"; the offline-pack page explains staging and checksum verification before
+  saying what will work without a connection.
+- `UNDEFINED_JARGON` — the product's single most important control is labeled
+  "Commit answer," while the same button reads "Saving answer…" while in
+  flight. A simulation control is labeled "Deterministic set seed."
+- `DEFENSIVE_STACKING` — the review lead states in one sentence that the queue
+  "never treats displayed feedback as reviewed and does not claim mastery or an
+  official schedule"; the privacy page lists six separate infrastructure
+  absences.
+- `TRUST_REVERSAL` — "No answer bytes are embedded in this page" and "hash-bound
+  in the release manifest" state real integrity guarantees in terms likelier to
+  unsettle a candidate than to reassure one.
+- `AI_CADENCE` — "accepted" appears twice in the atlas eyebrow alone; the
+  authored comparison questions repeat "In the accepted … comparison" across
+  eleven items and open every rationale with "Correct."
+
+**What the audit did not find.** No case was found where required meaning could
+be deleted. Unofficial status, unknown-fact labeling, the site-designed
+distribution statement, the practice-score disclaimer, commit-before-reveal,
+source retention, and the secure-material prohibition are all present and all
+load-bearing. The finding is consistently about *layer and prominence*, not
+about removal — which is why 24 families are marked `KEEP` and only 5 are
+`INTERNAL_ONLY`.
+
+**Contradiction to resolve with participants.** The desk audit cannot tell
+whether the provenance detail that reads as defensive to an auditor reads as
+trustworthy to a candidate. Research questions 2 and 4 exist precisely because
+that judgment is not the executor's to make.
 
 ### Benchmark study
 

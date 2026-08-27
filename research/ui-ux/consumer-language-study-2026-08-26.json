@@ -1,7 +1,19 @@
 {
   "schemaVersion": "consumer-language-study-v1",
   "study": "Plan 004 consumer-language boundary",
-  "status": "inventory pending",
+  "status": "decision pending",
+  "deskInventory": {
+    "state": "complete",
+    "generatedDocuments": 526,
+    "implementedRouteIds": 27,
+    "plannedRouteIdsWithoutCopy": 9,
+    "classifiedCopyFamilies": 120,
+    "dynamicMessageCandidates": 847,
+    "dynamicMessagePublicRenderSites": 11,
+    "dynamicMessageIndirectProducers": 205,
+    "dynamicMessageNotPublic": 451,
+    "note": "Desk-audit severity ranks product reasoning only. It is not participant evidence and does not pre-empt the critical-issue rubric."
+  },
   "plannedAtSha": "e6f911901f7f18f6716204309fee8b103419a5e0",
   "executionBaseSha": "115b91a3cce5a6ec4cdbe7981847f8d494e326eb",
   "retainedRecordPolicy": "Counts, dispositions, and cryptographic coordinates only. Participant rows, contact data, raw notes, quotations, and prototype markup are never stored here.",
