@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "consumer-language-study-v1",
+  "study": "Plan 004 consumer-language boundary",
+  "status": "inventory pending",
+  "plannedAtSha": "e6f911901f7f18f6716204309fee8b103419a5e0",
+  "executionBaseSha": "115b91a3cce5a6ec4cdbe7981847f8d494e326eb",
+  "retainedRecordPolicy": "Counts, dispositions, and cryptographic coordinates only. Participant rows, contact data, raw notes, quotations, and prototype markup are never stored here.",
+  "prototypeIds": [
+    "home",
+    "profile",
+    "practice-start",
+    "question-feedback",
+    "hazard-feedback",
+    "review",
+    "offline-data",
+    "trust-recovery"
+  ],
+  "taskIds": [
+    "proposition-recall",
+    "profile-fit",
+    "practice-commitment",
+    "feedback-evidence",
+    "hazard-feedback",
+    "review-meaning",
+    "offline-failure",
+    "import-reset",
+    "advanced-evidence"
+  ],
+  "decisionOwner": {
+    "identity": "mannyc2",
+    "githubHandle": "mannyc2",
+    "role": "Repository owner and product decision owner for mannyc2/nycustodianexam",
+    "approvalChannel": "pending"
+  },
+  "operationsApproval": [],
+  "rounds": [],
+  "issueSummaries": [],
+  "evidenceValidation": {},
+  "decision": {
+    "status": "pending",
+    "note": "No direction has been researched, tested, or selected. The desk audit does not authorize a direction."
+  }
+}

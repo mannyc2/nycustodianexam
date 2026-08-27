@@ -32,9 +32,11 @@ and conclusions already maintained elsewhere do not belong here.
 | [`illustration/TOOL_GEOMETRY_PIPELINE_2026-08-20.md`](illustration/TOOL_GEOMETRY_PIPELINE_2026-08-20.md) | Accepted historical synthesis | Preserves the recovered bundle/inventory identity and the useful review conclusions behind the retired deterministic route. Production is controlled by [`illustration/VISUAL_AUTHORING_POLICY.md`](../illustration/VISUAL_AUTHORING_POLICY.md) and maintained visual inventory/release records. |
 | [`v2/hazard-scene-production/README.md`](v2/hazard-scene-production/README.md) | Accepted historical synthesis | Preserves target/decoy closure, region, accessibility/nonvisual, version, and QA boundaries. Production is controlled by the visual policy and the accepted 18-scene release records. |
 | [`v2/tool-geometry-audit/REPORT.md`](v2/tool-geometry-audit/REPORT.md) | Accepted historical evidence; byte-identical | Preserves exact POC dispositions, artifact-identity conflict, rights declaration, and stable line evidence consumed by the maintained tool pilot brief. The four POCs are retired production-art candidates. |
+| [`ui-ux/consumer-language-study-2026-08-26.md`](ui-ux/consumer-language-study-2026-08-26.md) | Active investigation | De-identified product-research evidence for the Plan 004 consumer-language boundary. Accepted normative rules will live once in `product/CONTENT_DESIGN.md`, not here. Its aggregate record and retained validator are [`consumer-language-study-2026-08-26.json`](ui-ux/consumer-language-study-2026-08-26.json) and [`verify-consumer-language-study.mjs`](ui-ux/verify-consumer-language-study.mjs). |
 
-There is no unresolved research program in this reduced tree. Current exam
-unknowns and implementation/release gates are recorded in [`docs/OPEN.md`](../docs/OPEN.md).
+One unresolved research program is open in this tree: the Plan 004
+consumer-language study above. Current exam unknowns and implementation/release
+gates are recorded in [`docs/OPEN.md`](../docs/OPEN.md).
 
 ## Deleted-family map
 
