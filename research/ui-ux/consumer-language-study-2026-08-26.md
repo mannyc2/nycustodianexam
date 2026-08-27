@@ -1,9 +1,10 @@
 # Consumer-language study (Plan 004)
 
-**Status**: `decision pending`. The desk inventory is complete. No benchmark
-evidence has been gathered, no participant research has been conducted, and no
-direction has been selected. Result sections below are explicitly empty until
-the evidence that fills them exists.
+**Status**: `decision pending`. The desk inventory is complete and the benchmark
+study is partially complete — 13 dated records across all three required groups,
+with two account-gated criteria still unevaluated. **No participant research has
+been conducted and no direction has been selected.** Result sections that depend
+on participant evidence are explicitly empty until that evidence exists.
 
 ## Source coordinates
 
@@ -98,7 +99,7 @@ owns code and content migration.
 | Phase | Method | State |
 |---|---|---|
 | Desk inventory | Classify every public copy family across all 27 implemented route IDs, every copy-bearing React family, every dynamic message sink, print output, PWA metadata, and fallbacks | Complete |
-| Benchmark study | 8–12 dated current products across consumer exam prep, trusted public-service tools, and no-account/offline consumer experiences | **Partial** — 10 records across all three groups; three interaction criteria not evaluable by static retrieval |
+| Benchmark study | 8–12 dated current products across consumer exam prep, trusted public-service tools, and no-account/offline consumer experiences | **Partial** — 13 records across all three groups; a driven-browser pass closed the destructive-action criterion; two account-gated criteria remain unevaluated |
 | Prototypes | Eight text-first local prototypes, piloted once, frozen per round under a locked normalization and manifest algorithm | **Authored, not piloted, not frozen** — piloting requires a person |
 | Round 1 | Moderated, 5–8 qualifying participants, nine locked tasks each | **Not authorized** |
 | Round 2 | Moderated, 5–8 new qualifying participants, every critical round-one issue retested | **Not authorized** |
@@ -248,16 +249,58 @@ required groups. No screenshots and no wholesale prose are retained.
 | C | Joplin | <https://joplinapp.org/> |
 | C | W3C WAI, involving users | <https://www.w3.org/WAI/test-evaluate/involving-users/> |
 
-Four further products were attempted and are recorded as not retrievable rather
-than silently dropped: Duolingo and Excalidraw rendered no content without
-JavaScript; NYC DCAS "Take an exam" and Union Test Prep returned HTTP 403.
+A second pass on **2026-08-27** used a driven browser, which retrieved three of
+the four products that static fetching could not render or reach:
 
-**Why this is partial.** Observation was static document retrieval, not a driven
-interactive session. Three protocol criteria — question commitment and feedback
-behaviour, error and destructive-action language in situ, and advanced
-diagnostic disclosure behind an account — are therefore marked
-`not-evaluated (method)` for interactive products. They were **not** filled in
-from memory. A successor with a driven browser should complete them.
+| Group | Product | URL |
+|---|---|---|
+| C | Excalidraw | <https://excalidraw.com/> |
+| A | Duolingo | <https://www.duolingo.com/> |
+| A | Khan Academy (primary surface) | <https://www.khanacademy.org/> |
+
+Two remain unretrieved and are recorded rather than silently dropped: NYC DCAS
+"Take an exam" and Union Test Prep both return HTTP 403.
+
+**Why this is still partial.** The driven pass closed one of the three open
+criteria — *error and destructive-action language in situ* — by reaching a real
+destructive confirmation dialog. Two remain `not-evaluated (method)`: question
+commitment and feedback behaviour, and advanced diagnostic disclosure behind an
+account. Both sit behind account creation, which this study will not do. They
+were **not** filled in from memory.
+
+**Findings from the driven pass.**
+
+- *Local storage stated as a risk, not a guarantee.* Excalidraw's first-load
+  copy is three plain sentences: "Your drawings are saved in your browser's
+  storage." / "Browser storage can be cleared unexpectedly." / "Save your work
+  to a file regularly to avoid losing it." A local-first product volunteers the
+  **limitation** of browser storage in ordinary words, unprompted. The audited
+  product's equivalent surfaces instead assert integrity machinery — checksum
+  closure, generations, application-shell bytes — and never tell the learner
+  that local storage can vanish. This is the sharpest available contrast for
+  research question 5.
+- *No storage nouns in the control set.* Excalidraw's controls are Open, Help,
+  Save to…, Export image…, Undo, Redo, Selection, Draw, Eraser, Rectangle,
+  Arrow, Text, Library. Not one names a storage or build concept.
+- *Destructive-action language, observed in situ.* Excalidraw's menu item reads
+  "Reset the canvas"; the confirmation reads "Clear canvas / This will clear the
+  whole canvas. Are you sure? / Cancel / Confirm". Useful as a **floor, not a
+  model**: it states what is cleared but not what is kept, does not say the
+  action is irreversible, and offers no export-first path — even though "Save
+  to…" and "Export image…" sit in the same menu. `FEATURE_SPEC.md` requires the
+  audited product's destructive local-data actions to be better specified than
+  this, so the benchmark supports raising the bar rather than copying it.
+- *Audience self-selection as the primary entry.* Khan Academy's main call to
+  action is "Get started as a… Student / Family / Teacher / School or district."
+  Choosing who you are precedes choosing what to study — directly relevant to
+  whether exam-profile fit should outrank practice in the first-run hierarchy.
+- *The gamification register, seen close up.* Duolingo leads with "The most fun
+  way to learn languages, chess, and more!", a single "GET STARTED" primary
+  action, and "you'll earn points and unlock new levels." This is precisely the
+  register direction CL-D3 flirts with, and it is incompatible with
+  `FEATURE_SPEC.md:135-142`, which forbids guilt and urgency, and with
+  `FEATURE_SPEC.md:353`, which prohibits premature readiness claims. Recorded as
+  a boundary marker, not as a pattern to adopt.
 
 **Findings that survive the limitation.**
 
@@ -420,8 +463,10 @@ External benchmark sources, all observed **2026-08-27**:
 | <https://joplinapp.org/> | Benchmark, group C | Local vs optional-cloud as a choice, not a lifecycle |
 | <https://www.w3.org/WAI/test-evaluate/involving-users/> | Method guidance | Small-sample reporting limits |
 | <https://www.gov.uk/service-manual/user-research/plan-user-research-for-your-service> | Method guidance | Round structure; 4–8 participants per qualitative round |
+| <https://excalidraw.com/> | Benchmark, group C (driven browser) | Local storage stated as a risk; destructive-action confirmation observed in situ |
+| <https://www.duolingo.com/> | Benchmark, group A (driven browser) | The gamification register, recorded as a boundary marker |
+| <https://www.khanacademy.org/> | Benchmark, group A (driven browser) | Audience self-selection as the primary entry; no-JavaScript failure state |
 
 Attempted and not retrievable, recorded so the set is not silently selective:
-<https://www.duolingo.com/> and <https://excalidraw.com/> (client-rendered, no
-content), <https://www.nyc.gov/site/dcas/employment/take-an-exam.page> and
-<https://uniontestprep.com/> (HTTP 403).
+<https://www.nyc.gov/site/dcas/employment/take-an-exam.page> and
+<https://uniontestprep.com/> (both HTTP 403).

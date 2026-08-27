@@ -47,15 +47,23 @@
   "benchmarkStudy": {
     "state": "partial",
     "observedOn": "2026-08-27",
-    "records": 10,
+    "records": 13,
     "groupsCovered": 3,
-    "notRetrievable": 4,
+    "notRetrievable": 2,
     "criteriaNotEvaluated": [
-      "question commitment and feedback behaviour",
-      "error and destructive-action language in situ",
+      "question commitment and feedback behaviour (account-gated)",
       "advanced diagnostic disclosure behind an account"
     ],
-    "note": "Static document retrieval only. The three criteria above require a driven interactive session and were not filled in from memory."
+    "note": "Static retrieval plus one driven-browser pass. The two remaining criteria sit behind account creation, which this study will not do. Neither was filled in from memory.",
+    "drivenBrowserPassOn": "2026-08-27",
+    "drivenBrowserProducts": [
+      "excalidraw",
+      "duolingo",
+      "khan-academy"
+    ],
+    "criteriaClosedByDrivenPass": [
+      "error and destructive-action language in situ"
+    ]
   },
   "prototypeSet": {
     "state": "authored-not-piloted-not-frozen",
