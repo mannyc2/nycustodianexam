@@ -34,7 +34,7 @@ REJECTED (with one-line rationale)
 ## Current execution state
 
 Recorded 2026-08-27 against `origin/main` at
-`e6f911901f7f18f6716204309fee8b103419a5e0`.
+`c8644c80c980a36699b526ed11d50758ee67e298`.
 
 The whole 004-008 sequence is gated on evidence that only a human can supply.
 Each plan forbids substituting agents, generated personas, role-played
@@ -49,7 +49,7 @@ cannot satisfy any of these gates on the owner's behalf, by design.
 |---|---|---|---|
 | 004 | `codex/uiux-consumer-language` | #37 | Step 7 — recruitment, consent, compensation, raw-notes location, retention, recording, and prototype exposure are unauthorized |
 | 005 | `codex/uiux-task-navigation` | #38 | Step 3 — the same operations gate, plus a final-round dependency on Plan 004 |
-| 006 | none | none | Step 1 pre-branch sequence fails: 004/005 are not DONE in `origin/main` and `product/CONTENT_DESIGN.md` does not exist there |
+| 006 | none | none | Step 1 pre-branch sequence fails: 004/005 are not DONE in `origin/main`, and `product/CONTENT_DESIGN.md` does not exist there |
 | 007 | none | none | Step 1 preconditions fail: 004-006 are not DONE and none of the three required research artifacts exists in `origin/main` |
 | 008 | none | none | Step 1 preconditions fail: 004-007 are not DONE in `origin/main` |
 
@@ -57,12 +57,15 @@ Plans 006-008 are blocked structurally rather than by effort. Each says to stop
 rather than select another base or branch name, so no branch was created for
 them.
 
-Note that `origin/main` does not yet contain Plans 004-008 or these index rows —
-they live on this branch (PR #36), unmerged. The 004 and 005 research branches
-are therefore rooted at this branch's plan-publication commit rather than at
-`origin/main`, and each records that deviation in its own charter. Merging
-PR #36 is the first step toward unblocking the dependency chain, but it does not
-by itself unblock 004 or 005, whose gates are participant authorization.
+PR #36 merged on 2026-08-27, so `origin/main` now carries Plans 004-008 and
+these index rows. That closes the base deviation the 004 and 005 research
+branches originally recorded: both have been merged forward onto the merged head
+`c8644c80c980a36699b526ed11d50758ee67e298` without force-pushing, and each
+charter records the reconciled base.
+
+Merging PR #36 did not unblock anything on its own. Plans 004 and 005 remain
+gated on participant authorization and on the fieldwork itself, and Plans
+006-008 still require 004 and 005 to reach DONE here first.
 
 ## How the sequence works
 
