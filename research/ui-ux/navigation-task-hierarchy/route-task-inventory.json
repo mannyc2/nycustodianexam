@@ -1,14 +1,18 @@
 {
   "schemaVersion": 1,
   "plannedAtSha": "e6f911901f7f18f6716204309fee8b103419a5e0",
-  "researchBaseSha": "115b91a3cce5a6ec4cdbe7981847f8d494e326eb",
+  "researchBaseSha": "c8644c80c980a36699b526ed11d50758ee67e298",
   "note": "Task statements are written from the learner's intent, not from destination names. Every taskPriority and proposedShell value is an unvalidated desk hypothesis; the participant phases exist to confirm or overturn them. The fixed inventory is not reopened: all 21 families, all 32 core route IDs, and all four spokes remain.",
   "families": [
     {
       "familyNumber": 1,
       "familyLabel": "Home / study dashboard",
-      "routeIds": ["home"],
-      "pathPatterns": ["/"],
+      "routeIds": [
+        "home"
+      ],
+      "pathPatterns": [
+        "/"
+      ],
       "currentParentNavigation": "global root",
       "indexability": "index",
       "renderOwnership": "static; personalized resume/due summaries belong to the study-hub island",
@@ -24,8 +28,12 @@
     {
       "familyNumber": 2,
       "familyLabel": "Exam selector",
-      "routeIds": ["exam-selector"],
-      "pathPatterns": ["/exams/"],
+      "routeIds": [
+        "exam-selector"
+      ],
+      "pathPatterns": [
+        "/exams/"
+      ],
       "currentParentNavigation": "Home",
       "indexability": "index",
       "renderOwnership": "static published profile list + lazy ExamSelector island",
@@ -41,8 +49,12 @@
     {
       "familyNumber": 3,
       "familyLabel": "\"Not sure which exam?\" checker",
-      "routeIds": ["exam-checker"],
-      "pathPatterns": ["/exams/check/"],
+      "routeIds": [
+        "exam-checker"
+      ],
+      "pathPatterns": [
+        "/exams/check/"
+      ],
       "currentParentNavigation": "Exam selector",
       "indexability": "noindex",
       "renderOwnership": "static safety guidance + lazy ExamChecker form island",
@@ -58,7 +70,9 @@
     {
       "familyNumber": 4,
       "familyLabel": "State / jurisdiction / profile",
-      "routeIds": ["profile"],
+      "routeIds": [
+        "profile"
+      ],
       "pathPatterns": [
         "/ny/",
         "/ny/{jurisdictionSlug}/",
@@ -79,8 +93,12 @@
     {
       "familyNumber": 5,
       "familyLabel": "Study / practice hub",
-      "routeIds": ["study-hub"],
-      "pathPatterns": ["/practice/"],
+      "routeIds": [
+        "study-hub"
+      ],
+      "pathPatterns": [
+        "/practice/"
+      ],
       "currentParentNavigation": "Home",
       "indexability": "index",
       "renderOwnership": "static study-method overview + lazy StudyHub local-actions island",
@@ -96,8 +114,12 @@
     {
       "familyNumber": 6,
       "familyLabel": "Tool atlas index",
-      "routeIds": ["atlas-index"],
-      "pathPatterns": ["/atlas/"],
+      "routeIds": [
+        "atlas-index"
+      ],
+      "pathPatterns": [
+        "/atlas/"
+      ],
       "currentParentNavigation": "Study",
       "indexability": "index",
       "renderOwnership": "static catalog + lazy AtlasFilters island",
@@ -113,8 +135,12 @@
     {
       "familyNumber": 7,
       "familyLabel": "Tool-family comparison",
-      "routeIds": ["atlas-family"],
-      "pathPatterns": ["/atlas/family/{familySlug}/"],
+      "routeIds": [
+        "atlas-family"
+      ],
+      "pathPatterns": [
+        "/atlas/family/{familySlug}/"
+      ],
       "currentParentNavigation": "Atlas",
       "indexability": "conditional on substantive reviewed comparison",
       "renderOwnership": "primarily static, optional local-practice actions island",
@@ -130,8 +156,12 @@
     {
       "familyNumber": 8,
       "familyLabel": "Tool detail",
-      "routeIds": ["atlas-tool"],
-      "pathPatterns": ["/atlas/tool/{toolSlug}/"],
+      "routeIds": [
+        "atlas-tool"
+      ],
+      "pathPatterns": [
+        "/atlas/tool/{toolSlug}/"
+      ],
       "currentParentNavigation": "Atlas -> family",
       "indexability": "index after source/rights/accessibility review",
       "renderOwnership": "primarily static, optional atlas media/practice island",
@@ -147,8 +177,14 @@
     {
       "familyNumber": 9,
       "familyLabel": "Cleaning procedures",
-      "routeIds": ["procedures-index", "procedure-detail"],
-      "pathPatterns": ["/procedures/", "/procedures/{procedureSlug}/"],
+      "routeIds": [
+        "procedures-index",
+        "procedure-detail"
+      ],
+      "pathPatterns": [
+        "/procedures/",
+        "/procedures/{procedureSlug}/"
+      ],
       "currentParentNavigation": "Study",
       "indexability": "index for the index; conditional for detail",
       "renderOwnership": "static, with optional practice-action island",
@@ -164,8 +200,13 @@
     {
       "familyNumber": 10,
       "familyLabel": "Repair-tool laboratory",
-      "routeIds": ["repair-lab"],
-      "pathPatterns": ["/repairs/", "/repairs/{topicSlug}/"],
+      "routeIds": [
+        "repair-lab"
+      ],
+      "pathPatterns": [
+        "/repairs/",
+        "/repairs/{topicSlug}/"
+      ],
       "currentParentNavigation": "Study",
       "indexability": "index for the index; conditional for topics",
       "renderOwnership": "static reference + optional comparison/practice island",
@@ -181,8 +222,12 @@
     {
       "familyNumber": 11,
       "familyLabel": "Question practice",
-      "routeIds": ["question-player"],
-      "pathPatterns": ["/practice/session/{sessionId}/question/{position}/"],
+      "routeIds": [
+        "question-player"
+      ],
+      "pathPatterns": [
+        "/practice/session/{sessionId}/question/{position}/"
+      ],
       "currentParentNavigation": "Study (study-hub); player returns to Practice",
       "indexability": "noindex",
       "renderOwnership": "safe generated fallback + lazy QuestionPlayer island",
@@ -198,8 +243,14 @@
     {
       "familyNumber": 12,
       "familyLabel": "Hazard laboratory / player",
-      "routeIds": ["hazards-index", "hazard-player"],
-      "pathPatterns": ["/hazards/", "/hazards/session/{sessionId}/scene/{position}/"],
+      "routeIds": [
+        "hazards-index",
+        "hazard-player"
+      ],
+      "pathPatterns": [
+        "/hazards/",
+        "/hazards/session/{sessionId}/scene/{position}/"
+      ],
       "currentParentNavigation": "Study -> Hazards",
       "indexability": "index for the landing; noindex for the player",
       "renderOwnership": "static landing + setup island; player is an island route",
@@ -215,8 +266,14 @@
     {
       "familyNumber": 13,
       "familyLabel": "Spaced review",
-      "routeIds": ["review-queue", "review-player"],
-      "pathPatterns": ["/review/", "/review/session/{sessionId}/item/{position}/"],
+      "routeIds": [
+        "review-queue",
+        "review-player"
+      ],
+      "pathPatterns": [
+        "/review/",
+        "/review/session/{sessionId}/item/{position}/"
+      ],
       "currentParentNavigation": "Home/Study -> Review",
       "indexability": "noindex for both",
       "renderOwnership": "generated shell + lazy review islands",
@@ -232,7 +289,11 @@
     {
       "familyNumber": 14,
       "familyLabel": "Simulation",
-      "routeIds": ["simulation-setup", "simulation-player", "simulation-results"],
+      "routeIds": [
+        "simulation-setup",
+        "simulation-player",
+        "simulation-results"
+      ],
       "pathPatterns": [
         "/simulations/",
         "/simulations/session/{sessionId}/question/{position}/",
@@ -253,8 +314,14 @@
     {
       "familyNumber": 15,
       "familyLabel": "Print",
-      "routeIds": ["print-center", "print-preview"],
-      "pathPatterns": ["/print/", "/print/preview/{printJobId}/"],
+      "routeIds": [
+        "print-center",
+        "print-preview"
+      ],
+      "pathPatterns": [
+        "/print/",
+        "/print/preview/{printJobId}/"
+      ],
       "currentParentNavigation": "Study -> Print",
       "indexability": "index for the center; noindex for the preview",
       "renderOwnership": "static print guidance + generator island; preview is an island route with printable semantic HTML",
@@ -270,8 +337,12 @@
     {
       "familyNumber": 16,
       "familyLabel": "FAQ",
-      "routeIds": ["faq"],
-      "pathPatterns": ["/faq/"],
+      "routeIds": [
+        "faq"
+      ],
+      "pathPatterns": [
+        "/faq/"
+      ],
       "currentParentNavigation": "global Help",
       "indexability": "index",
       "renderOwnership": "static only",
@@ -319,8 +390,12 @@
     {
       "familyNumber": 18,
       "familyLabel": "Correction / security submission",
-      "routeIds": ["correction-submit"],
-      "pathPatterns": ["/report/"],
+      "routeIds": [
+        "correction-submit"
+      ],
+      "pathPatterns": [
+        "/report/"
+      ],
       "currentParentNavigation": "Transparency / contextual Report links",
       "indexability": "noindex",
       "renderOwnership": "static prohibition/privacy text + lazy CorrectionForm island",
@@ -336,8 +411,12 @@
     {
       "familyNumber": 19,
       "familyLabel": "Settings",
-      "routeIds": ["settings"],
-      "pathPatterns": ["/settings/"],
+      "routeIds": [
+        "settings"
+      ],
+      "pathPatterns": [
+        "/settings/"
+      ],
       "currentParentNavigation": "global utility navigation",
       "indexability": "noindex",
       "renderOwnership": "generated shell + lazy Settings island",
@@ -353,8 +432,12 @@
     {
       "familyNumber": 20,
       "familyLabel": "Offline packs / updates",
-      "routeIds": ["offline-packs"],
-      "pathPatterns": ["/offline/"],
+      "routeIds": [
+        "offline-packs"
+      ],
+      "pathPatterns": [
+        "/offline/"
+      ],
       "currentParentNavigation": "global utility navigation / Settings",
       "indexability": "noindex",
       "renderOwnership": "static explanation + lazy OfflinePackManager island",
@@ -370,8 +453,13 @@
     {
       "familyNumber": 21,
       "familyLabel": "Explicit status / error / content unavailable",
-      "routeIds": ["status"],
-      "pathPatterns": ["/status/", "terminal 404/410/5xx documents at the requested URL"],
+      "routeIds": [
+        "status"
+      ],
+      "pathPatterns": [
+        "/status/",
+        "terminal 404/410/5xx documents at the requested URL"
+      ],
       "currentParentNavigation": "global Help or nearest valid parent",
       "indexability": "noindex",
       "renderOwnership": "static recovery guide + optional lazy local-diagnostics island",

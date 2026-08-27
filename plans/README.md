@@ -22,14 +22,47 @@ checkpoint inside production, not a separate project.
 | 001 | Generate and approve the complete tool/PPE visual library | P1 | L | — | DONE — 65 accepted masters and 14 accepted deterministic comparisons verified |
 | 002 | Generate and approve the launch hazard-scene bank | P1 | L | Plan 001 pilot checkpoint | DONE — 18 accepted scenes passed exact-pixel independent review, release verification, and checksum closure |
 | 003 | Normalize and reduce the research corpus through connected @GitHub | P1 | L | Plans 001 and 002 merged; exact post-visual `main` SHA | DONE — PR #27 merged; maintained authorities and the retained research map now own the reconciled result |
-| 004 | Establish the consumer-language boundary | P1 | L | —; coordinate vocabulary and recruitment with Plan 005 | TODO |
-| 005 | Rebuild navigation around learner tasks | P1 | L | — to start; Plan 004 before final first-click round and promotion | BLOCKED — charter and complete fixed route-task inventory landed on `codex/uiux-task-navigation` (draft PR #38); Steps 3-13 need participant authorization, and the final round additionally needs Plan 004's accepted vocabulary, which is itself blocked |
-| 006 | Select a consumer visual system and route archetypes | P1 | L | Plans 004 and 005 | TODO |
-| 007 | Specify shared UI foundations and responsive route-family contracts | P1 | L | Plans 004, 005, and 006 | TODO |
-| 008 | Run integrated consumer UX and accessibility validation | P1 | L | Plans 004, 005, 006, and 007 | TODO |
+| 004 | Establish the consumer-language boundary | P1 | L | —; coordinate vocabulary and recruitment with Plan 005 | BLOCKED — Steps 1-6 done on `codex/uiux-consumer-language` (PR #37); Steps 7-11 need participant authorization |
+| 005 | Rebuild navigation around learner tasks | P1 | L | — to start; Plan 004 before final first-click round and promotion | BLOCKED — Steps 1-2 done on `codex/uiux-task-navigation` (PR #38); Steps 3-13 need participant authorization plus Plan 004's vocabulary |
+| 006 | Select a consumer visual system and route archetypes | P1 | L | Plans 004 and 005 | BLOCKED — cannot create its branch; Step 1 requires Plans 004 and 005 DONE in `origin/main` plus `product/CONTENT_DESIGN.md` |
+| 007 | Specify shared UI foundations and responsive route-family contracts | P1 | L | Plans 004, 005, and 006 | BLOCKED — cannot create its branch; Step 1 requires Plans 004-006 DONE in `origin/main` plus three promoted research artifacts |
+| 008 | Run integrated consumer UX and accessibility validation | P1 | L | Plans 004, 005, 006, and 007 | BLOCKED — cannot create its branch; Step 1 requires Plans 004-007 DONE in `origin/main` |
 
 Status values: TODO | IN PROGRESS | DONE | BLOCKED (with one-line reason) |
 REJECTED (with one-line rationale)
+
+## Current execution state
+
+Recorded 2026-08-27 against `origin/main` at
+`e6f911901f7f18f6716204309fee8b103419a5e0`.
+
+The whole 004-008 sequence is gated on evidence that only a human can supply.
+Each plan forbids substituting agents, generated personas, role-played
+candidates, or expert review for participant evidence, and each requires its
+authorizations to be structured, unedited comments posted by the chartered
+decision owner on that plan's own draft PR. Every retained verifier resolves
+those comments live through `gh`, checks the author login and that the comment
+was never edited, and compares the SHA-256 of the exact body. An executor
+cannot satisfy any of these gates on the owner's behalf, by design.
+
+| Plan | Branch | Draft PR | Where it stops |
+|---|---|---|---|
+| 004 | `codex/uiux-consumer-language` | #37 | Step 7 — recruitment, consent, compensation, raw-notes location, retention, recording, and prototype exposure are unauthorized |
+| 005 | `codex/uiux-task-navigation` | #38 | Step 3 — the same operations gate, plus a final-round dependency on Plan 004 |
+| 006 | none | none | Step 1 pre-branch sequence fails: 004/005 are not DONE in `origin/main` and `product/CONTENT_DESIGN.md` does not exist there |
+| 007 | none | none | Step 1 preconditions fail: 004-006 are not DONE and none of the three required research artifacts exists in `origin/main` |
+| 008 | none | none | Step 1 preconditions fail: 004-007 are not DONE in `origin/main` |
+
+Plans 006-008 are blocked structurally rather than by effort. Each says to stop
+rather than select another base or branch name, so no branch was created for
+them.
+
+Note that `origin/main` does not yet contain Plans 004-008 or these index rows —
+they live on this branch (PR #36), unmerged. The 004 and 005 research branches
+are therefore rooted at this branch's plan-publication commit rather than at
+`origin/main`, and each records that deviation in its own charter. Merging
+PR #36 is the first step toward unblocking the dependency chain, but it does not
+by itself unblock 004 or 005, whose gates are participant authorization.
 
 ## How the sequence works
 

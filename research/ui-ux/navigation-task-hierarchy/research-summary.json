@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "plannedAtSha": "e6f911901f7f18f6716204309fee8b103419a5e0",
-  "researchBaseSha": "115b91a3cce5a6ec4cdbe7981847f8d494e326eb",
-  "scopeBaseSha": "115b91a3cce5a6ec4cdbe7981847f8d494e326eb",
+  "researchBaseSha": "c8644c80c980a36699b526ed11d50758ee67e298",
+  "scopeBaseSha": "c8644c80c980a36699b526ed11d50758ee67e298",
   "status": "inventory complete; all participant phases unauthorized",
   "retainedRecordPolicy": "Aggregate counts, predeclared thresholds, cryptographic coordinates, and dispositions only. Participant rows, contact data, raw notes, card-sort exports, and first-click exports are never stored here.",
   "acceptedLanguageDependency": {
@@ -39,12 +39,29 @@
     "effectiveSha256": null,
     "rationale": null,
     "recommended": {
-      "openSort": { "min": 6, "max": 8 },
-      "thresholdPilot": { "min": 2, "max": 3 },
-      "treeTest": { "min": 15, "max": 20 },
-      "firstClickRound1": { "min": 5, "max": 8 },
-      "firstClickRound2": { "min": 5, "max": 8 },
-      "accessStrategyParticipants": { "min": 4 }
+      "openSort": {
+        "min": 6,
+        "max": 8
+      },
+      "thresholdPilot": {
+        "min": 2,
+        "max": 3
+      },
+      "treeTest": {
+        "min": 15,
+        "max": 20
+      },
+      "firstClickRound1": {
+        "min": 5,
+        "max": 8
+      },
+      "firstClickRound2": {
+        "min": 5,
+        "max": 8
+      },
+      "accessStrategyParticipants": {
+        "min": 4
+      }
     },
     "effective": null,
     "deviation": null
@@ -98,5 +115,7 @@
     "status": "pending",
     "note": "No candidate has been built, exposed, tested, or selected. The inventory mapping is an unvalidated desk hypothesis."
   },
-  "canonicalPromotions": []
+  "canonicalPromotions": [],
+  "originalResearchBaseSha": "115b91a3cce5a6ec4cdbe7981847f8d494e326eb",
+  "researchBaseNote": "PR #36 merged 2026-08-27; the branch was merged forward onto the merged main head, closing the original base deviation. plans/README.md was reconciled preserving every status row. No force-push."
 }

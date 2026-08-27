@@ -26,19 +26,26 @@ product's feature model?
 | Coordinate | Value |
 |---|---|
 | Planning commit | `e6f911901f7f18f6716204309fee8b103419a5e0` |
-| Research base | `115b91a3cce5a6ec4cdbe7981847f8d494e326eb` |
-| Scope base | `115b91a3cce5a6ec4cdbe7981847f8d494e326eb` |
+| Original research base | `115b91a3cce5a6ec4cdbe7981847f8d494e326eb` |
+| Reconciled research base | `c8644c80c980a36699b526ed11d50758ee67e298` |
+| Scope base | `c8644c80c980a36699b526ed11d50758ee67e298` |
 | Output branch | `codex/uiux-task-navigation` |
 | Draft PR base | `main` |
 
-The research base is the commit that published the reviewed Plan 005 file and
-its `plans/README.md` row. Plan 005 requires a base containing both, and states
-that the raw planning coordinate `e6f9119` is not an executable base because it
-predates the plan and index. `origin/main` is still at `e6f9119` because the
-plan program is on `codex/uiux-research-program-plans` (draft PR #36, unmerged),
-so the base used here is that plan-publication commit — immutable, pushed to
-`origin`, and a descendant of the planning coordinate. If PR #36 merges, a
-successor should re-derive the base from the merged `main` head and record it.
+Plan 005 requires a base containing the reviewed plan and its index row, and
+states that the raw planning coordinate `e6f9119` is not an executable base
+because it predates both. When this study started, `origin/main` was still at
+`e6f9119` and the plan program was on `codex/uiux-research-program-plans`
+(PR #36, unmerged), so the original base was that plan-publication commit —
+immutable, pushed to `origin`, and a descendant of the planning coordinate.
+
+PR #36 merged on 2026-08-27. `origin/main` now carries Plans 004-008 and their
+index rows, so the deviation is closed: this branch was merged forward onto the
+merged head `c8644c80c980a36699b526ed11d50758ee67e298`, which is the reconciled
+research base. Per the program index, `plans/README.md` was reconciled so that
+**every plan's status row is preserved**, and no force-push was used. The
+inventory was built at the original base; the merge brought in plan and index
+text only and changed no read-only evidence path.
 
 **Observed implementation at that base**: `bun run verify` exits 0; the site
 generator produces 526 canonical documents across 27 implemented route IDs. The
@@ -47,10 +54,10 @@ pre-existing failure.
 
 **Relationship to Plan 004.** Plan 004 runs in parallel on
 `codex/uiux-consumer-language` (draft PR #37) and is currently **BLOCKED** at
-its participant-authorization gate. Both branches are rooted at the same
-plan-publication commit, exactly as `plans/README.md` describes, so both edit
-`plans/README.md` and `research/README.md` independently. Per the program index,
-Plan 004 merges first; Plan 005 must then fetch the new `main`, reconcile both
+its participant-authorization gate. Both branches started from the same
+plan-publication commit, exactly as `plans/README.md` describes, and both have
+now been merged forward onto the same merged `main` head. Plan 004 still merges
+first; when it does, Plan 005 must fetch the new `main` again, reconcile the
 shared files without force-pushing, **preserve both map and status rows**, and
 only then run its final first-click round and seek merge.
 
