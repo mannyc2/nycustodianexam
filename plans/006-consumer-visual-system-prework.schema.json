@@ -1,0 +1,624 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/mannyc2/nycustodianexam/blob/main/plans/006-consumer-visual-system-prework.schema.json",
+  "title": "Plan 006 consumer visual-system provisional prework",
+  "description": "Fail-closed schema for deterministic prework that is not Plan 006 research, participant evidence, approval, selection, or acceptance.",
+  "x-artifactLabel": {
+    "status": "provisional-prework",
+    "participantEvidence": "none",
+    "decisionStatus": "pending",
+    "requiredDependencyShas": null,
+    "mustRebaseAndReverify": true
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "artifactId",
+    "schemaPath",
+    "label",
+    "sourceSnapshot",
+    "captureManifest",
+    "assetInventory",
+    "benchmarkTemplate",
+    "prototypeEngine",
+    "evidenceInterfaces",
+    "gateAccounting"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "artifactId": { "const": "plan-006-consumer-visual-system-provisional-prework" },
+    "schemaPath": { "const": "plans/006-consumer-visual-system-prework.schema.json" },
+    "label": { "$ref": "#/$defs/artifactLabel" },
+    "sourceSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "observedAt",
+        "sourceMainSha",
+        "branch",
+        "planStatuses",
+        "contentDesignExists",
+        "canonicalPlan006ResearchExists",
+        "sourceFiles"
+      ],
+      "properties": {
+        "label": { "$ref": "#/$defs/artifactLabel" },
+        "observedAt": { "type": "string", "format": "date-time" },
+        "sourceMainSha": { "$ref": "#/$defs/gitSha" },
+        "branch": { "const": "codex/uiux-orchestration-03-visual-territories" },
+        "planStatuses": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["004", "005", "006"],
+          "properties": {
+            "004": { "const": "BLOCKED" },
+            "005": { "const": "BLOCKED" },
+            "006": { "const": "BLOCKED" }
+          }
+        },
+        "contentDesignExists": { "const": false },
+        "canonicalPlan006ResearchExists": { "const": false },
+        "sourceFiles": {
+          "type": "array",
+          "minItems": 9,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/sourceFile" }
+        }
+      }
+    },
+    "captureManifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "canonicalBaselineStatus",
+        "cases",
+        "presentations",
+        "toolingContract",
+        "transientDryRun"
+      ],
+      "properties": {
+        "label": { "$ref": "#/$defs/artifactLabel" },
+        "canonicalBaselineStatus": { "const": "not-created" },
+        "cases": {
+          "type": "array",
+          "minItems": 24,
+          "maxItems": 24,
+          "items": { "$ref": "#/$defs/captureCase" }
+        },
+        "presentations": {
+          "type": "array",
+          "minItems": 9,
+          "maxItems": 9,
+          "items": { "$ref": "#/$defs/presentation" }
+        },
+        "toolingContract": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "buildCommands",
+            "browser",
+            "browserPackagePath",
+            "axePackagePath",
+            "captureRootPattern",
+            "loopbackOnly",
+            "committedScreenshotCount",
+            "futureCanonicalFields",
+            "freshnessChecks",
+            "retention"
+          ],
+          "properties": {
+            "buildCommands": { "type": "array", "minItems": 2, "items": { "type": "string", "minLength": 1 } },
+            "browser": { "const": "chromium" },
+            "browserPackagePath": { "const": "apps/site/node_modules/@playwright/test/index.mjs" },
+            "axePackagePath": { "const": "apps/site/node_modules/@axe-core/playwright/dist/index.mjs" },
+            "captureRootPattern": { "type": "string", "pattern": "^/tmp/" },
+            "loopbackOnly": { "const": true },
+            "committedScreenshotCount": { "const": 0 },
+            "futureCanonicalFields": { "type": "array", "minItems": 3, "uniqueItems": true, "items": { "type": "string" } },
+            "freshnessChecks": { "type": "array", "minItems": 8, "uniqueItems": true, "items": { "type": "string" } },
+            "retention": { "const": "temporary-under-/tmp-only" }
+          }
+        },
+        "transientDryRun": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "label",
+            "evidenceClass",
+            "sourceSha",
+            "observedAt",
+            "browserName",
+            "browserVersion",
+            "caseCount",
+            "httpSuccessCount",
+            "defaultPhoneDistinctHashCount",
+            "externalOriginCount",
+            "overflowCaseIds",
+            "presentationAdapterLimitations",
+            "resultManifestSha256",
+            "screenshotsRetained"
+          ],
+          "properties": {
+            "label": { "$ref": "#/$defs/artifactLabel" },
+            "evidenceClass": { "const": "supplementary-current-baseline-dry-run" },
+            "sourceSha": { "$ref": "#/$defs/gitSha" },
+            "observedAt": { "type": "string", "format": "date-time" },
+            "browserName": { "const": "chromium" },
+            "browserVersion": { "type": "string", "minLength": 1 },
+            "caseCount": { "const": 24 },
+            "httpSuccessCount": { "const": 24 },
+            "defaultPhoneDistinctHashCount": { "const": 16 },
+            "externalOriginCount": { "const": 0 },
+            "overflowCaseIds": { "type": "array", "uniqueItems": true, "items": { "type": "string" } },
+            "presentationAdapterLimitations": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string" } },
+            "resultManifestSha256": { "$ref": "#/$defs/sha256" },
+            "screenshotsRetained": { "const": false }
+          }
+        }
+      }
+    },
+    "assetInventory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "attachmentBaseline", "counts", "sourceLedgers", "entries", "futureVisualAuditFields"],
+      "properties": {
+        "attachmentBaseline": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["label", "archive", "authority", "entryCounts", "entries", "inspection"],
+          "properties": {
+            "label": { "$ref": "#/$defs/artifactLabel" },
+            "archive": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["locator", "bytes", "sha256"],
+              "properties": {
+                "locator": { "const": "/home/cjpher/.codex/attachments/3d868f50-c832-49bd-9640-def0d35c3c58/NYC Custodian Component Design.zip" },
+                "bytes": { "const": 1428961 },
+                "sha256": { "const": "dcbf9fcf9a8c43e263bfbc501dfb1ec2d98f21eda5126ffa9181c50cac795442" }
+              }
+            },
+            "authority": { "const": "uninformed-old-system-pass-one-baseline-not-selected-not-a-constraint" },
+            "entryCounts": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["archiveEntries", "canonicalDerivativeCopies", "evidenceOnlyFiles", "totalUncompressedBytes"],
+              "properties": {
+                "archiveEntries": { "const": 15 },
+                "canonicalDerivativeCopies": { "const": 11 },
+                "evidenceOnlyFiles": { "const": 4 },
+                "totalUncompressedBytes": { "const": 1596384 }
+              }
+            },
+            "entries": {
+              "type": "array",
+              "minItems": 15,
+              "maxItems": 15,
+              "items": { "$ref": "#/$defs/attachmentEntry" }
+            },
+            "inspection": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["archiveCommentPresent", "embeddedLicenseFound", "entryPathSafety", "externalNetworkDependencyStatus", "htmlLiteralExternalSubresourceCount", "imageCopiesByteIdenticalToCanonicalRepo", "runtimeCdnFallbackCount", "runtimeCdnFallbackUrls", "transientExtractionRetained"],
+              "properties": {
+                "archiveCommentPresent": { "const": false },
+                "embeddedLicenseFound": { "const": false },
+                "entryPathSafety": { "const": "pass-no-absolute-or-parent-paths" },
+                "externalNetworkDependencyStatus": { "const": "three-runtime-cdn-fallbacks-in-old-support-js-prohibited-for-future-prototypes" },
+                "htmlLiteralExternalSubresourceCount": { "const": 0 },
+                "imageCopiesByteIdenticalToCanonicalRepo": { "const": 11 },
+                "runtimeCdnFallbackCount": { "const": 3 },
+                "runtimeCdnFallbackUrls": {
+                  "const": [
+                    "https://unpkg.com/react@18.3.1/umd/react.production.min.js",
+                    "https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js",
+                    "https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+                  ]
+                },
+                "transientExtractionRetained": { "const": false }
+              }
+            }
+          }
+        },
+        "label": { "$ref": "#/$defs/artifactLabel" },
+        "counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["tool", "comparison", "scene", "total"],
+          "properties": {
+            "tool": { "const": 65 },
+            "comparison": { "const": 14 },
+            "scene": { "const": 18 },
+            "total": { "const": 97 }
+          }
+        },
+        "sourceLedgers": { "type": "array", "minItems": 4, "uniqueItems": true, "items": { "$ref": "#/$defs/sourceFile" } },
+        "entries": {
+          "type": "array",
+          "minItems": 97,
+          "maxItems": 97,
+          "items": { "$ref": "#/$defs/assetEntry" }
+        },
+        "futureVisualAuditFields": { "type": "array", "minItems": 18, "maxItems": 18, "uniqueItems": true, "items": { "type": "string" } }
+      }
+    },
+    "benchmarkTemplate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "acquisitionStatus",
+        "targetValidatedRows",
+        "categories",
+        "acquisitionSlots",
+        "canonicalSourceFields",
+        "qualitativeEvaluationFields",
+        "sources",
+        "claimPolicy"
+      ],
+      "properties": {
+        "label": { "$ref": "#/$defs/artifactLabel" },
+        "acquisitionStatus": { "const": "not-started" },
+        "targetValidatedRows": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["minimum", "maximum", "minimumPerCategory"],
+          "properties": {
+            "minimum": { "const": 10 },
+            "maximum": { "const": 12 },
+            "minimumPerCategory": { "const": 2 }
+          }
+        },
+        "categories": {
+          "const": [
+            "exam-preparation",
+            "public-service-reference",
+            "practical-visual-learning",
+            "no-account-offline-education"
+          ]
+        },
+        "acquisitionSlots": {
+          "type": "array",
+          "minItems": 12,
+          "maxItems": 12,
+          "items": { "$ref": "#/$defs/benchmarkSlot" }
+        },
+        "canonicalSourceFields": { "type": "array", "minItems": 10, "maxItems": 10, "uniqueItems": true, "items": { "type": "string" } },
+        "qualitativeEvaluationFields": { "type": "array", "minItems": 20, "uniqueItems": true, "items": { "type": "string" } },
+        "sources": { "type": "array", "maxItems": 0 },
+        "claimPolicy": { "type": "array", "minItems": 4, "uniqueItems": true, "items": { "type": "string" } }
+      }
+    },
+    "prototypeEngine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "engineStatus",
+        "futureInputs",
+        "sharedInvariantFields",
+        "operations",
+        "permittedTerritoryOverrides",
+        "routeArchetypes",
+        "territories",
+        "tokenRoles",
+        "renderContract",
+        "prohibitions"
+      ],
+      "properties": {
+        "label": { "$ref": "#/$defs/artifactLabel" },
+        "engineStatus": { "const": "blocked-awaiting-future-language-and-navigation-inputs" },
+        "futureInputs": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["language", "navigation"],
+          "properties": {
+            "language": { "$ref": "#/$defs/futureInput" },
+            "navigation": { "$ref": "#/$defs/futureInput" }
+          }
+        },
+        "sharedInvariantFields": { "type": "array", "minItems": 8, "uniqueItems": true, "items": { "type": "string" } },
+        "operations": {
+          "const": [
+            "bindLanguageContract",
+            "bindNavigationContract",
+            "normalizeSharedContent",
+            "renderArchetype",
+            "semanticFingerprint",
+            "styleFingerprint"
+          ]
+        },
+        "permittedTerritoryOverrides": {
+          "const": ["tokens", "densityRules", "imageFraming", "cssComposition"]
+        },
+        "routeArchetypes": { "type": "array", "minItems": 7, "maxItems": 7, "items": { "$ref": "#/$defs/routeArchetype" } },
+        "territories": { "type": "array", "minItems": 3, "maxItems": 3, "items": { "$ref": "#/$defs/territory" } },
+        "tokenRoles": { "type": "array", "minItems": 70, "uniqueItems": true, "items": { "type": "string" } },
+        "renderContract": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["rendererCount", "territoryCount", "archetypeCount", "minimumFrameCount", "serverBinding", "assetAllowlist", "crossTerritoryEquality"],
+          "properties": {
+            "rendererCount": { "const": 1 },
+            "territoryCount": { "const": 3 },
+            "archetypeCount": { "const": 7 },
+            "minimumFrameCount": { "const": 21 },
+            "serverBinding": { "const": "127.0.0.1" },
+            "assetAllowlist": { "type": "array", "minItems": 3, "maxItems": 3, "uniqueItems": true, "items": { "type": "string" } },
+            "crossTerritoryEquality": { "type": "array", "minItems": 8, "uniqueItems": true, "items": { "type": "string" } }
+          }
+        },
+        "prohibitions": { "type": "array", "minItems": 14, "uniqueItems": true, "items": { "type": "string" } }
+      }
+    },
+    "evidenceInterfaces": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "interfaces", "routeSimulationTasks"],
+      "properties": {
+        "label": { "$ref": "#/$defs/artifactLabel" },
+        "interfaces": { "type": "array", "minItems": 5, "maxItems": 5, "items": { "$ref": "#/$defs/evidenceInterface" } },
+        "routeSimulationTasks": { "type": "array", "minItems": 7, "maxItems": 7, "items": { "$ref": "#/$defs/routeSimulationTask" } }
+      }
+    },
+    "gateAccounting": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "observedParticipantCount",
+        "participantIds",
+        "approvalArtifacts",
+        "matrixRatings",
+        "advancingTerritoryIds",
+        "finalistTerritoryIds",
+        "selectedTerritoryId",
+        "winnerTerritoryId",
+        "recommendedTerritoryId",
+        "hybrid",
+        "canonicalPromotionPerformed",
+        "plan006DoneClaimed"
+      ],
+      "properties": {
+        "label": { "$ref": "#/$defs/artifactLabel" },
+        "observedParticipantCount": { "const": 0 },
+        "participantIds": { "type": "array", "maxItems": 0 },
+        "approvalArtifacts": { "type": "array", "maxItems": 0 },
+        "matrixRatings": { "type": "array", "maxItems": 0 },
+        "advancingTerritoryIds": { "type": "array", "maxItems": 0 },
+        "finalistTerritoryIds": { "type": "array", "maxItems": 0 },
+        "selectedTerritoryId": { "type": "null" },
+        "winnerTerritoryId": { "type": "null" },
+        "recommendedTerritoryId": { "type": "null" },
+        "hybrid": { "const": false },
+        "canonicalPromotionPerformed": { "const": false },
+        "plan006DoneClaimed": { "const": false }
+      }
+    }
+  },
+  "$defs": {
+    "artifactLabel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "participantEvidence", "decisionStatus", "requiredDependencyShas", "mustRebaseAndReverify"],
+      "properties": {
+        "status": { "const": "provisional-prework" },
+        "participantEvidence": { "const": "none" },
+        "decisionStatus": { "const": "pending" },
+        "requiredDependencyShas": { "type": "null" },
+        "mustRebaseAndReverify": { "const": true }
+      }
+    },
+    "gitSha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "sourceFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": { "type": "string", "pattern": "^[^/].+" },
+        "sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "attachmentEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bytes", "canonicalRepoPath", "contentKind", "path", "rightsStatus", "sha256", "useStatus"],
+      "properties": {
+        "bytes": { "type": "integer", "minimum": 1 },
+        "canonicalRepoPath": { "oneOf": [{ "type": "null" }, { "type": "string", "pattern": "^content/assets/derivatives/" }] },
+        "contentKind": { "enum": ["generated-preview-thumbnail", "old-component-library-html", "canonical-derivative-copy", "old-baseline-metadata", "old-renderer-runtime"] },
+        "path": { "type": "string", "minLength": 1 },
+        "rightsStatus": { "enum": ["unknown-archive-provides-no-license", "archive-adds-no-rights-canonical-release-ledger-controls"] },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "useStatus": { "enum": ["evidence-only-do-not-copy-to-product-or-prototype", "use-only-via-byte-identical-canonical-repo-derivative"] }
+      }
+    },
+    "presentation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["presentationId", "width", "height", "builtInLargeText", "textZoomPercent", "forcedColors", "reducedMotion", "media"],
+      "properties": {
+        "presentationId": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "width": { "type": "integer", "minimum": 320 },
+        "height": { "type": "integer", "minimum": 720 },
+        "builtInLargeText": { "type": "boolean" },
+        "textZoomPercent": { "type": "integer", "minimum": 100, "maximum": 200 },
+        "forcedColors": { "type": "boolean" },
+        "reducedMotion": { "type": "boolean" },
+        "media": { "enum": ["screen", "print"] }
+      }
+    },
+    "captureCase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["caseId", "routeId", "routePath", "presentationId", "captureStatus", "captureId", "sha256", "capturedAt"],
+      "properties": {
+        "caseId": { "type": "string", "pattern": "^C(0[1-9]|1[0-9]|2[0-4])$" },
+        "routeId": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "routePath": { "type": "string", "pattern": "^/" },
+        "presentationId": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "captureStatus": { "const": "pending-future-canonical-run" },
+        "captureId": { "type": "null" },
+        "sha256": { "type": "null" },
+        "capturedAt": { "type": "null" }
+      }
+    },
+    "derivative": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "bytes", "sha256", "width", "height"],
+      "properties": {
+        "path": { "type": "string", "pattern": "^content/assets/derivatives/" },
+        "bytes": { "type": "integer", "minimum": 1 },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "masterAsset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "bytes", "sha256"],
+      "properties": {
+        "path": { "type": "string", "pattern": "^content/assets/masters/" },
+        "bytes": { "type": "integer", "minimum": 1 },
+        "sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "assetEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "assetType",
+        "stableId",
+        "opaqueAssetId",
+        "revision",
+        "sourceReleaseStatus",
+        "sourceLedger",
+        "master",
+        "web",
+        "phone",
+        "print",
+        "rightsReview",
+        "use",
+        "visualAuditStatus"
+      ],
+      "properties": {
+        "assetType": { "enum": ["tool", "comparison", "scene"] },
+        "stableId": { "type": "string", "minLength": 3 },
+        "opaqueAssetId": { "type": "string", "pattern": "^[tps][0-9]{3}$" },
+        "revision": { "oneOf": [{ "type": "integer", "minimum": 1 }, { "const": "n/a" }] },
+        "sourceReleaseStatus": { "const": "accepted" },
+        "sourceLedger": { "type": "string", "pattern": "^content/authoring/visuals/releases/" },
+        "master": { "$ref": "#/$defs/masterAsset" },
+        "web": { "$ref": "#/$defs/derivative" },
+        "phone": { "$ref": "#/$defs/derivative" },
+        "print": { "$ref": "#/$defs/derivative" },
+        "rightsReview": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["outcome", "statement", "source"],
+          "properties": {
+            "outcome": { "enum": ["pass", "accepted-master-input-composition"] },
+            "statement": { "type": "string", "minLength": 12 },
+            "source": { "type": "string", "minLength": 5 }
+          }
+        },
+        "use": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["practiceEligibility", "scopeStatus", "gate", "prototypeBoundary"],
+          "properties": {
+            "practiceEligibility": { "enum": ["entry-level-supported", "atlas-only-watchlist-or-gated", "hazard-assessment-only"] },
+            "scopeStatus": { "const": "source-fact-only-not-route-identity-approval" },
+            "gate": { "oneOf": [{ "type": "null" }, { "type": "string", "minLength": 1 }] },
+            "prototypeBoundary": { "type": "string", "minLength": 12 }
+          }
+        },
+        "visualAuditStatus": { "const": "pending-future-plan-006-per-pixel-audit" }
+      }
+    },
+    "futureInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "sourcePath", "sourceSha", "contentSha256", "verificationStatus"],
+      "properties": {
+        "required": { "const": true },
+        "sourcePath": { "type": "null" },
+        "sourceSha": { "type": "null" },
+        "contentSha256": { "type": "null" },
+        "verificationStatus": { "const": "unavailable" }
+      }
+    },
+    "benchmarkSlot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["slotId", "category", "acquisitionStatus", "directUrl", "observedAt", "claimIds"],
+      "properties": {
+        "slotId": { "type": "string", "pattern": "^B(0[1-9]|1[0-2])$" },
+        "category": { "enum": ["exam-preparation", "public-service-reference", "practical-visual-learning", "no-account-offline-education"] },
+        "acquisitionStatus": { "const": "unacquired" },
+        "directUrl": { "type": "null" },
+        "observedAt": { "type": "null" },
+        "claimIds": { "type": "array", "maxItems": 0 }
+      }
+    },
+    "routeArchetype": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["archetypeId", "routeIds", "terminalDocuments"],
+      "properties": {
+        "archetypeId": { "enum": ["orientation", "study-launcher", "browse-reference", "focused-task", "review-results", "utility", "recovery"] },
+        "routeIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "pattern": "^[a-z0-9-]+$" } },
+        "terminalDocuments": { "type": "array", "uniqueItems": true, "items": { "enum": ["404", "410", "5xx"] } }
+      }
+    },
+    "territory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["territoryId", "internalHypothesis", "participantFacingLabel", "differentiationAxes", "tokenValues", "evaluationStatus", "territoryStatus", "selectionEligible", "renderEnabled"],
+      "properties": {
+        "territoryId": { "enum": ["A", "B", "C"] },
+        "internalHypothesis": { "enum": ["Editorial Field Guide", "Practical Workshop Manual", "Calm Study Companion"] },
+        "participantFacingLabel": { "enum": ["A", "B", "C"] },
+        "differentiationAxes": { "type": "array", "minItems": 5, "uniqueItems": true, "items": { "type": "string" } },
+        "renderEnabled": { "const": false },
+        "selectionEligible": { "const": false },
+        "territoryStatus": { "const": "provisional-shell" },
+        "tokenValues": { "type": "null" },
+        "evaluationStatus": { "const": "not-built-or-evaluated" }
+      }
+    },
+    "evidenceInterface": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["interfaceId", "label", "recordFields", "records", "evidenceClass", "participantCountContribution", "canSatisfyParticipantGate", "canSatisfyOwnerSelection"],
+      "properties": {
+        "interfaceId": { "enum": ["heuristic-review", "automated-accessibility", "corpus-use", "route-simulation", "owner-dogfood"] },
+        "label": { "$ref": "#/$defs/artifactLabel" },
+        "recordFields": { "type": "array", "minItems": 8, "uniqueItems": true, "items": { "type": "string" } },
+        "records": { "type": "array", "maxItems": 0 },
+        "evidenceClass": { "const": "supplementary-only" },
+        "participantCountContribution": { "const": 0 },
+        "canSatisfyParticipantGate": { "const": false },
+        "canSatisfyOwnerSelection": { "const": false }
+      }
+    },
+    "routeSimulationTask": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["taskId", "archetypeId", "routeIds", "actorType", "participantCountContribution"],
+      "properties": {
+        "taskId": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "archetypeId": { "enum": ["orientation", "study-launcher", "browse-reference", "focused-task", "utility", "recovery"] },
+        "routeIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string" } },
+        "actorType": { "const": "deterministic-harness" },
+        "participantCountContribution": { "const": 0 }
+      }
+    }
+  }
+}
