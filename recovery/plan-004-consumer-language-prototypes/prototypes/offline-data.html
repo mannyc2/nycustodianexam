@@ -1,0 +1,93 @@
+<!-- Prototype ID: offline-data -->
+<!-- Prototype version: CL-1 -->
+<!--
+Source anchor: apps/site/scripts/generate-pages.tsx:1493-1495,1519; apps/site/src/offline-packs/react/pack-manager.tsx:25-34,292-309; apps/site/src/settings/react/settings.tsx:154-176,364-426; apps/site/public/offline.html
+Tested hypothesis: A learner can tell apart saved-on-device, available-offline, downloaded-but-not-ready, and could-not-import, and can correctly predict what an import and a reset will and will not change — without learning the storage state machine.
+Preserved constraint: A failed update must still leave the prior working content in place. Destructive actions keep explicit scope and confirmation. Version pins must still block unsafe removal. Export must still exclude free-form correction drafts unless explicitly included.
+Candidate layers: default | guardrail | advanced
+Research-only. Not production copy. Structure and product semantics
+are held fixed; only wording and disclosure level vary.
+-->
+<main class="proto" data-prototype="offline-data">
+<h1 class="proto-title">Offline packs, import, and reset</h1>
+<section class="proto-block" data-variant="current" aria-label="Current wording">
+<h2>Current wording</h2>
+<p>A requested pack is staged, checksum-verified, and then waits for a separate activation action. Failed updates leave the prior active pack unchanged.</p>
+<p>Manager surfaces: exact objects · checksum closure · generations · application-shell bytes · shell-build fingerprint</p>
+<p>Preferences, export, import preview, quarantine, and scoped reset work without an account. Offline-pack removal stays on its own page so version pins cannot be bypassed.</p>
+<p>Diagnostics: architecture ready · append-only events · schema versions · SHA-256 checksums · projections · quarantine</p>
+<p>Error heading: <strong>Local-data operation stopped</strong></p>
+</section>
+<section class="proto-block" data-variant="CL-D1" aria-label="Candidate CL-D1 — four states named by consequence">
+<h2>Candidate CL-D1 — four states named by consequence</h2>
+<ul>
+<li><strong>Ready to use offline</strong> — 65 tools and 90 questions work with no internet.</li>
+<li><strong>Downloaded, not ready yet</strong> — we are still checking these files. Nothing has changed yet.</li>
+<li><strong>Not downloaded</strong> — these need internet. <strong>Download for offline use (12 MB)</strong></li>
+<li><strong>Saved on this device</strong> — your answers and progress. These never leave this device.</li>
+</ul>
+<p class="guardrail">Nothing downloads on its own. You choose when.</p>
+</section>
+<section class="proto-block" data-variant="CL-D2" aria-label="Candidate CL-D2 (open book)">
+<h2>Candidate CL-D2 (open book)</h2>
+<p><strong>Ready to use offline</strong> — 65 tools, 90 questions. <a href="#">What is stored on this device</a></p>
+<p class="guardrail">We check every download before switching to it. If the check fails, you keep what you already had.</p>
+</section>
+<section class="proto-state" data-state="offline-download-failed" aria-label="State: offline-download-failed">
+<h2>State: offline-download-failed</h2>
+<p><strong>The update did not finish downloading.</strong></p>
+<p>You still have the version you had before, and it still works offline. Nothing was deleted.</p>
+<p><strong>Try again</strong> when you have a better connection.</p>
+<p class="note">Replaces localFailureDetail output at pack-manager.tsx:294.</p>
+</section>
+<section class="proto-state" data-state="offline-page-unavailable" aria-label="State: offline-page-unavailable">
+<h2>State: offline-page-unavailable</h2>
+<p><strong>That page is not saved on this device.</strong></p>
+<p>Your saved practice is still here. We did not show you a different page instead.</p>
+<p><strong>Try again when you are back online</strong> · <strong>See what is saved</strong> · <strong>Go to the home page</strong></p>
+</section>
+<section class="proto-state" data-state="import-preview" aria-label="State: import-preview">
+<h2>State: import-preview</h2>
+<p><strong>Check this before importing</strong></p>
+<ul>
+<li><strong>Will be added:</strong> 142 answers from 3 August to 24 August.</li>
+<li><strong>Will not change:</strong> your settings, and any answers already on this device.</li>
+<li><strong>We could not read 4 items.</strong> They will be skipped, not imported. Nothing else is affected.</li>
+</ul>
+<p>Actions: <strong>Import 142 answers</strong> · <strong>Cancel</strong></p>
+</section>
+<section class="proto-state" data-state="import-failed" aria-label="State: import-failed">
+<h2>State: import-failed</h2>
+<p><strong>Nothing was imported.</strong></p>
+<p>This file is not a study export from this site, or it was damaged. Your existing answers are untouched.</p>
+<p><strong>Choose a different file</strong></p>
+</section>
+<section class="proto-state" data-state="destructive-reset-confirm" aria-label="State: destructive-reset-confirm">
+<h2>State: destructive-reset-confirm</h2>
+<p><strong>Delete your practice history?</strong></p>
+<ul>
+<li><strong>This deletes:</strong> all 142 saved answers and your review list.</li>
+<li><strong>This keeps:</strong> your settings, and the content you downloaded for offline use.</li>
+<li><strong>This cannot be undone.</strong> Export first if you want a copy.</li>
+</ul>
+<p>Actions: <strong>Export first</strong> · <strong>Delete practice history</strong> · <strong>Cancel</strong></p>
+</section>
+<section class="proto-state" data-state="removal-blocked-by-pin" aria-label="State: removal-blocked-by-pin">
+<h2>State: removal-blocked-by-pin</h2>
+<p><strong>You cannot remove this while a practice set is using it.</strong></p>
+<p>Finish or leave your current set first, then come back.</p>
+</section>
+<section class="proto-state" data-state="error" aria-label="State: error">
+<h2>State: error</h2>
+<p><strong>We could not change your local data.</strong></p>
+<p>Nothing was changed. Everything you had is still here.</p>
+<p><strong>Try again.</strong> If it keeps failing, your browser may be out of storage space.</p>
+<p class="note">Replaces 'Local-data operation stopped' plus localFailureDetail output at settings.tsx:366-367.</p>
+</section>
+<section class="proto-block" data-variant="advanced" aria-label="Advanced disclosure (both candidates)">
+<h2>Advanced disclosure (both candidates)</h2>
+<details><summary>Storage details</summary>
+<p>Space used, item counts, content pack version and checksum, and a rebuild action that deletes nothing.</p>
+</details>
+</section>
+</main>

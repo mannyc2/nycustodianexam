@@ -1,0 +1,62 @@
+<!-- Prototype ID: hazard-feedback -->
+<!-- Prototype version: CL-1 -->
+<!--
+Source anchor: apps/site/scripts/generate-pages.tsx:1255; apps/site/src/hazard-player/react/results.tsx:16-55,127-145
+Tested hypothesis: A learner can interpret a missed hazard and a safe detail they wrongly marked, without the words target, decoy, false positive, or construct.
+Preserved constraint: Commit-before-reveal is unchanged. The nonvisual keyboard equivalent stays first-class (FEATURE_SPEC.md:30-43). Fuzzy region matching must stay truthfully described, not overstated.
+Candidate layers: default | guardrail | advanced
+Research-only. Not production copy. Structure and product semantics
+are held fixed; only wording and disclosure level vary.
+-->
+<main class="proto" data-prototype="hazard-feedback">
+<h1 class="proto-title">Hazard scene feedback</h1>
+<section class="proto-block" data-variant="current" aria-label="Current wording">
+<h2>Current wording</h2>
+<p>Each scene starts with neutral orientation only. Hazard targets, safe decoys, corrections, and receipts remain unavailable until you commit.</p>
+<p>Results describe authored conditions, the scene model, a decoy false positive, and the correction concept.</p>
+<p>The visual-recognition construct uses granular authored locations.</p>
+<p>Alternate start: <strong>Start keyboard-native scene 1</strong></p>
+</section>
+<section class="proto-block" data-variant="CL-D1" aria-label="Candidate CL-D1 (plain task)">
+<h2>Candidate CL-D1 (plain task)</h2>
+<p>Look at the whole scene and mark anything unsafe. We will not tell you how many there are until you are done.</p>
+<p>Alternate start: <strong>Use the list version</strong> — the same scene described in text, for keyboard and screen readers.</p>
+<h4>After submitting</h4>
+<p><strong>You found 3 of 4 unsafe things.</strong></p>
+<p><strong>You missed:</strong> the mop bucket left in the doorway. Someone coming through cannot see it. Move it out of the walkway and put a wet-floor sign up.</p>
+<p><strong>You marked the fire extinguisher, but it is fine.</strong> It is mounted at the right height and its tag is current. It is easy to mistake for a hazard — check the tag date before flagging one.</p>
+<p><strong>You found:</strong> frayed cord, blocked exit sign, chemical bottle with no label.</p>
+</section>
+<section class="proto-block" data-variant="CL-D2" aria-label="Candidate CL-D2 (open book)">
+<h2>Candidate CL-D2 (open book)</h2>
+<p><strong>You found 3 of 4 unsafe things.</strong></p>
+<p><strong>You missed:</strong> the mop bucket in the doorway. <a href="#">Why this counts as a hazard</a></p>
+<p class="guardrail">We mark a hazard as found if you clicked near it — you do not have to be exact.</p>
+</section>
+<section class="proto-state" data-state="near-miss" aria-label="State: near-miss">
+<h2>State: near-miss</h2>
+<p><strong>Close enough — we counted it.</strong> You marked just beside the frayed cord. You do not need to be exact.</p>
+</section>
+<section class="proto-state" data-state="zero-marks" aria-label="State: zero-marks">
+<h2>State: zero-marks</h2>
+<p><strong>You marked nothing, and that was right.</strong> This scene has no hazards. Recognising a safe room matters as much as spotting a bad one.</p>
+</section>
+<section class="proto-state" data-state="commit-failed" aria-label="State: commit-failed">
+<h2>State: commit-failed</h2>
+<p><strong>Your marks were not saved.</strong></p>
+<p>Your marks are still on the scene and nothing has been revealed.</p>
+<p><strong>Submit again.</strong></p>
+</section>
+<section class="proto-state" data-state="asset-unavailable" aria-label="State: asset-unavailable">
+<h2>State: asset-unavailable</h2>
+<p><strong>This scene's picture is not available on this device.</strong></p>
+<p>Nothing about your progress has changed.</p>
+<p><strong>Use the list version</strong>, or <strong>download this scene</strong> for offline use.</p>
+</section>
+<section class="proto-block" data-variant="advanced" aria-label="Advanced disclosure (both candidates)">
+<h2>Advanced disclosure (both candidates)</h2>
+<details><summary>Technical details</summary>
+<p>Scene identifier, marked region coordinates, and match tolerance.</p>
+</details>
+</section>
+</main>

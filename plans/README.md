@@ -1,6 +1,6 @@
 # Implementation Plans
 
-Revised on 2026-08-26. Plans 001-003 record the completed visual-production and
+Revised on 2026-08-28. Plans 001-003 record the completed visual-production and
 research-normalization sequence. Plans 004-008 form a new consumer UI/UX
 research program planned at commit `e6f9119`. They assume the current route and
 feature inventory is the intended product, but do not assume the current copy,
@@ -22,8 +22,8 @@ checkpoint inside production, not a separate project.
 | 001 | Generate and approve the complete tool/PPE visual library | P1 | L | — | DONE — 65 accepted masters and 14 accepted deterministic comparisons verified |
 | 002 | Generate and approve the launch hazard-scene bank | P1 | L | Plan 001 pilot checkpoint | DONE — 18 accepted scenes passed exact-pixel independent review, release verification, and checksum closure |
 | 003 | Normalize and reduce the research corpus through connected @GitHub | P1 | L | Plans 001 and 002 merged; exact post-visual `main` SHA | DONE — PR #27 merged; maintained authorities and the retained research map now own the reconciled result |
-| 004 | Establish the consumer-language boundary | P1 | L | —; coordinate vocabulary and recruitment with Plan 005 | BLOCKED — Steps 1-6 done on `codex/uiux-consumer-language` (PR #37); Steps 7-11 need participant authorization |
-| 005 | Rebuild navigation around learner tasks | P1 | L | — to start; Plan 004 before final first-click round and promotion | BLOCKED — Steps 1-2 done on `codex/uiux-task-navigation` (PR #38); Steps 3-13 need participant authorization plus Plan 004's vocabulary |
+| 004 | Establish the consumer-language boundary | P1 | L | —; coordinate vocabulary and recruitment with Plan 005 | BLOCKED — 120-family desk audit complete (79 `REWRITE`); benchmark partial; eight `CL-1` prototypes authored but not piloted/frozen; no participant round or selected direction (open draft PR #37) |
+| 005 | Rebuild navigation around learner tasks | P1 | L | — to start; Plan 004 before final first-click round and promotion | BLOCKED — unvalidated 21-family/32-route/4-spoke task inventory complete; no participant study, candidate hierarchy, accepted decision, or product-contract promotion (open draft PR #38) |
 | 006 | Select a consumer visual system and route archetypes | P1 | L | Plans 004 and 005 | BLOCKED — cannot create its branch; Step 1 requires Plans 004 and 005 DONE in `origin/main` plus `product/CONTENT_DESIGN.md` |
 | 007 | Specify shared UI foundations and responsive route-family contracts | P1 | L | Plans 004, 005, and 006 | BLOCKED — cannot create its branch; Step 1 requires Plans 004-006 DONE in `origin/main` plus three promoted research artifacts |
 | 008 | Run integrated consumer UX and accessibility validation | P1 | L | Plans 004, 005, 006, and 007 | BLOCKED — cannot create its branch; Step 1 requires Plans 004-007 DONE in `origin/main` |
@@ -33,8 +33,8 @@ REJECTED (with one-line rationale)
 
 ## Current execution state
 
-Recorded 2026-08-27 against `origin/main` at
-`c8644c80c980a36699b526ed11d50758ee67e298`.
+Recorded 2026-08-28 after fetching `origin/main` at
+`e84f28e34549688bea6fab4c7fc574f812d72f46`.
 
 The whole 004-008 sequence is gated on evidence that only a human can supply.
 Each plan forbids substituting agents, generated personas, role-played
@@ -47,8 +47,8 @@ cannot satisfy any of these gates on the owner's behalf, by design.
 
 | Plan | Branch | Draft PR | Where it stops |
 |---|---|---|---|
-| 004 | `codex/uiux-consumer-language` | #37 | Step 7 — recruitment, consent, compensation, raw-notes location, retention, recording, and prototype exposure are unauthorized |
-| 005 | `codex/uiux-task-navigation` | #38 | Step 3 — the same operations gate, plus a final-round dependency on Plan 004 |
+| 004 | `codex/uiux-consumer-language` | #37 | Steps 1-4 complete; Step 5 benchmark partial; Step 6 authoring only. Pilot, R1/R2 freezes, participant rounds, owner decision, and promotion remain undone |
+| 005 | `codex/uiux-task-navigation` | #38 | Research setup and fixed route/task inventory only. Participant protocol onward remains undone; final labels/round/promotion also require Plan 004's accepted vocabulary |
 | 006 | none | none | Step 1 pre-branch sequence fails: 004/005 are not DONE in `origin/main`, and `product/CONTENT_DESIGN.md` does not exist there |
 | 007 | none | none | Step 1 preconditions fail: 004-006 are not DONE and none of the three required research artifacts exists in `origin/main` |
 | 008 | none | none | Step 1 preconditions fail: 004-007 are not DONE in `origin/main` |
@@ -57,15 +57,26 @@ Plans 006-008 are blocked structurally rather than by effort. Each says to stop
 rather than select another base or branch name, so no branch was created for
 them.
 
-PR #36 merged on 2026-08-27, so `origin/main` now carries Plans 004-008 and
-these index rows. That closes the base deviation the 004 and 005 research
-branches originally recorded: both have been merged forward onto the merged head
-`c8644c80c980a36699b526ed11d50758ee67e298` without force-pushing, and each
-charter records the reconciled base.
+PR #36 merged as `c8644c80c980a36699b526ed11d50758ee67e298`, and PR
+#39 then merged the index correction as the current main head shown above.
+PRs #37 and #38 remain open drafts at
+`fecc71c5ea240385b3d98f896b1152022a2bbbe8` and
+`9daddbfde073f1f73d806a68dac427b69efc8359`, respectively. Each draft merged
+the PR #36 main head into its branch; that did not merge either draft's
+research into `main`, and neither branch contains PR #39's later main commit.
 
-Merging PR #36 did not unblock anything on its own. Plans 004 and 005 remain
-gated on participant authorization and on the fieldwork itself, and Plans
-006-008 still require 004 and 005 to reach DONE here first.
+The drafts retain useful partial work: PR #37 holds the desk-audit synthesis,
+benchmark record, aggregate, and validator; PR #38 holds the fixed route/task
+inventory, research skeleton, aggregate, and validator. This reconciliation
+does not duplicate, discard, accept, close, or merge that work. The eight safe
+editable Plan 004 prototype bytes that existed only in temporary storage are
+preserved separately with exact provenance and hashes in
+[`recovery/plan-004-consumer-language-prototypes/`](../recovery/plan-004-consumer-language-prototypes/).
+That recovery set is not a formal R1/R2 snapshot or participant evidence.
+
+Merging PRs #36 and #39 did not complete any research. Plans 004 and 005 remain
+gated on authorization and real-user fieldwork, and Plans 006-008 still require
+004 and 005 to reach DONE here first.
 
 ## How the sequence works
 
@@ -115,8 +126,10 @@ plans themselves. External participant outreach, compensation, recording, or
 prototype hosting still requires separate operator approval. Raw participant
 data never belongs in Git.
 
-Plans 004 and 005 may open in parallel, but merge Plan 004 first. Plan 005 must
-then fetch the new `main`, reconcile the accepted vocabulary and the shared
+Plans 004 and 005 are open in parallel as draft PRs #37 and #38, but neither is
+accepted or merged. Merge Plan 004 first only after its remaining criteria are
+actually complete. Plan 005 must then fetch the new `main`, reconcile the
+accepted vocabulary and the shared
 `research/README.md`/`plans/README.md` edits without force-pushing, preserve both
 map/status rows, rerun affected label tests, and only then run its final
 first-click round and seek merge. Plans 006-008 begin from the exact merged head

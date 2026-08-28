@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "artifactSetId": "plan-004-consumer-language-editable-cl-1-recovery-2026-08-28",
+  "status": "recovered-editable-unpiloted-unfrozen",
+  "hashAlgorithm": "sha256-raw-bytes",
+  "setDigest": {
+    "algorithm": "sha256-of-alphabetically-sorted-sha256sum-basename-lines",
+    "sha256": "f1ef0a2dec44ae04c8c2b3e8f94fe9e59b3c38a54d3310ae50b4b7dde10ecf14"
+  },
+  "source": {
+    "kind": "untracked-temporary-working-artifact",
+    "pathAtObservation": "/tmp/nycustodian-content-004.VLmjKt/prototypes",
+    "observedAt": "2026-08-28T10:27:03Z",
+    "commonFileMtimeUtc": "2026-08-27T10:00:43.397627276Z",
+    "planningSha": "e6f911901f7f18f6716204309fee8b103419a5e0",
+    "originalExecutionBaseSha": "115b91a3cce5a6ec4cdbe7981847f8d494e326eb",
+    "associatedBranch": "codex/uiux-consumer-language",
+    "associatedBranchHeadAtObservation": "fecc71c5ea240385b3d98f896b1152022a2bbbe8",
+    "relatedPullRequest": {
+      "number": 37,
+      "url": "https://github.com/mannyc2/nycustodianexam/pull/37",
+      "stateAtObservation": "open-draft"
+    },
+    "workingLedger": {
+      "pathAtObservation": "/tmp/nycustodian-content-004.VLmjKt/research-ledger.md",
+      "sha256": "a373461015989134ada21203b6489599d11d89707a28a83f3a2c8a4ebf354873"
+    },
+    "observedGenerator": {
+      "pathAtObservation": "/tmp/nycustodian-content-004.VLmjKt/build-prototypes.mjs",
+      "sha256": "c383ae542ed26d513ec21ef182fd8cd1f7b8cf73b8bc5e69a9d8d5761bfadac9",
+      "retained": false
+    }
+  },
+  "preservation": {
+    "repositoryBaseSha": "e84f28e34549688bea6fab4c7fc574f812d72f46",
+    "outputBranch": "codex/uiux-orchestration-01-reconcile",
+    "rawFileBytesUnchanged": true,
+    "trackedFileMode": "100644",
+    "sourceModeNote": "Seven source files were mode 0664 and review.html was mode 0444. Git normalizes all retained text files to 100644; byte hashes are unchanged."
+  },
+  "observedState": {
+    "prototypeCount": 8,
+    "totalBytes": 36767,
+    "prototypeVersion": "CL-1",
+    "formalPrototypeManifestPresent": false,
+    "snapshotRounds": {
+      "R1": "empty",
+      "R2": "empty"
+    },
+    "deskAudit": {
+      "classifiedCopyFamilies": 120,
+      "rewriteFamilies": 79
+    },
+    "benchmarkStudy": "partial",
+    "moderatorGuidePilot": false,
+    "participantRounds": 0,
+    "participantExposure": false,
+    "selectedDirection": false
+  },
+  "safetyReview": {
+    "reviewedAt": "2026-08-28T10:27:03Z",
+    "disposition": "safe-to-retain",
+    "contextualInspectionOfEveryFile": true,
+    "participantPiiDetected": false,
+    "secretsDetected": false,
+    "remoteOrExecutableResourcesDetected": false,
+    "protectedSecureRememberedOrRecalledExamContentDetected": false,
+    "note": "question-feedback.html contains three explicitly research-only rewrites of the project's original practice comparisons; they are not official or remembered examination items."
+  },
+  "files": [
+    {
+      "prototypeId": "home",
+      "prototypeVersionMarker": "CL-1",
+      "path": "prototypes/home.html",
+      "mediaType": "text/html",
+      "charset": "UTF-8",
+      "bytes": 3571,
+      "sha256": "05df1d5bdc797137d0b35e0a30eaf1b2781351e542b0b4d7a2c68da42d8231b2",
+      "sourceMode": "0664",
+      "sourceAnchor": "apps/site/scripts/generate-pages.tsx:912,922-930"
+    },
+    {
+      "prototypeId": "profile",
+      "prototypeVersionMarker": "CL-1",
+      "path": "prototypes/profile.html",
+      "mediaType": "text/html",
+      "charset": "UTF-8",
+      "bytes": 3499,
+      "sha256": "e672f50871d80572cdc2e6f13e3fe85e04a8c5ac186f0228093ce85e8fd79ca6",
+      "sourceMode": "0664",
+      "sourceAnchor": "apps/site/scripts/generate-pages.tsx:1078,1116-1120"
+    },
+    {
+      "prototypeId": "practice-start",
+      "prototypeVersionMarker": "CL-1",
+      "path": "prototypes/practice-start.html",
+      "mediaType": "text/html",
+      "charset": "UTF-8",
+      "bytes": 4047,
+      "sha256": "cfe277890d2c6ef9490c74055c6ba94a5921a0a6c465aaf34b3b960a07a4e06e",
+      "sourceMode": "0664",
+      "sourceAnchor": "apps/site/scripts/generate-pages.tsx:1138-1151; apps/site/src/simulation/react/setup.tsx:212-227"
+    },
+    {
+      "prototypeId": "question-feedback",
+      "prototypeVersionMarker": "CL-1",
+      "path": "prototypes/question-feedback.html",
+      "mediaType": "text/html",
+      "charset": "UTF-8",
+      "bytes": 6058,
+      "sha256": "10336e7ce3d85b587b0eea5f8e8eb6d717e1a595775e11256201f62b45c676db",
+      "sourceMode": "0664",
+      "sourceAnchor": "apps/site/src/question-player/react/question-form.tsx:15-17,92-98; apps/site/src/question-player/react/feedback.tsx:23,88-145; content/authoring/packs/launch-v1.curated.mjs:1008-1087"
+    },
+    {
+      "prototypeId": "hazard-feedback",
+      "prototypeVersionMarker": "CL-1",
+      "path": "prototypes/hazard-feedback.html",
+      "mediaType": "text/html",
+      "charset": "UTF-8",
+      "bytes": 4219,
+      "sha256": "c9441b28584f1453b8afe982f61c906a9d5f98e352fcc886b1e135e64b3e495b",
+      "sourceMode": "0664",
+      "sourceAnchor": "apps/site/scripts/generate-pages.tsx:1255; apps/site/src/hazard-player/react/results.tsx:16-55,127-145"
+    },
+    {
+      "prototypeId": "review",
+      "prototypeVersionMarker": "CL-1",
+      "path": "prototypes/review.html",
+      "mediaType": "text/html",
+      "charset": "UTF-8",
+      "bytes": 3751,
+      "sha256": "207ff61103d67bdd5dd5be8d4ef154cb804aa767f2583ea57698525f664c2c67",
+      "sourceMode": "0444",
+      "sourceAnchor": "apps/site/scripts/generate-pages.tsx:946-953,491; apps/site/src/review/react/review-queue.tsx:5-16,154"
+    },
+    {
+      "prototypeId": "offline-data",
+      "prototypeVersionMarker": "CL-1",
+      "path": "prototypes/offline-data.html",
+      "mediaType": "text/html",
+      "charset": "UTF-8",
+      "bytes": 6528,
+      "sha256": "0eede6bbc7d6c7f2a2b1434eb7f2ad1fa3929c0ecf3bc9fe823151a558d42a8f",
+      "sourceMode": "0664",
+      "sourceAnchor": "apps/site/scripts/generate-pages.tsx:1493-1495,1519; apps/site/src/offline-packs/react/pack-manager.tsx:25-34,292-309; apps/site/src/settings/react/settings.tsx:154-176,364-426; apps/site/public/offline.html"
+    },
+    {
+      "prototypeId": "trust-recovery",
+      "prototypeVersionMarker": "CL-1",
+      "path": "prototypes/trust-recovery.html",
+      "mediaType": "text/html",
+      "charset": "UTF-8",
+      "bytes": 5094,
+      "sha256": "36f1cec7646ccddf7e5cd525b88517cf7372cfc5eb187beae7332bac4eafa2f4",
+      "sourceMode": "0664",
+      "sourceAnchor": "apps/site/scripts/generate-pages.tsx:1060-1061,1271-1272,1538-1589,1166,1234-1238"
+    }
+  ]
+}
