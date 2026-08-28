@@ -8,7 +8,8 @@ This directory is the implementation-facing product contract recovered and norma
 2. **Current implementation constraints:** `ARCHITECTURE_CONSTRAINTS.md`.
 3. **Canonical page implementation:** `ROUTES.md`, `SCREEN_STATES.md`, and
    `COMPONENT_ARCHITECTURE.md`, with presentation rules in `DESIGN_SYSTEM.md`.
-4. **Product behavior and UX:** `FEATURE_SPEC.md`.
+4. **Product behavior and UX:** `FEATURE_SPEC.md`, with public wording governed
+   by `CONTENT_DESIGN.md`.
 5. **Illustration production:** `../illustration/`.
 6. **Supporting investigations:** [`../research/README.md`](../research/README.md).
 7. **Recovery bookkeeping:** `../recovery/CORPUS_RECOVERY.md`.
@@ -49,6 +50,10 @@ The contract covers:
 - `DESIGN_SYSTEM.md` supplies the shared token, layout, control, focus,
   responsive, forced-color, reduced-motion, and print contract used by static
   documents and islands.
+- `CONTENT_DESIGN.md` supplies the selected task-first copy layers, public
+  vocabulary, error/recovery structure, progressive evidence disclosure, and
+  explicit `CODEX-ONLY-UIUX-V1` limitations. It is **NOT
+  HUMAN-USABILITY-TESTED**.
 
 Together these files are the implementation-facing UI plan. New pages,
 components, modes, and boolean behavior props must be reconciled here rather
