@@ -1,7 +1,7 @@
 # Chat corpus recovery and reconciliation ledger
 
 **Initial recovery date:** 2026-08-19
-**Updated:** 2026-08-24
+**Updated:** 2026-08-28
 **Purpose:** distinguish maintained authority, durable recovered artifacts,
 historical evidence, superseded recommendations, and work that was never
 located.
@@ -35,6 +35,7 @@ The reduced current evidence map is [`research/README.md`](../research/README.md
 | Hazard-scene behavior | **CANONICAL-INTEGRATED** | Product specification plus maintained scene content/release records. |
 | Offline/PWA/local-first behavior | **CANONICAL-INTEGRATED** | Product specification and architecture constraints. |
 | Accessibility and print behavior | **CANONICAL-INTEGRATED** | Product specification; implementation/release evidence remains tracked in [`docs/OPEN.md`](../docs/OPEN.md). |
+| Plan 004 editable consumer-language prototypes, recovered 2026-08-28 | **RECOVERED-DURABLE / UNPILOTED** | [`plan-004-consumer-language-prototypes/`](plan-004-consumer-language-prototypes/) preserves the exact eight safe `CL-1` working files and their recovery manifest. They were not piloted, frozen as R1/R2, exposed to participants, selected, or promoted to product authority. |
 | Standalone print-system deliverable | **NOT LOCATED** | No fabricated replacement. The feature specification is the only durable print contract recovered. |
 
 ## Effect/Bun research reconciliation
@@ -132,6 +133,11 @@ editorial geometry authoritative or grant production approval.
 - historical cost assumptions — `e7a192cce464b6758c62b58ea5e7d41f403d121de8f92a5fe583cafd20633df6`
 - Nassau question-bank report — `a2fc4f9704e1530c0e2f93a4e616e01b2fb9a148bffdf21152d37daa734758f4`
 - supplied first-pass archive — `40cfab3f2a0a6d26782b7e24776d4d595ba6cef86389836030134844c3aaeff5`
+- recovered Plan 004 editable prototype set (SHA-256 of the sorted eight
+  `sha256sum` basename lines) —
+  `f1ef0a2dec44ae04c8c2b3e8f94fe9e59b3c38a54d3310ae50b4b7dde10ecf14`
+- Plan 004 prototype recovery manifest —
+  `a4c9f7ae8b077c7449c7ebf55a004a27559327526f0b02f8343fe59675b56bc2`
 
 ## Reconciliation rules
 

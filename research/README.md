@@ -33,8 +33,16 @@ and conclusions already maintained elsewhere do not belong here.
 | [`v2/hazard-scene-production/README.md`](v2/hazard-scene-production/README.md) | Accepted historical synthesis | Preserves target/decoy closure, region, accessibility/nonvisual, version, and QA boundaries. Production is controlled by the visual policy and the accepted 18-scene release records. |
 | [`v2/tool-geometry-audit/REPORT.md`](v2/tool-geometry-audit/REPORT.md) | Accepted historical evidence; byte-identical | Preserves exact POC dispositions, artifact-identity conflict, rights declaration, and stable line evidence consumed by the maintained tool pilot brief. The four POCs are retired production-art candidates. |
 
-There is no unresolved research program in this reduced tree. Current exam
-unknowns and implementation/release gates are recorded in [`docs/OPEN.md`](../docs/OPEN.md).
+No unresolved research program has merged into this reduced research tree.
+Plans 004 and 005 are partial work in open draft PRs
+[#37](https://github.com/mannyc2/nycustodianexam/pull/37) and
+[#38](https://github.com/mannyc2/nycustodianexam/pull/38), respectively; neither
+draft is accepted research or product authority. The eight safe Plan 004
+editable prototypes recovered from temporary storage live in the
+[`recovery/` ledger](../recovery/plan-004-consumer-language-prototypes/), not
+in this retained research map, because they are unpiloted working artifacts.
+Current exam unknowns and implementation/release gates are recorded in
+[`docs/OPEN.md`](../docs/OPEN.md).
 
 ## Deleted-family map
 

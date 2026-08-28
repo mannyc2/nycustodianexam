@@ -1,0 +1,57 @@
+<!-- Prototype ID: review -->
+<!-- Prototype version: CL-1 -->
+<!--
+Source anchor: apps/site/scripts/generate-pages.tsx:946-953,491; apps/site/src/review/react/review-queue.tsx:5-16,154
+Tested hypothesis: A learner can say what is waiting for them and what finishing an item will do, without the words projection, acknowledgement, or false-positive marker.
+Preserved constraint: 'Due', 'reviewed', 'recent accuracy', and 'practice history' keep their reserved meanings and no premature 'mastered' claim appears (FEATURE_SPEC.md:353). An empty queue is success, not an error. Opening an item must not silently acknowledge it.
+Candidate layers: default | guardrail | advanced
+Research-only. Not production copy. Structure and product semantics
+are held fixed; only wording and disclosure level vary.
+-->
+<main class="proto" data-prototype="review">
+<h1 class="proto-title">Review queue</h1>
+<section class="proto-block" data-variant="current" aria-label="Current wording">
+<h2>Current wording</h2>
+<p>This no-account queue is rebuilt on this device from durable question and visual-hazard attempts. It never treats displayed feedback as reviewed and does not claim mastery or an official schedule.</p>
+<p>Item label: directional concept relationship · general false-positive marker</p>
+<p><strong>Saved feedback:</strong> opening this item does not acknowledge it or remove it from the due queue. Return to Review and use the explicit acknowledgement action when finished.</p>
+</section>
+<section class="proto-block" data-variant="CL-D1" aria-label="Candidate CL-D1 (plain task)">
+<h2>Candidate CL-D1 (plain task)</h2>
+<h3>Things worth another look</h3>
+<p>These come from questions and scenes you have already answered on this device.</p>
+<ul>
+<li><strong>Pipe wrench vs adjustable wrench</strong> — you picked adjustable wrench on 24 August</li>
+<li><strong>Fire extinguishers</strong> — you marked a safe one as a hazard on 25 August</li>
+</ul>
+<p class="guardrail">This list is ours, not a study schedule from the state. Reading an item does not clear it — you choose when you are done with it.</p>
+<p>Action label: <strong>I'm done with this one</strong></p>
+</section>
+<section class="proto-block" data-variant="CL-D2" aria-label="Candidate CL-D2 (open book)">
+<h2>Candidate CL-D2 (open book)</h2>
+<h3>Things worth another look</h3>
+<p>Built from your answers on this device. <a href="#">How we choose these</a></p>
+<p class="guardrail">Reading an item does not clear it.</p>
+</section>
+<section class="proto-state" data-state="empty" aria-label="State: empty">
+<h2>State: empty</h2>
+<p><strong>Nothing is waiting.</strong></p>
+<p>You have looked at everything you got wrong so far. New items appear here after you practise.</p>
+<p><strong>Start practising</strong></p>
+</section>
+<section class="proto-state" data-state="loading" aria-label="State: loading">
+<h2>State: loading</h2>
+<p>Looking for your saved practice on this device…</p>
+</section>
+<section class="proto-state" data-state="unavailable" aria-label="State: unavailable">
+<h2>State: unavailable</h2>
+<p><strong>We cannot read your saved practice right now.</strong></p>
+<p>Nothing has been deleted. Your answers are still on this device.</p>
+<p><strong>Reload the page.</strong> If that does not work, <strong>rebuild the list in Settings</strong> — this does not delete any answers.</p>
+<p class="note">Replaces the arbitrary detail string currently rendered at review-queue.tsx:154.</p>
+</section>
+<section class="proto-state" data-state="no-javascript" aria-label="State: no-javascript">
+<h2>State: no-javascript</h2>
+<p>This list is built from answers saved on this device, so it needs JavaScript. Nothing on this page is stored anywhere else.</p>
+</section>
+</main>
