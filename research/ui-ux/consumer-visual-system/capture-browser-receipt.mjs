@@ -129,8 +129,8 @@ export const coverageContract = Object.freeze({
 
 export const keyboardEvidenceContract = Object.freeze({
   classification: "native-document-focus-order-round-trip",
-  forwardTraversal: "Native Tab visits every derived enabled rendered document focus stop exactly once in forward order.",
-  returnTraversal: "Native Shift+Tab visits the exact engine-specific reverse document order and returns to the first stop.",
+  forwardTraversal: "Native Tab visits every derived enabled rendered logical document focus stop exactly once in forward order and records the exact focused element coordinate.",
+  returnTraversal: "Native Shift+Tab visits the exact reverse logical document focus-stop order, records each exact engine-specific focused element coordinate, and returns to the first logical stop.",
   programmaticElementFocusUsed: false,
   firefoxAutomationLimitation: "After the final document stop, Playwright Firefox sends forward focus to browser chrome but exposes document.activeElement as the last link indefinitely; 100 additional native Tab presses in both headless and headed Xvfb runs did not expose or re-enter that chrome path. Therefore this evidence does not claim an observable forward-Tab wrap in Firefox."
 })
@@ -275,27 +275,60 @@ export const validateBrowserCase = (browserCase, allowlist = axePolicy.allowlist
     if (browserCase.actionTargetMinimumCssPx !== null) errors.push("print-action-target-must-be-null")
   } else {
     const keyboard = browserCase.keyboardTraversal
+    const exactShape = (value, keys) => value !== null && typeof value === "object" && !Array.isArray(value) && JSON.stringify(Object.keys(value).sort()) === JSON.stringify([...keys].sort())
+    const canonicalLogicalStop = ({ logicalStopId, coordinate }) => {
+      if (typeof logicalStopId !== "string" || typeof coordinate !== "string" || logicalStopId.length === 0 || coordinate.length === 0) return false
+      if (logicalStopId.startsWith("element:")) return logicalStopId === `element:${coordinate}`
+      if (!logicalStopId.startsWith("radio-group:")) return false
+      const encoded = logicalStopId.slice("radio-group:".length)
+      let tuple
+      try { tuple = JSON.parse(encoded) } catch { return false }
+      return Array.isArray(tuple) && tuple.length === 2 && tuple.every((value) => typeof value === "string" && value.length > 0) && tuple[1].length > 0 && JSON.stringify(tuple) === encoded
+    }
+    const expectedStopShape = (value) => exactShape(value, ["logicalStopId", "coordinate"]) &&
+      typeof value.logicalStopId === "string" && value.logicalStopId.length > 0 &&
+      typeof value.coordinate === "string" && value.coordinate.length > 0 &&
+      canonicalLogicalStop(value)
+    const visitedStopShape = (value) => exactShape(value, ["logicalStopId", "coordinate", "focusVisible"]) &&
+      expectedStopShape({ logicalStopId: value.logicalStopId, coordinate: value.coordinate }) &&
+      value.focusVisible === true
     if (keyboard?.performed !== true) errors.push("keyboard-traversal-missing")
     if (keyboard?.mode !== "native-Tab-forward-and-Shift-Tab-return-cycle") errors.push("keyboard-traversal-not-native-tab-cycle")
     if (!Number.isInteger(keyboard?.expectedFocusableCount) || keyboard.expectedFocusableCount < 1) errors.push("keyboard-focusable-count")
-    if (!Array.isArray(keyboard?.expectedOrder) || keyboard.expectedOrder.length !== keyboard.expectedFocusableCount) errors.push("keyboard-expected-order-count")
+    if (!Array.isArray(keyboard?.expectedOrder) || keyboard.expectedOrder.length !== keyboard.expectedFocusableCount || !keyboard.expectedOrder.every(expectedStopShape)) errors.push("keyboard-expected-order-count-or-shape")
     if (!Array.isArray(keyboard?.returnExpectedOrder) ||
       keyboard.returnExpectedOrder.length !== keyboard.expectedFocusableCount - 1 ||
-      new Set(keyboard.returnExpectedOrder).size !== keyboard.returnExpectedOrder.length ||
-      keyboard.returnExpectedOrder.at(-1) !== keyboard.expectedOrder?.[0]) errors.push("keyboard-return-expected-order")
-    if (!Array.isArray(keyboard?.visited) || keyboard.visited.length !== keyboard.expectedFocusableCount) errors.push("keyboard-visited-count")
-    if (!Array.isArray(keyboard?.returnVisited) || keyboard.returnVisited.length !== keyboard.expectedFocusableCount - 1) errors.push("keyboard-return-visited-count")
+      !keyboard.returnExpectedOrder.every(expectedStopShape)) errors.push("keyboard-return-expected-order-count-or-shape")
+    if (!Array.isArray(keyboard?.visited) || keyboard.visited.length !== keyboard.expectedFocusableCount || !keyboard.visited.every(visitedStopShape)) errors.push("keyboard-visited-count-or-shape")
+    if (!Array.isArray(keyboard?.returnVisited) || keyboard.returnVisited.length !== keyboard.expectedFocusableCount - 1 || !keyboard.returnVisited.every(visitedStopShape)) errors.push("keyboard-return-visited-count-or-shape")
     if (!Number.isInteger(keyboard?.stepCount) || keyboard.stepCount !== keyboard.expectedFocusableCount) errors.push("keyboard-step-count")
     if (!Number.isInteger(keyboard?.tabPressCount) || keyboard.tabPressCount !== 2 * keyboard.expectedFocusableCount - 1) errors.push("keyboard-tab-press-count")
-    if (Array.isArray(keyboard?.expectedOrder) && new Set(keyboard.expectedOrder).size !== keyboard.expectedOrder.length) errors.push("keyboard-expected-order-duplicate")
-    const visitedOrder = Array.isArray(keyboard?.visited) ? keyboard.visited.map(({ coordinate }) => coordinate) : []
-    const returnVisitedOrder = Array.isArray(keyboard?.returnVisited) ? keyboard.returnVisited.map(({ coordinate }) => coordinate) : []
-    if (new Set(visitedOrder).size !== visitedOrder.length || keyboard?.allStopsUnique !== true) errors.push("keyboard-observed-duplicate-or-trap")
+    const expectedLogicalOrder = Array.isArray(keyboard?.expectedOrder) ? keyboard.expectedOrder.map(({ logicalStopId }) => logicalStopId) : []
+    const expectedCoordinateOrder = Array.isArray(keyboard?.expectedOrder) ? keyboard.expectedOrder.map(({ coordinate }) => coordinate) : []
+    const returnExpectedLogicalOrder = Array.isArray(keyboard?.returnExpectedOrder) ? keyboard.returnExpectedOrder.map(({ logicalStopId }) => logicalStopId) : []
+    const returnExpectedCoordinateOrder = Array.isArray(keyboard?.returnExpectedOrder) ? keyboard.returnExpectedOrder.map(({ coordinate }) => coordinate) : []
+    const visitedOrder = Array.isArray(keyboard?.visited) ? keyboard.visited.map(({ logicalStopId, coordinate }) => ({ logicalStopId, coordinate })) : []
+    const returnVisitedOrder = Array.isArray(keyboard?.returnVisited) ? keyboard.returnVisited.map(({ logicalStopId, coordinate }) => ({ logicalStopId, coordinate })) : []
+    const uniqueExpectedStops = new Set(expectedLogicalOrder).size === expectedLogicalOrder.length && new Set(expectedCoordinateOrder).size === expectedCoordinateOrder.length
+    const uniqueReturnStops = new Set(returnExpectedLogicalOrder).size === returnExpectedLogicalOrder.length && new Set(returnExpectedCoordinateOrder).size === returnExpectedCoordinateOrder.length
+    const uniqueVisitedStops = new Set(visitedOrder.map(({ logicalStopId }) => logicalStopId)).size === visitedOrder.length && new Set(visitedOrder.map(({ coordinate }) => coordinate)).size === visitedOrder.length
+    const uniqueReturnVisitedStops = new Set(returnVisitedOrder.map(({ logicalStopId }) => logicalStopId)).size === returnVisitedOrder.length && new Set(returnVisitedOrder.map(({ coordinate }) => coordinate)).size === returnVisitedOrder.length
+    if (!uniqueExpectedStops || !uniqueReturnStops) errors.push("keyboard-expected-order-duplicate")
+    if (JSON.stringify(returnExpectedLogicalOrder) !== JSON.stringify(expectedLogicalOrder.slice(0, -1).reverse())) errors.push("keyboard-return-logical-order-mismatch")
+    if (Array.isArray(keyboard?.returnExpectedOrder) && Array.isArray(keyboard?.expectedOrder)) {
+      for (const returnStop of keyboard.returnExpectedOrder) {
+        const forwardStop = keyboard.expectedOrder.find(({ logicalStopId }) => logicalStopId === returnStop.logicalStopId)
+        if (forwardStop !== undefined && forwardStop.coordinate !== returnStop.coordinate && !(browserCase.browserProject === "webkit" && returnStop.logicalStopId.startsWith("radio-group:"))) errors.push("keyboard-directional-coordinate-drift")
+      }
+    }
+    if (!uniqueVisitedStops || !uniqueReturnVisitedStops || keyboard?.allStopsUnique !== true) errors.push("keyboard-observed-duplicate-or-trap")
     if (Array.isArray(keyboard?.expectedOrder) && JSON.stringify(visitedOrder) !== JSON.stringify(keyboard.expectedOrder)) errors.push("keyboard-observed-order-mismatch")
     if (Array.isArray(keyboard?.returnExpectedOrder) && JSON.stringify(returnVisitedOrder) !== JSON.stringify(keyboard.returnExpectedOrder)) errors.push("keyboard-return-order-mismatch")
     if (keyboard?.exactOrder !== true) errors.push("keyboard-exact-order-false")
     if (keyboard?.returnOrderExact !== true) errors.push("keyboard-return-order-exact-false")
-    if (keyboard?.returnedToFirst !== true || keyboard?.cycleReturnCoordinate !== keyboard?.expectedOrder?.[0]) errors.push("keyboard-cycle-return")
+    if (keyboard?.returnedToFirst !== true ||
+      keyboard?.cycleReturnLogicalStopId !== keyboard?.expectedOrder?.[0]?.logicalStopId ||
+      keyboard?.cycleReturnCoordinate !== keyboard?.returnExpectedOrder?.at(-1)?.coordinate) errors.push("keyboard-cycle-return")
     if (keyboard?.cycleReturnFocusVisible !== true) errors.push("keyboard-cycle-return-focus-invisible")
     if (keyboard?.noTrap !== true) errors.push("keyboard-trap")
     if (keyboard?.allVisitedFocusVisible !== true ||
@@ -389,10 +422,20 @@ const passingCaseFixture = (overrides = {}) => ({
     performed: true,
     mode: "native-Tab-forward-and-Shift-Tab-return-cycle",
     expectedFocusableCount: 4,
-    expectedOrder: ["#first", "#second", "#third", "#late-control"],
-    returnExpectedOrder: ["#third", "#second", "#first"],
+    expectedOrder: [
+      { logicalStopId: "element:#first", coordinate: "#first" },
+      { logicalStopId: "element:#second", coordinate: "#second" },
+      { logicalStopId: "element:#third", coordinate: "#third" },
+      { logicalStopId: "element:#late-control", coordinate: "#late-control" }
+    ],
+    returnExpectedOrder: [
+      { logicalStopId: "element:#third", coordinate: "#third" },
+      { logicalStopId: "element:#second", coordinate: "#second" },
+      { logicalStopId: "element:#first", coordinate: "#first" }
+    ],
     stepCount: 4,
     tabPressCount: 7,
+    cycleReturnLogicalStopId: "element:#first",
     cycleReturnCoordinate: "#first",
     cycleReturnFocusVisible: true,
     returnedToFirst: true,
@@ -402,15 +445,15 @@ const passingCaseFixture = (overrides = {}) => ({
     noTrap: true,
     allVisitedFocusVisible: true,
     visited: [
-      { coordinate: "#first", focusVisible: true },
-      { coordinate: "#second", focusVisible: true },
-      { coordinate: "#third", focusVisible: true },
-      { coordinate: "#late-control", focusVisible: true }
+      { logicalStopId: "element:#first", coordinate: "#first", focusVisible: true },
+      { logicalStopId: "element:#second", coordinate: "#second", focusVisible: true },
+      { logicalStopId: "element:#third", coordinate: "#third", focusVisible: true },
+      { logicalStopId: "element:#late-control", coordinate: "#late-control", focusVisible: true }
     ],
     returnVisited: [
-      { coordinate: "#third", focusVisible: true },
-      { coordinate: "#second", focusVisible: true },
-      { coordinate: "#first", focusVisible: true }
+      { logicalStopId: "element:#third", coordinate: "#third", focusVisible: true },
+      { logicalStopId: "element:#second", coordinate: "#second", focusVisible: true },
+      { logicalStopId: "element:#first", coordinate: "#first", focusVisible: true }
     ]
   },
   actionTargetMinimumCssPx: 44,
@@ -587,6 +630,85 @@ export const runBrowserContractAdversarialTests = () => {
       exactOrder: false
     }
   }))
+  const radioLogicalStopId = 'radio-group:["no-form","fixture-choice"]'
+  const directionalRadioCase = passingCaseFixture({
+    browserProject: "webkit",
+    keyboardTraversal: {
+      ...requiredFirefoxCase.keyboardTraversal,
+      expectedOrder: requiredFirefoxCase.keyboardTraversal.expectedOrder.map((entry, index) => index === 1
+        ? { logicalStopId: radioLogicalStopId, coordinate: "#radio-first" }
+        : entry),
+      returnExpectedOrder: requiredFirefoxCase.keyboardTraversal.returnExpectedOrder.map((entry, index) => index === 1
+        ? { logicalStopId: radioLogicalStopId, coordinate: "#radio-last" }
+        : entry),
+      visited: requiredFirefoxCase.keyboardTraversal.visited.map((entry, index) => index === 1
+        ? { logicalStopId: radioLogicalStopId, coordinate: "#radio-first", focusVisible: true }
+        : entry),
+      returnVisited: requiredFirefoxCase.keyboardTraversal.returnVisited.map((entry, index) => index === 1
+        ? { logicalStopId: radioLogicalStopId, coordinate: "#radio-last", focusVisible: true }
+        : entry)
+    }
+  })
+  requireAccepted("direction-specific-radio-member", directionalRadioCase)
+  expectRejected("keyboard-retargeted-radio-member", () => validateBrowserCase({
+    ...directionalRadioCase,
+    keyboardTraversal: {
+      ...directionalRadioCase.keyboardTraversal,
+      returnVisited: directionalRadioCase.keyboardTraversal.returnVisited.map((entry, index) => index === 1
+        ? { ...entry, coordinate: "#radio-first" }
+        : entry)
+    }
+  }))
+  expectRejected("keyboard-logical-stop-drift", () => validateBrowserCase({
+    ...directionalRadioCase,
+    keyboardTraversal: {
+      ...directionalRadioCase.keyboardTraversal,
+      returnVisited: directionalRadioCase.keyboardTraversal.returnVisited.map((entry, index) => index === 1
+        ? { ...entry, logicalStopId: 'radio-group:["no-form","different-choice"]' }
+        : entry)
+    }
+  }))
+  expectRejected("keyboard-coherent-return-order-drift", () => validateBrowserCase({
+    ...directionalRadioCase,
+    keyboardTraversal: {
+      ...directionalRadioCase.keyboardTraversal,
+      returnExpectedOrder: [
+        directionalRadioCase.keyboardTraversal.returnExpectedOrder[1],
+        directionalRadioCase.keyboardTraversal.returnExpectedOrder[0],
+        ...directionalRadioCase.keyboardTraversal.returnExpectedOrder.slice(2)
+      ],
+      returnVisited: [
+        directionalRadioCase.keyboardTraversal.returnVisited[1],
+        directionalRadioCase.keyboardTraversal.returnVisited[0],
+        ...directionalRadioCase.keyboardTraversal.returnVisited.slice(2)
+      ]
+    }
+  }))
+  expectRejected("keyboard-element-coordinate-identity-drift", () => validateBrowserCase({
+    ...requiredFirefoxCase,
+    keyboardTraversal: {
+      ...requiredFirefoxCase.keyboardTraversal,
+      expectedOrder: requiredFirefoxCase.keyboardTraversal.expectedOrder.map((entry, index) => index === 0 ? { ...entry, coordinate: "#retargeted-first" } : entry),
+      visited: requiredFirefoxCase.keyboardTraversal.visited.map((entry, index) => index === 0 ? { ...entry, coordinate: "#retargeted-first" } : entry)
+    }
+  }))
+  expectRejected("keyboard-nonwebkit-radio-direction-drift", () => validateBrowserCase({ ...directionalRadioCase, browserProject: "firefox" }))
+  expectRejected("keyboard-duplicate-logical-stop", () => validateBrowserCase({
+    ...requiredFirefoxCase,
+    keyboardTraversal: {
+      ...requiredFirefoxCase.keyboardTraversal,
+      expectedOrder: requiredFirefoxCase.keyboardTraversal.expectedOrder.map((entry, index) => index === 2 ? { ...entry, logicalStopId: requiredFirefoxCase.keyboardTraversal.expectedOrder[1].logicalStopId } : entry),
+      visited: requiredFirefoxCase.keyboardTraversal.visited.map((entry, index) => index === 2 ? { ...entry, logicalStopId: requiredFirefoxCase.keyboardTraversal.visited[1].logicalStopId } : entry)
+    }
+  }))
+  expectRejected("keyboard-cycle-logical-stop-drift", () => validateBrowserCase({
+    ...requiredFirefoxCase,
+    keyboardTraversal: { ...requiredFirefoxCase.keyboardTraversal, cycleReturnLogicalStopId: "element:#second" }
+  }))
+  expectRejected("keyboard-cycle-coordinate-drift", () => validateBrowserCase({
+    ...requiredFirefoxCase,
+    keyboardTraversal: { ...requiredFirefoxCase.keyboardTraversal, cycleReturnCoordinate: "#second" }
+  }))
 
   const printCase = passingPresentationFixture("print", { browserProject: "chromium" })
   requireAccepted("print", printCase)
@@ -716,6 +838,13 @@ const focusableSnapshot = ({ direction, browserProject }) => {
     }
     return `html>${segments.join(">")}`
   }
+  const logicalStopIdFor = (element) => {
+    if (element instanceof HTMLInputElement && element.type === "radio" && element.name !== "") {
+      const formCoordinate = element.form === null ? "no-form" : coordinateFor(element.form)
+      return `radio-group:${JSON.stringify([formCoordinate, element.name])}`
+    }
+    return `element:${coordinateFor(element)}`
+  }
   const candidates = [...document.querySelectorAll(selector)].filter((element) => {
     if (!(element instanceof HTMLElement)) return false
     if (element.matches(":disabled") || element.getAttribute("aria-disabled") === "true") return false
@@ -746,7 +875,10 @@ const focusableSnapshot = ({ direction, browserProject }) => {
     if (leftPositive && left.tabIndex !== right.tabIndex) return left.tabIndex - right.tabIndex
     return documentOrder.get(left) - documentOrder.get(right)
   })
-  return eligible.map((element) => coordinateFor(element))
+  return eligible.map((element) => ({
+    logicalStopId: logicalStopIdFor(element),
+    coordinate: coordinateFor(element)
+  }))
 }
 
 const activeFocusObservation = () => {
@@ -765,11 +897,19 @@ const activeFocusObservation = () => {
     }
     return `html>${segments.join(">")}`
   }
+  const logicalStopIdFor = (element) => {
+    if (element instanceof HTMLInputElement && element.type === "radio" && element.name !== "") {
+      const formCoordinate = element.form === null ? "no-form" : coordinateFor(element.form)
+      return `radio-group:${JSON.stringify([formCoordinate, element.name])}`
+    }
+    return `element:${coordinateFor(element)}`
+  }
   const element = document.activeElement
   if (!(element instanceof HTMLElement) || element === document.body || element === document.documentElement) return null
   const style = getComputedStyle(element)
   const transparentOutline = style.outlineColor === "transparent" || style.outlineColor === "rgba(0, 0, 0, 0)"
   return {
+    logicalStopId: logicalStopIdFor(element),
     coordinate: coordinateFor(element),
     focusVisible: element.matches(":focus-visible") &&
       style.outlineStyle !== "none" &&
@@ -786,7 +926,8 @@ const nativeKeyboardTraversal = async (page, browserProject) => {
   })
   const expectedOrder = await page.evaluate(focusableSnapshot, { direction: "forward", browserProject })
   if (expectedOrder.length === 0) throw new Error("rendered fixture has no enabled sequential focus stops")
-  if (new Set(expectedOrder).size !== expectedOrder.length) throw new Error("derived sequential focus order contains duplicate coordinates")
+  if (new Set(expectedOrder.map(({ logicalStopId }) => logicalStopId)).size !== expectedOrder.length) throw new Error("derived sequential focus order contains duplicate logical stops")
+  if (new Set(expectedOrder.map(({ coordinate }) => coordinate)).size !== expectedOrder.length) throw new Error("derived sequential focus order contains duplicate element coordinates")
   const visited = []
   let tabPressCount = 0
   for (let step = 0; step < expectedOrder.length; step += 1) {
@@ -802,6 +943,14 @@ const nativeKeyboardTraversal = async (page, browserProject) => {
   // only cross-engine, DOM-observable proof of a complete no-trap round trip.
   // No document control is focused programmatically.
   const backwardDocumentOrder = await page.evaluate(focusableSnapshot, { direction: "backward", browserProject })
+  const forwardLogicalOrder = expectedOrder.map(({ logicalStopId }) => logicalStopId)
+  const backwardLogicalOrder = backwardDocumentOrder.map(({ logicalStopId }) => logicalStopId)
+  if (JSON.stringify(backwardLogicalOrder) !== JSON.stringify(forwardLogicalOrder)) throw new Error("forward/backward derived logical focus-stop closure differs")
+  for (const backwardStop of backwardDocumentOrder) {
+    const forwardStop = expectedOrder.find(({ logicalStopId }) => logicalStopId === backwardStop.logicalStopId)
+    if (forwardStop === undefined) throw new Error("backward logical focus stop absent from forward closure")
+    if (forwardStop.coordinate !== backwardStop.coordinate && !(browserProject === "webkit" && backwardStop.logicalStopId.startsWith("radio-group:"))) throw new Error("direction-specific element coordinate is allowed only for a WebKit radio group")
+  }
   const returnExpectedOrder = backwardDocumentOrder.slice(0, -1).reverse()
   const returnVisited = []
   for (let step = 0; step < returnExpectedOrder.length; step += 1) {
@@ -811,13 +960,20 @@ const nativeKeyboardTraversal = async (page, browserProject) => {
     if (observation === null) break
     returnVisited.push(observation)
   }
-  const visitedOrder = visited.map(({ coordinate }) => coordinate)
-  const returnVisitedOrder = returnVisited.map(({ coordinate }) => coordinate)
-  const allStopsUnique = new Set(visitedOrder).size === visitedOrder.length
+  const visitedOrder = visited.map(({ logicalStopId, coordinate }) => ({ logicalStopId, coordinate }))
+  const returnVisitedOrder = returnVisited.map(({ logicalStopId, coordinate }) => ({ logicalStopId, coordinate }))
+  const returnExpectedLogicalOrder = returnExpectedOrder.map(({ logicalStopId }) => logicalStopId)
+  if (JSON.stringify(returnExpectedLogicalOrder) !== JSON.stringify(forwardLogicalOrder.slice(0, -1).reverse())) throw new Error("return traversal does not reverse the logical focus-stop order")
+  const allStopsUnique =
+    new Set(visitedOrder.map(({ logicalStopId }) => logicalStopId)).size === visitedOrder.length &&
+    new Set(visitedOrder.map(({ coordinate }) => coordinate)).size === visitedOrder.length &&
+    new Set(returnVisitedOrder.map(({ logicalStopId }) => logicalStopId)).size === returnVisitedOrder.length &&
+    new Set(returnVisitedOrder.map(({ coordinate }) => coordinate)).size === returnVisitedOrder.length
   const exactOrder = JSON.stringify(visitedOrder) === JSON.stringify(expectedOrder)
   const returnOrderExact = JSON.stringify(returnVisitedOrder) === JSON.stringify(returnExpectedOrder)
   const cycleReturn = returnVisited.at(-1) ?? null
-  const returnedToFirst = cycleReturn?.coordinate === expectedOrder[0]
+  const returnedToFirst = cycleReturn?.logicalStopId === expectedOrder[0].logicalStopId &&
+    cycleReturn?.coordinate === returnExpectedOrder.at(-1)?.coordinate
   return {
     performed: true,
     mode: "native-Tab-forward-and-Shift-Tab-return-cycle",
@@ -826,6 +982,7 @@ const nativeKeyboardTraversal = async (page, browserProject) => {
     returnExpectedOrder,
     stepCount: visited.length,
     tabPressCount,
+    cycleReturnLogicalStopId: cycleReturn?.logicalStopId ?? null,
     cycleReturnCoordinate: cycleReturn?.coordinate ?? null,
     cycleReturnFocusVisible: cycleReturn?.focusVisible ?? false,
     returnedToFirst,
@@ -1310,7 +1467,7 @@ const capture = async ({ sourceSha, port }) => {
     const printCaseCount = cases.filter(({ presentation }) => presentation === "print").length
     if (printCaseCount !== coverageContract.printScope.caseCount) throw new Error(`immutable print scope expected ${coverageContract.printScope.caseCount} cases; captured ${printCaseCount}`)
     const receipt = {
-      schemaVersion: 3,
+      schemaVersion: 4,
       receiptId: "plan-006-browser-evidence",
       ...evidenceCoordinates,
       status: "passed",

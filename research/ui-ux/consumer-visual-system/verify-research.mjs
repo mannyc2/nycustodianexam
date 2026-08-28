@@ -36,7 +36,10 @@ const REVIEW_OUTPUT_PATHS = Object.freeze({
   "accessibility-cognitive-load": `${researchRoot}/reviews/accessibility-cognitive-load.json`,
   "visual-component-coherence": `${researchRoot}/reviews/visual-component-coherence.json`
 })
-const REJECTED_REVIEW_SUBJECT_SHAS = new Set(["7fcc776e6941c7f41a504dda59ea59af88ba31fb"])
+const REJECTED_REVIEW_SUBJECT_SHAS = new Set([
+  "7fcc776e6941c7f41a504dda59ea59af88ba31fb",
+  "f1a566f3eabb5bc972d75a555038e3b315a211a2"
+])
 const REVIEW_AUDIT_PARENT_THREAD_ID = "01a04a64-3e78-72b2-8045-a25334d3f1be"
 const REJECTED_REVIEW_SESSION_UUIDS = new Set([
   "01a04a02-5ef1-79a3-b612-3179d9ee5fea",
@@ -152,8 +155,8 @@ const REPRESENTATIVE_COVERAGE_CONTRACT = Object.freeze({
 })
 const KEYBOARD_EVIDENCE_CONTRACT = Object.freeze({
   classification: "native-document-focus-order-round-trip",
-  forwardTraversal: "Native Tab visits every derived enabled rendered document focus stop exactly once in forward order.",
-  returnTraversal: "Native Shift+Tab visits the exact engine-specific reverse document order and returns to the first stop.",
+  forwardTraversal: "Native Tab visits every derived enabled rendered logical document focus stop exactly once in forward order and records the exact focused element coordinate.",
+  returnTraversal: "Native Shift+Tab visits the exact reverse logical document focus-stop order, records each exact engine-specific focused element coordinate, and returns to the first logical stop.",
   programmaticElementFocusUsed: false,
   firefoxAutomationLimitation: "After the final document stop, Playwright Firefox sends forward focus to browser chrome but exposes document.activeElement as the last link indefinitely; 100 additional native Tab presses in both headless and headed Xvfb runs did not expose or re-enter that chrome path. Therefore this evidence does not claim an observable forward-Tab wrap in Firefox."
 })
@@ -892,7 +895,7 @@ const validateTokenMapping = (record, prototypeContext, descriptor, sourceSha, o
 }
 const validateBrowser = async (record, prototypeContext, receipt) => {
   exactKeys(receipt, ["schemaVersion", "receiptId", "protocolId", "reviewMode", "humanEvidence", "humanParticipantCount", "humanReviewRequired", "notHumanUsabilityTested", "status", "sourceSha", "sourceClosure", "prototypeBundleSha256", "prototypeFiles", "tokenMappingFile", "harnessFiles", "startedAt", "completedAt", "browserProjects", "presentationContracts", "defaultFrameCoverage", "coverageContract", "keyboardEvidenceContract", "specialPresentationMatrix", "axePolicy", "suiteResult", "tokenEvidence", "cases", "screenshotBytesRetained"], "browser receipt")
-  assert(receipt.schemaVersion === 3 && receipt.receiptId === "plan-006-browser-evidence" && receipt.status === "passed", "browser receipt identity/status drift")
+  assert(receipt.schemaVersion === 4 && receipt.receiptId === "plan-006-browser-evidence" && receipt.status === "passed", "browser receipt identity/status drift")
   validateHumanBoundary(receipt, "browser receipt")
   assert(receipt.sourceSha === record.prototype.comparisonSourceSha && receipt.prototypeBundleSha256 === record.prototype.bundleSha256, "browser receipt source/prototype join drift")
   validateSourceClosureObject(receipt.sourceClosure, receipt.sourceSha, "browser receipt source closure")
@@ -968,24 +971,59 @@ const validateBrowser = async (record, prototypeContext, receipt) => {
       assert([browserCase.printToolbarElementCount, browserCase.printActionRowElementCount, browserCase.printActionElementCount].every((value) => Number.isInteger(value) && value > 0), `browser case ${browserCase.caseId}: print suppression requires nonzero observed element counts`)
     } else {
       const keyboard = browserCase.keyboardTraversal
-      exactKeys(keyboard, ["performed", "mode", "expectedFocusableCount", "expectedOrder", "returnExpectedOrder", "stepCount", "tabPressCount", "cycleReturnCoordinate", "cycleReturnFocusVisible", "returnedToFirst", "allStopsUnique", "exactOrder", "returnOrderExact", "noTrap", "allVisitedFocusVisible", "visited", "returnVisited"], `browser case ${browserCase.caseId}: screen keyboard traversal`)
+      const assertCanonicalLogicalStop = (entry, path) => {
+        assert(typeof entry.logicalStopId === "string" && entry.logicalStopId.length > 0 && typeof entry.coordinate === "string" && entry.coordinate.length > 0, `${path}: logical-stop ID and element coordinate required`)
+        if (entry.logicalStopId.startsWith("element:")) {
+          assert(entry.logicalStopId === `element:${entry.coordinate}`, `${path}: ordinary-element logical-stop ID must bind its exact coordinate`)
+          return
+        }
+        assert(entry.logicalStopId.startsWith("radio-group:"), `${path}: canonical element: or radio-group: logical-stop ID required`)
+        const encoded = entry.logicalStopId.slice("radio-group:".length)
+        let tuple
+        try { tuple = JSON.parse(encoded) } catch { fail(`${path}: radio-group logical-stop tuple is not JSON`) }
+        assert(Array.isArray(tuple) && tuple.length === 2 && tuple.every((value) => typeof value === "string" && value.length > 0) && JSON.stringify(tuple) === encoded, `${path}: canonical [form-coordinate,name] radio-group logical-stop tuple required`)
+      }
+      exactKeys(keyboard, ["performed", "mode", "expectedFocusableCount", "expectedOrder", "returnExpectedOrder", "stepCount", "tabPressCount", "cycleReturnLogicalStopId", "cycleReturnCoordinate", "cycleReturnFocusVisible", "returnedToFirst", "allStopsUnique", "exactOrder", "returnOrderExact", "noTrap", "allVisitedFocusVisible", "visited", "returnVisited"], `browser case ${browserCase.caseId}: screen keyboard traversal`)
       assert(keyboard.performed === true && keyboard.mode === "native-Tab-forward-and-Shift-Tab-return-cycle", `browser case ${browserCase.caseId}: native keyboard traversal mode failure`)
       assert(Number.isInteger(keyboard.expectedFocusableCount) && keyboard.expectedFocusableCount >= 1, `browser case ${browserCase.caseId}: expected focusable count invalid`)
-      assert(Array.isArray(keyboard.expectedOrder) && keyboard.expectedOrder.length === keyboard.expectedFocusableCount && new Set(keyboard.expectedOrder).size === keyboard.expectedOrder.length, `browser case ${browserCase.caseId}: exact unique expected focus order invalid`)
-      assert(Array.isArray(keyboard.returnExpectedOrder) && keyboard.returnExpectedOrder.length === keyboard.expectedFocusableCount - 1 && new Set(keyboard.returnExpectedOrder).size === keyboard.returnExpectedOrder.length && keyboard.returnExpectedOrder.at(-1) === keyboard.expectedOrder[0], `browser case ${browserCase.caseId}: return focus order invalid`)
-      equal(keyboard.returnExpectedOrder, keyboard.expectedOrder.slice(0, -1).reverse(), `browser case ${browserCase.caseId}: exact reverse return order`)
+      for (const key of ["expectedOrder", "returnExpectedOrder"]) {
+        assert(Array.isArray(keyboard[key]), `browser case ${browserCase.caseId}: ${key} array required`)
+        for (const entry of keyboard[key]) {
+          exactKeys(entry, ["logicalStopId", "coordinate"], `browser case ${browserCase.caseId}: ${key} entry`)
+          assertCanonicalLogicalStop(entry, `browser case ${browserCase.caseId}: ${key} entry`)
+        }
+      }
+      assert(keyboard.expectedOrder.length === keyboard.expectedFocusableCount, `browser case ${browserCase.caseId}: forward expected focus-stop count drift`)
+      assert(keyboard.returnExpectedOrder.length === keyboard.expectedFocusableCount - 1, `browser case ${browserCase.caseId}: return expected focus-stop count drift`)
+      const expectedLogicalOrder = keyboard.expectedOrder.map(({ logicalStopId }) => logicalStopId)
+      const expectedCoordinateOrder = keyboard.expectedOrder.map(({ coordinate }) => coordinate)
+      const returnExpectedLogicalOrder = keyboard.returnExpectedOrder.map(({ logicalStopId }) => logicalStopId)
+      const returnExpectedCoordinateOrder = keyboard.returnExpectedOrder.map(({ coordinate }) => coordinate)
+      assert(new Set(expectedLogicalOrder).size === expectedLogicalOrder.length && new Set(expectedCoordinateOrder).size === expectedCoordinateOrder.length, `browser case ${browserCase.caseId}: exact unique forward expected focus stops invalid`)
+      assert(new Set(returnExpectedLogicalOrder).size === returnExpectedLogicalOrder.length && new Set(returnExpectedCoordinateOrder).size === returnExpectedCoordinateOrder.length, `browser case ${browserCase.caseId}: exact unique return expected focus stops invalid`)
+      equal(returnExpectedLogicalOrder, expectedLogicalOrder.slice(0, -1).reverse(), `browser case ${browserCase.caseId}: exact reverse logical return order`)
+      for (const returnStop of keyboard.returnExpectedOrder) {
+        const forwardStop = keyboard.expectedOrder.find(({ logicalStopId }) => logicalStopId === returnStop.logicalStopId)
+        assert(forwardStop !== undefined, `browser case ${browserCase.caseId}: return logical stop absent from forward closure`)
+        if (forwardStop.coordinate !== returnStop.coordinate) assert(browserCase.browserProject === "webkit" && returnStop.logicalStopId.startsWith("radio-group:"), `browser case ${browserCase.caseId}: direction-specific element coordinate allowed only for a WebKit radio group`)
+      }
       assert(keyboard.stepCount === keyboard.expectedFocusableCount && keyboard.tabPressCount === 2 * keyboard.expectedFocusableCount - 1, `browser case ${browserCase.caseId}: keyboard step/keypress count drift`)
       for (const key of ["visited", "returnVisited"]) {
         assert(Array.isArray(keyboard[key]), `browser case ${browserCase.caseId}: ${key} array required`)
         for (const entry of keyboard[key]) {
-          exactKeys(entry, ["coordinate", "focusVisible"], `browser case ${browserCase.caseId}: ${key} entry`)
-          assert(typeof entry.coordinate === "string" && entry.coordinate.length > 0 && entry.focusVisible === true, `browser case ${browserCase.caseId}: ${key} receipt invalid`)
+          exactKeys(entry, ["logicalStopId", "coordinate", "focusVisible"], `browser case ${browserCase.caseId}: ${key} entry`)
+          assertCanonicalLogicalStop(entry, `browser case ${browserCase.caseId}: ${key} entry`)
+          assert(entry.focusVisible === true, `browser case ${browserCase.caseId}: ${key} focus-visible receipt invalid`)
         }
       }
       assert(keyboard.visited.length === keyboard.expectedFocusableCount && keyboard.returnVisited.length === keyboard.expectedFocusableCount - 1, `browser case ${browserCase.caseId}: full forward/return focus traversal required`)
-      equal(keyboard.visited.map(({ coordinate }) => coordinate), keyboard.expectedOrder, `browser case ${browserCase.caseId}: forward focus order`)
-      equal(keyboard.returnVisited.map(({ coordinate }) => coordinate), keyboard.returnExpectedOrder, `browser case ${browserCase.caseId}: return focus order`)
-      assert(keyboard.cycleReturnCoordinate === keyboard.expectedOrder[0] && keyboard.cycleReturnFocusVisible === true && keyboard.returnedToFirst === true && keyboard.allStopsUnique === true && keyboard.exactOrder === true && keyboard.returnOrderExact === true && keyboard.noTrap === true && keyboard.allVisitedFocusVisible === true, `browser case ${browserCase.caseId}: full-cycle order/trap/focus-visible proof failed`)
+      const visitedOrder = keyboard.visited.map(({ logicalStopId, coordinate }) => ({ logicalStopId, coordinate }))
+      const returnVisitedOrder = keyboard.returnVisited.map(({ logicalStopId, coordinate }) => ({ logicalStopId, coordinate }))
+      assert(new Set(visitedOrder.map(({ logicalStopId }) => logicalStopId)).size === visitedOrder.length && new Set(visitedOrder.map(({ coordinate }) => coordinate)).size === visitedOrder.length, `browser case ${browserCase.caseId}: forward visited focus stops must be logically and physically unique`)
+      assert(new Set(returnVisitedOrder.map(({ logicalStopId }) => logicalStopId)).size === returnVisitedOrder.length && new Set(returnVisitedOrder.map(({ coordinate }) => coordinate)).size === returnVisitedOrder.length, `browser case ${browserCase.caseId}: return visited focus stops must be logically and physically unique`)
+      equal(visitedOrder, keyboard.expectedOrder, `browser case ${browserCase.caseId}: exact forward logical-stop/coordinate order`)
+      equal(returnVisitedOrder, keyboard.returnExpectedOrder, `browser case ${browserCase.caseId}: exact return logical-stop/coordinate order`)
+      assert(keyboard.cycleReturnLogicalStopId === keyboard.expectedOrder[0].logicalStopId && keyboard.cycleReturnCoordinate === keyboard.returnExpectedOrder.at(-1)?.coordinate && keyboard.cycleReturnFocusVisible === true && keyboard.returnedToFirst === true && keyboard.allStopsUnique === true && keyboard.exactOrder === true && keyboard.returnOrderExact === true && keyboard.noTrap === true && keyboard.allVisitedFocusVisible === true, `browser case ${browserCase.caseId}: full-cycle logical-order/coordinate/trap/focus-visible proof failed`)
       assert(browserCase.actionTargetMinimumCssPx >= 44 && browserCase.printToolbarSuppressed === null && browserCase.printActionRowSuppressed === null && browserCase.printActionsSuppressed === null, `browser case ${browserCase.caseId}: screen target/print-observation contract failure`)
       assert(browserCase.printToolbarElementCount === null && browserCase.printActionRowElementCount === null && browserCase.printActionElementCount === null, `browser case ${browserCase.caseId}: screen print counts must be null`)
     }
@@ -1044,7 +1082,7 @@ const validateBrowser = async (record, prototypeContext, receipt) => {
   assert(forcedColorsCases.length === 3, "browser receipt requires exactly one forced-colors case per territory")
   const forcedColorsHashes = forcedColorsCases.map(({ presentationEvidence }) => presentationEvidence.stableAdaptationSha256)
   assert(new Set(forcedColorsHashes).size === 1 && receipt.suiteResult.forcedColorsStableAdaptationSha256 === forcedColorsHashes[0] && sha256Pattern.test(forcedColorsHashes[0]), "browser forced-colors adaptation hash must be stable across A/B/C")
-  equal(receipt.suiteResult.harnessAdversarialTests, ["missing-nonfocused-firefox-default-frame", "broken-nonfocused-firefox-default-frame", "keyboard-skipped-late-control", "keyboard-duplicate-or-trap", "keyboard-late-invisible-focus", "keyboard-wrong-order", "unsuppressed-print-action", "zero-count-suppressed-print-action", "route-path-frame-drift", "repository-relative-url-drift", "fixture-request-path-drift", "viewport-width-drift", "semantic-signature-direct-text-erased", "large-text-root-ratio", "reduced-motion-not-matched", "forced-colors-adaptation-drift", "zoom-equivalence-drift", "moderate-axe-finding"], "browser harness adversarial receipts")
+  equal(receipt.suiteResult.harnessAdversarialTests, ["missing-nonfocused-firefox-default-frame", "broken-nonfocused-firefox-default-frame", "keyboard-skipped-late-control", "keyboard-duplicate-or-trap", "keyboard-late-invisible-focus", "keyboard-wrong-order", "keyboard-retargeted-radio-member", "keyboard-logical-stop-drift", "keyboard-coherent-return-order-drift", "keyboard-element-coordinate-identity-drift", "keyboard-nonwebkit-radio-direction-drift", "keyboard-duplicate-logical-stop", "keyboard-cycle-logical-stop-drift", "keyboard-cycle-coordinate-drift", "unsuppressed-print-action", "zero-count-suppressed-print-action", "route-path-frame-drift", "repository-relative-url-drift", "fixture-request-path-drift", "viewport-width-drift", "semantic-signature-direct-text-erased", "large-text-root-ratio", "reduced-motion-not-matched", "forced-colors-adaptation-drift", "zoom-equivalence-drift", "moderate-axe-finding"], "browser harness adversarial receipts")
   equal(harness.runBrowserContractAdversarialTests(), receipt.suiteResult.harnessAdversarialTests, "browser live adversarial checks")
   const tokenEvidence = receipt.tokenEvidence
   exactKeys(tokenEvidence, ["observations", "computedAxes", "differentiation", "materialDifferentiationCount"], "browser token evidence")
@@ -2090,6 +2128,9 @@ const runAdversarial = async ({ schemaBytes, schema, record, prototypeContext, a
   const subjectDriftReviews = clone(loadedReviews)
   subjectDriftReviews[0].review.repositoryCommit = "7fcc776e6941c7f41a504dda59ea59af88ba31fb"
   await reject("rejected old review subject reuse", () => validateReviews(record, browserBytes, browserReceipt, subjectDriftReviews, taskReceipt, prompts))
+  const invalidRadioSubjectReviews = clone(loadedReviews)
+  invalidRadioSubjectReviews[0].review.repositoryCommit = "f1a566f3eabb5bc972d75a555038e3b315a211a2"
+  await reject("invalid pre-radio-repair review subject reuse", () => validateReviews(record, browserBytes, browserReceipt, invalidRadioSubjectReviews, taskReceipt, prompts))
   const fakeCoordinateReviews = clone(loadedReviews)
   fakeCoordinateReviews[0].review.territoryScores[0].criterionScores[0].evidenceCoordinates = ["no-such-file#fake-anchor"]
   await reject("unresolved fake evidence anchor", () => validateReviews(record, browserBytes, browserReceipt, fakeCoordinateReviews, taskReceipt, prompts))
@@ -2230,8 +2271,44 @@ const runAdversarial = async ({ schemaBytes, schema, record, prototypeContext, a
   const forgedReturnOrderReceipt = clone(browserReceipt)
   const forgedReturnKeyboard = forgedReturnOrderReceipt.cases.find((entry) => entry.presentation === "default" && entry.browserProject === "firefox").keyboardTraversal
   ;[forgedReturnKeyboard.returnExpectedOrder[0], forgedReturnKeyboard.returnExpectedOrder[1]] = [forgedReturnKeyboard.returnExpectedOrder[1], forgedReturnKeyboard.returnExpectedOrder[0]]
-  forgedReturnKeyboard.returnVisited = forgedReturnKeyboard.returnExpectedOrder.map((coordinate) => ({ coordinate, focusVisible: true }))
+  forgedReturnKeyboard.returnVisited = forgedReturnKeyboard.returnExpectedOrder.map(({ logicalStopId, coordinate }) => ({ logicalStopId, coordinate, focusVisible: true }))
   await reject("keyboard forged return order", () => validateBrowser(record, prototypeContext, forgedReturnOrderReceipt))
+  const directionalRadioCase = browserReceipt.cases.find((entry) => entry.browserProject === "webkit" && entry.presentation !== "print" && entry.keyboardTraversal.returnExpectedOrder.some((returnStop) => {
+    const forwardStop = entry.keyboardTraversal.expectedOrder.find(({ logicalStopId }) => logicalStopId === returnStop.logicalStopId)
+    return returnStop.logicalStopId.startsWith("radio-group:") && forwardStop !== undefined && forwardStop.coordinate !== returnStop.coordinate
+  }))
+  assert(directionalRadioCase !== undefined, "browser receipt must retain an observed WebKit direction-specific radio-group member")
+  const directionalRadioReturnIndex = directionalRadioCase.keyboardTraversal.returnExpectedOrder.findIndex((returnStop) => {
+    const forwardStop = directionalRadioCase.keyboardTraversal.expectedOrder.find(({ logicalStopId }) => logicalStopId === returnStop.logicalStopId)
+    return returnStop.logicalStopId.startsWith("radio-group:") && forwardStop !== undefined && forwardStop.coordinate !== returnStop.coordinate
+  })
+  assert(directionalRadioReturnIndex >= 0, "WebKit direction-specific radio-group mutation fixture absent")
+  const directionalRadioLogicalStopId = directionalRadioCase.keyboardTraversal.returnExpectedOrder[directionalRadioReturnIndex].logicalStopId
+  const directionalRadioForwardCoordinate = directionalRadioCase.keyboardTraversal.expectedOrder.find(({ logicalStopId }) => logicalStopId === directionalRadioLogicalStopId).coordinate
+  const retargetedRadioReceipt = clone(browserReceipt)
+  const retargetedRadioCase = retargetedRadioReceipt.cases.find(({ caseId }) => caseId === directionalRadioCase.caseId)
+  retargetedRadioCase.keyboardTraversal.returnVisited[directionalRadioReturnIndex].coordinate = directionalRadioForwardCoordinate
+  await reject("keyboard retargeted radio member", () => validateBrowser(record, prototypeContext, retargetedRadioReceipt))
+  const logicalStopDriftReceipt = clone(browserReceipt)
+  const logicalStopDriftCase = logicalStopDriftReceipt.cases.find(({ caseId }) => caseId === directionalRadioCase.caseId)
+  logicalStopDriftCase.keyboardTraversal.returnVisited[directionalRadioReturnIndex].logicalStopId = 'radio-group:["no-form","drifted-choice"]'
+  await reject("keyboard logical stop drift", () => validateBrowser(record, prototypeContext, logicalStopDriftReceipt))
+  const elementIdentityDriftReceipt = clone(browserReceipt)
+  const elementIdentityDriftCase = elementIdentityDriftReceipt.cases.find((entry) => entry.presentation === "default" && entry.browserProject === "chromium")
+  const ordinaryIndex = elementIdentityDriftCase.keyboardTraversal.expectedOrder.findIndex(({ logicalStopId }) => logicalStopId.startsWith("element:"))
+  assert(ordinaryIndex >= 0, "ordinary focus-stop mutation fixture absent")
+  elementIdentityDriftCase.keyboardTraversal.expectedOrder[ordinaryIndex].coordinate = "#retargeted-ordinary-control"
+  elementIdentityDriftCase.keyboardTraversal.visited[ordinaryIndex].coordinate = "#retargeted-ordinary-control"
+  await reject("keyboard ordinary coordinate/logical identity drift", () => validateBrowser(record, prototypeContext, elementIdentityDriftReceipt))
+  const nonWebkitDirectionalRadioReceipt = clone(browserReceipt)
+  nonWebkitDirectionalRadioReceipt.cases.find(({ caseId }) => caseId === directionalRadioCase.caseId).browserProject = "firefox"
+  await reject("keyboard non-WebKit direction-specific radio coordinate", () => validateBrowser(record, prototypeContext, nonWebkitDirectionalRadioReceipt))
+  const cycleLogicalDriftReceipt = clone(browserReceipt)
+  cycleLogicalDriftReceipt.cases.find((entry) => entry.presentation === "default" && entry.browserProject === "firefox").keyboardTraversal.cycleReturnLogicalStopId = "element:#drifted-cycle-stop"
+  await reject("keyboard cycle logical-stop drift", () => validateBrowser(record, prototypeContext, cycleLogicalDriftReceipt))
+  const cycleCoordinateDriftReceipt = clone(browserReceipt)
+  cycleCoordinateDriftReceipt.cases.find((entry) => entry.presentation === "default" && entry.browserProject === "firefox").keyboardTraversal.cycleReturnCoordinate = "#drifted-cycle-coordinate"
+  await reject("keyboard cycle coordinate drift", () => validateBrowser(record, prototypeContext, cycleCoordinateDriftReceipt))
   const coverageContractReceipt = clone(browserReceipt)
   coverageContractReceipt.coverageContract.deferredHazardVariants.pop()
   await reject("browser representative coverage contract weakening", () => validateBrowser(record, prototypeContext, coverageContractReceipt))
