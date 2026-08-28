@@ -44,8 +44,9 @@
     "test:browser:chromium": "bun run --filter @nycustodian/site test:browser:chromium",
     "typecheck": "node --experimental-strip-types scripts/run-workspaces.ts typecheck",
     "typecheck:browser": "bun run --filter @nycustodian/site typecheck:browser",
-    "verify": "bun run check:toolchain && bun run check:layout && bun run check:boundaries && bun run check:certification-record && bun run verify:visuals && bun run content:build && bun run typecheck && bun run typecheck:browser && bun run test && bun run site:build && bun run verify:artifacts",
+    "verify": "bun run check:toolchain && bun run check:layout && bun run check:boundaries && bun run check:certification-record && bun run verify:visuals && bun run content:build && bun run typecheck && bun run typecheck:browser && bun run test && bun run site:build && bun run verify:artifacts && bun run verify:codex-uiux",
     "verify:artifacts": "bun run scripts/verify-artifacts.ts",
+    "verify:codex-uiux": "node plans/validate-004-005-codex-only.mjs",
     "verify:visuals": "bun content/authoring/visuals/releases/verify-visual-release.mjs"
   },
   "devDependencies": {
