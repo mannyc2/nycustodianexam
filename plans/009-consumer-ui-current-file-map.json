@@ -1,0 +1,1323 @@
+{
+  "schemaVersion": 1,
+  "artifact": "plans/009-consumer-ui-current-file-map.json",
+  "artifactKind": "current-file-map",
+  "metadata": {
+    "status": "provisional-prework",
+    "participantEvidence": "none",
+    "humanEvidence": "none",
+    "notHumanUsabilityTested": true,
+    "decisionStatus": "pending",
+    "requiredDependencyShas": null,
+    "mustRebaseAndReverify": true,
+    "productionAuthorization": false,
+    "authorizationInterface": "CODEX-ONLY-UIUX-V1",
+    "observedAtSha": "9fc7dcacfc961752e5d9a2cedbc426deead54a05"
+  },
+  "observedAt": "2026-08-28",
+  "scope": {
+    "coverageMode": "canonical-owners-and-load-bearing-seams",
+    "implementationRoot": ".",
+    "sourceInventoryCompleteness": "provisional-until-parallel-step-04-inventory-is-merged-and-verified",
+    "generatedOutputsAreCanonical": false,
+    "productionFilesModified": false,
+    "planIndexModified": false
+  },
+  "authorizationModel": {
+    "interfaceId": "CODEX-ONLY-UIUX-V1",
+    "researchReviewDecisionSignoff": "codex-only",
+    "humanEvidence": "none",
+    "notHumanUsabilityTested": true,
+    "agentsCountAsHumans": false,
+    "humanApprovalArtifactRequired": false,
+    "requiredEvidence": [
+      "exact-repository-attested-step-02-through-step-05-decision-shas",
+      "independent-codex-subagent-review-records",
+      "exact-ci-certification"
+    ],
+    "productionDeploymentControls": "separate-technical-gates",
+    "productionAuthorization": false
+  },
+  "upstreamDecisionInputs": [
+    {
+      "stepId": "step-02",
+      "acceptanceInterface": "CODEX-ONLY-UIUX-V1",
+      "scopeBinding": "resolve-from-the-accepted-repository-attestation-only-after-landing",
+      "decisionStatus": "pending",
+      "acceptedDecisionSha": null,
+      "mergeCommitSha": null,
+      "ciRunId": null,
+      "ciHeadSha": null,
+      "independentReviewRecordSha256": null,
+      "mustRebaseAndReverify": true
+    },
+    {
+      "stepId": "step-03",
+      "acceptanceInterface": "CODEX-ONLY-UIUX-V1",
+      "scopeBinding": "resolve-from-the-accepted-repository-attestation-only-after-landing",
+      "decisionStatus": "pending",
+      "acceptedDecisionSha": null,
+      "mergeCommitSha": null,
+      "ciRunId": null,
+      "ciHeadSha": null,
+      "independentReviewRecordSha256": null,
+      "mustRebaseAndReverify": true
+    },
+    {
+      "stepId": "step-04",
+      "acceptanceInterface": "CODEX-ONLY-UIUX-V1",
+      "scopeBinding": "resolve-from-the-accepted-repository-attestation-only-after-landing",
+      "decisionStatus": "pending",
+      "acceptedDecisionSha": null,
+      "mergeCommitSha": null,
+      "ciRunId": null,
+      "ciHeadSha": null,
+      "independentReviewRecordSha256": null,
+      "mustRebaseAndReverify": true
+    },
+    {
+      "stepId": "step-05",
+      "acceptanceInterface": "CODEX-ONLY-UIUX-V1",
+      "scopeBinding": "resolve-from-the-accepted-repository-attestation-only-after-landing",
+      "decisionStatus": "pending",
+      "acceptedDecisionSha": null,
+      "mergeCommitSha": null,
+      "ciRunId": null,
+      "ciHeadSha": null,
+      "independentReviewRecordSha256": null,
+      "mustRebaseAndReverify": true
+    }
+  ],
+  "codexReviewLedger": [],
+  "dependencySlots": [
+    {
+      "id": "consumer-language",
+      "sourcePlan": "plans/004-establish-consumer-language-boundary.md",
+      "purpose": "accepted consumer vocabulary, copy ownership, and internal-wording disposition",
+      "canonicalConsumers": ["product/CONTENT_DESIGN.md"],
+      "coordinateKind": "git-and-artifact",
+      "participantEvidence": "none",
+      "decisionStatus": "pending",
+      "requiredDependencyShas": null,
+      "upstreamInputRef": null,
+      "artifactSha256ByPath": null,
+      "externalEvidenceId": null,
+      "status": "provisional-prework",
+      "mustRebaseAndReverify": true
+    },
+    {
+      "id": "task-navigation",
+      "sourcePlan": "plans/005-rebuild-learner-task-navigation.md",
+      "purpose": "accepted learner-task hierarchy, labels, route relationships, and navigation behavior",
+      "canonicalConsumers": [
+        "product/ROUTES.md",
+        "product/SCREEN_STATES.md",
+        "product/COMPONENT_ARCHITECTURE.md",
+        "product/DESIGN_SYSTEM.md"
+      ],
+      "coordinateKind": "git-and-artifact",
+      "participantEvidence": "none",
+      "decisionStatus": "pending",
+      "requiredDependencyShas": null,
+      "upstreamInputRef": null,
+      "artifactSha256ByPath": null,
+      "externalEvidenceId": null,
+      "status": "provisional-prework",
+      "mustRebaseAndReverify": true
+    },
+    {
+      "id": "consumer-visual-system",
+      "sourcePlan": "plans/006-select-consumer-visual-system.md",
+      "purpose": "accepted visual territory and token contract",
+      "canonicalConsumers": ["product/DESIGN_SYSTEM.md"],
+      "coordinateKind": "git-and-artifact",
+      "participantEvidence": "none",
+      "decisionStatus": "pending",
+      "requiredDependencyShas": null,
+      "upstreamInputRef": null,
+      "artifactSha256ByPath": null,
+      "externalEvidenceId": null,
+      "status": "provisional-prework",
+      "mustRebaseAndReverify": true
+    },
+    {
+      "id": "ui-foundations-responsive-contract",
+      "sourcePlan": "plans/007-specify-ui-foundations-and-responsive-contract.md",
+      "purpose": "accepted component anatomy, route archetypes, responsive behavior, and authoritative migration ordering",
+      "canonicalConsumers": [
+        "product/COMPONENT_ARCHITECTURE.md",
+        "product/DESIGN_SYSTEM.md"
+      ],
+      "coordinateKind": "git-and-artifact",
+      "participantEvidence": "none",
+      "decisionStatus": "pending",
+      "requiredDependencyShas": null,
+      "upstreamInputRef": null,
+      "artifactSha256ByPath": null,
+      "externalEvidenceId": null,
+      "status": "provisional-prework",
+      "mustRebaseAndReverify": true
+    },
+    {
+      "id": "integrated-consumer-validation",
+      "sourcePlan": "plans/008-run-integrated-consumer-ux-validation.md",
+      "purpose": "accepted integrated journey, accessibility, and conditional rollout evidence",
+      "canonicalConsumers": [
+        "product/CONTENT_DESIGN.md",
+        "product/ROUTES.md",
+        "product/COMPONENT_ARCHITECTURE.md",
+        "product/DESIGN_SYSTEM.md"
+      ],
+      "coordinateKind": "git-and-artifact",
+      "participantEvidence": "none",
+      "decisionStatus": "pending",
+      "requiredDependencyShas": null,
+      "upstreamInputRef": null,
+      "artifactSha256ByPath": null,
+      "externalEvidenceId": null,
+      "status": "provisional-prework",
+      "mustRebaseAndReverify": true
+    },
+    {
+      "id": "parallel-step-04-source-inventory",
+      "sourcePlan": null,
+      "purpose": "exact source-string, component, selector, route, and generated-output inventory produced in parallel",
+      "canonicalConsumers": [
+        "plans/009-consumer-ui-migration-plan.draft.md",
+        "plans/009-consumer-ui-current-file-map.json"
+      ],
+      "coordinateKind": "git-and-artifact",
+      "participantEvidence": "none",
+      "decisionStatus": "pending",
+      "requiredDependencyShas": null,
+      "upstreamInputRef": null,
+      "artifactSha256ByPath": null,
+      "externalEvidenceId": null,
+      "status": "provisional-prework",
+      "mustRebaseAndReverify": true
+    },
+    {
+      "id": "rollout-feature-flag-decision",
+      "sourcePlan": null,
+      "purpose": "optional accepted decision only if the current no-runtime-flag hard cut is replaced",
+      "canonicalConsumers": [],
+      "coordinateKind": "optional-git-decision",
+      "participantEvidence": "none",
+      "decisionStatus": "pending",
+      "requiredDependencyShas": null,
+      "upstreamInputRef": null,
+      "artifactSha256ByPath": null,
+      "externalEvidenceId": null,
+      "status": "provisional-prework",
+      "mustRebaseAndReverify": true
+    },
+    {
+      "id": "observability-privacy-decision",
+      "sourcePlan": null,
+      "purpose": "optional accepted privacy and retention decision only if remote observability is proposed",
+      "canonicalConsumers": [],
+      "coordinateKind": "optional-git-decision",
+      "participantEvidence": "none",
+      "decisionStatus": "pending",
+      "requiredDependencyShas": null,
+      "upstreamInputRef": null,
+      "artifactSha256ByPath": null,
+      "externalEvidenceId": null,
+      "status": "provisional-prework",
+      "mustRebaseAndReverify": true
+    },
+    {
+      "id": "production-authorization-evidence",
+      "sourcePlan": null,
+      "purpose": "post-graduation candidate-bound CI certification and protected deployment-control evidence; this remains null when Plan 009 becomes executable and no Git SHA is assumed",
+      "canonicalConsumers": ["docs/certification/production-v1.json"],
+      "coordinateKind": "technical-deployment-evidence",
+      "participantEvidence": "none",
+      "decisionStatus": "pending",
+      "requiredDependencyShas": null,
+      "upstreamInputRef": null,
+      "artifactSha256ByPath": null,
+      "externalEvidenceId": null,
+      "status": "provisional-prework",
+      "mustRebaseAndReverify": true
+    }
+  ],
+  "topologyAreas": [
+    "component",
+    "route",
+    "state",
+    "stylesheet",
+    "content",
+    "test",
+    "build",
+    "accessibility",
+    "offline",
+    "print",
+    "deployment"
+  ],
+  "fileRecords": [
+    {
+      "path": "product/FEATURE_SPEC.md",
+      "areas": ["content", "state", "accessibility", "offline", "print"],
+      "role": "Maintained user-visible behavior, security, local-first, print, and accessibility contract.",
+      "migrationSeam": "Every visible slice must preserve its facts, reveal boundary, and offline/print behavior.",
+      "authority": "maintained-authority"
+    },
+    {
+      "path": "product/ARCHITECTURE_CONSTRAINTS.md",
+      "areas": ["component", "state", "build", "deployment"],
+      "role": "Maintained renderer, runtime-root, workspace, delivery, and privacy constraints.",
+      "migrationSeam": "Constrains migration mechanics without supplying pending consumer design decisions.",
+      "authority": "maintained-authority"
+    },
+    {
+      "path": "product/ROUTES.md",
+      "areas": ["route", "accessibility", "offline"],
+      "role": "Canonical route IDs, paths, ownership, indexability, navigation, and offline contract.",
+      "migrationSeam": "Route identity and normal-document navigation remain stable unless an accepted contract explicitly changes them.",
+      "authority": "maintained-authority"
+    },
+    {
+      "path": "product/SCREEN_STATES.md",
+      "areas": ["state", "accessibility", "offline", "print"],
+      "role": "Canonical legal screen states, transitions, focus, history, recovery, and offline semantics.",
+      "migrationSeam": "Presentation may change only after state restoration and transition behavior is characterized.",
+      "authority": "maintained-authority"
+    },
+    {
+      "path": "product/COMPONENT_ARCHITECTURE.md",
+      "areas": ["component", "accessibility"],
+      "role": "Maintained React 19 compound-component and provider contract.",
+      "migrationSeam": "Accepted future component anatomy must be adopted without moving durable truth into React.",
+      "authority": "maintained-authority"
+    },
+    {
+      "path": "product/DESIGN_SYSTEM.md",
+      "areas": ["stylesheet", "accessibility", "print"],
+      "role": "Maintained semantic token, layout, control, responsive, forced-color, motion, and print rules.",
+      "migrationSeam": "Pending visual decisions must promote here before CSS or component cutover.",
+      "authority": "maintained-authority"
+    },
+    {
+      "path": "docs/OPEN.md",
+      "areas": ["content", "test", "accessibility", "deployment"],
+      "role": "Canonical unresolved fact, implementation-evidence, certification, analytics, and operational gates.",
+      "migrationSeam": "Unknowns and release gaps remain explicit production stop conditions.",
+      "authority": "maintained-authority"
+    },
+    {
+      "path": "docs/FACTBASE.md",
+      "areas": ["content"],
+      "role": "Maintained established exam, logistics, and legal fact authority.",
+      "migrationSeam": "Consumer-language changes may project these facts but cannot rewrite, infer, or silently resolve them.",
+      "authority": "maintained-authority"
+    },
+    {
+      "path": "docs/SCOPE.md",
+      "areas": ["content"],
+      "role": "Maintained testable-content scope and source basis.",
+      "migrationSeam": "Route or copy migration cannot expand scored scope or merge incompatible exam series.",
+      "authority": "maintained-authority"
+    },
+    {
+      "path": "docs/TAXONOMY.md",
+      "areas": ["content", "accessibility", "print"],
+      "role": "Maintained tool, PPE, confusable-comparison, and hazard taxonomy with evidence tiers.",
+      "migrationSeam": "Accepted presentation may clarify decisive distinctions but cannot invent concepts, pairings, or hazard claims.",
+      "authority": "maintained-authority"
+    },
+    {
+      "path": "illustration/VISUAL_AUTHORING_POLICY.md",
+      "areas": ["content", "accessibility", "print"],
+      "role": "Current production authority for accepted raster illustration mechanics and security/rights boundaries.",
+      "migrationSeam": "UI layout may consume reviewed raster bytes but cannot regenerate, trace, or replace their production authority.",
+      "authority": "maintained-authority"
+    },
+    {
+      "path": "apps/site/src/route-registry.ts",
+      "areas": ["route", "test", "build"],
+      "role": "Implemented route-ID allowlist used by static generation and artifact verification.",
+      "migrationSeam": "Any route addition or removal must reconcile the maintained route contract and every generated/offline projection.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/scripts/generate-pages.tsx",
+      "areas": ["component", "route", "stylesheet", "content", "build", "accessibility", "offline", "print"],
+      "role": "Central document generator for shell, navigation, metadata, static fallback, route copy, island bootstraps, pack navigation, and stylesheet publication.",
+      "migrationSeam": "Primary producer cutover point; generated documents are projections and must not become a peer source of truth.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/vite.config.ts",
+      "areas": ["route", "build", "deployment"],
+      "role": "Discovers generated HTML as multi-page build inputs and installs local dynamic-shell routing for development and preview.",
+      "migrationSeam": "Route closure changes must remain normal-document inputs rather than becoming an SPA router.",
+      "authority": "build-release"
+    },
+    {
+      "path": "apps/site/src/asset-router.ts",
+      "areas": ["route", "deployment"],
+      "role": "Narrow Cloudflare Static Assets router for opaque simulation/result/print shells and terminal responses.",
+      "migrationSeam": "Only exact local-shell path behavior may change; it must not become an application backend.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/shell-route-policy.ts",
+      "areas": ["route", "offline", "deployment"],
+      "role": "Shared trusted-shell navigation and local-shell route policy.",
+      "migrationSeam": "Route-family changes must update shell trust and offline closure atomically.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/styles.css",
+      "areas": ["stylesheet", "component", "accessibility", "print"],
+      "role": "Single authored CSS source for tokens, base, layout, components, utilities, responsive adaptations, forced colors, motion, and print.",
+      "migrationSeam": "Hard-cut token/foundation changes originate here and must update static and island surfaces together.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/settings/preferences-boot.ts",
+      "areas": ["component", "state", "stylesheet", "accessibility", "offline", "build"],
+      "role": "Minimal canonical route-document preference, connectivity, and service-worker-controlled freshness-detection bootstrap.",
+      "migrationSeam": "Static routes retain this small boot while preserving zero React, Effect, and study-runtime closure; accepted tokens must still honor its large-text and reduced-motion projections.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/screen/store.ts",
+      "areas": ["component", "state", "accessibility"],
+      "role": "Renderer-neutral snapshot publication, focus request, announcement request, subscription, start, and disposal primitive.",
+      "migrationSeam": "New presentation must consume this contract rather than infer application truth from DOM structure.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/app-runtime.ts",
+      "areas": ["component", "state", "offline"],
+      "role": "Long-lived document runtime for question, hazard, review, simulation, print persistence, database, and verified content.",
+      "migrationSeam": "Multiple islands must not create or dispose competing runtimes during component migration.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/verified-content.ts",
+      "areas": ["content", "state", "offline"],
+      "role": "Verified item-scoped postcommit content acquisition, receipt, hash, and cache boundary.",
+      "migrationSeam": "Presentation cannot request or read answer-bearing content before durable commitment or weaken exact receipt/hash verification.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/attempt-receipt.ts",
+      "areas": ["content", "state", "offline"],
+      "role": "Canonical question and hazard attempt receipt schemas, durable attempt identity, and exact postcommit/asset binding.",
+      "migrationSeam": "Question, review, hazard, simulation, and generated bootstrap changes must preserve receipt identity and exact content closure.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/trusted-release-content.ts",
+      "areas": ["content", "state", "offline", "build"],
+      "role": "Trusted release registry decoding and exact question/hazard content, variant, receipt, option/zone, and visual-asset closure.",
+      "migrationSeam": "Route and component migration cannot substitute content, collapse visual/nonvisual variants, or weaken registry closure.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/delivery-manifest.ts",
+      "areas": ["content", "build", "offline", "deployment"],
+      "role": "Public delivery manifest schema, deployable artifact filtering, and unique path closure.",
+      "migrationSeam": "Generated route and offline changes must retain one closed public delivery manifest without publishing internal artifacts.",
+      "authority": "build-release"
+    },
+    {
+      "path": "apps/site/src/session-navigation.ts",
+      "areas": ["route", "state", "accessibility", "offline"],
+      "role": "Shared player-session Previous and Next gesture, origin, and browser-history policy.",
+      "migrationSeam": "Question, review, hazard, and simulation controls must characterize legal state gating before navigation presentation changes.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/question-player/state.ts",
+      "areas": ["state", "component"],
+      "role": "Question-player legal state representation including commit-before-reveal failure recovery.",
+      "migrationSeam": "Visual variants project this state; they must not add reveal-capable presentation-only states.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/question-player/persistence.ts",
+      "areas": ["state", "offline"],
+      "role": "Question attempt validation, idempotent durable commit, lookup, and listing boundary.",
+      "migrationSeam": "Question UI rollback remains safe only while attempt identity and commit transaction semantics stay unchanged.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/question-player/commit-and-reveal.ts",
+      "areas": ["content", "state", "offline"],
+      "role": "Question commit-before-reveal, restoration, retry, and verified postcommit fetch use cases.",
+      "migrationSeam": "The UI must remain a projection of durable commit then verified reveal and cannot introduce an in-memory shortcut.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/question-player/controller.ts",
+      "areas": ["state", "component", "accessibility"],
+      "role": "Question commands, persistence coordination, snapshot publication, focus, and announcement behavior.",
+      "migrationSeam": "Preserve controller behavior while replacing only the consumer presentation composition.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/question-player/react/player.tsx",
+      "areas": ["component", "accessibility"],
+      "role": "Question compound-component exports and current practice composition.",
+      "migrationSeam": "Pilot seam for accepted explicit practice/review variants without behavioral boolean proliferation.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/question-player/react/bootstrap.tsx",
+      "areas": ["component", "route", "state"],
+      "role": "Question/review document bootstrap, input decoding, root mount, session navigation, service-worker registration, and cleanup.",
+      "migrationSeam": "Must select the route-appropriate accepted variant and preserve one-root lifecycle ownership.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/hazard-player/state.ts",
+      "areas": ["state", "component", "accessibility"],
+      "role": "Visual/nonvisual hazard legal states and commit/recovery representation.",
+      "migrationSeam": "Accepted presentation must preserve distinct visual and nonvisual constructs.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/hazard-player/persistence.ts",
+      "areas": ["state", "offline"],
+      "role": "Hazard attempt/session validation, durable commit/completion, restoration, and listing boundary.",
+      "migrationSeam": "Visual/nonvisual UI changes cannot alter attempt identity, zero-mark confirmation, completion, or restoration transactions.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/hazard-player/commit-and-reveal.ts",
+      "areas": ["content", "state", "offline"],
+      "role": "Hazard commit-before-reveal, completion, restoration, asset retention, and verified feedback use cases.",
+      "migrationSeam": "The component cutover must preserve durable neutral commitment before answer-bearing feedback or completed results.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/hazard-player/controller.ts",
+      "areas": ["state", "component", "accessibility"],
+      "role": "Hazard commands, commit, marker/zone state, focus, announcement, and lifecycle behavior.",
+      "migrationSeam": "Presentation cutover must preserve durable attempt and neutral pre-reveal behavior.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/hazard-player/react/player.tsx",
+      "areas": ["component", "accessibility"],
+      "role": "Hazard compound components and explicit visual/nonvisual compositions.",
+      "migrationSeam": "Existing explicit variants are the component-contract adoption seam.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/hazard-player/react/bootstrap.tsx",
+      "areas": ["component", "route", "state", "offline"],
+      "role": "Hazard document decoding, runtime acquisition, session navigation, mount, and cleanup boundary; current hazard-review links also reach this ordinary hazard bootstrap.",
+      "migrationSeam": "Route-appropriate hazard variants and navigation policy must cut over without changing asset receipts or lifecycle ownership.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/review/model.ts",
+      "areas": ["component", "route", "state", "offline"],
+      "role": "Review queue and review-item identities, projections, and unavailable-history state contract.",
+      "migrationSeam": "Accepted question-review and hazard-review variants must preserve review identity and event-derived truth.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/review/controller.ts",
+      "areas": ["state", "component", "offline"],
+      "role": "Review queue reconstruction, acknowledgement, navigation, and recovery controller.",
+      "migrationSeam": "Review presentation must retain event-derived queue truth and unavailable-history handling.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/review/persistence.ts",
+      "areas": ["state", "offline"],
+      "role": "Idempotent review acknowledgement identity, validation, legacy import, listing, and IndexedDB transaction boundary.",
+      "migrationSeam": "Review UI changes cannot duplicate acknowledgements, change event identity, or bypass durable acknowledgement commits.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/review/projection.ts",
+      "areas": ["content", "state", "offline"],
+      "role": "Canonical event-and-content-derived review queue, exact receipt matching, quarantine, and acknowledgement projection.",
+      "migrationSeam": "Review and settings-rebuild presentation must share this one derivation algorithm and preserve exact-content failures.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/review/react/bootstrap.tsx",
+      "areas": ["component", "route", "state"],
+      "role": "Review queue bootstrap decoder, receipt validation, root mount, and runtime cleanup.",
+      "migrationSeam": "Queue composition changes remain downstream of validated bootstrap and controller state.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/review/react/review-queue.tsx",
+      "areas": ["component", "route", "state", "accessibility", "offline"],
+      "role": "Review queue composition, filters, unavailable-history presentation, and item links.",
+      "migrationSeam": "Queue navigation and empty/unavailable states must migrate with explicit question and hazard review destinations.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/simulation/controller.ts",
+      "areas": ["component", "state", "offline"],
+      "role": "Simulation setup/player/results transitions, persistence, navigation, and recovery.",
+      "migrationSeam": "Three simulation documents must migrate as one deterministic workflow boundary.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/simulation/model.ts",
+      "areas": ["component", "route", "state", "offline"],
+      "role": "Simulation setup, in-progress, submitted, results, and recovery state model.",
+      "migrationSeam": "All three simulation documents must project the same legal state machine without presentation-only shortcuts.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/simulation/generation.ts",
+      "areas": ["content", "state", "offline"],
+      "role": "Deterministic simulation identity, item selection, and pinned content generation.",
+      "migrationSeam": "Visual migration cannot change eligibility, ordering, pins, or deterministic session identity.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/simulation/persistence.ts",
+      "areas": ["state", "offline"],
+      "role": "Durable simulation session and final-submission storage operations.",
+      "migrationSeam": "Autosave, restoration, and final-submit reconciliation stay authoritative across presentation rollback.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/simulation/react/bootstrap-setup.tsx",
+      "areas": ["component", "route", "state"],
+      "role": "Simulation setup document decoder, mount, and lifecycle owner.",
+      "migrationSeam": "Setup form composition cuts over downstream of validated bootstrap inputs.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/simulation/react/bootstrap-player.tsx",
+      "areas": ["component", "route", "state", "offline"],
+      "role": "Simulation player restoration, runtime, navigation, mount, and cleanup boundary.",
+      "migrationSeam": "Player controls and session navigation must remain gated by restoration and submission state.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/simulation/react/bootstrap-results.tsx",
+      "areas": ["component", "route", "state", "offline"],
+      "role": "Opaque simulation-results identity decoder, restoration, mount, and cleanup boundary.",
+      "migrationSeam": "Results presentation must never become available before durable final submission.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/simulation/react/setup.tsx",
+      "areas": ["component", "state", "accessibility"],
+      "role": "Current simulation setup presentation and form state projection.",
+      "migrationSeam": "Accepted form anatomy must retain settings on generation failure.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/simulation/react/player.tsx",
+      "areas": ["component", "state", "accessibility", "offline"],
+      "role": "Simulation player controls, progress, item projection, and submission presentation.",
+      "migrationSeam": "Accepted anatomy must preserve neutral in-session feedback and keyboard/focus behavior.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/simulation/react/results.tsx",
+      "areas": ["component", "state", "accessibility", "offline"],
+      "role": "Simulation results, explanation, recovery, and navigation composition.",
+      "migrationSeam": "Results cut over only as the terminal projection of a durably submitted session.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/settings-runtime.ts",
+      "areas": ["component", "state", "offline"],
+      "role": "Settings document runtime and service composition boundary.",
+      "migrationSeam": "Settings islands must reuse one lifecycle-owned runtime rather than constructing persistence services during render.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/settings/model.ts",
+      "areas": ["component", "state", "accessibility", "offline"],
+      "role": "Settings, diagnostics, transfer, destructive-preview, and recovery state contract.",
+      "migrationSeam": "Accepted utility archetypes must represent restoration, preview, progress, success, and failure distinctly.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/settings/persistence.ts",
+      "areas": ["state", "offline"],
+      "role": "Preference persistence, mirror coordination, reset, and local-diagnostics operations.",
+      "migrationSeam": "UI work cannot change preference or destructive-operation semantics incidentally.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/settings/review-rebuild.ts",
+      "areas": ["state", "offline"],
+      "role": "Explicit idempotent settings recovery action that delegates review reconstruction to the canonical review projection.",
+      "migrationSeam": "Settings presentation must retain a read-only, repeatable rebuild and cannot fork review derivation logic.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/settings/react/bootstrap.tsx",
+      "areas": ["component", "route", "state", "offline"],
+      "role": "Settings restoration, runtime, mount, and cleanup boundary.",
+      "migrationSeam": "The consumer composition must remain downstream of authoritative preference and local-data restoration.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/settings/react/settings.tsx",
+      "areas": ["component", "state", "accessibility", "offline"],
+      "role": "Large settings, preferences, transfer, reset, rebuild, and local diagnostics presentation.",
+      "migrationSeam": "Decompose presentation only around existing persistence operations and explicit destructive previews.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/offline-pack-runtime.ts",
+      "areas": ["component", "state", "offline"],
+      "role": "Offline-pack document runtime and storage/cache service composition boundary.",
+      "migrationSeam": "Pack UI cutover must preserve one runtime owner and truthful reconciliation lifecycle.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/offline-packs/model.ts",
+      "areas": ["component", "state", "offline"],
+      "role": "Offline-pack identity, operation, restoration, and presentation state contract.",
+      "migrationSeam": "Loading, unavailable, staged, active, retained, failed, and removal states cannot be collapsed by styling.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/settings/data-transfer.ts",
+      "areas": ["state", "content", "offline"],
+      "role": "Portable export v2, v1 normalization, integrity checks, preview, quarantine, and atomic import contract.",
+      "migrationSeam": "UI work must preserve encoded compatibility and may not rewrite or silently drop local records.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/offline-packs/manager.ts",
+      "areas": ["state", "offline"],
+      "role": "Pack stage, verify, activate, retain, reconcile, remove, and pin-safety workflow.",
+      "migrationSeam": "Presentation changes remain consumers of the durable pack lifecycle.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/offline-packs/persistence.ts",
+      "areas": ["state", "offline"],
+      "role": "IndexedDB and Cache Storage ownership for pack records and operations.",
+      "migrationSeam": "No visual migration may change pack identity, pointer, cache, or transaction semantics incidentally.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/offline-packs/react/pack-manager.tsx",
+      "areas": ["component", "state", "accessibility", "offline"],
+      "role": "Current pack management UI, restore/reconcile trigger, storage estimate, status, and destructive actions.",
+      "migrationSeam": "Restoration/loading must be represented truthfully before any accepted visual-state cutover.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/offline-packs/react/bootstrap.tsx",
+      "areas": ["component", "route", "state", "offline"],
+      "role": "Offline-pack restoration, reconciliation, mount, and cleanup boundary.",
+      "migrationSeam": "The bootstrap must expose restoration distinctly before the manager can claim an empty pack list.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/correction-runtime.ts",
+      "areas": ["component", "state", "offline"],
+      "role": "Correction intake runtime and local-draft/service composition boundary.",
+      "migrationSeam": "Correction presentation must retain local-first draft ownership and dormant-worker behavior.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/corrections/model.ts",
+      "areas": ["component", "state", "accessibility", "offline"],
+      "role": "Correction form, consent, attachment, draft, submit, and recovery state contract.",
+      "migrationSeam": "Accepted form patterns cannot imply network submission or success that has not occurred.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/corrections/client.ts",
+      "areas": ["state", "offline", "deployment"],
+      "role": "Correction transport client and typed remote failure boundary.",
+      "migrationSeam": "UI changes cannot activate the dormant Worker or add an unattested endpoint.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/corrections/persistence.ts",
+      "areas": ["state", "offline"],
+      "role": "Correction draft persistence and restoration operations.",
+      "migrationSeam": "Draft identity and no-network recovery must survive consumer-form changes and rollback.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/corrections/react/bootstrap.tsx",
+      "areas": ["component", "route", "state", "offline"],
+      "role": "Correction draft restoration, runtime, mount, and cleanup boundary.",
+      "migrationSeam": "Form presentation cuts over only after authoritative draft restoration is represented.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/corrections/react/correction-form.tsx",
+      "areas": ["component", "state", "accessibility", "offline"],
+      "role": "Correction intake fields, consent, attachments, draft status, and submit presentation.",
+      "migrationSeam": "Consumer copy and form anatomy must preserve consent, local-draft, accessibility, and truthful transport states.",
+      "authority": "production-source"
+    },
+    {
+      "path": "packages/correction-intake/src/model.ts",
+      "areas": ["content", "state", "deployment"],
+      "role": "Shared correction request, receipt, consent, classification, and activation-boundary data contract.",
+      "migrationSeam": "Consumer form changes must preserve the shared encoded boundary without implying that dormant intake is active.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/correction-worker/src/worker.ts",
+      "areas": ["state", "test", "deployment"],
+      "role": "Dormant correction Worker request boundary and fail-closed inactive behavior.",
+      "migrationSeam": "UI work cannot activate collection, provision storage, or make the dormant endpoint reachable.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/correction-worker/wrangler.jsonc",
+      "areas": ["build", "deployment"],
+      "role": "Dormant correction Worker deployment configuration without active production routes or bindings.",
+      "migrationSeam": "No UI tranche may add routes, bindings, secrets, or deployment authority here.",
+      "authority": "build-release"
+    },
+    {
+      "path": "apps/site/src/study-storage/app-database/storage-model.ts",
+      "areas": ["state", "offline", "print"],
+      "role": "IndexedDB name, version 5, fifteen-store union, legacy database identities, and database service contract.",
+      "migrationSeam": "A UI-only migration must not bump or downgrade this schema; any state change requires a separate data migration proof.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/study-storage/app-database/connection-owner.ts",
+      "areas": ["state", "offline"],
+      "role": "Database connection lifecycle, missing-store creation, upgrade blocking, and disposal.",
+      "migrationSeam": "Rollback cannot assume an older application can consume a newly changed durable schema.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/public/sw.js",
+      "areas": ["route", "offline", "deployment"],
+      "role": "Service-worker template for versioned shell/runtime caches, exact active-pack lookup, local shells, and offline fallback.",
+      "migrationSeam": "Shell/navigation changes must preserve cache ownership, pack bypass, and active-client update behavior.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/scripts/finalize-service-worker.ts",
+      "areas": ["build", "offline", "deployment"],
+      "role": "Build-time shell closure, safe precache, answer-boundary checks, and cache-version finalization.",
+      "migrationSeam": "Every route/component asset change must be proven safe before entering the shell closure.",
+      "authority": "build-release"
+    },
+    {
+      "path": "apps/site/src/print/controller.ts",
+      "areas": ["component", "state", "print", "accessibility"],
+      "role": "Print builder/preview snapshot, generation, navigation, focus, and recovery controller.",
+      "migrationSeam": "Builder and preview variants must preserve durable manifest creation before navigation.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/print/generation.ts",
+      "areas": ["content", "state", "print"],
+      "role": "Deterministic product selection, identity, packet composition, and availability rules.",
+      "migrationSeam": "Layout changes may not alter deterministic selection, content identity, or key separation.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/print/workflow.ts",
+      "areas": ["state", "print"],
+      "role": "Print generation/persistence workflow and typed failure boundary.",
+      "migrationSeam": "Presentation must remain downstream of one durable print workflow.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/print/persistence.ts",
+      "areas": ["state", "offline", "print"],
+      "role": "Durable print-job manifest storage and restoration boundary.",
+      "migrationSeam": "Preview identity and deterministic regeneration must survive UI changes and rollback.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/print/react/builder-bootstrap.tsx",
+      "areas": ["component", "route", "state", "print"],
+      "role": "Print builder runtime, decoder, mount, and cleanup boundary.",
+      "migrationSeam": "Accepted controls cut over downstream of the durable generation workflow.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/print/react/preview-bootstrap.tsx",
+      "areas": ["component", "route", "state", "offline", "print"],
+      "role": "Opaque print-job restoration, preview mount, and cleanup boundary.",
+      "migrationSeam": "Preview must render only a restored persisted manifest and retain unavailable-job recovery.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/print/react/builder.tsx",
+      "areas": ["component", "print", "accessibility"],
+      "role": "Current print-center controls and state projection.",
+      "migrationSeam": "Accepted form and responsive patterns cut over here without changing product availability rules.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/site/src/print/react/preview.tsx",
+      "areas": ["component", "print", "accessibility"],
+      "role": "Current semantic printable packet and preview actions.",
+      "migrationSeam": "Screen and print projections must migrate together while keeping navigation chrome out of print.",
+      "authority": "production-source"
+    },
+    {
+      "path": "content/authoring/packs/README.md",
+      "areas": ["content"],
+      "role": "Authored-content ownership and curated launch-pack workflow documentation.",
+      "migrationSeam": "Scored/instructional content remains curated content, not handwritten UI migration prose.",
+      "authority": "content-source"
+    },
+    {
+      "path": "content/authoring/packs/launch-v1.curated.mjs",
+      "areas": ["content"],
+      "role": "Maintained controlled-English launch content used to construct normalized compiler input.",
+      "migrationSeam": "Any accepted content-language changes must be classified by owner before editing this source.",
+      "authority": "content-source"
+    },
+    {
+      "path": "packages/content/src/model.ts",
+      "areas": ["content", "state", "build"],
+      "role": "Portable content model public surface and boundary decoders.",
+      "migrationSeam": "UI changes consume published models and do not add presentation decisions to the content schema without evidence.",
+      "authority": "production-source"
+    },
+    {
+      "path": "packages/content/src/compiler.ts",
+      "areas": ["content", "build"],
+      "role": "Portable deterministic compiler/publication-gate public surface.",
+      "migrationSeam": "Accepted copy/content changes must continue through the same validation and split-publication boundary.",
+      "authority": "production-source"
+    },
+    {
+      "path": "apps/content-compiler/src/main.ts",
+      "areas": ["content", "build"],
+      "role": "Bun compiler root for parse, validation, hashing, staging, verification, and activation.",
+      "migrationSeam": "Content-adoption changes must remain deterministic and promote the manifest last.",
+      "authority": "build-release"
+    },
+    {
+      "path": "apps/content-compiler/src/release-activation.ts",
+      "areas": ["content", "build", "deployment"],
+      "role": "Filesystem release activation with restoration of the prior release on activation failure.",
+      "migrationSeam": "Compiler rollback is distinct from UI deployment rollback and must remain independently verified.",
+      "authority": "build-release"
+    },
+    {
+      "path": "package.json",
+      "areas": ["test", "build", "deployment"],
+      "role": "Exact Bun/Node/workspace catalog and root build, typecheck, test, browser, and verification commands.",
+      "migrationSeam": "The provisional packet adds no script or dependency; final implementation must use these gates on the exact toolchain.",
+      "authority": "build-release"
+    },
+    {
+      "path": "bun.lock",
+      "areas": ["build", "test", "deployment"],
+      "role": "Committed dependency graph for frozen Bun installs.",
+      "migrationSeam": "UI dependency additions require explicit review and cannot be hidden in a visual slice.",
+      "authority": "build-release"
+    },
+    {
+      "path": "apps/site/package.json",
+      "areas": ["component", "test", "build", "deployment"],
+      "role": "Site runtime dependencies and generate/build/unit/browser/typecheck scripts.",
+      "migrationSeam": "Component migration must not create phantom dependencies or new runtime boundaries accidentally.",
+      "authority": "build-release"
+    },
+    {
+      "path": "scripts/verify-artifacts.ts",
+      "areas": ["route", "content", "test", "build", "accessibility", "offline", "print", "deployment"],
+      "role": "Release-wide route, manifest, answer-leak, safe-precache, delivery, and bundle-budget verifier.",
+      "migrationSeam": "Every visible tranche must retain or strengthen these release invariants; budgets cannot be silently raised.",
+      "authority": "release-gate"
+    },
+    {
+      "path": "apps/site/playwright.config.ts",
+      "areas": ["test", "accessibility", "offline", "print", "deployment"],
+      "role": "Chromium/Firefox/WebKit browser projects, service-worker policy, retries, workers, trace, screenshot, and local preview wiring.",
+      "migrationSeam": "Route-family regression tests run through shipped document/runtime wiring rather than isolated stories only.",
+      "authority": "test-evidence"
+    },
+    {
+      "path": "apps/site/browser-tests/README.md",
+      "areas": ["test", "accessibility", "offline", "print", "deployment"],
+      "role": "Maintained description of configured browser evidence and remaining exact candidate/runtime gates.",
+      "migrationSeam": "Its execution-status wording must be reconciled with release-candidate claims before final acceptance.",
+      "authority": "test-evidence"
+    },
+    {
+      "path": "apps/site/browser-tests/delivery.pw.ts",
+      "areas": ["route", "test", "build", "offline", "deployment"],
+      "role": "Generated-document, canonical-route, static runtime, and delivery closure browser suite.",
+      "migrationSeam": "Shell/static tranches must preserve exact multi-document and zero React/Effect closure behavior.",
+      "authority": "test-evidence"
+    },
+    {
+      "path": "apps/site/browser-tests/question-player.pw.ts",
+      "areas": ["component", "route", "state", "test", "accessibility", "offline"],
+      "role": "Question commit/reveal, restoration, navigation, accessibility, and offline browser suite.",
+      "migrationSeam": "Question and review variants must keep these state and answer-boundary assertions while presentation changes.",
+      "authority": "test-evidence"
+    },
+    {
+      "path": "apps/site/browser-tests/hazard-player.pw.ts",
+      "areas": ["component", "route", "state", "test", "accessibility", "offline"],
+      "role": "Visual/nonvisual hazard input, commit/reveal, asset, navigation, accessibility, and offline browser suite.",
+      "migrationSeam": "Hazard anatomy and viewport cutover cannot weaken neutral precommit or exact visual-asset checks.",
+      "authority": "test-evidence"
+    },
+    {
+      "path": "apps/site/browser-tests/review-queue.pw.ts",
+      "areas": ["component", "route", "state", "test", "accessibility", "offline"],
+      "role": "Review reconstruction, acknowledgement, link, recovery, and local-state browser suite.",
+      "migrationSeam": "Explicit question/hazard review variants must extend rather than bypass the queue's event-derived assertions.",
+      "authority": "test-evidence"
+    },
+    {
+      "path": "apps/site/browser-tests/simulation.pw.ts",
+      "areas": ["component", "route", "state", "test", "accessibility", "offline"],
+      "role": "Simulation setup/player/results, restoration, submission, navigation, and feedback-timing browser suite.",
+      "migrationSeam": "All simulation documents migrate behind the same no-early-feedback and durable-final-submit evidence.",
+      "authority": "test-evidence"
+    },
+    {
+      "path": "apps/site/browser-tests/settings-review-rebuild.pw.ts",
+      "areas": ["component", "route", "state", "test", "accessibility", "offline"],
+      "role": "Settings restoration, transfer/reset, review rebuild, diagnostics, and recovery browser suite.",
+      "migrationSeam": "Utility presentation cannot collapse restoration, preview, destructive, progress, or failure states.",
+      "authority": "test-evidence"
+    },
+    {
+      "path": "apps/site/browser-tests/accessibility-and-presentation.pw.ts",
+      "areas": ["test", "accessibility", "stylesheet", "component", "print"],
+      "role": "Axe, reflow, target, forced-color, reduced-motion, focus, and print presentation browser coverage.",
+      "migrationSeam": "Every visible tranche adds route-family fixtures here without replacing Codex-executed assistive-technology and device certification evidence.",
+      "authority": "test-evidence"
+    },
+    {
+      "path": "apps/site/browser-tests/app-database.pw.ts",
+      "areas": ["test", "state", "offline"],
+      "role": "Real-browser database upgrade, preservation, blocked-upgrade, legacy import, and quarantine evidence.",
+      "migrationSeam": "Any state/schema proposal must extend this proof before UI cutover.",
+      "authority": "test-evidence"
+    },
+    {
+      "path": "apps/site/browser-tests/local-data-and-packs.pw.ts",
+      "areas": ["test", "state", "accessibility", "offline"],
+      "role": "Integrated settings, local-data, correction draft, pack lifecycle, focus, and offline navigation coverage.",
+      "migrationSeam": "Local-data presentation slices require restoration and destructive-action regression coverage here.",
+      "authority": "test-evidence"
+    },
+    {
+      "path": "apps/site/browser-tests/offline-and-update.pw.ts",
+      "areas": ["test", "route", "offline", "deployment"],
+      "role": "Service-worker activation, waiting, cache rollover, offline reload, and BFCache coverage.",
+      "migrationSeam": "Shell and asset changes must pass active-client and offline-update behavior before release.",
+      "authority": "test-evidence"
+    },
+    {
+      "path": "apps/site/browser-tests/print.pw.ts",
+      "areas": ["test", "accessibility", "print"],
+      "role": "Browser print-builder, preview, regeneration, product separation, and print-media coverage.",
+      "migrationSeam": "Print layout migration retains deterministic output and still requires physical certification.",
+      "authority": "test-evidence"
+    },
+    {
+      "path": "apps/site/test/static-site-generation.test.ts",
+      "areas": ["test", "route", "content", "build", "accessibility"],
+      "role": "Generated-document semantics, route identity, metadata, and static fallback unit coverage.",
+      "migrationSeam": "Generator-owned shell/content changes receive characterization and parity assertions here.",
+      "authority": "test-evidence"
+    },
+    {
+      "path": "apps/site/test/question-player-commit-and-reveal.test.ts",
+      "areas": ["test", "state", "content"],
+      "role": "Question durable-commit-before-postcommit-fetch and retry behavior coverage.",
+      "migrationSeam": "Player UI changes cannot weaken reveal ordering.",
+      "authority": "test-evidence"
+    },
+    {
+      "path": "apps/site/test/session-navigation.test.ts",
+      "areas": ["test", "route", "state"],
+      "role": "Current same-origin replace-navigation gesture policy tests.",
+      "migrationSeam": "Needs characterization of legal player states before navigation presentation changes.",
+      "authority": "test-evidence"
+    },
+    {
+      "path": "apps/site/test/offline-pack-manager-react.test.ts",
+      "areas": ["test", "component", "state", "offline"],
+      "role": "Current pack projection and action-identity unit tests.",
+      "migrationSeam": "Must add truthful restoration-state coverage before restyling the empty state.",
+      "authority": "test-evidence"
+    },
+    {
+      "path": "apps/site/test/service-worker.test.ts",
+      "areas": ["test", "route", "offline", "deployment"],
+      "role": "Service-worker cache, pack, bypass, and local-shell policy unit coverage.",
+      "migrationSeam": "Any route closure or asset policy cutover updates this test in the same slice.",
+      "authority": "test-evidence"
+    },
+    {
+      "path": "apps/site/test/print-generation.test.ts",
+      "areas": ["test", "content", "state", "print"],
+      "role": "Deterministic print generation and product-availability unit coverage.",
+      "migrationSeam": "Print presentation changes must not change manifest identity or product separation.",
+      "authority": "test-evidence"
+    },
+    {
+      "path": "apps/site/test/production-certification.test.ts",
+      "areas": ["test", "accessibility", "print", "deployment"],
+      "role": "Executable certification-record validation coverage.",
+      "migrationSeam": "Final release remains candidate-bound and blocked until every required check is evidenced.",
+      "authority": "test-evidence"
+    },
+    {
+      "path": "docs/DEPLOYMENT.md",
+      "areas": ["deployment", "test", "accessibility", "print"],
+      "role": "Technical handoff for certification, inactive preview, protected production deployment, and remaining credentials/domain gates.",
+      "migrationSeam": "Defines rollout boundary; it does not document an instant production rollback mechanism.",
+      "authority": "maintained-authority"
+    },
+    {
+      "path": "docs/certification/production-v1.json",
+      "areas": ["deployment", "test", "accessibility", "print"],
+      "role": "Machine-enforced candidate-bound production certification record, currently blocked.",
+      "migrationSeam": "Any redesign invalidates prior candidate evidence and requires a fresh exact-commit matrix.",
+      "authority": "release-gate"
+    },
+    {
+      "path": "scripts/check-production-certification.ts",
+      "areas": ["test", "deployment", "accessibility", "print"],
+      "role": "Certification schema, ancestry, changed-path, evidence, and complete-check enforcement.",
+      "migrationSeam": "Production rollout cannot bypass this gate or substitute environment approval for evidence.",
+      "authority": "release-gate"
+    },
+    {
+      "path": ".github/workflows/certification.yml",
+      "areas": ["test", "build", "accessibility", "offline", "print", "deployment"],
+      "role": "Frozen Bun verification, cross-browser/accessibility/offline/print, local workerd, and dormant Worker CI.",
+      "migrationSeam": "Every implementation slice must be green here; this draft validator remains an explicit packet command only.",
+      "authority": "release-gate"
+    },
+    {
+      "path": ".github/workflows/cloudflare-preview.yml",
+      "areas": ["build", "deployment", "test"],
+      "role": "Workflow-dispatched exact-main inactive Cloudflare version upload after CI certification.",
+      "migrationSeam": "Primary rollout rehearsal boundary; it activates no production traffic.",
+      "authority": "release-gate"
+    },
+    {
+      "path": ".github/workflows/cloudflare-production.yml",
+      "areas": ["build", "deployment", "test", "accessibility", "offline", "print"],
+      "role": "Workflow-dispatched exact-main protected production deployment after typed confirmation and candidate-bound technical certification.",
+      "migrationSeam": "No provisional tranche may invoke or weaken this workflow.",
+      "authority": "release-gate"
+    },
+    {
+      "path": "apps/site/wrangler.jsonc",
+      "areas": ["route", "build", "deployment"],
+      "role": "Cloudflare Worker Static Assets and narrow router configuration.",
+      "migrationSeam": "Route/static-asset changes must preserve the no-data router boundary and host policy.",
+      "authority": "build-release"
+    }
+  ],
+  "observations": {
+    "routeRegistry": {
+      "source": "apps/site/src/route-registry.ts",
+      "routeIds": [
+        "atlas-family",
+        "atlas-index",
+        "atlas-tool",
+        "correction-submit",
+        "corrections",
+        "exam-selector",
+        "foil",
+        "hazards-index",
+        "hazard-player",
+        "home",
+        "offline-packs",
+        "print-center",
+        "print-preview",
+        "privacy",
+        "profile",
+        "question-player",
+        "review-player",
+        "review-queue",
+        "security",
+        "settings",
+        "simulation-player",
+        "simulation-results",
+        "simulation-setup",
+        "source",
+        "status",
+        "study-hub",
+        "transparency-index"
+      ],
+      "plannedContractIsBroaderThanImplementedRegistry": true,
+      "omittedFamiliesRequireReviewedMachineReadableContent": true
+    },
+    "documentDelivery": {
+      "mode": "generated-multi-document-static-assets-with-react-islands",
+      "spaRouter": false,
+      "generator": "apps/site/scripts/generate-pages.tsx",
+      "buildInputDiscovery": "apps/site/vite.config.ts",
+      "workerRouter": "apps/site/src/asset-router.ts"
+    },
+    "stylesheetProjection": {
+      "authoredSource": "apps/site/src/styles.css",
+      "generatedPublicCopy": "apps/site/public/styles.css",
+      "copyOwner": "apps/site/scripts/generate-pages.tsx",
+      "generatedPublicCopyIsTracked": false
+    },
+    "appDatabase": {
+      "source": "apps/site/src/study-storage/app-database/storage-model.ts",
+      "name": "nycustodian-study-v1",
+      "version": 5,
+      "stores": [
+        "meta",
+        "attempts",
+        "sessions",
+        "hazard-attempts",
+        "hazard-sessions",
+        "simulation-sessions",
+        "simulation-submissions",
+        "print-jobs",
+        "review-events",
+        "migration-quarantine",
+        "preferences",
+        "correction-drafts",
+        "offline-packs",
+        "offline-pack-operations",
+        "transfer-quarantine"
+      ],
+      "uiOnlyMigrationMayChangeSchema": false,
+      "portableExportSchemaVersion": 2,
+      "legacyPortableVersionSupported": 1
+    },
+    "bundleBudget": {
+      "source": "scripts/verify-artifacts.ts",
+      "rawBytes": 470000,
+      "gzipBytes": 140000,
+      "brotliBytes": 120000,
+      "recordedLargestFamily": "Settings",
+      "recordedLargestRawBytes": 468355,
+      "recordedLargestGzipBytes": 139994,
+      "recordedLargestBrotliBytes": 118248,
+      "budgetMayBeRaisedByDraft": false,
+      "staticRouteEffectClosureBudgetBytes": 0,
+      "webVitalsNumericBudget": null
+    },
+    "accessibilityEvidence": {
+      "automated": [
+        "axe WCAG A/AA serious and critical checks",
+        "320 CSS-pixel reflow",
+        "minimum target sizing",
+        "forced colors",
+        "reduced motion",
+        "focus and live-region mutations",
+        "print-media visibility"
+      ],
+      "codexTechnicalProductionGates": [
+        "NVDA with Firefox on Windows",
+        "VoiceOver with Safari on macOS",
+        "VoiceOver with Safari on iOS",
+        "TalkBack with Chrome on Android",
+        "JAWS smoke when licensed",
+        "true 400 percent zoom in Chrome, Firefox, and Safari",
+        "US Letter and A4 normal and large print",
+        "grayscale physical print"
+      ]
+    },
+    "rollout": {
+      "runtimeFeatureFlagSystemPresent": false,
+      "launchAnalyticsEnabled": false,
+      "remotePreviewActivatesTraffic": false,
+      "productionCertificationStatus": "blocked",
+      "documentedInstantProductionRollback": false,
+      "provisionalRollbackMechanism": "revert-or-forward-fix-on-main-then-repeat-preview-and-certification"
+    },
+    "generatedEvidence": {
+      "recordedSource": "docs/OPEN.md",
+      "baselineCiRunId": 33165017762,
+      "baselineCiUrl": "https://github.com/mannyc2/nycustodianexam/actions/runs/33165017762",
+      "baselineCiHeadSha": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "baselineCiConclusion": "success",
+      "recordedGeneratedDocuments": 526,
+      "recordedUnitTests": 352,
+      "recordedBrowserCases": 198,
+      "recordedBrowserPasses": 172,
+      "recordedBrowserSkips": 26,
+      "rerunByThisDraft": true
+    }
+  },
+  "knownPreMigrationConfounders": [
+    {
+      "id": "player-navigation-not-state-gated",
+      "status": "characterization-required",
+      "evidence": [
+        "apps/site/scripts/generate-pages.tsx",
+        "apps/site/src/session-navigation.ts",
+        "apps/site/src/question-player/react/bootstrap.tsx",
+        "apps/site/src/hazard-player/react/bootstrap.tsx",
+        "apps/site/src/simulation/react/bootstrap-player.tsx",
+        "apps/site/test/session-navigation.test.ts"
+      ],
+      "observedFact": "Question, review, hazard, and simulation player bootstraps install shared session navigation. Generated question and hazard Previous and Next links are positional, while the shared click policy checks gesture and origin but not the current commit/restoration state; simulation has additional workflow gating that must be characterized separately.",
+      "requiredBeforeVisualMigration": "Characterize each player family's legal navigation policy and resolve any state-gating gap without deriving behavior from pending design research."
+    },
+    {
+      "id": "offline-restoration-can-project-empty-before-reconcile",
+      "status": "characterization-required",
+      "evidence": [
+        "apps/site/src/offline-packs/react/pack-manager.tsx",
+        "apps/site/test/offline-pack-manager-react.test.ts"
+      ],
+      "observedFact": "The island initializes pack records as an empty array, starts asynchronous reconciliation, and renders the stored-pack empty message whenever the array is empty.",
+      "requiredBeforeVisualMigration": "Introduce and prove a truthful restoration projection before restyling loading or empty states."
+    },
+    {
+      "id": "review-question-route-mounts-practice-composition",
+      "status": "characterization-required",
+      "evidence": [
+        "apps/site/scripts/generate-pages.tsx",
+        "apps/site/src/review/model.ts",
+        "apps/site/src/question-player/react/bootstrap.tsx",
+        "apps/site/src/question-player/react/player.tsx",
+        "product/SCREEN_STATES.md"
+      ],
+      "observedFact": "Question review documents carry the review-player route ID but use the shared question bootstrap, which always renders the current practice composition. Review destinations also include hazard review identities governed by the maintained state contract.",
+      "requiredBeforeVisualMigration": "Characterize and prove an explicit question-review variant in Tranche 5 and hazard-review variant in Tranche 6 before adopting accepted component anatomy."
+    }
+  ],
+  "unresolvedEvidence": [
+    {
+      "id": "stale-browser-evidence-readme",
+      "sources": ["docs/OPEN.md", "apps/site/browser-tests/README.md"],
+      "conflict": "The maintained open ledger and exact baseline CI establish a passing integrated 198-case matrix, while the browser evidence README retains stale pre-run wording that says the candidate must rerun before recording that evidence.",
+      "requiredAction": "Correct the stale evidence README at the rebased final-plan SHA and run a fresh exact-SHA matrix for the redesigned candidate."
+    },
+    {
+      "id": "production-performance-evidence",
+      "sources": ["docs/OPEN.md", "scripts/verify-artifacts.ts"],
+      "conflict": "Deterministic closure budgets exist, but broader lab, field, and long-duration storage performance evidence remains open.",
+      "requiredAction": "Populate accepted performance gates or retain an explicit production stop condition."
+    },
+    {
+      "id": "production-rollback-proof",
+      "sources": ["docs/DEPLOYMENT.md", ".github/workflows/cloudflare-production.yml"],
+      "conflict": "Source-level revert and recertification are available, but no tested instant Cloudflare production rollback workflow is documented.",
+      "requiredAction": "Rehearse and document the actual rollback boundary before production authorization."
+    }
+  ],
+  "prohibitedInferences": [
+    "No copy, token, visual territory, component anatomy, route archetype, or final tranche order is accepted by this map.",
+    "Recovered or branch-only Plan 004 and Plan 005 artifacts are not accepted CODEX-ONLY-UIUX-V1 attestations or product authority.",
+    "The existence of a current production seam does not authorize changing it.",
+    "Recorded test counts are not a rerun by this provisional draft.",
+    "This map does not authorize analytics, a runtime feature-flag framework, deployment, a database migration, or production traffic."
+  ]
+}
