@@ -1,19 +1,26 @@
 # CODEX-ONLY-UIUX-V1 — accessibility, cognitive load, language, navigation, and trust review
 
 ```yaml
+programVersion: CODEX-ONLY-UIUX-V1
 agentTaskId: /root/accessibility_lane_v1
+reportId: CODEX-ONLY-UIUX-V1-ACCESSIBILITY-COGNITIVE
+actorClass: codex-agent
+independent: true
+findingIds: ["F-01","F-02","F-03","F-04","F-05","F-06","F-07","F-08","F-09","F-10","DU-10"]
+recommendationIds: ["NI-01","NI-02","NI-03","NI-04","NI-05","NI-06","CL-D3"]
 evidenceMode: codex-only
 humanEvidence: none
 humanParticipantCount: 0
 notHumanUsabilityTested: true
 statusLabel: NOT HUMAN-USABILITY-TESTED
+reviewStatus: complete
 ```
 
 ## Audit record
 
 | Field | Value |
 |---|---|
-| `taskId` | `CODEX-ONLY-UIUX-V1/accessibility-cognitive-review` |
+| `reportId` | `CODEX-ONLY-UIUX-V1-ACCESSIBILITY-COGNITIVE` |
 | `label` | **NOT HUMAN-USABILITY-TESTED** |
 | `humanEvidence` | `none` |
 | `humanParticipantCount` | `0` |

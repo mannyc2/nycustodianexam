@@ -1,8 +1,6 @@
 # Design system
 
 **Status:** maintained visual, responsive, accessibility, and print contract.
-The standard/focused shell amendment was selected under
-`CODEX-ONLY-UIUX-V1` and is **NOT HUMAN-USABILITY-TESTED**.
 This document supplies the shared design layer for `FEATURE_SPEC.md`,
 `COMPONENT_ARCHITECTURE.md`, and the route families in `ROUTES.md`.
 `SCREEN_STATES.md` controls which state and transition combinations are legal;
@@ -220,8 +218,7 @@ It is never lowered merely to match a common device width.
 
 ## 6. Shell and navigation
 
-Standard acquisition, reference, setup, result, preview, and utility routes use this
-semantic order:
+Every public route uses this semantic order:
 
 ```text
 skip link
@@ -233,29 +230,9 @@ main
 footer
 ```
 
-Focused question, hazard, review, and simulation player routes use this
-deliberately reduced order:
-
-```text
-skip link
-site header
-  independent/unofficial site identity
-  active profile/version context when relevant
-main
-  named session landmark
-  position/progress
-  task controls
-  truthful Exit or Save-and-exit
-```
-
-The focused shell omits global learner-task, acquisition, trust, and utility
-navigation and the global footer. Site identity carries the independent and
-unofficial context. The explicit exit returns to the owning hub and may say
-`Save` only when the maintained persistence contract makes that outcome true.
-
 - The skip link is the first focusable element and becomes visibly prominent on
   focus.
-- Standard-shell primary navigation uses links and `aria-current="page"`. A compact menu uses a
+- Primary navigation uses links and `aria-current="page"`. A compact menu uses a
   named native button/disclosure pattern and remains usable without precision or
   animation. Closing it restores focus to the trigger.
 - The current profile and version are visible on routes where they affect
@@ -265,15 +242,14 @@ unofficial context. The explicit exit returns to the owning hub and may say
 - Breadcrumbs appear on nested reference pages and use a labeled navigation
   landmark. They do not replace the route heading.
 - Main content gets a stable focus target for route navigation and recovery.
-- The standard shell footer includes the unofficial-status statement and direct routes to
+- The shell footer includes the unofficial-status statement and direct routes to
   sources, corrections, security, and privacy.
 
-At wider available widths, standard-shell identity, primary navigation, and
-profile context may share a row. When they no longer fit without wrapping
-controls below their target size, the profile context moves to its own row and
-navigation becomes a compact disclosure. The header is sticky only if testing
-proves that it does not reduce usable 400% reflow space; sticky primary study
-actions take precedence. Focused shells do not introduce a compact global menu.
+At wider available widths, identity, primary navigation, and profile context may
+share a row. When they no longer fit without wrapping controls below their target
+size, the profile context moves to its own row and navigation becomes a compact
+disclosure. The header is sticky only if testing proves that it does not reduce
+usable 400% reflow space; sticky primary study actions take precedence.
 
 ## 7. Controls, targets, and focus
 

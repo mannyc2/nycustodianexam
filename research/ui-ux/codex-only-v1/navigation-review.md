@@ -1,19 +1,26 @@
 # CODEX-ONLY-UIUX-V1 learner-task navigation review
 
 ```yaml
+programVersion: CODEX-ONLY-UIUX-V1
 agentTaskId: /root/navigation_lane_v1
+reportId: CODEX-ONLY-UIUX-V1-NAVIGATION
+actorClass: codex-agent
+independent: true
+findingIds: ["NAV-F01","NAV-F02","NAV-F03","NAV-F04","NAV-F05","NAV-D01","NAV-D02","NAV-D03","NAV-D04","HC-06"]
+recommendationIds: ["NAV-C2-TASK-FIRST-TWO-TIER"]
 evidenceMode: codex-only
 humanEvidence: none
 humanParticipantCount: 0
 notHumanUsabilityTested: true
 statusLabel: NOT HUMAN-USABILITY-TESTED
+reviewStatus: complete
 ```
 
 ## Record
 
 | Field | Value |
 |---|---|
-| `taskId` | `CODEX-ONLY-UIUX-V1-NAV-001` |
+| `reportId` | `CODEX-ONLY-UIUX-V1-NAVIGATION` |
 | `recommendationId` | `NAV-C2-TASK-FIRST-TWO-TIER` |
 | `evidenceMode` | `codex-only` |
 | `label` | `NOT HUMAN-USABILITY-TESTED` |

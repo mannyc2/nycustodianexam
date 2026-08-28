@@ -2,9 +2,12 @@
 
 ```yaml
 programVersion: CODEX-ONLY-UIUX-V1
-taskId: /root/free_recruitment
+agentTaskId: /root/free_recruitment
+reportId: CODEX-ONLY-UIUX-V1-FREE-RECRUITMENT
 actorClass: codex-agent
 independent: true
+findingIds: ["UI-01","UI-02","UI-03","UI-04","UI-05","UI-06","UI-07","UI-08","UI-09","UI-10","UI-11"]
+recommendationIds: []
 evidenceMode: codex-only
 humanEvidence: none
 humanParticipantCount: 0

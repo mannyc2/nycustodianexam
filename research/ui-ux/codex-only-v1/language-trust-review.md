@@ -1,19 +1,26 @@
 # CODEX-ONLY-UIUX-V1 language and consumer-trust review
 
 ```yaml
+programVersion: CODEX-ONLY-UIUX-V1
 agentTaskId: /root/language_lane_v1
+reportId: CODEX-ONLY-UIUX-V1-LANGUAGE-TRUST
+actorClass: codex-agent
+independent: true
+findingIds: ["LT-01","LT-02","LT-03","LT-04","LT-05","LT-06","LT-07","LT-08","LT-09","LT-10","DS-01","DS-04","HC-04","HC-05","HC-06"]
+recommendationIds: ["CL-H1-PLAIN-TASK-OPEN-PROOF"]
 evidenceMode: codex-only
 humanEvidence: none
 humanParticipantCount: 0
 notHumanUsabilityTested: true
 statusLabel: NOT HUMAN-USABILITY-TESTED
+reviewStatus: complete
 ```
 
 ## Audit record
 
 | Field | Value |
 |---|---|
-| `taskId` | `CODEX-ONLY-UIUX-V1-LANGUAGE-TRUST` |
+| `reportId` | `CODEX-ONLY-UIUX-V1-LANGUAGE-TRUST` |
 | `recommendationId` | `CL-H1-PLAIN-TASK-OPEN-PROOF` |
 | `evidenceMode` | `codex-only` |
 | `humanEvidence` | `none` |
@@ -267,7 +274,7 @@ Every line coordinate below resolves against the listed immutable commit and raw
 
 | Field | Value |
 |---|---|
-| `taskId` | `CODEX-ONLY-UIUX-V1-LANGUAGE-TRUST` |
+| `reportId` | `CODEX-ONLY-UIUX-V1-LANGUAGE-TRUST` |
 | `recommendationId` | `CL-H1-PLAIN-TASK-OPEN-PROOF` |
 | Recommendation | Author a new, versioned hybrid prototype: CL-D1 task/action/recovery language as the default; one contextual guardrail at the decision it controls; CL-D2 publisher/title/date proof as an adjacent link or disclosure; exact IDs, versions, hashes, checksums, seeds, rights notes, and diagnostics in advanced/support or internal-only layers. |
 | Required corrections | Use U.S. English; remove unsupported universal claims and stale hard-coded counts; call generated scenes artwork/images, not photos; phrase inventory as what the site contains, not comprehensive exam coverage; use “Submit answer” with explicit locking consequence; replace raw failures with typed public messages. |

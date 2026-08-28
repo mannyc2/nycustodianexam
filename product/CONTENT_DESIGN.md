@@ -15,6 +15,66 @@ humanParticipantCount: 0
 notHumanUsabilityTested: true
 ```
 
+## Machine-readable selected-direction closure
+
+```json
+{
+  "schemaVersion": "codex-only-rule-closure-v1",
+  "programVersion": "CODEX-ONLY-UIUX-V1",
+  "directionId": "CL-CODEX-1",
+  "evidenceMode": "codex-only",
+  "humanEvidence": "none",
+  "humanParticipantCount": 0,
+  "notHumanUsabilityTested": true,
+  "rules": [
+    {
+      "id": "CL-CL1-QUARANTINE",
+      "statement": "Keep recovered CL-1 bytes unchanged as evidence and author factually current U.S.-English CL-2 copy."
+    },
+    {
+      "id": "CL-DORMANT-CORRECTION",
+      "statement": "State the dormant correction boundary in consumer terms and never imply an unavailable endpoint can receive a report."
+    },
+    {
+      "id": "CL-FOCUSED-FEEDBACK",
+      "statement": "Use specific outcomes and concise plain rationales, remove internal model labels and canned cadence, and keep required proof reachable."
+    },
+    {
+      "id": "CL-LAYER-PROOF",
+      "statement": "Keep human-readable proof adjacent or disclosed and move raw identifiers and diagnostics out of the default layer."
+    },
+    {
+      "id": "CL-NO-UNMEASURED-TIME",
+      "statement": "Do not publish a practice-duration estimate without measured evidence for the exact task and conditions."
+    },
+    {
+      "id": "CL-TASK-FIRST",
+      "statement": "At each action or decision, state the learner task, material consequence, and next safe action clearly."
+    },
+    {
+      "id": "CL-TYPED-PUBLIC-ERRORS",
+      "statement": "Map typed failures to stable outcome, preserved-state, and recovery copy while keeping raw exceptions internal."
+    },
+    {
+      "id": "CL-US-ENGLISH-FACTS",
+      "statement": "Use U.S. English, current derived counts, and bounded factual claims without unsupported universal language."
+    },
+    {
+      "id": "SHARED-EXPLICIT-PROFILE-CONTEXT",
+      "statement": "Require explicit or visibly neutral profile context and never silently substitute the first jurisdiction."
+    },
+    {
+      "id": "SHARED-HUMAN-EVIDENCE-BOUNDARY",
+      "statement": "Keep human evidence none, human participant count zero, and every result labeled not human usability tested."
+    },
+    {
+      "id": "SHARED-PRESERVE-LOAD-BEARING-TRUTH",
+      "statement": "Preserve unofficial status, uncertainty, source support, local-data risk, security boundaries, and commit-before-reveal."
+    }
+  ]
+}
+```
+
 This contract establishes the shared consumer-language safety envelope supported
 by independent Codex inspection of the current site, the Plan 004 audit at
 `fecc71c5ea240385b3d98f896b1152022a2bbbe8`, and the recovered CL-1 artifacts at

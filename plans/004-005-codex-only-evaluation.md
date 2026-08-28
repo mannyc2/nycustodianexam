@@ -74,6 +74,16 @@ The reports are:
 - [`navigation-review.md`](../research/ui-ux/codex-only-v1/navigation-review.md)
 - [`accessibility-cognitive-review.md`](../research/ui-ux/codex-only-v1/accessibility-cognitive-review.md)
 
+The manifest also retains one machine-readable `codex-task-receipt-v1` summary
+for each lane. Each receipt binds the native task path, session/parent lineage,
+provenance class, originator, depth, completion event/turn/message digest,
+launch-time repository coordinate, and current report path/hash. Its
+`safeReceiptSha256` is SHA-256 over UTF-8 compact `JSON.stringify` of the fixed
+ordered fields declared by the validator. A receipt is an audit summary, not a
+signature: ordinary CI can validate its exact shape, declared digest, report
+metadata, and repository joins, but cannot re-query local Codex JSONL or
+cryptographically authenticate a session.
+
 No lane supplies participant quotes, sessions, timings, first clicks, card sorts,
 tree tests, preferences, comprehension results, trust judgments, or
 assistive-technology-user observations.
@@ -84,7 +94,9 @@ assistive-technology-user observations.
 
 1. Normalize a recommendation into one bounded rule without changing its
    meaning.
-2. Count unique supporting agent task IDs. Human evidence has weight `0`.
+2. Resolve each support to an actual retained `findingId` or
+   `recommendationId` in the cited report, then count unique agent task paths.
+   Human evidence has weight `0`.
 3. Promote a rule only when at least two independent lanes support it and no
    maintained hard constraint fails.
 4. Keep a rule unresolved when it has fewer than two supports.
@@ -94,9 +106,11 @@ assistive-technology-user observations.
    plus promoted shared rules. Record all dissent and limitations.
 
 The validator recomputes every rule status and both direction closures. It
-rejects a one-lane promotion, an owner-locked promotion, a missing review/domain,
-a duplicate task, a persona substitution, a nonzero human field, or a changed
-hash.
+rejects invented, missing, duplicated, or task-mismatched support references; a
+one-lane promotion; an owner-locked promotion; receipt lineage/digest/report
+drift; report-metadata drift; a missing review/domain; a duplicate task; a
+persona substitution; a nonzero human field; or semantic rule drift in a
+canonical contract.
 
 ## Selected language boundary
 
@@ -116,9 +130,13 @@ constraints are:
 - current U.S. English facts, derived counts, no universal claims, and no
   unmeasured duration;
 - dormant correction intake never implies an unavailable endpoint can receive a
-  report; any local draft action must describe implemented persistence; and
-- CL-D3 is not selected: there are no recovered bytes and it sits closest to
-  prohibited urgency, guilt, readiness, and mastery claims.
+  report; any local draft action must describe implemented persistence.
+
+`CL-D3-NOT-SELECTED` remains a machine-recorded research disposition, not an
+implementation rule: the language and accessibility lanes agree that no CL-D3
+prototype bytes exist and that the direction sits nearest prohibited urgency,
+guilt, readiness, and mastery claims. It is therefore absent from the
+`CL-CODEX-1` selected-direction closure.
 
 The exact contract is
 [`product/CONTENT_DESIGN.md`](../product/CONTENT_DESIGN.md). It preserves
@@ -132,8 +150,7 @@ every fixed route while selecting:
 
 - distinct learner-task and utility/trust discovery instead of seven peer
   links, while leaving exact labels and grouping unresolved;
-- a two-class route-to-shell closure: the four fixed player IDs use focused
-  chrome and every other fixed route remains standard;
+- focused chrome for the four fixed player route IDs;
 - a named native compact disclosure that works without JavaScript;
 - visible profile/version context outside that disclosure;
 - Practice task starts before diagnostics, without selecting a universal
@@ -145,7 +162,10 @@ every fixed route while selecting:
 
 The exact structural contract is the `NAV-CODEX-1` section of
 [`product/ROUTES.md`](../product/ROUTES.md). It intentionally selects no exact
-global labels, group count, membership, nesting, or order.
+global labels, group count, membership, nesting, or order. The earlier proposed
+rule assigning every non-player route to one `standard` complement had only one
+genuine task-level support and is now unresolved, not part of the selected
+direction.
 
 ## Cross-lane priorities
 
@@ -176,6 +196,7 @@ These remain explicit and are excluded from consensus:
 | `UNRESOLVED-SHORTEST-PRACTICE-PRIMARY` | Whether the shortest valid count should be the universal primary Practice start | Put feasible count-labelled starts before diagnostics; select no preferred count |
 | `UNRESOLVED-PRACTICE-TIMING` | Practice duration | State exact current question count only |
 | `UNRESOLVED-SOURCE-PROMINENCE` | Inline versus disclosed proof on each surface | Keep proof reachable and readable; do not lead with raw coordinates |
+| `NAV-SHELL-BOUNDARY` | Whether every fixed non-player route belongs to one `standard` shell complement | Keep the four fixed players focused; do not infer or claim a selected complement |
 
 ## Product and plan effects
 
@@ -183,10 +204,14 @@ This PR promotes only research/contract records:
 
 - new `product/CONTENT_DESIGN.md` for `CL-CODEX-1`;
 - the `NAV-CODEX-1` navigation section in `product/ROUTES.md`;
-- reconciled standard/focused shell contracts in `product/DESIGN_SYSTEM.md` and
-  `product/COMPONENT_ARCHITECTURE.md`;
 - product/research indexes and Plan 004/005 execution-supersession notes; and
-- the exact evidence manifest plus fail-closed validator.
+- the exact evidence manifest, task-receipt ledger, visible contract closures,
+  and fail-closed validator.
+
+`product/DESIGN_SYSTEM.md` and `product/COMPONENT_ARCHITECTURE.md` remain
+unchanged from the released base and are not independent canonical promotions;
+future implementation work may project the two canonical contracts into them
+without treating that projection as another selected direction.
 
 Production site source remains unchanged. A later implementation plan owns copy,
 generator, shell, persistence, correction, CSS, and test changes.
@@ -210,9 +235,11 @@ env PATH=/tmp/nycustodian-bun-1.4.0/package/bin:/run/user/1000/fnm_multishells/2
 ```
 
 The locked `bun run verify` includes the packet validator as its final gate.
-Passing it proves deterministic files, source hashes, review coverage, product
-hashes, mutation rejection, and the existing repository checks. It does not
-prove human usability or accessibility conformance.
+Passing it proves deterministic files, source hashes, review coverage, declared
+receipt digests and joins, exact support membership, semantic product-rule
+closures, mutation rejection, and the existing repository checks. It does not
+authenticate local sessions, prove human usability, or prove accessibility
+conformance.
 
 ## Limitations
 

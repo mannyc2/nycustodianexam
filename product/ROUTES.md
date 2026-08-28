@@ -11,6 +11,66 @@ the human participant count is `0`; the direction is a contract-fit selection,
 not observed first-click, tree-test, task-success, preference, or
 assistive-technology evidence.
 
+## Machine-readable selected-direction closure
+
+```json
+{
+  "schemaVersion": "codex-only-rule-closure-v1",
+  "programVersion": "CODEX-ONLY-UIUX-V1",
+  "directionId": "NAV-CODEX-1",
+  "evidenceMode": "codex-only",
+  "humanEvidence": "none",
+  "humanParticipantCount": 0,
+  "notHumanUsabilityTested": true,
+  "rules": [
+    {
+      "id": "NAV-FOCUSED-PLAYERS",
+      "statement": "Give every player a named session landmark, progress, and truthful explicit exit without acquisition or utility navigation."
+    },
+    {
+      "id": "NAV-NATIVE-COMPACT",
+      "statement": "Use a named native no-JavaScript-safe compact disclosure before global links wrap into peer rows."
+    },
+    {
+      "id": "NAV-NOJS",
+      "statement": "Keep primary discovery as static ordinary document navigation with truthful JavaScript-free fallbacks."
+    },
+    {
+      "id": "NAV-NONVISUAL-EQUAL-DISCOVERY",
+      "statement": "Give visual and text-keyboard hazard tasks equivalent discovery without claiming identical measurement."
+    },
+    {
+      "id": "NAV-PRACTICE-TASK-HUB",
+      "statement": "Lead Practice with concrete task starts and place translated capacity diagnostics after those starts."
+    },
+    {
+      "id": "NAV-ROUTE-IDENTITY",
+      "statement": "Preserve every fixed route identity, canonical path, and no-JavaScript purpose."
+    },
+    {
+      "id": "NAV-STATIC-REVIEW-ENTRY",
+      "statement": "Expose Review through a normal static parent entry while retaining local and noindex semantics."
+    },
+    {
+      "id": "NAV-TWO-TIER",
+      "statement": "Separate learner tasks from utility and trust destinations instead of presenting every destination as a peer."
+    },
+    {
+      "id": "SHARED-EXPLICIT-PROFILE-CONTEXT",
+      "statement": "Require explicit or visibly neutral profile context and never silently substitute the first jurisdiction."
+    },
+    {
+      "id": "SHARED-HUMAN-EVIDENCE-BOUNDARY",
+      "statement": "Keep human evidence none, human participant count zero, and every result labeled not human usability tested."
+    },
+    {
+      "id": "SHARED-PRESERVE-LOAD-BEARING-TRUTH",
+      "statement": "Preserve unofficial status, uncertainty, source support, local-data risk, security boundaries, and commit-before-reveal."
+    }
+  ]
+}
+```
+
 This file turns the 21 destination families in `FEATURE_SPEC.md` into one
 canonical path registry. It controls route identity, public path shape,
 indexability, document/island ownership, parent navigation, offline behavior,
@@ -163,8 +223,9 @@ so they cannot disappear between data-model and page implementation.
 ## Navigation contract
 
 `NAV-CODEX-1` preserves every route ID, path, indexability value, document/island
-owner, offline rule, and capability above. It changes only discovery hierarchy,
-shell assignment, and display-language constraints. Values in the registry's
+owner, offline rule, and capability above. It changes discovery hierarchy and
+display-language constraints while reaffirming the maintained focused-player
+requirements. Values in the registry's
 `Parent navigation` column are logical ownership coordinates; the selected
 display structure below supersedes their old peer-flat presentation.
 
@@ -182,22 +243,18 @@ evidence link may bypass the global regions. Downstream candidates must retain
 every fixed route and compare their exact grouping within this envelope rather
 than treating the navigation-lane candidate as participant consensus.
 
-### Route-to-shell closure
+### Focused-player boundary
 
-The cross-lane rule selects only the standard-versus-focused-player boundary.
-Every route belongs to exactly one of those two classes; this is the exact
-closure of the four fixed player IDs plus their complement, not the
-navigation-lane candidate's five-class shell proposal. The mapping is data, not
-a path-prefix inference.
-
-| Shell class | Route IDs |
-|---|---|
-| `focused-player` | `question-player`, `hazard-player`, `review-player`, `simulation-player` |
-| `standard` | `home`, `exam-selector`, `exam-checker`, `profile`, `study-hub`, `atlas-index`, `atlas-family`, `atlas-tool`, `procedures-index`, `procedure-detail`, `repair-lab`, `hazards-index`, `review-queue`, `simulation-setup`, `simulation-results`, `print-center`, `print-preview`, `faq`, `transparency-index`, `source`, `corrections`, `foil`, `security`, `privacy`, `correction-submit`, `settings`, `offline-packs`, `status`, `scoring-explainer`, `actual-questions-explainer`, `about`, `nyc-disambiguation` |
+The four maintained player route IDs—`question-player`, `hazard-player`,
+`review-player`, and `simulation-player`—use focused work chrome. Cross-lane
+evidence does not select the prior proposed complement that assigned every
+other fixed route to one `standard` class. Non-player shell composition remains
+governed by each route's existing document/island ownership and later
+implementation contracts; it may not be inferred from a path prefix.
 
 ### Wide and compact shells
 
-The standard static document shell owns the brand/Home link and the distinct
+Global-navigation documents own the brand/Home link and the distinct
 learner-task and utility/trust regions. At ample widths the regions are visibly
 distinct. At compact widths, brand and current profile context remain visible
 while a named native disclosure holds navigation. Its exact summary and link
@@ -269,8 +326,9 @@ focused-session landmark.
 
 In addition to the route acceptance list below, implementation must prove:
 
-1. every implemented and planned route ID appears exactly once in the two-class
-   shell closure without generating an unreviewed page;
+1. all four fixed player route IDs map explicitly to focused work chrome,
+   without inferring shell behavior from paths or assigning an unsupported
+   complement to every other route;
 2. 320 CSS-pixel and wide layouts preserve target size and avoid a wrapped peer
    link cloud;
 3. compact disclosure operation, semantic-region separation, focus restoration,

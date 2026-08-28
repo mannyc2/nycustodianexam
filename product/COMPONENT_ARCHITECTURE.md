@@ -1,8 +1,6 @@
 # Component architecture
 
 **Status:** maintained implementation contract for the site UI. This document
-includes the `CODEX-ONLY-UIUX-V1` standard/focused shell amendment, which is
-**NOT HUMAN-USABILITY-TESTED**. It
 implements the product behavior in `FEATURE_SPEC.md` and the delivery boundary
 in `ARCHITECTURE_CONSTRAINTS.md`. `ROUTES.md` is the canonical route inventory,
 and `SCREEN_STATES.md` controls legal state/transition combinations; this
@@ -130,8 +128,7 @@ may implement the same pattern without forcing one renderer on the other.
 
 | Foundation | Contract |
 | --- | --- |
-| `DocumentShell.Standard` | Skip link, site header, learner-task plus utility/trust navigation, active-profile context where relevant, one `main`, and footer. |
-| `DocumentShell.FocusedPlayer` | Skip link, independent/unofficial site identity, relevant profile context, one `main` containing a named session landmark/progress, and a truthful explicit exit. It omits global navigation and footer; it may label the exit `Save and exit` only when durable behavior supports that claim. |
+| `DocumentShell` | Skip link, site header, primary navigation, active-profile context where relevant, one `main`, and footer. |
 | `PageHeader` | One route title plus optional lead, metadata, breadcrumbs, and composed actions. It never invents profile facts. |
 | `Stack`, `Cluster`, `Grid`, `Split`, `Sidebar` | Layout-only wrappers used when no more meaningful HTML element applies. Spacing comes from tokens, not per-page numbers. |
 | `Prose`, `DefinitionList`, `MetadataList` | Readable source/profile/instruction content with a bounded measure and real list semantics. |

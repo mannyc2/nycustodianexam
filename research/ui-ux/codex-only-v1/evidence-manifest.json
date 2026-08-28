@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "codex-only-uiux-evidence-v1",
+  "schemaVersion": "codex-only-uiux-evidence-v2",
   "programVersion": "CODEX-ONLY-UIUX-V1",
   "programStatus": "codex-only-complete",
   "evidenceMode": "codex-only",
@@ -315,9 +315,84 @@
       "sha256": "cab9477c50a892048599bee003e71936c3ac3c1106c42ee0f7edfe44196c88e7"
     }
   ],
+  "taskReceipts": [
+    {
+      "schemaVersion": "codex-task-receipt-v1",
+      "taskPath": "/root/free_recruitment",
+      "sessionUuid": "01a04919-ab2d-7211-8b17-fc5e38d083db",
+      "parentThreadId": "01a047c6-af9b-7eb1-b2e7-920c71cba366",
+      "provenanceClass": "root-orchestrated-supplied-independent-lane",
+      "threadSource": "subagent",
+      "originator": "Codex Desktop",
+      "depth": 1,
+      "completionState": "completed",
+      "completionEventTimestamp": "2026-08-28T17:20:30.085Z",
+      "completionTurnId": "01a0495c-0ee5-7d02-8002-a1dab7b7e340",
+      "completionMessageSha256": "d2e2ed6ab99e49562cf9eaf701a7af1845407fa2507fdc8017eec4bd6de1eff0",
+      "reportPath": "research/ui-ux/codex-only-v1/free-recruitment-review.md",
+      "reportSha256": "a275b06ea3d5e51f019abb4b7866b557b58078346b6f571ccafa98502754b887",
+      "repositoryCommit": null,
+      "safeReceiptSha256": "e7da6af72ba575b5483cf2fb81300ce4ef3d9535fa6c518bffb7b467eb2680b2"
+    },
+    {
+      "schemaVersion": "codex-task-receipt-v1",
+      "taskPath": "/root/language_lane_v1",
+      "sessionUuid": "01a04964-81cf-7721-aaf9-87064743b81c",
+      "parentThreadId": "01a047e7-6e92-7fd2-afdf-4a7ced144d45",
+      "provenanceClass": "step-2-child-independent-lane",
+      "threadSource": "subagent",
+      "originator": "codex_exec",
+      "depth": 1,
+      "completionState": "completed",
+      "completionEventTimestamp": "2026-08-28T17:33:45.479Z",
+      "completionTurnId": "01a0496e-f46b-7d00-9cf1-74edd7acb396",
+      "completionMessageSha256": "6b05c8ed811dd3634db1d3a9c73dfa7102adba8b371eecd8db6776803af75df8",
+      "reportPath": "research/ui-ux/codex-only-v1/language-trust-review.md",
+      "reportSha256": "40da3609f6b5b152bc18eb7904b669da7b1a70fd6e45fd27d17400f783b60dcd",
+      "repositoryCommit": "7e73dfd7e76101bf96d3122c9e3917cf4725251f",
+      "safeReceiptSha256": "3a024e8b75af4c18e88c8c9a1598d2be9ec482a0f09a06923ed6d9a803ba52f0"
+    },
+    {
+      "schemaVersion": "codex-task-receipt-v1",
+      "taskPath": "/root/navigation_lane_v1",
+      "sessionUuid": "01a04964-a103-71a1-a051-08e867a5935b",
+      "parentThreadId": "01a047e7-6e92-7fd2-afdf-4a7ced144d45",
+      "provenanceClass": "step-2-child-independent-lane",
+      "threadSource": "subagent",
+      "originator": "codex_exec",
+      "depth": 1,
+      "completionState": "completed",
+      "completionEventTimestamp": "2026-08-28T17:36:07.347Z",
+      "completionTurnId": "01a04970-c043-7b62-a469-04d198c18a2c",
+      "completionMessageSha256": "89b0ea5a18a87a95ab5531ee111b62206010d67a979f90bc42cffb2959127213",
+      "reportPath": "research/ui-ux/codex-only-v1/navigation-review.md",
+      "reportSha256": "4aebc020c7888ebd45197229e1c516dcd6655e68b574d08d870cd3155735723d",
+      "repositoryCommit": "7e73dfd7e76101bf96d3122c9e3917cf4725251f",
+      "safeReceiptSha256": "209c60baab9ef92c60110821dd5b585f373a8e20b91782235e087d432538f3f3"
+    },
+    {
+      "schemaVersion": "codex-task-receipt-v1",
+      "taskPath": "/root/accessibility_lane_v1",
+      "sessionUuid": "01a04964-c148-7803-b30d-da107b147348",
+      "parentThreadId": "01a047e7-6e92-7fd2-afdf-4a7ced144d45",
+      "provenanceClass": "step-2-child-independent-lane",
+      "threadSource": "subagent",
+      "originator": "codex_exec",
+      "depth": 1,
+      "completionState": "completed",
+      "completionEventTimestamp": "2026-08-28T17:38:28.040Z",
+      "completionTurnId": "01a04973-4544-7b61-9938-5ab53871b976",
+      "completionMessageSha256": "e3578404a6a226913d53094ab18b97d6d411e0fb44002138ac2fe4504170defa",
+      "reportPath": "research/ui-ux/codex-only-v1/accessibility-cognitive-review.md",
+      "reportSha256": "67f43328c6b6c14d616345570cdf63e488ad7d8b8b762efc41220debb9df7ef4",
+      "repositoryCommit": "7e73dfd7e76101bf96d3122c9e3917cf4725251f",
+      "safeReceiptSha256": "5491185446239c0fb23abc11bb77bca0fc5626e29c025ccf50964c5261da8182"
+    }
+  ],
   "reviews": [
     {
-      "taskId": "/root/free_recruitment",
+      "agentTaskId": "/root/free_recruitment",
+      "reportId": "CODEX-ONLY-UIUX-V1-FREE-RECRUITMENT",
       "actorClass": "codex-agent",
       "independent": true,
       "evidenceMode": "codex-only",
@@ -325,8 +400,9 @@
       "humanParticipantCount": 0,
       "notHumanUsabilityTested": true,
       "statusLabel": "NOT HUMAN-USABILITY-TESTED",
+      "reviewStatus": "complete",
       "reportPath": "research/ui-ux/codex-only-v1/free-recruitment-review.md",
-      "reportSha256": "b5d228297f9d77da85a9d8141aaa41853f4f88cb1c6329bcaba3ca0ff7ef0027",
+      "reportSha256": "a275b06ea3d5e51f019abb4b7866b557b58078346b6f571ccafa98502754b887",
       "domains": [
         "accessibility",
         "ai-slop-patterns",
@@ -353,7 +429,7 @@
         "P1": 8,
         "P2": 3
       },
-      "recommendationIds": [
+      "findingIds": [
         "UI-01",
         "UI-02",
         "UI-03",
@@ -361,12 +437,16 @@
         "UI-05",
         "UI-06",
         "UI-07",
+        "UI-08",
         "UI-09",
-        "UI-10"
-      ]
+        "UI-10",
+        "UI-11"
+      ],
+      "recommendationIds": []
     },
     {
-      "taskId": "/root/language_lane_v1",
+      "agentTaskId": "/root/language_lane_v1",
+      "reportId": "CODEX-ONLY-UIUX-V1-LANGUAGE-TRUST",
       "actorClass": "codex-agent",
       "independent": true,
       "evidenceMode": "codex-only",
@@ -374,8 +454,9 @@
       "humanParticipantCount": 0,
       "notHumanUsabilityTested": true,
       "statusLabel": "NOT HUMAN-USABILITY-TESTED",
+      "reviewStatus": "complete",
       "reportPath": "research/ui-ux/codex-only-v1/language-trust-review.md",
-      "reportSha256": "5a33d032c7c70fb0dd2a9616b79267385b1fb7f2b19ce8395467b57eee3905db",
+      "reportSha256": "40da3609f6b5b152bc18eb7904b669da7b1a70fd6e45fd27d17400f783b60dcd",
       "domains": [
         "ai-slop-patterns",
         "consumer-trust",
@@ -421,12 +502,30 @@
         "naturalVoice": 2,
         "navigationLanguageFit": 2
       },
+      "findingIds": [
+        "LT-01",
+        "LT-02",
+        "LT-03",
+        "LT-04",
+        "LT-05",
+        "LT-06",
+        "LT-07",
+        "LT-08",
+        "LT-09",
+        "LT-10",
+        "DS-01",
+        "DS-04",
+        "HC-04",
+        "HC-05",
+        "HC-06"
+      ],
       "recommendationIds": [
         "CL-H1-PLAIN-TASK-OPEN-PROOF"
       ]
     },
     {
-      "taskId": "/root/navigation_lane_v1",
+      "agentTaskId": "/root/navigation_lane_v1",
+      "reportId": "CODEX-ONLY-UIUX-V1-NAVIGATION",
       "actorClass": "codex-agent",
       "independent": true,
       "evidenceMode": "codex-only",
@@ -434,8 +533,9 @@
       "humanParticipantCount": 0,
       "notHumanUsabilityTested": true,
       "statusLabel": "NOT HUMAN-USABILITY-TESTED",
+      "reviewStatus": "complete",
       "reportPath": "research/ui-ux/codex-only-v1/navigation-review.md",
-      "reportSha256": "9ec0ada23dec2b6003f1b0e96132e3ef62a9ded0b3f865c4b9a17f3682875956",
+      "reportSha256": "4aebc020c7888ebd45197229e1c516dcd6655e68b574d08d870cd3155735723d",
       "domains": [
         "cognitive-load",
         "learner-task-information-architecture",
@@ -463,12 +563,25 @@
         "languageLayering": 2,
         "verifiability": 1
       },
+      "findingIds": [
+        "NAV-F01",
+        "NAV-F02",
+        "NAV-F03",
+        "NAV-F04",
+        "NAV-F05",
+        "NAV-D01",
+        "NAV-D02",
+        "NAV-D03",
+        "NAV-D04",
+        "HC-06"
+      ],
       "recommendationIds": [
         "NAV-C2-TASK-FIRST-TWO-TIER"
       ]
     },
     {
-      "taskId": "/root/accessibility_lane_v1",
+      "agentTaskId": "/root/accessibility_lane_v1",
+      "reportId": "CODEX-ONLY-UIUX-V1-ACCESSIBILITY-COGNITIVE",
       "actorClass": "codex-agent",
       "independent": true,
       "evidenceMode": "codex-only",
@@ -476,8 +589,9 @@
       "humanParticipantCount": 0,
       "notHumanUsabilityTested": true,
       "statusLabel": "NOT HUMAN-USABILITY-TESTED",
+      "reviewStatus": "complete",
       "reportPath": "research/ui-ux/codex-only-v1/accessibility-cognitive-review.md",
-      "reportSha256": "353a905622a5e472242e84e193601e6beb350c1d6debef432974ecec6bb35b55",
+      "reportSha256": "67f43328c6b6c14d616345570cdf63e488ad7d8b8b762efc41220debb9df7ef4",
       "domains": [
         "accessibility",
         "ai-slop-patterns",
@@ -532,15 +646,27 @@
         "consumerTrustClaimCalibration": 3,
         "editorialDirectness": 2
       },
+      "findingIds": [
+        "F-01",
+        "F-02",
+        "F-03",
+        "F-04",
+        "F-05",
+        "F-06",
+        "F-07",
+        "F-08",
+        "F-09",
+        "F-10",
+        "DU-10"
+      ],
       "recommendationIds": [
-        "CL-D1-DEFAULT-PLUS-CL-D2-EVIDENCE",
-        "NAV-A-OR-NAV-C-CONDITIONAL",
         "NI-01",
         "NI-02",
         "NI-03",
         "NI-04",
         "NI-05",
-        "NI-06"
+        "NI-06",
+        "CL-D3"
       ]
     }
   ],
@@ -550,16 +676,26 @@
     "humanEvidenceWeight": 0,
     "hardConstraintFailuresBlockPromotion": true,
     "ownerLockedUnresolvedCannotPromote": true,
+    "candidateDispositions": [
+      {
+        "id": "CL-D3-NOT-SELECTED",
+        "statement": "Do not select CL-D3 because it has no recovered prototype and sits nearest prohibited urgency, guilt, mastery, and readiness claims.",
+        "supportReferences": [
+          { "taskPath": "/root/language_lane_v1", "findingId": "HC-05" },
+          { "taskPath": "/root/accessibility_lane_v1", "recommendationId": "CL-D3" }
+        ],
+        "implementationRule": false,
+        "status": "not-selected-research-disposition"
+      }
+    ],
     "rules": [
       {
         "id": "CL-TASK-FIRST",
         "scope": "language",
         "statement": "At each action or decision, state the learner task, material consequence, and next safe action clearly.",
-        "supportTaskIds": [
-          "/root/free_recruitment",
-          "/root/language_lane_v1",
-          "/root/navigation_lane_v1",
-          "/root/accessibility_lane_v1"
+        "supportReferences": [
+          { "taskPath": "/root/free_recruitment", "findingId": "UI-05" },
+          { "taskPath": "/root/language_lane_v1", "recommendationId": "CL-H1-PLAIN-TASK-OPEN-PROOF" }
         ],
         "dissentTaskIds": [],
         "hardConstraintFailures": [],
@@ -570,11 +706,10 @@
         "id": "CL-LAYER-PROOF",
         "scope": "language",
         "statement": "Keep human-readable proof adjacent or disclosed and move raw identifiers and diagnostics out of the default layer.",
-        "supportTaskIds": [
-          "/root/free_recruitment",
-          "/root/language_lane_v1",
-          "/root/navigation_lane_v1",
-          "/root/accessibility_lane_v1"
+        "supportReferences": [
+          { "taskPath": "/root/free_recruitment", "findingId": "UI-07" },
+          { "taskPath": "/root/language_lane_v1", "recommendationId": "CL-H1-PLAIN-TASK-OPEN-PROOF" },
+          { "taskPath": "/root/accessibility_lane_v1", "findingId": "F-08" }
         ],
         "dissentTaskIds": [],
         "hardConstraintFailures": [],
@@ -585,10 +720,10 @@
         "id": "CL-TYPED-PUBLIC-ERRORS",
         "scope": "language",
         "statement": "Map typed failures to stable outcome, preserved-state, and recovery copy while keeping raw exceptions internal.",
-        "supportTaskIds": [
-          "/root/free_recruitment",
-          "/root/language_lane_v1",
-          "/root/accessibility_lane_v1"
+        "supportReferences": [
+          { "taskPath": "/root/free_recruitment", "findingId": "UI-06" },
+          { "taskPath": "/root/language_lane_v1", "findingId": "LT-07" },
+          { "taskPath": "/root/accessibility_lane_v1", "findingId": "F-07" }
         ],
         "dissentTaskIds": [],
         "hardConstraintFailures": [],
@@ -599,10 +734,11 @@
         "id": "CL-FOCUSED-FEEDBACK",
         "scope": "language",
         "statement": "Use specific outcomes and concise plain rationales, remove internal model labels and canned cadence, and keep required proof reachable.",
-        "supportTaskIds": [
-          "/root/free_recruitment",
-          "/root/language_lane_v1",
-          "/root/accessibility_lane_v1"
+        "supportReferences": [
+          { "taskPath": "/root/free_recruitment", "findingId": "UI-07" },
+          { "taskPath": "/root/language_lane_v1", "findingId": "LT-05" },
+          { "taskPath": "/root/language_lane_v1", "findingId": "LT-10" },
+          { "taskPath": "/root/accessibility_lane_v1", "findingId": "F-09" }
         ],
         "dissentTaskIds": [],
         "hardConstraintFailures": [],
@@ -613,10 +749,9 @@
         "id": "CL-DORMANT-CORRECTION",
         "scope": "language",
         "statement": "State the dormant correction boundary in consumer terms and never imply an unavailable endpoint can receive a report.",
-        "supportTaskIds": [
-          "/root/free_recruitment",
-          "/root/language_lane_v1",
-          "/root/accessibility_lane_v1"
+        "supportReferences": [
+          { "taskPath": "/root/free_recruitment", "findingId": "UI-09" },
+          { "taskPath": "/root/language_lane_v1", "findingId": "LT-09" }
         ],
         "dissentTaskIds": [],
         "hardConstraintFailures": [],
@@ -627,10 +762,10 @@
         "id": "CL-CL1-QUARANTINE",
         "scope": "language",
         "statement": "Keep recovered CL-1 bytes unchanged as evidence and author factually current U.S.-English CL-2 copy.",
-        "supportTaskIds": [
-          "/root/free_recruitment",
-          "/root/language_lane_v1",
-          "/root/accessibility_lane_v1"
+        "supportReferences": [
+          { "taskPath": "/root/free_recruitment", "findingId": "UI-10" },
+          { "taskPath": "/root/language_lane_v1", "findingId": "DS-04" },
+          { "taskPath": "/root/language_lane_v1", "recommendationId": "CL-H1-PLAIN-TASK-OPEN-PROOF" }
         ],
         "dissentTaskIds": [],
         "hardConstraintFailures": [],
@@ -641,9 +776,9 @@
         "id": "CL-US-ENGLISH-FACTS",
         "scope": "language",
         "statement": "Use U.S. English, current derived counts, and bounded factual claims without unsupported universal language.",
-        "supportTaskIds": [
-          "/root/free_recruitment",
-          "/root/language_lane_v1"
+        "supportReferences": [
+          { "taskPath": "/root/free_recruitment", "findingId": "UI-10" },
+          { "taskPath": "/root/language_lane_v1", "recommendationId": "CL-H1-PLAIN-TASK-OPEN-PROOF" }
         ],
         "dissentTaskIds": [],
         "hardConstraintFailures": [],
@@ -654,23 +789,9 @@
         "id": "CL-NO-UNMEASURED-TIME",
         "scope": "language",
         "statement": "Do not publish a practice-duration estimate without measured evidence for the exact task and conditions.",
-        "supportTaskIds": [
-          "/root/free_recruitment",
-          "/root/language_lane_v1",
-          "/root/accessibility_lane_v1"
-        ],
-        "dissentTaskIds": [],
-        "hardConstraintFailures": [],
-        "ownerLockedUnresolved": false,
-        "status": "promoted"
-      },
-      {
-        "id": "CL-D3-NOT-SELECTED",
-        "scope": "language",
-        "statement": "Do not select CL-D3 because it has no recovered prototype and sits nearest prohibited urgency, guilt, mastery, and readiness claims.",
-        "supportTaskIds": [
-          "/root/language_lane_v1",
-          "/root/accessibility_lane_v1"
+        "supportReferences": [
+          { "taskPath": "/root/free_recruitment", "findingId": "UI-02" },
+          { "taskPath": "/root/language_lane_v1", "findingId": "HC-04" }
         ],
         "dissentTaskIds": [],
         "hardConstraintFailures": [],
@@ -681,11 +802,10 @@
         "id": "NAV-TWO-TIER",
         "scope": "navigation",
         "statement": "Separate learner tasks from utility and trust destinations instead of presenting every destination as a peer.",
-        "supportTaskIds": [
-          "/root/free_recruitment",
-          "/root/language_lane_v1",
-          "/root/navigation_lane_v1",
-          "/root/accessibility_lane_v1"
+        "supportReferences": [
+          { "taskPath": "/root/free_recruitment", "findingId": "UI-03" },
+          { "taskPath": "/root/language_lane_v1", "findingId": "LT-02" },
+          { "taskPath": "/root/navigation_lane_v1", "findingId": "NAV-F01" }
         ],
         "dissentTaskIds": [],
         "hardConstraintFailures": [],
@@ -696,10 +816,10 @@
         "id": "NAV-NATIVE-COMPACT",
         "scope": "navigation",
         "statement": "Use a named native no-JavaScript-safe compact disclosure before global links wrap into peer rows.",
-        "supportTaskIds": [
-          "/root/free_recruitment",
-          "/root/navigation_lane_v1",
-          "/root/accessibility_lane_v1"
+        "supportReferences": [
+          { "taskPath": "/root/free_recruitment", "findingId": "UI-03" },
+          { "taskPath": "/root/navigation_lane_v1", "findingId": "NAV-F01" },
+          { "taskPath": "/root/accessibility_lane_v1", "recommendationId": "NI-04" }
         ],
         "dissentTaskIds": [],
         "hardConstraintFailures": [],
@@ -710,11 +830,10 @@
         "id": "NAV-FOCUSED-PLAYERS",
         "scope": "navigation",
         "statement": "Give every player a named session landmark, progress, and truthful explicit exit without acquisition or utility navigation.",
-        "supportTaskIds": [
-          "/root/free_recruitment",
-          "/root/language_lane_v1",
-          "/root/navigation_lane_v1",
-          "/root/accessibility_lane_v1"
+        "supportReferences": [
+          { "taskPath": "/root/free_recruitment", "findingId": "UI-04" },
+          { "taskPath": "/root/navigation_lane_v1", "findingId": "NAV-F02" },
+          { "taskPath": "/root/accessibility_lane_v1", "recommendationId": "NI-05" }
         ],
         "dissentTaskIds": [],
         "hardConstraintFailures": [],
@@ -725,24 +844,22 @@
         "id": "NAV-SHELL-BOUNDARY",
         "scope": "navigation",
         "statement": "Assign question, hazard, review, and simulation player route IDs to the focused shell and all other fixed routes to standard.",
-        "supportTaskIds": [
-          "/root/free_recruitment",
-          "/root/navigation_lane_v1",
-          "/root/accessibility_lane_v1"
+        "supportReferences": [
+          { "taskPath": "/root/navigation_lane_v1", "findingId": "NAV-F02" }
         ],
         "dissentTaskIds": [],
         "hardConstraintFailures": [],
         "ownerLockedUnresolved": false,
-        "status": "promoted"
+        "status": "unresolved"
       },
       {
         "id": "NAV-PRACTICE-TASK-HUB",
         "scope": "navigation",
         "statement": "Lead Practice with concrete task starts and place translated capacity diagnostics after those starts.",
-        "supportTaskIds": [
-          "/root/free_recruitment",
-          "/root/navigation_lane_v1",
-          "/root/accessibility_lane_v1"
+        "supportReferences": [
+          { "taskPath": "/root/free_recruitment", "findingId": "UI-02" },
+          { "taskPath": "/root/navigation_lane_v1", "findingId": "NAV-F04" },
+          { "taskPath": "/root/accessibility_lane_v1", "findingId": "F-02" }
         ],
         "dissentTaskIds": [],
         "hardConstraintFailures": [],
@@ -753,9 +870,9 @@
         "id": "NAV-STATIC-REVIEW-ENTRY",
         "scope": "navigation",
         "statement": "Expose Review through a normal static parent entry while retaining local and noindex semantics.",
-        "supportTaskIds": [
-          "/root/navigation_lane_v1",
-          "/root/accessibility_lane_v1"
+        "supportReferences": [
+          { "taskPath": "/root/navigation_lane_v1", "findingId": "NAV-F04" },
+          { "taskPath": "/root/accessibility_lane_v1", "findingId": "F-04" }
         ],
         "dissentTaskIds": [],
         "hardConstraintFailures": [],
@@ -765,11 +882,11 @@
       {
         "id": "NAV-ROUTE-IDENTITY",
         "scope": "navigation",
-        "statement": "Preserve every fixed route identity, path, owner, indexability value, offline rule, and no-JavaScript purpose.",
-        "supportTaskIds": [
-          "/root/language_lane_v1",
-          "/root/navigation_lane_v1",
-          "/root/accessibility_lane_v1"
+        "statement": "Preserve every fixed route identity, canonical path, and no-JavaScript purpose.",
+        "supportReferences": [
+          { "taskPath": "/root/language_lane_v1", "findingId": "LT-02" },
+          { "taskPath": "/root/navigation_lane_v1", "recommendationId": "NAV-C2-TASK-FIRST-TWO-TIER" },
+          { "taskPath": "/root/accessibility_lane_v1", "recommendationId": "NI-01" }
         ],
         "dissentTaskIds": [],
         "hardConstraintFailures": [],
@@ -780,9 +897,9 @@
         "id": "NAV-NOJS",
         "scope": "navigation",
         "statement": "Keep primary discovery as static ordinary document navigation with truthful JavaScript-free fallbacks.",
-        "supportTaskIds": [
-          "/root/navigation_lane_v1",
-          "/root/accessibility_lane_v1"
+        "supportReferences": [
+          { "taskPath": "/root/navigation_lane_v1", "recommendationId": "NAV-C2-TASK-FIRST-TWO-TIER" },
+          { "taskPath": "/root/accessibility_lane_v1", "recommendationId": "NI-01" }
         ],
         "dissentTaskIds": [],
         "hardConstraintFailures": [],
@@ -793,9 +910,9 @@
         "id": "NAV-NONVISUAL-EQUAL-DISCOVERY",
         "scope": "navigation",
         "statement": "Give visual and text-keyboard hazard tasks equivalent discovery without claiming identical measurement.",
-        "supportTaskIds": [
-          "/root/navigation_lane_v1",
-          "/root/accessibility_lane_v1"
+        "supportReferences": [
+          { "taskPath": "/root/language_lane_v1", "findingId": "LT-06" },
+          { "taskPath": "/root/accessibility_lane_v1", "recommendationId": "NI-06" }
         ],
         "dissentTaskIds": [],
         "hardConstraintFailures": [],
@@ -806,11 +923,10 @@
         "id": "SHARED-HUMAN-EVIDENCE-BOUNDARY",
         "scope": "shared",
         "statement": "Keep human evidence none, human participant count zero, and every result labeled not human usability tested.",
-        "supportTaskIds": [
-          "/root/free_recruitment",
-          "/root/language_lane_v1",
-          "/root/navigation_lane_v1",
-          "/root/accessibility_lane_v1"
+        "supportReferences": [
+          { "taskPath": "/root/language_lane_v1", "findingId": "HC-06" },
+          { "taskPath": "/root/navigation_lane_v1", "findingId": "NAV-D04" },
+          { "taskPath": "/root/accessibility_lane_v1", "findingId": "DU-10" }
         ],
         "dissentTaskIds": [],
         "hardConstraintFailures": [],
@@ -821,10 +937,14 @@
         "id": "SHARED-PRESERVE-LOAD-BEARING-TRUTH",
         "scope": "shared",
         "statement": "Preserve unofficial status, uncertainty, source support, local-data risk, security boundaries, and commit-before-reveal.",
-        "supportTaskIds": [
-          "/root/language_lane_v1",
-          "/root/navigation_lane_v1",
-          "/root/accessibility_lane_v1"
+        "supportReferences": [
+          { "taskPath": "/root/language_lane_v1", "findingId": "LT-03" },
+          { "taskPath": "/root/language_lane_v1", "findingId": "LT-05" },
+          { "taskPath": "/root/language_lane_v1", "findingId": "LT-08" },
+          { "taskPath": "/root/language_lane_v1", "findingId": "LT-09" },
+          { "taskPath": "/root/navigation_lane_v1", "findingId": "HC-06" },
+          { "taskPath": "/root/accessibility_lane_v1", "findingId": "F-08" },
+          { "taskPath": "/root/accessibility_lane_v1", "findingId": "F-10" }
         ],
         "dissentTaskIds": [],
         "hardConstraintFailures": [],
@@ -835,11 +955,11 @@
         "id": "SHARED-EXPLICIT-PROFILE-CONTEXT",
         "scope": "shared",
         "statement": "Require explicit or visibly neutral profile context and never silently substitute the first jurisdiction.",
-        "supportTaskIds": [
-          "/root/free_recruitment",
-          "/root/language_lane_v1",
-          "/root/navigation_lane_v1",
-          "/root/accessibility_lane_v1"
+        "supportReferences": [
+          { "taskPath": "/root/free_recruitment", "findingId": "UI-01" },
+          { "taskPath": "/root/language_lane_v1", "findingId": "LT-03" },
+          { "taskPath": "/root/navigation_lane_v1", "findingId": "NAV-F03" },
+          { "taskPath": "/root/accessibility_lane_v1", "recommendationId": "NI-03" }
         ],
         "dissentTaskIds": [],
         "hardConstraintFailures": [],
@@ -850,8 +970,8 @@
         "id": "UNRESOLVED-SHORTEST-PRACTICE-PRIMARY",
         "scope": "shared",
         "statement": "Whether the shortest valid whole-bank question count should be the primary Practice start remains unresolved.",
-        "supportTaskIds": [
-          "/root/free_recruitment"
+        "supportReferences": [
+          { "taskPath": "/root/free_recruitment", "findingId": "UI-02" }
         ],
         "dissentTaskIds": [],
         "hardConstraintFailures": [],
@@ -862,10 +982,8 @@
         "id": "UNRESOLVED-HOME-PRIMARY-CTA",
         "scope": "shared",
         "statement": "Whether Check my exam or Start practice is the universal primary Home action remains unresolved.",
-        "supportTaskIds": [
-          "/root/free_recruitment",
-          "/root/navigation_lane_v1",
-          "/root/accessibility_lane_v1"
+        "supportReferences": [
+          { "taskPath": "/root/free_recruitment", "findingId": "UI-08" }
         ],
         "dissentTaskIds": [],
         "hardConstraintFailures": [],
@@ -876,10 +994,10 @@
         "id": "UNRESOLVED-EXACT-NAV-LABELS-GROUPING",
         "scope": "navigation",
         "statement": "Exact global navigation labels, group count, membership, nesting, and order remain unresolved rather than consensus.",
-        "supportTaskIds": [
-          "/root/free_recruitment",
-          "/root/navigation_lane_v1",
-          "/root/accessibility_lane_v1"
+        "supportReferences": [
+          { "taskPath": "/root/free_recruitment", "findingId": "UI-03" },
+          { "taskPath": "/root/navigation_lane_v1", "findingId": "NAV-D01" },
+          { "taskPath": "/root/navigation_lane_v1", "findingId": "NAV-D02" }
         ],
         "dissentTaskIds": [],
         "hardConstraintFailures": [],
@@ -890,10 +1008,9 @@
         "id": "UNRESOLVED-D1-VS-D2",
         "scope": "language",
         "statement": "The full choice between CL-D1 and CL-D2, including any hybrid, remains unresolved and no candidate is selected.",
-        "supportTaskIds": [
-          "/root/free_recruitment",
-          "/root/language_lane_v1",
-          "/root/accessibility_lane_v1"
+        "supportReferences": [
+          { "taskPath": "/root/language_lane_v1", "findingId": "DS-01" },
+          { "taskPath": "/root/accessibility_lane_v1", "findingId": "F-08" }
         ],
         "dissentTaskIds": [],
         "hardConstraintFailures": [],
@@ -904,10 +1021,9 @@
         "id": "UNRESOLVED-PRACTICE-TIMING",
         "scope": "language",
         "statement": "No practice duration is established; only exact current question counts may be stated.",
-        "supportTaskIds": [
-          "/root/free_recruitment",
-          "/root/language_lane_v1",
-          "/root/accessibility_lane_v1"
+        "supportReferences": [
+          { "taskPath": "/root/free_recruitment", "findingId": "UI-02" },
+          { "taskPath": "/root/language_lane_v1", "findingId": "HC-04" }
         ],
         "dissentTaskIds": [],
         "hardConstraintFailures": [],
@@ -918,11 +1034,11 @@
         "id": "UNRESOLVED-SOURCE-PROMINENCE",
         "scope": "language",
         "statement": "The route-specific choice between inline proof and disclosed proof remains unresolved.",
-        "supportTaskIds": [
-          "/root/free_recruitment",
-          "/root/language_lane_v1",
-          "/root/navigation_lane_v1",
-          "/root/accessibility_lane_v1"
+        "supportReferences": [
+          { "taskPath": "/root/free_recruitment", "findingId": "UI-07" },
+          { "taskPath": "/root/language_lane_v1", "findingId": "DS-01" },
+          { "taskPath": "/root/navigation_lane_v1", "findingId": "NAV-D03" },
+          { "taskPath": "/root/accessibility_lane_v1", "findingId": "F-08" }
         ],
         "dissentTaskIds": [],
         "hardConstraintFailures": [],
@@ -937,7 +1053,6 @@
         "evidenceMode": "codex-only",
         "ruleIds": [
           "CL-CL1-QUARANTINE",
-          "CL-D3-NOT-SELECTED",
           "CL-DORMANT-CORRECTION",
           "CL-FOCUSED-FEEDBACK",
           "CL-LAYER-PROOF",
@@ -961,7 +1076,6 @@
           "NAV-NONVISUAL-EQUAL-DISCOVERY",
           "NAV-PRACTICE-TASK-HUB",
           "NAV-ROUTE-IDENTITY",
-          "NAV-SHELL-BOUNDARY",
           "NAV-STATIC-REVIEW-ENTRY",
           "NAV-TWO-TIER",
           "SHARED-EXPLICIT-PROFILE-CONTEXT",
@@ -985,22 +1099,12 @@
     {
       "path": "product/CONTENT_DESIGN.md",
       "directionId": "CL-CODEX-1",
-      "sha256": "029b35f97bea05c088c3efa44118536dee8e0d03f877247260efeaafde48549f"
+      "sha256": "91061006ffd60984b30bc9f7e7413d32ce3e57541260c71c932979eb7e4cd390"
     },
     {
       "path": "product/ROUTES.md",
       "directionId": "NAV-CODEX-1",
-      "sha256": "e590db9fa153353faa197bace2a974c59470a60ed1e36bd74270eaa46aa1fcc8"
-    },
-    {
-      "path": "product/DESIGN_SYSTEM.md",
-      "directionId": "NAV-CODEX-1",
-      "sha256": "22f0eb6762b77b572fb537860a55073ee084f76adaffea6816aa896ae6dfe826"
-    },
-    {
-      "path": "product/COMPONENT_ARCHITECTURE.md",
-      "directionId": "NAV-CODEX-1",
-      "sha256": "4ff04439c35b9ee639f4217701f82ea56f87b8b1748df3502f56f83528303b12"
+      "sha256": "501230759f15e6ccd13e1a49d24db1e3ee94d7a52e80634490c7ff7b08c24e98"
     }
   ]
 }
