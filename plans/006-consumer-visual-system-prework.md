@@ -3,10 +3,11 @@
 <!-- artifact-label: {"status":"provisional-prework","participantEvidence":"none","decisionStatus":"pending","requiredDependencyShas":null,"mustRebaseAndReverify":true} -->
 
 This packet is deterministic preparation only. It is not the Plan 006 research
-tree, participant evidence, external-action approval, a territory evaluation,
-a recommendation, a selection, canonical design-system authority, or a claim
-that Plan 006 is complete. Plans 004 and 005 remain blocked on real-volunteer
-evidence. The exact labels above and in every machine artifact are intentional:
+tree, human evidence, a completed Codex territory review, a recommendation, a
+selection, canonical design-system authority, or a claim that Plan 006 is
+complete. The exact merged Step 2 agent-only language/navigation SHA has not
+landed and remains the sole upstream dependency. The exact labels above and in
+every machine artifact are intentional:
 `status=provisional-prework`, `participantEvidence=none`,
 `decisionStatus=pending`, `requiredDependencyShas=null`, and
 `mustRebaseAndReverify=true`.
@@ -19,52 +20,74 @@ evidence. The exact labels above and in every machine artifact are intentional:
   and 18 hazard scenes. It carries release hashes, derivative dimensions,
   rights-review evidence, practice/use gates, and conservative prototype
   boundaries without making the future route-level visual-audit judgments.
-- A checksum-verified 15-entry ledger for the supplied old-system ZIP. Its 11
-  image copies are byte-identical to canonical repository derivatives and may
-  be used only through those canonical copies; the four remaining files have
-  no embedded license and remain evidence-only, not product or prototype input.
-  The old renderer also contains three unpkg CDN fallbacks; future prototypes
-  prohibit inheriting those external dependencies.
+  All 13 rows with non-null upstream gate text are prohibited from scored and
+  prototype use under the Codex-only workflow; the remaining 84 retain their
+  recorded practice-scope boundaries.
+- A 15-entry text ledger for the supplied old-system ZIP, identified only by a
+  logical source ID, recorded byte length, and archive SHA-256. Default
+  validation is deliberately ledger-only and does not imply that an external
+  archive was reverified. The ledger records 11 entries matching canonical
+  repository-derivative hashes at observation time, but all attachment rights
+  remain unknown. An exact marker scan of three enumerated text entries found
+  no `license`, `copyright`, or `SPDX` marker; that observation is not a license
+  determination. The old `support.js` ledger records three unpkg fallbacks,
+  generic dynamic-URL fetches, and `new Function` construction as
+  do-not-execute capabilities.
 - Twelve empty benchmark-acquisition slots and the exact future source and
-  qualitative evaluation fields. No product observation or benchmark claim is
-  present.
+  qualitative evaluation fields. No benchmark-source observation, acquired
+  benchmark row, or benchmark claim is present.
 - One future-input adapter contract, seven provisional presentation archetypes covering
   all 36 maintained route IDs, and three unbuilt A/B/C hypothesis shells. Token
   roles are declared while every territory token value remains null.
-- Empty, supplementary-only interfaces for heuristic review, automated
-  accessibility, corpus use, deterministic route simulation, and owner
-  dogfooding. None can contribute participant evidence, approval, or selection.
+- Empty, nonhuman interfaces for Codex heuristic review, automated
+  accessibility, corpus use, deterministic route simulation, and Codex
+  experience audit. None is user research or can independently select a
+  territory.
+- A `CODEX-ONLY-UIUX-V1` decision contract requiring three independent Codex
+  subagent task IDs and distinct rubrics for consumer trust/anti-AI-slop,
+  accessibility/cognitive load, and visual/component coherence. Review records,
+  scores, evidence coordinates, consensus, and dissent remain empty until the
+  exact merged Step 2 SHA is supplied.
 
 ## Current-control dry run
 
 A transient Chromium dry run at source
 `9fc7dcacfc961752e5d9a2cedbc426deead54a05` reached all 24 routes with HTTP
 200, made no external-origin requests, and produced 16 distinct default-phone
-hashes. No screenshots or raw dumps were retained. Two current-control
-phone cases had page-level horizontal overflow:
+hashes. No screenshots, page content, or raw dumps were retained. The compact
+per-case metrics and deterministic receipt are committed below, and the
+validator recomputes their joins, hashes, and aggregates. Two default-phone
+cases had page-level horizontal overflow:
 
 - `simulation-setup-phone-390-default`;
 - `print-center-phone-390-default`.
 
-Those measurements are supplementary defect-discovery evidence only. They are
-not canonical Plan 006 baseline rows. The ad-hoc large-text and 200% adapters
-also exposed limitations recorded in the machine contract, so their screenshots
-were deliberately not promoted as valid presentation evidence.
+The ad-hoc large-text and 200% adapters additionally produced overflow in
+`C20` and `C21`. Those adapters are explicitly noncanonical, and their
+limitations are recorded in the machine contract. All measurements are
+supplementary, self-consistent harness observations only—not canonical Plan
+006 baseline rows, user research, or territory-selection evidence.
 
 ## Fail-closed future use
 
-Before any territory can render, the engine requires separately verified,
-immutable language and navigation inputs from completed Plans 004 and 005. A
-future executor must rebase onto their accepted merged head, update all source
-hashes, rerun the 24 cases with the canonical adapters, and revalidate all
-asset bytes. The engine then enforces one shared semantic renderer: territories
-may vary only tokens, density rules, image framing, and CSS composition.
+Before any territory can render, the engine requires the exact immutable SHA of
+the merged Step 2 agent-only language/navigation contract. A future executor
+must rebase onto that SHA, bind both inputs from it, update all source hashes,
+rerun the 24 cases with canonical adapters, and revalidate all asset bytes. The
+engine then enforces one shared semantic renderer: territories may vary only
+tokens, density rules, image framing, and CSS composition.
 
-The full future Plan 006 participant, approval, comparison, decision-matrix,
-human-selection, promotion, and `DONE` gates remain unchanged. Automated
-checks, agents, personas, route simulations, heuristic reviewers, and owner
-dogfooding cannot substitute for real target-user evidence or the explicit
-human selection gate.
+The program uses no human participants, reviewers, selectors, owners, or
+sign-offs. `CODEX-ONLY-UIUX-V1` keeps `humanEvidence=none`,
+`humanParticipantCount=0`, `humanReviewRequired=false`, and
+`notHumanUsabilityTested=true`. Agents and automation are nonhuman evidence and
+must never be represented as user research. Selection remains pending until
+three independent rubric-specific Codex reviews are complete at the same exact
+Step 2/prototype coordinates; a unique nonblocked score winner is required,
+and ties or unresolved dissent remain pending. Promotion and `DONE` stay false
+in this prework packet. Immutable source-ledger text that mentions a specialist
+signoff remains provenance, not a planned dependency; the engine prohibits
+scored use of those gated assets instead of attempting to satisfy that gate.
 
 ## Validation
 
@@ -74,13 +97,27 @@ Run:
 node plans/validate-006-consumer-visual-system-prework.mjs
 ```
 
-The validator checks labels, exact record shapes, source hashes, all 24 capture
-tuples, all 97 release-ledger joins and 388 master/derivative files, use gates,
-the attached archive hash plus all 15 entry hashes and canonical-copy joins,
-36-route archetype closure, token shells, empty evidence interfaces, gate
-accounting, and the exact three-file Git scope. It also runs mutation tests
-that prove participant, approval, accepted/selected,
-supplementary-substitution, and `DONE` claims fail closed.
+Default validation is clone- and CI-portable: it never discovers or requires an
+external attachment and truthfully reports the archive as ledger-only/not
+deep-reverified. An opt-in local invocation may run
+`node plans/validate-006-consumer-visual-system-prework.mjs --attachment PATH`
+with an explicit caller-supplied path. That opt-in mode hashes and inspects the
+archive in memory, does not execute its content, and retains neither its path
+nor bytes.
+
+The validator implements the documented
+`draft-2020-12-portable-subset-v1`: a complete evaluator for every Draft 2020-12
+keyword this schema uses, not a general Draft 2020-12 meta-schema
+implementation. It validates schema structure and local references, pins the
+canonical parsed-schema digest, validates the extracted instance, then applies
+independent semantic gates. Adversarial instance and schema-weakening tests
+cover human-evidence/count drift, Codex-review fabrication, selection,
+recommendation, `DONE`, dependency, and render claims. It also verifies
+source-file hashes, all 24 capture tuples,
+the 24 retained non-image metrics and receipt, all 97 release-ledger joins and
+388 master/derivative files, the committed attachment ledger and canonical-copy
+joins, 36-route archetype closure, empty evidence interfaces, and zero-valued
+gate accounting.
 
 ## Machine record
 
@@ -92,17 +129,18 @@ supplementary-substitution, and `DONE` claims fail closed.
     "attachmentBaseline": {
       "archive": {
         "bytes": 1428961,
-        "locator": "/home/cjpher/.codex/attachments/3d868f50-c832-49bd-9640-def0d35c3c58/NYC Custodian Component Design.zip",
+        "logicalSourceId": "user-supplied/nyc-custodian-component-design/old-system-pass-one",
         "sha256": "dcbf9fcf9a8c43e263bfbc501dfb1ec2d98f21eda5126ffa9181c50cac795442"
       },
       "authority": "uninformed-old-system-pass-one-baseline-not-selected-not-a-constraint",
+      "defaultVerificationStatus": "ledger-only-not-deep-reverified",
       "entries": [
         {
           "bytes": 26456,
           "canonicalRepoPath": null,
           "contentKind": "generated-preview-thumbnail",
           "path": ".thumbnail",
-          "rightsStatus": "unknown-archive-provides-no-license",
+          "rightsStatus": "unknown-attachment-rights-not-determined",
           "sha256": "32475ee6c16605a782be47285d21f0ec38fdabc9c89721af9ef323100a53c4ea",
           "useStatus": "evidence-only-do-not-copy-to-product-or-prototype"
         },
@@ -111,7 +149,7 @@ supplementary-substitution, and `DONE` claims fail closed.
           "canonicalRepoPath": null,
           "contentKind": "old-component-library-html",
           "path": "Component Library.dc.html",
-          "rightsStatus": "unknown-archive-provides-no-license",
+          "rightsStatus": "unknown-attachment-rights-not-determined",
           "sha256": "ae2dc4402bbe4c584f86a0ffcad17d7e3d168fa48894f5597b3244ff664fd6f6",
           "useStatus": "evidence-only-do-not-copy-to-product-or-prototype"
         },
@@ -120,7 +158,7 @@ supplementary-substitution, and `DONE` claims fail closed.
           "canonicalRepoPath": "content/assets/derivatives/scenes/s003-phone.png",
           "contentKind": "canonical-derivative-copy",
           "path": "content/assets/derivatives/scenes/s003-phone.png",
-          "rightsStatus": "archive-adds-no-rights-canonical-release-ledger-controls",
+          "rightsStatus": "unknown-attachment-rights-not-determined",
           "sha256": "4213808a50ec91260499d7e409d22211479cb071a5643e935aa98cb37d054171",
           "useStatus": "use-only-via-byte-identical-canonical-repo-derivative"
         },
@@ -129,7 +167,7 @@ supplementary-substitution, and `DONE` claims fail closed.
           "canonicalRepoPath": "content/assets/derivatives/scenes/s008-phone.png",
           "contentKind": "canonical-derivative-copy",
           "path": "content/assets/derivatives/scenes/s008-phone.png",
-          "rightsStatus": "archive-adds-no-rights-canonical-release-ledger-controls",
+          "rightsStatus": "unknown-attachment-rights-not-determined",
           "sha256": "5c9baf1012aa80a741e45572e0a61486ae11b9608525759617a8b00f87149b2b",
           "useStatus": "use-only-via-byte-identical-canonical-repo-derivative"
         },
@@ -138,7 +176,7 @@ supplementary-substitution, and `DONE` claims fail closed.
           "canonicalRepoPath": "content/assets/derivatives/scenes/s009-phone.png",
           "contentKind": "canonical-derivative-copy",
           "path": "content/assets/derivatives/scenes/s009-phone.png",
-          "rightsStatus": "archive-adds-no-rights-canonical-release-ledger-controls",
+          "rightsStatus": "unknown-attachment-rights-not-determined",
           "sha256": "b8ed8646a78b6e047f47c0750e859a13fa91e53a6a0a4b51d26d5a76acb019a6",
           "useStatus": "use-only-via-byte-identical-canonical-repo-derivative"
         },
@@ -147,7 +185,7 @@ supplementary-substitution, and `DONE` claims fail closed.
           "canonicalRepoPath": "content/assets/derivatives/tools/t001-phone.png",
           "contentKind": "canonical-derivative-copy",
           "path": "content/assets/derivatives/tools/t001-phone.png",
-          "rightsStatus": "archive-adds-no-rights-canonical-release-ledger-controls",
+          "rightsStatus": "unknown-attachment-rights-not-determined",
           "sha256": "20982817fe806bffa8da7e2cc06ce4f5caa85400da7a1412b07e55301177234f",
           "useStatus": "use-only-via-byte-identical-canonical-repo-derivative"
         },
@@ -156,7 +194,7 @@ supplementary-substitution, and `DONE` claims fail closed.
           "canonicalRepoPath": "content/assets/derivatives/tools/t002-phone.png",
           "contentKind": "canonical-derivative-copy",
           "path": "content/assets/derivatives/tools/t002-phone.png",
-          "rightsStatus": "archive-adds-no-rights-canonical-release-ledger-controls",
+          "rightsStatus": "unknown-attachment-rights-not-determined",
           "sha256": "baba2e79d2ada171771ea355aa6a2be3ffe0c886434970869d121e8127acd3eb",
           "useStatus": "use-only-via-byte-identical-canonical-repo-derivative"
         },
@@ -165,7 +203,7 @@ supplementary-substitution, and `DONE` claims fail closed.
           "canonicalRepoPath": "content/assets/derivatives/tools/t003-phone.png",
           "contentKind": "canonical-derivative-copy",
           "path": "content/assets/derivatives/tools/t003-phone.png",
-          "rightsStatus": "archive-adds-no-rights-canonical-release-ledger-controls",
+          "rightsStatus": "unknown-attachment-rights-not-determined",
           "sha256": "5511fcb6a43ac0c435e7405f4f77bfe19b67fc6c87a7f8af1bdbd5a211978e1f",
           "useStatus": "use-only-via-byte-identical-canonical-repo-derivative"
         },
@@ -174,7 +212,7 @@ supplementary-substitution, and `DONE` claims fail closed.
           "canonicalRepoPath": "content/assets/derivatives/tools/t004-phone.png",
           "contentKind": "canonical-derivative-copy",
           "path": "content/assets/derivatives/tools/t004-phone.png",
-          "rightsStatus": "archive-adds-no-rights-canonical-release-ledger-controls",
+          "rightsStatus": "unknown-attachment-rights-not-determined",
           "sha256": "72667701c86604f67f79f7d6276922fafbe8b4222f6b3e1ed5ecd468b05195d6",
           "useStatus": "use-only-via-byte-identical-canonical-repo-derivative"
         },
@@ -183,7 +221,7 @@ supplementary-substitution, and `DONE` claims fail closed.
           "canonicalRepoPath": "content/assets/derivatives/tools/t005-phone.png",
           "contentKind": "canonical-derivative-copy",
           "path": "content/assets/derivatives/tools/t005-phone.png",
-          "rightsStatus": "archive-adds-no-rights-canonical-release-ledger-controls",
+          "rightsStatus": "unknown-attachment-rights-not-determined",
           "sha256": "22e57a774aa6e324b12ddf80be3fea469d150a7837076d7323206350af878b7e",
           "useStatus": "use-only-via-byte-identical-canonical-repo-derivative"
         },
@@ -192,7 +230,7 @@ supplementary-substitution, and `DONE` claims fail closed.
           "canonicalRepoPath": "content/assets/derivatives/tools/t006-phone.png",
           "contentKind": "canonical-derivative-copy",
           "path": "content/assets/derivatives/tools/t006-phone.png",
-          "rightsStatus": "archive-adds-no-rights-canonical-release-ledger-controls",
+          "rightsStatus": "unknown-attachment-rights-not-determined",
           "sha256": "c4d39cd0758b807af4bbe3ca997d0370b49f67476191a88f0b19084a63ddd5fb",
           "useStatus": "use-only-via-byte-identical-canonical-repo-derivative"
         },
@@ -201,7 +239,7 @@ supplementary-substitution, and `DONE` claims fail closed.
           "canonicalRepoPath": "content/assets/derivatives/tools/t007-phone.png",
           "contentKind": "canonical-derivative-copy",
           "path": "content/assets/derivatives/tools/t007-phone.png",
-          "rightsStatus": "archive-adds-no-rights-canonical-release-ledger-controls",
+          "rightsStatus": "unknown-attachment-rights-not-determined",
           "sha256": "539e60f55898692a3e4379eb2da0a552b8b41d6cbff6b8e2f09a2acf7a7bb319",
           "useStatus": "use-only-via-byte-identical-canonical-repo-derivative"
         },
@@ -210,7 +248,7 @@ supplementary-substitution, and `DONE` claims fail closed.
           "canonicalRepoPath": "content/assets/derivatives/tools/t008-phone.png",
           "contentKind": "canonical-derivative-copy",
           "path": "content/assets/derivatives/tools/t008-phone.png",
-          "rightsStatus": "archive-adds-no-rights-canonical-release-ledger-controls",
+          "rightsStatus": "unknown-attachment-rights-not-determined",
           "sha256": "ec7ce4b5bdfb020972eecebd7a3d384fe58fa518a58b4e3311c95aa4cce32be6",
           "useStatus": "use-only-via-byte-identical-canonical-repo-derivative"
         },
@@ -219,7 +257,7 @@ supplementary-substitution, and `DONE` claims fail closed.
           "canonicalRepoPath": null,
           "contentKind": "old-baseline-metadata",
           "path": "github.md",
-          "rightsStatus": "unknown-archive-provides-no-license",
+          "rightsStatus": "unknown-attachment-rights-not-determined",
           "sha256": "de84e5e8a3f1f70bbc106748a02512d56a8f014ec80edbc42c1fb06b0eaa5967",
           "useStatus": "evidence-only-do-not-copy-to-product-or-prototype"
         },
@@ -228,7 +266,7 @@ supplementary-substitution, and `DONE` claims fail closed.
           "canonicalRepoPath": null,
           "contentKind": "old-renderer-runtime",
           "path": "support.js",
-          "rightsStatus": "unknown-archive-provides-no-license",
+          "rightsStatus": "unknown-attachment-rights-not-determined",
           "sha256": "8fe7df74405f3c55f49b7249c74ea1397e65d07dea2b1bd3b4a489bec2e28cbe",
           "useStatus": "evidence-only-do-not-copy-to-product-or-prototype"
         }
@@ -241,17 +279,43 @@ supplementary-substitution, and `DONE` claims fail closed.
       },
       "inspection": {
         "archiveCommentPresent": false,
-        "embeddedLicenseFound": false,
+        "dynamicExternalCodeCapability": {
+          "directEvalCallCount": 0,
+          "dynamicImportCount": 0,
+          "functionConstructorCount": 2,
+          "mechanism": "new Function",
+          "status": "present-do-not-execute"
+        },
         "entryPathSafety": "pass-no-absolute-or-parent-paths",
-        "externalNetworkDependencyStatus": "three-runtime-cdn-fallbacks-in-old-support-js-prohibited-for-future-prototypes",
+        "externalNetworkDependencyStatus": "old-support-js-has-three-unpkg-fallbacks-dynamic-remote-fetch-and-new-Function-prohibited-for-future-prototypes",
+        "genericRemoteModuleFetchCapability": {
+          "dynamicArgumentFetchCallCount": 3,
+          "mechanism": "fetch(dynamic-url)",
+          "status": "present-do-not-execute"
+        },
         "htmlLiteralExternalSubresourceCount": 0,
-        "imageCopiesByteIdenticalToCanonicalRepo": 11,
+        "ledgerRowsMatchingCanonicalRepoHashes": 11,
         "runtimeCdnFallbackCount": 3,
         "runtimeCdnFallbackUrls": [
           "https://unpkg.com/react@18.3.1/umd/react.production.min.js",
           "https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js",
           "https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
         ],
+        "scannedTextMarkerObservation": {
+          "caseInsensitiveWholeWordMarkers": [
+            "license",
+            "copyright",
+            "SPDX"
+          ],
+          "matchingEntryCount": 0,
+          "rightsInference": "none-rights-remain-unknown",
+          "scannedEntries": [
+            "Component Library.dc.html",
+            "github.md",
+            "support.js"
+          ],
+          "status": "no-marker-match-observed-not-no-license"
+        },
         "transientExtractionRetained": false
       },
       "label": {
@@ -260,6 +324,13 @@ supplementary-substitution, and `DONE` claims fail closed.
         "participantEvidence": "none",
         "requiredDependencyShas": null,
         "status": "provisional-prework"
+      },
+      "optionalExternalArchiveRecheck": {
+        "argument": "--attachment",
+        "inferred": false,
+        "pathStored": false,
+        "required": false,
+        "retainsBytes": false
       }
     },
     "counts": {
@@ -301,10 +372,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.scrub-brush",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -347,10 +419,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.staple-gun",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -393,10 +466,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "ppe.protective-gloves",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -439,10 +513,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.push-broom",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -485,10 +560,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.angle-broom",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -531,10 +607,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.dust-mop",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -577,10 +654,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.wet-mop",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -623,10 +701,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.flat-mop",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -669,10 +748,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "equipment.mop-bucket-wringer",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -715,10 +795,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.deck-brush",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -761,10 +842,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.hand-scrub-brush",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -807,10 +889,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.toilet-bowl-brush",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -853,10 +936,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.duster",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -899,10 +983,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.dustpan",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -945,10 +1030,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.floor-squeegee",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -991,10 +1077,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.window-squeegee",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -1037,10 +1124,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.window-strip-washer",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -1083,10 +1171,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "equipment.janitor-cart",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -1129,10 +1218,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "equipment.hand-truck",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -1175,10 +1265,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "equipment.dolly",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -1221,10 +1312,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "equipment.vacuum.upright",
         "use": {
-          "gate": "Before scored upright-vacuum versus carpet-extractor comparison use, obtain specialist comparative signoff; the selected drawings represent specific generic configurations, not universal silhouettes.",
+          "codexOnlyDisposition": "prohibited-from-scored-and-prototype-use",
           "practiceEligibility": "atlas-only-watchlist-or-gated",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": "Before scored upright-vacuum versus carpet-extractor comparison use, obtain specialist comparative signoff; the selected drawings represent specific generic configurations, not universal silhouettes."
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -1267,10 +1359,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "equipment.vacuum.canister",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -1313,10 +1406,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "equipment.vacuum.wet-dry",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -1359,10 +1453,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "equipment.carpet-extractor",
         "use": {
-          "gate": "Before scored upright-vacuum versus carpet-extractor comparison use, obtain specialist comparative signoff; the selected drawings represent specific generic configurations, not universal silhouettes.",
+          "codexOnlyDisposition": "prohibited-from-scored-and-prototype-use",
           "practiceEligibility": "atlas-only-watchlist-or-gated",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": "Before scored upright-vacuum versus carpet-extractor comparison use, obtain specialist comparative signoff; the selected drawings represent specific generic configurations, not universal silhouettes."
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -1405,10 +1500,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "equipment.steam-cleaner",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -1451,10 +1547,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "equipment.floor-machine.low-speed",
         "use": {
-          "gate": "Before scored floor-machine versus burnisher comparison use, obtain specialist comparative signoff; accessory and chassis geometry are representative, not universal.",
+          "codexOnlyDisposition": "prohibited-from-scored-and-prototype-use",
           "practiceEligibility": "atlas-only-watchlist-or-gated",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": "Before scored floor-machine versus burnisher comparison use, obtain specialist comparative signoff; accessory and chassis geometry are representative, not universal."
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -1497,10 +1594,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "equipment.burnisher.high-speed",
         "use": {
-          "gate": "Before scored floor-machine versus burnisher comparison use, obtain specialist comparative signoff; accessory and chassis geometry are representative, not universal.",
+          "codexOnlyDisposition": "prohibited-from-scored-and-prototype-use",
           "practiceEligibility": "atlas-only-watchlist-or-gated",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": "Before scored floor-machine versus burnisher comparison use, obtain specialist comparative signoff; accessory and chassis geometry are representative, not universal."
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -1543,10 +1641,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "equipment.vacuum.ride-on",
         "use": {
-          "gate": "Entry recognition only pending scope and specialist review; do not infer a universal ride-on vacuum silhouette or teach operation from the image.",
+          "codexOnlyDisposition": "prohibited-from-scored-and-prototype-use",
           "practiceEligibility": "atlas-only-watchlist-or-gated",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": "Entry recognition only pending scope and specialist review; do not infer a universal ride-on vacuum silhouette or teach operation from the image."
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -1589,10 +1688,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "equipment.snow-blower",
         "use": {
-          "gate": "Entry recognition/basic-safety use only pending scope review; do not teach operation from the image.",
+          "codexOnlyDisposition": "prohibited-from-scored-and-prototype-use",
           "practiceEligibility": "atlas-only-watchlist-or-gated",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": "Entry recognition/basic-safety use only pending scope review; do not teach operation from the image."
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -1635,10 +1735,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "equipment.hedge-trimmer",
         "use": {
-          "gate": "Entry recognition/basic-safety use only pending scope review; do not teach operation from the image.",
+          "codexOnlyDisposition": "prohibited-from-scored-and-prototype-use",
           "practiceEligibility": "atlas-only-watchlist-or-gated",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": "Entry recognition/basic-safety use only pending scope review; do not teach operation from the image."
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -1681,10 +1782,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.hammer.claw",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -1727,10 +1829,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.hammer.ball-peen",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -1773,10 +1876,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.mallet.rubber",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -1819,10 +1923,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.screwdriver.slotted",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -1865,10 +1970,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.screwdriver.phillips",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -1911,10 +2017,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.adjustable-wrench",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -1957,10 +2064,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.pipe-wrench",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -2003,10 +2111,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.wrench.fixed",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -2049,10 +2158,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.pliers.slip-joint",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -2095,10 +2205,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.pliers.tongue-groove",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -2141,10 +2252,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.pliers.needle-nose",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -2187,10 +2299,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.pliers.diagonal-cutting",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -2233,10 +2346,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.pliers.locking",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -2279,10 +2393,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.clamp.c",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -2325,10 +2440,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.clamp.bar",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -2371,10 +2487,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.hand-plane",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -2417,10 +2534,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.saw.crosscut",
         "use": {
-          "gate": "Crosscut/rip scored comparison remains gated on specialist tooth-geometry review at native and 320 px sizes.",
+          "codexOnlyDisposition": "prohibited-from-scored-and-prototype-use",
           "practiceEligibility": "atlas-only-watchlist-or-gated",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": "Crosscut/rip scored comparison remains gated on specialist tooth-geometry review at native and 320 px sizes."
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -2463,10 +2581,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.saw.rip",
         "use": {
-          "gate": "Crosscut/rip scored comparison remains gated on specialist tooth-geometry review at native and 320 px sizes.",
+          "codexOnlyDisposition": "prohibited-from-scored-and-prototype-use",
           "practiceEligibility": "atlas-only-watchlist-or-gated",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": "Crosscut/rip scored comparison remains gated on specialist tooth-geometry review at native and 320 px sizes."
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -2509,10 +2628,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.saw.hacksaw",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -2555,10 +2675,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.utility-knife",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -2601,10 +2722,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.putty-knife",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -2647,10 +2769,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.paint-scraper",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -2693,10 +2816,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.tape-measure",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -2739,10 +2863,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.level",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -2785,10 +2910,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.square",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -2831,10 +2957,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.plunger.cup",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -2877,10 +3004,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.plunger.flange",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -2923,10 +3051,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.drain-snake",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "atlas-only-watchlist-or-gated",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -2969,10 +3098,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.pipe-reamer",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "atlas-only-watchlist-or-gated",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -3015,10 +3145,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "tool.soldering-gun",
         "use": {
-          "gate": "Identification contrast only; the image does not establish skilled electrical work as entry-level operational scope.",
+          "codexOnlyDisposition": "prohibited-from-scored-and-prototype-use",
           "practiceEligibility": "atlas-only-watchlist-or-gated",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": "Identification contrast only; the image does not establish skilled electrical work as entry-level operational scope."
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -3061,10 +3192,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "access.stepladder",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -3107,10 +3239,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "access.extension-ladder",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -3153,10 +3286,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "ppe.safety-glasses",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -3199,10 +3333,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "ppe.ear-plugs",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -3245,10 +3380,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "safety.wet-floor-sign",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -3291,10 +3427,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "comparison.floor-machine-burnisher",
         "use": {
-          "gate": "Before scored floor-machine versus burnisher comparison use, obtain specialist comparative signoff; accessory and chassis geometry are representative, not universal.",
+          "codexOnlyDisposition": "prohibited-from-scored-and-prototype-use",
           "practiceEligibility": "atlas-only-watchlist-or-gated",
-          "prototypeBoundary": "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": "Before scored floor-machine versus burnisher comparison use, obtain specialist comparative signoff; accessory and chassis geometry are representative, not universal."
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -3337,10 +3474,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "comparison.pipe-adjustable-wrench",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -3383,10 +3521,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "comparison.cup-flange-plunger",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -3429,10 +3568,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "comparison.crosscut-rip-saw",
         "use": {
-          "gate": "Crosscut/rip scored comparison remains gated on specialist tooth-geometry review at native and 320 px sizes.",
+          "codexOnlyDisposition": "prohibited-from-scored-and-prototype-use",
           "practiceEligibility": "atlas-only-watchlist-or-gated",
-          "prototypeBoundary": "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": "Crosscut/rip scored comparison remains gated on specialist tooth-geometry review at native and 320 px sizes."
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -3475,10 +3615,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "comparison.claw-ball-peen-hammer",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -3521,10 +3662,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "comparison.step-extension-ladder",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -3567,10 +3709,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "comparison.dust-wet-mop",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -3613,10 +3756,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "comparison.floor-window-squeegee",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -3659,10 +3803,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "comparison.upright-vacuum-carpet-extractor",
         "use": {
-          "gate": "Before scored upright-vacuum versus carpet-extractor comparison use, obtain specialist comparative signoff; the selected drawings represent specific generic configurations, not universal silhouettes.",
+          "codexOnlyDisposition": "prohibited-from-scored-and-prototype-use",
           "practiceEligibility": "atlas-only-watchlist-or-gated",
-          "prototypeBoundary": "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": "Before scored upright-vacuum versus carpet-extractor comparison use, obtain specialist comparative signoff; the selected drawings represent specific generic configurations, not universal silhouettes."
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -3705,10 +3850,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "comparison.slip-joint-tongue-groove-pliers",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -3751,10 +3897,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "comparison.needle-nose-diagonal-pliers",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -3797,10 +3944,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "comparison.putty-knife-paint-scraper",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -3843,10 +3991,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "comparison.c-clamp-locking-bar-clamp",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -3889,10 +4038,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "comparison.push-broom-deck-brush",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "entry-level-supported",
-          "prototypeBoundary": "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation; scored use still obeys any source gate",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "prototypeBoundary": "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation",
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -3935,10 +4085,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "scene.slip.hallway-wet-floor",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "hazard-assessment-only",
           "prototypeBoundary": "exact accepted delivery derivative inside a hazard-task frame only; never acquisition decoration; no overlay, region, or postcommit data before commitment",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -3981,10 +4132,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "scene.slip.lobby-raised-mat",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "hazard-assessment-only",
           "prototypeBoundary": "exact accepted delivery derivative inside a hazard-task frame only; never acquisition decoration; no overlay, region, or postcommit data before commitment",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -4027,10 +4179,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "scene.egress.stairwell-boxes",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "hazard-assessment-only",
           "prototypeBoundary": "exact accepted delivery derivative inside a hazard-task frame only; never acquisition decoration; no overlay, region, or postcommit data before commitment",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -4073,10 +4226,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "scene.egress.gym-exit-obstruction",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "hazard-assessment-only",
           "prototypeBoundary": "exact accepted delivery derivative inside a hazard-task frame only; never acquisition decoration; no overlay, region, or postcommit data before commitment",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -4119,10 +4273,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "scene.chemical.closet-unidentified-container",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "hazard-assessment-only",
           "prototypeBoundary": "exact accepted delivery derivative inside a hazard-task frame only; never acquisition decoration; no overlay, region, or postcommit data before commitment",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -4165,10 +4320,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "scene.chemical.kitchen-chemicals-over-foodware",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "hazard-assessment-only",
           "prototypeBoundary": "exact accepted delivery derivative inside a hazard-task frame only; never acquisition decoration; no overlay, region, or postcommit data before commitment",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -4211,10 +4367,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "scene.electrical.utility-damaged-cord",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "hazard-assessment-only",
           "prototypeBoundary": "exact accepted delivery derivative inside a hazard-task frame only; never acquisition decoration; no overlay, region, or postcommit data before commitment",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -4257,10 +4414,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "scene.electrical.classroom-wet-power-strip",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "hazard-assessment-only",
           "prototypeBoundary": "exact accepted delivery derivative inside a hazard-task frame only; never acquisition decoration; no overlay, region, or postcommit data before commitment",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -4303,10 +4461,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "scene.sharps.restroom-broken-glass",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "hazard-assessment-only",
           "prototypeBoundary": "exact accepted delivery derivative inside a hazard-task frame only; never acquisition decoration; no overlay, region, or postcommit data before commitment",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -4349,10 +4508,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "scene.sharps.grounds-broken-bottle",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "hazard-assessment-only",
           "prototypeBoundary": "exact accepted delivery derivative inside a hazard-task frame only; never acquisition decoration; no overlay, region, or postcommit data before commitment",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -4395,10 +4555,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "scene.material.loading-unstable-stack",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "hazard-assessment-only",
           "prototypeBoundary": "exact accepted delivery derivative inside a hazard-task frame only; never acquisition decoration; no overlay, region, or postcommit data before commitment",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -4441,10 +4602,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "scene.material.cafeteria-obscured-vision",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "hazard-assessment-only",
           "prototypeBoundary": "exact accepted delivery derivative inside a hazard-task frame only; never acquisition decoration; no overlay, region, or postcommit data before commitment",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -4487,10 +4649,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "scene.biological.restroom-bare-hand-cleaning",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "hazard-assessment-only",
           "prototypeBoundary": "exact accepted delivery derivative inside a hazard-task frame only; never acquisition decoration; no overlay, region, or postcommit data before commitment",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -4533,10 +4696,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "scene.biological.cafeteria-mop-on-table",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "hazard-assessment-only",
           "prototypeBoundary": "exact accepted delivery derivative inside a hazard-task frame only; never acquisition decoration; no overlay, region, or postcommit data before commitment",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -4579,10 +4743,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "scene.machine.gym-unguarded-fan",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "hazard-assessment-only",
           "prototypeBoundary": "exact accepted delivery derivative inside a hazard-task frame only; never acquisition decoration; no overlay, region, or postcommit data before commitment",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -4625,10 +4790,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "scene.machine.utility-saw-guard",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "hazard-assessment-only",
           "prototypeBoundary": "exact accepted delivery derivative inside a hazard-task frame only; never acquisition decoration; no overlay, region, or postcommit data before commitment",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -4671,10 +4837,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "scene.zero.classroom-orderly",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "hazard-assessment-only",
           "prototypeBoundary": "exact accepted delivery derivative inside a hazard-task frame only; never acquisition decoration; no overlay, region, or postcommit data before commitment",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -4717,10 +4884,11 @@ supplementary-substitution, and `DONE` claims fail closed.
         "sourceReleaseStatus": "accepted",
         "stableId": "scene.zero.closet-contained",
         "use": {
-          "gate": null,
+          "codexOnlyDisposition": "accepted-derivative-eligible-within-recorded-practice-scope",
           "practiceEligibility": "hazard-assessment-only",
           "prototypeBoundary": "exact accepted delivery derivative inside a hazard-task frame only; never acquisition decoration; no overlay, region, or postcommit data before commitment",
-          "scopeStatus": "source-fact-only-not-route-identity-approval"
+          "scopeStatus": "source-fact-only-no-route-identity-decision",
+          "upstreamSourceGateText": null
         },
         "visualAuditStatus": "pending-future-plan-006-per-pixel-audit",
         "web": {
@@ -4911,6 +5079,7 @@ supplementary-substitution, and `DONE` claims fail closed.
       "requiredDependencyShas": null,
       "status": "provisional-prework"
     },
+    "observedAcquiredCount": 0,
     "qualitativeEvaluationFields": [
       "firstUseProposition",
       "dominantAction",
@@ -5314,13 +5483,39 @@ supplementary-substitution, and `DONE` claims fail closed.
       "retention": "temporary-under-/tmp-only"
     },
     "transientDryRun": {
-      "browserName": "chromium",
-      "browserVersion": "151.0.7922.34",
-      "caseCount": 24,
-      "defaultPhoneDistinctHashCount": 16,
-      "evidenceClass": "supplementary-current-baseline-dry-run",
-      "externalOriginCount": 0,
-      "httpSuccessCount": 24,
+      "aggregates": {
+        "caseCount": 24,
+        "defaultPhoneDistinctScreenshotHashCount": 16,
+        "externalOriginCount": 0,
+        "httpSuccessCount": 24,
+        "overflowCaseIds": [
+          "C12",
+          "C13",
+          "C20",
+          "C21"
+        ]
+      },
+      "evidenceClass": "supplementary-committed-non-image-current-control-metrics",
+      "harnessContract": {
+        "adapters": {
+          "builtInLargeText": "transient-root-font-125-percent-emulation",
+          "textZoom": "transient-root-font-presentation-percent-emulation"
+        },
+        "browser": "chromium",
+        "caseOrder": "captureManifest.cases-array-order",
+        "externalOriginRule": "unique request origins not equal to http://127.0.0.1:4173 per case",
+        "httpResult": "main-navigation-response-status",
+        "locale": "en-US",
+        "measurementRule": "document-and-body-clientWidth-and-scrollWidth-after-networkidle-plus-100ms-settle",
+        "media": "captureManifest.presentations.media",
+        "network": "loopback-only-preview-at-127.0.0.1",
+        "routeIdentity": "body-data-route-id-must-equal-capture-case-routeId",
+        "screenshotRetention": "hash-in-memory-then-discard-bytes",
+        "screenshotSettings": "full-page-animations-disabled-sha256",
+        "timezone": "UTC",
+        "timing": "capturedAt-after-widths-and-screenshot-within-receipt-interval",
+        "viewport": "captureManifest.presentations-width-height"
+      },
       "label": {
         "decisionStatus": "pending",
         "mustRebaseAndReverify": true,
@@ -5328,28 +5523,509 @@ supplementary-substitution, and `DONE` claims fail closed.
         "requiredDependencyShas": null,
         "status": "provisional-prework"
       },
-      "observedAt": "2026-08-28T16:18:17Z",
-      "overflowCaseIds": [
-        "simulation-setup-phone-390-default",
-        "print-center-phone-390-default"
+      "metrics": [
+        {
+          "bodyClientWidth": 390,
+          "bodyScrollWidth": 390,
+          "capturedAt": "2026-08-28T16:57:43.819Z",
+          "caseId": "C01",
+          "documentClientWidth": 390,
+          "documentScrollWidth": 390,
+          "externalOriginCount": 0,
+          "httpStatus": 200,
+          "presentationId": "phone-390-default",
+          "repositoryRelativeUrl": "/",
+          "routeId": "home",
+          "screenshotSha256": "2c67dcb034a45c435f5f688a1255ad16ee900879eebec04b2f1c4f5be8c9957c"
+        },
+        {
+          "bodyClientWidth": 390,
+          "bodyScrollWidth": 390,
+          "capturedAt": "2026-08-28T16:57:44.501Z",
+          "caseId": "C02",
+          "documentClientWidth": 390,
+          "documentScrollWidth": 390,
+          "externalOriginCount": 0,
+          "httpStatus": 200,
+          "presentationId": "phone-390-default",
+          "repositoryRelativeUrl": "/exams/",
+          "routeId": "exam-selector",
+          "screenshotSha256": "7f9ca64256a4aee64eb11afdf49b2952fbf8645b538423422a82688b7fa11a85"
+        },
+        {
+          "bodyClientWidth": 390,
+          "bodyScrollWidth": 390,
+          "capturedAt": "2026-08-28T16:57:45.212Z",
+          "caseId": "C03",
+          "documentClientWidth": 390,
+          "documentScrollWidth": 390,
+          "externalOriginCount": 0,
+          "httpStatus": 200,
+          "presentationId": "phone-390-default",
+          "repositoryRelativeUrl": "/ny/",
+          "routeId": "profile",
+          "screenshotSha256": "7eb003509812f9d4660cf645244194e4261016824906010e39f6a9463dd43004"
+        },
+        {
+          "bodyClientWidth": 390,
+          "bodyScrollWidth": 390,
+          "capturedAt": "2026-08-28T16:57:45.935Z",
+          "caseId": "C04",
+          "documentClientWidth": 390,
+          "documentScrollWidth": 390,
+          "externalOriginCount": 0,
+          "httpStatus": 200,
+          "presentationId": "phone-390-default",
+          "repositoryRelativeUrl": "/practice/",
+          "routeId": "study-hub",
+          "screenshotSha256": "1b893439d4d629ff36728332ba8a7c1b8cecb42a8a7d385bcf912d77b51dda92"
+        },
+        {
+          "bodyClientWidth": 390,
+          "bodyScrollWidth": 390,
+          "capturedAt": "2026-08-28T16:57:47.696Z",
+          "caseId": "C05",
+          "documentClientWidth": 390,
+          "documentScrollWidth": 390,
+          "externalOriginCount": 0,
+          "httpStatus": 200,
+          "presentationId": "phone-390-default",
+          "repositoryRelativeUrl": "/atlas/",
+          "routeId": "atlas-index",
+          "screenshotSha256": "5e40919d34c03165da807bef8822262e6b35aa2a90f7c58fd4ad0ee0ffc4f282"
+        },
+        {
+          "bodyClientWidth": 390,
+          "bodyScrollWidth": 390,
+          "capturedAt": "2026-08-28T16:57:48.427Z",
+          "caseId": "C06",
+          "documentClientWidth": 390,
+          "documentScrollWidth": 390,
+          "externalOriginCount": 0,
+          "httpStatus": 200,
+          "presentationId": "phone-390-default",
+          "repositoryRelativeUrl": "/atlas/tool/pipe-wrench/",
+          "routeId": "atlas-tool",
+          "screenshotSha256": "f615ed6611949284cace5ad51b9694bd831f7c9b790e5b95467d3610e829ae25"
+        },
+        {
+          "bodyClientWidth": 390,
+          "bodyScrollWidth": 390,
+          "capturedAt": "2026-08-28T16:57:49.263Z",
+          "caseId": "C07",
+          "documentClientWidth": 390,
+          "documentScrollWidth": 390,
+          "externalOriginCount": 0,
+          "httpStatus": 200,
+          "presentationId": "phone-390-default",
+          "repositoryRelativeUrl": "/atlas/family/articulated-hand-tools/#comparison-pipe-adjustable-wrench",
+          "routeId": "atlas-family",
+          "screenshotSha256": "57736092afabfa81021ed06cc250ae6bf7c1ec8802eefc8e871eb45ada9ace19"
+        },
+        {
+          "bodyClientWidth": 390,
+          "bodyScrollWidth": 390,
+          "capturedAt": "2026-08-28T16:57:49.963Z",
+          "caseId": "C08",
+          "documentClientWidth": 390,
+          "documentScrollWidth": 390,
+          "externalOriginCount": 0,
+          "httpStatus": 200,
+          "presentationId": "phone-390-default",
+          "repositoryRelativeUrl": "/practice/session/vertical-slice/question/1/",
+          "routeId": "question-player",
+          "screenshotSha256": "6cb3f2991bfac8e35aaea6159231fd6a9f038d87213aacfc0e72ddc37e20b519"
+        },
+        {
+          "bodyClientWidth": 390,
+          "bodyScrollWidth": 390,
+          "capturedAt": "2026-08-28T16:57:50.646Z",
+          "caseId": "C09",
+          "documentClientWidth": 390,
+          "documentScrollWidth": 390,
+          "externalOriginCount": 0,
+          "httpStatus": 200,
+          "presentationId": "phone-390-default",
+          "repositoryRelativeUrl": "/hazards/",
+          "routeId": "hazards-index",
+          "screenshotSha256": "6eb00bfb60af9149dbc1d92ce0fe942db2812a3544c6849f808b3b6d4cf6107a"
+        },
+        {
+          "bodyClientWidth": 390,
+          "bodyScrollWidth": 390,
+          "capturedAt": "2026-08-28T16:57:51.567Z",
+          "caseId": "C10",
+          "documentClientWidth": 390,
+          "documentScrollWidth": 390,
+          "externalOriginCount": 0,
+          "httpStatus": 200,
+          "presentationId": "phone-390-default",
+          "repositoryRelativeUrl": "/hazards/session/launch-v1/scene/1/",
+          "routeId": "hazard-player",
+          "screenshotSha256": "d8e11d2250521d031ac2a49b0575249aa3704f0533bfe4d90969562c3788bc12"
+        },
+        {
+          "bodyClientWidth": 390,
+          "bodyScrollWidth": 390,
+          "capturedAt": "2026-08-28T16:57:52.268Z",
+          "caseId": "C11",
+          "documentClientWidth": 390,
+          "documentScrollWidth": 390,
+          "externalOriginCount": 0,
+          "httpStatus": 200,
+          "presentationId": "phone-390-default",
+          "repositoryRelativeUrl": "/review/",
+          "routeId": "review-queue",
+          "screenshotSha256": "9a6a1855f743c7bed2b5aa604490945a5166b7b79a0d95934ff05e63a5512f75"
+        },
+        {
+          "bodyClientWidth": 390,
+          "bodyScrollWidth": 1117,
+          "capturedAt": "2026-08-28T16:57:53.028Z",
+          "caseId": "C12",
+          "documentClientWidth": 390,
+          "documentScrollWidth": 1117,
+          "externalOriginCount": 0,
+          "httpStatus": 200,
+          "presentationId": "phone-390-default",
+          "repositoryRelativeUrl": "/simulations/",
+          "routeId": "simulation-setup",
+          "screenshotSha256": "99a9dbdcd06fbbca0f18618f5f2ed5dffb7ecfe3906774aa0a4ac4e114fe2352"
+        },
+        {
+          "bodyClientWidth": 390,
+          "bodyScrollWidth": 554,
+          "capturedAt": "2026-08-28T16:57:53.758Z",
+          "caseId": "C13",
+          "documentClientWidth": 390,
+          "documentScrollWidth": 554,
+          "externalOriginCount": 0,
+          "httpStatus": 200,
+          "presentationId": "phone-390-default",
+          "repositoryRelativeUrl": "/print/",
+          "routeId": "print-center",
+          "screenshotSha256": "65e7d113e3e932138d54407d0750ed5409edc8cdaddb1e13c7d5e01c37e7447f"
+        },
+        {
+          "bodyClientWidth": 390,
+          "bodyScrollWidth": 390,
+          "capturedAt": "2026-08-28T16:57:54.477Z",
+          "caseId": "C14",
+          "documentClientWidth": 390,
+          "documentScrollWidth": 390,
+          "externalOriginCount": 0,
+          "httpStatus": 200,
+          "presentationId": "phone-390-default",
+          "repositoryRelativeUrl": "/offline/",
+          "routeId": "offline-packs",
+          "screenshotSha256": "973ed332d92083fe64180dc73769d1dcf5f0b849845af5ca212a5892013c2122"
+        },
+        {
+          "bodyClientWidth": 390,
+          "bodyScrollWidth": 390,
+          "capturedAt": "2026-08-28T16:57:55.205Z",
+          "caseId": "C15",
+          "documentClientWidth": 390,
+          "documentScrollWidth": 390,
+          "externalOriginCount": 0,
+          "httpStatus": 200,
+          "presentationId": "phone-390-default",
+          "repositoryRelativeUrl": "/settings/",
+          "routeId": "settings",
+          "screenshotSha256": "afc61dccdad2d607f601ecb671f71329049edbae16c7718d3e4dba7a2a6d765f"
+        },
+        {
+          "bodyClientWidth": 390,
+          "bodyScrollWidth": 390,
+          "capturedAt": "2026-08-28T16:57:55.901Z",
+          "caseId": "C16",
+          "documentClientWidth": 390,
+          "documentScrollWidth": 390,
+          "externalOriginCount": 0,
+          "httpStatus": 200,
+          "presentationId": "phone-390-default",
+          "repositoryRelativeUrl": "/status/",
+          "routeId": "status",
+          "screenshotSha256": "8a395db23482916676e1cc0f852fb5c5f14ed51d9a1731d7324d6d078c6eb956"
+        },
+        {
+          "bodyClientWidth": 320,
+          "bodyScrollWidth": 320,
+          "capturedAt": "2026-08-28T16:57:56.588Z",
+          "caseId": "C17",
+          "documentClientWidth": 320,
+          "documentScrollWidth": 320,
+          "externalOriginCount": 0,
+          "httpStatus": 200,
+          "presentationId": "compact-320-default",
+          "repositoryRelativeUrl": "/",
+          "routeId": "home",
+          "screenshotSha256": "15a1bbca0478be439aacd6fb0132157be41485661b6f3dedb416f5b9f8eab239"
+        },
+        {
+          "bodyClientWidth": 768,
+          "bodyScrollWidth": 768,
+          "capturedAt": "2026-08-28T16:57:57.323Z",
+          "caseId": "C18",
+          "documentClientWidth": 768,
+          "documentScrollWidth": 768,
+          "externalOriginCount": 0,
+          "httpStatus": 200,
+          "presentationId": "tablet-768-default",
+          "repositoryRelativeUrl": "/atlas/tool/pipe-wrench/",
+          "routeId": "atlas-tool",
+          "screenshotSha256": "2527ceadc55d5f347e2cb1d48c21cedf9b7563191e690c3c34e42d3714deecf6"
+        },
+        {
+          "bodyClientWidth": 1440,
+          "bodyScrollWidth": 1440,
+          "capturedAt": "2026-08-28T16:57:58.008Z",
+          "caseId": "C19",
+          "documentClientWidth": 1440,
+          "documentScrollWidth": 1440,
+          "externalOriginCount": 0,
+          "httpStatus": 200,
+          "presentationId": "wide-1440-default",
+          "repositoryRelativeUrl": "/",
+          "routeId": "home",
+          "screenshotSha256": "530362673b04e48523d40f2adc88e69d38d53b0d5718a22cb2ddc44d87012559"
+        },
+        {
+          "bodyClientWidth": 400,
+          "bodyScrollWidth": 400,
+          "capturedAt": "2026-08-28T16:57:58.700Z",
+          "caseId": "C20",
+          "documentClientWidth": 390,
+          "documentScrollWidth": 400,
+          "externalOriginCount": 0,
+          "httpStatus": 200,
+          "presentationId": "phone-390-large-text",
+          "repositoryRelativeUrl": "/practice/session/vertical-slice/question/1/",
+          "routeId": "question-player",
+          "screenshotSha256": "f09bd4a4b38138d2f9e7e0f4cfcb6d4bcca0e75b9acce9b0b402d5909bd2c884"
+        },
+        {
+          "bodyClientWidth": 640,
+          "bodyScrollWidth": 640,
+          "capturedAt": "2026-08-28T16:57:59.425Z",
+          "caseId": "C21",
+          "documentClientWidth": 390,
+          "documentScrollWidth": 640,
+          "externalOriginCount": 0,
+          "httpStatus": 200,
+          "presentationId": "phone-390-zoom-200",
+          "repositoryRelativeUrl": "/practice/session/vertical-slice/question/1/",
+          "routeId": "question-player",
+          "screenshotSha256": "1bf71ce9d8b000eaa01037a48d1da27a48e4505b0a44fbd79de82e73ab144a89"
+        },
+        {
+          "bodyClientWidth": 390,
+          "bodyScrollWidth": 390,
+          "capturedAt": "2026-08-28T16:58:00.132Z",
+          "caseId": "C22",
+          "documentClientWidth": 390,
+          "documentScrollWidth": 390,
+          "externalOriginCount": 0,
+          "httpStatus": 200,
+          "presentationId": "phone-390-forced-colors",
+          "repositoryRelativeUrl": "/settings/",
+          "routeId": "settings",
+          "screenshotSha256": "e82d2dc06fcfc088d541e235029a19af1788f02c714c7eb900cedfee4f1a97f9"
+        },
+        {
+          "bodyClientWidth": 390,
+          "bodyScrollWidth": 390,
+          "capturedAt": "2026-08-28T16:58:01.015Z",
+          "caseId": "C23",
+          "documentClientWidth": 390,
+          "documentScrollWidth": 390,
+          "externalOriginCount": 0,
+          "httpStatus": 200,
+          "presentationId": "phone-390-reduced-motion",
+          "repositoryRelativeUrl": "/hazards/session/launch-v1/scene/1/",
+          "routeId": "hazard-player",
+          "screenshotSha256": "d8e11d2250521d031ac2a49b0575249aa3704f0533bfe4d90969562c3788bc12"
+        },
+        {
+          "bodyClientWidth": 816,
+          "bodyScrollWidth": 816,
+          "capturedAt": "2026-08-28T16:58:01.697Z",
+          "caseId": "C24",
+          "documentClientWidth": 816,
+          "documentScrollWidth": 816,
+          "externalOriginCount": 0,
+          "httpStatus": 200,
+          "presentationId": "print-default",
+          "repositoryRelativeUrl": "/print/",
+          "routeId": "print-center",
+          "screenshotSha256": "fbe7cf01a7e25fa2372443e1081791c3139fd79d8eb2fc50b2113f801baf63cd"
+        }
       ],
       "presentationAdapterLimitations": [
-        "ad-hoc built-in-large-text initialization was reset by preference boot, so it is not canonical large-text evidence",
-        "ad-hoc 200-percent run used root-font-size emulation, not a verified browser-native text-enlargement adapter",
+        "built-in-large-text used a transient 125-percent root-font adapter, not the future canonical preference adapter",
+        "200-percent text zoom used a transient root-font adapter, not a verified browser-native text-only zoom adapter",
         "static reduced-motion screenshot equality does not establish behavioral reduced-motion equivalence"
       ],
-      "resultManifestSha256": "231117938df1c941e93f73d42d032fc2c99f45924a9bd74165064fecf0015e11",
+      "receipt": {
+        "browserName": "chromium",
+        "browserVersion": "151.0.7922.34",
+        "canonicalization": "UTF-8 JSON.stringify after recursive lexicographic object-key sorting; array order preserved; no trailing LF",
+        "caseCount": 24,
+        "completedAt": "2026-08-28T16:58:01.713Z",
+        "harnessContractSha256": "98e9dc9a6b5e4bd115be5c860f8031a965935ab89ac53c3ca1877150a137dcd3",
+        "harnessId": "plan006-current-control-metrics-v1",
+        "metricsSha256": "72631c07defe7defb6bdadc0c216b7ab088c615d2d5a522c3cfd1b4cf164b3a0",
+        "receiptSha256": "b25b2f11e77e22cb4d62e3b66c6be83ae9f0ea918809f34888069475b31d26e5",
+        "sourceSha": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+        "startedAt": "2026-08-28T16:57:43.060Z"
+      },
       "screenshotsRetained": false,
-      "sourceSha": "9fc7dcacfc961752e5d9a2cedbc426deead54a05"
+      "verificationStatus": "self-consistent-receipt-not-canonical-baseline"
     }
+  },
+  "codexOnlyWorkflow": {
+    "consensus": {
+      "dissent": [],
+      "status": "not-run-awaiting-exact-step-2-sha",
+      "supportingAgentTaskIds": [],
+      "territoryId": null
+    },
+    "decisionRule": {
+      "aggregation": "sum-unweighted-criterion-scores-by-territory",
+      "blockingFindingRule": "any-blocking-finding-prevents-selection",
+      "dissentRule": "preserve-all-non-consensus-positions-and-evidence-coordinates",
+      "minimumIndependentReviewCount": 3,
+      "requiredDistinctRubricCount": 3,
+      "selectionRule": "unique-highest-nonblocked-total",
+      "tieRule": "pending-no-selection",
+      "unresolvedDissentPreventsSelection": true
+    },
+    "humanEvidence": "none",
+    "humanParticipantCount": 0,
+    "humanReviewRequired": false,
+    "independence": {
+      "agentReviewsAreNotUserResearch": true,
+      "agentsAreNonhumanEvidence": true,
+      "distinctAgentTaskIdsRequired": true,
+      "onePrimaryRubricPerAgentTaskId": true
+    },
+    "label": {
+      "decisionStatus": "pending",
+      "mustRebaseAndReverify": true,
+      "participantEvidence": "none",
+      "requiredDependencyShas": null,
+      "status": "provisional-prework"
+    },
+    "notHumanUsabilityTested": true,
+    "protocolId": "CODEX-ONLY-UIUX-V1",
+    "requiredDependency": {
+      "futureVerificationChecks": [
+        "full-forty-character-sha",
+        "commit-exists",
+        "merged-into-main-or-ancestor-proof",
+        "language-and-navigation-consumers-resolve-from-same-sha"
+      ],
+      "kind": "exact-merged-step-2-agent-only-language-navigation-sha",
+      "sha": null,
+      "status": "awaiting-coordinator-supplied-exact-sha"
+    },
+    "reviewRecordContract": {
+      "criterionClosureRule": "each-rubric-criterion-scored-exactly-once-per-territory",
+      "dissentFields": [
+        "agentTaskId",
+        "territoryId",
+        "reason",
+        "evidenceCoordinates"
+      ],
+      "evidenceCoordinateFields": [
+        "path",
+        "anchor",
+        "claim"
+      ],
+      "evidenceCoordinateFormat": "repository-relative-path#stable-anchor-or-Lline",
+      "fixedFields": {
+        "crossReviewOutputsReadBeforeSubmission": false,
+        "evidenceClass": "nonhuman-codex-review-not-user-research",
+        "independentReview": true,
+        "notHumanUsabilityTested": true
+      },
+      "requiredFields": [
+        "agentTaskId",
+        "rubricId",
+        "sourceSha",
+        "prototypeSha256",
+        "evidenceClass",
+        "notHumanUsabilityTested",
+        "independentReview",
+        "crossReviewOutputsReadBeforeSubmission",
+        "reviewedAt",
+        "territoryScores",
+        "evidenceCoordinates",
+        "consensusPosition",
+        "dissent"
+      ],
+      "scoreMaximum": 5,
+      "scoreMinimum": 1,
+      "territoryIds": [
+        "A",
+        "B",
+        "C"
+      ],
+      "territoryScoreFields": [
+        "territoryId",
+        "criterionScores",
+        "total",
+        "blockingFindings"
+      ]
+    },
+    "reviewRecords": [],
+    "rubrics": [
+      {
+        "agentTaskId": null,
+        "criteria": [
+          "unofficial-status-and-source-trust",
+          "clarity-without-institutional-impersonation",
+          "specificity-and-originality",
+          "avoidance-of-generic-ai-gloss",
+          "information-hierarchy-for-consumer-confidence"
+        ],
+        "reviewStatus": "blocked-awaiting-exact-step-2-sha",
+        "rubricId": "consumer-trust-anti-ai-slop"
+      },
+      {
+        "agentTaskId": null,
+        "criteria": [
+          "semantic-and-focus-clarity",
+          "zoom-reflow-and-large-text",
+          "contrast-and-non-color-meaning",
+          "cognitive-chunking-and-working-memory",
+          "motion-state-and-recovery"
+        ],
+        "reviewStatus": "blocked-awaiting-exact-step-2-sha",
+        "rubricId": "accessibility-cognitive-load"
+      },
+      {
+        "agentTaskId": null,
+        "criteria": [
+          "component-role-consistency",
+          "token-system-coherence",
+          "seven-archetype-coverage",
+          "responsive-and-print-continuity",
+          "visual-differentiation-without-content-drift"
+        ],
+        "reviewStatus": "blocked-awaiting-exact-step-2-sha",
+        "rubricId": "visual-component-coherence"
+      }
+    ]
   },
   "evidenceInterfaces": {
     "interfaces": [
       {
-        "canSatisfyOwnerSelection": false,
-        "canSatisfyParticipantGate": false,
-        "evidenceClass": "supplementary-only",
-        "interfaceId": "heuristic-review",
+        "canIndependentlySelectTerritory": false,
+        "evidenceClass": "nonhuman-supplementary-only",
+        "humanEvidence": "none",
+        "humanParticipantCountContribution": 0,
+        "interfaceId": "codex-heuristic-review",
         "label": {
           "decisionStatus": "pending",
           "mustRebaseAndReverify": true,
@@ -5357,20 +6033,20 @@ supplementary-substitution, and `DONE` claims fail closed.
           "requiredDependencyShas": null,
           "status": "provisional-prework"
         },
-        "participantCountContribution": 0,
+        "notHumanUsabilityTested": true,
         "recordFields": [
-          "reviewId",
+          "agentTaskId",
+          "rubricId",
+          "sourceSha",
           "prototypeSha256",
           "territoryId",
           "archetypeId",
-          "reviewerId",
-          "relationship",
           "criterionId",
           "score",
           "frameId",
           "selectorOrElement",
           "visibleCause",
-          "evidenceIds",
+          "evidenceCoordinates",
           "disposition",
           "automaticFailures",
           "reviewedAt"
@@ -5378,9 +6054,10 @@ supplementary-substitution, and `DONE` claims fail closed.
         "records": []
       },
       {
-        "canSatisfyOwnerSelection": false,
-        "canSatisfyParticipantGate": false,
-        "evidenceClass": "supplementary-only",
+        "canIndependentlySelectTerritory": false,
+        "evidenceClass": "nonhuman-supplementary-only",
+        "humanEvidence": "none",
+        "humanParticipantCountContribution": 0,
         "interfaceId": "automated-accessibility",
         "label": {
           "decisionStatus": "pending",
@@ -5389,7 +6066,7 @@ supplementary-substitution, and `DONE` claims fail closed.
           "requiredDependencyShas": null,
           "status": "provisional-prework"
         },
-        "participantCountContribution": 0,
+        "notHumanUsabilityTested": true,
         "recordFields": [
           "runId",
           "prototypeSha256",
@@ -5407,9 +6084,10 @@ supplementary-substitution, and `DONE` claims fail closed.
         "records": []
       },
       {
-        "canSatisfyOwnerSelection": false,
-        "canSatisfyParticipantGate": false,
-        "evidenceClass": "supplementary-only",
+        "canIndependentlySelectTerritory": false,
+        "evidenceClass": "nonhuman-supplementary-only",
+        "humanEvidence": "none",
+        "humanParticipantCountContribution": 0,
         "interfaceId": "corpus-use",
         "label": {
           "decisionStatus": "pending",
@@ -5418,7 +6096,7 @@ supplementary-substitution, and `DONE` claims fail closed.
           "requiredDependencyShas": null,
           "status": "provisional-prework"
         },
-        "participantCountContribution": 0,
+        "notHumanUsabilityTested": true,
         "recordFields": [
           "caseId",
           "territoryId",
@@ -5445,9 +6123,10 @@ supplementary-substitution, and `DONE` claims fail closed.
         "records": []
       },
       {
-        "canSatisfyOwnerSelection": false,
-        "canSatisfyParticipantGate": false,
-        "evidenceClass": "supplementary-only",
+        "canIndependentlySelectTerritory": false,
+        "evidenceClass": "nonhuman-supplementary-only",
+        "humanEvidence": "none",
+        "humanParticipantCountContribution": 0,
         "interfaceId": "route-simulation",
         "label": {
           "decisionStatus": "pending",
@@ -5456,7 +6135,7 @@ supplementary-substitution, and `DONE` claims fail closed.
           "requiredDependencyShas": null,
           "status": "provisional-prework"
         },
-        "participantCountContribution": 0,
+        "notHumanUsabilityTested": true,
         "recordFields": [
           "simulationId",
           "taskId",
@@ -5470,16 +6149,17 @@ supplementary-substitution, and `DONE` claims fail closed.
           "expectedRecovery",
           "observedRouteTrail",
           "assertions",
-          "evidenceIds",
+          "evidenceCoordinates",
           "result"
         ],
         "records": []
       },
       {
-        "canSatisfyOwnerSelection": false,
-        "canSatisfyParticipantGate": false,
-        "evidenceClass": "supplementary-only",
-        "interfaceId": "owner-dogfood",
+        "canIndependentlySelectTerritory": false,
+        "evidenceClass": "nonhuman-supplementary-only",
+        "humanEvidence": "none",
+        "humanParticipantCountContribution": 0,
+        "interfaceId": "codex-experience-audit",
         "label": {
           "decisionStatus": "pending",
           "mustRebaseAndReverify": true,
@@ -5487,18 +6167,18 @@ supplementary-substitution, and `DONE` claims fail closed.
           "requiredDependencyShas": null,
           "status": "provisional-prework"
         },
-        "participantCountContribution": 0,
+        "notHumanUsabilityTested": true,
         "recordFields": [
-          "sessionId",
-          "humanOwner",
+          "agentTaskId",
+          "sourceSha",
           "prototypeSha256",
           "territoryOrder",
           "taskIds",
           "observations",
           "issueCodes",
-          "evidenceIds",
+          "evidenceCoordinates",
           "completedAt",
-          "approval"
+          "result"
         ],
         "records": []
       }
@@ -5514,7 +6194,8 @@ supplementary-substitution, and `DONE` claims fail closed.
       {
         "actorType": "deterministic-harness",
         "archetypeId": "orientation",
-        "participantCountContribution": 0,
+        "humanParticipantCountContribution": 0,
+        "notHumanUsabilityTested": true,
         "routeIds": [
           "home",
           "exam-selector",
@@ -5525,7 +6206,8 @@ supplementary-substitution, and `DONE` claims fail closed.
       {
         "actorType": "deterministic-harness",
         "archetypeId": "study-launcher",
-        "participantCountContribution": 0,
+        "humanParticipantCountContribution": 0,
+        "notHumanUsabilityTested": true,
         "routeIds": [
           "study-hub"
         ],
@@ -5534,7 +6216,8 @@ supplementary-substitution, and `DONE` claims fail closed.
       {
         "actorType": "deterministic-harness",
         "archetypeId": "browse-reference",
-        "participantCountContribution": 0,
+        "humanParticipantCountContribution": 0,
+        "notHumanUsabilityTested": true,
         "routeIds": [
           "atlas-tool",
           "atlas-family"
@@ -5544,7 +6227,8 @@ supplementary-substitution, and `DONE` claims fail closed.
       {
         "actorType": "deterministic-harness",
         "archetypeId": "focused-task",
-        "participantCountContribution": 0,
+        "humanParticipantCountContribution": 0,
+        "notHumanUsabilityTested": true,
         "routeIds": [
           "question-player"
         ],
@@ -5553,7 +6237,8 @@ supplementary-substitution, and `DONE` claims fail closed.
       {
         "actorType": "deterministic-harness",
         "archetypeId": "focused-task",
-        "participantCountContribution": 0,
+        "humanParticipantCountContribution": 0,
+        "notHumanUsabilityTested": true,
         "routeIds": [
           "hazard-player"
         ],
@@ -5562,7 +6247,8 @@ supplementary-substitution, and `DONE` claims fail closed.
       {
         "actorType": "deterministic-harness",
         "archetypeId": "utility",
-        "participantCountContribution": 0,
+        "humanParticipantCountContribution": 0,
+        "notHumanUsabilityTested": true,
         "routeIds": [
           "offline-packs",
           "settings"
@@ -5572,7 +6258,8 @@ supplementary-substitution, and `DONE` claims fail closed.
       {
         "actorType": "deterministic-harness",
         "archetypeId": "recovery",
-        "participantCountContribution": 0,
+        "humanParticipantCountContribution": 0,
+        "notHumanUsabilityTested": true,
         "routeIds": [
           "status"
         ],
@@ -5582,9 +6269,14 @@ supplementary-substitution, and `DONE` claims fail closed.
   },
   "gateAccounting": {
     "advancingTerritoryIds": [],
-    "approvalArtifacts": [],
     "canonicalPromotionPerformed": false,
+    "codexConsensusStatus": "not-run-awaiting-exact-step-2-sha",
+    "codexReviewCount": 0,
+    "codexReviewTaskIds": [],
     "finalistTerritoryIds": [],
+    "humanEvidence": "none",
+    "humanParticipantCount": 0,
+    "humanReviewRequired": false,
     "hybrid": false,
     "label": {
       "decisionStatus": "pending",
@@ -5593,9 +6285,7 @@ supplementary-substitution, and `DONE` claims fail closed.
       "requiredDependencyShas": null,
       "status": "provisional-prework"
     },
-    "matrixRatings": [],
-    "observedParticipantCount": 0,
-    "participantIds": [],
+    "notHumanUsabilityTested": true,
     "plan006DoneClaimed": false,
     "recommendedTerritoryId": null,
     "selectedTerritoryId": null,
@@ -5609,7 +6299,12 @@ supplementary-substitution, and `DONE` claims fail closed.
     "status": "provisional-prework"
   },
   "prototypeEngine": {
-    "engineStatus": "blocked-awaiting-future-language-and-navigation-inputs",
+    "dependencyContract": {
+      "requiredMergedStep2Sha": null,
+      "sourceKind": "exact-merged-step-2-agent-only-language-navigation-sha",
+      "status": "awaiting-coordinator-supplied-exact-sha"
+    },
+    "engineStatus": "blocked-awaiting-exact-merged-step-2-sha",
     "futureInputs": {
       "language": {
         "contentSha256": null,
@@ -5634,6 +6329,7 @@ supplementary-substitution, and `DONE` claims fail closed.
       "status": "provisional-prework"
     },
     "operations": [
+      "verifyMergedStep2Dependency",
       "bindLanguageContract",
       "bindNavigationContract",
       "normalizeSharedContent",
@@ -5648,8 +6344,10 @@ supplementary-substitution, and `DONE` claims fail closed.
       "cssComposition"
     ],
     "prohibitions": [
+      "render-before-exact-merged-step-2-sha",
       "render-before-language-input",
       "render-before-navigation-input",
+      "codex-review-before-exact-merged-step-2-sha",
       "territory-copy-override",
       "territory-link-override",
       "territory-fact-override",
@@ -5664,6 +6362,8 @@ supplementary-substitution, and `DONE` claims fail closed.
       "overlay-or-postcommit-precommit",
       "image-crop-filter-mask-blend",
       "public-or-shared-host",
+      "scored-use-of-specialist-gated-asset",
+      "selection-before-three-independent-codex-reviews",
       "territory-selection",
       "canonical-promotion"
     ],
@@ -5773,6 +6473,14 @@ supplementary-substitution, and `DONE` claims fail closed.
         ]
       }
     ],
+    "selectionInputContract": {
+      "minimumIndependentCodexReviews": 3,
+      "protocolId": "CODEX-ONLY-UIUX-V1",
+      "prototypeStatus": "not-built",
+      "requiredMergedStep2Sha": null,
+      "requiredPrototypeSha256": null,
+      "status": "blocked-awaiting-exact-step-2-sha"
+    },
     "sharedInvariantFields": [
       "semanticOrder",
       "copy",
@@ -5785,6 +6493,7 @@ supplementary-substitution, and `DONE` claims fail closed.
     ],
     "territories": [
       {
+        "comparisonLabel": "A",
         "differentiationAxes": [
           "typography:editorial-rule-led",
           "color-distribution:ink-paper-restrained",
@@ -5799,7 +6508,6 @@ supplementary-substitution, and `DONE` claims fail closed.
         ],
         "evaluationStatus": "not-built-or-evaluated",
         "internalHypothesis": "Editorial Field Guide",
-        "participantFacingLabel": "A",
         "renderEnabled": false,
         "selectionEligible": false,
         "territoryId": "A",
@@ -5807,6 +6515,7 @@ supplementary-substitution, and `DONE` claims fail closed.
         "tokenValues": null
       },
       {
+        "comparisonLabel": "B",
         "differentiationAxes": [
           "typography:sturdy-sans-utility",
           "color-distribution:high-contrast-functional-neutral",
@@ -5821,7 +6530,6 @@ supplementary-substitution, and `DONE` claims fail closed.
         ],
         "evaluationStatus": "not-built-or-evaluated",
         "internalHypothesis": "Practical Workshop Manual",
-        "participantFacingLabel": "B",
         "renderEnabled": false,
         "selectionEligible": false,
         "territoryId": "B",
@@ -5829,6 +6537,7 @@ supplementary-substitution, and `DONE` claims fail closed.
         "tokenValues": null
       },
       {
+        "comparisonLabel": "C",
         "differentiationAxes": [
           "typography:approachable-humanist-system",
           "color-distribution:warm-low-chroma-consumer",
@@ -5843,7 +6552,6 @@ supplementary-substitution, and `DONE` claims fail closed.
         ],
         "evaluationStatus": "not-built-or-evaluated",
         "internalHypothesis": "Calm Study Companion",
-        "participantFacingLabel": "C",
         "renderEnabled": false,
         "selectionEligible": false,
         "territoryId": "C",

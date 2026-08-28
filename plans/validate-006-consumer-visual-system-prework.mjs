@@ -20,7 +20,15 @@ const allowedPaths = [markdownPath, schemaPath, validatorPath]
 const decoder = new TextDecoder("utf-8", { fatal: true })
 const shaPattern = /^[0-9a-f]{40}$/
 const sha256Pattern = /^[0-9a-f]{64}$/
-const attachmentArchive = "/home/cjpher/.codex/attachments/3d868f50-c832-49bd-9640-def0d35c3c58/NYC Custodian Component Design.zip"
+const schemaProfile = "draft-2020-12-portable-subset-v1"
+const expectedCanonicalSchemaSha256 = "56b73a2089110edff1aa2c3b278fa97eab057ac95c261e817883ae7f8d3417c3"
+
+const parseArguments = (arguments_) => {
+  if (arguments_.length === 0) return { attachmentPath: null }
+  assert(arguments_.length === 2 && arguments_[0] === "--attachment" && arguments_[1].length > 0, "usage: node plans/validate-006-consumer-visual-system-prework.mjs [--attachment PATH]")
+  return { attachmentPath: arguments_[1] }
+}
+
 const attachmentRows = [
   [".thumbnail", 26456, "32475ee6c16605a782be47285d21f0ec38fdabc9c89721af9ef323100a53c4ea", null, "generated-preview-thumbnail"],
   ["Component Library.dc.html", 139026, "ae2dc4402bbe4c584f86a0ffcad17d7e3d168fa48894f5597b3244ff664fd6f6", null, "old-component-library-html"],
@@ -43,7 +51,7 @@ const expectedAttachmentEntries = attachmentRows.map(([path, bytes, digest, cano
   canonicalRepoPath,
   contentKind,
   path,
-  rightsStatus: canonicalRepoPath === null ? "unknown-archive-provides-no-license" : "archive-adds-no-rights-canonical-release-ledger-controls",
+  rightsStatus: "unknown-attachment-rights-not-determined",
   sha256: digest,
   useStatus: canonicalRepoPath === null ? "evidence-only-do-not-copy-to-product-or-prototype" : "use-only-via-byte-identical-canonical-repo-derivative"
 }))
@@ -57,7 +65,20 @@ const assert = (condition, message) => {
 const absolute = (path) => `${repoRoot}${path}`
 const sha256 = (value) => createHash("sha256").update(value).digest("hex")
 const readBytes = (path) => readFileSync(absolute(path))
-const readZipEntry = (path) => execFileSync("unzip", ["-p", attachmentArchive, path], { encoding: null, maxBuffer: 2 * 1024 * 1024 })
+const runUnzip = (attachmentPath, arguments_, encoding = null) => {
+  try {
+    return execFileSync("unzip", [...arguments_, attachmentPath], { encoding, maxBuffer: 2 * 1024 * 1024 })
+  } catch {
+    fail("explicit attachment recheck: archive operation failed")
+  }
+}
+const readZipEntry = (attachmentPath, entryPath) => {
+  try {
+    return execFileSync("unzip", ["-p", attachmentPath, entryPath], { encoding: null, maxBuffer: 2 * 1024 * 1024 })
+  } catch {
+    fail("explicit attachment recheck: unable to read a ledger entry")
+  }
+}
 const readText = (path) => {
   const bytes = readBytes(path)
   let text
@@ -143,7 +164,7 @@ const parseJsonStrict = (text, path) => {
   const parseObject = () => {
     cursor += 1
     whitespace()
-    const result = {}
+    const result = Object.create(null)
     const keys = new Set()
     if (text[cursor] === "}") {
       cursor += 1
@@ -192,6 +213,165 @@ const parseJsonStrict = (text, path) => {
   return value
 }
 
+// This is deliberately not advertised as a general JSON Schema implementation.
+// It implements every Draft 2020-12 keyword used by this packet, rejects all
+// other schema keywords, permits local JSON Pointer refs only, and treats the
+// date-time format as an assertion. The schema's canonical digest below makes
+// any otherwise-valid weakening an explicit validator change.
+const supportedSchemaKeywords = new Set([
+  "$schema", "$id", "$ref", "$defs", "title", "description", "type", "const", "enum",
+  "required", "properties", "additionalProperties", "items", "minItems", "maxItems",
+  "uniqueItems", "minLength", "pattern", "format", "minimum", "maximum", "oneOf"
+])
+const supportedJsonTypes = new Set(["object", "array", "string", "integer", "boolean", "null"])
+const hasOwn = (value, key) => Object.prototype.hasOwnProperty.call(value, key)
+const isObject = (value) => value !== null && typeof value === "object" && !Array.isArray(value)
+const schemaChildPath = (path, key) => `${path}/${String(key).replaceAll("~", "~0").replaceAll("/", "~1")}`
+
+const resolveLocalRef = (rootSchema, reference, path) => {
+  assert(typeof reference === "string" && reference.startsWith("#/"), `${path}: only non-root local JSON Pointer refs are supported by ${schemaProfile}`)
+  let target = rootSchema
+  for (const encoded of reference.slice(2).split("/")) {
+    let key
+    try { key = decodeURIComponent(encoded).replaceAll("~1", "/").replaceAll("~0", "~") } catch { fail(`${path}: invalid local ref encoding`) }
+    assert(isObject(target) && hasOwn(target, key), `${path}: unresolved local ref ${reference}`)
+    target = target[key]
+  }
+  assert(isObject(target), `${path}: local ref must resolve to an object schema`)
+  return target
+}
+
+const validateSchemaNode = (node, path, rootSchema, root = false) => {
+  assert(isObject(node), `${path}: ${schemaProfile} supports object schemas only`)
+  for (const key of Object.keys(node)) {
+    const customRootKeyword = root && (key === "x-artifactLabel" || key === "x-validationProfile")
+    assert(supportedSchemaKeywords.has(key) || customRootKeyword, `${path}: unsupported schema keyword ${key}`)
+    if (!root) assert(!["$schema", "$id"].includes(key), `${path}: ${key} is root-only in ${schemaProfile}`)
+  }
+  if (hasOwn(node, "$schema")) assert(node.$schema === "https://json-schema.org/draft/2020-12/schema", `${path}.$schema: Draft 2020-12 URI required`)
+  if (hasOwn(node, "$id")) assert(typeof node.$id === "string" && node.$id.length > 0, `${path}.$id: nonempty string required`)
+  for (const annotation of ["title", "description"]) if (hasOwn(node, annotation)) assert(typeof node[annotation] === "string", `${path}.${annotation}: string required`)
+  if (hasOwn(node, "type")) assert(typeof node.type === "string" && supportedJsonTypes.has(node.type), `${path}.type: unsupported type or type union`)
+  if (hasOwn(node, "$ref")) resolveLocalRef(rootSchema, node.$ref, `${path}.$ref`)
+  if (hasOwn(node, "$defs")) {
+    assert(isObject(node.$defs), `${path}.$defs: object required`)
+    for (const [key, child] of Object.entries(node.$defs)) validateSchemaNode(child, schemaChildPath(`${path}/$defs`, key), rootSchema)
+  }
+  if (hasOwn(node, "properties")) {
+    assert(isObject(node.properties), `${path}.properties: object required`)
+    for (const [key, child] of Object.entries(node.properties)) validateSchemaNode(child, schemaChildPath(`${path}/properties`, key), rootSchema)
+  }
+  if (hasOwn(node, "required")) {
+    assert(Array.isArray(node.required) && node.required.every((entry) => typeof entry === "string"), `${path}.required: string array required`)
+    unique(node.required, `${path}.required`)
+    assert(isObject(node.properties), `${path}.required: this profile requires sibling properties`)
+    for (const key of node.required) assert(hasOwn(node.properties, key), `${path}.required: ${key} has no sibling property schema`)
+  }
+  if (hasOwn(node, "additionalProperties")) assert(typeof node.additionalProperties === "boolean", `${path}.additionalProperties: boolean required by ${schemaProfile}`)
+  if (hasOwn(node, "items")) validateSchemaNode(node.items, `${path}/items`, rootSchema)
+  if (hasOwn(node, "oneOf")) {
+    assert(Array.isArray(node.oneOf) && node.oneOf.length > 0, `${path}.oneOf: nonempty schema array required`)
+    node.oneOf.forEach((child, index) => validateSchemaNode(child, `${path}/oneOf/${index}`, rootSchema))
+  }
+  if (hasOwn(node, "enum")) {
+    assert(Array.isArray(node.enum) && node.enum.length > 0, `${path}.enum: nonempty array required`)
+    unique(node.enum.map(stable), `${path}.enum`)
+  }
+  for (const keyword of ["minItems", "maxItems", "minLength"]) {
+    if (hasOwn(node, keyword)) assert(Number.isInteger(node[keyword]) && node[keyword] >= 0, `${path}.${keyword}: nonnegative integer required`)
+  }
+  for (const keyword of ["minimum", "maximum"]) {
+    if (hasOwn(node, keyword)) assert(typeof node[keyword] === "number" && Number.isFinite(node[keyword]), `${path}.${keyword}: finite number required`)
+  }
+  if (hasOwn(node, "minItems") && hasOwn(node, "maxItems")) assert(node.minItems <= node.maxItems, `${path}: minItems exceeds maxItems`)
+  if (hasOwn(node, "minimum") && hasOwn(node, "maximum")) assert(node.minimum <= node.maximum, `${path}: minimum exceeds maximum`)
+  if (hasOwn(node, "uniqueItems")) assert(typeof node.uniqueItems === "boolean", `${path}.uniqueItems: boolean required`)
+  if (hasOwn(node, "pattern")) {
+    assert(typeof node.pattern === "string", `${path}.pattern: string required`)
+    try { new RegExp(node.pattern, "u") } catch { fail(`${path}.pattern: invalid ECMAScript regular expression`) }
+  }
+  if (hasOwn(node, "format")) assert(node.format === "date-time", `${path}.format: only date-time is supported`)
+}
+
+const daysInMonth = (year, month) => {
+  if (month === 2) return (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0)) ? 29 : 28
+  return [4, 6, 9, 11].includes(month) ? 30 : 31
+}
+const isRfc3339DateTime = (value) => {
+  if (typeof value !== "string") return false
+  const match = value.match(/^(\d{4})-(\d{2})-(\d{2})[Tt](\d{2}):(\d{2}):(\d{2})(?:\.\d+)?(?:[Zz]|[+-](\d{2}):(\d{2}))$/)
+  if (match === null) return false
+  const [, yearText, monthText, dayText, hourText, minuteText, secondText, offsetHourText, offsetMinuteText] = match
+  const [year, month, day, hour, minute, second] = [yearText, monthText, dayText, hourText, minuteText, secondText].map(Number)
+  if (month < 1 || month > 12 || day < 1 || day > daysInMonth(year, month) || hour > 23 || minute > 59 || second > 60) return false
+  if (offsetHourText !== undefined && (Number(offsetHourText) > 23 || Number(offsetMinuteText) > 59)) return false
+  return true
+}
+
+const instanceTypeMatches = (value, type) => {
+  if (type === "null") return value === null
+  if (type === "array") return Array.isArray(value)
+  if (type === "object") return isObject(value)
+  if (type === "integer") return typeof value === "number" && Number.isFinite(value) && Number.isInteger(value)
+  return typeof value === type
+}
+
+const schemaInstanceErrors = (schemaNode, value, path, rootSchema, referenceStack = []) => {
+  const errors = []
+  if (hasOwn(schemaNode, "$ref")) {
+    if (referenceStack.includes(schemaNode.$ref)) errors.push(`${path}: recursive refs are unsupported by ${schemaProfile}`)
+    else errors.push(...schemaInstanceErrors(resolveLocalRef(rootSchema, schemaNode.$ref, `${path}.$ref`), value, path, rootSchema, [...referenceStack, schemaNode.$ref]))
+  }
+  if (hasOwn(schemaNode, "const") && stable(value) !== stable(schemaNode.const)) errors.push(`${path}: const mismatch`)
+  if (hasOwn(schemaNode, "enum") && !schemaNode.enum.some((candidate) => stable(value) === stable(candidate))) errors.push(`${path}: enum mismatch`)
+  let typeMatches = true
+  if (hasOwn(schemaNode, "type")) {
+    typeMatches = instanceTypeMatches(value, schemaNode.type)
+    if (!typeMatches) errors.push(`${path}: expected ${schemaNode.type}`)
+  }
+  if (hasOwn(schemaNode, "oneOf")) {
+    const matchingBranches = schemaNode.oneOf.filter((branch) => schemaInstanceErrors(branch, value, path, rootSchema, referenceStack).length === 0).length
+    if (matchingBranches !== 1) errors.push(`${path}: oneOf matched ${matchingBranches} branches`)
+  }
+  if (typeMatches && isObject(value)) {
+    if (hasOwn(schemaNode, "required")) for (const key of schemaNode.required) if (!hasOwn(value, key)) errors.push(`${schemaChildPath(path, key)}: required property missing`)
+    if (hasOwn(schemaNode, "properties")) {
+      for (const [key, child] of Object.entries(schemaNode.properties)) if (hasOwn(value, key)) errors.push(...schemaInstanceErrors(child, value[key], schemaChildPath(path, key), rootSchema, referenceStack))
+      if (schemaNode.additionalProperties === false) for (const key of Object.keys(value)) if (!hasOwn(schemaNode.properties, key)) errors.push(`${schemaChildPath(path, key)}: additional property forbidden`)
+    } else if (schemaNode.additionalProperties === false && Object.keys(value).length > 0) errors.push(`${path}: all properties forbidden`)
+  }
+  if (typeMatches && Array.isArray(value)) {
+    if (hasOwn(schemaNode, "minItems") && value.length < schemaNode.minItems) errors.push(`${path}: fewer than minItems`)
+    if (hasOwn(schemaNode, "maxItems") && value.length > schemaNode.maxItems) errors.push(`${path}: more than maxItems`)
+    if (schemaNode.uniqueItems === true && new Set(value.map(stable)).size !== value.length) errors.push(`${path}: uniqueItems violated`)
+    if (hasOwn(schemaNode, "items")) value.forEach((entry, index) => errors.push(...schemaInstanceErrors(schemaNode.items, entry, `${path}/${index}`, rootSchema, referenceStack)))
+  }
+  if (typeMatches && typeof value === "string") {
+    if (hasOwn(schemaNode, "minLength") && [...value].length < schemaNode.minLength) errors.push(`${path}: shorter than minLength`)
+    if (hasOwn(schemaNode, "pattern") && !new RegExp(schemaNode.pattern, "u").test(value)) errors.push(`${path}: pattern mismatch`)
+    if (schemaNode.format === "date-time" && !isRfc3339DateTime(value)) errors.push(`${path}: invalid RFC 3339 date-time`)
+  }
+  if (typeMatches && typeof value === "number") {
+    if (hasOwn(schemaNode, "minimum") && value < schemaNode.minimum) errors.push(`${path}: below minimum`)
+    if (hasOwn(schemaNode, "maximum") && value > schemaNode.maximum) errors.push(`${path}: above maximum`)
+  }
+  return errors
+}
+
+const validateSchemaIntegrity = (schema) => {
+  validateSchemaNode(schema, "#", schema, true)
+  assert(schema.$schema === "https://json-schema.org/draft/2020-12/schema", `${schemaPath}: Draft 2020-12 declaration required`)
+  assert(schema["x-validationProfile"] === schemaProfile, `${schemaPath}: honest validation profile marker required`)
+  equal(schema["x-artifactLabel"], ARTIFACT_LABEL, `${schemaPath} x-artifactLabel`)
+  const digest = sha256(Buffer.from(stable(schema), "utf8"))
+  assert(digest === expectedCanonicalSchemaSha256, `${schemaPath}: canonical schema digest mismatch`)
+}
+
+const validateInstanceAgainstSchema = (schema, value, path = "record") => {
+  const errors = schemaInstanceErrors(schema, value, path, schema)
+  assert(errors.length === 0, `schema instance validation failed: ${errors.slice(0, 8).join("; ")}`)
+}
+
 const extractMachineRecord = (markdown) => {
   const startMarker = "<!-- plan006-prework-record:start -->\n```json\n"
   const endMarker = "\n```\n<!-- plan006-prework-record:end -->"
@@ -208,24 +388,38 @@ const extractMachineRecord = (markdown) => {
 
 const git = (args) => execFileSync("git", args, { cwd: repoRoot, encoding: "utf8" }).trim()
 const lines = (text) => text.length === 0 ? [] : text.split("\n").filter(Boolean)
-const validateScopePaths = (paths) => {
+const validateScopePathSafety = (paths) => {
   const normalized = [...new Set(paths)].sort()
-  equal(normalized, [...allowedPaths].sort(), "Git scope")
   for (const path of normalized) {
+    assert(allowedPaths.includes(path), `Git scope: forbidden path ${path}`)
     assert(!path.startsWith("/") && !path.split("/").includes(".."), `Git scope: unsafe path ${path}`)
     assert(!/\.(?:png|jpe?g|webp|svg|woff2?|ttf|otf)$/i.test(path), `Git scope: binary visual/font forbidden: ${path}`)
     assert(!/screenshot/i.test(path), `Git scope: screenshot path forbidden: ${path}`)
   }
+  return normalized
+}
+const validateScopePaths = (paths) => {
+  const normalized = validateScopePathSafety(paths)
+  equal(normalized, [...allowedPaths].sort(), "Git scope")
 }
 const validateGitScope = (baseSha) => {
   assert(shaPattern.test(baseSha), "Git scope: full base SHA required")
-  const paths = [
-    ...lines(git(["diff", "--name-only", `${baseSha}...HEAD`])),
+  const workingPaths = [
     ...lines(git(["diff", "--cached", "--name-only"])),
     ...lines(git(["diff", "--name-only"])),
     ...lines(git(["ls-files", "--others", "--exclude-standard"]))
   ]
-  validateScopePaths(paths)
+  let baseAvailable = false
+  try {
+    execFileSync("git", ["cat-file", "-e", `${baseSha}^{commit}`], { cwd: repoRoot, stdio: "ignore" })
+    baseAvailable = true
+  } catch {}
+  if (!baseAvailable) {
+    validateScopePathSafety(workingPaths)
+    return "working-tree-only-base-object-unavailable"
+  }
+  validateScopePaths([...lines(git(["diff", "--name-only", `${baseSha}...HEAD`])), ...workingPaths])
+  return "committed-and-working-tree-verified"
 }
 
 const pngDimensions = (path) => {
@@ -271,7 +465,7 @@ const packTool = new Map(releaseData.pack.tools.map((entry) => [entry.conceptId,
 const sceneQa = new Map(releaseData.sceneQa.map((entry) => [entry.sceneId, entry]))
 
 const expectedAssets = () => {
-  const common = (entry, assetType, stableId, opaqueAssetId, revision, sourceReleaseStatus, sourceLedger, rightsReview, practiceEligibility, gate, prototypeBoundary) => ({
+  const common = (entry, assetType, stableId, opaqueAssetId, revision, sourceReleaseStatus, sourceLedger, rightsReview, practiceEligibility, upstreamSourceGateText, prototypeBoundary) => ({
     assetType,
     stableId,
     opaqueAssetId,
@@ -284,9 +478,10 @@ const expectedAssets = () => {
     print: getDerivative(entry, "print"),
     rightsReview,
     use: {
+      codexOnlyDisposition: upstreamSourceGateText === null ? "accepted-derivative-eligible-within-recorded-practice-scope" : "prohibited-from-scored-and-prototype-use",
       practiceEligibility,
-      scopeStatus: "source-fact-only-not-route-identity-approval",
-      gate,
+      scopeStatus: "source-fact-only-no-route-identity-decision",
+      upstreamSourceGateText,
       prototypeBoundary
     },
     visualAuditStatus: "pending-future-plan-006-per-pixel-audit"
@@ -309,7 +504,7 @@ const expectedAssets = () => {
       },
       packEntry.practiceEligibility === "text-question" ? "entry-level-supported" : "atlas-only-watchlist-or-gated",
       entry.publicationGate,
-      "exact accepted delivery derivative only; no crop, filter, or pixel mutation; scored use still obeys any source gate"
+      "exact accepted delivery derivative only; no crop, filter, or pixel mutation"
     )
   })
   const comparisons = releaseData.comparisons.map((entry) => common(
@@ -327,7 +522,7 @@ const expectedAssets = () => {
     },
     entry.scoredUseGate.length === 0 ? "entry-level-supported" : "atlas-only-watchlist-or-gated",
     entry.scoredUseGate.length === 0 ? null : entry.scoredUseGate.join(" | "),
-    "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation; scored use still obeys any source gate"
+    "exact accepted delivery derivative only; no feature borrowing, crop, filter, or pixel mutation"
   ))
   const scenes = releaseData.scenes.map((entry) => {
     const qa = sceneQa.get(entry.sceneId)
@@ -413,16 +608,20 @@ const validateSourceSnapshot = (snapshot, options) => {
   equal(snapshot.planStatuses, { "004": "BLOCKED", "005": "BLOCKED", "006": "BLOCKED" }, "sourceSnapshot.planStatuses")
   assert(snapshot.contentDesignExists === false, "sourceSnapshot.contentDesignExists must remain false")
   assert(snapshot.canonicalPlan006ResearchExists === false, "sourceSnapshot.canonicalPlan006ResearchExists must remain false")
-  assert(Array.isArray(snapshot.sourceFiles) && snapshot.sourceFiles.length >= 9, "sourceSnapshot.sourceFiles closure missing")
+  assert(Array.isArray(snapshot.sourceFiles) && snapshot.sourceFiles.length === 14, "sourceSnapshot.sourceFiles: exact 14-row closure required")
   unique(snapshot.sourceFiles.map(({ path }) => path), "sourceSnapshot.sourceFiles paths")
+  equal(snapshot.sourceFiles.map(({ path }) => path), [
+    "plans/README.md", "plans/006-select-consumer-visual-system.md", "product/ROUTES.md", "product/SCREEN_STATES.md", "product/DESIGN_SYSTEM.md",
+    "illustration/VISUAL_AUTHORING_POLICY.md", "content/authoring/visuals/releases/tools.json", "content/authoring/visuals/releases/comparisons.json",
+    "content/authoring/visuals/releases/scenes.json", "content/authoring/visuals/releases/scene-qa-ledger.json", "content/authoring/visuals/releases/RELEASE-INVARIANTS.md",
+    "content/authoring/packs/launch-v1.json", "apps/site/playwright.config.ts", "apps/site/src/styles.css"
+  ], "sourceSnapshot.sourceFiles exact path closure")
   for (const [index, source] of snapshot.sourceFiles.entries()) {
     exactKeys(source, ["path", "sha256"], `sourceSnapshot.sourceFiles[${index}]`)
     assert(sha256Pattern.test(source.sha256), `sourceSnapshot.sourceFiles[${index}].sha256 invalid`)
     if (options.repo) assert(fileSha(source.path) === source.sha256, `sourceSnapshot source drift: ${source.path}`)
   }
   if (options.repo) {
-    assert(git(["rev-parse", "origin/main"]) === snapshot.sourceMainSha, "origin/main moved: rebase and reverify required")
-    assert(git(["branch", "--show-current"]) === snapshot.branch, "wrong orchestration branch")
     const planIndex = readText("plans/README.md")
     for (const plan of ["004", "005", "006"]) {
       const row = planIndex.split("\n").find((line) => line.startsWith(`| ${plan} |`))
@@ -437,7 +636,7 @@ const statExists = (path) => {
 }
 const fileSha = (path) => sha256(readBytes(path))
 
-const validateCaptureManifest = (capture) => {
+const validateCaptureManifest = (capture, sourceMainSha) => {
   exactKeys(capture, ["label", "canonicalBaselineStatus", "cases", "presentations", "toolingContract", "transientDryRun"], "captureManifest")
   exactLabel(capture.label, "captureManifest.label")
   assert(capture.canonicalBaselineStatus === "not-created", "captureManifest cannot claim a canonical baseline")
@@ -453,15 +652,58 @@ const validateCaptureManifest = (capture) => {
   assert(tooling.axePackagePath === "apps/site/node_modules/@axe-core/playwright/dist/index.mjs", "capture axe path drift")
   assert(tooling.captureRootPattern.startsWith("/tmp/") && tooling.committedScreenshotCount === 0 && tooling.retention === "temporary-under-/tmp-only", "capture retention boundary violated")
   equal(tooling.futureCanonicalFields, ["captureId", "sha256", "capturedAt"], "future canonical capture fields")
-  assert(tooling.freshnessChecks.length >= 8 && new Set(tooling.freshnessChecks).size === tooling.freshnessChecks.length, "capture freshness checks incomplete")
+  equal(tooling.freshnessChecks, ["absolute-fresh-tmp-root", "no-symlinks", "png-signature", "unique-capture-id", "unique-route-presentation-tuple", "hash-every-file", "timestamp-not-before-run", "sixteen-distinct-default-phone-hashes", "source-ancestry", "no-app-change-in-capture-range"], "capture exact freshness checks")
   const dry = capture.transientDryRun
-  exactKeys(dry, ["label", "evidenceClass", "sourceSha", "observedAt", "browserName", "browserVersion", "caseCount", "httpSuccessCount", "defaultPhoneDistinctHashCount", "externalOriginCount", "overflowCaseIds", "presentationAdapterLimitations", "resultManifestSha256", "screenshotsRetained"], "captureManifest.transientDryRun")
+  exactKeys(dry, ["label", "evidenceClass", "verificationStatus", "aggregates", "harnessContract", "metrics", "presentationAdapterLimitations", "receipt", "screenshotsRetained"], "captureManifest.transientDryRun")
   exactLabel(dry.label, "captureManifest.transientDryRun.label")
-  assert(dry.evidenceClass === "supplementary-current-baseline-dry-run", "dry run evidence class mismatch")
-  assert(dry.caseCount === 24 && dry.httpSuccessCount === 24 && dry.defaultPhoneDistinctHashCount === 16, "dry run closure mismatch")
-  assert(dry.externalOriginCount === 0 && dry.screenshotsRetained === false, "dry run external/retention boundary violated")
-  equal(dry.overflowCaseIds, ["simulation-setup-phone-390-default", "print-center-phone-390-default"], "dry run overflow cases")
-  assert(dry.presentationAdapterLimitations.length >= 1 && sha256Pattern.test(dry.resultManifestSha256), "dry run limitations/receipt missing")
+  assert(dry.evidenceClass === "supplementary-committed-non-image-current-control-metrics", "dry run evidence class mismatch")
+  assert(dry.verificationStatus === "self-consistent-receipt-not-canonical-baseline", "dry run cannot claim canonical verification")
+  assert(dry.screenshotsRetained === false && dry.presentationAdapterLimitations.length >= 1, "dry run retention/limitations boundary violated")
+  assert(dry.metrics.length === expectedCaptureCases.length, "dry run metric closure mismatch")
+  const receipt = dry.receipt
+  assert(receipt.sourceSha === sourceMainSha, "dry run receipt/source snapshot SHA join mismatch")
+  assert(receipt.caseCount === dry.metrics.length, "dry run receipt case count mismatch")
+  assert(isRfc3339DateTime(receipt.startedAt) && isRfc3339DateTime(receipt.completedAt), "dry run receipt interval invalid")
+  const startedAt = Date.parse(receipt.startedAt)
+  const completedAt = Date.parse(receipt.completedAt)
+  assert(startedAt <= completedAt, "dry run receipt interval reversed")
+  let previousCapturedAt = startedAt
+  dry.metrics.forEach((metric, index) => {
+    const captureCase = expectedCaptureCases[index]
+    equal({
+      caseId: metric.caseId,
+      presentationId: metric.presentationId,
+      repositoryRelativeUrl: metric.repositoryRelativeUrl,
+      routeId: metric.routeId
+    }, {
+      caseId: captureCase.caseId,
+      presentationId: captureCase.presentationId,
+      repositoryRelativeUrl: captureCase.routePath,
+      routeId: captureCase.routeId
+    }, `dry run metric ${index} capture join`)
+    assert(metric.httpStatus === 200 && metric.externalOriginCount === 0, `dry run metric ${index} HTTP/origin mismatch`)
+    assert([metric.bodyClientWidth, metric.bodyScrollWidth, metric.documentClientWidth, metric.documentScrollWidth].every((value) => Number.isInteger(value) && value > 0), `dry run metric ${index} widths invalid`)
+    assert(metric.screenshotSha256 === null || sha256Pattern.test(metric.screenshotSha256), `dry run metric ${index} screenshot receipt invalid`)
+    assert(isRfc3339DateTime(metric.capturedAt), `dry run metric ${index} capturedAt invalid`)
+    const capturedAt = Date.parse(metric.capturedAt)
+    assert(capturedAt >= previousCapturedAt && capturedAt <= completedAt, `dry run metric ${index} timestamp/receipt join invalid`)
+    previousCapturedAt = capturedAt
+  })
+  const computedAggregates = {
+    caseCount: dry.metrics.length,
+    defaultPhoneDistinctScreenshotHashCount: new Set(dry.metrics.filter(({ presentationId, screenshotSha256 }) => presentationId === "phone-390-default" && screenshotSha256 !== null).map(({ screenshotSha256 }) => screenshotSha256)).size,
+    externalOriginCount: dry.metrics.reduce((sum, { externalOriginCount }) => sum + externalOriginCount, 0),
+    httpSuccessCount: dry.metrics.filter(({ httpStatus }) => httpStatus >= 200 && httpStatus < 300).length,
+    overflowCaseIds: dry.metrics.filter((metric) => metric.bodyScrollWidth > metric.bodyClientWidth || metric.documentScrollWidth > metric.documentClientWidth).map(({ caseId }) => caseId)
+  }
+  equal(dry.aggregates, computedAggregates, "dry run recomputed aggregates")
+  const harnessContractSha256 = sha256(Buffer.from(stable(dry.harnessContract), "utf8"))
+  assert(receipt.harnessContractSha256 === harnessContractSha256, "dry run harness contract receipt mismatch")
+  const metricsSha256 = sha256(Buffer.from(stable(dry.metrics), "utf8"))
+  assert(receipt.metricsSha256 === metricsSha256, "dry run metrics receipt mismatch")
+  const { canonicalization, receiptSha256, ...receiptInput } = receipt
+  assert(canonicalization === "UTF-8 JSON.stringify after recursive lexicographic object-key sorting; array order preserved; no trailing LF", "dry run canonicalization mismatch")
+  assert(receiptSha256 === sha256(Buffer.from(stable(receiptInput), "utf8")), "dry run receipt hash mismatch")
 }
 
 const validateAssetEntryShape = (entry, index) => {
@@ -473,8 +715,9 @@ const validateAssetEntryShape = (entry, index) => {
   exactKeys(entry.rightsReview, ["outcome", "statement", "source"], `${path}.rightsReview`)
   assert(["pass", "accepted-master-input-composition"].includes(entry.rightsReview.outcome), `${path}.rightsReview outcome invalid`)
   assert(entry.rightsReview.statement.length >= 12, `${path}.rightsReview statement missing`)
-  exactKeys(entry.use, ["practiceEligibility", "scopeStatus", "gate", "prototypeBoundary"], `${path}.use`)
-  assert(entry.use.scopeStatus === "source-fact-only-not-route-identity-approval", `${path}.use scope must remain provisional`)
+  exactKeys(entry.use, ["codexOnlyDisposition", "practiceEligibility", "prototypeBoundary", "scopeStatus", "upstreamSourceGateText"], `${path}.use`)
+  assert(entry.use.scopeStatus === "source-fact-only-no-route-identity-decision", `${path}.use scope must remain non-decisional`)
+  assert(entry.use.codexOnlyDisposition === (entry.use.upstreamSourceGateText === null ? "accepted-derivative-eligible-within-recorded-practice-scope" : "prohibited-from-scored-and-prototype-use"), `${path}.use Codex-only disposition mismatch`)
   assert(entry.visualAuditStatus === "pending-future-plan-006-per-pixel-audit", `${path}.visualAuditStatus cannot be accepted`)
   verifyFileRecord(entry.master, `${path}.master`)
   assert(entry.master.path.startsWith("content/assets/masters/"), `${path}.master path invalid`)
@@ -482,14 +725,16 @@ const validateAssetEntryShape = (entry, index) => {
 }
 
 const validateAttachmentBaseline = (baseline, options) => {
-  exactKeys(baseline, ["label", "archive", "authority", "entryCounts", "entries", "inspection"], "assetInventory.attachmentBaseline")
+  exactKeys(baseline, ["label", "archive", "authority", "defaultVerificationStatus", "entryCounts", "entries", "inspection", "optionalExternalArchiveRecheck"], "assetInventory.attachmentBaseline")
   exactLabel(baseline.label, "assetInventory.attachmentBaseline.label")
   equal(baseline.archive, {
-    locator: attachmentArchive,
+    logicalSourceId: "user-supplied/nyc-custodian-component-design/old-system-pass-one",
     bytes: 1428961,
     sha256: "dcbf9fcf9a8c43e263bfbc501dfb1ec2d98f21eda5126ffa9181c50cac795442"
   }, "assetInventory.attachmentBaseline.archive")
   assert(baseline.authority === "uninformed-old-system-pass-one-baseline-not-selected-not-a-constraint", "attachment cannot become design authority")
+  assert(baseline.defaultVerificationStatus === "ledger-only-not-deep-reverified", "default attachment status must remain ledger-only")
+  equal(baseline.optionalExternalArchiveRecheck, { argument: "--attachment", inferred: false, pathStored: false, required: false, retainsBytes: false }, "assetInventory.attachmentBaseline.optionalExternalArchiveRecheck")
   equal(baseline.entries, expectedAttachmentEntries, "assetInventory.attachmentBaseline.entries")
   equal(baseline.entryCounts, {
     archiveEntries: 15,
@@ -499,30 +744,57 @@ const validateAttachmentBaseline = (baseline, options) => {
   }, "assetInventory.attachmentBaseline.entryCounts")
   equal(baseline.inspection, {
     archiveCommentPresent: false,
-    embeddedLicenseFound: false,
+    dynamicExternalCodeCapability: {
+      directEvalCallCount: 0,
+      dynamicImportCount: 0,
+      functionConstructorCount: 2,
+      mechanism: "new Function",
+      status: "present-do-not-execute"
+    },
     entryPathSafety: "pass-no-absolute-or-parent-paths",
-    externalNetworkDependencyStatus: "three-runtime-cdn-fallbacks-in-old-support-js-prohibited-for-future-prototypes",
+    externalNetworkDependencyStatus: "old-support-js-has-three-unpkg-fallbacks-dynamic-remote-fetch-and-new-Function-prohibited-for-future-prototypes",
+    genericRemoteModuleFetchCapability: {
+      dynamicArgumentFetchCallCount: 3,
+      mechanism: "fetch(dynamic-url)",
+      status: "present-do-not-execute"
+    },
     htmlLiteralExternalSubresourceCount: 0,
-    imageCopiesByteIdenticalToCanonicalRepo: 11,
+    ledgerRowsMatchingCanonicalRepoHashes: 11,
     runtimeCdnFallbackCount: 3,
     runtimeCdnFallbackUrls: [
       "https://unpkg.com/react@18.3.1/umd/react.production.min.js",
       "https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js",
       "https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
     ],
+    scannedTextMarkerObservation: {
+      caseInsensitiveWholeWordMarkers: ["license", "copyright", "SPDX"],
+      matchingEntryCount: 0,
+      rightsInference: "none-rights-remain-unknown",
+      scannedEntries: ["Component Library.dc.html", "github.md", "support.js"],
+      status: "no-marker-match-observed-not-no-license"
+    },
     transientExtractionRetained: false
   }, "assetInventory.attachmentBaseline.inspection")
-  if (!options.assetFiles) return
-  const archiveStat = statSync(attachmentArchive)
-  const archiveBytes = readFileSync(attachmentArchive)
+  const canonicalRows = baseline.entries.filter(({ canonicalRepoPath }) => canonicalRepoPath !== null)
+  assert(canonicalRows.length === baseline.inspection.ledgerRowsMatchingCanonicalRepoHashes, "attachment canonical-ledger row count mismatch")
+  for (const row of canonicalRows) assert(fileSha(row.canonicalRepoPath) === row.sha256, `attachment ledger/canonical repository hash drift: ${row.canonicalRepoPath}`)
+  if (options.attachmentPath === null) return false
+  let archiveStat
+  let archiveBytes
+  try {
+    archiveStat = statSync(options.attachmentPath)
+    archiveBytes = readFileSync(options.attachmentPath)
+  } catch {
+    fail("explicit attachment recheck: supplied archive is unreadable")
+  }
   assert(archiveStat.isFile() && archiveBytes.byteLength === baseline.archive.bytes, "attachment archive byte count mismatch")
   assert(sha256(archiveBytes) === baseline.archive.sha256, "attachment archive SHA-256 mismatch")
-  const listedPaths = execFileSync("unzip", ["-Z1", attachmentArchive], { encoding: "utf8" }).trimEnd().split("\n")
+  const listedPaths = runUnzip(options.attachmentPath, ["-Z1"], "utf8").trimEnd().split("\n")
   equal(listedPaths, expectedAttachmentEntries.map(({ path }) => path), "attachment archive entry closure")
   unique(listedPaths, "attachment archive paths")
   for (const [index, entry] of expectedAttachmentEntries.entries()) {
     assert(!entry.path.startsWith("/") && !entry.path.endsWith("/") && !entry.path.split("/").includes(".."), `attachment entry ${index}: unsafe path`)
-    const bytes = readZipEntry(entry.path)
+    const bytes = readZipEntry(options.attachmentPath, entry.path)
     assert(bytes.byteLength === entry.bytes, `attachment entry ${index}: byte count mismatch`)
     assert(sha256(bytes) === entry.sha256, `attachment entry ${index}: SHA-256 mismatch`)
     if (entry.canonicalRepoPath !== null) {
@@ -530,23 +802,29 @@ const validateAttachmentBaseline = (baseline, options) => {
       assert(bytes.equals(canonicalBytes), `attachment entry ${index}: canonical derivative is not byte-identical`)
     }
   }
-  const html = decoder.decode(readZipEntry("Component Library.dc.html"))
+  const html = decoder.decode(readZipEntry(options.attachmentPath, "Component Library.dc.html"))
   const externalSubresources = [...html.matchAll(/\b(?:src|href)="https?:\/\/[^\"]+"/gi)]
   assert(externalSubresources.length === baseline.inspection.htmlLiteralExternalSubresourceCount, "attachment HTML literal external-subresource observation changed")
-  const support = decoder.decode(readZipEntry("support.js"))
+  const support = decoder.decode(readZipEntry(options.attachmentPath, "support.js"))
   const runtimeCdnFallbackUrls = [...support.matchAll(/https:\/\/unpkg\.com\/[^\"\s]+/g)].map((match) => match[0])
   equal(runtimeCdnFallbackUrls, baseline.inspection.runtimeCdnFallbackUrls, "attachment runtime CDN fallbacks")
   assert(runtimeCdnFallbackUrls.length === baseline.inspection.runtimeCdnFallbackCount, "attachment runtime CDN fallback count changed")
-  const licensingText = [html, decoder.decode(readZipEntry("github.md")), support].join("\n")
-  assert(!/\b(?:license|copyright|SPDX)\b/i.test(licensingText), "attachment embedded-license observation changed")
-  const zipCommentOutput = execFileSync("unzip", ["-z", attachmentArchive], { encoding: "utf8" }).trimEnd().split("\n")
+  const github = decoder.decode(readZipEntry(options.attachmentPath, "github.md"))
+  const scannedTexts = [html, github, support]
+  assert(scannedTexts.filter((text) => /\b(?:license|copyright|SPDX)\b/i.test(text)).length === baseline.inspection.scannedTextMarkerObservation.matchingEntryCount, "attachment scanned-text marker observation changed")
+  assert([...support.matchAll(/\bnew\s+Function\s*\(/g)].length === baseline.inspection.dynamicExternalCodeCapability.functionConstructorCount, "attachment new Function capability count changed")
+  assert([...support.matchAll(/\beval\s*\(/g)].length === baseline.inspection.dynamicExternalCodeCapability.directEvalCallCount, "attachment direct eval count changed")
+  assert([...support.matchAll(/\bimport\s*\(/g)].length === baseline.inspection.dynamicExternalCodeCapability.dynamicImportCount, "attachment dynamic import count changed")
+  assert([...support.matchAll(/\bfetch\s*\(\s*(?![\"'`])/g)].length === baseline.inspection.genericRemoteModuleFetchCapability.dynamicArgumentFetchCallCount, "attachment dynamic-argument fetch count changed")
+  const zipCommentOutput = runUnzip(options.attachmentPath, ["-z"], "utf8").trimEnd().split("\n")
   assert(zipCommentOutput.length === 1, "attachment archive comment observation changed")
+  return true
 }
 
 const validateAssetInventory = (inventory, options) => {
   exactKeys(inventory, ["label", "attachmentBaseline", "counts", "sourceLedgers", "entries", "futureVisualAuditFields"], "assetInventory")
   exactLabel(inventory.label, "assetInventory.label")
-  validateAttachmentBaseline(inventory.attachmentBaseline, options)
+  const attachmentReverified = validateAttachmentBaseline(inventory.attachmentBaseline, options)
   equal(inventory.counts, { tool: 65, comparison: 14, scene: 18, total: 97 }, "assetInventory.counts")
   const expectedSourceLedgers = [
     "content/authoring/visuals/releases/tools.json",
@@ -563,18 +841,22 @@ const validateAssetInventory = (inventory, options) => {
   if (options.assetFiles) inventory.entries.forEach(validateAssetEntryShape)
   const typeCount = (type) => inventory.entries.filter(({ assetType }) => assetType === type).length
   assert(typeCount("tool") === 65 && typeCount("comparison") === 14 && typeCount("scene") === 18, "asset type closure mismatch")
-  assert(inventory.entries.filter(({ assetType, use }) => assetType === "tool" && use.gate !== null).length === 10, "ten gated tools required")
-  assert(inventory.entries.filter(({ assetType, use }) => assetType === "comparison" && use.gate !== null).length === 3, "three gated comparisons required")
-  assert(inventory.entries.filter(({ assetType, use }) => assetType === "scene" && use.gate !== null).length === 0, "scene gate closure mismatch")
+  assert(inventory.entries.filter(({ assetType, use }) => assetType === "tool" && use.upstreamSourceGateText !== null).length === 10, "ten source-gated tools required")
+  assert(inventory.entries.filter(({ assetType, use }) => assetType === "comparison" && use.upstreamSourceGateText !== null).length === 3, "three source-gated comparisons required")
+  assert(inventory.entries.filter(({ assetType, use }) => assetType === "scene" && use.upstreamSourceGateText !== null).length === 0, "scene source-gate closure mismatch")
+  assert(inventory.entries.filter(({ use }) => use.codexOnlyDisposition === "prohibited-from-scored-and-prototype-use").length === 13, "exactly 13 source-gated assets must be prohibited")
+  assert(inventory.entries.filter(({ use }) => use.codexOnlyDisposition === "accepted-derivative-eligible-within-recorded-practice-scope").length === 84, "exactly 84 assets must remain eligible within recorded scope")
   assert(inventory.entries.filter(({ assetType, use }) => assetType === "tool" && use.practiceEligibility === "entry-level-supported").length === 53, "53 entry-level-supported tools required")
   assert(inventory.entries.filter(({ assetType, use }) => assetType === "tool" && use.practiceEligibility === "atlas-only-watchlist-or-gated").length === 12, "12 atlas-only tools required")
   equal(inventory.futureVisualAuditFields, ["asset_type", "stable_id", "opaque_asset_id", "revision", "review_surface", "visual_mode", "aspect_ratio", "background_mode", "detail_density", "phone_legibility", "print_legibility", "crop_tolerance", "permitted_contexts", "prohibited_contexts", "identity_fit", "slop_flags", "disposition", "notes"], "future visual audit fields")
+  return attachmentReverified
 }
 
 const validateBenchmark = (benchmark) => {
-  exactKeys(benchmark, ["label", "acquisitionStatus", "targetValidatedRows", "categories", "acquisitionSlots", "canonicalSourceFields", "qualitativeEvaluationFields", "sources", "claimPolicy"], "benchmarkTemplate")
+  exactKeys(benchmark, ["label", "acquisitionStatus", "observedAcquiredCount", "targetValidatedRows", "categories", "acquisitionSlots", "canonicalSourceFields", "qualitativeEvaluationFields", "sources", "claimPolicy"], "benchmarkTemplate")
   exactLabel(benchmark.label, "benchmarkTemplate.label")
   assert(benchmark.acquisitionStatus === "not-started", "benchmark acquisition cannot be claimed")
+  assert(benchmark.observedAcquiredCount === 0, "benchmark observed count must remain zero")
   equal(benchmark.targetValidatedRows, { minimum: 10, maximum: 12, minimumPerCategory: 2 }, "benchmark target rows")
   const categories = ["exam-preparation", "public-service-reference", "practical-visual-learning", "no-account-offline-education"]
   equal(benchmark.categories, categories, "benchmark categories")
@@ -586,14 +868,17 @@ const validateBenchmark = (benchmark) => {
     assert(slot.acquisitionStatus === "unacquired" && slot.directUrl === null && slot.observedAt === null && slot.claimIds.length === 0, `benchmark slot ${index} must be empty`)
   })
   equal(benchmark.canonicalSourceFields, ["sourceId", "product", "category", "directUrl", "finalUrl", "observedAt", "accessStatus", "httpStatus", "reportClaimIds", "limitations"], "benchmark canonical fields")
-  assert(benchmark.qualitativeEvaluationFields.length >= 20 && benchmark.sources.length === 0, "benchmark observations must remain empty")
-  assert(benchmark.claimPolicy.includes("no-memory-based-claim") && benchmark.claimPolicy.includes("current-direct-https-source-required"), "benchmark claim policy incomplete")
+  equal(benchmark.qualitativeEvaluationFields, ["firstUseProposition", "dominantAction", "navigationHierarchy", "mobileHierarchy", "typographyStrategy", "surfaceStrategy", "colorStrategy", "elevationStrategy", "instructionalImageryIntegration", "unofficialAffiliationTreatment", "trustTreatment", "loadingPresentation", "errorPresentation", "offlinePresentation", "recoveryPresentation", "patternsWorthTesting", "patternsRejected", "observationLimits", "claimIds", "evidenceLocator"], "benchmark qualitative fields")
+  equal(benchmark.claimPolicy, ["current-direct-https-source-required", "search-result-url-rejected", "dated-observation-required", "blocked-attempt-does-not-count", "no-third-party-screenshot-or-brand-asset", "no-memory-based-claim"], "benchmark claim policy")
+  assert(benchmark.sources.length === 0, "benchmark observations must remain empty")
 }
 
 const validatePrototypeEngine = (engine) => {
-  exactKeys(engine, ["label", "engineStatus", "futureInputs", "sharedInvariantFields", "operations", "permittedTerritoryOverrides", "routeArchetypes", "territories", "tokenRoles", "renderContract", "prohibitions"], "prototypeEngine")
+  exactKeys(engine, ["label", "dependencyContract", "engineStatus", "futureInputs", "sharedInvariantFields", "operations", "permittedTerritoryOverrides", "routeArchetypes", "selectionInputContract", "territories", "tokenRoles", "renderContract", "prohibitions"], "prototypeEngine")
   exactLabel(engine.label, "prototypeEngine.label")
-  assert(engine.engineStatus === "blocked-awaiting-future-language-and-navigation-inputs", "prototype engine cannot render yet")
+  equal(engine.dependencyContract, { requiredMergedStep2Sha: null, sourceKind: "exact-merged-step-2-agent-only-language-navigation-sha", status: "awaiting-coordinator-supplied-exact-sha" }, "prototypeEngine.dependencyContract")
+  equal(engine.selectionInputContract, { minimumIndependentCodexReviews: 3, protocolId: "CODEX-ONLY-UIUX-V1", prototypeStatus: "not-built", requiredMergedStep2Sha: null, requiredPrototypeSha256: null, status: "blocked-awaiting-exact-step-2-sha" }, "prototypeEngine.selectionInputContract")
+  assert(engine.engineStatus === "blocked-awaiting-exact-merged-step-2-sha", "prototype engine cannot render yet")
   exactKeys(engine.futureInputs, ["language", "navigation"], "prototypeEngine.futureInputs")
   for (const name of ["language", "navigation"]) {
     const input = engine.futureInputs[name]
@@ -601,7 +886,7 @@ const validatePrototypeEngine = (engine) => {
     assert(input.required === true && input.sourcePath === null && input.sourceSha === null && input.contentSha256 === null && input.verificationStatus === "unavailable", `prototypeEngine ${name} input must remain unavailable`)
   }
   equal(engine.sharedInvariantFields, ["semanticOrder", "copy", "navigation", "actions", "exampleFacts", "assetUrls", "legalState", "routeIdentity"], "prototype shared fields")
-  equal(engine.operations, ["bindLanguageContract", "bindNavigationContract", "normalizeSharedContent", "renderArchetype", "semanticFingerprint", "styleFingerprint"], "prototype operations")
+  equal(engine.operations, ["verifyMergedStep2Dependency", "bindLanguageContract", "bindNavigationContract", "normalizeSharedContent", "renderArchetype", "semanticFingerprint", "styleFingerprint"], "prototype operations")
   equal(engine.permittedTerritoryOverrides, ["tokens", "densityRules", "imageFraming", "cssComposition"], "prototype permitted overrides")
   equal(engine.routeArchetypes, expectedArchetypes, "prototype route archetypes")
   const flattenedRoutes = engine.routeArchetypes.flatMap(({ routeIds }) => routeIds)
@@ -611,8 +896,8 @@ const validatePrototypeEngine = (engine) => {
   assert(engine.territories.length === 3, "prototype must expose exactly A/B/C shells")
   const expectedIds = ["A", "B", "C"]
   engine.territories.forEach((territory, index) => {
-    exactKeys(territory, ["territoryId", "internalHypothesis", "participantFacingLabel", "differentiationAxes", "tokenValues", "evaluationStatus", "territoryStatus", "selectionEligible", "renderEnabled"], `prototypeEngine.territories[${index}]`)
-    assert(territory.territoryId === expectedIds[index] && territory.participantFacingLabel === expectedIds[index], `territory ${index}: neutral ID mismatch`)
+    exactKeys(territory, ["territoryId", "internalHypothesis", "comparisonLabel", "differentiationAxes", "tokenValues", "evaluationStatus", "territoryStatus", "selectionEligible", "renderEnabled"], `prototypeEngine.territories[${index}]`)
+    assert(territory.territoryId === expectedIds[index] && territory.comparisonLabel === expectedIds[index], `territory ${index}: neutral ID mismatch`)
     assert(territory.tokenValues === null && territory.evaluationStatus === "not-built-or-evaluated", `territory ${index}: cannot contain values/evaluation`)
     assert(territory.territoryStatus === "provisional-shell" && territory.selectionEligible === false && territory.renderEnabled === false, `territory ${index}: shell cannot render or enter selection`)
     assert(territory.differentiationAxes.length === 10, `territory ${index}: ten axis intents required`)
@@ -625,134 +910,272 @@ const validatePrototypeEngine = (engine) => {
     const differences = [...leftMap].filter(([axis, value]) => rightMap.get(axis) !== value).length
     assert(differences >= 5, `territory pair ${left}/${right}: fewer than five differentiated axes`)
   }
-  assert(engine.tokenRoles.length >= 70, "prototype token-role shell incomplete")
-  unique(engine.tokenRoles, "prototype token roles")
+  equal(engine.tokenRoles, ["fonts.heading", "fonts.body", "fonts.mono", "typeScale.xs", "typeScale.sm", "typeScale.body", "typeScale.lead", "typeScale.h4", "typeScale.h3", "typeScale.h2", "typeScale.h1", "weights.normal", "weights.medium", "weights.bold", "lineHeights.tight", "lineHeights.body", "lineHeights.loose", "spacing.0", "spacing.1", "spacing.2", "spacing.3", "spacing.4", "spacing.5", "spacing.6", "spacing.7", "spacing.8", "spacing.9", "layout.copyMeasure", "layout.narrowMeasure", "layout.wideMax", "layout.fullMax", "layout.fluidGutter", "surfaces.canvas", "surfaces.surface", "surfaces.surfaceSubtle", "text.default", "text.muted", "identity.accent", "identity.onAccent", "actions.action", "actions.actionHover", "actions.onAction", "actions.link", "actions.focus", "actions.selectedSurface", "actions.selectedBorder", "actions.disabledSurface", "actions.disabledText", "status.success", "status.successSurface", "status.warning", "status.warningSurface", "status.danger", "status.dangerSurface", "status.information", "status.informationSurface", "borders.default", "borders.control", "borders.thin", "borders.strong", "shape.sm", "shape.md", "shape.lg", "shape.pill", "elevation.low", "elevation.high", "figure.background", "figure.border", "motion.fast", "motion.normal", "motion.easing", "zIndex.header", "zIndex.stickyActions", "zIndex.dialog", "zIndex.skipLink", "manifest.backgroundColor", "manifest.themeColor"], "prototype exact token roles")
   const render = engine.renderContract
   exactKeys(render, ["rendererCount", "territoryCount", "archetypeCount", "minimumFrameCount", "serverBinding", "assetAllowlist", "crossTerritoryEquality"], "prototypeEngine.renderContract")
   assert(render.rendererCount === 1 && render.territoryCount === 3 && render.archetypeCount === 7 && render.minimumFrameCount === 21, "prototype render matrix mismatch")
   assert(render.serverBinding === "127.0.0.1", "prototype server must bind to loopback")
   equal(render.crossTerritoryEquality, engine.sharedInvariantFields, "prototype equality fields")
   assert(render.assetAllowlist.every((path) => /^content\/assets\/derivatives\/(tools|comparisons|scenes)\/$/.test(path)), "prototype asset allowlist invalid")
-  for (const prohibition of ["external-font", "external-icon-pack", "external-image", "public-or-shared-host", "territory-selection", "canonical-promotion"]) assert(engine.prohibitions.includes(prohibition), `prototype missing prohibition ${prohibition}`)
+  equal(engine.prohibitions, [
+    "render-before-exact-merged-step-2-sha", "render-before-language-input", "render-before-navigation-input", "codex-review-before-exact-merged-step-2-sha",
+    "territory-copy-override", "territory-link-override", "territory-fact-override", "territory-asset-override", "territory-state-override",
+    "external-font", "external-icon-pack", "external-image", "candidate-asset", "master-asset", "review-or-contact-sheet", "overlay-or-postcommit-precommit",
+    "image-crop-filter-mask-blend", "public-or-shared-host", "scored-use-of-specialist-gated-asset", "selection-before-three-independent-codex-reviews",
+    "territory-selection", "canonical-promotion"
+  ], "prototype exact prohibitions")
+}
+
+const validateCodexOnlyWorkflow = (workflow) => {
+  exactKeys(workflow, ["consensus", "decisionRule", "humanEvidence", "humanParticipantCount", "humanReviewRequired", "independence", "label", "notHumanUsabilityTested", "protocolId", "requiredDependency", "reviewRecordContract", "reviewRecords", "rubrics"], "codexOnlyWorkflow")
+  exactLabel(workflow.label, "codexOnlyWorkflow.label")
+  assert(workflow.protocolId === "CODEX-ONLY-UIUX-V1", "Codex-only protocol ID mismatch")
+  assert(workflow.humanEvidence === "none" && workflow.humanParticipantCount === 0 && workflow.humanReviewRequired === false && workflow.notHumanUsabilityTested === true, "Codex-only workflow must preserve zero/no-human semantics")
+  equal(workflow.requiredDependency, {
+    futureVerificationChecks: ["full-forty-character-sha", "commit-exists", "merged-into-main-or-ancestor-proof", "language-and-navigation-consumers-resolve-from-same-sha"],
+    kind: "exact-merged-step-2-agent-only-language-navigation-sha",
+    sha: null,
+    status: "awaiting-coordinator-supplied-exact-sha"
+  }, "codexOnlyWorkflow.requiredDependency")
+  equal(workflow.independence, { agentReviewsAreNotUserResearch: true, agentsAreNonhumanEvidence: true, distinctAgentTaskIdsRequired: true, onePrimaryRubricPerAgentTaskId: true }, "codexOnlyWorkflow.independence")
+  equal(workflow.decisionRule, {
+    aggregation: "sum-unweighted-criterion-scores-by-territory",
+    blockingFindingRule: "any-blocking-finding-prevents-selection",
+    dissentRule: "preserve-all-non-consensus-positions-and-evidence-coordinates",
+    minimumIndependentReviewCount: 3,
+    requiredDistinctRubricCount: 3,
+    selectionRule: "unique-highest-nonblocked-total",
+    tieRule: "pending-no-selection",
+    unresolvedDissentPreventsSelection: true
+  }, "codexOnlyWorkflow.decisionRule")
+  equal(workflow.reviewRecordContract, {
+    criterionClosureRule: "each-rubric-criterion-scored-exactly-once-per-territory",
+    dissentFields: ["agentTaskId", "territoryId", "reason", "evidenceCoordinates"],
+    evidenceCoordinateFields: ["path", "anchor", "claim"],
+    evidenceCoordinateFormat: "repository-relative-path#stable-anchor-or-Lline",
+    fixedFields: {
+      crossReviewOutputsReadBeforeSubmission: false,
+      evidenceClass: "nonhuman-codex-review-not-user-research",
+      independentReview: true,
+      notHumanUsabilityTested: true
+    },
+    requiredFields: ["agentTaskId", "rubricId", "sourceSha", "prototypeSha256", "evidenceClass", "notHumanUsabilityTested", "independentReview", "crossReviewOutputsReadBeforeSubmission", "reviewedAt", "territoryScores", "evidenceCoordinates", "consensusPosition", "dissent"],
+    scoreMaximum: 5,
+    scoreMinimum: 1,
+    territoryIds: ["A", "B", "C"],
+    territoryScoreFields: ["territoryId", "criterionScores", "total", "blockingFindings"]
+  }, "codexOnlyWorkflow.reviewRecordContract")
+  const expectedRubrics = [
+    ["consumer-trust-anti-ai-slop", ["unofficial-status-and-source-trust", "clarity-without-institutional-impersonation", "specificity-and-originality", "avoidance-of-generic-ai-gloss", "information-hierarchy-for-consumer-confidence"]],
+    ["accessibility-cognitive-load", ["semantic-and-focus-clarity", "zoom-reflow-and-large-text", "contrast-and-non-color-meaning", "cognitive-chunking-and-working-memory", "motion-state-and-recovery"]],
+    ["visual-component-coherence", ["component-role-consistency", "token-system-coherence", "seven-archetype-coverage", "responsive-and-print-continuity", "visual-differentiation-without-content-drift"]]
+  ]
+  assert(workflow.rubrics.length === 3, "Codex-only workflow requires three rubric shells")
+  workflow.rubrics.forEach((rubric, index) => {
+    exactKeys(rubric, ["agentTaskId", "criteria", "reviewStatus", "rubricId"], `codexOnlyWorkflow.rubrics[${index}]`)
+    equal(rubric, { agentTaskId: null, criteria: expectedRubrics[index][1], reviewStatus: "blocked-awaiting-exact-step-2-sha", rubricId: expectedRubrics[index][0] }, `codexOnlyWorkflow.rubrics[${index}]`)
+  })
+  assert(workflow.reviewRecords.length === 0, "Codex review records must remain empty before the Step 2 dependency")
+  equal(workflow.consensus, { dissent: [], status: "not-run-awaiting-exact-step-2-sha", supportingAgentTaskIds: [], territoryId: null }, "codexOnlyWorkflow.consensus")
 }
 
 const validateEvidence = (evidence) => {
   exactKeys(evidence, ["label", "interfaces", "routeSimulationTasks"], "evidenceInterfaces")
   exactLabel(evidence.label, "evidenceInterfaces.label")
-  const ids = ["heuristic-review", "automated-accessibility", "corpus-use", "route-simulation", "owner-dogfood"]
+  const ids = ["codex-heuristic-review", "automated-accessibility", "corpus-use", "route-simulation", "codex-experience-audit"]
+  const expectedRecordFields = [
+    ["agentTaskId", "rubricId", "sourceSha", "prototypeSha256", "territoryId", "archetypeId", "criterionId", "score", "frameId", "selectorOrElement", "visibleCause", "evidenceCoordinates", "disposition", "automaticFailures", "reviewedAt"],
+    ["runId", "prototypeSha256", "territoryId", "archetypeId", "presentationId", "toolVersions", "checks", "violations", "artifactRefs", "startedAt", "completedAt", "result"],
+    ["caseId", "territoryId", "archetypeId", "stableId", "opaqueAssetId", "derivativeKind", "path", "ledgerSha256", "observedSha256", "intrinsicAspectRatio", "objectFit", "pixelMutation", "crop", "filter", "opacity", "clipMaskBlend", "useContext", "gateAlignment", "answerBoundary", "issues", "result"],
+    ["simulationId", "taskId", "actorType", "startRouteId", "routePath", "archetypeId", "legalStateInput", "expectedSemanticOrder", "expectedPrimaryAction", "expectedRecovery", "observedRouteTrail", "assertions", "evidenceCoordinates", "result"],
+    ["agentTaskId", "sourceSha", "prototypeSha256", "territoryOrder", "taskIds", "observations", "issueCodes", "evidenceCoordinates", "completedAt", "result"]
+  ]
   assert(evidence.interfaces.length === ids.length, "exact five supplementary interfaces required")
   evidence.interfaces.forEach((entry, index) => {
-    exactKeys(entry, ["interfaceId", "label", "recordFields", "records", "evidenceClass", "participantCountContribution", "canSatisfyParticipantGate", "canSatisfyOwnerSelection"], `evidenceInterfaces.interfaces[${index}]`)
+    exactKeys(entry, ["interfaceId", "label", "recordFields", "records", "evidenceClass", "humanEvidence", "humanParticipantCountContribution", "notHumanUsabilityTested", "canIndependentlySelectTerritory"], `evidenceInterfaces.interfaces[${index}]`)
     assert(entry.interfaceId === ids[index], `evidence interface ${index} ID mismatch`)
     exactLabel(entry.label, `evidence interface ${entry.interfaceId} label`)
-    assert(entry.recordFields.length >= 8 && entry.records.length === 0, `evidence interface ${entry.interfaceId} must be an empty template`)
-    assert(entry.evidenceClass === "supplementary-only" && entry.participantCountContribution === 0 && entry.canSatisfyParticipantGate === false && entry.canSatisfyOwnerSelection === false, `evidence interface ${entry.interfaceId} cannot satisfy a gate`)
+    equal(entry.recordFields, expectedRecordFields[index], `evidence interface ${entry.interfaceId} exact record fields`)
+    assert(entry.records.length === 0, `evidence interface ${entry.interfaceId} must be an empty template`)
+    assert(entry.evidenceClass === "nonhuman-supplementary-only" && entry.humanEvidence === "none" && entry.humanParticipantCountContribution === 0 && entry.notHumanUsabilityTested === true && entry.canIndependentlySelectTerritory === false, `evidence interface ${entry.interfaceId} cannot become human evidence or independently select`)
   })
   const taskIds = ["exam-fit-affiliation", "start-short-practice", "compare-pipe-adjustable-wrench", "precommit-primary-action", "neutral-hazard-proceed", "make-material-available-offline", "unavailable-page-recovery"]
   assert(evidence.routeSimulationTasks.length === 7, "seven deterministic route simulations required")
   evidence.routeSimulationTasks.forEach((task, index) => {
-    exactKeys(task, ["taskId", "archetypeId", "routeIds", "actorType", "participantCountContribution"], `routeSimulationTasks[${index}]`)
-    assert(task.taskId === taskIds[index] && task.actorType === "deterministic-harness" && task.participantCountContribution === 0, `route simulation task ${index} cannot act as a participant`)
+    exactKeys(task, ["taskId", "archetypeId", "routeIds", "actorType", "humanParticipantCountContribution", "notHumanUsabilityTested"], `routeSimulationTasks[${index}]`)
+    assert(task.taskId === taskIds[index] && task.actorType === "deterministic-harness" && task.humanParticipantCountContribution === 0 && task.notHumanUsabilityTested === true, `route simulation task ${index} cannot act as human evidence`)
   })
+  equal(evidence.routeSimulationTasks, [
+    { actorType: "deterministic-harness", archetypeId: "orientation", humanParticipantCountContribution: 0, notHumanUsabilityTested: true, routeIds: ["home", "exam-selector", "profile"], taskId: "exam-fit-affiliation" },
+    { actorType: "deterministic-harness", archetypeId: "study-launcher", humanParticipantCountContribution: 0, notHumanUsabilityTested: true, routeIds: ["study-hub"], taskId: "start-short-practice" },
+    { actorType: "deterministic-harness", archetypeId: "browse-reference", humanParticipantCountContribution: 0, notHumanUsabilityTested: true, routeIds: ["atlas-tool", "atlas-family"], taskId: "compare-pipe-adjustable-wrench" },
+    { actorType: "deterministic-harness", archetypeId: "focused-task", humanParticipantCountContribution: 0, notHumanUsabilityTested: true, routeIds: ["question-player"], taskId: "precommit-primary-action" },
+    { actorType: "deterministic-harness", archetypeId: "focused-task", humanParticipantCountContribution: 0, notHumanUsabilityTested: true, routeIds: ["hazard-player"], taskId: "neutral-hazard-proceed" },
+    { actorType: "deterministic-harness", archetypeId: "utility", humanParticipantCountContribution: 0, notHumanUsabilityTested: true, routeIds: ["offline-packs", "settings"], taskId: "make-material-available-offline" },
+    { actorType: "deterministic-harness", archetypeId: "recovery", humanParticipantCountContribution: 0, notHumanUsabilityTested: true, routeIds: ["status"], taskId: "unavailable-page-recovery" }
+  ], "exact route-simulation task assignments")
 }
 
 const validateGateAccounting = (gate) => {
-  exactKeys(gate, ["label", "observedParticipantCount", "participantIds", "approvalArtifacts", "matrixRatings", "advancingTerritoryIds", "finalistTerritoryIds", "selectedTerritoryId", "winnerTerritoryId", "recommendedTerritoryId", "hybrid", "canonicalPromotionPerformed", "plan006DoneClaimed"], "gateAccounting")
+  exactKeys(gate, ["advancingTerritoryIds", "canonicalPromotionPerformed", "codexConsensusStatus", "codexReviewCount", "codexReviewTaskIds", "finalistTerritoryIds", "humanEvidence", "humanParticipantCount", "humanReviewRequired", "hybrid", "label", "notHumanUsabilityTested", "plan006DoneClaimed", "recommendedTerritoryId", "selectedTerritoryId", "winnerTerritoryId"], "gateAccounting")
   exactLabel(gate.label, "gateAccounting.label")
-  assert(gate.observedParticipantCount === 0 && gate.participantIds.length === 0, "participant evidence must remain zero")
-  assert(gate.approvalArtifacts.length === 0 && gate.matrixRatings.length === 0, "approval/matrix evidence must remain empty")
+  assert(gate.humanEvidence === "none" && gate.humanParticipantCount === 0 && gate.humanReviewRequired === false && gate.notHumanUsabilityTested === true, "gate accounting must preserve zero/no-human semantics")
+  assert(gate.codexReviewCount === 0 && gate.codexReviewTaskIds.length === 0 && gate.codexConsensusStatus === "not-run-awaiting-exact-step-2-sha", "Codex reviews cannot be claimed before Step 2")
   assert(gate.advancingTerritoryIds.length === 0 && gate.finalistTerritoryIds.length === 0, "finalists cannot exist in prework")
   assert(gate.selectedTerritoryId === null && gate.winnerTerritoryId === null && gate.recommendedTerritoryId === null, "selection/recommendation must remain null")
   assert(gate.hybrid === false && gate.canonicalPromotionPerformed === false && gate.plan006DoneClaimed === false, "hybrid/promotion/DONE claim forbidden")
 }
 
-const validateRecord = (record, options = { repo: false, assetFiles: false }) => {
-  exactKeys(record, ["schemaVersion", "artifactId", "schemaPath", "label", "sourceSnapshot", "captureManifest", "assetInventory", "benchmarkTemplate", "prototypeEngine", "evidenceInterfaces", "gateAccounting"], "record")
+const validateRecord = (record, options = { repo: false, assetFiles: false, attachmentPath: null }) => {
+  const normalizedOptions = { repo: options.repo ?? false, assetFiles: options.assetFiles ?? false, attachmentPath: options.attachmentPath ?? null }
+  exactKeys(record, ["schemaVersion", "artifactId", "schemaPath", "label", "sourceSnapshot", "captureManifest", "assetInventory", "benchmarkTemplate", "codexOnlyWorkflow", "prototypeEngine", "evidenceInterfaces", "gateAccounting"], "record")
   assert(record.schemaVersion === 1 && record.artifactId === "plan-006-consumer-visual-system-provisional-prework" && record.schemaPath === schemaPath, "record identity mismatch")
   exactLabel(record.label, "record.label")
-  validateSourceSnapshot(record.sourceSnapshot, options)
-  validateCaptureManifest(record.captureManifest)
-  validateAssetInventory(record.assetInventory, options)
+  validateSourceSnapshot(record.sourceSnapshot, normalizedOptions)
+  validateCaptureManifest(record.captureManifest, record.sourceSnapshot.sourceMainSha)
+  const attachmentReverified = validateAssetInventory(record.assetInventory, normalizedOptions)
   validateBenchmark(record.benchmarkTemplate)
+  validateCodexOnlyWorkflow(record.codexOnlyWorkflow)
   validatePrototypeEngine(record.prototypeEngine)
   validateEvidence(record.evidenceInterfaces)
   validateGateAccounting(record.gateAccounting)
+  return attachmentReverified
 }
 
-const expectRejected = (name, record, mutate) => {
-  const candidate = jsonClone(record)
-  mutate(candidate)
+const expectThrows = (name, operation) => {
   let rejected = false
-  try { validateRecord(candidate, { repo: false, assetFiles: false }) } catch { rejected = true }
-  assert(rejected, `negative self-test was accepted: ${name}`)
+  try { operation() } catch { rejected = true }
+  assert(rejected, `${name}: expected rejection did not occur`)
 }
 
-const runNegativeTests = (record) => {
-  const tests = [
+const makeMutation = (name, value, mutate) => {
+  const candidate = jsonClone(value)
+  try { mutate(candidate) } catch (error) { fail(`${name}: mutation construction failed: ${error instanceof Error ? error.message : "unknown error"}`) }
+  return candidate
+}
+
+const expectDualRejected = (name, record, schema, mutate) => {
+  const candidate = makeMutation(name, record, mutate)
+  assert(schemaInstanceErrors(schema, candidate, "record", schema).length > 0, `${name}: declared schema accepted dangerous instance mutation`)
+  expectThrows(`${name}/custom`, () => validateRecord(candidate, { repo: false, assetFiles: false, attachmentPath: null }))
+}
+
+const expectCustomRejected = (name, record, mutate) => {
+  const candidate = makeMutation(name, record, mutate)
+  expectThrows(`${name}/custom`, () => validateRecord(candidate, { repo: false, assetFiles: false, attachmentPath: null }))
+}
+
+const expectSchemaWeakeningRejected = (name, record, schema, mutateRecord, weakenSchema) => {
+  const candidate = makeMutation(`${name}/instance`, record, mutateRecord)
+  assert(schemaInstanceErrors(schema, candidate, "record", schema).length > 0, `${name}: original schema did not reject attack instance`)
+  expectThrows(`${name}/custom`, () => validateRecord(candidate, { repo: false, assetFiles: false, attachmentPath: null }))
+  const weakened = makeMutation(`${name}/schema`, schema, weakenSchema)
+  validateSchemaNode(weakened, "#", weakened, true)
+  assert(schemaInstanceErrors(weakened, candidate, "record", weakened).length === 0, `${name}: schema mutation did not demonstrate the intended weakening`)
+  expectThrows(`${name}/schema-integrity`, () => validateSchemaIntegrity(weakened))
+}
+
+const runAdversarialTests = (record, schema) => {
+  const dualTests = [
     ["DONE status", (x) => { x.label.status = "DONE" }],
     ["accepted workflow status", (x) => { x.label.status = "accepted" }],
     ["selected decision", (x) => { x.label.decisionStatus = "selected" }],
-    ["participant evidence", (x) => { x.label.participantEvidence = "synthetic" }],
-    ["participant count", (x) => { x.gateAccounting.observedParticipantCount = 1 }],
-    ["participant row", (x) => { x.gateAccounting.participantIds.push("P01") }],
-    ["approval artifact", (x) => { x.gateAccounting.approvalArtifacts.push("https://example.invalid/approval") }],
+    ["participant evidence label", (x) => { x.label.participantEvidence = "synthetic" }],
+    ["human evidence claim", (x) => { x.codexOnlyWorkflow.humanEvidence = "observed" }],
+    ["human participant count", (x) => { x.codexOnlyWorkflow.humanParticipantCount = 1 }],
+    ["human review required", (x) => { x.codexOnlyWorkflow.humanReviewRequired = true }],
+    ["human usability claim", (x) => { x.codexOnlyWorkflow.notHumanUsabilityTested = false }],
+    ["legacy approval injection", (x) => { x.gateAccounting.approvalArtifacts = ["fabricated"] }],
     ["selected territory", (x) => { x.gateAccounting.selectedTerritoryId = "A" }],
+    ["recommended territory", (x) => { x.gateAccounting.recommendedTerritoryId = "A" }],
     ["dependency SHA substitution", (x) => { x.label.requiredDependencyShas = { "004": "0".repeat(40), "005": "1".repeat(40) } }],
+    ["Step 2 SHA premature", (x) => { x.codexOnlyWorkflow.requiredDependency.sha = "0".repeat(40) }],
+    ["prototype SHA premature", (x) => { x.prototypeEngine.selectionInputContract.requiredPrototypeSha256 = "0".repeat(64) }],
     ["reverify disabled", (x) => { x.label.mustRebaseAndReverify = false }],
-    ["supplementary selection", (x) => { x.evidenceInterfaces.interfaces[0].canSatisfyOwnerSelection = true }],
-    ["dogfood participant", (x) => { x.evidenceInterfaces.interfaces[4].participantCountContribution = 1 }],
+    ["Codex review row premature", (x) => { x.codexOnlyWorkflow.reviewRecords.push({}) }],
+    ["rubric agent task premature", (x) => { x.codexOnlyWorkflow.rubrics[0].agentTaskId = "agent-1" }],
+    ["consensus task premature", (x) => { x.codexOnlyWorkflow.consensus.supportingAgentTaskIds.push("agent-1") }],
+    ["Codex review count premature", (x) => { x.gateAccounting.codexReviewCount = 1 }],
+    ["interface human participant", (x) => { x.evidenceInterfaces.interfaces[0].humanParticipantCountContribution = 1 }],
+    ["interface independent selection", (x) => { x.evidenceInterfaces.interfaces[0].canIndependentlySelectTerritory = true }],
     ["capture removed", (x) => { x.captureManifest.cases.pop() }],
     ["partial capture promoted", (x) => { x.captureManifest.cases[0].captureId = "fake.png" }],
-    ["asset hash tampered", (x) => { x.assetInventory.entries[0].phone.sha256 = "0".repeat(64) }],
-    ["attachment hash tampered", (x) => { x.assetInventory.attachmentBaseline.entries[0].sha256 = "0".repeat(64) }],
-    ["attachment HTML promoted", (x) => { x.assetInventory.attachmentBaseline.entries[1].useStatus = "use-only-via-byte-identical-canonical-repo-derivative" }],
-    ["attachment rights fabricated", (x) => { x.assetInventory.attachmentBaseline.entries[1].rightsStatus = "pass" }],
-    ["source ledger hash tampered", (x) => { x.assetInventory.sourceLedgers[0].sha256 = "0".repeat(64) }],
-    ["candidate source", (x) => { x.assetInventory.entries[0].phone.path = "content/assets/candidates/tools/a001.png" }],
-    ["use gate altered", (x) => { x.assetInventory.entries.find((entry) => entry.opaqueAssetId === "t021").use.gate = null }],
-    ["route duplicated", (x) => { x.prototypeEngine.routeArchetypes[0].routeIds.push("home") }],
-    ["territory copy override", (x) => { x.prototypeEngine.territories[0].copy = "invented" }],
-    ["territories collapse", (x) => { x.prototypeEngine.territories[1].differentiationAxes = [...x.prototypeEngine.territories[0].differentiationAxes] }],
+    ["benchmark acquired count", (x) => { x.benchmarkTemplate.observedAcquiredCount = 1 }],
     ["territory token values", (x) => { x.prototypeEngine.territories[0].tokenValues = { action: "#000" } }],
     ["territory rendering enabled", (x) => { x.prototypeEngine.territories[0].renderEnabled = true }],
     ["unknown root field", (x) => { x.unreviewed = true }],
-    ["matrix rating", (x) => { x.gateAccounting.matrixRatings.push({ territoryId: "A", rating: 5 }) }],
-    ["recommended territory", (x) => { x.gateAccounting.recommendedTerritoryId = "A" }],
     ["canonical promotion", (x) => { x.gateAccounting.canonicalPromotionPerformed = true }],
     ["Plan 006 DONE", (x) => { x.gateAccounting.plan006DoneClaimed = true }],
     ["future language smuggled", (x) => { x.prototypeEngine.futureInputs.language.sourceSha = "0".repeat(40) }]
   ]
-  for (const [name, mutate] of tests) expectRejected(name, record, mutate)
-  let duplicateRejected = false
-  try { parseJsonStrict('{"status":"provisional-prework","status":"DONE"}', "duplicate-key-self-test") } catch { duplicateRejected = true }
-  assert(duplicateRejected, "duplicate-key self-test was accepted")
-  let scopeRejected = false
-  try { validateScopePaths([...allowedPaths, "product/DESIGN_SYSTEM.md"]) } catch { scopeRejected = true }
-  assert(scopeRejected, "out-of-scope-path self-test was accepted")
-  return tests.length + 2
+  for (const [name, mutate] of dualTests) expectDualRejected(name, record, schema, mutate)
+
+  const customTests = [
+    ["asset hash tampered", (x) => { x.assetInventory.entries[0].phone.sha256 = "0".repeat(64) }],
+    ["attachment ledger hash tampered", (x) => { x.assetInventory.attachmentBaseline.entries[0].sha256 = "0".repeat(64) }],
+    ["source ledger hash tampered", (x) => { x.assetInventory.sourceLedgers[0].sha256 = "0".repeat(64) }],
+    ["source path closure drift", (x) => { x.sourceSnapshot.sourceFiles[0].path = "docs/OPEN.md" }],
+    ["source-gated asset promoted", (x) => { x.assetInventory.entries.find((entry) => entry.opaqueAssetId === "t021").use.codexOnlyDisposition = "accepted-derivative-eligible-within-recorded-practice-scope" }],
+    ["route duplicated", (x) => { x.prototypeEngine.routeArchetypes[0].routeIds.push("home") }],
+    ["territories collapse", (x) => { x.prototypeEngine.territories[1].differentiationAxes = [...x.prototypeEngine.territories[0].differentiationAxes] }],
+    ["metrics receipt tampered", (x) => { x.captureManifest.transientDryRun.receipt.metricsSha256 = "0".repeat(64) }],
+    ["metric route join drift", (x) => { x.captureManifest.transientDryRun.metrics[0].routeId = "status" }],
+    ["capture freshness drift", (x) => { x.captureManifest.toolingContract.freshnessChecks[0] = "weakened" }],
+    ["interface field drift", (x) => { x.evidenceInterfaces.interfaces[0].recordFields[0] = "humanParticipantId" }],
+    ["route-simulation assignment drift", (x) => { x.evidenceInterfaces.routeSimulationTasks[0].routeIds = ["status"] }],
+    ["prototype prohibition drift", (x) => { x.prototypeEngine.prohibitions[0] = "render-anytime" }]
+  ]
+  for (const [name, mutate] of customTests) expectCustomRejected(name, record, mutate)
+
+  const schemaWeakeningTests = [
+    ["participant schema weakening", (x) => { x.codexOnlyWorkflow.humanParticipantCount = 1 }, (s) => { s.properties.codexOnlyWorkflow.properties.humanParticipantCount = { type: "integer", minimum: 0 } }],
+    ["approval schema weakening", (x) => { x.gateAccounting.approvalArtifacts = ["fabricated"] }, (s) => { s.properties.gateAccounting.additionalProperties = true }],
+    ["selection schema weakening", (x) => { x.gateAccounting.selectedTerritoryId = "A" }, (s) => { s.properties.gateAccounting.properties.selectedTerritoryId = { enum: [null, "A"] } }],
+    ["DONE schema weakening", (x) => { x.label.status = "DONE" }, (s) => { s.$defs.artifactLabel.properties.status = { enum: ["provisional-prework", "DONE"] } }],
+    ["dependency schema weakening", (x) => { x.codexOnlyWorkflow.requiredDependency.sha = "0".repeat(40) }, (s) => { s.properties.codexOnlyWorkflow.properties.requiredDependency.properties.sha = { oneOf: [{ type: "null" }, { $ref: "#/$defs/gitSha" }] } }],
+    ["render schema weakening", (x) => { x.prototypeEngine.territories[0].renderEnabled = true }, (s) => { s.$defs.territory.properties.renderEnabled = { type: "boolean" } }],
+    ["no-human schema weakening", (x) => { x.codexOnlyWorkflow.notHumanUsabilityTested = false }, (s) => { s.properties.codexOnlyWorkflow.properties.notHumanUsabilityTested = { type: "boolean" } }],
+    ["review-record schema weakening", (x) => { x.codexOnlyWorkflow.reviewRecords.push({}) }, (s) => { s.properties.codexOnlyWorkflow.properties.reviewRecords = { type: "array" } }],
+    ["consensus-task schema weakening", (x) => { x.codexOnlyWorkflow.consensus.supportingAgentTaskIds.push("agent-1") }, (s) => { s.properties.codexOnlyWorkflow.properties.consensus.properties.supportingAgentTaskIds.maxItems = 1 }],
+    ["prototype-receipt schema weakening", (x) => { x.prototypeEngine.selectionInputContract.requiredPrototypeSha256 = "0".repeat(64) }, (s) => { s.properties.prototypeEngine.properties.selectionInputContract.properties.requiredPrototypeSha256 = { oneOf: [{ type: "null" }, { $ref: "#/$defs/sha256" }] } }]
+  ]
+  for (const [name, mutateRecord, weakenSchema] of schemaWeakeningTests) expectSchemaWeakeningRejected(name, record, schema, mutateRecord, weakenSchema)
+
+  expectThrows("duplicate-key self-test", () => parseJsonStrict('{"status":"provisional-prework","status":"DONE"}', "duplicate-key-self-test"))
+  expectThrows("out-of-scope-path self-test", () => validateScopePaths([...allowedPaths, "product/DESIGN_SYSTEM.md"]))
+  expectThrows("unsupported-schema-keyword self-test", () => { const candidate = jsonClone(schema); candidate.allOf = []; validateSchemaNode(candidate, "#", candidate, true) })
+  expectThrows("dangling-ref self-test", () => { const candidate = jsonClone(schema); candidate.properties.label.$ref = "#/$defs/missing"; validateSchemaNode(candidate, "#", candidate, true) })
+  expectThrows("malformed-pattern self-test", () => { const candidate = jsonClone(schema); candidate.$defs.gitSha.pattern = "["; validateSchemaNode(candidate, "#", candidate, true) })
+  expectThrows("missing-attachment-argument self-test", () => parseArguments(["--attachment"]))
+  expectThrows("unknown-argument self-test", () => parseArguments(["--archive", "unused"]))
+  assert(parseArguments([]).attachmentPath === null, "default arguments must not infer an attachment")
+  return dualTests.length + customTests.length + schemaWeakeningTests.length + 8
 }
 
 const markdown = readText(markdownPath)
 const schemaText = readText(schemaPath)
 const validatorText = readText(validatorPath)
+const arguments_ = parseArguments(process.argv.slice(2))
 const exactComment = `{"status":"provisional-prework","participantEvidence":"none","decisionStatus":"pending","requiredDependencyShas":null,"mustRebaseAndReverify":true}`
 assert(markdown.includes(`<!-- artifact-label: ${exactComment} -->`), `${markdownPath}: machine label missing`)
 assert(validatorText.startsWith(`// artifact-label: ${exactComment}\n`), `${validatorPath}: machine label missing`)
 const schema = parseJsonStrict(schemaText.trimEnd(), schemaPath)
-equal(schema["x-artifactLabel"], ARTIFACT_LABEL, `${schemaPath} x-artifactLabel`)
-assert(schema.$schema === "https://json-schema.org/draft/2020-12/schema" && schema.additionalProperties === false, `${schemaPath}: strict Draft 2020-12 root required`)
+validateSchemaIntegrity(schema)
 const record = extractMachineRecord(markdown)
-validateRecord(record, { repo: true, assetFiles: true })
-validateGitScope(record.sourceSnapshot.sourceMainSha)
-const negativeTestCount = runNegativeTests(record)
+validateInstanceAgainstSchema(schema, record)
+const attachmentReverified = validateRecord(record, { repo: true, assetFiles: true, attachmentPath: arguments_.attachmentPath })
+const scopeVerification = validateGitScope(record.sourceSnapshot.sourceMainSha)
+const negativeTestCount = runAdversarialTests(record, schema)
 
 console.log(
   `plan006-prework ok status=provisional-prework capture_cases=${record.captureManifest.cases.length} ` +
   `assets=${record.assetInventory.entries.length} tools=${record.assetInventory.counts.tool} ` +
   `comparisons=${record.assetInventory.counts.comparison} scenes=${record.assetInventory.counts.scene} ` +
   `attachment_entries=${record.assetInventory.attachmentBaseline.entries.length} ` +
+  `attachment_verification=${attachmentReverified ? "explicit-deep-reverified" : "ledger-only-not-deep-reverified"} ` +
+  `scope_verification=${scopeVerification} ` +
   `benchmark_slots=${record.benchmarkTemplate.acquisitionSlots.length} territories=${record.prototypeEngine.territories.length} ` +
   `archetypes=${record.prototypeEngine.routeArchetypes.length} routes=${record.prototypeEngine.routeArchetypes.flatMap(({ routeIds }) => routeIds).length} ` +
-  `participants=${record.gateAccounting.observedParticipantCount} approvals=${record.gateAccounting.approvalArtifacts.length} ` +
-  `decision=${record.label.decisionStatus} negative_tests=${negativeTestCount}`
+  `human_participants=${record.gateAccounting.humanParticipantCount} codex_reviews=${record.gateAccounting.codexReviewCount} ` +
+  `decision=${record.label.decisionStatus} schema_profile=${schemaProfile} adversarial_tests=${negativeTestCount}`
 )

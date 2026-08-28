@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/mannyc2/nycustodianexam/blob/main/plans/006-consumer-visual-system-prework.schema.json",
   "title": "Plan 006 consumer visual-system provisional prework",
-  "description": "Fail-closed schema for deterministic prework that is not Plan 006 research, participant evidence, approval, selection, or acceptance.",
+  "description": "Draft 2020-12 schema constrained to the complete in-repository portable subset declared by x-validationProfile; covers deterministic prework that is not Plan 006 research, user research, a completed Codex review, selection, or acceptance.",
   "x-artifactLabel": {
     "status": "provisional-prework",
     "participantEvidence": "none",
@@ -10,6 +10,7 @@
     "requiredDependencyShas": null,
     "mustRebaseAndReverify": true
   },
+  "x-validationProfile": "draft-2020-12-portable-subset-v1",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -19,6 +20,7 @@
     "label",
     "sourceSnapshot",
     "captureManifest",
+    "codexOnlyWorkflow",
     "assetInventory",
     "benchmarkTemplate",
     "prototypeEngine",
@@ -62,7 +64,8 @@
         "canonicalPlan006ResearchExists": { "const": false },
         "sourceFiles": {
           "type": "array",
-          "minItems": 9,
+          "minItems": 14,
+          "maxItems": 14,
           "uniqueItems": true,
           "items": { "$ref": "#/$defs/sourceFile" }
         }
@@ -128,34 +131,150 @@
           "required": [
             "label",
             "evidenceClass",
-            "sourceSha",
-            "observedAt",
-            "browserName",
-            "browserVersion",
-            "caseCount",
-            "httpSuccessCount",
-            "defaultPhoneDistinctHashCount",
-            "externalOriginCount",
-            "overflowCaseIds",
+            "verificationStatus",
+            "aggregates",
+            "harnessContract",
+            "metrics",
             "presentationAdapterLimitations",
-            "resultManifestSha256",
+            "receipt",
             "screenshotsRetained"
           ],
           "properties": {
             "label": { "$ref": "#/$defs/artifactLabel" },
-            "evidenceClass": { "const": "supplementary-current-baseline-dry-run" },
-            "sourceSha": { "$ref": "#/$defs/gitSha" },
-            "observedAt": { "type": "string", "format": "date-time" },
-            "browserName": { "const": "chromium" },
-            "browserVersion": { "type": "string", "minLength": 1 },
-            "caseCount": { "const": 24 },
-            "httpSuccessCount": { "const": 24 },
-            "defaultPhoneDistinctHashCount": { "const": 16 },
-            "externalOriginCount": { "const": 0 },
-            "overflowCaseIds": { "type": "array", "uniqueItems": true, "items": { "type": "string" } },
+            "evidenceClass": { "const": "supplementary-committed-non-image-current-control-metrics" },
+            "verificationStatus": { "const": "self-consistent-receipt-not-canonical-baseline" },
+            "aggregates": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["caseCount", "defaultPhoneDistinctScreenshotHashCount", "externalOriginCount", "httpSuccessCount", "overflowCaseIds"],
+              "properties": {
+                "caseCount": { "const": 24 },
+                "defaultPhoneDistinctScreenshotHashCount": { "const": 16 },
+                "externalOriginCount": { "const": 0 },
+                "httpSuccessCount": { "const": 24 },
+                "overflowCaseIds": { "const": ["C12", "C13", "C20", "C21"] }
+              }
+            },
+            "harnessContract": {
+              "const": {
+                "adapters": {
+                  "builtInLargeText": "transient-root-font-125-percent-emulation",
+                  "textZoom": "transient-root-font-presentation-percent-emulation"
+                },
+                "browser": "chromium",
+                "caseOrder": "captureManifest.cases-array-order",
+                "externalOriginRule": "unique request origins not equal to http://127.0.0.1:4173 per case",
+                "httpResult": "main-navigation-response-status",
+                "locale": "en-US",
+                "media": "captureManifest.presentations.media",
+                "measurementRule": "document-and-body-clientWidth-and-scrollWidth-after-networkidle-plus-100ms-settle",
+                "network": "loopback-only-preview-at-127.0.0.1",
+                "routeIdentity": "body-data-route-id-must-equal-capture-case-routeId",
+                "screenshotRetention": "hash-in-memory-then-discard-bytes",
+                "screenshotSettings": "full-page-animations-disabled-sha256",
+                "timing": "capturedAt-after-widths-and-screenshot-within-receipt-interval",
+                "timezone": "UTC",
+                "viewport": "captureManifest.presentations-width-height"
+              }
+            },
+            "metrics": { "type": "array", "minItems": 24, "maxItems": 24, "items": { "$ref": "#/$defs/currentControlMetric" } },
             "presentationAdapterLimitations": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string" } },
-            "resultManifestSha256": { "$ref": "#/$defs/sha256" },
+            "receipt": { "$ref": "#/$defs/currentControlReceipt" },
             "screenshotsRetained": { "const": false }
+          }
+        }
+      }
+    },
+    "codexOnlyWorkflow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "protocolId",
+        "humanEvidence",
+        "humanParticipantCount",
+        "humanReviewRequired",
+        "notHumanUsabilityTested",
+        "requiredDependency",
+        "independence",
+        "rubrics",
+        "reviewRecordContract",
+        "reviewRecords",
+        "decisionRule",
+        "consensus"
+      ],
+      "properties": {
+        "label": { "$ref": "#/$defs/artifactLabel" },
+        "protocolId": { "const": "CODEX-ONLY-UIUX-V1" },
+        "humanEvidence": { "const": "none" },
+        "humanParticipantCount": { "const": 0 },
+        "humanReviewRequired": { "const": false },
+        "notHumanUsabilityTested": { "const": true },
+        "requiredDependency": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["futureVerificationChecks", "kind", "sha", "status"],
+          "properties": {
+            "futureVerificationChecks": { "const": ["full-forty-character-sha", "commit-exists", "merged-into-main-or-ancestor-proof", "language-and-navigation-consumers-resolve-from-same-sha"] },
+            "kind": { "const": "exact-merged-step-2-agent-only-language-navigation-sha" },
+            "sha": { "type": "null" },
+            "status": { "const": "awaiting-coordinator-supplied-exact-sha" }
+          }
+        },
+        "independence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["agentReviewsAreNotUserResearch", "agentsAreNonhumanEvidence", "distinctAgentTaskIdsRequired", "onePrimaryRubricPerAgentTaskId"],
+          "properties": {
+            "agentReviewsAreNotUserResearch": { "const": true },
+            "agentsAreNonhumanEvidence": { "const": true },
+            "distinctAgentTaskIdsRequired": { "const": true },
+            "onePrimaryRubricPerAgentTaskId": { "const": true }
+          }
+        },
+        "rubrics": { "type": "array", "minItems": 3, "maxItems": 3, "items": { "$ref": "#/$defs/codexReviewRubric" } },
+        "reviewRecordContract": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["criterionClosureRule", "dissentFields", "evidenceCoordinateFields", "evidenceCoordinateFormat", "fixedFields", "requiredFields", "scoreMaximum", "scoreMinimum", "territoryIds", "territoryScoreFields"],
+          "properties": {
+            "criterionClosureRule": { "const": "each-rubric-criterion-scored-exactly-once-per-territory" },
+            "dissentFields": { "const": ["agentTaskId", "territoryId", "reason", "evidenceCoordinates"] },
+            "evidenceCoordinateFields": { "const": ["path", "anchor", "claim"] },
+            "evidenceCoordinateFormat": { "const": "repository-relative-path#stable-anchor-or-Lline" },
+            "fixedFields": { "const": { "crossReviewOutputsReadBeforeSubmission": false, "evidenceClass": "nonhuman-codex-review-not-user-research", "independentReview": true, "notHumanUsabilityTested": true } },
+            "requiredFields": { "const": ["agentTaskId", "rubricId", "sourceSha", "prototypeSha256", "evidenceClass", "notHumanUsabilityTested", "independentReview", "crossReviewOutputsReadBeforeSubmission", "reviewedAt", "territoryScores", "evidenceCoordinates", "consensusPosition", "dissent"] },
+            "scoreMaximum": { "const": 5 },
+            "scoreMinimum": { "const": 1 },
+            "territoryIds": { "const": ["A", "B", "C"] },
+            "territoryScoreFields": { "const": ["territoryId", "criterionScores", "total", "blockingFindings"] }
+          }
+        },
+        "reviewRecords": { "type": "array", "maxItems": 0 },
+        "decisionRule": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["aggregation", "blockingFindingRule", "dissentRule", "minimumIndependentReviewCount", "requiredDistinctRubricCount", "selectionRule", "tieRule", "unresolvedDissentPreventsSelection"],
+          "properties": {
+            "aggregation": { "const": "sum-unweighted-criterion-scores-by-territory" },
+            "blockingFindingRule": { "const": "any-blocking-finding-prevents-selection" },
+            "dissentRule": { "const": "preserve-all-non-consensus-positions-and-evidence-coordinates" },
+            "minimumIndependentReviewCount": { "const": 3 },
+            "requiredDistinctRubricCount": { "const": 3 },
+            "selectionRule": { "const": "unique-highest-nonblocked-total" },
+            "tieRule": { "const": "pending-no-selection" },
+            "unresolvedDissentPreventsSelection": { "const": true }
+          }
+        },
+        "consensus": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["dissent", "status", "supportingAgentTaskIds", "territoryId"],
+          "properties": {
+            "dissent": { "type": "array", "maxItems": 0 },
+            "status": { "const": "not-run-awaiting-exact-step-2-sha" },
+            "supportingAgentTaskIds": { "type": "array", "maxItems": 0 },
+            "territoryId": { "type": "null" }
           }
         }
       }
@@ -168,20 +287,21 @@
         "attachmentBaseline": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["label", "archive", "authority", "entryCounts", "entries", "inspection"],
+          "required": ["label", "archive", "authority", "defaultVerificationStatus", "entryCounts", "entries", "inspection", "optionalExternalArchiveRecheck"],
           "properties": {
             "label": { "$ref": "#/$defs/artifactLabel" },
             "archive": {
               "type": "object",
               "additionalProperties": false,
-              "required": ["locator", "bytes", "sha256"],
+              "required": ["logicalSourceId", "bytes", "sha256"],
               "properties": {
-                "locator": { "const": "/home/cjpher/.codex/attachments/3d868f50-c832-49bd-9640-def0d35c3c58/NYC Custodian Component Design.zip" },
+                "logicalSourceId": { "const": "user-supplied/nyc-custodian-component-design/old-system-pass-one" },
                 "bytes": { "const": 1428961 },
                 "sha256": { "const": "dcbf9fcf9a8c43e263bfbc501dfb1ec2d98f21eda5126ffa9181c50cac795442" }
               }
             },
             "authority": { "const": "uninformed-old-system-pass-one-baseline-not-selected-not-a-constraint" },
+            "defaultVerificationStatus": { "const": "ledger-only-not-deep-reverified" },
             "entryCounts": {
               "type": "object",
               "additionalProperties": false,
@@ -202,14 +322,35 @@
             "inspection": {
               "type": "object",
               "additionalProperties": false,
-              "required": ["archiveCommentPresent", "embeddedLicenseFound", "entryPathSafety", "externalNetworkDependencyStatus", "htmlLiteralExternalSubresourceCount", "imageCopiesByteIdenticalToCanonicalRepo", "runtimeCdnFallbackCount", "runtimeCdnFallbackUrls", "transientExtractionRetained"],
+              "required": ["archiveCommentPresent", "dynamicExternalCodeCapability", "entryPathSafety", "externalNetworkDependencyStatus", "genericRemoteModuleFetchCapability", "htmlLiteralExternalSubresourceCount", "ledgerRowsMatchingCanonicalRepoHashes", "runtimeCdnFallbackCount", "runtimeCdnFallbackUrls", "scannedTextMarkerObservation", "transientExtractionRetained"],
               "properties": {
                 "archiveCommentPresent": { "const": false },
-                "embeddedLicenseFound": { "const": false },
+                "dynamicExternalCodeCapability": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["directEvalCallCount", "dynamicImportCount", "functionConstructorCount", "mechanism", "status"],
+                  "properties": {
+                    "directEvalCallCount": { "const": 0 },
+                    "dynamicImportCount": { "const": 0 },
+                    "functionConstructorCount": { "const": 2 },
+                    "mechanism": { "const": "new Function" },
+                    "status": { "const": "present-do-not-execute" }
+                  }
+                },
                 "entryPathSafety": { "const": "pass-no-absolute-or-parent-paths" },
-                "externalNetworkDependencyStatus": { "const": "three-runtime-cdn-fallbacks-in-old-support-js-prohibited-for-future-prototypes" },
+                "externalNetworkDependencyStatus": { "const": "old-support-js-has-three-unpkg-fallbacks-dynamic-remote-fetch-and-new-Function-prohibited-for-future-prototypes" },
+                "genericRemoteModuleFetchCapability": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["dynamicArgumentFetchCallCount", "mechanism", "status"],
+                  "properties": {
+                    "dynamicArgumentFetchCallCount": { "const": 3 },
+                    "mechanism": { "const": "fetch(dynamic-url)" },
+                    "status": { "const": "present-do-not-execute" }
+                  }
+                },
                 "htmlLiteralExternalSubresourceCount": { "const": 0 },
-                "imageCopiesByteIdenticalToCanonicalRepo": { "const": 11 },
+                "ledgerRowsMatchingCanonicalRepoHashes": { "const": 11 },
                 "runtimeCdnFallbackCount": { "const": 3 },
                 "runtimeCdnFallbackUrls": {
                   "const": [
@@ -218,7 +359,31 @@
                     "https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
                   ]
                 },
+                "scannedTextMarkerObservation": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["caseInsensitiveWholeWordMarkers", "matchingEntryCount", "rightsInference", "scannedEntries", "status"],
+                  "properties": {
+                    "caseInsensitiveWholeWordMarkers": { "const": ["license", "copyright", "SPDX"] },
+                    "matchingEntryCount": { "const": 0 },
+                    "rightsInference": { "const": "none-rights-remain-unknown" },
+                    "scannedEntries": { "const": ["Component Library.dc.html", "github.md", "support.js"] },
+                    "status": { "const": "no-marker-match-observed-not-no-license" }
+                  }
+                },
                 "transientExtractionRetained": { "const": false }
+              }
+            },
+            "optionalExternalArchiveRecheck": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["argument", "inferred", "pathStored", "required", "retainsBytes"],
+              "properties": {
+                "argument": { "const": "--attachment" },
+                "inferred": { "const": false },
+                "pathStored": { "const": false },
+                "required": { "const": false },
+                "retainsBytes": { "const": false }
               }
             }
           }
@@ -251,6 +416,7 @@
       "required": [
         "label",
         "acquisitionStatus",
+        "observedAcquiredCount",
         "targetValidatedRows",
         "categories",
         "acquisitionSlots",
@@ -262,6 +428,7 @@
       "properties": {
         "label": { "$ref": "#/$defs/artifactLabel" },
         "acquisitionStatus": { "const": "not-started" },
+        "observedAcquiredCount": { "const": 0 },
         "targetValidatedRows": {
           "type": "object",
           "additionalProperties": false,
@@ -297,12 +464,14 @@
       "additionalProperties": false,
       "required": [
         "label",
+        "dependencyContract",
         "engineStatus",
         "futureInputs",
         "sharedInvariantFields",
         "operations",
         "permittedTerritoryOverrides",
         "routeArchetypes",
+        "selectionInputContract",
         "territories",
         "tokenRoles",
         "renderContract",
@@ -310,7 +479,17 @@
       ],
       "properties": {
         "label": { "$ref": "#/$defs/artifactLabel" },
-        "engineStatus": { "const": "blocked-awaiting-future-language-and-navigation-inputs" },
+        "dependencyContract": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["requiredMergedStep2Sha", "sourceKind", "status"],
+          "properties": {
+            "requiredMergedStep2Sha": { "type": "null" },
+            "sourceKind": { "const": "exact-merged-step-2-agent-only-language-navigation-sha" },
+            "status": { "const": "awaiting-coordinator-supplied-exact-sha" }
+          }
+        },
+        "engineStatus": { "const": "blocked-awaiting-exact-merged-step-2-sha" },
         "futureInputs": {
           "type": "object",
           "additionalProperties": false,
@@ -323,6 +502,7 @@
         "sharedInvariantFields": { "type": "array", "minItems": 8, "uniqueItems": true, "items": { "type": "string" } },
         "operations": {
           "const": [
+            "verifyMergedStep2Dependency",
             "bindLanguageContract",
             "bindNavigationContract",
             "normalizeSharedContent",
@@ -335,6 +515,19 @@
           "const": ["tokens", "densityRules", "imageFraming", "cssComposition"]
         },
         "routeArchetypes": { "type": "array", "minItems": 7, "maxItems": 7, "items": { "$ref": "#/$defs/routeArchetype" } },
+        "selectionInputContract": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["minimumIndependentCodexReviews", "protocolId", "prototypeStatus", "requiredMergedStep2Sha", "requiredPrototypeSha256", "status"],
+          "properties": {
+            "minimumIndependentCodexReviews": { "const": 3 },
+            "protocolId": { "const": "CODEX-ONLY-UIUX-V1" },
+            "prototypeStatus": { "const": "not-built" },
+            "requiredMergedStep2Sha": { "type": "null" },
+            "requiredPrototypeSha256": { "type": "null" },
+            "status": { "const": "blocked-awaiting-exact-step-2-sha" }
+          }
+        },
         "territories": { "type": "array", "minItems": 3, "maxItems": 3, "items": { "$ref": "#/$defs/territory" } },
         "tokenRoles": { "type": "array", "minItems": 70, "uniqueItems": true, "items": { "type": "string" } },
         "renderContract": {
@@ -351,7 +544,7 @@
             "crossTerritoryEquality": { "type": "array", "minItems": 8, "uniqueItems": true, "items": { "type": "string" } }
           }
         },
-        "prohibitions": { "type": "array", "minItems": 14, "uniqueItems": true, "items": { "type": "string" } }
+        "prohibitions": { "type": "array", "minItems": 22, "uniqueItems": true, "items": { "type": "string" } }
       }
     },
     "evidenceInterfaces": {
@@ -369,10 +562,13 @@
       "additionalProperties": false,
       "required": [
         "label",
-        "observedParticipantCount",
-        "participantIds",
-        "approvalArtifacts",
-        "matrixRatings",
+        "humanEvidence",
+        "humanParticipantCount",
+        "humanReviewRequired",
+        "notHumanUsabilityTested",
+        "codexReviewCount",
+        "codexReviewTaskIds",
+        "codexConsensusStatus",
         "advancingTerritoryIds",
         "finalistTerritoryIds",
         "selectedTerritoryId",
@@ -384,10 +580,13 @@
       ],
       "properties": {
         "label": { "$ref": "#/$defs/artifactLabel" },
-        "observedParticipantCount": { "const": 0 },
-        "participantIds": { "type": "array", "maxItems": 0 },
-        "approvalArtifacts": { "type": "array", "maxItems": 0 },
-        "matrixRatings": { "type": "array", "maxItems": 0 },
+        "humanEvidence": { "const": "none" },
+        "humanParticipantCount": { "const": 0 },
+        "humanReviewRequired": { "const": false },
+        "notHumanUsabilityTested": { "const": true },
+        "codexReviewCount": { "const": 0 },
+        "codexReviewTaskIds": { "type": "array", "maxItems": 0 },
+        "codexConsensusStatus": { "const": "not-run-awaiting-exact-step-2-sha" },
         "advancingTerritoryIds": { "type": "array", "maxItems": 0 },
         "finalistTerritoryIds": { "type": "array", "maxItems": 0 },
         "selectedTerritoryId": { "type": "null" },
@@ -432,7 +631,7 @@
         "canonicalRepoPath": { "oneOf": [{ "type": "null" }, { "type": "string", "pattern": "^content/assets/derivatives/" }] },
         "contentKind": { "enum": ["generated-preview-thumbnail", "old-component-library-html", "canonical-derivative-copy", "old-baseline-metadata", "old-renderer-runtime"] },
         "path": { "type": "string", "minLength": 1 },
-        "rightsStatus": { "enum": ["unknown-archive-provides-no-license", "archive-adds-no-rights-canonical-release-ledger-controls"] },
+        "rightsStatus": { "const": "unknown-attachment-rights-not-determined" },
         "sha256": { "$ref": "#/$defs/sha256" },
         "useStatus": { "enum": ["evidence-only-do-not-copy-to-product-or-prototype", "use-only-via-byte-identical-canonical-repo-derivative"] }
       }
@@ -465,6 +664,43 @@
         "captureId": { "type": "null" },
         "sha256": { "type": "null" },
         "capturedAt": { "type": "null" }
+      }
+    },
+    "currentControlMetric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bodyClientWidth", "bodyScrollWidth", "capturedAt", "caseId", "documentClientWidth", "documentScrollWidth", "externalOriginCount", "httpStatus", "presentationId", "repositoryRelativeUrl", "routeId", "screenshotSha256"],
+      "properties": {
+        "bodyClientWidth": { "type": "integer", "minimum": 1 },
+        "bodyScrollWidth": { "type": "integer", "minimum": 1 },
+        "capturedAt": { "type": "string", "format": "date-time" },
+        "caseId": { "type": "string", "pattern": "^C(0[1-9]|1[0-9]|2[0-4])$" },
+        "documentClientWidth": { "type": "integer", "minimum": 1 },
+        "documentScrollWidth": { "type": "integer", "minimum": 1 },
+        "externalOriginCount": { "type": "integer", "minimum": 0 },
+        "httpStatus": { "const": 200 },
+        "presentationId": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "repositoryRelativeUrl": { "type": "string", "pattern": "^/" },
+        "routeId": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "screenshotSha256": { "oneOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }] }
+      }
+    },
+    "currentControlReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["browserName", "browserVersion", "canonicalization", "caseCount", "completedAt", "harnessContractSha256", "harnessId", "metricsSha256", "receiptSha256", "sourceSha", "startedAt"],
+      "properties": {
+        "browserName": { "const": "chromium" },
+        "browserVersion": { "type": "string", "minLength": 1 },
+        "canonicalization": { "const": "UTF-8 JSON.stringify after recursive lexicographic object-key sorting; array order preserved; no trailing LF" },
+        "caseCount": { "const": 24 },
+        "completedAt": { "type": "string", "format": "date-time" },
+        "harnessContractSha256": { "$ref": "#/$defs/sha256" },
+        "harnessId": { "const": "plan006-current-control-metrics-v1" },
+        "metricsSha256": { "$ref": "#/$defs/sha256" },
+        "receiptSha256": { "$ref": "#/$defs/sha256" },
+        "sourceSha": { "$ref": "#/$defs/gitSha" },
+        "startedAt": { "type": "string", "format": "date-time" }
       }
     },
     "derivative": {
@@ -531,12 +767,13 @@
         "use": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["practiceEligibility", "scopeStatus", "gate", "prototypeBoundary"],
+          "required": ["codexOnlyDisposition", "practiceEligibility", "prototypeBoundary", "scopeStatus", "upstreamSourceGateText"],
           "properties": {
+            "codexOnlyDisposition": { "enum": ["accepted-derivative-eligible-within-recorded-practice-scope", "prohibited-from-scored-and-prototype-use"] },
             "practiceEligibility": { "enum": ["entry-level-supported", "atlas-only-watchlist-or-gated", "hazard-assessment-only"] },
-            "scopeStatus": { "const": "source-fact-only-not-route-identity-approval" },
-            "gate": { "oneOf": [{ "type": "null" }, { "type": "string", "minLength": 1 }] },
-            "prototypeBoundary": { "type": "string", "minLength": 12 }
+            "prototypeBoundary": { "type": "string", "minLength": 12 },
+            "scopeStatus": { "const": "source-fact-only-no-route-identity-decision" },
+            "upstreamSourceGateText": { "oneOf": [{ "type": "null" }, { "type": "string", "minLength": 1 }] }
           }
         },
         "visualAuditStatus": { "const": "pending-future-plan-006-per-pixel-audit" }
@@ -580,11 +817,11 @@
     "territory": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["territoryId", "internalHypothesis", "participantFacingLabel", "differentiationAxes", "tokenValues", "evaluationStatus", "territoryStatus", "selectionEligible", "renderEnabled"],
+      "required": ["territoryId", "internalHypothesis", "comparisonLabel", "differentiationAxes", "tokenValues", "evaluationStatus", "territoryStatus", "selectionEligible", "renderEnabled"],
       "properties": {
         "territoryId": { "enum": ["A", "B", "C"] },
         "internalHypothesis": { "enum": ["Editorial Field Guide", "Practical Workshop Manual", "Calm Study Companion"] },
-        "participantFacingLabel": { "enum": ["A", "B", "C"] },
+        "comparisonLabel": { "enum": ["A", "B", "C"] },
         "differentiationAxes": { "type": "array", "minItems": 5, "uniqueItems": true, "items": { "type": "string" } },
         "renderEnabled": { "const": false },
         "selectionEligible": { "const": false },
@@ -596,28 +833,41 @@
     "evidenceInterface": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["interfaceId", "label", "recordFields", "records", "evidenceClass", "participantCountContribution", "canSatisfyParticipantGate", "canSatisfyOwnerSelection"],
+      "required": ["interfaceId", "label", "recordFields", "records", "evidenceClass", "humanEvidence", "humanParticipantCountContribution", "notHumanUsabilityTested", "canIndependentlySelectTerritory"],
       "properties": {
-        "interfaceId": { "enum": ["heuristic-review", "automated-accessibility", "corpus-use", "route-simulation", "owner-dogfood"] },
+        "interfaceId": { "enum": ["codex-heuristic-review", "automated-accessibility", "corpus-use", "route-simulation", "codex-experience-audit"] },
         "label": { "$ref": "#/$defs/artifactLabel" },
         "recordFields": { "type": "array", "minItems": 8, "uniqueItems": true, "items": { "type": "string" } },
         "records": { "type": "array", "maxItems": 0 },
-        "evidenceClass": { "const": "supplementary-only" },
-        "participantCountContribution": { "const": 0 },
-        "canSatisfyParticipantGate": { "const": false },
-        "canSatisfyOwnerSelection": { "const": false }
+        "evidenceClass": { "const": "nonhuman-supplementary-only" },
+        "humanEvidence": { "const": "none" },
+        "humanParticipantCountContribution": { "const": 0 },
+        "notHumanUsabilityTested": { "const": true },
+        "canIndependentlySelectTerritory": { "const": false }
       }
     },
     "routeSimulationTask": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["taskId", "archetypeId", "routeIds", "actorType", "participantCountContribution"],
+      "required": ["taskId", "archetypeId", "routeIds", "actorType", "humanParticipantCountContribution", "notHumanUsabilityTested"],
       "properties": {
         "taskId": { "type": "string", "pattern": "^[a-z0-9-]+$" },
         "archetypeId": { "enum": ["orientation", "study-launcher", "browse-reference", "focused-task", "utility", "recovery"] },
         "routeIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string" } },
         "actorType": { "const": "deterministic-harness" },
-        "participantCountContribution": { "const": 0 }
+        "humanParticipantCountContribution": { "const": 0 },
+        "notHumanUsabilityTested": { "const": true }
+      }
+    },
+    "codexReviewRubric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["agentTaskId", "criteria", "reviewStatus", "rubricId"],
+      "properties": {
+        "agentTaskId": { "type": "null" },
+        "criteria": { "type": "array", "minItems": 5, "maxItems": 5, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "reviewStatus": { "const": "blocked-awaiting-exact-step-2-sha" },
+        "rubricId": { "enum": ["consumer-trust-anti-ai-slop", "accessibility-cognitive-load", "visual-component-coherence"] }
       }
     }
   }
