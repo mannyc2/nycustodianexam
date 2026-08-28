@@ -237,17 +237,13 @@ test.describe("A/B/C route-surface and presentation matrix", () => {
           await expectActionsHaveTargetSize(page, width)
         }
 
-        // CSS zoom forces the equivalent layout pressure of 400% zoom in a
-        // 1280 CSS-pixel viewport while preserving a deterministic assertion.
-        await page.setViewportSize({ width: 1_280, height: 900 })
-        await page.locator("html").evaluate((element) => { element.style.zoom = "4" })
-        const zoomedBounds = await page.locator("[data-shared-root]").evaluate((element) => {
-          const bounds = element.getBoundingClientRect()
-          return { left: bounds.left, right: bounds.right, viewport: window.innerWidth }
-        })
-        expect(zoomedBounds.left).toBeGreaterThanOrEqual(0)
-        expect(zoomedBounds.right).toBeLessThanOrEqual(zoomedBounds.viewport + 0.5)
-        await page.locator("html").evaluate((element) => { element.style.zoom = "" })
+        // WCAG 400% reflow is layout-equivalent to a 320 CSS-pixel viewport
+        // when a 1280-pixel-wide viewport is zoomed to 400%. Using the
+        // effective CSS viewport avoids Chromium's nonstandard CSS zoom,
+        // which scales paint without reproducing browser-zoom reflow.
+        await page.setViewportSize({ width: 320, height: 900 })
+        await expectNoHorizontalOverflow(page, 320)
+        await expectActionsHaveTargetSize(page, 320)
 
         await page.setViewportSize({ width: 320, height: 900 })
         await gotoFixture(page, territoryId, frame, "large-text")

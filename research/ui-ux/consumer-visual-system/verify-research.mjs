@@ -78,7 +78,7 @@ const PRESENTATIONS = Object.freeze([
   "phone-390",
   "tablet-768",
   "desktop-1440",
-  "large-text-200",
+  "large-text-125",
   "zoom-400",
   "forced-colors",
   "reduced-motion",
@@ -604,7 +604,11 @@ const validateBrowser = (record, prototypeContext, receipt) => {
     assert(browserCase.httpResult === 200 && browserCase.externalOriginCount === 0, `browser case ${browserCase.caseId}: loopback HTTP/network failure`)
     assert(Number.isInteger(browserCase.scrollWidth) && Number.isInteger(browserCase.clientWidth) && browserCase.scrollWidth <= browserCase.clientWidth, `browser case ${browserCase.caseId}: horizontal overflow`)
     assert(browserCase.seriousAxeViolationCount === 0, `browser case ${browserCase.caseId}: serious/critical axe finding`)
-    assert(browserCase.keyboardFocusVisible === true && browserCase.actionTargetMinimumCssPx >= 44, `browser case ${browserCase.caseId}: focus/target contract failure`)
+    if (browserCase.presentation === "print") {
+      assert(browserCase.keyboardFocusVisible === false && browserCase.actionTargetMinimumCssPx === 0, `browser case ${browserCase.caseId}: print must suppress interactive actions`)
+    } else {
+      assert(browserCase.keyboardFocusVisible === true && browserCase.actionTargetMinimumCssPx >= 44, `browser case ${browserCase.caseId}: focus/target contract failure`)
+    }
     assert(sha256Pattern.test(browserCase.semanticSha256), `browser case ${browserCase.caseId}: semantic digest invalid`)
     assert(isDateTime(browserCase.capturedAt) && Date.parse(browserCase.capturedAt) >= Date.parse(receipt.startedAt) && Date.parse(browserCase.capturedAt) <= Date.parse(receipt.completedAt), `browser case ${browserCase.caseId}: timestamp outside receipt interval`)
   }

@@ -244,6 +244,7 @@ research/ui-ux/consumer-visual-system/README.md
 research/ui-ux/consumer-visual-system/asset-audit.tsv
 research/ui-ux/consumer-visual-system/benchmark-sources.json
 research/ui-ux/consumer-visual-system/browser-receipt.json
+research/ui-ux/consumer-visual-system/capture-browser-receipt.mjs
 research/ui-ux/consumer-visual-system/evidence-manifest.json
 research/ui-ux/consumer-visual-system/evidence-manifest.schema.json
 research/ui-ux/consumer-visual-system/playwright.config.ts

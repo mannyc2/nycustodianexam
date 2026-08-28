@@ -987,6 +987,12 @@ html[data-territory="C"] .figure-frame {
     color: ButtonText;
     background: ButtonFace;
   }
+
+  .research-toolbar,
+  .research-toolbar span {
+    color: CanvasText;
+    background: Canvas;
+  }
 }
 
 @media print {
