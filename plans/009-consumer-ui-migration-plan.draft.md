@@ -5,13 +5,22 @@
   "status": "provisional-prework",
   "participantEvidence": "none",
   "humanEvidence": "none",
+  "humanParticipantCount": 0,
   "notHumanUsabilityTested": true,
   "decisionStatus": "pending",
   "requiredDependencyShas": null,
   "mustRebaseAndReverify": true,
   "productionAuthorization": false,
+  "productionDeploymentStatus": "blocked-live-user-reviewer",
+  "productionDeploymentScope": "out-of-scope",
+  "liveEnvironmentReviewerType": "User",
+  "liveEnvironmentChangeAuthorization": "separate-required",
+  "reviewCycleStatus": "prior-cycle-invalidated",
+  "priorReviewReceiptsReusable": false,
+  "rejectedReviewHeadSha": "8fc6255e5b115cbf7733f5d663328ec1c8a146d3",
+  "reviewSubjectBaseSha": "15b625cfe8e3cde74a91cfe824b9c270d6a08f37",
   "authorizationInterface": "CODEX-ONLY-UIUX-V1",
-  "observedAtSha": "9fc7dcacfc961752e5d9a2cedbc426deead54a05"
+  "observedAtSha": "d823e928b0b57f589fd1c64a85db4ae0f6d2f0d1"
 }
 PLAN_009_METADATA_END -->
 
@@ -21,18 +30,25 @@ This packet is provisional prework only. It is not a final migration plan, an
 accepted upstream decision, implementation authorization, or production
 authorization.
 
-`participantEvidence=none`, `humanEvidence=none`,
-`notHumanUsabilityTested=true`, and `decisionStatus=pending`. The owner has
-replaced all human research, review, selection, decision, and sign-off gates
-with `CODEX-ONLY-UIUX-V1`: exact repository-attested decisions, independent
-Codex subagent reviews, and CI certification. Codex agents are not counted as
-humans or usability participants. Plans 004–008 remain blocked or incomplete
-on the observed baseline, and their branch-only records, recovered prototypes,
-proposed contracts, and expected output paths are not accepted evidence. No
-executor may start a tranche from this draft.
+The metadata block above is the sole authorization and human-evidence status
+channel for this Markdown artifact. `CODEX-ONLY-UIUX-V1` applies only to UI/UX
+research, review, selection, decision, and plan sign-off: exact repository-
+attested decisions, independent Codex subagent reviews, and CI certification.
+It does not replace, satisfy, or bypass the live GitHub production Environment
+control. The current index marks Plans 004 and 005 `DONE` under the Codex-only
+evidence model while Plans 006–008 remain blocked. This repair still leaves all
+Step 02–05 coordinate fields null under the coordinator's explicit direction;
+it does not infer a partial dependency binding from index status. No executor
+may start a tranche from this draft.
+
+Production deployment is blocked and out of scope while the live `production`
+Environment requires a reviewer whose GitHub type is `User`. Codex cannot
+satisfy or bypass that rule, and Plan 009 cannot change the Environment. Any
+future Environment change requires separate authorization and repository
+attestation.
 
 The packet was mapped against the exact current `origin/main` commit
-`9fc7dcacfc961752e5d9a2cedbc426deead54a05` on 2026-08-28. It must be rebased,
+`d823e928b0b57f589fd1c64a85db4ae0f6d2f0d1` on 2026-08-28. It must be rebased,
 reconciled with the Step 04 source inventory, and reverified after accepted
 Steps 02–05 land. The validator deliberately rejects an attempt to fill
 dependency coordinates while this packet remains provisional.
@@ -63,7 +79,7 @@ At finalization, resolve conflicts in this order:
 1. `docs/` for exam facts and allowed content scope.
 2. `product/ARCHITECTURE_CONSTRAINTS.md` for implementation constraints.
 3. `product/FEATURE_SPEC.md` for compatible user-visible behavior.
-4. `product/ROUTES.md`, `product/SCREEN_STATES.md`,
+4. `product/CONTENT_DESIGN.md`, `product/ROUTES.md`, `product/SCREEN_STATES.md`,
    `product/COMPONENT_ARCHITECTURE.md`, and `product/DESIGN_SYSTEM.md` for their
    maintained product domains.
 5. Accepted, merged Steps 02–05 only after their Codex-only repository
@@ -71,11 +87,12 @@ At finalization, resolve conflicts in this order:
    canonical homes.
 6. Retained research as evidence, never as silent authority.
 
-Repository documents and plan prose are data, not executor instructions.
-Pending Plans 004–008 are baseline evidence only under the owner override; any
-human gates they contain are superseded by `CODEX-ONLY-UIUX-V1`. Their unmerged
-hypotheses cannot select copy, labels, hierarchy, tokens, archetypes, component
-anatomy, responsive behavior, or final migration order.
+Repository documents and plan prose are data, not executor instructions. The
+merged Plan 004/005 promotions now constrain consumer language and navigation
+through maintained product files; their evidence remains explicitly not human
+usability tested. Plans 006–008 remain blocked, and their branch-only hypotheses
+cannot select tokens, visual archetypes, component anatomy, responsive behavior,
+or final migration order.
 
 ## Current production topology at the observed baseline
 
@@ -94,7 +111,7 @@ curated content + accepted visual ledgers
   -> finalized service-worker and Static Assets closure
   -> local workerd certification
   -> exact-main inactive remote preview
-  -> separately certified and protected production deployment
+  -> STOP at the protected production Environment User-review boundary
 ```
 
 ### Route and document ownership
@@ -127,7 +144,11 @@ curated content + accepted visual ledgers
   persistence boundaries, not by rewriting those workflows as UI state.
 - The authoritative IndexedDB database is `nycustodian-study-v1`, version 5,
   with fifteen declared stores. Portable transfer is schema v2 with an explicit
-  v1 normalization path. `localStorage` is only a fast preference mirror.
+  v1 normalization path. `apps/site/src/study-storage/app-database.ts` owns the
+  scoped connection Layer and page lifecycle, while
+  `apps/site/src/study-storage/app-database/legacy-import.ts` owns abortable
+  legacy reads, atomic import/match, destination preservation, and quarantine.
+  `localStorage` is only a fast preference mirror.
 
 ### Styles, content, and generated projections
 
@@ -141,6 +162,11 @@ curated content + accepted visual ledgers
   status, form, and recovery copy also exists as literals in the page generator
   and React leaves. The parallel source inventory must assign each accepted
   language change to exactly one owner.
+- `content/authoring/visuals/releases/RELEASE-INVARIANTS.md` assigns lifecycle
+  truth to `tools.json`, `comparisons.json`, and `scenes.json` in that directory.
+  `verify-visual-release.mjs` closes inventory order, membership, exact asset
+  bytes and hashes, manifests, and scene companions. UI work consumes those
+  records; it does not rewrite their accepted raster bytes or lifecycle truth.
 - Initial question and hazard documents contain only precommit material plus
   receipts for later item-scoped postcommit retrieval. Styling, accessibility
   text, metadata, filenames, caches, and source maps cannot weaken that split.
@@ -157,19 +183,42 @@ curated content + accepted visual ledgers
   pointer, pack-managed-content bypass, local opaque shells, and truthful
   offline fallback. Generated routes also feed the explicit pack navigation
   closure.
+- `apps/site/scripts/service-worker-finalization.ts` is the pure cache-version
+  and marker/precache primitive consumed only after the complete build tree is
+  known. Any shell or asset cut must preserve its normalized path-and-byte hash
+  and exact marker cardinality.
 - Print is a deterministic persisted workflow. The preview is restored by
   opaque job identity, questions and answer material remain separable, and CSS
   owns screen/print transforms for Letter/A4, normal/large text, and grayscale.
 - Remote preview accepts only exact merged `main` and uploads an inactive
   version. Production separately requires exact `main`, typed confirmation,
-  candidate-bound certification, and the protected production environment.
-  The certification record is currently blocked.
+  candidate-bound certification, and the protected production Environment.
+  Repository evidence and a read-only live query on 2026-08-28 establish a
+  required reviewer whose GitHub type is `User`; the workflow consumes that
+  Environment at its deploy job. Codex cannot satisfy or bypass that rule.
+  The structured deployment-status and scope fields in this artifact are the
+  controlling status record. Any future Environment change requires separate
+  authorization and repository attestation and is outside this planning task.
+
+### Explicit provisional tranche ownership for repaired topology seams
+
+| Current owner | Provisional tranche ownership | Required invariant |
+|---|---|---|
+| `apps/site/scripts/service-worker-finalization.ts` | Tranche 3; reverify in Tranches 7 and 8 | Deterministic cache identity and complete safe precache closure |
+| `apps/site/src/study-storage/app-database.ts` | Characterize in Tranche 1; preserve in Tranche 7 | One scoped connection owner and unchanged runtime lifecycle |
+| `apps/site/src/study-storage/app-database/legacy-import.ts` | Characterize in Tranche 1; preserve in Tranche 7 | Abortability, decoding, destination truth, quarantine, and atomic import |
+| `content/authoring/visuals/releases/RELEASE-INVARIANTS.md` | Tranches 4 and 6; reclose in Tranche 8 | Inventory evidence never becomes lifecycle authority |
+| `content/authoring/visuals/releases/tools.json` | Tranche 4; reclose in Tranche 8 | Exact 65-record release identity, bytes, hashes, and gates |
+| `content/authoring/visuals/releases/comparisons.json` | Tranche 4; reclose in Tranche 8 | Exact 14-record membership, distinctions, hashes, and scored-use gates |
+| `content/authoring/visuals/releases/scenes.json` | Tranche 6; reclose in Tranche 8 | Exact 18-scene identity, artifacts, companion records, and gates |
+| `content/authoring/visuals/releases/verify-visual-release.mjs` | Required in Tranches 4, 6, and 8 | Complete release graph and artifact closure |
 
 ### Current evidence limits that the final plan must reconcile
 
-- `docs/OPEN.md` records a passing integrated 198-case browser matrix, and
+- `docs/OPEN.md` records a passing integrated 198-case browser matrix, and the
+  retained historical
   [Certification run 33165017762](https://github.com/mannyc2/nycustodianexam/actions/runs/33165017762)
-  succeeded for the exact observed baseline
+  succeeded for its exact pre-Step-2 baseline
   `9fc7dcacfc961752e5d9a2cedbc426deead54a05`.
   `apps/site/browser-tests/README.md` still carries pre-run wording that says
   the integrated candidate must rerun. Treat that README wording as stale
@@ -230,14 +279,14 @@ implemented candidate is merged, previewed, and certified.
 | `task-navigation` | `product/ROUTES.md`, `product/SCREEN_STATES.md`, `product/COMPONENT_ARCHITECTURE.md`, and `product/DESIGN_SYSTEM.md` | `null` | Accepted hierarchy, labels, route behavior, and merge/artifact coordinates |
 | `consumer-visual-system` | `product/DESIGN_SYSTEM.md` | `null` | Accepted visual territory, token contract, and merge/artifact coordinates |
 | `ui-foundations-responsive-contract` | `product/COMPONENT_ARCHITECTURE.md` and `product/DESIGN_SYSTEM.md` | `null` | Accepted anatomy, route archetypes, responsive rules, migration map, and coordinates |
-| `integrated-consumer-validation` | `product/CONTENT_DESIGN.md`, `product/ROUTES.md`, `product/COMPONENT_ARCHITECTURE.md`, and `product/DESIGN_SYSTEM.md` plus final retained validation evidence | `null` | Acceptable implementation disposition, zero unresolved critical failures, every condition assigned, and exact coordinates |
+| `integrated-consumer-validation` | `product/CONTENT_DESIGN.md`, `product/ROUTES.md`, `product/COMPONENT_ARCHITECTURE.md`, `product/DESIGN_SYSTEM.md`, and `docs/OPEN.md` plus final retained validation evidence | `null` | Acceptable implementation disposition, zero unresolved critical failures, every condition assigned, and exact coordinates |
 | `parallel-step-04-source-inventory` | This plan and the current-file map | `null` | Exact merged commit, complete path/string/selector assignment, drift reconciliation |
 | `rollout-feature-flag-decision` | Release section of the final plan | `null` | Optional Git decision only if the current no-runtime-flag hard cut is replaced |
 | `observability-privacy-decision` | Observability section of the final plan | `null` | Optional Git decision only if remote measurement or logging is proposed |
-| `production-authorization-evidence` | Protected environment and candidate-bound certification | `null` | Post-graduation release gate; remains null when Plan 009 becomes executable and is populated only after candidate certification |
+| `production-authorization-evidence` | Deployment handoff, production workflow, and candidate-bound certification record | `null` | Post-graduation technical evidence only; remains null, is out of scope here, and cannot bypass the live User reviewer |
 
-Participant evidence and human evidence both remain `none`; neither is a
-future gate under `CODEX-ONLY-UIUX-V1`. Recovered Plan 004 prototypes and
+The structured metadata fields are the sole evidence-state channel; narrative
+text cannot populate a dependency slot. Recovered Plan 004 prototypes and
 partial Plan 004/005 draft-branch artifacts do not populate any slot.
 
 ## Codex-only authorization and review evidence
@@ -266,22 +315,19 @@ byte-identical to the reviewed subject and rejects every other post-review
 change.
 
 <!-- PLAN_009_CODEX_REVIEW_RECORDS_START -->
-Independent Codex review evidence for this immutable subject is recorded
-without hidden reasoning in `codexReviewLedger`. Each result binds the exact
-review occurrence, subject/base commits, and all three packet Git blobs.
+The current immutable-subject independent Codex reviews are pending. This block
+will be populated only after the repaired packet is committed, reviewed by
+exact commit and packet blob hashes, and found free of unresolved dissent.
 
 | Codex task ID | Disposition | Consensus / dissent | Record SHA-256 |
 |---|---|---|---|
-| `/root/topology_fact_check` | Accepted after repair | Root and independent review agree / none recorded after final recheck | `4aca1b647e25013b3c87e4aa0177101d2959032e179e7cb939be055efa326231` |
-| `/root/final_packet_consistency` | Accepted after repair | Root and independent review agree / none recorded after final recheck | `b6f2c074e627c5f71ab39ed26d0e5c336c57c9e3c64c1aa8fcec37f55961976f` |
-| `/root/validator_quality_review` | Accepted after repair | Root and independent review agree / none recorded after final recheck | `cefb779510564e7a1a5e41c821ac9401f5d2bff88bb9d3f35924056f4f9f459b` |
 <!-- PLAN_009_CODEX_REVIEW_RECORDS_END -->
 
-Those reviews will be Codex evidence, not human evidence or a human usability test.
-The interface does not require or accept a human selector, decision owner,
-reviewer, participant round, sign-off, or approval artifact. Production remains
-unauthorized here; protected deployment workflows and candidate-bound
-technical certification remain separate execution controls.
+Codex review receipts are machine-agent evidence and never change the structured
+human-evidence fields. `CODEX-ONLY-UIUX-V1` defines the UI/UX evidence boundary
+only. Candidate certification and the live production Environment are separate
+technical controls; the existing required reviewer of type `User` remains
+outside this interface and cannot be satisfied by Codex.
 
 ## Contract adoption procedure after Steps 02–05 land
 
@@ -294,9 +340,10 @@ This is a re-authoring gate, not an executor step:
 3. Verify each attestation's decision SHA, merge SHA, CI run/head, independent
    Codex review task IDs and canonical record hashes, artifact hashes,
    conditions, and canonical promotions against merged Git history and bytes.
-4. Verify the Step 05 integrated decision is `accept for implementation` or
-   `accept with conditions`, with zero unresolved critical failures. Preserve
-   every condition verbatim and assign it to a tranche and production gate.
+4. Verify the Step 05 integrated attestation uses one of its schema-defined
+   implementation dispositions, with zero unresolved critical failures.
+   Preserve every condition verbatim and assign it to a tranche and technical
+   candidate gate.
 5. Resolve the Step 04 attestation's exact source-inventory commit. Prove it is
    an ancestor of the new base; reconcile every mapped source string, selector,
    component, route, generated projection, and test consumer against the live
@@ -336,8 +383,15 @@ paths before a release candidate exists.
 If accepted upstream decisions require a flag or staged traffic rollout, stop
 and specify its canonical owner, offline behavior, cache/version identity,
 durable-state behavior, privacy/analytics impact, cleanup condition, tests, and
-rollback semantics before implementation. A generic flag framework is not an
-authorized fallback.
+rollback semantics before implementation. A generic flag framework is not a
+specified fallback.
+
+Rollback eligibility is global and cannot be weakened by a tranche-local
+presentation boundary. Direct revert is permitted only for the current
+unmerged tip or a dependency-closed suffix. Any earlier or nonclosed recovery
+requires a forward fix, full rebuild, inactive preview, and recertification.
+Atomic file groups below identify what must move together; they do not make an
+earlier tranche, arbitrary range, or isolated presentation subset revertible.
 
 ## Provisional eight-tranche dependency order
 
@@ -360,8 +414,8 @@ conditions must replace or explicitly ratify it after rebase.
 
 **Contract slots:** All accepted Step 02–05 repository-attestation coordinates,
 including the Step 04 source-inventory commit, are prerequisites for final
-sequencing. The three
-current confounder dispositions require explicit maintained-contract readings;
+sequencing. The four current confounder dispositions require explicit
+maintained-contract readings;
 none is supplied by this draft.
 
 **Scope:** Reconcile the exact current path/string/selector inventory and add
@@ -369,13 +423,15 @@ behavioral characterization around `generate-pages.tsx`,
 `session-navigation.ts`, the question, review, hazard, and simulation
 bootstraps, and offline-pack restoration. Distinguish the simulation renderer's
 existing save gating from the state-blind generated question/hazard links. Keep
-any authorized correctness repair in a separate atomic slice from styling or
-language changes.
+settings preference restoration in scope as a separate correctness boundary.
+Keep any separately repository-attested correctness repair in its own atomic
+slice, separate from styling or language changes.
 
 **Preserved invariant:** No visual observation is allowed to mask a current
 state, restoration, navigation, or variant correctness defect.
 
-**Review slice:** Characterize and, only if separately authorized, resolve:
+**Review slice:** Characterize and, only after separate repository attestation,
+resolve in its own slice:
 
 1. generated Previous/Next links whose replace-navigation policy does not
    consult the player commit/restoration state;
@@ -384,16 +440,28 @@ state, restoration, navigation, or variant correctness defect.
 3. question review documents that carry `review-player` route identity while
    the shared question bootstrap renders the current practice composition, plus
    hazard review entries that currently link to hazard-player practice routes
-   even though the maintained state contract requires explicit review variants.
+   even though the maintained state contract requires explicit review variants;
+   and
+4. `apps/site/src/settings/react/settings.tsx`, which initializes default
+   preferences with `busy=false`, begins the authoritative IndexedDB load
+   asynchronously, persists the current React projection, and leaves preference
+   controls plus Save active before restoration resolves. Require an explicit
+   restoring state and disable every preference control and Save until
+   authoritative load or a visible handled failure completes.
 
 **Verification:** Run focused unit and browser tests for history/reload,
 pending/failed durable work, restoration-versus-empty, explicit review/practice
-composition, focus, accessibility-tree state, and answer-leak closure. Then run
+composition, focus, accessibility-tree state, and answer-leak closure. Add a
+focused delayed-settings-load test that proves all preference edits and Save are
+disabled, no default write occurs, stored values win after success, and a load
+failure exits restoring only through a visible handled-failure state. Then run
 `bun run verify` and the complete browser suite on exact Bun 1.4.0.
 
-**Rollback boundary:** Revert each characterization or correctness slice
-independently. No database version, record schema, cache protocol, route scope,
-content artifact, or visual contract changes in this tranche.
+**Rollback boundary:** Direct revert is permitted only for the current unmerged
+tip or a dependency-closed suffix. Any earlier or nonclosed recovery requires a
+forward fix, full rebuild, inactive preview, and recertification. This tranche
+cannot change database versions, record schemas, cache protocols, route scope,
+content artifacts, or visual contracts.
 
 **STOP conditions:** Stop on an incomplete inventory, irreproducible behavior,
 conflict with maintained state contracts, any fix that needs a new product
@@ -425,9 +493,11 @@ motion; 320 CSS-pixel reflow; target sizing; static/island parity; zero
 React/Effect/study-runtime closure on static routes while retaining the minimal
 preference/connectivity boot; and per-family raw/gzip/Brotli measurements.
 
-**Rollback boundary:** Revert component/CSS/template changes together. No
-controller, durable record, content schema, IndexedDB, service-worker, or asset
-identity changes.
+**Rollback boundary:** Direct revert is permitted only for the current unmerged
+tip or a dependency-closed suffix. Any earlier or nonclosed recovery requires a
+forward fix, full rebuild, inactive preview, and recertification. The atomic
+unit contains component, CSS, and template changes and cannot include controller,
+durable-record, content-schema, IndexedDB, service-worker, or asset-identity changes.
 
 **STOP conditions:** Stop while any accepted token/foundation slot is null, if
 one migrated element receives both old and new rules, if a component needs
@@ -443,6 +513,8 @@ behavior, and route inventory are mandatory.
 **Scope:** Migrate the generator-owned header, footer, skip link, breadcrumbs,
 document wrapper, primary/utility navigation, player shell, static
 offline/status shell, and terminal documents as one coordinated producer cut.
+Keep `apps/site/scripts/service-worker-finalization.ts` as the deterministic
+cache-version and precache primitive rather than duplicating that logic.
 
 **Preserved invariant:** The result remains a multi-document site with one
 useful `main`, one route heading, truthful recovery, stable route identity,
@@ -458,9 +530,11 @@ keyboard navigation; no-JavaScript usefulness; 320px and true-400% reflow;
 static-route closure; cached navigation; terminal identity; print chrome
 removal; and Chromium/Firefox/WebKit route checks.
 
-**Rollback boundary:** Revert generator/shell/CSS/service-worker-finalization
-changes together and rebuild the entire closure. Never upload a cache namespace
-from a half-migrated shell.
+**Rollback boundary:** Direct revert is permitted only for the current unmerged
+tip or a dependency-closed suffix. Any earlier or nonclosed recovery requires a
+forward fix, full rebuild, inactive preview, and recertification. Generator,
+shell, CSS, and service-worker finalization form one atomic closure; never upload
+a cache namespace from a half-migrated shell.
 
 **STOP conditions:** Stop on a path/label/grouping absent from accepted
 contracts, a proposal to generate omitted route placeholders, duplicated
@@ -479,6 +553,9 @@ corrections information, and other static/reference surfaces assigned here by
 the rebased inventory. The hazard landing belongs only to Tranche 6; the status
 and recovery route belongs only to Tranche 7. Omitted maintained routes remain
 omitted until their existing publication gates pass.
+Treat `RELEASE-INVARIANTS.md`, `tools.json`, and `comparisons.json` under
+`content/authoring/visuals/releases/` as immutable consumption contracts and run
+`verify-visual-release.mjs`; this tranche owns presentation, not lifecycle data.
 
 **Preserved invariant:** Substantive semantic HTML, exact fact states,
 provenance, taxonomy, practice eligibility, image identity, version identity,
@@ -496,9 +573,11 @@ text reflow; image dimensions and no decisive cropping; offline-stale behavior;
 print transformation; cross-route archetype comparison; and zero React/Effect
 closure.
 
-**Rollback boundary:** Revert generator templates, CSS, and copy mappings
-together and regenerate. Do not change compiled evidence, taxonomy, source
-records, visual bytes, or practice eligibility.
+**Rollback boundary:** Direct revert is permitted only for the current unmerged
+tip or a dependency-closed suffix. Any earlier or nonclosed recovery requires a
+forward fix, full rebuild, inactive preview, and recertification. Generator
+templates, CSS, and copy mappings form one atomic closure and cannot change
+compiled evidence, taxonomy, source records, visual bytes, or practice eligibility.
 
 **STOP conditions:** Stop if copy changes an exam fact or unknown, an accepted
 copy/archetype slot is absent, a static route gains runtime closure, an omitted
@@ -524,7 +603,7 @@ remains answer-free.
 
 **Review slice:** Make validated route/state identity select the accepted named
 composition. Keep renderer-neutral controllers and persistence unchanged unless
-a separately authorized correctness slice proves a necessary change. Static
+a separate repository-attested correctness slice proves a necessary change. Static
 fallback and island semantics migrate together.
 
 **Verification:** Commit failure/success/reconciliation; duplicate prevention;
@@ -533,9 +612,11 @@ answer-leak scans; keyboard completion; focus and announcements; back/forward,
 reload, and BFCache; pinned offline content; long-content reflow; forced colors;
 reduced motion; and bundle ceilings.
 
-**Rollback boundary:** Revert route generation, React composition, and CSS as
-one slice. No durable schema or event-shape change is allowed; extract one into
-a separately reviewed data migration if accepted requirements demand it.
+**Rollback boundary:** Direct revert is permitted only for the current unmerged
+tip or a dependency-closed suffix. Any earlier or nonclosed recovery requires a
+forward fix, full rebuild, inactive preview, and recertification. Route
+generation, React composition, and CSS form one atomic closure. Durable schema
+or event-shape changes require a separately reviewed data migration.
 
 **STOP conditions:** Stop if feedback can reveal after in-memory-only failure,
 review mounts practice composition, navigation can leave an illegal state,
@@ -552,6 +633,9 @@ rules, and integrated-validation conditions are mandatory.
 explicit hazard-review variant assigned by Tranche 5, plus simulation
 setup/player/results, shared controls, viewport, marker/zone navigation,
 results, generated fallback, and bootstraps.
+Consume `content/authoring/visuals/releases/scenes.json` without changing its
+18-scene identity, artifact, companion-record, or publication-gate closure, and
+run `verify-visual-release.mjs` for this tranche.
 
 **Preserved invariant:** Zero marks remains a valid explicitly confirmed input;
 visual and nonvisual tasks remain distinct constructs; simulation withholds
@@ -569,8 +653,11 @@ reconciliation; no early simulation feedback; exact asset receipt closure;
 focus/live regions; 320px/400% reflow; forced colors; reduced motion; offline
 continuation; grayscale and print behavior; and bundle ceilings.
 
-**Rollback boundary:** Revert component, generator, and CSS changes atomically.
-Do not alter persisted records, cache keys, asset hashes, IDs, or eligibility.
+**Rollback boundary:** Direct revert is permitted only for the current unmerged
+tip or a dependency-closed suffix. Any earlier or nonclosed recovery requires a
+forward fix, full rebuild, inactive preview, and recertification. Component,
+generator, and CSS changes form one atomic closure and cannot alter persisted
+records, cache keys, asset hashes, IDs, or eligibility.
 
 **STOP conditions:** Stop if controls obscure decisive pixels or require a
 precision gesture, simulation exposes early feedback, asset identity changes,
@@ -588,6 +675,11 @@ preferences, transfer, reset, review rebuild, offline packs, correction draft,
 the status/recovery route and its terminal-state presentation, print builder,
 and print preview. Recompute service-worker and pack navigation closure only
 where the accepted route/component cut requires it.
+Preserve `apps/site/src/study-storage/app-database.ts` as the scoped lifecycle
+owner and `app-database/legacy-import.ts` as the atomic import/quarantine owner;
+do not fold either into UI state. Preference controls and Save remain disabled
+through the explicit restoring state until authoritative load or a visible
+handled failure completes.
 
 **Preserved invariant:** Restoration precedes empty/success claims; no pack
 download or correction submit is implicit; pack states remain distinct and
@@ -609,10 +701,12 @@ survival; service-worker install/wait/activate/update; offline navigation;
 deterministic print regeneration; answer separation; Letter/A4 normal/large
 layouts; grayscale; physical print; accessibility; and bundles.
 
-**Rollback boundary:** UI-only changes revert normally. An IndexedDB or cache
-protocol migration cannot be rolled back by serving old JavaScript. Require
-backward-read compatibility or a tested forward-fix runbook before merging any
-such separately authorized sub-slice.
+**Rollback boundary:** Direct revert is permitted only for the current unmerged
+tip or a dependency-closed suffix. Any earlier or nonclosed recovery requires a
+forward fix, full rebuild, inactive preview, and recertification. An IndexedDB
+or cache-protocol migration cannot be recovered by serving old JavaScript;
+require backward-read compatibility or a tested forward-fix runbook before any
+separately repository-attested state slice.
 
 **STOP conditions:** Stop on any unattested state/cache change, restoring data
 presented as empty, failed updates displacing the active pack, correction intake
@@ -623,13 +717,15 @@ Codex technical print evidence, or null contract slots.
 
 **Contract slots:** Every accepted Step 02–05 repository-attestation coordinate,
 the exact Step 04 inventory commit, every integrated-validation condition and disposition, and
-any separately accepted rollout/observability decision are mandatory.
-Production deployment controls remain a later technical gate.
+any separately accepted rollout/observability decision are mandatory. The live
+production Environment boundary remains outside every tranche.
 
 **Scope:** Give every old selector, token, string, template, component variant,
 and generated projection one disposition: removed, retained with an accepted
 reason, or owned by a non-UI compatibility boundary. Remove temporary migration
 checks and produce one canonical release candidate for inactive preview.
+Re-run `content/authoring/visuals/releases/verify-visual-release.mjs` to close
+the unchanged tool, comparison, and scene release graph over the candidate.
 
 **Preserved invariant:** The candidate has one implementation, no dual renderer
 or hidden legacy theme, no unassigned visible string, no production-only code
@@ -641,10 +737,11 @@ runs the complete automated matrix, and earns merge through independent Codex
 review and CI. Phase B begins only after that exact commit is merged to `main`:
 upload the inactive exact-main preview, complete Codex-executed
 accessibility/zoom/device/print checks, rehearse the supported rollback
-boundary, and land a certification-
-attestation-only follow-up when the evidence is complete. Phase C is later:
-satisfy protected production-deployment controls and deploy the certified main
-commit.
+boundary, and land a certification-attestation-only follow-up when the evidence
+is complete. The planning and migration sequence ends there. No Phase C
+deployment action exists in Plan 009: the live `User` reviewer rule cannot be
+satisfied by Codex, and Environment mutation requires separate authorization
+and attestation.
 
 **Verification:** `bun run verify`; full Chromium/Firefox/WebKit; local workerd;
 route/canonical/artifact/answer-leak closure; per-family bundle measurements;
@@ -655,25 +752,24 @@ assistive-technology matrix; true
 preview checks; certification validator; inventory reconciliation; and clean
 Git diff.
 
-**Rollback boundary:** Before production, revert the precise tranche or the
-ordered migration range and rebuild. After production, an earlier version may
-be served only after a rehearsed Cloudflare procedure proves it can read any
-already-upgraded IndexedDB/cache state. Otherwise stop and use an authorized
-forward fix followed by a fresh candidate and certification.
+**Rollback boundary:** Direct revert is permitted only for the current unmerged
+tip or a dependency-closed suffix. Any earlier or nonclosed recovery requires a
+forward fix, full rebuild, inactive preview, and recertification. Platform
+version switching cannot bypass dependency closure or durable-state and cache
+compatibility proof.
 
 **STOP conditions:** Do not enter Phase A if any accepted dependency is
 null/unreachable/mismatched, Step 5 lacks an acceptable implementation
 disposition or has a critical failure, or a condition has no owner. During
 Phase A, stop and correct any legacy coexistence, budget, semantic,
-accessibility, offline, print, or rollback failure before merge. A blocked
-certification record and absent production authorization are expected before
-Phase B and do not prevent branch completion; they block Phase C production.
+accessibility, offline, print, or rollback failure before merge. Candidate work
+stops after Phase B; production workflow dispatch is not part of this plan.
 
 ## Cross-tranche test and certification strategy
 
 Each implementation slice must record its exact base/head, dependency snapshot,
 source-inventory hash, changed canonical owners, generated projections, test
-counts, bundle report, known gaps, and revert commit or forward-fix boundary.
+counts, bundle report, known gaps, and recovery boundary.
 Verification runs at four levels:
 
 1. **Focused characterization:** state/controller/pure-generation unit tests for
@@ -687,7 +783,8 @@ Verification runs at four levels:
 4. **Candidate certification after Tranche 8:** all three browser engines, local
    workerd, inactive remote preview, Codex-executed
    AT/zoom/device/physical-print matrix,
-   rollback rehearsal, and candidate-bound production record.
+   rollback rehearsal, and candidate-bound certification record. These checks
+   do not satisfy the live production Environment reviewer.
 
 Expected final-plan commands, after exact Bun 1.4.0 dependencies are installed:
 
@@ -713,13 +810,13 @@ motion, focus/live-region mutations, and print-media behavior. Current design
 constraints require 44 CSS-pixel primary targets and no unexplained exception
 below the WCAG 2.2 AA minimum.
 
-Production additionally stops until Codex executes and records the exact
-candidate passing NVDA+Firefox, VoiceOver+Safari on macOS and iOS,
+Candidate certification additionally requires Codex to execute and record the
+exact candidate checks for NVDA+Firefox, VoiceOver+Safari on macOS and iOS,
 TalkBack+Chrome on Android, JAWS when licensed, true 400% zoom in
 Chrome/Firefox/Safari, US Letter and A4 in normal and large print, and grayscale
-physical print. Missing technical capability yields preview only with the exact
-gap recorded; it does not create a human-review or human-usability gate, and
-`notHumanUsabilityTested=true` remains truthful.
+physical print. Missing technical capability yields preview-only evidence with
+the exact gap recorded. These checks cannot satisfy the live Environment
+reviewer and do not change any structured human-evidence field.
 
 Current interactive closure ceilings are:
 
@@ -813,19 +910,21 @@ merged-main certification:
 3. merge the candidate and build exact current `main`;
 4. upload an inactive preview version;
 5. complete candidate-bound Codex technical certification and its attestation-only
-   follow-up;
-6. satisfy separate protected production-deployment controls; and
-7. deploy only that certified main commit.
+   follow-up; and
+6. stop before production workflow dispatch while the live required reviewer of
+   type `User` remains configured.
 
-There is no documented instant rollback workflow. Source rollback means revert
-or forward-fix on `main`, then rebuild, preview, and recertify. A final plan must
-also rehearse Cloudflare version rollback and prove compatibility with already-
-activated service-worker caches and durable state before promising it.
+There is no documented instant rollback workflow. Direct revert remains limited
+to the current unmerged tip or a dependency-closed suffix. Every earlier or
+nonclosed recovery uses a forward fix, full rebuild, inactive preview, and
+recertification. Platform version switching cannot bypass source dependency
+closure or compatibility with already-activated service-worker caches and
+durable state.
 
 ## Ownership slots
 
-No individual or human reviewer is assigned by this draft. The final plan must
-bind each domain to exact Codex task IDs, independent Codex review task IDs,
+The final plan must bind each UI/UX domain to exact Codex task IDs, independent
+Codex review task IDs,
 repository attestations, and CI evidence:
 
 | Ownership domain | Current canonical owner | Required final Codex accountability record |
@@ -842,39 +941,38 @@ repository attestations, and CI evidence:
 | Print | Print model/controller/generation/CSS | Codex certification task + exact print evidence + CI |
 | Release/rollback | Deployment workflows and certification record | Technical workflow evidence; no planning-task deployment authority |
 
-Codex agents do not become human participants, reviewers, selectors, or
-approvers. `humanEvidence=none` and `notHumanUsabilityTested=true` remain fixed.
+Codex agents remain machine agents. Only structured metadata may encode current
+human-evidence state. The external GitHub reviewer type remains a deployment
+control and is not UI/UX evidence.
 
 ## Risk and rollback matrix
 
 | Risk boundary | Evidence-backed failure mode | Required containment | Rollback boundary |
 |---|---|---|---|
-| Generator breadth | Shell, copy, routes, bootstraps, offline closure, and style projection share one producer | Small route-family diffs plus complete regeneration and closure checks | Revert generator/CSS slice and rebuild all projections |
-| Static/island parity | Shared classes and fallback/island markup can diverge | Migrate both representations in one tranche and test accessibility-tree parity | Revert both, never retain dual variants |
-| Runtime ownership | Multiple islands can dispose shared runtime state incorrectly | One documented document-root owner and lifecycle characterization | Revert presentation; no per-island runtime fallback |
-| Answer boundary | Hidden copy/assets/chunks/caches can reveal answers | Full DOM/chunk/source-map/filename/precache scan every tranche | Reject candidate; restore prior answer-free closure |
-| IndexedDB | Forward schema change can make old code unsafe | No schema change by default; separate migration and compatibility proof | Forward fix unless backward-read is proven |
-| Service worker | New shell/cache activation can strand mixed clients | Active-client update tests and exact cache closure | Revert/rebuild only with cache compatibility proof |
-| Offline pack | Route/asset change alters required navigation and receipts | Recompute descriptor/finalizer closure and prove old active pack survival | Preserve prior active pack; reject incomplete generation |
-| Bundle size | Settings has six bytes gzip headroom | Per-tranche closure measurement; no speculative dependency | Revert imports/components; do not raise budget silently |
-| Accessibility | Visual success can hide semantic/focus/AT regressions | Automated semantic gates plus Codex-executed exact-candidate matrix | Preview only; no production |
-| Print | Screen redesign can clip or mix keys into blank packets | Deterministic and physical Letter/A4/grayscale checks | Revert print projection; retain job/content identity |
-| Release | No tested instant production rollback exists | Inactive preview, state/cache-compatible rehearsal, protected technical controls | Revert or forward-fix, then fresh preview/certification |
+| Generator breadth | Shell, copy, routes, bootstraps, offline closure, and style projection share one producer | Small route-family diffs plus complete regeneration and closure checks | Global eligibility rule; generator, CSS, and every generated projection remain one atomic closure |
+| Static/island parity | Shared classes and fallback/island markup can diverge | Migrate both representations in one tranche and test accessibility-tree parity | Global eligibility rule; static fallback and island presentation remain one atomic closure |
+| Runtime ownership | Multiple islands can dispose shared runtime state incorrectly | One documented document-root owner and lifecycle characterization | Global eligibility rule; no per-island runtime fallback or isolated presentation recovery |
+| Answer boundary | Hidden copy/assets/chunks/caches can reveal answers | Full DOM/chunk/source-map/filename/precache scan every tranche | Global eligibility rule plus a fresh answer-leak closure before candidate reuse |
+| IndexedDB | Forward schema change can make old code unsafe | No schema change by default; separate migration and compatibility proof | Forward fix unless the global direct-revert rule and backward-read proof both hold |
+| Service worker | New shell/cache activation can strand mixed clients | Active-client update tests and exact cache closure | Global eligibility rule plus cache compatibility and a complete rebuilt closure |
+| Offline pack | Route/asset change alters required navigation and receipts | Recompute descriptor/finalizer closure and prove old active pack survival | Preserve the prior active pack; use the global recovery rule for source changes |
+| Bundle size | Settings has six bytes gzip headroom | Per-tranche closure measurement; no speculative dependency | Global eligibility rule; otherwise remove excess through a forward fix and recertify |
+| Accessibility | Visual success can hide semantic/focus/AT regressions | Automated semantic gates plus Codex-executed exact-candidate matrix | Global eligibility rule; every recovery requires fresh affected accessibility evidence |
+| Print | Screen redesign can clip or mix keys into blank packets | Deterministic and physical Letter/A4/grayscale checks | Global eligibility rule; print projection and durable job/content identity remain atomic |
+| Release | No tested instant production rollback exists | Inactive preview, state/cache-compatible rehearsal, protected technical controls | Direct revert only under the global eligibility rule; otherwise mandatory forward-fix sequence |
 
 ## Explicit production stop conditions
 
-Production is stopped if any one of these is true:
+The structured production status remains blocking if any one of these is true:
 
-1. This artifact still says `status=provisional-prework`,
-   `decisionStatus=pending`, `requiredDependencyShas=null`, or
-   `mustRebaseAndReverify=true`. The permanently truthful no-human-evidence
-   fields are not release gates under `CODEX-ONLY-UIUX-V1`.
+1. Any provisional lifecycle or unbound-dependency field in the structured
+   metadata remains unchanged.
 2. Any accepted Step 02–05 decision, merge, artifact, result, Codex review,
    condition, or Step 04 inventory coordinate is missing, unmerged, unreachable,
    mismatched, or contradicted by its canonical consumer.
 3. Integrated validation is rejected, requests another round, contains an
    unresolved critical failure, or leaves an accepted condition unowned.
-4. The three current correctness confounders are not characterized and given an
+4. The four current correctness confounders are not characterized and given an
    explicit accepted disposition before their affected visual tranches.
 5. Current-route and exact source-inventory maps disagree or an old/new consumer
    remains unassigned.
@@ -898,6 +996,10 @@ Production is stopped if any one of these is true:
 14. `docs/certification/production-v1.json` remains blocked, required deployment
     coordinates remain absent, or protected technical production-deployment
     controls remain unsatisfied.
+15. The live `production` Environment retains its required reviewer of type
+    `User`. Codex cannot satisfy that rule, and this plan cannot modify it. Any
+    future Environment change requires separate authorization and repository
+    attestation.
 
 ## Non-goals
 
@@ -915,8 +1017,10 @@ Production is stopped if any one of these is true:
   correction submission as part of visual work.
 - Do not enable analytics, remote observability, production traffic, domain
   purchase, outreach, or deployment.
-- Do not mark Plans 004–008 complete or add this draft to the executable plan
-  index.
+- Do not dispatch the production workflow or change the live `production`
+  Environment, required-reviewer rule, branch policy, secrets, or variables.
+- Do not change any Plan 004–008 status or add this draft to the executable
+  plan index.
 
 ## Rebase, reverify, and graduation checklist
 

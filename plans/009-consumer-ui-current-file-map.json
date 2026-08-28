@@ -6,13 +6,22 @@
     "status": "provisional-prework",
     "participantEvidence": "none",
     "humanEvidence": "none",
+    "humanParticipantCount": 0,
     "notHumanUsabilityTested": true,
     "decisionStatus": "pending",
     "requiredDependencyShas": null,
     "mustRebaseAndReverify": true,
     "productionAuthorization": false,
+    "productionDeploymentStatus": "blocked-live-user-reviewer",
+    "productionDeploymentScope": "out-of-scope",
+    "liveEnvironmentReviewerType": "User",
+    "liveEnvironmentChangeAuthorization": "separate-required",
+    "reviewCycleStatus": "prior-cycle-invalidated",
+    "priorReviewReceiptsReusable": false,
+    "rejectedReviewHeadSha": "8fc6255e5b115cbf7733f5d663328ec1c8a146d3",
+    "reviewSubjectBaseSha": "15b625cfe8e3cde74a91cfe824b9c270d6a08f37",
     "authorizationInterface": "CODEX-ONLY-UIUX-V1",
-    "observedAtSha": "9fc7dcacfc961752e5d9a2cedbc426deead54a05"
+    "observedAtSha": "d823e928b0b57f589fd1c64a85db4ae0f6d2f0d1"
   },
   "observedAt": "2026-08-28",
   "scope": {
@@ -27,15 +36,21 @@
     "interfaceId": "CODEX-ONLY-UIUX-V1",
     "researchReviewDecisionSignoff": "codex-only",
     "humanEvidence": "none",
+    "humanParticipantCount": 0,
     "notHumanUsabilityTested": true,
     "agentsCountAsHumans": false,
-    "humanApprovalArtifactRequired": false,
+    "humanUiUxApprovalArtifactRequired": false,
     "requiredEvidence": [
       "exact-repository-attested-step-02-through-step-05-decision-shas",
       "independent-codex-subagent-review-records",
       "exact-ci-certification"
     ],
-    "productionDeploymentControls": "separate-technical-gates",
+    "productionDeploymentControls": "separate-technical-gates-including-live-user-reviewer",
+    "productionDeploymentStatus": "blocked-live-user-reviewer",
+    "productionDeploymentScope": "out-of-scope",
+    "liveEnvironmentReviewerType": "User",
+    "codexOnlyMaySatisfyLiveEnvironmentReview": false,
+    "liveEnvironmentChangeAuthorization": "separate-required",
     "productionAuthorization": false
   },
   "upstreamDecisionInputs": [
@@ -88,143 +103,7 @@
       "mustRebaseAndReverify": true
     }
   ],
-  "codexReviewLedger": [
-    {
-      "taskId": "/root/topology_fact_check",
-      "reviewOccurrenceId": "codex-only-uiux-v1-topology-final",
-      "reviewKind": "topology-and-source-fact-check",
-      "reviewedCommitSha": "48694b541d07869a6a3e5d7a31c2e7a811f5fb2d",
-      "reviewedBaseSha": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
-      "reviewedPacketBlobs": {
-        "plans/009-consumer-ui-current-file-map.json": "e74a436847fa5269a01fbd2ae4e82f95cbab0744",
-        "plans/009-consumer-ui-migration-plan.draft.md": "f3ec2ebe72a8b3ee18b1621c13c9776ead06961e",
-        "plans/validate-009-migration-draft.mjs": "48ed450727575b95f89fd0496135a2af46779d6d"
-      },
-      "findingIds": [
-        "topology-load-bearing-owner-omissions",
-        "static-route-runtime-closure-misstatement",
-        "navigation-confounder-incomplete-family-scope",
-        "review-confounder-missing-hazard-variant",
-        "browser-evidence-status-misclassification",
-        "preview-certification-production-sequencing"
-      ],
-      "findingSummary": "Repaired canonical-owner and load-bearing coverage for correction, simulation, settings, offline, review, and runtime seams; retained the preference/connectivity bootstrap while enforcing zero React/Effect static closure; expanded navigation and review confounder scope; classified the browser README as stale against the exact passing baseline; and ordered merge, inactive preview, candidate certification, protected deployment, and rollback without granting implementation or production authority.",
-      "evidencePaths": [
-        "plans/009-consumer-ui-current-file-map.json",
-        "plans/009-consumer-ui-migration-plan.draft.md",
-        "plans/validate-009-migration-draft.mjs",
-        "product/ARCHITECTURE_CONSTRAINTS.md",
-        "product/ROUTES.md",
-        "product/SCREEN_STATES.md",
-        "apps/site/scripts/generate-pages.tsx",
-        "apps/site/src/route-registry.ts",
-        "apps/site/src/settings/preferences-boot.ts",
-        "apps/site/src/session-navigation.ts",
-        "apps/site/src/question-player/react/bootstrap.tsx",
-        "apps/site/src/hazard-player/react/bootstrap.tsx",
-        "apps/site/src/simulation/react/bootstrap-player.tsx",
-        "apps/site/src/offline-packs/react/pack-manager.tsx",
-        "apps/site/src/study-storage/app-database/storage-model.ts",
-        "scripts/verify-artifacts.ts",
-        "apps/site/browser-tests/README.md",
-        "docs/OPEN.md",
-        "docs/DEPLOYMENT.md",
-        "docs/certification/production-v1.json",
-        ".github/workflows/cloudflare-preview.yml",
-        ".github/workflows/cloudflare-production.yml"
-      ],
-      "disposition": "accepted-after-repair",
-      "consensus": "root-and-independent-review-agree",
-      "dissent": "none-recorded-after-final-recheck",
-      "recordSha256": "4aca1b647e25013b3c87e4aa0177101d2959032e179e7cb939be055efa326231"
-    },
-    {
-      "taskId": "/root/final_packet_consistency",
-      "reviewOccurrenceId": "codex-only-uiux-v1-consistency-final",
-      "reviewKind": "packet-consistency-and-contract-review",
-      "reviewedCommitSha": "48694b541d07869a6a3e5d7a31c2e7a811f5fb2d",
-      "reviewedBaseSha": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
-      "reviewedPacketBlobs": {
-        "plans/009-consumer-ui-current-file-map.json": "e74a436847fa5269a01fbd2ae4e82f95cbab0744",
-        "plans/009-consumer-ui-migration-plan.draft.md": "f3ec2ebe72a8b3ee18b1621c13c9776ead06961e",
-        "plans/validate-009-migration-draft.mjs": "48ed450727575b95f89fd0496135a2af46779d6d"
-      },
-      "findingIds": [
-        "tranche-owner-overlap",
-        "global-preference-and-reveal-seams",
-        "production-authorization-phase",
-        "dependency-consumer-parity",
-        "baseline-ci-provenance",
-        "codex-only-human-evidence-stop",
-        "canonical-state-content-owner-omissions",
-        "effect-guidance-installation-fact",
-        "review-occurrence-provenance",
-        "markdown-reference-link-smuggling",
-        "inline-comment-separator-smuggling",
-        "populated-ledger-self-test-oracle"
-      ],
-      "findingSummary": "Recheck confirms repairs for route-family tranche ownership, global preference and commit/reveal seams, dependency consumers, baseline CI provenance, Codex-only evidence semantics, omitted durable-content owners, Effect guidance wording, immutable review provenance, fail-closed Markdown reference-link and dual comment projections, and the populated-ledger self-test oracle. Technical deployment controls remain separate and non-authorizing.",
-      "evidencePaths": [
-        "plans/009-consumer-ui-current-file-map.json",
-        "plans/009-consumer-ui-migration-plan.draft.md",
-        "plans/validate-009-migration-draft.mjs",
-        "product/ROUTES.md",
-        "apps/site/scripts/generate-pages.tsx",
-        "apps/site/src/settings/preferences-boot.ts",
-        "apps/site/src/question-player/commit-and-reveal.ts",
-        "apps/site/src/hazard-player/commit-and-reveal.ts",
-        "apps/site/src/verified-content.ts",
-        "apps/site/src/attempt-receipt.ts",
-        "apps/site/src/trusted-release-content.ts",
-        "apps/site/src/delivery-manifest.ts",
-        "apps/site/src/review/persistence.ts",
-        "apps/site/src/review/projection.ts",
-        "apps/site/src/settings/review-rebuild.ts",
-        "plans/007-specify-ui-foundations-and-responsive-contract.md",
-        "plans/008-run-integrated-consumer-ux-validation.md",
-        "docs/OPEN.md",
-        "docs/DEPLOYMENT.md",
-        "docs/certification/production-v1.json",
-        "package.json",
-        "bun.lock"
-      ],
-      "disposition": "accepted-after-repair",
-      "consensus": "root-and-independent-review-agree",
-      "dissent": "none-recorded-after-final-recheck",
-      "recordSha256": "b6f2c074e627c5f71ab39ed26d0e5c336c57c9e3c64c1aa8fcec37f55961976f"
-    },
-    {
-      "taskId": "/root/validator_quality_review",
-      "reviewOccurrenceId": "codex-only-uiux-v1-validator-final",
-      "reviewKind": "validator-integrity-review",
-      "reviewedCommitSha": "48694b541d07869a6a3e5d7a31c2e7a811f5fb2d",
-      "reviewedBaseSha": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
-      "reviewedPacketBlobs": {
-        "plans/009-consumer-ui-current-file-map.json": "e74a436847fa5269a01fbd2ae4e82f95cbab0744",
-        "plans/009-consumer-ui-migration-plan.draft.md": "f3ec2ebe72a8b3ee18b1621c13c9776ead06961e",
-        "plans/validate-009-migration-draft.mjs": "48ed450727575b95f89fd0496135a2af46779d6d"
-      },
-      "findingIds": [
-        "validator-parent-and-blob-identity",
-        "validator-provisional-evidence-guards",
-        "validator-semantic-projection-regressions",
-        "validator-final-ledger-self-tests",
-        "validator-post-review-binding"
-      ],
-      "findingSummary": "Exact parent and packet blobs match the supplied immutable subject; pending-ledger validation passes with 239 negative tests; a disposable canonical three-record ledger fixture passes with 243 negative tests, including tampered record, occurrence, record-hash, and rendered review-hash rejection; immutable byte binding remains enforced.",
-      "evidencePaths": [
-        "plans/validate-009-migration-draft.mjs",
-        "plans/009-consumer-ui-migration-plan.draft.md",
-        "plans/009-consumer-ui-current-file-map.json",
-        "plans/README.md",
-        "docs/certification/production-v1.json"
-      ],
-      "disposition": "accepted-after-repair",
-      "consensus": "root-and-independent-review-agree",
-      "dissent": "none-recorded-after-final-recheck",
-      "recordSha256": "cefb779510564e7a1a5e41c821ac9401f5d2bff88bb9d3f35924056f4f9f459b"
-    }
-  ],
+  "codexReviewLedger": [],
   "dependencySlots": [
     {
       "id": "consumer-language",
@@ -302,7 +181,8 @@
         "product/CONTENT_DESIGN.md",
         "product/ROUTES.md",
         "product/COMPONENT_ARCHITECTURE.md",
-        "product/DESIGN_SYSTEM.md"
+        "product/DESIGN_SYSTEM.md",
+        "docs/OPEN.md"
       ],
       "coordinateKind": "git-and-artifact",
       "participantEvidence": "none",
@@ -365,8 +245,12 @@
     {
       "id": "production-authorization-evidence",
       "sourcePlan": null,
-      "purpose": "post-graduation candidate-bound CI certification and protected deployment-control evidence; this remains null when Plan 009 becomes executable and no Git SHA is assumed",
-      "canonicalConsumers": ["docs/certification/production-v1.json"],
+      "purpose": "post-graduation candidate-bound certification and live protected-deployment evidence; this remains null and cannot be satisfied by this planning task",
+      "canonicalConsumers": [
+        "docs/DEPLOYMENT.md",
+        ".github/workflows/cloudflare-production.yml",
+        "docs/certification/production-v1.json"
+      ],
       "coordinateKind": "technical-deployment-evidence",
       "participantEvidence": "none",
       "decisionStatus": "pending",
@@ -404,6 +288,13 @@
       "areas": ["component", "state", "build", "deployment"],
       "role": "Maintained renderer, runtime-root, workspace, delivery, and privacy constraints.",
       "migrationSeam": "Constrains migration mechanics without supplying pending consumer design decisions.",
+      "authority": "maintained-authority"
+    },
+    {
+      "path": "product/CONTENT_DESIGN.md",
+      "areas": ["content", "component", "accessibility"],
+      "role": "Maintained Codex-only consumer-language safety envelope covering copy roles, voice, claims, internal wording, typed failures, and accessible disclosure.",
+      "migrationSeam": "The accepted boundary constrains later copy migration but does not assign final route copy or populate this draft's deliberately null Step 02 coordinate slot.",
       "authority": "maintained-authority"
     },
     {
@@ -802,7 +693,8 @@
       "path": "apps/site/src/settings/react/settings.tsx",
       "areas": ["component", "state", "accessibility", "offline"],
       "role": "Large settings, preferences, transfer, reset, rebuild, and local diagnostics presentation.",
-      "migrationSeam": "Decompose presentation only around existing persistence operations and explicit destructive previews.",
+      "migrationSeam": "Tranche 1 must characterize and close the default-state restoration race; Tranche 7 may migrate presentation only after explicit restoring state disables preference edits and Save until authoritative load or handled failure completes.",
+      "trancheOwnership": ["tranche-01-correctness", "tranche-07-presentation"],
       "authority": "production-source"
     },
     {
@@ -918,6 +810,14 @@
       "authority": "build-release"
     },
     {
+      "path": "apps/site/src/study-storage/app-database.ts",
+      "areas": ["state", "offline", "build"],
+      "role": "Public scoped database Layer that owns connection lifecycle, pagehide/pageshow handling, and legacy-import capability.",
+      "migrationSeam": "Tranche 7 owns this invariant after Tranche 1 characterization; UI work must preserve one connection owner and cannot change its runtime or import lifecycle.",
+      "trancheOwnership": ["tranche-01-characterization", "tranche-07-invariant"],
+      "authority": "production-source"
+    },
+    {
       "path": "apps/site/src/study-storage/app-database/storage-model.ts",
       "areas": ["state", "offline", "print"],
       "role": "IndexedDB name, version 5, fifteen-store union, legacy database identities, and database service contract.",
@@ -932,11 +832,27 @@
       "authority": "production-source"
     },
     {
+      "path": "apps/site/src/study-storage/app-database/legacy-import.ts",
+      "areas": ["state", "offline", "test"],
+      "role": "Abortable legacy-database reader and atomic import, match, conflict-preservation, and quarantine boundary.",
+      "migrationSeam": "Tranche 7 owns this invariant after Tranche 1 characterization; presentation changes cannot weaken decoding, destination truth, quarantine, or transaction atomicity.",
+      "trancheOwnership": ["tranche-01-characterization", "tranche-07-invariant"],
+      "authority": "production-source"
+    },
+    {
       "path": "apps/site/public/sw.js",
       "areas": ["route", "offline", "deployment"],
       "role": "Service-worker template for versioned shell/runtime caches, exact active-pack lookup, local shells, and offline fallback.",
       "migrationSeam": "Shell/navigation changes must preserve cache ownership, pack bypass, and active-client update behavior.",
       "authority": "production-source"
+    },
+    {
+      "path": "apps/site/scripts/service-worker-finalization.ts",
+      "areas": ["build", "offline", "deployment"],
+      "role": "Pure deterministic cache-version and service-worker marker/precache finalization primitive over normalized unique path and byte inputs.",
+      "migrationSeam": "Tranche 3 owns the primary shell cut; Tranches 7 and 8 must reverify deterministic cache identity and complete precache closure.",
+      "trancheOwnership": ["tranche-03-primary", "tranche-07-reverify", "tranche-08-reverify"],
+      "authority": "build-release"
     },
     {
       "path": "apps/site/scripts/finalize-service-worker.ts",
@@ -1000,6 +916,46 @@
       "role": "Current semantic printable packet and preview actions.",
       "migrationSeam": "Screen and print projections must migrate together while keeping navigation chrome out of print.",
       "authority": "production-source"
+    },
+    {
+      "path": "content/authoring/visuals/releases/RELEASE-INVARIANTS.md",
+      "areas": ["content", "build", "test"],
+      "role": "Maintained ownership contract separating stable visual inventory evidence from canonical release-lifecycle ledgers and their verification gate.",
+      "migrationSeam": "Tranche 4 owns tool/comparison consumption, Tranche 6 owns scene consumption, and Tranche 8 recloses the immutable release graph without changing lifecycle authority.",
+      "trancheOwnership": ["tranche-04-tools-comparisons", "tranche-06-scenes", "tranche-08-closure"],
+      "authority": "maintained-authority"
+    },
+    {
+      "path": "content/authoring/visuals/releases/tools.json",
+      "areas": ["content", "build", "accessibility"],
+      "role": "Canonical 65-record accepted tool-release ledger binding concept identity, exact masters and derivatives, hashes, review evidence, and publication gates.",
+      "migrationSeam": "Tranche 4 may change only consumer presentation; Tranche 8 must reclose every unchanged tool identity, byte count, hash, and publication gate.",
+      "trancheOwnership": ["tranche-04-primary", "tranche-08-reverify"],
+      "authority": "content-source"
+    },
+    {
+      "path": "content/authoring/visuals/releases/comparisons.json",
+      "areas": ["content", "build", "accessibility"],
+      "role": "Canonical 14-record accepted comparison-release ledger binding members, member-master hashes, decisive distinctions, derivatives, and scored-use gates.",
+      "migrationSeam": "Tranche 4 may change only atlas presentation; Tranche 8 must preserve membership, hashes, decisive distinctions, and scored-use gates exactly.",
+      "trancheOwnership": ["tranche-04-primary", "tranche-08-reverify"],
+      "authority": "content-source"
+    },
+    {
+      "path": "content/authoring/visuals/releases/scenes.json",
+      "areas": ["content", "build", "accessibility", "offline", "print"],
+      "role": "Canonical 18-record accepted hazard-scene ledger binding scene identity, semantic manifests, exact artifacts, hashes, companion records, and publication gates.",
+      "migrationSeam": "Tranche 6 may change only scene consumption and viewport presentation; Tranche 8 must reclose exact scene identities, bytes, hashes, and companion records.",
+      "trancheOwnership": ["tranche-06-primary", "tranche-08-reverify"],
+      "authority": "content-source"
+    },
+    {
+      "path": "content/authoring/visuals/releases/verify-visual-release.mjs",
+      "areas": ["content", "build", "test", "deployment"],
+      "role": "Read-only release gate for taxonomy provenance, lifecycle ownership, inventory order, membership, exact artifact bytes/hashes, manifests, and scene companions.",
+      "migrationSeam": "Tranches 4 and 6 must run this gate for their visual consumers, and Tranche 8 must pass its complete release closure before candidate preview.",
+      "trancheOwnership": ["tranche-04-gate", "tranche-06-gate", "tranche-08-gate"],
+      "authority": "release-gate"
     },
     {
       "path": "content/authoring/packs/README.md",
@@ -1214,15 +1170,15 @@
     {
       "path": "docs/DEPLOYMENT.md",
       "areas": ["deployment", "test", "accessibility", "print"],
-      "role": "Technical handoff for certification, inactive preview, protected production deployment, and remaining credentials/domain gates.",
-      "migrationSeam": "Defines rollout boundary; it does not document an instant production rollback mechanism.",
+      "role": "Technical handoff recording candidate certification, inactive preview, remaining credentials/domain gates, and the live production Environment required reviewer of type User.",
+      "migrationSeam": "Defines a blocking external deployment boundary that CODEX-ONLY-UIUX-V1 cannot satisfy or bypass; this task cannot change the Environment and no instant production rollback is documented.",
       "authority": "maintained-authority"
     },
     {
       "path": "docs/certification/production-v1.json",
       "areas": ["deployment", "test", "accessibility", "print"],
       "role": "Machine-enforced candidate-bound production certification record, currently blocked.",
-      "migrationSeam": "Any redesign invalidates prior candidate evidence and requires a fresh exact-commit matrix.",
+      "migrationSeam": "Any redesign invalidates prior candidate evidence and requires a fresh exact-commit matrix; certification cannot substitute for the live User reviewer and is not production authorization.",
       "authority": "release-gate"
     },
     {
@@ -1249,8 +1205,8 @@
     {
       "path": ".github/workflows/cloudflare-production.yml",
       "areas": ["build", "deployment", "test", "accessibility", "offline", "print"],
-      "role": "Workflow-dispatched exact-main protected production deployment after typed confirmation and candidate-bound technical certification.",
-      "migrationSeam": "No provisional tranche may invoke or weaken this workflow.",
+      "role": "Workflow-dispatched exact-main deployment whose deploy job consumes the live production Environment after typed confirmation and candidate-bound technical certification.",
+      "migrationSeam": "The live Environment requires a reviewer of type User, so Codex cannot satisfy the job; no provisional tranche may invoke, weaken, or modify this workflow or Environment.",
       "authority": "release-gate"
     },
     {
@@ -1357,7 +1313,7 @@
         "focus and live-region mutations",
         "print-media visibility"
       ],
-      "codexTechnicalProductionGates": [
+      "codexCandidateCertificationChecks": [
         "NVDA with Firefox on Windows",
         "VoiceOver with Safari on macOS",
         "VoiceOver with Safari on iOS",
@@ -1373,8 +1329,39 @@
       "launchAnalyticsEnabled": false,
       "remotePreviewActivatesTraffic": false,
       "productionCertificationStatus": "blocked",
+      "productionDeploymentStatus": "blocked-live-user-reviewer",
+      "productionDeploymentInScope": false,
+      "liveProductionEnvironment": {
+        "name": "production",
+        "repositoryEvidence": [
+          "docs/DEPLOYMENT.md",
+          ".github/workflows/cloudflare-production.yml"
+        ],
+        "liveObservationDate": "2026-08-28",
+        "requiredReviewerRule": "required_reviewers",
+        "requiredReviewerType": "User",
+        "codexOnlyMaySatisfyRequiredReviewer": false,
+        "environmentChangeAuthorizedByPlan009": false,
+        "environmentChangeRequiresSeparateAttestation": true
+      },
       "documentedInstantProductionRollback": false,
-      "provisionalRollbackMechanism": "revert-or-forward-fix-on-main-then-repeat-preview-and-certification"
+      "rollbackPolicy": {
+        "directRevertAllowed": [
+          "current-unmerged-tip",
+          "dependency-closed-suffix"
+        ],
+        "directRevertProhibited": [
+          "earlier-change-with-live-dependents",
+          "nonclosed-range",
+          "isolated-presentation-subset"
+        ],
+        "mandatoryFallback": [
+          "forward-fix",
+          "full-rebuild",
+          "inactive-preview",
+          "recertification"
+        ]
+      }
     },
     "generatedEvidence": {
       "recordedSource": "docs/OPEN.md",
@@ -1427,6 +1414,16 @@
       ],
       "observedFact": "Question review documents carry the review-player route ID but use the shared question bootstrap, which always renders the current practice composition. Review destinations also include hazard review identities governed by the maintained state contract.",
       "requiredBeforeVisualMigration": "Characterize and prove an explicit question-review variant in Tranche 5 and hazard-review variant in Tranche 6 before adopting accepted component anatomy."
+    },
+    {
+      "id": "settings-preferences-restoration-race",
+      "status": "characterization-required",
+      "evidence": [
+        "apps/site/src/settings/react/settings.tsx",
+        "apps/site/browser-tests/local-data-and-packs.pw.ts"
+      ],
+      "observedFact": "The settings island initializes default preferences with busy false, begins authoritative IndexedDB restoration asynchronously, saves the current React projection, and leaves preference controls plus Save active while restoration is unresolved.",
+      "requiredBeforeVisualMigration": "Introduce an explicit restoring state, disable every preference control and Save until authoritative load or a visible handled failure completes, and prove with a delayed-load test that no default write occurs and stored values win."
     }
   ],
   "unresolvedEvidence": [
@@ -1445,15 +1442,23 @@
     {
       "id": "production-rollback-proof",
       "sources": ["docs/DEPLOYMENT.md", ".github/workflows/cloudflare-production.yml"],
-      "conflict": "Source-level revert and recertification are available, but no tested instant Cloudflare production rollback workflow is documented.",
-      "requiredAction": "Rehearse and document the actual rollback boundary before production authorization."
+      "conflict": "No tested instant Cloudflare production rollback exists, and direct source revert is safe only for the current unmerged tip or a dependency-closed suffix.",
+      "requiredAction": "For any earlier or nonclosed recovery, use a forward fix, full rebuild, inactive preview, and recertification; separately rehearse the actual platform rollback boundary before any future production decision."
+    },
+    {
+      "id": "live-production-user-reviewer-incompatible-with-codex-only",
+      "sources": ["docs/DEPLOYMENT.md", ".github/workflows/cloudflare-production.yml"],
+      "conflict": "The live production Environment requires a reviewer of type User, while CODEX-ONLY-UIUX-V1 supplies only machine-agent UI/UX review and CI evidence.",
+      "requiredAction": "Keep deployment blocked and out of scope; do not invoke or change the Environment, and require separate authorization plus repository attestation for any future Environment change."
     }
   ],
   "prohibitedInferences": [
-    "No copy, token, visual territory, component anatomy, route archetype, or final tranche order is accepted by this map.",
+    "Current accepted consumer-language and navigation constraints do not assign final route copy, tokens, visual territory, component anatomy, route archetypes, or final tranche order in this map.",
     "Recovered or branch-only Plan 004 and Plan 005 artifacts are not accepted CODEX-ONLY-UIUX-V1 attestations or product authority.",
     "The existence of a current production seam does not authorize changing it.",
-    "Recorded test counts are not a rerun by this provisional draft.",
+    "Codex-only UI/UX review and CI cannot satisfy or bypass the live production Environment reviewer of type User.",
+    "No prior review receipt from the rejected published head is reusable in the new ledger.",
+    "Recorded baseline-CI counts remain historical provenance; this provisional draft's local reruns are verification only and never production authorization.",
     "This map does not authorize analytics, a runtime feature-flag framework, deployment, a database migration, or production traffic."
   ]
 }
