@@ -266,12 +266,15 @@ byte-identical to the reviewed subject and rejects every other post-review
 change.
 
 <!-- PLAN_009_CODEX_REVIEW_RECORDS_START -->
-The current immutable-subject independent Codex reviews are pending. This block
-will be populated only after the repaired packet is committed, reviewed by
-exact commit and packet blob hashes, and found free of unresolved dissent.
+Independent Codex review evidence for this immutable subject is recorded
+without hidden reasoning in `codexReviewLedger`. Each result binds the exact
+review occurrence, subject/base commits, and all three packet Git blobs.
 
 | Codex task ID | Disposition | Consensus / dissent | Record SHA-256 |
 |---|---|---|---|
+| `/root/topology_fact_check` | Accepted after repair | Root and independent review agree / none recorded after final recheck | `4aca1b647e25013b3c87e4aa0177101d2959032e179e7cb939be055efa326231` |
+| `/root/final_packet_consistency` | Accepted after repair | Root and independent review agree / none recorded after final recheck | `b6f2c074e627c5f71ab39ed26d0e5c336c57c9e3c64c1aa8fcec37f55961976f` |
+| `/root/validator_quality_review` | Accepted after repair | Root and independent review agree / none recorded after final recheck | `cefb779510564e7a1a5e41c821ac9401f5d2bff88bb9d3f35924056f4f9f459b` |
 <!-- PLAN_009_CODEX_REVIEW_RECORDS_END -->
 
 Those reviews will be Codex evidence, not human evidence or a human usability test.

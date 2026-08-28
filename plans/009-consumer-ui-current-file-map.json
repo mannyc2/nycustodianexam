@@ -88,7 +88,143 @@
       "mustRebaseAndReverify": true
     }
   ],
-  "codexReviewLedger": [],
+  "codexReviewLedger": [
+    {
+      "taskId": "/root/topology_fact_check",
+      "reviewOccurrenceId": "codex-only-uiux-v1-topology-final",
+      "reviewKind": "topology-and-source-fact-check",
+      "reviewedCommitSha": "48694b541d07869a6a3e5d7a31c2e7a811f5fb2d",
+      "reviewedBaseSha": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "reviewedPacketBlobs": {
+        "plans/009-consumer-ui-current-file-map.json": "e74a436847fa5269a01fbd2ae4e82f95cbab0744",
+        "plans/009-consumer-ui-migration-plan.draft.md": "f3ec2ebe72a8b3ee18b1621c13c9776ead06961e",
+        "plans/validate-009-migration-draft.mjs": "48ed450727575b95f89fd0496135a2af46779d6d"
+      },
+      "findingIds": [
+        "topology-load-bearing-owner-omissions",
+        "static-route-runtime-closure-misstatement",
+        "navigation-confounder-incomplete-family-scope",
+        "review-confounder-missing-hazard-variant",
+        "browser-evidence-status-misclassification",
+        "preview-certification-production-sequencing"
+      ],
+      "findingSummary": "Repaired canonical-owner and load-bearing coverage for correction, simulation, settings, offline, review, and runtime seams; retained the preference/connectivity bootstrap while enforcing zero React/Effect static closure; expanded navigation and review confounder scope; classified the browser README as stale against the exact passing baseline; and ordered merge, inactive preview, candidate certification, protected deployment, and rollback without granting implementation or production authority.",
+      "evidencePaths": [
+        "plans/009-consumer-ui-current-file-map.json",
+        "plans/009-consumer-ui-migration-plan.draft.md",
+        "plans/validate-009-migration-draft.mjs",
+        "product/ARCHITECTURE_CONSTRAINTS.md",
+        "product/ROUTES.md",
+        "product/SCREEN_STATES.md",
+        "apps/site/scripts/generate-pages.tsx",
+        "apps/site/src/route-registry.ts",
+        "apps/site/src/settings/preferences-boot.ts",
+        "apps/site/src/session-navigation.ts",
+        "apps/site/src/question-player/react/bootstrap.tsx",
+        "apps/site/src/hazard-player/react/bootstrap.tsx",
+        "apps/site/src/simulation/react/bootstrap-player.tsx",
+        "apps/site/src/offline-packs/react/pack-manager.tsx",
+        "apps/site/src/study-storage/app-database/storage-model.ts",
+        "scripts/verify-artifacts.ts",
+        "apps/site/browser-tests/README.md",
+        "docs/OPEN.md",
+        "docs/DEPLOYMENT.md",
+        "docs/certification/production-v1.json",
+        ".github/workflows/cloudflare-preview.yml",
+        ".github/workflows/cloudflare-production.yml"
+      ],
+      "disposition": "accepted-after-repair",
+      "consensus": "root-and-independent-review-agree",
+      "dissent": "none-recorded-after-final-recheck",
+      "recordSha256": "4aca1b647e25013b3c87e4aa0177101d2959032e179e7cb939be055efa326231"
+    },
+    {
+      "taskId": "/root/final_packet_consistency",
+      "reviewOccurrenceId": "codex-only-uiux-v1-consistency-final",
+      "reviewKind": "packet-consistency-and-contract-review",
+      "reviewedCommitSha": "48694b541d07869a6a3e5d7a31c2e7a811f5fb2d",
+      "reviewedBaseSha": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "reviewedPacketBlobs": {
+        "plans/009-consumer-ui-current-file-map.json": "e74a436847fa5269a01fbd2ae4e82f95cbab0744",
+        "plans/009-consumer-ui-migration-plan.draft.md": "f3ec2ebe72a8b3ee18b1621c13c9776ead06961e",
+        "plans/validate-009-migration-draft.mjs": "48ed450727575b95f89fd0496135a2af46779d6d"
+      },
+      "findingIds": [
+        "tranche-owner-overlap",
+        "global-preference-and-reveal-seams",
+        "production-authorization-phase",
+        "dependency-consumer-parity",
+        "baseline-ci-provenance",
+        "codex-only-human-evidence-stop",
+        "canonical-state-content-owner-omissions",
+        "effect-guidance-installation-fact",
+        "review-occurrence-provenance",
+        "markdown-reference-link-smuggling",
+        "inline-comment-separator-smuggling",
+        "populated-ledger-self-test-oracle"
+      ],
+      "findingSummary": "Recheck confirms repairs for route-family tranche ownership, global preference and commit/reveal seams, dependency consumers, baseline CI provenance, Codex-only evidence semantics, omitted durable-content owners, Effect guidance wording, immutable review provenance, fail-closed Markdown reference-link and dual comment projections, and the populated-ledger self-test oracle. Technical deployment controls remain separate and non-authorizing.",
+      "evidencePaths": [
+        "plans/009-consumer-ui-current-file-map.json",
+        "plans/009-consumer-ui-migration-plan.draft.md",
+        "plans/validate-009-migration-draft.mjs",
+        "product/ROUTES.md",
+        "apps/site/scripts/generate-pages.tsx",
+        "apps/site/src/settings/preferences-boot.ts",
+        "apps/site/src/question-player/commit-and-reveal.ts",
+        "apps/site/src/hazard-player/commit-and-reveal.ts",
+        "apps/site/src/verified-content.ts",
+        "apps/site/src/attempt-receipt.ts",
+        "apps/site/src/trusted-release-content.ts",
+        "apps/site/src/delivery-manifest.ts",
+        "apps/site/src/review/persistence.ts",
+        "apps/site/src/review/projection.ts",
+        "apps/site/src/settings/review-rebuild.ts",
+        "plans/007-specify-ui-foundations-and-responsive-contract.md",
+        "plans/008-run-integrated-consumer-ux-validation.md",
+        "docs/OPEN.md",
+        "docs/DEPLOYMENT.md",
+        "docs/certification/production-v1.json",
+        "package.json",
+        "bun.lock"
+      ],
+      "disposition": "accepted-after-repair",
+      "consensus": "root-and-independent-review-agree",
+      "dissent": "none-recorded-after-final-recheck",
+      "recordSha256": "b6f2c074e627c5f71ab39ed26d0e5c336c57c9e3c64c1aa8fcec37f55961976f"
+    },
+    {
+      "taskId": "/root/validator_quality_review",
+      "reviewOccurrenceId": "codex-only-uiux-v1-validator-final",
+      "reviewKind": "validator-integrity-review",
+      "reviewedCommitSha": "48694b541d07869a6a3e5d7a31c2e7a811f5fb2d",
+      "reviewedBaseSha": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "reviewedPacketBlobs": {
+        "plans/009-consumer-ui-current-file-map.json": "e74a436847fa5269a01fbd2ae4e82f95cbab0744",
+        "plans/009-consumer-ui-migration-plan.draft.md": "f3ec2ebe72a8b3ee18b1621c13c9776ead06961e",
+        "plans/validate-009-migration-draft.mjs": "48ed450727575b95f89fd0496135a2af46779d6d"
+      },
+      "findingIds": [
+        "validator-parent-and-blob-identity",
+        "validator-provisional-evidence-guards",
+        "validator-semantic-projection-regressions",
+        "validator-final-ledger-self-tests",
+        "validator-post-review-binding"
+      ],
+      "findingSummary": "Exact parent and packet blobs match the supplied immutable subject; pending-ledger validation passes with 239 negative tests; a disposable canonical three-record ledger fixture passes with 243 negative tests, including tampered record, occurrence, record-hash, and rendered review-hash rejection; immutable byte binding remains enforced.",
+      "evidencePaths": [
+        "plans/validate-009-migration-draft.mjs",
+        "plans/009-consumer-ui-migration-plan.draft.md",
+        "plans/009-consumer-ui-current-file-map.json",
+        "plans/README.md",
+        "docs/certification/production-v1.json"
+      ],
+      "disposition": "accepted-after-repair",
+      "consensus": "root-and-independent-review-agree",
+      "dissent": "none-recorded-after-final-recheck",
+      "recordSha256": "cefb779510564e7a1a5e41c821ac9401f5d2bff88bb9d3f35924056f4f9f459b"
+    }
+  ],
   "dependencySlots": [
     {
       "id": "consumer-language",
