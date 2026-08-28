@@ -1,0 +1,1006 @@
+{
+  "schemaVersion": "codex-only-uiux-evidence-v1",
+  "programVersion": "CODEX-ONLY-UIUX-V1",
+  "programStatus": "codex-only-complete",
+  "evidenceMode": "codex-only",
+  "humanEvidence": "none",
+  "humanParticipantEvidence": "none",
+  "humanParticipantCount": 0,
+  "notHumanUsabilityTested": true,
+  "statusLabel": "NOT HUMAN-USABILITY-TESTED",
+  "humanClaims": {
+    "participantResearchConducted": false,
+    "humanUsabilityTested": false,
+    "humanValidatedDirection": false,
+    "humanSignOffReceived": false
+  },
+  "humanRoleCounts": {
+    "participants": 0,
+    "moderators": 0,
+    "reviewers": 0,
+    "decisionOwners": 0,
+    "signOffs": 0
+  },
+  "sourceCommits": {
+    "step1Base": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+    "plan004Draft": "fecc71c5ea240385b3d98f896b1152022a2bbbe8",
+    "plan005Draft": "9daddbfde073f1f73d806a68dac427b69efc8359"
+  },
+  "sourceArtifacts": [
+    {
+      "id": "site-generator",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "apps/site/scripts/generate-pages.tsx",
+      "sha256": "239f102cc0cbc46053c4f4e5fd40e16e98e45c0cdff1d269771e28061dc569ba"
+    },
+    {
+      "id": "site-styles",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "apps/site/src/styles.css",
+      "sha256": "ec572566a43c02b356b67a56ff88126d50901ea18f76441ffb9f278cd39273a8"
+    },
+    {
+      "id": "site-failure-detail",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "apps/site/src/local-failure-detail.ts",
+      "sha256": "dd52b5f14999e3af4cf887683e9b6282dc6805ca4d30eb5689cd1061c4a5e2a4"
+    },
+    {
+      "id": "site-correction-form",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "apps/site/src/corrections/react/correction-form.tsx",
+      "sha256": "a87454dc412aad5ec67af4fab3cf96a58a1391c441a58bb1e6e1617707fe9fcf"
+    },
+    {
+      "id": "site-question-form",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "apps/site/src/question-player/react/question-form.tsx",
+      "sha256": "87d846bc0d4fe218b386d21c31c35970d18293aa43c194ac1d7a0f2642e92223"
+    },
+    {
+      "id": "site-question-provider",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "apps/site/src/question-player/react/provider.tsx",
+      "sha256": "8df88cfbb2f0fef1dfcd4136a0be0a2c6ad18c5e969316fa88453c6acb752ba4"
+    },
+    {
+      "id": "site-question-feedback",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "apps/site/src/question-player/react/feedback.tsx",
+      "sha256": "b53b202e089f2a3885b9c18ab33d51d55adb085c461f4afe8c43fbb528c55725"
+    },
+    {
+      "id": "site-hazard-results",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "apps/site/src/hazard-player/react/results.tsx",
+      "sha256": "1dadd860da45852262d82cd5b35ad73c3da3688436779da8c69d89e7a926e284"
+    },
+    {
+      "id": "site-review-queue",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "apps/site/src/review/react/review-queue.tsx",
+      "sha256": "c8ce32e08358bf489217ddf275b9e937dab5043e3b2bf299fff7a6a6e1119096"
+    },
+    {
+      "id": "site-simulation-setup",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "apps/site/src/simulation/react/setup.tsx",
+      "sha256": "936da350013a6e9dfb35d173e2fae85701872fb38dc523e187edebf44de10182"
+    },
+    {
+      "id": "site-simulation-results",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "apps/site/src/simulation/react/results.tsx",
+      "sha256": "4196fbf9c3292cfb0e7a70c46796784ac3f5aa077a098296b8ec9e9420d8074f"
+    },
+    {
+      "id": "site-offline-manager",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "apps/site/src/offline-packs/react/pack-manager.tsx",
+      "sha256": "48c80fb01bab5976f0432c1d1c4863b4e66ebaffb41fdc7ab45bef114d27eaa0"
+    },
+    {
+      "id": "site-settings",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "apps/site/src/settings/react/settings.tsx",
+      "sha256": "0024e7c9f21bd8f3fac8dd8af31eb9335ff26f82e3c4b0cdd7df887403ebb165"
+    },
+    {
+      "id": "site-marker-controls",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "apps/site/src/hazard-player/react/marker-controls.tsx",
+      "sha256": "2606e9ca0c8149c0bdd976c7128b77d70793ac40ed6e73272084c12233e43e05"
+    },
+    {
+      "id": "site-scene-viewport",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "apps/site/src/hazard-player/react/scene-viewport.tsx",
+      "sha256": "523e757a5f6f0e6306f5cce6e2c1afedb71974a160b7e52045161c86c095b563"
+    },
+    {
+      "id": "site-accessibility-test",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "apps/site/browser-tests/accessibility-and-presentation.pw.ts",
+      "sha256": "fde1dd0a9987c7e56fa28f43f1bc6b72a90de7126aa379b11623f944ed8320b3"
+    },
+    {
+      "id": "site-offline-fallback",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "apps/site/offline/index.html",
+      "sha256": "b56b309f6f4faefe6fdee5958cfe1c0f4102629cfa18e2cb6a1d4708c5eb8def"
+    },
+    {
+      "id": "launch-content",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "content/authoring/packs/launch-v1.json",
+      "sha256": "779a9b0c0b4fc091ea112195c1ff44d77b26a72142f56a194970f14fb10218ed"
+    },
+    {
+      "id": "launch-content-curated",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "content/authoring/packs/launch-v1.curated.mjs",
+      "sha256": "04805eb0e7c653f035aeaf934ddfdfafd1863cbe8bd1f2f87a02d3f3c66366c1"
+    },
+    {
+      "id": "feature-spec",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "product/FEATURE_SPEC.md",
+      "sha256": "a1c3d2441fd85162931d17eb3752029e533cd37b8268a842c0a1a4ee8713dd48"
+    },
+    {
+      "id": "routes-base",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "product/ROUTES.md",
+      "sha256": "9478211d12646c94688853787e652919adf4889bd7f2f920e4b37b0572eec227"
+    },
+    {
+      "id": "screen-states",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "product/SCREEN_STATES.md",
+      "sha256": "54b7b18280cbc8a6ec3300c424ee412e4fcb9c4d4cb773ecd4af7adc63c22987"
+    },
+    {
+      "id": "design-system",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "product/DESIGN_SYSTEM.md",
+      "sha256": "12532bbb78166ae4ffb684ea15f57d400761668e55f2845fec602e4ba9394039"
+    },
+    {
+      "id": "visual-authoring-policy",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "illustration/VISUAL_AUTHORING_POLICY.md",
+      "sha256": "a17d47cd976fbd4caa2b57f834216450f8316063d0b9759ef4fbd0e451d0d904"
+    },
+    {
+      "id": "open-register",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "docs/OPEN.md",
+      "sha256": "3dc4a398aa4a9cdc8d96e9da4d2d4f669efaecfa2a5c98c791d35170ff899f6f"
+    },
+    {
+      "id": "recovery-manifest",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "recovery/plan-004-consumer-language-prototypes/recovery-manifest.json",
+      "sha256": "a4c9f7ae8b077c7449c7ebf55a004a27559327526f0b02f8343fe59675b56bc2"
+    },
+    {
+      "id": "prototype-home",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "recovery/plan-004-consumer-language-prototypes/prototypes/home.html",
+      "sha256": "05df1d5bdc797137d0b35e0a30eaf1b2781351e542b0b4d7a2c68da42d8231b2"
+    },
+    {
+      "id": "prototype-profile",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "recovery/plan-004-consumer-language-prototypes/prototypes/profile.html",
+      "sha256": "e672f50871d80572cdc2e6f13e3fe85e04a8c5ac186f0228093ce85e8fd79ca6"
+    },
+    {
+      "id": "prototype-practice",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "recovery/plan-004-consumer-language-prototypes/prototypes/practice-start.html",
+      "sha256": "cfe277890d2c6ef9490c74055c6ba94a5921a0a6c465aaf34b3b960a07a4e06e"
+    },
+    {
+      "id": "prototype-question",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "recovery/plan-004-consumer-language-prototypes/prototypes/question-feedback.html",
+      "sha256": "10336e7ce3d85b587b0eea5f8e8eb6d717e1a595775e11256201f62b45c676db"
+    },
+    {
+      "id": "prototype-hazard",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "recovery/plan-004-consumer-language-prototypes/prototypes/hazard-feedback.html",
+      "sha256": "c9441b28584f1453b8afe982f61c906a9d5f98e352fcc886b1e135e64b3e495b"
+    },
+    {
+      "id": "prototype-review",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "recovery/plan-004-consumer-language-prototypes/prototypes/review.html",
+      "sha256": "207ff61103d67bdd5dd5be8d4ef154cb804aa767f2583ea57698525f664c2c67"
+    },
+    {
+      "id": "prototype-offline",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "recovery/plan-004-consumer-language-prototypes/prototypes/offline-data.html",
+      "sha256": "0eede6bbc7d6c7f2a2b1434eb7f2ad1fa3929c0ecf3bc9fe823151a558d42a8f"
+    },
+    {
+      "id": "prototype-trust",
+      "kind": "git-blob",
+      "commit": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+      "path": "recovery/plan-004-consumer-language-prototypes/prototypes/trust-recovery.html",
+      "sha256": "36f1cec7646ccddf7e5cd525b88517cf7372cfc5eb187beae7332bac4eafa2f4"
+    },
+    {
+      "id": "plan004-plan",
+      "kind": "git-blob",
+      "commit": "fecc71c5ea240385b3d98f896b1152022a2bbbe8",
+      "path": "plans/004-establish-consumer-language-boundary.md",
+      "sha256": "0804b4303dd54a22764eb70b7b51026edb8cd988041f832ece8c7a7093a92880"
+    },
+    {
+      "id": "plan004-report",
+      "kind": "git-blob",
+      "commit": "fecc71c5ea240385b3d98f896b1152022a2bbbe8",
+      "path": "research/ui-ux/consumer-language-study-2026-08-26.md",
+      "sha256": "790679c137c798d45492ffbef98ac079934abb794b5c4add923781fc10913431"
+    },
+    {
+      "id": "plan004-record",
+      "kind": "git-blob",
+      "commit": "fecc71c5ea240385b3d98f896b1152022a2bbbe8",
+      "path": "research/ui-ux/consumer-language-study-2026-08-26.json",
+      "sha256": "dc84a24decffee4cac7d5cee5969826dbbf29b9f758cdc73927dbf5cb084462a"
+    },
+    {
+      "id": "plan005-plan",
+      "kind": "git-blob",
+      "commit": "9daddbfde073f1f73d806a68dac427b69efc8359",
+      "path": "plans/005-rebuild-learner-task-navigation.md",
+      "sha256": "cb0c0b0fe68ae6999dee2b8c8ec5ba2a7885d06e38e5e52c546558c38757d294"
+    },
+    {
+      "id": "plan005-report",
+      "kind": "git-blob",
+      "commit": "9daddbfde073f1f73d806a68dac427b69efc8359",
+      "path": "research/ui-ux/navigation-task-hierarchy/README.md",
+      "sha256": "369eecff330c6404a3b207df549eca88187dfbb194dd784078c831d6882bea32"
+    },
+    {
+      "id": "plan005-inventory",
+      "kind": "git-blob",
+      "commit": "9daddbfde073f1f73d806a68dac427b69efc8359",
+      "path": "research/ui-ux/navigation-task-hierarchy/route-task-inventory.json",
+      "sha256": "db5536f5d376f7450e8b63590532db2ee8eea3c86ad972ab1aa353059cd587ff"
+    },
+    {
+      "id": "plan005-record",
+      "kind": "git-blob",
+      "commit": "9daddbfde073f1f73d806a68dac427b69efc8359",
+      "path": "research/ui-ux/navigation-task-hierarchy/research-summary.json",
+      "sha256": "cab9477c50a892048599bee003e71936c3ac3c1106c42ee0f7edfe44196c88e7"
+    }
+  ],
+  "reviews": [
+    {
+      "taskId": "/root/free_recruitment",
+      "actorClass": "codex-agent",
+      "independent": true,
+      "evidenceMode": "codex-only",
+      "humanEvidence": "none",
+      "humanParticipantCount": 0,
+      "notHumanUsabilityTested": true,
+      "statusLabel": "NOT HUMAN-USABILITY-TESTED",
+      "reportPath": "research/ui-ux/codex-only-v1/free-recruitment-review.md",
+      "reportSha256": "b5d228297f9d77da85a9d8141aaa41853f4f88cb1c6329bcaba3ca0ff7ef0027",
+      "domains": [
+        "accessibility",
+        "ai-slop-patterns",
+        "cognitive-load",
+        "consumer-trust",
+        "internal-wording-leakage",
+        "learner-task-information-architecture",
+        "navigation",
+        "plain-language"
+      ],
+      "evidenceArtifactIds": [
+        "site-generator",
+        "site-styles",
+        "site-failure-detail",
+        "site-correction-form",
+        "site-question-feedback",
+        "site-hazard-results",
+        "recovery-manifest",
+        "plan004-report",
+        "plan005-inventory"
+      ],
+      "rubricScores": null,
+      "priorityCounts": {
+        "P1": 8,
+        "P2": 3
+      },
+      "recommendationIds": [
+        "UI-01",
+        "UI-02",
+        "UI-03",
+        "UI-04",
+        "UI-05",
+        "UI-06",
+        "UI-07",
+        "UI-09",
+        "UI-10"
+      ]
+    },
+    {
+      "taskId": "/root/language_lane_v1",
+      "actorClass": "codex-agent",
+      "independent": true,
+      "evidenceMode": "codex-only",
+      "humanEvidence": "none",
+      "humanParticipantCount": 0,
+      "notHumanUsabilityTested": true,
+      "statusLabel": "NOT HUMAN-USABILITY-TESTED",
+      "reportPath": "research/ui-ux/codex-only-v1/language-trust-review.md",
+      "reportSha256": "5a33d032c7c70fb0dd2a9616b79267385b1fb7f2b19ce8395467b57eee3905db",
+      "domains": [
+        "ai-slop-patterns",
+        "consumer-trust",
+        "internal-wording-leakage",
+        "navigation",
+        "plain-language"
+      ],
+      "evidenceArtifactIds": [
+        "site-generator",
+        "site-question-form",
+        "site-question-feedback",
+        "site-hazard-results",
+        "site-review-queue",
+        "site-simulation-setup",
+        "site-simulation-results",
+        "site-offline-manager",
+        "site-settings",
+        "site-failure-detail",
+        "site-correction-form",
+        "site-offline-fallback",
+        "feature-spec",
+        "routes-base",
+        "design-system",
+        "visual-authoring-policy",
+        "recovery-manifest",
+        "prototype-home",
+        "prototype-profile",
+        "prototype-practice",
+        "prototype-question",
+        "prototype-hazard",
+        "prototype-review",
+        "prototype-offline",
+        "prototype-trust",
+        "plan004-plan",
+        "plan004-report",
+        "launch-content-curated"
+      ],
+      "rubricScores": {
+        "taskAndNextActionClarity": 2,
+        "plainLanguageBoundary": 1,
+        "trustCalibration": 2,
+        "stateAndRecoveryClarity": 3,
+        "naturalVoice": 2,
+        "navigationLanguageFit": 2
+      },
+      "recommendationIds": [
+        "CL-H1-PLAIN-TASK-OPEN-PROOF"
+      ]
+    },
+    {
+      "taskId": "/root/navigation_lane_v1",
+      "actorClass": "codex-agent",
+      "independent": true,
+      "evidenceMode": "codex-only",
+      "humanEvidence": "none",
+      "humanParticipantCount": 0,
+      "notHumanUsabilityTested": true,
+      "statusLabel": "NOT HUMAN-USABILITY-TESTED",
+      "reportPath": "research/ui-ux/codex-only-v1/navigation-review.md",
+      "reportSha256": "9ec0ada23dec2b6003f1b0e96132e3ef62a9ded0b3f865c4b9a17f3682875956",
+      "domains": [
+        "cognitive-load",
+        "learner-task-information-architecture",
+        "navigation",
+        "plain-language"
+      ],
+      "evidenceArtifactIds": [
+        "site-generator",
+        "site-styles",
+        "routes-base",
+        "screen-states",
+        "design-system",
+        "plan005-plan",
+        "plan005-inventory",
+        "plan005-record",
+        "plan004-report",
+        "site-accessibility-test"
+      ],
+      "rubricScores": {
+        "routeCoverage": 2,
+        "taskHierarchy": 2,
+        "profileContinuity": 1,
+        "compactNoJavaScript": 2,
+        "focusedPlayers": 1,
+        "languageLayering": 2,
+        "verifiability": 1
+      },
+      "recommendationIds": [
+        "NAV-C2-TASK-FIRST-TWO-TIER"
+      ]
+    },
+    {
+      "taskId": "/root/accessibility_lane_v1",
+      "actorClass": "codex-agent",
+      "independent": true,
+      "evidenceMode": "codex-only",
+      "humanEvidence": "none",
+      "humanParticipantCount": 0,
+      "notHumanUsabilityTested": true,
+      "statusLabel": "NOT HUMAN-USABILITY-TESTED",
+      "reportPath": "research/ui-ux/codex-only-v1/accessibility-cognitive-review.md",
+      "reportSha256": "353a905622a5e472242e84e193601e6beb350c1d6debef432974ecec6bb35b55",
+      "domains": [
+        "accessibility",
+        "ai-slop-patterns",
+        "cognitive-load",
+        "consumer-trust",
+        "internal-wording-leakage",
+        "learner-task-information-architecture",
+        "navigation",
+        "plain-language"
+      ],
+      "evidenceArtifactIds": [
+        "site-generator",
+        "site-styles",
+        "site-failure-detail",
+        "site-question-form",
+        "site-question-provider",
+        "site-question-feedback",
+        "site-hazard-results",
+        "site-review-queue",
+        "site-offline-manager",
+        "site-settings",
+        "site-marker-controls",
+        "site-scene-viewport",
+        "site-correction-form",
+        "site-accessibility-test",
+        "feature-spec",
+        "routes-base",
+        "design-system",
+        "open-register",
+        "prototype-home",
+        "prototype-profile",
+        "prototype-practice",
+        "prototype-question",
+        "prototype-hazard",
+        "prototype-review",
+        "prototype-offline",
+        "prototype-trust",
+        "plan004-report",
+        "plan004-record",
+        "plan005-report",
+        "plan005-inventory",
+        "plan005-record",
+        "launch-content"
+      ],
+      "rubricScores": {
+        "semanticStructureFocusAnnouncements": 4,
+        "keyboardMotorReflowAdaptations": 3,
+        "nonvisualHazardEquivalence": 3,
+        "cognitiveLoadPlainLanguage": 2,
+        "navigationFindabilityOrientation": 2,
+        "errorRecoveryComprehension": 2,
+        "consumerTrustClaimCalibration": 3,
+        "editorialDirectness": 2
+      },
+      "recommendationIds": [
+        "CL-D1-DEFAULT-PLUS-CL-D2-EVIDENCE",
+        "NAV-A-OR-NAV-C-CONDITIONAL",
+        "NI-01",
+        "NI-02",
+        "NI-03",
+        "NI-04",
+        "NI-05",
+        "NI-06"
+      ]
+    }
+  ],
+  "synthesis": {
+    "algorithmVersion": "codex-only-consensus-v1",
+    "minimumIndependentSupport": 2,
+    "humanEvidenceWeight": 0,
+    "hardConstraintFailuresBlockPromotion": true,
+    "ownerLockedUnresolvedCannotPromote": true,
+    "rules": [
+      {
+        "id": "CL-TASK-FIRST",
+        "scope": "language",
+        "statement": "At each action or decision, state the learner task, material consequence, and next safe action clearly.",
+        "supportTaskIds": [
+          "/root/free_recruitment",
+          "/root/language_lane_v1",
+          "/root/navigation_lane_v1",
+          "/root/accessibility_lane_v1"
+        ],
+        "dissentTaskIds": [],
+        "hardConstraintFailures": [],
+        "ownerLockedUnresolved": false,
+        "status": "promoted"
+      },
+      {
+        "id": "CL-LAYER-PROOF",
+        "scope": "language",
+        "statement": "Keep human-readable proof adjacent or disclosed and move raw identifiers and diagnostics out of the default layer.",
+        "supportTaskIds": [
+          "/root/free_recruitment",
+          "/root/language_lane_v1",
+          "/root/navigation_lane_v1",
+          "/root/accessibility_lane_v1"
+        ],
+        "dissentTaskIds": [],
+        "hardConstraintFailures": [],
+        "ownerLockedUnresolved": false,
+        "status": "promoted"
+      },
+      {
+        "id": "CL-TYPED-PUBLIC-ERRORS",
+        "scope": "language",
+        "statement": "Map typed failures to stable outcome, preserved-state, and recovery copy while keeping raw exceptions internal.",
+        "supportTaskIds": [
+          "/root/free_recruitment",
+          "/root/language_lane_v1",
+          "/root/accessibility_lane_v1"
+        ],
+        "dissentTaskIds": [],
+        "hardConstraintFailures": [],
+        "ownerLockedUnresolved": false,
+        "status": "promoted"
+      },
+      {
+        "id": "CL-FOCUSED-FEEDBACK",
+        "scope": "language",
+        "statement": "Use specific outcomes and concise plain rationales, remove internal model labels and canned cadence, and keep required proof reachable.",
+        "supportTaskIds": [
+          "/root/free_recruitment",
+          "/root/language_lane_v1",
+          "/root/accessibility_lane_v1"
+        ],
+        "dissentTaskIds": [],
+        "hardConstraintFailures": [],
+        "ownerLockedUnresolved": false,
+        "status": "promoted"
+      },
+      {
+        "id": "CL-DORMANT-CORRECTION",
+        "scope": "language",
+        "statement": "State the dormant correction boundary in consumer terms and never imply an unavailable endpoint can receive a report.",
+        "supportTaskIds": [
+          "/root/free_recruitment",
+          "/root/language_lane_v1",
+          "/root/accessibility_lane_v1"
+        ],
+        "dissentTaskIds": [],
+        "hardConstraintFailures": [],
+        "ownerLockedUnresolved": false,
+        "status": "promoted"
+      },
+      {
+        "id": "CL-CL1-QUARANTINE",
+        "scope": "language",
+        "statement": "Keep recovered CL-1 bytes unchanged as evidence and author factually current U.S.-English CL-2 copy.",
+        "supportTaskIds": [
+          "/root/free_recruitment",
+          "/root/language_lane_v1",
+          "/root/accessibility_lane_v1"
+        ],
+        "dissentTaskIds": [],
+        "hardConstraintFailures": [],
+        "ownerLockedUnresolved": false,
+        "status": "promoted"
+      },
+      {
+        "id": "CL-US-ENGLISH-FACTS",
+        "scope": "language",
+        "statement": "Use U.S. English, current derived counts, and bounded factual claims without unsupported universal language.",
+        "supportTaskIds": [
+          "/root/free_recruitment",
+          "/root/language_lane_v1"
+        ],
+        "dissentTaskIds": [],
+        "hardConstraintFailures": [],
+        "ownerLockedUnresolved": false,
+        "status": "promoted"
+      },
+      {
+        "id": "CL-NO-UNMEASURED-TIME",
+        "scope": "language",
+        "statement": "Do not publish a practice-duration estimate without measured evidence for the exact task and conditions.",
+        "supportTaskIds": [
+          "/root/free_recruitment",
+          "/root/language_lane_v1",
+          "/root/accessibility_lane_v1"
+        ],
+        "dissentTaskIds": [],
+        "hardConstraintFailures": [],
+        "ownerLockedUnresolved": false,
+        "status": "promoted"
+      },
+      {
+        "id": "CL-D3-NOT-SELECTED",
+        "scope": "language",
+        "statement": "Do not select CL-D3 because it has no recovered prototype and sits nearest prohibited urgency, guilt, mastery, and readiness claims.",
+        "supportTaskIds": [
+          "/root/language_lane_v1",
+          "/root/accessibility_lane_v1"
+        ],
+        "dissentTaskIds": [],
+        "hardConstraintFailures": [],
+        "ownerLockedUnresolved": false,
+        "status": "promoted"
+      },
+      {
+        "id": "NAV-TWO-TIER",
+        "scope": "navigation",
+        "statement": "Separate learner tasks from utility and trust destinations instead of presenting every destination as a peer.",
+        "supportTaskIds": [
+          "/root/free_recruitment",
+          "/root/language_lane_v1",
+          "/root/navigation_lane_v1",
+          "/root/accessibility_lane_v1"
+        ],
+        "dissentTaskIds": [],
+        "hardConstraintFailures": [],
+        "ownerLockedUnresolved": false,
+        "status": "promoted"
+      },
+      {
+        "id": "NAV-NATIVE-COMPACT",
+        "scope": "navigation",
+        "statement": "Use a named native no-JavaScript-safe compact disclosure before global links wrap into peer rows.",
+        "supportTaskIds": [
+          "/root/free_recruitment",
+          "/root/navigation_lane_v1",
+          "/root/accessibility_lane_v1"
+        ],
+        "dissentTaskIds": [],
+        "hardConstraintFailures": [],
+        "ownerLockedUnresolved": false,
+        "status": "promoted"
+      },
+      {
+        "id": "NAV-FOCUSED-PLAYERS",
+        "scope": "navigation",
+        "statement": "Give every player a named session landmark, progress, and truthful explicit exit without acquisition or utility navigation.",
+        "supportTaskIds": [
+          "/root/free_recruitment",
+          "/root/language_lane_v1",
+          "/root/navigation_lane_v1",
+          "/root/accessibility_lane_v1"
+        ],
+        "dissentTaskIds": [],
+        "hardConstraintFailures": [],
+        "ownerLockedUnresolved": false,
+        "status": "promoted"
+      },
+      {
+        "id": "NAV-SHELL-BOUNDARY",
+        "scope": "navigation",
+        "statement": "Assign question, hazard, review, and simulation player route IDs to the focused shell and all other fixed routes to standard.",
+        "supportTaskIds": [
+          "/root/free_recruitment",
+          "/root/navigation_lane_v1",
+          "/root/accessibility_lane_v1"
+        ],
+        "dissentTaskIds": [],
+        "hardConstraintFailures": [],
+        "ownerLockedUnresolved": false,
+        "status": "promoted"
+      },
+      {
+        "id": "NAV-PRACTICE-TASK-HUB",
+        "scope": "navigation",
+        "statement": "Lead Practice with concrete task starts and place translated capacity diagnostics after those starts.",
+        "supportTaskIds": [
+          "/root/free_recruitment",
+          "/root/navigation_lane_v1",
+          "/root/accessibility_lane_v1"
+        ],
+        "dissentTaskIds": [],
+        "hardConstraintFailures": [],
+        "ownerLockedUnresolved": false,
+        "status": "promoted"
+      },
+      {
+        "id": "NAV-STATIC-REVIEW-ENTRY",
+        "scope": "navigation",
+        "statement": "Expose Review through a normal static parent entry while retaining local and noindex semantics.",
+        "supportTaskIds": [
+          "/root/navigation_lane_v1",
+          "/root/accessibility_lane_v1"
+        ],
+        "dissentTaskIds": [],
+        "hardConstraintFailures": [],
+        "ownerLockedUnresolved": false,
+        "status": "promoted"
+      },
+      {
+        "id": "NAV-ROUTE-IDENTITY",
+        "scope": "navigation",
+        "statement": "Preserve every fixed route identity, path, owner, indexability value, offline rule, and no-JavaScript purpose.",
+        "supportTaskIds": [
+          "/root/language_lane_v1",
+          "/root/navigation_lane_v1",
+          "/root/accessibility_lane_v1"
+        ],
+        "dissentTaskIds": [],
+        "hardConstraintFailures": [],
+        "ownerLockedUnresolved": false,
+        "status": "promoted"
+      },
+      {
+        "id": "NAV-NOJS",
+        "scope": "navigation",
+        "statement": "Keep primary discovery as static ordinary document navigation with truthful JavaScript-free fallbacks.",
+        "supportTaskIds": [
+          "/root/navigation_lane_v1",
+          "/root/accessibility_lane_v1"
+        ],
+        "dissentTaskIds": [],
+        "hardConstraintFailures": [],
+        "ownerLockedUnresolved": false,
+        "status": "promoted"
+      },
+      {
+        "id": "NAV-NONVISUAL-EQUAL-DISCOVERY",
+        "scope": "navigation",
+        "statement": "Give visual and text-keyboard hazard tasks equivalent discovery without claiming identical measurement.",
+        "supportTaskIds": [
+          "/root/navigation_lane_v1",
+          "/root/accessibility_lane_v1"
+        ],
+        "dissentTaskIds": [],
+        "hardConstraintFailures": [],
+        "ownerLockedUnresolved": false,
+        "status": "promoted"
+      },
+      {
+        "id": "SHARED-HUMAN-EVIDENCE-BOUNDARY",
+        "scope": "shared",
+        "statement": "Keep human evidence none, human participant count zero, and every result labeled not human usability tested.",
+        "supportTaskIds": [
+          "/root/free_recruitment",
+          "/root/language_lane_v1",
+          "/root/navigation_lane_v1",
+          "/root/accessibility_lane_v1"
+        ],
+        "dissentTaskIds": [],
+        "hardConstraintFailures": [],
+        "ownerLockedUnresolved": false,
+        "status": "promoted"
+      },
+      {
+        "id": "SHARED-PRESERVE-LOAD-BEARING-TRUTH",
+        "scope": "shared",
+        "statement": "Preserve unofficial status, uncertainty, source support, local-data risk, security boundaries, and commit-before-reveal.",
+        "supportTaskIds": [
+          "/root/language_lane_v1",
+          "/root/navigation_lane_v1",
+          "/root/accessibility_lane_v1"
+        ],
+        "dissentTaskIds": [],
+        "hardConstraintFailures": [],
+        "ownerLockedUnresolved": false,
+        "status": "promoted"
+      },
+      {
+        "id": "SHARED-EXPLICIT-PROFILE-CONTEXT",
+        "scope": "shared",
+        "statement": "Require explicit or visibly neutral profile context and never silently substitute the first jurisdiction.",
+        "supportTaskIds": [
+          "/root/free_recruitment",
+          "/root/language_lane_v1",
+          "/root/navigation_lane_v1",
+          "/root/accessibility_lane_v1"
+        ],
+        "dissentTaskIds": [],
+        "hardConstraintFailures": [],
+        "ownerLockedUnresolved": false,
+        "status": "promoted"
+      },
+      {
+        "id": "UNRESOLVED-SHORTEST-PRACTICE-PRIMARY",
+        "scope": "shared",
+        "statement": "Whether the shortest valid whole-bank question count should be the primary Practice start remains unresolved.",
+        "supportTaskIds": [
+          "/root/free_recruitment"
+        ],
+        "dissentTaskIds": [],
+        "hardConstraintFailures": [],
+        "ownerLockedUnresolved": false,
+        "status": "unresolved"
+      },
+      {
+        "id": "UNRESOLVED-HOME-PRIMARY-CTA",
+        "scope": "shared",
+        "statement": "Whether Check my exam or Start practice is the universal primary Home action remains unresolved.",
+        "supportTaskIds": [
+          "/root/free_recruitment",
+          "/root/navigation_lane_v1",
+          "/root/accessibility_lane_v1"
+        ],
+        "dissentTaskIds": [],
+        "hardConstraintFailures": [],
+        "ownerLockedUnresolved": true,
+        "status": "unresolved"
+      },
+      {
+        "id": "UNRESOLVED-EXACT-NAV-LABELS-GROUPING",
+        "scope": "navigation",
+        "statement": "Exact global navigation labels, group count, membership, nesting, and order remain unresolved rather than consensus.",
+        "supportTaskIds": [
+          "/root/free_recruitment",
+          "/root/navigation_lane_v1",
+          "/root/accessibility_lane_v1"
+        ],
+        "dissentTaskIds": [],
+        "hardConstraintFailures": [],
+        "ownerLockedUnresolved": true,
+        "status": "unresolved"
+      },
+      {
+        "id": "UNRESOLVED-D1-VS-D2",
+        "scope": "language",
+        "statement": "The full choice between CL-D1 and CL-D2, including any hybrid, remains unresolved and no candidate is selected.",
+        "supportTaskIds": [
+          "/root/free_recruitment",
+          "/root/language_lane_v1",
+          "/root/accessibility_lane_v1"
+        ],
+        "dissentTaskIds": [],
+        "hardConstraintFailures": [],
+        "ownerLockedUnresolved": true,
+        "status": "unresolved"
+      },
+      {
+        "id": "UNRESOLVED-PRACTICE-TIMING",
+        "scope": "language",
+        "statement": "No practice duration is established; only exact current question counts may be stated.",
+        "supportTaskIds": [
+          "/root/free_recruitment",
+          "/root/language_lane_v1",
+          "/root/accessibility_lane_v1"
+        ],
+        "dissentTaskIds": [],
+        "hardConstraintFailures": [],
+        "ownerLockedUnresolved": true,
+        "status": "unresolved"
+      },
+      {
+        "id": "UNRESOLVED-SOURCE-PROMINENCE",
+        "scope": "language",
+        "statement": "The route-specific choice between inline proof and disclosed proof remains unresolved.",
+        "supportTaskIds": [
+          "/root/free_recruitment",
+          "/root/language_lane_v1",
+          "/root/navigation_lane_v1",
+          "/root/accessibility_lane_v1"
+        ],
+        "dissentTaskIds": [],
+        "hardConstraintFailures": [],
+        "ownerLockedUnresolved": true,
+        "status": "unresolved"
+      }
+    ],
+    "selectedDirections": {
+      "language": {
+        "id": "CL-CODEX-1",
+        "name": "Consumer-language safety envelope",
+        "evidenceMode": "codex-only",
+        "ruleIds": [
+          "CL-CL1-QUARANTINE",
+          "CL-D3-NOT-SELECTED",
+          "CL-DORMANT-CORRECTION",
+          "CL-FOCUSED-FEEDBACK",
+          "CL-LAYER-PROOF",
+          "CL-NO-UNMEASURED-TIME",
+          "CL-TASK-FIRST",
+          "CL-TYPED-PUBLIC-ERRORS",
+          "CL-US-ENGLISH-FACTS",
+          "SHARED-EXPLICIT-PROFILE-CONTEXT",
+          "SHARED-HUMAN-EVIDENCE-BOUNDARY",
+          "SHARED-PRESERVE-LOAD-BEARING-TRUTH"
+        ]
+      },
+      "navigation": {
+        "id": "NAV-CODEX-1",
+        "name": "Task and utility separation with focused players",
+        "evidenceMode": "codex-only",
+        "ruleIds": [
+          "NAV-FOCUSED-PLAYERS",
+          "NAV-NATIVE-COMPACT",
+          "NAV-NOJS",
+          "NAV-NONVISUAL-EQUAL-DISCOVERY",
+          "NAV-PRACTICE-TASK-HUB",
+          "NAV-ROUTE-IDENTITY",
+          "NAV-SHELL-BOUNDARY",
+          "NAV-STATIC-REVIEW-ENTRY",
+          "NAV-TWO-TIER",
+          "SHARED-EXPLICIT-PROFILE-CONTEXT",
+          "SHARED-HUMAN-EVIDENCE-BOUNDARY",
+          "SHARED-PRESERVE-LOAD-BEARING-TRUTH"
+        ]
+      }
+    },
+    "confidence": "moderate-for-codex-inspection-only",
+    "limitations": [
+      "No human participant, moderator, reviewer, decision owner, or sign-off exists.",
+      "No comprehension, trust, preference, task-success, first-click, tree-test, or timing outcome was observed.",
+      "No assistive-technology user or real-device human session occurred.",
+      "Codex and automated inspection can identify source-level defects but cannot establish human usability.",
+      "Plan 004 candidate prototypes are unpiloted and include stale or unsupported claims.",
+      "Plan 005 priorities and shell assignments remain desk hypotheses rather than behavior evidence.",
+      "Exact Home action, navigation labels/grouping, full D1-versus-D2 candidate selection, primary Practice count, timing, and source prominence remain explicit unresolved boundaries."
+    ]
+  },
+  "canonicalPromotions": [
+    {
+      "path": "product/CONTENT_DESIGN.md",
+      "directionId": "CL-CODEX-1",
+      "sha256": "029b35f97bea05c088c3efa44118536dee8e0d03f877247260efeaafde48549f"
+    },
+    {
+      "path": "product/ROUTES.md",
+      "directionId": "NAV-CODEX-1",
+      "sha256": "e590db9fa153353faa197bace2a974c59470a60ed1e36bd74270eaa46aa1fcc8"
+    },
+    {
+      "path": "product/DESIGN_SYSTEM.md",
+      "directionId": "NAV-CODEX-1",
+      "sha256": "22f0eb6762b77b572fb537860a55073ee084f76adaffea6816aa896ae6dfe826"
+    },
+    {
+      "path": "product/COMPONENT_ARCHITECTURE.md",
+      "directionId": "NAV-CODEX-1",
+      "sha256": "4ff04439c35b9ee639f4217701f82ea56f87b8b1748df3502f56f83528303b12"
+    }
+  ]
+}
