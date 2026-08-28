@@ -1,0 +1,758 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schemaVersion": 1,
+  "packetId": "plan-008-integrated-validation-provisional-prework-v1",
+  "status": "provisional-prework",
+  "participantEvidence": "none",
+  "decisionStatus": "pending",
+  "requiredDependencyShas": null,
+  "mustRebaseAndReverify": true,
+  "preparedAt": "2026-08-28T16:38:10Z",
+  "sourceCoordinates": {
+    "preparedAgainstOriginMainSha": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+    "plan008PlanningSha": "e6f911901f7f18f6716204309fee8b103419a5e0",
+    "protocolPath": "plans/008-integrated-validation-prework.md",
+    "contractPath": "plans/008-integrated-validation-schema-contract.json",
+    "validatorPath": "plans/validate-008-integrated-validation-prework.mjs",
+    "planStatusPath": "plans/README.md"
+  },
+  "classification": {
+    "evidenceKind": "protocol-and-schema-prework",
+    "acceptedResearch": false,
+    "participantSubstitute": false,
+    "designSelection": false,
+    "integratedPrototype": false,
+    "operationsApproved": false,
+    "artifactApproved": false,
+    "plan008StatusChanged": false,
+    "productionMigration": false
+  },
+  "dependencyInterface": {
+    "mode": "null-slots-only",
+    "ready": false,
+    "requiredPlans": [
+      {
+        "planId": "004",
+        "acceptedOutput": "consumer-language-contract",
+        "requiredSha": null,
+        "requiredArtifactPath": null,
+        "acceptanceStatus": "unaccepted"
+      },
+      {
+        "planId": "005",
+        "acceptedOutput": "learner-task-navigation-contract",
+        "requiredSha": null,
+        "requiredArtifactPath": null,
+        "acceptanceStatus": "unaccepted"
+      },
+      {
+        "planId": "006",
+        "acceptedOutput": "consumer-visual-system-and-route-archetypes",
+        "requiredSha": null,
+        "requiredArtifactPath": null,
+        "acceptanceStatus": "unaccepted"
+      },
+      {
+        "planId": "007",
+        "acceptedOutput": "component-foundation-and-responsive-contract",
+        "requiredSha": null,
+        "requiredArtifactPath": null,
+        "acceptanceStatus": "unaccepted"
+      }
+    ],
+    "futureIntegratedLoopbackHarness": {
+      "interfaceVersion": 1,
+      "status": "not-built",
+      "participantExposureAllowed": false,
+      "host": "127.0.0.1",
+      "externalRequestsAllowed": false,
+      "requiredInputs": [
+        {
+          "slot": "executionBaseSha",
+          "type": "git-sha-40",
+          "value": null
+        },
+        {
+          "slot": "acceptedDependencyShas",
+          "type": "plan-id-to-git-sha-40-map",
+          "value": null
+        },
+        {
+          "slot": "acceptedDependencyArtifactPaths",
+          "type": "plan-id-to-repository-path-map",
+          "value": null
+        },
+        {
+          "slot": "harnessManifestSha256",
+          "type": "sha256-hex",
+          "value": null
+        },
+        {
+          "slot": "harnessManifestCommitSha",
+          "type": "git-sha-40",
+          "value": null
+        },
+        {
+          "slot": "approvedAccessMethod",
+          "type": "operator-approved-enum",
+          "value": null
+        },
+        {
+          "slot": "approvedExposureBoundary",
+          "type": "operator-approved-string",
+          "value": null
+        }
+      ],
+      "requiredTaskIds": [
+        "orientation",
+        "profile-fit",
+        "begin-study",
+        "question-feedback",
+        "tool-comparison",
+        "hazard-practice",
+        "review",
+        "offline-data-control"
+      ],
+      "requiredStateFamilies": [
+        "loading",
+        "empty",
+        "ready",
+        "selected",
+        "committing",
+        "answered-revealed",
+        "reviewed",
+        "offline-stale",
+        "offline-unavailable",
+        "recoverable-error",
+        "content-unavailable",
+        "storage-unavailable"
+      ],
+      "requiredCapabilities": [
+        "semantic-html",
+        "keyboard-only",
+        "focus-and-announcements",
+        "320-and-1440-css-pixel-reflow",
+        "large-text-and-400-percent-zoom-pilot",
+        "forced-colors",
+        "reduced-motion",
+        "visual-and-nonvisual-hazard",
+        "offline-and-degraded-network",
+        "interruption-and-durable-recovery",
+        "print-transformation",
+        "precommit-answer-safety",
+        "zero-external-requests"
+      ],
+      "prohibitedSources": [
+        "production-controller-imports",
+        "production-storage-imports",
+        "unaccepted-plan-output",
+        "recovered-editable-prototype-as-accepted-direction",
+        "secure-or-remembered-exam-content"
+      ]
+    }
+  },
+  "operationsBoundary": {
+    "status": "not-approved",
+    "approvalReferences": [],
+    "operations": [
+      {
+        "operation": "recruitment",
+        "proposedUse": true,
+        "status": "pending"
+      },
+      {
+        "operation": "outreach",
+        "proposedUse": true,
+        "status": "pending"
+      },
+      {
+        "operation": "compensation",
+        "proposedUse": false,
+        "proposedMode": "unpaid-adult-volunteer",
+        "status": "pending"
+      },
+      {
+        "operation": "recording",
+        "proposedUse": false,
+        "proposedMode": "no-audio-video-screen-or-automated-transcript",
+        "status": "pending"
+      },
+      {
+        "operation": "private-data-retention",
+        "proposedUse": true,
+        "status": "pending"
+      },
+      {
+        "operation": "prototype-exposure",
+        "proposedUse": true,
+        "status": "pending"
+      }
+    ]
+  },
+  "participantProtocol": {
+    "minimumAge": 18,
+    "volunteerKind": "real-adult-volunteer",
+    "payment": "none",
+    "recording": "none",
+    "automatedTranscription": "none",
+    "currentRecruitmentCount": 0,
+    "currentParticipantCount": 0,
+    "targetIfDependenciesAndApprovalsLaterExist": {
+      "rounds": 2,
+      "minimumPerRound": 6,
+      "maximumPerRound": 8,
+      "minimumRoundTwoRelevantAccessStrategyParticipants": 2
+    },
+    "forbiddenParticipantSubstitutions": [
+      "agent",
+      "ai-agent",
+      "llm",
+      "automation",
+      "bot",
+      "generated-persona",
+      "synthetic-persona",
+      "synthetic-participant",
+      "simulated-participant",
+      "role-played-candidate",
+      "staff-proxy",
+      "internal-reviewer",
+      "expert-review"
+    ]
+  },
+  "codebooks": {
+    "taskId": [
+      "orientation",
+      "profile-fit",
+      "begin-study",
+      "question-feedback",
+      "tool-comparison",
+      "hazard-practice",
+      "review",
+      "offline-data-control"
+    ],
+    "roundId": [
+      "R1",
+      "R2"
+    ],
+    "completion": [
+      "complete",
+      "partial",
+      "failed"
+    ],
+    "firstAction": [
+      "expected-primary",
+      "expected-secondary",
+      "wrong-study-destination",
+      "utility-trust-detour",
+      "no-action"
+    ],
+    "comprehension": [
+      "accurate",
+      "partial",
+      "incorrect",
+      "not-applicable"
+    ],
+    "accessBlocker": [
+      "none",
+      "resolved",
+      "unresolved"
+    ],
+    "accessStrategy": [
+      "none",
+      "keyboard",
+      "zoom-text",
+      "screen-reader",
+      "voice-input",
+      "switch-or-motor",
+      "other-declared"
+    ],
+    "issueCategory": [
+      "language",
+      "hierarchy",
+      "visual",
+      "interaction",
+      "correctness",
+      "access",
+      "security",
+      "data-safety",
+      "affiliation-trust",
+      "evidence-contract"
+    ],
+    "severity": [
+      "critical",
+      "high",
+      "medium",
+      "low"
+    ],
+    "retestOutcome": [
+      "not-applicable",
+      "resolved",
+      "persists",
+      "inconclusive"
+    ],
+    "occurrence": [
+      "observed",
+      "retest"
+    ],
+    "accessStrategyUsed": [
+      "yes",
+      "no"
+    ],
+    "deviceClass": [
+      "phone",
+      "tablet",
+      "laptop",
+      "desktop",
+      "other-declared"
+    ],
+    "networkCondition": [
+      "ordinary",
+      "self-reported-low-bandwidth",
+      "self-reported-intermittent",
+      "moderator-controlled-offline",
+      "moderator-controlled-degraded",
+      "unknown"
+    ],
+    "recoveryEvent": [
+      "none",
+      "reload",
+      "back-forward",
+      "offline-transition",
+      "degraded-network",
+      "storage-write-failure",
+      "quota-limited",
+      "blocked-upgrade",
+      "missing-object",
+      "stale-pack",
+      "cross-tab-invalidation",
+      "safe-exit-and-resume"
+    ],
+    "recoveryOutcome": [
+      "recovered-independently",
+      "recovered-with-assistance",
+      "not-recovered",
+      "not-attempted"
+    ]
+  },
+  "futurePrivateRecordSchemas": {
+    "participantContext": {
+      "storage": "approved-private-location-only-never-git",
+      "requiredFields": [
+        "studyId",
+        "roundId",
+        "actorKind",
+        "age18PlusConfirmed",
+        "unpaidConsentConfirmed",
+        "noRecordingConsentConfirmed",
+        "withdrawalAndDeletionExplained",
+        "phoneFirst",
+        "lowerDigitalConfidence",
+        "lowBandwidth",
+        "limitedEnglish",
+        "accessStrategy"
+      ],
+      "actorKindConstant": "real-adult-volunteer"
+    },
+    "environment": {
+      "storage": "approved-private-location-only-never-git",
+      "requiredFields": [
+        "studyId",
+        "taskId",
+        "deviceClass",
+        "operatingSystemName",
+        "operatingSystemVersion",
+        "browserName",
+        "browserVersion",
+        "viewportCssWidth",
+        "viewportCssHeight",
+        "orientation",
+        "zoomOrTextScale",
+        "accessStrategy",
+        "assistiveTechnologyName",
+        "assistiveTechnologyVersion",
+        "inputMode",
+        "networkCondition",
+        "networkConditionSource"
+      ],
+      "prohibitedFields": [
+        "ipAddress",
+        "deviceSerial",
+        "advertisingId",
+        "accountId",
+        "preciseLocation",
+        "browserFingerprint"
+      ]
+    },
+    "taskObservation": {
+      "storage": "approved-private-location-only-never-git",
+      "requiredFields": [
+        "studyId",
+        "roundId",
+        "taskId",
+        "completion",
+        "firstAction",
+        "outcomeComprehension",
+        "unofficialStatusComprehension",
+        "trustSourceComprehension",
+        "accessBlocker",
+        "recoveryEvent",
+        "recoveryOutcome",
+        "codedNoteId"
+      ],
+      "prohibitedFields": [
+        "name",
+        "email",
+        "phone",
+        "address",
+        "employer",
+        "applicantId",
+        "admissionNumber",
+        "diagnosis",
+        "rawTranscript",
+        "examRecollection"
+      ],
+      "diagnosticExtensions": [
+        {
+          "field": "wrongTurnAndRecoveryPath",
+          "type": "controlled-code-sequence",
+          "allowedValues": null,
+          "decisionStatus": "pending"
+        },
+        {
+          "field": "meaningfulStartDurationMilliseconds",
+          "type": "nonnegative-integer",
+          "allowedValues": null,
+          "decisionStatus": "pending"
+        },
+        {
+          "field": "hesitationCodes",
+          "type": "controlled-code-array",
+          "allowedValues": null,
+          "decisionStatus": "pending"
+        },
+        {
+          "field": "trustRating",
+          "type": "operator-approved-ordinal",
+          "allowedValues": null,
+          "decisionStatus": "pending"
+        },
+        {
+          "field": "trustReasonCode",
+          "type": "controlled-code",
+          "allowedValues": null,
+          "decisionStatus": "pending"
+        }
+      ]
+    },
+    "issueOccurrence": {
+      "storage": "approved-private-location-only-never-git",
+      "requiredFields": [
+        "patternId",
+        "studyId",
+        "roundId",
+        "taskId",
+        "category",
+        "severity",
+        "occurrence",
+        "retestOfPatternId",
+        "retestOutcome"
+      ]
+    },
+    "withdrawalDeletion": {
+      "storage": "approved-private-location-only-never-git",
+      "requiredFields": [
+        "studyId",
+        "withdrawalRequested",
+        "deletionRequested",
+        "requestedAt",
+        "completedAt",
+        "completedByRole"
+      ]
+    }
+  },
+  "futureAggregateSchemas": {
+    "status": "provisional-interface-only",
+    "participantRowsAllowed": false,
+    "participantIdsAllowed": false,
+    "publicationStatus": "pending",
+    "roundSummary": {
+      "requiredFields": [
+        "roundId",
+        "uniqueCompletedParticipants",
+        "artifactVersion",
+        "artifactManifestSha256",
+        "taskAggregates",
+        "accessStrategyParticipantCount"
+      ],
+      "taskAggregateRequiredFields": [
+        "taskId",
+        "eligibleParticipantDenominator",
+        "completedTaskDenominator",
+        "completionNumerators",
+        "firstActionNumerators",
+        "comprehensionNumerators",
+        "accessBlockerNumerators",
+        "recoveryAttemptDenominator",
+        "recoveryOutcomeNumerators"
+      ]
+    },
+    "coverageSummary": {
+      "requiredFields": [
+        "denominator",
+        "mobileFirstCount",
+        "lowerDigitalConfidenceCount",
+        "lowBandwidthCount",
+        "limitedEnglishCount",
+        "relevantAccessStrategyCount",
+        "screenReaderCount",
+        "physicalMobileDeviceCount"
+      ],
+      "rareIntersectionRowsAllowed": false
+    },
+    "patternSummary": {
+      "requiredFields": [
+        "roundId",
+        "patternId",
+        "taskId",
+        "category",
+        "severity",
+        "occurrenceCount",
+        "distinctParticipantCount",
+        "eligibleParticipantDenominator",
+        "repeated",
+        "retestOutcome"
+      ],
+      "participantIdsAllowed": false
+    },
+    "evidenceValidation": {
+      "requiredFields": [
+        "observationsSha256",
+        "patternsSha256",
+        "contextsSha256",
+        "verifiedOn"
+      ],
+      "sha256Pattern": "^[0-9a-f]{64}$"
+    },
+    "invariants": [
+      "all counts are nonnegative integers",
+      "each numerator is less than or equal to its matching denominator",
+      "each completed volunteer contributes at most once to a denominator",
+      "only real adult volunteer records contribute to participant denominators",
+      "automation contributes zero to every participant denominator",
+      "round and task counts derive from the approved private matrices",
+      "pattern repeated is true only for at least two distinct volunteers in one round",
+      "a critical occurrence remains blocking even when its repeated value is false",
+      "aggregate evidence hashes match the exact approved private matrices",
+      "withdrawal deletion triggers recomputation before republication"
+    ],
+    "unresolvedBeforeOperationalUse": [
+      "small-cell publication threshold",
+      "diagnostic extension codebooks",
+      "time-to-meaningful-start aggregation",
+      "multi-access-strategy aggregation",
+      "trust-rating scale and reason codes"
+    ]
+  },
+  "pendingFixture": {
+    "status": "provisional-prework",
+    "participantEvidence": "none",
+    "decisionStatus": "pending",
+    "requiredDependencyShas": null,
+    "mustRebaseAndReverify": true,
+    "participants": [],
+    "environments": [],
+    "taskObservations": [],
+    "issueOccurrences": [],
+    "withdrawalsAndDeletions": [],
+    "operationApprovals": [],
+    "artifactApprovals": [],
+    "decisionApprovals": [],
+    "approvalReferences": [],
+    "aggregates": {
+      "participantCount": 0,
+      "roundParticipantCounts": {
+        "R1": 0,
+        "R2": 0
+      },
+      "taskObservationCounts": {
+        "orientation": 0,
+        "profile-fit": 0,
+        "begin-study": 0,
+        "question-feedback": 0,
+        "tool-comparison": 0,
+        "hazard-practice": 0,
+        "review": 0,
+        "offline-data-control": 0
+      },
+      "contextCounts": {
+        "mobileFirst": 0,
+        "lowerDigitalConfidence": 0,
+        "lowBandwidth": 0,
+        "limitedEnglish": 0,
+        "relevantAccessStrategy": 0,
+        "screenReader": 0,
+        "physicalMobileDevice": 0
+      },
+      "completionCounts": {
+        "complete": 0,
+        "partial": 0,
+        "failed": 0
+      },
+      "issueCounts": {
+        "critical": 0,
+        "high": 0,
+        "medium": 0,
+        "low": 0
+      }
+    },
+    "evidenceValidation": {
+      "observationsSha256": null,
+      "patternsSha256": null,
+      "contextsSha256": null,
+      "verifiedOn": null
+    },
+    "baselineEvidence": [
+      {
+        "evidenceId": "BASE-AUTOMATED-001",
+        "kind": "non-participant-automation",
+        "status": "passed",
+        "claimScope": "current-site-baseline-only",
+        "sourceSha": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+        "recordedAt": "2026-08-28T16:32:15Z",
+        "command": "env PATH=/tmp/nycustodian-bun-1.4.0/package/bin:$PATH bun run verify",
+        "participantCount": 0,
+        "participantEvidence": "none",
+        "substitutionForParticipants": false,
+        "coverageCategories": [],
+        "environment": {
+          "os": "Ubuntu 24.04.3 LTS; Linux 6.8.0-101-generic x86_64",
+          "nodeVersion": "22.22.0",
+          "bunVersion": "1.4.0",
+          "playwrightVersion": "1.62.1",
+          "browserProjects": [],
+          "browserVersions": []
+        },
+        "resultSummary": "Exited 0: layout and boundaries passed; 396 visual hashes verified; five workspace typechecks and 352 unit tests passed; 526 documents built; artifact invariants passed.",
+        "limitations": [
+          "Repository verify does not execute Playwright or manual certification.",
+          "No participant, comprehension, design-direction, device, browser, or assistive-technology claim is made."
+        ]
+      },
+      {
+        "evidenceId": "BASE-AUTOMATED-002",
+        "kind": "non-participant-automation",
+        "status": "passed",
+        "claimScope": "current-site-baseline-only",
+        "sourceSha": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+        "recordedAt": "2026-08-28T16:32:15Z",
+        "command": "prestart: env PATH=/tmp/nycustodian-bun-1.4.0/package/bin:$PATH bun run vite preview --host 127.0.0.1 --port 4175 --strictPort (cwd apps/site); run: env CI=1 NYCUSTODIAN_PLAYWRIGHT_BASE_URL=http://127.0.0.1:4175 PATH=/tmp/nycustodian-bun-1.4.0/package/bin:$PATH bun run test:browser",
+        "participantCount": 0,
+        "participantEvidence": "none",
+        "substitutionForParticipants": false,
+        "coverageCategories": [
+          "accessibility",
+          "keyboard",
+          "responsive",
+          "offline",
+          "print",
+          "recovery"
+        ],
+        "environment": {
+          "os": "Ubuntu 24.04.3 LTS; Linux 6.8.0-101-generic x86_64",
+          "nodeVersion": "22.22.0",
+          "bunVersion": "1.4.0",
+          "playwrightVersion": "1.62.1",
+          "browserProjects": [
+            "chromium",
+            "firefox",
+            "webkit"
+          ],
+          "browserVersions": [
+            "chromium 151.0.7922.34",
+            "firefox 153.0",
+            "webkit 26.5"
+          ]
+        },
+        "resultSummary": "Isolated loopback CI-mode matrix exited 0: 172 passed and 26 intentional project-specific skips across 198 configured cases in 2.2 minutes.",
+        "limitations": [
+          "Desktop Playwright projects only; explicit 320 CSS-pixel reflow coverage is limited to question and hazard fixtures.",
+          "No real mobile device, emitted screen-reader speech, true 400% browser zoom, physical print, participant comprehension, or accepted-design evidence.",
+          "Firefox/WebKit service-worker cases and other project-specific unsupported behaviors account for the intentional skips."
+        ]
+      }
+    ]
+  },
+  "baselineEvidenceContract": {
+    "allowedKind": "non-participant-automation",
+    "requiredClaimScope": "current-site-baseline-only",
+    "requiredParticipantCount": 0,
+    "requiredParticipantEvidence": "none",
+    "requiredSubstitutionForParticipants": false,
+    "coverageCategories": [
+      "accessibility",
+      "keyboard",
+      "responsive",
+      "offline",
+      "print",
+      "recovery"
+    ],
+    "prohibitedClaims": [
+      "participant-validation",
+      "design-direction-validation",
+      "plan-008-gate-satisfaction",
+      "assistive-technology-certification",
+      "production-release-certification"
+    ]
+  },
+  "validatorContract": {
+    "mode": "fail-closed-provisional-only",
+    "plan008AllowedIndexStatus": "BLOCKED",
+    "rejectedStructuredStates": [
+      "accepted",
+      "accept-for-implementation",
+      "accept-with-conditions",
+      "approved",
+      "complete",
+      "completed",
+      "DONE"
+    ],
+    "selfTestIds": [
+      "reject-duplicate-json-key",
+      "reject-extra-root-key",
+      "reject-missing-root-key",
+      "reject-accepted-status",
+      "reject-done-status",
+      "reject-participant-evidence",
+      "reject-approved-decision",
+      "reject-dependency-sha",
+      "reject-rebase-flag-false",
+      "reject-unexpected-pending-field",
+      "reject-zero-budget-payment-change",
+      "reject-recording-change",
+      "reject-operation-mode-change",
+      "reject-removed-agent-prohibition",
+      "reject-private-schema-agent-substitution",
+      "reject-fake-approval-body-hash",
+      "reject-nonnull-evidence-hash",
+      "reject-extra-dependency-field",
+      "reject-markdown-metadata-mismatch",
+      "reject-script-metadata-mismatch",
+      "reject-plan-008-done-row",
+      "reject-nonzero-count-without-records",
+      "reject-real-looking-row-in-provisional-packet",
+      "reject-agent-substitution",
+      "reject-generated-persona-substitution",
+      "reject-automation-substitution",
+      "reject-fake-approval-reference",
+      "reject-operation-approval",
+      "reject-selected-design",
+      "reject-built-harness",
+      "reject-dependency-done",
+      "reject-dependency-slot-sha",
+      "reject-baseline-participant-claim",
+      "reject-unknown-task",
+      "reject-duplicate-task",
+      "reject-malformed-source-sha"
+    ]
+  }
+}
