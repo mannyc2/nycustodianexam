@@ -14,15 +14,24 @@ if (!Number.isSafeInteger(port) || port < 1024 || port > 65_535) {
 
 const baseURL = `http://127.0.0.1:${port}`
 const chromiumExecutable = process.env.NYCUSTODIAN_CHROMIUM_EXECUTABLE
+const evidenceCoordinates = {
+  protocolId: "CODEX-ONLY-UIUX-V1",
+  reviewMode: "codex-only",
+  humanEvidence: "none",
+  humanParticipantCount: 0,
+  humanReviewRequired: false,
+  notHumanUsabilityTested: true
+} as const
 
 export default defineConfig({
+  metadata: evidenceCoordinates,
   testDir: prototypeRoot,
   testMatch: "visual-system-research.pw.ts",
   outputDir: "/tmp/nycustodian-visual-system-playwright-results",
-  fullyParallel: true,
+  fullyParallel: false,
   forbidOnly: true,
-  retries: process.env.CI ? 1 : 0,
-  workers: process.env.CI ? 2 : 4,
+  retries: 0,
+  workers: 1,
   reporter: [
     ["list"],
     [

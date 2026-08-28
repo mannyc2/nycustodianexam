@@ -2,36 +2,16 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/mannyc2/nycustodianexam/blob/main/research/ui-ux/consumer-visual-system/evidence-manifest.schema.json",
   "title": "Plan 006 terminal CODEX-only consumer visual-system evidence",
-  "description": "Draft 2020-12 schema constrained to the complete portable subset named by x-validationProfile. Custom joins and deterministic decision invariants are enforced by verify-research.mjs.",
+  "description": "Draft 2020-12 schema constrained to the complete portable subset named by x-validationProfile. Custom joins, immutable subject checks, and deterministic decision invariants are enforced by verify-research.mjs.",
   "x-validationProfile": "draft-2020-12-portable-subset-v1",
   "type": "object",
   "additionalProperties": false,
-  "required": [
-    "schemaVersion",
-    "artifactId",
-    "schemaPath",
-    "status",
-    "decisionStatus",
-    "protocolId",
-    "reviewMode",
-    "humanEvidence",
-    "humanParticipantCount",
-    "humanReviewRequired",
-    "notHumanUsabilityTested",
-    "source",
-    "prototype",
-    "assets",
-    "benchmarks",
-    "browser",
-    "reviews",
-    "decision",
-    "canonical"
-  ],
+  "required": ["schemaVersion", "artifactId", "schemaFile", "artifactStatus", "decisionStatus", "protocolId", "reviewMode", "humanEvidence", "humanParticipantCount", "humanReviewRequired", "notHumanUsabilityTested", "source", "prototype", "assets", "benchmarks", "browser", "reviews", "decision", "plan", "report", "plansIndex", "researchIndex", "canonical"],
   "properties": {
-    "schemaVersion": { "const": 1 },
+    "schemaVersion": { "const": 2 },
     "artifactId": { "const": "plan-006-consumer-visual-system-terminal-evidence" },
-    "schemaPath": { "const": "research/ui-ux/consumer-visual-system/evidence-manifest.schema.json" },
-    "status": { "const": "complete" },
+    "schemaFile": { "$ref": "#/$defs/artifactFile" },
+    "artifactStatus": { "const": "complete" },
     "decisionStatus": { "enum": ["selected", "unresolved"] },
     "protocolId": { "const": "CODEX-ONLY-UIUX-V1" },
     "reviewMode": { "const": "codex-only" },
@@ -46,27 +26,16 @@
     "browser": { "$ref": "#/$defs/browser" },
     "reviews": { "$ref": "#/$defs/reviews" },
     "decision": { "$ref": "#/$defs/decision" },
-    "canonical": {
-      "oneOf": [
-        { "type": "null" },
-        { "$ref": "#/$defs/canonical" }
-      ]
-    }
+    "plan": { "$ref": "#/$defs/artifactFile" },
+    "report": { "$ref": "#/$defs/artifactFile" },
+    "plansIndex": { "$ref": "#/$defs/artifactFile" },
+    "researchIndex": { "$ref": "#/$defs/artifactFile" },
+    "canonical": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/canonical" }] }
   },
   "$defs": {
-    "sha1": {
-      "type": "string",
-      "pattern": "^[0-9a-f]{40}$"
-    },
-    "sha256": {
-      "type": "string",
-      "pattern": "^[0-9a-f]{64}$"
-    },
-    "repoPath": {
-      "type": "string",
-      "minLength": 1,
-      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*[\\u0000\\r\\n]).+$"
-    },
+    "sha1": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "repoPath": { "type": "string", "minLength": 1, "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*[\\u0000\\r\\n]).+$" },
     "artifactFile": {
       "type": "object",
       "additionalProperties": false,
@@ -90,35 +59,33 @@
     "source": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "acceptedStep2SubjectSha",
-        "acceptedStep2MergeSha",
-        "acceptedStep2TreeSha",
-        "promotions",
-        "unresolvedDecisionIds"
-      ],
+      "required": ["acceptedStep2SubjectSha", "acceptedStep2MergeSha", "acceptedStep2TreeSha", "promotions", "unresolvedDecisionQuarantine", "preReceiptSource"],
       "properties": {
         "acceptedStep2SubjectSha": { "const": "4130693dee6caaa804a116f490b2192861f53e6e" },
         "acceptedStep2MergeSha": { "const": "d823e928b0b57f589fd1c64a85db4ae0f6d2f0d1" },
         "acceptedStep2TreeSha": { "const": "2c81903699d209516eba50a07b606ec9166e78a2" },
-        "promotions": {
-          "type": "array",
-          "minItems": 2,
-          "maxItems": 2,
-          "uniqueItems": true,
-          "items": { "$ref": "#/$defs/promotion" }
-        },
-        "unresolvedDecisionIds": {
-          "const": [
-            "NAV-SHELL-BOUNDARY",
-            "UNRESOLVED-SHORTEST-PRACTICE-PRIMARY",
-            "UNRESOLVED-HOME-PRIMARY-CTA",
-            "UNRESOLVED-EXACT-NAV-LABELS-GROUPING",
-            "UNRESOLVED-D1-VS-D2",
-            "UNRESOLVED-PRACTICE-TIMING",
-            "UNRESOLVED-SOURCE-PROMINENCE"
-          ]
+        "preReceiptSource": { "$ref": "#/$defs/sourceClosure" },
+        "promotions": { "type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true, "items": { "$ref": "#/$defs/promotion" } },
+        "unresolvedDecisionQuarantine": {
+          "const": {
+            "status": "quarantined-not-promoted",
+            "decisionIds": ["NAV-SHELL-BOUNDARY", "UNRESOLVED-SHORTEST-PRACTICE-PRIMARY", "UNRESOLVED-HOME-PRIMARY-CTA", "UNRESOLVED-EXACT-NAV-LABELS-GROUPING", "UNRESOLVED-D1-VS-D2", "UNRESOLVED-PRACTICE-TIMING", "UNRESOLVED-SOURCE-PROMINENCE"],
+            "promotionBoundary": "visual-tokens-and-composition-only",
+            "fixtureSemantics": "noncanonical-comparison-fixture"
+          }
         }
+      }
+    },
+    "sourceClosure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "sourceSha", "pathCount", "files", "sha256"],
+      "properties": {
+        "algorithm": { "const": "sha256(UTF-8(JSON.stringify(sorted exact {path,bytes,sha256} descriptors)) + LF)" },
+        "sourceSha": { "$ref": "#/$defs/sha1" },
+        "pathCount": { "const": 228 },
+        "files": { "type": "array", "minItems": 228, "maxItems": 228, "uniqueItems": true, "items": { "$ref": "#/$defs/artifactFile" } },
+        "sha256": { "$ref": "#/$defs/sha256" }
       }
     },
     "archetype": {
@@ -126,91 +93,58 @@
       "additionalProperties": false,
       "required": ["archetypeId", "routeIds", "terminalDocuments"],
       "properties": {
-        "archetypeId": {
-          "enum": [
-            "orientation",
-            "study-launcher",
-            "browse-reference",
-            "focused-task",
-            "review-results",
-            "utility",
-            "recovery"
-          ]
-        },
-        "routeIds": {
-          "type": "array",
-          "minItems": 1,
-          "uniqueItems": true,
-          "items": { "type": "string", "minLength": 1 }
-        },
-        "terminalDocuments": {
-          "type": "array",
-          "uniqueItems": true,
-          "items": { "type": "string", "minLength": 1 }
-        }
+        "archetypeId": { "enum": ["orientation", "study-launcher", "browse-reference", "focused-task", "review-results", "utility", "recovery"] },
+        "routeIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "terminalDocuments": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } }
       }
     },
     "prototype": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "comparisonSourceSha",
-        "territoryIds",
-        "archetypes",
-        "routeIdCount",
-        "frameIds",
-        "sharedFrameCount",
-        "comparableFrameCount",
-        "files",
-        "bundleAlgorithm",
-        "bundleSha256",
-        "candidateSelectionEmbedded"
-      ],
+      "required": ["comparisonSourceSha", "territoryIds", "archetypes", "routeIdCount", "representedRouteIdCount", "coverageContract", "frameIds", "sharedFrameCount", "comparableFrameCount", "files", "bundleAlgorithm", "bundleSha256", "candidateSelectionEmbedded", "fixtureSemantics"],
       "properties": {
         "comparisonSourceSha": { "$ref": "#/$defs/sha1" },
         "territoryIds": { "const": ["A", "B", "C"] },
-        "archetypes": {
-          "type": "array",
-          "minItems": 7,
-          "maxItems": 7,
-          "uniqueItems": true,
-          "items": { "$ref": "#/$defs/archetype" }
-        },
+        "archetypes": { "type": "array", "minItems": 7, "maxItems": 7, "uniqueItems": true, "items": { "$ref": "#/$defs/archetype" } },
         "routeIdCount": { "const": 36 },
-        "frameIds": {
-          "type": "array",
-          "minItems": 7,
-          "uniqueItems": true,
-          "items": { "type": "string", "minLength": 1 }
+        "representedRouteIdCount": { "const": 10 },
+        "coverageContract": {
+          "const": {
+            "classification": "representative-visual-comparison-not-exhaustive-legal-state-validation",
+            "registryRouteIdCount": 36,
+            "representedRouteIdCount": 10,
+            "representativeFrameCount": 12,
+            "defaultCaseCount": 108,
+            "deferredHazardVariants": ["asset-unavailable", "region-required", "version-mismatch", "commit-failure-preservation"],
+            "deferredRecoveryVariants": ["not-found-404", "withdrawn-410", "invalid-publication", "storage-unavailable", "service-failure"],
+            "printScope": {
+              "classification": "immutable-review-queue-empty-only",
+              "caseCount": 9,
+              "frameIds": ["review-queue-empty"],
+              "territoryIds": ["A", "B", "C"],
+              "browserProjects": ["chromium", "firefox", "webkit"]
+            }
+          }
         },
-        "sharedFrameCount": { "type": "integer", "minimum": 7 },
-        "comparableFrameCount": { "type": "integer", "minimum": 21 },
-        "files": {
-          "type": "array",
-          "minItems": 3,
-          "maxItems": 3,
-          "uniqueItems": true,
-          "items": { "$ref": "#/$defs/artifactFile" }
-        },
+        "frameIds": { "type": "array", "minItems": 12, "maxItems": 12, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "sharedFrameCount": { "const": 12 },
+        "comparableFrameCount": { "const": 36 },
+        "files": { "type": "array", "minItems": 3, "maxItems": 3, "uniqueItems": true, "items": { "$ref": "#/$defs/artifactFile" } },
         "bundleAlgorithm": { "const": "sha256(sorted(path + NUL + bytes + NUL))" },
         "bundleSha256": { "$ref": "#/$defs/sha256" },
-        "candidateSelectionEmbedded": { "const": false }
+        "candidateSelectionEmbedded": { "const": false },
+        "fixtureSemantics": { "const": { "status": "noncanonical-comparison-fixture", "acceptedInputs": "exact-accepted-step2-language-and-navigation-closures", "unresolvedChoices": "quarantined-not-promoted" } }
       }
     },
     "assets": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["file", "rowCount", "kindCounts"],
+      "required": ["file", "verifier", "rowCount", "kindCounts"],
       "properties": {
         "file": { "$ref": "#/$defs/artifactFile" },
+        "verifier": { "$ref": "#/$defs/artifactFile" },
         "rowCount": { "const": 97 },
-        "kindCounts": {
-          "const": {
-            "tool": 65,
-            "comparison": 14,
-            "scene": 18
-          }
-        }
+        "kindCounts": { "const": { "tool": 65, "comparison": 14, "scene": 18 } }
       }
     },
     "benchmarks": {
@@ -220,14 +154,7 @@
       "properties": {
         "file": { "$ref": "#/$defs/artifactFile" },
         "sourceCount": { "const": 12 },
-        "categoryCounts": {
-          "const": {
-            "exam-preparation": 3,
-            "public-service-reference": 3,
-            "practical-visual-learning": 3,
-            "no-account-offline-education": 3
-          }
-        }
+        "categoryCounts": { "const": { "exam-preparation": 3, "public-service-reference": 3, "practical-visual-learning": 3, "no-account-offline-education": 3 } }
       }
     },
     "browser": {
@@ -239,48 +166,47 @@
         "status": { "const": "passed" },
         "sourceSha": { "$ref": "#/$defs/sha1" },
         "prototypeBundleSha256": { "$ref": "#/$defs/sha256" },
-        "caseCount": { "type": "integer", "minimum": 36 },
+        "caseCount": { "const": 141 },
         "semanticParity": { "const": true }
       }
     },
     "reviewFile": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["path", "bytes", "sha256", "agentTaskId", "rubricId"],
+      "required": ["path", "bytes", "sha256", "taskPath", "rubricId"],
       "properties": {
         "path": { "$ref": "#/$defs/repoPath" },
         "bytes": { "type": "integer", "minimum": 1 },
         "sha256": { "$ref": "#/$defs/sha256" },
-        "agentTaskId": { "type": "string", "pattern": "^/root/[a-z0-9_/-]+$" },
-        "rubricId": {
-          "enum": [
-            "consumer-trust-anti-ai-slop",
-            "accessibility-cognitive-load",
-            "visual-component-coherence"
-          ]
-        }
+        "taskPath": { "enum": ["/root/audit_lifecycle_precommit/review_consumer_trust_r3", "/root/audit_lifecycle_precommit/review_consumer_trust_r3/review_accessibility_r3", "/root/audit_lifecycle_precommit/review_consumer_trust_r3/review_visual_coherence_r3"] },
+        "rubricId": { "enum": ["consumer-trust-anti-ai-slop", "accessibility-cognitive-load", "visual-component-coherence"] }
+      }
+    },
+    "promptFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "bytes", "sha256", "taskPath", "rubricId"],
+      "properties": {
+        "path": { "$ref": "#/$defs/repoPath" },
+        "bytes": { "type": "integer", "minimum": 1 },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "taskPath": { "enum": ["/root/audit_lifecycle_precommit/review_consumer_trust_r3", "/root/audit_lifecycle_precommit/review_consumer_trust_r3/review_accessibility_r3", "/root/audit_lifecycle_precommit/review_consumer_trust_r3/review_visual_coherence_r3"] },
+        "rubricId": { "enum": ["consumer-trust-anti-ai-slop", "accessibility-cognitive-load", "visual-component-coherence"] }
       }
     },
     "reviews": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["files", "reviewCount", "requiredRubricIds"],
+      "required": ["reviewSubjectSha", "reviewSubjectTreeSha", "files", "promptFiles", "taskReceiptFile", "reviewCount", "requiredRubricIds", "receiptAuthenticationLimitation"],
       "properties": {
-        "files": {
-          "type": "array",
-          "minItems": 3,
-          "maxItems": 3,
-          "uniqueItems": true,
-          "items": { "$ref": "#/$defs/reviewFile" }
-        },
+        "reviewSubjectSha": { "$ref": "#/$defs/sha1" },
+        "reviewSubjectTreeSha": { "$ref": "#/$defs/sha1" },
+        "files": { "type": "array", "minItems": 3, "maxItems": 3, "uniqueItems": true, "items": { "$ref": "#/$defs/reviewFile" } },
+        "promptFiles": { "type": "array", "minItems": 3, "maxItems": 3, "uniqueItems": true, "items": { "$ref": "#/$defs/promptFile" } },
+        "taskReceiptFile": { "$ref": "#/$defs/artifactFile" },
         "reviewCount": { "const": 3 },
-        "requiredRubricIds": {
-          "const": [
-            "consumer-trust-anti-ai-slop",
-            "accessibility-cognitive-load",
-            "visual-component-coherence"
-          ]
-        }
+        "requiredRubricIds": { "const": ["consumer-trust-anti-ai-slop", "accessibility-cognitive-load", "visual-component-coherence"] },
+        "receiptAuthenticationLimitation": { "const": "Local Codex state and rollout records are not cryptographic proof of task identity, timing, or cross-output non-observability; ordinary CI can validate only the committed receipt bytes and declared joins." }
       }
     },
     "scoreTotals": {
@@ -296,65 +222,83 @@
     "dissent": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["agentTaskId", "territoryId", "reason", "evidenceCoordinates"],
+      "required": ["taskPath", "territoryId", "reason", "evidenceCoordinates"],
       "properties": {
-        "agentTaskId": { "type": "string", "pattern": "^/root/[a-z0-9_/-]+$" },
+        "taskPath": { "enum": ["/root/audit_lifecycle_precommit/review_consumer_trust_r3", "/root/audit_lifecycle_precommit/review_consumer_trust_r3/review_accessibility_r3", "/root/audit_lifecycle_precommit/review_consumer_trust_r3/review_visual_coherence_r3"] },
         "territoryId": { "enum": ["A", "B", "C"] },
         "reason": { "type": "string", "minLength": 1 },
-        "evidenceCoordinates": {
-          "type": "array",
-          "minItems": 1,
-          "uniqueItems": true,
-          "items": { "type": "string", "minLength": 1 }
-        }
+        "evidenceCoordinates": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } }
       }
     },
     "decision": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "ruleId",
-        "criteriaPerTerritoryPerReview",
-        "totals",
-        "eligibleTerritoryIds",
-        "blockerCount",
-        "dissent",
-        "consensusStatus",
-        "selectedTerritoryId"
-      ],
+      "required": ["ruleId", "criteriaPerTerritoryPerReview", "totals", "highestTerritoryIds", "blockerCount", "unsupportedLaneTaskPaths", "dissent", "consensusStatus", "selectedTerritoryId"],
       "properties": {
-        "ruleId": { "const": "sum-15-unweighted-criterion-scores-unique-highest-v1" },
+        "ruleId": { "const": "sum-15-unweighted-criterion-scores-global-gates-unique-highest-v2" },
         "criteriaPerTerritoryPerReview": { "const": 5 },
         "totals": { "$ref": "#/$defs/scoreTotals" },
-        "eligibleTerritoryIds": {
-          "type": "array",
-          "uniqueItems": true,
-          "items": { "enum": ["A", "B", "C"] }
-        },
+        "highestTerritoryIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "enum": ["A", "B", "C"] } },
         "blockerCount": { "type": "integer", "minimum": 0 },
-        "dissent": {
-          "type": "array",
-          "uniqueItems": true,
-          "items": { "$ref": "#/$defs/dissent" }
-        },
-        "consensusStatus": { "enum": ["unique-winner-no-dissent", "unresolved-tie-dissent-or-blocker"] },
-        "selectedTerritoryId": {
-          "oneOf": [
-            { "type": "null" },
-            { "enum": ["A", "B", "C"] }
-          ]
-        }
+        "unsupportedLaneTaskPaths": { "type": "array", "uniqueItems": true, "items": { "enum": ["/root/audit_lifecycle_precommit/review_consumer_trust_r3", "/root/audit_lifecycle_precommit/review_consumer_trust_r3/review_accessibility_r3", "/root/audit_lifecycle_precommit/review_consumer_trust_r3/review_visual_coherence_r3"] } },
+        "dissent": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/dissent" } },
+        "consensusStatus": { "enum": ["selected-unique-supported-no-blocker-no-dissent", "unresolved-global-gate-or-nonunique"] },
+        "selectedTerritoryId": { "oneOf": [{ "type": "null" }, { "enum": ["A", "B", "C"] }] }
+      }
+    },
+    "tokenEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role", "value"],
+      "properties": { "role": { "type": "string", "minLength": 1 }, "value": { "type": "string", "minLength": 1 } }
+    },
+    "axisEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["axisId", "value"],
+      "properties": {
+        "axisId": { "enum": ["typography", "colorDistribution", "spacing", "surfaces", "borderElevation", "composition", "imageFraming", "dataDensity"] },
+        "value": { "type": "string", "minLength": 1 }
+      }
+    },
+    "promotionContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contractVersion", "protocolId", "reviewMode", "humanEvidence", "humanParticipantCount", "humanReviewRequired", "notHumanUsabilityTested", "scope", "acceptedStep2SubjectSha", "acceptedStep2MergeSha", "reviewSubjectSha", "prototypeBundleSha256", "decisionRuleId", "decisionStatus", "consensusStatus", "aggregateScores", "selectedTerritoryId", "selectedTerritoryName", "tokens", "compositionAxes", "unresolvedExclusions", "fixtureSemantics", "prohibitedPromotionKeys"],
+      "properties": {
+        "contractVersion": { "const": 1 },
+        "protocolId": { "const": "CODEX-ONLY-UIUX-V1" },
+        "reviewMode": { "const": "codex-only" },
+        "humanEvidence": { "const": "none" },
+        "humanParticipantCount": { "const": 0 },
+        "humanReviewRequired": { "const": false },
+        "notHumanUsabilityTested": { "const": true },
+        "scope": { "const": "visual-tokens-and-composition-only" },
+        "acceptedStep2SubjectSha": { "const": "4130693dee6caaa804a116f490b2192861f53e6e" },
+        "acceptedStep2MergeSha": { "const": "d823e928b0b57f589fd1c64a85db4ae0f6d2f0d1" },
+        "reviewSubjectSha": { "$ref": "#/$defs/sha1" },
+        "prototypeBundleSha256": { "$ref": "#/$defs/sha256" },
+        "decisionRuleId": { "const": "sum-15-unweighted-criterion-scores-global-gates-unique-highest-v2" },
+        "decisionStatus": { "const": "selected" },
+        "consensusStatus": { "const": "selected-unique-supported-no-blocker-no-dissent" },
+        "aggregateScores": { "$ref": "#/$defs/scoreTotals" },
+        "selectedTerritoryId": { "enum": ["A", "B", "C"] },
+        "selectedTerritoryName": { "type": "string", "minLength": 1 },
+        "tokens": { "type": "array", "minItems": 20, "uniqueItems": true, "items": { "$ref": "#/$defs/tokenEntry" } },
+        "compositionAxes": { "type": "array", "minItems": 8, "maxItems": 8, "uniqueItems": true, "items": { "$ref": "#/$defs/axisEntry" } },
+        "unresolvedExclusions": { "const": ["NAV-SHELL-BOUNDARY", "UNRESOLVED-SHORTEST-PRACTICE-PRIMARY", "UNRESOLVED-HOME-PRIMARY-CTA", "UNRESOLVED-EXACT-NAV-LABELS-GROUPING", "UNRESOLVED-D1-VS-D2", "UNRESOLVED-PRACTICE-TIMING", "UNRESOLVED-SOURCE-PROMINENCE"] },
+        "fixtureSemantics": { "const": { "status": "noncanonical-comparison-fixture", "navigation": "excluded-unresolved-step2-fixture", "homePrimaryAction": "excluded-unresolved-step2-fixture", "practiceTiming": "excluded-unresolved-step2-fixture", "sourceProminence": "excluded-unresolved-step2-fixture", "d1D2": "excluded-unresolved-step2-fixture" } },
+        "prohibitedPromotionKeys": { "const": ["navShellBoundary", "shortestPracticePrimary", "homePrimaryCta", "navigationLabels", "navigationGrouping", "d1D2", "practiceTiming", "sourceProminence", "navigation", "cta"] }
       }
     },
     "canonical": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["selectedTerritoryId", "designSystem", "plansIndex", "researchIndex"],
+      "required": ["selectedTerritoryId", "promotionContract", "designSystem"],
       "properties": {
         "selectedTerritoryId": { "enum": ["A", "B", "C"] },
-        "designSystem": { "$ref": "#/$defs/artifactFile" },
-        "plansIndex": { "$ref": "#/$defs/artifactFile" },
-        "researchIndex": { "$ref": "#/$defs/artifactFile" }
+        "promotionContract": { "$ref": "#/$defs/promotionContract" },
+        "designSystem": { "$ref": "#/$defs/artifactFile" }
       }
     }
   }

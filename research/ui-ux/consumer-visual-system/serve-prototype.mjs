@@ -2,6 +2,15 @@ import { createServer } from "node:http"
 import { readFile } from "node:fs/promises"
 import { fileURLToPath } from "node:url"
 
+export const evidenceCoordinates = Object.freeze({
+  protocolId: "CODEX-ONLY-UIUX-V1",
+  reviewMode: "codex-only",
+  humanEvidence: "none",
+  humanParticipantCount: 0,
+  humanReviewRequired: false,
+  notHumanUsabilityTested: true
+})
+
 const prototypeRoot = fileURLToPath(new URL("./", import.meta.url))
 const repositoryRoot = fileURLToPath(new URL("../../../", import.meta.url))
 

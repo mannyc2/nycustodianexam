@@ -2,7 +2,7 @@
   "schemaVersion": "1.0.0",
   "recordId": "plan-006-benchmark-sources-2026-08-28",
   "protocolId": "CODEX-ONLY-UIUX-V1",
-  "reviewMode": "CODEX-ONLY",
+  "reviewMode": "codex-only",
   "evidenceClass": "nonhuman-desk-observation",
   "humanEvidence": "none",
   "humanParticipantCount": 0,

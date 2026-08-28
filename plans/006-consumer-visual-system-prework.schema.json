@@ -2,13 +2,18 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/mannyc2/nycustodianexam/blob/main/plans/006-consumer-visual-system-prework.schema.json",
   "title": "Plan 006 consumer visual-system provisional prework",
-  "description": "Draft 2020-12 schema constrained to the complete in-repository portable subset declared by x-validationProfile; covers deterministic prework that is not Plan 006 research, user research, a completed Codex review, selection, or acceptance.",
+  "description": "Draft 2020-12 schema constrained to the complete in-repository portable subset declared by x-validationProfile; covers a frozen, superseded, non-executable deterministic-prework snapshot that is not Plan 006 research, user research, a completed Codex review, selection, or acceptance.",
   "x-artifactLabel": {
     "status": "provisional-prework",
     "participantEvidence": "none",
     "decisionStatus": "pending",
     "requiredDependencyShas": null,
-    "mustRebaseAndReverify": true
+    "mustRebaseAndReverify": true,
+    "reviewMode": "codex-only",
+    "humanEvidence": "none",
+    "humanParticipantCount": 0,
+    "humanReviewRequired": false,
+    "notHumanUsabilityTested": true
   },
   "x-validationProfile": "draft-2020-12-portable-subset-v1",
   "type": "object",
@@ -18,6 +23,7 @@
     "artifactId",
     "schemaPath",
     "label",
+    "snapshotDisposition",
     "sourceSnapshot",
     "captureManifest",
     "codexOnlyWorkflow",
@@ -32,6 +38,20 @@
     "artifactId": { "const": "plan-006-consumer-visual-system-provisional-prework" },
     "schemaPath": { "const": "plans/006-consumer-visual-system-prework.schema.json" },
     "label": { "$ref": "#/$defs/artifactLabel" },
+    "snapshotDisposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["acceptedStep2MergeSha", "acceptedStep2SubjectSha", "activeContractPath", "executionStatus", "frozenAtCommit", "historicalObservationRule", "recordType"],
+      "properties": {
+        "acceptedStep2MergeSha": { "const": "d823e928b0b57f589fd1c64a85db4ae0f6d2f0d1" },
+        "acceptedStep2SubjectSha": { "const": "4130693dee6caaa804a116f490b2192861f53e6e" },
+        "activeContractPath": { "const": "plans/006-select-consumer-visual-system.md" },
+        "executionStatus": { "const": "superseded-non-executable" },
+        "frozenAtCommit": { "const": "74c6799fbcef587e44c5c5f3854258db516a9aaa" },
+        "historicalObservationRule": { "const": "preserve-pre-Step-2-null-and-pending-values-as-observed-do-not-reinterpret-as-current-state" },
+        "recordType": { "const": "frozen-historical-prework-snapshot" }
+      }
+    },
     "sourceSnapshot": {
       "type": "object",
       "additionalProperties": false,
@@ -194,6 +214,7 @@
         "humanEvidence",
         "humanParticipantCount",
         "humanReviewRequired",
+        "historicalFutureReviewInterfaceDisposition",
         "notHumanUsabilityTested",
         "requiredDependency",
         "independence",
@@ -209,6 +230,18 @@
         "humanEvidence": { "const": "none" },
         "humanParticipantCount": { "const": 0 },
         "humanReviewRequired": { "const": false },
+        "historicalFutureReviewInterfaceDisposition": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["activeContractPath", "mayPopulateReviewRecords", "maySelectOrPromote", "reason", "status"],
+          "properties": {
+            "activeContractPath": { "const": "plans/006-select-consumer-visual-system.md" },
+            "mayPopulateReviewRecords": { "const": false },
+            "maySelectOrPromote": { "const": false },
+            "reason": { "const": "arbitrary-agentTaskId-and-self-attested-independence-interface-superseded-by-exact-native-task-receipt-contract" },
+            "status": { "const": "superseded-non-executable" }
+          }
+        },
         "notHumanUsabilityTested": { "const": true },
         "requiredDependency": {
           "type": "object",
@@ -602,13 +635,18 @@
     "artifactLabel": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["status", "participantEvidence", "decisionStatus", "requiredDependencyShas", "mustRebaseAndReverify"],
+      "required": ["status", "participantEvidence", "decisionStatus", "requiredDependencyShas", "mustRebaseAndReverify", "reviewMode", "humanEvidence", "humanParticipantCount", "humanReviewRequired", "notHumanUsabilityTested"],
       "properties": {
         "status": { "const": "provisional-prework" },
         "participantEvidence": { "const": "none" },
         "decisionStatus": { "const": "pending" },
         "requiredDependencyShas": { "type": "null" },
-        "mustRebaseAndReverify": { "const": true }
+        "mustRebaseAndReverify": { "const": true },
+        "reviewMode": { "const": "codex-only" },
+        "humanEvidence": { "const": "none" },
+        "humanParticipantCount": { "const": 0 },
+        "humanReviewRequired": { "const": false },
+        "notHumanUsabilityTested": { "const": true }
       }
     },
     "gitSha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },

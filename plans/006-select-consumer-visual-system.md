@@ -3,7 +3,9 @@
 ## Status
 
 - **Execution protocol**: `CODEX-ONLY-UIUX-V1`
-- **Status**: IN PROGRESS until every gate below passes on one exact commit
+- **Status**: IN PROGRESS — rejected subject
+  `7fcc776e6941c7f41a504dda59ea59af88ba31fb` and every review/selection bound
+  to its pre-repair bytes are invalid and non-reusable
 - **Priority / effort / risk**: P1 / L / MED
 - **Category**: research and product-contract direction, not production implementation
 - **Accepted dependency subject**: `4130693dee6caaa804a116f490b2192861f53e6e`
@@ -35,6 +37,45 @@ user research, behavior evidence, a preference survey, a comprehension study,
 or a usability test. No outreach, external hosting, deployment, or sign-off is
 part of this plan.
 
+## Exact-subject lifecycle
+
+Plan 006 uses one hard-cutover workflow; there is no fallback to the rejected
+subject or its receipts:
+
+1. Commit the repaired prototype, token map, asset proof, benchmark record,
+   prompt templates, browser harness, receipt extractor, schema, Plan 006
+   contract, and terminal validator as one clean harness-source commit. The
+   exact source closure is enumerated by path, byte length, and SHA-256 in the
+   browser receipt. No browser receipt, terminal manifest/report, task receipt,
+   or review output may exist in that source tree.
+2. Run the browser capture only from that clean exact source commit. Commit the
+   generated browser receipt in a selection-neutral review-subject commit whose
+   sole parent is the source SHA and whose complete source-to-subject diff is
+   exactly `A research/ui-ux/consumer-visual-system/browser-receipt.json`. The
+   subject contains no final review files, terminal manifest/report, canonical
+   promotion, or terminal result claim.
+3. Launch three fresh native Codex tasks against that exact review-subject SHA.
+   Withhold every result from the other lanes until all three have completed.
+4. If any candidate, harness, prompt, browser, asset, or source byte needs repair,
+   invalidate the subject and all outputs, then repeat from step 1.
+5. Only an unchanged clean subject may receive the explicit terminal output and
+   status path set: normalized review files, safe task-receipt summaries,
+   evidence manifest, report, plan/index status, and any permitted visual-only
+   canonical promotion. Every candidate, prompt, asset proof, benchmark,
+   harness, schema, and validator byte from the subject remains immutable at
+   terminal HEAD.
+
+The terminal validator runs only from a clean commit and derives that commit
+from Git. It requires the fixed base
+`d823e928b0b57f589fd1c64a85db4ae0f6d2f0d1` for source, subject,
+prompt rendering, and terminal verification; a caller-supplied base is allowed
+only in an explicitly diagnostic phase. A manifest cannot truthfully contain
+its own commit SHA; instead, every described byte must equal `HEAD:path`, and
+the immutable pre-review subject SHA is recorded explicitly in every task and
+review join. Exact parent, exact diff, source-cleanliness, forbidden-source-
+output, immutable-input, and terminal-path closure are fail-closed invariants,
+not ancestry-only checks.
+
 ## Fixed inputs and unresolved decisions
 
 Consume only the exact accepted Step 2 closures `CL-CODEX-1` and
@@ -58,9 +99,18 @@ shared by A/B/C. Exactly `question-player`, `hazard-player`, `review-player`,
 and `simulation-player` use the accepted focused-player shell. The comparison
 must not generalize a universal shell contract for every other route.
 
-## Fixed route and state matrix
+The promoted contract is closed-schema and visual-only. It may contain token
+roles plus typography, color distribution, spacing, surfaces, borders/elevation,
+route-local composition, image framing, visual action treatment, and data
+density. It may not contain a Home CTA choice, collapsed-source default,
+navigation presence/labels/grouping, practice timing, source prominence, D1/D2
+choice, or any value for another unresolved Step 2 decision. All seven IDs stay
+present as `unresolved-excluded`, and every shared fixture records
+`status=noncanonical-comparison-fixture` and `promotable=false`.
 
-The renderer must close all 36 route IDs through these seven archetypes:
+## Route registry and representative comparison matrix
+
+The accepted registry groups 36 route IDs into seven archetypes:
 
 | Archetype | Route IDs |
 |---|---|
@@ -72,13 +122,37 @@ The renderer must close all 36 route IDs through these seven archetypes:
 | Utility | `settings`, `offline-packs`, `correction-submit` |
 | Recovery | `status`, plus representative 404/410/5xx document states |
 
-The committed comparison contains at least one populated frame for every
-archetype and at least 21 territory/archetype frames. It also exercises the two
+The committed comparison is a representative visual comparison, not exhaustive
+route or legal-state validation. It contains 12 shared frames across exactly 10
+route IDs (`home`, `study-hub`, `atlas-tool`, `atlas-family`,
+`question-player`, `hazard-player`, `review-queue`, `offline-packs`,
+`correction-submit`, and `status`), at least one populated frame for every
+archetype, and 36 territory/frame render combinations. It exercises the two
 Home-action fixtures, ready/prerequisite study states, tool and comparison
 reference, question and hazard precommit states, successful empty review,
 offline material, dormant correction draft, and one explicitly synthetic
-recovery fixture. Synthetic fixtures are interface-state examples, not runtime
-observations.
+recovery fixture. Synthetic fixtures are noncanonical interface-state examples,
+not runtime observations or proof for an unrendered registry route.
+
+Legal-state closure remains deferred. In particular, this comparison does not
+validate hazard asset unavailable, region unavailable, version mismatch, or
+commit-failure/preservation states, nor recovery 404, withdrawn/410, invalid
+publication, storage unavailable, or service failure states. Those omissions
+must remain explicit in the manifest, report, and final limitation text.
+
+```text
+coverageClassification=representative-visual-comparison-not-exhaustive-legal-state-validation
+registryRouteIdCount=36
+representedRouteIdCount=10
+representativeFrameCount=12
+deferredHazardVariants=asset-unavailable,region-required,version-mismatch,commit-failure-preservation
+deferredRecoveryVariants=not-found-404,withdrawn-410,invalid-publication,storage-unavailable,service-failure
+printEvidenceClassification=immutable-review-queue-empty-only
+printEvidenceCaseCount=9
+printEvidenceFrameIds=review-queue-empty
+printEvidenceTerritoryIds=A,B,C
+printEvidenceBrowserProjects=chromium,firefox,webkit
+```
 
 ## Accepted-asset boundary
 
@@ -86,6 +160,12 @@ Audit every accepted release row: 65 tools, 14 comparisons, and 18 scenes. Use
 only immutable delivery derivatives and preserve the release ledger's stable ID,
 opaque ID, revision, hashes, review coordinates, rights statement, and any
 publication/scored-use gate.
+
+For every one of the 97 rows, terminal proof recomputes the phone and print path,
+byte length, SHA-256, pixel dimensions, release-ledger path and digest, release
+coordinate, review coordinate and record digest, rights coordinates and record
+digest, and the complete gate value. The three prototype images are additionally
+bound to their exact accepted delivery bytes and stable render coordinates.
 
 Consumer prototypes may use only accepted derivatives. They may not load or
 expose candidates, masters, review/contact sheets, regions, overlays,
@@ -100,6 +180,13 @@ historical prework packet retains only its logical source ID, byte length,
 archive hash, text ledger, scanned-entry markers, unknown rights, and the
 recorded do-not-execute dynamic-code capability. Ordinary validation never
 requires or infers a host attachment path.
+
+`historicalPreworkDisposition=frozen-snapshot-only`
+`historicalPreworkCommit=74c6799fbcef587e44c5c5f3854258db516a9aaa`
+
+The prework packet and its validator preserve the earlier snapshot for audit;
+they are not an active dependency, review protocol, selection path, or alternate
+Plan 006 completion contract.
 
 ## Benchmark boundary
 
@@ -127,15 +214,48 @@ Create exactly three materially different visual hypotheses:
 
 Each territory has a complete semantic token set and differs on at least five
 of typography, color distribution, spacing, surfaces, border/elevation,
-composition, image framing, action treatment, navigation presence, and data
-density. Do not create a logo, mascot, decorative image, gradient/blob identity,
+composition, image framing, visual action treatment, and data density.
+Navigation presence, structure, labels, grouping, and order remain one identical
+noncanonical fixture across A/B/C and are never a territory differentiator or
+promotion field. Do not create a logo, mascot, decorative image, gradient/blob identity,
 stock art, generated filler, third-party icon pack, downloaded font, or new
 accepted image.
+
+One machine-readable role-to-CSS map is authoritative. Every promotable token
+must map to a real selector/property consumer, and browser evidence must observe
+its computed value in A, B, and C. At least five declared axes must have material
+computed-style differences. A token listed only in JavaScript or shadowed by a
+hard-coded default is not implemented and cannot be reviewed or promoted.
 
 The local server binds only to `127.0.0.1`, has an explicit file allowlist and
 deny-by-default CSP, and serves only the prototype text files plus the three
 recorded accepted derivatives used by fixtures. Screenshots, traces, and raw
 browser output remain under `/tmp`.
+
+The terminal browser receipt captures every default A/B/C frame in Chromium,
+Firefox, and WebKit: 108 immutable default cases. A separately justified
+special-presentation matrix contains 33 immutable cases covering
+phone, tablet, wide desktop, large text, 400%-equivalent reflow, forced colors,
+reduced motion, and print without implying every combination was run. Immutable
+print receipt scope is exactly nine cases: the `review-queue-empty` frame for
+A/B/C in Chromium, Firefox, and WebKit. Those nine cases observe hidden
+toolbars/actions in the rendered page; broader Playwright print checks are
+diagnostic unless they are added to the committed receipt before source freeze.
+Keyboard proof derives the enabled, rendered, visible focusable set and order,
+uses native forward Tab through every stop and native Shift+Tab through the
+exact reverse return to the first stop, and requires every expected stop exactly
+once per direction, no duplicate/trap, correct order, and visible focus at every
+stop. This round trip is used because Playwright cannot observe Firefox's
+browser-chrome focus transition or a forward-only return after the final page
+stop; it is not reported as forward-only cycle evidence. Every Axe result at every impact level is
+retained; the required allowlist is closed and empty unless an exact rule, node,
+rationale, and disposition are added before the review subject freezes. Firefox
+runs serially or at a measured bounded concurrency that produces no navigation
+timeout; a timeout is a failed suite, never a waived result.
+
+`keyboardEvidenceClassification=native-document-focus-order-round-trip`
+
+`firefoxAutomationLimitation=After the final document stop, Playwright Firefox sends forward focus to browser chrome but exposes document.activeElement as the last link indefinitely; 100 additional native Tab presses in both headless and headed Xvfb runs did not expose or re-enter that chrome path. Therefore this evidence does not claim an observable forward-Tab wrap in Firefox.`
 
 ## Independent Codex review protocol
 
@@ -143,11 +263,47 @@ Freeze the comparison bytes first. Hash every prototype file and compute the
 bundle SHA-256 as the hash of each repository-relative path, a NUL byte, the
 file bytes, and a trailing NUL byte in lexicographic path order.
 
-Launch exactly three independent Codex subagent tasks at the same time. Each
-receives only the fixed source coordinates, exact prototype hashes, common
-review record contract, and one distinct rubric. An agent must set
-`crossReviewOutputsReadBeforeSubmission=false` and must not read another lane's
-output before submitting.
+Launch exactly three fresh native Codex subagent tasks with overlapping execution
+intervals. Each receives the same exact subject/source/prototype/browser hashes,
+one committed prompt template, the common review-record contract, and one
+distinct rubric. Each safe receipt records `taskPath`, `sessionUuid`,
+`parentThreadId`, provenance class/source/originator/depth, completion state,
+native completion event timestamp and turn ID, native completion-message
+SHA-256, normalized report path and SHA-256, repository commit, and the
+`safeReceiptSha256` computed over the ordered safe payload. It also retains the
+exact exposed raw spawn and completion bytes when available. The native
+completion text hash is distinct from the normalized review JSON hash. The
+exact three task paths and parent/depth topology are pinned by the validator;
+each fresh session UUID is retained exactly and cross-joined throughout its
+receipt but remains subject to the authentication limitation below. Copied old
+output, retargeted output, arbitrary `/root` strings, reconstructed spawn
+objects, and self-asserted timestamps are not evidence.
+
+The safe receipt is an unauthenticated local orchestration audit summary, not a
+signature: Codex cannot cryptographically prove native identity, timing, or
+cross-output non-observability. That limitation is explicit in every terminal
+artifact. No lane output is shared with another evidence lane. The trust lane
+completes without receiving either child output, and the two child final
+payloads remain withheld until root sends `RELEASE_REVIEW_OUTPUT` after that
+trust completion. Only then are normalized outputs written to the worktree.
+Evidence coordinates use only
+`repository/path:L<line>` and must resolve to a nonblank line in the exact
+review-subject commit. Native Codex does not expose a cryptographic proof of
+cross-task non-observability; that remains an explicit limitation rather than a
+self-attested guarantee.
+
+`receiptAuthenticationLimitation=Local Codex state and rollout records are not cryptographic proof of task identity, timing, or cross-output non-observability; ordinary CI can validate only the committed receipt bytes and declared joins.`
+
+The native four-slot limit is handled without serializing the evidence lanes.
+The completed pre-source audit task later spawns the fresh trust lane and exits;
+that lane, after its parent has exited, spawns the accessibility and coherence
+lanes with `fork_turns=none`. The latter two analyze independently but withhold
+their final payload until root sends `RELEASE_REVIEW_OUTPUT` after the trust lane
+has completed. Thus all three native task intervals overlap, no child result is
+delivered to the trust lane before its completion, and only the raw spawn
+responses are relayed early. The safe receipts preserve the actual depth-2/
+depth-3 parent joins; the limitation above still forbids treating this schedule
+as cryptographic proof of independence.
 
 | Rubric | Five equally weighted criteria |
 |---|---|
@@ -156,10 +312,16 @@ output before submitting.
 | `visual-component-coherence` | component-role consistency; token coherence; seven-archetype coverage; responsive/print continuity; differentiation without content drift |
 
 Every lane scores each criterion for each A/B/C territory once with an integer
-from 1 through 5, where higher is better. It records its immutable agent task
-ID, rubric ID, exact source and prototype hashes, timestamp, evidence
-coordinates, blockers, consensus position, and dissent. Scores are structured
-nonhuman review evidence only.
+from 1 through 5, where higher is better. Its normalized report records
+`taskPath`, `repositoryCommit`, rubric ID, exact source and prototype hashes,
+evidence coordinates, blockers, consensus position, selection-rule support, and
+dissent; native timing and session fields live only in the joined safe receipt.
+A lane has no separate recommendation field. Scores are structured nonhuman
+review evidence only.
+
+Outputs bound to rejected subject
+`7fcc776e6941c7f41a504dda59ea59af88ba31fb` may inform repairs but can never
+populate these terminal receipt slots.
 
 ## Deterministic decision rule
 
@@ -171,16 +333,24 @@ A unique territory may be selected only when all of the following are true:
 - exactly three distinct task IDs and exactly the three required rubrics exist;
 - all receipts bind the exact comparison bytes and accepted Step 2 coordinates;
 - every required score and evidence coordinate exists;
-- no blocking finding exists;
-- no unresolved dissent contests selection eligibility or the unique result;
+- no blocking finding exists in any lane for any territory;
+- every lane supports applying the deterministic selection rule;
+- no dissent record exists for any territory;
+- every lane has one unique high-scoring territory; and
 - the highest aggregate total is unique; and
 - browser, accessibility, asset, semantic-equality, security, schema, scope,
   and repository gates pass.
 
-A tie, missing review, hash drift, blocker, or unresolved selection dissent
-produces `decisionStatus=pending`, `selectedTerritoryId=null`, and no canonical
+A per-lane or aggregate tie, missing review, hash drift, any blocker (including
+one attached to a non-leading territory), an unsupported lane, or any dissent produces
+`decisionStatus=unresolved`, `selectedTerritoryId=null`, and no canonical
 promotion. Do not average away dissent, invent a hybrid, or use a role/sign-off
 field to override the rule.
+
+The terminal vocabulary is closed: `artifactStatus=complete` and
+`decisionStatus=selected|unresolved`. `pending` and `accepted` are pre-terminal
+states only and are forbidden in the terminal manifest, report, and canonical
+contract.
 
 When the rule produces one unique winner, preserve A/B/C comparison bytes,
 record the selected contract separately, promote that exact token/composition/
@@ -202,17 +372,34 @@ Adversarial tests run by default and must reject at least:
 - schema digest or schema weakening/tampering;
 - human/participant/approval substitution;
 - missing or duplicate review/task/rubric identity;
+- fake native task names, prompt/rubric/result drift, non-overlapping task
+  intervals, early result sharing, and unresolved evidence coordinates;
 - score, total, evidence-coordinate, or timestamp drift;
 - tie, blocker, dissent, or selection drift;
+- a unique A score combined with any B blocker still producing a selection;
 - Step 2, prototype, file, bundle, review, asset, benchmark, route, frame, or
   semantic-equality hash drift;
 - forbidden asset paths or answer/postcommit leakage; and
-- canonical contract, research index, plan status, or scope drift.
+- unresolved Step 2 choice promotion;
+- unrendered token declarations or fewer than five computed-style differences;
+- a non-focused Firefox default frame, unsuppressed print action, or any
+  unallowlisted Axe finding at any impact level;
+- a skipped late keyboard control, duplicate/trapped focus stop, invisible late
+  focus stop, or focus order drift;
+- a non-direct source/subject parent, extra source-to-subject path, omitted dirty
+  source input, receipt already present at source, evidence-schema drift, or
+  terminal-validator drift;
+- copied old task output, a task retargeted to another subject, or safe-receipt
+  digest/native-completion drift;
+- an affirmative human study, usability, approval, production authorization,
+  real-device, participant, private contact/locator, candidate/applicant ID,
+  host/device, or non-loopback-network claim; and
+- canonical contract, research index, plan status, exact-path scope, dirty
+  manifest/canonical bytes, or extra UTF-8 SVG drift.
 
 Required checks on the final exact commit:
 
 ```sh
-node plans/validate-006-consumer-visual-system-prework.mjs
 node research/ui-ux/consumer-visual-system/verify-research.mjs --phase=all
 node apps/site/node_modules/@playwright/test/cli.js test --config=research/ui-ux/consumer-visual-system/playwright.config.ts
 bun run verify:visuals
@@ -247,15 +434,22 @@ research/ui-ux/consumer-visual-system/browser-receipt.json
 research/ui-ux/consumer-visual-system/capture-browser-receipt.mjs
 research/ui-ux/consumer-visual-system/evidence-manifest.json
 research/ui-ux/consumer-visual-system/evidence-manifest.schema.json
+research/ui-ux/consumer-visual-system/extract-codex-task-receipt.mjs
 research/ui-ux/consumer-visual-system/playwright.config.ts
 research/ui-ux/consumer-visual-system/prototype.css
 research/ui-ux/consumer-visual-system/prototype.html
 research/ui-ux/consumer-visual-system/prototype.mjs
+research/ui-ux/consumer-visual-system/review-prompts/accessibility-cognitive-load.md
+research/ui-ux/consumer-visual-system/review-prompts/consumer-trust-anti-ai-slop.md
+research/ui-ux/consumer-visual-system/review-prompts/visual-component-coherence.md
+research/ui-ux/consumer-visual-system/review-task-receipts.json
 research/ui-ux/consumer-visual-system/reviews/accessibility-cognitive-load.json
 research/ui-ux/consumer-visual-system/reviews/consumer-trust-anti-ai-slop.json
 research/ui-ux/consumer-visual-system/reviews/visual-component-coherence.json
 research/ui-ux/consumer-visual-system/serve-prototype.mjs
+research/ui-ux/consumer-visual-system/token-role-css-map.json
 research/ui-ux/consumer-visual-system/verify-research.mjs
+research/ui-ux/consumer-visual-system/verify-asset-proof.mjs
 research/ui-ux/consumer-visual-system/visual-system-research.pw.ts
 ```
 

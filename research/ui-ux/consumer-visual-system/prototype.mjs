@@ -422,7 +422,8 @@ export const sharedFrames = deepFreeze([
     state: { label: "Submission", value: "Unavailable · draft not yet saved" },
     actions: [
       { label: "Save draft locally", href: "#save-draft-fixture", kind: "primary" },
-      { label: "Read the correction process", href: "/transparency/corrections/", kind: "secondary" }
+      { label: "Read the correction process", href: "/transparency/corrections/", kind: "secondary" },
+      { label: "Submit when online", href: "#submit-when-online-fixture", kind: "disabled", disabled: true }
     ],
     interaction: {
       kind: "draft-field",
@@ -486,6 +487,8 @@ export const tokenRoles = deepFreeze([
   "zIndex.header", "zIndex.stickyActions", "zIndex.dialog", "zIndex.skipLink",
   "manifest.backgroundColor", "manifest.themeColor"
 ])
+
+export const cssCustomPropertyForTokenRole = (role) => `--token-${role.replaceAll(".", "-")}`
 
 const sharedTokenValues = {
   "fonts.mono": "Courier New, Courier, monospace",
@@ -562,7 +565,7 @@ export const territories = deepFreeze([
       composition: "asymmetric figure-led columns",
       imageFraming: "captioned reference plates",
       actions: "text-led hierarchy with one solid action",
-      navigationPresence: "contents-like compact regions",
+      navigationPresence: "noncanonical shared navigation fixture—not a territory differentiator",
       dataDensity: "compact reference density"
     },
     tokens: completeTokens({
@@ -612,7 +615,7 @@ export const territories = deepFreeze([
       composition: "structured grid and task rail",
       imageFraming: "diagram workbench frame",
       actions: "explicit boxed primary",
-      navigationPresence: "persistent task signposts",
+      navigationPresence: "noncanonical shared navigation fixture—not a territory differentiator",
       dataDensity: "dense scannable"
     },
     tokens: completeTokens({
@@ -665,7 +668,7 @@ export const territories = deepFreeze([
       composition: "sequential study flow",
       imageFraming: "inline study anchor",
       actions: "calm high-clarity action",
-      navigationPresence: "compact progressive disclosure",
+      navigationPresence: "noncanonical shared navigation fixture—not a territory differentiator",
       dataDensity: "moderate breathing room"
     },
     tokens: completeTokens({
@@ -782,14 +785,19 @@ const renderFrame = (territoryId, frameId, presentation = "default") => {
   const territory = territories.find((entry) => entry.territoryId === territoryId) ?? territories[0]
   const frame = sharedFrames.find((entry) => entry.frameId === frameId) ?? sharedFrames[0]
   document.documentElement.dataset.territory = territory.territoryId
-  document.body.dataset.presentation = presentation
+  document.documentElement.dataset.tokenMappingVersion = "1"
+  document.documentElement.dataset.presentation = presentation
+  for (const role of tokenRoles) {
+    document.documentElement.style.setProperty(cssCustomPropertyForTokenRole(role), territory.tokens[role])
+  }
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", territory.tokens["manifest.themeColor"])
   document.title = `${territory.territoryId} · ${territory.name} · ${frame.title}`
   const navigation = renderNavigation(frame)
   const profile = `<a class="profile-chip" href="/ny/"><span>Current profile</span><strong>${frame.legalState.includes("no-profile") || frame.legalState.includes("prerequisite") ? "No profile selected" : "New York State · reviewed"}</strong></a>`
   const session = frame.focused ? `<div class="session-landmark" role="region" aria-label="Current session">${escapeHtml(frame.sessionLabel)}</div>` : ""
   const headerNavigation = frame.focused ? "" : `${navigation.wide}${navigation.compact}`
   const actions = frame.actions.map((action) => action.href.startsWith("#")
-    ? `<button class="action ${action.kind === "primary" ? "" : action.kind}" type="button" data-fixture-action="${escapeHtml(action.href.slice(1))}">${escapeHtml(action.label)}</button>`
+    ? `<button class="action ${action.kind === "primary" ? "" : action.kind}" type="button" data-fixture-action="${escapeHtml(action.href.slice(1))}"${action.disabled === true ? " disabled" : ""}>${escapeHtml(action.label)}</button>`
     : `<a class="action ${action.kind === "primary" ? "" : action.kind}" href="${escapeHtml(action.href)}">${escapeHtml(action.label)}</a>`).join("")
   const interaction = renderInteraction(frame.interaction)
   const sections = frame.sections.map((section) => `<section class="content-section"><h2>${escapeHtml(section.heading)}</h2><p>${escapeHtml(section.body)}</p></section>`).join("")

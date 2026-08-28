@@ -1,4 +1,4 @@
-// artifact-label: {"status":"provisional-prework","participantEvidence":"none","decisionStatus":"pending","requiredDependencyShas":null,"mustRebaseAndReverify":true}
+// artifact-label: {"status":"provisional-prework","participantEvidence":"none","decisionStatus":"pending","requiredDependencyShas":null,"mustRebaseAndReverify":true,"reviewMode":"codex-only","humanEvidence":"none","humanParticipantCount":0,"humanReviewRequired":false,"notHumanUsabilityTested":true}
 import { createHash } from "node:crypto"
 import { execFileSync } from "node:child_process"
 import { readFileSync, statSync } from "node:fs"
@@ -9,7 +9,12 @@ export const ARTIFACT_LABEL = Object.freeze({
   participantEvidence: "none",
   decisionStatus: "pending",
   requiredDependencyShas: null,
-  mustRebaseAndReverify: true
+  mustRebaseAndReverify: true,
+  reviewMode: "codex-only",
+  humanEvidence: "none",
+  humanParticipantCount: 0,
+  humanReviewRequired: false,
+  notHumanUsabilityTested: true
 })
 
 const repoRoot = fileURLToPath(new URL("../", import.meta.url))
@@ -21,7 +26,7 @@ const decoder = new TextDecoder("utf-8", { fatal: true })
 const shaPattern = /^[0-9a-f]{40}$/
 const sha256Pattern = /^[0-9a-f]{64}$/
 const schemaProfile = "draft-2020-12-portable-subset-v1"
-const expectedCanonicalSchemaSha256 = "56b73a2089110edff1aa2c3b278fa97eab057ac95c261e817883ae7f8d3417c3"
+const expectedCanonicalSchemaSha256 = "de42f9cb0585f85fdeb18bc3f16ccc64207ec611b67207e5e49cbe34a313126c"
 
 const parseArguments = (arguments_) => {
   if (arguments_.length === 0) return { attachmentPath: null }
@@ -116,7 +121,7 @@ const unique = (values, path) => {
   assert(new Set(values).size === values.length, `${path}: duplicate value`)
 }
 const exactLabel = (value, path) => {
-  exactKeys(value, ["status", "participantEvidence", "decisionStatus", "requiredDependencyShas", "mustRebaseAndReverify"], path)
+  exactKeys(value, ["status", "participantEvidence", "decisionStatus", "requiredDependencyShas", "mustRebaseAndReverify", "reviewMode", "humanEvidence", "humanParticipantCount", "humanReviewRequired", "notHumanUsabilityTested"], path)
   equal(value, ARTIFACT_LABEL, path)
 }
 
@@ -599,6 +604,19 @@ const canonicalRouteIds = () => {
   return [...registryIds, ...spokeIds]
 }
 
+const validateSnapshotDisposition = (disposition) => {
+  exactKeys(disposition, ["acceptedStep2MergeSha", "acceptedStep2SubjectSha", "activeContractPath", "executionStatus", "frozenAtCommit", "historicalObservationRule", "recordType"], "snapshotDisposition")
+  equal(disposition, {
+    acceptedStep2MergeSha: "d823e928b0b57f589fd1c64a85db4ae0f6d2f0d1",
+    acceptedStep2SubjectSha: "4130693dee6caaa804a116f490b2192861f53e6e",
+    activeContractPath: "plans/006-select-consumer-visual-system.md",
+    executionStatus: "superseded-non-executable",
+    frozenAtCommit: "74c6799fbcef587e44c5c5f3854258db516a9aaa",
+    historicalObservationRule: "preserve-pre-Step-2-null-and-pending-values-as-observed-do-not-reinterpret-as-current-state",
+    recordType: "frozen-historical-prework-snapshot"
+  }, "snapshotDisposition")
+}
+
 const validateSourceSnapshot = (snapshot, options) => {
   exactKeys(snapshot, ["label", "observedAt", "sourceMainSha", "branch", "planStatuses", "contentDesignExists", "canonicalPlan006ResearchExists", "sourceFiles"], "sourceSnapshot")
   exactLabel(snapshot.label, "sourceSnapshot.label")
@@ -930,7 +948,7 @@ const validatePrototypeEngine = (engine) => {
 }
 
 const validateCodexOnlyWorkflow = (workflow) => {
-  exactKeys(workflow, ["consensus", "decisionRule", "humanEvidence", "humanParticipantCount", "humanReviewRequired", "independence", "label", "notHumanUsabilityTested", "protocolId", "requiredDependency", "reviewRecordContract", "reviewRecords", "rubrics"], "codexOnlyWorkflow")
+  exactKeys(workflow, ["consensus", "decisionRule", "humanEvidence", "humanParticipantCount", "humanReviewRequired", "historicalFutureReviewInterfaceDisposition", "independence", "label", "notHumanUsabilityTested", "protocolId", "requiredDependency", "reviewRecordContract", "reviewRecords", "rubrics"], "codexOnlyWorkflow")
   exactLabel(workflow.label, "codexOnlyWorkflow.label")
   assert(workflow.protocolId === "CODEX-ONLY-UIUX-V1", "Codex-only protocol ID mismatch")
   assert(workflow.humanEvidence === "none" && workflow.humanParticipantCount === 0 && workflow.humanReviewRequired === false && workflow.notHumanUsabilityTested === true, "Codex-only workflow must preserve zero/no-human semantics")
@@ -940,6 +958,13 @@ const validateCodexOnlyWorkflow = (workflow) => {
     sha: null,
     status: "awaiting-coordinator-supplied-exact-sha"
   }, "codexOnlyWorkflow.requiredDependency")
+  equal(workflow.historicalFutureReviewInterfaceDisposition, {
+    activeContractPath: "plans/006-select-consumer-visual-system.md",
+    mayPopulateReviewRecords: false,
+    maySelectOrPromote: false,
+    reason: "arbitrary-agentTaskId-and-self-attested-independence-interface-superseded-by-exact-native-task-receipt-contract",
+    status: "superseded-non-executable"
+  }, "codexOnlyWorkflow.historicalFutureReviewInterfaceDisposition")
   equal(workflow.independence, { agentReviewsAreNotUserResearch: true, agentsAreNonhumanEvidence: true, distinctAgentTaskIdsRequired: true, onePrimaryRubricPerAgentTaskId: true }, "codexOnlyWorkflow.independence")
   equal(workflow.decisionRule, {
     aggregation: "sum-unweighted-criterion-scores-by-territory",
@@ -1031,9 +1056,10 @@ const validateGateAccounting = (gate) => {
 
 const validateRecord = (record, options = { repo: false, assetFiles: false, attachmentPath: null }) => {
   const normalizedOptions = { repo: options.repo ?? false, assetFiles: options.assetFiles ?? false, attachmentPath: options.attachmentPath ?? null }
-  exactKeys(record, ["schemaVersion", "artifactId", "schemaPath", "label", "sourceSnapshot", "captureManifest", "assetInventory", "benchmarkTemplate", "codexOnlyWorkflow", "prototypeEngine", "evidenceInterfaces", "gateAccounting"], "record")
+  exactKeys(record, ["schemaVersion", "artifactId", "schemaPath", "label", "snapshotDisposition", "sourceSnapshot", "captureManifest", "assetInventory", "benchmarkTemplate", "codexOnlyWorkflow", "prototypeEngine", "evidenceInterfaces", "gateAccounting"], "record")
   assert(record.schemaVersion === 1 && record.artifactId === "plan-006-consumer-visual-system-provisional-prework" && record.schemaPath === schemaPath, "record identity mismatch")
   exactLabel(record.label, "record.label")
+  validateSnapshotDisposition(record.snapshotDisposition)
   validateSourceSnapshot(record.sourceSnapshot, normalizedOptions)
   validateCaptureManifest(record.captureManifest, record.sourceSnapshot.sourceMainSha)
   const attachmentReverified = validateAssetInventory(record.assetInventory, normalizedOptions)
@@ -1084,6 +1110,11 @@ const runAdversarialTests = (record, schema) => {
     ["accepted workflow status", (x) => { x.label.status = "accepted" }],
     ["selected decision", (x) => { x.label.decisionStatus = "selected" }],
     ["participant evidence label", (x) => { x.label.participantEvidence = "synthetic" }],
+    ["review mode label", (x) => { x.label.reviewMode = "human" }],
+    ["human evidence label", (x) => { x.label.humanEvidence = "observed" }],
+    ["human participant label", (x) => { x.label.humanParticipantCount = 1 }],
+    ["human review label", (x) => { x.label.humanReviewRequired = true }],
+    ["human usability label", (x) => { x.label.notHumanUsabilityTested = false }],
     ["human evidence claim", (x) => { x.codexOnlyWorkflow.humanEvidence = "observed" }],
     ["human participant count", (x) => { x.codexOnlyWorkflow.humanParticipantCount = 1 }],
     ["human review required", (x) => { x.codexOnlyWorkflow.humanReviewRequired = true }],
@@ -1109,7 +1140,19 @@ const runAdversarialTests = (record, schema) => {
     ["unknown root field", (x) => { x.unreviewed = true }],
     ["canonical promotion", (x) => { x.gateAccounting.canonicalPromotionPerformed = true }],
     ["Plan 006 DONE", (x) => { x.gateAccounting.plan006DoneClaimed = true }],
-    ["future language smuggled", (x) => { x.prototypeEngine.futureInputs.language.sourceSha = "0".repeat(40) }]
+    ["future language smuggled", (x) => { x.prototypeEngine.futureInputs.language.sourceSha = "0".repeat(40) }],
+    ["snapshot merge SHA drift", (x) => { x.snapshotDisposition.acceptedStep2MergeSha = "0".repeat(40) }],
+    ["snapshot subject SHA drift", (x) => { x.snapshotDisposition.acceptedStep2SubjectSha = "0".repeat(40) }],
+    ["snapshot active contract drift", (x) => { x.snapshotDisposition.activeContractPath = "plans/README.md" }],
+    ["snapshot execution reactivated", (x) => { x.snapshotDisposition.executionStatus = "active" }],
+    ["snapshot frozen commit drift", (x) => { x.snapshotDisposition.frozenAtCommit = "0".repeat(40) }],
+    ["snapshot observation rule drift", (x) => { x.snapshotDisposition.historicalObservationRule = "reinterpret-as-current" }],
+    ["snapshot record type drift", (x) => { x.snapshotDisposition.recordType = "current-contract" }],
+    ["historical review contract path drift", (x) => { x.codexOnlyWorkflow.historicalFutureReviewInterfaceDisposition.activeContractPath = "plans/README.md" }],
+    ["historical review population reactivated", (x) => { x.codexOnlyWorkflow.historicalFutureReviewInterfaceDisposition.mayPopulateReviewRecords = true }],
+    ["historical review selection reactivated", (x) => { x.codexOnlyWorkflow.historicalFutureReviewInterfaceDisposition.maySelectOrPromote = true }],
+    ["historical review disposition reason drift", (x) => { x.codexOnlyWorkflow.historicalFutureReviewInterfaceDisposition.reason = "self-attestation-accepted" }],
+    ["historical review disposition status drift", (x) => { x.codexOnlyWorkflow.historicalFutureReviewInterfaceDisposition.status = "active" }]
   ]
   for (const [name, mutate] of dualTests) expectDualRejected(name, record, schema, mutate)
 
@@ -1138,6 +1181,9 @@ const runAdversarialTests = (record, schema) => {
     ["dependency schema weakening", (x) => { x.codexOnlyWorkflow.requiredDependency.sha = "0".repeat(40) }, (s) => { s.properties.codexOnlyWorkflow.properties.requiredDependency.properties.sha = { oneOf: [{ type: "null" }, { $ref: "#/$defs/gitSha" }] } }],
     ["render schema weakening", (x) => { x.prototypeEngine.territories[0].renderEnabled = true }, (s) => { s.$defs.territory.properties.renderEnabled = { type: "boolean" } }],
     ["no-human schema weakening", (x) => { x.codexOnlyWorkflow.notHumanUsabilityTested = false }, (s) => { s.properties.codexOnlyWorkflow.properties.notHumanUsabilityTested = { type: "boolean" } }],
+    ["review-mode label schema weakening", (x) => { x.label.reviewMode = "human" }, (s) => { s.$defs.artifactLabel.properties.reviewMode = { enum: ["codex-only", "human"] } }],
+    ["snapshot disposition schema weakening", (x) => { x.snapshotDisposition.executionStatus = "active" }, (s) => { s.properties.snapshotDisposition.properties.executionStatus = { enum: ["superseded-non-executable", "active"] } }],
+    ["historical review interface schema weakening", (x) => { x.codexOnlyWorkflow.historicalFutureReviewInterfaceDisposition.mayPopulateReviewRecords = true }, (s) => { s.properties.codexOnlyWorkflow.properties.historicalFutureReviewInterfaceDisposition.properties.mayPopulateReviewRecords = { type: "boolean" } }],
     ["review-record schema weakening", (x) => { x.codexOnlyWorkflow.reviewRecords.push({}) }, (s) => { s.properties.codexOnlyWorkflow.properties.reviewRecords = { type: "array" } }],
     ["consensus-task schema weakening", (x) => { x.codexOnlyWorkflow.consensus.supportingAgentTaskIds.push("agent-1") }, (s) => { s.properties.codexOnlyWorkflow.properties.consensus.properties.supportingAgentTaskIds.maxItems = 1 }],
     ["prototype-receipt schema weakening", (x) => { x.prototypeEngine.selectionInputContract.requiredPrototypeSha256 = "0".repeat(64) }, (s) => { s.properties.prototypeEngine.properties.selectionInputContract.properties.requiredPrototypeSha256 = { oneOf: [{ type: "null" }, { $ref: "#/$defs/sha256" }] } }]
@@ -1159,7 +1205,7 @@ const markdown = readText(markdownPath)
 const schemaText = readText(schemaPath)
 const validatorText = readText(validatorPath)
 const arguments_ = parseArguments(process.argv.slice(2))
-const exactComment = `{"status":"provisional-prework","participantEvidence":"none","decisionStatus":"pending","requiredDependencyShas":null,"mustRebaseAndReverify":true}`
+const exactComment = `{"status":"provisional-prework","participantEvidence":"none","decisionStatus":"pending","requiredDependencyShas":null,"mustRebaseAndReverify":true,"reviewMode":"codex-only","humanEvidence":"none","humanParticipantCount":0,"humanReviewRequired":false,"notHumanUsabilityTested":true}`
 assert(markdown.includes(`<!-- artifact-label: ${exactComment} -->`), `${markdownPath}: machine label missing`)
 assert(validatorText.startsWith(`// artifact-label: ${exactComment}\n`), `${validatorPath}: machine label missing`)
 const schema = parseJsonStrict(schemaText.trimEnd(), schemaPath)
@@ -1182,6 +1228,7 @@ console.log(
   `attachment_entries=${record.assetInventory.attachmentBaseline.entries.length} ` +
   `attachment_verification=${attachmentReverified ? "explicit-deep-reverified" : "ledger-only-not-deep-reverified"} ` +
   `scope_verification=${scopeVerification} ` +
+  `snapshot=${record.snapshotDisposition.recordType} execution=${record.snapshotDisposition.executionStatus} ` +
   `benchmark_slots=${record.benchmarkTemplate.acquisitionSlots.length} territories=${record.prototypeEngine.territories.length} ` +
   `archetypes=${record.prototypeEngine.routeArchetypes.length} routes=${record.prototypeEngine.routeArchetypes.flatMap(({ routeIds }) => routeIds).length} ` +
   `human_participants=${record.gateAccounting.humanParticipantCount} codex_reviews=${record.gateAccounting.codexReviewCount} ` +

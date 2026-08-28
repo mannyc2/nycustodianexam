@@ -1,16 +1,24 @@
 # Plan 006 consumer visual-system provisional prework
 
-<!-- artifact-label: {"status":"provisional-prework","participantEvidence":"none","decisionStatus":"pending","requiredDependencyShas":null,"mustRebaseAndReverify":true} -->
+<!-- artifact-label: {"status":"provisional-prework","participantEvidence":"none","decisionStatus":"pending","requiredDependencyShas":null,"mustRebaseAndReverify":true,"reviewMode":"codex-only","humanEvidence":"none","humanParticipantCount":0,"humanReviewRequired":false,"notHumanUsabilityTested":true} -->
 
-This packet is deterministic preparation only. It is not the Plan 006 research
-tree, human evidence, a completed Codex territory review, a recommendation, a
-selection, canonical design-system authority, or a claim that Plan 006 is
-complete. The exact merged Step 2 agent-only language/navigation SHA has not
-landed and remains the sole upstream dependency. The exact labels above and in
-every machine artifact are intentional:
+This packet is a frozen historical snapshot of deterministic preparation only.
+It is not the Plan 006 research tree, human evidence, a completed Codex
+territory review, a recommendation, a selection, canonical design-system
+authority, or a claim that Plan 006 is complete. At the time captured, the exact
+merged Step 2 agent-only language/navigation SHA had not landed; the null and
+pending dependency observations below preserve that historical fact. This
+snapshot was repaired at commit
+`74c6799fbcef587e44c5c5f3854258db516a9aaa`. Step 2 later landed at accepted
+subject `4130693dee6caaa804a116f490b2192861f53e6e` and merge
+`d823e928b0b57f589fd1c64a85db4ae0f6d2f0d1`; this snapshot did not consume
+those later bytes and must not be reinterpreted as current state. The exact
+labels above and in every machine artifact are intentional:
 `status=provisional-prework`, `participantEvidence=none`,
 `decisionStatus=pending`, `requiredDependencyShas=null`, and
-`mustRebaseAndReverify=true`.
+`mustRebaseAndReverify=true`, with `reviewMode=codex-only`,
+`humanEvidence=none`, `humanParticipantCount=0`,
+`humanReviewRequired=false`, and `notHumanUsabilityTested=true`.
 
 ## What is prepared
 
@@ -43,11 +51,12 @@ every machine artifact are intentional:
   accessibility, corpus use, deterministic route simulation, and Codex
   experience audit. None is user research or can independently select a
   territory.
-- A `CODEX-ONLY-UIUX-V1` decision contract requiring three independent Codex
-  subagent task IDs and distinct rubrics for consumer trust/anti-AI-slop,
-  accessibility/cognitive load, and visual/component coherence. Review records,
-  scores, evidence coordinates, consensus, and dissent remain empty until the
-  exact merged Step 2 SHA is supplied.
+- A historical `CODEX-ONLY-UIUX-V1` future-review interface that anticipated
+  three Codex subagent task IDs and distinct rubrics for consumer
+  trust/anti-AI-slop, accessibility/cognitive load, and visual/component
+  coherence. Its arbitrary `agentTaskId` and self-attested independence fields
+  are now explicitly superseded and non-executable. Review records, scores,
+  evidence coordinates, consensus, and dissent remain empty as observed.
 
 ## Current-control dry run
 
@@ -68,26 +77,25 @@ limitations are recorded in the machine contract. All measurements are
 supplementary, self-consistent harness observations only—not canonical Plan
 006 baseline rows, user research, or territory-selection evidence.
 
-## Fail-closed future use
+## Frozen disposition and active cutover
 
-Before any territory can render, the engine requires the exact immutable SHA of
-the merged Step 2 agent-only language/navigation contract. A future executor
-must rebase onto that SHA, bind both inputs from it, update all source hashes,
-rerun the 24 cases with canonical adapters, and revalidate all asset bytes. The
-engine then enforces one shared semantic renderer: territories may vary only
-tokens, density rules, image framing, and CSS composition.
+The prototype engine and future-review interface below are retained as frozen
+pre-Step-2 evidence only. They are superseded, may not render, populate review
+records, select, promote, or serve as an alternate Plan 006 execution path. The
+only executable workflow is `plans/006-select-consumer-visual-system.md`, which
+must bind the later accepted Step 2 subject and merge through its current
+native-task receipt, exact-byte, browser, and terminal lifecycle contracts.
 
 The program uses no human participants, reviewers, selectors, owners, or
-sign-offs. `CODEX-ONLY-UIUX-V1` keeps `humanEvidence=none`,
+sign-offs. The frozen `CODEX-ONLY-UIUX-V1` labels keep `reviewMode=codex-only`,
+`humanEvidence=none`,
 `humanParticipantCount=0`, `humanReviewRequired=false`, and
 `notHumanUsabilityTested=true`. Agents and automation are nonhuman evidence and
-must never be represented as user research. Selection remains pending until
-three independent rubric-specific Codex reviews are complete at the same exact
-Step 2/prototype coordinates; a unique nonblocked score winner is required,
-and ties or unresolved dissent remain pending. Promotion and `DONE` stay false
-in this prework packet. Immutable source-ledger text that mentions a specialist
-signoff remains provenance, not a planned dependency; the engine prohibits
-scored use of those gated assets instead of attempting to satisfy that gate.
+must never be represented as user research. No review or selection may be
+executed from this packet. Promotion and `DONE` stay false here. Immutable
+source-ledger text that mentions a specialist signoff remains provenance, not a
+planned dependency; the frozen engine prohibited scored use of those gated
+assets instead of attempting to satisfy that gate.
 
 ## Validation
 
@@ -320,9 +328,14 @@ gate accounting.
       },
       "label": {
         "decisionStatus": "pending",
+        "humanEvidence": "none",
+        "humanParticipantCount": 0,
+        "humanReviewRequired": false,
         "mustRebaseAndReverify": true,
+        "notHumanUsabilityTested": true,
         "participantEvidence": "none",
         "requiredDependencyShas": null,
+        "reviewMode": "codex-only",
         "status": "provisional-prework"
       },
       "optionalExternalArchiveRecheck": {
@@ -4922,9 +4935,14 @@ gate accounting.
     ],
     "label": {
       "decisionStatus": "pending",
+      "humanEvidence": "none",
+      "humanParticipantCount": 0,
+      "humanReviewRequired": false,
       "mustRebaseAndReverify": true,
+      "notHumanUsabilityTested": true,
       "participantEvidence": "none",
       "requiredDependencyShas": null,
+      "reviewMode": "codex-only",
       "status": "provisional-prework"
     },
     "sourceLedgers": [
@@ -5074,9 +5092,14 @@ gate accounting.
     ],
     "label": {
       "decisionStatus": "pending",
+      "humanEvidence": "none",
+      "humanParticipantCount": 0,
+      "humanReviewRequired": false,
       "mustRebaseAndReverify": true,
+      "notHumanUsabilityTested": true,
       "participantEvidence": "none",
       "requiredDependencyShas": null,
+      "reviewMode": "codex-only",
       "status": "provisional-prework"
     },
     "observedAcquiredCount": 0,
@@ -5355,9 +5378,14 @@ gate accounting.
     ],
     "label": {
       "decisionStatus": "pending",
+      "humanEvidence": "none",
+      "humanParticipantCount": 0,
+      "humanReviewRequired": false,
       "mustRebaseAndReverify": true,
+      "notHumanUsabilityTested": true,
       "participantEvidence": "none",
       "requiredDependencyShas": null,
+      "reviewMode": "codex-only",
       "status": "provisional-prework"
     },
     "presentations": [
@@ -5518,9 +5546,14 @@ gate accounting.
       },
       "label": {
         "decisionStatus": "pending",
+        "humanEvidence": "none",
+        "humanParticipantCount": 0,
+        "humanReviewRequired": false,
         "mustRebaseAndReverify": true,
+        "notHumanUsabilityTested": true,
         "participantEvidence": "none",
         "requiredDependencyShas": null,
+        "reviewMode": "codex-only",
         "status": "provisional-prework"
       },
       "metrics": [
@@ -5900,6 +5933,13 @@ gate accounting.
       "tieRule": "pending-no-selection",
       "unresolvedDissentPreventsSelection": true
     },
+    "historicalFutureReviewInterfaceDisposition": {
+      "activeContractPath": "plans/006-select-consumer-visual-system.md",
+      "mayPopulateReviewRecords": false,
+      "maySelectOrPromote": false,
+      "reason": "arbitrary-agentTaskId-and-self-attested-independence-interface-superseded-by-exact-native-task-receipt-contract",
+      "status": "superseded-non-executable"
+    },
     "humanEvidence": "none",
     "humanParticipantCount": 0,
     "humanReviewRequired": false,
@@ -5911,9 +5951,14 @@ gate accounting.
     },
     "label": {
       "decisionStatus": "pending",
+      "humanEvidence": "none",
+      "humanParticipantCount": 0,
+      "humanReviewRequired": false,
       "mustRebaseAndReverify": true,
+      "notHumanUsabilityTested": true,
       "participantEvidence": "none",
       "requiredDependencyShas": null,
+      "reviewMode": "codex-only",
       "status": "provisional-prework"
     },
     "notHumanUsabilityTested": true,
@@ -6028,9 +6073,14 @@ gate accounting.
         "interfaceId": "codex-heuristic-review",
         "label": {
           "decisionStatus": "pending",
+          "humanEvidence": "none",
+          "humanParticipantCount": 0,
+          "humanReviewRequired": false,
           "mustRebaseAndReverify": true,
+          "notHumanUsabilityTested": true,
           "participantEvidence": "none",
           "requiredDependencyShas": null,
+          "reviewMode": "codex-only",
           "status": "provisional-prework"
         },
         "notHumanUsabilityTested": true,
@@ -6061,9 +6111,14 @@ gate accounting.
         "interfaceId": "automated-accessibility",
         "label": {
           "decisionStatus": "pending",
+          "humanEvidence": "none",
+          "humanParticipantCount": 0,
+          "humanReviewRequired": false,
           "mustRebaseAndReverify": true,
+          "notHumanUsabilityTested": true,
           "participantEvidence": "none",
           "requiredDependencyShas": null,
+          "reviewMode": "codex-only",
           "status": "provisional-prework"
         },
         "notHumanUsabilityTested": true,
@@ -6091,9 +6146,14 @@ gate accounting.
         "interfaceId": "corpus-use",
         "label": {
           "decisionStatus": "pending",
+          "humanEvidence": "none",
+          "humanParticipantCount": 0,
+          "humanReviewRequired": false,
           "mustRebaseAndReverify": true,
+          "notHumanUsabilityTested": true,
           "participantEvidence": "none",
           "requiredDependencyShas": null,
+          "reviewMode": "codex-only",
           "status": "provisional-prework"
         },
         "notHumanUsabilityTested": true,
@@ -6130,9 +6190,14 @@ gate accounting.
         "interfaceId": "route-simulation",
         "label": {
           "decisionStatus": "pending",
+          "humanEvidence": "none",
+          "humanParticipantCount": 0,
+          "humanReviewRequired": false,
           "mustRebaseAndReverify": true,
+          "notHumanUsabilityTested": true,
           "participantEvidence": "none",
           "requiredDependencyShas": null,
+          "reviewMode": "codex-only",
           "status": "provisional-prework"
         },
         "notHumanUsabilityTested": true,
@@ -6162,9 +6227,14 @@ gate accounting.
         "interfaceId": "codex-experience-audit",
         "label": {
           "decisionStatus": "pending",
+          "humanEvidence": "none",
+          "humanParticipantCount": 0,
+          "humanReviewRequired": false,
           "mustRebaseAndReverify": true,
+          "notHumanUsabilityTested": true,
           "participantEvidence": "none",
           "requiredDependencyShas": null,
+          "reviewMode": "codex-only",
           "status": "provisional-prework"
         },
         "notHumanUsabilityTested": true,
@@ -6185,9 +6255,14 @@ gate accounting.
     ],
     "label": {
       "decisionStatus": "pending",
+      "humanEvidence": "none",
+      "humanParticipantCount": 0,
+      "humanReviewRequired": false,
       "mustRebaseAndReverify": true,
+      "notHumanUsabilityTested": true,
       "participantEvidence": "none",
       "requiredDependencyShas": null,
+      "reviewMode": "codex-only",
       "status": "provisional-prework"
     },
     "routeSimulationTasks": [
@@ -6280,9 +6355,14 @@ gate accounting.
     "hybrid": false,
     "label": {
       "decisionStatus": "pending",
+      "humanEvidence": "none",
+      "humanParticipantCount": 0,
+      "humanReviewRequired": false,
       "mustRebaseAndReverify": true,
+      "notHumanUsabilityTested": true,
       "participantEvidence": "none",
       "requiredDependencyShas": null,
+      "reviewMode": "codex-only",
       "status": "provisional-prework"
     },
     "notHumanUsabilityTested": true,
@@ -6293,9 +6373,14 @@ gate accounting.
   },
   "label": {
     "decisionStatus": "pending",
+    "humanEvidence": "none",
+    "humanParticipantCount": 0,
+    "humanReviewRequired": false,
     "mustRebaseAndReverify": true,
+    "notHumanUsabilityTested": true,
     "participantEvidence": "none",
     "requiredDependencyShas": null,
+    "reviewMode": "codex-only",
     "status": "provisional-prework"
   },
   "prototypeEngine": {
@@ -6323,9 +6408,14 @@ gate accounting.
     },
     "label": {
       "decisionStatus": "pending",
+      "humanEvidence": "none",
+      "humanParticipantCount": 0,
+      "humanReviewRequired": false,
       "mustRebaseAndReverify": true,
+      "notHumanUsabilityTested": true,
       "participantEvidence": "none",
       "requiredDependencyShas": null,
+      "reviewMode": "codex-only",
       "status": "provisional-prework"
     },
     "operations": [
@@ -6641,15 +6731,29 @@ gate accounting.
   },
   "schemaPath": "plans/006-consumer-visual-system-prework.schema.json",
   "schemaVersion": 1,
+  "snapshotDisposition": {
+    "acceptedStep2MergeSha": "d823e928b0b57f589fd1c64a85db4ae0f6d2f0d1",
+    "acceptedStep2SubjectSha": "4130693dee6caaa804a116f490b2192861f53e6e",
+    "activeContractPath": "plans/006-select-consumer-visual-system.md",
+    "executionStatus": "superseded-non-executable",
+    "frozenAtCommit": "74c6799fbcef587e44c5c5f3854258db516a9aaa",
+    "historicalObservationRule": "preserve-pre-Step-2-null-and-pending-values-as-observed-do-not-reinterpret-as-current-state",
+    "recordType": "frozen-historical-prework-snapshot"
+  },
   "sourceSnapshot": {
     "branch": "codex/uiux-orchestration-03-visual-territories",
     "canonicalPlan006ResearchExists": false,
     "contentDesignExists": false,
     "label": {
       "decisionStatus": "pending",
+      "humanEvidence": "none",
+      "humanParticipantCount": 0,
+      "humanReviewRequired": false,
       "mustRebaseAndReverify": true,
+      "notHumanUsabilityTested": true,
       "participantEvidence": "none",
       "requiredDependencyShas": null,
+      "reviewMode": "codex-only",
       "status": "provisional-prework"
     },
     "observedAt": "2026-08-28T16:18:17Z",
