@@ -29,15 +29,18 @@ and conclusions already maintained elsewhere do not belong here.
 
 | Path | Status | Why retained / current authority |
 |---|---|---|
+| [`ui-ux/codex-only-v1/`](ui-ux/codex-only-v1/) | Accepted Codex-only supporting evidence; **NOT HUMAN-USABILITY-TESTED** | Retains four independent structured agent audits, exact source coordinates, deterministic synthesis inputs, consensus/dissent, and explicit limitations for `CODEX-ONLY-UIUX-V1`. Accepted copy rules live in [`product/CONTENT_DESIGN.md`](../product/CONTENT_DESIGN.md); navigation authority remains [`product/ROUTES.md`](../product/ROUTES.md). Human evidence is `none` and the human participant count is `0`. |
 | [`illustration/TOOL_GEOMETRY_PIPELINE_2026-08-20.md`](illustration/TOOL_GEOMETRY_PIPELINE_2026-08-20.md) | Accepted historical synthesis | Preserves the recovered bundle/inventory identity and the useful review conclusions behind the retired deterministic route. Production is controlled by [`illustration/VISUAL_AUTHORING_POLICY.md`](../illustration/VISUAL_AUTHORING_POLICY.md) and maintained visual inventory/release records. |
 | [`v2/hazard-scene-production/README.md`](v2/hazard-scene-production/README.md) | Accepted historical synthesis | Preserves target/decoy closure, region, accessibility/nonvisual, version, and QA boundaries. Production is controlled by the visual policy and the accepted 18-scene release records. |
 | [`v2/tool-geometry-audit/REPORT.md`](v2/tool-geometry-audit/REPORT.md) | Accepted historical evidence; byte-identical | Preserves exact POC dispositions, artifact-identity conflict, rights declaration, and stable line evidence consumed by the maintained tool pilot brief. The four POCs are retired production-art candidates. |
 
-No unresolved research program has merged into this reduced research tree.
-Plans 004 and 005 are partial work in open draft PRs
+The `CODEX-ONLY-UIUX-V1` scope is the only current UI/UX evidence program in
+this reduced research tree. It deliberately supplies no human-usability
+evidence. Earlier Plan 004 and 005 work remains in open draft PRs
 [#37](https://github.com/mannyc2/nycustodianexam/pull/37) and
-[#38](https://github.com/mannyc2/nycustodianexam/pull/38), respectively; neither
-draft is accepted research or product authority. The eight safe Plan 004
+[#38](https://github.com/mannyc2/nycustodianexam/pull/38), respectively; their
+audits and inventories are preserved inputs, not independently accepted product
+authority. The eight safe Plan 004
 editable prototypes recovered from temporary storage live in the
 [`recovery/` ledger](../recovery/plan-004-consumer-language-prototypes/), not
 in this retained research map, because they are unpiloted working artifacts.

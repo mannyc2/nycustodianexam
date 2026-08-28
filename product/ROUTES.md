@@ -2,6 +2,75 @@
 
 **Status:** maintained implementation contract, accepted 2026-08-23.
 
+**Navigation direction:** `NAV-CODEX-1` — separate learner-task and
+utility/trust discovery, with focused players; selected 2026-08-28 under
+`CODEX-ONLY-UIUX-V1`.
+
+**Evidence label:** **NOT HUMAN-USABILITY-TESTED**. Human evidence is `none` and
+the human participant count is `0`; the direction is a contract-fit selection,
+not observed first-click, tree-test, task-success, preference, or
+assistive-technology evidence.
+
+## Machine-readable selected-direction closure
+
+```json
+{
+  "schemaVersion": "codex-only-rule-closure-v1",
+  "programVersion": "CODEX-ONLY-UIUX-V1",
+  "directionId": "NAV-CODEX-1",
+  "evidenceMode": "codex-only",
+  "humanEvidence": "none",
+  "humanParticipantCount": 0,
+  "notHumanUsabilityTested": true,
+  "rules": [
+    {
+      "id": "NAV-FOCUSED-PLAYERS",
+      "statement": "Give every player a named session landmark, progress, and truthful explicit exit without acquisition or utility navigation."
+    },
+    {
+      "id": "NAV-NATIVE-COMPACT",
+      "statement": "Use a named native no-JavaScript-safe compact disclosure before global links wrap into peer rows."
+    },
+    {
+      "id": "NAV-NOJS",
+      "statement": "Keep primary discovery as static ordinary document navigation with truthful JavaScript-free fallbacks."
+    },
+    {
+      "id": "NAV-NONVISUAL-EQUAL-DISCOVERY",
+      "statement": "Give visual and text-keyboard hazard tasks equivalent discovery without claiming identical measurement."
+    },
+    {
+      "id": "NAV-PRACTICE-TASK-HUB",
+      "statement": "Lead Practice with concrete task starts and place translated capacity diagnostics after those starts."
+    },
+    {
+      "id": "NAV-ROUTE-IDENTITY",
+      "statement": "Preserve every fixed route identity, canonical path, and no-JavaScript purpose."
+    },
+    {
+      "id": "NAV-STATIC-REVIEW-ENTRY",
+      "statement": "Expose Review through a normal static parent entry while retaining local and noindex semantics."
+    },
+    {
+      "id": "NAV-TWO-TIER",
+      "statement": "Separate learner tasks from utility and trust destinations instead of presenting every destination as a peer."
+    },
+    {
+      "id": "SHARED-EXPLICIT-PROFILE-CONTEXT",
+      "statement": "Require explicit or visibly neutral profile context and never silently substitute the first jurisdiction."
+    },
+    {
+      "id": "SHARED-HUMAN-EVIDENCE-BOUNDARY",
+      "statement": "Keep human evidence none, human participant count zero, and every result labeled not human usability tested."
+    },
+    {
+      "id": "SHARED-PRESERVE-LOAD-BEARING-TRUTH",
+      "statement": "Preserve unofficial status, uncertainty, source support, local-data risk, security boundaries, and commit-before-reveal."
+    }
+  ]
+}
+```
+
 This file turns the 21 destination families in `FEATURE_SPEC.md` into one
 canonical path registry. It controls route identity, public path shape,
 indexability, document/island ownership, parent navigation, offline behavior,
@@ -153,15 +222,126 @@ so they cannot disappear between data-model and page implementation.
 
 ## Navigation contract
 
-The static document shell owns logo/home, Study, Atlas, Profiles, Print, FAQ,
-Transparency, and utility links. The selected profile summary may be enhanced by
-an island but cannot be the only route back to profile context.
+`NAV-CODEX-1` preserves every route ID, path, indexability value, document/island
+owner, offline rule, and capability above. It changes discovery hierarchy and
+display-language constraints while reaffirming the maintained focused-player
+requirements. Values in the registry's
+`Parent navigation` column are logical ownership coordinates; the selected
+display structure below supersedes their old peer-flat presentation.
 
-Breadcrumbs are generated from the registry, not inferred from URL string
-splitting. Player routes expose an accessible session landmark and explicit
-Exit/Save-and-exit action; they do not render the full acquisition navigation in
-a way that competes with the task. Back/forward and focus rules are normative in
-`SCREEN_STATES.md`.
+### Selected structural envelope
+
+Do not present every destination family as a peer. Global discovery separates
+links that begin or continue learner tasks from links for utility, data,
+evidence, policy, and operator trust. The two semantic roles are a promoted
+constraint, not selected display groups: exact labels, group count, membership,
+nesting, and order remain owner-locked unresolved questions. This contract does
+not create stable group IDs or infer a hierarchy from task popularity.
+
+Route IDs remain the stable identity. A contextual task, recovery, report, or
+evidence link may bypass the global regions. Downstream candidates must retain
+every fixed route and compare their exact grouping within this envelope rather
+than treating the navigation-lane candidate as participant consensus.
+
+### Focused-player boundary
+
+The four maintained player route IDs—`question-player`, `hazard-player`,
+`review-player`, and `simulation-player`—use focused work chrome. Cross-lane
+evidence does not select the prior proposed complement that assigned every
+other fixed route to one `standard` class. Non-player shell composition remains
+governed by each route's existing document/island ownership and later
+implementation contracts; it may not be inferred from a path prefix.
+
+### Wide and compact shells
+
+Global-navigation documents own the brand/Home link and the distinct
+learner-task and utility/trust regions. At ample widths the regions are visibly
+distinct. At compact widths, brand and current profile context remain visible
+while a named native disclosure holds navigation. Its exact summary and link
+grouping are unresolved; the unenhanced HTML contains all links, works with
+JavaScript disabled, exposes a programmatic name, supports keyboard operation,
+and restores focus to its trigger when dismissed.
+
+Compact navigation must transform before peer links wrap into multiple rows or
+fall below the maintained target size. A menu is not a SPA router: every route
+change is an ordinary document navigation. `aria-current` derives from the
+current stable route ID for each rendered link (never shell, proposed group, or
+path-prefix inference) and applies to Settings, Offline, trust, and study
+destinations as well as the original five sections.
+
+When a compatible profile is selected, show `Profile: {label}` plus its relevant
+version outside the compact disclosure on study, setup, and focused routes.
+That context links to the profile document and may be enhanced by an island, but
+it is never available only through JavaScript or only inside a menu.
+
+### Profile and Practice continuity
+
+Profile pages retain substantive static facts. A bounded `Use this profile`
+action owns durable selection through the existing authoritative preference and
+pack-recovery boundary; it must not introduce a second profile truth. After a
+successful selection, offer the next Practice action. Without JavaScript,
+profile facts and explicit destinations remain available and the page states
+truthfully that local selection/resume needs JavaScript.
+
+Practice never selects the first jurisdiction or Nassau implicitly. It either
+uses the visible selected profile or renders the existing recoverable
+prerequisite/neutral context. Feasible question-practice starts precede the
+capacity diagnostics and state exact counts without timing estimates. Tool,
+procedure, repair, visual/nonvisual hazard, Review, simulation, longer-set, and
+print tasks remain discoverable from their fixed parent surfaces. The exact
+labels, grouping, order among those task families, and primary question count
+remain unresolved; a shortest-available primary is a one-lane hypothesis, not
+the selected direction.
+
+Procedures and repairs join the same study catalog when their publication gates
+pass. Actual set length/distribution and insufficient-inventory truth remain at
+the decision. The full capacity matrix, translated filter names, and technical
+diagnostics follow the task starts under a named disclosure/supporting section;
+raw keys and repeated disabled controls do not form the main navigation.
+
+Home presents one visually dominant first action plus secondary task links, but
+the agent evidence does not establish a universal preference between
+`Check my exam` and `Start practice`. The implementation must keep both tasks
+findable and may use explicit product state or correctness prerequisites; it may
+not infer popularity or silently select an exam to manufacture a default.
+
+### Focused work
+
+`focused-player` routes contain only site identity, visible relevant profile
+context, a named session landmark, item position/status, previous/next where
+legal, and one explicit `Exit to {owning hub}` or `Save and exit`. They omit
+acquisition, trust, and utility navigation. Exit/history/persistence semantics
+remain those of `SCREEN_STATES.md`; a display label cannot imply a save that did
+not durably succeed.
+
+Simulation results and print preview remain in the standard shell for this
+scope. A separately reduced result/preview shell appeared in one navigation
+lane only and is not promoted as consensus.
+
+Breadcrumbs are generated from the registry, never by splitting URL strings.
+They show location and parentage; they do not replace the current profile or
+focused-session landmark.
+
+### Navigation verification
+
+In addition to the route acceptance list below, implementation must prove:
+
+1. all four fixed player route IDs map explicitly to focused work chrome,
+   without inferring shell behavior from paths or assigning an unsupported
+   complement to every other route;
+2. 320 CSS-pixel and wide layouts preserve target size and avoid a wrapped peer
+   link cloud;
+3. compact disclosure operation, semantic-region separation, focus restoration,
+   and link closure work with keyboard and JavaScript disabled;
+4. selected profile/version remains visible outside the disclosure and Practice
+   never substitutes a profile;
+5. every focused player has a named session landmark and a truthful explicit
+   exit, with no acquisition/utility navigation;
+6. utility destinations receive correct current-page state;
+7. ordinary document navigation, back/forward, offline availability, and
+   answer-leak boundaries are unchanged; and
+8. automated/Codex checks remain labeled non-human evidence and never claim
+   first-click, tree-test, comprehension, preference, or usability success.
 
 ## Route acceptance
 

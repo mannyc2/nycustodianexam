@@ -1,12 +1,19 @@
 # Plan 004: Establish a consumer-language boundary for every public surface
 
-> **Executor instructions**: Follow this plan step by step. Run every verification
-> command and confirm the expected result before moving to the next step. If
-> anything in the "STOP conditions" section occurs, stop and report—do not
-> improvise. This is a research and specification plan. It does not authorize a
-> production copy rewrite. When done, update the status row for this plan in
-> `plans/README.md`, unless a reviewer dispatched you and told you they maintain
-> the index.
+> **Execution-path supersession (2026-08-28):** The owner retired the human
+> fieldwork and approval path below for this program. Its protocols remain
+> historical plan context; they are not active instructions or incomplete
+> gates. Step 2 now uses `CODEX-ONLY-UIUX-V1`, keeps human evidence at `none`
+> and the human participant count at `0`, and is explicitly
+> **NOT HUMAN-USABILITY-TESTED**. The active evidence packet is
+> [`004-005-codex-only-evaluation.md`](004-005-codex-only-evaluation.md), and
+> accepted implementation-facing language lives in
+> [`../product/CONTENT_DESIGN.md`](../product/CONTENT_DESIGN.md).
+
+> **Historical inactive executor block — do not execute:** The superseded path
+> required sequential verification, its listed STOP conditions, no production
+> copy rewrite, and an index update. The remaining executor/protocol text below
+> is retained only as plan history and is not an active instruction set.
 >
 > **Hard Rule 4**: Never reproduce secret values. If the audit finds credentials, tokens, or `.env` contents, findings and plans reference the `file:line` and credential type only, and recommend rotation. The value itself must never appear in anything you write.
 >
