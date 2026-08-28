@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" data-territory="A">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>Plan 006 consumer visual-system comparison</title>
+    <link rel="stylesheet" href="/prototype.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#prototype-main">Skip to prototype</a>
+    <aside class="research-toolbar" aria-label="Research prototype controls">
+      <div>
+        <strong>CODEX-ONLY-UIUX-V1 comparison</strong>
+        <span>Non-production · not human-usability-tested</span>
+      </div>
+      <label>
+        Territory
+        <select id="territory-select" aria-label="Territory"></select>
+      </label>
+      <label>
+        Surface
+        <select id="frame-select" aria-label="Surface"></select>
+      </label>
+      <label>
+        Presentation
+        <select id="presentation-select" aria-label="Presentation">
+          <option value="default">Default</option>
+          <option value="large-text">Large text</option>
+          <option value="reduced-motion">Reduced motion</option>
+        </select>
+      </label>
+    </aside>
+    <div id="prototype-root" aria-live="polite"></div>
+    <noscript>
+      <p class="noscript-note">
+        This non-production comparison needs JavaScript to switch research
+        fixtures. The product contract continues to require useful static pages
+        without JavaScript.
+      </p>
+    </noscript>
+    <script type="module" src="/prototype.mjs"></script>
+  </body>
+</html>

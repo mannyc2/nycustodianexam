@@ -1,0 +1,297 @@
+{
+  "schemaVersion": "1.0.0",
+  "recordId": "plan-006-benchmark-sources-2026-08-28",
+  "protocolId": "CODEX-ONLY-UIUX-V1",
+  "reviewMode": "CODEX-ONLY",
+  "evidenceClass": "nonhuman-desk-observation",
+  "humanEvidence": "none",
+  "humanParticipantCount": 0,
+  "humanReviewRequired": false,
+  "notHumanUsabilityTested": true,
+  "observedAt": "2026-08-28",
+  "sourceCount": 12,
+  "categoryCounts": {
+    "exam-preparation": 3,
+    "public-service-reference": 3,
+    "practical-visual-learning": 3,
+    "no-account-offline-education": 3
+  },
+  "evidenceBoundary": "Current direct-source observations are design-benchmark inputs only. They are not user research, product endorsement, usability evidence, or permission to copy third-party expression.",
+  "retainedThirdPartyBytes": false,
+  "sources": [
+    {
+      "sourceId": "B01",
+      "product": "College Board SAT Practice",
+      "category": "exam-preparation",
+      "directUrl": "https://satsuite.collegeboard.org/practice",
+      "finalUrl": "https://satsuite.collegeboard.org/practice",
+      "observedAt": "2026-08-28",
+      "accessStatus": "observed",
+      "httpStatus": 200,
+      "reportClaimIds": [
+        "BM-B01-TASK-GROUPING",
+        "BM-B01-ENTRY-ACTIONS"
+      ],
+      "originalObservations": [
+        "The entry page groups preparation choices by learner task rather than presenting one undifferentiated resource list.",
+        "Primary actions are visually separated from supporting preparation links."
+      ],
+      "applicability": [
+        "Compare exam-prep task hierarchy and progressive disclosure on orientation and study-hub frames."
+      ],
+      "antiCopyBoundary": "Pattern-level comparison only; do not copy wording, branding, layout, taxonomy, or assets.",
+      "limitations": "Public entry page only; authenticated and personalized states were not exercised."
+    },
+    {
+      "sourceId": "B02",
+      "product": "ETS Praxis Test Prep",
+      "category": "exam-preparation",
+      "directUrl": "https://praxis.ets.org/praxis-test-prep",
+      "finalUrl": "https://praxis.ets.org/praxis-test-prep",
+      "observedAt": "2026-08-28",
+      "accessStatus": "observed",
+      "httpStatus": 200,
+      "reportClaimIds": [
+        "BM-B02-PRODUCT-GROUPING",
+        "BM-B02-COMMERCIAL-BOUNDARY"
+      ],
+      "originalObservations": [
+        "Preparation resources are organized as distinct products and resource types with a strong purchase boundary.",
+        "Filtering and repeated action labels help scan a broad preparation catalog."
+      ],
+      "applicability": [
+        "Compare catalog scanning and ensure this free product does not inherit commercial urgency or purchase framing."
+      ],
+      "antiCopyBoundary": "Pattern-level comparison only; do not copy wording, branding, commercial framing, layout, taxonomy, or assets.",
+      "limitations": "Public catalog page only; no transaction, account, or purchased product was opened."
+    },
+    {
+      "sourceId": "B03",
+      "product": "USCIS Citizenship — What to Expect",
+      "category": "exam-preparation",
+      "directUrl": "https://my.uscis.gov/citizenship/what_to_expect",
+      "finalUrl": "https://my.uscis.gov/citizenship/what_to_expect",
+      "observedAt": "2026-08-28",
+      "accessStatus": "observed",
+      "httpStatus": 200,
+      "reportClaimIds": [
+        "BM-B03-SEQUENCE",
+        "BM-B03-FREE-TOOLS"
+      ],
+      "originalObservations": [
+        "A numbered sequence explains a high-stakes process before presenting study resources.",
+        "Free study tools appear as bounded supporting actions rather than as proof of readiness."
+      ],
+      "applicability": [
+        "Compare ordered orientation, plain-language process framing, and separation of preparation from official outcomes."
+      ],
+      "antiCopyBoundary": "Pattern-level comparison only; do not copy government wording, branding, sequence content, layout, or assets.",
+      "limitations": "Public orientation page only; downstream account and application flows were not exercised."
+    },
+    {
+      "sourceId": "B04",
+      "product": "NYC DCAS — Apply for a Civil Service Exam",
+      "category": "public-service-reference",
+      "directUrl": "https://www.nyc.gov/site/dcas/employment/apply-for-a-city-job-how-you-can-apply-for-a-civil-service-exam.page",
+      "finalUrl": "https://www.nyc.gov/site/dcas/employment/apply-for-a-city-job-how-you-can-apply-for-a-civil-service-exam.page",
+      "observedAt": "2026-08-28",
+      "accessStatus": "observed",
+      "httpStatus": 200,
+      "reportClaimIds": [
+        "BM-B04-OFFICIAL-CONTEXT",
+        "BM-B04-LONGFORM-SCAN"
+      ],
+      "originalObservations": [
+        "Official context and application steps are presented in a long-form service page with related navigation.",
+        "Headings and links carry most of the scanning burden in a dense information environment."
+      ],
+      "applicability": [
+        "Compare source-link prominence and calm separation between this unofficial study product and official NYC actions."
+      ],
+      "antiCopyBoundary": "Pattern-level comparison only; do not copy official wording, NYC branding, page chrome, layout, or assets.",
+      "limitations": "Public information page only; OASys account and application completion were not exercised."
+    },
+    {
+      "sourceId": "B05",
+      "product": "USAGov Benefit Finder",
+      "category": "public-service-reference",
+      "directUrl": "https://www.usa.gov/benefit-finder/retirement",
+      "finalUrl": "https://www.usa.gov/benefit-finder/retirement",
+      "observedAt": "2026-08-28",
+      "accessStatus": "observed",
+      "httpStatus": 200,
+      "reportClaimIds": [
+        "BM-B05-QUESTION-FLOW",
+        "BM-B05-TRUST-CUES"
+      ],
+      "originalObservations": [
+        "A question-led finder narrows a public-service task before showing relevant information.",
+        "The page keeps government identity and explanatory context visible around the interactive task."
+      ],
+      "applicability": [
+        "Compare bounded question flow, progress expectations, and persistent trust context without implying official affiliation."
+      ],
+      "antiCopyBoundary": "Pattern-level comparison only; do not copy federal wording, branding, question content, layout, or assets.",
+      "limitations": "One public entry route was observed; no answers were submitted and no result was treated as product evidence."
+    },
+    {
+      "sourceId": "B06",
+      "product": "NYC OASys Exams",
+      "category": "public-service-reference",
+      "directUrl": "https://a856-exams.nyc.gov/OASysWeb/exams",
+      "finalUrl": "https://a856-exams.nyc.gov/OASysWeb/exams",
+      "observedAt": "2026-08-28",
+      "accessStatus": "partial",
+      "httpStatus": 200,
+      "reportClaimIds": [
+        "BM-B06-OFFICIAL-ENTRY-SHELL"
+      ],
+      "originalObservations": [
+        "The direct route resolves to the official exams application entry shell rather than a general agency article."
+      ],
+      "applicability": [
+        "Keep links to official exam actions recognizable and separate from study-site practice actions."
+      ],
+      "antiCopyBoundary": "Locator and boundary comparison only; do not copy application wording, NYC branding, interface layout, or assets.",
+      "limitations": "The direct page returned HTTP 200, but the browsing text parser exposed no page lines; no authenticated flow or detailed interface claim is included."
+    },
+    {
+      "sourceId": "B07",
+      "product": "OSHA Apps and eTools",
+      "category": "practical-visual-learning",
+      "directUrl": "https://www.osha.gov/apps-and-etools",
+      "finalUrl": "https://www.osha.gov/apps-and-etools",
+      "observedAt": "2026-08-28",
+      "accessStatus": "observed",
+      "httpStatus": 200,
+      "reportClaimIds": [
+        "BM-B07-VISUAL-MENU",
+        "BM-B07-TOPIC-GROUPING"
+      ],
+      "originalObservations": [
+        "Safety resources are grouped by topic and introduced through illustrated menu choices.",
+        "Short summaries distinguish practical tools before the user leaves the index."
+      ],
+      "applicability": [
+        "Compare visual-reference indexing, concise labels, and keeping instructional imagery tied to a real task."
+      ],
+      "antiCopyBoundary": "Pattern-level comparison only; do not copy OSHA wording, branding, illustrations, taxonomy, layout, or assets.",
+      "limitations": "Index page only; individual tools, downloads, and simulations were not exercised."
+    },
+    {
+      "sourceId": "B08",
+      "product": "iFixit Repair Guides",
+      "category": "practical-visual-learning",
+      "directUrl": "https://www.ifixit.com/Guide",
+      "finalUrl": "https://www.ifixit.com/Guide",
+      "observedAt": "2026-08-28",
+      "accessStatus": "observed",
+      "httpStatus": 200,
+      "reportClaimIds": [
+        "BM-B08-GUIDE-FINDING",
+        "BM-B08-STEP-STRUCTURE"
+      ],
+      "originalObservations": [
+        "Search and category navigation support finding a specific practical guide.",
+        "The guide catalog sets an expectation of step-based, image-supported instruction."
+      ],
+      "applicability": [
+        "Compare findability for tool families and the boundary between reference imagery and sequential instruction."
+      ],
+      "antiCopyBoundary": "Pattern-level comparison only; do not copy guide wording, community content, branding, layout, photographs, or taxonomy.",
+      "limitations": "Public guide index only; no repair guide was reproduced and community or account features were not exercised."
+    },
+    {
+      "sourceId": "B09",
+      "product": "NIOSH Ladder Safety App",
+      "category": "practical-visual-learning",
+      "directUrl": "https://www.cdc.gov/niosh/falls/ladder/ladder-safety-app.html",
+      "finalUrl": "https://www.cdc.gov/niosh/falls/ladder/ladder-safety-app.html",
+      "observedAt": "2026-08-28",
+      "accessStatus": "partial",
+      "httpStatus": 403,
+      "reportClaimIds": [
+        "BM-B09-MULTIMODAL-FEEDBACK",
+        "BM-B09-LIFECYCLE-NOTICE"
+      ],
+      "originalObservations": [
+        "The public description ties visual, sound, and vibration feedback to a focused ladder task.",
+        "A lifecycle notice makes the tool's current maintenance limitation visible."
+      ],
+      "applicability": [
+        "Compare multimodal feedback disclosure and visible status limitations on focused safety-learning surfaces."
+      ],
+      "antiCopyBoundary": "Pattern-level comparison only; do not copy CDC wording, branding, interaction mechanics, app media, layout, or assets.",
+      "limitations": "Browser text observation succeeded while a generic curl request received HTTP 403. The page says the app is not receiving updates; no app binary was installed or exercised."
+    },
+    {
+      "sourceId": "B10",
+      "product": "OpenStax Higher Education",
+      "category": "no-account-offline-education",
+      "directUrl": "https://openstax.org/higher-education",
+      "finalUrl": "https://openstax.org/higher-education",
+      "observedAt": "2026-08-28",
+      "accessStatus": "observed",
+      "httpStatus": 200,
+      "reportClaimIds": [
+        "BM-B10-FREE-ACCESS",
+        "BM-B10-FORMAT-CHOICE"
+      ],
+      "originalObservations": [
+        "Subject browsing and free-access framing appear before any personalized study setup.",
+        "Web and downloadable reading formats are treated as explicit choices."
+      ],
+      "applicability": [
+        "Compare no-account entry, format labeling, and offline-resource affordances."
+      ],
+      "antiCopyBoundary": "Pattern-level comparison only; do not copy textbook wording, branding, covers, subject taxonomy, layout, or assets.",
+      "limitations": "Public higher-education entry page only; individual books, download licenses, and account behavior were not audited."
+    },
+    {
+      "sourceId": "B11",
+      "product": "Kiwix",
+      "category": "no-account-offline-education",
+      "directUrl": "https://get.kiwix.org/en/",
+      "finalUrl": "https://get.kiwix.org/en/",
+      "observedAt": "2026-08-28",
+      "accessStatus": "observed",
+      "httpStatus": 200,
+      "reportClaimIds": [
+        "BM-B11-OFFLINE-PURPOSE",
+        "BM-B11-DELIVERY-MODES"
+      ],
+      "originalObservations": [
+        "Offline use is the primary value proposition rather than a secondary settings feature.",
+        "Reader, catalog, and local hotspot choices distinguish different offline delivery needs."
+      ],
+      "applicability": [
+        "Compare plain offline-purpose language, pack status, and separation of download from use."
+      ],
+      "antiCopyBoundary": "Pattern-level comparison only; do not copy wording, branding, catalog organization, interface layout, or assets.",
+      "limitations": "Public product page only; no reader, content package, server, or hotspot was installed."
+    },
+    {
+      "sourceId": "B12",
+      "product": "Kolibri",
+      "category": "no-account-offline-education",
+      "directUrl": "https://learningequality.org/kolibri/about-kolibri/",
+      "finalUrl": "https://learningequality.org/kolibri/about-kolibri/",
+      "observedAt": "2026-08-28",
+      "accessStatus": "observed",
+      "httpStatus": 200,
+      "reportClaimIds": [
+        "BM-B12-OFFLINE-FIRST",
+        "BM-B12-LOCAL-DISTRIBUTION"
+      ],
+      "originalObservations": [
+        "Offline-first use and local-network delivery are described as core operating conditions.",
+        "Import and distribution are framed as distinct content-management tasks."
+      ],
+      "applicability": [
+        "Compare offline-first status communication and explicit pack import, storage, and local-use boundaries."
+      ],
+      "antiCopyBoundary": "Pattern-level comparison only; do not copy wording, branding, deployment diagrams, interface layout, taxonomy, or assets.",
+      "limitations": "Public product description only; no Kolibri server, device, or content channel was installed or exercised."
+    }
+  ]
+}
