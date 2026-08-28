@@ -830,10 +830,12 @@ revive it. An event keyed to one study propagates through
 contact-only effect. Recording revocation changes recording to `withdrawn` and
 requires recording deletion but leaves structured-note consent unchanged.
 Research consent maps `affirmed → consented`, `declined → declined`, and
-applicable `revoked`/`participant-withdrew → withdrawn`; phase status uses
-`scheduled`, `session-started`, `session-completed`, `excluded`, or
-`participant-withdrew`; deletion is `not-requested`, `pending`, `completed`, or
-`irreversibly-deidentified`. Applicable research exclusion/stop/withdrawal or a
+applicable `revoked`/`participant-withdrew → withdrawn`. Phase events project
+as `study-id-activated → activated`, `scheduled → scheduled`,
+`session-started → started`, `session-completed → completed`,
+`excluded → excluded`, `participant-withdrew → withdrawn`, and
+`researcher-stopped → stopped`; deletion is `not-requested`, `pending`,
+`completed`, or `irreversibly-deidentified`. Applicable research exclusion/stop/withdrawal or a
 timely deletion forces aggregate ineligibility even if completion is earlier.
 Task-only technical/protocol exclusions remove only named task rows; phase-level
 events remove the entire phase. The compatibility projection is therefore
@@ -1084,9 +1086,14 @@ direction is exactly CL-D1 or CL-D2. The pilot instead uses
 the exact isolated CL-D1, CL-D2, or current condition actually shown. Consent is
 `consented | declined | withdrawn`;
 recording is `not-requested | consented | declined | withdrawn`; phase status is
-`scheduled | started | completed | excluded | withdrawn`; exclusion
-is `included | excluded | pending`. Mirrored consent, withdrawal, and deletion
-values must match the shared ledger at closure.
+`scheduled | started | completed | excluded | withdrawn | stopped`; exclusion
+is `included | excluded | pending`. Every mirrored participant value is derived
+at the closure cutoff: consent, recording, and deletion byte-match their shared
+projection states; `phase_status` byte-matches `phase_state`; projection
+`eligibility_state = eligible` maps only to `included` plus reason `none`; and
+projection reason `researcher-stopped` maps exactly to `stopped`, `excluded`,
+and participant reason `researcher-stopped`. It never becomes
+`withdrawn` or a generic completed/excluded phase status.
 
 `consumer-language-task-observations-v2` is one independently scored condition
 row. Its primary key is `task_observation_id`; participant/session,
@@ -1501,10 +1508,15 @@ unresolved until a later eligible independently reviewed row for the same
 candidate and unchanged hierarchy explicitly references the family, records
 `retest_outcome = passed`, and `disposition = resolved`.
 `navigation-formal-aggregate-v1` then contains cutoff/input/attrition/eligible
-coordinates, exact per-candidate/task rational gate rows, issue lineage, unique-
-person access coverage, and exclusions. `navigation-progression-decision-v1`
-binds the tree and R1 aggregate files and is the only permissible source of a
-selected R2 candidate.
+coordinates, exact per-candidate/task rational gate rows, retained method
+outcome counts, issue lineage, unique-person access coverage, and exclusions.
+Each shared task row carries all five integer fields: `treeDirectCount`,
+`treeIndirectCount`, `treeFailedCount`, `firstClickCorrectCount`, and
+`firstClickIncorrectCount`. Nonapplicable method counts are exactly zero.
+These category counts remain in the de-identified canonical aggregate after
+authorized raw deletion. `navigation-progression-decision-v1` binds the tree
+and R1 aggregate files and is the only permissible source of a selected R2
+candidate.
 
 ## 14. Coding, severity, exclusions, and adjudication
 
@@ -1717,9 +1729,21 @@ For Plan 005 open sort, use the 276-pair, label/code, and expectation derivation
 in section 12. For the threshold pilot, derive rational success counts and
 per-person ranges for all eight cells from valid trials before comparing the
 hash-bound declarations. For formal tree/first-click, group valid
-`navigation-task-evidence-v2` by exact phase/candidate/task. Tree numerator is
-`direct`, with `indirect` and `failed` retained separately; first-click
-numerator is `correct-first-click`. Denominator is their exact valid sum.
+`navigation-task-evidence-v2` by exact phase/candidate/task. A tree row is
+`direct` exactly when its observed destination matches, wrong-branch and
+backtrack counts are zero, and neither rescue nor timeout occurred. It is
+`indirect` exactly when the destination matches, at least one wrong branch or
+backtrack occurred, and neither rescue nor timeout occurred. Every other valid
+tree row is `failed`. Therefore `treeDirectCount + treeIndirectCount +
+treeFailedCount = denominator`, and only `treeDirectCount` is the formal
+`successNumerator`. A first-click row is `correct-first-click` exactly when its
+first actionable destination matches and neither rescue nor timeout occurred;
+every other valid first-click row is `incorrect-first-click`. Therefore
+`firstClickCorrectCount + firstClickIncorrectCount = denominator`, and only
+`firstClickCorrectCount` is the formal `successNumerator`. All counts derive
+from raw observations, all nonapplicable shared-row counts are zero, and the
+five category counts survive authorized raw deletion in the canonical
+aggregate.
 Derive unresolved criticals from joined issue/retest rows. Compare a rate to its
 threshold by integer cross-multiplication; the six-decimal string is display
 only. Recompute all task rows, the 13+13 R1 candidate gates, progression set,

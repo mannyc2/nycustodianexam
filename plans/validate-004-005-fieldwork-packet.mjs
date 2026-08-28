@@ -138,6 +138,9 @@ for (const requiredText of [
   "study-id-activated",
   "keyed-HMAC",
   "exactly eight rows",
+  "`treeDirectCount`",
+  "`firstClickIncorrectCount`",
+  "`researcher-stopped` maps exactly",
   contract.releasedMainSha,
   contract.recoverySetSha256,
 ]) {
@@ -1212,6 +1215,9 @@ for (const { phase, method, roundId, studyPrefix, candidateIds, consentAtUtc, ac
     if (sha256(finalOrder.map((taskId) => `${taskId}\n`).join("")) !== primary.task_order_sha256) fail("Plan 005 allocation task-order digest failed")
     for (const [sequenceIndex, taskId] of finalOrder.entries()) {
       const schedule = scheduleRows.find((row) => row.candidate_id === candidateId && row.task_id === taskId)
+      const fixtureTreeIndirect = phase === "p005-tree-test" && candidateId === "candidate-b" && taskId === taskRows[0].taskId
+      const fixtureTreeFailed = phase === "p005-tree-test" && candidateId === "candidate-b" && taskId === taskRows[1].taskId
+      const fixtureFirstClickIncorrect = phase === "p005-first-click-r1" && candidateId === "candidate-b" && taskId === taskRows[2].taskId
       p005FormalEvidenceRows.push(rowFor("plan005FormalTaskEvidence", {
         task_evidence_id: `${phase}-${candidateId}-${taskId}`, phase, study_id: studyId,
         program_person_key: personKey, session_id: `${phase}-${candidateId}-SESSION`, research_consent_event_id: eventId,
@@ -1231,9 +1237,10 @@ for (const { phase, method, roundId, studyPrefix, candidateIds, consentAtUtc, ac
         entry_state_sha256: method === "tree" ? "n/a" : schedule.entry_state_sha256,
         expected_destination_id: schedule.expected_destination_id,
         expected_first_action_id: method === "tree" ? "n/a" : schedule.expected_first_action_id,
-        observed_destination_id: schedule.expected_destination_id,
-        observed_first_action_id: method === "tree" ? "n/a" : schedule.expected_first_action_id,
-        wrong_branch_count: "0", backtrack_count: "0", elapsed_ms: "1000", rescue_used: "false", timeout_used: "false",
+        observed_destination_id: fixtureTreeFailed ? `WRONG-DESTINATION-${taskId}` : schedule.expected_destination_id,
+        observed_first_action_id: method === "tree" ? "n/a" : fixtureFirstClickIncorrect ? `WRONG-FIRST-ACTION-${taskId}` : schedule.expected_first_action_id,
+        wrong_branch_count: fixtureTreeIndirect ? "1" : "0", backtrack_count: fixtureTreeIndirect ? "1" : "0",
+        elapsed_ms: "1000", rescue_used: "false", timeout_used: "false",
         analysis_disposition: "included", exclusion_code: "n/a", notes_code: "n/a",
       }))
     }
@@ -1713,6 +1720,33 @@ const p004PhaseProjection = buildPhaseProjectionFixture({
   studies: [{ recruitmentKey: p004RecruitmentKey, programPersonKey: p004ProgramPersonKey, studyId: p004Consent.study_id, consentId: p004Consent.event_id, planId: "004", phaseId: "p004-r1" }],
   cutoffAtUtc: "2026-01-12T00:00:00Z",
 })
+const assertPlan004ParticipantMatchesProjection = (participant, projection) => {
+  if (!projection || participant.plan_id !== projection.plan_id || participant.phase !== projection.phase_id || participant.study_id !== projection.study_id || participant.program_person_key !== projection.program_person_key || participant.research_consent_event_id !== projection.research_consent_event_id) fail("Plan 004 participant/projection join mismatch")
+  if (participant.consent_status !== projection.research_consent_state || participant.recording_consent !== projection.recording_state || participant.phase_status !== projection.phase_state || participant.deletion_status !== projection.deletion_state) fail("Plan 004 participant/projection exact state mismatch")
+  if (projection.eligibility_state === "eligible") {
+    if (participant.exclusion_status !== "included" || participant.exclusion_reason !== "none") fail("Plan 004 eligible inclusion projection mismatch")
+  } else if (participant.exclusion_status !== "excluded") {
+    fail("Plan 004 ineligible exclusion projection mismatch")
+  }
+  if (projection.eligibility_reason_code === "researcher-stopped" && (participant.phase_status !== "stopped" || participant.exclusion_status !== "excluded" || participant.exclusion_reason !== "researcher-stopped")) fail("Plan 004 researcher-stopped projection mismatch")
+}
+assertPlan004ParticipantMatchesProjection(p004Participant, p004PhaseProjection.rows.find((row) => row.study_id === p004Participant.study_id))
+const p004ResearcherStoppedEvent = { ...p004CompletedEvent, event_type: "researcher-stopped", reason_code: "protocol-deviation" }
+const parsedP004ResearcherStoppedLedger = parseRows("attritionConsent", parsedP004ConsentRows.map((row) => row.event_id === p004CompletedEvent.event_id ? p004ResearcherStoppedEvent : row))
+const p004ResearcherStoppedProjection = buildPhaseProjectionFixture({
+  phaseId: "p004-r1", ledgerRows: parsedP004ResearcherStoppedLedger,
+  studies: [{ recruitmentKey: p004RecruitmentKey, programPersonKey: p004ProgramPersonKey, studyId: p004Consent.study_id, consentId: p004Consent.event_id, planId: "004", phaseId: "p004-r1" }],
+  cutoffAtUtc: "2026-01-12T00:00:00Z",
+})
+const parsedP004ResearcherStoppedParticipant = parseRows("plan004Participants", [{ ...p004Participant, phase_status: "stopped", exclusion_status: "excluded", exclusion_reason: "researcher-stopped" }])[0]
+validateForeignKeys({ attritionConsent: parsedP004ResearcherStoppedLedger, plan004Allocation: parsedAllocation, plan004Participants: [parsedP004ResearcherStoppedParticipant] })
+const p004ResearcherStoppedProjectionRow = p004ResearcherStoppedProjection.rows.find((row) => row.study_id === parsedP004ResearcherStoppedParticipant.study_id)
+if (p004ResearcherStoppedProjectionRow.phase_state !== "stopped" || p004ResearcherStoppedProjectionRow.eligibility_state !== "ineligible" || p004ResearcherStoppedProjectionRow.eligibility_reason_code !== "researcher-stopped" || p004ResearcherStoppedProjection.eligibleStudyIds.length !== 0) fail("Plan 004 researcher-stopped positive projection fixture failed")
+assertPlan004ParticipantMatchesProjection(parsedP004ResearcherStoppedParticipant, p004ResearcherStoppedProjectionRow)
+tsvSemanticFixtureCount += 1
+expectSemanticFailure(() => assertPlan004ParticipantMatchesProjection({ ...parsedP004ResearcherStoppedParticipant, phase_status: "completed" }, p004ResearcherStoppedProjectionRow), "exact state mismatch")
+expectSemanticFailure(() => assertPlan004ParticipantMatchesProjection({ ...parsedP004ResearcherStoppedParticipant, exclusion_status: "included" }, p004ResearcherStoppedProjectionRow), "ineligible exclusion projection mismatch")
+expectSemanticFailure(() => assertPlan004ParticipantMatchesProjection({ ...parsedP004ResearcherStoppedParticipant, exclusion_reason: "ineligible" }, p004ResearcherStoppedProjectionRow), "researcher-stopped projection mismatch")
 const formalPhaseProjectionById = new Map(formalPhaseConfigs.map(({ phase, aggregateCutoffAtUtc }) => [phase, buildPhaseProjectionFixture({
   phaseId: phase, ledgerRows: parsedP005FormalConsents,
   studies: p005FormalStudyConfigs.filter((study) => study.phaseId === phase),
@@ -1919,6 +1953,16 @@ if (sha256(serializeCanonicalJson(parsedThresholdAggregate)) !== thresholdPilotA
 
 const thresholdDeclarationByCell = new Map(parsedThresholdDeclarations.map((row) => [`${row.method}:${row.task_priority}`, row]))
 const allFormalTaskIds = taskRows.map((task) => task.taskId).sort()
+const classifyFormalOutcome = (row) => {
+  const noRescueOrTimeout = row.rescue_used === "false" && row.timeout_used === "false"
+  if (row.method === "tree") {
+    const reachedExpectedDestination = row.observed_destination_id === row.expected_destination_id
+    if (reachedExpectedDestination && Number(row.wrong_branch_count) === 0 && Number(row.backtrack_count) === 0 && noRescueOrTimeout) return "tree-direct"
+    if (reachedExpectedDestination && (Number(row.wrong_branch_count) > 0 || Number(row.backtrack_count) > 0) && noRescueOrTimeout) return "tree-indirect"
+    return "tree-failed"
+  }
+  return row.observed_first_action_id === row.expected_first_action_id && noRescueOrTimeout ? "first-click-correct" : "first-click-incorrect"
+}
 const deriveFormalAggregateRows = (phase, method) => {
   const projection = formalPhaseProjectionById.get(phase)
   if (!projection) fail(`missing formal attrition projection: ${phase}`)
@@ -1932,14 +1976,23 @@ const deriveFormalAggregateRows = (phase, method) => {
     const rows = eligibleEvidence.filter((row) => row.candidate_id === candidateId && row.task_id === taskId)
     const taskPriority = rows[0].task_priority
     const declaration = thresholdDeclarationByCell.get(`${method}:${taskPriority}`)
-    const success = (row) => method === "tree"
-      ? row.observed_destination_id === row.expected_destination_id && row.wrong_branch_count === "0" && row.backtrack_count === "0" && row.rescue_used === "false" && row.timeout_used === "false"
-      : row.observed_first_action_id === row.expected_first_action_id && row.rescue_used === "false" && row.timeout_used === "false"
-    const successNumerator = rows.filter(success).length
+    const outcomes = rows.map(classifyFormalOutcome)
+    const treeDirectCount = method === "tree" ? outcomes.filter((outcome) => outcome === "tree-direct").length : 0
+    const treeIndirectCount = method === "tree" ? outcomes.filter((outcome) => outcome === "tree-indirect").length : 0
+    const treeFailedCount = method === "tree" ? outcomes.filter((outcome) => outcome === "tree-failed").length : 0
+    const firstClickCorrectCount = method === "first-click" ? outcomes.filter((outcome) => outcome === "first-click-correct").length : 0
+    const firstClickIncorrectCount = method === "first-click" ? outcomes.filter((outcome) => outcome === "first-click-incorrect").length : 0
+    const successNumerator = method === "tree" ? treeDirectCount : firstClickCorrectCount
     const denominator = rows.length
     const thresholdNumerator = Number(declaration.threshold_numerator)
     const thresholdDenominator = Number(declaration.threshold_denominator)
-    return { candidateId, taskId, taskPriority, successNumerator, denominator, thresholdNumerator, thresholdDenominator, thresholdMet: successNumerator * thresholdDenominator >= thresholdNumerator * denominator }
+    return {
+      candidateId, taskId, taskPriority, successNumerator, denominator,
+      treeDirectCount, treeIndirectCount, treeFailedCount,
+      firstClickCorrectCount, firstClickIncorrectCount,
+      thresholdNumerator, thresholdDenominator,
+      thresholdMet: successNumerator * thresholdDenominator >= thresholdNumerator * denominator,
+    }
   }).sort((left, right) => left.candidateId.localeCompare(right.candidateId, "en") || left.taskId.localeCompare(right.taskId, "en"))
   const eligibleEvidenceIds = new Set(eligibleEvidence.map((row) => row.task_evidence_id))
   const phaseIssues = p005AggregateIssueRows.filter((row) => row.phase === phase && eligibleEvidenceIds.has(row.task_evidence_id))
@@ -1979,6 +2032,13 @@ const validateFormalAggregate = (value, { selectedCandidateId = "n/a" } = {}) =>
   for (const candidateId of candidateIds) {
     const rows = value.taskRows.filter((row) => row.candidateId === candidateId)
     if (rows.length !== 13 || !canonicalJsonEqual(rows.map((row) => row.taskId).sort(), allFormalTaskIds) || rows.some((row) => row.denominator <= 0 || row.thresholdDenominator <= 0 || row.thresholdMet !== (row.successNumerator * row.thresholdDenominator >= row.thresholdNumerator * row.denominator))) fail("formal aggregate 13-task gate/rational derivation failed")
+    for (const row of rows) {
+      if (value.method === "tree") {
+        if (row.treeDirectCount + row.treeIndirectCount + row.treeFailedCount !== row.denominator || row.successNumerator !== row.treeDirectCount || row.firstClickCorrectCount !== 0 || row.firstClickIncorrectCount !== 0) fail("formal aggregate tree outcome-count invariant failed")
+      } else if (row.firstClickCorrectCount + row.firstClickIncorrectCount !== row.denominator || row.successNumerator !== row.firstClickCorrectCount || row.treeDirectCount !== 0 || row.treeIndirectCount !== 0 || row.treeFailedCount !== 0) {
+        fail("formal aggregate first-click outcome-count invariant failed")
+      }
+    }
   }
   const derived = deriveFormalAggregateRows(value.phase, value.method)
   for (const field of ["eligibleStudyIds", "eligibleSetSha256", "eligiblePersonCount", "taskRows", "issueRows", "accessCoverageRows", "exclusionRows"]) if (!canonicalJsonEqual(value[field], derived[field])) fail(`formal aggregate raw derivation mismatch: ${field}`)
@@ -1995,6 +2055,8 @@ const firstClickFormalAggregateExample = {
   ...deriveFormalAggregateRows("p005-first-click-r1", "first-click"),
 }
 const parsedFirstClickFormalAggregate = validateSemanticJson("plan005FormalAggregate", firstClickFormalAggregateExample, validateFormalAggregate)
+if (!parsedFormalAggregate.taskRows.some((row) => row.candidateId === "candidate-b" && row.treeIndirectCount === 1) || !parsedFormalAggregate.taskRows.some((row) => row.candidateId === "candidate-b" && row.treeFailedCount === 1) || parsedFormalAggregate.taskRows.some((row) => row.firstClickCorrectCount !== 0 || row.firstClickIncorrectCount !== 0)) fail("formal tree retained outcome-count positive fixture failed")
+if (!parsedFirstClickFormalAggregate.taskRows.some((row) => row.candidateId === "candidate-b" && row.firstClickIncorrectCount === 1) || parsedFirstClickFormalAggregate.taskRows.some((row) => row.treeDirectCount !== 0 || row.treeIndirectCount !== 0 || row.treeFailedCount !== 0)) fail("formal first-click retained outcome-count positive fixture failed")
 const treeAggregateExternalSha = sha256(serializeCanonicalJson(parsedFormalAggregate))
 const firstClickR1AggregateExternalSha = sha256(serializeCanonicalJson(parsedFirstClickFormalAggregate))
 
@@ -2051,7 +2113,7 @@ const parsedR2FormalAggregate = validateSemanticJson("plan005FormalAggregate", r
 
 const noEligibleFirstClickAggregate = {
   ...parsedFirstClickFormalAggregate,
-  taskRows: parsedFirstClickFormalAggregate.taskRows.map((row) => row.taskId === allFormalTaskIds[0] ? { ...row, successNumerator: 0, thresholdMet: false } : row),
+  taskRows: parsedFirstClickFormalAggregate.taskRows.map((row) => row.taskId === allFormalTaskIds[0] ? { ...row, successNumerator: 0, firstClickCorrectCount: 0, firstClickIncorrectCount: row.denominator, thresholdMet: false } : row),
 }
 const noEligibleProgressionRows = deriveProgressionCandidateRows(parsedFormalAggregate, noEligibleFirstClickAggregate)
 const noEligibleProgressionExample = {
@@ -2081,6 +2143,14 @@ expectSemanticFailure(() => validateThresholdAggregate({ ...parsedThresholdAggre
 expectSemanticFailure(() => validateThresholdAggregate({ ...parsedThresholdAggregate, attritionProjectionSha256: hashToken("wrong-threshold-projection") }), "does not reproduce raw pilot rows")
 expectSemanticFailure(() => validateThresholdAggregate({ ...parsedThresholdAggregate, sessionLengthReview: { ...parsedThresholdAggregate.sessionLengthReview, rerunRequired: true } }), "session-length")
 expectSemanticFailure(() => validateFormalAggregate({ ...parsedFormalAggregate, taskRows: parsedFormalAggregate.taskRows.map((row, index) => index === 0 ? { ...row, thresholdMet: false } : row) }), "13-task gate")
+expectSemanticFailure(() => validateFormalAggregate({ ...parsedFormalAggregate, taskRows: parsedFormalAggregate.taskRows.map((row, index) => index === 0 ? { ...row, treeFailedCount: row.treeFailedCount + 1 } : row) }), "tree outcome-count invariant")
+expectSemanticFailure(() => validateFormalAggregate({ ...parsedFormalAggregate, taskRows: parsedFormalAggregate.taskRows.map((row, index) => index === 0 ? { ...row, successNumerator: 0, thresholdMet: false } : row) }), "tree outcome-count invariant")
+expectSemanticFailure(() => validateFormalAggregate({ ...parsedFormalAggregate, taskRows: parsedFormalAggregate.taskRows.map((row, index) => index === 0 ? { ...row, firstClickIncorrectCount: 1 } : row) }), "tree outcome-count invariant")
+expectSemanticFailure(() => validateFormalAggregate({ ...parsedFormalAggregate, taskRows: parsedFormalAggregate.taskRows.map((row) => row.candidateId === "candidate-b" && row.treeIndirectCount === 1 ? { ...row, treeDirectCount: 1, treeIndirectCount: 0, successNumerator: 1, thresholdMet: true } : row) }), "formal aggregate raw derivation mismatch: taskRows")
+expectSemanticFailure(() => validateFormalAggregate({ ...parsedFirstClickFormalAggregate, taskRows: parsedFirstClickFormalAggregate.taskRows.map((row, index) => index === 0 ? { ...row, firstClickIncorrectCount: row.firstClickIncorrectCount + 1 } : row) }), "first-click outcome-count invariant")
+expectSemanticFailure(() => validateFormalAggregate({ ...parsedFirstClickFormalAggregate, taskRows: parsedFirstClickFormalAggregate.taskRows.map((row, index) => index === 0 ? { ...row, successNumerator: 0, thresholdMet: false } : row) }), "first-click outcome-count invariant")
+expectSemanticFailure(() => validateFormalAggregate({ ...parsedFirstClickFormalAggregate, taskRows: parsedFirstClickFormalAggregate.taskRows.map((row, index) => index === 0 ? { ...row, treeFailedCount: 1 } : row) }), "first-click outcome-count invariant")
+expectSemanticFailure(() => validateFormalAggregate({ ...parsedFirstClickFormalAggregate, taskRows: parsedFirstClickFormalAggregate.taskRows.map((row) => row.candidateId === "candidate-a" && row.firstClickCorrectCount === 1 ? { ...row, firstClickCorrectCount: 0, firstClickIncorrectCount: 1, successNumerator: 0, thresholdMet: false } : row) }), "formal aggregate raw derivation mismatch: taskRows")
 expectSemanticFailure(() => validateFormalAggregate({ ...parsedFormalAggregate, attritionProjectionSha256: hashToken("wrong-formal-projection") }), "formal aggregate input/attrition hash mismatch")
 expectSemanticFailure(() => validateProgression({ ...parsedProgression, treeAggregateFileSha256: hashToken("wrong-tree-aggregate") }), "upstream aggregate/declaration hash")
 expectSemanticFailure(() => validateProgression({ ...parsedProgression, candidateRows: parsedProgression.candidateRows.map((row, index) => index === 0 ? { ...row, firstClickR1PassedTaskIds: row.firstClickR1PassedTaskIds.slice(1) } : row) }), "does not match formal aggregate")
@@ -2088,7 +2158,7 @@ expectSemanticFailure(() => validateProgression({ ...parsedProgression, selected
 expectSemanticFailure(() => validateProgression({ ...parsedProgression, candidateRows: parsedProgression.candidateRows.map((row) => row.candidateId === "candidate-b" ? { ...row, firstClickR1UnresolvedCriticalCount: 0, eligible: true } : row) }), "does not match formal aggregate")
 expectSemanticFailure(() => validateProgression({ ...parsedNoEligibleProgression, selectedCandidateId: fixtureSelectedCandidateId }, { treeAggregate: parsedFormalAggregate, firstClickR1Aggregate: noEligibleFirstClickAggregate }), "selection/reviewer derivation failed")
 expectSemanticFailure(() => validateFormalAggregate({ ...parsedR2FormalAggregate, taskRows: parsedR2FormalAggregate.taskRows.map((row) => ({ ...row, candidateId: "candidate-b" })) }, { selectedCandidateId: parsedProgression.selectedCandidateId }), "candidate cardinality/selection failed")
-expectSemanticFailure(() => validateFormalAggregate({ ...parsedR2FormalAggregate, taskRows: parsedR2FormalAggregate.taskRows.map((row, index) => index === 0 ? { ...row, successNumerator: 0, thresholdMet: false } : row) }, { selectedCandidateId: parsedProgression.selectedCandidateId }), "formal aggregate raw derivation mismatch")
+expectSemanticFailure(() => validateFormalAggregate({ ...parsedR2FormalAggregate, taskRows: parsedR2FormalAggregate.taskRows.map((row, index) => index === 0 ? { ...row, successNumerator: 0, firstClickCorrectCount: 0, firstClickIncorrectCount: row.denominator, thresholdMet: false } : row) }, { selectedCandidateId: parsedProgression.selectedCandidateId }), "formal aggregate raw derivation mismatch")
 
 const fileDigestLines = []
 for (const file of [...recoveryManifest.files].sort((left, right) => left.path.localeCompare(right.path))) {
