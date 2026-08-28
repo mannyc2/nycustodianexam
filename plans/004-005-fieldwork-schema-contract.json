@@ -1,0 +1,529 @@
+{
+  "schemaVersion": 2,
+  "protocolVersion": "FW-004-005-v2",
+  "releasedMainSha": "9fc7dcacfc961752e5d9a2cedbc426deead54a05",
+  "recoverySetSha256": "f1ef0a2dec44ae04c8c2b3e8f94fe9e59b3c38a54d3310ae50b4b7dde10ecf14",
+  "status": "no-participant-data",
+  "canonicalTsv": {
+    "encoding": "strict-utf8-no-bom",
+    "lineEndings": "lf-only",
+    "terminalNewline": "exactly-one",
+    "delimiter": "tab",
+    "normalization": "NFC except explicitly normalized open-sort text",
+    "emptyCells": "reject",
+    "unknownColumns": "reject",
+    "nullToken": "n/a",
+    "nullability": "n/a is rejected unless the field's enum/pattern contains n/a or the schema lists it in nullableFields",
+    "multiValueEncoding": "lexically-sorted unique lowercase tokens joined by +; n/a for not applicable",
+    "fixtureNamespace": "FIXTURE-",
+    "fixturePolicy": "accepted only by explicit test mode and rejected by every operational command"
+  },
+  "fieldRuleResolution": {
+    "schema_version": "must exactly equal the enclosing schema id",
+    "sha256Suffix": "lowercase [0-9a-f]{64}; n/a only when the schema invariant explicitly permits it",
+    "utcSuffix": "UTC RFC3339 YYYY-MM-DDTHH:mm:ssZ; n/a only when explicitly permitted",
+    "integerFields": "base-10 nonnegative integer without sign or leading zero except 0",
+    "booleanFields": "true or false",
+    "defaultToken": "[A-Za-z0-9][A-Za-z0-9._:/+-]{0,255}",
+    "normalizedText": "nonempty UTF-8, no tab, CR, LF, NUL, or leading/trailing whitespace",
+    "enumPrecedence": "a schema enum or pattern overrides the generic field-name rule"
+  },
+  "jsonFieldRuleResolution": {
+    "schemaVersion": "exact enclosing schema id string",
+    "protocolVersion": "FW-004-005-v2",
+    "sha256Suffix": "lowercase [0-9a-f]{64}",
+    "utcSuffix": "UTC RFC3339 second precision",
+    "countNumeratorDenominatorCardinality": "nonnegative safe integer",
+    "booleanPrefixes": "is/has or *Met are boolean",
+    "idsPlural": "lexically sorted unique string array",
+    "limitations": "string array",
+    "contractArrays": "array with exactly the declared row fields and declared sort/cardinality",
+    "default": "nonempty string token"
+  },
+  "multiValueDomains": {
+    "access-strategy": ["none", "prefer-not-to-say", "keyboard-only", "screen-reader", "magnification-reflow", "motor-adaptation", "cognitive-literacy-support"]
+  },
+  "idLifecycle": {
+    "recruitmentKeyPattern": "RK-[0-9a-f]{32}",
+    "programPersonKeyPattern": "PPK-[0-9a-f]{32}",
+    "eventIdPattern": "EVT-[0-9a-f]{32}",
+    "preActivationStudyId": "n/a",
+    "studyIdPatterns": ["PILOT-P[0-9]{2}", "R1-P[0-9]{2}", "R2-P[0-9]{2}", "OS-P[0-9]{2}", "TP-P[0-9]{2}", "TT-P[0-9]{2}", "F1-P[0-9]{2}", "F2-P[0-9]{2}"],
+    "activationEvent": "study-id-activated",
+    "rule": "contact and screening use recruitment_key with study_id=n/a; an exploratory ID activates only after its PRE-DISCOVERY/PILOT gate and a formal ID only after its exact PRE-FORMAL-EXPOSURE gate"
+  },
+  "attritionReasonPrecedence": ["deleted", "deletion-pending", "participant-withdrew", "research-consent-revoked", "researcher-stopped", "excluded", "artifact-or-protocol-invalid", "phase-incomplete", "research-consent-declined", "missing-research-consent", "eligible"],
+  "hashDag": {
+    "stages": [
+      "validated raw files and immutable artifacts",
+      "fieldwork-phase-input-manifest-v1 external file SHA-256",
+      "cutoff-specific attrition projection and eligible-set SHA-256",
+      "canonical aggregate external file SHA-256",
+      "human decision or declaration external file SHA-256",
+      "fieldwork-phase-evidence-manifest-v1 external file SHA-256",
+      "owner approval bound to the final manifest external SHA-256"
+    ],
+    "selfHashRule": "every file created by FW-004-005-v2 contains no digest of itself and no v2 digest is computed with an omitted self field; no consumer-language-prototypes-v1 file was recovered, and if a post-pilot v1 manifest is later owner-approved its legacy manifest_sha256 cell is non-authoritative provenance while every v2 prototype_manifest_sha256 is the external SHA-256 of the complete strictly validated v1 file bytes including that legacy column",
+    "artifactSetRecipe": "SHA-256 of UTF-8/LF bytes formed by lexical artifact_id order, one line per artifact: artifact_sha256, two ASCII spaces, artifact_id, LF",
+    "openSortCardSetRecipe": "SHA-256 of UTF-8/LF bytes in ascending OS-C01..OS-C24 order, one line per card: card_id, TAB, exact packet card text, LF",
+    "openSortPresentedOrderRecipe": "SHA-256 of UTF-8/LF bytes in ascending presented position 1..24, one line per position: unpadded base-10 position, TAB, card_id, LF",
+    "formalTaskOrderRecipe": "SHA-256 of UTF-8/LF bytes in presentation order, one task_id plus LF per line after the declared rotation/reversal",
+    "eligibleSetRecipe": "SHA-256 of lexical eligible study IDs, one UTF-8 ID plus LF per line",
+    "eligibleTrialSetRecipe": "SHA-256 of lexical eligible trial IDs, one UTF-8 trial_id plus LF per line",
+    "independentCodingSetRecipe": "SHA-256 of canonical navigation-open-sort-coding-v1 TSV bytes containing the exact header and only the matching response's independent rows, with independent_row_set_sha256 and adjudication_code fixed to n/a, ordered by schema sort key then primary key, strict UTF-8/LF and one final LF",
+    "candidateDecisionRowSetRecipe": "SHA-256 of canonical recursively key-sorted UTF-8/LF JSON wrapper {schemaVersion:navigation-candidate-decision-row-set-v1,protocolVersion,candidateId,decisionRows}; exactly that candidate's 21 rows sorted by numeric familyNumber then decisionId; no digest field",
+    "jsonRecipe": "recursively lexically sort object keys, preserve contract-declared array order, strict UTF-8, exactly one LF"
+  },
+  "schemas": {
+    "compensationTerms": {
+      "id": "fieldwork-compensation-terms-v1",
+      "filename": "fieldwork-compensation-terms.v1.tsv",
+      "header": ["schema_version", "phase_id", "phase_version", "terms_code", "amount_currency_minor", "currency_code", "funding_owner_code", "funding_verification_sha256", "delivery_method_code", "delivery_deadline_code", "withdrawal_payment_code", "no_show_terms_sha256", "cancellation_terms_sha256", "participant_terms_sha256"],
+      "primaryKey": ["phase_id", "phase_version"],
+      "sortKey": ["phase_id", "phase_version"],
+      "nullableFields": ["currency_code", "funding_owner_code", "funding_verification_sha256", "delivery_method_code", "delivery_deadline_code"],
+      "enums": {"phase_id": ["p004-pilot", "p004-r1", "p004-r2", "p005-open-sort", "p005-threshold-pilot", "p005-tree-test", "p005-first-click-r1", "p005-first-click-r2"], "terms_code": ["paid", "unpaid"], "withdrawal_payment_code": ["full-promised-amount", "n/a-unpaid"]},
+      "invariants": ["exactly eight rows, one per exposed phase", "unpaid requires amount_currency_minor=0, currency_code=n/a, funding_verification_sha256=n/a, delivery_method_code=n/a, delivery_deadline_code=n/a, withdrawal_payment_code=n/a-unpaid", "paid requires positive amount, a currency, funding proof, delivery method/deadline, and full-promised-amount"]
+    },
+    "attritionConsent": {
+      "id": "fieldwork-consent-attrition-v2",
+      "filename": "participant-consent-attrition.v2.tsv",
+      "header": ["schema_version", "event_id", "recruitment_key", "program_person_key", "study_id", "event_at_utc", "event_type", "target_scope", "target_plan_id", "target_phase_id", "consent_document_sha256", "withdrawal_cutoff_at_utc", "compensation_terms_code", "compensation_terms_sha256", "reason_code", "access_strategy_code", "actor_code", "prior_event_id"],
+      "primaryKey": ["event_id"],
+      "sortKey": ["event_at_utc", "event_id"],
+      "nullableFields": ["program_person_key", "study_id", "target_plan_id", "target_phase_id", "consent_document_sha256", "withdrawal_cutoff_at_utc", "compensation_terms_code", "compensation_terms_sha256", "reason_code", "access_strategy_code", "prior_event_id"],
+      "patterns": {"event_id": "EVT-[0-9a-f]{32}", "recruitment_key": "RK-[0-9a-f]{32}", "program_person_key": "PPK-[0-9a-f]{32}|n/a", "study_id": "(?:PILOT|R1|R2|OS|TP|TT|F1|F2)-P[0-9]{2}|n/a", "prior_event_id": "EVT-[0-9a-f]{32}|n/a"},
+      "enums": {"event_type": ["screened-eligible", "screened-ineligible", "contact-consent-affirmed", "contact-consent-declined", "contact-consent-revoked", "study-id-activated", "research-consent-affirmed", "research-consent-declined", "research-consent-revoked", "recording-not-used", "recording-consent-affirmed", "recording-consent-declined", "recording-consent-revoked", "scheduled", "session-started", "session-completed", "participant-withdrew", "researcher-stopped", "excluded", "deletion-requested", "raw-deletion-confirmed", "aggregate-no-longer-separable", "access-strategy-used"], "target_scope": ["phase", "plan", "program", "contact", "recording", "n/a"], "target_plan_id": ["004", "005", "n/a"], "target_phase_id": ["p004-pilot", "p004-r1", "p004-r2", "p005-open-sort", "p005-threshold-pilot", "p005-tree-test", "p005-first-click-r1", "p005-first-click-r2", "n/a"], "compensation_terms_code": ["paid", "unpaid", "n/a"], "reason_code": ["n/a", "none", "participant-request", "consent-incomplete", "security-interruption", "artifact-mismatch", "technical-failure", "facilitator-contamination", "duplicate", "ineligible", "protocol-deviation", "legacy-missing-consent", "legacy-unresolved"], "access_strategy_code": ["n/a", "none", "prefer-not-to-say", "keyboard-only", "screen-reader", "magnification-reflow", "motor-adaptation", "cognitive-literacy-support"]},
+      "invariants": ["pre-activation events use study_id=n/a and are chained by recruitment_key", "study-id-activated and later study events require program_person_key and study_id", "phase scope requires target_plan_id and target_phase_id; plan scope requires plan and phase=n/a; program/contact/recording/n/a scopes require both targets=n/a", "research-consent-affirmed is the exact event referenced by research_consent_event_id", "prior_event_id forms an acyclic same-recruitment-key chain", "research-consent-affirmed requires consent_document_sha256 and the participant-specific withdrawal_cutoff_at_utc disclosed by that document; other events use withdrawal cutoff n/a and consent events retain their document hash", "the disclosed cutoff is no later than the applicable plan's 180-days-after-last-session ceiling", "compensation terms are n/a before a phase is chosen and otherwise join the phase terms row"]
+    },
+    "attritionProjection": {
+      "id": "fieldwork-attrition-projection-v1",
+      "filename": "fieldwork-attrition-projection.v1.tsv",
+      "header": ["schema_version", "projection_version", "source_ledger_file_sha256", "cutoff_at_utc", "recruitment_key", "program_person_key", "study_id", "plan_id", "phase_id", "research_consent_state", "research_consent_event_id", "withdrawal_cutoff_at_utc", "recording_state", "recording_decisive_event_id", "contact_state", "contact_decisive_event_id", "phase_state", "phase_decisive_event_id", "exclusion_state", "exclusion_decisive_event_id", "deletion_state", "deletion_decisive_event_id", "deletion_request_timeliness", "eligibility_state", "eligibility_reason_code", "applicable_program_event_id", "applicable_plan_event_id", "applicable_phase_event_id"],
+      "primaryKey": ["projection_version", "study_id"],
+      "sortKey": ["projection_version", "phase_id", "study_id"],
+      "nullableFields": ["research_consent_event_id", "recording_decisive_event_id", "contact_decisive_event_id", "phase_decisive_event_id", "exclusion_decisive_event_id", "deletion_decisive_event_id", "applicable_program_event_id", "applicable_plan_event_id", "applicable_phase_event_id"],
+      "patterns": {"recruitment_key": "RK-[0-9a-f]{32}", "program_person_key": "PPK-[0-9a-f]{32}", "study_id": "(?:PILOT|R1|R2|OS|TP|TT|F1|F2)-P[0-9]{2}", "research_consent_event_id": "EVT-[0-9a-f]{32}|n/a", "recording_decisive_event_id": "EVT-[0-9a-f]{32}|n/a", "contact_decisive_event_id": "EVT-[0-9a-f]{32}|n/a", "phase_decisive_event_id": "EVT-[0-9a-f]{32}|n/a", "exclusion_decisive_event_id": "EVT-[0-9a-f]{32}|n/a", "deletion_decisive_event_id": "EVT-[0-9a-f]{32}|n/a", "applicable_program_event_id": "EVT-[0-9a-f]{32}|n/a", "applicable_plan_event_id": "EVT-[0-9a-f]{32}|n/a", "applicable_phase_event_id": "EVT-[0-9a-f]{32}|n/a"},
+      "enums": {"plan_id": ["004", "005"], "phase_id": ["p004-pilot", "p004-r1", "p004-r2", "p005-open-sort", "p005-threshold-pilot", "p005-tree-test", "p005-first-click-r1", "p005-first-click-r2"], "research_consent_state": ["consented", "declined", "withdrawn", "missing"], "recording_state": ["not-requested", "consented", "declined", "withdrawn"], "contact_state": ["affirmed", "declined", "revoked", "missing"], "phase_state": ["activated", "scheduled", "started", "completed", "excluded", "withdrawn", "stopped"], "exclusion_state": ["included", "excluded"], "deletion_state": ["not-requested", "pending", "completed", "irreversibly-deidentified"], "deletion_request_timeliness": ["no-request", "timely", "late-after-cutoff"], "eligibility_state": ["eligible", "ineligible"], "eligibility_reason_code": ["eligible", "missing-research-consent", "research-consent-declined", "research-consent-revoked", "participant-withdrew", "researcher-stopped", "phase-incomplete", "excluded", "deletion-pending", "deleted", "artifact-or-protocol-invalid"]},
+      "invariants": ["derived, never hand-entered, from the exact source ledger bytes at cutoff_at_utc", "withdrawal_cutoff_at_utc byte-matches the referenced research-consent event and cutoff_at_utc is strictly later for an included row", "all non-n/a decisive event IDs join the same program person and applicable scope in the source ledger", "program scope overrides plan, which overrides phase; later narrower consent cannot revive broader terminal withdrawal/deletion", "same-scope events resolve by event_at_utc then event_id", "contact revocation changes contact_state only; recording revocation changes recording_state and recording deletion only", "deletion-requested at or before withdrawal_cutoff_at_utc is timely and makes the scoped row ineligible; a later request is late-after-cutoff and cannot be represented as separable after a valid aggregate-no-longer-separable event", "aggregate-no-longer-separable must be strictly after withdrawal_cutoff_at_utc", "research revocation, participant withdrawal, researcher stop, applicable exclusion/timely deletion, incomplete phase, or invalid artifact/protocol makes eligibility ineligible", "task-local exclusions are not phase events and are applied after this projection", "the validated external file SHA-256 is attritionProjectionSha256"]
+    },
+    "screener": {
+      "id": "fieldwork-screener-v1",
+      "filename": "fieldwork-screener.v1.tsv",
+      "header": ["schema_version", "recruitment_key", "program_person_key", "intended_plan_id", "intended_phase_id", "screener_version", "screener_sha256", "screened_at_utc", "eligibility_status", "segment_code", "device_code", "digital_confidence_code", "account_expectation_code", "access_strategy_codes", "english_prototype_eligible", "prior_exposure_status", "contributor_status", "security_boundary_agreed", "availability_status", "contact_consent_status", "quota_code", "exclusion_code"],
+      "primaryKey": ["recruitment_key", "intended_phase_id", "screener_version"],
+      "sortKey": ["screened_at_utc", "recruitment_key"],
+      "nullableFields": ["program_person_key"],
+      "multiValueFields": {"access_strategy_codes": "access-strategy"},
+      "patterns": {"recruitment_key": "RK-[0-9a-f]{32}", "program_person_key": "PPK-[0-9a-f]{32}|n/a"},
+      "enums": {"intended_plan_id": ["004", "005"], "eligibility_status": ["eligible", "ineligible", "pending"], "english_prototype_eligible": ["true", "false"], "prior_exposure_status": ["none", "exposed-ineligible-for-reuse", "unknown"], "contributor_status": ["target-user", "contributor-excluded"], "security_boundary_agreed": ["true", "false"], "availability_status": ["available", "unavailable"], "contact_consent_status": ["affirmed", "declined", "revoked"], "exclusion_code": ["none", "under-18", "wrong-segment", "higher-level-only", "english-prototype-unavailable", "prior-exposure", "project-contributor", "security-boundary-declined", "unavailable", "contact-consent-declined"]},
+      "foreignKeys": [{"fields": ["recruitment_key"], "schema": "attritionConsent", "fieldsThere": ["recruitment_key"]}],
+      "invariants": ["stored only in the research evidence store", "identity/contact values never appear", "eligible requires every exclusion predicate to pass and exclusion_code=none", "program_person_key may be n/a during screening but must be assigned before study-id activation"]
+    },
+    "schemaMigration": {
+      "id": "fieldwork-schema-migration-v1",
+      "filename": "fieldwork-schema-migration.v1.tsv",
+      "header": ["schema_version", "migration_id", "plan_id", "source_schema_id", "source_presence", "source_path_code", "source_head_git_sha", "source_evidence_sha256", "source_row_count", "source_header_sha256", "target_schema_id", "target_path_code", "target_header_sha256", "migration_kind", "zero_row_assertion", "old_aggregate_sha256", "new_aggregate_sha256", "owner_comment_url_sha256", "owner_comment_body_sha256", "migrated_at_utc", "actor_code"],
+      "primaryKey": ["migration_id"],
+      "sortKey": ["plan_id", "source_schema_id"],
+      "nullableFields": ["source_path_code"],
+      "enums": {"plan_id": ["004", "005"], "source_presence": ["absent-schema-witness", "present-private-file"], "migration_kind": ["absent-source-schema-witness", "zero-row-file-replacement", "quarantined-nonzero-source"], "zero_row_assertion": ["true", "false"]},
+      "patterns": {"source_head_git_sha": "[0-9a-f]{40}"},
+      "invariants": ["absent-source-schema-witness requires source_presence=absent-schema-witness, source_path_code=n/a, source_row_count=0, zero_row_assertion=true, and source_evidence_sha256 equal to the SHA-256 of the exact maintained header plus LF", "zero-row-file-replacement requires source_presence=present-private-file, the actual private path code/file SHA, source_row_count=0, and zero_row_assertion=true", "a discovered nonzero source uses quarantined-nonzero-source and cannot be transformed or declared eligible", "old/new aggregate hashes bind canonical zero aggregates; owner hashes bind unedited PR comments"]
+    },
+    "phaseInputManifest": {
+      "id": "fieldwork-phase-input-manifest-v1",
+      "filename": "phase-input-manifest.v1.tsv",
+      "header": ["schema_version", "phase_id", "phase_version", "input_manifest_id", "source_file_id", "source_schema_id", "source_file_sha256", "source_row_count", "protocol_sha256", "artifact_or_card_set_sha256", "schedule_file_sha256", "task_registry_file_sha256", "created_at_utc", "created_by_code"],
+      "primaryKey": ["phase_id", "phase_version", "source_file_id"],
+      "sortKey": ["phase_id", "phase_version", "source_file_id"],
+      "nullableFields": ["artifact_or_card_set_sha256", "schedule_file_sha256", "task_registry_file_sha256"],
+      "invariants": ["the manifest contains no digest of itself", "all repeated phase-level values byte-match", "its validated external file SHA-256 is the sole phase_input_manifest_sha256 used downstream", "formal manifests are frozen before the first formal study ID"]
+    },
+    "phaseEvidenceManifest": {
+      "id": "fieldwork-phase-evidence-manifest-v1",
+      "filename": "phase-evidence-manifest.v1.tsv",
+      "header": ["schema_version", "phase_id", "phase_version", "source_file_id", "source_schema_id", "source_file_sha256", "source_row_count", "phase_input_manifest_sha256", "attrition_projection_sha256", "eligible_set_sha256", "aggregate_file_sha256", "decision_file_sha256", "closed_at_utc", "closed_by_code"],
+      "primaryKey": ["phase_id", "phase_version", "source_file_id"],
+      "sortKey": ["phase_id", "phase_version", "source_file_id"],
+      "nullableFields": ["aggregate_file_sha256", "decision_file_sha256"],
+      "invariants": ["the manifest contains no digest of itself", "aggregate_file_sha256 is n/a only for an uncounted pilot", "decision_file_sha256 is n/a unless the phase creates a candidate formation, threshold declaration, progression, or selection record", "an owner approval binds the validated external SHA-256 of this entire file"]
+    },
+    "plan004Allocation": {
+      "id": "consumer-language-allocation-v1",
+      "filename": "plan-004-allocation.v1.tsv",
+      "header": ["schema_version", "phase", "schedule_version", "planned_effective_n", "randomization_seed_hex", "randomized_position", "allocation_slot", "slot_role", "replacement_of_allocation_slot", "assigned_direction_id", "feedback_order", "offline_order", "import_reset_order"],
+      "primaryKey": ["phase", "schedule_version", "randomized_position"],
+      "sortKey": ["phase", "schedule_version", "randomized_position"],
+      "nullableFields": ["replacement_of_allocation_slot"],
+      "patterns": {"randomization_seed_hex": "[0-9a-f]{64}"},
+      "enums": {"phase": ["p004-r1", "p004-r2"], "planned_effective_n": ["6", "8"], "slot_role": ["primary", "reserve-1", "reserve-2"], "assigned_direction_id": ["CL-D1", "CL-D2"], "feedback_order": ["current-first", "candidate-first"], "offline_order": ["current-first", "candidate-first"], "import_reset_order": ["current-first", "candidate-first"]},
+      "invariants": ["one schedule and seed are frozen before the phase's first formal ID", "allocation_slot is unique within phase and schedule_version", "each primary balance cell has exactly reserve-1 and reserve-2 rows with the same direction and three order values", "primary replacement_of_allocation_slot=n/a; reserve rows name their primary slot", "eligible primary/replacement completions use each primary balance cell exactly once", "a used slot or study ID is never reassigned"]
+    },
+    "plan004Participants": {
+      "id": "consumer-language-participants-v2",
+      "filename": "plan-004-participants.v2.tsv",
+      "header": ["schema_version", "plan_id", "phase", "study_id", "program_person_key", "session_id", "research_consent_event_id", "consent_version", "consent_status", "consent_at_utc", "recording_consent", "assigned_direction_id", "allocation_schema_version", "allocation_schedule_version", "allocation_schedule_file_sha256", "allocation_slot", "feedback_order", "offline_order", "import_reset_order", "usual_access_strategy_codes", "phase_status", "exclusion_status", "exclusion_reason", "withdrawal_scope", "deletion_status"],
+      "primaryKey": ["phase", "study_id"],
+      "sortKey": ["phase", "study_id"],
+      "multiValueFields": {"usual_access_strategy_codes": "access-strategy"},
+      "enums": {"plan_id": ["004"], "phase": ["p004-r1", "p004-r2"], "consent_status": ["consented", "declined", "withdrawn"], "recording_consent": ["not-requested", "consented", "declined", "withdrawn"], "assigned_direction_id": ["CL-D1", "CL-D2"], "feedback_order": ["current-first", "candidate-first"], "offline_order": ["current-first", "candidate-first"], "import_reset_order": ["current-first", "candidate-first"], "phase_status": ["scheduled", "started", "completed", "excluded", "withdrawn"], "exclusion_status": ["included", "excluded", "pending"], "exclusion_reason": ["none", "consent-incomplete", "security-interruption", "artifact-mismatch", "technical-failure", "facilitator-contamination", "duplicate", "ineligible", "protocol-deviation", "withdrawn"], "withdrawal_scope": ["phase", "plan", "program", "n/a"], "deletion_status": ["not-requested", "pending", "completed", "irreversibly-deidentified"]},
+      "foreignKeys": [{"fields": ["research_consent_event_id", "program_person_key", "study_id"], "schema": "attritionConsent", "fieldsThere": ["event_id", "program_person_key", "study_id"]}, {"fields": ["phase", "allocation_schedule_version", "allocation_slot", "assigned_direction_id", "feedback_order", "offline_order", "import_reset_order"], "schema": "plan004Allocation", "fieldsThere": ["phase", "schedule_version", "allocation_slot", "assigned_direction_id", "feedback_order", "offline_order", "import_reset_order"]}],
+      "invariants": ["research_consent_event_id names the same-person same-study research-consent-affirmed event", "allocation_schema_version=consumer-language-allocation-v1 and allocation_schedule_version plus file hash identify one frozen schedule", "mirrored consent/attrition fields equal the cutoff projection and never grant eligibility"]
+    },
+    "plan004ExposureManifest": {
+      "id": "consumer-language-exposures-v2",
+      "filename": "plan-004-exposure-manifest.v2.tsv",
+      "header": ["schema_version", "phase", "artifact_set_version", "artifact_set_sha256", "artifact_id", "prototype_manifest_version", "prototype_manifest_sha256", "prototype_id", "prototype_version", "prototype_sha256", "task_id", "state_id", "condition_id", "exposure_direction_id", "copy_variant_id", "normalization", "artifact_sha256"],
+      "primaryKey": ["phase", "artifact_id"],
+      "sortKey": ["phase", "artifact_id"],
+      "nullableFields": ["prototype_manifest_version", "prototype_manifest_sha256", "prototype_id", "prototype_version", "prototype_sha256"],
+      "enums": {"phase": ["p004-pilot", "p004-r1", "p004-r2"], "condition_id": ["candidate", "current-control"], "exposure_direction_id": ["CL-D1", "CL-D2", "current"], "normalization": ["strict-utf8-nfc-lf-one-final-lf"]},
+      "invariants": ["artifact_set_sha256 uses the top-level acyclic artifact-set recipe, not this manifest's file bytes", "formal rows require source prototype manifest/hash; pilot rows may use n/a", "each artifact contains exactly one direction, state, and condition"]
+    },
+    "plan004Pilot": {
+      "id": "consumer-language-pilot-v1",
+      "filename": "plan-004-pilot.v1.tsv",
+      "header": ["schema_version", "phase", "study_id", "program_person_key", "research_consent_event_id", "session_id", "guide_version", "guide_sha256", "phase_input_manifest_sha256", "working_artifact_set_version", "working_artifact_set_sha256", "task_id", "task_sequence", "state_id", "condition_id", "exposure_direction_id", "artifact_id", "artifact_sha256", "access_strategy_codes", "pilot_check_code", "pilot_outcome", "exclusion_code", "notes_code"],
+      "primaryKey": ["session_id", "task_sequence", "condition_id", "exposure_direction_id"],
+      "sortKey": ["session_id", "task_sequence", "condition_id", "exposure_direction_id"],
+      "multiValueFields": {"access_strategy_codes": "access-strategy"},
+      "enums": {"phase": ["p004-pilot"], "condition_id": ["candidate", "current-control"], "exposure_direction_id": ["CL-D1", "CL-D2", "current"], "pilot_outcome": ["usable", "repair-required", "not-observed"], "exclusion_code": ["none", "consent-incomplete", "security-interruption", "artifact-mismatch", "technical-failure", "facilitator-contamination", "withdrawn"]},
+      "foreignKeys": [{"fields": ["research_consent_event_id", "program_person_key", "study_id"], "schema": "attritionConsent", "fieldsThere": ["event_id", "program_person_key", "study_id"]}, {"fields": ["phase", "artifact_id", "task_id", "state_id", "condition_id", "exposure_direction_id", "artifact_sha256"], "schema": "plan004ExposureManifest", "fieldsThere": ["phase", "artifact_id", "task_id", "state_id", "condition_id", "exposure_direction_id", "artifact_sha256"]}],
+      "invariants": ["one real consented pilot only; no formal R1/R2 ID", "the pilot is unscored overall but every row records the one exact CL-D1, CL-D2, or current artifact/state/condition actually isolated and shown", "working_artifact_set_sha256 byte-matches the joined exposure manifest artifact-set digest", "pilot rows never enter formal aggregates", "exact working bytes may change only after the session and get a new hash/version"]
+    },
+    "plan004TaskObservations": {
+      "id": "consumer-language-task-observations-v2",
+      "filename": "plan-004-task-observations.v2.tsv",
+      "header": ["schema_version", "phase", "study_id", "session_id", "task_observation_id", "comparison_pair_id", "assigned_direction_id", "exposure_direction_id", "task_id", "state_id", "condition_id", "exposure_position", "current_candidate_order", "artifact_id", "artifact_sha256", "prototype_manifest_version", "prototype_manifest_sha256", "prototype_id", "prototype_version", "prototype_sha256", "copy_variant_id", "access_strategy_codes", "exposure_started_at_utc", "score_locked_at_utc", "scoring_status", "exclusion_reason", "task_completed", "first_action_code", "time_to_first_action_ms", "wrong_turn_code", "clarification_count", "teachback_outcome", "unofficial_status_outcome", "advanced_evidence_outcome", "consequence_outcome", "security_interruption", "notes_code"],
+      "primaryKey": ["task_observation_id"],
+      "sortKey": ["phase", "study_id", "task_id", "exposure_position"],
+      "nullableFields": ["comparison_pair_id", "exclusion_reason", "first_action_code", "time_to_first_action_ms", "wrong_turn_code", "teachback_outcome", "unofficial_status_outcome", "advanced_evidence_outcome", "consequence_outcome", "notes_code"],
+      "multiValueFields": {"access_strategy_codes": "access-strategy"},
+      "enums": {"phase": ["p004-r1", "p004-r2"], "assigned_direction_id": ["CL-D1", "CL-D2"], "exposure_direction_id": ["CL-D1", "CL-D2", "current"], "condition_id": ["candidate", "current-control"], "exposure_position": ["1", "2"], "current_candidate_order": ["candidate-only", "current-first", "candidate-first"], "scoring_status": ["valid", "excluded"], "exclusion_reason": ["n/a", "consent-incomplete", "security-interruption", "artifact-mismatch", "technical-failure", "facilitator-contamination", "duplicate", "ineligible", "protocol-deviation", "withdrawn"], "task_completed": ["true", "false"], "teachback_outcome": ["accurate", "partial", "incorrect", "n/a"], "unofficial_status_outcome": ["accurate", "partial", "incorrect", "n/a"], "advanced_evidence_outcome": ["accurate", "partial", "incorrect", "n/a"], "consequence_outcome": ["accurate", "partial", "incorrect", "n/a"], "security_interruption": ["true", "false"]},
+      "foreignKeys": [{"fields": ["phase", "study_id", "session_id", "assigned_direction_id"], "schema": "plan004Participants", "fieldsThere": ["phase", "study_id", "session_id", "assigned_direction_id"]}, {"fields": ["phase", "artifact_id", "task_id", "state_id", "condition_id", "exposure_direction_id", "copy_variant_id", "artifact_sha256", "prototype_manifest_version", "prototype_manifest_sha256", "prototype_id", "prototype_version", "prototype_sha256"], "schema": "plan004ExposureManifest", "fieldsThere": ["phase", "artifact_id", "task_id", "state_id", "condition_id", "exposure_direction_id", "copy_variant_id", "artifact_sha256", "prototype_manifest_version", "prototype_manifest_sha256", "prototype_id", "prototype_version", "prototype_sha256"]}],
+      "invariants": ["candidate rows require exposure_direction_id=assigned_direction_id; current-control rows require exposure_direction_id=current", "candidate-only tasks use comparison_pair_id=n/a, exposure_position=1, current_candidate_order=candidate-only", "each comparison pair has exactly one candidate and one current-control row in assigned order", "first score locks before second exposure starts; each condition is scored independently before any comparative probe", "unofficial_status_outcome is non-n/a only for proposition-recall; advanced_evidence_outcome only for advanced-evidence; consequence_outcome only for practice-commitment, offline-failure, and import-reset", "artifact/prototype/task/state/direction/hash values byte-match joined manifests", "formal candidate completeness is nine valid candidate rows and three attempted controls", "a control-local failure after an already locked candidate score excludes only that control; any wrong order, leading, rescue, wrong artifact, or control-first failure that occurs before the candidate score locks contaminates the candidate and triggers same-cell replacement"]
+    },
+    "plan004Issues": {
+      "id": "consumer-language-issues-v2",
+      "filename": "plan-004-issues.v2.tsv",
+      "header": ["schema_version", "phase", "issue_occurrence_id", "issue_family_id", "study_id", "task_observation_id", "comparison_pair_id", "task_id", "condition_id", "assigned_direction_id", "artifact_id", "observed_at_utc", "severity", "taxonomy_code", "occurrence", "moderator_code", "second_reviewer_code", "review_state", "retest_of_issue_family_id", "retest_outcome", "disposition", "adjudication_code"],
+      "primaryKey": ["phase", "issue_occurrence_id"],
+      "sortKey": ["phase", "issue_family_id", "issue_occurrence_id"],
+      "nullableFields": ["comparison_pair_id", "second_reviewer_code", "retest_of_issue_family_id", "adjudication_code"],
+      "enums": {"phase": ["p004-r1", "p004-r2"], "condition_id": ["candidate", "current-control"], "assigned_direction_id": ["CL-D1", "CL-D2"], "severity": ["critical", "high", "medium", "low"], "review_state": ["pending-second-review", "confirmed", "adjudicated"], "retest_outcome": ["passed", "failed", "not-a-retest"], "disposition": ["open", "resolved", "carried", "not-applicable"]},
+      "foreignKeys": [{"fields": ["phase", "task_observation_id", "study_id", "comparison_pair_id", "task_id", "condition_id", "assigned_direction_id", "artifact_id"], "schema": "plan004TaskObservations", "fieldsThere": ["phase", "task_observation_id", "study_id", "comparison_pair_id", "task_id", "condition_id", "assigned_direction_id", "artifact_id"]}],
+      "invariants": ["critical/high rows require a named second human reviewer distinct from moderator and confirmed/adjudicated state", "R2 resolves an R1 family only with a later observed_at_utc valid R2 row for the same direction and relevant task/artifact lineage, retest_outcome=passed, disposition=resolved", "otherwise the family is unresolved"]
+    },
+    "plan004Aggregate": {
+      "id": "consumer-language-aggregate-v2",
+      "filename": "plan-004-aggregate.v2.json",
+      "format": "json",
+      "additionalProperties": false,
+      "requiredFields": ["schemaVersion", "protocolVersion", "phase", "cutoffAtUtc", "inputManifestSha256", "attritionProjectionSha256", "candidateEligibleStudyIds", "candidateEligibleSetSha256", "controlEligibleObservationIds", "eligibilityCounts", "candidateRows", "controlRows", "pairedRows", "issueRows", "accessCoverageRows", "exclusionRows"],
+      "arrayContracts": {
+        "candidateRows": {"fields": ["directionId", "taskId", "candidateOrder", "outcome", "numerator", "denominator"], "sortKey": ["directionId", "taskId", "candidateOrder", "outcome"]},
+        "controlRows": {"fields": ["taskId", "currentOrder", "outcome", "numerator", "denominator"], "sortKey": ["taskId", "currentOrder", "outcome"]},
+        "pairedRows": {"fields": ["directionId", "taskId", "currentCandidateOrder", "candidateOutcome", "currentOutcome", "count"], "sortKey": ["directionId", "taskId", "currentCandidateOrder", "candidateOutcome", "currentOutcome"]},
+        "issueRows": {"fields": ["directionId", "issueFamilyId", "severity", "openCount", "resolvedCount"], "sortKey": ["directionId", "issueFamilyId"]},
+        "accessCoverageRows": {"fields": ["strategyCode", "uniquePersonCount"], "sortKey": ["strategyCode"]},
+        "exclusionRows": {"fields": ["reasonCode", "count"], "sortKey": ["reasonCode"]}
+      },
+      "invariants": ["candidate eligibility requires nine valid candidate rows", "a control-local invalidity may preserve an already locked candidate score, but any invalid control/order/leading/rescue/artifact event before candidate score lock contaminates that candidate and requires same-cell replacement", "invalid controls never enter control or paired denominators", "all counts derive from raw rows and cutoff attrition projection; no entered eligibility or rate is trusted"]
+    },
+    "plan005TaskRegistry": {
+      "id": "navigation-task-registry-v1",
+      "filename": "navigation-task-registry.v1.tsv",
+      "header": ["schema_version", "task_id", "canonical_position", "task_priority", "prompt_sha256", "destination_intent_code", "tree_timeout_ms", "first_click_timeout_ms", "tree_success_code", "first_click_success_code"],
+      "primaryKey": ["task_id"],
+      "sortKey": ["canonical_position"],
+      "enums": {"task_priority": ["top", "supporting", "utility", "trust-recovery"], "tree_timeout_ms": ["90000"], "first_click_timeout_ms": ["30000"], "tree_success_code": ["direct"], "first_click_success_code": ["correct-first-click"]},
+      "invariants": ["exactly 13 rows in canonical positions 1 through 13", "task IDs and task-priority assignments are immutable for one threshold/formal version", "prompt_sha256 binds the verbatim packet prompt"]
+    },
+    "plan005OpenSortSessions": {
+      "id": "navigation-open-sort-sessions-v1",
+      "filename": "open-sort-sessions.v1.tsv",
+      "header": ["schema_version", "study_id", "program_person_key", "session_id", "research_consent_event_id", "phase_input_manifest_sha256", "protocol_sha256", "card_set_sha256", "presented_order_sha256", "moderator_code", "started_at_utc", "ended_at_utc", "session_state", "candidate_exposure", "exclusion_code"],
+      "primaryKey": ["session_id"],
+      "sortKey": ["study_id"],
+      "enums": {"session_state": ["completed", "excluded", "withdrawn"], "candidate_exposure": ["none"], "exclusion_code": ["none", "consent-incomplete", "security-interruption", "artifact-mismatch", "technical-failure", "facilitator-contamination", "duplicate", "ineligible", "withdrawn"]},
+      "foreignKeys": [{"fields": ["research_consent_event_id", "program_person_key", "study_id"], "schema": "attritionConsent", "fieldsThere": ["event_id", "program_person_key", "study_id"]}],
+      "invariants": ["research consent predates started_at_utc and the event matches the same study/person", "ended_at_utc is after started_at_utc", "presented_order_sha256 matches the deterministic rotation/reversal"]
+    },
+    "plan005OpenSortGroups": {
+      "id": "navigation-open-sort-groups-v1",
+      "filename": "open-sort-groups.v1.tsv",
+      "header": ["schema_version", "session_id", "group_id", "group_order", "label_raw_object_sha256", "label_normalized"],
+      "primaryKey": ["session_id", "group_id"],
+      "sortKey": ["session_id", "group_order"],
+      "textFields": ["label_normalized"],
+      "foreignKeys": [{"fields": ["session_id"], "schema": "plan005OpenSortSessions", "fieldsThere": ["session_id"]}],
+      "invariants": ["group_order is contiguous from 1 per session", "label_normalized is deterministically NFKC/trim/collapse/lowercase derived from the separately stored raw object"]
+    },
+    "plan005OpenSortPlacements": {
+      "id": "navigation-open-sort-placements-v1",
+      "filename": "open-sort-placements.v1.tsv",
+      "header": ["schema_version", "session_id", "card_id", "presented_position", "group_id", "within_group_position"],
+      "primaryKey": ["session_id", "card_id"],
+      "sortKey": ["session_id", "presented_position"],
+      "patterns": {"card_id": "OS-C(?:0[1-9]|1[0-9]|2[0-4])"},
+      "foreignKeys": [{"fields": ["session_id", "group_id"], "schema": "plan005OpenSortGroups", "fieldsThere": ["session_id", "group_id"]}],
+      "invariants": ["each eligible session has exactly all 24 cards once and positions 1 through 24", "within-group positions are contiguous"]
+    },
+    "plan005OpenSortExpectations": {
+      "id": "navigation-open-sort-expectations-v1",
+      "filename": "open-sort-expectations.v1.tsv",
+      "header": ["schema_version", "session_id", "expectation_id", "response_ordinal", "response_kind", "response_ref", "response_raw_object_sha256", "response_normalized", "notes_code"],
+      "primaryKey": ["session_id", "expectation_id", "response_ordinal"],
+      "sortKey": ["session_id", "expectation_id", "response_ordinal"],
+      "nullableFields": ["response_ref", "response_raw_object_sha256", "response_normalized", "notes_code"],
+      "textFields": ["response_normalized"],
+      "enums": {"expectation_id": ["arrival-first", "global-everywhere", "player-hidden", "profile-location", "offline-location", "settings-location", "sources-location", "correction-location", "mobile-menu", "player-exit"], "response_kind": ["card", "group", "free-text", "none"]},
+      "foreignKeys": [{"fields": ["session_id"], "schema": "plan005OpenSortSessions", "fieldsThere": ["session_id"]}],
+      "invariants": ["card/group references join the named session; none uses response_ref=n/a", "free-text normalization uses the open-sort normalization recipe and raw-object hash"]
+    },
+    "plan005OpenSortCoding": {
+      "id": "navigation-open-sort-coding-v1",
+      "filename": "open-sort-coding.v1.tsv",
+      "header": ["schema_version", "coding_row_id", "session_id", "expectation_id", "response_ordinal", "source_response_kind", "source_text_sha256", "codebook_sha256", "coding_stage", "coder_code", "code_id", "decision", "independent_row_set_sha256", "adjudication_code"],
+      "primaryKey": ["coding_row_id"],
+      "sortKey": ["session_id", "expectation_id", "response_ordinal", "coding_stage", "coder_code", "code_id"],
+      "nullableFields": ["independent_row_set_sha256", "adjudication_code"],
+      "enums": {"source_response_kind": ["free-text"], "coding_stage": ["independent", "adjudicated"], "decision": ["present", "absent"]},
+      "foreignKeys": [{"fields": ["session_id", "expectation_id", "response_ordinal", "source_response_kind", "source_text_sha256"], "schema": "plan005OpenSortExpectations", "fieldsThere": ["session_id", "expectation_id", "response_ordinal", "response_kind", "response_raw_object_sha256"]}],
+      "invariants": ["every coded response has two independent rows from distinct named human coder codes before adjudication", "adjudicated rows share the SHA-256 of canonical sorted complete independent coding rows and use a named human adjudicator", "only adjudicated decision=present rows enter aggregates", "agents/personas cannot be coder codes"]
+    },
+    "plan005OpenSortAggregate": {
+      "id": "navigation-open-sort-aggregate-v1",
+      "filename": "open-sort-aggregate.v1.json",
+      "format": "json",
+      "additionalProperties": false,
+      "requiredFields": ["schemaVersion", "protocolVersion", "phaseVersion", "cutoffAtUtc", "inputManifestSha256", "attritionProjectionSha256", "eligibleStudyIds", "eligibleSetSha256", "eligibleSessionCount", "pairRows", "labelRows", "codeRows", "expectationRows", "exclusionRows"],
+      "arrayContracts": {
+        "pairRows": {"fields": ["cardIdA", "cardIdB", "sameGroupNumerator", "eligibleSessionDenominator"], "sortKey": ["cardIdA", "cardIdB"], "cardinality": 276},
+        "labelRows": {"fields": ["labelNormalized", "count"], "sortKey": ["labelNormalized"]},
+        "codeRows": {"fields": ["codeId", "count"], "sortKey": ["codeId"]},
+        "expectationRows": {"fields": ["expectationId", "responseKind", "responseRef", "count"], "sortKey": ["expectationId", "responseKind", "responseRef"]},
+        "exclusionRows": {"fields": ["reasonCode", "count"], "sortKey": ["reasonCode"]}
+      },
+      "invariants": ["pairRows contains every unordered OS-C01..OS-C24 pair exactly once", "denominator equals eligibleSessionCount", "only eligible sessions and final adjudicated codes contribute"]
+    },
+    "plan005CandidateFormation": {
+      "id": "navigation-candidate-formation-v1",
+      "filename": "candidate-formation.v1.json",
+      "format": "json",
+      "additionalProperties": false,
+      "requiredFields": ["schemaVersion", "protocolVersion", "phaseInputManifestSha256", "openSortAggregateFileSha256", "eligibleSetSha256", "routeTaskInventorySha256", "candidateBuilderVersion", "candidateBuilderSha256", "candidateTemplateSetSha256", "provisionalLabelSetSha256", "codebookSha256", "candidates", "decisionRows", "materialDifferenceRows", "authorCode", "secondReviewerCode", "formedAtUtc", "limitations"],
+      "objectContracts": {
+        "candidates": {"cardinality": 2, "fields": ["candidateId", "decisionRowSetSha256", "normalizedHierarchySha256", "artifactVersionSha256"]},
+        "decisionRows": {"cardinality": 42, "fields": ["decisionId", "candidateId", "familyNumber", "routeIds", "viewId", "parentViewId", "navigationTier", "tierOrder", "taskPriority", "evidenceReferenceIds", "rationaleCode"]},
+        "materialDifferenceRows": {"minimumCardinality": 1, "fields": ["familyNumber", "candidateAParentViewId", "candidateBParentViewId", "differenceCode", "evidenceReferenceIds"]}
+      },
+      "invariants": ["contains no digest of itself", "candidate IDs are exactly candidate-a and candidate-b", "21 inventory families appear exactly once per candidate", "route arrays and evidence arrays are lexical unique arrays", "builder reproduces the normalized hierarchy from decision rows and immutable inventory/template/label inputs; separately hashed prototype artifact bytes are not claimed to be derivable unless the builder actually produces them", "the two normalized hierarchy hashes differ and at least one material hierarchy difference is recorded", "author and second reviewer are distinct named humans"]
+    },
+    "plan005PilotArtifactManifest": {
+      "id": "navigation-pilot-artifact-manifest-v1",
+      "filename": "pilot-artifact-manifest.v1.tsv",
+      "header": ["schema_version", "pilot_iteration_id", "artifact_id", "candidate_id", "method", "task_id", "artifact_version_sha256", "hierarchy_sha256", "entry_page_id", "entry_state_id", "entry_state_sha256", "normalization", "artifact_sha256"],
+      "primaryKey": ["pilot_iteration_id", "artifact_id"],
+      "sortKey": ["pilot_iteration_id", "candidate_id", "method", "task_id", "artifact_id"],
+      "nullableFields": ["entry_page_id", "entry_state_id", "entry_state_sha256"],
+      "enums": {"candidate_id": ["candidate-a", "candidate-b"], "method": ["tree", "first-click"], "normalization": ["strict-utf8-nfc-lf-one-final-lf"]},
+      "invariants": ["one immutable artifact row per pilot candidate/method/task exposure", "tree rows use n/a entry fields; first-click rows require exact entry page/state/hash", "artifact and hierarchy hashes match candidate formation and exact pilot bytes", "the external file SHA, not an in-file self hash, is pilot_artifact_manifest_sha256"]
+    },
+    "plan005ThresholdSchedule": {
+      "id": "navigation-threshold-pilot-schedule-v1",
+      "filename": "threshold-pilot-schedule.v1.tsv",
+      "header": ["schema_version", "pilot_iteration_id", "participant_slot", "presentation_index", "method", "candidate_id", "task_id", "task_priority", "artifact_id", "entry_page_id", "entry_state_id", "entry_state_sha256", "task_registry_file_sha256", "prompt_sha256", "artifact_version_sha256", "hierarchy_sha256", "expected_destination_id", "expected_first_action_id"],
+      "primaryKey": ["pilot_iteration_id", "participant_slot", "presentation_index"],
+      "sortKey": ["pilot_iteration_id", "participant_slot", "presentation_index"],
+      "nullableFields": ["entry_page_id", "entry_state_id", "entry_state_sha256", "expected_first_action_id"],
+      "enums": {"method": ["tree", "first-click"], "candidate_id": ["candidate-a", "candidate-b"], "task_priority": ["top", "supporting", "utility", "trust-recovery"]},
+      "foreignKeys": [{"fields": ["task_id", "task_priority", "prompt_sha256"], "schema": "plan005TaskRegistry", "fieldsThere": ["task_id", "task_priority", "prompt_sha256"]}, {"fields": ["pilot_iteration_id", "artifact_id", "candidate_id", "method", "task_id", "artifact_version_sha256", "hierarchy_sha256", "entry_page_id", "entry_state_id", "entry_state_sha256"], "schema": "plan005PilotArtifactManifest", "fieldsThere": ["pilot_iteration_id", "artifact_id", "candidate_id", "method", "task_id", "artifact_version_sha256", "hierarchy_sha256", "entry_page_id", "entry_state_id", "entry_state_sha256"]}],
+      "invariants": ["each participant slot has exactly 16 trials: candidate x method x priority", "odd slots use candidate A then B and tree then first-click; even slots reverse both block orders", "one registry task per priority cell is selected by the documented deterministic rotation", "no feedback or state carryover between trials", "each candidate/method/priority cell is represented by at least two unique pilot slots"]
+    },
+    "plan005ThresholdSessions": {
+      "id": "navigation-threshold-pilot-sessions-v1",
+      "filename": "threshold-pilot-sessions.v1.tsv",
+      "header": ["schema_version", "study_id", "program_person_key", "session_id", "participant_slot", "research_consent_event_id", "phase_input_manifest_sha256", "protocol_sha256", "task_registry_file_sha256", "pilot_artifact_manifest_sha256", "threshold_schedule_file_sha256", "moderator_code", "started_at_utc", "ended_at_utc", "session_state", "exclusion_code"],
+      "primaryKey": ["session_id"],
+      "sortKey": ["participant_slot", "study_id"],
+      "enums": {"session_state": ["completed", "excluded", "withdrawn"], "exclusion_code": ["none", "consent-incomplete", "security-interruption", "artifact-mismatch", "technical-failure", "facilitator-contamination", "duplicate", "ineligible", "protocol-deviation", "withdrawn"]},
+      "foreignKeys": [{"fields": ["research_consent_event_id", "program_person_key", "study_id"], "schema": "attritionConsent", "fieldsThere": ["event_id", "program_person_key", "study_id"]}],
+      "invariants": ["participant_slot joins exactly one threshold schedule block", "same-person consent predates started_at_utc", "session duration is measured and the declared participant-facing duration is revised and the pilot rerun if 16 trials do not fit without rushing"]
+    },
+    "plan005ThresholdTrials": {
+      "id": "navigation-threshold-pilot-trials-v1",
+      "filename": "threshold-pilot-trials.v1.tsv",
+      "header": ["schema_version", "session_id", "trial_id", "pilot_iteration_id", "participant_slot", "presentation_index", "method", "candidate_id", "task_id", "task_priority", "artifact_id", "entry_page_id", "entry_state_id", "entry_state_sha256", "prompt_sha256", "artifact_version_sha256", "hierarchy_sha256", "expected_destination_id", "expected_first_action_id", "observed_destination_id", "observed_first_action_id", "wrong_branch_count", "backtrack_count", "rescue_used", "timeout_used", "elapsed_ms", "trial_status", "exclusion_code", "notes_code"],
+      "primaryKey": ["trial_id"],
+      "sortKey": ["session_id", "presentation_index"],
+      "nullableFields": ["entry_page_id", "entry_state_id", "entry_state_sha256", "expected_first_action_id", "observed_destination_id", "observed_first_action_id", "exclusion_code", "notes_code"],
+      "enums": {"method": ["tree", "first-click"], "candidate_id": ["candidate-a", "candidate-b"], "task_priority": ["top", "supporting", "utility", "trust-recovery"], "rescue_used": ["true", "false"], "timeout_used": ["true", "false"], "trial_status": ["valid", "excluded"], "exclusion_code": ["n/a", "consent-incomplete", "security-interruption", "artifact-mismatch", "technical-failure", "facilitator-contamination", "duplicate", "ineligible", "protocol-deviation", "withdrawn"]},
+      "foreignKeys": [{"fields": ["session_id", "participant_slot"], "schema": "plan005ThresholdSessions", "fieldsThere": ["session_id", "participant_slot"]}, {"fields": ["pilot_iteration_id", "participant_slot", "presentation_index", "method", "candidate_id", "task_id", "task_priority", "artifact_id", "entry_page_id", "entry_state_id", "entry_state_sha256", "prompt_sha256", "artifact_version_sha256", "hierarchy_sha256", "expected_destination_id", "expected_first_action_id"], "schema": "plan005ThresholdSchedule", "fieldsThere": ["pilot_iteration_id", "participant_slot", "presentation_index", "method", "candidate_id", "task_id", "task_priority", "artifact_id", "entry_page_id", "entry_state_id", "entry_state_sha256", "prompt_sha256", "artifact_version_sha256", "hierarchy_sha256", "expected_destination_id", "expected_first_action_id"]}],
+      "invariants": ["derive tree direct iff destination matches, wrong_branch_count=0, backtrack_count=0, rescue=false, timeout=false; derive first-click success iff first action matches, rescue=false, timeout=false", "never trust an entered success outcome", "valid rows byte-match all schedule and artifact coordinates"]
+    },
+    "plan005ThresholdAggregate": {
+      "id": "navigation-threshold-pilot-aggregate-v1",
+      "filename": "threshold-pilot-aggregate.v1.json",
+      "format": "json",
+      "additionalProperties": false,
+      "requiredFields": ["schemaVersion", "protocolVersion", "phaseVersion", "cutoffAtUtc", "inputManifestSha256", "attritionProjectionSha256", "eligibleStudyIds", "eligibleSetSha256", "eligibleTrialSetSha256", "scheduleFileSha256", "coverageRows", "metricRows", "exclusionRows", "sessionLengthReview"],
+      "arrayContracts": {
+        "coverageRows": {"fields": ["studyId", "candidateId", "method", "taskPriority", "validTrialCount"], "sortKey": ["studyId", "candidateId", "method", "taskPriority"]},
+        "metricRows": {"fields": ["metricId", "method", "taskPriority", "successNumerator", "denominator", "participantRateMinNumerator", "participantRateMinDenominator", "participantRateMaxNumerator", "participantRateMaxDenominator", "uniquePersonCount"], "sortKey": ["method", "taskPriority"], "cardinality": 8},
+        "exclusionRows": {"fields": ["reasonCode", "count"], "sortKey": ["reasonCode"]}
+      },
+      "recordContracts": {
+        "sessionLengthReview": {"fields": ["declaredDurationSeconds", "eligibleSessionCount", "minimumDurationSeconds", "medianDurationNumeratorSeconds", "medianDurationDenominator", "maximumDurationSeconds", "noRushingObserved", "fitsDeclaredDuration", "rerunRequired", "reviewerCode", "reviewedAtUtc"]}
+      },
+      "invariants": ["metricRows contains exactly both methods x four priorities with metricId mapped by plan005.thresholdMetricMap", "every cell has evidence from at least two eligible unique people", "numerators are derived from observed destinations/actions and rational values are not rounded", "session durations derive from eligible session UTC endpoints; median is an exact rational with denominator 1 for odd counts or 2 for even counts", "fitsDeclaredDuration is true iff maximumDurationSeconds is no greater than declaredDurationSeconds; rerunRequired is true iff duration does not fit or noRushingObserved is false; declarations require rerunRequired=false"]
+    },
+    "plan005ThresholdDeclarations": {
+      "id": "navigation-threshold-declarations-v1",
+      "filename": "threshold-declarations.v1.tsv",
+      "header": ["schema_version", "declaration_id", "metric_id", "method", "task_priority", "pilot_input_manifest_sha256", "pilot_aggregate_file_sha256", "eligible_trial_set_sha256", "success_numerator", "denominator", "participant_rate_min_numerator", "participant_rate_min_denominator", "participant_rate_max_numerator", "participant_rate_max_denominator", "threshold_numerator", "threshold_denominator", "rationale_sha256", "declared_by_code", "reviewed_by_code", "declared_at_utc"],
+      "primaryKey": ["declaration_id"],
+      "sortKey": ["method", "task_priority"],
+      "enums": {"metric_id": ["treeDirectSuccessTopTasks", "treeDirectSuccessSupportingTasks", "treeDirectSuccessUtilityTasks", "treeDirectSuccessTrustRecoveryTasks", "firstClickSuccessTopTasks", "firstClickSuccessSupportingTasks", "firstClickSuccessUtilityTasks", "firstClickSuccessTrustRecoveryTasks"], "method": ["tree", "first-click"], "task_priority": ["top", "supporting", "utility", "trust-recovery"]},
+      "invariants": ["exactly eight rows, one method x priority cell, and metric_id exactly matches plan005.thresholdMetricMap for that cell", "contains no declaration-set self hash", "pilot rational fields byte-match the aggregate; every denominator is positive and every numerator is between zero and its denominator", "declared/reviewed are distinct named humans and declarations predate every formal ID", "the final phase evidence manifest binds this file's external SHA-256"]
+    },
+    "plan005FormalAllocation": {
+      "id": "navigation-phase-allocation-v1",
+      "filename": "navigation-phase-allocation.v1.tsv",
+      "header": ["schema_version", "phase", "schedule_version", "planned_effective_n", "randomization_seed_hex", "randomized_position", "allocation_slot", "slot_role", "replacement_of_allocation_slot", "candidate_id", "rotation_offset", "reversed", "task_order_sha256"],
+      "primaryKey": ["phase", "schedule_version", "randomized_position"],
+      "sortKey": ["phase", "schedule_version", "randomized_position"],
+      "nullableFields": ["replacement_of_allocation_slot"],
+      "patterns": {"randomization_seed_hex": "[0-9a-f]{64}"},
+      "enums": {"phase": ["p005-tree-test", "p005-first-click-r1", "p005-first-click-r2"], "slot_role": ["primary", "reserve-1", "reserve-2"], "candidate_id": ["candidate-a", "candidate-b"], "reversed": ["true", "false"]},
+      "invariants": ["one complete schedule is frozen before the phase's first formal ID", "allocation_slot is unique within phase and schedule_version", "tree and R1 primary candidate counts differ by at most one and each primary has same-candidate reserve-1/reserve-2", "R2 uses the actual candidate-a or candidate-b selected by the progression record and still precommits primary/reserve order", "reserve rows retain the primary rotation/reversal and name the replaced allocation slot", "used rows/IDs are never reused; exhausted reserves stop the round and require a new version before more exposure"]
+    },
+    "plan005TreeSchedule": {
+      "id": "navigation-tree-schedule-v1",
+      "filename": "tree-schedule.v1.tsv",
+      "header": ["schema_version", "round_id", "candidate_id", "task_id", "canonical_task_position", "task_priority", "task_registry_file_sha256", "prompt_sha256", "threshold_declaration_file_sha256", "artifact_version_sha256", "hierarchy_sha256", "expected_destination_id"],
+      "primaryKey": ["round_id", "candidate_id", "task_id"],
+      "sortKey": ["round_id", "candidate_id", "canonical_task_position"],
+      "enums": {"round_id": ["tree-r1"], "candidate_id": ["candidate-a", "candidate-b"]},
+      "foreignKeys": [{"fields": ["task_id", "canonical_task_position", "task_priority", "prompt_sha256"], "schema": "plan005TaskRegistry", "fieldsThere": ["task_id", "canonical_position", "task_priority", "prompt_sha256"]}],
+      "invariants": ["exactly 26 rows: both candidates x all 13 registry tasks", "all rows bind the same external threshold declaration file SHA", "expected destination is candidate-specific and non-n/a"]
+    },
+    "firstClickSchedule": {
+      "id": "navigation-first-click-schedule-v1",
+      "filename": "first-click-schedule.v1.tsv",
+      "header": ["schema_version", "round_id", "candidate_id", "task_id", "canonical_task_position", "task_priority", "task_registry_file_sha256", "prompt_sha256", "threshold_declaration_file_sha256", "entry_page_id", "entry_state_id", "entry_state_sha256", "artifact_version_sha256", "hierarchy_sha256", "content_contract_sha256", "expected_destination_id", "expected_first_action_id"],
+      "primaryKey": ["round_id", "candidate_id", "task_id"],
+      "sortKey": ["round_id", "candidate_id", "canonical_task_position"],
+      "nullableFields": ["content_contract_sha256"],
+      "enums": {"round_id": ["first-click-r1", "first-click-r2"], "candidate_id": ["candidate-a", "candidate-b"]},
+      "foreignKeys": [{"fields": ["task_id", "canonical_task_position", "task_priority", "prompt_sha256"], "schema": "plan005TaskRegistry", "fieldsThere": ["task_id", "canonical_position", "task_priority", "prompt_sha256"]}],
+      "invariants": ["R1 has exactly 26 rows: both candidates x all 13 tasks; R2 has exactly 13 rows for the actual candidate ID in the progression record", "entry page/state exactly matches the contract template", "R1 content_contract_sha256=n/a; R2 requires the accepted Plan 004 contract SHA", "every expected destination and first action is non-n/a"]
+    },
+    "plan005FormalTaskEvidence": {
+      "id": "navigation-task-evidence-v2",
+      "filename": "task-evidence.v2.tsv",
+      "header": ["schema_version", "task_evidence_id", "phase", "study_id", "program_person_key", "session_id", "research_consent_event_id", "phase_input_manifest_sha256", "allocation_schedule_version", "allocation_schedule_file_sha256", "allocation_slot", "candidate_id", "allocation_rotation_offset", "allocation_reversed", "allocation_task_order_sha256", "method", "task_registry_file_sha256", "prompt_sha256", "task_priority", "threshold_declaration_file_sha256", "artifact_version_sha256", "hierarchy_sha256", "entry_schedule_schema_id", "entry_schedule_file_sha256", "schedule_round_id", "content_contract_sha256", "task_id", "canonical_task_position", "task_sequence", "entry_page_id", "entry_state_id", "entry_state_sha256", "expected_destination_id", "expected_first_action_id", "observed_destination_id", "observed_first_action_id", "wrong_branch_count", "backtrack_count", "elapsed_ms", "rescue_used", "timeout_used", "analysis_disposition", "exclusion_code", "notes_code"],
+      "primaryKey": ["task_evidence_id"],
+      "sortKey": ["phase", "study_id", "task_sequence"],
+      "nullableFields": ["entry_page_id", "entry_state_id", "entry_state_sha256", "content_contract_sha256", "expected_first_action_id", "observed_destination_id", "observed_first_action_id", "exclusion_code", "notes_code"],
+      "enums": {"phase": ["p005-tree-test", "p005-first-click-r1", "p005-first-click-r2"], "candidate_id": ["candidate-a", "candidate-b"], "allocation_reversed": ["true", "false"], "method": ["tree", "first-click"], "task_priority": ["top", "supporting", "utility", "trust-recovery"], "entry_schedule_schema_id": ["navigation-tree-schedule-v1", "navigation-first-click-schedule-v1"], "schedule_round_id": ["tree-r1", "first-click-r1", "first-click-r2"], "rescue_used": ["true", "false"], "timeout_used": ["true", "false"], "analysis_disposition": ["included", "excluded", "pending"], "exclusion_code": ["n/a", "consent-incomplete", "security-interruption", "artifact-mismatch", "technical-failure", "facilitator-contamination", "duplicate", "ineligible", "protocol-deviation", "withdrawn"]},
+      "foreignKeys": [{"fields": ["research_consent_event_id", "program_person_key", "study_id"], "schema": "attritionConsent", "fieldsThere": ["event_id", "program_person_key", "study_id"]}, {"fields": ["phase", "allocation_schedule_version", "allocation_slot", "candidate_id", "allocation_rotation_offset", "allocation_reversed", "allocation_task_order_sha256"], "schema": "plan005FormalAllocation", "fieldsThere": ["phase", "schedule_version", "allocation_slot", "candidate_id", "rotation_offset", "reversed", "task_order_sha256"]}, {"fields": ["task_id", "task_priority", "prompt_sha256"], "schema": "plan005TaskRegistry", "fieldsThere": ["task_id", "task_priority", "prompt_sha256"]}],
+      "conditionalForeignKeys": [{"when": {"field": "entry_schedule_schema_id", "equals": "navigation-tree-schedule-v1"}, "schema": "plan005TreeSchedule", "fields": ["schedule_round_id", "candidate_id", "task_id", "canonical_task_position", "task_priority", "task_registry_file_sha256", "prompt_sha256", "threshold_declaration_file_sha256", "artifact_version_sha256", "hierarchy_sha256", "expected_destination_id"], "fieldsThere": ["round_id", "candidate_id", "task_id", "canonical_task_position", "task_priority", "task_registry_file_sha256", "prompt_sha256", "threshold_declaration_file_sha256", "artifact_version_sha256", "hierarchy_sha256", "expected_destination_id"]}, {"when": {"field": "entry_schedule_schema_id", "equals": "navigation-first-click-schedule-v1"}, "schema": "firstClickSchedule", "fields": ["schedule_round_id", "candidate_id", "task_id", "canonical_task_position", "task_priority", "task_registry_file_sha256", "prompt_sha256", "threshold_declaration_file_sha256", "entry_page_id", "entry_state_id", "entry_state_sha256", "artifact_version_sha256", "hierarchy_sha256", "content_contract_sha256", "expected_destination_id", "expected_first_action_id"], "fieldsThere": ["round_id", "candidate_id", "task_id", "canonical_task_position", "task_priority", "task_registry_file_sha256", "prompt_sha256", "threshold_declaration_file_sha256", "entry_page_id", "entry_state_id", "entry_state_sha256", "artifact_version_sha256", "hierarchy_sha256", "content_contract_sha256", "expected_destination_id", "expected_first_action_id"]}],
+      "invariants": ["one participant sees one candidate for all 13 tasks", "tree method requires tree schedule schema/round and n/a entry/action/content fields; first-click requires first-click schema and exact R1/R2 round", "all expected and artifact values byte-match the method's locked entry schedule", "derive tree direct/indirect/failed and first-click correct/incorrect from observed destination/action, branch/backtrack, rescue, timeout and time; no outcome column is trusted", "analysis disposition equals cutoff attrition and validation projection", "R2 requires non-n/a content contract hash and unchanged selected hierarchy"]
+    },
+    "plan005Issues": {
+      "id": "navigation-issues-v1",
+      "filename": "navigation-issues.v1.tsv",
+      "header": ["schema_version", "phase", "issue_occurrence_id", "issue_family_id", "task_evidence_id", "candidate_id", "study_id", "task_id", "method", "artifact_version_sha256", "hierarchy_sha256", "task_registry_file_sha256", "prompt_sha256", "observed_at_utc", "severity", "taxonomy_code", "occurrence", "moderator_code", "second_reviewer_code", "review_state", "retest_of_issue_family_id", "retest_outcome", "disposition", "adjudication_code"],
+      "primaryKey": ["phase", "issue_occurrence_id"],
+      "sortKey": ["phase", "issue_family_id", "issue_occurrence_id"],
+      "nullableFields": ["second_reviewer_code", "retest_of_issue_family_id", "adjudication_code"],
+      "enums": {"phase": ["p005-tree-test", "p005-first-click-r1", "p005-first-click-r2"], "candidate_id": ["candidate-a", "candidate-b"], "method": ["tree", "first-click"], "severity": ["critical", "high", "medium", "low"], "review_state": ["pending-second-review", "confirmed", "adjudicated"], "retest_outcome": ["passed", "failed", "not-a-retest"], "disposition": ["open", "resolved", "carried", "not-applicable"]},
+      "foreignKeys": [{"fields": ["phase", "task_evidence_id", "candidate_id", "study_id", "task_id", "method", "artifact_version_sha256", "hierarchy_sha256", "task_registry_file_sha256", "prompt_sha256"], "schema": "plan005FormalTaskEvidence", "fieldsThere": ["phase", "task_evidence_id", "candidate_id", "study_id", "task_id", "method", "artifact_version_sha256", "hierarchy_sha256", "task_registry_file_sha256", "prompt_sha256"]}],
+      "invariants": ["critical/high requires a named second human reviewer distinct from moderator", "a critical family remains unresolved until a later observed_at_utc eligible independently reviewed row on the same candidate and unchanged hierarchy references it, has retest_outcome=passed and disposition=resolved", "tree and R1 selected-candidate critical gates derive from these rows, not a hand-entered count"]
+    },
+    "plan005FormalAggregate": {
+      "id": "navigation-formal-aggregate-v1",
+      "filename": "navigation-formal-aggregate.v1.json",
+      "format": "json",
+      "additionalProperties": false,
+      "requiredFields": ["schemaVersion", "protocolVersion", "phase", "phaseVersion", "method", "cutoffAtUtc", "inputManifestSha256", "attritionProjectionSha256", "eligibleStudyIds", "eligibleSetSha256", "eligiblePersonCount", "taskRows", "issueRows", "accessCoverageRows", "exclusionRows"],
+      "arrayContracts": {
+        "taskRows": {"fields": ["candidateId", "taskId", "taskPriority", "successNumerator", "denominator", "thresholdNumerator", "thresholdDenominator", "thresholdMet"], "sortKey": ["candidateId", "taskId"]},
+        "issueRows": {"fields": ["candidateId", "issueFamilyId", "severity", "unresolved", "retestOutcome"], "sortKey": ["candidateId", "issueFamilyId"]},
+        "accessCoverageRows": {"fields": ["strategyCode", "uniquePersonCount"], "sortKey": ["strategyCode"]},
+        "exclusionRows": {"fields": ["reasonCode", "count"], "sortKey": ["reasonCode"]}
+      },
+      "invariants": ["tree/R1 taskRows contain exactly 13 rows per candidate and R2 exactly 13 for the actual selected candidate ID", "thresholdMet derives by integer cross multiplication", "success derives from observed raw fields", "issue rows derive exact critical lineage", "access counts use distinct program person keys, never phase seats"]
+    },
+    "plan005ProgressionDecision": {
+      "id": "navigation-progression-decision-v1",
+      "filename": "navigation-progression-decision.v1.json",
+      "format": "json",
+      "additionalProperties": false,
+      "requiredFields": ["schemaVersion", "treeAggregateFileSha256", "firstClickR1AggregateFileSha256", "thresholdDeclarationFileSha256", "candidateRows", "eligibleCandidateIds", "selectedCandidateId", "ownerRationaleSha256", "ownerCode", "secondReviewerCode", "decidedAtUtc"],
+      "arrayContracts": {"candidateRows": {"fields": ["candidateId", "treePassedTaskIds", "treeUnresolvedCriticalCount", "firstClickR1PassedTaskIds", "firstClickR1UnresolvedCriticalCount", "eligible"], "sortKey": ["candidateId"], "cardinality": 2}},
+      "invariants": ["eligible requires exactly all 13 tree task IDs, zero unresolved tree criticals, all 13 R1 first-click task IDs, and zero unresolved R1 criticals", "selectedCandidateId is one eligible candidate or n/a when none; if two are eligible the owner rationale is required", "all fields derive from the two formal aggregate files except the explicit owner selection/rationale"]
+    }
+  },
+  "legacyMigrationSources": [
+    {"planId": "004", "sourceSchemaId": "consumer-language-study-v1-observation-matrix", "sourcePresence": "absent-schema-witness", "targetSchemaId": "consumer-language-task-observations-v2", "expectedColumns": 16, "exactHeader": ["round", "study_id", "consent_status", "prototype_manifest_version", "prototype_manifest_sha256", "prototype_id", "prototype_version", "prototype_sha256", "task_id", "task_completed", "teachback_outcome", "unofficial_status_outcome", "advanced_evidence_outcome", "consequence_outcome", "security_interruption", "notes_code"]},
+    {"planId": "004", "sourceSchemaId": "consumer-language-study-v1-issues", "sourcePresence": "absent-schema-witness", "targetSchemaId": "consumer-language-issues-v2", "expectedColumns": 9, "exactHeader": ["round", "issue_id", "study_id", "task_id", "severity", "occurrence", "retest_of_issue_id", "retest_outcome", "disposition"]},
+    {"planId": "004", "sourceSchemaId": "consumer-language-prototypes-v1", "sourcePresence": "absent-schema-witness", "targetSchemaId": "consumer-language-exposures-v2", "expectedColumns": 9, "exactHeader": ["round", "manifest_schema", "manifest_version", "normalization", "prototype_id", "filename", "prototype_version", "normalized_sha256", "manifest_sha256"]},
+    {"planId": "005", "sourceSchemaId": "navigation-participant-phases-v1", "sourcePresence": "absent-schema-witness", "targetSchemaId": "fieldwork-consent-attrition-v2", "expectedColumns": 4, "exactHeader": ["phase", "study_id", "completion_status", "access_strategy_used"]},
+    {"planId": "005", "sourceSchemaId": "navigation-task-evidence-v1", "sourcePresence": "absent-schema-witness", "targetSchemaId": "navigation-task-evidence-v2", "expectedColumns": 9, "exactHeader": ["phase", "study_id", "candidate_id", "artifact_version_sha256", "hierarchy_sha256", "task_id", "outcome", "first_action_code", "notes_code"]},
+    {"planId": "005", "sourceSchemaId": "navigation-critical-issues-v1", "sourcePresence": "absent-schema-witness", "targetSchemaId": "navigation-issues-v1", "expectedColumns": 8, "exactHeader": ["phase", "candidate_id", "task_id", "issue_id", "study_id", "occurrence", "retest_of_issue_id", "retest_outcome"]}
+  ],
+  "plan004": {
+    "formalDirections": ["CL-D1", "CL-D2"],
+    "rejectedDirection": "CL-D3",
+    "comparisonTasks": ["feedback-evidence", "offline-failure", "import-reset"],
+    "formalEffectiveSampleSizes": [6, 8],
+    "allocationPatterns": {"6": ["001", "010", "011", "100", "101", "110"], "8": ["000", "001", "010", "011", "100", "101", "110", "111"]},
+    "candidateRowsPerCandidateEligibleParticipant": 9,
+    "attemptedControlRowsPerCandidateEligibleParticipant": 3,
+    "taskStateVariantMap": [
+      {"taskId": "proposition-recall", "prototypeId": "home", "stateId": "home-first-use-ready", "conditionFamily": "candidate", "variantFamily": "default"},
+      {"taskId": "profile-fit", "prototypeId": "profile", "stateId": "profile-scope-undetermined", "conditionFamily": "candidate", "variantFamily": "guardrail"},
+      {"taskId": "practice-commitment", "prototypeId": "practice-start", "stateId": "answer-selected-uncommitted", "conditionFamily": "candidate", "variantFamily": "default"},
+      {"taskId": "feedback-evidence", "prototypeId": "question-feedback", "stateId": "question-postcommit-feedback", "conditionFamily": "candidate-or-current", "variantFamily": "rationale-source"},
+      {"taskId": "hazard-feedback", "prototypeId": "hazard-feedback", "stateId": "hazard-miss-false-positive", "conditionFamily": "candidate", "variantFamily": "feedback"},
+      {"taskId": "review-meaning", "prototypeId": "review", "stateId": "review-ready", "conditionFamily": "candidate", "variantFamily": "default"},
+      {"taskId": "offline-failure", "prototypeId": "offline-data", "stateId": "update-failed-prior-usable", "conditionFamily": "candidate-or-current", "variantFamily": "recovery"},
+      {"taskId": "import-reset", "prototypeId": "offline-data", "stateId": "import-preview-reset-confirm", "conditionFamily": "candidate-or-current", "variantFamily": "destructive-guardrail"},
+      {"taskId": "advanced-evidence", "prototypeId": "trust-recovery", "stateId": "source-detail-closed", "conditionFamily": "candidate", "variantFamily": "advanced"}
+    ]
+  },
+  "plan005": {
+    "taskRegistryRows": [
+      {"taskId": "profile-fit", "position": 1, "priority": "top", "entryPageId": "index.html", "entryStateId": "default"},
+      {"taskId": "quick-practice", "position": 2, "priority": "top", "entryPageId": "profile.html", "entryStateId": "default"},
+      {"taskId": "review-misses", "position": 3, "priority": "top", "entryPageId": "practice.html", "entryStateId": "default"},
+      {"taskId": "tool-lookup", "position": 4, "priority": "supporting", "entryPageId": "practice.html", "entryStateId": "default"},
+      {"taskId": "tool-comparison", "position": 5, "priority": "supporting", "entryPageId": "atlas.html", "entryStateId": "default"},
+      {"taskId": "hazard-practice", "position": 6, "priority": "top", "entryPageId": "atlas.html", "entryStateId": "default"},
+      {"taskId": "simulation", "position": 7, "priority": "supporting", "entryPageId": "review.html", "entryStateId": "default"},
+      {"taskId": "print", "position": 8, "priority": "utility", "entryPageId": "atlas.html", "entryStateId": "default"},
+      {"taskId": "offline-download", "position": 9, "priority": "utility", "entryPageId": "profile.html", "entryStateId": "default"},
+      {"taskId": "settings-data-control", "position": 10, "priority": "utility", "entryPageId": "review.html", "entryStateId": "default"},
+      {"taskId": "source-support", "position": 11, "priority": "trust-recovery", "entryPageId": "player.html", "entryStateId": "default"},
+      {"taskId": "correction-report", "position": 12, "priority": "trust-recovery", "entryPageId": "utility.html", "entryStateId": "default"},
+      {"taskId": "unavailable-recovery", "position": 13, "priority": "trust-recovery", "entryPageId": "utility.html", "entryStateId": "unavailable"}
+    ],
+    "candidateIds": ["candidate-a", "candidate-b"],
+    "thresholdMetricMap": [
+      {"metricId": "treeDirectSuccessTopTasks", "method": "tree", "taskPriority": "top"},
+      {"metricId": "treeDirectSuccessSupportingTasks", "method": "tree", "taskPriority": "supporting"},
+      {"metricId": "treeDirectSuccessUtilityTasks", "method": "tree", "taskPriority": "utility"},
+      {"metricId": "treeDirectSuccessTrustRecoveryTasks", "method": "tree", "taskPriority": "trust-recovery"},
+      {"metricId": "firstClickSuccessTopTasks", "method": "first-click", "taskPriority": "top"},
+      {"metricId": "firstClickSuccessSupportingTasks", "method": "first-click", "taskPriority": "supporting"},
+      {"metricId": "firstClickSuccessUtilityTasks", "method": "first-click", "taskPriority": "utility"},
+      {"metricId": "firstClickSuccessTrustRecoveryTasks", "method": "first-click", "taskPriority": "trust-recovery"}
+    ],
+    "openSortCardIds": ["OS-C01", "OS-C02", "OS-C03", "OS-C04", "OS-C05", "OS-C06", "OS-C07", "OS-C08", "OS-C09", "OS-C10", "OS-C11", "OS-C12", "OS-C13", "OS-C14", "OS-C15", "OS-C16", "OS-C17", "OS-C18", "OS-C19", "OS-C20", "OS-C21", "OS-C22", "OS-C23", "OS-C24"],
+    "exposedPhases": ["p004-pilot", "p004-r1", "p004-r2", "p005-open-sort", "p005-threshold-pilot", "p005-tree-test", "p005-first-click-r1", "p005-first-click-r2"],
+    "allowedExposedCohortReusePairs": []
+  }
+}
