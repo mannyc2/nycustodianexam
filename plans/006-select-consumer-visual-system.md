@@ -3,9 +3,11 @@
 ## Status
 
 - **Execution protocol**: `CODEX-ONLY-UIUX-V1`
-- **Status**: IN PROGRESS — rejected subject
-  `7fcc776e6941c7f41a504dda59ea59af88ba31fb` and every review/selection bound
-  to its pre-repair bytes are invalid and non-reusable
+- **Status**: IN PROGRESS — rejected subjects
+  `7fcc776e6941c7f41a504dda59ea59af88ba31fb`,
+  `f1a566f3eabb5bc972d75a555038e3b315a211a2`, and
+  `58275cab4ae1a22b148831ba454f994cc644cd31` are invalid and non-reusable;
+  no territory is selected
 - **Priority / effort / risk**: P1 / L / MED
 - **Category**: research and product-contract direction, not production implementation
 - **Accepted dependency subject**: `4130693dee6caaa804a116f490b2192861f53e6e`
@@ -268,10 +270,13 @@ intervals. Each receives the same exact subject/source/prototype/browser hashes,
 one committed prompt template, the common review-record contract, and one
 distinct rubric. Each safe receipt records `taskPath`, `sessionUuid`,
 `parentThreadId`, provenance class/source/originator/depth, completion state,
-native completion event timestamp and turn ID, native completion-message
-SHA-256, normalized report path and SHA-256, repository commit, and the
-`safeReceiptSha256` computed over the ordered safe payload. It also retains the
-exact exposed raw spawn and completion bytes when available. The native
+exact native task-start and completion event timestamps and turn ID, native
+completion-message SHA-256, normalized report path and SHA-256, repository
+commit, and the `safeReceiptSha256` computed over the ordered safe payload. The
+local extractor triangulates the session UUIDv7 time, database insertion time,
+session-metadata event time, and task-start event time in nondecreasing order;
+each adjacent pre-start delay is at most 1,000 milliseconds. It also retains
+the exact exposed raw spawn and completion bytes when available. The native
 completion text hash is distinct from the normalized review JSON hash. The
 exact three task paths and parent/depth topology are pinned by the validator;
 each fresh session UUID is retained exactly and cross-joined throughout its
@@ -319,9 +324,15 @@ dissent; native timing and session fields live only in the joined safe receipt.
 A lane has no separate recommendation field. Scores are structured nonhuman
 review evidence only.
 
-Outputs bound to rejected subject
-`7fcc776e6941c7f41a504dda59ea59af88ba31fb` may inform repairs but can never
-populate these terminal receipt slots.
+Outputs bound to rejected subjects
+`7fcc776e6941c7f41a504dda59ea59af88ba31fb`,
+`f1a566f3eabb5bc972d75a555038e3b315a211a2`, or
+`58275cab4ae1a22b148831ba454f994cc644cd31` may inform repairs but can never
+populate these terminal receipt slots. All r3 review outputs and partial receipt
+material are non-reusable: safe extraction exposed a native 3-millisecond delay
+between the session UUIDv7 time and database insertion time in one lane. The
+repaired contract models that delay explicitly through ordered, bounded native
+timestamp joins instead of asserting timestamp equality.
 
 ## Deterministic decision rule
 

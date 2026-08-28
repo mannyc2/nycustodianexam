@@ -16,6 +16,7 @@ const AUTHENTICATION_LIMITATION =
 const PROVENANCE_CLASS = "native-codex-subagent-thread-spawn"
 const SAFE_RECEIPT_HASH_ALGORITHM =
   "sha256(UTF-8 compact JSON.stringify of the ordered receipt payload excluding safeReceiptSha256)"
+const MAX_PRE_START_ADJACENT_DELAY_MS = 1_000
 
 const SHA_PATTERN = /^[0-9a-f]{40}$/u
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/u
@@ -298,7 +299,11 @@ const extractReceipt = ({
   if (thread.thread_source !== "subagent") fail("THREAD_SOURCE_INVALID")
   if (!UUID_PATTERN.test(thread.id)) fail("SESSION_UUID_INVALID")
   if (!Number.isSafeInteger(thread.created_at_ms)) fail("THREAD_CREATED_AT_INVALID")
-  if (uuidV7Time(thread.id, "SESSION_UUID_INVALID") !== thread.created_at_ms) {
+  const sessionUuidTime = uuidV7Time(thread.id, "SESSION_UUID_INVALID")
+  if (
+    sessionUuidTime > thread.created_at_ms ||
+    thread.created_at_ms - sessionUuidTime > MAX_PRE_START_ADJACENT_DELAY_MS
+  ) {
     fail("SESSION_CREATED_AT_JOIN_FAILED")
   }
   let recordedRolloutReal
@@ -355,6 +360,15 @@ const extractReceipt = ({
     fail("SESSION_META_JOIN_FAILED")
   }
   if (!SAFE_ORIGINATOR_PATTERN.test(meta.originator)) fail("ORIGINATOR_INVALID")
+  const sessionMetaEventTimestamp = sessionMeta.timestamp
+  if (!canonicalDateTime(sessionMetaEventTimestamp)) fail("SESSION_META_TIMESTAMP_INVALID")
+  const sessionMetaTime = Date.parse(sessionMetaEventTimestamp)
+  if (
+    thread.created_at_ms > sessionMetaTime ||
+    sessionMetaTime - thread.created_at_ms > MAX_PRE_START_ADJACENT_DELAY_MS
+  ) {
+    fail("SESSION_META_TIME_JOIN_FAILED")
+  }
 
   const currentSessionEvents = records
     .map((record, index) => ({ record, index }))
@@ -363,7 +377,7 @@ const extractReceipt = ({
       if (!["task_started", "task_complete", "turn_aborted"].includes(record?.payload?.type)) return false
       const turnId = record?.payload?.turn_id
       if (!UUID_PATTERN.test(turnId) || turnId[14] !== "7") return false
-      return uuidV7Time(turnId, "COMPLETION_TURN_ID_INVALID") >= thread.created_at_ms
+      return uuidV7Time(turnId, "COMPLETION_TURN_ID_INVALID") >= sessionUuidTime
     })
   const starts = currentSessionEvents.filter(({ record }) => record.payload.type === "task_started")
   const completions = currentSessionEvents.filter(({ record }) => record.payload.type === "task_complete")
@@ -375,16 +389,37 @@ const extractReceipt = ({
   const completed = completions[0]
   if (
     started.record.payload.turn_id !== completed.record.payload.turn_id ||
+    records.indexOf(sessionMeta) >= started.index ||
     started.index >= completed.index
   ) {
     fail("CURRENT_TURN_JOIN_FAILED")
   }
   const completionTurnId = completed.record.payload.turn_id
+  const taskStartEventTimestamp = started.record.timestamp
+  if (!canonicalDateTime(taskStartEventTimestamp)) fail("TASK_START_TIMESTAMP_INVALID")
+  const taskStartTime = Date.parse(taskStartEventTimestamp)
+  if (
+    sessionMetaTime > taskStartTime ||
+    taskStartTime - sessionMetaTime > MAX_PRE_START_ADJACENT_DELAY_MS ||
+    !Number.isInteger(started.record.payload.started_at) ||
+    Math.floor(taskStartTime / 1_000) !== started.record.payload.started_at
+  ) {
+    fail("TASK_START_TIMESTAMP_JOIN_FAILED")
+  }
+  const completionTurnTime = uuidV7Time(completionTurnId, "COMPLETION_TURN_ID_INVALID")
+  if (
+    completionTurnTime > taskStartTime ||
+    taskStartTime - completionTurnTime > MAX_PRE_START_ADJACENT_DELAY_MS
+  ) {
+    fail("TASK_START_TURN_TIME_JOIN_FAILED")
+  }
   const completionEventTimestamp = completed.record.timestamp
   if (!canonicalDateTime(completionEventTimestamp)) fail("COMPLETION_TIMESTAMP_INVALID")
+  const completionTime = Date.parse(completionEventTimestamp)
   if (
+    taskStartTime >= completionTime ||
     !Number.isInteger(completed.record.payload.completed_at) ||
-    Math.floor(Date.parse(completionEventTimestamp) / 1000) !== completed.record.payload.completed_at
+    Math.floor(completionTime / 1_000) !== completed.record.payload.completed_at
   ) {
     fail("COMPLETION_TIMESTAMP_JOIN_FAILED")
   }
@@ -441,6 +476,7 @@ const extractReceipt = ({
     threadSource: thread.thread_source,
     originator: meta.originator,
     depth: dbSpawn.depth,
+    taskStartEventTimestamp,
     completionState: "completed",
     completionEventTimestamp,
     completionTurnId,
@@ -523,7 +559,46 @@ const makeSyntheticFixture = (root, mutation = "none") => {
   const turnId = "0190abcd-0001-7000-8000-000000000001"
   const secondTurnId = "0190abcd-0002-7000-8000-000000000001"
   const sessionCreatedAt = uuidV7Time(sessionUuid, "SYNTHETIC_UUID_INVALID")
-  const completionTimestamp = new Date(sessionCreatedAt + 2_000).toISOString()
+  let databaseCreatedAt = sessionCreatedAt
+  let sessionMetaTimestampMs = sessionCreatedAt
+  let taskStartTimestampMs = sessionCreatedAt + 1
+  if (mutation === "positive-db-insertion-delay-3ms") {
+    databaseCreatedAt = sessionCreatedAt + 3
+    sessionMetaTimestampMs = sessionCreatedAt + 3
+    taskStartTimestampMs = sessionCreatedAt + 4
+  } else if (mutation === "db-before-uuid") {
+    databaseCreatedAt = sessionCreatedAt - 1
+  } else if (mutation === "db-delay-over-bound") {
+    databaseCreatedAt = sessionCreatedAt + MAX_PRE_START_ADJACENT_DELAY_MS + 1
+    sessionMetaTimestampMs = databaseCreatedAt
+    taskStartTimestampMs = databaseCreatedAt + 1
+  } else if (mutation === "session-meta-before-db") {
+    databaseCreatedAt = sessionCreatedAt + 3
+    sessionMetaTimestampMs = sessionCreatedAt + 2
+    taskStartTimestampMs = sessionCreatedAt + 4
+  } else if (mutation === "session-meta-delay-over-bound") {
+    sessionMetaTimestampMs = sessionCreatedAt + MAX_PRE_START_ADJACENT_DELAY_MS + 1
+    taskStartTimestampMs = sessionMetaTimestampMs + 1
+  } else if (mutation === "task-start-before-session-meta") {
+    sessionMetaTimestampMs = sessionCreatedAt + 5
+    taskStartTimestampMs = sessionCreatedAt + 4
+  } else if (mutation === "task-start-delay-over-bound") {
+    taskStartTimestampMs = sessionCreatedAt + MAX_PRE_START_ADJACENT_DELAY_MS + 1
+  }
+  const completionTimestampMs = mutation === "task-start-not-before-completion"
+    ? taskStartTimestampMs
+    : sessionCreatedAt + 2_000
+  const completionTimestamp = new Date(completionTimestampMs).toISOString()
+  const taskStartEventTimestampMs = taskStartTimestampMs
+  const sessionMetaTimestamp = mutation === "session-meta-timestamp-invalid"
+    ? "not-a-timestamp"
+    : new Date(sessionMetaTimestampMs).toISOString()
+  const taskStartTimestamp = mutation === "task-start-timestamp-invalid"
+    ? "not-a-timestamp"
+    : new Date(taskStartEventTimestampMs).toISOString()
+  const activeTurnId = mutation === "task-start-turn-time-after-event"
+    ? "0190abcd-0100-7000-8000-000000000001"
+    : turnId
   const report = {
     schemaVersion: 2,
     taskPath,
@@ -555,7 +630,7 @@ const makeSyntheticFixture = (root, mutation = "none") => {
   const rolloutPath = resolve(root, "synthetic-rollout.jsonl")
   const records = [
     {
-      timestamp: new Date(sessionCreatedAt).toISOString(),
+      timestamp: sessionMetaTimestamp,
       type: "session_meta",
       payload: {
         id: mutation === "session-mismatch" ? secondSessionUuid : sessionUuid,
@@ -568,9 +643,15 @@ const makeSyntheticFixture = (root, mutation = "none") => {
       },
     },
     {
-      timestamp: new Date(sessionCreatedAt + 1).toISOString(),
+      timestamp: taskStartTimestamp,
       type: "event_msg",
-      payload: { type: "task_started", turn_id: turnId },
+      payload: {
+        type: "task_started",
+        turn_id: mutation === "task-start-turn-mismatch" ? secondTurnId : activeTurnId,
+        started_at: mutation === "task-start-seconds-mismatch"
+          ? Math.floor(taskStartEventTimestampMs / 1_000) + 1
+          : Math.floor(taskStartEventTimestampMs / 1_000),
+      },
     },
     {
       timestamp: new Date(sessionCreatedAt + 1_500).toISOString(),
@@ -578,7 +659,7 @@ const makeSyntheticFixture = (root, mutation = "none") => {
       payload: {
         type: "message",
         role: "assistant",
-        internal_chat_message_metadata_passthrough: { turn_id: turnId },
+        internal_chat_message_metadata_passthrough: { turn_id: activeTurnId },
         content: [{ type: "output_text", text: mutation === "raw-mismatch" ? "{}" : completionMessage }],
       },
     },
@@ -589,7 +670,7 @@ const makeSyntheticFixture = (root, mutation = "none") => {
       type: "event_msg",
       payload: {
         type: "task_complete",
-        turn_id: turnId,
+        turn_id: activeTurnId,
         completed_at: Math.floor(Date.parse(completionTimestamp) / 1000),
         last_agent_message: completionMessage,
       },
@@ -649,7 +730,7 @@ const makeSyntheticFixture = (root, mutation = "none") => {
   database.prepare(`
     INSERT INTO threads (id, rollout_path, source, thread_source, agent_path, git_sha, created_at_ms)
     VALUES (?, ?, ?, ?, ?, ?, ?)
-  `).run(sessionUuid, dbRolloutPath, JSON.stringify(source), "subagent", taskPath, repositoryCommit, sessionCreatedAt)
+  `).run(sessionUuid, dbRolloutPath, JSON.stringify(source), "subagent", taskPath, repositoryCommit, databaseCreatedAt)
   if (mutation === "duplicate-task") {
     database.prepare(`
       INSERT INTO threads (id, rollout_path, source, thread_source, agent_path, git_sha, created_at_ms)
@@ -676,6 +757,8 @@ const makeSyntheticFixture = (root, mutation = "none") => {
 const runSelfTest = async () => {
   const root = await mkdtemp(resolve(tmpdir(), "codex-safe-receipt-self-test-"))
   const negativeCases = [
+    "db-before-uuid",
+    "db-delay-over-bound",
     "duplicate-task",
     "incomplete-turn",
     "multiple-turns",
@@ -687,12 +770,40 @@ const runSelfTest = async () => {
     "report-task",
     "retargeted-commit",
     "rollout-join",
+    "session-meta-before-db",
+    "session-meta-delay-over-bound",
+    "session-meta-timestamp-invalid",
     "session-mismatch",
+    "task-start-before-session-meta",
+    "task-start-delay-over-bound",
+    "task-start-not-before-completion",
+    "task-start-seconds-mismatch",
+    "task-start-timestamp-invalid",
+    "task-start-turn-mismatch",
+    "task-start-turn-time-after-event",
     "wrong-parent",
   ]
+  const expectedTimingFailureCodes = new Map([
+    ["db-before-uuid", "SESSION_CREATED_AT_JOIN_FAILED"],
+    ["db-delay-over-bound", "SESSION_CREATED_AT_JOIN_FAILED"],
+    ["session-meta-before-db", "SESSION_META_TIME_JOIN_FAILED"],
+    ["session-meta-delay-over-bound", "SESSION_META_TIME_JOIN_FAILED"],
+    ["session-meta-timestamp-invalid", "SESSION_META_TIMESTAMP_INVALID"],
+    ["task-start-before-session-meta", "TASK_START_TIMESTAMP_JOIN_FAILED"],
+    ["task-start-delay-over-bound", "TASK_START_TIMESTAMP_JOIN_FAILED"],
+    ["task-start-not-before-completion", "COMPLETION_TIMESTAMP_JOIN_FAILED"],
+    ["task-start-seconds-mismatch", "TASK_START_TIMESTAMP_JOIN_FAILED"],
+    ["task-start-timestamp-invalid", "TASK_START_TIMESTAMP_INVALID"],
+    ["task-start-turn-mismatch", "CURRENT_TURN_JOIN_FAILED"],
+    ["task-start-turn-time-after-event", "TASK_START_TURN_TIME_JOIN_FAILED"],
+  ])
   try {
     const positiveRoot = resolve(root, "positive")
     const receipt = extractReceipt(makeSyntheticFixture(positiveRoot))
+    const delayedReceipt = extractReceipt(makeSyntheticFixture(
+      resolve(root, "positive-db-insertion-delay-3ms"),
+      "positive-db-insertion-delay-3ms",
+    ))
     const payload = Object.fromEntries(
       Object.entries(receipt).filter(([key]) => key !== "safeReceiptSha256"),
     )
@@ -700,7 +811,10 @@ const runSelfTest = async () => {
       receipt.schemaVersion !== SCHEMA_VERSION ||
       receipt.authenticationStatus !== AUTHENTICATION_STATUS ||
       receipt.safeReceiptSha256 !== sha256(Buffer.from(JSON.stringify(payload), "utf8")) ||
-      receipt.completionMessageSha256 !== receipt.rawCompletion.sha256
+      receipt.completionMessageSha256 !== receipt.rawCompletion.sha256 ||
+      !canonicalDateTime(receipt.taskStartEventTimestamp) ||
+      !canonicalDateTime(delayedReceipt.taskStartEventTimestamp) ||
+      Date.parse(delayedReceipt.taskStartEventTimestamp) - uuidV7Time(delayedReceipt.sessionUuid, "SELF_TEST_UUID_INVALID") !== 4
     ) {
       fail("SELF_TEST_POSITIVE_FAILED")
     }
@@ -709,15 +823,19 @@ const runSelfTest = async () => {
       let rejected = false
       try {
         extractReceipt(makeSyntheticFixture(resolve(root, mutation), mutation))
-      } catch {
+      } catch (error) {
         rejected = true
+        const expectedCode = expectedTimingFailureCodes.get(mutation)
+        if (expectedCode !== undefined && error?.code !== expectedCode) {
+          fail("SELF_TEST_NEGATIVE_WRONG_GATE")
+        }
       }
       if (!rejected) fail("SELF_TEST_NEGATIVE_FAILED")
     }
     return {
       schemaVersion: "codex-task-safe-receipt-extractor-self-test-v1",
       status: "passed",
-      positiveCases: 1,
+      positiveCases: 2,
       negativeCases: negativeCases.length,
     }
   } finally {

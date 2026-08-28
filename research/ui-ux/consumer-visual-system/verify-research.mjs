@@ -12,7 +12,7 @@ const reportPath = `${researchRoot}/README.md`
 const taskReceiptPath = `${researchRoot}/review-task-receipts.json`
 const schemaProfile = "draft-2020-12-portable-subset-v1"
 // Update this one value only after an intentional, reviewed schema change.
-const expectedCanonicalSchemaSha256 = "f27769739c3b720ea45581e8353be76ba57e5ceda34c7adcce58c9959b96f7b4"
+const expectedCanonicalSchemaSha256 = "3caa20db17fe82993b2503f30bfa7b42ab836bf668c69971e9187af7188f1b15"
 
 const STEP2_SUBJECT_SHA = "4130693dee6caaa804a116f490b2192861f53e6e"
 const STEP2_MERGE_SHA = "d823e928b0b57f589fd1c64a85db4ae0f6d2f0d1"
@@ -26,9 +26,9 @@ const RUBRIC_IDS = Object.freeze([
   "visual-component-coherence"
 ])
 const REVIEW_TASK_PATHS = Object.freeze({
-  "consumer-trust-anti-ai-slop": "/root/audit_lifecycle_precommit/review_consumer_trust_r3",
-  "accessibility-cognitive-load": "/root/audit_lifecycle_precommit/review_consumer_trust_r3/review_accessibility_r3",
-  "visual-component-coherence": "/root/audit_lifecycle_precommit/review_consumer_trust_r3/review_visual_coherence_r3"
+  "consumer-trust-anti-ai-slop": "/root/audit_lifecycle_precommit/review_consumer_trust_r4",
+  "accessibility-cognitive-load": "/root/audit_lifecycle_precommit/review_consumer_trust_r4/review_accessibility_r4",
+  "visual-component-coherence": "/root/audit_lifecycle_precommit/review_consumer_trust_r4/review_visual_coherence_r4"
 })
 const REVIEW_PROMPT_PATHS = Object.freeze(Object.fromEntries(RUBRIC_IDS.map((rubricId) => [rubricId, `${researchRoot}/review-prompts/${rubricId}.md`])))
 const REVIEW_OUTPUT_PATHS = Object.freeze({
@@ -38,16 +38,20 @@ const REVIEW_OUTPUT_PATHS = Object.freeze({
 })
 const REJECTED_REVIEW_SUBJECT_SHAS = new Set([
   "7fcc776e6941c7f41a504dda59ea59af88ba31fb",
-  "f1a566f3eabb5bc972d75a555038e3b315a211a2"
+  "f1a566f3eabb5bc972d75a555038e3b315a211a2",
+  "58275cab4ae1a22b148831ba454f994cc644cd31"
 ])
 const REVIEW_AUDIT_PARENT_THREAD_ID = "01a04a64-3e78-72b2-8045-a25334d3f1be"
 const REJECTED_REVIEW_SESSION_UUIDS = new Set([
   "01a04a02-5ef1-79a3-b612-3179d9ee5fea",
   "01a04a02-b7b2-7fd2-aaea-3496b38b0393",
-  "01a04a03-1263-7101-bdff-5ad2ff732ba4"
+  "01a04a03-1263-7101-bdff-5ad2ff732ba4",
+  "01a04a9e-6fcb-7b53-858d-5dc3a36c7f74",
+  "01a04a9f-32bf-7b72-a6f1-2d014196c9a6",
+  "01a04aa8-e9da-7e60-a440-7cee636da6be"
 ])
 const RECEIPT_AUTHENTICATION_LIMITATION = "Local Codex state and rollout records are not cryptographic proof of task identity, timing, or cross-output non-observability; ordinary CI can validate only the committed receipt bytes and declared joins."
-const TRUST_LANE_ORCHESTRATION_INSTRUCTION = `Topology duty for this lane only: after the parent audit task has completed and freed its slot, call spawn_agent with leaf task_name=review_accessibility_r3 and leaf task_name=review_visual_coherence_r3, fork_turns=none, and their exact rendered task messages. Require the exposed returned canonical task paths to equal ${REVIEW_TASK_PATHS["accessibility-cognitive-load"]} and ${REVIEW_TASK_PATHS["visual-component-coherence"]}. Send only each exact exposed raw spawn response JSON to /root; do not request, read, or relay either child output. Then complete this trust review while both child lanes remain active.`
+const TRUST_LANE_ORCHESTRATION_INSTRUCTION = `Topology duty for this lane only: after the parent audit task has completed and freed its slot, call spawn_agent with leaf task_name=review_accessibility_r4 and leaf task_name=review_visual_coherence_r4, fork_turns=none, and their exact rendered task messages. Require the exposed returned canonical task paths to equal ${REVIEW_TASK_PATHS["accessibility-cognitive-load"]} and ${REVIEW_TASK_PATHS["visual-component-coherence"]}. Send only each exact exposed raw spawn response JSON to /root; do not request, read, or relay either child output. Then complete this trust review while both child lanes remain active.`
 const CHILD_LANE_RELEASE_INSTRUCTION = "Output barrier for this lane: analyze independently, but do not write or send the final JSON until /root sends the exact release token RELEASE_REVIEW_OUTPUT after the trust lane has completed. While waiting, do not request or read any other lane output."
 const HISTORICAL_PREWORK_SHA = "74c6799fbcef587e44c5c5f3854258db516a9aaa"
 const RUBRIC_CRITERIA = Object.freeze({
@@ -1296,7 +1300,7 @@ const validateTaskReceipts = (record, browserBytes, browserReceipt, loadedReview
   assert(trustTask !== undefined && uuidPattern.test(trustTask.safeReceipt?.sessionUuid), "trust-lane native session UUID absent")
   const trustSessionUuid = trustTask.safeReceipt.sessionUuid
   const trustCreatedAt = Number.parseInt(trustSessionUuid.replaceAll("-", "").slice(0, 12), 16)
-  const safePayloadKeys = ["schemaVersion", "authenticationStatus", "authenticationLimitation", "taskPath", "sessionUuid", "parentThreadId", "provenanceClass", "threadSource", "originator", "depth", "completionState", "completionEventTimestamp", "completionTurnId", "completionMessageSha256", "reportPath", "reportSha256", "repositoryCommit", "rawSpawn", "rawCompletion", "safeReceiptHashAlgorithm"]
+  const safePayloadKeys = ["schemaVersion", "authenticationStatus", "authenticationLimitation", "taskPath", "sessionUuid", "parentThreadId", "provenanceClass", "threadSource", "originator", "depth", "taskStartEventTimestamp", "completionState", "completionEventTimestamp", "completionTurnId", "completionMessageSha256", "reportPath", "reportSha256", "repositoryCommit", "rawSpawn", "rawCompletion", "safeReceiptHashAlgorithm"]
   const rawKeys = ["source", "encoding", "byteLength", "sha256", "bytesBase64"]
   const decodeRaw = (raw, path, expectedSource) => {
     equal(Object.keys(raw), rawKeys, `${path}: physical key order and shape`)
@@ -1345,12 +1349,21 @@ const validateTaskReceipts = (record, browserBytes, browserReceipt, loadedReview
     let nativeReview
     try { nativeReview = parseJsonStrict(rawCompletionBytes.toString("utf8"), `safe receipt ${task.rubricId}.rawCompletion`) } catch { fail(`safe receipt ${task.rubricId}: native completion is not strict JSON`) }
     equal(nativeReview, loaded.review, `safe receipt ${task.rubricId}: native completion/normalized report semantic join`)
+    assert(isCanonicalMillisecondDateTime(receipt.taskStartEventTimestamp), `safe receipt ${task.rubricId}: canonical native task-start timestamp invalid`)
     assert(isCanonicalMillisecondDateTime(receipt.completionEventTimestamp), `safe receipt ${task.rubricId}: canonical native completion timestamp invalid`)
     const createdAt = uuidV7Time(receipt.sessionUuid)
+    const taskStartedAt = Date.parse(receipt.taskStartEventTimestamp)
+    const completionAt = Date.parse(receipt.completionEventTimestamp)
+    const turnCreatedAt = uuidV7Time(receipt.completionTurnId)
     assert(subjectCommittedAt <= createdAt, `safe receipt ${task.rubricId}: session predates immutable subject commit`)
-    assert(createdAt < Date.parse(receipt.completionEventTimestamp), `safe receipt ${task.rubricId}: derived observed interval invalid`)
+    assert(createdAt <= taskStartedAt && taskStartedAt - createdAt <= 3_000, `safe receipt ${task.rubricId}: session/task-start triangulation invalid`)
+    assert(turnCreatedAt <= taskStartedAt && taskStartedAt - turnCreatedAt <= 1_000, `safe receipt ${task.rubricId}: turn/task-start triangulation invalid`)
+    assert(taskStartedAt < completionAt, `safe receipt ${task.rubricId}: native task interval invalid`)
     assert(createdAt >= Date.parse(browserReceipt.completedAt), `safe receipt ${task.rubricId}: session predates browser evidence completion`)
-    if (!isTrustLane) assert(createdAt >= trustCreatedAt, `safe receipt ${task.rubricId}: child session predates trust parent session`)
+    if (!isTrustLane) {
+      assert(createdAt >= trustCreatedAt, `safe receipt ${task.rubricId}: child session predates trust parent session`)
+      assert(taskStartedAt >= Date.parse(trustTask.safeReceipt.taskStartEventTimestamp), `safe receipt ${task.rubricId}: child task start predates trust parent task start`)
+    }
     for (const literal of [
       `taskPath=${receipt.taskPath}`,
       `rubricId=${task.rubricId}`,
@@ -1369,7 +1382,7 @@ const validateTaskReceipts = (record, browserBytes, browserReceipt, loadedReview
       "Do not read or request another review lane's output before submitting your own result."
     ]) assert(expectedRenderedTaskMessage.includes(literal), `${prompt.descriptor.path}: exact rendered task-message literal absent: ${literal}`)
   }
-  const latestStart = Math.max(...taskReceipt.tasks.map(({ safeReceipt }) => uuidV7Time(safeReceipt.sessionUuid)))
+  const latestStart = Math.max(...taskReceipt.tasks.map(({ safeReceipt }) => Date.parse(safeReceipt.taskStartEventTimestamp)))
   const earliestCompletion = Math.min(...taskReceipt.tasks.map(({ safeReceipt }) => Date.parse(safeReceipt.completionEventTimestamp)))
   assert(latestStart < earliestCompletion, "three observed Codex task intervals must have a nonempty common overlap")
   const trustCompletion = Date.parse(trustTask.safeReceipt.completionEventTimestamp)
@@ -1977,7 +1990,7 @@ const runAdversarial = async ({ schemaBytes, schema, record, prototypeContext, a
     ["schema DONE weakening", '"artifactStatus": { "const": "complete" }', '"artifactStatus": { "enum": ["complete", "DONE"] }'],
     ["schema dependency weakening", '"acceptedStep2SubjectSha": { "const": "4130693dee6caaa804a116f490b2192861f53e6e" }', '"acceptedStep2SubjectSha": { "$ref": "#/$defs/sha1" }'],
     ["schema render weakening", '"comparableFrameCount": { "const": 36 }', '"comparableFrameCount": { "type": "integer", "minimum": 0 }'],
-    ["schema review-task weakening", '"taskPath": { "enum": ["/root/audit_lifecycle_precommit/review_consumer_trust_r3", "/root/audit_lifecycle_precommit/review_consumer_trust_r3/review_accessibility_r3", "/root/audit_lifecycle_precommit/review_consumer_trust_r3/review_visual_coherence_r3"] }', '"taskPath": { "type": "string" }'],
+    ["schema review-task weakening", '"taskPath": { "enum": ["/root/audit_lifecycle_precommit/review_consumer_trust_r4", "/root/audit_lifecycle_precommit/review_consumer_trust_r4/review_accessibility_r4", "/root/audit_lifecycle_precommit/review_consumer_trust_r4/review_visual_coherence_r4"] }', '"taskPath": { "type": "string" }'],
     ["schema source-closure weakening", '"pathCount": { "const": 228 }', '"pathCount": { "type": "integer", "minimum": 0 }'],
     ["schema quarantine weakening", '"promotionBoundary": "visual-tokens-and-composition-only"', '"promotionBoundary": "anything"']
   ]
@@ -2131,6 +2144,9 @@ const runAdversarial = async ({ schemaBytes, schema, record, prototypeContext, a
   const invalidRadioSubjectReviews = clone(loadedReviews)
   invalidRadioSubjectReviews[0].review.repositoryCommit = "f1a566f3eabb5bc972d75a555038e3b315a211a2"
   await reject("invalid pre-radio-repair review subject reuse", () => validateReviews(record, browserBytes, browserReceipt, invalidRadioSubjectReviews, taskReceipt, prompts))
+  const invalidR3SubjectReviews = clone(loadedReviews)
+  invalidR3SubjectReviews[0].review.repositoryCommit = "58275cab4ae1a22b148831ba454f994cc644cd31"
+  await reject("invalid r3 review subject reuse", () => validateReviews(record, browserBytes, browserReceipt, invalidR3SubjectReviews, taskReceipt, prompts))
   const fakeCoordinateReviews = clone(loadedReviews)
   fakeCoordinateReviews[0].review.territoryScores[0].criterionScores[0].evidenceCoordinates = ["no-such-file#fake-anchor"]
   await reject("unresolved fake evidence anchor", () => validateReviews(record, browserBytes, browserReceipt, fakeCoordinateReviews, taskReceipt, prompts))
@@ -2144,7 +2160,7 @@ const runAdversarial = async ({ schemaBytes, schema, record, prototypeContext, a
   assert(blankLine > 0, "adversarial blank-line coordinate fixture absent")
   blankLineReviews[0].review.territoryScores[0].criterionScores[0].evidenceCoordinates = [`${coordinateFile}:L${blankLine}`]
   await reject("blank review evidence line", () => validateReviews(record, browserBytes, browserReceipt, blankLineReviews, taskReceipt, prompts))
-  const safePayloadKeys = ["schemaVersion", "authenticationStatus", "authenticationLimitation", "taskPath", "sessionUuid", "parentThreadId", "provenanceClass", "threadSource", "originator", "depth", "completionState", "completionEventTimestamp", "completionTurnId", "completionMessageSha256", "reportPath", "reportSha256", "repositoryCommit", "rawSpawn", "rawCompletion", "safeReceiptHashAlgorithm"]
+  const safePayloadKeys = ["schemaVersion", "authenticationStatus", "authenticationLimitation", "taskPath", "sessionUuid", "parentThreadId", "provenanceClass", "threadSource", "originator", "depth", "taskStartEventTimestamp", "completionState", "completionEventTimestamp", "completionTurnId", "completionMessageSha256", "reportPath", "reportSha256", "repositoryCommit", "rawSpawn", "rawCompletion", "safeReceiptHashAlgorithm"]
   const recomputeSafeReceipt = (receipt) => { receipt.safeReceiptSha256 = sha256(Buffer.from(JSON.stringify(Object.fromEntries(safePayloadKeys.map((key) => [key, receipt[key]]))), "utf8")) }
   const rawSpawnMutation = clone(taskReceipt)
   const fakeSpawnBytes = Buffer.from('{"task_name":"/root/fake_a"}', "utf8")
@@ -2153,10 +2169,12 @@ const runAdversarial = async ({ schemaBytes, schema, record, prototypeContext, a
   rawSpawnMutation.tasks[0].safeReceipt.rawSpawn.bytesBase64 = fakeSpawnBytes.toString("base64")
   recomputeSafeReceipt(rawSpawnMutation.tasks[0].safeReceipt)
   await reject("raw spawn response task path retarget", () => validateTaskReceipts(record, browserBytes, browserReceipt, loadedReviews, rawSpawnMutation, prompts))
-  const oldSessionMutation = clone(taskReceipt)
-  oldSessionMutation.tasks[0].safeReceipt.sessionUuid = [...REJECTED_REVIEW_SESSION_UUIDS][0]
-  recomputeSafeReceipt(oldSessionMutation.tasks[0].safeReceipt)
-  await reject("copied old review session result", () => validateTaskReceipts(record, browserBytes, browserReceipt, loadedReviews, oldSessionMutation, prompts))
+  for (const rejectedSessionUuid of REJECTED_REVIEW_SESSION_UUIDS) {
+    const oldSessionMutation = clone(taskReceipt)
+    oldSessionMutation.tasks[0].safeReceipt.sessionUuid = rejectedSessionUuid
+    recomputeSafeReceipt(oldSessionMutation.tasks[0].safeReceipt)
+    await reject(`copied rejected review session result ${rejectedSessionUuid}`, () => validateTaskReceipts(record, browserBytes, browserReceipt, loadedReviews, oldSessionMutation, prompts))
+  }
   const copiedResultMutation = clone(taskReceipt)
   copiedResultMutation.tasks[1].safeReceipt.rawCompletion = clone(copiedResultMutation.tasks[0].safeReceipt.rawCompletion)
   copiedResultMutation.tasks[1].safeReceipt.completionMessageSha256 = copiedResultMutation.tasks[1].safeReceipt.rawCompletion.sha256
@@ -2166,6 +2184,10 @@ const runAdversarial = async ({ schemaBytes, schema, record, prototypeContext, a
   retargetedSubjectMutation.tasks[0].safeReceipt.repositoryCommit = "7fcc776e6941c7f41a504dda59ea59af88ba31fb"
   recomputeSafeReceipt(retargetedSubjectMutation.tasks[0].safeReceipt)
   await reject("retargeted old review subject", () => validateTaskReceipts(record, browserBytes, browserReceipt, loadedReviews, retargetedSubjectMutation, prompts))
+  const retargetedR3SubjectMutation = clone(taskReceipt)
+  retargetedR3SubjectMutation.tasks[0].safeReceipt.repositoryCommit = "58275cab4ae1a22b148831ba454f994cc644cd31"
+  recomputeSafeReceipt(retargetedR3SubjectMutation.tasks[0].safeReceipt)
+  await reject("retargeted invalid r3 review subject", () => validateTaskReceipts(record, browserBytes, browserReceipt, loadedReviews, retargetedR3SubjectMutation, prompts))
   const parentMutation = clone(taskReceipt)
   parentMutation.tasks[0].safeReceipt.parentThreadId = parentMutation.tasks[0].safeReceipt.sessionUuid
   recomputeSafeReceipt(parentMutation.tasks[0].safeReceipt)
@@ -2190,9 +2212,25 @@ const runAdversarial = async ({ schemaBytes, schema, record, prototypeContext, a
   promptDescriptorMutation.tasks[0].promptTemplateSha256 = "0".repeat(64)
   await reject("task prompt-template descriptor drift", () => validateTaskReceipts(record, browserBytes, browserReceipt, loadedReviews, promptDescriptorMutation, prompts))
   const intervalMutation = clone(taskReceipt)
-  intervalMutation.tasks[2].safeReceipt.sessionUuid = "ffffffff-ffff-7fff-8fff-ffffffffffff"
-  recomputeSafeReceipt(intervalMutation.tasks[2].safeReceipt)
+  const trustCompletionForInterval = Date.parse(intervalMutation.tasks.find(({ rubricId }) => rubricId === "consumer-trust-anti-ai-slop").safeReceipt.completionEventTimestamp)
+  const intervalTask = intervalMutation.tasks.find(({ rubricId }) => rubricId === "accessibility-cognitive-load")
+  const intervalStartHex = trustCompletionForInterval.toString(16).padStart(12, "0")
+  intervalTask.safeReceipt.sessionUuid = `${intervalStartHex.slice(0, 8)}-${intervalStartHex.slice(8, 12)}-7ffe-8ffe-ffffffffffff`
+  intervalTask.safeReceipt.completionTurnId = `${intervalStartHex.slice(0, 8)}-${intervalStartHex.slice(8, 12)}-7fff-8fff-ffffffffffff`
+  intervalTask.safeReceipt.taskStartEventTimestamp = new Date(trustCompletionForInterval).toISOString()
+  if (Date.parse(intervalTask.safeReceipt.completionEventTimestamp) <= trustCompletionForInterval) {
+    intervalTask.safeReceipt.completionEventTimestamp = new Date(trustCompletionForInterval + 1).toISOString()
+  }
+  recomputeSafeReceipt(intervalTask.safeReceipt)
   await reject("nonoverlapping review task intervals", () => validateTaskReceipts(record, browserBytes, browserReceipt, loadedReviews, intervalMutation, prompts))
+  const noncanonicalTaskStartMutation = clone(taskReceipt)
+  noncanonicalTaskStartMutation.tasks[0].safeReceipt.taskStartEventTimestamp = "2030-01-01T00:00:00Z"
+  recomputeSafeReceipt(noncanonicalTaskStartMutation.tasks[0].safeReceipt)
+  await reject("noncanonical native task-start timestamp", () => validateTaskReceipts(record, browserBytes, browserReceipt, loadedReviews, noncanonicalTaskStartMutation, prompts))
+  const reversedTaskIntervalMutation = clone(taskReceipt)
+  reversedTaskIntervalMutation.tasks[0].safeReceipt.taskStartEventTimestamp = reversedTaskIntervalMutation.tasks[0].safeReceipt.completionEventTimestamp
+  recomputeSafeReceipt(reversedTaskIntervalMutation.tasks[0].safeReceipt)
+  await reject("task start not before completion", () => validateTaskReceipts(record, browserBytes, browserReceipt, loadedReviews, reversedTaskIntervalMutation, prompts))
   const selfTimestampMutation = clone(taskReceipt)
   selfTimestampMutation.outputsFirstSharedAt = "2030-01-01T00:00:00.000Z"
   await reject("self-authored output-share timestamp forbidden", () => validateTaskReceipts(record, browserBytes, browserReceipt, loadedReviews, selfTimestampMutation, prompts))
@@ -2417,6 +2455,8 @@ const runAdversarial = async ({ schemaBytes, schema, record, prototypeContext, a
 
   await reject("non-direct review-subject parent", () => assertReceiptOnlyDirectChildFacts(["subject", record.prototype.comparisonSourceSha, STEP2_MERGE_SHA], record.prototype.comparisonSourceSha, [{ status: "A", path: `${researchRoot}/browser-receipt.json` }], "adversarial subject"))
   await reject("extra source-to-subject diff", () => assertReceiptOnlyDirectChildFacts(["subject", record.prototype.comparisonSourceSha], record.prototype.comparisonSourceSha, [{ status: "A", path: `${researchRoot}/browser-receipt.json` }, { status: "M", path: `${researchRoot}/prototype.css` }], "adversarial subject"))
+  await reject("rejected r3 subject cannot become a new source", () => validatePreReceiptSourceCommit("58275cab4ae1a22b148831ba454f994cc644cd31"))
+  await reject("rejected r3 subject cannot be reviewed again", () => validateSubjectTopology("58275cab4ae1a22b148831ba454f994cc644cd31", browserReceipt))
   for (const [label, path] of [
     ["source already contains browser receipt", `${researchRoot}/browser-receipt.json`],
     ["source already contains evidence manifest", manifestPath],
