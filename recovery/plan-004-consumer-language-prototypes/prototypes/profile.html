@@ -1,0 +1,58 @@
+<!-- Prototype ID: profile -->
+<!-- Prototype version: CL-1 -->
+<!--
+Source anchor: apps/site/scripts/generate-pages.tsx:1078,1116-1120
+Tested hypothesis: A candidate can decide whether this profile matches their exam without reading a compatibility key, two version numbers, or the phrase 'fact states'.
+Preserved constraint: Unknown and conflicting facts must stay explicitly labelled and must never be replaced by a guess (FEATURE_SPEC.md:30-43). Version context stays available where it affects content (FEATURE_SPEC.md:135-142).
+Candidate layers: default | guardrail | advanced
+Research-only. Not production copy. Structure and product semantics
+are held fixed; only wording and disclosure level vary.
+-->
+<main class="proto" data-prototype="profile">
+<h1 class="proto-title">Exam profile and truthful scope</h1>
+<section class="proto-block" data-variant="current" aria-label="Current wording">
+<h2>Current wording</h2>
+<p class="eyebrow">Statewide series · profile version 3 · pack version 7</p>
+<h3>Entry-level Custodian / Janitor (statewide series)</h3>
+<p>Announcement fact states — Every mutable fact remains labeled with its exact state. Unpublished or unresolved values are not replaced with guesses.</p>
+<p>Compatibility key: <code>ny-statewide-entry-v3</code></p>
+<p>Accepted atlas tools: 65 · Scored-practice eligible tools: 58</p>
+</section>
+<section class="proto-block" data-variant="CL-D1" aria-label="Candidate CL-D1 (plain task)">
+<h2>Candidate CL-D1 (plain task)</h2>
+<p class="eyebrow">New York State — entry level</p>
+<h3>Custodian and Janitor</h3>
+<p>Use this if you are taking an entry-level custodian or janitor exam anywhere in New York State.</p>
+<h4>What we know about this exam</h4>
+<ul>
+<li><strong>Exam number:</strong> not published yet. We will not guess one.</li>
+<li><strong>Test date:</strong> not published yet.</li>
+<li><strong>What it covers:</strong> confirmed — tools, cleaning, safety, and basic repairs.</li>
+</ul>
+<p class="guardrail">Your official announcement always wins. If it says something different from this page, follow the announcement.</p>
+<p>65 tools and 90 questions cover this exam. 7 tools are here for reference only and never appear in practice questions.</p>
+</section>
+<section class="proto-block" data-variant="CL-D2" aria-label="Candidate CL-D2 (open book)">
+<h2>Candidate CL-D2 (open book)</h2>
+<p class="eyebrow">New York State — entry level</p>
+<h3>Custodian and Janitor</h3>
+<h4>What we know, and how we know it</h4>
+<ul>
+<li><strong>What it covers:</strong> confirmed — <a href="#">NYS Civil Service test guide, checked 12 August 2026</a></li>
+<li><strong>Exam number:</strong> not published yet — we checked on 12 August 2026 and found nothing.</li>
+</ul>
+<p class="guardrail">Your official announcement always wins.</p>
+</section>
+<section class="proto-state" data-state="superseded" aria-label="State: superseded">
+<h2>State: superseded</h2>
+<p>This is an older version of this exam profile, kept so old links still work.</p>
+<p><a href="#">See the current profile</a></p>
+</section>
+<section class="proto-block" data-variant="advanced" aria-label="Advanced disclosure (both candidates)">
+<h2>Advanced disclosure (both candidates)</h2>
+<details><summary>Technical details</summary>
+<p>Profile version 3 · content pack version 7 · compatibility key <code>ny-statewide-entry-v3</code></p>
+<p>Fact sheet version 4, reviewed 12 August 2026. Full change history and source list.</p>
+</details>
+</section>
+</main>

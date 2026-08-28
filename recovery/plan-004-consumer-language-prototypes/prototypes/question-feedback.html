@@ -1,0 +1,77 @@
+<!-- Prototype ID: question-feedback -->
+<!-- Prototype version: CL-1 -->
+<!--
+Source anchor: apps/site/src/question-player/react/question-form.tsx:15-17,92-98; apps/site/src/question-player/react/feedback.tsx:23,88-145; content/authoring/packs/launch-v1.curated.mjs:1008-1087
+Tested hypothesis: A learner can predict that submitting locks their answer, can say what was right and why afterwards, and can find the supporting source without claim IDs and evidence tiers dominating the explanation.
+Preserved constraint: Commit-before-reveal is unchanged. Post-answer order (outcome, rationale, source line, description, actions) and source-backed rationales must survive (FEATURE_SPEC.md:245-259). Source evidence may be progressively disclosed but never deleted.
+Candidate layers: default | guardrail | advanced
+Research-only. Not production copy. Structure and product semantics
+are held fixed; only wording and disclosure level vary.
+-->
+<main class="proto" data-prototype="question-feedback">
+<h1 class="proto-title">Answering, feedback, and evidence</h1>
+<section class="proto-block" data-variant="current" aria-label="Current wording">
+<h2>Current wording</h2>
+<p class="eyebrow">Hand tools · one question</p>
+<p>Select one answer. Your choice is saved before the explanation is loaded.</p>
+<p>Primary action: <strong>Commit answer</strong></p>
+<p>Disclosure: <strong>Source receipts</strong> — Publisher / Source version / Verified / Locator / Evidence</p>
+<p>Rationale body: <code>SRC-014</code> — NYS Civil Service test guide <code>p.12 §3</code></p>
+</section>
+<section class="proto-block" data-variant="CL-D1" aria-label="Candidate CL-D1 (plain task)">
+<h2>Candidate CL-D1 (plain task)</h2>
+<p class="eyebrow">Question 3 of 10 · Hand tools</p>
+<p>Pick one answer. Once you submit, you cannot change it — then we show you the explanation.</p>
+<p>Primary action: <strong>Submit answer</strong> (while sending: <strong>Saving your answer…</strong>)</p>
+<h4>After submitting</h4>
+<p><strong>Correct.</strong> A pipe wrench has angled, toothed jaws that bite into round pipe.</p>
+<p>An adjustable wrench has flat, smooth jaws and a small screw wheel — it would slip on pipe.</p>
+<p><strong>Where this comes from:</strong> NYS Civil Service test guide (2024)</p>
+<details><summary>See the exact source</summary>
+<p>NYS Civil Service test guide, page 12, section 3. Published by the NYS Department of Civil Service. Checked 12 August 2026.</p>
+<blockquote><p>Quoted passage appears here.</p></blockquote>
+<p>Reuse terms for this source.</p>
+</details>
+</section>
+<section class="proto-block" data-variant="CL-D2" aria-label="Candidate CL-D2 (open book)">
+<h2>Candidate CL-D2 (open book)</h2>
+<p><strong>Correct.</strong> A pipe wrench has angled, toothed jaws that bite into round pipe.</p>
+<p><strong>Source:</strong> NYS Civil Service test guide (2024), p.12 — <a href="#">read the passage</a></p>
+<p class="guardrail">This is our reading of a public document, not an official answer key.</p>
+</section>
+<section class="proto-state" data-state="commit-failed" aria-label="State: commit-failed">
+<h2>State: commit-failed</h2>
+<p><strong>Your answer was not saved.</strong></p>
+<p>Your choice is still selected and the explanation has not been shown.</p>
+<p><strong>Submit again</strong>. If it keeps failing, your browser may be out of storage space — <strong>check storage in Settings</strong>.</p>
+<p class="note">Replaces an arbitrary runtime string. Every branch maps a typed condition to this three-part structure.</p>
+</section>
+<section class="proto-state" data-state="reveal-failed" aria-label="State: reveal-failed">
+<h2>State: reveal-failed</h2>
+<p><strong>Your answer was saved. We could not load the explanation.</strong></p>
+<p>Your answer is recorded and will not change.</p>
+<p><strong>Retry explanation</strong>, or <strong>go to the next question</strong> and come back later.</p>
+</section>
+<section class="proto-state" data-state="missing-rationale" aria-label="State: missing-rationale">
+<h2>State: missing-rationale</h2>
+<p><strong>Correct.</strong></p>
+<p>We do not have a written explanation for this question yet. The source below still applies.</p>
+</section>
+<section class="proto-block" data-variant="authored" aria-label="Authored question rewrites (research-only)">
+<h2>Authored question rewrites (research-only)</h2>
+<p class="note"><strong>Research-only.</strong> Testing direct stems against the current editorial framing. These are not edits to the curated module, the generated pack, or the review ledger. Any production change re-enters the digest-bound editorial, source, security, and accessibility review.</p>
+<h4>1. comparison.pipe-adjustable-wrench</h4>
+<p><em>Current:</em> In the accepted wrench comparison, which tool has serrated offset hook-and-heel jaws rather than smooth parallel jaws and a worm gear?</p>
+<p><em>Candidate:</em> Which wrench has toothed, angled jaws for gripping round pipe?</p>
+<p><em>Current rationale:</em> Correct. The pipe wrench is identified by serrated offset hook-and-heel jaws for gripping round pipe.</p>
+<p><em>Candidate rationale:</em> A pipe wrench has toothed jaws set at an angle so they bite into round pipe as you turn it.</p>
+<h4>2. comparison.cup-flange-plunger</h4>
+<p><em>Current:</em> In the accepted plunger comparison, which tool has an extended lower flange beneath the cup?</p>
+<p><em>Candidate:</em> Which plunger has a soft sleeve that folds out below the cup to seal a toilet?</p>
+<p><em>Candidate rationale:</em> The flange plunger has a sleeve that folds down to fit a toilet outlet and hold a seal.</p>
+<h4>3. comparison.step-extension-ladder</h4>
+<p><em>Current:</em> In the accepted ladder comparison, which tool is the self-supporting A-frame with spreaders?</p>
+<p><em>Candidate:</em> Which ladder stands on its own in an A shape, with braces that lock it open?</p>
+<p><em>Candidate rationale:</em> A stepladder stands on its own once the braces are locked open. An extension ladder must lean against something.</p>
+</section>
+</main>

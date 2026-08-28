@@ -1,0 +1,63 @@
+<!-- Prototype ID: practice-start -->
+<!-- Prototype version: CL-1 -->
+<!--
+Source anchor: apps/site/scripts/generate-pages.tsx:1138-1151; apps/site/src/simulation/react/setup.tsx:212-227
+Tested hypothesis: A learner can start a set and correctly predict what happens when they submit, and can understand why a length is unavailable, without reading a capacity matrix.
+Preserved constraint: Set lengths and distributions must remain explicitly site-designed, never official counts or weights. The practice-score disclaimer must survive (FEATURE_SPEC.md:30-43). Insufficient capacity must stay truthful.
+Candidate layers: default | guardrail | advanced
+Research-only. Not production copy. Structure and product semantics
+are held fixed; only wording and disclosure level vary.
+-->
+<main class="proto" data-prototype="practice-start">
+<h1 class="proto-title">Starting a practice set</h1>
+<section class="proto-block" data-variant="current" aria-label="Current wording">
+<h2>Current wording</h2>
+<p class="eyebrow">90 reviewed original questions</p>
+<h3>Choose a set the bank can actually supply.</h3>
+<p>Site-designed set of 20 distinct reviewed objectives for the statewide series.</p>
+<p>Filtered inventory capacity — Each row is computed only from answer-independent memberships shared by every displayed option in release launch-v1.</p>
+<p>Unavailable: the filtered bank cannot supply this length without repeats.</p>
+<p><strong>Scoring boundary:</strong> Practice accuracy is not an official converted score or pass prediction.</p>
+</section>
+<section class="proto-block" data-variant="CL-D1" aria-label="Candidate CL-D1 (plain task)">
+<h2>Candidate CL-D1 (plain task)</h2>
+<h3>How many questions do you want?</h3>
+<ul>
+<li><strong>10 questions</strong> — about 5 minutes</li>
+<li><strong>20 questions</strong> — about 10 minutes</li>
+<li><strong>40 questions</strong> — about 20 minutes</li>
+</ul>
+<p>You will not get the same question twice in one set.</p>
+<p class="guardrail">We choose how many questions and which topics. The real exam may be a different length and cover topics differently.</p>
+<p class="guardrail">Your score here is practice only. It is not an exam score and does not predict whether you will pass.</p>
+</section>
+<section class="proto-block" data-variant="CL-D2" aria-label="Candidate CL-D2 (open book)">
+<h2>Candidate CL-D2 (open book)</h2>
+<h3>How many questions do you want?</h3>
+<p>We have 90 questions about tools. Pick a set length and we will choose from those without repeating any.</p>
+<p class="guardrail">These lengths are ours, not the state's. <a href="#">Why we cannot tell you the real exam length</a></p>
+<p class="guardrail">Your score here is practice only. It is not an exam score.</p>
+</section>
+<section class="proto-state" data-state="empty-insufficient-capacity" aria-label="State: empty-insufficient-capacity">
+<h2>State: empty-insufficient-capacity</h2>
+<p><strong>40 questions is not available for tools right now.</strong></p>
+<p>We only have 28 tool questions, so a 40-question set would repeat some.</p>
+<p>You can start 20 tool questions, or start 40 questions on all topics.</p>
+</section>
+<section class="proto-state" data-state="ready-repeatable" aria-label="State: ready-repeatable">
+<h2>State: ready-repeatable</h2>
+<p>Want the same set again later? <strong>Save this set</strong> and we will give you the same questions in the same order.</p>
+</section>
+<section class="proto-state" data-state="error" aria-label="State: error">
+<h2>State: error</h2>
+<p><strong>We could not start your practice set.</strong></p>
+<p>Nothing was saved and nothing was lost.</p>
+<p><strong>Try again</strong>, or <strong>go back to practice</strong>.</p>
+</section>
+<section class="proto-block" data-variant="advanced" aria-label="Advanced disclosure (both candidates)">
+<h2>Advanced disclosure (both candidates)</h2>
+<details><summary>Technical details</summary>
+<p>Repeatable set identifier. Full availability table by topic and length. Release identifier.</p>
+</details>
+</section>
+</main>
