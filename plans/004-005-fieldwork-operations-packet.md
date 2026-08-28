@@ -40,11 +40,13 @@ round manifest, an exposure approval, participant evidence, or an accepted
 language direction.
 
 The user's approval authorizes in-scope repository work, research operations,
-branches, pushes, PRs, and verification. It does not create a participant pool,
-a way to contact that pool, money or a payment rail, a private research-data
-system, research devices, or a prototype exposure endpoint. It also does not
-turn executor prose into the structured approval comments required by the
-existing retained verifiers.
+branches, pushes, PRs, and verification. The user's later zero-budget decision
+also fixes every phase as unpaid, amount `0`, with funding/delivery/payment rails
+not applicable and recording off. Those decisions do not create a participant
+pool, a way to contact that pool, venue permission, an access-separated private
+research-data system, named custodians or research staff, research devices, or
+a prototype exposure endpoint. They also do not turn executor prose into the
+structured approval comments required by the existing retained verifiers.
 
 ### Evidence and sample accounting
 
@@ -52,6 +54,7 @@ existing retained verifiers.
 |---|---|---|---|
 | Plan 004 | 526-document/27-route baseline; 120 copy families; 79 proposed rewrite families; 24 keep; 9 move to details; 5 internal only; 2 content re-review; 1 support relocation; 847 dynamic-message anchors; 13 dated benchmark records; eight editable `CL-1` prototype files | Pilot `n=0`; R1 `n=0`; R2 `n=0`; observations `n=0`; issue rows `n=0` | No direction selected; `product/CONTENT_DESIGN.md` correctly absent |
 | Plan 005 | 21 destination families; 32 unique core route IDs; four acquisition spokes; 21 learner-task statements | Open sort `n=0`; threshold pilot `n=0`; tree test `n=0`; first-click R1 `n=0`; first-click R2 `n=0`; distinct access-strategy people `n=0` | No candidates, thresholds, locks, selected model, or product-contract promotion |
+| Non-participant lanes | Six executable lanes defined; no lane run is claimed by this packet | Items `0`; participant-sample contribution `n=0` | Hypotheses/defects/priorities only; no participant, threshold, critical-closure, or selection credit |
 
 The eight Plan 004 working files are durably preserved byte-for-byte under
 `recovery/plan-004-consumer-language-prototypes/prototypes/`. The recovery
@@ -95,13 +98,13 @@ consented contact administration.
 | Plan 005 preservation | `STATUS LANDED; RESEARCH DRAFT` | PR #40 status plus #38 inventory, without promoting hypotheses |
 | Recruitment/contact channel | `ABSENT` | Named real channel, authorized contact owner, exact target pool, workflow, and availability window |
 | Real target-user access | `ABSENT` | Proof that the channel can reach qualifying real people; no names in Git |
-| Paid or unpaid terms | `ABSENT` | Exact phase terms; if paid, amount, funding, delivery, timing, and cancellation; if unpaid, explicit no-payment terms |
-| Contact/payment registry | `ABSENT` | First access-separated private system in section 4, including contact consent for scheduling, payment when used, withdrawal, and deletion requests |
+| Unpaid participation terms | `READY: ZERO-BUDGET-UNPAID-V1` | All eight canonical rows: amount `0`; currency/funding/delivery/payment rail `n/a`; no-show/cancellation charge `0`; stop/skip/cancel without penalty; file SHA-256 `fc01b211b1ddaa1862bea1adb54d82b2aafdadf4a3c1a1cd0bfda775d0c833c5` |
+| Contact/consent registry | `ABSENT` | First access-separated private system in section 4, including contact consent for screening/scheduling and withdrawal/deletion requests; no payment data is needed |
 | Research evidence store and screener writer | `ABSENT` | Second access-separated private system; implemented `fieldwork-screener-v1`, `fieldwork-consent-attrition-v2`, and strict private validator; the store is ready to receive de-identified rows keyed by `recruitment_key` before screening |
 | Screener/contact materials | `PACKET READY; INSTANTIATION ABSENT` | Exact channel copy, screener version/hash, contact consent, retention/deletion language, cohort-reuse token disclosure/check, and per-phase compensation-terms hash |
 | Pre-recruitment structured approvals | `ABSENT` | Owner-authored schema-amendment and operations/sample comments on both #37 and #38; no formal exposure approval is required yet |
 | Incident owner | `ABSENT` | Named human contact and response path for privacy, safety, accessibility, and protocol incidents |
-| Recruitment recording | `READY: false` | Recruitment calls/messages are not recorded; a change needs separate approval and disclosure |
+| Recruitment recording | `READY: false` | No audio, video, screen, or keystroke recording; a change requires a prospective protocol amendment |
 
 Every row in this table must be ready before first contact. Passing it creates
 screened or scheduled people, not participants and not evidence. A draft PR URL
@@ -118,7 +121,7 @@ deliberately not prerequisites here.
 | `PRE-RECRUITMENT` | `FAIL` | Every section 2.1 row ready and the person screened eligible |
 | Screening/consent infrastructure | `INHERITED FROM 2.1` | Approved research store plus strict screener, shared attrition, and phase-terms validators remain operational |
 | Human roles | `ABSENT` | Named moderator, incident owner, and second human reviewer |
-| Session facility | `ABSENT` | Required device/browser/AT and private exposure method; recording remains false by default |
+| Session facility | `ABSENT` | Required device/browser/AT and private exposure method; recording is fixed false |
 | Plan 004 uncounted pilot | `NOT READY` | Authority-repaired working copies; isolated direction/role/state; working-artifact hashes; pilot guide; one screened real person; no `R1-P*` ID |
 | Plan 005 open sort | `NOT READY` | Exact 24-card/script hashes, private open-sort schemas, no candidate IA/language exposure, screened real people |
 | Plan 005 threshold pilot | `NOT READY` | Completed open-sort aggregates and hash-bound formation record; pilot A/B artifacts and schedule hashes; private threshold schemas; 2–3 fresh people eligible for the pilot aggregate and barred from formal reuse |
@@ -142,7 +145,7 @@ Common formal rows:
 |---|---|---|
 | Cohort independence | `FAIL` | Private reuse check passes the section 5 matrix before formal ID issuance |
 | Formal exposure facility | `ABSENT` | Exact device/browser/AT/private host or local method and time-bounded access boundary |
-| Recording | `READY: false` | Default no recording; any true value needs separate opt-in, tool, viewers, storage, retention, and deletion approval |
+| Recording | `READY: false` | No audio, video, screen, or keystroke recording under `ZERO-BUDGET-UNPAID-V1`; any true value requires a prospective protocol amendment |
 | Exact-round structured approval | `ABSENT` | Owner-authored formal exposure comment on the relevant #37 or #38, bound to exact bytes/schedule/access method |
 | Human analysis | `ABSENT` | Named moderator, incident owner, and second human critical/high reviewer |
 
@@ -247,7 +250,7 @@ pilot while preserving fail-closed formal evidence.
 
 The shared private boundary uses `fieldwork-compensation-terms-v1`,
 `fieldwork-consent-attrition-v2`, `fieldwork-attrition-projection-v1`,
-`fieldwork-screener-v1`,
+`fieldwork-screener-v1`, `fieldwork-nonparticipant-evidence-v1`,
 `fieldwork-schema-migration-v1`, `fieldwork-phase-input-manifest-v1`, and
 `fieldwork-phase-evidence-manifest-v1`. For Plan 004, retain
 `consumer-language-prototypes-v1` as the exact eight-source manifest and add
@@ -307,12 +310,25 @@ structural-candidate, and minimal selected paths can succeed. Add
   Fixture IDs are valid only in explicit test mode and operational phases must
   reject them.
 
+Across both plans, the validator also verifies the exact eight-row
+`ZERO-BUDGET-UNPAID-V1` file and its row joins, requires
+`recording-not-used` before exposure, and rejects any paid, recorded, missing-
+policy, or mutated terms fixture. It validates all six non-participant lane/
+actor pairs and rejects a nonzero sample count, participant/threshold/selection
+credit, participant join fields, relabeling, or use of a lane register in an
+input/evidence manifest. Lane evidence can stop a safety or conformance
+preflight, but can never make a participant gate pass.
+
 ### 3.4 Zero-row schema amendment and migration
 
 The normative companion is
 `plans/004-005-fieldwork-schema-contract.json`. It contains schemas only—no
 people or study results—and is checked by
 `plans/validate-004-005-fieldwork-packet.mjs`.
+The canonical public zero-budget matrix is
+`plans/004-005-fieldwork-unpaid-terms.v1.tsv`; the public blank operator kit is
+`plans/004-005-zero-cost-fieldwork-kit.md`. Neither file contains permission,
+identity, contact, consent, screening, private-system, or participant evidence.
 
 Plan 004 migration registers the maintained 16-column observation matrix,
 9-column issue matrix, and the absent `consumer-language-prototypes-v1` schema
@@ -387,7 +403,7 @@ legacy in-row value is never an exception for a new file.
 
 The operator supplies this completed manifest outside Git. The repository may
 retain only non-sensitive decisions and approval coordinates. Never commit
-credentials, contact lists, names, payment details, consent forms, or private
+credentials, contact lists, names, consent forms, or private
 store paths that reveal a person's identity.
 
 ```text
@@ -403,27 +419,32 @@ real_target_user_access_basis: <how the channel reaches the screened segments>
 session_mode: <in-person | remote | mixed>
 
 compensation_terms_schema: fieldwork-compensation-terms-v1
-compensation_terms_file_sha256: <validated external private file hash>
-compensation_terms_by_phase: <exact eight-row matrix: p004-pilot; p004-r1; p004-r2; p005-open-sort; p005-threshold-pilot; p005-tree-test; p005-first-click-r1; p005-first-click-r2>
-per_phase_required_fields: <paid|unpaid; exact amount/currency or none; funder/proof or n/a; delivery rail/deadline or n/a; withdrawal; no-show; cancellation; participant-terms hash>
+compensation_terms_version: ZERO-BUDGET-UNPAID-V1
+compensation_terms_file: plans/004-005-fieldwork-unpaid-terms.v1.tsv
+compensation_terms_file_sha256: fc01b211b1ddaa1862bea1adb54d82b2aafdadf4a3c1a1cd0bfda775d0c833c5
+terms_code_and_amount: unpaid; 0
+currency_funder_proof_delivery_rail_deadline: n/a
+withdrawal_payment_code: n/a-unpaid
+no_show_and_cancellation_charge_currency_minor: 0; 0
+stop_or_skip_without_penalty: true
 
-contact_registry_system: <named approved system and non-secret locator>
+contact_registry_system: <named provisioned local system/version and non-secret label>
 contact_registry_custodian: <named person>
-contact_registry_access: <named identities/roles; recruitment/payment only>
-contact_registry_controls: <MFA, encryption, audit/access-review policy>
-contact_registry_data_classes: <contact; contact consent; scheduling; payment if used; person-key/study-ID link; privacy-minimal cohort-reuse/suppression token; withdrawal/deletion requests>
-contact_registry_retention_trigger_and_deadline: <exact rule>
-contact_registry_deletion_and_backup_process: <exact primary/backup confirmation process>
-contact_registry_withdrawal_handling: <who receives, authenticates, relays, and closes a request>
+contact_registry_access: <named identities/roles; contact administration only>
+contact_registry_controls: <OS-account/volume separation; encryption; authentication; access review; denial test>
+contact_registry_data_classes: <channel permission; contact; contact consent; scheduling; person-key/study-ID link; privacy-minimal cohort-reuse/suppression token; withdrawal/deletion requests; no payment data>
+contact_registry_retention_trigger_and_deadline: <exact contact/permission/reuse rule>
+contact_registry_deletion_and_backup_process: <exact primary/backup confirmation and tested process>
+contact_registry_withdrawal_handling: <who receives, authenticates, relays, and closes a request; tested dry run>
 cohort_reuse_token_method: <keyed HMAC over normalized operator-held contact coordinate; key custodian/rotation; no raw contact in research store>
 cohort_reuse_token_custodian_and_access: <named minimum-necessary contact-registry roles>
 cohort_reuse_token_retention_and_deletion: <through final cross-plan recruitment/reuse check, then exact deletion and backup purge>
 
-research_evidence_system: <different named approved system and non-secret locator>
+research_evidence_system: <different named provisioned local system/version and non-secret label>
 research_evidence_custodian: <named person; may not resolve identities>
 research_evidence_access: <named moderator/researcher/reviewer identities or roles>
-research_evidence_controls: <MFA, encryption, audit/access-review policy>
-research_evidence_data_classes: <recruitment keys; de-identified screener/quota rows; opaque person/study IDs; consent/attrition events; raw matrices/notes; artifact joins; no contact/payment data or reuse token>
+research_evidence_controls: <different account/device/independently permissioned volume; encryption; authentication; access review; denial/restore/delete tests>
+research_evidence_data_classes: <recruitment keys; de-identified screener/quota rows; opaque person/study IDs; consent/attrition events; raw matrices/notes; artifact joins; no identity/contact data or reuse token>
 plan_004_retention_trigger_and_deadline: <later of latest applicable disclosed cutoff and the Plan 004 ordinary earlier-of deadline; cutoff no later than Plan 004 180-day ceiling>
 plan_005_retention_trigger_and_deadline: <independent later of latest applicable disclosed cutoff and the Plan 005 ordinary earlier-of deadline; cutoff no later than Plan 005 180-day ceiling>
 research_evidence_deletion_and_backup_process: <exact primary/backup confirmation process>
@@ -438,7 +459,9 @@ required_at_facilities: <keyboard, screen reader, enlargement/reflow, motor/cogn
 prototype_exposure_method: <exact device, local method, or approved private URL>
 prototype_exposure_boundary: <who can access it and for how long>
 recording_used: false
-recording_tool_storage_retention_deletion: n/a
+recording_types_tool_storage_retention_deletion: n/a
+recording_consent_code: not-requested
+required_ledger_event_before_exposure: recording-not-used
 observer_roles: <moderator; optional disclosed note-taker/reviewer>
 withdrawal_window: <exact participant-facing rule and computed cutoff>
 
@@ -449,15 +472,20 @@ plan_005_pr_38_gate_comments: <owner-authored structured comment URLs/body hashe
 The two private systems must be access-separated in fact. One shared account,
 folder, public link, or nominally different path does not satisfy the boundary.
 Only the contact registry may resolve `program_person_key` or `study_id` to a
-person. Research roles receive opaque keys; contact/payment roles do not receive
+person. Research roles receive opaque keys; contact roles do not receive
 raw observations. A withdrawal/deletion request enters through the contact
 registry and is relayed by opaque key to the evidence custodian.
 
-If `recording_used` changes to `true`, the operator must also supply the exact
-tool, recording types, viewers, storage location, separate opt-in language,
-retention deadline, and deletion confirmation process. Declining recording may
-not make an otherwise eligible person ineligible; structured notes are the
-fallback.
+The zero-budget policy can run locally without a purchased platform: an
+encrypted contact vault under the contact custodian's OS account and a separate
+encrypted research vault under a different custodian/account/device or
+independently permissioned volume. The operator records the actual system,
+version, custodian, access list, encryption/authentication, retention, deletion,
+backup, cross-access denial test, restore/delete test, and withdrawal dry run.
+The repository template does not provision or prove either boundary. One
+account with two folders fails. Recording cannot change to `true` within this
+protocol version; that requires a prospective amendment and new participant-
+facing terms before contact.
 
 The approval sequence remains machine-bound to the existing draft PRs. Before
 recruitment, #37/#38 receive their amended schema/operations/sample comments.
@@ -471,6 +499,40 @@ authored comment grammars; executor prose or the manifest itself is not an
 approval.
 
 ## 5. Target segments and sample plan
+
+### Non-participant evidence lanes
+
+These lanes may run provisionally while volunteer access is pending. They may
+generate hypotheses or defects, prioritize participant questions, and stop an
+artifact on a safety or standards preflight. They may stop, never pass, a
+participant, threshold, critical-closure, progression, or selection gate.
+
+| Exact lane code | Actor class | Permitted output | Prohibited inference |
+|---|---|---|---|
+| `expert-heuristic-review` | `expert-reviewer` | Heuristic defect/hypothesis/question priority | Expert opinion is not a recruited learner session |
+| `automated-accessibility-check` | `automated-tool` | Deterministic standards defect/hypothesis | Tool output is neither WCAG conformance by itself nor a participant |
+| `manual-accessibility-check` | `manual-accessibility-reviewer` | Human standards/manual-check defect | A manual reviewer is not a target-user sample unless independently recruited into a later lawful phase |
+| `public-language-corpus-analysis` | `corpus-analyst` | Public-usage hypothesis/question priority | Corpus documents are not people or comprehension observations |
+| `deterministic-task-route-simulation` | `deterministic-runner` | Route/state defect or test hypothesis | A scripted path is not first-click, tree, or task evidence |
+| `structured-owner-dogfooding` | `project-owner` | Owner-observed defect/hypothesis | The owner remains contributor-excluded and cannot count |
+
+Agents, synthetic personas, role-play, heuristic reviewers, accessibility
+checkers, public documents, deterministic runs, owner dogfooding, and project
+contributors contribute exactly `0` to invited, screened, scheduled, started,
+completed, eligible, access-strategy, retest, and sample counts. A target-like
+acquaintance's ad hoc review is still non-participant evidence. An activity is
+classified when it occurs and cannot be dual-registered or later relabeled.
+Any later volunteer session must independently pass permission-based outreach,
+screening, consent, prior-exposure, and cohort rules.
+
+Each atomic safe lane result uses `fieldwork-nonparticipant-evidence-v1`, stays
+outside participant input/evidence manifests, and bears this exact banner:
+
+> **NON-PARTICIPANT EVIDENCE — DOES NOT COUNT TOWARD RECRUITMENT, SAMPLE, THRESHOLDS, OR SELECTION**
+
+Lane accounting is reported as `items`, never participant `n`. Current lane
+items are `0`. The public blank result form is in
+`plans/004-005-zero-cost-fieldwork-kit.md`.
 
 ### Counted primary participants
 
@@ -487,7 +549,9 @@ approval.
 
 Librarians and workforce-development staff may be interviewed separately as
 support users. They do not satisfy a learner minimum and their evidence is
-reported separately.
+reported separately unless they independently pass the exact target-learner
+screener and consent for that phase; venue or professional status alone never
+makes them a learner participant.
 
 Recruit for phone-primary use, varied reading and digital confidence, and
 access strategies without asking for a diagnosis. Plan 005 must include at
@@ -512,8 +576,14 @@ strategy category, not medical information.
 Plan 004 uses six or eight, both inside the reviewed 5–8 range, because the
 locked allocation requires direction/order balance; seven is not a valid
 formal size. Plan 005 retains its recommended ranges and non-waivable floors.
-Any feasibility deviation must be approved before contact and may not be
-lowered after results are visible.
+The normal zero-budget small-round target is 4–8 actual or likely users where a
+stronger plan-specific design does not apply. The one-person uncounted Plan 004
+pilot, 2–3-person threshold-method pilot, exact Plan 004 balance, and 15–20-
+person tree test are deliberate plan-specific exceptions. Every small round is
+directional and not statistically generalizable. A target, invitation, screened
+person, scheduled seat, or pop-up is not a completed eligible participant. Any
+feasibility deviation must be approved before contact and may not be lowered
+after results are visible.
 
 ### Cohort-reuse matrix
 
@@ -562,7 +632,7 @@ Before the first answer, the contact registry creates a random
 `RK-[0-9a-f]{32}` recruitment key and sends only that key plus intended
 plan/phase to the approved research-store screener writer. The exact
 `fieldwork-screener-v1` row contains de-identified routing/quota answers and no
-name, contact coordinate, payment value, or free text. The contact registry
+name, contact coordinate, or free text. The contact registry
 keeps identity/contact and its reuse token; the research store keeps the
 screener row. A `program_person_key` may be `n/a` while screening and is created
 after contact consent/eligibility, before any exposure. Screening and scheduling
@@ -576,8 +646,12 @@ artifact may be prepared merely because screening passed.
 
 Recruitment copy must say the project is independent/unofficial, is testing a
 study site rather than the person, never wants remembered exam material, and
-states exact duration plus the approved paid or unpaid terms. The recruiter
-asks:
+states exact duration plus the fixed unpaid `$0`, no-charge, no-penalty, and no-
+recording terms. Use permission-based personal-network or community-partner
+outreach; approach NYPL, Workforce1, or a similar public job-seeker venue only
+after that specific venue grants permission. The exact 30-second intercept,
+contact copy, accommodations prompt, and private permission record are in
+`plans/004-005-zero-cost-fieldwork-kit.md`. The recruiter asks:
 
 1. **Are you 18 or older?** `No` ends screening.
 2. **Which best describes you?** `preparing/recently prepared for an
@@ -610,11 +684,11 @@ asks:
     documents?** `No` ends screening without collecting the material.
 12. **Are you available for the stated session length and mode?** Use the
     operator's real schedule.
-13. **May the research operator contact you only about scheduling, payment if
-    this phase is paid, and any withdrawal or deletion request you make?** `No`
-    ends recruitment. This contact consent does not equal research consent.
-    Contact details go into the contact/payment registry, never the research
-    matrix or Git.
+13. **May the research operator contact you only about screening follow-up,
+    scheduling, and any withdrawal or deletion request you make?** `No` ends
+    recruitment. This contact consent does not equal research consent. Contact
+    details go into the contact/consent registry, never the research matrix or
+    Git.
 
 Do not ask for an employer, applicant/admission number, exact location,
 disability diagnosis, exam recollection, or proof of candidacy. A public exam
@@ -634,11 +708,11 @@ private run sheet:
 >
 > This session takes about [MINUTES] minutes. I will ask you to group study
 > tasks, find information, or explain what words on a prototype mean. You may
-> skip any question, take a break, or stop at any time without giving a reason.
-> [PAID VERSION: This session pays [AMOUNT AND METHOD]. If the session starts
-> and you stop, you still receive the promised amount.] [UNPAID VERSION: This
-> session is unpaid. You may stop or skip without penalty; no payment is
-> offered.]
+> skip any question, take a break, cancel, or stop at any time without giving a
+> reason. Participation is unpaid and voluntary. The amount is zero; no payment
+> or other incentive is offered. There is no cancellation or no-show charge and
+> no penalty for declining, skipping, or stopping. Your decision does not affect
+> any job, exam, library, workforce, community, or other service.
 >
 > Please do not share anything remembered from a real exam: no questions,
 > answer choices, drawings, answers, review-session notes, admission documents,
@@ -646,13 +720,14 @@ private run sheet:
 > will not write down or repeat the material.
 >
 > We will take structured notes about what you do and say about the prototype.
-> [NO RECORDING WILL BE MADE / EXACT SEPARATE RECORDING STATEMENT]. Your contact
-> and payment information is kept separately from study notes. Raw notes are in
-> [PRIVATE SYSTEM NAME], available only to [ROLES], and follow the deletion
-> schedule I will give you. GitHub receives only de-identified totals and
-> themes.
+> We will not record audio, video, your screen, or keystrokes. Your contact
+> information is kept separately from study notes. Raw notes are in [RESEARCH
+> EVIDENCE SYSTEM NAME], available only to [ROLES], and follow the deletion
+> schedule I will give you. GitHub receives only de-identified totals, themes,
+> and artifact hashes.
 >
-> You can ask us to delete your identifiable notes until [WITHDRAWAL CUTOFF] by
+> You can ask us to delete your separable coded notes and raw evidence until
+> [WITHDRAWAL CUTOFF] by
 > contacting [OPERATOR CONTACT]. After results have been de-identified and
 > combined, we may no longer be able to separate your contribution. The main
 > risks are ordinary frustration with a prototype and accidental disclosure of
@@ -661,46 +736,51 @@ private run sheet:
 
 The moderator then asks, separately:
 
-1. Paid: “Can you stop or skip a task and still receive the promised
-   compensation?” Unpaid: “Can you stop or skip a task without penalty, and is
-   it clear that this session offers no payment?”
+1. “Is it clear that this is unpaid, offers no payment, and that you may skip or
+   stop without penalty?”
 2. “Should you tell us a question or answer you remember from a real exam?”
-3. “Do you agree to take part and to the note-taking just described?”
-4. If recording is approved: “Do you separately agree to [audio/screen] recording?”
+3. “Do you voluntarily agree to take part and to the structured note-taking
+   just described?”
 
-Research consent is complete only after a correct `yes` to the applicable terms
-question, `no` to sharing remembered exam material, and `yes` to
-research/note-taking (items 1–3). Correct misunderstandings once and ask again.
-Otherwise stop without issuing a scored participant row. When recording is
-approved and offered, item 4 controls recording only: `yes` permits the named
-recording, while `no` records `recording-consent-declined` and the session
-continues on the required no-recording path without exclusion.
+Research consent is complete only after `yes` to items 1 and 3 and `no` to item
+2. Correct misunderstandings once and ask again. Otherwise stop without issuing
+a scored participant row. Append `recording-not-used` after affirmative research
+consent and before any task exposure. Do not ask for recording consent under
+this protocol version.
 
-### Compensation policy
+### Unpaid participation policy
 
-- When used, compensation is for time, not performance, agreement, or
-  completion. An unpaid phase must be labeled unpaid in every contact and
-  consent surface.
-- Before recruitment, the operator records either exact paid terms and verifies
-  the funds/payment rail or records exact unpaid terms with amount `none`.
-- For a paid phase, pay the full promised session amount when a participant
-  withdraws after the session starts or the researcher stops for security,
-  privacy, accessibility, distress, or technical reasons. For an unpaid phase,
-  do not imply that compensation exists; stopping remains penalty-free.
-- Recruitment copy states payment timing. The default operational target is
-  delivery within two business days; a different timing must be disclosed and
-  approved before contact.
-- No-show and advance-cancellation terms must be stated before scheduling.
-- A no-pay design is valid only as an explicit operator decision stated in the
-  recruitment and consent materials; silence is not a no-pay decision.
+- All eight phases use `ZERO-BUDGET-UNPAID-V1`: amount `0`; currency, funder,
+  funding proof, delivery method, payment rail, and deadline `n/a`.
+- No payment, incentive, reimbursement, cancellation charge, or no-show charge
+  exists. Do not imply that any exists.
+- Stopping, skipping, cancelling, declining, a researcher stop, and a technical
+  or accessibility failure carry no fee, penalty, debt, or loss of service.
+- Repeat the concise no-incentive disclosure in outreach, scheduling, consent,
+  and closing. The canonical text/hashes and eight rows are fixed in
+  `plans/004-005-fieldwork-unpaid-terms.v1.tsv`.
+
+The ledger joins the phase-specific row hash below, computed as exact TSV header
+plus LF plus the one canonical row plus LF:
+
+| Phase | `compensation_terms_sha256` |
+|---|---|
+| `p004-pilot` | `2e0c27e1537f8cb0114a0aca6868e2136bb58c731335ef7c33810bb6610ad8cd` |
+| `p004-r1` | `53cd0cdb19fb230114f9019806acecd9bf538636c519b5e8fcb189ed7c2e2a45` |
+| `p004-r2` | `0cbb85ab124569135b80517b3e98c64519b3cd41379ba21f850d622766681ef2` |
+| `p005-open-sort` | `2e0002d7c39c25d52ae27600925d03a1912ddadefc8b01a27f3ac809882f5aa8` |
+| `p005-threshold-pilot` | `380a7aef3e74605a9da7ed3d09b1a05d1b6e21d6f532a84619fb616c5acbfac1` |
+| `p005-tree-test` | `6163960a95f3aed72e886e6491837f9b8ee9ec666121ef2063add603bfd6c289` |
+| `p005-first-click-r1` | `70ba88aff5d8616f482bcd756a7da0d85f017fd58eb10852729f2a3aea55c9e0` |
+| `p005-first-click-r2` | `393bd1f0095ab0f56b9c467bb829aaf80f9442e05f7d2913463a2e7b6362e1d6` |
 
 ### Recording policy
 
-Default: no audio, video, screen, or keystroke recording. One moderator and,
-when disclosed, one note-taker use structured notes. If recording is later
-approved, consent to research and consent to recording remain separate;
-declining recording cannot exclude a participant, and the no-recording session
-path remains available.
+No audio, video, screen, or keystroke recording is permitted. One moderator and,
+when disclosed, one note-taker use minimum necessary structured notes. Every
+session appends `recording-not-used` before exposure and projects recording as
+`not-requested`. Recording requires a prospective versioned amendment; it
+cannot be enabled through a run-sheet substitution.
 
 ### Withdrawal and deletion
 
@@ -709,13 +789,13 @@ path remains available.
   `phase | plan | program` target scope; never overwrite a completed/excluded
   cell or revive a broader terminal event with narrower later consent.
   Every observation in scope is ineligible at the aggregation cutoff, including
-  observations that occurred before the request.
-- Pay according to the full-session withdrawal rule.
-- Before the stated cutoff, delete raw notes and any recording, invalidate and
+  observations that occurred before the request. No payment or charge is
+  created by the request.
+- Before the stated cutoff, delete raw notes, invalidate and
   recompute unpublished phase manifests/aggregates, and append only the
   approved opaque deletion tombstone. Immediately restrict/minimize the
   contact-registry identity/person/study resolving link to what is necessary to
-  authenticate and close the request and settle any payment; delete that link
+  authenticate and close the request; delete that link
   at the exact registry deadline in section 8. The separately disclosed
   reuse/suppression token follows its independent program-end deadline.
 - Until each person's disclosed withdrawal cutoff, keep the private inclusion
@@ -726,10 +806,10 @@ path remains available.
   disclosed cutoff and irreversible publication,
   explain the stated limit; do not pretend a row can be recovered.
 
-`contact-consent-revoked` stops future contact/scheduling and payment messages
-not needed to close an existing obligation; it does not erase valid structured
-evidence. `recording-consent-revoked` deletes and invalidates the recording only;
-it does not invalidate separately consented structured notes. Only applicable
+`contact-consent-revoked` stops future contact/scheduling except messages needed
+to close a withdrawal/deletion request; it does not erase valid structured
+evidence. `recording-consent-revoked` is invalid in this no-recording protocol;
+the generic ledger enum exists only for a future versioned amendment. Only applicable
 research-consent revocation, participant withdrawal, deletion within the
 cutoff, researcher stop, or evidence exclusion removes structured evidence from
 an aggregate. A skipped task is neither consent revocation nor withdrawal.
@@ -747,25 +827,29 @@ task is not withdrawal; apply the task rule without changing phase consent.
 
 The operator provisions two access-separated private systems:
 
-1. **Contact/consent/payment registry** — names and contact/payment status,
+1. **Contact/consent registry** — names and contact status, channel permission,
    scheduling, contact consent, opaque person/study links, privacy-minimal
    reuse/suppression token, and withdrawal/deletion requests; accessible only
-   to the recruitment/payment operator and its named custodian.
+   to the contact operator and its named custodian. It contains no payment data
+   because every phase is unpaid.
 2. **Research store** — recruitment keys, de-identified screener/quota rows,
    study IDs, structured observations, code-keyed notes, consent/attrition
    events without identity, prototype/evidence coordinates, and incident codes;
    accessible only to the named moderator/researcher, evidence custodian, and
-   minimum-necessary second reviewer. It contains no contact value, payment
-   coordinate, or cohort-reuse token.
+   minimum-necessary second reviewer. It contains no identity/contact value or
+   cohort-reuse token.
 
 The resolving ID link stays only in the contact registry. The research store
 may use the same opaque `program_person_key` for reuse/unique-person checks but
 cannot resolve it to identity. The systems need separately named custodians and
 access lists; one account or shared folder cannot satisfy both. Both require
 authenticated accounts, least privilege, MFA where available, encryption in
-transit and at rest, audit/access review, and deletion from recoverable backups
-under the named process. Shared public links, personal unencrypted folders,
-issue attachments, chat uploads, and `/tmp` are not private systems.
+transit and at rest, audit/access review, cross-access denial, restore/deletion
+tests, a withdrawal dry run, and deletion from recoverable backups under the
+named process. The no-cost local model and private provisioning template are in
+`plans/004-005-zero-cost-fieldwork-kit.md`. Shared public links, personal
+unencrypted folders, issue attachments, chat uploads, and `/tmp` are not private
+systems.
 
 ### Shared consent/attrition schema
 
@@ -800,12 +884,21 @@ Exact event types are `screened-eligible`, `screened-ineligible`,
 `raw-deletion-confirmed`, `aggregate-no-longer-separable`, and
 `access-strategy-used`.
 
+The generic v2 ledger retains recording-consent and `paid` enum members so a
+future protocol can migrate without inventing a new attrition history. They are
+operationally invalid under `ZERO-BUDGET-UNPAID-V1`: after activation every
+event carries the exact phase's `unpaid` row hash; each session has exactly one
+same-study `recording-not-used` event after research consent and before first
+exposure; no recording-consent event is permitted.
+
 `target_scope` is `phase | plan | program | contact | recording | n/a`.
 `phase` requires both target plan and phase; `plan` requires a plan and
 `target_phase_id = n/a`; `program`, `contact`, `recording`, and `n/a` require
 both targets `n/a`. Phase IDs are the eight exposed phase names in the cohort
-matrix. `compensation_terms_code` is `paid | unpaid | n/a` and an activated
-phase joins the exact `fieldwork-compensation-terms-v1` row/file hash. Each
+matrix. Before phase choice compensation fields are `n/a`; after activation
+`compensation_terms_code` is `unpaid` and
+`compensation_terms_sha256` is SHA-256 of the canonical header plus LF plus the
+one joined `fieldwork-compensation-terms-v1` phase row plus LF. Each
 `research-consent-affirmed` event requires the exact consent document SHA-256
 and the participant-specific UTC `withdrawal_cutoff_at_utc` disclosed by that
 document; other events use `n/a` for the cutoff. The cutoff must be no later
@@ -827,8 +920,11 @@ scope precedence is `program > plan > phase`; a broader research withdrawal,
 revocation, deletion, or stop is terminal and a later narrower consent cannot
 revive it. An event keyed to one study propagates through
 `program_person_key` to every study in its target scope. Contact revocation has
-contact-only effect. Recording revocation changes recording to `withdrawn` and
-requires recording deletion but leaves structured-note consent unchanged.
+contact-only effect. Under a future version that lawfully enables recording, a
+recording revocation would change recording to `withdrawn` and require recording
+deletion while leaving separately consented structured notes unchanged. Under
+this version, recording-consent/revocation events are invalid and the only valid
+recording projection is `recording-not-used → not-requested`.
 Research consent maps `affirmed → consented`, `declined → declined`, and
 applicable `revoked`/`participant-withdrew → withdrawn`. Phase events project
 as `study-id-activated → activated`, `scheduled → scheduled`,
@@ -847,8 +943,8 @@ the same recruitment/person/study keys and predate exposure. The contact
 registry separately retains contact-consent proof, its short-lived resolving
 map, and the longer privacy-minimal reuse/suppression token described above.
 Mirrored consent/status fields must byte-match the effective projection;
-disagreement fails. The ledger stores no name, contact value, payment
-coordinate, diagnosis, free-text note, or exam content.
+disagreement fails. The ledger stores no name, contact value, diagnosis,
+free-text note, or exam content.
 
 At each named closure cutoff, the verifier derives—not hand-enters—one
 `fieldwork-attrition-projection-v1` row per activated study. The exact private
@@ -873,8 +969,8 @@ the most convenient reason.
 Retention schedule (computed independently for each plan):
 
 - the identity/contact → person/study resolving link is deleted seven days after
-  the later of paid compensation resolution (or session closure when unpaid)
-  and that person's disclosed withdrawal cutoff; the separately disclosed
+  the later of session closure and that person's disclosed withdrawal cutoff;
+  the separately disclosed
   keyed-HMAC reuse/suppression token → opaque person/exposure-flags map remains
   through the final cross-plan recruitment/reuse check and is then deleted from
   primary storage and recoverable backups on its independently recorded date;
@@ -885,14 +981,14 @@ Retention schedule (computed independently for each plan):
   retroactively.
 - For Plan 004, first compute the ordinary deadline as the earlier of 30 days
   after the accepted Plan 004 findings merge and 180 days after the last Plan
-  004 session. Delete Plan 004 raw notes, matrices, label/control artifacts,
-  and any approved recording on the **later** of that ordinary deadline and the
+  004 session. Delete Plan 004 raw notes, matrices, and label/control artifacts
+  on the **later** of that ordinary deadline and the
   latest applicable disclosed Plan 004 withdrawal cutoff. A stopped Plan 004
   uses the same plan-specific rule and ceiling.
 - For Plan 005, independently compute the ordinary deadline as the earlier of
   30 days after the accepted Plan 005 findings merge and 180 days after the
-  last Plan 005 session. Delete Plan 005 raw notes, matrices, sort labels,
-  candidate/pilot material, and any approved recording on the **later** of that
+  last Plan 005 session. Delete Plan 005 raw notes, matrices, sort labels, and
+  candidate/pilot material on the **later** of that
   ordinary deadline and the latest applicable disclosed Plan 005 withdrawal
   cutoff. Plan 004 activity never extends this clock, and vice versa.
 - Raw evidence, the private inclusion map, and person/study linkage needed to
@@ -906,9 +1002,9 @@ Retention schedule (computed independently for each plan):
   only de-identified aggregate counts, findings, artifact hashes, limitations,
   and decisions.
 
-Consent/financial records that an operator must retain under a separate legal
-policy are outside this research corpus and must be disclosed by that operator;
-this packet does not invent a legal retention duty.
+Consent or operational records that an operator must retain under a separate
+legal policy are outside this research corpus and must be disclosed by that
+operator; this packet does not invent a legal retention duty.
 
 ## 9. Prototype exposure method
 
@@ -925,6 +1021,15 @@ browser that supports the method being studied; watching a facilitator click
 is not first-click or assistive-technology evidence. No public search indexing,
 analytics, third-party behavioral tracking, production modules, live learner
 data, or answer-bearing precommit material is allowed.
+
+The no-cost operator may also offer a scheduled remote session through the same
+private, time-bounded boundary, with camera optional/off and all recording off.
+A 10-minute pop-up may expose only one or two preselected tasks and must pass
+the same permission, screener, consent, privacy, artifact-hash, and attrition
+gates. It is a genuine volunteer interaction but not a completed phase where
+the maintained protocol requires a 9+3, 24-card, 16-trial, or 13-task schedule;
+use the result only as a defect/hypothesis unless a prospective approved
+amendment says otherwise. Exact pop-up/remote scripts are in the zero-cost kit.
 
 Every exploratory exposure uses safety-reviewed bytes whose exact working hash
 is recorded before the session; those bytes may be revised afterward and are
@@ -952,8 +1057,8 @@ participant directly. The moderator:
 5. after 30 seconds of no first action, repeats the task once; after the locked
    phase timeout or a request for help, records failure before offering a rescue;
 6. takes a break at the participant's request and offers one at 30 minutes; and
-7. closes by restating deletion/contact information and payment timing without
-   disclosing a correct research answer.
+7. closes by restating the unpaid/no-penalty terms, deletion cutoff, and contact
+   information without disclosing a correct research answer.
 
 Facilitator rescue never counts as success. A technical restart may continue
 only if the same immutable artifact, state, order, and task remain intact; else
@@ -961,9 +1066,11 @@ the session is technically invalid and may be rescheduled under a new ID.
 
 ## 11. Plan 004 sessions
 
-### Pilot (one real person; not evidence)
+### Pilot (one real person; uncounted and not formal decision evidence)
 
-Run the complete guide and repaired prototypes. Test timing, isolation of the
+Run the complete guide and repaired prototypes with a real consented volunteer.
+It is participant evidence about protocol usability, but contributes `0` to
+formal sample, threshold, or selection counts. Test timing, isolation of the
 assigned direction/state, task ambiguity, control behavior, screen-reader or
 zoom behavior where applicable, and note codes. Do not enter the pilot into R1
 or aggregate findings. Revise editable files and script; only then freeze R1,
@@ -1084,8 +1191,8 @@ phase status, exclusion/reason, withdrawal scope, and deletion status. Formal
 direction is exactly CL-D1 or CL-D2. The pilot instead uses
 `consumer-language-pilot-v1`; its session is unscored, while each row records
 the exact isolated CL-D1, CL-D2, or current condition actually shown. Consent is
-`consented | declined | withdrawn`;
-recording is `not-requested | consented | declined | withdrawn`; phase status is
+`consented | declined | withdrawn`; the generic schema retains recording states
+for migration, but every current row must be `not-requested`; phase status is
 `scheduled | started | completed | excluded | withdrawn | stopped`; exclusion
 is `included | excluded | pending`. Every mirrored participant value is derived
 at the closure cutoff: consent, recording, and deletion byte-match their shared
@@ -1677,13 +1784,13 @@ all bind the same candidate, artifact, hierarchy, and accepted language hashes.
 
 | Event | Immediate action | Evidence/data action |
 |---|---|---|
-| Remembered/secure exam content | Interrupt: “Let's stop there—I cannot collect or repeat that.” Move on or end | Do not record content; remove any accidental capture; retain only `security-interruption`; compensate fully |
+| Remembered/secure exam content | Interrupt: “Let's stop there—I cannot collect or repeat that.” Move on or end | Do not record content; remove any accidental capture; retain only `security-interruption`; no charge or penalty |
 | Accidental PII/document exposure | Stop viewing/recording, close the material, notify data custodian | Quarantine and delete the capture; retain only incident category/date; never commit it |
-| Distress or fatigue | Pause, offer break/skip/stop, do not probe | Withdrawal/skip rules; compensate fully if stopped |
+| Distress or fatigue | Pause, offer break/skip/stop, do not probe | Withdrawal/skip rules; no charge or penalty |
 | Accessibility barrier | Stop forcing the inaccessible path; offer reschedule only after repair | Score the locked task as blocked/failed where valid; open critical review; do not substitute observer clicks |
 | Technical failure | Allow one restart only when artifact/state/order remain exact | Otherwise invalidate technically, retain aggregate reason, and reschedule under a new ID |
 | Facilitator conflict or leading | Pause; replace facilitator if possible | Exclude contaminated task/session and record protocol deviation |
-| Participant withdrawal | Stop immediately, no reason required | Apply section 7 deletion and compensation rules |
+| Participant withdrawal | Stop immediately, no reason required | Apply section 7 deletion and unpaid/no-penalty rules |
 | Suspected privacy/security incident | Stop collection and access to affected data | Notify named incident owner within 24 hours; preserve no prohibited content in the incident note |
 
 The moderator does not confirm whether offered exam content is genuine, provide
@@ -1781,6 +1888,36 @@ decision pass. Production UI code remains out of scope. `plans/README.md` may
 say `DONE` only after the corresponding final verifier, product promotion,
 validation, remote-head, and draft-PR gates pass.
 
+### Authoritative human-research and accessibility guidance
+
+This packet applies the following public guidance, paraphrased together with
+the repository's stricter privacy, non-fabrication, and exam-security rules:
+
+- [W3C, Involving Users in Evaluating Web Accessibility](https://www.w3.org/WAI/test-evaluate/involving-users/)
+  supports involving people with disabilities and reporting study scope and
+  limitations, while distinguishing user observations from accessibility
+  conformance and statistical generalization.
+- [W3C, Understanding Conformance](https://www.w3.org/WAI/WCAG21/Understanding/conformance)
+  describes conformance evaluation as a combination of automated and human
+  checks; usability sessions supplement and do not replace that work.
+- [GOV.UK, Finding participants for user research](https://www.gov.uk/service-manual/user-research/find-user-research-participants)
+  calls for actual or likely users, diverse access needs, permission to invite
+  people, and typically 4–8 people for a small usability/interview round.
+- [GOV.UK, Doing pop-up research](https://www.gov.uk/service-manual/user-research/doing-pop-up-research)
+  supports a concise approach, clear objective, informed consent, and a short
+  roughly 10-minute one-to-two-task format.
+- [GOV.UK, Getting informed consent for user research](https://www.gov.uk/service-manual/user-research/getting-users-consent-for-research)
+  requires understandable disclosure of purpose, activity, data use, recording,
+  observers, retention, withdrawal, and participant rights.
+- [GOV.UK, Managing user research data and participant privacy](https://www.gov.uk/service-manual/user-research/managing-user-research-data-participant-privacy)
+  supports collecting the minimum, need-to-know access, early disclosure, and
+  data organization that permits deletion requests.
+- [HHS OHRP, Informed Consent FAQs](https://www.hhs.gov/ohrp/regulations-and-policy/guidance/faq/informed-consent/index.html)
+  and [The Belmont Report](https://www.hhs.gov/ohrp/regulations-and-policy/belmont-report/read-the-belmont-report/index.html)
+  support adequate time and information for a voluntary choice without
+  coercion or undue influence. Here refusal, cancellation, skipping, stopping,
+  or no-show causes no fee, penalty, service loss, or payment consequence.
+
 ## 18. Resume checklist
 
 Apply only the checklist for the intended next action; do not require formal-
@@ -1793,10 +1930,10 @@ round facts to screen someone or conduct an approved exploratory phase.
       is reconciled without changing truthful zeros.
 - [ ] A real recruitment channel, contact owner, authority, availability
       window, and real target-user access are named.
-- [ ] Exact paid or unpaid terms, funding/delivery where applicable, and
-      cancellation terms are approved in all eight
-      `fieldwork-compensation-terms-v1` phase rows.
-- [ ] The contact/payment registry, custodian, access controls, retention,
+- [x] `ZERO-BUDGET-UNPAID-V1` fixes all eight phase rows: amount and charges
+      `0`; currency/funding/delivery/payment rail `n/a`; stop/skip/cancel without
+      penalty; recording `false`; canonical file/hash validated.
+- [ ] The contact/consent registry, custodian, access controls, retention,
       deletion, backup, and withdrawal process are approved.
 - [ ] The access-separated research evidence store, screener writer, custodian,
       access controls, retention/deletion, and withdrawal process are approved
@@ -1814,7 +1951,7 @@ round facts to screen someone or conduct an approved exploratory phase.
 - [ ] The named moderator, incident owner, and second human reviewer are
       available.
 - [ ] Shared attrition and relevant phase schemas/validators pass; recording is
-      explicitly false unless separately approved.
+      fixed false and `recording-not-used` precedes exposure.
 - [ ] The exact safe pilot/card/candidate bytes, protocol, schedule, device,
       browser/AT, private exposure boundary, and hashes match the phase.
 
@@ -1828,12 +1965,15 @@ round facts to screen someone or conduct an approved exploratory phase.
       resolve on #37/#38 and match exact hashes.
 - [ ] The full formal verifier and tamper fixtures pass before any formal ID or
       link is issued.
-- [ ] No secure exam material, identity, contact/payment data, raw note,
+- [ ] No secure exam material, identity/contact data, raw note,
       credential, or private path is in Git.
 
 Current state remains `NEEDS ATTENTION — external participant resources`.
-No participant access, channel, payment/no-payment terms, two approved private
-systems, named human team, session facilities, or owner gate comments were
-available during this amendment. Full repository-operation approval supplied
-authority to prepare and publish this packet; it did not supply those people,
-funds, systems, facilities, or decisions.
+No participant access, authorized channel/venue window, two provisioned private
+systems with real custodians/access tests, named human team, session facilities,
+or owner gate comments were available during this amendment. The zero-budget
+decision did resolve amount, funding, delivery, cancellation/no-show, voluntary
+withdrawal, and recording fields; it did not supply people, permission, systems,
+facilities, or comments. Desk-only non-participant lanes, validator work, and
+artifact repair may proceed provisionally, but every participant count remains
+`n=0` and neither Plan 004 nor Plan 005 may select or promote a direction.

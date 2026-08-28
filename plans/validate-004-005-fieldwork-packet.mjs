@@ -15,10 +15,16 @@ const scriptDirectory = dirname(fileURLToPath(import.meta.url))
 const repositoryRoot = resolve(scriptDirectory, "..")
 const contractPath = resolve(scriptDirectory, "004-005-fieldwork-schema-contract.json")
 const packetPath = resolve(scriptDirectory, "004-005-fieldwork-operations-packet.md")
+const zeroCostKitPath = resolve(scriptDirectory, "004-005-zero-cost-fieldwork-kit.md")
+const unpaidTermsPath = resolve(scriptDirectory, "004-005-fieldwork-unpaid-terms.v1.tsv")
+const nonParticipantTemplatePath = resolve(scriptDirectory, "004-005-nonparticipant-evidence.v1.tsv")
 const recoveryRoot = resolve(repositoryRoot, "recovery/plan-004-consumer-language-prototypes")
 
 const contractSource = await readFile(contractPath, "utf8")
 const packet = await readFile(packetPath, "utf8")
+const zeroCostKit = await readFile(zeroCostKitPath, "utf8")
+const unpaidTermsSource = await readFile(unpaidTermsPath, "utf8")
+const nonParticipantTemplateSource = await readFile(nonParticipantTemplatePath, "utf8")
 
 // JSON.parse accepts duplicate object keys. This scanner rejects them before
 // parsing so an earlier schema member cannot be silently shadowed.
@@ -128,6 +134,17 @@ if (contract.protocolVersion !== "FW-004-005-v2") fail("unexpected protocol vers
 if (contract.releasedMainSha !== "9fc7dcacfc961752e5d9a2cedbc426deead54a05") fail("released main SHA drift")
 if (contract.recoverySetSha256 !== "f1ef0a2dec44ae04c8c2b3e8f94fe9e59b3c38a54d3310ae50b4b7dde10ecf14") fail("recovery-set SHA drift")
 
+const zeroBudget = contract.zeroBudgetPolicy
+if (zeroBudget?.version !== "ZERO-BUDGET-UNPAID-V1" || zeroBudget.programMode !== "zero-budget-pre-business") fail("zero-budget policy identity drift")
+if (zeroBudget.adultParticipation !== "explicitly-voluntary-only" || zeroBudget.participantEvidenceSource !== "actual-or-likely-user-volunteers-only") fail("zero-budget participant source drift")
+if (zeroBudget.normalSmallRoundTarget?.minimum !== 4 || zeroBudget.normalSmallRoundTarget?.maximum !== 8 || zeroBudget.normalSmallRoundTarget?.interpretation !== "directional-not-statistically-generalizable" || zeroBudget.normalSmallRoundTarget?.targetIsNotCompletion !== true) fail("small-round policy drift")
+if (zeroBudget.recording?.recordingUsed !== false || zeroBudget.recording.recordingTypesCode !== "n/a" || zeroBudget.recording.recordingConsentCode !== "not-requested" || [zeroBudget.recording.recordingToolCode, zeroBudget.recording.recordingStorageCode, zeroBudget.recording.recordingRetentionCode, zeroBudget.recording.recordingDeletionCode].some((value) => value !== "n/a") || zeroBudget.recording.ledgerEvent !== "recording-not-used" || zeroBudget.recording.projectionState !== "not-requested") fail("no-recording policy drift")
+const zeroBudgetCompensation = zeroBudget.compensation
+if (zeroBudgetCompensation.termsCode !== "unpaid" || zeroBudgetCompensation.amountCurrencyMinor !== "0" || [zeroBudgetCompensation.currencyCode, zeroBudgetCompensation.fundingOwnerCode, zeroBudgetCompensation.fundingVerificationSha256, zeroBudgetCompensation.deliveryMethodCode, zeroBudgetCompensation.paymentRailCode, zeroBudgetCompensation.deliveryDeadlineCode].some((value) => value !== "n/a") || zeroBudgetCompensation.withdrawalPaymentCode !== "n/a-unpaid" || zeroBudgetCompensation.noShowChargeCurrencyMinor !== "0" || zeroBudgetCompensation.cancellationChargeCurrencyMinor !== "0") fail("unpaid compensation policy drift")
+for (const [textField, hashField] of [["noShowTermsText", "noShowTermsSha256"], ["cancellationTermsText", "cancellationTermsSha256"], ["participantTermsText", "participantTermsSha256"]]) {
+  if (sha256(`${zeroBudgetCompensation[textField]}\n`) !== zeroBudgetCompensation[hashField]) fail(`${textField} canonical hash drift`)
+}
+
 for (const requiredText of [
   "**Packet version:** `FW-004-005-v2`",
   "`NEEDS ATTENTION — external participant resources`",
@@ -141,6 +158,13 @@ for (const requiredText of [
   "`treeDirectCount`",
   "`firstClickIncorrectCount`",
   "`researcher-stopped` maps exactly",
+  "`ZERO-BUDGET-UNPAID-V1`",
+  "`fieldwork-nonparticipant-evidence-v1`",
+  "may stop, never pass",
+  "NON-PARTICIPANT EVIDENCE — DOES NOT COUNT TOWARD RECRUITMENT, SAMPLE, THRESHOLDS, OR SELECTION",
+  "https://www.w3.org/WAI/test-evaluate/involving-users/",
+  "https://www.gov.uk/service-manual/user-research/find-user-research-participants",
+  "https://www.hhs.gov/ohrp/regulations-and-policy/guidance/faq/informed-consent/index.html",
   contract.releasedMainSha,
   contract.recoverySetSha256,
 ]) {
@@ -156,6 +180,9 @@ for (const forbiddenText of [
   '"threshold_declaration_set_sha256"',
   "After consent, generate a private 32-byte operating-system CSPRNG seed",
   "Formal completeness is exactly 12 rows",
+  "[PAID VERSION:",
+  "approved paid or unpaid terms",
+  "If recording is later approved",
 ]) {
   if (packet.includes(forbiddenText) || JSON.stringify(contract.schemas).includes(forbiddenText)) {
     fail(`retains rejected text: ${forbiddenText}`)
@@ -170,7 +197,7 @@ for (const source of contract.legacyMigrationSources) {
 }
 
 const requiredSchemaKeys = [
-  "compensationTerms", "attritionConsent", "attritionProjection", "screener", "schemaMigration",
+  "compensationTerms", "attritionConsent", "attritionProjection", "screener", "nonParticipantEvidence", "schemaMigration",
   "phaseInputManifest", "phaseEvidenceManifest", "plan004Allocation",
   "plan004Participants", "plan004ExposureManifest", "plan004Pilot",
   "plan004TaskObservations", "plan004Issues", "plan004Aggregate",
@@ -240,7 +267,7 @@ for (const [key, schema] of Object.entries(contract.schemas)) {
   }
 }
 
-const integerField = (field) => field === "participant_slot" || /(?:^|_)(?:amount_currency_minor|canonical_position|clarification_count|count|denominator|elapsed_ms|family_number|group_order|index|numerator|ordinal|planned_effective_n|position|response_ordinal|rotation_offset|row_count|sequence|task_sequence|time_to_first_action_ms|timeout_ms|within_group_position|wrong_branch_count|backtrack_count)$/.test(field)
+const integerField = (field) => field === "participant_slot" || /(?:^|_)(?:(?:amount|no_show_charge|cancellation_charge)_currency_minor|canonical_position|clarification_count|count|denominator|elapsed_ms|family_number|group_order|index|numerator|ordinal|planned_effective_n|position|response_ordinal|rotation_offset|row_count|sequence|task_sequence|time_to_first_action_ms|timeout_ms|within_group_position|wrong_branch_count|backtrack_count)$/.test(field)
 const timestampField = (field) => /(?:_at_utc|^started_at_utc$|^ended_at_utc$)$/.test(field)
 
 const validateCell = (schema, field, value, testMode) => {
@@ -357,18 +384,102 @@ for (const schema of Object.values(contract.schemas).filter((value) => value.for
 parseCanonicalTsv(contract.schemas.phaseInputManifest, serializeTsv(contract.schemas.phaseInputManifest, []), { testMode: true })
 let tsvSemanticFixtureCount = 0
 
-const compensationRows = contract.plan005.exposedPhases.map((phaseId) => rowFor("compensationTerms", {
-  phase_id: phaseId, phase_version: "EXAMPLE-V1", terms_code: "unpaid",
-  amount_currency_minor: "0", currency_code: "n/a", funding_owner_code: "n/a",
-  funding_verification_sha256: "n/a", delivery_method_code: "n/a",
-  delivery_deadline_code: "n/a", withdrawal_payment_code: "n/a-unpaid",
-  no_show_terms_sha256: hashToken(`no-show:${phaseId}`),
-  cancellation_terms_sha256: hashToken(`cancellation:${phaseId}`),
-  participant_terms_sha256: hashToken(`participant-terms:${phaseId}`),
-}))
-const parsedCompensationRows = parseCanonicalTsv(contract.schemas.compensationTerms, serializeTsv(contract.schemas.compensationTerms, compensationRows), { testMode: true })
-if (parsedCompensationRows.length !== 8 || new Set(parsedCompensationRows.map((row) => row.phase_id)).size !== 8) fail("per-phase compensation matrix example failed")
-for (const row of parsedCompensationRows) if (row.terms_code !== "unpaid" || row.amount_currency_minor !== "0" || [row.currency_code, row.funding_owner_code, row.funding_verification_sha256, row.delivery_method_code, row.delivery_deadline_code].some((value) => value !== "n/a") || row.withdrawal_payment_code !== "n/a-unpaid") fail("unpaid compensation invariant fixture failed")
+if (JSON.stringify(zeroBudget.appliesToPhases) !== JSON.stringify(contract.plan005.exposedPhases)) fail("zero-budget phase coverage drift")
+const compensationRowForPhase = (phaseId) => rowFor("compensationTerms", {
+  phase_id: phaseId,
+  phase_version: zeroBudget.version,
+  terms_code: zeroBudgetCompensation.termsCode,
+  amount_currency_minor: zeroBudgetCompensation.amountCurrencyMinor,
+  currency_code: zeroBudgetCompensation.currencyCode,
+  funding_owner_code: zeroBudgetCompensation.fundingOwnerCode,
+  funding_verification_sha256: zeroBudgetCompensation.fundingVerificationSha256,
+  delivery_method_code: zeroBudgetCompensation.deliveryMethodCode,
+  payment_rail_code: zeroBudgetCompensation.paymentRailCode,
+  delivery_deadline_code: zeroBudgetCompensation.deliveryDeadlineCode,
+  withdrawal_payment_code: zeroBudgetCompensation.withdrawalPaymentCode,
+  no_show_charge_currency_minor: zeroBudgetCompensation.noShowChargeCurrencyMinor,
+  cancellation_charge_currency_minor: zeroBudgetCompensation.cancellationChargeCurrencyMinor,
+  no_show_terms_sha256: zeroBudgetCompensation.noShowTermsSha256,
+  cancellation_terms_sha256: zeroBudgetCompensation.cancellationTermsSha256,
+  participant_terms_sha256: zeroBudgetCompensation.participantTermsSha256,
+  recording_used: String(zeroBudget.recording.recordingUsed),
+  recording_types_code: zeroBudget.recording.recordingTypesCode,
+  recording_consent_code: zeroBudget.recording.recordingConsentCode,
+  recording_tool_code: zeroBudget.recording.recordingToolCode,
+  recording_storage_code: zeroBudget.recording.recordingStorageCode,
+  recording_retention_code: zeroBudget.recording.recordingRetentionCode,
+  recording_deletion_code: zeroBudget.recording.recordingDeletionCode,
+})
+const compensationRows = zeroBudget.appliesToPhases.map(compensationRowForPhase)
+const canonicalCompensationSource = serializeTsv(contract.schemas.compensationTerms, compensationRows)
+const validateCompensationRows = (rows) => {
+  const actual = serializeTsv(contract.schemas.compensationTerms, rows)
+  if (actual !== canonicalCompensationSource) fail("zero-budget compensation rows do not byte-match canonical policy")
+  if (rows.length !== 8 || new Set(rows.map((row) => row.phase_id)).size !== 8) fail("per-phase compensation matrix example failed")
+}
+const validateCompensationFile = (source) => {
+  const parsed = parseCanonicalTsv(contract.schemas.compensationTerms, source)
+  validateCompensationRows(parsed)
+  if (sha256(source) !== zeroBudgetCompensation.termsFileSha256) fail("zero-budget compensation file digest mismatch")
+  return parsed
+}
+const parsedCompensationRows = validateCompensationFile(unpaidTermsSource)
+if (unpaidTermsSource !== canonicalCompensationSource) fail("tracked zero-budget compensation bytes drift")
+const compensationHeaderLine = contract.schemas.compensationTerms.header.join("\t")
+const compensationTermsRowShaByPhase = new Map(parsedCompensationRows.map((row) => [
+  row.phase_id,
+  sha256(`${compensationHeaderLine}\n${contract.schemas.compensationTerms.header.map((field) => row[field]).join("\t")}\n`),
+]))
+for (const phaseId of zeroBudget.appliesToPhases) {
+  if (compensationTermsRowShaByPhase.get(phaseId) !== zeroBudgetCompensation.phaseRowSha256?.[phaseId]) fail(`zero-budget phase-row digest drift for ${phaseId}`)
+}
+if (Object.keys(zeroBudgetCompensation.phaseRowSha256 ?? {}).length !== 8) fail("zero-budget phase-row digest registry must contain eight rows")
+const compensationTermsSha = (phaseId) => compensationTermsRowShaByPhase.get(phaseId) ?? fail(`missing compensation row hash for ${phaseId}`)
+const expectCompensationFailure = (rows, label) => {
+  let caught
+  try {
+    validateCompensationRows(rows)
+  } catch (error) {
+    caught = error
+  }
+  if (!caught) fail(`mutation accepted: ${label}`)
+  mutationCheckCount += 1
+}
+for (const [field, value] of [
+  ["terms_code", "paid"],
+  ["amount_currency_minor", "1"],
+  ["currency_code", "USD"],
+  ["funding_owner_code", "OWNER"],
+  ["funding_verification_sha256", hashToken("mutated-funding")],
+  ["delivery_method_code", "cash"],
+  ["payment_rail_code", "cash"],
+  ["delivery_deadline_code", "two-days"],
+  ["withdrawal_payment_code", "full-promised-amount"],
+  ["no_show_charge_currency_minor", "1"],
+  ["cancellation_charge_currency_minor", "1"],
+  ["no_show_terms_sha256", hashToken("mutated-no-show")],
+  ["cancellation_terms_sha256", hashToken("mutated-cancellation")],
+  ["participant_terms_sha256", hashToken("mutated-participant-terms")],
+  ["phase_version", "MUTATED-VERSION"],
+  ["recording_used", "true"],
+  ["recording_types_code", "audio"],
+  ["recording_consent_code", "separate-opt-in"],
+  ["recording_tool_code", "tool"],
+  ["recording_storage_code", "store"],
+  ["recording_retention_code", "retain"],
+  ["recording_deletion_code", "delete"],
+]) {
+  expectCompensationFailure(parsedCompensationRows.map((row, index) => index === 0 ? { ...row, [field]: value } : row), `zero-budget ${field}`)
+}
+expectCompensationFailure(parsedCompensationRows.slice(1), "missing zero-budget phase")
+let compensationDigestMutationRejected = false
+try {
+  validateCompensationFile(unpaidTermsSource.replace(zeroBudgetCompensation.participantTermsSha256, hashToken("file-digest-mutation")))
+} catch {
+  compensationDigestMutationRejected = true
+}
+if (!compensationDigestMutationRejected) fail("zero-budget file digest mutation accepted")
+mutationCheckCount += 1
 tsvSemanticFixtureCount += 1
 
 const schemaById = new Map(Object.entries(contract.schemas).map(([key, schema]) => [schema.id, { key, schema }]))
@@ -439,6 +550,105 @@ for (const [value, reason] of [
   ["none+screen-reader", "exclusive access value"],
 ]) {
   expectTsvFailure(multiValueSchema, serializeTsv(multiValueSchema, [{ ...multiValueRow, access_strategy_codes: value }]), reason, { testMode: true })
+}
+
+if (!zeroCostKit.includes("DO NOT COMMIT COMPLETED COPIES OR PRIVATE LOCATORS") || !zeroCostKit.includes("NON-PARTICIPANT EVIDENCE — DOES NOT COUNT TOWARD RECRUITMENT, SAMPLE, THRESHOLDS, OR SELECTION")) fail("zero-cost kit safety banner drift")
+const nonParticipantSchema = contract.schemas.nonParticipantEvidence
+const nonParticipantPolicy = contract.nonParticipantEvidencePolicy
+const nonParticipantActorByLane = new Map(nonParticipantPolicy.lanes.map(({ laneCode, actorClass }) => [laneCode, actorClass]))
+if (nonParticipantActorByLane.size !== 6 || JSON.stringify([...nonParticipantActorByLane.keys()]) !== JSON.stringify(nonParticipantSchema.enums.lane_code) || JSON.stringify([...new Set(nonParticipantActorByLane.values())].sort()) !== JSON.stringify([...nonParticipantSchema.enums.actor_class].sort())) fail("non-participant lane/actor registry drift")
+const canonicalEmptyNonParticipantTemplate = `${nonParticipantSchema.header.join("\t")}\n`
+const parsedEmptyNonParticipantTemplate = parseCanonicalTsv(nonParticipantSchema, nonParticipantTemplateSource)
+if (parsedEmptyNonParticipantTemplate.length !== 0 || nonParticipantTemplateSource !== canonicalEmptyNonParticipantTemplate || sha256(nonParticipantTemplateSource) !== nonParticipantPolicy.blankTemplateSha256 || nonParticipantPolicy.blankTemplateFile !== "004-005-nonparticipant-evidence.v1.tsv") fail("canonical non-participant blank template drift")
+for (const field of nonParticipantSchema.header) {
+  if (!zeroCostKit.includes(`${field}:`)) fail(`zero-cost kit omits canonical non-participant field ${field}`)
+}
+for (const { laneCode, actorClass } of nonParticipantPolicy.lanes) {
+  if (!packet.includes(`\`${laneCode}\``) || !packet.includes(`\`${actorClass}\``) || !zeroCostKit.includes(`\`${laneCode}\``) || !zeroCostKit.includes(`\`${actorClass}\``)) fail(`lane/actor pair is not present in packet and kit: ${laneCode}`)
+}
+for (const requiredKitText of [
+  "amount is zero",
+  "no cancellation or no-show debt to collect",
+  "no audio, video, screen, or keystroke recording",
+  "participant_sample_count: 0",
+  "participant_threshold_use: prohibited",
+  "final_selection_use: prohibited",
+]) {
+  if (!zeroCostKit.includes(requiredKitText)) fail(`zero-cost kit policy drift: ${requiredKitText}`)
+}
+for (const forbiddenField of nonParticipantPolicy.participantJoinFieldsForbidden) {
+  if (nonParticipantSchema.header.includes(forbiddenField)) fail(`non-participant schema contains participant join field ${forbiddenField}`)
+}
+for (const [schemaKey, schema] of Object.entries(contract.schemas)) {
+  for (const foreignKey of schema.foreignKeys ?? []) {
+    if (foreignKey.schema === "nonParticipantEvidence") fail(`${schemaKey}: participant/decision schema points to non-participant evidence`)
+  }
+}
+const validateNonParticipantRows = (rows, { requireAllLanes = true } = {}) => {
+  if (requireAllLanes && (rows.length !== 6 || new Set(rows.map((row) => row.lane_code)).size !== 6)) fail("non-participant fixture must cover all six lanes")
+  for (const row of rows) {
+    if (nonParticipantActorByLane.get(row.lane_code) !== row.actor_class) fail("non-participant lane/actor mismatch")
+    if (row.evidence_class !== nonParticipantPolicy.fixedFields.evidenceClass || row.participant_sample_count !== nonParticipantPolicy.fixedFields.participantSampleCount || row.participant_threshold_use !== nonParticipantPolicy.fixedFields.participantThresholdUse || row.final_selection_use !== nonParticipantPolicy.fixedFields.finalSelectionUse) fail("non-participant non-substitution invariant failed")
+  }
+}
+const nonParticipantRows = nonParticipantPolicy.lanes.map(({ laneCode, actorClass }, index) => rowFor("nonParticipantEvidence", {
+  evidence_item_id: `FIXTURE-NPE-${String(index + 1).padStart(2, "0")}`,
+  target_plan_id: index % 2 === 0 ? "004" : "005",
+  lane_code: laneCode,
+  actor_class: actorClass,
+  method_version: "FIXTURE-METHOD-V1",
+  input_set_sha256: hashToken(`nonparticipant-input:${laneCode}`),
+  procedure_sha256: hashToken(`nonparticipant-procedure:${laneCode}`),
+  result_file_sha256: hashToken(`nonparticipant-result:${laneCode}`),
+  observed_at_utc: `2026-01-01T00:00:0${index}Z`,
+  output_class: ["hypothesis", "defect", "question-priority"][index % 3],
+  evidence_class: "non-participant",
+  participant_sample_count: "0",
+  participant_threshold_use: "prohibited",
+  final_selection_use: "prohibited",
+}))
+const parsedNonParticipantRows = parseCanonicalTsv(nonParticipantSchema, serializeTsv(nonParticipantSchema, nonParticipantRows), { testMode: true })
+validateNonParticipantRows(parsedNonParticipantRows)
+tsvSemanticFixtureCount += 1
+const expectNonParticipantFailure = (rows, label) => {
+  let caught
+  try {
+    validateNonParticipantRows(rows)
+  } catch (error) {
+    caught = error
+  }
+  if (!caught) fail(`mutation accepted: ${label}`)
+  mutationCheckCount += 1
+}
+for (const [field, value] of [
+  ["participant_sample_count", "1"],
+  ["participant_threshold_use", "allowed"],
+  ["final_selection_use", "allowed"],
+  ["evidence_class", "participant"],
+  ["actor_class", "project-owner"],
+]) {
+  expectNonParticipantFailure(parsedNonParticipantRows.map((row, index) => index === 0 ? { ...row, [field]: value } : row), `non-participant ${field}`)
+}
+expectTsvFailure(nonParticipantSchema, serializeTsv(nonParticipantSchema, nonParticipantRows).replace("lane_code", "lane_code\tstudy_id").replace("actor_class", "R1-P01\tactor_class"), "exact header mismatch", { testMode: true })
+expectTsvFailure(nonParticipantSchema, serializeTsv(nonParticipantSchema, nonParticipantRows).replace("expert-heuristic-review", "unknown-lane"), "unknown enum", { testMode: true })
+expectTsvFailure(nonParticipantSchema, nonParticipantTemplateSource.replace("evidence_item_id", "evidence-item-id"), "exact header mismatch")
+if (sha256(`${nonParticipantTemplateSource} `) === nonParticipantPolicy.blankTemplateSha256) fail("non-participant blank-template hash mutation accepted")
+mutationCheckCount += 1
+
+const assertParticipantManifestBoundary = (rows) => {
+  if (rows.some((row) => row.source_schema_id === nonParticipantSchema.id)) fail("non-participant evidence cannot be a phase manifest source")
+}
+const mutatedInputManifestRows = parseCanonicalTsv(contract.schemas.phaseInputManifest, serializeTsv(contract.schemas.phaseInputManifest, [rowFor("phaseInputManifest", { source_schema_id: nonParticipantSchema.id })]), { testMode: true })
+const mutatedEvidenceManifestRows = parseCanonicalTsv(contract.schemas.phaseEvidenceManifest, serializeTsv(contract.schemas.phaseEvidenceManifest, [rowFor("phaseEvidenceManifest", { source_schema_id: nonParticipantSchema.id })]), { testMode: true })
+for (const [rows, label] of [[mutatedInputManifestRows, "input"], [mutatedEvidenceManifestRows, "evidence"]]) {
+  let caught
+  try {
+    assertParticipantManifestBoundary(rows)
+  } catch (error) {
+    caught = error
+  }
+  if (!caught) fail(`mutation accepted: non-participant ${label} manifest source`)
+  mutationCheckCount += 1
 }
 
 const canonicalJsonValue = (value) => {
@@ -576,7 +786,37 @@ const validateForeignKeys = (datasets) => {
   }
 }
 
-const parseRows = (schemaKey, rows) => parseCanonicalTsv(contract.schemas[schemaKey], serializeTsv(contract.schemas[schemaKey], rows), { testMode: true })
+const parseRows = (schemaKey, rows) => {
+  const parsed = parseCanonicalTsv(contract.schemas[schemaKey], serializeTsv(contract.schemas[schemaKey], rows), { testMode: true })
+  if (schemaKey === "phaseInputManifest" || schemaKey === "phaseEvidenceManifest") assertParticipantManifestBoundary(parsed)
+  return parsed
+}
+
+const assertZeroBudgetLedgerPolicy = (rows) => {
+  for (const recruitmentKey of new Set(rows.map((row) => row.recruitment_key))) {
+    const chain = rows.filter((row) => row.recruitment_key === recruitmentKey).sort((left, right) => left.event_at_utc.localeCompare(right.event_at_utc) || left.event_id.localeCompare(right.event_id))
+    const phaseIds = [...new Set(chain.map((row) => row.target_phase_id).filter((value) => value !== "n/a"))]
+    if (phaseIds.length > 1) fail("zero-budget ledger chain spans multiple phase IDs")
+    const phaseId = phaseIds[0]
+    for (const event of chain) {
+      if (event.event_type.startsWith("recording-consent-")) fail("recording consent event is prohibited by zero-budget policy")
+      if (event.study_id === "n/a") {
+        if (event.compensation_terms_code !== "n/a" || event.compensation_terms_sha256 !== "n/a") fail("preactivation compensation fields must be n/a")
+      } else {
+        if (!phaseId || event.compensation_terms_code !== "unpaid" || event.compensation_terms_sha256 !== compensationTermsSha(phaseId)) fail("post-activation event does not join canonical unpaid phase row")
+      }
+    }
+    for (const studyId of new Set(chain.map((row) => row.study_id).filter((value) => value !== "n/a"))) {
+      const studyRows = chain.filter((row) => row.study_id === studyId)
+      const consent = studyRows.find((row) => row.event_type === "research-consent-affirmed")
+      const exposureBoundary = studyRows.find((row) => row.event_type === "session-started") ?? studyRows.find((row) => row.event_type === "session-completed")
+      if (!consent || !exposureBoundary) continue
+      const recordingRows = studyRows.filter((row) => row.event_type === "recording-not-used")
+      if (recordingRows.length !== 1) fail("current session requires exactly one recording-not-used event")
+      if (!(consent.event_at_utc < recordingRows[0].event_at_utc && recordingRows[0].event_at_utc < exposureBoundary.event_at_utc)) fail("recording-not-used must follow consent and precede exposure/start")
+    }
+  }
+}
 
 const scopeRank = { phase: 1, plan: 2, program: 3 }
 const appliesToStudy = (event, planId, phaseId) => event.target_scope === "program" || (event.target_scope === "plan" && event.target_plan_id === planId) || (event.target_scope === "phase" && event.target_plan_id === planId && event.target_phase_id === phaseId)
@@ -679,8 +919,17 @@ const openConsent = rowFor("attritionConsent", {
   event_type: "research-consent-affirmed", target_scope: "phase",
   target_plan_id: "005", target_phase_id: "p005-open-sort",
   consent_document_sha256: hashToken("open-consent"), withdrawal_cutoff_at_utc: "2026-01-10T00:00:00Z", compensation_terms_code: "unpaid",
-  compensation_terms_sha256: hashToken("open-terms"), reason_code: "none",
+  compensation_terms_sha256: compensationTermsSha("p005-open-sort"), reason_code: "none",
   access_strategy_code: "n/a", actor_code: "HUMAN-MODERATOR", prior_event_id: "n/a",
+})
+const openRecordingNotUsed = rowFor("attritionConsent", {
+  event_id: `EVT-${sha256("open-sort-recording-not-used").slice(0, 32)}`,
+  recruitment_key: openConsent.recruitment_key, program_person_key: openConsent.program_person_key,
+  study_id: openConsent.study_id, event_at_utc: "2026-01-01T00:01:00Z",
+  event_type: "recording-not-used", target_scope: "recording", target_plan_id: "n/a",
+  target_phase_id: "n/a", consent_document_sha256: "n/a", withdrawal_cutoff_at_utc: "n/a",
+  compensation_terms_code: "unpaid", compensation_terms_sha256: compensationTermsSha("p005-open-sort"),
+  reason_code: "none", access_strategy_code: "n/a", actor_code: "HUMAN-MODERATOR", prior_event_id: openConsent.event_id,
 })
 const openCompletion = rowFor("attritionConsent", {
   event_id: `EVT-${sha256("open-sort-session-completed").slice(0, 32)}`,
@@ -690,7 +939,7 @@ const openCompletion = rowFor("attritionConsent", {
   target_phase_id: "p005-open-sort", consent_document_sha256: "n/a", withdrawal_cutoff_at_utc: "n/a",
   compensation_terms_code: openConsent.compensation_terms_code,
   compensation_terms_sha256: openConsent.compensation_terms_sha256, reason_code: "none",
-  access_strategy_code: "n/a", actor_code: "HUMAN-MODERATOR", prior_event_id: openConsent.event_id,
+  access_strategy_code: "n/a", actor_code: "HUMAN-MODERATOR", prior_event_id: openRecordingNotUsed.event_id,
 })
 const openSession = rowFor("plan005OpenSortSessions", {
   study_id: "OS-P01", program_person_key: openConsent.program_person_key,
@@ -729,7 +978,7 @@ const openCoding = [...independentRows, rowFor("plan005OpenSortCoding", {
   decision: "present", independent_row_set_sha256: independentSetSha, adjudication_code: "agree",
 })]
 const openDatasets = {
-  attritionConsent: parseRows("attritionConsent", [openConsent, openCompletion]),
+  attritionConsent: parseRows("attritionConsent", [openConsent, openRecordingNotUsed, openCompletion]),
   plan005OpenSortSessions: parseRows("plan005OpenSortSessions", [openSession]),
   plan005OpenSortGroups: parseRows("plan005OpenSortGroups", openGroups),
   plan005OpenSortPlacements: parseRows("plan005OpenSortPlacements", openPlacements),
@@ -737,6 +986,7 @@ const openDatasets = {
   plan005OpenSortCoding: parseRows("plan005OpenSortCoding", openCoding),
 }
 validateForeignKeys(openDatasets)
+assertZeroBudgetLedgerPolicy(openDatasets.attritionConsent)
 if (!(Date.parse(openConsent.event_at_utc) < Date.parse(openSession.started_at_utc) && Date.parse(openSession.started_at_utc) < Date.parse(openSession.ended_at_utc))) fail("open-sort consent/session chronology failed")
 const openSortPhaseProjection = buildPhaseProjectionFixture({
   phaseId: "p005-open-sort", ledgerRows: openDatasets.attritionConsent,
@@ -851,8 +1101,17 @@ const thresholdConsents = [1, 2].map((slot) => rowFor("attritionConsent", {
   event_type: "research-consent-affirmed", target_scope: "phase", target_plan_id: "005",
   target_phase_id: "p005-threshold-pilot", consent_document_sha256: hashToken(`tp-consent:${slot}`),
   withdrawal_cutoff_at_utc: "2026-01-01T23:00:00Z",
-  compensation_terms_code: "unpaid", compensation_terms_sha256: hashToken("tp-terms"),
+  compensation_terms_code: "unpaid", compensation_terms_sha256: compensationTermsSha("p005-threshold-pilot"),
   reason_code: "none", access_strategy_code: "n/a", actor_code: "HUMAN-MODERATOR", prior_event_id: "n/a",
+}))
+const thresholdRecordingRows = thresholdConsents.map((consent, index) => rowFor("attritionConsent", {
+  event_id: `EVT-${sha256(`threshold-recording-not-used:${index + 1}`).slice(0, 32)}`,
+  recruitment_key: consent.recruitment_key, program_person_key: consent.program_person_key,
+  study_id: consent.study_id, event_at_utc: `2025-12-31T2${index + 1}:01:00Z`,
+  event_type: "recording-not-used", target_scope: "recording", target_plan_id: "n/a", target_phase_id: "n/a",
+  consent_document_sha256: "n/a", withdrawal_cutoff_at_utc: "n/a", compensation_terms_code: "unpaid",
+  compensation_terms_sha256: compensationTermsSha("p005-threshold-pilot"), reason_code: "none",
+  access_strategy_code: "n/a", actor_code: "HUMAN-MODERATOR", prior_event_id: consent.event_id,
 }))
 const thresholdSessions = thresholdConsents.map((consent, index) => rowFor("plan005ThresholdSessions", {
   study_id: consent.study_id, program_person_key: consent.program_person_key,
@@ -872,7 +1131,7 @@ const thresholdCompletionRows = thresholdConsents.map((consent, index) => rowFor
   target_phase_id: "p005-threshold-pilot", consent_document_sha256: "n/a", withdrawal_cutoff_at_utc: "n/a",
   compensation_terms_code: consent.compensation_terms_code,
   compensation_terms_sha256: consent.compensation_terms_sha256, reason_code: "none",
-  access_strategy_code: "n/a", actor_code: "HUMAN-MODERATOR", prior_event_id: consent.event_id,
+  access_strategy_code: "n/a", actor_code: "HUMAN-MODERATOR", prior_event_id: thresholdRecordingRows[index].event_id,
 }))
 const sessionBySlot = new Map(thresholdSessions.map((row) => [row.participant_slot, row]))
 const thresholdTrials = parsedThresholdSchedule.filter((row) => row.participant_slot === "1" || row.participant_slot === "2").map((row) => {
@@ -893,7 +1152,7 @@ const thresholdTrials = parsedThresholdSchedule.filter((row) => row.participant_
   })
 })
 const thresholdDatasets = {
-  attritionConsent: parseRows("attritionConsent", [...thresholdConsents, ...thresholdCompletionRows]),
+  attritionConsent: parseRows("attritionConsent", [...thresholdConsents, ...thresholdRecordingRows, ...thresholdCompletionRows]),
   plan005TaskRegistry: parsedTaskRegistry,
   plan005PilotArtifactManifest: parsedPilotArtifacts,
   plan005ThresholdSchedule: parsedThresholdSchedule,
@@ -901,6 +1160,7 @@ const thresholdDatasets = {
   plan005ThresholdTrials: parseRows("plan005ThresholdTrials", thresholdTrials),
 }
 validateForeignKeys(thresholdDatasets)
+assertZeroBudgetLedgerPolicy(thresholdDatasets.attritionConsent)
 for (const session of thresholdDatasets.plan005ThresholdSessions) {
   const consent = thresholdDatasets.attritionConsent.find((row) => row.event_id === session.research_consent_event_id)
   if (consent.program_person_key !== session.program_person_key || consent.study_id !== session.study_id || Date.parse(consent.event_at_utc) >= Date.parse(session.started_at_utc) || Date.parse(session.started_at_utc) >= Date.parse(session.ended_at_utc)) fail("threshold consent/session semantic join failed")
@@ -1190,8 +1450,17 @@ for (const { phase, method, roundId, studyPrefix, candidateIds, consentAtUtc, ac
       program_person_key: personKey, study_id: studyId, event_at_utc: consentAtUtc,
       event_type: "research-consent-affirmed", target_scope: "phase", target_plan_id: "005", target_phase_id: phase,
       consent_document_sha256: hashToken(`formal-consent-document:${phase}:${candidateId}`), withdrawal_cutoff_at_utc: withdrawalCutoffAtUtc,
-      compensation_terms_code: "unpaid", compensation_terms_sha256: hashToken(`formal-terms:${phase}`), reason_code: "none",
+      compensation_terms_code: "unpaid", compensation_terms_sha256: compensationTermsSha(phase), reason_code: "none",
       access_strategy_code: "n/a", actor_code: "HUMAN-MODERATOR", prior_event_id: "n/a",
+    })
+    const formalRecordingRow = rowFor("attritionConsent", {
+      event_id: `EVT-${sha256(`formal-recording-not-used:${phase}:${candidateId}`).slice(0, 32)}`,
+      recruitment_key: formalConsentRow.recruitment_key, program_person_key: personKey, study_id: studyId,
+      event_at_utc: new Date(Date.parse(consentAtUtc) + 30_000).toISOString().replace(".000Z", "Z"),
+      event_type: "recording-not-used", target_scope: "recording", target_plan_id: "n/a", target_phase_id: "n/a",
+      consent_document_sha256: "n/a", withdrawal_cutoff_at_utc: "n/a", compensation_terms_code: "unpaid",
+      compensation_terms_sha256: compensationTermsSha(phase), reason_code: "none", access_strategy_code: "n/a",
+      actor_code: "HUMAN-MODERATOR", prior_event_id: formalConsentRow.event_id,
     })
     const formalAccessRow = rowFor("attritionConsent", {
       event_id: `EVT-${sha256(`formal-access:${phase}:${candidateId}`).slice(0, 32)}`,
@@ -1199,7 +1468,7 @@ for (const { phase, method, roundId, studyPrefix, candidateIds, consentAtUtc, ac
       event_at_utc: accessAtUtc, event_type: "access-strategy-used", target_scope: "phase",
       target_plan_id: "005", target_phase_id: phase, consent_document_sha256: "n/a", withdrawal_cutoff_at_utc: "n/a",
       compensation_terms_code: "unpaid", compensation_terms_sha256: formalConsentRow.compensation_terms_sha256,
-      reason_code: "none", access_strategy_code: "keyboard-only", actor_code: "HUMAN-MODERATOR", prior_event_id: eventId,
+      reason_code: "none", access_strategy_code: "keyboard-only", actor_code: "HUMAN-MODERATOR", prior_event_id: formalRecordingRow.event_id,
     })
     const formalCompletionRow = rowFor("attritionConsent", {
       event_id: `EVT-${sha256(`formal-completed:${phase}:${candidateId}`).slice(0, 32)}`,
@@ -1209,7 +1478,7 @@ for (const { phase, method, roundId, studyPrefix, candidateIds, consentAtUtc, ac
       compensation_terms_code: "unpaid", compensation_terms_sha256: formalConsentRow.compensation_terms_sha256,
       reason_code: "none", access_strategy_code: "n/a", actor_code: "HUMAN-MODERATOR", prior_event_id: formalAccessRow.event_id,
     })
-    p005FormalConsentRows.push(formalConsentRow, formalAccessRow, formalCompletionRow)
+    p005FormalConsentRows.push(formalConsentRow, formalRecordingRow, formalAccessRow, formalCompletionRow)
     p005FormalStudyConfigs.push({ recruitmentKey: formalConsentRow.recruitment_key, programPersonKey: personKey, studyId, consentId: eventId, planId: "005", phaseId: phase })
     const finalOrder = rotateThenReverse(taskRows.map((task) => task.taskId), Number(primary.rotation_offset), primary.reversed === "true")
     if (sha256(finalOrder.map((taskId) => `${taskId}\n`).join("")) !== primary.task_order_sha256) fail("Plan 005 allocation task-order digest failed")
@@ -1247,6 +1516,7 @@ for (const { phase, method, roundId, studyPrefix, candidateIds, consentAtUtc, ac
   }
 }
 const parsedP005FormalConsents = parseRows("attritionConsent", p005FormalConsentRows)
+assertZeroBudgetLedgerPolicy(parsedP005FormalConsents)
 const parsedP005FormalEvidence = parseRows("plan005FormalTaskEvidence", p005FormalEvidenceRows)
 const initialCriticalEvidence = parsedP005FormalEvidence.find((row) => row.phase === "p005-tree-test" && row.candidate_id === "candidate-a" && row.task_id === "profile-fit")
 const retestCriticalEvidence = parsedP005FormalEvidence.find((row) => row.phase === "p005-tree-test" && row.candidate_id === "candidate-a" && row.task_id === "quick-practice")
@@ -1359,7 +1629,7 @@ if (new Set(parsedAllocation.map((row) => `${row.phase}:${row.schedule_version}:
 const p004Primary = parsedAllocation.find((row) => row.allocation_slot === "CELL-001-PRIMARY")
 const p004RecruitmentKey = `RK-${"b".repeat(32)}`
 const p004ProgramPersonKey = `PPK-${"b".repeat(32)}`
-const p004TermsSha = hashToken("p004-unpaid-terms")
+const p004TermsSha = compensationTermsSha("p004-r1")
 const p004ScreenedEvent = rowFor("attritionConsent", {
   event_id: `EVT-${sha256("p004-screened").slice(0, 32)}`, recruitment_key: p004RecruitmentKey,
   program_person_key: "n/a", study_id: "n/a", event_at_utc: "2026-01-01T00:00:00Z",
@@ -1393,13 +1663,21 @@ const p004Consent = rowFor("attritionConsent", {
   compensation_terms_code: "unpaid", compensation_terms_sha256: p004TermsSha,
   reason_code: "none", access_strategy_code: "n/a", actor_code: "HUMAN-MODERATOR", prior_event_id: p004ActivationEvent.event_id,
 })
+const p004RecordingNotUsedEvent = rowFor("attritionConsent", {
+  event_id: `EVT-${sha256("p004-recording-not-used").slice(0, 32)}`, recruitment_key: p004RecruitmentKey,
+  program_person_key: p004ProgramPersonKey, study_id: p004Consent.study_id, event_at_utc: "2026-01-01T00:03:30Z",
+  event_type: "recording-not-used", target_scope: "recording", target_plan_id: "n/a", target_phase_id: "n/a",
+  consent_document_sha256: "n/a", withdrawal_cutoff_at_utc: "n/a", compensation_terms_code: "unpaid",
+  compensation_terms_sha256: p004TermsSha, reason_code: "none", access_strategy_code: "n/a",
+  actor_code: "HUMAN-MODERATOR", prior_event_id: p004Consent.event_id,
+})
 const p004AccessKeyboardEvent = rowFor("attritionConsent", {
   event_id: `EVT-${sha256("p004-access-keyboard").slice(0, 32)}`, recruitment_key: p004RecruitmentKey,
   program_person_key: p004ProgramPersonKey, study_id: p004Consent.study_id, event_at_utc: "2026-01-01T00:04:00Z",
   event_type: "access-strategy-used", target_scope: "phase", target_plan_id: "004", target_phase_id: "p004-r1",
   consent_document_sha256: "n/a", withdrawal_cutoff_at_utc: "n/a", compensation_terms_code: "unpaid",
   compensation_terms_sha256: p004TermsSha, reason_code: "none", access_strategy_code: "keyboard-only",
-  actor_code: "HUMAN-MODERATOR", prior_event_id: p004Consent.event_id,
+  actor_code: "HUMAN-MODERATOR", prior_event_id: p004RecordingNotUsedEvent.event_id,
 })
 const p004AccessScreenReaderEvent = rowFor("attritionConsent", {
   event_id: `EVT-${sha256("p004-access-screen-reader").slice(0, 32)}`, recruitment_key: p004RecruitmentKey,
@@ -1433,7 +1711,8 @@ const p004CompletedEvent = rowFor("attritionConsent", {
   compensation_terms_sha256: p004TermsSha, reason_code: "none", access_strategy_code: "n/a",
   actor_code: "HUMAN-MODERATOR", prior_event_id: p004StartedEvent.event_id,
 })
-const parsedP004ConsentRows = parseRows("attritionConsent", [p004ScreenedEvent, p004ContactEvent, p004ActivationEvent, p004Consent, p004AccessKeyboardEvent, p004AccessScreenReaderEvent, p004ScheduledEvent, p004StartedEvent, p004CompletedEvent])
+const parsedP004ConsentRows = parseRows("attritionConsent", [p004ScreenedEvent, p004ContactEvent, p004ActivationEvent, p004Consent, p004RecordingNotUsedEvent, p004AccessKeyboardEvent, p004AccessScreenReaderEvent, p004ScheduledEvent, p004StartedEvent, p004CompletedEvent])
+assertZeroBudgetLedgerPolicy(parsedP004ConsentRows)
 const p004Participant = rowFor("plan004Participants", {
   plan_id: "004", phase: "p004-r1", study_id: p004Consent.study_id,
   program_person_key: p004Consent.program_person_key, session_id: "P004-SESSION-01",
@@ -1624,7 +1903,6 @@ const buildLedgerChain = ({ label, studyId, planId = "004", phaseId = "p004-r1",
     sequence += 1
     const eventId = eventToken(`${label}:${sequence}:${type}`)
     const consentEvent = type.includes("consent-") && !["recording-consent-revoked", "contact-consent-revoked", "research-consent-revoked"].includes(type)
-    const phaseChosen = plan !== "n/a" && phase !== "n/a"
     ledgerRows.push(rowFor("attritionConsent", {
       event_id: eventId,
       recruitment_key: recruitmentKey,
@@ -1637,8 +1915,8 @@ const buildLedgerChain = ({ label, studyId, planId = "004", phaseId = "p004-r1",
       target_phase_id: phase,
       consent_document_sha256: consentEvent ? hashToken(`consent-document:${label}:${type}`) : "n/a",
       withdrawal_cutoff_at_utc: type === "research-consent-affirmed" ? cutoff : "n/a",
-      compensation_terms_code: phaseChosen ? "unpaid" : "n/a",
-      compensation_terms_sha256: phaseChosen ? hashToken("attrition-unpaid-terms") : "n/a",
+      compensation_terms_code: preActivation ? "n/a" : "unpaid",
+      compensation_terms_sha256: preActivation ? "n/a" : compensationTermsSha(phaseId),
       reason_code: reason,
       access_strategy_code: "n/a",
       actor_code: type === "participant-withdrew" || type.endsWith("-revoked") || type === "deletion-requested" ? "HUMAN-PARTICIPANT-REQUEST" : "HUMAN-MODERATOR",
@@ -1651,7 +1929,7 @@ const buildLedgerChain = ({ label, studyId, planId = "004", phaseId = "p004-r1",
   append({ at: "2026-01-01T00:01:00Z", type: "contact-consent-affirmed", scope: "contact", preActivation: true })
   append({ at: "2026-01-01T00:02:00Z", type: "study-id-activated", scope: "phase", plan: planId, phase: phaseId })
   const consentId = append({ at: "2026-01-01T00:03:00Z", type: "research-consent-affirmed", scope: "phase", plan: planId, phase: phaseId, cutoff: "2026-01-10T00:00:00Z" })
-  append({ at: "2026-01-01T00:04:00Z", type: "recording-consent-affirmed", scope: "recording" })
+  append({ at: "2026-01-01T00:04:00Z", type: "recording-not-used", scope: "recording" })
   append({ at: "2026-01-01T00:05:00Z", type: "scheduled", scope: "phase", plan: planId, phase: phaseId })
   append({ at: "2026-01-01T00:06:00Z", type: "session-started", scope: "phase", plan: planId, phase: phaseId })
   append({ at: "2026-01-01T01:00:00Z", type: "session-completed", scope: "phase", plan: planId, phase: phaseId })
@@ -1660,7 +1938,6 @@ const buildLedgerChain = ({ label, studyId, planId = "004", phaseId = "p004-r1",
 }
 const eligibleChain = buildLedgerChain({ label: "eligible", studyId: "R1-P01", behavior: ({ append }) => {
   append({ at: "2026-01-01T01:01:00Z", type: "contact-consent-revoked", scope: "contact", reason: "participant-request" })
-  append({ at: "2026-01-01T01:02:00Z", type: "recording-consent-revoked", scope: "recording", reason: "participant-request" })
 } })
 const withdrawnChain = buildLedgerChain({ label: "withdrawn", studyId: "R1-P02", behavior: ({ append }) => {
   append({ at: "2026-01-02T00:00:00Z", type: "participant-withdrew", scope: "program", reason: "participant-request" })
@@ -1675,12 +1952,13 @@ const lateDeletionChain = buildLedgerChain({ label: "late-delete", studyId: "R1-
 } })
 const plan005ProjectionChain = buildLedgerChain({ label: "plan005-projection", studyId: "OS-P09", planId: "005", phaseId: "p005-open-sort", behavior: () => {} })
 const parsedLedgerRows = parseRows("attritionConsent", ledgerRows)
+assertZeroBudgetLedgerPolicy(parsedLedgerRows)
 
 const projectionStudies = [eligibleChain, withdrawnChain, timelyDeletionChain, lateDeletionChain, plan005ProjectionChain]
 const projectionRows = deriveAttritionProjection(parsedLedgerRows, projectionStudies, "2026-01-12T00:00:00Z")
 const parsedProjectionRows = parseRows("attritionProjection", projectionRows)
 const projectionByStudy = new Map(parsedProjectionRows.map((row) => [row.study_id, row]))
-if (projectionByStudy.get("R1-P01").eligibility_state !== "eligible" || projectionByStudy.get("R1-P01").contact_state !== "revoked" || projectionByStudy.get("R1-P01").recording_state !== "withdrawn") fail("contact/recording-only attrition projection failed")
+if (projectionByStudy.get("R1-P01").eligibility_state !== "eligible" || projectionByStudy.get("R1-P01").contact_state !== "revoked" || projectionByStudy.get("R1-P01").recording_state !== "not-requested") fail("contact/no-recording attrition projection failed")
 if (projectionByStudy.get("R1-P02").eligibility_reason_code !== "participant-withdrew") fail("broader terminal withdrawal was revived")
 if (projectionByStudy.get("R1-P03").eligibility_reason_code !== "deletion-pending" || projectionByStudy.get("R1-P03").deletion_request_timeliness !== "timely") fail("timely deletion projection failed")
 if (projectionByStudy.get("R1-P04").eligibility_state !== "eligible" || projectionByStudy.get("R1-P04").deletion_request_timeliness !== "late-after-cutoff") fail("late deletion/irreversible projection failed")
@@ -1699,21 +1977,29 @@ const crossRecruitmentActivation = rowFor("attritionConsent", {
   program_person_key: eligibleChain.programPersonKey, study_id: "F1-P09", event_at_utc: "2026-01-01T23:00:00Z",
   event_type: "study-id-activated", target_scope: "phase", target_plan_id: "005", target_phase_id: "p005-first-click-r1",
   consent_document_sha256: "n/a", withdrawal_cutoff_at_utc: "n/a", compensation_terms_code: "unpaid",
-  compensation_terms_sha256: hashToken("cross-recruitment-terms"), reason_code: "none", access_strategy_code: "n/a",
+  compensation_terms_sha256: compensationTermsSha("p005-first-click-r1"), reason_code: "none", access_strategy_code: "n/a",
   actor_code: "HUMAN-MODERATOR", prior_event_id: "n/a",
 })
 const crossRecruitmentProgramWithdrawal = rowFor("attritionConsent", {
   event_id: eventToken("cross-recruitment-program-withdrawal"), recruitment_key: crossRecruitmentActivation.recruitment_key,
   program_person_key: eligibleChain.programPersonKey, study_id: "F1-P09", event_at_utc: "2026-01-02T00:00:00Z",
   event_type: "participant-withdrew", target_scope: "program", target_plan_id: "n/a", target_phase_id: "n/a",
-  consent_document_sha256: "n/a", withdrawal_cutoff_at_utc: "n/a", compensation_terms_code: "n/a",
-  compensation_terms_sha256: "n/a", reason_code: "participant-request", access_strategy_code: "n/a",
+  consent_document_sha256: "n/a", withdrawal_cutoff_at_utc: "n/a", compensation_terms_code: "unpaid",
+  compensation_terms_sha256: compensationTermsSha("p005-first-click-r1"), reason_code: "participant-request", access_strategy_code: "n/a",
   actor_code: "HUMAN-PARTICIPANT-REQUEST", prior_event_id: crossRecruitmentActivation.event_id,
 })
 const crossRecruitmentRows = parseRows("attritionConsent", [...parsedLedgerRows, crossRecruitmentActivation, crossRecruitmentProgramWithdrawal])
+assertZeroBudgetLedgerPolicy(crossRecruitmentRows)
 const crossRecruitmentProjection = deriveAttritionProjection(crossRecruitmentRows, projectionStudies, "2026-01-12T00:00:00Z").find((row) => row.study_id === eligibleChain.studyId)
 if (crossRecruitmentProjection.eligibility_reason_code !== "participant-withdrew" || crossRecruitmentProjection.applicable_program_event_id !== crossRecruitmentProgramWithdrawal.event_id) fail("cross-recruitment program withdrawal did not propagate by program_person_key")
 mutationCheckCount += 1
+
+expectSemanticFailure(() => assertZeroBudgetLedgerPolicy(parsedP004ConsentRows.filter((row) => row.event_type !== "recording-not-used")), "exactly one recording-not-used")
+expectSemanticFailure(() => assertZeroBudgetLedgerPolicy(parsedP004ConsentRows.map((row) => row.event_type === "recording-not-used" ? { ...row, event_type: "recording-consent-affirmed" } : row)), "recording consent event is prohibited")
+expectSemanticFailure(() => assertZeroBudgetLedgerPolicy(parsedP004ConsentRows.map((row) => row.event_type === "recording-not-used" ? { ...row, event_at_utc: "2026-01-01T02:30:00Z" } : row)), "precede exposure/start")
+expectSemanticFailure(() => assertZeroBudgetLedgerPolicy([...parsedP004ConsentRows, { ...p004RecordingNotUsedEvent, event_id: `EVT-${sha256("duplicate-recording-not-used").slice(0, 32)}` }]), "exactly one recording-not-used")
+expectSemanticFailure(() => assertZeroBudgetLedgerPolicy(parsedP004ConsentRows.map((row) => row.event_type === "recording-not-used" ? { ...row, compensation_terms_sha256: hashToken("wrong-recording-phase-terms") } : row)), "canonical unpaid phase row")
+expectSemanticFailure(() => assertZeroBudgetLedgerPolicy(parsedP004ConsentRows.map((row) => row.event_type === "recording-not-used" ? { ...row, study_id: "R1-P09" } : row)), "exactly one recording-not-used")
 
 const p004PhaseProjection = buildPhaseProjectionFixture({
   phaseId: "p004-r1", ledgerRows: parsedP004ConsentRows,

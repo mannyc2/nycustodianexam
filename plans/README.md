@@ -122,9 +122,11 @@ Each plan creates its own GitHub research branch rooted at an immutable base and
 opens a draft PR when it is explicitly executed. Before any plan starts, its
 execution base must contain the reviewed plan file and this index; `e6f9119` is
 the shared code-audit/planning coordinate, not a branch base that predates the
-plans themselves. External participant outreach, compensation, recording, or
-prototype hosting still requires separate operator approval. Raw participant
-data never belongs in Git.
+plans themselves. External participant outreach and prototype hosting still
+require real operator resources and the applicable staged approval. The Step 2
+packet fixes all eight phases as voluntary, unpaid `$0` participation with no
+recording; changing either term requires a prospective protocol amendment. Raw
+participant data never belongs in Git.
 
 Plans 004 and 005 are open in parallel as draft PRs #37 and #38, but neither is
 accepted or merged. Merge Plan 004 first only after its remaining criteria are
