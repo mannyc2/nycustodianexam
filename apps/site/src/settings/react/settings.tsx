@@ -2,7 +2,10 @@ import type { Effect as EffectType } from "effect"
 import { Effect } from "effect"
 import { useEffect, useRef, useState } from "react"
 import type { HazardPersistence } from "../../hazard-player/persistence.ts"
-import { localFailureDetail } from "../../local-failure-detail.ts"
+import {
+  localFailureReport,
+  type LocalFailureReport
+} from "../../local-failure-detail.ts"
 import type { QuestionPersistence } from "../../question-player/persistence.ts"
 import type { ReviewPersistence } from "../../review/persistence.ts"
 import type { VerifiedContent } from "../../verified-content.ts"
@@ -67,7 +70,7 @@ export const SettingsIsland = ({
   const [reviewRebuild, setReviewRebuild] = useState<ReviewRebuildState>({ tag: "idle" })
   const [busy, setBusy] = useState(false)
   const [notice, setNotice] = useState("Loading local settings…")
-  const [problem, setProblem] = useState<string | null>(null)
+  const [problem, setProblem] = useState<LocalFailureReport | null>(null)
   const [completion, setCompletion] = useState<string | null>(null)
   const problemHeading = useRef<HTMLHeadingElement>(null)
   const resultHeading = useRef<HTMLHeadingElement>(null)
@@ -98,11 +101,11 @@ export const SettingsIsland = ({
       setPreferences(stored)
       const mirrorDetail = synchronizeBootMirror(stored)
       setNotice((stored.updatedAt === 0
-        ? "Default preferences are shown; no preference record has been saved."
-        : "Saved local preferences loaded.") +
-        (mirrorDetail === null ? "" : ` ${mirrorDetail} The IndexedDB preference remains authoritative.`))
+        ? "Default preferences are shown; nothing has been saved yet."
+        : "Your saved preferences loaded.") +
+        (mirrorDetail === null ? "" : ` ${mirrorDetail} The copy saved on this device remains authoritative.`))
     }).catch((cause) => {
-      if (active) setProblem(localFailureDetail(cause, "The local-data operation failed."))
+      if (active) setProblem(localFailureReport(cause, "Saved settings could not be read from this device."))
     })
     return () => {
       active = false
@@ -147,11 +150,11 @@ export const SettingsIsland = ({
         reduceMotion: saved.reduceMotion
       })
       setNotice(mirror.mirrored
-        ? "Preferences saved in IndexedDB on this device."
-        : `Preferences saved in IndexedDB and applied in this tab. ${mirror.detail} Cross-tab and early reload application may be delayed.`)
+        ? "Preferences saved on this device."
+        : `Preferences saved on this device and applied in this tab. ${mirror.detail}`)
       setCompletion("Preferences saved")
     } catch (cause) {
-      const writeFailure = localFailureDetail(cause, "The local-data operation failed.")
+      const writeFailure = localFailureReport(cause, "Your preferences were not saved.")
       try {
         const stored = await runtime.runPromise(Effect.gen(function*() {
           const settings = yield* SettingsPersistence
@@ -160,29 +163,23 @@ export const SettingsIsland = ({
         lastAuthoritativePreferences.current = stored
         setPreferences(stored)
         const mirrorDetail = synchronizeBootMirror(stored)
-        setProblem(
-          `${writeFailure} The unsaved choices were discarded; controls and applied preferences ` +
-          "were restored from authoritative IndexedDB storage." +
-          (mirrorDetail === null
-            ? ""
-            : ` ${mirrorDetail} The IndexedDB preference remains authoritative.`)
-        )
+        setProblem({
+          message: `${writeFailure.message} The unsaved choices were set aside, and the controls ` +
+            "show the preferences still saved on this device." +
+            (mirrorDetail === null ? "" : ` ${mirrorDetail}`),
+          diagnostic: writeFailure.diagnostic
+        })
       } catch (restoreCause) {
+        console.error("Unable to reload the saved preferences", restoreCause)
         const stored = lastAuthoritativePreferences.current
         setPreferences(stored)
         const mirrorDetail = synchronizeBootMirror(stored)
-        setProblem(
-          `${writeFailure} ` +
-          localFailureDetail(
-            restoreCause,
-            "The authoritative IndexedDB preferences could not be restored."
-          ) +
-          " Controls and applied preferences were restored from the last known authoritative " +
-          "IndexedDB snapshot." +
-          (mirrorDetail === null
-            ? ""
-            : ` ${mirrorDetail} The last known IndexedDB preference remains authoritative.`)
-        )
+        setProblem({
+          message: `${writeFailure.message} The saved preferences also could not be reloaded, ` +
+            "so the controls show the last known saved values." +
+            (mirrorDetail === null ? "" : ` ${mirrorDetail}`),
+          diagnostic: writeFailure.diagnostic
+        })
       }
     } finally {
       setBusy(false)
@@ -205,10 +202,10 @@ export const SettingsIsland = ({
       anchor.download = `nycustodian-local-data-${new Date(envelope.payload.exportedAt).toISOString().slice(0, 10)}.json`
       anchor.click()
       URL.revokeObjectURL(href)
-      setNotice(`Export prepared with ${envelope.payload.questionAttempts.length + envelope.payload.hazardAttempts.length + envelope.payload.reviewAcknowledgements.length} event records. Correction drafts were ${includeDrafts ? "included by explicit choice" : "excluded"}.`)
-      setCompletion("Validated export ready")
+      setNotice(`Export ready with ${envelope.payload.questionAttempts.length + envelope.payload.hazardAttempts.length + envelope.payload.reviewAcknowledgements.length} event records. Correction drafts were ${includeDrafts ? "included because you chose to include them" : "excluded"}.`)
+      setCompletion("Export ready")
     } catch (cause) {
-      setProblem(localFailureDetail(cause, "The local-data operation failed."))
+      setProblem(localFailureReport(cause, "The export file could not be created. Nothing was changed."))
     } finally {
       setBusy(false)
     }
@@ -223,12 +220,12 @@ export const SettingsIsland = ({
       return
     }
     if (file.size > 10 * 1_024 * 1_024) {
-      setProblem("Import files are limited to 10 MiB before parsing.")
+      setProblem({ message: "Import files are limited to 10 MiB.", diagnostic: null })
       setImportText(null)
       return
     }
     setImportText(await file.text())
-    setNotice("File loaded locally. It has not been validated or written.")
+    setNotice("File loaded on this device. Nothing has been checked or written yet.")
   }
 
   const previewImport = async (): Promise<void> => {
@@ -246,9 +243,9 @@ export const SettingsIsland = ({
       }))
       setImportPlan(plan)
       setImportConfirmed(false)
-      setNotice("Checksum and schema validation passed. Review the no-write preview below.")
+      setNotice("The file checked out. Review the preview below — nothing has been written yet.")
     } catch (cause) {
-      setProblem(localFailureDetail(cause, "The local-data operation failed."))
+      setProblem(localFailureReport(cause, "The file could not be read or checked, so nothing was imported."))
       setImportPlan(null)
     } finally {
       setBusy(false)
@@ -268,7 +265,7 @@ export const SettingsIsland = ({
           bootstrap.trustedReleaseContentRegistry
         )
       }))
-      setNotice(`Import committed atomically: ${result.imported} inserted, ${result.matched} matched, ${result.quarantined} quarantined. No existing record was overwritten.`)
+      setNotice(`Import complete: ${result.imported} added, ${result.matched} already present, ${result.quarantined} set aside for review. Nothing already saved was overwritten.`)
       setImportPlan(null)
       setImportText(null)
       setImportConfirmed(false)
@@ -280,11 +277,11 @@ export const SettingsIsland = ({
       setPreferences(loaded)
       const mirrorDetail = synchronizeBootMirror(loaded)
       if (mirrorDetail !== null) {
-        setNotice((current) => `${current} ${mirrorDetail} Imported IndexedDB preferences remain authoritative.`)
+        setNotice((current) => `${current} ${mirrorDetail} The imported preferences remain authoritative.`)
       }
-      setCompletion("Portable import complete")
+      setCompletion("Import complete")
     } catch (cause) {
-      setProblem(localFailureDetail(cause, "The local-data operation failed."))
+      setProblem(localFailureReport(cause, "The import could not be applied. Nothing already saved was changed."))
     } finally {
       setBusy(false)
     }
@@ -301,9 +298,10 @@ export const SettingsIsland = ({
       )
       setReviewRebuild({ tag: "complete", receipt })
     } catch (cause) {
+      console.error("Unable to rebuild the review queue", cause)
       setReviewRebuild({
         tag: "recoverable_error",
-        detail: localFailureDetail(cause, "The review projection could not be rebuilt.")
+        detail: "The review queue could not be rebuilt from this device\u2019s storage."
       })
     } finally {
       setBusy(false)
@@ -321,9 +319,9 @@ export const SettingsIsland = ({
       }))
       setResetPreview(preview)
       setResetConfirmed(false)
-      setNotice("Reset preview is ready. No record was changed.")
+      setNotice("The delete preview is ready. No record was changed.")
     } catch (cause) {
-      setProblem(localFailureDetail(cause, "The local-data operation failed."))
+      setProblem(localFailureReport(cause, "The delete preview could not be created. Nothing was changed."))
     } finally {
       setBusy(false)
     }
@@ -339,7 +337,7 @@ export const SettingsIsland = ({
         const settings = yield* SettingsPersistence
         return yield* settings.reset(resetPreview)
       }))
-      setNotice(`Scoped reset completed for ${receipt.records} record(s). Offline packs and their caches were not included.`)
+      setNotice(`Delete complete: ${receipt.records} record(s) removed. Offline downloads were not touched.`)
       setResetPreview(null)
       setResetConfirmed(false)
       if (resetPreview.scope === "preferences" || resetPreview.scope === "all-portable-data") {
@@ -351,9 +349,9 @@ export const SettingsIsland = ({
           setNotice((current) => `${current} ${mirror.detail} Defaults were applied in this tab.`)
         }
       }
-      setCompletion("Scoped reset complete")
+      setCompletion("Delete complete")
     } catch (cause) {
-      setProblem(localFailureDetail(cause, "The local-data operation failed."))
+      setProblem(localFailureReport(cause, "The delete did not finish. Records outside the previewed scope were not touched."))
     } finally {
       setBusy(false)
     }
@@ -363,8 +361,14 @@ export const SettingsIsland = ({
     <div className="local-data-stack">
       {problem === null ? null : (
         <section className="local-data-error" role="alert" aria-labelledby="settings-error-heading">
-          <h2 id="settings-error-heading" ref={problemHeading} tabIndex={-1}>Local-data operation stopped</h2>
-          <p>{problem}</p>
+          <h2 id="settings-error-heading" ref={problemHeading} tabIndex={-1}>This didn’t finish</h2>
+          <p>{problem.message}</p>
+          {problem.diagnostic === null ? null : (
+            <details className="feedback-sources">
+              <summary>Technical details</summary>
+              <p><code>{problem.diagnostic}</code></p>
+            </details>
+          )}
         </section>
       )}
 
@@ -383,12 +387,12 @@ export const SettingsIsland = ({
               }))}
             >
               <option value="en">English (launch content available)</option>
-              <option value="es" disabled>Spanish (architecture ready; reviewed pages not launched)</option>
+              <option value="es" disabled>Spanish (not available yet)</option>
             </select>
           </div>
           <label className="affirmation-control">
             <input type="checkbox" checked={preferences.lowDataMode} disabled />
-            Low-data media preference (not enabled until a real media policy consumes it)
+            Low-data mode (not available yet)
           </label>
           <label className="affirmation-control">
             <input type="checkbox" checked={preferences.largeText} onChange={(event) =>
@@ -401,14 +405,14 @@ export const SettingsIsland = ({
             Reduce nonessential application motion
           </label>
           <button className="button button-primary" disabled={busy} onClick={() => void savePreferences()} type="button">
-            Save preferences locally
+            Save preferences
           </button>
         </fieldset>
       </section>
 
       <section id="export-local-data" className="reference-card" aria-labelledby="export-heading">
-        <h2 id="export-heading">Export portable local data</h2>
-        <p>Exports append-only study/review events and preferences with a schema version and SHA-256 checksum. Rebuildable session projections and offline-pack bytes are excluded.</p>
+        <h2 id="export-heading">Export your local data</h2>
+        <p>Downloads one file with your study history and preferences that you can keep or move to another device. Offline downloads are not included, and the file carries a checksum so imports can be verified.</p>
         <fieldset className="form-field-group">
           <legend>Export options</legend>
           <label className="affirmation-control">
@@ -416,14 +420,14 @@ export const SettingsIsland = ({
             Include correction drafts, which may contain sensitive free-form text
           </label>
           <button className="button button-secondary" disabled={busy} onClick={() => void exportData()} type="button">
-            Download validated export
+            Download export file
           </button>
         </fieldset>
       </section>
 
       <section className="reference-card" aria-labelledby="import-heading">
-        <h2 id="import-heading">Import with preview and quarantine</h2>
-        <p>No record is written until the file checksum and schema validate, references are classified, a preview is shown, and you confirm.</p>
+        <h2 id="import-heading">Import exported data</h2>
+        <p>Nothing is written until the file is checked, a preview is shown, and you confirm. Records that conflict or reference unknown content are set aside instead of overwriting anything.</p>
         <fieldset className="form-field-group">
           <legend>Import file and confirmation</legend>
           <div className="form-field">
@@ -432,25 +436,25 @@ export const SettingsIsland = ({
               void chooseImportFile(event.target.files?.[0])} />
           </div>
           <button className="button button-secondary" disabled={busy || importText === null} onClick={() => void previewImport()} type="button">
-            Validate and preview import
+            Check and preview import
           </button>
           {importPlan === null ? null : (
             <div className="operation-preview">
-              <h3 ref={resultHeading} tabIndex={-1}>No-write import preview</h3>
+              <h3 ref={resultHeading} tabIndex={-1}>Import preview — nothing written yet</h3>
               <dl className="fact-list">
                 <dt>New records</dt><dd>{importPlan.preview.insert}</dd>
                 <dt>Identical matches</dt><dd>{importPlan.preview.matched}</dd>
-                <dt>Conflicts to quarantine</dt><dd>{importPlan.preview.conflicts}</dd>
-                <dt>Unknown references to quarantine</dt><dd>{importPlan.preview.unknownReferences}</dd>
+                <dt>Conflicts set aside</dt><dd>{importPlan.preview.conflicts}</dd>
+                <dt>Unknown references set aside</dt><dd>{importPlan.preview.unknownReferences}</dd>
                 <dt>Correction drafts</dt><dd>{importPlan.preview.includesCorrectionDrafts ? "Included" : "Excluded"}</dd>
-                <dt>Checksum</dt><dd><code>{importPlan.preview.checksum}</code></dd>
               </dl>
+              <details className="source-note"><summary>Technical details</summary><p>Checksum <code>{importPlan.preview.checksum}</code></p></details>
               <label className="affirmation-control">
                 <input type="checkbox" checked={importConfirmed} onChange={(event) => setImportConfirmed(event.target.checked)} />
-                Apply this exact preview without overwriting existing records
+                Apply exactly this preview without overwriting existing records
               </label>
               <button className="button button-primary" disabled={busy || !importConfirmed} onClick={() => void applyImport()} type="button">
-                Apply validated import
+                Apply import
               </button>
             </div>
           )}
@@ -462,11 +466,10 @@ export const SettingsIsland = ({
         className="reference-card"
         aria-labelledby="review-rebuild-heading"
       >
-        <h2 id="review-rebuild-heading">Rebuild the local review projection</h2>
+        <h2 id="review-rebuild-heading">Rebuild your review queue</h2>
         <p>
-          Derive the due queue again from validated, append-only attempts and explicit review
-          acknowledgements. This read-only recovery does not edit study history or mark anything
-          reviewed.
+          Rebuild the review queue from your saved attempts and finished reviews. It does not
+          change your history or finish anything for you.
         </p>
         <button
           className="button button-secondary"
@@ -480,7 +483,7 @@ export const SettingsIsland = ({
         </button>
         {reviewRebuild.tag === "pending" ? (
           <p role="status" aria-live="polite" aria-atomic="true">
-            Rebuilding the review projection from saved local events…
+            Rebuilding the review queue from the events saved on this device…
           </p>
         ) : null}
         {reviewRebuild.tag === "recoverable_error" ? (
@@ -497,29 +500,29 @@ export const SettingsIsland = ({
               Review queue rebuild stopped
             </h3>
             <p>{reviewRebuild.detail}</p>
-            <p>No saved attempt or review acknowledgement was changed. The rebuild control is available again.</p>
+            <p>No saved attempt or finished review was changed. You can try the rebuild again.</p>
           </section>
         ) : null}
         {reviewRebuild.tag === "complete" ? (
           <div className="operation-preview">
             <h3 ref={rebuildResultHeading} tabIndex={-1}>Review queue rebuild complete</h3>
             <p role="status" aria-live="polite" aria-atomic="true">
-              Read {reviewRebuild.receipt.attemptsRead} validated attempt(s), derived {" "}
-              {reviewRebuild.receipt.dueItems} due item(s), and classified {" "}
-              {reviewRebuild.receipt.quarantinedAttempts} unavailable or inconsistent attempt(s)
-              for truthful review recovery. No study event or acknowledgement was written.
+              Read {reviewRebuild.receipt.attemptsRead} saved attempt(s), found {" "}
+              {reviewRebuild.receipt.dueItems} due for review, and set aside {" "}
+              {reviewRebuild.receipt.quarantinedAttempts} that could not be checked. Nothing in
+              your history was changed.
             </p>
           </div>
         ) : null}
       </section>
 
       <section className="reference-card" aria-labelledby="reset-heading">
-        <h2 id="reset-heading">Scoped local reset</h2>
-        <p>Export first if you may need these records. Offline packs are never deleted here; preview or remove them on the <a href="/offline/">Offline packs page</a>.</p>
+        <h2 id="reset-heading">Delete local data</h2>
+        <p>Export first if you may need these records. Offline downloads are never deleted here; preview or remove them on the <a href="/offline/">Use offline page</a>.</p>
         <fieldset className="form-field-group">
           <legend>Reset scope and confirmation</legend>
           <div className="form-field">
-            <label htmlFor="reset-scope">Reset scope</label>
+            <label htmlFor="reset-scope">What to delete</label>
             <select id="reset-scope" value={resetScope} onChange={(event) => {
               setResetScope(event.target.value as ResetScope)
               setResetPreview(null)
@@ -533,19 +536,19 @@ export const SettingsIsland = ({
             </select>
           </div>
           <button className="button button-secondary" disabled={busy} onClick={() => void previewResetOperation()} type="button">
-            Preview reset
+            Preview delete
           </button>
           {resetPreview === null ? null : (
             <div className="operation-preview">
-              <h3 ref={resetResultHeading} tabIndex={-1}>Reset preview: {resetPreview.records} record(s)</h3>
-              <ul>{resetPreview.stores.map((store) => <li key={store.name}><code>{store.name}</code>: {store.records}</li>)}</ul>
-              <p>Offline packs and cache bytes: excluded.</p>
+              <h3 ref={resetResultHeading} tabIndex={-1}>Delete preview: {resetPreview.records} record(s)</h3>
+              <p>Offline downloads are not included.</p>
+              <details className="source-note"><summary>Technical details</summary><ul>{resetPreview.stores.map((store) => <li key={store.name}><code>{store.name}</code>: {store.records}</li>)}</ul></details>
               <label className="affirmation-control">
                 <input type="checkbox" checked={resetConfirmed} onChange={(event) => setResetConfirmed(event.target.checked)} />
-                Delete exactly this reset scope from this device
+                Delete exactly these previewed records from this device
               </label>
               <button className="button button-primary" disabled={busy || !resetConfirmed} onClick={() => void applyReset()} type="button">
-                Confirm scoped reset
+                Delete these records
               </button>
             </div>
           )}

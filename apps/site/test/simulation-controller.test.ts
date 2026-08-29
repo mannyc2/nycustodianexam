@@ -515,7 +515,10 @@ describe("simulation player controller", () => {
     await vi.waitFor(() => expect(controller.getSnapshot().state).toMatchObject({
       tag: "ready",
       saving: false,
-      recoverableError: { kind: "response", detail: "Injected local save failure" },
+      recoverableError: {
+        kind: "response",
+        detail: "This device's storage could not complete the operation. Everything already saved is unchanged — try again."
+      },
       session: {
         responses: [{
           questionId: current.question.id,
@@ -732,8 +735,8 @@ describe("self-contained evaluated simulation restoration", () => {
     const html = await restoreTwice(session, submission)
     expect(html).toContain("Durable rationale for")
     expect(html).toContain("Durable source")
-    expect(html).toContain("Why this answer is correct")
-    expect(html).toContain("Open the separate local review queue")
+    expect(html).toContain("Answer explanations")
+    expect(html).toContain("Open your review queue")
   })
 
   it("restores v2 claims, caveats, and source-line excerpts from immutable results", async () => {
@@ -796,7 +799,7 @@ describe("self-contained evaluated simulation restoration", () => {
     expect(html).toContain("Supported claim for")
     expect(html).toContain("Site-designed application context.")
     expect(html).toContain("Exact source-line excerpt for")
-    expect(html).toContain("Source-line receipts")
+    expect(html).toContain("Where this comes from")
   })
 
   it("restores hazard corrections, full descriptions, and sources after pack removal", async () => {
@@ -859,8 +862,8 @@ describe("self-contained evaluated simulation restoration", () => {
     expect(html).toContain("Reviewed scene overlay")
     expect(html).toContain("data:image/png;base64,")
     expect(html).toContain('data-marker-kind="')
-    expect(html).toContain("Your flag is retained in this saved simulation result")
-    expect(html).toContain("not automatically added to the separate due review queue")
+    expect(html).toContain("Your flag stays with this saved result")
+    expect(html).toContain("do not automatically enter your review queue")
     expect(html).not.toContain("Open your flagged review queue")
   })
 })

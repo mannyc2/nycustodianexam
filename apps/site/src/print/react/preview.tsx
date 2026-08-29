@@ -2,6 +2,15 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react"
 import type { PrintPreviewController, PrintPreviewState } from "../controller.ts"
 import type { PrintJobRecord, ReleasedPrintPacketSection } from "../model.ts"
 
+const printRoleLabel = (role: string): string =>
+  role === "target"
+    ? "Condition needing correction"
+    : role === "decoy"
+      ? "Safe detail that may look suspicious"
+      : role === "safe-background"
+        ? "Safe background detail"
+        : role
+
 const packetSection = (section: ReleasedPrintPacketSection) => {
   switch (section.tag) {
     case "answer-sheet":
@@ -103,8 +112,8 @@ const packetSection = (section: ReleasedPrintPacketSection) => {
           {section.scenes.map((scene, index) => <article className="print-hazard-page" key={scene.id}>
             <h3>Scene {index + 1}: {scene.environment}</h3>
             {scene.asset === null ? null : <figure className="print-annotated-scene">
-              <img src={scene.asset.dataUrl} alt={`Reviewed ${scene.environment} scene`} />
-              <svg aria-label="Reviewed target-region outlines" preserveAspectRatio="none" role="img" viewBox="0 0 100 100">
+              <img src={scene.asset.dataUrl} alt={`${scene.environment} scene with answer outlines`} />
+              <svg aria-label="Hazard-region outlines" preserveAspectRatio="none" role="img" viewBox="0 0 100 100">
                 {scene.answer.targetRegions.flatMap((region, regionIndex) =>
                   region.polygons.map((polygon, polygonIndex) => <polygon
                     key={`${region.inventoryId}-${polygonIndex}`}
@@ -114,9 +123,9 @@ const packetSection = (section: ReleasedPrintPacketSection) => {
                 )}
               </svg>
             </figure>}
-            <p><strong>Reviewed claim:</strong> {scene.answer.claim}</p>
+            <p><strong>Scene explanation:</strong> {scene.answer.claim}</p>
             <ol>{scene.answer.targets.map((target) => <li key={target.id}><strong>{target.condition}</strong> — {target.correction}</li>)}</ol>
-            <h4>Reviewed safe decoys</h4>
+            <h4>Details that are safe as shown</h4>
             <ul>{scene.answer.decoys.map((decoy) => <li key={decoy.id}>{decoy.condition}: {decoy.safeBecause}</li>)}</ul>
             {scene.answer.sourceReferences.length === 0 ? null : <><h4>Source references</h4><ul>{scene.answer.sourceReferences.map((source) => <li key={source.id}>{source.label} — {source.locator}</li>)}</ul></>}
           </article>)}
@@ -126,11 +135,11 @@ const packetSection = (section: ReleasedPrintPacketSection) => {
       return (
         <section className="print-section print-text-equivalent" aria-labelledby="text-equivalent-heading">
           <h2 id="text-equivalent-heading">Text-equivalent/nonvisual hazard set</h2>
-          <p>This is an equivalent knowledge task, not the same visual-recognition construct.</p>
+          <p>This text version covers the same knowledge; it is not the same task as marking the image.</p>
           {section.scenes.map((scene, index) => <article className="print-hazard-page" key={scene.id}>
             <h3>Scene {index + 1}: {scene.environment}</h3>
-            <p><strong>Reviewed claim:</strong> {scene.answer.claim}</p>
-            <ol>{scene.answer.nonvisualStatements.map((statement, statementIndex) => <li key={`${statement.zone}-${statementIndex}`}><strong>{statement.zone} · {statement.role}:</strong> {statement.statement}</li>)}</ol>
+            <p><strong>Scene explanation:</strong> {scene.answer.claim}</p>
+            <ol>{scene.answer.nonvisualStatements.map((statement, statementIndex) => <li key={`${statement.zone}-${statementIndex}`}><strong>{statement.zone} · {printRoleLabel(statement.role)}:</strong> {statement.statement}</li>)}</ol>
             {scene.answer.sourceReferences.length === 0 ? null : <><h4>Source references</h4><ul>{scene.answer.sourceReferences.map((source) => <li key={source.id}>{source.label} — {source.locator}</li>)}</ul></>}
           </article>)}
         </section>
@@ -275,7 +284,7 @@ export const PrintPreview = ({ controller }: { readonly controller: PrintPreview
     >
       {announcement}
       <header className="print-preview-header">
-        <p className="eyebrow">Deterministic print preview</p>
+        <p className="eyebrow">Saved print preview</p>
         <h1 ref={headingRef} tabIndex={-1}>{job.packet.title}</h1>
         <p className="print-original-statement"><strong>{job.packet.statement}</strong></p>
         <dl className="print-manifest-summary">
@@ -290,7 +299,7 @@ export const PrintPreview = ({ controller }: { readonly controller: PrintPreview
       </header>
 
       {job.status === "stale" ? <p className="status-panel status-panel-warning">This job references corrected or removed content. Regenerate it before printing.</p> : null}
-      {snapshot.state.tag === "regenerating" ? <p className="status-panel" role="status">Regenerating these exact saved settings into a new local print job…</p> : null}
+      {snapshot.state.tag === "regenerating" ? <p className="status-panel" role="status">Regenerating this packet from the saved settings…</p> : null}
       {snapshot.state.tag === "regenerate-error" ? <section
         aria-labelledby="print-regenerate-error-heading"
         className="status-panel status-panel-danger"
@@ -320,7 +329,7 @@ export const PrintPreview = ({ controller }: { readonly controller: PrintPreview
           disabled={snapshot.state.tag === "regenerating"}
           onClick={controller.regenerate}
           type="button"
-        >{snapshot.state.tag === "regenerating" ? "Regenerating…" : "Regenerate exact settings"}</button>{" "}
+        >{snapshot.state.tag === "regenerating" ? "Regenerating…" : "Regenerate this packet"}</button>{" "}
         <button
           className="button"
           disabled={job.status === "stale" || snapshot.state.tag === "regenerating" || snapshot.state.tag === "regenerate-error" || !inspectionConfirmed}

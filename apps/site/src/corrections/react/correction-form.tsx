@@ -1,7 +1,10 @@
 import type { Effect as EffectType } from "effect"
 import { Effect } from "effect"
 import { useEffect, useRef, useState } from "react"
-import { localFailureDetail } from "../../local-failure-detail.ts"
+import {
+  localFailureReport,
+  type LocalFailureReport
+} from "../../local-failure-detail.ts"
 import {
   CorrectionDraftPersistence,
   type CorrectionDraftPersistenceError
@@ -11,7 +14,11 @@ import {
   correctionReportFromDraft,
   emptyCorrectionDraft
 } from "../model.ts"
-import { submitCorrectionReport } from "../client.ts"
+import {
+  fetchCorrectionIntakeStatus,
+  submitCorrectionReport,
+  type CorrectionIntakeStatus
+} from "../client.ts"
 
 interface CorrectionEffectRunner {
   readonly runPromise: <A, E>(
@@ -63,8 +70,9 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
   const [draft, setDraft] = useState<CorrectionDraftRecord>(freshDraft)
   const [loading, setLoading] = useState(true)
   const [busy, setBusy] = useState(false)
-  const [notice, setNotice] = useState("Loading any explicitly saved local draft…")
-  const [problem, setProblem] = useState<string | null>(null)
+  const [notice, setNotice] = useState("Checking this device for a saved draft…")
+  const [problem, setProblem] = useState<LocalFailureReport | null>(null)
+  const [intakeStatus, setIntakeStatus] = useState<CorrectionIntakeStatus | "unchecked" | "checking">("unchecked")
   const [validationErrors, setValidationErrors] = useState<CorrectionValidationErrors>({})
   const [acceptedRemotely, setAcceptedRemotely] = useState<string | null>(null)
   const [receiptStorageProblem, setReceiptStorageProblem] = useState(false)
@@ -82,14 +90,14 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
       if (!active) return
       if (stored !== undefined) setDraft(stored)
       setNotice(stored === undefined
-        ? "No saved local draft was found. Nothing has been sent."
+        ? "No saved draft was found on this device. Nothing has been sent."
         : stored.submissionState === "accepted"
-        ? "This device retained the accepted report receipt."
-        : "Your explicitly saved local draft was restored. Nothing was sent.")
+        ? "Your accepted report receipt is saved on this device."
+        : "Your saved draft was restored. Nothing was sent.")
       setLoading(false)
     }).catch((cause: CorrectionDraftPersistenceError) => {
       if (!active) return
-      setProblem(localFailureDetail(cause, "Local correction-draft storage is unavailable."))
+      setProblem(localFailureReport(cause, "Saved drafts could not be read from this device\u2019s storage."))
       setNotice("Nothing was sent.")
       setLoading(false)
     })
@@ -97,6 +105,12 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
       active = false
     }
   }, [runtime])
+
+  // No status request happens on page load; the learner asks explicitly.
+  const checkIntake = async (): Promise<void> => {
+    setIntakeStatus("checking")
+    setIntakeStatus(await fetchCorrectionIntakeStatus(fetch))
+  }
 
   useEffect(() => {
     if (problem !== null) problemHeading.current?.focus()
@@ -142,8 +156,8 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
       setDraft(saved)
       setNotice("Draft saved only on this device. It was not submitted.")
     } catch (cause) {
-      setProblem(localFailureDetail(cause, "Local correction-draft storage is unavailable."))
-      setNotice("Draft was not saved or submitted.")
+      setProblem(localFailureReport(cause, "The draft could not be saved to this device\u2019s storage. What you typed is still shown."))
+      setNotice("The draft was not saved, and nothing was sent.")
     } finally {
       setBusy(false)
     }
@@ -151,13 +165,17 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
 
   const submit = async (): Promise<void> => {
     if (acceptedRemotely !== null) return
+    if (intakeStatus !== "active") {
+      setNotice("Reports cannot be sent right now. Nothing was sent — your draft stays on this device.")
+      return
+    }
     setBusy(true)
     setProblem(null)
     let report
     const errors = validateCorrectionDraft(draft)
     if (Object.keys(errors).length > 0) {
       setValidationErrors(errors)
-      setProblem("Correct the labeled fields below before submitting this report.")
+      setProblem({ message: "Correct the labeled fields below before submitting this report.", diagnostic: null })
       setNotice("Nothing was sent.")
       setBusy(false)
       return
@@ -165,7 +183,7 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
     try {
       report = correctionReportFromDraft(draft)
     } catch {
-      setProblem("Correct the labeled fields below before submitting this report.")
+      setProblem({ message: "Correct the labeled fields below before submitting this report.", diagnostic: null })
       setNotice("Nothing was sent.")
       setBusy(false)
       return
@@ -180,17 +198,21 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
       setDraft(saved)
       const result = await submitCorrectionReport(fetch, report)
       if (result.tag === "inactive") {
-        setNotice("Online intake is not activated. Your report remains a local draft and was not submitted.")
+        setIntakeStatus("inactive")
+        setNotice("Online intake is off, so nothing was sent. Your report stays a draft on this device.")
         return
       }
       if (result.tag === "rate-limited") {
-        setProblem(`The intake pressure limit was reached. Retry explicitly in about ${result.retryAfterSeconds} seconds.`)
-        setNotice("Your local draft was retained. It will not retry automatically.")
+        setProblem({
+          message: `Too many reports are arriving right now. Wait about ${result.retryAfterSeconds} seconds, then choose Submit again.`,
+          diagnostic: null
+        })
+        setNotice("Your draft stays on this device. It will not retry on its own.")
         return
       }
       if (result.tag === "failed") {
-        setProblem(result.detail)
-        setNotice("Your local draft was retained. It will not retry automatically.")
+        setProblem({ message: result.detail, diagnostic: null })
+        setNotice("Your draft stays on this device. It will not retry on its own.")
         return
       }
 
@@ -205,18 +227,19 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
         const accepted = await persist(acceptedCandidate)
         setDraft(accepted)
         setReceiptStorageProblem(false)
-        setNotice("The service accepted the report and its receipt was retained locally. No publication decision is implied.")
+        setNotice("The report was accepted, and its receipt is saved on this device. Acceptance does not mean it will be published.")
       } catch (cause) {
+        console.error("Unable to save the accepted-report receipt", cause)
         setReceiptStorageProblem(true)
         setProblem(null)
         setNotice(
-          `The service accepted receipt ${result.clientReceiptId}, but this device could not retain the local receipt: ` +
-          `${localFailureDetail(cause, "local storage failed")}. Do not submit this report again; retry only the local receipt save.`
+          `The service accepted receipt ${result.clientReceiptId}, but the receipt could not be saved on this device. ` +
+          "Do not submit this report again — retry only the receipt save."
         )
       }
     } catch (cause) {
-      setProblem(localFailureDetail(cause, "Local correction-draft storage is unavailable."))
-      setNotice("Nothing will retry automatically. Review or save the fields again.")
+      setProblem(localFailureReport(cause, "The draft could not be written to this device\u2019s storage before sending, so nothing was sent."))
+      setNotice("Nothing will retry on its own. Review or save the fields again.")
     } finally {
       setBusy(false)
     }
@@ -230,12 +253,12 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
       const accepted = await persist(draft)
       setDraft(accepted)
       setReceiptStorageProblem(false)
-      setNotice("The already accepted report receipt is now retained on this device. No network submission occurred.")
+      setNotice("The accepted report\u2019s receipt is now saved on this device. Nothing new was sent.")
     } catch (cause) {
+      console.error("Unable to save the accepted-report receipt", cause)
       setReceiptStorageProblem(true)
       setNotice(
-        `The report remains accepted remotely, but its receipt still could not be retained locally: ` +
-        localFailureDetail(cause, "local storage failed")
+        "The report remains accepted, but its receipt still could not be saved on this device. You can retry the receipt save."
       )
     } finally {
       setBusy(false)
@@ -266,7 +289,7 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
       setReceiptStorageProblem(false)
       setNotice("The local draft was deleted. Nothing was submitted.")
     } catch (cause) {
-      setProblem(localFailureDetail(cause, "Local correction-draft storage is unavailable."))
+      setProblem(localFailureReport(cause, "The draft could not be deleted from this device\u2019s storage. Nothing was sent."))
     } finally {
       setBusy(false)
     }
@@ -279,15 +302,15 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
       <section className="local-data-state" aria-labelledby="correction-receipt-heading">
         <h2 id="correction-receipt-heading" ref={receiptHeading} tabIndex={-1}>
           {receiptStorageProblem
-            ? "Report accepted; local receipt not yet retained"
-            : "Report receipt retained on this device"}
+            ? "Report accepted — receipt not saved on this device yet"
+            : "Report receipt saved on this device"}
         </h2>
         <p>{notice}</p>
         <p><strong>Client receipt:</strong> <code>{draft.id}</code></p>
         <div className="question-controls">
           {receiptStorageProblem ? (
             <button className="button button-primary" disabled={busy} onClick={() => void retryReceiptSave()} type="button">
-              Retry local receipt save
+              Retry saving the receipt
             </button>
           ) : null}
           <button className="button button-primary" disabled={busy} onClick={startAnotherReport} type="button">
@@ -309,7 +332,13 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
       {problem === null ? null : (
         <section className="local-data-error" role="alert" aria-labelledby="correction-error-heading">
           <h2 id="correction-error-heading" ref={problemHeading} tabIndex={-1}>Report not submitted</h2>
-          <p>{problem}</p>
+          <p>{problem.message}</p>
+          {problem.diagnostic === null ? null : (
+            <details className="feedback-sources">
+              <summary>Technical details</summary>
+              <p><code>{problem.diagnostic}</code></p>
+            </details>
+          )}
         </section>
       )}
       <fieldset className="form-field-group">
@@ -416,18 +445,39 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
       )}
       </fieldset>
       <p role="status" aria-live="polite">{notice}</p>
-      <p className="source-note">Client receipt: <code>{draft.id}</code></p>
+      <details className="source-note"><summary>Technical details</summary><p>Client receipt ID: <code>{draft.id}</code></p></details>
       <div className="question-controls">
-        <button className="button button-secondary" disabled={busy} onClick={() => void saveLocally()} type="button">
+        <button className="button button-primary" disabled={busy} onClick={() => void saveLocally()} type="button">
           {busy ? "Working…" : "Save local draft"}
         </button>
-        <button className="button button-primary" disabled={busy} type="submit">
-          {busy ? "Checking intake…" : "Submit explicitly"}
-        </button>
+        {intakeStatus === "active" ? (
+          <button className="button button-secondary" disabled={busy} type="submit">
+            {busy ? "Submitting…" : "Submit report"}
+          </button>
+        ) : null}
         <button className="button button-secondary" disabled={busy} onClick={() => void deleteDraft()} type="button">
           Delete local draft
         </button>
       </div>
+      {intakeStatus === "active" ? null : (
+        <p className="source-note" role="status">
+          {intakeStatus === "unchecked"
+            ? "Reports cannot be sent unless online intake is on. Save your draft on this device, or check whether sending is available."
+            : intakeStatus === "checking"
+              ? "Checking whether reports can be sent…"
+              : intakeStatus === "inactive"
+                ? "Reports cannot be sent right now — online intake is off. Your draft stays on this device until you delete it."
+                : "Whether reports can be sent could not be checked; you may be offline. Your draft stays on this device."}
+          {intakeStatus === "unchecked" || intakeStatus === "inactive" || intakeStatus === "unknown" ? (
+            <>
+              {" "}
+              <button className="button button-secondary" disabled={busy} onClick={() => void checkIntake()} type="button">
+                {intakeStatus === "unchecked" ? "Check whether reports can be sent" : "Check again"}
+              </button>
+            </>
+          ) : null}
+        </p>
+      )}
     </form>
   )
 }

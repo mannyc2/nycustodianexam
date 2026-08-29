@@ -21,7 +21,7 @@ export const QuestionFeedback = () => {
               : "Your answer is saved"}
         </h2>
         <p>{state.message}</p>
-        {state.tag === "commit_failed" ? <p>Check storage access, then commit again.</p> : null}
+        {state.tag === "commit_failed" ? <p>Free up storage or close other tabs of this site, then submit again.</p> : null}
         {state.tag === "content_unavailable" ? (
           <button className="button button-secondary" onClick={actions.retryRestore} type="button">
             Check content again
@@ -58,7 +58,9 @@ export const QuestionFeedback = () => {
   return (
     <section className={correct ? "feedback feedback-correct" : "feedback feedback-review"}>
       <h2 ref={meta.outcomeHeadingRef} tabIndex={-1}>
-        {correct ? "Correct" : "Review this one"}
+        {correct
+          ? `Correct — “${optionLabel(state.payload.correctOptionId)}” is the right answer.`
+          : `Not correct — the right answer is “${optionLabel(state.payload.correctOptionId)}”.`}
       </h2>
       <dl className="feedback-answer-summary">
         <div>
@@ -109,7 +111,7 @@ export const QuestionFeedback = () => {
                                 return <li key={sourceLineId}>
                                   {source === undefined
                                     ? <>Unavailable source-line receipt <code>{sourceLineId}</code></>
-                                    : <><code>{source.id}</code> — {source.title} <code>{source.locator}</code></>}
+                                    : <>{source.title} <code>{source.locator}</code></>}
                                 </li>
                               })}
                             </ul>
@@ -125,7 +127,7 @@ export const QuestionFeedback = () => {
         </ol>
       </section>
       <details className="feedback-sources">
-        <summary>Source receipts</summary>
+        <summary>Where this comes from</summary>
         <ul className="source-receipt-list">
           {state.payload.sources.map((source) => (
             <li key={source.id}>

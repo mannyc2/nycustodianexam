@@ -124,7 +124,7 @@ test("Settings rebuild exposes pending/error/complete focus and remains idempote
   const completionStatus = page.getByRole("status").filter({
     hasText: "Read 1 validated attempt(s), derived 1 due item(s)"
   })
-  await expect(completionStatus).toContainText("No study event or acknowledgement was written")
+  await expect(completionStatus).toContainText("Nothing in your history was changed")
   const firstCompletion = await completionStatus.textContent()
   expect(await readReviewInputs(page)).toEqual(originalInputs)
 
@@ -149,7 +149,7 @@ test("Settings rebuild exposes pending/error/complete focus and remains idempote
   await rebuild.click()
   const stopped = page.getByRole("heading", { name: "Review queue rebuild stopped" })
   await expect(stopped).toBeFocused()
-  await expect(page.getByText(/No saved attempt or review acknowledgement was changed/))
+  await expect(page.getByText(/No saved attempt or finished review was changed/))
     .toBeVisible()
   await expect(rebuild).toBeEnabled()
 

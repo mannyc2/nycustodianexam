@@ -1,4 +1,5 @@
 import type { Effect } from "effect"
+import { LocalActionError } from "../local-failure-detail.ts"
 import { makeScreenStore, type ScreenSnapshot } from "../screen/store.ts"
 import type { VerifiedContent } from "../verified-content.ts"
 import {
@@ -64,17 +65,15 @@ export interface PrintPreviewController {
   readonly dispose: () => void
 }
 
-const safeError = (cause: unknown): string =>
-  cause instanceof Error && cause.message.length > 0
-    ? cause.message
-    : typeof cause === "object" && cause !== null &&
-        "detail" in cause && typeof cause.detail === "string" && cause.detail.length > 0
-      ? cause.detail
-    : "The local print operation could not be completed."
+const safeError = (cause: unknown): string => {
+  if (cause instanceof LocalActionError) return cause.message
+  console.error("Print operation failed", cause)
+  return "The print operation could not be completed on this device. The saved preview was not changed — try again."
+}
 
 const exactJob = (job: PrintJobRecord, expectedId: string): PrintJobRecord => {
   if (job.id !== expectedId) {
-    throw new Error("The local print operation returned a different print-job identity.")
+    throw new LocalActionError("Regeneration produced a different print job, so the saved preview was kept unchanged.")
   }
   return job
 }
@@ -186,14 +185,14 @@ export const createPrintPreviewController = (input: {
     }
     screen.publish(
       { tag: "regenerating", job },
-      { announce: "Regenerating the exact saved print settings into a new durable job." }
+      { announce: "Regenerating the packet from your saved print settings." }
     )
     const loadBootstrap = input.bootstrap === undefined
       ? input.loadBootstrap
       : () => Promise.resolve(input.bootstrap as PrintBuilderBootstrap)
     if (loadBootstrap === undefined) {
       screen.publish(
-        { tag: "regenerate-error", job, detail: "The current print inventory is unavailable." },
+        { tag: "regenerate-error", job, detail: "The current printable content is unavailable." },
         { focus: "error-summary" }
       )
       return

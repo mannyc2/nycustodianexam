@@ -43,7 +43,7 @@ export interface StoredAttempt {
 export const gotoReadyQuestion = async (page: Page): Promise<void> => {
   await page.goto(questionPath)
   await expect(page.getByRole("radio", { name: "Staple gun" })).toBeEnabled()
-  await expect(page.getByRole("button", { name: "Commit answer" })).toBeVisible()
+  await expect(page.getByRole("button", { name: "Submit answer" })).toBeVisible()
 }
 
 export const readStoredAttempt = (page: Page): Promise<StoredAttempt | undefined> =>

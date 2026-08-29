@@ -617,7 +617,7 @@ test("hazard worksheet, annotated answers, and text equivalents remain separate 
   await page.getByLabel("Deterministic seed").fill("paired-hazard-products")
   await page.getByRole("button", { name: "Generate preview" }).click()
   await expect(page.getByRole("heading", { level: 1, name: "Text-equivalent hazard set" })).toBeVisible()
-  await expect(page.getByText(/equivalent knowledge task, not the same visual-recognition construct/)).toBeVisible()
+  await expect(page.getByText(/text version covers the same knowledge; it is not the same task as marking the image/)).toBeVisible()
   await expect(page.locator(".print-text-equivalent img")).toHaveCount(0)
 
   const jobs = await readPrintJobs(page)

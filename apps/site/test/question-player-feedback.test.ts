@@ -116,7 +116,7 @@ describe("question feedback", () => {
     const selectedRationale = html.indexOf("Rationale for A.")
     const firstOtherRationale = html.indexOf("Rationale for B.")
     const secondOtherRationale = html.indexOf("Rationale for D.")
-    const sources = html.indexOf("Source receipt")
+    const sources = html.indexOf("Where this comes from")
 
     expect(correctRationale).toBeGreaterThan(-1)
     expect(selectedRationale).toBeGreaterThan(correctRationale)
@@ -128,7 +128,7 @@ describe("question feedback", () => {
       expect(occurrenceCount(html, `Rationale for ${optionId}.`)).toBe(1)
     }
     expect(occurrenceCount(html, 'aria-label="Claims and sources for this explanation"')).toBe(4)
-    expect(occurrenceCount(html, "line-1")).toBe(5)
+    expect(occurrenceCount(html, "line-1")).toBe(1)
     expect(occurrenceCount(html, "docs/source.md#L1")).toBe(5)
     expect(html).toContain("<strong>Scope note:</strong> This construction-industry provision")
     expect(html).toContain("Exact offline source excerpt for supported claim one.")
@@ -149,6 +149,6 @@ describe("question feedback", () => {
     expect(html).toContain("<dt>Your answer</dt><dd>Answer C (correct)</dd>")
     expect(occurrenceCount(html, "Rationale for C.")).toBe(1)
     expect(html.indexOf("Rationale for C.")).toBeLessThan(html.indexOf("Rationale for A."))
-    expect(html.indexOf("Rationale for D.")).toBeLessThan(html.indexOf("Source receipt"))
+    expect(html.indexOf("Rationale for D.")).toBeLessThan(html.indexOf("Where this comes from"))
   })
 })

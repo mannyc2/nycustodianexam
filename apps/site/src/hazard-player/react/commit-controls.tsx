@@ -12,7 +12,7 @@ export const HazardCommitControls = () => {
     return (
       <section aria-busy="true" aria-live="polite" className="hazard-player__commit-status">
         <h2>Restoring this scene</h2>
-        <p>Checking durable study storage before accepting a new response.</p>
+        <p>Checking this device for a saved response before accepting a new one.</p>
       </section>
     )
   }
@@ -74,7 +74,7 @@ export const HazardCommitControls = () => {
       <section className="feedback feedback-error" role="alert">
         <h2 ref={meta.errorHeadingRef} tabIndex={-1}>Your response is saved</h2>
         <p>{state.message}</p>
-        <p>Your committed markers cannot be changed. Retrying loads only the matching feedback.</p>
+        <p>Your saved marks can no longer be changed. Retrying only loads the matching feedback.</p>
         <button className="button button-primary" onClick={actions.retryReveal} type="button">
           Retry feedback
         </button>
@@ -102,6 +102,10 @@ export const HazardCommitControls = () => {
           ? "You have not marked a concern. Submitting opens a neutral confirmation."
           : `${selectedCount} ${selectedCount === 1 ? "location is" : "locations are"} ready to save.`}
       </p>
+      <p>
+        You can change your choices until you submit. Feedback appears only after your response
+        is saved on this device.
+      </p>
       <button
         className="button button-primary"
         disabled={state.tag === "committing"}
@@ -109,7 +113,7 @@ export const HazardCommitControls = () => {
         type="button"
       >
         {state.tag === "committing"
-          ? "Saving response…"
+          ? "Saving your response…"
           : state.tag === "commit_failed"
             ? "Retry saving response"
             : "Submit scene response"}

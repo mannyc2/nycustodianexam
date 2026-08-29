@@ -22,7 +22,7 @@ test("commit is durable before feedback fetch and survives reload", async ({ con
   })
 
   await page.getByRole("radio", { name: "Scrub brush" }).check()
-  await page.getByRole("button", { name: "Commit answer" }).click()
+  await page.getByRole("button", { name: "Submit answer" }).click()
 
   await expect(page.getByRole("heading", { name: "Correct", exact: true })).toBeFocused()
   expect(attemptObservedAtFetch).toMatchObject({
@@ -89,7 +89,7 @@ test("schema-valid bytes with the wrong digest stay unrevealed until a clean ret
   })
 
   await page.getByRole("radio", { name: "Scrub brush" }).check()
-  await page.getByRole("button", { name: "Commit answer" }).click()
+  await page.getByRole("button", { name: "Submit answer" }).click()
 
   await expect(page.getByRole("heading", { name: "Your answer is saved" })).toBeFocused()
   await expect(page.getByRole("heading", { name: "Correct", exact: true })).toHaveCount(0)
@@ -120,7 +120,7 @@ test("session start pushes history while Next replaces the current position", as
 
   await page.goBack({ waitUntil: "commit" })
   await expect(page).toHaveURL("/practice/")
-  await expect(page.getByRole("heading", { name: "Choose a set the bank can actually supply." }))
+  await expect(page.getByRole("heading", { name: "Choose a practice set." }))
     .toBeVisible()
 })
 
@@ -145,7 +145,7 @@ test("an injected IndexedDB write failure never reveals or requests feedback", a
   })
 
   await page.getByRole("radio", { name: "Scrub brush" }).check()
-  await page.getByRole("button", { name: "Commit answer" }).click()
+  await page.getByRole("button", { name: "Submit answer" }).click()
 
   const errorHeading = page.getByRole("heading", { name: "Your answer was not saved" })
   await expect(errorHeading).toBeFocused()
@@ -165,7 +165,7 @@ test("keyboard selection drives focus and polite status announcements", async ({
   await expect(page.getByRole("radio", { name: "Scrub brush" })).toBeChecked()
 
   await page.keyboard.press("Tab")
-  await expect(page.getByRole("button", { name: "Commit answer" })).toBeFocused()
+  await expect(page.getByRole("button", { name: "Submit answer" })).toBeFocused()
   await page.keyboard.press("Enter")
 
   await expect(page.getByRole("heading", { name: "Correct", exact: true })).toBeFocused()
@@ -196,7 +196,7 @@ test("revealed safety evidence keeps its scope caveat and exact source excerpt a
   await page.getByRole("radio", {
     name: "Remove the unsafe wrench from use and obtain a serviceable tool."
   }).check()
-  await page.getByRole("button", { name: "Commit answer" }).click()
+  await page.getByRole("button", { name: "Submit answer" }).click()
 
   await expect(page.getByRole("heading", { name: "Correct", exact: true })).toBeFocused()
   const caveat = page.locator(".claim-caveat").first()
@@ -281,7 +281,7 @@ test("Chromium back-forward cache restores the live island without restarting it
   })
 
   await page.getByRole("radio", { name: "Scrub brush" }).check()
-  await page.getByRole("button", { name: "Commit answer" }).click()
+  await page.getByRole("button", { name: "Submit answer" }).click()
   await expect(page.getByRole("heading", { name: "Correct", exact: true })).toBeFocused()
   await expect.poll(() => page.evaluate(() =>
     (window as typeof window & {

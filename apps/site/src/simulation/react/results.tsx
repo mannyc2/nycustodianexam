@@ -21,8 +21,8 @@ const QuestionEvidence = ({ result }: { readonly result: SimulationQuestionResul
   const feedback = result.postcommit
   if (feedback.schemaVersion === 1) {
     return <details className="feedback-sources">
-      <summary>Source receipts</summary>
-      <p>This historical result preserves the source-reference format published with its release.</p>
+      <summary>Where this comes from</summary>
+      <p>This older saved result keeps the source-reference format published with its release.</p>
       <ul>{feedback.sources.map((source) => <li key={source.id}>
         {source.label} <code>{source.locator}</code>
       </li>)}</ul>
@@ -39,7 +39,7 @@ const QuestionEvidence = ({ result }: { readonly result: SimulationQuestionResul
       </li>)}</ul>
     </section>
     <details className="feedback-sources">
-      <summary>Source-line receipts</summary>
+      <summary>Where this comes from</summary>
       <ul>{feedback.sources.map((source) => <li key={source.id}>
         <p><strong>{source.title}</strong> — {source.publisher}, {source.version}</p>
         <p><code>{source.locator}</code> · verified {source.verifiedOn}</p>
@@ -52,15 +52,15 @@ const QuestionEvidence = ({ result }: { readonly result: SimulationQuestionResul
 
 const ResultActions = ({ flagged }: { readonly flagged: boolean }) => (
   <section>
-    <h4>Review and source actions</h4>
+    <h4>Next steps</h4>
     {flagged ? <p>
-      Your flag is retained in this saved simulation result. Simulation flags are not
-      automatically added to the separate due review queue.
+      Your flag stays with this saved result. Simulation flags do not automatically enter
+      your review queue.
     </p> : null}
     <nav aria-label="Review and source actions" className="question-controls">
-      <a className="button button-secondary" href="/review/">Open the separate local review queue</a>
+      <a className="button button-secondary" href="/review/">Open your review queue</a>
       <a className="button button-secondary" href="/transparency/sources/">
-        Inspect source records
+        Browse sources
       </a>
     </nav>
   </section>
@@ -89,7 +89,6 @@ const QuestionResultFeedback = ({
   ]
   const optionLabel = (optionId: string | null): string =>
     optionId === null ? "No answer" : optionLabels.get(optionId) ?? "Unavailable answer choice"
-  const decisiveRule = rationales.get(result.correctOptionId)
   const claimById = result.postcommit.schemaVersion === 2
     ? new Map(result.postcommit.claims.map((claim) => [claim.id, claim]))
     : new Map<string, never>()
@@ -120,10 +119,6 @@ const QuestionResultFeedback = ({
         </li>)}
       </ol>
     </section>
-    <section>
-      <h4>Why this answer is correct</h4>
-      <p>{decisiveRule ?? "The reviewed correct-answer rationale is unavailable."}</p>
-    </section>
     <QuestionEvidence result={result} />
     <ResultActions flagged={answer.reviewIntent === "flagged"} />
   </>
@@ -147,9 +142,9 @@ const VisualHazardResponseFeedback = ({
   const assessment = assessVisualMarkers(answer.markers ?? [], result.postcommit)
   return <section>
     {result.retainedVisualAsset === null
-      ? <p role="alert">The exact retained scene image is unavailable.</p>
+      ? <p role="alert">The saved scene image is unavailable.</p>
       : <AnnotatedHazardScene
-          alt="Reviewed version of the submitted hazard scene"
+          alt="The submitted hazard scene with answer outlines"
           imageUrl={result.retainedVisualAsset.dataUrl}
           markers={answer.markers ?? []}
           payload={result.postcommit}
@@ -165,26 +160,26 @@ const VisualHazardResponseFeedback = ({
         )
         return <li key={marker.marker.id}>
           <h5>Marker {marker.markerNumber}</h5>
-          {marker.kind === "hit" ? <p><strong>Identified.</strong> {target === undefined
-            ? "This marker corresponds to an authored condition needing correction."
-            : `${target.condition}. Correction concept: ${target.correction}.`}</p>
-            : marker.kind === "duplicate" ? <p><strong>Duplicate mark.</strong> {target === undefined
-              ? "Another marker already identified this authored condition."
-              : `Another marker already identified ${target.condition}.`}</p>
-              : marker.kind === "decoy_false_positive" ? <p><strong>Decoy false positive.</strong> {decoy === undefined
-                ? "The marked detail was an authored safe detail."
+          {marker.kind === "hit" ? <p><strong>Hazard found.</strong> {target === undefined
+            ? "This marker matches a condition that needs correction."
+            : `${target.condition}. How to correct it: ${target.correction}.`}</p>
+            : marker.kind === "duplicate" ? <p><strong>Already marked.</strong> {target === undefined
+              ? "Another marker already covers this hazard."
+              : `Another marker already covers ${target.condition}.`}</p>
+              : marker.kind === "decoy_false_positive" ? <p><strong>Safe as shown.</strong> {decoy === undefined
+                ? "The detail you marked is safe as depicted in this scene."
                 : `${decoy.condition}; ${decoy.safeBecause}.`}</p>
-                : <p>This mark did not correspond to an authored condition. The scene model does not invent meaning for an unauthored location.</p>}
+                : <p>This mark does not match any condition recorded in this scene, so it is not scored as right or wrong.</p>}
         </li>
       })}
     </ol>}
     {assessment.missedInventoryIds.length === 0
-      ? <p>No authored correction condition was left unidentified.</p>
-      : <><h5>Conditions not marked</h5><ul>
+      ? <p>No hazard was left unmarked.</p>
+      : <><h5>Hazards you missed</h5><ul>
         {assessment.missedInventoryIds.map((inventoryId) => {
           const target = result.postcommit.targets.find((candidate) => candidate.id === inventoryId)
           return target === undefined ? null : <li key={inventoryId}>
-            {target.condition}. Correction concept: {target.correction}.
+            {target.condition}. How to correct it: {target.correction}.
           </li>
         })}
       </ul></>}
@@ -203,12 +198,12 @@ const NonvisualHazardResponseFeedback = ({
   const selected = new Set(answer.selectedZoneOrders ?? [])
   return <section>
     <h4>Zone feedback</h4>
-    <p>This zoned text activity is an equivalent knowledge task; it does not measure the same visual-recognition construct as placing markers on the image.</p>
+    <p>This text version covers the same knowledge, but it is not the same task as finding hazards on the image.</p>
     <ol>{item.scene.neutralPreAnswer.zones.map((zone) => <li key={zone.order}>
       <h5>Zone {zone.order}: {zone.label}</h5>
       <p>{selected.has(zone.order) ? "You selected this zone." : "You did not select this zone."}</p>
     </li>)}</ol>
-    <h5>Complete zoned text equivalent</h5>
+    <h5>Full scene description by zone</h5>
     <ul>{result.postcommit.nonvisualZonedEquivalent.map((statement) => <li
       key={`${statement.zone}:${statement.role}:${statement.statement}`}
     >
@@ -227,21 +222,21 @@ const HazardResultFeedback = ({
   readonly result: SimulationHazardResult
 }) => <>
   <p><strong>Your response:</strong> {result.answered
-    ? `${result.hitCount} identified, ${result.missedCount} missed, ${result.decoyFalsePositiveCount + result.falsePositiveCount + result.duplicateCount} false-positive or duplicate marks`
+    ? `${result.hitCount} found, ${result.missedCount} missed, ${result.decoyFalsePositiveCount + result.falsePositiveCount + result.duplicateCount} extra or repeated marks`
     : "No hazards selected or marked"}</p>
   {item.mode === "visual"
     ? <VisualHazardResponseFeedback answer={answer} result={result} />
     : <NonvisualHazardResponseFeedback answer={answer} item={item} result={result} />}
   <section>
-    <h4>Scene explanation and complete post-submission description</h4>
+    <h4>Scene explanation and full post-submission description</h4>
     <p>{result.postcommit.claim}</p>
-    <h5>Conditions and immediate correction concepts</h5>
+    <h5>Hazards and how to correct them</h5>
     {result.postcommit.fullPostAnswer.targets.length === 0
-      ? <p>No condition needing correction was authored in this scene.</p>
+      ? <p>This scene contains no hazard that needs correction.</p>
       : <ul>{result.postcommit.fullPostAnswer.targets.map((target) => <li
         key={`${target.condition}:${target.correction}`}
       ><strong>{target.condition}.</strong> {target.correction}.</li>)}</ul>}
-    <h5>Authored safe details and decoys</h5>
+    <h5>Details that are safe as shown</h5>
     <ul>
       {result.postcommit.fullPostAnswer.decoys.map((decoy) => <li
         key={`${decoy.condition}:${decoy.safeBecause}`}
@@ -250,7 +245,7 @@ const HazardResultFeedback = ({
     </ul>
   </section>
   <details className="feedback-sources">
-    <summary>Source receipts</summary>
+    <summary>Where this comes from</summary>
     <ul>{result.postcommit.fullPostAnswer.sources.map((source) => <li key={source.id}>
       <a href={source.url} rel="external noopener">{source.title}</a>, {source.locator}. {source.scope}
     </li>)}</ul>
@@ -281,8 +276,8 @@ export const SimulationResults = ({ controller }: { readonly controller: Results
 
   if (snapshot.state.tag === "reconciling") {
     return <>{announcement}<section className="review-state" aria-busy="true">
-      <h1>Reconciling your final submission</h1>
-      <p>The final answer snapshot is already durable. Verified answer records are now being loaded to calculate practice-only results.</p>
+      <h1>Checking your final submission</h1>
+      <p>Your final answers are already saved on this device. The answer records are loading to calculate practice-only results.</p>
     </section></>
   }
   if (snapshot.state.tag === "failure") {
@@ -290,7 +285,7 @@ export const SimulationResults = ({ controller }: { readonly controller: Results
       <h1 ref={errorRef} tabIndex={-1}>Results are not available yet</h1>
       <p>{snapshot.state.detail}</p>
       <p>Your final submission remains saved on this device. Retrying never creates a second submission.</p>
-      <button className="button button-primary" onClick={controller.retry} type="button">Retry result reconciliation</button>
+      <button className="button button-primary" onClick={controller.retry} type="button">Retry loading results</button>
     </section></>
   }
 
@@ -329,15 +324,16 @@ export const SimulationResults = ({ controller }: { readonly controller: Results
       data-simulation-profile-id={session.profile.id}
       data-simulation-profile-version={session.profile.version}
     >
-      <p className="eyebrow">Site-designed simulation result</p>
-      <h1 id="simulation-results-heading" ref={headingRef} tabIndex={-1}>Raw practice accuracy: {correct} of {session.actualLength} ({accuracy}%)</h1>
+      <p className="eyebrow">Practice simulation result</p>
+      <h1 id="simulation-results-heading" ref={headingRef} tabIndex={-1}>Practice accuracy: {correct} of {session.actualLength} ({accuracy}%)</h1>
       <p>{answered} answered · {session.actualLength - answered} unanswered · Elapsed time {elapsed}</p>
-      <p><strong>Profile:</strong> {session.profile.label} · version {session.profile.version} · compatibility {session.profile.compatibilityKey}</p>
-      <p><strong>This practice accuracy is not an official converted score or pass prediction.</strong> The item length and distribution are site-designed, not official.</p>
+      <p><strong>Profile:</strong> {session.profile.label}</p>
+      <p><strong>This practice accuracy is not an official converted score or a pass prediction.</strong> The set length and mix are a site-designed distribution, not official exam counts.</p>
+      <details className="source-note"><summary>Technical details</summary><p>Profile version {session.profile.version} · compatibility key <code>{session.profile.compatibilityKey}</code></p></details>
     </section>
 
     <section className="reference-card section-gap" aria-labelledby="actual-distribution-heading">
-      <h2 id="actual-distribution-heading">Actual generated distribution</h2>
+      <h2 id="actual-distribution-heading">What this set contained</h2>
       <dl className="fact-list">
         {session.distribution.map((entry) => <div key={entry.label}>
           <dt>{entry.label}</dt><dd>{entry.count} item{entry.count === 1 ? "" : "s"}</dd>
@@ -352,14 +348,14 @@ export const SimulationResults = ({ controller }: { readonly controller: Results
 
     {session.format === "questions" ? null : <section className="reference-card section-gap" aria-labelledby="hazard-metrics-heading">
       <h2 id="hazard-metrics-heading">Hazard practice metrics</h2>
-      <p>Visual and nonvisual metrics are reported separately and only for the {session.format === "visual-hazards" ? "visual marker" : "nonvisual zoned"} format sampled in this simulation.</p>
+      <p>Visual and keyboard hazard results are tracked separately; these numbers cover only the {session.format === "visual-hazards" ? "visual marker" : "keyboard zone"} format in this simulation.</p>
       <dl className="fact-list">
-        <div><dt>Authored targets sampled</dt><dd>{hazardResults.reduce((total, result) => total + result.targetCount, 0)}</dd></div>
-        <div><dt>Targets identified</dt><dd>{hazardResults.reduce((total, result) => total + result.hitCount, 0)}</dd></div>
-        <div><dt>Targets missed</dt><dd>{hazardResults.reduce((total, result) => total + result.missedCount, 0)}</dd></div>
-        <div><dt>Decoy false positives</dt><dd>{hazardResults.reduce((total, result) => total + result.decoyFalsePositiveCount, 0)}</dd></div>
-        <div><dt>Other false positives</dt><dd>{hazardResults.reduce((total, result) => total + result.falsePositiveCount, 0)}</dd></div>
-        <div><dt>Duplicate false positives</dt><dd>{hazardResults.reduce((total, result) => total + result.duplicateCount, 0)}</dd></div>
+        <div><dt>Hazards in this set</dt><dd>{hazardResults.reduce((total, result) => total + result.targetCount, 0)}</dd></div>
+        <div><dt>Hazards found</dt><dd>{hazardResults.reduce((total, result) => total + result.hitCount, 0)}</dd></div>
+        <div><dt>Hazards missed</dt><dd>{hazardResults.reduce((total, result) => total + result.missedCount, 0)}</dd></div>
+        <div><dt>Safe details marked as hazards</dt><dd>{hazardResults.reduce((total, result) => total + result.decoyFalsePositiveCount, 0)}</dd></div>
+        <div><dt>Marks matching nothing in the scene</dt><dd>{hazardResults.reduce((total, result) => total + result.falsePositiveCount, 0)}</dd></div>
+        <div><dt>Repeated marks on the same hazard</dt><dd>{hazardResults.reduce((total, result) => total + result.duplicateCount, 0)}</dd></div>
       </dl>
       <h3>Hazard-family samples</h3>
       <ul>{hazardFamilySamples.map(([family, sample]) => <li key={family}>
@@ -398,20 +394,20 @@ export const SimulationResults = ({ controller }: { readonly controller: Results
               <h3 id={`result-question-${item.position}`} tabIndex={-1}>Question {item.position}: {questionResult?.correct ? "Correct" : questionResult?.selectedOptionId === null ? "Unanswered" : "Incorrect"}</h3>
               <p>{item.question.prompt}</p>
               {questionResult === undefined || answer === undefined
-                ? <p role="alert">The immutable result closure for this item is unavailable.</p>
+                ? <p role="alert">The saved result for this item is unavailable.</p>
                 : <QuestionResultFeedback answer={answer} item={item} result={questionResult} />}
             </li>
           }
           const hazardResult = result?.kind === "hazard" ? result : undefined
           return <li className="reference-card" key={itemId}>
-            <h3 id={`result-question-${item.position}`} tabIndex={-1}>Hazard item {item.position}: {hazardResult?.correct ? "All authored targets identified without false positives" : hazardResult?.answered ? "Needs review" : "Unanswered"}</h3>
+            <h3 id={`result-question-${item.position}`} tabIndex={-1}>Hazard item {item.position}: {hazardResult?.correct ? "Found every hazard with no extra marks" : hazardResult?.answered ? "Needs review" : "Unanswered"}</h3>
             <p>{item.scene.neutralPreAnswer.overview}</p>
-            <p><strong>Format:</strong> {item.mode === "visual" ? "Visual marker task" : "Nonvisual zoned equivalent"}</p>
+            <p><strong>Format:</strong> {item.mode === "visual" ? "Visual marker task" : "Keyboard zone task"}</p>
             <p><strong>Hazard family:</strong> {hazardResult?.hazardFamily ?? "Zero-hazard control"}</p>
-            <p><strong>Targets:</strong> {hazardResult?.hitCount ?? 0} identified · {hazardResult?.missedCount ?? 0} missed · sample size {hazardResult?.targetCount ?? 0}</p>
-            <p><strong>False positives:</strong> {hazardResult?.decoyFalsePositiveCount ?? 0} decoy · {hazardResult?.falsePositiveCount ?? 0} other · {hazardResult?.duplicateCount ?? 0} duplicate</p>
+            <p><strong>Hazards:</strong> {hazardResult?.hitCount ?? 0} found · {hazardResult?.missedCount ?? 0} missed · {hazardResult?.targetCount ?? 0} in this scene</p>
+            <p><strong>Extra marks:</strong> {hazardResult?.decoyFalsePositiveCount ?? 0} on safe details · {hazardResult?.falsePositiveCount ?? 0} matching nothing · {hazardResult?.duplicateCount ?? 0} repeated</p>
             {hazardResult === undefined || answer === undefined
-              ? <p role="alert">The immutable result closure for this item is unavailable.</p>
+              ? <p role="alert">The saved result for this item is unavailable.</p>
               : <HazardResultFeedback answer={answer} item={item} result={hazardResult} />}
           </li>
         })}

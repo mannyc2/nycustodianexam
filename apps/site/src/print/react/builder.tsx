@@ -135,10 +135,10 @@ export const PrintBuilder = ({
   return (
     <section aria-labelledby="print-builder-heading" className="print-builder screen-only">
       <p aria-live="polite" className="sr-only">{snapshot.announcementRequest?.message ?? ""}</p>
-      <h2 id="print-builder-heading">Build a deterministic print packet</h2>
+      <h2 id="print-builder-heading">Build a printable practice packet</h2>
       <p>
-        Counts are bounded by the compatible inventory on this device. Each generated product is
-        saved separately so questions, keys, and explanations can begin on distinct sheets.
+        Counts are limited by what this release contains. Each product is saved separately so
+        questions, keys, and explanations can begin on distinct sheets.
       </p>
       {snapshot.state.tag === "recoverable-error" ? (
         <section className="status-panel status-panel-danger" role="alert" aria-labelledby="print-error-heading">
@@ -207,8 +207,9 @@ export const PrintBuilder = ({
             <span className="field-hint">Available {countUnit}: {capacity}</span>
           </label>
           <label htmlFor="print-seed">
-            Deterministic seed
+            Repeat this exact set (code)
             <input id="print-seed" maxLength={deterministicSeedMaxLength} value={seed} onChange={(event) => setSeed(event.target.value)} />
+            <span className="field-hint">The same settings and code always produce the same items.</span>
           </label>
           <label htmlFor="print-paper">
             Paper
@@ -250,7 +251,7 @@ export const PrintBuilder = ({
             onChange={(event) => setIncludeExplanations(event.target.checked)}
             type="checkbox"
           /> Append explanations after the answer key</label>
-          <p className="field-hint">Separate question, answer-sheet, key, and explanation jobs expose the same pairing identifier when their release, profile, count, seed, and filter coordinates match.</p>
+          <p className="field-hint">Question sheets, answer sheets, keys, and explanations printed with the same settings and code carry the same pairing label, so you can match them later.</p>
         </fieldset>
 
         <p className="status-text" role="status" aria-live="polite">

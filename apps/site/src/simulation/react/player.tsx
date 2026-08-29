@@ -105,14 +105,14 @@ export const SimulationPlayer = ({
   if (snapshot.state.tag === "restoring") {
     return <>{announcement}<section className="review-state" aria-busy="true">
       <h1>Restoring your simulation</h1>
-      <p>Reading the pinned manifest and saved response from this device.</p>
+      <p>Reading your saved simulation and responses from this device.</p>
     </section></>
   }
   if (snapshot.state.tag === "failure") {
     return <>{announcement}<section className="error-panel" role="alert">
       <h1 ref={errorRef} tabIndex={-1}>Simulation storage is unavailable</h1>
       <p>{snapshot.state.detail}</p>
-      <button className="button button-primary" onClick={() => controller.dispatch({ tag: "retry" })} type="button">Retry local restoration</button>
+      <button className="button button-primary" onClick={() => controller.dispatch({ tag: "retry" })} type="button">Retry</button>
       <p><a href="/simulations/">Start a new simulation</a></p>
     </section></>
   }
@@ -124,7 +124,7 @@ export const SimulationPlayer = ({
     recoverableError?.kind === "timer" || recoverableError?.kind === "submission"
   const item = session.items[position - 1]
   if (item === undefined) {
-    return <section className="error-panel" role="alert"><h1>Question unavailable</h1><p>This position is outside the saved simulation manifest.</p></section>
+    return <section className="error-panel" role="alert"><h1>Question unavailable</h1><p>This position is outside your saved simulation.</p></section>
   }
   const itemId = simulationItemId(item)
   const response = session.responses.find((candidate) => candidate.questionId === itemId)
@@ -166,7 +166,7 @@ export const SimulationPlayer = ({
     />
     {"question" in item ? <article className="question-card" aria-labelledby="simulation-question-heading">
       <header className="question-prompt">
-        <p className="eyebrow">Site-designed simulation · Question {position} of {session.actualLength}</p>
+        <p className="eyebrow">Practice simulation · Question {position} of {session.actualLength}</p>
         <h1 id="simulation-question-heading">{item.question.prompt}</h1>
         <p>Choose one answer. You can edit it until final submission. Feedback is not loaded during the simulation.</p>
       </header>

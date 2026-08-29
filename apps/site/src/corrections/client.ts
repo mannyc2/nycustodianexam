@@ -20,6 +20,33 @@ const decodeJson = async (response: Response): Promise<unknown> => {
   }
 }
 
+export type CorrectionIntakeStatus = "active" | "inactive" | "unknown"
+
+export const fetchCorrectionIntakeStatus = async (
+  fetcher: typeof fetch
+): Promise<CorrectionIntakeStatus> => {
+  let statusResponse: Response
+  try {
+    statusResponse = await fetcher("/api/corrections/status", {
+      cache: "no-store",
+      credentials: "omit",
+      headers: { accept: "application/json" }
+    })
+  } catch {
+    return "unknown"
+  }
+  if (statusResponse.status === 404) return "inactive"
+  if (!statusResponse.ok) return "unknown"
+  try {
+    const status = Schema.decodeUnknownSync(CorrectionStatusResponse)(
+      await decodeJson(statusResponse)
+    )
+    return status.acceptsReports && status.mode === "active-v1" ? "active" : "inactive"
+  } catch {
+    return "unknown"
+  }
+}
+
 export const submitCorrectionReport = async (
   fetcher: typeof fetch,
   report: CorrectionReportValue

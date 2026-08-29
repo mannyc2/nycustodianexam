@@ -53,7 +53,7 @@ test("a committed question reloads from the controlled service worker while offl
   await expect.poll(() => page.evaluate(() => navigator.serviceWorker.controller !== null)).toBe(true)
 
   await page.getByRole("radio", { name: "Scrub brush" }).check()
-  await page.getByRole("button", { name: "Commit answer" }).click()
+  await page.getByRole("button", { name: "Submit answer" }).click()
   await expect(page.getByRole("heading", { name: "Correct", exact: true })).toBeVisible()
 
   const verifiedCacheKey = verifiedContentCacheKey(new URL(page.url()).origin, {
@@ -296,7 +296,7 @@ test("known-offline partial start blocks commitment when exact feedback is absen
   const choices = await page.getByRole("radio").all()
   expect(choices).toHaveLength(4)
   for (const choice of choices) await expect(choice).toBeDisabled()
-  await expect(page.getByRole("button", { name: "Commit answer" })).toBeDisabled()
+  await expect(page.getByRole("button", { name: "Submit answer" })).toBeDisabled()
   expect(postcommitRequests).toBe(0)
   expect(await readStoredAttemptAt(page, currentAttemptId)).toBeUndefined()
 })

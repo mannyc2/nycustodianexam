@@ -94,7 +94,7 @@ test("an exact receipt mismatch is quarantined without loading or substituting f
     "A saved question receipt does not match this exact released item. It was not reinterpreted."
   )
   await expect(page.getByRole("link", { name: "Open saved feedback" })).toHaveCount(0)
-  await expect(page.getByRole("button", { name: "Acknowledge review" })).toHaveCount(0)
+  await expect(page.getByRole("button", { name: "Finish review" })).toHaveCount(0)
   expect(postcommitRequests).toBe(0)
   expect(await readStoredAttempt(page)).toEqual(mismatchedAttempt)
 })

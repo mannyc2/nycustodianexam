@@ -1259,7 +1259,7 @@ describe("semantic print preview", () => {
     await vi.waitFor(() => expect(controller.getSnapshot().state).toMatchObject({
       tag: "regenerate-error",
       job: { id: original.id },
-      detail: "Current inventory unavailable"
+      detail: "The print operation could not be completed on this device. The saved preview was not changed — try again."
     }))
     expect(loadBootstrap).toHaveBeenCalledTimes(1)
     controller.dispose()
@@ -1304,7 +1304,7 @@ describe("semantic print preview", () => {
     await vi.waitFor(() => expect(controller.getSnapshot().state).toMatchObject({
       tag: "regenerate-error",
       job: { id: original.id },
-      detail: expect.stringMatching(/different print-job identity/)
+      detail: expect.stringMatching(/different print job/)
     }))
     expect(replacements).toEqual([])
     controller.dispose()

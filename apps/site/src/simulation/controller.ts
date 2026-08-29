@@ -76,13 +76,10 @@ export interface SimulationPlayerController {
   readonly dispose: () => void
 }
 
-const safeError = (cause: unknown): string =>
-  cause instanceof Error && cause.message.length > 0
-    ? cause.message
-    : typeof cause === "object" && cause !== null &&
-        "detail" in cause && typeof cause.detail === "string" && cause.detail.length > 0
-      ? cause.detail
-    : "The local simulation operation could not be completed."
+const safeError = (cause: unknown): string => {
+  console.error("Simulation operation failed", cause)
+  return "This device's storage could not complete the operation. Everything already saved is unchanged — try again."
+}
 
 const loadSession = Effect.fn("Simulation.loadSession")(function*(sessionId: string) {
   const persistence = yield* SimulationPersistence
@@ -90,7 +87,7 @@ const loadSession = Effect.fn("Simulation.loadSession")(function*(sessionId: str
   if (session === undefined) {
     return yield* new SimulationPersistenceError({
       operation: "restore-session",
-      detail: "This simulation is not available on this device. Start a new site-designed simulation.",
+      detail: "This simulation is not saved on this device. Start a new simulation.",
       cause: new Error("Missing local simulation")
     })
   }
@@ -115,7 +112,7 @@ export const createLocallyClosedSimulation = Effect.fn(
       Effect.mapError((cause) =>
         new SimulationPersistenceError({
           operation: "prepare-local-content",
-          detail: `Availability metadata for the pinned result receipt ${itemId} could not be verified.`,
+          detail: `The saved record for item ${itemId} could not be verified on this device.`,
           cause
         })
       )
@@ -135,7 +132,7 @@ export const createLocallyClosedSimulation = Effect.fn(
         Effect.mapError((cause) =>
           new SimulationPersistenceError({
             operation: "prepare-local-content",
-            detail: `Availability metadata for the pinned scene asset ${itemId} could not be verified.`,
+            detail: `The saved scene image record for item ${itemId} could not be verified on this device.`,
             cause
           })
         )
@@ -253,7 +250,7 @@ export const createSimulationPlayerController = (input: {
         const visualAsset = yield* verifiedContent.loadCachedAssetBlob(item.visualAsset).pipe(
           Effect.mapError((cause) => new SimulationPersistenceError({
             operation: "restore-scene-asset",
-            detail: "The exact pinned scene image is no longer retained on this device.",
+            detail: "The exact scene image is no longer saved on this device.",
             cause
           }))
         )
@@ -636,7 +633,7 @@ export const reconcileSimulation = Effect.fn("Simulation.reconcileResults")(
     if (submission === undefined || session.status === "active") {
       return yield* new SimulationPersistenceError({
         operation: "restore-submission",
-        detail: "No durable final submission exists for this simulation.",
+        detail: "No final submission is saved for this simulation.",
         cause: new Error("Missing final submission")
       })
     }
@@ -696,7 +693,7 @@ export const reconcileSimulation = Effect.fn("Simulation.reconcileResults")(
           if (item.visualAsset === null) {
             return yield* new SimulationPersistenceError({
               operation: "retain-hazard-image",
-              detail: "The submitted visual hazard has no pinned image receipt.",
+              detail: "The submitted visual hazard has no saved image record.",
               cause: new Error("Missing visual asset receipt")
             })
           }
@@ -711,7 +708,7 @@ export const reconcileSimulation = Effect.fn("Simulation.reconcileResults")(
             try: () => retainImageBlob(item.visualAsset as NonNullable<typeof item.visualAsset>, blob),
             catch: (cause) => new SimulationPersistenceError({
               operation: "retain-hazard-image",
-              detail: "The exact submitted scene image failed durable integrity verification.",
+              detail: "The saved scene image did not match this release, so it was not shown.",
               cause
             })
           })

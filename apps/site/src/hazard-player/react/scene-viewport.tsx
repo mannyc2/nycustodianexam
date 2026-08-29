@@ -18,7 +18,7 @@ export const HazardPrompt = () => {
   const { meta, mode, scene } = useHazardPlayer()
   return (
     <header className="hazard-player__prompt">
-      <p className="eyebrow">Hazard laboratory · original practice scene</p>
+      <p className="eyebrow">Hazard practice · original scene</p>
       <h1 id="hazard-scene-heading" ref={meta.sceneHeadingRef} tabIndex={-1}>
         Inspect the {scene.environment}
       </h1>
@@ -26,7 +26,7 @@ export const HazardPrompt = () => {
       <p>
         {mode === "visual"
           ? "Mark every location that concerns you. You may submit no markers after confirming that choice."
-          : "Review each observable zone and select every area that concerns you. This text task is an equivalent knowledge activity, not the same visual-recognition task."}
+          : "Review each zone and select every area that concerns you. This text version covers the same knowledge, but it is not the same task as marking the image."}
       </p>
       <p>No feedback or expected count is available until your response is saved.</p>
     </header>
