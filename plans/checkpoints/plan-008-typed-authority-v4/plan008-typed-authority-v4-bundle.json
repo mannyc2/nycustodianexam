@@ -1,0 +1,65 @@
+{
+  "artifacts": {
+    "authority": {
+      "logicalName": "authority",
+      "sha256": "fd86e3d2687445a826ce3f024d36de1d7817c651abb1c6ef5d4915bf42d69382"
+    },
+    "fixture": {
+      "logicalName": "accepted-fixture",
+      "sha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68"
+    },
+    "oracle": {
+      "logicalName": "validator-owned-oracle",
+      "sha256": "3fdf16b2dce61a22405415237b95aeec9013660d9ae699a867c81af126907fbe"
+    },
+    "proof": {
+      "logicalName": "validation-proof",
+      "sha256": "ae45f042c50d84d8bbff4f1fb1f66aa905300270b5c72aad36b3c0bfbfdba916"
+    },
+    "report": {
+      "logicalName": "validation-report",
+      "sha256": "eec7489d224bc0762e085469b5209564a75888feb5c06d1492c15abc12c6d27b"
+    },
+    "validator": {
+      "logicalName": "standalone-validator",
+      "sha256": "d6c65706c5ada3c829b002860a13b891f30f0e07a1a5a6fb33e1c576a20b0253"
+    }
+  },
+  "bundleVersion": "plan008-portable-authority-bundle-v4",
+  "invocation": {
+    "argv": [
+      "<validator>",
+      "suite",
+      "--authority",
+      "<authority>",
+      "--fixture",
+      "<accepted-fixture>",
+      "--oracle",
+      "<validator-oracle>",
+      "--proof-out",
+      "<proof>",
+      "--report-out",
+      "<report>",
+      "--bundle-out",
+      "<bundle>"
+    ],
+    "kind": "portable-invocation-descriptor",
+    "program": "node",
+    "workingDirectory": "discovered-git-root"
+  },
+  "kind": "canonical-parent-manifest",
+  "sourceBindings": [
+    {
+      "gitBlobSha": "c2d71d1f786efe99421ee5eb5167cbd3cd426023",
+      "repoRelativePath": "product/SCREEN_STATES.md",
+      "sha256": "54b7b18280cbc8a6ec3300c424ee412e4fcb9c4d4cb773ecd4af7adc63c22987",
+      "sourceId": "SCREEN_STATES"
+    },
+    {
+      "gitBlobSha": "4c40d047af8ba8c34bd4a7a1ff40da990b20add8",
+      "repoRelativePath": "product/ROUTES.md",
+      "sha256": "501230759f15e6ccd13e1a49d24db1e3ee94d7a52e80634490c7ff7b08c24e98",
+      "sourceId": "ROUTES"
+    }
+  ]
+}

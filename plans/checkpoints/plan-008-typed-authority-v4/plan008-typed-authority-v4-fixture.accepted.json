@@ -1,0 +1,3687 @@
+{
+  "acceptedAuthoritySha256": "6d9357567b3e2f504c3cb1a9dc9e252cdd86339c6b6e0a36bc19ce0d72c05d47",
+  "expected": {
+    "bidirectionalEdgeIds": [
+      "E-SIM-010-RECORD",
+      "E-SIM-011-CLEAR",
+      "E-HAZARD-010-ADD",
+      "E-HAZARD-012-CLEAR"
+    ],
+    "counts": {
+      "actionCount": 55,
+      "dimensionCount": 6,
+      "edgeCount": 165,
+      "effectBindingCount": 8,
+      "effectTypeCount": 4,
+      "eventCount": 58,
+      "globalTransitionRuleCount": 9,
+      "implementationMissingRouteCountExcluded": 9,
+      "implementationRegistryCountExcluded": 27,
+      "interpretationCount": 30,
+      "invalidCombinationConstraintCount": 9,
+      "journeyLensCountExcluded": 8,
+      "machineCount": 10,
+      "machineStateCount": 92,
+      "milestoneCount": 6,
+      "mutationCount": 111,
+      "navigationConstructionCount": 9,
+      "outcomeCount": 22,
+      "positiveControlCount": 26,
+      "presentationEffectCount": 8,
+      "registryRouteCount": 32,
+      "routeCount": 36,
+      "selectedDirectionRuleCount": 11,
+      "sourceClauseCount": 129,
+      "sourceCount": 2,
+      "spokeRouteCount": 4,
+      "totalConstraintCount": 18,
+      "validationRuleCount": 28
+    },
+    "dimensionIds": [
+      "availability",
+      "operation",
+      "connectivity",
+      "persistence",
+      "interaction",
+      "freshness"
+    ],
+    "implementationMilestones": [
+      {
+        "exitCondition": "Static generator, document shell, canonical/error policy, React-island bootstrap, and route-contract tests exist.",
+        "milestoneId": "M0",
+        "ordinal": 0,
+        "sourceClauseIds": [
+          "RT-MILESTONES"
+        ]
+      },
+      {
+        "exitCondition": "Profile/source registry and crawlable profile, study, atlas, procedure, repair, FAQ, and transparency documents publish from validated data.",
+        "milestoneId": "M1",
+        "ordinal": 1,
+        "sourceClauseIds": [
+          "RT-MILESTONES"
+        ]
+      },
+      {
+        "exitCondition": "One source-backed question completes the React-island, one long-lived `ManagedRuntime`, IndexedDB commit-before-reveal, reload, print, accessibility, leak, and offline proof.",
+        "milestoneId": "M2",
+        "ordinal": 2,
+        "sourceClauseIds": [
+          "RT-MILESTONES"
+        ]
+      },
+      {
+        "exitCondition": "Review and hazard families work with directional confusion data, accessible nonvisual equivalents, and truthful local queue states.",
+        "milestoneId": "M3",
+        "ordinal": 3,
+        "sourceClauseIds": [
+          "RT-MILESTONES"
+        ]
+      },
+      {
+        "exitCondition": "Deterministic simulation, results, print generation, and full session restoration work.",
+        "milestoneId": "M4",
+        "ordinal": 4,
+        "sourceClauseIds": [
+          "RT-MILESTONES"
+        ]
+      },
+      {
+        "exitCondition": "Explicit pack lifecycle, settings/import/export/reset, corrections workflow, recovery/status surfaces, and release-wide navigation/state tests work.",
+        "milestoneId": "M5",
+        "ordinal": 5,
+        "sourceClauseIds": [
+          "RT-MILESTONES"
+        ]
+      }
+    ],
+    "implementationMissingRouteIds": [
+      "exam-checker",
+      "procedures-index",
+      "procedure-detail",
+      "repair-lab",
+      "faq",
+      "scoring-explainer",
+      "actual-questions-explainer",
+      "about",
+      "nyc-disambiguation"
+    ],
+    "integrityRoots": {
+      "actionsSha256": "fbf924679fe6678a5a4ebfba94731270a470a2f229af6c2c7fcf397eed152b3c",
+      "constraintsSha256": "ce5e4a52737ef7e99889bf63da3014716e514acc1305dea36211c1c270c8a0ed",
+      "dimensionsSha256": "6356d4dd412eb9f980416f960909d69570ca4cd485c7dfd03069fd87c0d24984",
+      "edgesSha256": "ca238c8521d6fd43879abd1de541b3576f38f43939d27ccd493339c89c611f42",
+      "effectBindingsSha256": "e2f9339c57be728a806a1cb1773e2f69738f4af12930a3cb3102a981bba25e5f",
+      "effectTypesSha256": "c4d85e3b947cabdd9ebdef6316c264da2987e80a5645d0e24bf571d696cf5a55",
+      "eventsSha256": "2136fdd3343fbecb539684a606c75550c62f97b78481f70f57aa7d5a3bc663fc",
+      "implementationDriftSha256": "672cf940dc9115f0f61921cfdeca7cc7ee5d204e7d1e7dd3d6c976bc77d0d620",
+      "implementationMilestonesSha256": "cf0275b5868baf955e783a96e71cc9417e10014a854e7b87e3b87c8c9cbdba82",
+      "interpretationsSha256": "987fc60cfb61e5a48dd97f66c06106992a1b70df49d807ec35f3d30e326d9bb5",
+      "journeyLensSha256": "e085380640f10b71225269f0386f4c4da4fe8c5baf64259fc63bd2f81f1ac958",
+      "machineStatesSha256": "1e57eb0a4024e68111da4ec47e6d92e9a9fb3f9ed9f4420b8fa7141a602a6a44",
+      "machinesSha256": "14134ea068ff841dad3c85c05dd26318dd7d13c9711f38fdc1c9e62dee5ade6e",
+      "metadataSha256": "bc2a3c2146a3d3deea3db85000be33c841756783e57377958d2ff1f1f235509a",
+      "navigationConstructionsSha256": "956b4f23a132db6e566e4da8a2a0ea96017805d8697aa8c4d26e9567098b3af4",
+      "outcomesSha256": "e57c38b1e16f9282b0db8b8ffce5710d3baad1a1de95e7742c48d729b0920501",
+      "presentationEffectsSha256": "b66977ae8764e747255e54fb6171b9192ae02048329f78ef317bc76b1fbcf925",
+      "routesSha256": "fb637cad44d868fb37fb0794930ac714fd5f27760e1ae40ccd3b04e43b02cb62",
+      "selectedDirectionSha256": "4152b70e95538118ed458f536e2a2b9842d2e5e3372a73632482bf0d10718789",
+      "snapshotSchemaSha256": "c376cecdbf89de5a7aaf33a9127d0ff43768ad60ffe7028e1ea71668bbc43ae7",
+      "sourceClausesSha256": "6ebabc8d8e2204a3d960894415b2dbfebb9471832972a3e64dc499c55a042d4f",
+      "sourcesSha256": "3f38b979abed6de340313b24a592a30bfd0bf6a951d16502801bd1825fe9dbf7",
+      "validationSha256": "a75147f511a663e86110eaa9448a944df210bbe0c5751bc1e3e1af1b6f9ee76f"
+    },
+    "referenceOverlayEdgeIds": [
+      "E-REF-040-ATLAS-LOAD",
+      "E-REF-041-REVIEW-INITIAL-LOAD",
+      "E-REF-042-LOAD-READY",
+      "E-REF-043-REVIEW-LOAD-EMPTY",
+      "E-REF-044-LOAD-FAIL",
+      "E-REF-050-START-PENDING",
+      "E-REF-051-REVIEW-REBUILD",
+      "E-REF-052-EXAM-SELECTED",
+      "E-REF-053-PROFILE-DONE",
+      "E-REF-054-STUDY-DONE",
+      "E-REF-055-ATLAS-PRACTICE-DONE",
+      "E-REF-056-REVIEW-REBUILT-READY",
+      "E-REF-057-REVIEW-REBUILT-EMPTY",
+      "E-REF-058-PENDING-FAIL"
+    ],
+    "referenceProjection": {
+      "about": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale",
+        "reference-document.withdrawn",
+        "reference-document.not-found"
+      ],
+      "actual-questions-explainer": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale",
+        "reference-document.withdrawn",
+        "reference-document.not-found"
+      ],
+      "atlas-family": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale",
+        "reference-document.recoverable-error",
+        "reference-document.withdrawn",
+        "reference-document.pending"
+      ],
+      "atlas-index": [
+        "reference-document.ready-current",
+        "reference-document.empty",
+        "reference-document.recoverable-error",
+        "reference-document.loading"
+      ],
+      "atlas-tool": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale",
+        "reference-document.withdrawn",
+        "reference-document.ready-retired",
+        "reference-document.ready-corrected"
+      ],
+      "corrections": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale",
+        "reference-document.withdrawn",
+        "reference-document.not-found"
+      ],
+      "exam-selector": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.empty",
+        "reference-document.offline-stale",
+        "reference-document.recoverable-error",
+        "reference-document.offline-unavailable",
+        "reference-document.content-unavailable",
+        "reference-document.pending"
+      ],
+      "faq": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale"
+      ],
+      "foil": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale",
+        "reference-document.withdrawn",
+        "reference-document.not-found"
+      ],
+      "hazards-index": [
+        "reference-document.ready-current",
+        "reference-document.empty"
+      ],
+      "home": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale"
+      ],
+      "nyc-disambiguation": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale",
+        "reference-document.withdrawn",
+        "reference-document.not-found"
+      ],
+      "privacy": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale",
+        "reference-document.withdrawn",
+        "reference-document.not-found"
+      ],
+      "procedure-detail": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale",
+        "reference-document.withdrawn",
+        "reference-document.ready-corrected"
+      ],
+      "procedures-index": [
+        "reference-document.ready-current",
+        "reference-document.empty"
+      ],
+      "profile": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale",
+        "reference-document.recoverable-error",
+        "reference-document.pending",
+        "reference-document.ready-superseded",
+        "reference-document.ready-retired"
+      ],
+      "repair-lab": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.empty",
+        "reference-document.offline-stale",
+        "reference-document.recoverable-error",
+        "reference-document.content-unavailable"
+      ],
+      "review-queue": [
+        "reference-document.ready-current",
+        "reference-document.empty",
+        "reference-document.recoverable-error",
+        "reference-document.loading",
+        "reference-document.pending"
+      ],
+      "scoring-explainer": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale",
+        "reference-document.withdrawn",
+        "reference-document.not-found"
+      ],
+      "security": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale",
+        "reference-document.withdrawn",
+        "reference-document.not-found"
+      ],
+      "source": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.empty",
+        "reference-document.offline-stale",
+        "reference-document.withdrawn",
+        "reference-document.not-found"
+      ],
+      "study-hub": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.empty",
+        "reference-document.offline-stale",
+        "reference-document.recoverable-error",
+        "reference-document.pending"
+      ],
+      "transparency-index": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale",
+        "reference-document.withdrawn",
+        "reference-document.not-found"
+      ]
+    },
+    "routeIds": [
+      "home",
+      "exam-selector",
+      "exam-checker",
+      "profile",
+      "study-hub",
+      "atlas-index",
+      "atlas-family",
+      "atlas-tool",
+      "procedures-index",
+      "procedure-detail",
+      "repair-lab",
+      "question-player",
+      "hazards-index",
+      "hazard-player",
+      "review-queue",
+      "review-player",
+      "simulation-setup",
+      "simulation-player",
+      "simulation-results",
+      "print-center",
+      "print-preview",
+      "faq",
+      "transparency-index",
+      "source",
+      "corrections",
+      "foil",
+      "security",
+      "privacy",
+      "correction-submit",
+      "settings",
+      "offline-packs",
+      "status",
+      "scoring-explainer",
+      "actual-questions-explainer",
+      "about",
+      "nyc-disambiguation"
+    ],
+    "routeMilestoneAssignments": {
+      "about": {
+        "kind": "not-applicable",
+        "reason": "additional-acquisition-spoke-outside-21-family-milestone-table"
+      },
+      "actual-questions-explainer": {
+        "kind": "not-applicable",
+        "reason": "additional-acquisition-spoke-outside-21-family-milestone-table"
+      },
+      "atlas-family": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "atlas-index": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "atlas-tool": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "correction-submit": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M5"
+        ],
+        "sourceCell": "M5"
+      },
+      "corrections": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1",
+          "M5"
+        ],
+        "sourceCell": "M1 for core records, M5 completion"
+      },
+      "exam-checker": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "exam-selector": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "faq": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "foil": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1",
+          "M5"
+        ],
+        "sourceCell": "M1 for core records, M5 completion"
+      },
+      "hazard-player": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M3"
+        ],
+        "sourceCell": "M3"
+      },
+      "hazards-index": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M3"
+        ],
+        "sourceCell": "M3"
+      },
+      "home": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M0"
+        ],
+        "sourceCell": "M0"
+      },
+      "nyc-disambiguation": {
+        "kind": "not-applicable",
+        "reason": "additional-acquisition-spoke-outside-21-family-milestone-table"
+      },
+      "offline-packs": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M2",
+          "M5"
+        ],
+        "sourceCell": "M2 single-pack proof, full M5"
+      },
+      "print-center": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M2",
+          "M4"
+        ],
+        "sourceCell": "M2 fixture, full M4"
+      },
+      "print-preview": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M2",
+          "M4"
+        ],
+        "sourceCell": "M2 fixture, full M4"
+      },
+      "privacy": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1",
+          "M5"
+        ],
+        "sourceCell": "M1 for core records, M5 completion"
+      },
+      "procedure-detail": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "procedures-index": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "profile": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "question-player": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M2"
+        ],
+        "sourceCell": "M2"
+      },
+      "repair-lab": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "review-player": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M3"
+        ],
+        "sourceCell": "M3"
+      },
+      "review-queue": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M3"
+        ],
+        "sourceCell": "M3"
+      },
+      "scoring-explainer": {
+        "kind": "not-applicable",
+        "reason": "additional-acquisition-spoke-outside-21-family-milestone-table"
+      },
+      "security": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1",
+          "M5"
+        ],
+        "sourceCell": "M1 for core records, M5 completion"
+      },
+      "settings": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M5"
+        ],
+        "sourceCell": "M5"
+      },
+      "simulation-player": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M4"
+        ],
+        "sourceCell": "M4"
+      },
+      "simulation-results": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M4"
+        ],
+        "sourceCell": "M4"
+      },
+      "simulation-setup": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M4"
+        ],
+        "sourceCell": "M4"
+      },
+      "source": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1",
+          "M5"
+        ],
+        "sourceCell": "M1 for core records, M5 completion"
+      },
+      "status": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M0",
+          "M5"
+        ],
+        "sourceCell": "M0 shell, full recovery M5"
+      },
+      "study-hub": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1",
+          "M2",
+          "M4"
+        ],
+        "sourceCell": "M1; local actions M2–M4"
+      },
+      "transparency-index": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1",
+          "M5"
+        ],
+        "sourceCell": "M1 for core records, M5 completion"
+      }
+    },
+    "selectedDirection": {
+      "directionId": "NAV-CODEX-1",
+      "evidenceMode": "codex-only",
+      "humanEvidence": "none",
+      "humanParticipantCount": 0,
+      "notHumanUsabilityTested": true,
+      "programVersion": "CODEX-ONLY-UIUX-V1",
+      "rules": [
+        {
+          "id": "NAV-FOCUSED-PLAYERS",
+          "statement": "Give every player a named session landmark, progress, and truthful explicit exit without acquisition or utility navigation."
+        },
+        {
+          "id": "NAV-NATIVE-COMPACT",
+          "statement": "Use a named native no-JavaScript-safe compact disclosure before global links wrap into peer rows."
+        },
+        {
+          "id": "NAV-NOJS",
+          "statement": "Keep primary discovery as static ordinary document navigation with truthful JavaScript-free fallbacks."
+        },
+        {
+          "id": "NAV-NONVISUAL-EQUAL-DISCOVERY",
+          "statement": "Give visual and text-keyboard hazard tasks equivalent discovery without claiming identical measurement."
+        },
+        {
+          "id": "NAV-PRACTICE-TASK-HUB",
+          "statement": "Lead Practice with concrete task starts and place translated capacity diagnostics after those starts."
+        },
+        {
+          "id": "NAV-ROUTE-IDENTITY",
+          "statement": "Preserve every fixed route identity, canonical path, and no-JavaScript purpose."
+        },
+        {
+          "id": "NAV-STATIC-REVIEW-ENTRY",
+          "statement": "Expose Review through a normal static parent entry while retaining local and noindex semantics."
+        },
+        {
+          "id": "NAV-TWO-TIER",
+          "statement": "Separate learner tasks from utility and trust destinations instead of presenting every destination as a peer."
+        },
+        {
+          "id": "SHARED-EXPLICIT-PROFILE-CONTEXT",
+          "statement": "Require explicit or visibly neutral profile context and never silently substitute the first jurisdiction."
+        },
+        {
+          "id": "SHARED-HUMAN-EVIDENCE-BOUNDARY",
+          "statement": "Keep human evidence none, human participant count zero, and every result labeled not human usability tested."
+        },
+        {
+          "id": "SHARED-PRESERVE-LOAD-BEARING-TRUTH",
+          "statement": "Preserve unofficial status, uncertainty, source support, local-data risk, security boundaries, and commit-before-reveal."
+        }
+      ],
+      "schemaVersion": "codex-only-rule-closure-v1",
+      "sourceClauseIds": [
+        "RT-CODEX-METADATA",
+        "RT-SELECTED-RULES"
+      ]
+    },
+    "sourceClauseIds": [
+      "SS-CONTRACT",
+      "SS-DIM-PRODUCT",
+      "SS-DIM-AVAILABILITY",
+      "SS-DIM-OPERATION",
+      "SS-DIM-CONNECTIVITY",
+      "SS-DIM-PERSISTENCE",
+      "SS-DIM-INTERACTION",
+      "SS-DIM-FRESHNESS",
+      "SS-TYPED-ERROR",
+      "SS-INVALID-01",
+      "SS-INVALID-02",
+      "SS-INVALID-03",
+      "SS-INVALID-04",
+      "SS-INVALID-05",
+      "SS-INVALID-06",
+      "SS-INVALID-07",
+      "SS-INVALID-08",
+      "SS-INVALID-09",
+      "SS-GLOBAL-01",
+      "SS-GLOBAL-02",
+      "SS-GLOBAL-03",
+      "SS-GLOBAL-04",
+      "SS-GLOBAL-05",
+      "SS-GLOBAL-06",
+      "SS-GLOBAL-07",
+      "SS-GLOBAL-08",
+      "SS-GLOBAL-09",
+      "SS-REF-MACHINE",
+      "SS-REF-ISLAND",
+      "SS-QUESTION-MACHINE",
+      "SS-QUESTION-SEMANTICS",
+      "SS-HAZARD-MACHINE",
+      "SS-HAZARD-SEMANTICS",
+      "SS-SIMULATION-MACHINE",
+      "SS-SIMULATION-SEMANTICS",
+      "SS-PRINT-MACHINE",
+      "SS-PRINT-SEMANTICS",
+      "SS-PACK-MACHINE",
+      "SS-PACK-SEMANTICS",
+      "SS-CORRECTION-MACHINE",
+      "SS-CORRECTION-SEMANTICS",
+      "SS-DATA-MACHINE",
+      "SS-DATA-COMMIT-COMPLETE-202",
+      "SS-DATA-COMMIT-COMPLETE-204",
+      "SS-DATA-SEMANTICS",
+      "SS-STATIC-SPOKES",
+      "SS-ROUTE-01",
+      "SS-ROUTE-02",
+      "SS-ROUTE-03",
+      "SS-ROUTE-04",
+      "SS-ROUTE-05",
+      "SS-ROUTE-06",
+      "SS-ROUTE-07",
+      "SS-ROUTE-08",
+      "SS-ROUTE-09",
+      "SS-ROUTE-10",
+      "SS-ROUTE-11",
+      "SS-ROUTE-12",
+      "SS-ROUTE-13",
+      "SS-ROUTE-14",
+      "SS-ROUTE-15",
+      "SS-ROUTE-16",
+      "SS-ROUTE-17",
+      "SS-ROUTE-18",
+      "SS-ROUTE-19",
+      "SS-ROUTE-20",
+      "SS-ROUTE-21",
+      "SS-FOCUS-DOCUMENT",
+      "SS-FOCUS-ISLAND",
+      "SS-HISTORY",
+      "SS-RECOVERY-ACTIONS",
+      "SS-RECOVERY-IDEMPOTENCE",
+      "SS-ACCEPTANCE",
+      "RT-CODEX-METADATA",
+      "RT-SELECTED-RULES",
+      "RT-AUTHORITY-SCOPE",
+      "RT-INVARIANT-01",
+      "RT-INVARIANT-02",
+      "RT-INVARIANT-03",
+      "RT-INVARIANT-04",
+      "RT-INVARIANT-05",
+      "RT-INVARIANT-06",
+      "RT-INVARIANT-07",
+      "RT-INVARIANT-08",
+      "RT-INVARIANT-09",
+      "RT-INVARIANT-10",
+      "RT-RENDER-LABELS",
+      "RT-ROUTE-01",
+      "RT-ROUTE-02",
+      "RT-ROUTE-03",
+      "RT-ROUTE-04",
+      "RT-ROUTE-05",
+      "RT-ROUTE-06",
+      "RT-ROUTE-07",
+      "RT-ROUTE-08",
+      "RT-ROUTE-09",
+      "RT-ROUTE-10",
+      "RT-ROUTE-11",
+      "RT-ROUTE-12",
+      "RT-ROUTE-13",
+      "RT-ROUTE-14",
+      "RT-ROUTE-15",
+      "RT-ROUTE-16",
+      "RT-ROUTE-17",
+      "RT-ROUTE-18",
+      "RT-ROUTE-19",
+      "RT-ROUTE-20",
+      "RT-ROUTE-21",
+      "RT-CONDITIONAL-GATE",
+      "RT-SPOKE-01",
+      "RT-SPOKE-02",
+      "RT-SPOKE-03",
+      "RT-SPOKE-04",
+      "RT-CAPABILITY-01",
+      "RT-CAPABILITY-02",
+      "RT-CAPABILITY-03",
+      "RT-CAPABILITY-04",
+      "RT-CAPABILITY-05",
+      "RT-CAPABILITY-06",
+      "RT-CAPABILITY-07",
+      "RT-LOCALE",
+      "RT-NAV-ENVELOPE",
+      "RT-FOCUSED-ROUTES",
+      "RT-SHELLS",
+      "RT-PROFILE-PRACTICE",
+      "RT-FOCUSED-WORK",
+      "RT-NAV-VERIFICATION",
+      "RT-ROUTE-ACCEPTANCE",
+      "RT-MILESTONES"
+    ],
+    "sources": [
+      {
+        "byteLength": 24683,
+        "byteOrderMark": false,
+        "encoding": "UTF-8",
+        "finalNewline": true,
+        "gitBlobSha": "c2d71d1f786efe99421ee5eb5167cbd3cd426023",
+        "newline": "LF",
+        "repoRelativePath": "product/SCREEN_STATES.md",
+        "sha256": "54b7b18280cbc8a6ec3300c424ee412e4fcb9c4d4cb773ecd4af7adc63c22987",
+        "sourceId": "SCREEN_STATES"
+      },
+      {
+        "byteLength": 28680,
+        "byteOrderMark": false,
+        "encoding": "UTF-8",
+        "finalNewline": true,
+        "gitBlobSha": "4c40d047af8ba8c34bd4a7a1ff40da990b20add8",
+        "newline": "LF",
+        "repoRelativePath": "product/ROUTES.md",
+        "sha256": "501230759f15e6ccd13e1a49d24db1e3ee94d7a52e80634490c7ff7b08c24e98",
+        "sourceId": "ROUTES"
+      }
+    ],
+    "statusDimensionAllowlist": {
+      "availability": [
+        "ready",
+        "not-found",
+        "withdrawn",
+        "offline-unavailable",
+        "content-unavailable"
+      ],
+      "connectivity": [
+        "online",
+        "offline"
+      ],
+      "freshness": [
+        "current",
+        "stale",
+        "superseded",
+        "retired",
+        "corrected"
+      ],
+      "operation": [
+        "idle",
+        "terminal-error"
+      ],
+      "persistence": [
+        "available",
+        "unavailable",
+        "quota-limited",
+        "reconciling"
+      ]
+    },
+    "statusProjection": {
+      "content-unavailable": {
+        "availability": {
+          "operator": "equals",
+          "value": "content-unavailable"
+        },
+        "connectivity": {
+          "operator": "anyLegalValue"
+        },
+        "freshness": {
+          "operator": "anyLegalValue"
+        },
+        "interaction": {
+          "operator": "equals",
+          "value": "content-unavailable"
+        },
+        "operation": {
+          "operator": "equals",
+          "value": "idle"
+        },
+        "persistence": {
+          "operator": "anyLegalValue"
+        }
+      },
+      "not-found": {
+        "availability": {
+          "operator": "equals",
+          "value": "not-found"
+        },
+        "connectivity": {
+          "operator": "anyLegalValue"
+        },
+        "freshness": {
+          "operator": "anyLegalValue"
+        },
+        "interaction": {
+          "operator": "equals",
+          "value": "not-found"
+        },
+        "operation": {
+          "operator": "equals",
+          "value": "idle"
+        },
+        "persistence": {
+          "operator": "anyLegalValue"
+        }
+      },
+      "offline-unavailable": {
+        "availability": {
+          "operator": "equals",
+          "value": "offline-unavailable"
+        },
+        "connectivity": {
+          "operator": "equals",
+          "value": "offline"
+        },
+        "freshness": {
+          "operator": "anyLegalValue"
+        },
+        "interaction": {
+          "operator": "equals",
+          "value": "offline-unavailable"
+        },
+        "operation": {
+          "operator": "equals",
+          "value": "idle"
+        },
+        "persistence": {
+          "operator": "anyLegalValue"
+        }
+      },
+      "service-unavailable": {
+        "availability": {
+          "operator": "equals",
+          "value": "ready"
+        },
+        "connectivity": {
+          "operator": "anyLegalValue"
+        },
+        "freshness": {
+          "operator": "anyLegalValue"
+        },
+        "interaction": {
+          "operator": "equals",
+          "value": "service-unavailable"
+        },
+        "operation": {
+          "operator": "equals",
+          "value": "terminal-error"
+        },
+        "persistence": {
+          "operator": "anyLegalValue"
+        }
+      },
+      "storage-unavailable": {
+        "availability": {
+          "operator": "equals",
+          "value": "ready"
+        },
+        "connectivity": {
+          "operator": "anyLegalValue"
+        },
+        "freshness": {
+          "operator": "anyLegalValue"
+        },
+        "interaction": {
+          "operator": "equals",
+          "value": "storage-unavailable"
+        },
+        "operation": {
+          "operator": "equals",
+          "value": "terminal-error"
+        },
+        "persistence": {
+          "operator": "equals",
+          "value": "unavailable"
+        }
+      },
+      "terminal-error": {
+        "availability": {
+          "operator": "equals",
+          "value": "ready"
+        },
+        "connectivity": {
+          "operator": "anyLegalValue"
+        },
+        "freshness": {
+          "operator": "anyLegalValue"
+        },
+        "interaction": {
+          "operator": "equals",
+          "value": "terminal-error"
+        },
+        "operation": {
+          "operator": "equals",
+          "value": "terminal-error"
+        },
+        "persistence": {
+          "operator": "anyLegalValue"
+        }
+      },
+      "withdrawn": {
+        "availability": {
+          "operator": "equals",
+          "value": "withdrawn"
+        },
+        "connectivity": {
+          "operator": "anyLegalValue"
+        },
+        "freshness": {
+          "operator": "anyLegalValue"
+        },
+        "interaction": {
+          "operator": "equals",
+          "value": "withdrawn"
+        },
+        "operation": {
+          "operator": "equals",
+          "value": "idle"
+        },
+        "persistence": {
+          "operator": "anyLegalValue"
+        }
+      }
+    }
+  },
+  "fixtureRole": "Immutable accepted-input expectations and executable semantic/mutation cases; never an oracle that can bless co-edited authority.",
+  "fixtureVersion": "plan008-typed-authority-accepted-fixture-v4-executable-boundary",
+  "mutations": [
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "ROUTE_SET",
+      "mutationId": "MUT-ROUTE-SAME-CARDINALITY-REPLACEMENT",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/routes/34/routeId",
+          "value": "about-shadow"
+        }
+      ],
+      "purpose": "A same-cardinality replacement cannot evade exact route identity."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "ROUTE_SET",
+      "mutationId": "MUT-ROUTE-UNICODE-REPLACEMENT",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/routes/34/routeId",
+          "value": "about​"
+        }
+      ],
+      "purpose": "A visually confusable Unicode route ID cannot evade exact route identity."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "DIMENSION_SET",
+      "mutationId": "MUT-DIMENSION-DELETE",
+      "operations": [
+        {
+          "op": "remove",
+          "pointer": "/dimensions/5"
+        }
+      ],
+      "purpose": "Deleting a dimension is rejected before count comparison."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "DIMENSION_SET",
+      "mutationId": "MUT-DIMENSION-REPLACE",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/dimensions/5/dimensionId",
+          "value": "recency"
+        }
+      ],
+      "purpose": "Renaming a dimension is not equivalent to the six-source product."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "LITERAL_PIPE",
+      "mutationId": "MUT-LITERAL-PIPE-AS-STATE",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/machineStates/37/selector/substates/0/legalValues/0",
+          "value": "unanswered | recorded"
+        }
+      ],
+      "purpose": "A prose pipe must not survive as one legal value."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "BIDIRECTIONAL_CLOSURE",
+      "mutationId": "MUT-REVERSE-BIDIRECTIONAL-DELETE",
+      "operations": [
+        {
+          "op": "remove",
+          "pointer": "/edges/44"
+        }
+      ],
+      "purpose": "Deleting only the reverse clear-answer edge breaks explicit bidirectionality."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "PLUS_PRODUCT",
+      "mutationId": "MUT-PLUS-AS-OR-STATE",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/machineStates/19/selector/dimensions/interaction/value",
+          "value": "selected + recoverable-error"
+        }
+      ],
+      "purpose": "The plus notation must remain an orthogonal dimension product, not a joined interaction token."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "PARENTHETICAL_PSEUDO_STATE",
+      "mutationId": "MUT-PARENTHETICAL-PSEUDO-STATE",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/machineStates/19/stateName",
+          "value": "selected (recoverable-error)"
+        }
+      ],
+      "purpose": "A prose parenthetical qualification cannot become a state name."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SAFE_PATH",
+      "mutationId": "MUT-SOURCE-PATH",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/sources/0/repoRelativePath",
+          "value": "../private-host/escape/SCREEN_STATES.md"
+        }
+      ],
+      "purpose": "The accepted source is bound to its exact canonical path."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SOURCE_BLOB",
+      "mutationId": "MUT-SOURCE-BLOB",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/sources/0/gitBlobSha",
+          "value": "0000000000000000000000000000000000000000"
+        }
+      ],
+      "purpose": "A source Git-blob substitution is rejected even if other metadata remains."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SOURCE_LF",
+      "mutationId": "MUT-SOURCE-LF",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/sources/0/newline",
+          "value": "CRLF"
+        }
+      ],
+      "purpose": "Changing the frozen newline declaration is rejected."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SOURCE_CLAUSE_SET",
+      "mutationId": "MUT-MISSING-SOURCE-CLAUSE",
+      "operations": [
+        {
+          "op": "remove",
+          "pointer": "/sourceClauses/127"
+        }
+      ],
+      "purpose": "Deleting an exact cited clause cannot be hidden by remaining citations."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "INTERPRETATION_ID_SET",
+      "mutationId": "MUT-CO-MUTATED-COUNT-AND-ROOT",
+      "operations": [
+        {
+          "op": "remove",
+          "pointer": "/interpretations/26"
+        },
+        {
+          "op": "replace",
+          "pointer": "/counts/interpretationCount",
+          "value": 26
+        },
+        {
+          "op": "replace",
+          "pointer": "/integrityRoots/interpretationsSha256",
+          "value": "f0b8e6f264c902bd90cf9f8f382ef012750a1ddbf0703f4be268c225e7cc137a"
+        }
+      ],
+      "purpose": "Updating a local count and local Merkle-style root cannot evade the frozen accepted fixture."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "OUTCOME_TRANSITION_SMUGGLING",
+      "mutationId": "MUT-HAZARD-CONFIRMATION-TRANSITION-SMUGGLING",
+      "operations": [
+        {
+          "op": "add",
+          "pointer": "/outcomes/7/payload/continuationStateId",
+          "value": "hazard-item.confirm-zero"
+        }
+      ],
+      "purpose": "Hazard confirmation data cannot carry a second continuation channel."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "OUTCOME_TRANSITION_SMUGGLING",
+      "mutationId": "MUT-SIMULATION-CONFIRMATION-TRANSITION-SMUGGLING",
+      "operations": [
+        {
+          "op": "add",
+          "pointer": "/outcomes/10/payload/continuationStateId",
+          "value": "simulation.final-confirmation"
+        }
+      ],
+      "purpose": "Simulation confirmation data cannot carry a second continuation channel."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "OUTCOME_TRANSITION_SMUGGLING",
+      "mutationId": "MUT-DATA-CONFIRMATION-TRANSITION-SMUGGLING",
+      "operations": [
+        {
+          "op": "add",
+          "pointer": "/outcomes/15/payload/continuationStateId",
+          "value": "data-operation.committing"
+        }
+      ],
+      "purpose": "Data-operation confirmation data cannot carry a second continuation channel."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "OUTCOME_TRANSITION_SMUGGLING",
+      "mutationId": "MUT-PACK-REMOVAL-DUAL-CONTINUATION",
+      "operations": [
+        {
+          "op": "add",
+          "pointer": "/outcomes/14/payload/continuationStateId",
+          "value": "offline-pack.removing"
+        }
+      ],
+      "purpose": "Pack removal cannot combine confirmation and a direct removing-state continuation."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "NAV_SELECTOR",
+      "mutationId": "MUT-FREE-PROSE-NAVIGATION-SELECTOR",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/outcomes/1/payload/selector",
+          "value": "nearest cached public parent"
+        }
+      ],
+      "purpose": "A human-readable destination phrase is not a closed route selector."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "STATUS_TERMINAL",
+      "mutationId": "MUT-STATUS-TERMINAL-DIMENSION-LEAK",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/machineStates/84/selector/dimensions/availability",
+          "value": {
+            "operator": "anyLegalValue"
+          }
+        }
+      ],
+      "purpose": "A terminal state cannot widen availability to unrelated values."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "REFERENCE_PROJECTION",
+      "mutationId": "MUT-HOME-REFERENCE-ERROR-PROJECTION",
+      "operations": [
+        {
+          "op": "add",
+          "pointer": "/routes/0/machineBindings/0/legalMachineStateIds/-",
+          "value": "reference-document.recoverable-error"
+        }
+      ],
+      "purpose": "Home cannot acquire a recoverable-error state through a blanket reference scope."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "DATA_HISTORICAL_INVARIANT",
+      "mutationId": "MUT-DATA-HISTORICAL-INVARIANT-DELETE",
+      "operations": [
+        {
+          "op": "remove",
+          "pointer": "/machineStates/73/context/historicalCorrectnessInvariant"
+        }
+      ],
+      "purpose": "Every projection-rebuild phase must retain the historical-correctness invariant."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "ROUTE_SET",
+      "mutationId": "MUT-ROUTE-DELETE",
+      "operations": [
+        {
+          "op": "remove",
+          "pointer": "/routes/34"
+        }
+      ],
+      "purpose": "Deleting a route violates the complete 36-ID family."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "ROUTE_SET",
+      "mutationId": "MUT-ROUTE-DUPLICATE",
+      "operations": [
+        {
+          "op": "add",
+          "pointer": "/routes/-",
+          "value": {
+            "familySelector": {
+              "familyNumber": 1,
+              "kind": "destination-family",
+              "routeId": "home"
+            },
+            "legalStateSelector": {
+              "dimensionAllowlist": {
+                "availability": [
+                  "ready",
+                  "offline-stale"
+                ],
+                "freshness": [
+                  "current",
+                  "stale"
+                ]
+              },
+              "interpretationPolicy": "dimension values and bound machine states form a product; omission from both is illegal",
+              "machineBindingIds": [
+                "BIND-HOME-REFERENCE-DOCUMENT"
+              ]
+            },
+            "machineBindings": [
+              {
+                "bindingId": "BIND-HOME-REFERENCE-DOCUMENT",
+                "legalMachineStateIds": [
+                  "reference-document.ready-current",
+                  "reference-document.ready-stale",
+                  "reference-document.offline-stale"
+                ],
+                "machineId": "reference-document",
+                "qualification": null,
+                "sourceClauseIds": [
+                  "SS-ROUTE-01",
+                  "RT-ROUTE-01",
+                  "RT-AUTHORITY-SCOPE"
+                ],
+                "variant": "document"
+              }
+            ],
+            "navigationShellSelector": {
+              "authority": "must-not-infer-standard-complement",
+              "shell": "non-player-unspecified"
+            },
+            "parentNavigation": [
+              "global root"
+            ],
+            "pathPatterns": [
+              {
+                "islandName": null,
+                "parameterNames": [],
+                "pattern": "/",
+                "renderOwner": "static",
+                "searchPolicy": "index"
+              }
+            ],
+            "routeId": "home",
+            "routeKind": "destination-family-route",
+            "sourceClauseIds": [
+              "SS-ROUTE-01",
+              "RT-ROUTE-01",
+              "RT-AUTHORITY-SCOPE"
+            ]
+          }
+        }
+      ],
+      "purpose": "Appending a duplicate route violates exact-once identity."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "DIMENSION_SET",
+      "mutationId": "MUT-DIMENSION-ADD",
+      "operations": [
+        {
+          "op": "add",
+          "pointer": "/dimensions/-",
+          "value": {
+            "dimensionId": "recency",
+            "legalValues": [
+              "current",
+              "stale",
+              "superseded",
+              "retired",
+              "corrected"
+            ],
+            "meaning": "Status of the exact profile/content revision represented.",
+            "ownership": "screen-product",
+            "sourceClauseIds": [
+              "SS-DIM-PRODUCT",
+              "SS-DIM-FRESHNESS",
+              "SS-GLOBAL-05"
+            ]
+          }
+        }
+      ],
+      "purpose": "Appending a seventh dimension violates the six-dimensional product."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "STATE_ID_SET",
+      "mutationId": "MUT-STATE-FAMILY-DELETE",
+      "operations": [
+        {
+          "op": "remove",
+          "pointer": "/machineStates/91"
+        }
+      ],
+      "purpose": "Deleting a required reference freshness state violates full state-family closure."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "EDGE_ID_SET",
+      "mutationId": "MUT-EDGE-FAMILY-DELETE",
+      "operations": [
+        {
+          "op": "remove",
+          "pointer": "/edges/136"
+        }
+      ],
+      "purpose": "Deleting a constructibility edge violates full edge-family closure."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "EDGE_ID_SET",
+      "mutationId": "MUT-DUPLICATE-COMMIT-COMPLETE-EDGE",
+      "operations": [
+        {
+          "op": "add",
+          "pointer": "/edges/-",
+          "value": {
+            "edgeId": "E-DATA-011-COMMIT-COMPLETE-DUPLICATE",
+            "fromSelector": {
+              "kind": "machine-state",
+              "machineId": "data-operation",
+              "routeIds": [
+                "settings"
+              ],
+              "stateIds": [
+                "data-operation.committing"
+              ],
+              "substate": null
+            },
+            "guards": [],
+            "machineId": "data-operation",
+            "sourceClauseIds": [
+              "SS-DATA-COMMIT-COMPLETE-202",
+              "SS-DATA-COMMIT-COMPLETE-204",
+              "SS-GLOBAL-03",
+              "SS-DATA-SEMANTICS"
+            ],
+            "toStateSelector": {
+              "preserve": [
+                "operationKind"
+              ],
+              "stateId": "data-operation.complete",
+              "substateAssignments": null
+            },
+            "trigger": {
+              "id": "data.commit-complete",
+              "kind": "event"
+            }
+          }
+        }
+      ],
+      "purpose": "A duplicate semantic committing-to-complete edge is rejected even with different identity."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SOURCE_CLAUSE_SET",
+      "mutationId": "MUT-MISSING-GLOBAL-SOURCE-CLAUSE",
+      "operations": [
+        {
+          "op": "remove",
+          "pointer": "/sourceClauses/26"
+        }
+      ],
+      "purpose": "All global source clauses are mandatory, not a sampled subset."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "CLAUSE_DERIVATION",
+      "mutationId": "MUT-CLAUSE-LINE-RANGE-IMPOSSIBLE",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/sourceClauses/0/lineRange/endInclusive",
+          "value": 999999
+        }
+      ],
+      "purpose": "A stored line range cannot override source-derived offsets."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "CLAUSE_DERIVATION",
+      "mutationId": "MUT-CLAUSE-KIND-RETARGET",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/sourceClauses/0/clauseKind",
+          "value": "route-family-row"
+        }
+      ],
+      "purpose": "Clause kind is derived from the validator-owned source table."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "ROUTE_CITATION_COMPATIBILITY",
+      "mutationId": "MUT-HOME-CITATIONS-RETARGET-EXAM-SELECTOR",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/routes/0/sourceClauseIds",
+          "value": [
+            "SS-ROUTE-02",
+            "RT-ROUTE-02",
+            "RT-AUTHORITY-SCOPE"
+          ]
+        },
+        {
+          "op": "replace",
+          "pointer": "/routes/0/machineBindings/0/sourceClauseIds",
+          "value": [
+            "SS-ROUTE-02",
+            "RT-ROUTE-02",
+            "RT-AUTHORITY-SCOPE"
+          ]
+        }
+      ],
+      "purpose": "A route cannot borrow another family row while keeping its route ID."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "METADATA_KEYS",
+      "mutationId": "MUT-UNKNOWN-METADATA-CHANNEL",
+      "operations": [
+        {
+          "op": "add",
+          "pointer": "/metadata/continuation",
+          "value": "simulation.results"
+        }
+      ],
+      "purpose": "Metadata is an exact-key object and cannot carry a hidden transition channel."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRANSITION_CHANNEL",
+      "mutationId": "MUT-HIDDEN-ACTION-PAYLOAD-CONTINUATION",
+      "operations": [
+        {
+          "op": "add",
+          "pointer": "/actions/0/payload/continuationStateId",
+          "value": "reference-document.ready-current"
+        }
+      ],
+      "purpose": "No payload family can smuggle a continuationStateId."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRANSITION_CHANNEL",
+      "mutationId": "MUT-PSEUDO-ENDPOINT-ON-EDGE",
+      "operations": [
+        {
+          "op": "add",
+          "pointer": "/edges/0/continuationStateId",
+          "value": "reference-document.ready-current"
+        }
+      ],
+      "purpose": "Edges accept only the typed target-state selector or outcome endpoint channel."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "EDGE_TO_STATE_ROUTE",
+      "mutationId": "MUT-CROSS-ROUTE-SIMULATION-TARGET",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/edges/43/toStateSelector/stateId",
+          "value": "simulation.results"
+        }
+      ],
+      "purpose": "A plain state target must be legal on every preserved source route."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "NAV_EMITTER_DOMAIN",
+      "mutationId": "MUT-NAVIGATION-MAP-MISSING-ACTIVE-SOURCE",
+      "operations": [
+        {
+          "op": "remove",
+          "pointer": "/outcomes/1/payload/selector/bySourceRouteId/status"
+        }
+      ],
+      "purpose": "Every edge emitting a route-map outcome must have a map entry for each source route."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "QUESTION_PRESERVATION",
+      "mutationId": "MUT-QUESTION-FAILURE-DRAFT-ID-LOSS",
+      "operations": [
+        {
+          "op": "remove",
+          "pointer": "/machineStates/19/selector/substates/2"
+        }
+      ],
+      "purpose": "Question failure state must retain selectedOptionId and the stable draftAttemptId."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "QUESTION_PRESERVATION",
+      "mutationId": "MUT-QUESTION-RETRY-PRESERVE-LOSS",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/edges/16/toStateSelector/preserve",
+          "value": [
+            "selectedOptionId"
+          ]
+        }
+      ],
+      "purpose": "Question retry must preserve both selection and stable draft identity."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "HAZARD_PRESERVATION",
+      "mutationId": "MUT-HAZARD-FAILURE-MARKER-LOSS",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/edges/33/toStateSelector/preserve",
+          "value": [
+            "previousEditableState",
+            "hazardAttemptId"
+          ]
+        }
+      ],
+      "purpose": "Hazard failure must preserve prior editable state, neutral markers, and attempt ID."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SIMULATION_PRESERVATION",
+      "mutationId": "MUT-SIMULATION-FAILURE-FLAG-LOSS",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/edges/55/toStateSelector/preserve",
+          "value": [
+            "answer",
+            "position",
+            "sessionId",
+            "submissionId"
+          ]
+        }
+      ],
+      "purpose": "Simulation submit failure must preserve answer, flag, position, session, and submission identity."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "REFERENCE_FRESHNESS",
+      "mutationId": "MUT-REFERENCE-RETIRED-AS-WITHDRAWN",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/machineStates/90/selector/dimensions/availability",
+          "value": {
+            "operator": "equals",
+            "value": "withdrawn"
+          }
+        }
+      ],
+      "purpose": "Readable retired freshness is distinct from withdrawn availability."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "CONFIRMATION_DETERMINISM",
+      "mutationId": "MUT-CONFIRMATION-DISMISSAL-AMBIGUOUS-ORIGIN",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/edges/153/toStateSelector",
+          "value": {
+            "preserve": [
+              "editableOrigin"
+            ],
+            "stateIds": [
+              "hazard-item.ready",
+              "hazard-item.marking"
+            ]
+          }
+        }
+      ],
+      "purpose": "Presented and dismissed confirmation resolutions have deterministic state origins and targets."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "JOURNEY_DERIVATION",
+      "mutationId": "MUT-JOURNEY-CO-DRIFT",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/journeyLens/journeyIds",
+          "value": []
+        },
+        {
+          "op": "replace",
+          "pointer": "/journeyLens/journeyCount",
+          "value": 0
+        },
+        {
+          "op": "replace",
+          "pointer": "/counts/journeyLensCountExcluded",
+          "value": 0
+        }
+      ],
+      "purpose": "Journey count is derived from the exact unique J01-J08 set."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "IMPLEMENTATION_DRIFT",
+      "mutationId": "MUT-IMPLEMENTATION-REGISTRY-CO-DRIFT",
+      "operations": [
+        {
+          "op": "add",
+          "pointer": "/implementationDrift/implementationRouteIds/-",
+          "value": "exam-checker"
+        },
+        {
+          "op": "replace",
+          "pointer": "/implementationDrift/implementationRouteCount",
+          "value": 28
+        },
+        {
+          "op": "remove",
+          "pointer": "/implementationDrift/missingRouteIds/0"
+        },
+        {
+          "op": "replace",
+          "pointer": "/implementationDrift/missingRouteCount",
+          "value": 8
+        },
+        {
+          "op": "replace",
+          "pointer": "/counts/implementationRegistryCountExcluded",
+          "value": 28
+        },
+        {
+          "op": "replace",
+          "pointer": "/counts/implementationMissingRouteCountExcluded",
+          "value": 8
+        }
+      ],
+      "purpose": "Copied registry IDs/counts cannot replace parsing the exact live registry bytes."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "PINNED_FIXTURE",
+      "mutationId": "MUT-COEDITED-FIXTURE-HASH-ROOT-COUNT",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "remove",
+          "pointer": "/interpretations/26"
+        },
+        {
+          "derivation": "authority.interpretationCount",
+          "document": "authority",
+          "op": "replace-derived",
+          "pointer": "/counts/interpretationCount"
+        },
+        {
+          "derivation": "authority.interpretationsSha256",
+          "document": "authority",
+          "op": "replace-derived",
+          "pointer": "/integrityRoots/interpretationsSha256"
+        },
+        {
+          "derivation": "authority.interpretationCount",
+          "document": "fixture",
+          "op": "replace-derived",
+          "pointer": "/expected/counts/interpretationCount"
+        },
+        {
+          "derivation": "authority.interpretationsSha256",
+          "document": "fixture",
+          "op": "replace-derived",
+          "pointer": "/expected/integrityRoots/interpretationsSha256"
+        },
+        {
+          "derivation": "authority.canonicalSha256",
+          "document": "fixture",
+          "op": "replace-derived",
+          "pointer": "/acceptedAuthoritySha256"
+        }
+      ],
+      "purpose": "A co-edited fixture, local root, derived count, and accepted hash cannot bless a changed authority."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRANSITION_CONSTRUCTIBILITY",
+      "mutationId": "MUT-V4-CHECKER-INPUT-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/0/toStateSelector/preserve",
+          "value": []
+        }
+      ],
+      "purpose": "Checker validation must retain input."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SIMULATION_PRESERVATION",
+      "mutationId": "MUT-V4-SIM-SETTINGS-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/41/toStateSelector/preserve",
+          "value": []
+        }
+      ],
+      "purpose": "Simulation generation must retain settings."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SIMULATION_PRESERVATION",
+      "mutationId": "MUT-V4-SIM-POSITION-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/45/toStateSelector/preserve",
+          "value": [
+            "answer",
+            "sessionId"
+          ]
+        }
+      ],
+      "purpose": "Simulation flagging retains position and session."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SIMULATION_PRESERVATION",
+      "mutationId": "MUT-V4-SIM-RETRY-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/58/toStateSelector/preserve",
+          "value": [
+            "answer",
+            "flag",
+            "position",
+            "sessionId"
+          ]
+        }
+      ],
+      "purpose": "Retry submit retains the entire submission identity."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "HAZARD_PRESERVATION",
+      "mutationId": "MUT-V4-HAZARD-ATTEMPT-KIND-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/33/toStateSelector/preserve",
+          "value": [
+            "previousEditableState",
+            "neutralMarkers",
+            "hazardAttemptId"
+          ]
+        }
+      ],
+      "purpose": "Hazard failure retains attempt kind."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "CONFIRMATION_DETERMINISM",
+      "mutationId": "MUT-V4-HAZARD-READY-ORIGIN-REPLACE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/153/toStateSelector/stateId",
+          "value": "hazard-item.marking"
+        }
+      ],
+      "purpose": "Ready-origin dismissal returns to ready."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRANSITION_CONSTRUCTIBILITY",
+      "mutationId": "MUT-V4-CORRECTION-SAFE-FIELDS-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "remove",
+          "pointer": "/machineStates/66/selector/substates/0"
+        }
+      ],
+      "purpose": "Validation errors retain safe fields."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRANSITION_CONSTRUCTIBILITY",
+      "mutationId": "MUT-V4-CORRECTION-RECEIPT-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/99/toStateSelector/preserve",
+          "value": [
+            "safeFields"
+          ]
+        }
+      ],
+      "purpose": "Submission failure retains receipt ID."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRIGGER_CONSTRUCTION",
+      "mutationId": "MUT-V4-TRIGGER-OPTION-ID-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "remove",
+          "pointer": "/actions/9/payload/fields/2"
+        }
+      ],
+      "purpose": "selectOption declares optionId used by construction."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRIGGER_CONSTRUCTION",
+      "mutationId": "MUT-V4-TRIGGER-TYPED-CAUSE-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "remove",
+          "pointer": "/events/4/payload/fields/1"
+        }
+      ],
+      "purpose": "Typed failure declares typedCause."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRIGGER_CONSTRUCTION",
+      "mutationId": "MUT-V4-TRIGGER-SMUGGLE-UNKNOWN",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/99/toStateSelector/substateAssignments/typedCause",
+          "value": "event.privateCause"
+        }
+      ],
+      "purpose": "Assignments cannot read undeclared trigger fields."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "CONSTRAINT_PATH",
+      "mutationId": "MUT-V4-CONSTRAINT-UNRESOLVED-PATH",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/constraints/0/expression/forbidAll/0/path",
+          "value": "dimensions.interaction"
+        }
+      ],
+      "purpose": "Every operand resolves against snapshot schema."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "CONSTRAINT_WITNESS",
+      "mutationId": "MUT-V4-CONSTRAINT-NEGATIVE-WITNESS",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/constraints/1/witnesses/forbidden/context/acceptedClientReceipt",
+          "value": true
+        }
+      ],
+      "purpose": "Each negative witness must violate its constraint."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "EFFECT_ID_SET",
+      "mutationId": "MUT-V4-EFFECT-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "remove",
+          "pointer": "/presentationEffects/0"
+        }
+      ],
+      "purpose": "Required effect lifecycle cannot be deleted."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "EFFECT_LIFECYCLE",
+      "mutationId": "MUT-V4-EFFECT-ORDER-REPLACE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/presentationEffects/1/ordering/phase",
+          "value": "before-render"
+        }
+      ],
+      "purpose": "Effects run after render."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "EFFECT_LIFECYCLE",
+      "mutationId": "MUT-V4-EFFECT-ACK-REPLACE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/presentationEffects/2/acknowledgement/mode",
+          "value": "at-least-once"
+        }
+      ],
+      "purpose": "Effect acknowledgement is exactly once."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRANSITION_CONSTRUCTIBILITY",
+      "mutationId": "MUT-V4-PACK-PRIOR-GENERATION-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "remove",
+          "pointer": "/machineStates/55/selector/substates/0"
+        }
+      ],
+      "purpose": "Update verification retains the prior active generation."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRANSITION_CONSTRUCTIBILITY",
+      "mutationId": "MUT-V4-PACK-CANDIDATE-GENERATION-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "remove",
+          "pointer": "/edges/81/toStateSelector/preserve/1"
+        }
+      ],
+      "purpose": "Update verification retains candidate generation."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "PACK_GENERATION",
+      "mutationId": "MUT-V4-PACK-ACTIVATION-SMUGGLE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/85/toStateSelector/substateAssignments/activeGeneration",
+          "value": "state.priorActiveGeneration"
+        }
+      ],
+      "purpose": "Atomic activation selects only the verified candidate."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SELECTED_DIRECTION",
+      "mutationId": "MUT-V4-NAV-RULE-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "remove",
+          "pointer": "/selectedDirection/rules/0"
+        }
+      ],
+      "purpose": "The exact 11-rule selected program is complete."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SELECTED_DIRECTION",
+      "mutationId": "MUT-V4-NAV-RULE-REORDER",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/selectedDirection/rules/0/id",
+          "value": "NAV-NATIVE-COMPACT"
+        }
+      ],
+      "purpose": "Selected program rule order is authoritative."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SELECTED_DIRECTION",
+      "mutationId": "MUT-V4-NAV-RULE-STATEMENT",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/selectedDirection/rules/0/statement",
+          "value": "drift"
+        }
+      ],
+      "purpose": "Selected program statements are source exact."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "MILESTONE_ID_SET",
+      "mutationId": "MUT-V4-MILESTONE-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "remove",
+          "pointer": "/implementationMilestones/5"
+        }
+      ],
+      "purpose": "M0-M5 closure is complete."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "MILESTONE_CLOSURE",
+      "mutationId": "MUT-V4-MILESTONE-ASSIGNMENT-LOSS",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/routes/11/milestoneAssignment/milestoneIds",
+          "value": []
+        }
+      ],
+      "purpose": "Each registry route retains its source-derived milestone assignment."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "QUESTION_PRESERVATION",
+      "mutationId": "MUT-V4-QUESTION-SELECTION-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/15/toStateSelector/preserve",
+          "value": [
+            "draftAttemptId"
+          ]
+        }
+      ],
+      "purpose": "Question commit failure retains selectedOptionId independently of draftAttemptId."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "QUESTION_PRESERVATION",
+      "mutationId": "MUT-V4-QUESTION-ATTEMPT-DOMAIN-REPLACE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/machineStates/19/selector/substates/2/valueDomain",
+          "value": "ephemeral attempt"
+        }
+      ],
+      "purpose": "Question draftAttemptId remains a stable identity field."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRIGGER_CONSTRUCTION",
+      "mutationId": "MUT-V4-QUESTION-OPTION-TYPE-REPLACE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/actions/9/payload/fields/2/valueType",
+          "value": "free-string"
+        }
+      ],
+      "purpose": "Question option assignment has an exact option-id trigger type."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "HAZARD_PRESERVATION",
+      "mutationId": "MUT-V4-HAZARD-PREVIOUS-STATE-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/33/toStateSelector/preserve",
+          "value": [
+            "attemptKind",
+            "neutralMarkers",
+            "hazardAttemptId"
+          ]
+        }
+      ],
+      "purpose": "Hazard commit failure retains previousEditableState."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "HAZARD_PRESERVATION",
+      "mutationId": "MUT-V4-HAZARD-ATTEMPT-ID-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/33/toStateSelector/preserve",
+          "value": [
+            "attemptKind",
+            "previousEditableState",
+            "neutralMarkers"
+          ]
+        }
+      ],
+      "purpose": "Hazard commit failure retains hazardAttemptId."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRIGGER_CONSTRUCTION",
+      "mutationId": "MUT-V4-HAZARD-RESTORE-MARKER-REPLACE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/events/5/payload/fields/1/literal",
+          "value": "non-neutral-marker"
+        }
+      ],
+      "purpose": "Hazard restoration constructs the exact neutral marker literal."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SIMULATION_PRESERVATION",
+      "mutationId": "MUT-V4-SIM-FAILURE-ANSWER-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/55/toStateSelector/preserve",
+          "value": [
+            "flag",
+            "position",
+            "sessionId",
+            "submissionId"
+          ]
+        }
+      ],
+      "purpose": "Simulation failure retains the current answer."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SIMULATION_PRESERVATION",
+      "mutationId": "MUT-V4-SIM-FAILURE-POSITION-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/55/toStateSelector/preserve",
+          "value": [
+            "answer",
+            "flag",
+            "sessionId",
+            "submissionId"
+          ]
+        }
+      ],
+      "purpose": "Simulation failure retains the current position."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SIMULATION_PRESERVATION",
+      "mutationId": "MUT-V4-SIM-FAILURE-SESSION-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/55/toStateSelector/preserve",
+          "value": [
+            "answer",
+            "flag",
+            "position",
+            "submissionId"
+          ]
+        }
+      ],
+      "purpose": "Simulation failure retains the session identity."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SIMULATION_PRESERVATION",
+      "mutationId": "MUT-V4-SIM-FAILURE-SUBMISSION-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/55/toStateSelector/preserve",
+          "value": [
+            "answer",
+            "flag",
+            "position",
+            "sessionId"
+          ]
+        }
+      ],
+      "purpose": "Simulation failure retains the submission identity."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRIGGER_CONSTRUCTION",
+      "mutationId": "MUT-V4-SIM-POSITION-TYPE-REPLACE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/events/14/payload/fields/3/valueType",
+          "value": "free-number"
+        }
+      ],
+      "purpose": "Simulation generated position matches the destination field contract."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRANSITION_CONSTRUCTIBILITY",
+      "mutationId": "MUT-V4-CORRECTION-VALIDATE-SAFE-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/94/toStateSelector/preserve",
+          "value": []
+        }
+      ],
+      "purpose": "Correction validation retains safe fields."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRANSITION_CONSTRUCTIBILITY",
+      "mutationId": "MUT-V4-CORRECTION-INVALID-SAFE-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/96/toStateSelector/preserve",
+          "value": []
+        }
+      ],
+      "purpose": "Correction validation errors retain safe fields."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRANSITION_CONSTRUCTIBILITY",
+      "mutationId": "MUT-V4-CORRECTION-SAVE-SAFE-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/100/toStateSelector/preserve",
+          "value": []
+        }
+      ],
+      "purpose": "Correction local save retains safe fields."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRANSITION_CONSTRUCTIBILITY",
+      "mutationId": "MUT-V4-CORRECTION-RESUME-SAFE-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/101/toStateSelector/preserve",
+          "value": []
+        }
+      ],
+      "purpose": "Correction resume retains safe fields."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRIGGER_CONSTRUCTION",
+      "mutationId": "MUT-V4-CORRECTION-SAFE-SMUGGLE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/99/toStateSelector/preserve",
+          "value": [
+            "clientReceiptId"
+          ]
+        },
+        {
+          "document": "authority",
+          "op": "add",
+          "pointer": "/edges/99/toStateSelector/substateAssignments/safeFields",
+          "value": "event.privateSafeFields"
+        }
+      ],
+      "purpose": "Correction failure cannot reconstruct safe fields from an undeclared failure payload."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRIGGER_CONSTRUCTION",
+      "mutationId": "MUT-V4-PACK-UPDATE-CANDIDATE-SMUGGLE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/88/toStateSelector/substateAssignments/candidateGeneration",
+          "value": "event.privateCandidate"
+        }
+      ],
+      "purpose": "Pack update candidate comes from the declared event field."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRANSITION_CONSTRUCTIBILITY",
+      "mutationId": "MUT-V4-PACK-DOWNLOAD-PRIOR-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/89/toStateSelector/preserve",
+          "value": [
+            "candidateGeneration"
+          ]
+        }
+      ],
+      "purpose": "Pack update download retains the prior active generation."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRANSITION_CONSTRUCTIBILITY",
+      "mutationId": "MUT-V4-PACK-QUARANTINE-PRIOR-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/82/toStateSelector/preserve",
+          "value": [
+            "candidateGeneration"
+          ]
+        }
+      ],
+      "purpose": "Pack verification quarantine retains the prior active generation."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRANSITION_CONSTRUCTIBILITY",
+      "mutationId": "MUT-V4-PACK-FAILURE-CANDIDATE-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/83/toStateSelector/preserve",
+          "value": [
+            "priorActiveGeneration"
+          ]
+        }
+      ],
+      "purpose": "Pack verification failure retains the candidate generation."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRANSITION_CONSTRUCTIBILITY",
+      "mutationId": "MUT-V4-PACK-ACTIVATING-PRIOR-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/84/toStateSelector/preserve",
+          "value": [
+            "candidateGeneration"
+          ]
+        }
+      ],
+      "purpose": "Pack activation retains the prior active generation until promotion."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRANSITION_CONSTRUCTIBILITY",
+      "mutationId": "MUT-V4-PACK-ACTIVATION-QUARANTINE-CANDIDATE-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/86/toStateSelector/preserve",
+          "value": [
+            "priorActiveGeneration"
+          ]
+        }
+      ],
+      "purpose": "Pack activation quarantine retains the candidate generation."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "EFFECT_LIFECYCLE",
+      "mutationId": "MUT-V4-EFFECT-SEMANTIC-TARGET-REPLACE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/presentationEffects/0/semanticTarget/kind",
+          "value": "dom-selector"
+        }
+      ],
+      "purpose": "Presentation focus targets remain semantic rather than DOM selectors."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "EFFECT_LIFECYCLE",
+      "mutationId": "MUT-V4-EFFECT-DOM-TARGET-REPLACE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/presentationEffects/0/semanticTarget/target",
+          "value": "#error-summary"
+        }
+      ],
+      "purpose": "Presentation focus targets do not contain CSS selector syntax."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "EFFECT_LIFECYCLE",
+      "mutationId": "MUT-V4-EFFECT-ANNOUNCEMENT-REPLACE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/presentationEffects/4/announcementPolicy/duplicateSuppression",
+          "value": "none"
+        }
+      ],
+      "purpose": "Presentation announcements suppress duplicate effect IDs."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "EFFECT_LIFECYCLE",
+      "mutationId": "MUT-V4-EFFECT-BINDING-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/effectBindings/7/edgeIds",
+          "value": []
+        }
+      ],
+      "purpose": "Every effect has a nonempty emitting edge binding."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "EFFECT_LIFECYCLE",
+      "mutationId": "MUT-V4-EFFECT-ACK-FIELD-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "remove",
+          "pointer": "/events/57/payload/fields/1"
+        }
+      ],
+      "purpose": "Exactly-once acknowledgement declares effectId."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRANSITION_CHANNEL",
+      "mutationId": "MUT-V4-EFFECT-CONTINUATION-SMUGGLE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "add",
+          "pointer": "/presentationEffects/1/semanticTarget/continuationStateId",
+          "value": "immediate-feedback.completed"
+        }
+      ],
+      "purpose": "Presentation payloads cannot smuggle a transition continuation."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "CONSTRAINT_WITNESS",
+      "mutationId": "MUT-V4-CONSTRAINT-01-WITNESS-REPLACE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/constraints/0/witnesses/forbidden",
+          "value": {
+            "context": {
+              "attemptDurablyCommitted": true
+            },
+            "machineId": "immediate-feedback",
+            "selector": {
+              "dimensions": {
+                "interaction": {
+                  "operator": "equals",
+                  "value": "answered-revealed"
+                }
+              },
+              "substates": []
+            }
+          }
+        }
+      ],
+      "purpose": "Constraint 1 must retain a distinct forbidden witness."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "CONSTRAINT_WITNESS",
+      "mutationId": "MUT-V4-CONSTRAINT-02-WITNESS-REPLACE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/constraints/1/witnesses/forbidden",
+          "value": {
+            "context": {
+              "acceptedClientReceipt": true
+            },
+            "machineId": "correction-report",
+            "selector": {
+              "dimensions": {
+                "interaction": {
+                  "operator": "equals",
+                  "value": "submitted"
+                }
+              },
+              "substates": []
+            }
+          }
+        }
+      ],
+      "purpose": "Constraint 2 must retain a distinct forbidden witness."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "CONSTRAINT_WITNESS",
+      "mutationId": "MUT-V4-CONSTRAINT-03-WITNESS-REPLACE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/constraints/2/witnesses/forbidden",
+          "value": {
+            "context": {
+              "allActivationGatesSucceeded": true
+            },
+            "machineId": "offline-pack",
+            "selector": {
+              "dimensions": {
+                "interaction": {
+                  "operator": "equals",
+                  "value": "active"
+                }
+              },
+              "substates": []
+            }
+          }
+        }
+      ],
+      "purpose": "Constraint 3 must retain a distinct forbidden witness."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "CONSTRAINT_WITNESS",
+      "mutationId": "MUT-V4-CONSTRAINT-04-WITNESS-REPLACE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/constraints/3/witnesses/forbidden",
+          "value": {
+            "context": {
+              "contentMayExistButUnavailableOffline": false
+            },
+            "machineId": "reference-document",
+            "selector": {
+              "dimensions": {
+                "availability": {
+                  "operator": "equals",
+                  "value": "empty"
+                }
+              },
+              "substates": []
+            }
+          }
+        }
+      ],
+      "purpose": "Constraint 4 must retain a distinct forbidden witness."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "CONSTRAINT_WITNESS",
+      "mutationId": "MUT-V4-CONSTRAINT-05-WITNESS-REPLACE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/constraints/4/witnesses/forbidden",
+          "value": {
+            "context": {
+              "onlyBasisIsOfflineCachedProfile": false
+            },
+            "machineId": "reference-document",
+            "selector": {
+              "dimensions": {
+                "freshness": {
+                  "operator": "equals",
+                  "value": "current"
+                }
+              },
+              "substates": []
+            }
+          }
+        }
+      ],
+      "purpose": "Constraint 5 must retain a distinct forbidden witness."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "CONSTRAINT_WITNESS",
+      "mutationId": "MUT-V4-CONSTRAINT-06-WITNESS-REPLACE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/constraints/5/witnesses/forbidden",
+          "value": {
+            "context": {
+              "requiredPinnedClosureComplete": true
+            },
+            "machineId": "immediate-feedback",
+            "selector": {
+              "dimensions": {
+                "interaction": {
+                  "operator": "equals",
+                  "value": "ready"
+                }
+              },
+              "substates": []
+            }
+          }
+        }
+      ],
+      "purpose": "Constraint 6 must retain a distinct forbidden witness."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "CONSTRAINT_WITNESS",
+      "mutationId": "MUT-V4-CONSTRAINT-07-WITNESS-REPLACE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/constraints/6/witnesses/forbidden",
+          "value": {
+            "context": {
+              "onlyBasisIsRenderedScrolledOrTimed": false
+            },
+            "machineId": "immediate-feedback",
+            "selector": {
+              "dimensions": {
+                "interaction": {
+                  "operator": "equals",
+                  "value": "reviewed"
+                }
+              },
+              "substates": []
+            }
+          }
+        }
+      ],
+      "purpose": "Constraint 7 must retain a distinct forbidden witness."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "CONSTRAINT_WITNESS",
+      "mutationId": "MUT-V4-CONSTRAINT-08-WITNESS-REPLACE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/constraints/7/witnesses/forbidden",
+          "value": {
+            "context": {
+              "finalSubmissionSettled": true
+            },
+            "machineId": "simulation",
+            "selector": {
+              "dimensions": {
+                "interaction": {
+                  "operator": "equals",
+                  "value": "answered-revealed"
+                }
+              },
+              "substates": []
+            }
+          }
+        }
+      ],
+      "purpose": "Constraint 8 must retain a distinct forbidden witness."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "CONSTRAINT_WITNESS",
+      "mutationId": "MUT-V4-CONSTRAINT-09-WITNESS-REPLACE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/constraints/8/witnesses/forbidden",
+          "value": {
+            "context": {
+              "historicalItemRequested": true,
+              "representedItemVersion": "v1",
+              "requestedItemVersion": "v1"
+            },
+            "machineId": "immediate-feedback",
+            "selector": {
+              "dimensions": {
+                "interaction": {
+                  "operator": "equals",
+                  "value": "restoring"
+                }
+              },
+              "substates": []
+            }
+          }
+        }
+      ],
+      "purpose": "Constraint 9 must retain a distinct forbidden witness."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "CONSTRAINT_PATH",
+      "mutationId": "MUT-V4-CONSTRAINT-NESTED-PATH-MISSING",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/constraints/-1/expression/forbidAll/1/value/path",
+          "value": "context.privateVersion"
+        }
+      ],
+      "purpose": "Nested context operand paths must resolve in the canonical schema."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "CONSTRAINT_STATE",
+      "mutationId": "MUT-V4-CONSTRAINT-STATE-VIOLATION",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/machineStates/20/context/attemptDurablyCommitted",
+          "value": false
+        }
+      ],
+      "purpose": "Machine states cannot instantiate a forbidden snapshot."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "EVENT_PAYLOAD_TAG",
+      "mutationId": "MUT-V4-TRIGGER-WILDCARD-REPLACE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/events/4/payload/kind",
+          "value": "wildcard"
+        }
+      ],
+      "purpose": "Every trigger payload remains a closed tagged object."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRIGGER_CONSTRUCTION",
+      "mutationId": "MUT-V4-TRIGGER-ENUM-DOMAIN-REPLACE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/events/14/payload/fields/1/legalValues",
+          "value": [
+            "unknown"
+          ]
+        }
+      ],
+      "purpose": "Trigger enum values match target state legal values."
+    },
+    {
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SELECTED_DIRECTION",
+      "mutationId": "MUT-V4-NAV-EVIDENCE-DRIFT",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/selectedDirection/humanParticipantCount",
+          "value": 1
+        }
+      ],
+      "purpose": "Selected navigation evidence remains CODEX-only with no human participants."
+    }
+  ],
+  "positiveControls": [
+    {
+      "assertions": [
+        {
+          "expected": [
+            "reference-document.ready-current",
+            "reference-document.ready-stale",
+            "reference-document.offline-stale"
+          ],
+          "kind": "pointer-equals",
+          "pointer": "/routes/0/machineBindings/0/legalMachineStateIds"
+        },
+        {
+          "expected": "reference-document.recoverable-error",
+          "kind": "pointer-excludes",
+          "pointer": "/routes/21/machineBindings/0/legalMachineStateIds"
+        },
+        {
+          "expected": "reference-document.pending",
+          "kind": "pointer-includes",
+          "pointer": "/routes/3/machineBindings/0/legalMachineStateIds"
+        },
+        {
+          "expected": "reference-document.ready-stale",
+          "kind": "pointer-includes",
+          "pointer": "/routes/3/machineBindings/0/legalMachineStateIds"
+        }
+      ],
+      "controlId": "POS-REFERENCE-ROUTE-SPECIFIC-FRESHNESS",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "purpose": "Home/FAQ remain static-safe while Profile admits the exact freshness/error/pending projection."
+    },
+    {
+      "assertions": [
+        {
+          "expected": {
+            "id": "persistence.restored",
+            "kind": "event"
+          },
+          "kind": "pointer-equals",
+          "pointer": "/edges/23/trigger"
+        },
+        {
+          "expected": "hazard-item.ready",
+          "kind": "pointer-equals",
+          "pointer": "/edges/23/toStateSelector/stateId"
+        },
+        {
+          "expected": "hazard-item.content-unavailable",
+          "kind": "pointer-equals",
+          "pointer": "/edges/24/toStateSelector/stateId"
+        }
+      ],
+      "controlId": "POS-HAZARD-RESTORATION",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "purpose": "Hazard restoration deterministically yields ready or content-unavailable from typed events."
+    },
+    {
+      "assertions": [
+        {
+          "expected": {
+            "operator": "equals",
+            "value": "online"
+          },
+          "kind": "pointer-equals",
+          "pointer": "/machineStates/68/selector/dimensions/connectivity"
+        },
+        {
+          "expected": "G-CORRECTION-OFFLINE",
+          "kind": "pointer-equals",
+          "pointer": "/edges/100/guards/0/guardId"
+        },
+        {
+          "expected": "G-NO-AUTO-SUBMIT",
+          "kind": "pointer-equals",
+          "pointer": "/edges/101/guards/1/guardId"
+        }
+      ],
+      "controlId": "POS-CORRECTION-CONNECTIVITY",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "purpose": "Submission is online-only while offline work saves locally and resumes without auto-submit."
+    },
+    {
+      "assertions": [
+        {
+          "expected": {
+            "id": "resource.initial-failure",
+            "kind": "event"
+          },
+          "kind": "pointer-equals",
+          "pointer": "/edges/119/trigger"
+        },
+        {
+          "expected": [
+            "exam-selector"
+          ],
+          "kind": "pointer-equals",
+          "pointer": "/edges/119/fromSelector/routeIds"
+        },
+        {
+          "expected": [
+            "exam-selector",
+            "repair-lab"
+          ],
+          "kind": "pointer-equals",
+          "pointer": "/edges/120/fromSelector/routeIds"
+        },
+        {
+          "expected": "home",
+          "kind": "pointer-excludes",
+          "pointer": "/edges/121/fromSelector/routeIds"
+        },
+        {
+          "expected": "faq",
+          "kind": "pointer-excludes",
+          "pointer": "/edges/121/fromSelector/routeIds"
+        }
+      ],
+      "controlId": "POS-INITIAL-FAILURE-DISPATCH",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "purpose": "Initial failure is one typed event with exact route-dispatch partitions and no Home/FAQ path."
+    },
+    {
+      "assertions": [
+        {
+          "expected": "G-RETAINED-PREVIEW-SAFE",
+          "kind": "pointer-equals",
+          "pointer": "/edges/74/guards/0/guardId"
+        },
+        {
+          "expected": "print-job.preview-ready",
+          "kind": "pointer-equals",
+          "pointer": "/edges/74/toStateSelector/stateId"
+        },
+        {
+          "expected": "print-job.generating-regeneration",
+          "kind": "pointer-equals",
+          "pointer": "/edges/73/toStateSelector/stateId"
+        },
+        {
+          "expected": [
+            "print-preview"
+          ],
+          "kind": "pointer-equals",
+          "pointer": "/machineStates/48/routeScope"
+        },
+        {
+          "expected": [
+            "questionProduct",
+            "keyExplanationProduct"
+          ],
+          "kind": "pointer-equals",
+          "pointer": "/edges/73/toStateSelector/preserve"
+        }
+      ],
+      "controlId": "POS-GUARDED-PRINT-RETAIN-REGENERATE",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "purpose": "Retain is evidence-guarded; regenerate remains on Print Preview and preserves both products."
+    },
+    {
+      "assertions": [
+        {
+          "expected": "route-map",
+          "kind": "pointer-equals",
+          "pointer": "/outcomes/1/payload/selector/kind"
+        },
+        {
+          "expected": "atlas-index",
+          "kind": "pointer-equals",
+          "pointer": "/outcomes/1/payload/selector/bySourceRouteId/atlas-tool"
+        },
+        {
+          "expected": {
+            "destinationStateId": "immediate-feedback.restoring",
+            "kind": "exact-route",
+            "routeId": "question-player"
+          },
+          "kind": "pointer-equals",
+          "pointer": "/outcomes/19/payload/selector"
+        },
+        {
+          "expected": "route-map",
+          "kind": "pointer-equals",
+          "pointer": "/outcomes/6/payload/selector/kind"
+        }
+      ],
+      "controlId": "POS-TYPED-NAVIGATION",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "purpose": "Navigation uses closed variants and exact authority route IDs, never prose selectors."
+    },
+    {
+      "assertions": [
+        {
+          "expected": "superseded",
+          "kind": "pointer-equals",
+          "pointer": "/machineStates/89/selector/dimensions/freshness/value"
+        },
+        {
+          "expected": "ready",
+          "kind": "pointer-equals",
+          "pointer": "/machineStates/90/selector/dimensions/availability/value"
+        },
+        {
+          "expected": [
+            "atlas-tool",
+            "procedure-detail"
+          ],
+          "kind": "pointer-equals",
+          "pointer": "/machineStates/91/routeScope"
+        },
+        {
+          "expected": "reference-document.ready-corrected",
+          "kind": "pointer-equals",
+          "pointer": "/edges/136/toStateSelector/stateId"
+        }
+      ],
+      "controlId": "POS-REFERENCE-FRESHNESS-CONSTRUCTIBILITY",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "purpose": "Superseded, retired, and corrected remain readable ready states with exact route-specific inbound edges."
+    },
+    {
+      "assertions": [
+        {
+          "expected": [
+            "selectedOptionId",
+            "draftAttemptId"
+          ],
+          "kind": "pointer-equals",
+          "pointer": "/edges/15/toStateSelector/preserve"
+        },
+        {
+          "expected": [
+            "selectedOptionId",
+            "draftAttemptId"
+          ],
+          "kind": "pointer-equals",
+          "pointer": "/edges/16/toStateSelector/preserve"
+        },
+        {
+          "expected": "draftAttemptId",
+          "kind": "pointer-equals",
+          "pointer": "/machineStates/19/selector/substates/2/substateId"
+        }
+      ],
+      "controlId": "POS-QUESTION-DRAFT-PRESERVATION",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "purpose": "Commit failure and retry retain selectedOptionId plus the same stable draftAttemptId."
+    },
+    {
+      "assertions": [
+        {
+          "expected": [
+            "answer",
+            "flag",
+            "position",
+            "sessionId",
+            "submissionId"
+          ],
+          "kind": "pointer-equals",
+          "pointer": "/edges/55/toStateSelector/preserve"
+        },
+        {
+          "expected": [
+            "answer",
+            "flag",
+            "position",
+            "sessionId",
+            "submissionId"
+          ],
+          "kind": "pointer-equals",
+          "pointer": "/edges/57/toStateSelector/preserve"
+        },
+        {
+          "expected": "submissionId",
+          "kind": "pointer-equals",
+          "pointer": "/machineStates/41/selector/substates/4/substateId"
+        }
+      ],
+      "controlId": "POS-SIMULATION-SUBMISSION-PRESERVATION",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "purpose": "Submission and reconciliation paths retain answer, flag, position, session ID, and submission ID."
+    },
+    {
+      "assertions": [
+        {
+          "expected": "state-contract",
+          "kind": "pointer-equals",
+          "pointer": "/sourceClauses/0/clauseKind"
+        },
+        {
+          "expected": {
+            "endInclusive": 15,
+            "startInclusive": 3
+          },
+          "kind": "pointer-equals",
+          "pointer": "/sourceClauses/0/lineRange"
+        },
+        {
+          "expected": "SCREEN_STATES",
+          "kind": "pointer-equals",
+          "pointer": "/sourceClauses/0/sourceId"
+        }
+      ],
+      "controlId": "POS-CLAUSE-DERIVATION",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "purpose": "Clause kind, line range, byte range, text, and hash are source-derived."
+    },
+    {
+      "assertions": [
+        {
+          "expected": 27,
+          "kind": "pointer-equals",
+          "pointer": "/implementationDrift/implementationRouteCount"
+        },
+        {
+          "expected": 9,
+          "kind": "pointer-equals",
+          "pointer": "/implementationDrift/missingRouteCount"
+        },
+        {
+          "expected": [],
+          "kind": "pointer-equals",
+          "pointer": "/implementationDrift/extraRouteIds"
+        }
+      ],
+      "controlId": "POS-LIVE-REGISTRY-DERIVATION",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "purpose": "Implementation drift is parsed from exact bound registry bytes and remains excluded from authority counts."
+    },
+    {
+      "assertions": [
+        {
+          "expected": "simulation.active",
+          "kind": "pointer-equals",
+          "pointer": "/edges/43/toStateSelector/stateId"
+        },
+        {
+          "expected": "home",
+          "kind": "pointer-equals",
+          "pointer": "/outcomes/1/payload/selector/bySourceRouteId/status"
+        }
+      ],
+      "controlId": "POS-ROUTE-TOTAL-TRANSITIONS",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "purpose": "Plain targets are route-legal and route-map outcomes cover every active emitting route."
+    },
+    {
+      "assertions": [
+        {
+          "expected": [
+            "J01",
+            "J02",
+            "J03",
+            "J04",
+            "J05",
+            "J06",
+            "J07",
+            "J08"
+          ],
+          "kind": "pointer-equals",
+          "pointer": "/journeyLens/journeyIds"
+        },
+        {
+          "expected": 8,
+          "kind": "pointer-equals",
+          "pointer": "/journeyLens/journeyCount"
+        }
+      ],
+      "controlId": "POS-JOURNEY-DERIVATION",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "purpose": "The separate lens count equals the exact unique J01-J08 IDs."
+    },
+    {
+      "assertions": [
+        {
+          "kind": "semantic-validator",
+          "targetId": "TRANSITION_CONSTRUCTIBILITY"
+        }
+      ],
+      "controlId": "POS-V4-ALL-TRANSITIONS-CONSTRUCTIBLE",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "purpose": "Every dynamic state target is fixed, preserved from all legal origins, or assigned from a declared trigger field."
+    },
+    {
+      "assertions": [
+        {
+          "kind": "semantic-validator",
+          "targetId": "CONSTRAINT_EXECUTION"
+        }
+      ],
+      "controlId": "POS-V4-CONSTRAINT-WITNESSES",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "purpose": "All nine constraints resolve and execute over legal/forbidden witnesses plus states/transitions."
+    },
+    {
+      "assertions": [
+        {
+          "kind": "semantic-validator",
+          "targetId": "EFFECT_LIFECYCLE"
+        }
+      ],
+      "controlId": "POS-V4-EFFECT-LIFECYCLE",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "purpose": "Focus and announcement effects are post-render, semantic, and acknowledged exactly once."
+    },
+    {
+      "assertions": [
+        {
+          "kind": "semantic-validator",
+          "targetId": "CONFIRMATION_DETERMINISM"
+        }
+      ],
+      "controlId": "POS-V4-HAZARD-ORIGINS",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "purpose": "Ready and marking zero-confirmation origins have constructible deterministic presentation and dismissal paths."
+    },
+    {
+      "assertions": [
+        {
+          "kind": "semantic-validator",
+          "targetId": "CORRECTION_PRESERVATION"
+        }
+      ],
+      "controlId": "POS-V4-CORRECTION-RETENTION",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "purpose": "Safe fields and receipt identities survive validation, failure, save, and resume."
+    },
+    {
+      "assertions": [
+        {
+          "kind": "semantic-validator",
+          "targetId": "PACK_GENERATION"
+        }
+      ],
+      "controlId": "POS-V4-PACK-DUAL-GENERATION",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "purpose": "Update states retain prior and candidate generations until atomic activation."
+    },
+    {
+      "assertions": [
+        {
+          "kind": "semantic-validator",
+          "targetId": "SELECTED_DIRECTION"
+        }
+      ],
+      "controlId": "POS-V4-SELECTED-DIRECTION",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "purpose": "NAV-CODEX-1 exact ordered rules and evidence fields derive from ROUTES."
+    },
+    {
+      "assertions": [
+        {
+          "kind": "semantic-validator",
+          "targetId": "MILESTONE_CLOSURE"
+        }
+      ],
+      "controlId": "POS-V4-MILESTONE-CLOSURE",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "purpose": "M0-M5 and every route milestone assignment derive from ROUTES."
+    },
+    {
+      "assertions": [
+        {
+          "expected": [
+            "selectedOptionId",
+            "draftAttemptId"
+          ],
+          "kind": "pointer-equals",
+          "pointer": "/edges/15/toStateSelector/preserve"
+        },
+        {
+          "expected": [
+            "selectedOptionId",
+            "draftAttemptId"
+          ],
+          "kind": "pointer-equals",
+          "pointer": "/edges/16/toStateSelector/preserve"
+        }
+      ],
+      "controlId": "POS-V4-QUESTION-SELECTION-ATTEMPT",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "purpose": "Question failure and retry retain selectedOptionId and the stable draftAttemptId."
+    },
+    {
+      "assertions": [
+        {
+          "expected": [
+            "attemptKind",
+            "previousEditableState",
+            "neutralMarkers",
+            "hazardAttemptId"
+          ],
+          "kind": "pointer-equals",
+          "pointer": "/edges/33/toStateSelector/preserve"
+        },
+        {
+          "expected": [
+            "attemptKind",
+            "previousEditableState",
+            "neutralMarkers",
+            "hazardAttemptId"
+          ],
+          "kind": "pointer-equals",
+          "pointer": "/edges/34/toStateSelector/preserve"
+        }
+      ],
+      "controlId": "POS-V4-HAZARD-FAILURE-IDENTITY",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "purpose": "Hazard failure and retry retain origin, marker set, attempt ID, and attempt kind."
+    },
+    {
+      "assertions": [
+        {
+          "expected": [
+            "answer",
+            "flag",
+            "position",
+            "sessionId",
+            "submissionId"
+          ],
+          "kind": "pointer-equals",
+          "pointer": "/edges/55/toStateSelector/preserve"
+        },
+        {
+          "expected": [
+            "answer",
+            "flag",
+            "position",
+            "sessionId",
+            "submissionId"
+          ],
+          "kind": "pointer-equals",
+          "pointer": "/edges/57/toStateSelector/preserve"
+        }
+      ],
+      "controlId": "POS-V4-SIMULATION-FAILURE-IDENTITY",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "purpose": "Simulation submit and reconcile failures retain answer, flag, position, session, and submission IDs."
+    },
+    {
+      "assertions": [
+        {
+          "expected": [
+            "safeFields"
+          ],
+          "kind": "pointer-equals",
+          "pointer": "/edges/94/toStateSelector/preserve"
+        },
+        {
+          "expected": [
+            "safeFields"
+          ],
+          "kind": "pointer-equals",
+          "pointer": "/edges/96/toStateSelector/preserve"
+        },
+        {
+          "expected": [
+            "safeFields",
+            "clientReceiptId"
+          ],
+          "kind": "pointer-equals",
+          "pointer": "/edges/99/toStateSelector/preserve"
+        },
+        {
+          "expected": [
+            "safeFields"
+          ],
+          "kind": "pointer-equals",
+          "pointer": "/edges/100/toStateSelector/preserve"
+        },
+        {
+          "expected": [
+            "safeFields"
+          ],
+          "kind": "pointer-equals",
+          "pointer": "/edges/101/toStateSelector/preserve"
+        }
+      ],
+      "controlId": "POS-V4-CORRECTION-ALL-RETENTION-FLOWS",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "purpose": "Correction validate, invalid, failure, save, and resume paths preserve their safe fields and receipt IDs."
+    },
+    {
+      "assertions": [
+        {
+          "expected": [
+            "priorActiveGeneration",
+            "candidateGeneration"
+          ],
+          "kind": "pointer-equals",
+          "pointer": "/edges/89/toStateSelector/preserve"
+        },
+        {
+          "expected": [
+            "priorActiveGeneration",
+            "candidateGeneration"
+          ],
+          "kind": "pointer-equals",
+          "pointer": "/edges/81/toStateSelector/preserve"
+        },
+        {
+          "expected": [
+            "priorActiveGeneration",
+            "candidateGeneration"
+          ],
+          "kind": "pointer-equals",
+          "pointer": "/edges/82/toStateSelector/preserve"
+        },
+        {
+          "expected": [
+            "priorActiveGeneration",
+            "candidateGeneration"
+          ],
+          "kind": "pointer-equals",
+          "pointer": "/edges/83/toStateSelector/preserve"
+        },
+        {
+          "expected": [
+            "priorActiveGeneration",
+            "candidateGeneration"
+          ],
+          "kind": "pointer-equals",
+          "pointer": "/edges/84/toStateSelector/preserve"
+        }
+      ],
+      "controlId": "POS-V4-PACK-ALL-DUAL-GENERATION-PHASES",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "purpose": "Pack update, download, verify, quarantine, failure, and activation paths carry prior/candidate generations until promotion."
+    }
+  ]
+}

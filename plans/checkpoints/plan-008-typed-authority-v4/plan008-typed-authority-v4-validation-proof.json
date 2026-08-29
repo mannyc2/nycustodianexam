@@ -1,0 +1,2809 @@
+{
+  "atomicWriteControl": {
+    "actualExitCode": 0,
+    "actualResult": "accept",
+    "caseId": "ATOMIC-WRITE-REOPEN-HASH",
+    "expectedExitCode": 0,
+    "expectedHashes": {
+      "bundle": "3a9e3c9fd1378006438436eecaa1325613f874323e75a9c78dd20a6ef65081cd",
+      "proof": "2efd4f505bc95e9cdac15e2dc9b32ea0d8b5434302cec6fbd471f271f64b0d60",
+      "report": "5624ee6cc26e88c65ff7e43a8793f4120328f6050660a292116f11076ed9d7ff"
+    },
+    "expectedResult": "accept",
+    "reopenedHashes": {
+      "bundle": "3a9e3c9fd1378006438436eecaa1325613f874323e75a9c78dd20a6ef65081cd",
+      "proof": "2efd4f505bc95e9cdac15e2dc9b32ea0d8b5434302cec6fbd471f271f64b0d60",
+      "report": "5624ee6cc26e88c65ff7e43a8793f4120328f6050660a292116f11076ed9d7ff"
+    }
+  },
+  "baseline": {
+    "actualExitCode": 0,
+    "actualResult": "accept",
+    "derivedCounts": {
+      "actionCount": 55,
+      "dimensionCount": 6,
+      "edgeCount": 165,
+      "effectBindingCount": 8,
+      "effectTypeCount": 4,
+      "eventCount": 58,
+      "globalTransitionRuleCount": 9,
+      "implementationMissingRouteCountExcluded": 9,
+      "implementationRegistryCountExcluded": 27,
+      "interpretationCount": 30,
+      "invalidCombinationConstraintCount": 9,
+      "journeyLensCountExcluded": 8,
+      "machineCount": 10,
+      "machineStateCount": 92,
+      "milestoneCount": 6,
+      "mutationCount": 69,
+      "navigationConstructionCount": 9,
+      "outcomeCount": 22,
+      "positiveControlCount": 21,
+      "presentationEffectCount": 8,
+      "registryRouteCount": 32,
+      "routeCount": 36,
+      "selectedDirectionRuleCount": 11,
+      "sourceClauseCount": 129,
+      "sourceCount": 2,
+      "spokeRouteCount": 4,
+      "totalConstraintCount": 18,
+      "validationRuleCount": 28
+    },
+    "derivedRoots": {
+      "actionsSha256": "334e077df97d9a3667ad4fda1df53e0906ee0a516270d30b65628b95e5591690",
+      "constraintsSha256": "ce5e4a52737ef7e99889bf63da3014716e514acc1305dea36211c1c270c8a0ed",
+      "dimensionsSha256": "6356d4dd412eb9f980416f960909d69570ca4cd485c7dfd03069fd87c0d24984",
+      "edgesSha256": "9647c55c8ff2b78079da717a0fe7e95e33b28cd050bb731efaf6801599e1c2ff",
+      "effectBindingsSha256": "e2f9339c57be728a806a1cb1773e2f69738f4af12930a3cb3102a981bba25e5f",
+      "effectTypesSha256": "c4d85e3b947cabdd9ebdef6316c264da2987e80a5645d0e24bf571d696cf5a55",
+      "eventsSha256": "4929761d85fe87067a2ecc1c56f8990be5e64e0d4b9a0d02f5e984cfbe2656cf",
+      "implementationDriftSha256": "672cf940dc9115f0f61921cfdeca7cc7ee5d204e7d1e7dd3d6c976bc77d0d620",
+      "implementationMilestonesSha256": "cf0275b5868baf955e783a96e71cc9417e10014a854e7b87e3b87c8c9cbdba82",
+      "interpretationsSha256": "987fc60cfb61e5a48dd97f66c06106992a1b70df49d807ec35f3d30e326d9bb5",
+      "journeyLensSha256": "e085380640f10b71225269f0386f4c4da4fe8c5baf64259fc63bd2f81f1ac958",
+      "machineStatesSha256": "1e57eb0a4024e68111da4ec47e6d92e9a9fb3f9ed9f4420b8fa7141a602a6a44",
+      "machinesSha256": "14134ea068ff841dad3c85c05dd26318dd7d13c9711f38fdc1c9e62dee5ade6e",
+      "metadataSha256": "bc2a3c2146a3d3deea3db85000be33c841756783e57377958d2ff1f1f235509a",
+      "navigationConstructionsSha256": "956b4f23a132db6e566e4da8a2a0ea96017805d8697aa8c4d26e9567098b3af4",
+      "outcomesSha256": "e57c38b1e16f9282b0db8b8ffce5710d3baad1a1de95e7742c48d729b0920501",
+      "presentationEffectsSha256": "b66977ae8764e747255e54fb6171b9192ae02048329f78ef317bc76b1fbcf925",
+      "routesSha256": "fb637cad44d868fb37fb0794930ac714fd5f27760e1ae40ccd3b04e43b02cb62",
+      "selectedDirectionSha256": "4152b70e95538118ed458f536e2a2b9842d2e5e3372a73632482bf0d10718789",
+      "snapshotSchemaSha256": "c376cecdbf89de5a7aaf33a9127d0ff43768ad60ffe7028e1ea71668bbc43ae7",
+      "sourceClausesSha256": "6ebabc8d8e2204a3d960894415b2dbfebb9471832972a3e64dc499c55a042d4f",
+      "sourcesSha256": "3f38b979abed6de340313b24a592a30bfd0bf6a951d16502801bd1825fe9dbf7",
+      "validationSha256": "544d96b60b81c206fc9f0e7005166c48a870e6cefee85764d148eee39afb4f3e"
+    },
+    "expectedExitCode": 0,
+    "expectedResult": "accept",
+    "resultSha256": "8c2434f3ae938a607307b6ebff23f1299bff7f5790af776a7eba735183d7267b"
+  },
+  "bindings": {
+    "authoritySha256": "fd86e3d2687445a826ce3f024d36de1d7817c651abb1c6ef5d4915bf42d69382",
+    "fixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+    "oracleSha256": "3fdf16b2dce61a22405415237b95aeec9013660d9ae699a867c81af126907fbe",
+    "sources": [
+      {
+        "gitBlobSha": "c2d71d1f786efe99421ee5eb5167cbd3cd426023",
+        "repoRelativePath": "product/SCREEN_STATES.md",
+        "sha256": "54b7b18280cbc8a6ec3300c424ee412e4fcb9c4d4cb773ecd4af7adc63c22987",
+        "sourceId": "SCREEN_STATES"
+      },
+      {
+        "gitBlobSha": "4c40d047af8ba8c34bd4a7a1ff40da990b20add8",
+        "repoRelativePath": "product/ROUTES.md",
+        "sha256": "501230759f15e6ccd13e1a49d24db1e3ee94d7a52e80634490c7ff7b08c24e98",
+        "sourceId": "ROUTES"
+      }
+    ]
+  },
+  "cliAttacks": [
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "CLI_ARGS",
+      "caseId": "CLI-SPAWN-DUPLICATE-ARG",
+      "envelopeSha256": "54fe2b6de835a667bb327768145474b2e174bf5b83313d80e772e112d9662fd5",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "CLI_ARGS",
+      "protectedArtifactsUnchanged": true,
+      "stderrSha256": "ba6bd17e43710161efad8be344ffaa2a9ccb690b7a976a483b949cbb377c9bcc",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "CLI_ARGS",
+      "caseId": "CLI-SPAWN-UNKNOWN-ARG",
+      "envelopeSha256": "54fe2b6de835a667bb327768145474b2e174bf5b83313d80e772e112d9662fd5",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "CLI_ARGS",
+      "protectedArtifactsUnchanged": true,
+      "stderrSha256": "ba6bd17e43710161efad8be344ffaa2a9ccb690b7a976a483b949cbb377c9bcc",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "CLI_ARGS",
+      "caseId": "CLI-SPAWN-MISSING-ARG",
+      "envelopeSha256": "54fe2b6de835a667bb327768145474b2e174bf5b83313d80e772e112d9662fd5",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "CLI_ARGS",
+      "protectedArtifactsUnchanged": true,
+      "stderrSha256": "ba6bd17e43710161efad8be344ffaa2a9ccb690b7a976a483b949cbb377c9bcc",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "INPUT_FILE",
+      "caseId": "CLI-SPAWN-MISSING-INPUT",
+      "envelopeSha256": "fcff69836eb1bd435ccb6aa6dc9305414de698c4a6185483d33a224f3fa6ed2f",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "INPUT_FILE",
+      "protectedArtifactsUnchanged": true,
+      "stderrSha256": "d8589f0db07132cacbfb9e8c47a4ea0167b365ddbb562de0a5306755f5e9d8e5",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "INPUT_FILE",
+      "caseId": "CLI-SPAWN-NONREGULAR-INPUT",
+      "envelopeSha256": "fcff69836eb1bd435ccb6aa6dc9305414de698c4a6185483d33a224f3fa6ed2f",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "INPUT_FILE",
+      "protectedArtifactsUnchanged": true,
+      "stderrSha256": "d8589f0db07132cacbfb9e8c47a4ea0167b365ddbb562de0a5306755f5e9d8e5",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "INPUT_SYMLINK",
+      "caseId": "CLI-SPAWN-INPUT-SYMLINK",
+      "envelopeSha256": "4108589539cc06ea52e5ff34e79a025a97ae9295863ff7472456ed6b93b6d8e4",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "INPUT_SYMLINK",
+      "protectedArtifactsUnchanged": true,
+      "stderrSha256": "2eca24659c905ab4d769b03344e5dc0cdf04612cd727c50ef7af7eeeb3362010",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "PATH_ALIAS",
+      "caseId": "CLI-SPAWN-INPUT-HARDLINK-ALIAS",
+      "envelopeSha256": "2fa16d611d9703550edd62a82e3bcda1d5ab06c5d7e0c6c4f3acba94f013980d",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "PATH_ALIAS",
+      "protectedArtifactsUnchanged": true,
+      "stderrSha256": "391ca0ad5ad1695ec8049c337afca5809aa1bd5b83152540d41620facf53b2da",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "PATH_ALIAS",
+      "caseId": "CLI-SPAWN-LEXICAL-OUTPUT-ALIAS",
+      "envelopeSha256": "2fa16d611d9703550edd62a82e3bcda1d5ab06c5d7e0c6c4f3acba94f013980d",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "PATH_ALIAS",
+      "protectedArtifactsUnchanged": true,
+      "stderrSha256": "391ca0ad5ad1695ec8049c337afca5809aa1bd5b83152540d41620facf53b2da",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "PATH_ALIAS",
+      "caseId": "CLI-SPAWN-HARDLINK-OUTPUT-ALIAS",
+      "envelopeSha256": "2fa16d611d9703550edd62a82e3bcda1d5ab06c5d7e0c6c4f3acba94f013980d",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "PATH_ALIAS",
+      "protectedArtifactsUnchanged": true,
+      "stderrSha256": "391ca0ad5ad1695ec8049c337afca5809aa1bd5b83152540d41620facf53b2da",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "OUTPUT_SYMLINK",
+      "caseId": "CLI-SPAWN-OUTPUT-SYMLINK",
+      "envelopeSha256": "33c1ae69da01b395a1a1e19009187b03a6ad2a7eeb2ad7ad9c1a2a84632562cd",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "OUTPUT_SYMLINK",
+      "protectedArtifactsUnchanged": true,
+      "stderrSha256": "8142dc6c01cfc774433883dcd6ccf965bfee4dc9009b573b51b089c1c67244f0",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "PATH_ALIAS",
+      "caseId": "CLI-SPAWN-DUPLICATE-OUTPUT",
+      "envelopeSha256": "2fa16d611d9703550edd62a82e3bcda1d5ab06c5d7e0c6c4f3acba94f013980d",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "PATH_ALIAS",
+      "protectedArtifactsUnchanged": true,
+      "stderrSha256": "391ca0ad5ad1695ec8049c337afca5809aa1bd5b83152540d41620facf53b2da",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "PATH_ALIAS",
+      "caseId": "CLI-SPAWN-REALPATH-OUTPUT-ALIAS",
+      "envelopeSha256": "2fa16d611d9703550edd62a82e3bcda1d5ab06c5d7e0c6c4f3acba94f013980d",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "PATH_ALIAS",
+      "protectedArtifactsUnchanged": true,
+      "stderrSha256": "391ca0ad5ad1695ec8049c337afca5809aa1bd5b83152540d41620facf53b2da",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "SAFE_PATH",
+      "caseId": "CLI-SPAWN-SOURCE-SYMLINK-ESCAPE",
+      "envelopeSha256": "6b26bc28e478f8e707721ac59813f9d7da8b74dcdc4165a73887910f04249d1e",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SAFE_PATH",
+      "protectedArtifactsUnchanged": true,
+      "stderrSha256": "419d5a61801997683bcba374333754850193d05ed502ccd9d1e1e841dfb6d766",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "invocation": {
+    "argv": [
+      "<validator>",
+      "suite",
+      "--authority",
+      "<authority>",
+      "--fixture",
+      "<accepted-fixture>",
+      "--oracle",
+      "<validator-oracle>",
+      "--proof-out",
+      "<proof>",
+      "--report-out",
+      "<report>",
+      "--bundle-out",
+      "<bundle>"
+    ],
+    "kind": "portable-invocation-descriptor",
+    "program": "node",
+    "workingDirectory": "discovered-git-root"
+  },
+  "mutations": [
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "ROUTE_SET",
+      "diagnostic": "routeId family differs",
+      "diagnosticSha256": "df77bae08f8fd57646cec0b9b39c2fede1ec018cb8df171410e0bb5bebda6c1c",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "ROUTE_SET",
+      "mutatedAuthoritySha256": "f615f9e7d79e01ab54bec18f48dfb3be426c9839758fb4f8ae91f24cdbc65ebc",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-ROUTE-SAME-CARDINALITY-REPLACEMENT",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/routes/34/routeId",
+          "value": "about-shadow"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "ROUTE_SET",
+      "diagnostic": "routeId family differs",
+      "diagnosticSha256": "df77bae08f8fd57646cec0b9b39c2fede1ec018cb8df171410e0bb5bebda6c1c",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "ROUTE_SET",
+      "mutatedAuthoritySha256": "916a81672234fa33a1f0baff9bab07a1c94a19e5e776eaa334b4476fe48c0933",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-ROUTE-UNICODE-REPLACEMENT",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/routes/34/routeId",
+          "value": "about​"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "DIMENSION_SET",
+      "diagnostic": "dimensionId family differs",
+      "diagnosticSha256": "892f5aac78ec417188b65d4b6bae59e9bfac9343811945fddbb8626ee548ffc8",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "DIMENSION_SET",
+      "mutatedAuthoritySha256": "630a2fdf5d2b9d4a7af2e35e7d468e2e7da8e7c2c999bae791e2ab668f75cb8b",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-DIMENSION-DELETE",
+      "operations": [
+        {
+          "op": "remove",
+          "pointer": "/dimensions/5"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "DIMENSION_SET",
+      "diagnostic": "dimensionId family differs",
+      "diagnosticSha256": "892f5aac78ec417188b65d4b6bae59e9bfac9343811945fddbb8626ee548ffc8",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "DIMENSION_SET",
+      "mutatedAuthoritySha256": "4c7bc106d1d1d4b8f29423c95ab6ce33346341dd6b003d3de6a63ad10e24b08e",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-DIMENSION-REPLACE",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/dimensions/5/dimensionId",
+          "value": "recency"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "LITERAL_PIPE",
+      "diagnostic": "literal pipe preserved as a legal value",
+      "diagnosticSha256": "59f5a2496df72dd1d376054cd4f3a520939fe1ba57d56281de8c827b0d7ede24",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "LITERAL_PIPE",
+      "mutatedAuthoritySha256": "e972b54e68e0751553654af189f3a4aee8f8d5dbf31ab4e694921ed776bece2c",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-LITERAL-PIPE-AS-STATE",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/machineStates/37/selector/substates/0/legalValues/0",
+          "value": "unanswered | recorded"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "BIDIRECTIONAL_CLOSURE",
+      "diagnostic": "bidirectional edge is missing",
+      "diagnosticSha256": "7da8e7ba3b417bf26eedf8c0845b90f80f9e413449d66fc7de84b62f22fa707a",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "BIDIRECTIONAL_CLOSURE",
+      "mutatedAuthoritySha256": "76003e86a76b5b7d6e9103ecd9479cc498e0b6f243f44de1f403faa85ec627cb",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-REVERSE-BIDIRECTIONAL-DELETE",
+      "operations": [
+        {
+          "op": "remove",
+          "pointer": "/edges/44"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "PLUS_PRODUCT",
+      "diagnostic": "plus notation is not an orthogonal product",
+      "diagnosticSha256": "d434fc355d852da70472e3d8dae282839a173ec4f635fc320ad87a615c281b24",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "PLUS_PRODUCT",
+      "mutatedAuthoritySha256": "e6f896db085dc160cbdf0237c45b17c0b5028afcc0bc907788141d5d800f1539",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-PLUS-AS-OR-STATE",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/machineStates/19/selector/dimensions/interaction/value",
+          "value": "selected + recoverable-error"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "PARENTHETICAL_PSEUDO_STATE",
+      "diagnostic": "parenthetical pseudo-state",
+      "diagnosticSha256": "bbf4a4259fda4755a6a6b0e2c044e0b447375205b6036b3b0bebbc712111e71e",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "PARENTHETICAL_PSEUDO_STATE",
+      "mutatedAuthoritySha256": "41d5fb91ec93e8eb9cc06e09d0363b6f8aaf5f800a93ab255c55373ccaa4458c",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-PARENTHETICAL-PSEUDO-STATE",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/machineStates/19/stateName",
+          "value": "selected (recoverable-error)"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "SAFE_PATH",
+      "diagnostic": "unsafe repository-relative path",
+      "diagnosticSha256": "8762c6de26c7763ef0a8401edfcfcfdd0f50759e231ed18d3d23ca835fce0f00",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SAFE_PATH",
+      "mutatedAuthoritySha256": "d9f58397a30decb112157fd2034227666d6f2436e0af4437eb791ed7cfd0b3af",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-SOURCE-PATH",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/sources/0/repoRelativePath",
+          "value": "../private-host/escape/SCREEN_STATES.md"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "SOURCE_BLOB",
+      "diagnostic": "source Git blob differs",
+      "diagnosticSha256": "67028de2c45b8df7db4738df7524d7ea05ee36620e8f1a60c630568469ab1ab5",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SOURCE_BLOB",
+      "mutatedAuthoritySha256": "b0220c3eb36272b3fab04ea214d8620284388fa16014d44485602b4cc5656baf",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-SOURCE-BLOB",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/sources/0/gitBlobSha",
+          "value": "0000000000000000000000000000000000000000"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "SOURCE_LF",
+      "diagnostic": "source encoding declaration differs",
+      "diagnosticSha256": "8adf937a8d4503f8ec18915349e5acf4fe02fa25115ea430830adf2f70c70efc",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SOURCE_LF",
+      "mutatedAuthoritySha256": "dde91fe7963c1b4ca7a1788fbff74dfd8147e5d34135317d71774f89afb88f32",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-SOURCE-LF",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/sources/0/newline",
+          "value": "CRLF"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "SOURCE_CLAUSE_SET",
+      "diagnostic": "source clause set/order differs",
+      "diagnosticSha256": "296f4a0c0af1d3ff0f8c95f2336143298eb84cf3749a85319d98f7c40e3f71c2",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SOURCE_CLAUSE_SET",
+      "mutatedAuthoritySha256": "63ba85291dad3ef5aad580647a0c797f4835b4384d898531bcc439350f0435bd",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-MISSING-SOURCE-CLAUSE",
+      "operations": [
+        {
+          "op": "remove",
+          "pointer": "/sourceClauses/127"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "INTERPRETATION_ID_SET",
+      "diagnostic": "interpretationId family differs",
+      "diagnosticSha256": "a4fd9eb16fa578a51eb5d2a85c4446d94a302cef6bbf29eabb0313a767487522",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "INTERPRETATION_ID_SET",
+      "mutatedAuthoritySha256": "9cce3aba26402645ae5896d47c0fa5b409ea434c01679c599a88903c12bf7ea9",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-CO-MUTATED-COUNT-AND-ROOT",
+      "operations": [
+        {
+          "op": "remove",
+          "pointer": "/interpretations/26"
+        },
+        {
+          "op": "replace",
+          "pointer": "/counts/interpretationCount",
+          "value": 26
+        },
+        {
+          "op": "replace",
+          "pointer": "/integrityRoots/interpretationsSha256",
+          "value": "f0b8e6f264c902bd90cf9f8f382ef012750a1ddbf0703f4be268c225e7cc137a"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "OUTCOME_TRANSITION_SMUGGLING",
+      "diagnostic": "confirmation payload contains a state continuation",
+      "diagnosticSha256": "2ea8dabd7e044dddf7ab2cf7e165f38c534c32a70430202131b343168a07bea2",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "OUTCOME_TRANSITION_SMUGGLING",
+      "mutatedAuthoritySha256": "8d7d32a2c117063fb50416baa2f27dd779155376b61e734b95a31dcbfaebe8f4",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-HAZARD-CONFIRMATION-TRANSITION-SMUGGLING",
+      "operations": [
+        {
+          "op": "add",
+          "pointer": "/outcomes/7/payload/continuationStateId",
+          "value": "hazard-item.confirm-zero"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "OUTCOME_TRANSITION_SMUGGLING",
+      "diagnostic": "confirmation payload contains a state continuation",
+      "diagnosticSha256": "2ea8dabd7e044dddf7ab2cf7e165f38c534c32a70430202131b343168a07bea2",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "OUTCOME_TRANSITION_SMUGGLING",
+      "mutatedAuthoritySha256": "e8713a973add5533c74746b7da56c2ea508bf637096d03245ebe6f5cbfa6a7f5",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-SIMULATION-CONFIRMATION-TRANSITION-SMUGGLING",
+      "operations": [
+        {
+          "op": "add",
+          "pointer": "/outcomes/10/payload/continuationStateId",
+          "value": "simulation.final-confirmation"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "OUTCOME_TRANSITION_SMUGGLING",
+      "diagnostic": "confirmation payload contains a state continuation",
+      "diagnosticSha256": "2ea8dabd7e044dddf7ab2cf7e165f38c534c32a70430202131b343168a07bea2",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "OUTCOME_TRANSITION_SMUGGLING",
+      "mutatedAuthoritySha256": "798e4e7eca06d81c8cc212b19932806ade08509b4a4dbcf38321f4d04a0b8c7a",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-DATA-CONFIRMATION-TRANSITION-SMUGGLING",
+      "operations": [
+        {
+          "op": "add",
+          "pointer": "/outcomes/15/payload/continuationStateId",
+          "value": "data-operation.committing"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "OUTCOME_TRANSITION_SMUGGLING",
+      "diagnostic": "confirmation payload contains a state continuation",
+      "diagnosticSha256": "2ea8dabd7e044dddf7ab2cf7e165f38c534c32a70430202131b343168a07bea2",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "OUTCOME_TRANSITION_SMUGGLING",
+      "mutatedAuthoritySha256": "e2d7c77b966cf87e24625aee7424ef8938ac5fcf52a338431a19b924fe5edff7",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-PACK-REMOVAL-DUAL-CONTINUATION",
+      "operations": [
+        {
+          "op": "add",
+          "pointer": "/outcomes/14/payload/continuationStateId",
+          "value": "offline-pack.removing"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "NAV_SELECTOR",
+      "diagnostic": "navigation selector tag differs",
+      "diagnosticSha256": "064d47e788e7e6f342ea4850e08c9db02d5994520270ad20fbf5d72e1921f83b",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "NAV_SELECTOR",
+      "mutatedAuthoritySha256": "7e74adf9b4969809bc7673bb4c7ec3725fb6e76791cc6dd52bbf098a3649395a",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-FREE-PROSE-NAVIGATION-SELECTOR",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/outcomes/1/payload/selector",
+          "value": "nearest cached public parent"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "STATUS_TERMINAL",
+      "diagnostic": "terminal state projection differs",
+      "diagnosticSha256": "94b61a6d115e98b83e57ad97cf96c31ceca695a238bfa6db9b341bc2fa4d484d",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "STATUS_TERMINAL",
+      "mutatedAuthoritySha256": "38ad8e11205af39473aaae3bf0f9beacebd3f3d4ba2a2143635258b51fc6cf65",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-STATUS-TERMINAL-DIMENSION-LEAK",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/machineStates/84/selector/dimensions/availability",
+          "value": {
+            "operator": "anyLegalValue"
+          }
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "REFERENCE_PROJECTION",
+      "diagnostic": "reference projection differs",
+      "diagnosticSha256": "ee21cd9acc698d0e2ca984a91776504dfbc2406ea6d00fec1945d827be62bad4",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "REFERENCE_PROJECTION",
+      "mutatedAuthoritySha256": "f2e81bf554702047f74e4d4f1873f376dbd9585fe579d8b5ae5e50a2abdaa2c6",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-HOME-REFERENCE-ERROR-PROJECTION",
+      "operations": [
+        {
+          "op": "add",
+          "pointer": "/routes/0/machineBindings/0/legalMachineStateIds/-",
+          "value": "reference-document.recoverable-error"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "DATA_HISTORICAL_INVARIANT",
+      "diagnostic": "projection-rebuild invariant differs",
+      "diagnosticSha256": "5370f7cba13b9e0071a90a2a3cd0ce55a79d245fc1fe9967302f6effb5e1b976",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "DATA_HISTORICAL_INVARIANT",
+      "mutatedAuthoritySha256": "7ed1ced0fc4b91e6f27200c6d3b34e651c7517888bcf76c603ef9542ccd70c3d",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-DATA-HISTORICAL-INVARIANT-DELETE",
+      "operations": [
+        {
+          "op": "remove",
+          "pointer": "/machineStates/73/context/historicalCorrectnessInvariant"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "ROUTE_SET",
+      "diagnostic": "routeId family differs",
+      "diagnosticSha256": "df77bae08f8fd57646cec0b9b39c2fede1ec018cb8df171410e0bb5bebda6c1c",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "ROUTE_SET",
+      "mutatedAuthoritySha256": "327d936438577a84584752a30a7ea8352961a6e5fb90fceacb4bb3558034eb3c",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-ROUTE-DELETE",
+      "operations": [
+        {
+          "op": "remove",
+          "pointer": "/routes/34"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "ROUTE_SET",
+      "diagnostic": "routeId family differs",
+      "diagnosticSha256": "df77bae08f8fd57646cec0b9b39c2fede1ec018cb8df171410e0bb5bebda6c1c",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "ROUTE_SET",
+      "mutatedAuthoritySha256": "1b6190cbed37d729e251c6bbd2e8381610455c70eeb08a517da99bd3353ef7bf",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-ROUTE-DUPLICATE",
+      "operations": [
+        {
+          "op": "add",
+          "pointer": "/routes/-",
+          "value": {
+            "familySelector": {
+              "familyNumber": 1,
+              "kind": "destination-family",
+              "routeId": "home"
+            },
+            "legalStateSelector": {
+              "dimensionAllowlist": {
+                "availability": [
+                  "ready",
+                  "offline-stale"
+                ],
+                "freshness": [
+                  "current",
+                  "stale"
+                ]
+              },
+              "interpretationPolicy": "dimension values and bound machine states form a product; omission from both is illegal",
+              "machineBindingIds": [
+                "BIND-HOME-REFERENCE-DOCUMENT"
+              ]
+            },
+            "machineBindings": [
+              {
+                "bindingId": "BIND-HOME-REFERENCE-DOCUMENT",
+                "legalMachineStateIds": [
+                  "reference-document.ready-current",
+                  "reference-document.ready-stale",
+                  "reference-document.offline-stale"
+                ],
+                "machineId": "reference-document",
+                "qualification": null,
+                "sourceClauseIds": [
+                  "SS-ROUTE-01",
+                  "RT-ROUTE-01",
+                  "RT-AUTHORITY-SCOPE"
+                ],
+                "variant": "document"
+              }
+            ],
+            "navigationShellSelector": {
+              "authority": "must-not-infer-standard-complement",
+              "shell": "non-player-unspecified"
+            },
+            "parentNavigation": [
+              "global root"
+            ],
+            "pathPatterns": [
+              {
+                "islandName": null,
+                "parameterNames": [],
+                "pattern": "/",
+                "renderOwner": "static",
+                "searchPolicy": "index"
+              }
+            ],
+            "routeId": "home",
+            "routeKind": "destination-family-route",
+            "sourceClauseIds": [
+              "SS-ROUTE-01",
+              "RT-ROUTE-01",
+              "RT-AUTHORITY-SCOPE"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "DIMENSION_SET",
+      "diagnostic": "dimensionId family differs",
+      "diagnosticSha256": "892f5aac78ec417188b65d4b6bae59e9bfac9343811945fddbb8626ee548ffc8",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "DIMENSION_SET",
+      "mutatedAuthoritySha256": "7e880447f831e0262c7269d2b7abf56484bb6b65d15caafabacc90c2c756d13d",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-DIMENSION-ADD",
+      "operations": [
+        {
+          "op": "add",
+          "pointer": "/dimensions/-",
+          "value": {
+            "dimensionId": "recency",
+            "legalValues": [
+              "current",
+              "stale",
+              "superseded",
+              "retired",
+              "corrected"
+            ],
+            "meaning": "Status of the exact profile/content revision represented.",
+            "ownership": "screen-product",
+            "sourceClauseIds": [
+              "SS-DIM-PRODUCT",
+              "SS-DIM-FRESHNESS",
+              "SS-GLOBAL-05"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "STATE_ID_SET",
+      "diagnostic": "machineStateId family differs",
+      "diagnosticSha256": "b306aa0c5fde09661bfcfb37dd8ed21e5dc010758e6349a9f9f54012615a207b",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "STATE_ID_SET",
+      "mutatedAuthoritySha256": "e73ee22eda89d2ce0c1727941723c1f529508146022052112732045767565f0c",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-STATE-FAMILY-DELETE",
+      "operations": [
+        {
+          "op": "remove",
+          "pointer": "/machineStates/91"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "EDGE_ID_SET",
+      "diagnostic": "edgeId family differs",
+      "diagnosticSha256": "b06e4195e676a97625d06964238167e87fa7ac67576cf15f669e6fec166fc549",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "EDGE_ID_SET",
+      "mutatedAuthoritySha256": "6c0a69f2f33356f4b1de1238b04ab63bcc0b9e96e83cd98e3000b6ac4f3d68b5",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-EDGE-FAMILY-DELETE",
+      "operations": [
+        {
+          "op": "remove",
+          "pointer": "/edges/136"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "EDGE_ID_SET",
+      "diagnostic": "edgeId family differs",
+      "diagnosticSha256": "b06e4195e676a97625d06964238167e87fa7ac67576cf15f669e6fec166fc549",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "EDGE_ID_SET",
+      "mutatedAuthoritySha256": "5b2741768f10faa5241bccaa92fcc05a1dec3503597e1c070635681814bb9ff0",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-DUPLICATE-COMMIT-COMPLETE-EDGE",
+      "operations": [
+        {
+          "op": "add",
+          "pointer": "/edges/-",
+          "value": {
+            "edgeId": "E-DATA-011-COMMIT-COMPLETE-DUPLICATE",
+            "fromSelector": {
+              "kind": "machine-state",
+              "machineId": "data-operation",
+              "routeIds": [
+                "settings"
+              ],
+              "stateIds": [
+                "data-operation.committing"
+              ],
+              "substate": null
+            },
+            "guards": [],
+            "machineId": "data-operation",
+            "sourceClauseIds": [
+              "SS-DATA-COMMIT-COMPLETE-202",
+              "SS-DATA-COMMIT-COMPLETE-204",
+              "SS-GLOBAL-03",
+              "SS-DATA-SEMANTICS"
+            ],
+            "toStateSelector": {
+              "preserve": [
+                "operationKind"
+              ],
+              "stateId": "data-operation.complete",
+              "substateAssignments": null
+            },
+            "trigger": {
+              "id": "data.commit-complete",
+              "kind": "event"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "SOURCE_CLAUSE_SET",
+      "diagnostic": "source clause set/order differs",
+      "diagnosticSha256": "296f4a0c0af1d3ff0f8c95f2336143298eb84cf3749a85319d98f7c40e3f71c2",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SOURCE_CLAUSE_SET",
+      "mutatedAuthoritySha256": "9029aec32cccf86f9307fd0a7c793e8a8191d97bb7001a2ad5f0a6a558b40f42",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-MISSING-GLOBAL-SOURCE-CLAUSE",
+      "operations": [
+        {
+          "op": "remove",
+          "pointer": "/sourceClauses/26"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "CLAUSE_DERIVATION",
+      "diagnostic": "source-derived clause differs SS-CONTRACT",
+      "diagnosticSha256": "8fb8350fb887e2df82794199c508cb2a9b14ad28e42c4e2968634b0db04aefbe",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "CLAUSE_DERIVATION",
+      "mutatedAuthoritySha256": "0de9d2a26102a9bca02aff7129af0ff5873836a4062b93e29daa31bc7eb105dc",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-CLAUSE-LINE-RANGE-IMPOSSIBLE",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/sourceClauses/0/lineRange/endInclusive",
+          "value": 999999
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "CLAUSE_DERIVATION",
+      "diagnostic": "source-derived clause differs SS-CONTRACT",
+      "diagnosticSha256": "8fb8350fb887e2df82794199c508cb2a9b14ad28e42c4e2968634b0db04aefbe",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "CLAUSE_DERIVATION",
+      "mutatedAuthoritySha256": "1be1635a6e46028e18554ee3dfdff516a5c663e4f03ee26ed0dd48a066a13415",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-CLAUSE-KIND-RETARGET",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/sourceClauses/0/clauseKind",
+          "value": "route-family-row"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "ROUTE_CITATION_COMPATIBILITY",
+      "diagnostic": "route required citations differ",
+      "diagnosticSha256": "2e0b12fb60965634fb952d0dd9a7a7f3bbd0cfec1f8e05ef46014df7ea5946a4",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "ROUTE_CITATION_COMPATIBILITY",
+      "mutatedAuthoritySha256": "4d3955174d215d05cde41a4197d8281520db2d0c4adb802ba836d0732d09059c",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-HOME-CITATIONS-RETARGET-EXAM-SELECTOR",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/routes/0/sourceClauseIds",
+          "value": [
+            "SS-ROUTE-02",
+            "RT-ROUTE-02",
+            "RT-AUTHORITY-SCOPE"
+          ]
+        },
+        {
+          "op": "replace",
+          "pointer": "/routes/0/machineBindings/0/sourceClauseIds",
+          "value": [
+            "SS-ROUTE-02",
+            "RT-ROUTE-02",
+            "RT-AUTHORITY-SCOPE"
+          ]
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "METADATA_KEYS",
+      "diagnostic": "metadata keys differ",
+      "diagnosticSha256": "d07abfb870d2bd72d4fdd7d02a634fdf302601388bdc2378b22ca91d50200b19",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "METADATA_KEYS",
+      "mutatedAuthoritySha256": "43b05d3cf191ccc0be4a6ce7b0da00b81bdcf38bd8794666864bed963a3abc7d",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-UNKNOWN-METADATA-CHANNEL",
+      "operations": [
+        {
+          "op": "add",
+          "pointer": "/metadata/continuation",
+          "value": "simulation.results"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "TRANSITION_CHANNEL",
+      "diagnostic": "unknown continuation channel",
+      "diagnosticSha256": "1eac3870a0331ec9976a85524a55ff0ea3af242921e1df8d8114b68d574124fe",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRANSITION_CHANNEL",
+      "mutatedAuthoritySha256": "aebc622aede3c4f6fadc0a6aae0f3439a365c4a5e7730394bb9652401f33bc3c",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-HIDDEN-ACTION-PAYLOAD-CONTINUATION",
+      "operations": [
+        {
+          "op": "add",
+          "pointer": "/actions/0/payload/continuationStateId",
+          "value": "reference-document.ready-current"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "TRANSITION_CHANNEL",
+      "diagnostic": "unknown continuation channel",
+      "diagnosticSha256": "1eac3870a0331ec9976a85524a55ff0ea3af242921e1df8d8114b68d574124fe",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRANSITION_CHANNEL",
+      "mutatedAuthoritySha256": "6b4d5baf75615acfcf4c51174d7f85a60d7ca421e4723036896aa1b128b6cf78",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-PSEUDO-ENDPOINT-ON-EDGE",
+      "operations": [
+        {
+          "op": "add",
+          "pointer": "/edges/0/continuationStateId",
+          "value": "reference-document.ready-current"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "EDGE_TO_STATE_ROUTE",
+      "diagnostic": "plain target state is illegal on a source route",
+      "diagnosticSha256": "297693af0f02f01b5310e342e2358c81d35666bc09ac15292d531a9c8cd047ff",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "EDGE_TO_STATE_ROUTE",
+      "mutatedAuthoritySha256": "98684c7e3dfe3c42c5367aa6eb832b81f04833b18d2b98353ff1361c468da93e",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-CROSS-ROUTE-SIMULATION-TARGET",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/edges/43/toStateSelector/stateId",
+          "value": "simulation.results"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "NAV_EMITTER_DOMAIN",
+      "diagnostic": "route-map omits an emitting source route",
+      "diagnosticSha256": "0756c9f41239d82ff1ab07ba79f1f42a3fa209b5520ca91650ebcf3c232c8b91",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "NAV_EMITTER_DOMAIN",
+      "mutatedAuthoritySha256": "9618fd947ab17aa7aa6936031432f67c559e24bbafafe5f66887bb5694e2c463",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-NAVIGATION-MAP-MISSING-ACTIVE-SOURCE",
+      "operations": [
+        {
+          "op": "remove",
+          "pointer": "/outcomes/1/payload/selector/bySourceRouteId/status"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "QUESTION_PRESERVATION",
+      "diagnostic": "question draft fields differ",
+      "diagnosticSha256": "fab0731ace915b8b6e92a75d1300e552fdaf1d4a41b2fe329f78785a895d6664",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "QUESTION_PRESERVATION",
+      "mutatedAuthoritySha256": "54193db927e0d46879dc1382d8fbe550406739a0676575bdb8404109f3e934e8",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-QUESTION-FAILURE-DRAFT-ID-LOSS",
+      "operations": [
+        {
+          "op": "remove",
+          "pointer": "/machineStates/19/selector/substates/2"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "QUESTION_PRESERVATION",
+      "diagnostic": "failure/retry preservation target differs",
+      "diagnosticSha256": "c8a489132861e387bee452349b10c64bc1fd4619aab3b9977c916428534fc828",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "QUESTION_PRESERVATION",
+      "mutatedAuthoritySha256": "d6e87fd50c20cf9a4492e21741d20bf5cf7328ad62c9dd8757154c97e07d326d",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-QUESTION-RETRY-PRESERVE-LOSS",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/edges/16/toStateSelector/preserve",
+          "value": [
+            "selectedOptionId"
+          ]
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "HAZARD_PRESERVATION",
+      "diagnostic": "failure/retry preservation target differs",
+      "diagnosticSha256": "c8a489132861e387bee452349b10c64bc1fd4619aab3b9977c916428534fc828",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "HAZARD_PRESERVATION",
+      "mutatedAuthoritySha256": "99d1a95fcfbb4a19d8d5e98d7cf5dc3bc27237f3c34b7b80b6556bf71d11294e",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-HAZARD-FAILURE-MARKER-LOSS",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/edges/33/toStateSelector/preserve",
+          "value": [
+            "previousEditableState",
+            "hazardAttemptId"
+          ]
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "SIMULATION_PRESERVATION",
+      "diagnostic": "failure/retry preservation target differs",
+      "diagnosticSha256": "c8a489132861e387bee452349b10c64bc1fd4619aab3b9977c916428534fc828",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SIMULATION_PRESERVATION",
+      "mutatedAuthoritySha256": "330557fe0896cd32bf664521d595e034668f783a57186e9eec5d615d145a0fd2",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-SIMULATION-FAILURE-FLAG-LOSS",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/edges/55/toStateSelector/preserve",
+          "value": [
+            "answer",
+            "position",
+            "sessionId",
+            "submissionId"
+          ]
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "REFERENCE_FRESHNESS",
+      "diagnostic": "reference historical freshness projection differs",
+      "diagnosticSha256": "e0c5d3d3d158b6314ccd8f7eab68aa89ea9c6dcf3bc27291c8d0a8b9770dfc1f",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "REFERENCE_FRESHNESS",
+      "mutatedAuthoritySha256": "0946615a2ce3621d0e7a94f1322977c7b4a168a2bd7ab727b724477a490c7d9a",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-REFERENCE-RETIRED-AS-WITHDRAWN",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/machineStates/90/selector/dimensions/availability",
+          "value": {
+            "operator": "equals",
+            "value": "withdrawn"
+          }
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "CONFIRMATION_DETERMINISM",
+      "diagnostic": "confirmation resolution targets differ",
+      "diagnosticSha256": "9087ec7a9fe9a201679a885292701dc336764e720d358536f1a0b1ec4785c740",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "CONFIRMATION_DETERMINISM",
+      "mutatedAuthoritySha256": "2f64375278562b98fca9174a834e10251e36263fa27639dab68aed7433dd83ca",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-CONFIRMATION-DISMISSAL-AMBIGUOUS-ORIGIN",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/edges/153/toStateSelector",
+          "value": {
+            "preserve": [
+              "editableOrigin"
+            ],
+            "stateIds": [
+              "hazard-item.ready",
+              "hazard-item.marking"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "JOURNEY_DERIVATION",
+      "diagnostic": "journey ID set differs",
+      "diagnosticSha256": "2b91a54100df304f9203c242aa735d320c9d5c55e4df3e1e25206f35cd38f740",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "JOURNEY_DERIVATION",
+      "mutatedAuthoritySha256": "61d32ae9a361c93fbc7f973a71a6edc1bb19605d42cf57dd254432434d6501a2",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-JOURNEY-CO-DRIFT",
+      "operations": [
+        {
+          "op": "replace",
+          "pointer": "/journeyLens/journeyIds",
+          "value": []
+        },
+        {
+          "op": "replace",
+          "pointer": "/journeyLens/journeyCount",
+          "value": 0
+        },
+        {
+          "op": "replace",
+          "pointer": "/counts/journeyLensCountExcluded",
+          "value": 0
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "IMPLEMENTATION_DRIFT",
+      "diagnostic": "derived registry drift differs",
+      "diagnosticSha256": "bb8526f8516c1aae65d6f7b446e267299dfa7dd1182be497ce1ad5f821e525ce",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "IMPLEMENTATION_DRIFT",
+      "mutatedAuthoritySha256": "9051cc591cdcbe9a8aac555e0dd003da12abaf135720840325f909d66ad10e67",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-IMPLEMENTATION-REGISTRY-CO-DRIFT",
+      "operations": [
+        {
+          "op": "add",
+          "pointer": "/implementationDrift/implementationRouteIds/-",
+          "value": "exam-checker"
+        },
+        {
+          "op": "replace",
+          "pointer": "/implementationDrift/implementationRouteCount",
+          "value": 28
+        },
+        {
+          "op": "remove",
+          "pointer": "/implementationDrift/missingRouteIds/0"
+        },
+        {
+          "op": "replace",
+          "pointer": "/implementationDrift/missingRouteCount",
+          "value": 8
+        },
+        {
+          "op": "replace",
+          "pointer": "/counts/implementationRegistryCountExcluded",
+          "value": 28
+        },
+        {
+          "op": "replace",
+          "pointer": "/counts/implementationMissingRouteCountExcluded",
+          "value": 8
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "PINNED_FIXTURE",
+      "diagnostic": "fixture bytes differ from validator-owned pin",
+      "diagnosticSha256": "515972e1cf2fe7352bc196dadd0b47d003bbcebb10285ad62d0090d1dba3a3ed",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "PINNED_FIXTURE",
+      "mutatedAuthoritySha256": "9990463ca2ddaefbffc4987f022137afeb4132e29cfa1ea81e153384ce7c4958",
+      "mutatedFixtureSha256": "9a2f0e74f6262dcd687c5c82afd7a1323a8918a9f92fbe42cb299b6db05d5023",
+      "mutationId": "MUT-COEDITED-FIXTURE-HASH-ROOT-COUNT",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "remove",
+          "pointer": "/interpretations/26"
+        },
+        {
+          "derivation": "authority.interpretationCount",
+          "document": "authority",
+          "op": "replace-derived",
+          "pointer": "/counts/interpretationCount"
+        },
+        {
+          "derivation": "authority.interpretationsSha256",
+          "document": "authority",
+          "op": "replace-derived",
+          "pointer": "/integrityRoots/interpretationsSha256"
+        },
+        {
+          "derivation": "authority.interpretationCount",
+          "document": "fixture",
+          "op": "replace-derived",
+          "pointer": "/expected/counts/interpretationCount"
+        },
+        {
+          "derivation": "authority.interpretationsSha256",
+          "document": "fixture",
+          "op": "replace-derived",
+          "pointer": "/expected/integrityRoots/interpretationsSha256"
+        },
+        {
+          "derivation": "authority.canonicalSha256",
+          "document": "fixture",
+          "op": "replace-derived",
+          "pointer": "/acceptedAuthoritySha256"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "TRANSITION_CONSTRUCTIBILITY",
+      "diagnostic": "E-CHECK-001-VALIDATE drops a required dynamic field",
+      "diagnosticSha256": "da81176553a307e9d83d372c4682439c301b0d8d9b708cc3e488ead14044e038",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRANSITION_CONSTRUCTIBILITY",
+      "mutatedAuthoritySha256": "b1c88de3690b098e891ec4c25a270f7574f83a9a6958c4ee325d99035fb82d63",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-V4-CHECKER-INPUT-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/0/toStateSelector/preserve",
+          "value": []
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "SIMULATION_PRESERVATION",
+      "diagnostic": "failure/retry preservation target differs",
+      "diagnosticSha256": "c8a489132861e387bee452349b10c64bc1fd4619aab3b9977c916428534fc828",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SIMULATION_PRESERVATION",
+      "mutatedAuthoritySha256": "56f53bc541da8a47242e82ac286230e1e667a23602e435cbb6cf2271df4ca0d9",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-V4-SIM-SETTINGS-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/41/toStateSelector/preserve",
+          "value": []
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "SIMULATION_PRESERVATION",
+      "diagnostic": "failure/retry preservation target differs",
+      "diagnosticSha256": "c8a489132861e387bee452349b10c64bc1fd4619aab3b9977c916428534fc828",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SIMULATION_PRESERVATION",
+      "mutatedAuthoritySha256": "f89a308be54a6ac5eda912cfa4faa3eaaddfcce815a0834e96032daef1112a45",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-V4-SIM-POSITION-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/45/toStateSelector/preserve",
+          "value": [
+            "answer",
+            "sessionId"
+          ]
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "SIMULATION_PRESERVATION",
+      "diagnostic": "failure/retry preservation target differs",
+      "diagnosticSha256": "c8a489132861e387bee452349b10c64bc1fd4619aab3b9977c916428534fc828",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SIMULATION_PRESERVATION",
+      "mutatedAuthoritySha256": "ddeb90e5c3b71384abfb1b377f93fec851b82f957d9b4eaaa43d0d0cffd97146",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-V4-SIM-RETRY-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/58/toStateSelector/preserve",
+          "value": [
+            "answer",
+            "flag",
+            "position",
+            "sessionId"
+          ]
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "HAZARD_PRESERVATION",
+      "diagnostic": "failure/retry preservation target differs",
+      "diagnosticSha256": "c8a489132861e387bee452349b10c64bc1fd4619aab3b9977c916428534fc828",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "HAZARD_PRESERVATION",
+      "mutatedAuthoritySha256": "2d882bb5fe8936f4728d2746dab3abcf4cab219b814c37c16311b061ea20ed2a",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-V4-HAZARD-ATTEMPT-KIND-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/33/toStateSelector/preserve",
+          "value": [
+            "previousEditableState",
+            "neutralMarkers",
+            "hazardAttemptId"
+          ]
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "CONFIRMATION_DETERMINISM",
+      "diagnostic": "confirmation resolution targets differ",
+      "diagnosticSha256": "9087ec7a9fe9a201679a885292701dc336764e720d358536f1a0b1ec4785c740",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "CONFIRMATION_DETERMINISM",
+      "mutatedAuthoritySha256": "82d30f249e1acaf616903022863a8acb58eac181648a415d40dee9e88b119c1b",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-V4-HAZARD-READY-ORIGIN-REPLACE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/153/toStateSelector/stateId",
+          "value": "hazard-item.marking"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "TRANSITION_CONSTRUCTIBILITY",
+      "diagnostic": "E-CORR-001-VALIDATE preserves safeFields absent from a legal origin",
+      "diagnosticSha256": "e916c57d7994c0d0d008787a61be9097632c45443166c18835d03c39b66ac92f",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRANSITION_CONSTRUCTIBILITY",
+      "mutatedAuthoritySha256": "1eda2197c0aaf20e043226300e22947a8b572b8cc5063ceae003141d11d301da",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-V4-CORRECTION-SAFE-FIELDS-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "remove",
+          "pointer": "/machineStates/66/selector/substates/0"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "TRANSITION_CONSTRUCTIBILITY",
+      "diagnostic": "E-CORR-012-SUBMIT-FAIL drops a required dynamic field",
+      "diagnosticSha256": "166e8e520a5b1d70ea7ef3fadfa620480e4317ab40619a7bc52a24042be2ffd5",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRANSITION_CONSTRUCTIBILITY",
+      "mutatedAuthoritySha256": "81a7dcce96361f355af1d89baa46436e91c17a33f1cb8d8960512d31258d61cd",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-V4-CORRECTION-RECEIPT-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/99/toStateSelector/preserve",
+          "value": [
+            "safeFields"
+          ]
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "TRIGGER_CONSTRUCTION",
+      "diagnostic": "E-ANSWER-010-SELECT reads undeclared trigger field command.optionId",
+      "diagnosticSha256": "0ac87d0f57093626e788e261edfa91ed9c36cd181ee7992836ad9c1ae6915037",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRIGGER_CONSTRUCTION",
+      "mutatedAuthoritySha256": "d1f977a6d331281d888c72dc8fcd41f85e9e74eae04d1ac0b265ae9caf39875e",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-V4-TRIGGER-OPTION-ID-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "remove",
+          "pointer": "/actions/9/payload/fields/2"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "TRIGGER_CONSTRUCTION",
+      "diagnostic": "E-ANSWER-023-COMMIT-FAIL reads undeclared trigger field event.typedCause",
+      "diagnosticSha256": "0e39678cee99a2bb0a5380d4883a03da17b0deb475b16a4c7b2ac185cc04b401",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRIGGER_CONSTRUCTION",
+      "mutatedAuthoritySha256": "a9dacde99fa41e4d54ebc91bcd6244ce7531b3cb5119422cc17d77dc06ebdbc6",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-V4-TRIGGER-TYPED-CAUSE-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "remove",
+          "pointer": "/events/4/payload/fields/1"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "TRIGGER_CONSTRUCTION",
+      "diagnostic": "E-CORR-012-SUBMIT-FAIL reads undeclared trigger field event.privateCause",
+      "diagnosticSha256": "ca4964320727d0ea114e61c4aa54098f871f6fa809c60c504853c2d4704a40ab",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRIGGER_CONSTRUCTION",
+      "mutatedAuthoritySha256": "da5717dcc6f6a5868944863dd093a05fe3448c5811b5ce7c208c806c5bffbe7c",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-V4-TRIGGER-SMUGGLE-UNKNOWN",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/99/toStateSelector/substateAssignments/typedCause",
+          "value": "event.privateCause"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "CONSTRAINT_PATH",
+      "diagnostic": "constraint operand path is unresolved",
+      "diagnosticSha256": "1a0ddffaf7a00cddb87853c4781ca03146844dccb5b46899eb40006ae3cdc53e",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "CONSTRAINT_PATH",
+      "mutatedAuthoritySha256": "b3f78dd4f35df2d7270b0b81b4fb41a5993e7239b4b688d4a273883652ef74c2",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-V4-CONSTRAINT-UNRESOLVED-PATH",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/constraints/0/expression/forbidAll/0/path",
+          "value": "dimensions.interaction"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "CONSTRAINT_WITNESS",
+      "diagnostic": "constraint witnesses do not prove both branches",
+      "diagnosticSha256": "8c4c5093d8037a55716493017ae3ec7885c19b9731670666356c1437068bb7b4",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "CONSTRAINT_WITNESS",
+      "mutatedAuthoritySha256": "78c353e0ab923de2bc735300bc601aaf539f4fb09c3e13ecaa5c663619277155",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-V4-CONSTRAINT-NEGATIVE-WITNESS",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/constraints/1/witnesses/forbidden/context/acceptedClientReceipt",
+          "value": true
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "EFFECT_ID_SET",
+      "diagnostic": "effectId family differs",
+      "diagnosticSha256": "88fec21bc82e5a51465066046fb21aed0e91be723afad309973829700a2c6244",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "EFFECT_ID_SET",
+      "mutatedAuthoritySha256": "ffb4c7dcb81e6ce35856d09b78e71cf353466a190a8f568146dec90730f1abc8",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-V4-EFFECT-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "remove",
+          "pointer": "/presentationEffects/0"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "EFFECT_LIFECYCLE",
+      "diagnostic": "effect projection differs from immutable semantics",
+      "diagnosticSha256": "5acb65e3d2e47f3e418e2357d7f0e385da07f85a0203fe160012fae764c7dc56",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "EFFECT_LIFECYCLE",
+      "mutatedAuthoritySha256": "a532f9e80fb956591d522ab34934e42fc1e7c1a8fd053f0ee57c0ed78dc60486",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-V4-EFFECT-ORDER-REPLACE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/presentationEffects/1/ordering/phase",
+          "value": "before-render"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "EFFECT_LIFECYCLE",
+      "diagnostic": "effect projection differs from immutable semantics",
+      "diagnosticSha256": "5acb65e3d2e47f3e418e2357d7f0e385da07f85a0203fe160012fae764c7dc56",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "EFFECT_LIFECYCLE",
+      "mutatedAuthoritySha256": "d3d8812946673d19540ffd4bb40b97e3aa2fd987a77e1df2e4c34c24aeac3302",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-V4-EFFECT-ACK-REPLACE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/presentationEffects/2/acknowledgement/mode",
+          "value": "at-least-once"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "TRANSITION_CONSTRUCTIBILITY",
+      "diagnostic": "preserved target field is undeclared",
+      "diagnosticSha256": "e28db4321d46d7a28255f54eedcc3ad2f08d6b6bd1cd1daa2197f3b7626f2116",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRANSITION_CONSTRUCTIBILITY",
+      "mutatedAuthoritySha256": "8f4ed007f41d48cb925628747a7d757c6a1ba579cd67465365709b5b033a5d81",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-V4-PACK-PRIOR-GENERATION-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "remove",
+          "pointer": "/machineStates/55/selector/substates/0"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "TRANSITION_CONSTRUCTIBILITY",
+      "diagnostic": "E-PACK-010-VERIFIED drops a required dynamic field",
+      "diagnosticSha256": "3c61878cf17863f92795536272ed9f0221949c3d192dbebe574354ee0ee8505c",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "TRANSITION_CONSTRUCTIBILITY",
+      "mutatedAuthoritySha256": "9a6748343294deab1f0e401daba050fde04a39c2e8d5db028c256d6c61eb0621",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-V4-PACK-CANDIDATE-GENERATION-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "remove",
+          "pointer": "/edges/81/toStateSelector/preserve/1"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "PACK_GENERATION",
+      "diagnostic": "pack activation is not atomic candidate promotion",
+      "diagnosticSha256": "1c9df9c590130006119c9a9c3454e7bf38a616184d03d0d7e45b5ab29d15110b",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "PACK_GENERATION",
+      "mutatedAuthoritySha256": "46ad5c5ed3fb617a77cbebefed3700a6c604e37ad46b6887d851af196d5c731e",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-V4-PACK-ACTIVATION-SMUGGLE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/edges/85/toStateSelector/substateAssignments/activeGeneration",
+          "value": "state.priorActiveGeneration"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "SELECTED_DIRECTION",
+      "diagnostic": "selected-direction program/evidence differs",
+      "diagnosticSha256": "b12d0c35959cabd8e811a1c7de81f11f384ad5971992091e3ba70ea04aa81d90",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SELECTED_DIRECTION",
+      "mutatedAuthoritySha256": "beb3531d509fc1cb8b61974f2b2f2f6f904462ca7ab42094836d124f1ef335e7",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-V4-NAV-RULE-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "remove",
+          "pointer": "/selectedDirection/rules/0"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "SELECTED_DIRECTION",
+      "diagnostic": "selected-direction program/evidence differs",
+      "diagnosticSha256": "b12d0c35959cabd8e811a1c7de81f11f384ad5971992091e3ba70ea04aa81d90",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SELECTED_DIRECTION",
+      "mutatedAuthoritySha256": "d2fa9ea9c90e587b16dc7dca90c092d829557f84e70c2f0fb8a145f8daebde54",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-V4-NAV-RULE-REORDER",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/selectedDirection/rules/0/id",
+          "value": "NAV-NATIVE-COMPACT"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "SELECTED_DIRECTION",
+      "diagnostic": "selected-direction program/evidence differs",
+      "diagnosticSha256": "b12d0c35959cabd8e811a1c7de81f11f384ad5971992091e3ba70ea04aa81d90",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SELECTED_DIRECTION",
+      "mutatedAuthoritySha256": "bdac2c80874616177d79959a722ee1c3559dd7559cee85041d53430504d46d08",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-V4-NAV-RULE-STATEMENT",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/selectedDirection/rules/0/statement",
+          "value": "drift"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "MILESTONE_ID_SET",
+      "diagnostic": "milestoneId family differs",
+      "diagnosticSha256": "638cc58bd3bbc801b30f08666fb49a221076dd2a3bc0d6dcf86a1969d805d89f",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "MILESTONE_ID_SET",
+      "mutatedAuthoritySha256": "506eb7ecfd7ac72ea6e19d314b6875eca82a288bfe66aae9e9e85aef4092ebeb",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-V4-MILESTONE-DELETE",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "remove",
+          "pointer": "/implementationMilestones/5"
+        }
+      ]
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "MILESTONE_CLOSURE",
+      "diagnostic": "route milestone assignment differs",
+      "diagnosticSha256": "9399cafd9fe7ebc0286178a024010ff55b2c53cdeac5e038879eb426352eeab2",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "MILESTONE_CLOSURE",
+      "mutatedAuthoritySha256": "989dc6d468096df28bef21eaf5f41bc09ff3f4cf7f38292b3602846a833bc6e8",
+      "mutatedFixtureSha256": "edf49a4c22bd0ed2944b52998c4e130fb253b3396f60860a256f2eb1aa5f6a68",
+      "mutationId": "MUT-V4-MILESTONE-ASSIGNMENT-LOSS",
+      "operations": [
+        {
+          "document": "authority",
+          "op": "replace",
+          "pointer": "/routes/11/milestoneAssignment/milestoneIds",
+          "value": []
+        }
+      ]
+    }
+  ],
+  "positiveControls": [
+    {
+      "actualExitCode": 0,
+      "actualResult": "accept",
+      "controlId": "POS-REFERENCE-ROUTE-SPECIFIC-FRESHNESS",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "observationSha256": "d83f4c4c1971b430f7a033d3305cd91603ea00e323ad13ae59b37c7cc1d34520",
+      "observations": [
+        {
+          "actual": [
+            "reference-document.ready-current",
+            "reference-document.ready-stale",
+            "reference-document.offline-stale"
+          ],
+          "assertion": {
+            "expected": [
+              "reference-document.ready-current",
+              "reference-document.ready-stale",
+              "reference-document.offline-stale"
+            ],
+            "kind": "pointer-equals",
+            "pointer": "/routes/0/machineBindings/0/legalMachineStateIds"
+          },
+          "pass": true
+        },
+        {
+          "actual": [
+            "reference-document.ready-current",
+            "reference-document.ready-stale",
+            "reference-document.offline-stale"
+          ],
+          "assertion": {
+            "expected": "reference-document.recoverable-error",
+            "kind": "pointer-excludes",
+            "pointer": "/routes/21/machineBindings/0/legalMachineStateIds"
+          },
+          "pass": true
+        },
+        {
+          "actual": [
+            "reference-document.ready-current",
+            "reference-document.ready-stale",
+            "reference-document.offline-stale",
+            "reference-document.recoverable-error",
+            "reference-document.pending",
+            "reference-document.ready-superseded",
+            "reference-document.ready-retired"
+          ],
+          "assertion": {
+            "expected": "reference-document.pending",
+            "kind": "pointer-includes",
+            "pointer": "/routes/3/machineBindings/0/legalMachineStateIds"
+          },
+          "pass": true
+        },
+        {
+          "actual": [
+            "reference-document.ready-current",
+            "reference-document.ready-stale",
+            "reference-document.offline-stale",
+            "reference-document.recoverable-error",
+            "reference-document.pending",
+            "reference-document.ready-superseded",
+            "reference-document.ready-retired"
+          ],
+          "assertion": {
+            "expected": "reference-document.ready-stale",
+            "kind": "pointer-includes",
+            "pointer": "/routes/3/machineBindings/0/legalMachineStateIds"
+          },
+          "pass": true
+        }
+      ]
+    },
+    {
+      "actualExitCode": 0,
+      "actualResult": "accept",
+      "controlId": "POS-HAZARD-RESTORATION",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "observationSha256": "c8070382f72fd36c6a1836644c620ef09c9ccd2ff47b5512a8632816c4f8068a",
+      "observations": [
+        {
+          "actual": {
+            "id": "persistence.restored",
+            "kind": "event"
+          },
+          "assertion": {
+            "expected": {
+              "id": "persistence.restored",
+              "kind": "event"
+            },
+            "kind": "pointer-equals",
+            "pointer": "/edges/23/trigger"
+          },
+          "pass": true
+        },
+        {
+          "actual": "hazard-item.ready",
+          "assertion": {
+            "expected": "hazard-item.ready",
+            "kind": "pointer-equals",
+            "pointer": "/edges/23/toStateSelector/stateId"
+          },
+          "pass": true
+        },
+        {
+          "actual": "hazard-item.content-unavailable",
+          "assertion": {
+            "expected": "hazard-item.content-unavailable",
+            "kind": "pointer-equals",
+            "pointer": "/edges/24/toStateSelector/stateId"
+          },
+          "pass": true
+        }
+      ]
+    },
+    {
+      "actualExitCode": 0,
+      "actualResult": "accept",
+      "controlId": "POS-CORRECTION-CONNECTIVITY",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "observationSha256": "09a988af3556bd53aa906f4f99718025cad912f3e1a89a62dc362a9f9608597e",
+      "observations": [
+        {
+          "actual": {
+            "operator": "equals",
+            "value": "online"
+          },
+          "assertion": {
+            "expected": {
+              "operator": "equals",
+              "value": "online"
+            },
+            "kind": "pointer-equals",
+            "pointer": "/machineStates/68/selector/dimensions/connectivity"
+          },
+          "pass": true
+        },
+        {
+          "actual": "G-CORRECTION-OFFLINE",
+          "assertion": {
+            "expected": "G-CORRECTION-OFFLINE",
+            "kind": "pointer-equals",
+            "pointer": "/edges/100/guards/0/guardId"
+          },
+          "pass": true
+        },
+        {
+          "actual": "G-NO-AUTO-SUBMIT",
+          "assertion": {
+            "expected": "G-NO-AUTO-SUBMIT",
+            "kind": "pointer-equals",
+            "pointer": "/edges/101/guards/1/guardId"
+          },
+          "pass": true
+        }
+      ]
+    },
+    {
+      "actualExitCode": 0,
+      "actualResult": "accept",
+      "controlId": "POS-INITIAL-FAILURE-DISPATCH",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "observationSha256": "cb6b8296824051466ac97d13826d6b3a8607694c0897d76d07b8d1fe9ec95feb",
+      "observations": [
+        {
+          "actual": {
+            "id": "resource.initial-failure",
+            "kind": "event"
+          },
+          "assertion": {
+            "expected": {
+              "id": "resource.initial-failure",
+              "kind": "event"
+            },
+            "kind": "pointer-equals",
+            "pointer": "/edges/119/trigger"
+          },
+          "pass": true
+        },
+        {
+          "actual": [
+            "exam-selector"
+          ],
+          "assertion": {
+            "expected": [
+              "exam-selector"
+            ],
+            "kind": "pointer-equals",
+            "pointer": "/edges/119/fromSelector/routeIds"
+          },
+          "pass": true
+        },
+        {
+          "actual": [
+            "exam-selector",
+            "repair-lab"
+          ],
+          "assertion": {
+            "expected": [
+              "exam-selector",
+              "repair-lab"
+            ],
+            "kind": "pointer-equals",
+            "pointer": "/edges/120/fromSelector/routeIds"
+          },
+          "pass": true
+        },
+        {
+          "actual": [
+            "transparency-index",
+            "source",
+            "corrections",
+            "foil",
+            "security",
+            "privacy",
+            "scoring-explainer",
+            "actual-questions-explainer",
+            "about",
+            "nyc-disambiguation"
+          ],
+          "assertion": {
+            "expected": "home",
+            "kind": "pointer-excludes",
+            "pointer": "/edges/121/fromSelector/routeIds"
+          },
+          "pass": true
+        },
+        {
+          "actual": [
+            "transparency-index",
+            "source",
+            "corrections",
+            "foil",
+            "security",
+            "privacy",
+            "scoring-explainer",
+            "actual-questions-explainer",
+            "about",
+            "nyc-disambiguation"
+          ],
+          "assertion": {
+            "expected": "faq",
+            "kind": "pointer-excludes",
+            "pointer": "/edges/121/fromSelector/routeIds"
+          },
+          "pass": true
+        }
+      ]
+    },
+    {
+      "actualExitCode": 0,
+      "actualResult": "accept",
+      "controlId": "POS-GUARDED-PRINT-RETAIN-REGENERATE",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "observationSha256": "0ebc02f33de8df991689a9fe326107f236a19bd504cfaf376fd727c2599858e8",
+      "observations": [
+        {
+          "actual": "G-RETAINED-PREVIEW-SAFE",
+          "assertion": {
+            "expected": "G-RETAINED-PREVIEW-SAFE",
+            "kind": "pointer-equals",
+            "pointer": "/edges/74/guards/0/guardId"
+          },
+          "pass": true
+        },
+        {
+          "actual": "print-job.preview-ready",
+          "assertion": {
+            "expected": "print-job.preview-ready",
+            "kind": "pointer-equals",
+            "pointer": "/edges/74/toStateSelector/stateId"
+          },
+          "pass": true
+        },
+        {
+          "actual": "print-job.generating-regeneration",
+          "assertion": {
+            "expected": "print-job.generating-regeneration",
+            "kind": "pointer-equals",
+            "pointer": "/edges/73/toStateSelector/stateId"
+          },
+          "pass": true
+        },
+        {
+          "actual": [
+            "print-preview"
+          ],
+          "assertion": {
+            "expected": [
+              "print-preview"
+            ],
+            "kind": "pointer-equals",
+            "pointer": "/machineStates/48/routeScope"
+          },
+          "pass": true
+        },
+        {
+          "actual": [
+            "questionProduct",
+            "keyExplanationProduct"
+          ],
+          "assertion": {
+            "expected": [
+              "questionProduct",
+              "keyExplanationProduct"
+            ],
+            "kind": "pointer-equals",
+            "pointer": "/edges/73/toStateSelector/preserve"
+          },
+          "pass": true
+        }
+      ]
+    },
+    {
+      "actualExitCode": 0,
+      "actualResult": "accept",
+      "controlId": "POS-TYPED-NAVIGATION",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "observationSha256": "651b6f0637266b56938b5e0d8ade3d797ca9956d4185c8d91e5a844fd4f86a77",
+      "observations": [
+        {
+          "actual": "route-map",
+          "assertion": {
+            "expected": "route-map",
+            "kind": "pointer-equals",
+            "pointer": "/outcomes/1/payload/selector/kind"
+          },
+          "pass": true
+        },
+        {
+          "actual": "atlas-index",
+          "assertion": {
+            "expected": "atlas-index",
+            "kind": "pointer-equals",
+            "pointer": "/outcomes/1/payload/selector/bySourceRouteId/atlas-tool"
+          },
+          "pass": true
+        },
+        {
+          "actual": {
+            "destinationStateId": "immediate-feedback.restoring",
+            "kind": "exact-route",
+            "routeId": "question-player"
+          },
+          "assertion": {
+            "expected": {
+              "destinationStateId": "immediate-feedback.restoring",
+              "kind": "exact-route",
+              "routeId": "question-player"
+            },
+            "kind": "pointer-equals",
+            "pointer": "/outcomes/19/payload/selector"
+          },
+          "pass": true
+        },
+        {
+          "actual": "route-map",
+          "assertion": {
+            "expected": "route-map",
+            "kind": "pointer-equals",
+            "pointer": "/outcomes/6/payload/selector/kind"
+          },
+          "pass": true
+        }
+      ]
+    },
+    {
+      "actualExitCode": 0,
+      "actualResult": "accept",
+      "controlId": "POS-REFERENCE-FRESHNESS-CONSTRUCTIBILITY",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "observationSha256": "513981c956262cb07f9c19f2038d30422d57473d98f96be305c82d98854b1eae",
+      "observations": [
+        {
+          "actual": "superseded",
+          "assertion": {
+            "expected": "superseded",
+            "kind": "pointer-equals",
+            "pointer": "/machineStates/89/selector/dimensions/freshness/value"
+          },
+          "pass": true
+        },
+        {
+          "actual": "ready",
+          "assertion": {
+            "expected": "ready",
+            "kind": "pointer-equals",
+            "pointer": "/machineStates/90/selector/dimensions/availability/value"
+          },
+          "pass": true
+        },
+        {
+          "actual": [
+            "atlas-tool",
+            "procedure-detail"
+          ],
+          "assertion": {
+            "expected": [
+              "atlas-tool",
+              "procedure-detail"
+            ],
+            "kind": "pointer-equals",
+            "pointer": "/machineStates/91/routeScope"
+          },
+          "pass": true
+        },
+        {
+          "actual": "reference-document.ready-corrected",
+          "assertion": {
+            "expected": "reference-document.ready-corrected",
+            "kind": "pointer-equals",
+            "pointer": "/edges/136/toStateSelector/stateId"
+          },
+          "pass": true
+        }
+      ]
+    },
+    {
+      "actualExitCode": 0,
+      "actualResult": "accept",
+      "controlId": "POS-QUESTION-DRAFT-PRESERVATION",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "observationSha256": "d1bbf5e50f15b54dc5b6aa095bc7992bd9043dec8998b8aba6bfcb69e0c16b6c",
+      "observations": [
+        {
+          "actual": [
+            "selectedOptionId",
+            "draftAttemptId"
+          ],
+          "assertion": {
+            "expected": [
+              "selectedOptionId",
+              "draftAttemptId"
+            ],
+            "kind": "pointer-equals",
+            "pointer": "/edges/15/toStateSelector/preserve"
+          },
+          "pass": true
+        },
+        {
+          "actual": [
+            "selectedOptionId",
+            "draftAttemptId"
+          ],
+          "assertion": {
+            "expected": [
+              "selectedOptionId",
+              "draftAttemptId"
+            ],
+            "kind": "pointer-equals",
+            "pointer": "/edges/16/toStateSelector/preserve"
+          },
+          "pass": true
+        },
+        {
+          "actual": "draftAttemptId",
+          "assertion": {
+            "expected": "draftAttemptId",
+            "kind": "pointer-equals",
+            "pointer": "/machineStates/19/selector/substates/2/substateId"
+          },
+          "pass": true
+        }
+      ]
+    },
+    {
+      "actualExitCode": 0,
+      "actualResult": "accept",
+      "controlId": "POS-SIMULATION-SUBMISSION-PRESERVATION",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "observationSha256": "675ba4314a111bb284bc4ef1dbd695bd0ac231fae76a51e7a56263dadaf405cf",
+      "observations": [
+        {
+          "actual": [
+            "answer",
+            "flag",
+            "position",
+            "sessionId",
+            "submissionId"
+          ],
+          "assertion": {
+            "expected": [
+              "answer",
+              "flag",
+              "position",
+              "sessionId",
+              "submissionId"
+            ],
+            "kind": "pointer-equals",
+            "pointer": "/edges/55/toStateSelector/preserve"
+          },
+          "pass": true
+        },
+        {
+          "actual": [
+            "answer",
+            "flag",
+            "position",
+            "sessionId",
+            "submissionId"
+          ],
+          "assertion": {
+            "expected": [
+              "answer",
+              "flag",
+              "position",
+              "sessionId",
+              "submissionId"
+            ],
+            "kind": "pointer-equals",
+            "pointer": "/edges/57/toStateSelector/preserve"
+          },
+          "pass": true
+        },
+        {
+          "actual": "submissionId",
+          "assertion": {
+            "expected": "submissionId",
+            "kind": "pointer-equals",
+            "pointer": "/machineStates/41/selector/substates/4/substateId"
+          },
+          "pass": true
+        }
+      ]
+    },
+    {
+      "actualExitCode": 0,
+      "actualResult": "accept",
+      "controlId": "POS-CLAUSE-DERIVATION",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "observationSha256": "93b51e7f28d7baf32cd54dc6c40d3e641d88f3849db66f87b406f559b94e7918",
+      "observations": [
+        {
+          "actual": "state-contract",
+          "assertion": {
+            "expected": "state-contract",
+            "kind": "pointer-equals",
+            "pointer": "/sourceClauses/0/clauseKind"
+          },
+          "pass": true
+        },
+        {
+          "actual": {
+            "endInclusive": 15,
+            "startInclusive": 3
+          },
+          "assertion": {
+            "expected": {
+              "endInclusive": 15,
+              "startInclusive": 3
+            },
+            "kind": "pointer-equals",
+            "pointer": "/sourceClauses/0/lineRange"
+          },
+          "pass": true
+        },
+        {
+          "actual": "SCREEN_STATES",
+          "assertion": {
+            "expected": "SCREEN_STATES",
+            "kind": "pointer-equals",
+            "pointer": "/sourceClauses/0/sourceId"
+          },
+          "pass": true
+        }
+      ]
+    },
+    {
+      "actualExitCode": 0,
+      "actualResult": "accept",
+      "controlId": "POS-LIVE-REGISTRY-DERIVATION",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "observationSha256": "a3d176ccde6e58eaa0e47a835ccd09fa5098b38202e58ea03537032061b37fa0",
+      "observations": [
+        {
+          "actual": 27,
+          "assertion": {
+            "expected": 27,
+            "kind": "pointer-equals",
+            "pointer": "/implementationDrift/implementationRouteCount"
+          },
+          "pass": true
+        },
+        {
+          "actual": 9,
+          "assertion": {
+            "expected": 9,
+            "kind": "pointer-equals",
+            "pointer": "/implementationDrift/missingRouteCount"
+          },
+          "pass": true
+        },
+        {
+          "actual": [],
+          "assertion": {
+            "expected": [],
+            "kind": "pointer-equals",
+            "pointer": "/implementationDrift/extraRouteIds"
+          },
+          "pass": true
+        }
+      ]
+    },
+    {
+      "actualExitCode": 0,
+      "actualResult": "accept",
+      "controlId": "POS-ROUTE-TOTAL-TRANSITIONS",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "observationSha256": "249b98db12b027cf25724481f844b55d913dbc8ffdcd1d10b28eb9c6260b0da6",
+      "observations": [
+        {
+          "actual": "simulation.active",
+          "assertion": {
+            "expected": "simulation.active",
+            "kind": "pointer-equals",
+            "pointer": "/edges/43/toStateSelector/stateId"
+          },
+          "pass": true
+        },
+        {
+          "actual": "home",
+          "assertion": {
+            "expected": "home",
+            "kind": "pointer-equals",
+            "pointer": "/outcomes/1/payload/selector/bySourceRouteId/status"
+          },
+          "pass": true
+        }
+      ]
+    },
+    {
+      "actualExitCode": 0,
+      "actualResult": "accept",
+      "controlId": "POS-JOURNEY-DERIVATION",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "observationSha256": "428ca3ca447920de6f20e6feca735885ef6c0c1d0ecafc4a073f04410200c71b",
+      "observations": [
+        {
+          "actual": [
+            "J01",
+            "J02",
+            "J03",
+            "J04",
+            "J05",
+            "J06",
+            "J07",
+            "J08"
+          ],
+          "assertion": {
+            "expected": [
+              "J01",
+              "J02",
+              "J03",
+              "J04",
+              "J05",
+              "J06",
+              "J07",
+              "J08"
+            ],
+            "kind": "pointer-equals",
+            "pointer": "/journeyLens/journeyIds"
+          },
+          "pass": true
+        },
+        {
+          "actual": 8,
+          "assertion": {
+            "expected": 8,
+            "kind": "pointer-equals",
+            "pointer": "/journeyLens/journeyCount"
+          },
+          "pass": true
+        }
+      ]
+    },
+    {
+      "actualExitCode": 0,
+      "actualResult": "accept",
+      "controlId": "POS-V4-ALL-TRANSITIONS-CONSTRUCTIBLE",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "observationSha256": "50ae7246c7fad42d1f7c591f0a6733ad991dc1079b3d3324834e007934cd40fc",
+      "observations": [
+        {
+          "actual": {
+            "result": "accept",
+            "validatorId": "TRANSITION_CONSTRUCTIBILITY"
+          },
+          "assertion": {
+            "kind": "semantic-validator",
+            "targetId": "TRANSITION_CONSTRUCTIBILITY"
+          },
+          "pass": true
+        }
+      ]
+    },
+    {
+      "actualExitCode": 0,
+      "actualResult": "accept",
+      "controlId": "POS-V4-CONSTRAINT-WITNESSES",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "observationSha256": "802841838e3f4e109f322e78493bb712c9671c60db59315e97e21e1daeb33cc0",
+      "observations": [
+        {
+          "actual": {
+            "result": "accept",
+            "validatorId": "CONSTRAINT_EXECUTION"
+          },
+          "assertion": {
+            "kind": "semantic-validator",
+            "targetId": "CONSTRAINT_EXECUTION"
+          },
+          "pass": true
+        }
+      ]
+    },
+    {
+      "actualExitCode": 0,
+      "actualResult": "accept",
+      "controlId": "POS-V4-EFFECT-LIFECYCLE",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "observationSha256": "5ed53c94ad04a9a080ff242078010ad0e5b69cc24634f6f069b20275de6edf4f",
+      "observations": [
+        {
+          "actual": {
+            "result": "accept",
+            "validatorId": "EFFECT_LIFECYCLE"
+          },
+          "assertion": {
+            "kind": "semantic-validator",
+            "targetId": "EFFECT_LIFECYCLE"
+          },
+          "pass": true
+        }
+      ]
+    },
+    {
+      "actualExitCode": 0,
+      "actualResult": "accept",
+      "controlId": "POS-V4-HAZARD-ORIGINS",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "observationSha256": "7ba99bde6ff6cbe731165472641a2cd92b69dc74ce56fa24c30e0f075543379f",
+      "observations": [
+        {
+          "actual": {
+            "result": "accept",
+            "validatorId": "CONFIRMATION_DETERMINISM"
+          },
+          "assertion": {
+            "kind": "semantic-validator",
+            "targetId": "CONFIRMATION_DETERMINISM"
+          },
+          "pass": true
+        }
+      ]
+    },
+    {
+      "actualExitCode": 0,
+      "actualResult": "accept",
+      "controlId": "POS-V4-CORRECTION-RETENTION",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "observationSha256": "9e9b507fe516dd53c78fbee1cab6ebbb147a3c77c49eeefe21542a7998dc1398",
+      "observations": [
+        {
+          "actual": {
+            "result": "accept",
+            "validatorId": "CORRECTION_PRESERVATION"
+          },
+          "assertion": {
+            "kind": "semantic-validator",
+            "targetId": "CORRECTION_PRESERVATION"
+          },
+          "pass": true
+        }
+      ]
+    },
+    {
+      "actualExitCode": 0,
+      "actualResult": "accept",
+      "controlId": "POS-V4-PACK-DUAL-GENERATION",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "observationSha256": "6d159fab6d79c6e1e44c89179e482c25fb640f2a29990ebd021caa10e7b94e75",
+      "observations": [
+        {
+          "actual": {
+            "result": "accept",
+            "validatorId": "PACK_GENERATION"
+          },
+          "assertion": {
+            "kind": "semantic-validator",
+            "targetId": "PACK_GENERATION"
+          },
+          "pass": true
+        }
+      ]
+    },
+    {
+      "actualExitCode": 0,
+      "actualResult": "accept",
+      "controlId": "POS-V4-SELECTED-DIRECTION",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "observationSha256": "4965eed52f6e90b6bed07d48ef5ef543bffc8e84295d5b6eae881462c26c46f9",
+      "observations": [
+        {
+          "actual": {
+            "result": "accept",
+            "validatorId": "SELECTED_DIRECTION"
+          },
+          "assertion": {
+            "kind": "semantic-validator",
+            "targetId": "SELECTED_DIRECTION"
+          },
+          "pass": true
+        }
+      ]
+    },
+    {
+      "actualExitCode": 0,
+      "actualResult": "accept",
+      "controlId": "POS-V4-MILESTONE-CLOSURE",
+      "expectedExitCode": 0,
+      "expectedResult": "accept",
+      "observationSha256": "eea732dd992ec0e557f7b7dd2af1d808b14157c767ff3f5f1392bcb946c8b745",
+      "observations": [
+        {
+          "actual": {
+            "result": "accept",
+            "validatorId": "MILESTONE_CLOSURE"
+          },
+          "assertion": {
+            "kind": "semantic-validator",
+            "targetId": "MILESTONE_CLOSURE"
+          },
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "proofVersion": "plan008-portable-validation-proof-v4",
+  "safePathAttacks": [
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "SAFE_PATH",
+      "caseId": "SAFE-PATH-TRAVERSAL",
+      "diagnosticSha256": "8762c6de26c7763ef0a8401edfcfcfdd0f50759e231ed18d3d23ca835fce0f00",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SAFE_PATH"
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "SAFE_PATH",
+      "caseId": "SAFE-PATH-ABSOLUTE",
+      "diagnosticSha256": "8762c6de26c7763ef0a8401edfcfcfdd0f50759e231ed18d3d23ca835fce0f00",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SAFE_PATH"
+    },
+    {
+      "actualExitCode": 1,
+      "actualResult": "reject",
+      "actualValidatorId": "SAFE_PATH",
+      "caseId": "SAFE-PATH-SYMLINK-ESCAPE",
+      "diagnosticSha256": "dd2863229dc2810d40c57e7e7b77f20826f814ac0be70019e7b7761da523f506",
+      "expectedExitCode": 1,
+      "expectedResult": "reject",
+      "expectedValidatorId": "SAFE_PATH"
+    }
+  ],
+  "suiteActualExitCode": 0,
+  "suiteActualResult": "accept",
+  "suiteExpectedExitCode": 0,
+  "suiteExpectedResult": "accept"
+}

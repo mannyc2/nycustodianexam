@@ -1,549 +1,325 @@
-# Plan 008 integrated validation provisional prework
+# Plan 008 CODEX-only integrated validation prework
 
 ---
 status: provisional-prework
+validationModel: CODEX-ONLY-UIUX-V1
+reviewMode: codex-only
 participantEvidence: none
+humanEvidence: none
+participantCount: 0
+humanParticipantCount: 0
+humanSessionCount: 0
+notHumanUsabilityTested: true
+agentsCountAsPeople: false
 decisionStatus: pending
 requiredDependencyShas: null
 mustRebaseAndReverify: true
 ---
 
-Prepared on 2026-08-28 against `origin/main` at
-`9fc7dcacfc961752e5d9a2cedbc426deead54a05`. Plan 008 remains `BLOCKED`.
-This packet is protocol, schema, and current-site baseline prework only. It does
-not start or complete a Plan 008 step and cannot approve an operation, artifact,
-design, component system, prototype, finding, canonical promotion, or final
-direction.
+## Status and permanent evidence boundary
 
-Participant count, session count, and participant-derived observation count are
-all exactly zero. No person has been recruited, contacted, screened, scheduled,
-consented, exposed, observed, compensated, or recorded through this packet.
-Automation, agents, personas, role-play, expert review, and current-site tests
-cannot substitute for an adult volunteer.
+An interrupted typed-authority repair is preserved only as a quarantined
+recovery checkpoint under `plans/checkpoints/plan-008-typed-authority-v4/`.
+Its baseline model/validator check passes, but its frozen proof bundle fails
+`PINNED_PROOF`; its generated reports are not acceptance evidence, and none of
+those files extend this contract's authority.
 
-The schema authority for this packet is
-`plans/008-integrated-validation-schema-contract.json`. The fail-closed checker
-is `plans/validate-008-integrated-validation-prework.mjs`. Both carry the same
-five provisional metadata values as this document.
+This packet is portable validation prework, not an integrated result. Plan 008
+remains BLOCKED because exact accepted CODEX-only Step 3 and Step 4 coordinates
+do not yet exist on `main`. It does not select a design, build or approve an
+integrated prototype, change Plan 008 status, authorize a release, implement
+the later migration, or deploy anything.
 
-## Status and boundary
+The permanent metadata above applies to the protocol, JSON contract, validator,
+pending fixture, and every future bundle. Codex agents and automation are not
+people or participant evidence. They cannot establish human behavior,
+comprehension, preference, real-device operation, emitted assistive-technology
+output, or human usability. The packet contains no participant, moderator,
+human review, decision-owner, approval, consent, recruitment, compensation,
+recording, or sign-off workflow.
 
-This packet distinguishes five kinds of material:
+## Source and dependency coordinates
 
-1. Maintained product contracts describe intended behavior.
-2. Recovered or draft Plan 004/005 artifacts are unaccepted evidence and
-   hypotheses.
-3. Current-site automation can provide non-participant runtime baseline
-   evidence only.
-4. Future private records may contain coded observations from real adult
-   volunteers only after the dependencies and approvals exist.
-5. Future owner-authored approvals and decisions must use the real Plan 008
-   workflow; this branch and draft PR are not that approval channel.
+The prepared base is immutable `origin/main`
+`d823e928b0b57f589fd1c64a85db4ae0f6d2f0d1`. The original Plan 008 planning
+coordinate is `e6f911901f7f18f6716204309fee8b103419a5e0`; the validator requires that
+commit object to exist and be an ancestor of the prepared base.
 
-The eight recovered `CL-1` files under
-`recovery/plan-004-consumer-language-prototypes/` are preserved unpiloted,
-unfrozen working evidence. They must not be served to volunteers, used as an
-accepted language direction, or placed into a dependency slot.
+Step 2 is the only resolved upstream slot:
 
-The provisional protocol is zero budget:
+- commit: `d823e928b0b57f589fd1c64a85db4ae0f6d2f0d1`
+- artifact: `plans/004-005-codex-only-evaluation.md`
+- artifact SHA-256: `bcfe0ffef023baa273242c5af2fac7be8eef58e04c0115f2a36da8784afb0116`
+- artifact Git blob: `434d055ebefb7c7a13e80e68fa8f4d1fa023a048`
+- status: accepted CODEX-only
 
-- adults only;
-- voluntary and unpaid;
-- no payment, gift, reimbursement, benefit, or priority access;
-- no audio, video, screen, keystroke, screen-reader-speech, photograph, or
-  automated-transcript recording;
-- no analytics or participant telemetry;
-- no public participant-level data; and
-- no secure, remembered, recalled, purchased, or reconstructed exam content.
+The Step 3 and Step 4 SHA, path, blob, and SHA-256 slots remain null. The overall
+dependency map and execution base therefore remain null and `ready=false`.
+Future population requires exact Git objects, ancestry, path existence, byte
+hashes, accepted CODEX-only metadata, and equality with freshly fetched
+`origin/main`. Provisional branches and draft PRs do not satisfy those slots.
 
-Recruitment, outreach, private retention, and exact artifact exposure would
-still require explicit future authorization. Proposing unpaid/no-recording
-operation settings is not an approval or denial.
+The validator binds this protocol, the JSON contract, the canonical Plan 008,
+the entire plan index, and the maintained route/state inputs by exact path,
+SHA-256, content-addressed Git blob, and stable semantic clauses. It also binds
+the superseded prepared-base Plan 008 and README blobs so the amendment remains
+auditable without reactivating those bytes.
 
-## Dependency slots
+## Canonical CODEX-only Plan 008
 
-All dependency SHA values are `null`, all acceptance states are `unaccepted`,
-and `requiredDependencyShas` must remain `null` in this provisional packet.
+`plans/008-run-integrated-consumer-ux-validation.md` wholly supersedes the old
+moderated-study executor. `plans/README.md` records the same permanent metadata
+and names exact accepted dependency SHAs as the only upstream execution gate.
 
-| Slot | Required future accepted input | Current value |
+Both canonical documents carry stable clause IDs. The validator parses their
+semantic clauses before checking whole-file hashes, then checks their exact
+SHA-256 and Git blob. Direct semantic mutations restoring moderated rounds,
+person counts, human sign-off, approval artifacts, recruitment, or an
+authorized release fail independently of byte-integrity checks.
+
+## Critical journey and state matrix
+
+The bound `product/SCREEN_STATES.md` blob, not the journey table, owns the
+canonical universe. Its 21 family rows and static-spoke clause exact-set 36
+route IDs. The frozen source projection contains 204 route/scope state atoms
+(162 direct and 42 explicitly labeled normalizations) and 109 transition
+occurrences representing 108 unique normalized edges. It preserves grouped
+simulation and print scopes instead of inventing a Cartesian per-route
+allocation. Exact source-clause bytes remain bound beside every normalization.
+
+The canonical Plan 008 block also retains eight critical journey lenses. Those
+lenses exact-set 145 qualified state occurrences (135 unique) and 168 legal
+transition/recovery occurrences (166 unique), including:
+
+- J04 selection idempotency and change, clear-to-ready, durable and reconciled
+  commit, flag and unflag loops, failure restoration, reviewed-next restore,
+  completion, and unavailable restoration;
+- J06 marker removal to ready, distinct marked/zero commit paths, correct
+  prior-editable-state restoration for every zero origin, reconciliation,
+  reviewed-next, completion, and unavailable restoration;
+- J07 separate question-review and hazard-review fixtures, queue rebuild/error
+  recovery, and complete variant-specific selection/marking/zero/commit/failure
+  paths; and
+- J08 previous-active-version retention through update cancel/failure/
+  quarantine, import/reset/rebuild recovery, stale print regeneration and safe
+  retained-version behavior, and terminal states.
+
+The contract then derives every journey cross-product row: 128 journey by
+interruption rows, 96 journey by capability rows, and 56 journey by category
+rows. Together with 36 route, 204 authority-state, 109 authority-transition,
+36 authority-route-transition-surface, 145 lens-state, and 168 lens-transition
+rows, all 978 requirements are applicable. Every row has a stable requirement ID,
+unique source clause ID, bound source path/blob, contract-owned lane,
+contract-owned provider kind/ID, and unique assertion contract ID. A bundle
+cannot declare a row not applicable.
+
+## Current automated baseline
+
+Two exact current-site records are retained as non-participant baseline
+evidence and nothing more:
+
+| ID | Command/result | Exact scope |
 |---|---|---|
-| Plan 004 | DONE-transition SHA, accepted consumer-language contract and synthesis | `null` |
-| Plan 005 | DONE-transition SHA, accepted learner-task navigation artifact and route contract | `null` |
-| Plan 006 | DONE-transition SHA, accepted consumer visual system and route archetypes | `null` |
-| Plan 007 | DONE-transition SHA, accepted component/foundation and responsive contract | `null` |
-
-A future operational packet must derive each DONE-transition SHA mechanically,
-prove each accepted head is an ancestor of its new execution base, hash the
-accepted artifacts, and map each decision to the eight journeys and their legal
-states. This document must be rebased and reverified first; it cannot be edited
-in place to declare the dependencies accepted.
-
-## Research questions and non-questions
-
-Future real-volunteer questions, if separately released, are:
-
-1. Can a first-time adult explain the product, audience, unofficial status, and
-   first useful action?
-2. Can the person find an applicable profile and begin the shortest currently
-   supported appropriate study activity?
-3. Do commitment, persistence, feedback, sources, review, offline availability,
-   export, import, removal, and reset consequences match expectations?
-4. Can the person recover after network loss, durable-write failure, reload,
-   Back/Forward, stale or missing content, a second-tab change, and an input
-   mistake without losing work or seeing an answer early?
-5. Are all eight journeys usable at constrained and ample widths with keyboard,
-   text enlargement, and the person's own access strategy where practical?
-6. Do visual and nonvisual hazard paths communicate their different constructs,
-   outcomes, and recovery actions clearly?
-7. Is relevant printed material understandable, separated correctly, and
-   truthful about original practice and sources?
-
-This prework does not:
-
-- choose language, navigation, visual, component, or responsive direction;
-- research or change exam facts, official scoring, weights, or item counts;
-- collect or reconstruct examination material;
-- establish population prevalence or statistical significance;
-- certify WCAG conformance, devices, browsers, assistive technologies, or print;
-- treat automation, screenshots, agents, or simulated users as comprehension
-  evidence; or
-- authorize production migration or Plan 008 status changes.
-
-## Adult-volunteer protocol
-
-The future proposed method is two moderated rounds of 6–8 completed primary
-adult volunteers. It remains pending and cannot begin from this packet.
-
-Eligibility:
-
-- confirm 18 or older without collecting birth date or exact age;
-- actually be preparing for, recently prepared for, or reasonably resemble the
-  intended entry-level civil-service/custodial study audience;
-- be able to evaluate the English launch experience without being told a
-  reviewed translation exists;
-- accept voluntary unpaid participation and the no-recording method; and
-- agree to use only fictional scenarios and not disclose secure or remembered
-  examination content.
-
-Friends role-playing candidates, project staff acting as test users, experts,
-agents, generated or synthetic personas, bots, automation, and internal review
-do not qualify. A support professional may later participate only in a
-separately accounted secondary interview and never substitutes for a primary
-learner.
-
-Across both future rounds, recruitment should deliberately include phone-first,
-lower-digital-confidence, intermittent/low-bandwidth, limited-English, and
-relevant-access-strategy contexts. Round two must include at least two people
-who actually use a relevant access strategy. Coverage characteristics may
-overlap, may be declined, and cannot be inferred.
-
-Offer the person's own device and familiar assistive technology when practical.
-Do not request diagnosis or proof. Do not recruit from a relationship where
-declining could reasonably affect work, benefits, grades, public services, or
-site access.
-
-Before a future session can begin, the exact approved protocol version,
-artifact manifest and commit, access method, private storage root, access list,
-retention deadline, withdrawal route, and deletion deadline must all be
-present. A blank field stops the session.
-
-## Privacy-minimal screener
-
-Use controlled answers only. Scheduling contact, if later approved, belongs in
-a separate ephemeral roster and never enters research, environment, observation,
-aggregate, or Git data.
-
-| Field | Allowed values | Purpose |
-|---|---|---|
-| `adult_confirmation` | `yes`, `no` | Adult gate without birth date |
-| `audience_fit` | `preparing`, `recently-prepared`, `resembles-audience`, `support-user`, `none`, `not-stated` | Primary/secondary classification without proof |
-| `phone_first` | `yes`, `no`, `not-stated` | Coverage planning |
-| `digital_confidence` | `lower`, `mixed`, `higher`, `not-stated` | Coverage planning |
-| `connectivity_context` | `stable`, `intermittent`, `limited`, `not-stated` | Coverage planning |
-| `english_launch_fit` | `can-evaluate`, `cannot-evaluate`, `not-stated` | English launch only |
-| `english_context` | `english-is-easiest`, `another-language-is-easier`, `not-stated` | Limited-English coverage planning without collecting a language or proficiency score |
-| `session_access_strategy` | `none`, `keyboard`, `zoom-text`, `screen-reader`, `voice-input`, `switch-or-motor`, `other-declared`, `not-stated` | Strategy, never diagnosis |
-| `own_setup_preference` | `own-device`, `provided-device`, `either`, `not-stated` | Environment planning |
-| `accepts_unpaid_session` | `yes`, `no` | Zero-budget gate |
-| `accepts_no_recording` | `yes`, `no` | Method gate |
-| `agrees_no_secure_content` | `yes`, `no` | Exam-security gate |
-
-A `no` response to the adult, unpaid, no-recording, or security gates excludes
-the person. `not-stated` never becomes `no`, `none`, or a represented coverage
-characteristic.
-
-Never request or retain a name, postal address, email, phone number, employer,
-exact location, diagnosis, applicant ID, admission notice, exam proof, official
-document, remembered question, answer choice, drawing, answer, key, or
-review-session detail in study data.
-
-## Consent script
-
-Read verbatim only after the future operation and artifact gates are satisfied:
-
-> This is voluntary research for a free, independent, unofficial study site.
-> You must be 18 or older. The session is unpaid: there is no payment, gift,
-> reimbursement, exam benefit, employment benefit, or effect on your access to
-> the site. We are testing the site, not you.
->
-> We will not record audio, video, your screen, photographs, keystrokes, browser
-> history, screen-reader speech, or an automated transcript. A moderator and
-> note-taker may enter only controlled observation codes and brief
-> non-identifying notes in the approved private study location. Nothing is sent
-> to site analytics, and participant-level records are never placed in Git.
->
-> Please use only the fictional scenarios we provide. Do not share an applicant
-> ID, admission notice, employer information, diagnosis, or any real or
-> remembered exam question, answer choice, drawing, answer, or review-session
-> detail.
->
-> You may skip a question, pause, take a break, or stop at any time without
-> giving a reason or losing anything. Using your withdrawal token, you may ask
-> for deletion through **[approved deadline]**. The data location, people with
-> access, retention date, and deletion date are **[read from the approved
-> session sheet]**. If any field is blank, we will not begin.
->
-> Do you confirm that you are 18 or older, understand that this is unpaid and
-> not recorded, and voluntarily agree to participate?
-
-Record only `completed` or `declined`, UTC time, opaque study ID, protocol
-version, and moderator/note-taker attestations in the approved private location.
-No signature, consent record, or contact information goes in Git.
-
-## Withdrawal and deletion scripts
-
-Give a future volunteer a random withdrawal token stored separately from
-contact details.
-
-During-session withdrawal:
-
-> We will stop now. You do not need to explain why. No recording exists. Would
-> you like us to delete the coded information from this session? If you do not
-> choose, we will default to deletion.
-
-Deletion request:
-
-> I matched your withdrawal token. We will delete the private consent/session,
-> observation, context, environment, and temporary-note records, remove any
-> remaining scheduling contact, recompute affected aggregates and pattern
-> counts, and rerun validation. We will confirm when that is complete. No
-> recording existed, and participant-level rows were never committed to Git.
-
-Deletion confirmation:
-
-> Deletion for withdrawal token **[suffix only]** completed on **[UTC date]**.
-> Affected aggregates were recomputed and validated. No participant row,
-> recording, transcript, screenshot, contact detail, or secure exam content
-> remains.
-
-Proposed retention, still pending future approval:
-
-- delete scheduling contact immediately after attendance/cancellation handling;
-- delete free-form temporary notes the same day after controlled coding;
-- delete participant-level matrices after aggregate verification and no later
-  than 30 calendar days after the session, whichever is earlier; and
-- retain only de-identified aggregates, integrity hashes, and non-participant
-  artifact coordinates.
-
-If individual deletion cannot be guaranteed after an aggregation deadline,
-state the exact deadline before consent. Never promise deletion that cannot be
-performed.
-
-## Moderator guide
-
-Pre-session fail-closed checklist:
-
-- exact released protocol, dependency, artifact, access, and retention
-  coordinates are populated and verified;
-- adult eligibility and accessible consent are ready;
-- recording, automated transcription, analytics, and telemetry are off;
-- private storage root, access list, retention date, and deletion date exist;
-- fictional tasks and exact environment record are ready;
-- the person's preferred access strategy and break/accommodation choices are
-  confirmed without requesting a diagnosis;
-- no recovered editable `CL-1` file is served; and
-- any missing field stops the session.
-
-Neutral prompts:
-
-- “Please show me how you would…”
-- “What would you expect to happen next?”
-- “What tells you that?”
-- “What would you do if this failed?”
-- “Please explain that in your own words.”
-- “You can continue however you normally would.”
-
-Do not name the expected destination, teach labels before observation, praise or
-correct choices, force thinking aloud, solve a product access barrier, or count
-moderator assistance as independent completion. Record assistance as a
-controlled code.
-
-The moderator reads consent/tasks, introduces only authorized interruptions,
-and protects privacy/security. The note-taker records controlled codes, focus,
-announcements, and recovery without transcribing protected content. If one
-person fills both roles, record the limitation; do not lower the evidence gate.
-
-## Interruption guide
-
-Secure-content interruption:
-
-> Please stop there. We cannot collect or discuss any real or remembered exam
-> question, answer choice, drawing, answer, admission notice, or review-session
-> detail. I will not write that content down. We will return to the fictional
-> scenario.
-
-Record only `security-interruption=interrupted-excluded`. Delete accidentally
-typed protected material immediately without copying it elsewhere. Continue
-only if the discussion can remain fictional; otherwise end safely.
-
-Personal-data interruption:
-
-> Please stop and use the fictional details instead. I will not record that
-> personal information.
-
-Access, discomfort, or withdrawal:
-
-> We can pause, change the setup, skip this task, or stop. You do not need to
-> continue to help the study.
-
-Prototype/correctness confounder:
-
-> The test artifact appears to have failed. This is a problem with the artifact,
-> not your task. I will record it separately and either restore the same
-> scenario or move on.
-
-Deliberate connection/interruption introduction:
-
-> I am going to change only this test environment to simulate an interruption.
-> It will not change your other apps or personal data. You may ask me to stop at
-> any time. Please continue as you normally would.
-
-Any precommit answer leak, false saved/reveal claim, loss-of-work implication,
-official-affiliation misunderstanding, destructive-action misunderstanding,
-unrecoverable error, or access-strategy blocker is critical after one real
-occurrence. It cannot be waived by sample size.
-
-## Recovery journey guide
-
-Every future journey card uses a fictional scenario, neutral prompt, legal
-starting state, interruption, expected recovery, measures, critical failures,
-and exact environment record.
-
-| Task ID | Route/state path | Required recovery evidence |
-|---|---|---|
-| `orientation` | Home `ready` or truthful `offline-stale` | Purpose, audience, unofficial status, first action; cached page remains useful |
-| `profile-fit` | selector/checker/profile through `ready`, `empty`, `validating`, `no-match`, `ambiguous`, `match`, `offline-stale` | Input retained; no silent selection; clear retry/profile/pack path |
-| `begin-study` | Study `ready/empty/offline-stale` → setup `pending/error` → player `restoring/ready` | Shortest supported activity only; durable session before navigation; missing closure blocks start truthfully |
-| `question-feedback` | `restoring → ready → selected → committing → answered-revealed → reviewed/completed` | Write failure returns editable choice, focuses error, reveals nothing; retry/reconcile is idempotent; reload/Back/second-tab agree with durable truth |
-| `tool-comparison` | Atlas `ready/empty` → family/tool `ready/offline-stale/withdrawn` | Text/nonvisual comparison survives optional media failure; filters and parent recovery remain clear |
-| `hazard-practice` | `ready ↔ marking → confirm-zero/committing → answered-revealed → reviewed/completed` | Undo input, explicit pan/zoom/non-drag path, preserved neutral marks after failure, no target leak, miss/false-positive comprehension |
-| `review` | queue `loading/ready/empty/error`, rebuild, question/hazard review | Understand due reason; missing object quarantined; explicit acknowledgement required; opening/scrolling is not review completion |
-| `offline-data-control` | pack lifecycle plus export/import/reset preview and commit | Paused download, failed update retains valid pack, pinned removal block, exact destructive scope, no write before confirmation |
-
-Cross-cutting interruption set:
-
-- reload, Back, Forward, safe exit/resume, and second-tab invalidation;
-- online to offline and degraded-network transitions;
-- durable write failure, quota limitation, blocked database upgrade, and unknown
-  completion requiring same-ID reconciliation;
-- stale pack, missing object, withdrawn content, and unavailable source;
-- focus to error summary, outcome, next heading, or restored dialog trigger;
-- concise non-answer-bearing save/offline/error announcements;
-- no duplicate attempt, review, session, draft, reset, or pack activation; and
-- optional print comprehension where relevant, with question/key and
-  blank/annotated hazard products separated.
-
-## Environment accounting
-
-Future exact environment rows remain private and link to an opaque study/task ID.
-Record only what is necessary to interpret the task:
-
-- device class and own/provided status;
-- OS family and observed version or `unknown`;
-- browser family and observed version or `unknown`;
-- CSS viewport dimensions and orientation;
-- primary input method;
-- declared session access strategy;
-- assistive technology name/version or `none|unknown`;
-- browser zoom or text enlargement;
-- network condition and whether self-reported or moderator-controlled; and
-- print condition where applicable.
-
-Never store serial number, IP address, precise location, account name,
-advertising ID, diagnosis, extensions, browser fingerprint, unrelated device
-data, or a rare characteristic linked to a quotation in committed aggregates.
-
-Required future manual coverage remains NVDA with Firefox on Windows; VoiceOver
-with Safari on macOS and iOS; TalkBack with Chrome on Android; JAWS smoke when
-licensed; true 400% zoom in Chrome, Firefox, and Safari; physical US Letter and
-A4 normal/large print; and grayscale inspection. Missing hardware remains an
-explicit gap, never an inferred pass.
-
-## Aggregate schemas and codebooks
-
-The JSON contract contains the machine-readable codebooks and empty fixture.
-All participant-level schemas are future private-only interfaces. No current row
-exists.
-
-Locked task IDs are exactly the eight in the journey table. Controlled domains:
-
-- completion: `complete | partial | failed`;
-- first action: `expected-primary | expected-secondary |
-  wrong-study-destination | utility-trust-detour | no-action`;
-- comprehension: `accurate | partial | incorrect | not-applicable`;
-- access blocker: `none | resolved | unresolved`;
-- access strategy: `none | keyboard | zoom-text | screen-reader | voice-input |
-  switch-or-motor | other-declared`;
-- severity: `critical | high | medium | low`; and
-- retest: `not-applicable | resolved | persists | inconclusive`.
-
-The committed pending fixture contains empty arrays for participants,
-environments, observations, issues, withdrawals/deletions, and all approval
-types. Every participant-derived count is zero. Automated baseline test counts
-may be nonzero only in separately typed `non-participant-automation` records
-whose participant contribution remains zero.
-
-The provisional aggregate interface defines round summaries, task-specific
-numerators and denominators, context coverage, pattern/retest summaries, and
-SHA-256 evidence bindings. It forbids participant IDs and participant rows,
-requires every numerator to be no greater than its matching denominator,
-excludes automation from every participant denominator, keeps a one-person
-critical occurrence blocking, and requires recomputation after withdrawal.
-The pending fixture carries no evidence hash: all three matrix hashes and the
-verification time are `null`.
-
-Known schema decisions that the future operational contract must resolve before
-it can accept a row:
-
-- how to represent declined/not-stated context without silently converting it;
-- multiple access strategies rather than one lossy value;
-- time to meaningful start;
-- wrong-turn and recovery path;
-- hesitation labels and trust rating/reason; and
-- exact per-task environment coordinates.
-
-The provisional validator intentionally rejects all participant rows, even a
-plausible real-looking row. Real evidence requires a successor operational
-contract with private-record and live-approval verification.
-
-## Current-site automated baseline
-
-Automation here is current-site, non-participant baseline evidence. It cannot
-validate an unaccepted integrated direction, comprehension, emitted assistive-
-technology output, or any Plan 008 human/decision gate.
-
-| Area | Feasible current-site check | Cannot prove |
-|---|---|---|
-| Accessibility | Axe A/AA rules, semantics, accessible names | WCAG certification or emitted speech |
-| Keyboard/focus | selection/submit, error/outcome focus, live-region DOM mutation | screen-reader navigation quality |
-| Responsive | 320 CSS-pixel overflow/target checks in question and hazard fixtures | true 400% zoom, complete route-family reflow, real mobile behavior |
-| Offline | Chromium service-worker lifecycle and cross-browser IndexedDB behavior | Firefox/WebKit service-worker behavior or field connectivity |
-| Persistence/recovery | injected write failure, reload, blocked upgrade, import/quarantine, pack lifecycle | real quota exhaustion, eviction, and every multi-tab/disposal race |
-| Print | print media, deterministic packets, separation, page-break rules | physical Letter/A4, grayscale, clipping, pagination, Save as PDF |
-| Color/motion | forced-colors and reduced-motion mechanics | every personal configuration |
-| Security | current precommit DOM/closure checks | a future accepted integrated artifact |
-
-Automated baseline run ledger:
-
-| Evidence ID | Source SHA | Command | Result | Participant contribution |
-|---|---|---|---|---:|
-| `BASE-AUTOMATED-001` | `9fc7dcacfc961752e5d9a2cedbc426deead54a05` | exact Bun 1.4.0 `bun run verify` | passed: 352 unit tests plus layout/type/build/artifact gates | 0 |
-| `BASE-AUTOMATED-002` | `9fc7dcacfc961752e5d9a2cedbc426deead54a05` | isolated `127.0.0.1:4175`, CI-mode `bun run test:browser` | passed: 172; intentional project skips: 26 | 0 |
-
-Both rows were recorded at `2026-08-28T16:32:15Z`. The browser matrix used
-Playwright 1.62.1 with Chromium 151.0.7922.34, Firefox 153.0, and WebKit 26.5 on
-Ubuntu 24.04.3 / Linux 6.8.0-101-generic x86_64. The JSON contract preserves the
-exact commands and limitations.
-
-An earlier non-CI attempt was discarded because port 4173 was already owned by
-an unrelated worktree preview and Playwright's local setting reused that server.
-Its failure was not evidence about this worktree. The counted run used this
-worktree's build on isolated port 4175, the CI cap of two workers, and exited 0.
-Configured or historical coverage is never presented as a new execution result.
-
-## Future loopback harness interface
-
-Interface only: no integrated prototype or harness exists.
-
-The future harness refuses to start until all four dependency slots and exact
-owner approvals are populated in a successor contract. It accepts:
-
-- the new immutable execution base and accepted dependency map;
-- exactly eight task IDs and declared legal state IDs;
-- fictional/public-precommit-safe data;
-- an approved public-safe asset allowlist; and
-- exact manifest/version/hash/commit and approved access boundary.
-
-Required controls, kept outside participant UI, are task reset; online/offline;
-degraded network; persistence available/write-failure/quota/unknown-completion;
-content current/stale/missing/withdrawn; reload; Back/Forward; second-tab
-invalidation; and print mode.
-
-The future server is loopback-only on `127.0.0.1`, uses an ephemeral port and an
-exact file allowlist, permits no external requests, and writes screenshots,
-traces, and dumps only beneath a fresh SHA-scoped `/tmp` directory. It does not
-import production controllers or storage, implement analytics, log participant
-behavior, select a design, or emulate a volunteer.
-
-Verification must cover semantic DOM, keyboard, focus, announcements, targets,
-320/1440 reflow, large text, real 400% pilot zoom, forced colors, reduced
-motion, print, visual/nonvisual hazard behavior, durable recovery, answer
-boundaries, asset/hash closure, and zero external requests. Every automated
-result remains `current-site-baseline-only` or future
-`integrated-artifact-non-participant-baseline`, with participant contribution
-zero.
-
-## Decision rules and remaining gates
-
-This packet's only valid structured state is provisional prework, participant
-evidence none, decision pending, dependency SHAs null, and mandatory rebase/
-reverification true.
-
-The validator rejects:
-
-- accepted, approved, complete, or DONE structured states;
-- any participant/session/context/environment/observation/issue row;
-- any nonzero participant-derived count;
-- any approval record, approver identity, body hash, or plausible PR comment
-  reference;
-- any dependency SHA or accepted dependency state;
-- any selected design, built/accepted integrated prototype, or promotion;
-- agent, AI/LLM, automation, bot, persona, role-play, staff proxy, or expert
-  review as a volunteer source; and
-- automated baseline evidence that contributes to participant counts or claims
-  human validation.
-
-Future release checklist:
-
-1. Plans 004–007 genuinely become DONE and merge.
-2. Fetch and rebase on the then-current `origin/main`.
-3. Derive and verify every dependency DONE-transition and accepted-head SHA.
-4. Resolve the private schema gaps and create a separately versioned operational
-   contract.
-5. Create the real Plan 008 execution branch and early draft PR.
-6. Obtain owner-authored operation approvals.
-7. Build, verify, hash, and obtain approval for the exact integrated artifact.
-8. Run two rounds of 6–8 real adult volunteers with required contexts.
-9. Resolve and retest every critical issue.
-10. Obtain the final decision-owner acceptance.
-11. Promote accepted conclusions once to their canonical homes.
-12. Only then change Plan 008 status.
-
-Until every applicable gate passes, the result remains provisional prework only.
+| `BASE-AUTOMATED-001` | locked repository `bun run verify`; exit 0; run-result SHA-256 `f99f0f8636f246486fea8eb06ed0ed030a1bb4d56aea3921b78c3bf05950c577`; record SHA-256 `e859d096f9c2d1d8c1746c50ca9f8251c0ef76da03f22c8d688eddd6ce253393` | layout, boundaries, 396 visual hashes, five typechecks, 352 unit tests, 526 documents, artifact invariants, and landed Step 2 packet validation at source SHA |
+| `BASE-AUTOMATED-002` | isolated loopback browser matrix; 198 configured, 172 passed, 26 intentional project-specific skips, zero failed; run-result SHA-256 `2d676c008572d7fa5c4d02299b3d35bb75bcc574df802c50ee5f67b25127f5c5`; record SHA-256 `43d9aaef0a261009e0213858fb0d908799daf162d6770bcf75a89176061ab612` | desktop Chromium, Firefox, and WebKit automation with current limited reflow/accessibility/offline/print/recovery coverage |
+
+The exact ordered record-sequence SHA-256 is
+`92b3d428ebd658091803d11bde5165e570f363b792b9997e41f4a41c470aaa14`.
+The validator exact-locks every baseline field, including IDs, kinds, commands,
+source SHA, environments, structured results, summaries, limitations, hashes,
+and order.
+
+These baselines do not exercise the 978 integrated requirements. They do not
+provide mobile-device, screen-reader speech, true 400% zoom, physical print,
+behavior, comprehension, direction-selection, WCAG certification, or release
+evidence.
+
+## CODEX-only adversarial lanes
+
+The future real loopback run has exactly three separately tasked lanes:
+
+1. `journey-recovery-semantics`, agent task ID
+   `/root/plan008_final_journey_reaudit`, checks legal journey/state/
+   interruption semantics and durable recovery.
+2. `accessibility-cognitive-load`, agent task ID
+   `/root/plan008_final_accessibility_reaudit`, checks semantic structure,
+   keyboard/focus/status behavior, responsive transformations, accessibility
+   mechanics, and cognitive load without predicting behavior.
+3. `consumer-trust-internal-wording-ai-slop`, agent task ID
+   `/root/plan008_final_trust_reaudit`, checks unofficial
+   status, consumer-facing/internal-language leakage, evidence overclaiming,
+   repetitive synthetic wording, and false authority.
+
+Each lane uses the exact versioned task contract in the JSON packet and emits
+structured outputs only. It records agent/task IDs, reviewed journey and
+requirement IDs, exact source coordinates, reproducible prompt/task-contract
+hash, findings, consensus position, and dissent without exposing hidden
+reasoning. Separate task coordinates and first-pass ordering are auditable;
+platform-native task identity and actual cross-output isolation are not
+independently authenticated by this packet.
+
+## First-pass receipt boundary
+
+Before peer outputs are provided, orchestration retains one task receipt and
+one first-pass receipt per lane. The exact bytes bind the recorded Codex task
+ID, prompt and rubric hashes, source and contract hashes, execution manifest
+and input roots, valid UTC start/completion intervals, and task/lane
+coordinates. The first-pass receipt exact-sets `peerOutputIdsVisible=[]` and
+`peerOutputsVisible=false`, and its immutable commit precedes consensus and the
+evidence commit.
+
+These bytes and Git ordering verify the retained orchestration record; they do
+not authenticate that a recorded ID came from the Codex platform and do not
+independently observe platform-internal cross-output non-observability. Those
+limitations are permanent. Missing receipt bytes, invalid times, backfilled
+coordinates, mismatched prompt/rubric/task IDs, or a first-pass seal that does
+not precede peer-visible artifacts fail real mode. Agent-run records reference
+the immutable first-pass receipt rather than rewriting it after consensus.
+
+Each first-pass receipt also binds a safe artifact path, SHA-256, and Git blob.
+The three canonical lane artifacts and the task/first-pass receipt arrays are
+committed together before the evidence-bundle and final-seal commits. The
+bundle binds that earlier commit, paths, SHA-256 values, and Git blobs;
+validation reads every artifact and receipt byte, requires execution-base
+ancestry, and requires strict ancestry from the receipt-seal commit to the
+later final-seal commit.
+
+## Per-requirement evidence and failure coupling
+
+Each applicable requirement owns exactly one assertion record. The assertion
+binds requirement, cell, assertion contract, contract-owned provider kind/ID,
+committed provider artifact and result-entry digests, implementation ID/path/
+blob, exact result, structured observation kind/digest, source path/blob, and
+record digest. IDs, provider entries, and observation digests are unique. A
+generic automated run or an unconstrained hash cannot itself substantiate a
+cell.
+
+Authority route/state/transition, journey-lens, interruption, and most
+capability rows come from exact
+machine-readable result manifests committed after the execution base. The
+precommit-answer-safety capability comes from the repository verifier. Category
+rows come from the immutable first-pass artifact for their owner lane. Each
+automation manifest binds its command, environment/toolchain, exact assertion
+contract root, unique source-present implementation IDs, structured result
+entries, exit code, counts, sequence digest, canonical bytes, path, Git blob,
+and commit. Public real mode accepts only `evidenceMode=real-execution`; the
+module-private isolated fixture uses `isolated-self-test-fixture` and cannot be
+submitted through the public CLI.
+
+A passed cell requires its matching passing assertion and no blocking finding.
+A failed cell requires its matching failed assertion and exactly one reciprocal
+finding. That finding must use the same requirement/cell/clause, be open,
+release-blocking, owned by the contract lane, and state
+`do-not-recommend`. The owning lane and consensus must also state
+`do-not-recommend`. Missing, resolved, unrelated, duplicated, or other-lane
+findings fail closed.
+
+## Transitive final evidence root
+
+Real mode seals one final evidence record over exact roots for:
+
+- canonical source/dependency contract and execution manifest;
+- task and first-pass receipts;
+- environment and automated-run records plus committed result-manifest coordinates;
+- unique per-requirement assertions and coverage cells;
+- finding records and sequences by lane;
+- agent-lane outputs;
+- dissent positions, groups, and matrix;
+- consensus; and
+- permanent metadata, exact counts, and final disposition.
+
+The final record hash feeds the caller-supplied expected evidence root. A second
+Git seal artifact binds bundle SHA-256, final evidence root, execution base,
+contract root, automated-result-manifest coordinate root, first-pass-artifact
+coordinate root, and first-pass receipt-seal SHA-256. Real validation checks
+the supplied seal commit, path, blob, signature under the earlier anchored key,
+strict ancestry, ordering, and exact bytes. An embedded self-declared root is
+insufficient when it differs from the supplied root.
+
+These checks authenticate exact bytes and possession of the anchored signing
+key; they do not attest independent key custody. A holder of that same private
+key can coherently sign a different descendant bundle and provide its
+recomputed root and seal coordinate. A consumer that needs a non-resealable
+decision boundary must independently pin the exact expected root and seal
+coordinate through a separately trusted publication channel. This packet does
+not provide or claim that custody or publication boundary.
+
+## Claim and privacy boundary
+
+Before schema or reference errors, real and synthetic bundle validation scans
+every object key and string leaf without echoing rejected values. It rejects:
+
+- nonzero person/session/study language and any observed-human claim;
+- design acceptance, selected/final direction, approval, release, go-live,
+  deployment, production authorization, or Plan 008 completion claims;
+- real-device, human assistive-technology, blanket accessibility/WCAG, or
+  agent/persona/automation-as-person-substitute claims;
+- email, phone, personal identifiers, non-loopback IPv4/IPv6, home/user paths,
+  street address or precise coordinate/location data; and
+- malformed Unicode, bidi controls, default-ignorable/zero-width characters,
+  and disallowed controls.
+
+Closed structural fields use exact grammars and codebooks so legal state IDs
+such as `question-player:selected`, ARIA tokens, accepted CODEX-only dependency
+status, and final-evidence field names are not mistaken for prose authority
+claims.
+
+Private-schema interfaces are agent-only. Their required and prohibited field
+sets are exact. Personal/contact/session fields and machine-owner environment
+fields remain prohibited. No inactive consent, recruitment, participant, or
+human session schema is a future gate.
+
+## Real evidence mode
+
+The public CLI has three separate paths:
+
+- default provisional validation: validates these five canonical packet files,
+  zero rows, exact baselines, and unresolved dependencies;
+- `--self-test`: uses a module-private synthetic capability for adversarial
+  mutations, including an isolated temporary-Git positive/negative fixture for
+  the real validator; and
+- `--validate-real-evidence <bundle> --expected-root <sha256> --anchor <commit>:<path> --seal <commit>:<path>`:
+  requires resolved live Step 2-4 coordinates, nonempty mandatory collections,
+  full cross-record closure, exact signed seal bytes and ancestry, and prints
+  only the verified final evidence root. The caller-supplied root and seal
+  coordinate remain trust inputs rather than independently authenticated
+  decisions.
+
+No public flag can override dependencies or activate synthetic evidence. With
+the present null Step 3/4 coordinates, the real path must fail before accepting
+a bundle. The isolated positive fixture tests mechanics only and never becomes
+Plan 008 evidence.
+
+## Deferred integrated run
+
+Root orchestration resumes the real run after accepted Step 3 and Step 4
+CODEX-only SHAs land. At that time it must fetch/rebase, repopulate exact
+dependencies, rebind all changed source blobs and canonical bytes, rerun the
+entire assertion matrix and lanes, produce the signed descendant seal, remediate
+or record blocking contract gaps, and retain Plan 008 as
+not-human-usability-tested. If a consumer requires immutable decision
+provenance, that consumer must separately pin the exact final root and seal
+coordinate; Step 5 does not infer such custody.
+
+This prework creates no final evidence records. All pending arrays remain empty;
+`agentOnlyReleaseRecommendation=null`, `decisionStatus=pending`, and
+`requiredDependencyShas=null`.
 
 ## Validation commands
 
-Use exact Bun 1.4.0 and Node 22.22.0 where repository commands require them.
+Run from the repository root with the locked toolchain:
 
 ```sh
 node plans/validate-008-integrated-validation-prework.mjs
 node plans/validate-008-integrated-validation-prework.mjs --self-test
-bun run check:toolchain
-bun run verify
-bun run test:browser
-git diff --check
+env PATH=/tmp/nycustodian-bun-1.4.0/package/bin:$PATH bun run verify
 ```
 
-The validator uses Node built-ins and performs in-memory adversarial mutations.
-It creates no fake participant row, approval, session, or evidence artifact on
-disk.
+The browser baseline uses a loopback preview only:
+
+```sh
+env PATH=/tmp/nycustodian-bun-1.4.0/package/bin:$PATH bun run vite preview --host 127.0.0.1 --port 4175 --strictPort
+env CI=1 NYCUSTODIAN_PLAYWRIGHT_BASE_URL=http://127.0.0.1:4175 PATH=/tmp/nycustodian-bun-1.4.0/package/bin:$PATH bun run test:browser
+```
+
+Do not run the real evidence command until the dependency interface is resolved.

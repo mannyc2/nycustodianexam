@@ -1,0 +1,5777 @@
+{
+  "acceptedAuthoritySha256": "6d9357567b3e2f504c3cb1a9dc9e252cdd86339c6b6e0a36bc19ce0d72c05d47",
+  "acceptedFixtureSha256": "a54a3c4ea5f81a2a291b8d9180baf18260e8cfc6cb141e42065caf80abd8320c",
+  "authorityStructuralShapeSha256": "0cbdcb6da2487f0c3ad4b1a8a905ae72c68bdf915ba63169bad7ed934bdf4e28",
+  "expected": {
+    "bidirectionalEdgeIds": [
+      "E-SIM-010-RECORD",
+      "E-SIM-011-CLEAR",
+      "E-HAZARD-010-ADD",
+      "E-HAZARD-012-CLEAR"
+    ],
+    "counts": {
+      "actionCount": 55,
+      "dimensionCount": 6,
+      "edgeCount": 165,
+      "effectBindingCount": 8,
+      "effectTypeCount": 4,
+      "eventCount": 58,
+      "globalTransitionRuleCount": 9,
+      "implementationMissingRouteCountExcluded": 9,
+      "implementationRegistryCountExcluded": 27,
+      "interpretationCount": 30,
+      "invalidCombinationConstraintCount": 9,
+      "journeyLensCountExcluded": 8,
+      "machineCount": 10,
+      "machineStateCount": 92,
+      "milestoneCount": 6,
+      "mutationCount": 111,
+      "navigationConstructionCount": 9,
+      "outcomeCount": 22,
+      "positiveControlCount": 26,
+      "presentationEffectCount": 8,
+      "registryRouteCount": 32,
+      "routeCount": 36,
+      "selectedDirectionRuleCount": 11,
+      "sourceClauseCount": 129,
+      "sourceCount": 2,
+      "spokeRouteCount": 4,
+      "totalConstraintCount": 18,
+      "validationRuleCount": 28
+    },
+    "dimensionIds": [
+      "availability",
+      "operation",
+      "connectivity",
+      "persistence",
+      "interaction",
+      "freshness"
+    ],
+    "implementationMilestones": [
+      {
+        "exitCondition": "Static generator, document shell, canonical/error policy, React-island bootstrap, and route-contract tests exist.",
+        "milestoneId": "M0",
+        "ordinal": 0,
+        "sourceClauseIds": [
+          "RT-MILESTONES"
+        ]
+      },
+      {
+        "exitCondition": "Profile/source registry and crawlable profile, study, atlas, procedure, repair, FAQ, and transparency documents publish from validated data.",
+        "milestoneId": "M1",
+        "ordinal": 1,
+        "sourceClauseIds": [
+          "RT-MILESTONES"
+        ]
+      },
+      {
+        "exitCondition": "One source-backed question completes the React-island, one long-lived `ManagedRuntime`, IndexedDB commit-before-reveal, reload, print, accessibility, leak, and offline proof.",
+        "milestoneId": "M2",
+        "ordinal": 2,
+        "sourceClauseIds": [
+          "RT-MILESTONES"
+        ]
+      },
+      {
+        "exitCondition": "Review and hazard families work with directional confusion data, accessible nonvisual equivalents, and truthful local queue states.",
+        "milestoneId": "M3",
+        "ordinal": 3,
+        "sourceClauseIds": [
+          "RT-MILESTONES"
+        ]
+      },
+      {
+        "exitCondition": "Deterministic simulation, results, print generation, and full session restoration work.",
+        "milestoneId": "M4",
+        "ordinal": 4,
+        "sourceClauseIds": [
+          "RT-MILESTONES"
+        ]
+      },
+      {
+        "exitCondition": "Explicit pack lifecycle, settings/import/export/reset, corrections workflow, recovery/status surfaces, and release-wide navigation/state tests work.",
+        "milestoneId": "M5",
+        "ordinal": 5,
+        "sourceClauseIds": [
+          "RT-MILESTONES"
+        ]
+      }
+    ],
+    "implementationMissingRouteIds": [
+      "exam-checker",
+      "procedures-index",
+      "procedure-detail",
+      "repair-lab",
+      "faq",
+      "scoring-explainer",
+      "actual-questions-explainer",
+      "about",
+      "nyc-disambiguation"
+    ],
+    "integrityRoots": {
+      "actionsSha256": "fbf924679fe6678a5a4ebfba94731270a470a2f229af6c2c7fcf397eed152b3c",
+      "constraintsSha256": "ce5e4a52737ef7e99889bf63da3014716e514acc1305dea36211c1c270c8a0ed",
+      "dimensionsSha256": "6356d4dd412eb9f980416f960909d69570ca4cd485c7dfd03069fd87c0d24984",
+      "edgesSha256": "ca238c8521d6fd43879abd1de541b3576f38f43939d27ccd493339c89c611f42",
+      "effectBindingsSha256": "e2f9339c57be728a806a1cb1773e2f69738f4af12930a3cb3102a981bba25e5f",
+      "effectTypesSha256": "c4d85e3b947cabdd9ebdef6316c264da2987e80a5645d0e24bf571d696cf5a55",
+      "eventsSha256": "2136fdd3343fbecb539684a606c75550c62f97b78481f70f57aa7d5a3bc663fc",
+      "implementationDriftSha256": "672cf940dc9115f0f61921cfdeca7cc7ee5d204e7d1e7dd3d6c976bc77d0d620",
+      "implementationMilestonesSha256": "cf0275b5868baf955e783a96e71cc9417e10014a854e7b87e3b87c8c9cbdba82",
+      "interpretationsSha256": "987fc60cfb61e5a48dd97f66c06106992a1b70df49d807ec35f3d30e326d9bb5",
+      "journeyLensSha256": "e085380640f10b71225269f0386f4c4da4fe8c5baf64259fc63bd2f81f1ac958",
+      "machineStatesSha256": "1e57eb0a4024e68111da4ec47e6d92e9a9fb3f9ed9f4420b8fa7141a602a6a44",
+      "machinesSha256": "14134ea068ff841dad3c85c05dd26318dd7d13c9711f38fdc1c9e62dee5ade6e",
+      "metadataSha256": "bc2a3c2146a3d3deea3db85000be33c841756783e57377958d2ff1f1f235509a",
+      "navigationConstructionsSha256": "956b4f23a132db6e566e4da8a2a0ea96017805d8697aa8c4d26e9567098b3af4",
+      "outcomesSha256": "e57c38b1e16f9282b0db8b8ffce5710d3baad1a1de95e7742c48d729b0920501",
+      "presentationEffectsSha256": "b66977ae8764e747255e54fb6171b9192ae02048329f78ef317bc76b1fbcf925",
+      "routesSha256": "fb637cad44d868fb37fb0794930ac714fd5f27760e1ae40ccd3b04e43b02cb62",
+      "selectedDirectionSha256": "4152b70e95538118ed458f536e2a2b9842d2e5e3372a73632482bf0d10718789",
+      "snapshotSchemaSha256": "c376cecdbf89de5a7aaf33a9127d0ff43768ad60ffe7028e1ea71668bbc43ae7",
+      "sourceClausesSha256": "6ebabc8d8e2204a3d960894415b2dbfebb9471832972a3e64dc499c55a042d4f",
+      "sourcesSha256": "3f38b979abed6de340313b24a592a30bfd0bf6a951d16502801bd1825fe9dbf7",
+      "validationSha256": "a75147f511a663e86110eaa9448a944df210bbe0c5751bc1e3e1af1b6f9ee76f"
+    },
+    "referenceOverlayEdgeIds": [
+      "E-REF-040-ATLAS-LOAD",
+      "E-REF-041-REVIEW-INITIAL-LOAD",
+      "E-REF-042-LOAD-READY",
+      "E-REF-043-REVIEW-LOAD-EMPTY",
+      "E-REF-044-LOAD-FAIL",
+      "E-REF-050-START-PENDING",
+      "E-REF-051-REVIEW-REBUILD",
+      "E-REF-052-EXAM-SELECTED",
+      "E-REF-053-PROFILE-DONE",
+      "E-REF-054-STUDY-DONE",
+      "E-REF-055-ATLAS-PRACTICE-DONE",
+      "E-REF-056-REVIEW-REBUILT-READY",
+      "E-REF-057-REVIEW-REBUILT-EMPTY",
+      "E-REF-058-PENDING-FAIL"
+    ],
+    "referenceProjection": {
+      "about": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale",
+        "reference-document.withdrawn",
+        "reference-document.not-found"
+      ],
+      "actual-questions-explainer": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale",
+        "reference-document.withdrawn",
+        "reference-document.not-found"
+      ],
+      "atlas-family": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale",
+        "reference-document.recoverable-error",
+        "reference-document.withdrawn",
+        "reference-document.pending"
+      ],
+      "atlas-index": [
+        "reference-document.ready-current",
+        "reference-document.empty",
+        "reference-document.recoverable-error",
+        "reference-document.loading"
+      ],
+      "atlas-tool": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale",
+        "reference-document.withdrawn",
+        "reference-document.ready-retired",
+        "reference-document.ready-corrected"
+      ],
+      "corrections": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale",
+        "reference-document.withdrawn",
+        "reference-document.not-found"
+      ],
+      "exam-selector": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.empty",
+        "reference-document.offline-stale",
+        "reference-document.recoverable-error",
+        "reference-document.offline-unavailable",
+        "reference-document.content-unavailable",
+        "reference-document.pending"
+      ],
+      "faq": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale"
+      ],
+      "foil": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale",
+        "reference-document.withdrawn",
+        "reference-document.not-found"
+      ],
+      "hazards-index": [
+        "reference-document.ready-current",
+        "reference-document.empty"
+      ],
+      "home": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale"
+      ],
+      "nyc-disambiguation": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale",
+        "reference-document.withdrawn",
+        "reference-document.not-found"
+      ],
+      "privacy": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale",
+        "reference-document.withdrawn",
+        "reference-document.not-found"
+      ],
+      "procedure-detail": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale",
+        "reference-document.withdrawn",
+        "reference-document.ready-corrected"
+      ],
+      "procedures-index": [
+        "reference-document.ready-current",
+        "reference-document.empty"
+      ],
+      "profile": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale",
+        "reference-document.recoverable-error",
+        "reference-document.pending",
+        "reference-document.ready-superseded",
+        "reference-document.ready-retired"
+      ],
+      "repair-lab": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.empty",
+        "reference-document.offline-stale",
+        "reference-document.recoverable-error",
+        "reference-document.content-unavailable"
+      ],
+      "review-queue": [
+        "reference-document.ready-current",
+        "reference-document.empty",
+        "reference-document.recoverable-error",
+        "reference-document.loading",
+        "reference-document.pending"
+      ],
+      "scoring-explainer": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale",
+        "reference-document.withdrawn",
+        "reference-document.not-found"
+      ],
+      "security": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale",
+        "reference-document.withdrawn",
+        "reference-document.not-found"
+      ],
+      "source": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.empty",
+        "reference-document.offline-stale",
+        "reference-document.withdrawn",
+        "reference-document.not-found"
+      ],
+      "study-hub": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.empty",
+        "reference-document.offline-stale",
+        "reference-document.recoverable-error",
+        "reference-document.pending"
+      ],
+      "transparency-index": [
+        "reference-document.ready-current",
+        "reference-document.ready-stale",
+        "reference-document.offline-stale",
+        "reference-document.withdrawn",
+        "reference-document.not-found"
+      ]
+    },
+    "routeIds": [
+      "home",
+      "exam-selector",
+      "exam-checker",
+      "profile",
+      "study-hub",
+      "atlas-index",
+      "atlas-family",
+      "atlas-tool",
+      "procedures-index",
+      "procedure-detail",
+      "repair-lab",
+      "question-player",
+      "hazards-index",
+      "hazard-player",
+      "review-queue",
+      "review-player",
+      "simulation-setup",
+      "simulation-player",
+      "simulation-results",
+      "print-center",
+      "print-preview",
+      "faq",
+      "transparency-index",
+      "source",
+      "corrections",
+      "foil",
+      "security",
+      "privacy",
+      "correction-submit",
+      "settings",
+      "offline-packs",
+      "status",
+      "scoring-explainer",
+      "actual-questions-explainer",
+      "about",
+      "nyc-disambiguation"
+    ],
+    "routeMilestoneAssignments": {
+      "about": {
+        "kind": "not-applicable",
+        "reason": "additional-acquisition-spoke-outside-21-family-milestone-table"
+      },
+      "actual-questions-explainer": {
+        "kind": "not-applicable",
+        "reason": "additional-acquisition-spoke-outside-21-family-milestone-table"
+      },
+      "atlas-family": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "atlas-index": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "atlas-tool": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "correction-submit": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M5"
+        ],
+        "sourceCell": "M5"
+      },
+      "corrections": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1",
+          "M5"
+        ],
+        "sourceCell": "M1 for core records, M5 completion"
+      },
+      "exam-checker": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "exam-selector": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "faq": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "foil": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1",
+          "M5"
+        ],
+        "sourceCell": "M1 for core records, M5 completion"
+      },
+      "hazard-player": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M3"
+        ],
+        "sourceCell": "M3"
+      },
+      "hazards-index": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M3"
+        ],
+        "sourceCell": "M3"
+      },
+      "home": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M0"
+        ],
+        "sourceCell": "M0"
+      },
+      "nyc-disambiguation": {
+        "kind": "not-applicable",
+        "reason": "additional-acquisition-spoke-outside-21-family-milestone-table"
+      },
+      "offline-packs": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M2",
+          "M5"
+        ],
+        "sourceCell": "M2 single-pack proof, full M5"
+      },
+      "print-center": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M2",
+          "M4"
+        ],
+        "sourceCell": "M2 fixture, full M4"
+      },
+      "print-preview": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M2",
+          "M4"
+        ],
+        "sourceCell": "M2 fixture, full M4"
+      },
+      "privacy": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1",
+          "M5"
+        ],
+        "sourceCell": "M1 for core records, M5 completion"
+      },
+      "procedure-detail": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "procedures-index": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "profile": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "question-player": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M2"
+        ],
+        "sourceCell": "M2"
+      },
+      "repair-lab": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "review-player": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M3"
+        ],
+        "sourceCell": "M3"
+      },
+      "review-queue": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M3"
+        ],
+        "sourceCell": "M3"
+      },
+      "scoring-explainer": {
+        "kind": "not-applicable",
+        "reason": "additional-acquisition-spoke-outside-21-family-milestone-table"
+      },
+      "security": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1",
+          "M5"
+        ],
+        "sourceCell": "M1 for core records, M5 completion"
+      },
+      "settings": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M5"
+        ],
+        "sourceCell": "M5"
+      },
+      "simulation-player": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M4"
+        ],
+        "sourceCell": "M4"
+      },
+      "simulation-results": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M4"
+        ],
+        "sourceCell": "M4"
+      },
+      "simulation-setup": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M4"
+        ],
+        "sourceCell": "M4"
+      },
+      "source": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1",
+          "M5"
+        ],
+        "sourceCell": "M1 for core records, M5 completion"
+      },
+      "status": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M0",
+          "M5"
+        ],
+        "sourceCell": "M0 shell, full recovery M5"
+      },
+      "study-hub": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1",
+          "M2",
+          "M4"
+        ],
+        "sourceCell": "M1; local actions M2–M4"
+      },
+      "transparency-index": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1",
+          "M5"
+        ],
+        "sourceCell": "M1 for core records, M5 completion"
+      }
+    },
+    "selectedDirection": {
+      "directionId": "NAV-CODEX-1",
+      "evidenceMode": "codex-only",
+      "humanEvidence": "none",
+      "humanParticipantCount": 0,
+      "notHumanUsabilityTested": true,
+      "programVersion": "CODEX-ONLY-UIUX-V1",
+      "rules": [
+        {
+          "id": "NAV-FOCUSED-PLAYERS",
+          "statement": "Give every player a named session landmark, progress, and truthful explicit exit without acquisition or utility navigation."
+        },
+        {
+          "id": "NAV-NATIVE-COMPACT",
+          "statement": "Use a named native no-JavaScript-safe compact disclosure before global links wrap into peer rows."
+        },
+        {
+          "id": "NAV-NOJS",
+          "statement": "Keep primary discovery as static ordinary document navigation with truthful JavaScript-free fallbacks."
+        },
+        {
+          "id": "NAV-NONVISUAL-EQUAL-DISCOVERY",
+          "statement": "Give visual and text-keyboard hazard tasks equivalent discovery without claiming identical measurement."
+        },
+        {
+          "id": "NAV-PRACTICE-TASK-HUB",
+          "statement": "Lead Practice with concrete task starts and place translated capacity diagnostics after those starts."
+        },
+        {
+          "id": "NAV-ROUTE-IDENTITY",
+          "statement": "Preserve every fixed route identity, canonical path, and no-JavaScript purpose."
+        },
+        {
+          "id": "NAV-STATIC-REVIEW-ENTRY",
+          "statement": "Expose Review through a normal static parent entry while retaining local and noindex semantics."
+        },
+        {
+          "id": "NAV-TWO-TIER",
+          "statement": "Separate learner tasks from utility and trust destinations instead of presenting every destination as a peer."
+        },
+        {
+          "id": "SHARED-EXPLICIT-PROFILE-CONTEXT",
+          "statement": "Require explicit or visibly neutral profile context and never silently substitute the first jurisdiction."
+        },
+        {
+          "id": "SHARED-HUMAN-EVIDENCE-BOUNDARY",
+          "statement": "Keep human evidence none, human participant count zero, and every result labeled not human usability tested."
+        },
+        {
+          "id": "SHARED-PRESERVE-LOAD-BEARING-TRUTH",
+          "statement": "Preserve unofficial status, uncertainty, source support, local-data risk, security boundaries, and commit-before-reveal."
+        }
+      ],
+      "schemaVersion": "codex-only-rule-closure-v1",
+      "sourceClauseIds": [
+        "RT-CODEX-METADATA",
+        "RT-SELECTED-RULES"
+      ]
+    },
+    "sourceClauseIds": [
+      "SS-CONTRACT",
+      "SS-DIM-PRODUCT",
+      "SS-DIM-AVAILABILITY",
+      "SS-DIM-OPERATION",
+      "SS-DIM-CONNECTIVITY",
+      "SS-DIM-PERSISTENCE",
+      "SS-DIM-INTERACTION",
+      "SS-DIM-FRESHNESS",
+      "SS-TYPED-ERROR",
+      "SS-INVALID-01",
+      "SS-INVALID-02",
+      "SS-INVALID-03",
+      "SS-INVALID-04",
+      "SS-INVALID-05",
+      "SS-INVALID-06",
+      "SS-INVALID-07",
+      "SS-INVALID-08",
+      "SS-INVALID-09",
+      "SS-GLOBAL-01",
+      "SS-GLOBAL-02",
+      "SS-GLOBAL-03",
+      "SS-GLOBAL-04",
+      "SS-GLOBAL-05",
+      "SS-GLOBAL-06",
+      "SS-GLOBAL-07",
+      "SS-GLOBAL-08",
+      "SS-GLOBAL-09",
+      "SS-REF-MACHINE",
+      "SS-REF-ISLAND",
+      "SS-QUESTION-MACHINE",
+      "SS-QUESTION-SEMANTICS",
+      "SS-HAZARD-MACHINE",
+      "SS-HAZARD-SEMANTICS",
+      "SS-SIMULATION-MACHINE",
+      "SS-SIMULATION-SEMANTICS",
+      "SS-PRINT-MACHINE",
+      "SS-PRINT-SEMANTICS",
+      "SS-PACK-MACHINE",
+      "SS-PACK-SEMANTICS",
+      "SS-CORRECTION-MACHINE",
+      "SS-CORRECTION-SEMANTICS",
+      "SS-DATA-MACHINE",
+      "SS-DATA-COMMIT-COMPLETE-202",
+      "SS-DATA-COMMIT-COMPLETE-204",
+      "SS-DATA-SEMANTICS",
+      "SS-STATIC-SPOKES",
+      "SS-ROUTE-01",
+      "SS-ROUTE-02",
+      "SS-ROUTE-03",
+      "SS-ROUTE-04",
+      "SS-ROUTE-05",
+      "SS-ROUTE-06",
+      "SS-ROUTE-07",
+      "SS-ROUTE-08",
+      "SS-ROUTE-09",
+      "SS-ROUTE-10",
+      "SS-ROUTE-11",
+      "SS-ROUTE-12",
+      "SS-ROUTE-13",
+      "SS-ROUTE-14",
+      "SS-ROUTE-15",
+      "SS-ROUTE-16",
+      "SS-ROUTE-17",
+      "SS-ROUTE-18",
+      "SS-ROUTE-19",
+      "SS-ROUTE-20",
+      "SS-ROUTE-21",
+      "SS-FOCUS-DOCUMENT",
+      "SS-FOCUS-ISLAND",
+      "SS-HISTORY",
+      "SS-RECOVERY-ACTIONS",
+      "SS-RECOVERY-IDEMPOTENCE",
+      "SS-ACCEPTANCE",
+      "RT-CODEX-METADATA",
+      "RT-SELECTED-RULES",
+      "RT-AUTHORITY-SCOPE",
+      "RT-INVARIANT-01",
+      "RT-INVARIANT-02",
+      "RT-INVARIANT-03",
+      "RT-INVARIANT-04",
+      "RT-INVARIANT-05",
+      "RT-INVARIANT-06",
+      "RT-INVARIANT-07",
+      "RT-INVARIANT-08",
+      "RT-INVARIANT-09",
+      "RT-INVARIANT-10",
+      "RT-RENDER-LABELS",
+      "RT-ROUTE-01",
+      "RT-ROUTE-02",
+      "RT-ROUTE-03",
+      "RT-ROUTE-04",
+      "RT-ROUTE-05",
+      "RT-ROUTE-06",
+      "RT-ROUTE-07",
+      "RT-ROUTE-08",
+      "RT-ROUTE-09",
+      "RT-ROUTE-10",
+      "RT-ROUTE-11",
+      "RT-ROUTE-12",
+      "RT-ROUTE-13",
+      "RT-ROUTE-14",
+      "RT-ROUTE-15",
+      "RT-ROUTE-16",
+      "RT-ROUTE-17",
+      "RT-ROUTE-18",
+      "RT-ROUTE-19",
+      "RT-ROUTE-20",
+      "RT-ROUTE-21",
+      "RT-CONDITIONAL-GATE",
+      "RT-SPOKE-01",
+      "RT-SPOKE-02",
+      "RT-SPOKE-03",
+      "RT-SPOKE-04",
+      "RT-CAPABILITY-01",
+      "RT-CAPABILITY-02",
+      "RT-CAPABILITY-03",
+      "RT-CAPABILITY-04",
+      "RT-CAPABILITY-05",
+      "RT-CAPABILITY-06",
+      "RT-CAPABILITY-07",
+      "RT-LOCALE",
+      "RT-NAV-ENVELOPE",
+      "RT-FOCUSED-ROUTES",
+      "RT-SHELLS",
+      "RT-PROFILE-PRACTICE",
+      "RT-FOCUSED-WORK",
+      "RT-NAV-VERIFICATION",
+      "RT-ROUTE-ACCEPTANCE",
+      "RT-MILESTONES"
+    ],
+    "sources": [
+      {
+        "byteLength": 24683,
+        "byteOrderMark": false,
+        "encoding": "UTF-8",
+        "finalNewline": true,
+        "gitBlobSha": "c2d71d1f786efe99421ee5eb5167cbd3cd426023",
+        "newline": "LF",
+        "repoRelativePath": "product/SCREEN_STATES.md",
+        "sha256": "54b7b18280cbc8a6ec3300c424ee412e4fcb9c4d4cb773ecd4af7adc63c22987",
+        "sourceId": "SCREEN_STATES"
+      },
+      {
+        "byteLength": 28680,
+        "byteOrderMark": false,
+        "encoding": "UTF-8",
+        "finalNewline": true,
+        "gitBlobSha": "4c40d047af8ba8c34bd4a7a1ff40da990b20add8",
+        "newline": "LF",
+        "repoRelativePath": "product/ROUTES.md",
+        "sha256": "501230759f15e6ccd13e1a49d24db1e3ee94d7a52e80634490c7ff7b08c24e98",
+        "sourceId": "ROUTES"
+      }
+    ],
+    "statusDimensionAllowlist": {
+      "availability": [
+        "ready",
+        "not-found",
+        "withdrawn",
+        "offline-unavailable",
+        "content-unavailable"
+      ],
+      "connectivity": [
+        "online",
+        "offline"
+      ],
+      "freshness": [
+        "current",
+        "stale",
+        "superseded",
+        "retired",
+        "corrected"
+      ],
+      "operation": [
+        "idle",
+        "terminal-error"
+      ],
+      "persistence": [
+        "available",
+        "unavailable",
+        "quota-limited",
+        "reconciling"
+      ]
+    },
+    "statusProjection": {
+      "content-unavailable": {
+        "availability": {
+          "operator": "equals",
+          "value": "content-unavailable"
+        },
+        "connectivity": {
+          "operator": "anyLegalValue"
+        },
+        "freshness": {
+          "operator": "anyLegalValue"
+        },
+        "interaction": {
+          "operator": "equals",
+          "value": "content-unavailable"
+        },
+        "operation": {
+          "operator": "equals",
+          "value": "idle"
+        },
+        "persistence": {
+          "operator": "anyLegalValue"
+        }
+      },
+      "not-found": {
+        "availability": {
+          "operator": "equals",
+          "value": "not-found"
+        },
+        "connectivity": {
+          "operator": "anyLegalValue"
+        },
+        "freshness": {
+          "operator": "anyLegalValue"
+        },
+        "interaction": {
+          "operator": "equals",
+          "value": "not-found"
+        },
+        "operation": {
+          "operator": "equals",
+          "value": "idle"
+        },
+        "persistence": {
+          "operator": "anyLegalValue"
+        }
+      },
+      "offline-unavailable": {
+        "availability": {
+          "operator": "equals",
+          "value": "offline-unavailable"
+        },
+        "connectivity": {
+          "operator": "equals",
+          "value": "offline"
+        },
+        "freshness": {
+          "operator": "anyLegalValue"
+        },
+        "interaction": {
+          "operator": "equals",
+          "value": "offline-unavailable"
+        },
+        "operation": {
+          "operator": "equals",
+          "value": "idle"
+        },
+        "persistence": {
+          "operator": "anyLegalValue"
+        }
+      },
+      "service-unavailable": {
+        "availability": {
+          "operator": "equals",
+          "value": "ready"
+        },
+        "connectivity": {
+          "operator": "anyLegalValue"
+        },
+        "freshness": {
+          "operator": "anyLegalValue"
+        },
+        "interaction": {
+          "operator": "equals",
+          "value": "service-unavailable"
+        },
+        "operation": {
+          "operator": "equals",
+          "value": "terminal-error"
+        },
+        "persistence": {
+          "operator": "anyLegalValue"
+        }
+      },
+      "storage-unavailable": {
+        "availability": {
+          "operator": "equals",
+          "value": "ready"
+        },
+        "connectivity": {
+          "operator": "anyLegalValue"
+        },
+        "freshness": {
+          "operator": "anyLegalValue"
+        },
+        "interaction": {
+          "operator": "equals",
+          "value": "storage-unavailable"
+        },
+        "operation": {
+          "operator": "equals",
+          "value": "terminal-error"
+        },
+        "persistence": {
+          "operator": "equals",
+          "value": "unavailable"
+        }
+      },
+      "terminal-error": {
+        "availability": {
+          "operator": "equals",
+          "value": "ready"
+        },
+        "connectivity": {
+          "operator": "anyLegalValue"
+        },
+        "freshness": {
+          "operator": "anyLegalValue"
+        },
+        "interaction": {
+          "operator": "equals",
+          "value": "terminal-error"
+        },
+        "operation": {
+          "operator": "equals",
+          "value": "terminal-error"
+        },
+        "persistence": {
+          "operator": "anyLegalValue"
+        }
+      },
+      "withdrawn": {
+        "availability": {
+          "operator": "equals",
+          "value": "withdrawn"
+        },
+        "connectivity": {
+          "operator": "anyLegalValue"
+        },
+        "freshness": {
+          "operator": "anyLegalValue"
+        },
+        "interaction": {
+          "operator": "equals",
+          "value": "withdrawn"
+        },
+        "operation": {
+          "operator": "equals",
+          "value": "idle"
+        },
+        "persistence": {
+          "operator": "anyLegalValue"
+        }
+      }
+    }
+  },
+  "fixtureStructuralShapeSha256": "8eb7a608ca311e5fde31c55fab811e23093c285188d237c5452e70c35bf7dcef",
+  "implementationRegistry": {
+    "byteLength": 823,
+    "gitBlobSha": "294395cf3d0d7f4620fbc821f96931ddb2569142",
+    "repoRelativePath": "apps/site/src/route-registry.ts",
+    "routeIds": [
+      "atlas-family",
+      "atlas-index",
+      "atlas-tool",
+      "correction-submit",
+      "corrections",
+      "exam-selector",
+      "foil",
+      "hazards-index",
+      "hazard-player",
+      "home",
+      "offline-packs",
+      "print-center",
+      "print-preview",
+      "privacy",
+      "profile",
+      "question-player",
+      "review-player",
+      "review-queue",
+      "security",
+      "settings",
+      "simulation-player",
+      "simulation-results",
+      "simulation-setup",
+      "source",
+      "status",
+      "study-hub",
+      "transparency-index"
+    ],
+    "sha256": "0fe1f54de882b9a9828efee25ae4b0b438e2d6fd02972ffe1bb6a174c03f9605"
+  },
+  "oracleVersion": "plan008-validator-owned-oracle-v4-executable-boundary",
+  "preservationProjection": {
+    "confirmationResolutionProjection": {
+      "confirmation.data-operation": [
+        {
+          "eventId": "confirmation.data-operation.accepted",
+          "machineId": "data-operation",
+          "toStateSelector": {
+            "preserve": [
+              "operationKind"
+            ],
+            "stateId": "data-operation.committing",
+            "substateAssignments": null
+          }
+        },
+        {
+          "eventId": "confirmation.data-operation.dismissed",
+          "machineId": "data-operation",
+          "toStateSelector": {
+            "preserve": [
+              "operationKind"
+            ],
+            "stateId": "data-operation.validated-preview",
+            "substateAssignments": null
+          }
+        }
+      ],
+      "confirmation.hazard-zero": [
+        {
+          "eventId": "confirmation.hazard-zero.presented",
+          "machineId": "hazard-item",
+          "toStateSelector": {
+            "preserve": [
+              "neutralMarkers",
+              "hazardAttemptId"
+            ],
+            "stateId": "hazard-item.confirm-zero",
+            "substateAssignments": {
+              "editableOrigin": "ready"
+            }
+          }
+        },
+        {
+          "eventId": "confirmation.hazard-zero.dismissed",
+          "machineId": "hazard-item",
+          "toStateSelector": {
+            "preserve": [
+              "neutralMarkers",
+              "hazardAttemptId"
+            ],
+            "stateId": "hazard-item.ready",
+            "substateAssignments": null
+          }
+        }
+      ],
+      "confirmation.hazard-zero-marking": [
+        {
+          "eventId": "confirmation.hazard-zero-marking.presented",
+          "machineId": "hazard-item",
+          "toStateSelector": {
+            "preserve": [
+              "hazardAttemptId"
+            ],
+            "stateId": "hazard-item.confirm-zero",
+            "substateAssignments": {
+              "editableOrigin": "marking",
+              "neutralMarkers": "zero-stable-neutral-markers"
+            }
+          }
+        },
+        {
+          "eventId": "confirmation.hazard-zero-marking.dismissed",
+          "machineId": "hazard-item",
+          "toStateSelector": {
+            "preserve": [
+              "neutralMarkers",
+              "hazardAttemptId"
+            ],
+            "stateId": "hazard-item.marking",
+            "substateAssignments": null
+          }
+        }
+      ],
+      "confirmation.pack-removal": [
+        {
+          "eventId": "confirmation.pack-removal.accepted",
+          "machineId": "offline-pack",
+          "toStateSelector": {
+            "preserve": [
+              "activeGeneration"
+            ],
+            "stateId": "offline-pack.removing",
+            "substateAssignments": null
+          }
+        },
+        {
+          "eventId": "confirmation.pack-removal.dismissed",
+          "machineId": "offline-pack",
+          "toStateSelector": {
+            "preserve": [
+              "activeGeneration"
+            ],
+            "stateId": "offline-pack.active",
+            "substateAssignments": null
+          }
+        }
+      ],
+      "confirmation.simulation-final": [
+        {
+          "eventId": "confirmation.simulation-final.presented",
+          "machineId": "simulation",
+          "toStateSelector": {
+            "preserve": [
+              "answer",
+              "flag",
+              "position",
+              "sessionId"
+            ],
+            "stateId": "simulation.final-confirmation",
+            "substateAssignments": {
+              "trigger": "explicit-submit"
+            }
+          }
+        },
+        {
+          "eventId": "confirmation.simulation-final.dismissed",
+          "machineId": "simulation",
+          "toStateSelector": {
+            "preserve": [
+              "answer",
+              "flag",
+              "position",
+              "sessionId"
+            ],
+            "stateId": "simulation.active",
+            "substateAssignments": null
+          }
+        }
+      ],
+      "confirmation.simulation-timer-final": [
+        {
+          "eventId": "confirmation.simulation-timer-final.presented",
+          "machineId": "simulation",
+          "toStateSelector": {
+            "preserve": [
+              "answer",
+              "flag",
+              "position",
+              "sessionId"
+            ],
+            "stateId": "simulation.final-confirmation",
+            "substateAssignments": {
+              "trigger": "strict-timer-opt-in"
+            }
+          }
+        },
+        {
+          "eventId": "confirmation.simulation-timer-final.dismissed",
+          "machineId": "simulation",
+          "toStateSelector": {
+            "preserve": [
+              "answer",
+              "flag",
+              "position",
+              "sessionId"
+            ],
+            "stateId": "simulation.active",
+            "substateAssignments": null
+          }
+        }
+      ]
+    },
+    "edgeTargets": {
+      "E-ANSWER-001-RESTORED": {
+        "preserve": [],
+        "stateId": "immediate-feedback.ready",
+        "substateAssignments": null
+      },
+      "E-ANSWER-002-MISSING": {
+        "preserve": [],
+        "stateId": "immediate-feedback.content-unavailable",
+        "substateAssignments": {
+          "missingPinnedClosure": "event.missingPinnedClosure"
+        }
+      },
+      "E-ANSWER-010-SELECT": {
+        "preserve": [],
+        "stateId": "immediate-feedback.selected",
+        "substateAssignments": {
+          "draftAttemptId": "new-stable-draft-attempt-id",
+          "selectedOptionId": "command.optionId"
+        }
+      },
+      "E-ANSWER-011-RESELECT": {
+        "preserve": [],
+        "stateId": "immediate-feedback.selected",
+        "substateAssignments": {
+          "draftAttemptId": "same-for-idempotent-choice-otherwise-rotated",
+          "selectedOptionId": "command.optionId"
+        }
+      },
+      "E-ANSWER-012-CLEAR": {
+        "preserve": [],
+        "stateId": "immediate-feedback.ready",
+        "substateAssignments": null
+      },
+      "E-ANSWER-020-COMMIT": {
+        "preserve": [
+          "selectedOptionId",
+          "draftAttemptId"
+        ],
+        "stateId": "immediate-feedback.committing",
+        "substateAssignments": null
+      },
+      "E-ANSWER-021-COMMIT-COMPLETE": {
+        "preserve": [],
+        "stateId": "immediate-feedback.answered-revealed",
+        "substateAssignments": {
+          "flag": "event.flag"
+        }
+      },
+      "E-ANSWER-022-RECONCILED": {
+        "preserve": [],
+        "stateId": "immediate-feedback.answered-revealed",
+        "substateAssignments": {
+          "flag": "event.flag"
+        }
+      },
+      "E-ANSWER-023-COMMIT-FAIL": {
+        "preserve": [
+          "selectedOptionId",
+          "draftAttemptId"
+        ],
+        "stateId": "immediate-feedback.selected-recoverable-error",
+        "substateAssignments": {
+          "typedCause": "event.typedCause"
+        }
+      },
+      "E-ANSWER-024-RETRY": {
+        "preserve": [
+          "selectedOptionId",
+          "draftAttemptId"
+        ],
+        "stateId": "immediate-feedback.committing",
+        "substateAssignments": null
+      },
+      "E-ANSWER-03-FLAG": {
+        "preserve": [],
+        "stateId": "immediate-feedback.answered-revealed",
+        "substateAssignments": {
+          "flag": "flagged"
+        }
+      },
+      "E-ANSWER-03-UNFLAG": {
+        "preserve": [],
+        "stateId": "immediate-feedback.answered-revealed",
+        "substateAssignments": {
+          "flag": "unflagged"
+        }
+      },
+      "E-ANSWER-040-REVIEW": {
+        "preserve": [],
+        "stateId": "immediate-feedback.reviewed",
+        "substateAssignments": null
+      },
+      "E-ANSWER-042-COMPLETE": {
+        "preserve": [],
+        "stateId": "immediate-feedback.completed",
+        "substateAssignments": null
+      },
+      "E-CHECK-001-VALIDATE": {
+        "preserve": [
+          "input"
+        ],
+        "stateId": "exam-checker.validating",
+        "substateAssignments": null
+      },
+      "E-CHECK-002-MALFORMED": {
+        "preserve": [
+          "input"
+        ],
+        "stateId": "exam-checker.ready-validation-error",
+        "substateAssignments": {
+          "validationErrors": "command.validationErrors"
+        }
+      },
+      "E-CHECK-01-AMBIGUOUS": {
+        "preserve": [
+          "input"
+        ],
+        "stateId": "exam-checker.ambiguous",
+        "substateAssignments": null
+      },
+      "E-CHECK-01-MATCH": {
+        "preserve": [
+          "input"
+        ],
+        "stateId": "exam-checker.match",
+        "substateAssignments": null
+      },
+      "E-CHECK-01-NO-MATCH": {
+        "preserve": [
+          "input"
+        ],
+        "stateId": "exam-checker.no-match",
+        "substateAssignments": null
+      },
+      "E-CHECK-021-EDIT": {
+        "preserve": [
+          "input"
+        ],
+        "stateId": "exam-checker.ready",
+        "substateAssignments": null
+      },
+      "E-CORR-001-VALIDATE": {
+        "preserve": [
+          "safeFields"
+        ],
+        "stateId": "correction-report.validating",
+        "substateAssignments": null
+      },
+      "E-CORR-002-VALID": {
+        "preserve": [
+          "safeFields"
+        ],
+        "stateId": "correction-report.ready-to-submit",
+        "substateAssignments": null
+      },
+      "E-CORR-003-INVALID": {
+        "preserve": [
+          "safeFields"
+        ],
+        "stateId": "correction-report.draft-validation-errors",
+        "substateAssignments": {
+          "validationErrors": "event.validationErrors"
+        }
+      },
+      "E-CORR-010-SUBMIT": {
+        "preserve": [
+          "safeFields"
+        ],
+        "stateId": "correction-report.submitting",
+        "substateAssignments": {
+          "clientReceiptId": "command.clientReceiptId"
+        }
+      },
+      "E-CORR-011-ACCEPTED": {
+        "preserve": [],
+        "stateId": "correction-report.submitted",
+        "substateAssignments": {
+          "acceptedClientReceipt": "event.acceptedClientReceipt"
+        }
+      },
+      "E-CORR-012-SUBMIT-FAIL": {
+        "preserve": [
+          "safeFields",
+          "clientReceiptId"
+        ],
+        "stateId": "correction-report.ready-recoverable-error",
+        "substateAssignments": {
+          "typedCause": "event.typedCause"
+        }
+      },
+      "E-CORR-020-SAVE-DRAFT": {
+        "preserve": [
+          "safeFields"
+        ],
+        "stateId": "correction-report.local-draft-saved",
+        "substateAssignments": null
+      },
+      "E-CORR-021-RESUME": {
+        "preserve": [
+          "safeFields"
+        ],
+        "stateId": "correction-report.ready-to-submit",
+        "substateAssignments": null
+      },
+      "E-HAZARD-001-RESTORED": {
+        "preserve": [],
+        "stateId": "hazard-item.ready",
+        "substateAssignments": {
+          "hazardAttemptId": "event.hazardAttemptId",
+          "neutralMarkers": "event.neutralMarkers"
+        }
+      },
+      "E-HAZARD-002-MISSING": {
+        "preserve": [],
+        "stateId": "hazard-item.content-unavailable",
+        "substateAssignments": {
+          "missingPinnedClosure": "event.missingPinnedClosure"
+        }
+      },
+      "E-HAZARD-010-ADD": {
+        "preserve": [
+          "neutralMarkers",
+          "hazardAttemptId"
+        ],
+        "stateId": "hazard-item.marking",
+        "substateAssignments": null
+      },
+      "E-HAZARD-011-MODIFY": {
+        "preserve": [
+          "neutralMarkers",
+          "hazardAttemptId"
+        ],
+        "stateId": "hazard-item.marking",
+        "substateAssignments": null
+      },
+      "E-HAZARD-012-CLEAR": {
+        "preserve": [
+          "hazardAttemptId"
+        ],
+        "stateId": "hazard-item.ready",
+        "substateAssignments": null
+      },
+      "E-HAZARD-020A-CONFIRM-PRESENTED": {
+        "preserve": [
+          "neutralMarkers",
+          "hazardAttemptId"
+        ],
+        "stateId": "hazard-item.confirm-zero",
+        "substateAssignments": {
+          "editableOrigin": "ready"
+        }
+      },
+      "E-HAZARD-020B-CONFIRM-DISMISSED": {
+        "preserve": [
+          "neutralMarkers",
+          "hazardAttemptId"
+        ],
+        "stateId": "hazard-item.ready",
+        "substateAssignments": null
+      },
+      "E-HAZARD-020MA-CONFIRM-PRESENTED": {
+        "preserve": [
+          "hazardAttemptId"
+        ],
+        "stateId": "hazard-item.confirm-zero",
+        "substateAssignments": {
+          "editableOrigin": "marking",
+          "neutralMarkers": "zero-stable-neutral-markers"
+        }
+      },
+      "E-HAZARD-020MB-CONFIRM-DISMISSED": {
+        "preserve": [
+          "neutralMarkers",
+          "hazardAttemptId"
+        ],
+        "stateId": "hazard-item.marking",
+        "substateAssignments": null
+      },
+      "E-HAZARD-021-CONFIRM-ZERO": {
+        "preserve": [
+          "neutralMarkers",
+          "hazardAttemptId"
+        ],
+        "stateId": "hazard-item.committing",
+        "substateAssignments": {
+          "attemptKind": "confirmed-zero",
+          "previousEditableState": "state.editableOrigin"
+        }
+      },
+      "E-HAZARD-022-COMMIT-MARKERS": {
+        "preserve": [
+          "neutralMarkers",
+          "hazardAttemptId"
+        ],
+        "stateId": "hazard-item.committing",
+        "substateAssignments": {
+          "attemptKind": "marked",
+          "previousEditableState": "marking"
+        }
+      },
+      "E-HAZARD-030-COMMIT-COMPLETE": {
+        "preserve": [],
+        "stateId": "hazard-item.answered-revealed",
+        "substateAssignments": null
+      },
+      "E-HAZARD-031-RECONCILED": {
+        "preserve": [],
+        "stateId": "hazard-item.answered-revealed",
+        "substateAssignments": null
+      },
+      "E-HAZARD-032-COMMIT-FAIL": {
+        "preserve": [
+          "attemptKind",
+          "previousEditableState",
+          "neutralMarkers",
+          "hazardAttemptId"
+        ],
+        "stateId": "hazard-item.editable-recoverable-error",
+        "substateAssignments": {
+          "typedCause": "event.typedCause"
+        }
+      },
+      "E-HAZARD-033-RETRY": {
+        "preserve": [
+          "attemptKind",
+          "previousEditableState",
+          "neutralMarkers",
+          "hazardAttemptId"
+        ],
+        "stateId": "hazard-item.committing",
+        "substateAssignments": null
+      },
+      "E-HAZARD-040-REVIEW": {
+        "preserve": [],
+        "stateId": "hazard-item.reviewed",
+        "substateAssignments": null
+      },
+      "E-HAZARD-042-COMPLETE": {
+        "preserve": [],
+        "stateId": "hazard-item.completed",
+        "substateAssignments": null
+      },
+      "E-PACK-001-DOWNLOAD": {
+        "preserve": [],
+        "stateId": "offline-pack.downloading",
+        "substateAssignments": {
+          "candidateGeneration": "command.candidateGeneration",
+          "priorActiveGeneration": "none"
+        }
+      },
+      "E-PACK-002-PAUSE-OFFLINE": {
+        "preserve": [
+          "priorActiveGeneration",
+          "candidateGeneration"
+        ],
+        "stateId": "offline-pack.paused-offline",
+        "substateAssignments": null
+      },
+      "E-PACK-003-RESUME": {
+        "preserve": [
+          "priorActiveGeneration",
+          "candidateGeneration"
+        ],
+        "stateId": "offline-pack.downloading",
+        "substateAssignments": null
+      },
+      "E-PACK-004-DOWNLOADED": {
+        "preserve": [
+          "priorActiveGeneration",
+          "candidateGeneration"
+        ],
+        "stateId": "offline-pack.verifying",
+        "substateAssignments": null
+      },
+      "E-PACK-005-DOWNLOAD-FAIL": {
+        "preserve": [
+          "priorActiveGeneration",
+          "candidateGeneration"
+        ],
+        "stateId": "offline-pack.recoverable-error",
+        "substateAssignments": {
+          "previousLifecycleState": "downloading",
+          "typedCause": "event.typedCause"
+        }
+      },
+      "E-PACK-006-CANCEL": {
+        "preserve": [],
+        "stateId": "offline-pack.absent",
+        "substateAssignments": null
+      },
+      "E-PACK-010-VERIFIED": {
+        "preserve": [
+          "priorActiveGeneration",
+          "candidateGeneration"
+        ],
+        "stateId": "offline-pack.staged",
+        "substateAssignments": null
+      },
+      "E-PACK-011-VERIFY-QUARANTINE": {
+        "preserve": [
+          "priorActiveGeneration",
+          "candidateGeneration"
+        ],
+        "stateId": "offline-pack.quarantined",
+        "substateAssignments": null
+      },
+      "E-PACK-012-VERIFY-FAIL": {
+        "preserve": [
+          "priorActiveGeneration",
+          "candidateGeneration"
+        ],
+        "stateId": "offline-pack.recoverable-error",
+        "substateAssignments": {
+          "previousLifecycleState": "verifying",
+          "typedCause": "event.typedCause"
+        }
+      },
+      "E-PACK-020-ACTIVATE": {
+        "preserve": [
+          "priorActiveGeneration",
+          "candidateGeneration"
+        ],
+        "stateId": "offline-pack.activating",
+        "substateAssignments": null
+      },
+      "E-PACK-021-ACTIVATED": {
+        "preserve": [],
+        "stateId": "offline-pack.active",
+        "substateAssignments": {
+          "activeGeneration": "state.candidateGeneration"
+        }
+      },
+      "E-PACK-022-ACTIVATE-QUARANTINE": {
+        "preserve": [
+          "priorActiveGeneration",
+          "candidateGeneration"
+        ],
+        "stateId": "offline-pack.quarantined",
+        "substateAssignments": null
+      },
+      "E-PACK-023-ACTIVATE-FAIL": {
+        "preserve": [
+          "priorActiveGeneration",
+          "candidateGeneration"
+        ],
+        "stateId": "offline-pack.recoverable-error",
+        "substateAssignments": {
+          "previousLifecycleState": "activating",
+          "typedCause": "event.typedCause"
+        }
+      },
+      "E-PACK-030-UPDATE": {
+        "preserve": [],
+        "stateId": "offline-pack.update-available",
+        "substateAssignments": {
+          "candidateGeneration": "event.candidateGeneration",
+          "priorActiveGeneration": "state.activeGeneration"
+        }
+      },
+      "E-PACK-031-DOWNLOAD-UPDATE": {
+        "preserve": [
+          "priorActiveGeneration",
+          "candidateGeneration"
+        ],
+        "stateId": "offline-pack.downloading",
+        "substateAssignments": null
+      },
+      "E-PACK-040A-CONFIRM-ACCEPTED": {
+        "preserve": [
+          "activeGeneration"
+        ],
+        "stateId": "offline-pack.removing",
+        "substateAssignments": null
+      },
+      "E-PACK-040B-CONFIRM-DISMISSED": {
+        "preserve": [
+          "activeGeneration"
+        ],
+        "stateId": "offline-pack.active",
+        "substateAssignments": null
+      },
+      "E-PACK-042-REMOVED": {
+        "preserve": [],
+        "stateId": "offline-pack.absent",
+        "substateAssignments": null
+      },
+      "E-PACK-043-RETAINED": {
+        "preserve": [
+          "activeGeneration"
+        ],
+        "stateId": "offline-pack.retained",
+        "substateAssignments": null
+      },
+      "E-SIM-001-GENERATE": {
+        "preserve": [
+          "settings"
+        ],
+        "stateId": "simulation.generating",
+        "substateAssignments": null
+      },
+      "E-SIM-003-GENERATION-FAIL": {
+        "preserve": [
+          "settings"
+        ],
+        "stateId": "simulation.setup-recoverable-error",
+        "substateAssignments": {
+          "typedCause": "event.typedCause"
+        }
+      },
+      "E-SIM-004-RETRY-GENERATION": {
+        "preserve": [
+          "settings"
+        ],
+        "stateId": "simulation.generating",
+        "substateAssignments": null
+      },
+      "E-SIM-010-RECORD": {
+        "preserve": [
+          "flag",
+          "position",
+          "sessionId"
+        ],
+        "stateId": "simulation.active",
+        "substateAssignments": {
+          "answer": "recorded"
+        }
+      },
+      "E-SIM-011-CLEAR": {
+        "preserve": [
+          "flag",
+          "position",
+          "sessionId"
+        ],
+        "stateId": "simulation.active",
+        "substateAssignments": {
+          "answer": "unanswered"
+        }
+      },
+      "E-SIM-012-FLAG": {
+        "preserve": [
+          "answer",
+          "position",
+          "sessionId"
+        ],
+        "stateId": "simulation.active",
+        "substateAssignments": {
+          "flag": "flagged"
+        }
+      },
+      "E-SIM-012-UNFLAG": {
+        "preserve": [
+          "answer",
+          "position",
+          "sessionId"
+        ],
+        "stateId": "simulation.active",
+        "substateAssignments": {
+          "flag": "unflagged"
+        }
+      },
+      "E-SIM-015-AUTOSAVE": {
+        "preserve": [
+          "answer",
+          "position",
+          "sessionId",
+          "flag"
+        ],
+        "stateId": "simulation.active",
+        "substateAssignments": null
+      },
+      "E-SIM-020A-CONFIRM-PRESENTED": {
+        "preserve": [
+          "answer",
+          "flag",
+          "position",
+          "sessionId"
+        ],
+        "stateId": "simulation.final-confirmation",
+        "substateAssignments": {
+          "trigger": "explicit-submit"
+        }
+      },
+      "E-SIM-020B-CONFIRM-DISMISSED": {
+        "preserve": [
+          "answer",
+          "flag",
+          "position",
+          "sessionId"
+        ],
+        "stateId": "simulation.active",
+        "substateAssignments": null
+      },
+      "E-SIM-021A-TIMER-CONFIRM-PRESENTED": {
+        "preserve": [
+          "answer",
+          "flag",
+          "position",
+          "sessionId"
+        ],
+        "stateId": "simulation.final-confirmation",
+        "substateAssignments": {
+          "trigger": "strict-timer-opt-in"
+        }
+      },
+      "E-SIM-021B-TIMER-CONFIRM-DISMISSED": {
+        "preserve": [
+          "answer",
+          "flag",
+          "position",
+          "sessionId"
+        ],
+        "stateId": "simulation.active",
+        "substateAssignments": null
+      },
+      "E-SIM-022-TIMER-SUBMIT": {
+        "preserve": [
+          "answer",
+          "flag",
+          "position",
+          "sessionId"
+        ],
+        "stateId": "simulation.submitting",
+        "substateAssignments": {
+          "submissionId": "new-stable-submission-id"
+        }
+      },
+      "E-SIM-023-CONFIRM-FINAL": {
+        "preserve": [
+          "answer",
+          "flag",
+          "position",
+          "sessionId"
+        ],
+        "stateId": "simulation.submitting",
+        "substateAssignments": {
+          "submissionId": "new-stable-submission-id"
+        }
+      },
+      "E-SIM-031-UNKNOWN": {
+        "preserve": [
+          "answer",
+          "flag",
+          "position",
+          "sessionId",
+          "submissionId"
+        ],
+        "stateId": "simulation.reconciling",
+        "substateAssignments": null
+      },
+      "E-SIM-032-SUBMIT-FAIL": {
+        "preserve": [
+          "answer",
+          "flag",
+          "position",
+          "sessionId",
+          "submissionId"
+        ],
+        "stateId": "simulation.active-recoverable-error",
+        "substateAssignments": {
+          "typedCause": "event.typedCause"
+        }
+      },
+      "E-SIM-034-RECONCILE-FAIL": {
+        "preserve": [
+          "answer",
+          "flag",
+          "position",
+          "sessionId",
+          "submissionId"
+        ],
+        "stateId": "simulation.active-recoverable-error",
+        "substateAssignments": {
+          "typedCause": "event.typedCause"
+        }
+      },
+      "E-SIM-035-RETRY-SUBMIT": {
+        "preserve": [
+          "answer",
+          "flag",
+          "position",
+          "sessionId",
+          "submissionId"
+        ],
+        "stateId": "simulation.submitting",
+        "substateAssignments": null
+      },
+      "E-SIM-036-RETRY-RECONCILE": {
+        "preserve": [
+          "answer",
+          "flag",
+          "position",
+          "sessionId",
+          "submissionId"
+        ],
+        "stateId": "simulation.reconciling",
+        "substateAssignments": null
+      },
+      "E-SIM-040-REVIEW-COMPLETE": {
+        "preserve": [],
+        "stateId": "simulation.completed",
+        "substateAssignments": null
+      }
+    },
+    "referenceFreshnessStates": {
+      "reference-document.ready-corrected": {
+        "dimensions": {
+          "availability": {
+            "operator": "equals",
+            "value": "ready"
+          },
+          "connectivity": {
+            "operator": "anyLegalValue"
+          },
+          "freshness": {
+            "operator": "equals",
+            "value": "corrected"
+          },
+          "operation": {
+            "operator": "equals",
+            "value": "idle"
+          },
+          "persistence": {
+            "operator": "anyLegalValue"
+          }
+        },
+        "routeScope": [
+          "atlas-tool",
+          "procedure-detail"
+        ]
+      },
+      "reference-document.ready-retired": {
+        "dimensions": {
+          "availability": {
+            "operator": "equals",
+            "value": "ready"
+          },
+          "connectivity": {
+            "operator": "anyLegalValue"
+          },
+          "freshness": {
+            "operator": "equals",
+            "value": "retired"
+          },
+          "operation": {
+            "operator": "equals",
+            "value": "idle"
+          },
+          "persistence": {
+            "operator": "anyLegalValue"
+          }
+        },
+        "routeScope": [
+          "profile",
+          "atlas-tool"
+        ]
+      },
+      "reference-document.ready-superseded": {
+        "dimensions": {
+          "availability": {
+            "operator": "equals",
+            "value": "ready"
+          },
+          "connectivity": {
+            "operator": "anyLegalValue"
+          },
+          "freshness": {
+            "operator": "equals",
+            "value": "superseded"
+          },
+          "operation": {
+            "operator": "equals",
+            "value": "idle"
+          },
+          "persistence": {
+            "operator": "anyLegalValue"
+          }
+        },
+        "routeScope": [
+          "profile"
+        ]
+      }
+    },
+    "stateSubstates": {
+      "correction-report.draft": [
+        {
+          "substateId": "safeFields",
+          "valueDomain": "editable non-echoing draft"
+        }
+      ],
+      "correction-report.draft-validation-errors": [
+        {
+          "substateId": "safeFields",
+          "valueDomain": "retained editable non-echoing draft"
+        },
+        {
+          "substateId": "validationErrors",
+          "valueDomain": "nonempty field diagnostics"
+        }
+      ],
+      "correction-report.local-draft-saved": [
+        {
+          "substateId": "safeFields",
+          "valueDomain": "explicitly saved non-echoing local draft"
+        }
+      ],
+      "correction-report.ready-recoverable-error": [
+        {
+          "substateId": "safeFields",
+          "valueDomain": "retained validated non-echoing draft"
+        },
+        {
+          "substateId": "clientReceiptId",
+          "valueDomain": "same stable opaque ID used by failed submit"
+        },
+        {
+          "substateId": "typedCause",
+          "valueDomain": "submission error"
+        }
+      ],
+      "correction-report.ready-to-submit": [
+        {
+          "substateId": "safeFields",
+          "valueDomain": "validated non-echoing draft"
+        }
+      ],
+      "correction-report.submitted": [
+        {
+          "substateId": "acceptedClientReceipt",
+          "valueDomain": "matching accepted receipt"
+        }
+      ],
+      "correction-report.submitting": [
+        {
+          "substateId": "safeFields",
+          "valueDomain": "validated non-echoing draft"
+        },
+        {
+          "substateId": "clientReceiptId",
+          "valueDomain": "stable opaque ID"
+        }
+      ],
+      "correction-report.validating": [
+        {
+          "substateId": "safeFields",
+          "valueDomain": "retained draft"
+        }
+      ],
+      "exam-checker.ambiguous": [
+        {
+          "substateId": "input",
+          "valueDomain": "retained editable form"
+        }
+      ],
+      "exam-checker.match": [
+        {
+          "substateId": "input",
+          "valueDomain": "retained editable form"
+        }
+      ],
+      "exam-checker.no-match": [
+        {
+          "substateId": "input",
+          "valueDomain": "retained editable form"
+        }
+      ],
+      "exam-checker.ready": [
+        {
+          "substateId": "input",
+          "valueDomain": "retained editable form"
+        }
+      ],
+      "exam-checker.ready-validation-error": [
+        {
+          "substateId": "input",
+          "valueDomain": "retained editable form"
+        },
+        {
+          "substateId": "validationErrors",
+          "valueDomain": "nonempty field diagnostics"
+        }
+      ],
+      "exam-checker.validating": [
+        {
+          "substateId": "input",
+          "valueDomain": "retained editable form"
+        }
+      ],
+      "hazard-item.answered-revealed": [],
+      "hazard-item.committing": [
+        {
+          "legalValues": [
+            "marked",
+            "confirmed-zero"
+          ],
+          "substateId": "attemptKind"
+        },
+        {
+          "legalValues": [
+            "ready",
+            "marking"
+          ],
+          "substateId": "previousEditableState"
+        },
+        {
+          "substateId": "neutralMarkers",
+          "valueDomain": "stable neutral marker set; zero allowed only after explicit confirmation"
+        },
+        {
+          "substateId": "hazardAttemptId",
+          "valueDomain": "stable opaque hazard attempt ID"
+        }
+      ],
+      "hazard-item.completed": [],
+      "hazard-item.confirm-zero": [
+        {
+          "legalValues": [
+            "ready",
+            "marking"
+          ],
+          "substateId": "editableOrigin"
+        },
+        {
+          "fixedValue": "zero-stable-neutral-markers",
+          "substateId": "neutralMarkers"
+        },
+        {
+          "substateId": "hazardAttemptId",
+          "valueDomain": "stable opaque hazard draft attempt ID"
+        }
+      ],
+      "hazard-item.content-unavailable": [
+        {
+          "substateId": "missingPinnedClosure",
+          "valueDomain": "typed image/region/description/source cause"
+        }
+      ],
+      "hazard-item.editable-recoverable-error": [
+        {
+          "legalValues": [
+            "marked",
+            "confirmed-zero"
+          ],
+          "substateId": "attemptKind"
+        },
+        {
+          "legalValues": [
+            "ready",
+            "marking"
+          ],
+          "substateId": "previousEditableState"
+        },
+        {
+          "substateId": "neutralMarkers",
+          "valueDomain": "same stable neutral marker set used by failed commit"
+        },
+        {
+          "substateId": "hazardAttemptId",
+          "valueDomain": "same stable opaque hazard attempt ID used by failed commit"
+        },
+        {
+          "substateId": "typedCause",
+          "valueDomain": "nonempty typed persistence error"
+        }
+      ],
+      "hazard-item.marking": [
+        {
+          "substateId": "neutralMarkers",
+          "valueDomain": "one-or-more stable neutral markers with no correctness metadata"
+        },
+        {
+          "substateId": "hazardAttemptId",
+          "valueDomain": "stable opaque hazard draft attempt ID"
+        }
+      ],
+      "hazard-item.ready": [
+        {
+          "fixedValue": "zero-stable-neutral-markers",
+          "substateId": "neutralMarkers"
+        },
+        {
+          "substateId": "hazardAttemptId",
+          "valueDomain": "stable opaque hazard draft attempt ID"
+        }
+      ],
+      "hazard-item.restoring": [
+        {
+          "substateId": "stableMarkers",
+          "valueDomain": "persisted marker set"
+        }
+      ],
+      "hazard-item.reviewed": [],
+      "immediate-feedback.answered-revealed": [
+        {
+          "legalValues": [
+            "flagged",
+            "unflagged"
+          ],
+          "substateId": "flag"
+        }
+      ],
+      "immediate-feedback.committing": [
+        {
+          "fixedValue": "selected-uncommitted-visible",
+          "substateId": "answerDraft"
+        },
+        {
+          "substateId": "selectedOptionId",
+          "valueDomain": "stable option ID from the exact pinned item"
+        },
+        {
+          "substateId": "draftAttemptId",
+          "valueDomain": "stable opaque ID"
+        }
+      ],
+      "immediate-feedback.completed": [],
+      "immediate-feedback.content-unavailable": [
+        {
+          "substateId": "missingPinnedClosure",
+          "valueDomain": "typed item/asset/pack cause"
+        }
+      ],
+      "immediate-feedback.ready": [
+        {
+          "fixedValue": "none",
+          "substateId": "answerDraft"
+        }
+      ],
+      "immediate-feedback.restoring": [
+        {
+          "substateId": "position",
+          "valueDomain": "validated one-based session position"
+        }
+      ],
+      "immediate-feedback.reviewed": [],
+      "immediate-feedback.selected": [
+        {
+          "fixedValue": "selected-uncommitted",
+          "substateId": "answerDraft"
+        },
+        {
+          "substateId": "selectedOptionId",
+          "valueDomain": "stable option ID from the exact pinned item"
+        },
+        {
+          "substateId": "draftAttemptId",
+          "valueDomain": "stable opaque ID; rotates only when selection changes"
+        }
+      ],
+      "immediate-feedback.selected-recoverable-error": [
+        {
+          "fixedValue": "selected-uncommitted-retained",
+          "substateId": "answerDraft"
+        },
+        {
+          "substateId": "selectedOptionId",
+          "valueDomain": "stable option ID from the exact pinned item"
+        },
+        {
+          "substateId": "draftAttemptId",
+          "valueDomain": "same stable opaque ID used by failed commit"
+        },
+        {
+          "substateId": "typedCause",
+          "valueDomain": "nonempty typed persistence error"
+        }
+      ],
+      "offline-pack.absent": [],
+      "offline-pack.activating": [
+        {
+          "substateId": "priorActiveGeneration",
+          "valueDomain": "stable active generation ID or explicit none sentinel"
+        },
+        {
+          "substateId": "candidateGeneration",
+          "valueDomain": "stable candidate generation ID"
+        }
+      ],
+      "offline-pack.active": [
+        {
+          "substateId": "activeGeneration",
+          "valueDomain": "stable active generation ID"
+        }
+      ],
+      "offline-pack.downloading": [
+        {
+          "substateId": "priorActiveGeneration",
+          "valueDomain": "stable active generation ID or explicit none sentinel"
+        },
+        {
+          "substateId": "candidateGeneration",
+          "valueDomain": "stable candidate generation ID"
+        }
+      ],
+      "offline-pack.paused-offline": [
+        {
+          "substateId": "priorActiveGeneration",
+          "valueDomain": "stable active generation ID or explicit none sentinel"
+        },
+        {
+          "substateId": "candidateGeneration",
+          "valueDomain": "stable candidate generation ID"
+        }
+      ],
+      "offline-pack.quarantined": [
+        {
+          "substateId": "priorActiveGeneration",
+          "valueDomain": "stable active generation ID or explicit none sentinel"
+        },
+        {
+          "substateId": "candidateGeneration",
+          "valueDomain": "stable candidate generation ID"
+        }
+      ],
+      "offline-pack.recoverable-error": [
+        {
+          "legalValues": [
+            "downloading",
+            "verifying",
+            "activating"
+          ],
+          "substateId": "previousLifecycleState"
+        },
+        {
+          "substateId": "priorActiveGeneration",
+          "valueDomain": "stable active generation ID or explicit none sentinel"
+        },
+        {
+          "substateId": "candidateGeneration",
+          "valueDomain": "stable candidate generation ID"
+        },
+        {
+          "substateId": "typedCause",
+          "valueDomain": "pack operation error"
+        }
+      ],
+      "offline-pack.removing": [
+        {
+          "substateId": "activeGeneration",
+          "valueDomain": "stable active generation ID"
+        }
+      ],
+      "offline-pack.retained": [
+        {
+          "substateId": "activeGeneration",
+          "valueDomain": "same retained active generation ID"
+        }
+      ],
+      "offline-pack.staged": [
+        {
+          "substateId": "priorActiveGeneration",
+          "valueDomain": "stable active generation ID or explicit none sentinel"
+        },
+        {
+          "substateId": "candidateGeneration",
+          "valueDomain": "stable candidate generation ID"
+        }
+      ],
+      "offline-pack.update-available": [
+        {
+          "substateId": "priorActiveGeneration",
+          "valueDomain": "stable active generation ID or explicit none sentinel"
+        },
+        {
+          "substateId": "candidateGeneration",
+          "valueDomain": "stable candidate generation ID"
+        }
+      ],
+      "offline-pack.verifying": [
+        {
+          "substateId": "priorActiveGeneration",
+          "valueDomain": "stable active generation ID or explicit none sentinel"
+        },
+        {
+          "substateId": "candidateGeneration",
+          "valueDomain": "stable candidate generation ID"
+        }
+      ],
+      "simulation.active": [
+        {
+          "initialValue": "unanswered",
+          "legalValues": [
+            "unanswered",
+            "recorded"
+          ],
+          "revealPolicy": "no item outcome or rationale",
+          "substateId": "answer"
+        },
+        {
+          "legalValues": [
+            "flagged",
+            "unflagged"
+          ],
+          "substateId": "flag"
+        },
+        {
+          "substateId": "position",
+          "valueDomain": "validated one-based simulation position"
+        },
+        {
+          "substateId": "sessionId",
+          "valueDomain": "stable opaque simulation session ID"
+        }
+      ],
+      "simulation.active-recoverable-error": [
+        {
+          "legalValues": [
+            "unanswered",
+            "recorded"
+          ],
+          "substateId": "answer"
+        },
+        {
+          "legalValues": [
+            "flagged",
+            "unflagged"
+          ],
+          "substateId": "flag"
+        },
+        {
+          "substateId": "position",
+          "valueDomain": "validated one-based simulation position"
+        },
+        {
+          "substateId": "sessionId",
+          "valueDomain": "stable opaque simulation session ID"
+        },
+        {
+          "substateId": "submissionId",
+          "valueDomain": "stable opaque submission ID"
+        },
+        {
+          "substateId": "typedCause",
+          "valueDomain": "submit or reconcile failure"
+        }
+      ],
+      "simulation.completed": [
+        {
+          "fixedValue": "reviewed",
+          "substateId": "review"
+        }
+      ],
+      "simulation.final-confirmation": [
+        {
+          "legalValues": [
+            "unanswered",
+            "recorded"
+          ],
+          "substateId": "answer"
+        },
+        {
+          "legalValues": [
+            "flagged",
+            "unflagged"
+          ],
+          "substateId": "flag"
+        },
+        {
+          "substateId": "position",
+          "valueDomain": "validated one-based simulation position"
+        },
+        {
+          "substateId": "sessionId",
+          "valueDomain": "stable opaque simulation session ID"
+        },
+        {
+          "legalValues": [
+            "explicit-submit",
+            "strict-timer-opt-in"
+          ],
+          "substateId": "trigger"
+        }
+      ],
+      "simulation.generating": [
+        {
+          "substateId": "settings",
+          "valueDomain": "validated simulation configuration"
+        }
+      ],
+      "simulation.reconciling": [
+        {
+          "legalValues": [
+            "unanswered",
+            "recorded"
+          ],
+          "substateId": "answer"
+        },
+        {
+          "legalValues": [
+            "flagged",
+            "unflagged"
+          ],
+          "substateId": "flag"
+        },
+        {
+          "substateId": "position",
+          "valueDomain": "validated one-based simulation position"
+        },
+        {
+          "substateId": "sessionId",
+          "valueDomain": "stable opaque simulation session ID"
+        },
+        {
+          "substateId": "submissionId",
+          "valueDomain": "stable opaque submission ID"
+        }
+      ],
+      "simulation.results": [
+        {
+          "initialValue": "unreviewed",
+          "legalValues": [
+            "unreviewed",
+            "reviewed"
+          ],
+          "substateId": "review"
+        }
+      ],
+      "simulation.setup": [
+        {
+          "substateId": "settings",
+          "valueDomain": "validated simulation configuration"
+        }
+      ],
+      "simulation.setup-recoverable-error": [
+        {
+          "substateId": "settings",
+          "valueDomain": "retained simulation configuration"
+        },
+        {
+          "substateId": "typedCause",
+          "valueDomain": "generation failure"
+        }
+      ],
+      "simulation.submitting": [
+        {
+          "legalValues": [
+            "unanswered",
+            "recorded"
+          ],
+          "substateId": "answer"
+        },
+        {
+          "legalValues": [
+            "flagged",
+            "unflagged"
+          ],
+          "substateId": "flag"
+        },
+        {
+          "substateId": "position",
+          "valueDomain": "validated one-based simulation position"
+        },
+        {
+          "substateId": "sessionId",
+          "valueDomain": "stable opaque simulation session ID"
+        },
+        {
+          "substateId": "submissionId",
+          "valueDomain": "stable opaque submission ID"
+        }
+      ]
+    }
+  },
+  "requiredIds": {
+    "actions": [
+      "reference.filter",
+      "reference.search",
+      "reference.clear-filters",
+      "reference.retry",
+      "reference.choose-cached-parent",
+      "reference.download-required-pack",
+      "checker.validate",
+      "checker.select-match",
+      "checker.edit",
+      "answer.select-option",
+      "answer.clear-selection",
+      "answer.commit-selection",
+      "answer.retry-persistence",
+      "study.flag",
+      "study.unflag",
+      "study.mark-reviewed",
+      "study.next",
+      "study.exit",
+      "hazard.add-marker",
+      "hazard.modify-marker",
+      "hazard.clear-markers",
+      "hazard.submit-zero",
+      "hazard.confirm-zero",
+      "hazard.commit-markers",
+      "simulation.generate",
+      "simulation.record-answer",
+      "simulation.clear-answer",
+      "simulation.navigate",
+      "simulation.submit",
+      "simulation.confirm-final",
+      "simulation.mark-results-reviewed",
+      "simulation.exit",
+      "print.generate",
+      "print.regenerate",
+      "print.request-system-print",
+      "print.retain-versioned-preview",
+      "pack.download",
+      "pack.resume",
+      "pack.cancel",
+      "pack.activate",
+      "pack.remove",
+      "pack.retry",
+      "correction.validate",
+      "correction.submit",
+      "correction.save-local-draft",
+      "correction.resume-for-submit",
+      "correction.exit",
+      "data.start",
+      "data.confirm",
+      "data.retry",
+      "data.export-progress",
+      "data.exit",
+      "reference.load-optional-media",
+      "reference.start-pending-operation",
+      "review.rebuild-queue"
+    ],
+    "constraints": [
+      "INVALID-01-NO-REVEAL-BEFORE-COMMIT",
+      "INVALID-02-NO-SUBMITTED-WITHOUT-RECEIPT",
+      "INVALID-03-NO-ACTIVE-UNVERIFIED-PACK",
+      "INVALID-04-NO-EMPTY-FOR-OFFLINE-ABSENCE",
+      "INVALID-05-NO-CURRENT-BY-OFFLINE-INFERENCE",
+      "INVALID-06-NO-READY-WITH-MISSING-PIN",
+      "INVALID-07-NO-PASSIVE-REVIEW-COMPLETION",
+      "INVALID-08-NO-SIMULATION-ITEM-REVEAL",
+      "INVALID-09-NO-HISTORICAL-SUBSTITUTION",
+      "GLOBAL-01-SEMANTIC-COMMAND-ONLY",
+      "GLOBAL-02-REVISION-AND-IDEMPOTENCE",
+      "GLOBAL-03-AUTHORITATIVE-DURABLE-SETTLEMENT",
+      "GLOBAL-04-POST-RENDER-EFFECTS-ONCE",
+      "GLOBAL-05-ATOMIC-BACKGROUND-REFRESH",
+      "GLOBAL-06-CONNECTIVITY-NOT-AVAILABILITY",
+      "GLOBAL-07-EXACT-SESSION-VERSION-PINS",
+      "GLOBAL-08-PENDING-WRITE-RECONCILIATION",
+      "GLOBAL-09-UNKNOWNS-NEVER-DEFAULTED"
+    ],
+    "dimensions": [
+      "availability",
+      "operation",
+      "connectivity",
+      "persistence",
+      "interaction",
+      "freshness"
+    ],
+    "edges": [
+      "E-CHECK-001-VALIDATE",
+      "E-CHECK-002-MALFORMED",
+      "E-CHECK-01-NO-MATCH",
+      "E-CHECK-01-AMBIGUOUS",
+      "E-CHECK-01-MATCH",
+      "E-CHECK-020-SELECT-MATCH",
+      "E-CHECK-021-EDIT",
+      "E-ANSWER-001-RESTORED",
+      "E-ANSWER-002-MISSING",
+      "E-ANSWER-010-SELECT",
+      "E-ANSWER-011-RESELECT",
+      "E-ANSWER-012-CLEAR",
+      "E-ANSWER-020-COMMIT",
+      "E-ANSWER-021-COMMIT-COMPLETE",
+      "E-ANSWER-022-RECONCILED",
+      "E-ANSWER-023-COMMIT-FAIL",
+      "E-ANSWER-024-RETRY",
+      "E-ANSWER-03-FLAG",
+      "E-ANSWER-03-UNFLAG",
+      "E-ANSWER-040-REVIEW",
+      "E-ANSWER-041-NEXT",
+      "E-ANSWER-042-COMPLETE",
+      "E-ANSWER-043-EXIT",
+      "E-HAZARD-001-RESTORED",
+      "E-HAZARD-002-MISSING",
+      "E-HAZARD-010-ADD",
+      "E-HAZARD-011-MODIFY",
+      "E-HAZARD-012-CLEAR",
+      "E-HAZARD-020-ZERO-CONFIRM",
+      "E-HAZARD-021-CONFIRM-ZERO",
+      "E-HAZARD-022-COMMIT-MARKERS",
+      "E-HAZARD-030-COMMIT-COMPLETE",
+      "E-HAZARD-031-RECONCILED",
+      "E-HAZARD-032-COMMIT-FAIL",
+      "E-HAZARD-033-RETRY",
+      "E-HAZARD-040-REVIEW",
+      "E-HAZARD-041-NEXT",
+      "E-HAZARD-042-COMPLETE",
+      "E-HAZARD-043-EXIT",
+      "E-SIM-001-GENERATE",
+      "E-SIM-002-GENERATED",
+      "E-SIM-003-GENERATION-FAIL",
+      "E-SIM-004-RETRY-GENERATION",
+      "E-SIM-010-RECORD",
+      "E-SIM-011-CLEAR",
+      "E-SIM-012-FLAG",
+      "E-SIM-012-UNFLAG",
+      "E-SIM-014-NAVIGATE",
+      "E-SIM-015-AUTOSAVE",
+      "E-SIM-020-SUBMIT-CONFIRM",
+      "E-SIM-021-TIMER-CONFIRM",
+      "E-SIM-022-TIMER-SUBMIT",
+      "E-SIM-023-CONFIRM-FINAL",
+      "E-SIM-030-SUBMITTED",
+      "E-SIM-031-UNKNOWN",
+      "E-SIM-032-SUBMIT-FAIL",
+      "E-SIM-033-RECONCILED",
+      "E-SIM-034-RECONCILE-FAIL",
+      "E-SIM-035-RETRY-SUBMIT",
+      "E-SIM-036-RETRY-RECONCILE",
+      "E-SIM-040-REVIEW-COMPLETE",
+      "E-SIM-041-EXIT-RESULTS",
+      "E-PRINT-001-GENERATE",
+      "E-PRINT-002-GENERATED",
+      "E-PRINT-003-GENERATION-FAIL",
+      "E-PRINT-004-RETRY-INITIAL",
+      "E-PRINT-010-REGENERATE",
+      "E-PRINT-011-REGENERATED",
+      "E-PRINT-012-REGEN-FAIL",
+      "E-PRINT-013-RETRY-REGEN",
+      "E-PRINT-020-REQUEST-PRINT",
+      "E-PRINT-021-DIALOG-CLOSED",
+      "E-PRINT-030-STALE",
+      "E-PRINT-031-STALE-REGENERATE",
+      "E-PRINT-032-RETAIN",
+      "E-PACK-001-DOWNLOAD",
+      "E-PACK-002-PAUSE-OFFLINE",
+      "E-PACK-003-RESUME",
+      "E-PACK-004-DOWNLOADED",
+      "E-PACK-005-DOWNLOAD-FAIL",
+      "E-PACK-006-CANCEL",
+      "E-PACK-010-VERIFIED",
+      "E-PACK-011-VERIFY-QUARANTINE",
+      "E-PACK-012-VERIFY-FAIL",
+      "E-PACK-020-ACTIVATE",
+      "E-PACK-021-ACTIVATED",
+      "E-PACK-022-ACTIVATE-QUARANTINE",
+      "E-PACK-023-ACTIVATE-FAIL",
+      "E-PACK-030-UPDATE",
+      "E-PACK-031-DOWNLOAD-UPDATE",
+      "E-PACK-040-REMOVE-CONFIRM",
+      "E-PACK-042-REMOVED",
+      "E-PACK-043-RETAINED",
+      "E-PACK-050-RETRY",
+      "E-CORR-001-VALIDATE",
+      "E-CORR-002-VALID",
+      "E-CORR-003-INVALID",
+      "E-CORR-010-SUBMIT",
+      "E-CORR-011-ACCEPTED",
+      "E-CORR-012-SUBMIT-FAIL",
+      "E-CORR-020-SAVE-DRAFT",
+      "E-CORR-021-RESUME",
+      "E-CORR-022-EXIT",
+      "E-DATA-001-START",
+      "E-DATA-002-VALID-PREVIEW",
+      "E-DATA-003-QUARANTINE",
+      "E-DATA-004-DECODE-FAIL",
+      "E-DATA-010-CONFIRM",
+      "E-DATA-011-COMMIT-COMPLETE",
+      "E-DATA-012-COMMIT-UNKNOWN",
+      "E-DATA-013-COMMIT-FAIL",
+      "E-DATA-014-RECONCILED",
+      "E-DATA-015-RECONCILE-FAIL",
+      "E-DATA-020-RETRY",
+      "E-DATA-021-EXPORT",
+      "E-DATA-022-EXIT",
+      "E-TERM-001-RETRY",
+      "E-TERM-002-PARENT",
+      "E-TERM-003-PACK",
+      "E-REF-001-INITIAL-OFFLINE",
+      "E-REF-002-INITIAL-CONTENT",
+      "E-REF-003-INITIAL-NOT-FOUND",
+      "E-REF-010-FILTER-MATCH",
+      "E-REF-011-FILTER-EMPTY",
+      "E-REF-010-SEARCH-MATCH",
+      "E-REF-011-SEARCH-EMPTY",
+      "E-REF-012-CLEAR-FILTERS",
+      "E-REF-020-REFRESH-CURRENT",
+      "E-REF-021-REFRESH-OFFLINE-STALE",
+      "E-REF-022-REFRESH-FAILURE",
+      "E-REF-023-WITHDRAWN",
+      "E-REF-030-RETRY",
+      "E-REF-031-CACHED-PARENT",
+      "E-REF-032-DOWNLOAD-PACK",
+      "E-REF-024-SUPERSEDED",
+      "E-REF-025-RETIRED",
+      "E-REF-026-CORRECTED",
+      "E-REF-027-CLASSIFIED-CURRENT",
+      "E-REF-040-ATLAS-LOAD",
+      "E-REF-041-REVIEW-INITIAL-LOAD",
+      "E-REF-042-LOAD-READY",
+      "E-REF-043-REVIEW-LOAD-EMPTY",
+      "E-REF-044-LOAD-FAIL",
+      "E-REF-050-START-PENDING",
+      "E-REF-051-REVIEW-REBUILD",
+      "E-REF-052-EXAM-SELECTED",
+      "E-REF-053-PROFILE-DONE",
+      "E-REF-054-STUDY-DONE",
+      "E-REF-055-ATLAS-PRACTICE-DONE",
+      "E-REF-056-REVIEW-REBUILT-READY",
+      "E-REF-057-REVIEW-REBUILT-EMPTY",
+      "E-REF-058-PENDING-FAIL",
+      "E-HAZARD-020A-CONFIRM-PRESENTED",
+      "E-HAZARD-020B-CONFIRM-DISMISSED",
+      "E-SIM-020A-CONFIRM-PRESENTED",
+      "E-SIM-020B-CONFIRM-DISMISSED",
+      "E-DATA-010A-CONFIRM-ACCEPTED",
+      "E-DATA-010B-CONFIRM-DISMISSED",
+      "E-PACK-040A-CONFIRM-ACCEPTED",
+      "E-PACK-040B-CONFIRM-DISMISSED",
+      "E-HAZARD-020M-ZERO-CONFIRM",
+      "E-HAZARD-020MA-CONFIRM-PRESENTED",
+      "E-HAZARD-020MB-CONFIRM-DISMISSED",
+      "E-SIM-021A-TIMER-CONFIRM-PRESENTED",
+      "E-SIM-021B-TIMER-CONFIRM-DISMISSED"
+    ],
+    "effects": [
+      "FX-ERROR-SUMMARY-FOCUS",
+      "FX-OUTCOME-FOCUS",
+      "FX-COMPLETION-ASSERTIVE",
+      "FX-NEXT-PROMPT-FOCUS",
+      "FX-BACKGROUND-ACTION-POLITE",
+      "FX-DIALOG-RESTORE-FOCUS",
+      "FX-FRAGMENT-HEADING-FOCUS",
+      "FX-FOCUS-VISIBILITY"
+    ],
+    "events": [
+      "resource.initial-failure",
+      "resource.withdrawn",
+      "refresh.validated-current",
+      "refresh.offline-stale",
+      "operation.typed-failure",
+      "persistence.restored",
+      "persistence.required-resource-missing",
+      "persistence.transaction-complete",
+      "persistence.reconciliation-found",
+      "persistence.unknown-completion",
+      "checker.no-match",
+      "checker.ambiguous",
+      "checker.match",
+      "checker.validation-error",
+      "simulation.generated",
+      "simulation.timer-expired",
+      "simulation.submission-complete",
+      "simulation.reconciliation-complete",
+      "simulation.autosave-complete",
+      "print.generation-complete",
+      "print.referenced-content-stale",
+      "print.dialog-closed",
+      "connectivity.offline",
+      "connectivity.online",
+      "pack.download-complete",
+      "pack.verification-passed",
+      "pack.quarantine-required",
+      "pack.activation-complete",
+      "pack.update-available",
+      "pack.removal-complete",
+      "pack.removal-blocked",
+      "correction.validation-passed",
+      "correction.validation-errors",
+      "correction.accepted",
+      "data.decoded-valid",
+      "data.quarantine-required",
+      "data.commit-complete",
+      "data.reconciliation-complete",
+      "reference.load-started",
+      "reference.load-ready",
+      "reference.load-empty",
+      "reference.pending-complete",
+      "resource.classified-superseded",
+      "resource.classified-retired",
+      "resource.classified-corrected",
+      "confirmation.hazard-zero.presented",
+      "confirmation.hazard-zero.dismissed",
+      "confirmation.simulation-final.presented",
+      "confirmation.simulation-final.dismissed",
+      "confirmation.data-operation.accepted",
+      "confirmation.data-operation.dismissed",
+      "confirmation.pack-removal.accepted",
+      "confirmation.pack-removal.dismissed",
+      "confirmation.hazard-zero-marking.presented",
+      "confirmation.hazard-zero-marking.dismissed",
+      "confirmation.simulation-timer-final.presented",
+      "confirmation.simulation-timer-final.dismissed",
+      "presentation.effect-acknowledged"
+    ],
+    "interpretations": [
+      "INT-SYNTAX-PIPE-ALTERNATIVES",
+      "INT-SYNTAX-PIPE-FROM-SET",
+      "INT-SYNTAX-SLASH-ACTIONS",
+      "INT-SYNTAX-PARENTHESES-QUALIFIER",
+      "INT-SYNTAX-PLUS-PRODUCT",
+      "INT-SYNTAX-BIDIRECTIONAL",
+      "INT-SYNTAX-COLON-SEMICOLON-SUBSTATES",
+      "INT-GROUPED-ROUTES-EXPANSION",
+      "INT-READY-TOKEN-CONTEXT",
+      "INT-INFERRED-TRIGGERS",
+      "INT-INITIAL-RESOURCE-FAILURE-EVENT",
+      "INT-NAVIGATION-AS-OUTCOME",
+      "INT-CONFIRMATION-AS-OUTCOME",
+      "INT-EXIT-AS-OUTCOME",
+      "INT-REFERENCE-BINDING-CLOSURE",
+      "INT-SIMULATION-ROUTE-ALLOCATION",
+      "INT-SIMULATION-REVIEWED-COMPLETED",
+      "INT-PRINT-ROUTE-ALLOCATION",
+      "INT-PRINT-DIALOG-TRUTH",
+      "INT-PRINT-PRODUCT-CONTROLS",
+      "INT-REVIEW-VARIANT-QUALIFICATION",
+      "INT-REVIEW-SETTINGS-REBUILD-OWNERSHIP",
+      "INT-SETTINGS-OPERATION-KINDS",
+      "INT-HAZARD-COMPLETION",
+      "INT-DUPLICATE-DATA-COMMIT-COMPLETE",
+      "INT-RETAINED-PRINT-SAFETY",
+      "INT-PACK-REMOVAL-CONFIRMATION",
+      "INT-TRIGGER-PAYLOAD-CONSTRUCTION",
+      "INT-EFFECT-LIFECYCLE",
+      "INT-PACK-DUAL-GENERATION"
+    ],
+    "journeyIds": [
+      "J01",
+      "J02",
+      "J03",
+      "J04",
+      "J05",
+      "J06",
+      "J07",
+      "J08"
+    ],
+    "machineStates": [
+      "reference-document.ready-current",
+      "reference-document.ready-stale",
+      "reference-document.empty",
+      "reference-document.offline-stale",
+      "reference-document.recoverable-error",
+      "reference-document.withdrawn",
+      "reference-document.offline-unavailable",
+      "reference-document.content-unavailable",
+      "reference-document.not-found",
+      "exam-checker.ready",
+      "exam-checker.validating",
+      "exam-checker.no-match",
+      "exam-checker.ambiguous",
+      "exam-checker.match",
+      "exam-checker.ready-validation-error",
+      "immediate-feedback.restoring",
+      "immediate-feedback.ready",
+      "immediate-feedback.selected",
+      "immediate-feedback.committing",
+      "immediate-feedback.selected-recoverable-error",
+      "immediate-feedback.answered-revealed",
+      "immediate-feedback.reviewed",
+      "immediate-feedback.completed",
+      "immediate-feedback.content-unavailable",
+      "hazard-item.restoring",
+      "hazard-item.ready",
+      "hazard-item.marking",
+      "hazard-item.confirm-zero",
+      "hazard-item.committing",
+      "hazard-item.editable-recoverable-error",
+      "hazard-item.answered-revealed",
+      "hazard-item.reviewed",
+      "hazard-item.completed",
+      "hazard-item.content-unavailable",
+      "simulation.setup",
+      "simulation.setup-recoverable-error",
+      "simulation.generating",
+      "simulation.active",
+      "simulation.final-confirmation",
+      "simulation.submitting",
+      "simulation.reconciling",
+      "simulation.active-recoverable-error",
+      "simulation.results",
+      "simulation.completed",
+      "print-job.configuring",
+      "print-job.generating-initial",
+      "print-job.configuring-recoverable-error",
+      "print-job.preview-ready",
+      "print-job.generating-regeneration",
+      "print-job.preview-recoverable-error",
+      "print-job.stale",
+      "print-job.system-print-requested",
+      "offline-pack.absent",
+      "offline-pack.downloading",
+      "offline-pack.paused-offline",
+      "offline-pack.verifying",
+      "offline-pack.staged",
+      "offline-pack.activating",
+      "offline-pack.active",
+      "offline-pack.update-available",
+      "offline-pack.quarantined",
+      "offline-pack.removing",
+      "offline-pack.retained",
+      "offline-pack.recoverable-error",
+      "correction-report.draft",
+      "correction-report.validating",
+      "correction-report.draft-validation-errors",
+      "correction-report.ready-to-submit",
+      "correction-report.submitting",
+      "correction-report.ready-recoverable-error",
+      "correction-report.local-draft-saved",
+      "correction-report.submitted",
+      "data-operation.idle",
+      "data-operation.decoding",
+      "data-operation.validated-preview",
+      "data-operation.committing",
+      "data-operation.complete",
+      "data-operation.reconciling",
+      "data-operation.quarantined",
+      "data-operation.recoverable-error",
+      "terminal-document.not-found",
+      "terminal-document.withdrawn",
+      "terminal-document.offline-unavailable",
+      "terminal-document.content-unavailable",
+      "terminal-document.storage-unavailable",
+      "terminal-document.service-unavailable",
+      "terminal-document.terminal-error",
+      "reference-document.loading",
+      "reference-document.pending",
+      "reference-document.ready-superseded",
+      "reference-document.ready-retired",
+      "reference-document.ready-corrected"
+    ],
+    "machines": [
+      "reference-document",
+      "exam-checker",
+      "immediate-feedback",
+      "hazard-item",
+      "simulation",
+      "print-job",
+      "offline-pack",
+      "correction-report",
+      "data-operation",
+      "terminal-document"
+    ],
+    "milestones": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5"
+    ],
+    "outcomes": [
+      "operation.retry-requested",
+      "navigation.cached-parent",
+      "navigation.offline-packs",
+      "navigation.profile",
+      "navigation.next-immediate-item",
+      "navigation.next-hazard",
+      "exit.focused-player",
+      "confirmation.hazard-zero",
+      "navigation.simulation-player",
+      "navigation.simulation-position",
+      "confirmation.simulation-final",
+      "navigation.simulation-results",
+      "exit.simulation",
+      "navigation.print-preview",
+      "confirmation.pack-removal",
+      "confirmation.data-operation",
+      "data.export-file-requested",
+      "exit.data-operation",
+      "exit.correction",
+      "navigation.question-player",
+      "confirmation.hazard-zero-marking",
+      "confirmation.simulation-timer-final"
+    ],
+    "routes": [
+      "home",
+      "exam-selector",
+      "exam-checker",
+      "profile",
+      "study-hub",
+      "atlas-index",
+      "atlas-family",
+      "atlas-tool",
+      "procedures-index",
+      "procedure-detail",
+      "repair-lab",
+      "question-player",
+      "hazards-index",
+      "hazard-player",
+      "review-queue",
+      "review-player",
+      "simulation-setup",
+      "simulation-player",
+      "simulation-results",
+      "print-center",
+      "print-preview",
+      "faq",
+      "transparency-index",
+      "source",
+      "corrections",
+      "foil",
+      "security",
+      "privacy",
+      "correction-submit",
+      "settings",
+      "offline-packs",
+      "status",
+      "scoring-explainer",
+      "actual-questions-explainer",
+      "about",
+      "nyc-disambiguation"
+    ],
+    "validationRules": [
+      "VAL-SOURCE-IDENTITY",
+      "VAL-ROUTE-CLOSURE",
+      "VAL-ROUTE-CITATIONS",
+      "VAL-DIMENSION-CLOSURE",
+      "VAL-CONSTRAINT-CLOSURE",
+      "VAL-ENDPOINT-XOR",
+      "VAL-TYPED-CLOSURE",
+      "VAL-CITATION-MULTIPLICITY",
+      "VAL-REFERENCE-BINDING",
+      "VAL-SIMULATION-ALLOCATION",
+      "VAL-PRINT-ALLOCATION",
+      "VAL-RESOURCE-FAILURE-EVENT",
+      "VAL-RECOVERY-LINE-87",
+      "VAL-OUTCOME-TYPES",
+      "VAL-DUPLICATE-EDGE-MERGE",
+      "VAL-INTERPRETATION-COVERAGE",
+      "VAL-CODEX-METADATA",
+      "VAL-JOURNEY-SEPARATION",
+      "V19-CONSTRAINT-EXECUTION",
+      "V20-TRANSITION-CONSTRUCTIBILITY",
+      "V21-EFFECT-LIFECYCLE",
+      "V22-TRIGGER-SCHEMAS",
+      "V23-PACK-DUAL-GENERATION",
+      "V24-SELECTED-DIRECTION",
+      "V25-MILESTONES",
+      "V26-FILESYSTEM-TRANSACTION",
+      "V27-BUNDLE-EXACT",
+      "V28-SPAWNED-CLI"
+    ]
+  },
+  "routeCitationCompatibility": {
+    "about": {
+      "requiredClauseIds": [
+        "SS-STATIC-SPOKES",
+        "RT-SPOKE-03"
+      ],
+      "routeKind": "additional-acquisition-spoke",
+      "spokeNumber": 3
+    },
+    "actual-questions-explainer": {
+      "requiredClauseIds": [
+        "SS-STATIC-SPOKES",
+        "RT-SPOKE-02"
+      ],
+      "routeKind": "additional-acquisition-spoke",
+      "spokeNumber": 2
+    },
+    "atlas-family": {
+      "familyNumber": 7,
+      "requiredClauseIds": [
+        "SS-ROUTE-07",
+        "RT-ROUTE-07"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "atlas-index": {
+      "familyNumber": 6,
+      "requiredClauseIds": [
+        "SS-ROUTE-06",
+        "RT-ROUTE-06"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "atlas-tool": {
+      "familyNumber": 8,
+      "requiredClauseIds": [
+        "SS-ROUTE-08",
+        "RT-ROUTE-08"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "correction-submit": {
+      "familyNumber": 18,
+      "requiredClauseIds": [
+        "SS-ROUTE-18",
+        "RT-ROUTE-18"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "corrections": {
+      "familyNumber": 17,
+      "requiredClauseIds": [
+        "SS-ROUTE-17",
+        "RT-ROUTE-17"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "exam-checker": {
+      "familyNumber": 3,
+      "requiredClauseIds": [
+        "SS-ROUTE-03",
+        "RT-ROUTE-03"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "exam-selector": {
+      "familyNumber": 2,
+      "requiredClauseIds": [
+        "SS-ROUTE-02",
+        "RT-ROUTE-02"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "faq": {
+      "familyNumber": 16,
+      "requiredClauseIds": [
+        "SS-ROUTE-16",
+        "RT-ROUTE-16"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "foil": {
+      "familyNumber": 17,
+      "requiredClauseIds": [
+        "SS-ROUTE-17",
+        "RT-ROUTE-17"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "hazard-player": {
+      "familyNumber": 12,
+      "requiredClauseIds": [
+        "SS-ROUTE-12",
+        "RT-ROUTE-12"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "hazards-index": {
+      "familyNumber": 12,
+      "requiredClauseIds": [
+        "SS-ROUTE-12",
+        "RT-ROUTE-12"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "home": {
+      "familyNumber": 1,
+      "requiredClauseIds": [
+        "SS-ROUTE-01",
+        "RT-ROUTE-01"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "nyc-disambiguation": {
+      "requiredClauseIds": [
+        "SS-STATIC-SPOKES",
+        "RT-SPOKE-04"
+      ],
+      "routeKind": "additional-acquisition-spoke",
+      "spokeNumber": 4
+    },
+    "offline-packs": {
+      "familyNumber": 20,
+      "requiredClauseIds": [
+        "SS-ROUTE-20",
+        "RT-ROUTE-20"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "print-center": {
+      "familyNumber": 15,
+      "requiredClauseIds": [
+        "SS-ROUTE-15",
+        "RT-ROUTE-15"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "print-preview": {
+      "familyNumber": 15,
+      "requiredClauseIds": [
+        "SS-ROUTE-15",
+        "RT-ROUTE-15"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "privacy": {
+      "familyNumber": 17,
+      "requiredClauseIds": [
+        "SS-ROUTE-17",
+        "RT-ROUTE-17"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "procedure-detail": {
+      "familyNumber": 9,
+      "requiredClauseIds": [
+        "SS-ROUTE-09",
+        "RT-ROUTE-09"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "procedures-index": {
+      "familyNumber": 9,
+      "requiredClauseIds": [
+        "SS-ROUTE-09",
+        "RT-ROUTE-09"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "profile": {
+      "familyNumber": 4,
+      "requiredClauseIds": [
+        "SS-ROUTE-04",
+        "RT-ROUTE-04"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "question-player": {
+      "familyNumber": 11,
+      "requiredClauseIds": [
+        "SS-ROUTE-11",
+        "RT-ROUTE-11"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "repair-lab": {
+      "familyNumber": 10,
+      "requiredClauseIds": [
+        "SS-ROUTE-10",
+        "RT-ROUTE-10"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "review-player": {
+      "familyNumber": 13,
+      "requiredClauseIds": [
+        "SS-ROUTE-13",
+        "RT-ROUTE-13"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "review-queue": {
+      "familyNumber": 13,
+      "requiredClauseIds": [
+        "SS-ROUTE-13",
+        "RT-ROUTE-13"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "scoring-explainer": {
+      "requiredClauseIds": [
+        "SS-STATIC-SPOKES",
+        "RT-SPOKE-01"
+      ],
+      "routeKind": "additional-acquisition-spoke",
+      "spokeNumber": 1
+    },
+    "security": {
+      "familyNumber": 17,
+      "requiredClauseIds": [
+        "SS-ROUTE-17",
+        "RT-ROUTE-17"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "settings": {
+      "familyNumber": 19,
+      "requiredClauseIds": [
+        "SS-ROUTE-19",
+        "RT-ROUTE-19"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "simulation-player": {
+      "familyNumber": 14,
+      "requiredClauseIds": [
+        "SS-ROUTE-14",
+        "RT-ROUTE-14"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "simulation-results": {
+      "familyNumber": 14,
+      "requiredClauseIds": [
+        "SS-ROUTE-14",
+        "RT-ROUTE-14"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "simulation-setup": {
+      "familyNumber": 14,
+      "requiredClauseIds": [
+        "SS-ROUTE-14",
+        "RT-ROUTE-14"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "source": {
+      "familyNumber": 17,
+      "requiredClauseIds": [
+        "SS-ROUTE-17",
+        "RT-ROUTE-17"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "status": {
+      "familyNumber": 21,
+      "requiredClauseIds": [
+        "SS-ROUTE-21",
+        "RT-ROUTE-21"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "study-hub": {
+      "familyNumber": 5,
+      "requiredClauseIds": [
+        "SS-ROUTE-05",
+        "RT-ROUTE-05"
+      ],
+      "routeKind": "destination-family-route"
+    },
+    "transparency-index": {
+      "familyNumber": 17,
+      "requiredClauseIds": [
+        "SS-ROUTE-17",
+        "RT-ROUTE-17"
+      ],
+      "routeKind": "destination-family-route"
+    }
+  },
+  "semanticProjection": {
+    "effectBindings": [
+      {
+        "bindingId": "BIND-FX-ERROR-SUMMARY-FOCUS",
+        "edgeIds": [
+          "E-CHECK-002-MALFORMED",
+          "E-ANSWER-023-COMMIT-FAIL",
+          "E-HAZARD-032-COMMIT-FAIL",
+          "E-SIM-003-GENERATION-FAIL",
+          "E-SIM-032-SUBMIT-FAIL",
+          "E-SIM-034-RECONCILE-FAIL",
+          "E-PRINT-003-GENERATION-FAIL",
+          "E-PRINT-012-REGEN-FAIL",
+          "E-PACK-005-DOWNLOAD-FAIL",
+          "E-PACK-012-VERIFY-FAIL",
+          "E-PACK-023-ACTIVATE-FAIL",
+          "E-CORR-003-INVALID",
+          "E-CORR-012-SUBMIT-FAIL",
+          "E-DATA-004-DECODE-FAIL",
+          "E-DATA-013-COMMIT-FAIL",
+          "E-DATA-015-RECONCILE-FAIL",
+          "E-REF-022-REFRESH-FAILURE",
+          "E-REF-044-LOAD-FAIL",
+          "E-REF-058-PENDING-FAIL"
+        ],
+        "effectId": "FX-ERROR-SUMMARY-FOCUS",
+        "emissionCondition": "user-triggered validation or operation failure",
+        "sourceClauseIds": [
+          "SS-GLOBAL-04",
+          "SS-FOCUS-ISLAND"
+        ]
+      },
+      {
+        "bindingId": "BIND-FX-OUTCOME-FOCUS",
+        "edgeIds": [
+          "E-ANSWER-021-COMMIT-COMPLETE",
+          "E-HAZARD-030-COMMIT-COMPLETE"
+        ],
+        "effectId": "FX-OUTCOME-FOCUS",
+        "emissionCondition": "durable immediate-feedback commit success",
+        "sourceClauseIds": [
+          "SS-GLOBAL-04",
+          "SS-FOCUS-ISLAND"
+        ]
+      },
+      {
+        "bindingId": "BIND-FX-COMPLETION-ASSERTIVE",
+        "edgeIds": [
+          "E-ANSWER-021-COMMIT-COMPLETE",
+          "E-HAZARD-030-COMMIT-COMPLETE"
+        ],
+        "effectId": "FX-COMPLETION-ASSERTIVE",
+        "emissionCondition": "durable immediate-feedback commit success",
+        "sourceClauseIds": [
+          "SS-GLOBAL-04",
+          "SS-FOCUS-ISLAND"
+        ]
+      },
+      {
+        "bindingId": "BIND-FX-NEXT-PROMPT-FOCUS",
+        "edgeIds": [
+          "E-ANSWER-041-NEXT",
+          "E-HAZARD-041-NEXT"
+        ],
+        "effectId": "FX-NEXT-PROMPT-FOCUS",
+        "emissionCondition": "next item or scene rendered",
+        "sourceClauseIds": [
+          "SS-GLOBAL-04",
+          "SS-FOCUS-ISLAND"
+        ]
+      },
+      {
+        "bindingId": "BIND-FX-BACKGROUND-ACTION-POLITE",
+        "edgeIds": [
+          "E-REF-020-REFRESH-CURRENT",
+          "E-REF-021-REFRESH-OFFLINE-STALE"
+        ],
+        "effectId": "FX-BACKGROUND-ACTION-POLITE",
+        "emissionCondition": "background change alters an available action",
+        "sourceClauseIds": [
+          "SS-GLOBAL-04",
+          "SS-FOCUS-ISLAND"
+        ]
+      },
+      {
+        "bindingId": "BIND-FX-DIALOG-RESTORE-FOCUS",
+        "edgeIds": [
+          "E-PRINT-021-DIALOG-CLOSED",
+          "E-HAZARD-020B-CONFIRM-DISMISSED",
+          "E-SIM-020B-CONFIRM-DISMISSED",
+          "E-DATA-010B-CONFIRM-DISMISSED",
+          "E-PACK-040B-CONFIRM-DISMISSED",
+          "E-HAZARD-020MB-CONFIRM-DISMISSED",
+          "E-SIM-021B-TIMER-CONFIRM-DISMISSED"
+        ],
+        "effectId": "FX-DIALOG-RESTORE-FOCUS",
+        "emissionCondition": "dialog close or cancellation",
+        "sourceClauseIds": [
+          "SS-GLOBAL-04",
+          "SS-FOCUS-ISLAND"
+        ]
+      },
+      {
+        "bindingId": "BIND-FX-FRAGMENT-HEADING-FOCUS",
+        "edgeIds": [
+          "E-REF-031-CACHED-PARENT"
+        ],
+        "effectId": "FX-FRAGMENT-HEADING-FOCUS",
+        "emissionCondition": "fragment navigation requires continuity",
+        "sourceClauseIds": [
+          "SS-GLOBAL-04",
+          "SS-FOCUS-ISLAND"
+        ]
+      },
+      {
+        "bindingId": "BIND-FX-FOCUS-VISIBILITY",
+        "edgeIds": [
+          "E-CHECK-001-VALIDATE",
+          "E-CHECK-002-MALFORMED",
+          "E-CHECK-01-NO-MATCH",
+          "E-CHECK-01-AMBIGUOUS",
+          "E-CHECK-01-MATCH",
+          "E-CHECK-021-EDIT",
+          "E-ANSWER-001-RESTORED",
+          "E-ANSWER-002-MISSING",
+          "E-ANSWER-010-SELECT",
+          "E-ANSWER-011-RESELECT",
+          "E-ANSWER-012-CLEAR",
+          "E-ANSWER-020-COMMIT",
+          "E-ANSWER-021-COMMIT-COMPLETE",
+          "E-ANSWER-022-RECONCILED",
+          "E-ANSWER-023-COMMIT-FAIL",
+          "E-ANSWER-024-RETRY",
+          "E-ANSWER-03-FLAG",
+          "E-ANSWER-03-UNFLAG",
+          "E-ANSWER-040-REVIEW",
+          "E-ANSWER-042-COMPLETE",
+          "E-HAZARD-001-RESTORED",
+          "E-HAZARD-002-MISSING",
+          "E-HAZARD-010-ADD",
+          "E-HAZARD-011-MODIFY",
+          "E-HAZARD-012-CLEAR",
+          "E-HAZARD-021-CONFIRM-ZERO",
+          "E-HAZARD-022-COMMIT-MARKERS",
+          "E-HAZARD-030-COMMIT-COMPLETE",
+          "E-HAZARD-031-RECONCILED",
+          "E-HAZARD-032-COMMIT-FAIL",
+          "E-HAZARD-033-RETRY",
+          "E-HAZARD-040-REVIEW",
+          "E-HAZARD-042-COMPLETE",
+          "E-SIM-001-GENERATE",
+          "E-SIM-003-GENERATION-FAIL",
+          "E-SIM-004-RETRY-GENERATION",
+          "E-SIM-010-RECORD",
+          "E-SIM-011-CLEAR",
+          "E-SIM-012-FLAG",
+          "E-SIM-012-UNFLAG",
+          "E-SIM-015-AUTOSAVE",
+          "E-SIM-022-TIMER-SUBMIT",
+          "E-SIM-023-CONFIRM-FINAL",
+          "E-SIM-031-UNKNOWN",
+          "E-SIM-032-SUBMIT-FAIL",
+          "E-SIM-034-RECONCILE-FAIL",
+          "E-SIM-035-RETRY-SUBMIT",
+          "E-SIM-036-RETRY-RECONCILE",
+          "E-SIM-040-REVIEW-COMPLETE",
+          "E-PRINT-001-GENERATE",
+          "E-PRINT-003-GENERATION-FAIL",
+          "E-PRINT-004-RETRY-INITIAL",
+          "E-PRINT-010-REGENERATE",
+          "E-PRINT-011-REGENERATED",
+          "E-PRINT-012-REGEN-FAIL",
+          "E-PRINT-013-RETRY-REGEN",
+          "E-PRINT-020-REQUEST-PRINT",
+          "E-PRINT-021-DIALOG-CLOSED",
+          "E-PRINT-030-STALE",
+          "E-PRINT-031-STALE-REGENERATE",
+          "E-PRINT-032-RETAIN",
+          "E-PACK-001-DOWNLOAD",
+          "E-PACK-002-PAUSE-OFFLINE",
+          "E-PACK-003-RESUME",
+          "E-PACK-004-DOWNLOADED",
+          "E-PACK-005-DOWNLOAD-FAIL",
+          "E-PACK-006-CANCEL",
+          "E-PACK-010-VERIFIED",
+          "E-PACK-011-VERIFY-QUARANTINE",
+          "E-PACK-012-VERIFY-FAIL",
+          "E-PACK-020-ACTIVATE",
+          "E-PACK-021-ACTIVATED",
+          "E-PACK-022-ACTIVATE-QUARANTINE",
+          "E-PACK-023-ACTIVATE-FAIL",
+          "E-PACK-030-UPDATE",
+          "E-PACK-031-DOWNLOAD-UPDATE",
+          "E-PACK-042-REMOVED",
+          "E-PACK-043-RETAINED",
+          "E-CORR-001-VALIDATE",
+          "E-CORR-002-VALID",
+          "E-CORR-003-INVALID",
+          "E-CORR-010-SUBMIT",
+          "E-CORR-011-ACCEPTED",
+          "E-CORR-012-SUBMIT-FAIL",
+          "E-CORR-020-SAVE-DRAFT",
+          "E-CORR-021-RESUME",
+          "E-DATA-001-START",
+          "E-DATA-002-VALID-PREVIEW",
+          "E-DATA-003-QUARANTINE",
+          "E-DATA-004-DECODE-FAIL",
+          "E-DATA-011-COMMIT-COMPLETE",
+          "E-DATA-012-COMMIT-UNKNOWN",
+          "E-DATA-013-COMMIT-FAIL",
+          "E-DATA-014-RECONCILED",
+          "E-DATA-015-RECONCILE-FAIL",
+          "E-REF-001-INITIAL-OFFLINE",
+          "E-REF-002-INITIAL-CONTENT",
+          "E-REF-003-INITIAL-NOT-FOUND",
+          "E-REF-010-FILTER-MATCH",
+          "E-REF-011-FILTER-EMPTY",
+          "E-REF-010-SEARCH-MATCH",
+          "E-REF-011-SEARCH-EMPTY",
+          "E-REF-012-CLEAR-FILTERS",
+          "E-REF-020-REFRESH-CURRENT",
+          "E-REF-021-REFRESH-OFFLINE-STALE",
+          "E-REF-022-REFRESH-FAILURE",
+          "E-REF-023-WITHDRAWN",
+          "E-REF-024-SUPERSEDED",
+          "E-REF-025-RETIRED",
+          "E-REF-026-CORRECTED",
+          "E-REF-027-CLASSIFIED-CURRENT",
+          "E-REF-040-ATLAS-LOAD",
+          "E-REF-041-REVIEW-INITIAL-LOAD",
+          "E-REF-042-LOAD-READY",
+          "E-REF-043-REVIEW-LOAD-EMPTY",
+          "E-REF-044-LOAD-FAIL",
+          "E-REF-050-START-PENDING",
+          "E-REF-051-REVIEW-REBUILD",
+          "E-REF-053-PROFILE-DONE",
+          "E-REF-056-REVIEW-REBUILT-READY",
+          "E-REF-057-REVIEW-REBUILT-EMPTY",
+          "E-REF-058-PENDING-FAIL",
+          "E-HAZARD-020A-CONFIRM-PRESENTED",
+          "E-HAZARD-020B-CONFIRM-DISMISSED",
+          "E-SIM-020A-CONFIRM-PRESENTED",
+          "E-SIM-020B-CONFIRM-DISMISSED",
+          "E-DATA-010A-CONFIRM-ACCEPTED",
+          "E-DATA-010B-CONFIRM-DISMISSED",
+          "E-PACK-040A-CONFIRM-ACCEPTED",
+          "E-PACK-040B-CONFIRM-DISMISSED",
+          "E-HAZARD-020MA-CONFIRM-PRESENTED",
+          "E-HAZARD-020MB-CONFIRM-DISMISSED",
+          "E-SIM-021A-TIMER-CONFIRM-PRESENTED",
+          "E-SIM-021B-TIMER-CONFIRM-DISMISSED"
+        ],
+        "effectId": "FX-FOCUS-VISIBILITY",
+        "emissionCondition": "semantic focus target may be obscured at supported zoom or reflow",
+        "sourceClauseIds": [
+          "SS-GLOBAL-04",
+          "SS-FOCUS-ISLAND"
+        ]
+      }
+    ],
+    "effectTypes": [
+      {
+        "effectType": "focus",
+        "payloadVariant": "semantic-target",
+        "sourceClauseIds": [
+          "SS-CONTRACT",
+          "SS-FOCUS-ISLAND"
+        ]
+      },
+      {
+        "effectType": "announcement",
+        "payloadVariant": "live-region-policy",
+        "sourceClauseIds": [
+          "SS-GLOBAL-04",
+          "SS-FOCUS-ISLAND"
+        ]
+      },
+      {
+        "effectType": "navigation",
+        "payloadVariant": "typed-navigation-outcome",
+        "sourceClauseIds": [
+          "SS-GLOBAL-04",
+          "SS-HISTORY"
+        ]
+      },
+      {
+        "effectType": "viewport",
+        "payloadVariant": "semantic-target-visibility",
+        "sourceClauseIds": [
+          "SS-FOCUS-ISLAND",
+          "SS-ACCEPTANCE"
+        ]
+      }
+    ],
+    "implementationMilestones": [
+      {
+        "exitCondition": "Static generator, document shell, canonical/error policy, React-island bootstrap, and route-contract tests exist.",
+        "milestoneId": "M0",
+        "ordinal": 0,
+        "sourceClauseIds": [
+          "RT-MILESTONES"
+        ]
+      },
+      {
+        "exitCondition": "Profile/source registry and crawlable profile, study, atlas, procedure, repair, FAQ, and transparency documents publish from validated data.",
+        "milestoneId": "M1",
+        "ordinal": 1,
+        "sourceClauseIds": [
+          "RT-MILESTONES"
+        ]
+      },
+      {
+        "exitCondition": "One source-backed question completes the React-island, one long-lived `ManagedRuntime`, IndexedDB commit-before-reveal, reload, print, accessibility, leak, and offline proof.",
+        "milestoneId": "M2",
+        "ordinal": 2,
+        "sourceClauseIds": [
+          "RT-MILESTONES"
+        ]
+      },
+      {
+        "exitCondition": "Review and hazard families work with directional confusion data, accessible nonvisual equivalents, and truthful local queue states.",
+        "milestoneId": "M3",
+        "ordinal": 3,
+        "sourceClauseIds": [
+          "RT-MILESTONES"
+        ]
+      },
+      {
+        "exitCondition": "Deterministic simulation, results, print generation, and full session restoration work.",
+        "milestoneId": "M4",
+        "ordinal": 4,
+        "sourceClauseIds": [
+          "RT-MILESTONES"
+        ]
+      },
+      {
+        "exitCondition": "Explicit pack lifecycle, settings/import/export/reset, corrections workflow, recovery/status surfaces, and release-wide navigation/state tests work.",
+        "milestoneId": "M5",
+        "ordinal": 5,
+        "sourceClauseIds": [
+          "RT-MILESTONES"
+        ]
+      }
+    ],
+    "navigationConstructions": [
+      {
+        "assignments": {
+          "position": "command.position"
+        },
+        "constructionId": "NAV-CONSTRUCT-E-ANSWER-041-NEXT",
+        "destinationStateId": "immediate-feedback.restoring",
+        "edgeId": "E-ANSWER-041-NEXT",
+        "outcomeId": "navigation.next-immediate-item",
+        "preserve": [],
+        "sourceClauseIds": [
+          "SS-QUESTION-MACHINE",
+          "SS-HISTORY",
+          "RT-FOCUSED-WORK",
+          "SS-GLOBAL-04"
+        ]
+      },
+      {
+        "assignments": {
+          "stableMarkers": "command.stableMarkers"
+        },
+        "constructionId": "NAV-CONSTRUCT-E-HAZARD-041-NEXT",
+        "destinationStateId": "hazard-item.restoring",
+        "edgeId": "E-HAZARD-041-NEXT",
+        "outcomeId": "navigation.next-hazard",
+        "preserve": [],
+        "sourceClauseIds": [
+          "SS-HAZARD-MACHINE",
+          "SS-HISTORY",
+          "SS-ROUTE-12",
+          "SS-GLOBAL-04"
+        ]
+      },
+      {
+        "assignments": {
+          "flag": "event.flag",
+          "position": "event.position",
+          "sessionId": "event.sessionId"
+        },
+        "constructionId": "NAV-CONSTRUCT-E-SIM-002-GENERATED",
+        "destinationStateId": "simulation.active",
+        "edgeId": "E-SIM-002-GENERATED",
+        "outcomeId": "navigation.simulation-player",
+        "preserve": [],
+        "sourceClauseIds": [
+          "SS-SIMULATION-MACHINE",
+          "SS-ROUTE-14",
+          "SS-HISTORY",
+          "SS-GLOBAL-04"
+        ]
+      },
+      {
+        "assignments": null,
+        "constructionId": "NAV-CONSTRUCT-E-SIM-014-NAVIGATE",
+        "destinationStateId": "simulation.active",
+        "edgeId": "E-SIM-014-NAVIGATE",
+        "outcomeId": "navigation.simulation-position",
+        "preserve": [
+          "flag",
+          "position",
+          "sessionId"
+        ],
+        "sourceClauseIds": [
+          "SS-SIMULATION-MACHINE",
+          "SS-HISTORY",
+          "RT-INVARIANT-07",
+          "SS-GLOBAL-04"
+        ]
+      },
+      {
+        "assignments": null,
+        "constructionId": "NAV-CONSTRUCT-E-SIM-030-SUBMITTED",
+        "destinationStateId": "simulation.results",
+        "edgeId": "E-SIM-030-SUBMITTED",
+        "outcomeId": "navigation.simulation-results",
+        "preserve": [],
+        "sourceClauseIds": [
+          "SS-SIMULATION-MACHINE",
+          "SS-SIMULATION-SEMANTICS",
+          "SS-HISTORY",
+          "SS-GLOBAL-04"
+        ]
+      },
+      {
+        "assignments": null,
+        "constructionId": "NAV-CONSTRUCT-E-SIM-033-RECONCILED",
+        "destinationStateId": "simulation.results",
+        "edgeId": "E-SIM-033-RECONCILED",
+        "outcomeId": "navigation.simulation-results",
+        "preserve": [],
+        "sourceClauseIds": [
+          "SS-SIMULATION-MACHINE",
+          "SS-GLOBAL-08",
+          "SS-HISTORY",
+          "SS-GLOBAL-04"
+        ]
+      },
+      {
+        "assignments": null,
+        "constructionId": "NAV-CONSTRUCT-E-PRINT-002-GENERATED",
+        "destinationStateId": "print-job.preview-ready",
+        "edgeId": "E-PRINT-002-GENERATED",
+        "outcomeId": "navigation.print-preview",
+        "preserve": [
+          "questionProduct",
+          "keyExplanationProduct"
+        ],
+        "sourceClauseIds": [
+          "SS-PRINT-MACHINE",
+          "SS-ROUTE-15",
+          "SS-GLOBAL-03",
+          "SS-GLOBAL-04"
+        ]
+      },
+      {
+        "assignments": {
+          "position": "event.position"
+        },
+        "constructionId": "NAV-CONSTRUCT-E-REF-054-STUDY-DONE",
+        "destinationStateId": "immediate-feedback.restoring",
+        "edgeId": "E-REF-054-STUDY-DONE",
+        "outcomeId": "navigation.question-player",
+        "preserve": [],
+        "sourceClauseIds": [
+          "SS-ROUTE-05",
+          "RT-ROUTE-05",
+          "SS-HISTORY",
+          "SS-GLOBAL-04"
+        ]
+      },
+      {
+        "assignments": {
+          "position": "event.position"
+        },
+        "constructionId": "NAV-CONSTRUCT-E-REF-055-ATLAS-PRACTICE-DONE",
+        "destinationStateId": "immediate-feedback.restoring",
+        "edgeId": "E-REF-055-ATLAS-PRACTICE-DONE",
+        "outcomeId": "navigation.question-player",
+        "preserve": [],
+        "sourceClauseIds": [
+          "SS-ROUTE-07",
+          "RT-ROUTE-07",
+          "SS-HISTORY",
+          "SS-GLOBAL-04"
+        ]
+      }
+    ],
+    "presentationEffects": [
+      {
+        "acknowledgement": {
+          "eventId": "presentation.effect-acknowledged",
+          "keyField": "effectId",
+          "mode": "exactly-once"
+        },
+        "announcementPolicy": {
+          "duplicateSuppression": "effect-id",
+          "hiddenAnswerExposureForbidden": true,
+          "mode": "none"
+        },
+        "effectId": "FX-ERROR-SUMMARY-FOCUS",
+        "effectType": "focus",
+        "ordering": {
+          "connectedTargetRequired": true,
+          "phase": "after-render",
+          "sequence": 1
+        },
+        "semanticTarget": {
+          "fallbackTarget": null,
+          "kind": "semantic-target",
+          "target": "error-summary"
+        },
+        "snapshotMetaPath": "meta.presentationEffects[]",
+        "sourceClauseIds": [
+          "SS-FOCUS-ISLAND",
+          "SS-ACCEPTANCE"
+        ]
+      },
+      {
+        "acknowledgement": {
+          "eventId": "presentation.effect-acknowledged",
+          "keyField": "effectId",
+          "mode": "exactly-once"
+        },
+        "announcementPolicy": {
+          "duplicateSuppression": "effect-id",
+          "hiddenAnswerExposureForbidden": true,
+          "mode": "none"
+        },
+        "effectId": "FX-OUTCOME-FOCUS",
+        "effectType": "focus",
+        "ordering": {
+          "connectedTargetRequired": true,
+          "phase": "after-render",
+          "sequence": 1
+        },
+        "semanticTarget": {
+          "fallbackTarget": null,
+          "kind": "semantic-target",
+          "target": "outcome"
+        },
+        "snapshotMetaPath": "meta.presentationEffects[]",
+        "sourceClauseIds": [
+          "SS-FOCUS-ISLAND",
+          "SS-QUESTION-SEMANTICS"
+        ]
+      },
+      {
+        "acknowledgement": {
+          "eventId": "presentation.effect-acknowledged",
+          "keyField": "effectId",
+          "mode": "exactly-once"
+        },
+        "announcementPolicy": {
+          "duplicateSuppression": "effect-id",
+          "hiddenAnswerExposureForbidden": true,
+          "mode": "assertive-concise-once"
+        },
+        "effectId": "FX-COMPLETION-ASSERTIVE",
+        "effectType": "announcement",
+        "ordering": {
+          "connectedTargetRequired": false,
+          "phase": "after-render",
+          "sequence": 1
+        },
+        "semanticTarget": {
+          "fallbackTarget": null,
+          "kind": "semantic-target",
+          "target": "outcome"
+        },
+        "snapshotMetaPath": "meta.presentationEffects[]",
+        "sourceClauseIds": [
+          "SS-FOCUS-ISLAND",
+          "SS-QUESTION-SEMANTICS"
+        ]
+      },
+      {
+        "acknowledgement": {
+          "eventId": "presentation.effect-acknowledged",
+          "keyField": "effectId",
+          "mode": "exactly-once"
+        },
+        "announcementPolicy": {
+          "duplicateSuppression": "effect-id",
+          "hiddenAnswerExposureForbidden": true,
+          "mode": "none"
+        },
+        "effectId": "FX-NEXT-PROMPT-FOCUS",
+        "effectType": "focus",
+        "ordering": {
+          "connectedTargetRequired": true,
+          "phase": "after-render",
+          "sequence": 1
+        },
+        "semanticTarget": {
+          "fallbackTarget": null,
+          "kind": "semantic-target",
+          "target": "prompt-heading"
+        },
+        "snapshotMetaPath": "meta.presentationEffects[]",
+        "sourceClauseIds": [
+          "SS-FOCUS-ISLAND",
+          "SS-HISTORY"
+        ]
+      },
+      {
+        "acknowledgement": {
+          "eventId": "presentation.effect-acknowledged",
+          "keyField": "effectId",
+          "mode": "exactly-once"
+        },
+        "announcementPolicy": {
+          "duplicateSuppression": "effect-id",
+          "hiddenAnswerExposureForbidden": true,
+          "mode": "polite-only-if-action-changed"
+        },
+        "effectId": "FX-BACKGROUND-ACTION-POLITE",
+        "effectType": "announcement",
+        "ordering": {
+          "connectedTargetRequired": false,
+          "phase": "after-render",
+          "sequence": 1
+        },
+        "semanticTarget": {
+          "fallbackTarget": null,
+          "kind": "semantic-target",
+          "target": "available-action-status"
+        },
+        "snapshotMetaPath": "meta.presentationEffects[]",
+        "sourceClauseIds": [
+          "SS-FOCUS-ISLAND",
+          "SS-GLOBAL-05"
+        ]
+      },
+      {
+        "acknowledgement": {
+          "eventId": "presentation.effect-acknowledged",
+          "keyField": "effectId",
+          "mode": "exactly-once"
+        },
+        "announcementPolicy": {
+          "duplicateSuppression": "effect-id",
+          "hiddenAnswerExposureForbidden": true,
+          "mode": "none"
+        },
+        "effectId": "FX-DIALOG-RESTORE-FOCUS",
+        "effectType": "focus",
+        "ordering": {
+          "connectedTargetRequired": true,
+          "phase": "after-render",
+          "sequence": 1
+        },
+        "semanticTarget": {
+          "fallbackTarget": "owning-heading",
+          "kind": "semantic-target",
+          "target": "dialog-trigger"
+        },
+        "snapshotMetaPath": "meta.presentationEffects[]",
+        "sourceClauseIds": [
+          "SS-FOCUS-ISLAND",
+          "SS-GLOBAL-04"
+        ]
+      },
+      {
+        "acknowledgement": {
+          "eventId": "presentation.effect-acknowledged",
+          "keyField": "effectId",
+          "mode": "exactly-once"
+        },
+        "announcementPolicy": {
+          "duplicateSuppression": "effect-id",
+          "hiddenAnswerExposureForbidden": true,
+          "mode": "none"
+        },
+        "effectId": "FX-FRAGMENT-HEADING-FOCUS",
+        "effectType": "focus",
+        "ordering": {
+          "connectedTargetRequired": true,
+          "phase": "after-render",
+          "sequence": 1
+        },
+        "semanticTarget": {
+          "fallbackTarget": null,
+          "kind": "semantic-target",
+          "target": "fragment-heading"
+        },
+        "snapshotMetaPath": "meta.presentationEffects[]",
+        "sourceClauseIds": [
+          "SS-FOCUS-DOCUMENT",
+          "SS-GLOBAL-04"
+        ]
+      },
+      {
+        "acknowledgement": {
+          "eventId": "presentation.effect-acknowledged",
+          "keyField": "effectId",
+          "mode": "exactly-once"
+        },
+        "announcementPolicy": {
+          "duplicateSuppression": "effect-id",
+          "hiddenAnswerExposureForbidden": true,
+          "mode": "none"
+        },
+        "effectId": "FX-FOCUS-VISIBILITY",
+        "effectType": "viewport",
+        "ordering": {
+          "connectedTargetRequired": true,
+          "phase": "after-render",
+          "sequence": 1
+        },
+        "semanticTarget": {
+          "fallbackTarget": null,
+          "kind": "semantic-target",
+          "target": "current-focus"
+        },
+        "snapshotMetaPath": "meta.presentationEffects[]",
+        "sourceClauseIds": [
+          "SS-FOCUS-ISLAND",
+          "SS-ACCEPTANCE"
+        ]
+      }
+    ],
+    "routeMilestoneAssignments": {
+      "about": {
+        "kind": "not-applicable",
+        "reason": "additional-acquisition-spoke-outside-21-family-milestone-table"
+      },
+      "actual-questions-explainer": {
+        "kind": "not-applicable",
+        "reason": "additional-acquisition-spoke-outside-21-family-milestone-table"
+      },
+      "atlas-family": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "atlas-index": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "atlas-tool": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "correction-submit": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M5"
+        ],
+        "sourceCell": "M5"
+      },
+      "corrections": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1",
+          "M5"
+        ],
+        "sourceCell": "M1 for core records, M5 completion"
+      },
+      "exam-checker": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "exam-selector": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "faq": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "foil": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1",
+          "M5"
+        ],
+        "sourceCell": "M1 for core records, M5 completion"
+      },
+      "hazard-player": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M3"
+        ],
+        "sourceCell": "M3"
+      },
+      "hazards-index": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M3"
+        ],
+        "sourceCell": "M3"
+      },
+      "home": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M0"
+        ],
+        "sourceCell": "M0"
+      },
+      "nyc-disambiguation": {
+        "kind": "not-applicable",
+        "reason": "additional-acquisition-spoke-outside-21-family-milestone-table"
+      },
+      "offline-packs": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M2",
+          "M5"
+        ],
+        "sourceCell": "M2 single-pack proof, full M5"
+      },
+      "print-center": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M2",
+          "M4"
+        ],
+        "sourceCell": "M2 fixture, full M4"
+      },
+      "print-preview": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M2",
+          "M4"
+        ],
+        "sourceCell": "M2 fixture, full M4"
+      },
+      "privacy": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1",
+          "M5"
+        ],
+        "sourceCell": "M1 for core records, M5 completion"
+      },
+      "procedure-detail": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "procedures-index": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "profile": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "question-player": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M2"
+        ],
+        "sourceCell": "M2"
+      },
+      "repair-lab": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1"
+        ],
+        "sourceCell": "M1"
+      },
+      "review-player": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M3"
+        ],
+        "sourceCell": "M3"
+      },
+      "review-queue": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M3"
+        ],
+        "sourceCell": "M3"
+      },
+      "scoring-explainer": {
+        "kind": "not-applicable",
+        "reason": "additional-acquisition-spoke-outside-21-family-milestone-table"
+      },
+      "security": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1",
+          "M5"
+        ],
+        "sourceCell": "M1 for core records, M5 completion"
+      },
+      "settings": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M5"
+        ],
+        "sourceCell": "M5"
+      },
+      "simulation-player": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M4"
+        ],
+        "sourceCell": "M4"
+      },
+      "simulation-results": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M4"
+        ],
+        "sourceCell": "M4"
+      },
+      "simulation-setup": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M4"
+        ],
+        "sourceCell": "M4"
+      },
+      "source": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1",
+          "M5"
+        ],
+        "sourceCell": "M1 for core records, M5 completion"
+      },
+      "status": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M0",
+          "M5"
+        ],
+        "sourceCell": "M0 shell, full recovery M5"
+      },
+      "study-hub": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1",
+          "M2",
+          "M4"
+        ],
+        "sourceCell": "M1; local actions M2–M4"
+      },
+      "transparency-index": {
+        "kind": "assigned",
+        "milestoneIds": [
+          "M1",
+          "M5"
+        ],
+        "sourceCell": "M1 for core records, M5 completion"
+      }
+    },
+    "selectedDirection": {
+      "directionId": "NAV-CODEX-1",
+      "evidenceMode": "codex-only",
+      "humanEvidence": "none",
+      "humanParticipantCount": 0,
+      "notHumanUsabilityTested": true,
+      "programVersion": "CODEX-ONLY-UIUX-V1",
+      "rules": [
+        {
+          "id": "NAV-FOCUSED-PLAYERS",
+          "statement": "Give every player a named session landmark, progress, and truthful explicit exit without acquisition or utility navigation."
+        },
+        {
+          "id": "NAV-NATIVE-COMPACT",
+          "statement": "Use a named native no-JavaScript-safe compact disclosure before global links wrap into peer rows."
+        },
+        {
+          "id": "NAV-NOJS",
+          "statement": "Keep primary discovery as static ordinary document navigation with truthful JavaScript-free fallbacks."
+        },
+        {
+          "id": "NAV-NONVISUAL-EQUAL-DISCOVERY",
+          "statement": "Give visual and text-keyboard hazard tasks equivalent discovery without claiming identical measurement."
+        },
+        {
+          "id": "NAV-PRACTICE-TASK-HUB",
+          "statement": "Lead Practice with concrete task starts and place translated capacity diagnostics after those starts."
+        },
+        {
+          "id": "NAV-ROUTE-IDENTITY",
+          "statement": "Preserve every fixed route identity, canonical path, and no-JavaScript purpose."
+        },
+        {
+          "id": "NAV-STATIC-REVIEW-ENTRY",
+          "statement": "Expose Review through a normal static parent entry while retaining local and noindex semantics."
+        },
+        {
+          "id": "NAV-TWO-TIER",
+          "statement": "Separate learner tasks from utility and trust destinations instead of presenting every destination as a peer."
+        },
+        {
+          "id": "SHARED-EXPLICIT-PROFILE-CONTEXT",
+          "statement": "Require explicit or visibly neutral profile context and never silently substitute the first jurisdiction."
+        },
+        {
+          "id": "SHARED-HUMAN-EVIDENCE-BOUNDARY",
+          "statement": "Keep human evidence none, human participant count zero, and every result labeled not human usability tested."
+        },
+        {
+          "id": "SHARED-PRESERVE-LOAD-BEARING-TRUTH",
+          "statement": "Preserve unofficial status, uncertainty, source support, local-data risk, security boundaries, and commit-before-reveal."
+        }
+      ],
+      "schemaVersion": "codex-only-rule-closure-v1",
+      "sourceClauseIds": [
+        "RT-CODEX-METADATA",
+        "RT-SELECTED-RULES"
+      ]
+    },
+    "snapshotSchema": {
+      "absentOptionalValue": {
+        "kind": "not-applicable"
+      },
+      "fields": [
+        {
+          "path": "machineId",
+          "presence": "required",
+          "valueType": "machine-id"
+        },
+        {
+          "legalValuesSource": "availability",
+          "path": "selector.dimensions.availability",
+          "presence": "optional",
+          "valueType": "dimension-selector"
+        },
+        {
+          "legalValuesSource": "operation",
+          "path": "selector.dimensions.operation",
+          "presence": "optional",
+          "valueType": "dimension-selector"
+        },
+        {
+          "legalValuesSource": "connectivity",
+          "path": "selector.dimensions.connectivity",
+          "presence": "optional",
+          "valueType": "dimension-selector"
+        },
+        {
+          "legalValuesSource": "persistence",
+          "path": "selector.dimensions.persistence",
+          "presence": "optional",
+          "valueType": "dimension-selector"
+        },
+        {
+          "legalValuesSource": "interaction",
+          "path": "selector.dimensions.interaction",
+          "presence": "optional",
+          "valueType": "dimension-selector"
+        },
+        {
+          "legalValuesSource": "freshness",
+          "path": "selector.dimensions.freshness",
+          "presence": "optional",
+          "valueType": "dimension-selector"
+        },
+        {
+          "absenceSemantics": "not-applicable",
+          "path": "context.attemptDurablyCommitted",
+          "presence": "optional",
+          "valueType": "boolean"
+        },
+        {
+          "absenceSemantics": "not-applicable",
+          "path": "context.acceptedClientReceipt",
+          "presence": "optional",
+          "valueType": "boolean"
+        },
+        {
+          "absenceSemantics": "not-applicable",
+          "path": "context.allActivationGatesSucceeded",
+          "presence": "optional",
+          "valueType": "boolean"
+        },
+        {
+          "absenceSemantics": "not-applicable",
+          "path": "context.contentMayExistButUnavailableOffline",
+          "presence": "optional",
+          "valueType": "boolean"
+        },
+        {
+          "absenceSemantics": "not-applicable",
+          "path": "context.onlyBasisIsOfflineCachedProfile",
+          "presence": "optional",
+          "valueType": "boolean"
+        },
+        {
+          "absenceSemantics": "not-applicable",
+          "path": "context.requiredPinnedClosureComplete",
+          "presence": "optional",
+          "valueType": "boolean"
+        },
+        {
+          "absenceSemantics": "not-applicable",
+          "path": "context.onlyBasisIsRenderedScrolledOrTimed",
+          "presence": "optional",
+          "valueType": "boolean"
+        },
+        {
+          "absenceSemantics": "not-applicable",
+          "path": "context.finalSubmissionSettled",
+          "presence": "optional",
+          "valueType": "boolean"
+        },
+        {
+          "absenceSemantics": "not-applicable",
+          "path": "context.historicalItemRequested",
+          "presence": "optional",
+          "valueType": "boolean"
+        },
+        {
+          "absenceSemantics": "not-applicable",
+          "path": "context.representedItemVersion",
+          "presence": "optional",
+          "valueType": "string"
+        },
+        {
+          "absenceSemantics": "not-applicable",
+          "path": "context.requestedItemVersion",
+          "presence": "optional",
+          "valueType": "string"
+        }
+      ],
+      "schemaVersion": "screen-snapshot-constraint-schema-v1",
+      "sourceClauseIds": [
+        "SS-CONTRACT",
+        "SS-DIM-PRODUCT",
+        "SS-INVALID-01",
+        "SS-INVALID-09"
+      ],
+      "stateProjection": {
+        "contextPath": "context",
+        "machineIdPath": "machineId",
+        "selectorPath": "selector"
+      }
+    }
+  },
+  "sourceClauseSpecs": [
+    {
+      "clauseId": "SS-CONTRACT",
+      "clauseKind": "state-contract",
+      "lineEnd": 15,
+      "lineStart": 3,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-DIM-PRODUCT",
+      "clauseKind": "dimension-definition",
+      "lineEnd": 20,
+      "lineStart": 17,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-DIM-AVAILABILITY",
+      "clauseKind": "dimension-definition",
+      "lineEnd": 24,
+      "lineStart": 22,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-DIM-OPERATION",
+      "clauseKind": "dimension-definition",
+      "lineEnd": 25,
+      "lineStart": 25,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-DIM-CONNECTIVITY",
+      "clauseKind": "dimension-definition",
+      "lineEnd": 26,
+      "lineStart": 26,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-DIM-PERSISTENCE",
+      "clauseKind": "dimension-definition",
+      "lineEnd": 27,
+      "lineStart": 27,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-DIM-INTERACTION",
+      "clauseKind": "dimension-definition",
+      "lineEnd": 28,
+      "lineStart": 28,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-DIM-FRESHNESS",
+      "clauseKind": "dimension-definition",
+      "lineEnd": 29,
+      "lineStart": 29,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-TYPED-ERROR",
+      "clauseKind": "state-contract",
+      "lineEnd": 35,
+      "lineStart": 31,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-INVALID-01",
+      "clauseKind": "invalid-combination-rule",
+      "lineEnd": 39,
+      "lineStart": 39,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-INVALID-02",
+      "clauseKind": "invalid-combination-rule",
+      "lineEnd": 41,
+      "lineStart": 40,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-INVALID-03",
+      "clauseKind": "invalid-combination-rule",
+      "lineEnd": 43,
+      "lineStart": 42,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-INVALID-04",
+      "clauseKind": "invalid-combination-rule",
+      "lineEnd": 44,
+      "lineStart": 44,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-INVALID-05",
+      "clauseKind": "invalid-combination-rule",
+      "lineEnd": 45,
+      "lineStart": 45,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-INVALID-06",
+      "clauseKind": "invalid-combination-rule",
+      "lineEnd": 46,
+      "lineStart": 46,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-INVALID-07",
+      "clauseKind": "invalid-combination-rule",
+      "lineEnd": 48,
+      "lineStart": 47,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-INVALID-08",
+      "clauseKind": "invalid-combination-rule",
+      "lineEnd": 49,
+      "lineStart": 49,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-INVALID-09",
+      "clauseKind": "invalid-combination-rule",
+      "lineEnd": 50,
+      "lineStart": 50,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-GLOBAL-01",
+      "clauseKind": "global-transition-rule",
+      "lineEnd": 55,
+      "lineStart": 54,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-GLOBAL-02",
+      "clauseKind": "global-transition-rule",
+      "lineEnd": 57,
+      "lineStart": 56,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-GLOBAL-03",
+      "clauseKind": "global-transition-rule",
+      "lineEnd": 59,
+      "lineStart": 58,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-GLOBAL-04",
+      "clauseKind": "global-transition-rule",
+      "lineEnd": 61,
+      "lineStart": 60,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-GLOBAL-05",
+      "clauseKind": "global-transition-rule",
+      "lineEnd": 64,
+      "lineStart": 62,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-GLOBAL-06",
+      "clauseKind": "global-transition-rule",
+      "lineEnd": 66,
+      "lineStart": 65,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-GLOBAL-07",
+      "clauseKind": "global-transition-rule",
+      "lineEnd": 68,
+      "lineStart": 67,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-GLOBAL-08",
+      "clauseKind": "global-transition-rule",
+      "lineEnd": 71,
+      "lineStart": 69,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-GLOBAL-09",
+      "clauseKind": "global-transition-rule",
+      "lineEnd": 73,
+      "lineStart": 72,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-REF-MACHINE",
+      "clauseKind": "machine-authority",
+      "lineEnd": 88,
+      "lineStart": 77,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-REF-ISLAND",
+      "clauseKind": "enhancement-island-contract",
+      "lineEnd": 92,
+      "lineStart": 90,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-QUESTION-MACHINE",
+      "clauseKind": "machine-authority",
+      "lineEnd": 113,
+      "lineStart": 94,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-QUESTION-SEMANTICS",
+      "clauseKind": "machine-authority",
+      "lineEnd": 120,
+      "lineStart": 115,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-HAZARD-MACHINE",
+      "clauseKind": "machine-authority",
+      "lineEnd": 131,
+      "lineStart": 122,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-HAZARD-SEMANTICS",
+      "clauseKind": "machine-authority",
+      "lineEnd": 136,
+      "lineStart": 133,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-SIMULATION-MACHINE",
+      "clauseKind": "machine-authority",
+      "lineEnd": 147,
+      "lineStart": 138,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-SIMULATION-SEMANTICS",
+      "clauseKind": "machine-authority",
+      "lineEnd": 153,
+      "lineStart": 149,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-PRINT-MACHINE",
+      "clauseKind": "machine-authority",
+      "lineEnd": 163,
+      "lineStart": 155,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-PRINT-SEMANTICS",
+      "clauseKind": "machine-authority",
+      "lineEnd": 167,
+      "lineStart": 165,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-PACK-MACHINE",
+      "clauseKind": "machine-authority",
+      "lineEnd": 178,
+      "lineStart": 169,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-PACK-SEMANTICS",
+      "clauseKind": "machine-authority",
+      "lineEnd": 183,
+      "lineStart": 180,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-CORRECTION-MACHINE",
+      "clauseKind": "machine-authority",
+      "lineEnd": 193,
+      "lineStart": 185,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-CORRECTION-SEMANTICS",
+      "clauseKind": "machine-authority",
+      "lineEnd": 197,
+      "lineStart": 195,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-DATA-MACHINE",
+      "clauseKind": "machine-authority",
+      "lineEnd": 206,
+      "lineStart": 199,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-DATA-COMMIT-COMPLETE-202",
+      "clauseKind": "machine-authority",
+      "lineEnd": 202,
+      "lineStart": 202,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-DATA-COMMIT-COMPLETE-204",
+      "clauseKind": "machine-authority",
+      "lineEnd": 204,
+      "lineStart": 204,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-DATA-SEMANTICS",
+      "clauseKind": "machine-authority",
+      "lineEnd": 211,
+      "lineStart": 208,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-STATIC-SPOKES",
+      "clauseKind": "route-spoke-family",
+      "lineEnd": 221,
+      "lineStart": 213,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-ROUTE-01",
+      "clauseKind": "route-family-row",
+      "lineEnd": 225,
+      "lineStart": 225,
+      "routeFamilyNumber": 1,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-ROUTE-02",
+      "clauseKind": "route-family-row",
+      "lineEnd": 226,
+      "lineStart": 226,
+      "routeFamilyNumber": 2,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-ROUTE-03",
+      "clauseKind": "route-family-row",
+      "lineEnd": 227,
+      "lineStart": 227,
+      "routeFamilyNumber": 3,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-ROUTE-04",
+      "clauseKind": "route-family-row",
+      "lineEnd": 228,
+      "lineStart": 228,
+      "routeFamilyNumber": 4,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-ROUTE-05",
+      "clauseKind": "route-family-row",
+      "lineEnd": 229,
+      "lineStart": 229,
+      "routeFamilyNumber": 5,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-ROUTE-06",
+      "clauseKind": "route-family-row",
+      "lineEnd": 230,
+      "lineStart": 230,
+      "routeFamilyNumber": 6,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-ROUTE-07",
+      "clauseKind": "route-family-row",
+      "lineEnd": 231,
+      "lineStart": 231,
+      "routeFamilyNumber": 7,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-ROUTE-08",
+      "clauseKind": "route-family-row",
+      "lineEnd": 232,
+      "lineStart": 232,
+      "routeFamilyNumber": 8,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-ROUTE-09",
+      "clauseKind": "route-family-row",
+      "lineEnd": 233,
+      "lineStart": 233,
+      "routeFamilyNumber": 9,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-ROUTE-10",
+      "clauseKind": "route-family-row",
+      "lineEnd": 234,
+      "lineStart": 234,
+      "routeFamilyNumber": 10,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-ROUTE-11",
+      "clauseKind": "route-family-row",
+      "lineEnd": 235,
+      "lineStart": 235,
+      "routeFamilyNumber": 11,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-ROUTE-12",
+      "clauseKind": "route-family-row",
+      "lineEnd": 236,
+      "lineStart": 236,
+      "routeFamilyNumber": 12,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-ROUTE-13",
+      "clauseKind": "route-family-row",
+      "lineEnd": 237,
+      "lineStart": 237,
+      "routeFamilyNumber": 13,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-ROUTE-14",
+      "clauseKind": "route-family-row",
+      "lineEnd": 238,
+      "lineStart": 238,
+      "routeFamilyNumber": 14,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-ROUTE-15",
+      "clauseKind": "route-family-row",
+      "lineEnd": 239,
+      "lineStart": 239,
+      "routeFamilyNumber": 15,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-ROUTE-16",
+      "clauseKind": "route-family-row",
+      "lineEnd": 240,
+      "lineStart": 240,
+      "routeFamilyNumber": 16,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-ROUTE-17",
+      "clauseKind": "route-family-row",
+      "lineEnd": 241,
+      "lineStart": 241,
+      "routeFamilyNumber": 17,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-ROUTE-18",
+      "clauseKind": "route-family-row",
+      "lineEnd": 242,
+      "lineStart": 242,
+      "routeFamilyNumber": 18,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-ROUTE-19",
+      "clauseKind": "route-family-row",
+      "lineEnd": 243,
+      "lineStart": 243,
+      "routeFamilyNumber": 19,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-ROUTE-20",
+      "clauseKind": "route-family-row",
+      "lineEnd": 244,
+      "lineStart": 244,
+      "routeFamilyNumber": 20,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-ROUTE-21",
+      "clauseKind": "route-family-row",
+      "lineEnd": 245,
+      "lineStart": 245,
+      "routeFamilyNumber": 21,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-FOCUS-DOCUMENT",
+      "clauseKind": "cross-cutting-behavior",
+      "lineEnd": 255,
+      "lineStart": 249,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-FOCUS-ISLAND",
+      "clauseKind": "cross-cutting-behavior",
+      "lineEnd": 271,
+      "lineStart": 257,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-HISTORY",
+      "clauseKind": "cross-cutting-behavior",
+      "lineEnd": 290,
+      "lineStart": 273,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-RECOVERY-ACTIONS",
+      "clauseKind": "cross-cutting-behavior",
+      "lineEnd": 307,
+      "lineStart": 292,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-RECOVERY-IDEMPOTENCE",
+      "clauseKind": "cross-cutting-behavior",
+      "lineEnd": 310,
+      "lineStart": 309,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "SS-ACCEPTANCE",
+      "clauseKind": "acceptance-criteria",
+      "lineEnd": 332,
+      "lineStart": 312,
+      "routeFamilyNumber": null,
+      "sourceId": "SCREEN_STATES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-CODEX-METADATA",
+      "clauseKind": "review-metadata",
+      "lineEnd": 12,
+      "lineStart": 3,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-SELECTED-RULES",
+      "clauseKind": "selected-direction",
+      "lineEnd": 72,
+      "lineStart": 14,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-AUTHORITY-SCOPE",
+      "clauseKind": "authority-scope",
+      "lineEnd": 83,
+      "lineStart": 74,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-INVARIANT-01",
+      "clauseKind": "route-global-invariant",
+      "lineEnd": 88,
+      "lineStart": 87,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-INVARIANT-02",
+      "clauseKind": "route-global-invariant",
+      "lineEnd": 90,
+      "lineStart": 89,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-INVARIANT-03",
+      "clauseKind": "route-global-invariant",
+      "lineEnd": 93,
+      "lineStart": 91,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-INVARIANT-04",
+      "clauseKind": "route-global-invariant",
+      "lineEnd": 96,
+      "lineStart": 94,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-INVARIANT-05",
+      "clauseKind": "route-global-invariant",
+      "lineEnd": 99,
+      "lineStart": 97,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-INVARIANT-06",
+      "clauseKind": "route-global-invariant",
+      "lineEnd": 101,
+      "lineStart": 100,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-INVARIANT-07",
+      "clauseKind": "route-global-invariant",
+      "lineEnd": 105,
+      "lineStart": 102,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-INVARIANT-08",
+      "clauseKind": "route-global-invariant",
+      "lineEnd": 107,
+      "lineStart": 106,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-INVARIANT-09",
+      "clauseKind": "route-global-invariant",
+      "lineEnd": 110,
+      "lineStart": 108,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-INVARIANT-10",
+      "clauseKind": "route-global-invariant",
+      "lineEnd": 113,
+      "lineStart": 111,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-RENDER-LABELS",
+      "clauseKind": "render-ownership-vocabulary",
+      "lineEnd": 125,
+      "lineStart": 115,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-ROUTE-01",
+      "clauseKind": "route-family-row",
+      "lineEnd": 148,
+      "lineStart": 148,
+      "routeFamilyNumber": 1,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-ROUTE-02",
+      "clauseKind": "route-family-row",
+      "lineEnd": 149,
+      "lineStart": 149,
+      "routeFamilyNumber": 2,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-ROUTE-03",
+      "clauseKind": "route-family-row",
+      "lineEnd": 150,
+      "lineStart": 150,
+      "routeFamilyNumber": 3,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-ROUTE-04",
+      "clauseKind": "route-family-row",
+      "lineEnd": 151,
+      "lineStart": 151,
+      "routeFamilyNumber": 4,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-ROUTE-05",
+      "clauseKind": "route-family-row",
+      "lineEnd": 152,
+      "lineStart": 152,
+      "routeFamilyNumber": 5,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-ROUTE-06",
+      "clauseKind": "route-family-row",
+      "lineEnd": 153,
+      "lineStart": 153,
+      "routeFamilyNumber": 6,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-ROUTE-07",
+      "clauseKind": "route-family-row",
+      "lineEnd": 154,
+      "lineStart": 154,
+      "routeFamilyNumber": 7,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-ROUTE-08",
+      "clauseKind": "route-family-row",
+      "lineEnd": 155,
+      "lineStart": 155,
+      "routeFamilyNumber": 8,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-ROUTE-09",
+      "clauseKind": "route-family-row",
+      "lineEnd": 156,
+      "lineStart": 156,
+      "routeFamilyNumber": 9,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-ROUTE-10",
+      "clauseKind": "route-family-row",
+      "lineEnd": 157,
+      "lineStart": 157,
+      "routeFamilyNumber": 10,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-ROUTE-11",
+      "clauseKind": "route-family-row",
+      "lineEnd": 158,
+      "lineStart": 158,
+      "routeFamilyNumber": 11,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-ROUTE-12",
+      "clauseKind": "route-family-row",
+      "lineEnd": 159,
+      "lineStart": 159,
+      "routeFamilyNumber": 12,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-ROUTE-13",
+      "clauseKind": "route-family-row",
+      "lineEnd": 160,
+      "lineStart": 160,
+      "routeFamilyNumber": 13,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-ROUTE-14",
+      "clauseKind": "route-family-row",
+      "lineEnd": 161,
+      "lineStart": 161,
+      "routeFamilyNumber": 14,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-ROUTE-15",
+      "clauseKind": "route-family-row",
+      "lineEnd": 162,
+      "lineStart": 162,
+      "routeFamilyNumber": 15,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-ROUTE-16",
+      "clauseKind": "route-family-row",
+      "lineEnd": 163,
+      "lineStart": 163,
+      "routeFamilyNumber": 16,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-ROUTE-17",
+      "clauseKind": "route-family-row",
+      "lineEnd": 164,
+      "lineStart": 164,
+      "routeFamilyNumber": 17,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-ROUTE-18",
+      "clauseKind": "route-family-row",
+      "lineEnd": 165,
+      "lineStart": 165,
+      "routeFamilyNumber": 18,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-ROUTE-19",
+      "clauseKind": "route-family-row",
+      "lineEnd": 166,
+      "lineStart": 166,
+      "routeFamilyNumber": 19,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-ROUTE-20",
+      "clauseKind": "route-family-row",
+      "lineEnd": 167,
+      "lineStart": 167,
+      "routeFamilyNumber": 20,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-ROUTE-21",
+      "clauseKind": "route-family-row",
+      "lineEnd": 168,
+      "lineStart": 168,
+      "routeFamilyNumber": 21,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-CONDITIONAL-GATE",
+      "clauseKind": "publication-gate",
+      "lineEnd": 177,
+      "lineStart": 170,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-SPOKE-01",
+      "clauseKind": "route-spoke-row",
+      "lineEnd": 186,
+      "lineStart": 186,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": 1
+    },
+    {
+      "clauseId": "RT-SPOKE-02",
+      "clauseKind": "route-spoke-row",
+      "lineEnd": 187,
+      "lineStart": 187,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": 2
+    },
+    {
+      "clauseId": "RT-SPOKE-03",
+      "clauseKind": "route-spoke-row",
+      "lineEnd": 188,
+      "lineStart": 188,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": 3
+    },
+    {
+      "clauseId": "RT-SPOKE-04",
+      "clauseKind": "route-spoke-row",
+      "lineEnd": 189,
+      "lineStart": 189,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": 4
+    },
+    {
+      "clauseId": "RT-CAPABILITY-01",
+      "clauseKind": "route-cross-cutting-contract",
+      "lineEnd": 198,
+      "lineStart": 198,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-CAPABILITY-02",
+      "clauseKind": "route-cross-cutting-contract",
+      "lineEnd": 199,
+      "lineStart": 199,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-CAPABILITY-03",
+      "clauseKind": "route-cross-cutting-contract",
+      "lineEnd": 200,
+      "lineStart": 200,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-CAPABILITY-04",
+      "clauseKind": "route-cross-cutting-contract",
+      "lineEnd": 201,
+      "lineStart": 201,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-CAPABILITY-05",
+      "clauseKind": "route-cross-cutting-contract",
+      "lineEnd": 202,
+      "lineStart": 202,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-CAPABILITY-06",
+      "clauseKind": "route-cross-cutting-contract",
+      "lineEnd": 203,
+      "lineStart": 203,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-CAPABILITY-07",
+      "clauseKind": "route-cross-cutting-contract",
+      "lineEnd": 205,
+      "lineStart": 204,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-LOCALE",
+      "clauseKind": "locale-policy",
+      "lineEnd": 221,
+      "lineStart": 207,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-NAV-ENVELOPE",
+      "clauseKind": "route-cross-cutting-contract",
+      "lineEnd": 244,
+      "lineStart": 223,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-FOCUSED-ROUTES",
+      "clauseKind": "route-cross-cutting-contract",
+      "lineEnd": 253,
+      "lineStart": 246,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-SHELLS",
+      "clauseKind": "route-cross-cutting-contract",
+      "lineEnd": 275,
+      "lineStart": 255,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-PROFILE-PRACTICE",
+      "clauseKind": "route-cross-cutting-contract",
+      "lineEnd": 306,
+      "lineStart": 277,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-FOCUSED-WORK",
+      "clauseKind": "route-cross-cutting-contract",
+      "lineEnd": 323,
+      "lineStart": 308,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-NAV-VERIFICATION",
+      "clauseKind": "acceptance-criteria",
+      "lineEnd": 344,
+      "lineStart": 325,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-ROUTE-ACCEPTANCE",
+      "clauseKind": "acceptance-criteria",
+      "lineEnd": 365,
+      "lineStart": 346,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    },
+    {
+      "clauseId": "RT-MILESTONES",
+      "clauseKind": "implementation-milestone-program",
+      "lineEnd": 138,
+      "lineStart": 126,
+      "routeFamilyNumber": null,
+      "sourceId": "ROUTES",
+      "spokeNumber": null
+    }
+  ]
+}
