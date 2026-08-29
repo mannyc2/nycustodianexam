@@ -200,6 +200,13 @@ const focusableSnapshot = ({ direction, browserProject }: { direction: "forward"
     }
     return `html>${segments.join(">")}`
   }
+  const logicalStopIdFor = (element: HTMLElement) => {
+    if (element instanceof HTMLInputElement && element.type === "radio" && element.name !== "") {
+      const formCoordinate = element.form === null ? "no-form" : coordinateFor(element.form)
+      return `radio-group:${JSON.stringify([formCoordinate, element.name])}`
+    }
+    return `element:${coordinateFor(element)}`
+  }
   const candidates = [...document.querySelectorAll<HTMLElement>(selector)].filter((element) => {
     if (element.matches(":disabled") || element.getAttribute("aria-disabled") === "true") return false
     if (element instanceof HTMLInputElement && element.type === "hidden") return false
@@ -230,7 +237,10 @@ const focusableSnapshot = ({ direction, browserProject }: { direction: "forward"
     if (leftPositive && left.tabIndex !== right.tabIndex) return left.tabIndex - right.tabIndex
     return documentOrder.get(left)! - documentOrder.get(right)!
   })
-  return eligible.map((element) => coordinateFor(element))
+  return eligible.map((element) => ({
+    logicalStopId: logicalStopIdFor(element),
+    coordinate: coordinateFor(element)
+  }))
 }
 
 const activeFocusObservation = () => {
@@ -249,11 +259,19 @@ const activeFocusObservation = () => {
     }
     return `html>${segments.join(">")}`
   }
+  const logicalStopIdFor = (element: HTMLElement) => {
+    if (element instanceof HTMLInputElement && element.type === "radio" && element.name !== "") {
+      const formCoordinate = element.form === null ? "no-form" : coordinateFor(element.form)
+      return `radio-group:${JSON.stringify([formCoordinate, element.name])}`
+    }
+    return `element:${coordinateFor(element)}`
+  }
   const element = document.activeElement
   if (!(element instanceof HTMLElement) || element === document.body || element === document.documentElement) return null
   const style = getComputedStyle(element)
   const transparentOutline = style.outlineColor === "transparent" || style.outlineColor === "rgba(0, 0, 0, 0)"
   return {
+    logicalStopId: logicalStopIdFor(element),
     coordinate: coordinateFor(element),
     focusVisible: element.matches(":focus-visible") &&
       style.outlineStyle !== "none" &&
@@ -270,35 +288,70 @@ const expectKeyboardTraversalAndVisibleFocus = async (page: Page, browserProject
   })
   const expectedOrder = await page.evaluate(focusableSnapshot, { direction: "forward", browserProject })
   expect(expectedOrder.length, "fixture has enabled rendered sequential focus stops").toBeGreaterThan(0)
-  expect(new Set(expectedOrder).size, "derived focus coordinates are unique").toBe(expectedOrder.length)
-  const visited: { coordinate: string; focusVisible: boolean }[] = []
+  expect(new Set(expectedOrder.map(({ logicalStopId }) => logicalStopId)).size, "derived logical focus stops are unique").toBe(expectedOrder.length)
+  expect(new Set(expectedOrder.map(({ coordinate }) => coordinate)).size, "derived forward focus coordinates are unique").toBe(expectedOrder.length)
+  const visited: { logicalStopId: string; coordinate: string; focusVisible: boolean }[] = []
+  let forwardTabPressCount = 0
   for (let step = 0; step < expectedOrder.length; step += 1) {
     await page.keyboard.press("Tab")
+    forwardTabPressCount += 1
     const observation = await page.evaluate(activeFocusObservation)
     expect(observation, `forward Tab stop ${step + 1} remains in the document`).not.toBeNull()
     visited.push(observation!)
     expect(observation!.focusVisible, `forward Tab stop ${visited.length} exposes a visible focus indicator`).toBe(true)
   }
-  const visitedOrder = visited.map(({ coordinate }) => coordinate)
+  const visitedOrder = visited.map(({ logicalStopId, coordinate }) => ({ logicalStopId, coordinate }))
   expect(visitedOrder, "native Tab visits the complete derived order, including late controls").toEqual(expectedOrder)
-  expect(new Set(visitedOrder).size, "native Tab cycle has no duplicate stop or trap").toBe(visitedOrder.length)
+  expect(new Set(visitedOrder.map(({ logicalStopId }) => logicalStopId)).size, "native Tab observes each logical stop once").toBe(visitedOrder.length)
+  expect(new Set(visitedOrder.map(({ coordinate }) => coordinate)).size, "native Tab observes each physical element once").toBe(visitedOrder.length)
 
-  // Firefox headless transfers forward focus into browser chrome after the
-  // final document stop but does not expose that path to page automation.
-  // Use only native Shift+Tab events for the observable return traversal;
-  // no document control is focused programmatically.
+  // Stop after observing the final document control. No forward Tab is sent
+  // from it, so this test neither observes browser chrome nor proves the
+  // absence of a final-control forward-Tab trap. The reverse traversal starts
+  // from the still-focused final control without programmatic element focus.
   const backwardDocumentOrder = await page.evaluate(focusableSnapshot, { direction: "backward", browserProject })
+  const forwardLogicalOrder = expectedOrder.map(({ logicalStopId }) => logicalStopId)
+  const backwardLogicalOrder = backwardDocumentOrder.map(({ logicalStopId }) => logicalStopId)
+  expect(backwardLogicalOrder, "forward and backward derivations contain the same logical document stops").toEqual(forwardLogicalOrder)
+  for (const backwardStop of backwardDocumentOrder) {
+    const forwardStop = expectedOrder.find(({ logicalStopId }) => logicalStopId === backwardStop.logicalStopId)
+    expect(forwardStop, `backward logical stop ${backwardStop.logicalStopId} exists in the forward closure`).toBeDefined()
+    const directionSpecificWebKitRadio = browserProject === "webkit" && backwardStop.logicalStopId.startsWith("radio-group:")
+    expect(forwardStop!.coordinate === backwardStop.coordinate || directionSpecificWebKitRadio, `physical member drift for ${backwardStop.logicalStopId} is limited to a WebKit radio group`).toBe(true)
+  }
   const returnExpectedOrder = backwardDocumentOrder.slice(0, -1).reverse()
-  const returnVisited: { coordinate: string; focusVisible: boolean }[] = []
+  expect(returnExpectedOrder.map(({ logicalStopId }) => logicalStopId), "return expectation reverses every preceding logical stop through the first").toEqual(forwardLogicalOrder.slice(0, -1).reverse())
+  const returnVisited: { logicalStopId: string; coordinate: string; focusVisible: boolean }[] = []
+  let returnShiftTabPressCount = 0
   for (let step = 0; step < returnExpectedOrder.length; step += 1) {
     await page.keyboard.press("Shift+Tab")
+    returnShiftTabPressCount += 1
     const observation = await page.evaluate(activeFocusObservation)
     expect(observation, `return Shift+Tab stop ${step + 1} remains in the document`).not.toBeNull()
     returnVisited.push(observation!)
     expect(observation!.focusVisible, `return Shift+Tab stop ${returnVisited.length} exposes a visible focus indicator`).toBe(true)
   }
-  expect(returnVisited.map(({ coordinate }) => coordinate), "native Shift+Tab follows the exact reverse return order").toEqual(returnExpectedOrder)
-  expect(returnVisited.at(-1)?.coordinate, "the native keyboard round trip returns to the first stop").toBe(expectedOrder[0])
+  const returnVisitedOrder = returnVisited.map(({ logicalStopId, coordinate }) => ({ logicalStopId, coordinate }))
+  expect(returnVisitedOrder, "native Shift+Tab follows the reverse return order through the first logical stop").toEqual(returnExpectedOrder)
+  expect(new Set(returnVisitedOrder.map(({ logicalStopId }) => logicalStopId)).size, "native Shift+Tab observes each return logical stop once").toBe(returnVisitedOrder.length)
+  expect(new Set(returnVisitedOrder.map(({ coordinate }) => coordinate)).size, "native Shift+Tab observes each return physical element once").toBe(returnVisitedOrder.length)
+
+  return {
+    performed: true,
+    mode: "native-document-focus-order-round-trip",
+    expectedFocusableCount: expectedOrder.length,
+    expectedOrder,
+    returnExpectedOrder,
+    forwardTabPressCount,
+    returnShiftTabPressCount,
+    forwardTabFromFinalStopPerformed: false,
+    absenceOfForwardTabTrapAtFinalStopProved: false,
+    forwardOrderObserved: JSON.stringify(visitedOrder) === JSON.stringify(expectedOrder),
+    returnOrderObserved: JSON.stringify(returnVisitedOrder) === JSON.stringify(returnExpectedOrder),
+    allObservedFocusVisible: visited.every(({ focusVisible }) => focusVisible) && returnVisited.every(({ focusVisible }) => focusVisible),
+    visited,
+    returnVisited
+  }
 }
 
 const expectAcceptedImageTreatment = async (page: Page, frame: Frame) => {
@@ -401,6 +454,55 @@ const rawStatus = (baseURL: string, path: string, options: { host?: string; meth
     request.once("error", reject)
     request.end()
   })
+
+test.describe("native document focus-order round-trip evidence boundary", () => {
+  test("final-control Tab preventDefault remains outside the evidence contract", async ({ page, browserName }) => {
+    await page.setContent(`<!doctype html>
+      <html lang="en">
+        <head>
+          <style>
+            button:focus-visible { outline: 3px solid currentColor; outline-offset: 2px; }
+          </style>
+        </head>
+        <body data-prevented-final-forward-tabs="0">
+          <button id="synthetic-first" type="button">First</button>
+          <button id="synthetic-middle" type="button">Middle</button>
+          <button id="synthetic-final" type="button">Final</button>
+          <script>
+            document.querySelector("#synthetic-final").addEventListener("keydown", (event) => {
+              if (event.key !== "Tab" || event.shiftKey) return
+              event.preventDefault()
+              const current = Number(document.body.dataset.preventedFinalForwardTabs)
+              document.body.dataset.preventedFinalForwardTabs = String(current + 1)
+            })
+          </script>
+        </body>
+      </html>`)
+
+    const traversal = await expectKeyboardTraversalAndVisibleFocus(page, browserName)
+    expect(traversal.expectedFocusableCount).toBe(3)
+    expect(traversal.forwardTabPressCount).toBe(3)
+    expect(traversal.returnShiftTabPressCount).toBe(2)
+    expect(traversal.forwardTabFromFinalStopPerformed).toBe(false)
+    expect(traversal.absenceOfForwardTabTrapAtFinalStopProved).toBe(false)
+    expect(await page.evaluate(() => ({
+      activeId: document.activeElement?.id ?? null,
+      preventedFinalForwardTabCount: Number(document.body.dataset.preventedFinalForwardTabs)
+    }))).toEqual({ activeId: "synthetic-first", preventedFinalForwardTabCount: 0 })
+
+    // The helper has returned natively to the first stop. This separate probe
+    // moves forward only to the final control, then deliberately exercises the
+    // fixture behavior that the evidence contract excludes.
+    for (let step = 1; step < traversal.expectedFocusableCount; step += 1) await page.keyboard.press("Tab")
+    expect((await page.evaluate(activeFocusObservation))?.coordinate).toBe("#synthetic-final")
+    await page.keyboard.press("Tab")
+    expect(await page.evaluate(() => ({
+      activeId: document.activeElement?.id ?? null,
+      preventedFinalForwardTabCount: Number(document.body.dataset.preventedFinalForwardTabs)
+    }))).toEqual({ activeId: "synthetic-final", preventedFinalForwardTabCount: 1 })
+    expect(traversal.absenceOfForwardTabTrapAtFinalStopProved).toBe(false)
+  })
+})
 
 test.describe("diagnostic A/B/C representative route-surface and presentation matrix", () => {
   for (const territoryId of territoryIds) {

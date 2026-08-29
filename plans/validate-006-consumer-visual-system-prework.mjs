@@ -125,12 +125,41 @@ const exactLabel = (value, path) => {
   equal(value, ARTIFACT_LABEL, path)
 }
 
+const rawJsonLeakScanVariants = (text) => {
+  const variants = [text]
+  let current = text
+  for (let index = 0; index < 4; index += 1) {
+    const decoded = current
+      .replace(/\\\\/g, "\\")
+      .replace(/\\u([0-9a-fA-F]{4})/g, (_, hex) => String.fromCharCode(Number.parseInt(hex, 16)))
+      .replace(/\\\//g, "/")
+    if (decoded === current) break
+    variants.push(decoded)
+    current = decoded
+  }
+  return variants
+}
+
+const scanRawJsonForPrivateMaterial = (text, path) => {
+  const checks = [
+    [/(?:^|["': \t\n\r])\/(?:home|Users|mnt\/(?:models|data|workspace))\/[A-Za-z0-9._-]+(?:\/|$)/u, "private absolute path"],
+    [/[A-Za-z]:\\Users\\[A-Za-z0-9._-]+(?:\\|$)/iu, "private Windows path"],
+    [/"(?:privatePath|homePath|hostPath|hostname|deviceName|contactEmail|candidateId|applicantId)"[ \t\n\r]*:/iu, "private metadata key"],
+    [/(?:https?:\/\/)?(?:10(?:\.[0-9]{1,3}){3}|192\.168(?:\.[0-9]{1,3}){2}|172\.(?:1[6-9]|2[0-9]|3[01])(?:\.[0-9]{1,3}){2}|169\.254(?:\.[0-9]{1,3}){2})(?::[0-9]+)?/iu, "private network address"]
+  ]
+  for (const variant of rawJsonLeakScanVariants(text)) {
+    for (const [pattern, label] of checks) assert(!pattern.test(variant), `${path}: ${label} forbidden`)
+  }
+}
+
 // A small strict JSON parser keeps duplicate object keys observable. JSON.parse
 // alone cannot distinguish a duplicate key from a last-write-wins object.
 const parseJsonStrict = (text, path) => {
+  scanRawJsonForPrivateMaterial(text, path)
   let cursor = 0
+  const jsonWhitespace = new Set([" ", "\t", "\n", "\r"])
   const whitespace = () => {
-    while (/\s/.test(text[cursor] ?? "")) cursor += 1
+    while (jsonWhitespace.has(text[cursor])) cursor += 1
   }
   const parseString = () => {
     const start = cursor
@@ -164,7 +193,9 @@ const parseJsonStrict = (text, path) => {
     const match = text.slice(cursor).match(/^-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?/)
     assert(match !== null, `${path}: JSON value expected at ${cursor}`)
     cursor += match[0].length
-    return Number(match[0])
+    const value = Number(match[0])
+    assert(Number.isFinite(value), `${path}: finite JSON number required at ${cursor - match[0].length}`)
+    return value
   }
   const parseObject = () => {
     cursor += 1
@@ -898,7 +929,7 @@ const validatePrototypeEngine = (engine) => {
   exactKeys(engine, ["label", "dependencyContract", "engineStatus", "futureInputs", "sharedInvariantFields", "operations", "permittedTerritoryOverrides", "routeArchetypes", "selectionInputContract", "territories", "tokenRoles", "renderContract", "prohibitions"], "prototypeEngine")
   exactLabel(engine.label, "prototypeEngine.label")
   equal(engine.dependencyContract, { requiredMergedStep2Sha: null, sourceKind: "exact-merged-step-2-agent-only-language-navigation-sha", status: "awaiting-coordinator-supplied-exact-sha" }, "prototypeEngine.dependencyContract")
-  equal(engine.selectionInputContract, { minimumIndependentCodexReviews: 3, protocolId: "CODEX-ONLY-UIUX-V1", prototypeStatus: "not-built", requiredMergedStep2Sha: null, requiredPrototypeSha256: null, status: "blocked-awaiting-exact-step-2-sha" }, "prototypeEngine.selectionInputContract")
+  equal(engine.selectionInputContract, { protocolId: "CODEX-ONLY-UIUX-V1", prototypeStatus: "not-built", requiredMergedStep2Sha: null, requiredPrototypeSha256: null, requiredTaskScopedCodexReviewCount: 3, status: "blocked-awaiting-exact-step-2-sha" }, "prototypeEngine.selectionInputContract")
   assert(engine.engineStatus === "blocked-awaiting-exact-merged-step-2-sha", "prototype engine cannot render yet")
   exactKeys(engine.futureInputs, ["language", "navigation"], "prototypeEngine.futureInputs")
   for (const name of ["language", "navigation"]) {
@@ -942,13 +973,13 @@ const validatePrototypeEngine = (engine) => {
     "render-before-exact-merged-step-2-sha", "render-before-language-input", "render-before-navigation-input", "codex-review-before-exact-merged-step-2-sha",
     "territory-copy-override", "territory-link-override", "territory-fact-override", "territory-asset-override", "territory-state-override",
     "external-font", "external-icon-pack", "external-image", "candidate-asset", "master-asset", "review-or-contact-sheet", "overlay-or-postcommit-precommit",
-    "image-crop-filter-mask-blend", "public-or-shared-host", "scored-use-of-specialist-gated-asset", "selection-before-three-independent-codex-reviews",
+    "image-crop-filter-mask-blend", "public-or-shared-host", "scored-use-of-specialist-gated-asset", "selection-before-three-task-scoped-codex-reviews",
     "territory-selection", "canonical-promotion"
   ], "prototype exact prohibitions")
 }
 
 const validateCodexOnlyWorkflow = (workflow) => {
-  exactKeys(workflow, ["consensus", "decisionRule", "humanEvidence", "humanParticipantCount", "humanReviewRequired", "historicalFutureReviewInterfaceDisposition", "independence", "label", "notHumanUsabilityTested", "protocolId", "requiredDependency", "reviewRecordContract", "reviewRecords", "rubrics"], "codexOnlyWorkflow")
+  exactKeys(workflow, ["consensus", "decisionRule", "humanEvidence", "humanParticipantCount", "humanReviewRequired", "historicalFutureReviewInterfaceDisposition", "label", "notHumanUsabilityTested", "protocolId", "requiredDependency", "reviewAccounting", "reviewRecordContract", "reviewRecords", "rubrics"], "codexOnlyWorkflow")
   exactLabel(workflow.label, "codexOnlyWorkflow.label")
   assert(workflow.protocolId === "CODEX-ONLY-UIUX-V1", "Codex-only protocol ID mismatch")
   assert(workflow.humanEvidence === "none" && workflow.humanParticipantCount === 0 && workflow.humanReviewRequired === false && workflow.notHumanUsabilityTested === true, "Codex-only workflow must preserve zero/no-human semantics")
@@ -962,32 +993,40 @@ const validateCodexOnlyWorkflow = (workflow) => {
     activeContractPath: "plans/006-select-consumer-visual-system.md",
     mayPopulateReviewRecords: false,
     maySelectOrPromote: false,
-    reason: "arbitrary-agentTaskId-and-self-attested-independence-interface-superseded-by-exact-native-task-receipt-contract",
+    reason: "arbitrary-task-labels-and-self-attested-independence-interface-superseded-by-unauthenticated-local-correlation-contract",
     status: "superseded-non-executable"
   }, "codexOnlyWorkflow.historicalFutureReviewInterfaceDisposition")
-  equal(workflow.independence, { agentReviewsAreNotUserResearch: true, agentsAreNonhumanEvidence: true, distinctAgentTaskIdsRequired: true, onePrimaryRubricPerAgentTaskId: true }, "codexOnlyWorkflow.independence")
+  equal(workflow.reviewAccounting, {
+    agentReviewsAreNotUserResearch: true,
+    agentsAreNonhumanEvidence: true,
+    crossOutputObservationStatus: "not-observable",
+    nativeSpawnBytesAvailability: "unavailable",
+    reviewUnit: "task-scoped-codex-review",
+    taskCorrelationEvidenceClass: "unauthenticated-local-correlation"
+  }, "codexOnlyWorkflow.reviewAccounting")
   equal(workflow.decisionRule, {
     aggregation: "sum-unweighted-criterion-scores-by-territory",
     blockingFindingRule: "any-blocking-finding-prevents-selection",
     dissentRule: "preserve-all-non-consensus-positions-and-evidence-coordinates",
-    minimumIndependentReviewCount: 3,
     requiredDistinctRubricCount: 3,
+    requiredTaskScopedCodexReviewCount: 3,
     selectionRule: "unique-highest-nonblocked-total",
     tieRule: "pending-no-selection",
     unresolvedDissentPreventsSelection: true
   }, "codexOnlyWorkflow.decisionRule")
   equal(workflow.reviewRecordContract, {
     criterionClosureRule: "each-rubric-criterion-scored-exactly-once-per-territory",
-    dissentFields: ["agentTaskId", "territoryId", "reason", "evidenceCoordinates"],
+    dissentFields: ["taskPath", "territoryId", "reason", "evidenceCoordinates"],
     evidenceCoordinateFields: ["path", "anchor", "claim"],
     evidenceCoordinateFormat: "repository-relative-path#stable-anchor-or-Lline",
     fixedFields: {
-      crossReviewOutputsReadBeforeSubmission: false,
+      crossOutputObservationStatus: "not-observable",
       evidenceClass: "nonhuman-codex-review-not-user-research",
-      independentReview: true,
-      notHumanUsabilityTested: true
+      nativeSpawnBytesAvailability: "unavailable",
+      notHumanUsabilityTested: true,
+      taskCorrelationEvidenceClass: "unauthenticated-local-correlation"
     },
-    requiredFields: ["agentTaskId", "rubricId", "sourceSha", "prototypeSha256", "evidenceClass", "notHumanUsabilityTested", "independentReview", "crossReviewOutputsReadBeforeSubmission", "reviewedAt", "territoryScores", "evidenceCoordinates", "consensusPosition", "dissent"],
+    requiredFields: ["taskPath", "rubricId", "sourceSha", "prototypeSha256", "evidenceClass", "notHumanUsabilityTested", "taskCorrelationEvidenceClass", "nativeSpawnBytesAvailability", "crossOutputObservationStatus", "reviewedAt", "territoryScores", "evidenceCoordinates", "consensusPosition", "dissent"],
     scoreMaximum: 5,
     scoreMinimum: 1,
     territoryIds: ["A", "B", "C"],
@@ -1000,11 +1039,11 @@ const validateCodexOnlyWorkflow = (workflow) => {
   ]
   assert(workflow.rubrics.length === 3, "Codex-only workflow requires three rubric shells")
   workflow.rubrics.forEach((rubric, index) => {
-    exactKeys(rubric, ["agentTaskId", "criteria", "reviewStatus", "rubricId"], `codexOnlyWorkflow.rubrics[${index}]`)
-    equal(rubric, { agentTaskId: null, criteria: expectedRubrics[index][1], reviewStatus: "blocked-awaiting-exact-step-2-sha", rubricId: expectedRubrics[index][0] }, `codexOnlyWorkflow.rubrics[${index}]`)
+    exactKeys(rubric, ["criteria", "reviewStatus", "rubricId", "taskPath"], `codexOnlyWorkflow.rubrics[${index}]`)
+    equal(rubric, { criteria: expectedRubrics[index][1], reviewStatus: "blocked-awaiting-exact-step-2-sha", rubricId: expectedRubrics[index][0], taskPath: null }, `codexOnlyWorkflow.rubrics[${index}]`)
   })
   assert(workflow.reviewRecords.length === 0, "Codex review records must remain empty before the Step 2 dependency")
-  equal(workflow.consensus, { dissent: [], status: "not-run-awaiting-exact-step-2-sha", supportingAgentTaskIds: [], territoryId: null }, "codexOnlyWorkflow.consensus")
+  equal(workflow.consensus, { dissent: [], status: "not-run-awaiting-exact-step-2-sha", supportingTaskPaths: [], territoryId: null }, "codexOnlyWorkflow.consensus")
 }
 
 const validateEvidence = (evidence) => {
@@ -1012,11 +1051,11 @@ const validateEvidence = (evidence) => {
   exactLabel(evidence.label, "evidenceInterfaces.label")
   const ids = ["codex-heuristic-review", "automated-accessibility", "corpus-use", "route-simulation", "codex-experience-audit"]
   const expectedRecordFields = [
-    ["agentTaskId", "rubricId", "sourceSha", "prototypeSha256", "territoryId", "archetypeId", "criterionId", "score", "frameId", "selectorOrElement", "visibleCause", "evidenceCoordinates", "disposition", "automaticFailures", "reviewedAt"],
+    ["taskPath", "rubricId", "sourceSha", "prototypeSha256", "territoryId", "archetypeId", "criterionId", "score", "frameId", "selectorOrElement", "visibleCause", "evidenceCoordinates", "disposition", "automaticFailures", "reviewedAt"],
     ["runId", "prototypeSha256", "territoryId", "archetypeId", "presentationId", "toolVersions", "checks", "violations", "artifactRefs", "startedAt", "completedAt", "result"],
     ["caseId", "territoryId", "archetypeId", "stableId", "opaqueAssetId", "derivativeKind", "path", "ledgerSha256", "observedSha256", "intrinsicAspectRatio", "objectFit", "pixelMutation", "crop", "filter", "opacity", "clipMaskBlend", "useContext", "gateAlignment", "answerBoundary", "issues", "result"],
     ["simulationId", "taskId", "actorType", "startRouteId", "routePath", "archetypeId", "legalStateInput", "expectedSemanticOrder", "expectedPrimaryAction", "expectedRecovery", "observedRouteTrail", "assertions", "evidenceCoordinates", "result"],
-    ["agentTaskId", "sourceSha", "prototypeSha256", "territoryOrder", "taskIds", "observations", "issueCodes", "evidenceCoordinates", "completedAt", "result"]
+    ["taskPath", "sourceSha", "prototypeSha256", "territoryOrder", "taskIds", "observations", "issueCodes", "evidenceCoordinates", "completedAt", "result"]
   ]
   assert(evidence.interfaces.length === ids.length, "exact five supplementary interfaces required")
   evidence.interfaces.forEach((entry, index) => {
@@ -1045,10 +1084,10 @@ const validateEvidence = (evidence) => {
 }
 
 const validateGateAccounting = (gate) => {
-  exactKeys(gate, ["advancingTerritoryIds", "canonicalPromotionPerformed", "codexConsensusStatus", "codexReviewCount", "codexReviewTaskIds", "finalistTerritoryIds", "humanEvidence", "humanParticipantCount", "humanReviewRequired", "hybrid", "label", "notHumanUsabilityTested", "plan006DoneClaimed", "recommendedTerritoryId", "selectedTerritoryId", "winnerTerritoryId"], "gateAccounting")
+  exactKeys(gate, ["advancingTerritoryIds", "canonicalPromotionPerformed", "codexConsensusStatus", "codexReviewCount", "codexReviewTaskPaths", "finalistTerritoryIds", "humanEvidence", "humanParticipantCount", "humanReviewRequired", "hybrid", "label", "notHumanUsabilityTested", "plan006DoneClaimed", "recommendedTerritoryId", "selectedTerritoryId", "winnerTerritoryId"], "gateAccounting")
   exactLabel(gate.label, "gateAccounting.label")
   assert(gate.humanEvidence === "none" && gate.humanParticipantCount === 0 && gate.humanReviewRequired === false && gate.notHumanUsabilityTested === true, "gate accounting must preserve zero/no-human semantics")
-  assert(gate.codexReviewCount === 0 && gate.codexReviewTaskIds.length === 0 && gate.codexConsensusStatus === "not-run-awaiting-exact-step-2-sha", "Codex reviews cannot be claimed before Step 2")
+  assert(gate.codexReviewCount === 0 && gate.codexReviewTaskPaths.length === 0 && gate.codexConsensusStatus === "not-run-awaiting-exact-step-2-sha", "Codex reviews cannot be claimed before Step 2")
   assert(gate.advancingTerritoryIds.length === 0 && gate.finalistTerritoryIds.length === 0, "finalists cannot exist in prework")
   assert(gate.selectedTerritoryId === null && gate.winnerTerritoryId === null && gate.recommendedTerritoryId === null, "selection/recommendation must remain null")
   assert(gate.hybrid === false && gate.canonicalPromotionPerformed === false && gate.plan006DoneClaimed === false, "hybrid/promotion/DONE claim forbidden")
@@ -1127,8 +1166,8 @@ const runAdversarialTests = (record, schema) => {
     ["prototype SHA premature", (x) => { x.prototypeEngine.selectionInputContract.requiredPrototypeSha256 = "0".repeat(64) }],
     ["reverify disabled", (x) => { x.label.mustRebaseAndReverify = false }],
     ["Codex review row premature", (x) => { x.codexOnlyWorkflow.reviewRecords.push({}) }],
-    ["rubric agent task premature", (x) => { x.codexOnlyWorkflow.rubrics[0].agentTaskId = "agent-1" }],
-    ["consensus task premature", (x) => { x.codexOnlyWorkflow.consensus.supportingAgentTaskIds.push("agent-1") }],
+    ["rubric task path premature", (x) => { x.codexOnlyWorkflow.rubrics[0].taskPath = "/root/review-1" }],
+    ["consensus task path premature", (x) => { x.codexOnlyWorkflow.consensus.supportingTaskPaths.push("/root/review-1") }],
     ["Codex review count premature", (x) => { x.gateAccounting.codexReviewCount = 1 }],
     ["interface human participant", (x) => { x.evidenceInterfaces.interfaces[0].humanParticipantCountContribution = 1 }],
     ["interface independent selection", (x) => { x.evidenceInterfaces.interfaces[0].canIndependentlySelectTerritory = true }],
@@ -1185,7 +1224,7 @@ const runAdversarialTests = (record, schema) => {
     ["snapshot disposition schema weakening", (x) => { x.snapshotDisposition.executionStatus = "active" }, (s) => { s.properties.snapshotDisposition.properties.executionStatus = { enum: ["superseded-non-executable", "active"] } }],
     ["historical review interface schema weakening", (x) => { x.codexOnlyWorkflow.historicalFutureReviewInterfaceDisposition.mayPopulateReviewRecords = true }, (s) => { s.properties.codexOnlyWorkflow.properties.historicalFutureReviewInterfaceDisposition.properties.mayPopulateReviewRecords = { type: "boolean" } }],
     ["review-record schema weakening", (x) => { x.codexOnlyWorkflow.reviewRecords.push({}) }, (s) => { s.properties.codexOnlyWorkflow.properties.reviewRecords = { type: "array" } }],
-    ["consensus-task schema weakening", (x) => { x.codexOnlyWorkflow.consensus.supportingAgentTaskIds.push("agent-1") }, (s) => { s.properties.codexOnlyWorkflow.properties.consensus.properties.supportingAgentTaskIds.maxItems = 1 }],
+    ["consensus-task schema weakening", (x) => { x.codexOnlyWorkflow.consensus.supportingTaskPaths.push("/root/review-1") }, (s) => { s.properties.codexOnlyWorkflow.properties.consensus.properties.supportingTaskPaths.maxItems = 1 }],
     ["prototype-receipt schema weakening", (x) => { x.prototypeEngine.selectionInputContract.requiredPrototypeSha256 = "0".repeat(64) }, (s) => { s.properties.prototypeEngine.properties.selectionInputContract.properties.requiredPrototypeSha256 = { oneOf: [{ type: "null" }, { $ref: "#/$defs/sha256" }] } }]
   ]
   for (const [name, mutateRecord, weakenSchema] of schemaWeakeningTests) expectSchemaWeakeningRejected(name, record, schema, mutateRecord, weakenSchema)

@@ -52,11 +52,13 @@ labels above and in every machine artifact are intentional:
   experience audit. None is user research or can independently select a
   territory.
 - A historical `CODEX-ONLY-UIUX-V1` future-review interface that anticipated
-  three Codex subagent task IDs and distinct rubrics for consumer
+  three task-scoped Codex reviews and distinct rubrics for consumer
   trust/anti-AI-slop, accessibility/cognitive load, and visual/component
-  coherence. Its arbitrary `agentTaskId` and self-attested independence fields
-  are now explicitly superseded and non-executable. Review records, scores,
-  evidence coordinates, consensus, and dissent remain empty as observed.
+  coherence. Its arbitrary task labels and self-attested independence fields
+  are now explicitly superseded and non-executable. Available local task
+  correlation is unauthenticated, native spawn bytes are unavailable, and
+  cross-output observation is not observable. Review records, scores, evidence
+  coordinates, consensus, and dissent remain empty as observed.
 
 ## Current-control dry run
 
@@ -84,7 +86,9 @@ pre-Step-2 evidence only. They are superseded, may not render, populate review
 records, select, promote, or serve as an alternate Plan 006 execution path. The
 only executable workflow is `plans/006-select-consumer-visual-system.md`, which
 must bind the later accepted Step 2 subject and merge through its current
-native-task receipt, exact-byte, browser, and terminal lifecycle contracts.
+unauthenticated local-correlation, exact-byte, browser, and terminal lifecycle
+contracts. Native spawn call and result bytes are not available to that local
+correlation source.
 
 The program uses no human participants, reviewers, selectors, owners, or
 sign-offs. The frozen `CODEX-ONLY-UIUX-V1` labels keep `reviewMode=codex-only`,
@@ -5920,15 +5924,15 @@ gate accounting.
     "consensus": {
       "dissent": [],
       "status": "not-run-awaiting-exact-step-2-sha",
-      "supportingAgentTaskIds": [],
+      "supportingTaskPaths": [],
       "territoryId": null
     },
     "decisionRule": {
       "aggregation": "sum-unweighted-criterion-scores-by-territory",
       "blockingFindingRule": "any-blocking-finding-prevents-selection",
       "dissentRule": "preserve-all-non-consensus-positions-and-evidence-coordinates",
-      "minimumIndependentReviewCount": 3,
       "requiredDistinctRubricCount": 3,
+      "requiredTaskScopedCodexReviewCount": 3,
       "selectionRule": "unique-highest-nonblocked-total",
       "tieRule": "pending-no-selection",
       "unresolvedDissentPreventsSelection": true
@@ -5937,18 +5941,12 @@ gate accounting.
       "activeContractPath": "plans/006-select-consumer-visual-system.md",
       "mayPopulateReviewRecords": false,
       "maySelectOrPromote": false,
-      "reason": "arbitrary-agentTaskId-and-self-attested-independence-interface-superseded-by-exact-native-task-receipt-contract",
+      "reason": "arbitrary-task-labels-and-self-attested-independence-interface-superseded-by-unauthenticated-local-correlation-contract",
       "status": "superseded-non-executable"
     },
     "humanEvidence": "none",
     "humanParticipantCount": 0,
     "humanReviewRequired": false,
-    "independence": {
-      "agentReviewsAreNotUserResearch": true,
-      "agentsAreNonhumanEvidence": true,
-      "distinctAgentTaskIdsRequired": true,
-      "onePrimaryRubricPerAgentTaskId": true
-    },
     "label": {
       "decisionStatus": "pending",
       "humanEvidence": "none",
@@ -5974,10 +5972,18 @@ gate accounting.
       "sha": null,
       "status": "awaiting-coordinator-supplied-exact-sha"
     },
+    "reviewAccounting": {
+      "agentReviewsAreNotUserResearch": true,
+      "agentsAreNonhumanEvidence": true,
+      "crossOutputObservationStatus": "not-observable",
+      "nativeSpawnBytesAvailability": "unavailable",
+      "reviewUnit": "task-scoped-codex-review",
+      "taskCorrelationEvidenceClass": "unauthenticated-local-correlation"
+    },
     "reviewRecordContract": {
       "criterionClosureRule": "each-rubric-criterion-scored-exactly-once-per-territory",
       "dissentFields": [
-        "agentTaskId",
+        "taskPath",
         "territoryId",
         "reason",
         "evidenceCoordinates"
@@ -5989,20 +5995,22 @@ gate accounting.
       ],
       "evidenceCoordinateFormat": "repository-relative-path#stable-anchor-or-Lline",
       "fixedFields": {
-        "crossReviewOutputsReadBeforeSubmission": false,
+        "crossOutputObservationStatus": "not-observable",
         "evidenceClass": "nonhuman-codex-review-not-user-research",
-        "independentReview": true,
-        "notHumanUsabilityTested": true
+        "nativeSpawnBytesAvailability": "unavailable",
+        "notHumanUsabilityTested": true,
+        "taskCorrelationEvidenceClass": "unauthenticated-local-correlation"
       },
       "requiredFields": [
-        "agentTaskId",
+        "taskPath",
         "rubricId",
         "sourceSha",
         "prototypeSha256",
         "evidenceClass",
         "notHumanUsabilityTested",
-        "independentReview",
-        "crossReviewOutputsReadBeforeSubmission",
+        "taskCorrelationEvidenceClass",
+        "nativeSpawnBytesAvailability",
+        "crossOutputObservationStatus",
         "reviewedAt",
         "territoryScores",
         "evidenceCoordinates",
@@ -6026,7 +6034,6 @@ gate accounting.
     "reviewRecords": [],
     "rubrics": [
       {
-        "agentTaskId": null,
         "criteria": [
           "unofficial-status-and-source-trust",
           "clarity-without-institutional-impersonation",
@@ -6035,10 +6042,10 @@ gate accounting.
           "information-hierarchy-for-consumer-confidence"
         ],
         "reviewStatus": "blocked-awaiting-exact-step-2-sha",
-        "rubricId": "consumer-trust-anti-ai-slop"
+        "rubricId": "consumer-trust-anti-ai-slop",
+        "taskPath": null
       },
       {
-        "agentTaskId": null,
         "criteria": [
           "semantic-and-focus-clarity",
           "zoom-reflow-and-large-text",
@@ -6047,10 +6054,10 @@ gate accounting.
           "motion-state-and-recovery"
         ],
         "reviewStatus": "blocked-awaiting-exact-step-2-sha",
-        "rubricId": "accessibility-cognitive-load"
+        "rubricId": "accessibility-cognitive-load",
+        "taskPath": null
       },
       {
-        "agentTaskId": null,
         "criteria": [
           "component-role-consistency",
           "token-system-coherence",
@@ -6059,7 +6066,8 @@ gate accounting.
           "visual-differentiation-without-content-drift"
         ],
         "reviewStatus": "blocked-awaiting-exact-step-2-sha",
-        "rubricId": "visual-component-coherence"
+        "rubricId": "visual-component-coherence",
+        "taskPath": null
       }
     ]
   },
@@ -6085,7 +6093,7 @@ gate accounting.
         },
         "notHumanUsabilityTested": true,
         "recordFields": [
-          "agentTaskId",
+          "taskPath",
           "rubricId",
           "sourceSha",
           "prototypeSha256",
@@ -6239,7 +6247,7 @@ gate accounting.
         },
         "notHumanUsabilityTested": true,
         "recordFields": [
-          "agentTaskId",
+          "taskPath",
           "sourceSha",
           "prototypeSha256",
           "territoryOrder",
@@ -6347,7 +6355,7 @@ gate accounting.
     "canonicalPromotionPerformed": false,
     "codexConsensusStatus": "not-run-awaiting-exact-step-2-sha",
     "codexReviewCount": 0,
-    "codexReviewTaskIds": [],
+    "codexReviewTaskPaths": [],
     "finalistTerritoryIds": [],
     "humanEvidence": "none",
     "humanParticipantCount": 0,
@@ -6453,7 +6461,7 @@ gate accounting.
       "image-crop-filter-mask-blend",
       "public-or-shared-host",
       "scored-use-of-specialist-gated-asset",
-      "selection-before-three-independent-codex-reviews",
+      "selection-before-three-task-scoped-codex-reviews",
       "territory-selection",
       "canonical-promotion"
     ],
@@ -6564,11 +6572,11 @@ gate accounting.
       }
     ],
     "selectionInputContract": {
-      "minimumIndependentCodexReviews": 3,
       "protocolId": "CODEX-ONLY-UIUX-V1",
       "prototypeStatus": "not-built",
       "requiredMergedStep2Sha": null,
       "requiredPrototypeSha256": null,
+      "requiredTaskScopedCodexReviewCount": 3,
       "status": "blocked-awaiting-exact-step-2-sha"
     },
     "sharedInvariantFields": [

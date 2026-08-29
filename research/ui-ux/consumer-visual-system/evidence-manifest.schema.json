@@ -178,7 +178,7 @@
         "path": { "$ref": "#/$defs/repoPath" },
         "bytes": { "type": "integer", "minimum": 1 },
         "sha256": { "$ref": "#/$defs/sha256" },
-        "taskPath": { "enum": ["/root/audit_lifecycle_precommit/review_consumer_trust_r4", "/root/audit_lifecycle_precommit/review_consumer_trust_r4/review_accessibility_r4", "/root/audit_lifecycle_precommit/review_consumer_trust_r4/review_visual_coherence_r4"] },
+        "taskPath": { "enum": ["/root/review_cohort_r5/review_consumer_trust_r5", "/root/review_cohort_r5/review_consumer_trust_r5/review_accessibility_r5", "/root/review_cohort_r5/review_consumer_trust_r5/review_visual_coherence_r5"] },
         "rubricId": { "enum": ["consumer-trust-anti-ai-slop", "accessibility-cognitive-load", "visual-component-coherence"] }
       }
     },
@@ -190,7 +190,7 @@
         "path": { "$ref": "#/$defs/repoPath" },
         "bytes": { "type": "integer", "minimum": 1 },
         "sha256": { "$ref": "#/$defs/sha256" },
-        "taskPath": { "enum": ["/root/audit_lifecycle_precommit/review_consumer_trust_r4", "/root/audit_lifecycle_precommit/review_consumer_trust_r4/review_accessibility_r4", "/root/audit_lifecycle_precommit/review_consumer_trust_r4/review_visual_coherence_r4"] },
+        "taskPath": { "enum": ["/root/review_cohort_r5/review_consumer_trust_r5", "/root/review_cohort_r5/review_consumer_trust_r5/review_accessibility_r5", "/root/review_cohort_r5/review_consumer_trust_r5/review_visual_coherence_r5"] },
         "rubricId": { "enum": ["consumer-trust-anti-ai-slop", "accessibility-cognitive-load", "visual-component-coherence"] }
       }
     },
@@ -206,7 +206,7 @@
         "taskReceiptFile": { "$ref": "#/$defs/artifactFile" },
         "reviewCount": { "const": 3 },
         "requiredRubricIds": { "const": ["consumer-trust-anti-ai-slop", "accessibility-cognitive-load", "visual-component-coherence"] },
-        "receiptAuthenticationLimitation": { "const": "Local Codex state and rollout records are not cryptographic proof of task identity, timing, or cross-output non-observability; ordinary CI can validate only the committed receipt bytes and declared joins." }
+        "receiptAuthenticationLimitation": { "const": "Local Codex state and rollout records are not cryptographic proof of task identity, timing, or cross-output non-observability. Native spawn call/result bytes are unavailable from the retained source, and no caller-supplied spawn context is acceptance evidence; ordinary CI can validate only the committed receipt bytes and declared joins." }
       }
     },
     "scoreTotals": {
@@ -224,7 +224,7 @@
       "additionalProperties": false,
       "required": ["taskPath", "territoryId", "reason", "evidenceCoordinates"],
       "properties": {
-        "taskPath": { "enum": ["/root/audit_lifecycle_precommit/review_consumer_trust_r4", "/root/audit_lifecycle_precommit/review_consumer_trust_r4/review_accessibility_r4", "/root/audit_lifecycle_precommit/review_consumer_trust_r4/review_visual_coherence_r4"] },
+        "taskPath": { "enum": ["/root/review_cohort_r5/review_consumer_trust_r5", "/root/review_cohort_r5/review_consumer_trust_r5/review_accessibility_r5", "/root/review_cohort_r5/review_consumer_trust_r5/review_visual_coherence_r5"] },
         "territoryId": { "enum": ["A", "B", "C"] },
         "reason": { "type": "string", "minLength": 1 },
         "evidenceCoordinates": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } }
@@ -240,7 +240,7 @@
         "totals": { "$ref": "#/$defs/scoreTotals" },
         "highestTerritoryIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "enum": ["A", "B", "C"] } },
         "blockerCount": { "type": "integer", "minimum": 0 },
-        "unsupportedLaneTaskPaths": { "type": "array", "uniqueItems": true, "items": { "enum": ["/root/audit_lifecycle_precommit/review_consumer_trust_r4", "/root/audit_lifecycle_precommit/review_consumer_trust_r4/review_accessibility_r4", "/root/audit_lifecycle_precommit/review_consumer_trust_r4/review_visual_coherence_r4"] } },
+        "unsupportedLaneTaskPaths": { "type": "array", "uniqueItems": true, "items": { "enum": ["/root/review_cohort_r5/review_consumer_trust_r5", "/root/review_cohort_r5/review_consumer_trust_r5/review_accessibility_r5", "/root/review_cohort_r5/review_consumer_trust_r5/review_visual_coherence_r5"] } },
         "dissent": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/dissent" } },
         "consensusStatus": { "enum": ["selected-unique-supported-no-blocker-no-dissent", "unresolved-global-gate-or-nonunique"] },
         "selectedTerritoryId": { "oneOf": [{ "type": "null" }, { "enum": ["A", "B", "C"] }] }

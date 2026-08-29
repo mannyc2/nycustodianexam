@@ -3,10 +3,15 @@
 ## Status
 
 - **Execution protocol**: `CODEX-ONLY-UIUX-V1`
-- **Status**: IN PROGRESS — rejected subjects
+- **Status**: IN PROGRESS — every source, subject, receipt, browser run,
+  review, task, and decision bound to `82d5be8a50fdafd38e5a34ffa965f48e3ea949cf`,
   `7fcc776e6941c7f41a504dda59ea59af88ba31fb`,
-  `f1a566f3eabb5bc972d75a555038e3b315a211a2`, and
-  `58275cab4ae1a22b148831ba454f994cc644cd31` are invalid and non-reusable;
+  `7712c8eef15f4f975ca78cfb88c763f391a5fb5a`,
+  `f1a566f3eabb5bc972d75a555038e3b315a211a2`,
+  `a9aa490f493b50231304d541a1a1c73d2cf7db65`,
+  `58275cab4ae1a22b148831ba454f994cc644cd31`,
+  `882e49bb9bbb9963b5b6497c88a87aa38b1fb0a9`, or
+  `8a106b256e4a083d69dd90a0b5bac1fa42e1b70e` is invalid and non-reusable;
   no territory is selected
 - **Priority / effort / risk**: P1 / L / MED
 - **Category**: research and product-contract direction, not production implementation
@@ -56,8 +61,11 @@ subject or its receipts:
    exactly `A research/ui-ux/consumer-visual-system/browser-receipt.json`. The
    subject contains no final review files, terminal manifest/report, canonical
    promotion, or terminal result claim.
-3. Launch three fresh native Codex tasks against that exact review-subject SHA.
-   Withhold every result from the other lanes until all three have completed.
+3. Launch three fresh Codex review tasks in the pinned fresh cohort topology
+   against that exact review-subject SHA. Operationally, root does not
+   intentionally relay one lane's output to another; the available local event stream does not expose
+   a first-sharing timestamp, so this sequencing policy is not proof of
+   cross-output non-observability.
 4. If any candidate, harness, prompt, browser, asset, or source byte needs repair,
    invalidate the subject and all outputs, then repeat from step 1.
 5. Only an unchanged clean subject may receive the explicit terminal output and
@@ -243,13 +251,14 @@ print receipt scope is exactly nine cases: the `review-queue-empty` frame for
 A/B/C in Chromium, Firefox, and WebKit. Those nine cases observe hidden
 toolbars/actions in the rendered page; broader Playwright print checks are
 diagnostic unless they are added to the committed receipt before source freeze.
-Keyboard proof derives the enabled, rendered, visible focusable set and order,
-uses native forward Tab through every stop and native Shift+Tab through the
-exact reverse return to the first stop, and requires every expected stop exactly
-once per direction, no duplicate/trap, correct order, and visible focus at every
-stop. This round trip is used because Playwright cannot observe Firefox's
-browser-chrome focus transition or a forward-only return after the final page
-stop; it is not reported as forward-only cycle evidence. Every Axe result at every impact level is
+Keyboard evidence derives the enabled, rendered, visible focusable set and
+order, uses native forward Tab through the final logical document stop and
+native Shift+Tab through the exact reverse order back to the first stop, and
+requires every expected stop exactly once per direction, correct order, and
+visible focus at every observed stop. The capture never presses native forward
+Tab from the final logical stop. It therefore does not prove the absence of a
+forward-Tab trap at that control, and it makes no browser-chrome transition or
+forward-wrap claim. Every Axe result at every impact level is
 retained; the required allowlist is closed and empty unless an exact rule, node,
 rationale, and disposition are added before the review subject freezes. Firefox
 runs serially or at a measured bounded concurrency that produces no navigation
@@ -257,27 +266,31 @@ timeout; a timeout is a failed suite, never a waived result.
 
 `keyboardEvidenceClassification=native-document-focus-order-round-trip`
 
-`firefoxAutomationLimitation=After the final document stop, Playwright Firefox sends forward focus to browser chrome but exposes document.activeElement as the last link indefinitely; 100 additional native Tab presses in both headless and headed Xvfb runs did not expose or re-enter that chrome path. Therefore this evidence does not claim an observable forward-Tab wrap in Firefox.`
+`finalForwardTabLimitation=No forward Tab is sent from the final document stop. The round trip does not observe browser chrome and does not prove the absence of a forward-Tab trap at the final control.`
 
-## Independent Codex review protocol
+## Codex review protocol and independence limitation
 
 Freeze the comparison bytes first. Hash every prototype file and compute the
 bundle SHA-256 as the hash of each repository-relative path, a NUL byte, the
 file bytes, and a trailing NUL byte in lexicographic path order.
 
-Launch exactly three fresh native Codex subagent tasks with overlapping execution
-intervals. Each receives the same exact subject/source/prototype/browser hashes,
+Launch exactly three fresh Codex subagent review tasks in one pinned fresh
+cohort topology with overlapping locally observed execution intervals. Each receives the same exact subject/source/prototype/browser hashes,
 one committed prompt template, the common review-record contract, and one
 distinct rubric. Each safe receipt records `taskPath`, `sessionUuid`,
 `parentThreadId`, provenance class/source/originator/depth, completion state,
-exact native task-start and completion event timestamps and turn ID, native
+exact locally observed task-start and completion event timestamps and turn ID,
 completion-message SHA-256, normalized report path and SHA-256, repository
 commit, and the `safeReceiptSha256` computed over the ordered safe payload. The
-local extractor triangulates the session UUIDv7 time, database insertion time,
+local extractor checks the session UUIDv7 time, database insertion time,
 session-metadata event time, and task-start event time in nondecreasing order;
-each adjacent pre-start delay is at most 1,000 milliseconds. It also retains
-the exact exposed raw spawn and completion bytes when available. The native
-completion text hash is distinct from the normalized review JSON hash. The
+each bounded pre-start join required by the extractor. It retains the exact
+completion bytes observed in the local task-complete rollout event. Native
+spawn call/result bytes are not available from the retained state/rollout
+source, and caller-supplied or reconstructed spawn bytes are not evidence. The
+native completion text hash and normalized review JSON hash are separately
+recorded and independently checked; equality is permitted when the bytes are
+identical. The
 exact three task paths and parent/depth topology are pinned by the validator;
 each fresh session UUID is retained exactly and cross-joined throughout its
 receipt but remains subject to the authentication limitation below. Copied old
@@ -287,28 +300,28 @@ objects, and self-asserted timestamps are not evidence.
 The safe receipt is an unauthenticated local orchestration audit summary, not a
 signature: Codex cannot cryptographically prove native identity, timing, or
 cross-output non-observability. That limitation is explicit in every terminal
-artifact. No lane output is shared with another evidence lane. The trust lane
-completes without receiving either child output, and the two child final
-payloads remain withheld until root sends `RELEASE_REVIEW_OUTPUT` after that
-trust completion. Only then are normalized outputs written to the worktree.
+artifact. Native spawn call/result bytes and the first output-sharing time are
+not observable from the available source. Operationally, root launches all
+three direct lanes before consuming results and does not intentionally relay
+outputs between lanes, but that sequence is policy rather than authenticated
+evidence. Normalized outputs are written only after all three tasks complete.
 Evidence coordinates use only
 `repository/path:L<line>` and must resolve to a nonblank line in the exact
 review-subject commit. Native Codex does not expose a cryptographic proof of
 cross-task non-observability; that remains an explicit limitation rather than a
 self-attested guarantee.
 
-`receiptAuthenticationLimitation=Local Codex state and rollout records are not cryptographic proof of task identity, timing, or cross-output non-observability; ordinary CI can validate only the committed receipt bytes and declared joins.`
+`receiptAuthenticationLimitation=Local Codex state and rollout records are not cryptographic proof of task identity, timing, or cross-output non-observability. Native spawn call/result bytes are unavailable from the retained source, and no caller-supplied spawn context is acceptance evidence; ordinary CI can validate only the committed receipt bytes and declared joins.`
 
-The native four-slot limit is handled without serializing the evidence lanes.
-The completed pre-source audit task later spawns the fresh trust lane and exits;
-that lane, after its parent has exited, spawns the accessibility and coherence
-lanes with `fork_turns=none`. The latter two analyze independently but withhold
-their final payload until root sends `RELEASE_REVIEW_OUTPUT` after the trust lane
-has completed. Thus all three native task intervals overlap, no child result is
-delivered to the trust lane before its completion, and only the raw spawn
-responses are relayed early. The safe receipts preserve the actual depth-2/
-depth-3 parent joins; the limitation above still forbids treating this schedule
-as cryptographic proof of independence.
+The four-slot limit is handled by one fresh non-evidence cohort task, a trust
+lane beneath it, and the two remaining review lanes beneath the trust task. The
+cohort task completes before the trust task spawns its two children, leaving
+root plus exactly three concurrently active review tasks. Safe receipts preserve
+the pinned parent/depth topology, distinct session IDs, and locally observed
+start/completion intervals. A nonempty common interval is checked from those
+local events. Neither that overlap nor the
+operational no-relay policy proves when outputs were first shared or proves
+cross-output non-observability.
 
 | Rubric | Five equally weighted criteria |
 |---|---|
@@ -320,19 +333,16 @@ Every lane scores each criterion for each A/B/C territory once with an integer
 from 1 through 5, where higher is better. Its normalized report records
 `taskPath`, `repositoryCommit`, rubric ID, exact source and prototype hashes,
 evidence coordinates, blockers, consensus position, selection-rule support, and
-dissent; native timing and session fields live only in the joined safe receipt.
+dissent; locally observed timing and session fields live only in the joined safe receipt.
 A lane has no separate recommendation field. Scores are structured nonhuman
 review evidence only.
 
-Outputs bound to rejected subjects
-`7fcc776e6941c7f41a504dda59ea59af88ba31fb`,
-`f1a566f3eabb5bc972d75a555038e3b315a211a2`, or
-`58275cab4ae1a22b148831ba454f994cc644cd31` may inform repairs but can never
-populate these terminal receipt slots. All r3 review outputs and partial receipt
-material are non-reusable: safe extraction exposed a native 3-millisecond delay
-between the session UUIDv7 time and database insertion time in one lane. The
-repaired contract models that delay explicitly through ordered, bounded native
-timestamp joins instead of asserting timestamp equality.
+Every prior Step 3 source, subject, receipt, task, review, and decision named in
+the Status section, including all r1, r3, and r4 task sessions, is non-reusable and
+cannot populate a terminal slot. Implementation concepts may be rebuilt only in
+a new source whose sole parent is the accepted Step 2 merge. The receipt
+contract models observed database insertion delay through ordered, bounded
+local timestamp joins instead of asserting timestamp equality.
 
 ## Deterministic decision rule
 
@@ -383,8 +393,8 @@ Adversarial tests run by default and must reject at least:
 - schema digest or schema weakening/tampering;
 - human/participant/approval substitution;
 - missing or duplicate review/task/rubric identity;
-- fake native task names, prompt/rubric/result drift, non-overlapping task
-  intervals, early result sharing, and unresolved evidence coordinates;
+- fake task paths, prompt/rubric/result drift, non-overlapping task intervals,
+  and unresolved evidence coordinates;
 - score, total, evidence-coordinate, or timestamp drift;
 - tie, blocker, dissent, or selection drift;
 - a unique A score combined with any B blocker still producing a selection;
@@ -395,8 +405,8 @@ Adversarial tests run by default and must reject at least:
 - unrendered token declarations or fewer than five computed-style differences;
 - a non-focused Firefox default frame, unsuppressed print action, or any
   unallowlisted Axe finding at any impact level;
-- a skipped late keyboard control, duplicate/trapped focus stop, invisible late
-  focus stop, or focus order drift;
+- a skipped late keyboard control, duplicate observed focus stop, invisible
+  late focus stop, or observed focus order drift;
 - a non-direct source/subject parent, extra source-to-subject path, omitted dirty
   source input, receipt already present at source, evidence-schema drift, or
   terminal-validator drift;
@@ -466,8 +476,12 @@ research/ui-ux/consumer-visual-system/visual-system-research.pw.ts
 
 No application source, content release, accepted image byte, illustration
 authority, feature behavior, route identity, or state machine may change. The
-branch is `codex/uiux-orchestration-03-visual-territories`; update draft PR #43,
-push without force, keep it draft, and do not merge or deploy it.
+branch is `codex/uiux-orchestration-03-visual-territories`; update draft PR #43
+and keep it draft. Because every existing Step 3 commit is explicitly invalid
+and the replacement source must have the accepted Step 2 merge as its sole
+parent, publish the disconnected replacement with one exact
+`--force-with-lease` against the observed rejected remote head. Do not merge or
+deploy it.
 
 ## Completion receipt
 

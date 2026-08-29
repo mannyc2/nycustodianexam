@@ -4,24 +4,59 @@ import { execFileSync } from "node:child_process"
 import { createHash } from "node:crypto"
 import { realpathSync, readFileSync, rmSync, statSync, writeFileSync, mkdirSync } from "node:fs"
 import { mkdtemp } from "node:fs/promises"
+import { isIP } from "node:net"
 import { tmpdir } from "node:os"
 import { dirname, isAbsolute, relative, resolve, sep } from "node:path"
 import { fileURLToPath } from "node:url"
 import { DatabaseSync } from "node:sqlite"
 
-const SCHEMA_VERSION = "codex-task-safe-receipt-v2"
+const SCHEMA_VERSION = "codex-task-safe-receipt-v3"
 const AUTHENTICATION_STATUS = "unauthenticated-local-orchestration-summary"
 const AUTHENTICATION_LIMITATION =
-  "Local Codex state and rollout records are not cryptographic proof of task identity, timing, or cross-output non-observability; ordinary CI can validate only the committed receipt bytes and declared joins."
-const PROVENANCE_CLASS = "native-codex-subagent-thread-spawn"
+  "Local Codex state and rollout records provide only unauthenticated correlation, not cryptographic proof of task identity, timing, lineage, or cross-output non-observability. Native spawn call and result bytes are unavailable from these sources, and no caller-supplied spawn context is acceptance evidence. Ordinary CI can validate only committed receipt bytes and declared local-record consistency checks."
+const PROVENANCE_CLASS = "unauthenticated-local-codex-db-rollout-correlation"
 const SAFE_RECEIPT_HASH_ALGORITHM =
   "sha256(UTF-8 compact JSON.stringify of the ordered receipt payload excluding safeReceiptSha256)"
 const MAX_PRE_START_ADJACENT_DELAY_MS = 1_000
+const SAFE_RECEIPT_PAYLOAD_KEYS = Object.freeze([
+  "schemaVersion",
+  "authenticationStatus",
+  "authenticationLimitation",
+  "taskPath",
+  "sessionUuid",
+  "parentThreadId",
+  "provenanceClass",
+  "threadSource",
+  "originator",
+  "depth",
+  "taskStartEventTimestamp",
+  "completionState",
+  "completionEventTimestamp",
+  "completionTurnId",
+  "completionMessageSha256",
+  "reportPath",
+  "reportSha256",
+  "repositoryCommit",
+  "rawCompletion",
+  "safeReceiptHashAlgorithm",
+])
 
 const SHA_PATTERN = /^[0-9a-f]{40}$/u
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/u
 const TASK_PATH_PATTERN = /^\/root(?:\/[a-z0-9][a-z0-9_]{0,95})+$/u
-const SAFE_ORIGINATOR_PATTERN = /^[A-Za-z0-9][A-Za-z0-9 ._-]{0,63}$/u
+const CODEX_ORIGINATOR_PATTERN = /^codex(?:[ ._-][A-Za-z0-9][A-Za-z0-9 ._-]{0,56})?$/iu
+const TASK_PATH_FIELD_KEYS = new Set(["agent_path", "taskPath"])
+const JSON_WHITESPACE = new Set([" ", "\t", "\n", "\r"])
+const JSON_ESCAPED_CHARACTER_VALUES = new Map([
+  ["\"", "\""],
+  ["\\", "\\"],
+  ["/", "/"],
+  ["b", "\b"],
+  ["f", "\f"],
+  ["n", "\n"],
+  ["r", "\r"],
+  ["t", "\t"],
+])
 
 const fail = (code) => {
   const error = new Error(code)
@@ -42,12 +77,121 @@ const exactKeys = (value, keys, code) => {
   }
 }
 
-const parseJson = (text, code) => {
-  try {
-    return JSON.parse(text)
-  } catch {
+// JSON.parse silently accepts the last occurrence of a duplicate object key.
+// Evidence inputs require a single unambiguous spelling, including when two
+// source spellings decode to the same key through JSON escapes.
+const parseJsonStrict = (text, code) => {
+  if (typeof text !== "string") fail(code)
+  let cursor = 0
+
+  const whitespace = () => {
+    while (JSON_WHITESPACE.has(text[cursor])) cursor += 1
+  }
+
+  const parseString = () => {
+    const start = cursor
+    if (text[cursor] !== "\"") fail(code)
+    cursor += 1
+    while (cursor < text.length) {
+      const character = text[cursor]
+      if (character === "\"") {
+        cursor += 1
+        try {
+          return JSON.parse(text.slice(start, cursor))
+        } catch {
+          fail(code)
+        }
+      }
+      if (character === "\\") {
+        cursor += 1
+        const escaped = text[cursor]
+        if (escaped === "u") {
+          if (!/^[0-9a-fA-F]{4}$/u.test(text.slice(cursor + 1, cursor + 5))) fail(code)
+          cursor += 5
+          continue
+        }
+        if (!JSON_ESCAPED_CHARACTER_VALUES.has(escaped)) fail(code)
+        cursor += 1
+        continue
+      }
+      if (character.charCodeAt(0) <= 0x1f) fail(code)
+      cursor += 1
+    }
     fail(code)
   }
+
+  const parseObject = () => {
+    cursor += 1
+    whitespace()
+    const result = Object.create(null)
+    const keys = new Set()
+    if (text[cursor] === "}") {
+      cursor += 1
+      return result
+    }
+    while (true) {
+      whitespace()
+      const key = parseString()
+      if (keys.has(key)) fail(code)
+      keys.add(key)
+      whitespace()
+      if (text[cursor] !== ":") fail(code)
+      cursor += 1
+      result[key] = parseValue()
+      whitespace()
+      if (text[cursor] === "}") {
+        cursor += 1
+        return result
+      }
+      if (text[cursor] !== ",") fail(code)
+      cursor += 1
+    }
+  }
+
+  const parseArray = () => {
+    cursor += 1
+    whitespace()
+    const result = []
+    if (text[cursor] === "]") {
+      cursor += 1
+      return result
+    }
+    while (true) {
+      result.push(parseValue())
+      whitespace()
+      if (text[cursor] === "]") {
+        cursor += 1
+        return result
+      }
+      if (text[cursor] !== ",") fail(code)
+      cursor += 1
+    }
+  }
+
+  const parseValue = () => {
+    whitespace()
+    const character = text[cursor]
+    if (character === "{") return parseObject()
+    if (character === "[") return parseArray()
+    if (character === "\"") return parseString()
+    for (const [token, value] of [["true", true], ["false", false], ["null", null]]) {
+      if (text.startsWith(token, cursor)) {
+        cursor += token.length
+        return value
+      }
+    }
+    const match = text.slice(cursor).match(/^-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?/u)
+    if (match === null) fail(code)
+    cursor += match[0].length
+    const value = Number(match[0])
+    if (!Number.isFinite(value)) fail(code)
+    return value
+  }
+
+  const value = parseValue()
+  whitespace()
+  if (cursor !== text.length) fail(code)
+  return value
 }
 
 const canonicalDateTime = (value) => {
@@ -95,13 +239,17 @@ const toPortableRelativePath = (repositoryRoot, inputPath) => {
 const forbiddenKey = (key) => {
   const normalized = key.toLowerCase().replaceAll(/[^a-z0-9]/gu, "")
   return new Set([
+    "absolutepath",
     "applicantid",
+    "baseurl",
     "candidateid",
     "contact",
     "contactid",
+    "contactnumber",
     "cwd",
     "device",
     "deviceid",
+    "deviceidentifier",
     "devicename",
     "email",
     "emailaddress",
@@ -111,29 +259,59 @@ const forbiddenKey = (key) => {
     "ipaddress",
     "locator",
     "macaddress",
+    "machineid",
+    "network",
+    "networkorigin",
     "phone",
     "phonenumber",
+    "privatecontact",
     "privatelocator",
+    "privatepath",
     "rollout",
     "rolloutpath",
+    "serialnumber",
+    "serverurl",
+    "socketaddress",
     "statedb",
+    "username",
+    "userhome",
+    "workingdirectory",
   ]).has(normalized)
 }
 
-const assertNoPrivateText = (text) => {
+const maskAllowedTaskPathFields = (text, allowedTaskPath) => {
+  if (allowedTaskPath === undefined) return text
+  const escapedTaskPath = JSON.stringify(allowedTaskPath).replaceAll(/[.*+?^${}()|[\]\\]/gu, "\\$&")
+  return text.replace(
+    new RegExp(`(\"(?:agent_path|taskPath)\"[ \\t\\r\\n]*:[ \\t\\r\\n]*)${escapedTaskPath}`, "gu"),
+    '$1"CODEX_TASK_PATH"',
+  )
+}
+
+const assertNoPrivateText = (
+  text,
+  allowedTaskPath,
+  allowExactTaskPath = false,
+  rawJsonView = false,
+) => {
   if (typeof text !== "string") return
+  let scanned = text
+  if (allowExactTaskPath && text === allowedTaskPath) return
+  if (rawJsonView) scanned = maskAllowedTaskPathFields(scanned, allowedTaskPath)
   const forbiddenPatterns = [
-    /(?:^|[\s"'(])\/(?:home|Users|mnt|private\/var)\//u,
-    /(?:^|[\s"'(])[A-Za-z]:\\/u,
-    /(?:^|[\s"'(])\\\\[^\\\s]+\\/u,
+    /(?:^|[\x20\t\r\n"'`([{=,:])[A-Za-z]:[\\/]/u,
+    /(?:^|[\x20\t\r\n"'`([{=,:])\\\\[^\\\s]+\\/u,
     /file:\/\//iu,
     /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/iu,
+    /\b(?:phone|mobile|contactNumber)\s*[:=]\s*\+?[0-9() .-]{7,}/iu,
     /\b(?:candidate|applicant)[ _-]?id\s*[:=]\s*[A-Za-z0-9_-]+/iu,
     /\b(?:[0-9A-F]{2}:){5}[0-9A-F]{2}\b/iu,
+    /\b[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.(?:corp|home|internal|lan|local)\b/iu,
   ]
-  if (forbiddenPatterns.some((pattern) => pattern.test(text))) fail("PRIVATE_VALUE_DETECTED")
+  if (forbiddenPatterns.some((pattern) => pattern.test(scanned))) fail("PRIVATE_VALUE_DETECTED")
 
-  for (const match of text.matchAll(/https?:\/\/([^/\s"')\]}]+)/giu)) {
+  const networkUriPattern = /\b[a-z][a-z0-9+.-]*:\/\/([^/\s"')\]}]+)/giu
+  for (const match of scanned.matchAll(networkUriPattern)) {
     const authority = match[1].replace(/^[^@]*@/u, "")
     const host = authority.startsWith("[")
       ? authority.slice(1, authority.indexOf("]"))
@@ -143,25 +321,183 @@ const assertNoPrivateText = (text) => {
     }
   }
 
-  for (const match of text.matchAll(/\b(?:\d{1,3}\.){3}\d{1,3}\b/gu)) {
-    if (match[0] !== "127.0.0.1") fail("NON_LOOPBACK_NETWORK_VALUE_DETECTED")
+  for (const match of scanned.matchAll(/(?<![0-9A-Fa-f:.])([0-9A-Fa-f:.]*:[0-9A-Fa-f:.]*)(?![0-9A-Fa-f:.])/gu)) {
+    const candidate = match[1]
+    if (candidate.split(":").length >= 3 && isIP(candidate) === 6 && candidate !== "::1") {
+      fail("NON_LOOPBACK_NETWORK_VALUE_DETECTED")
+    }
+  }
+
+  for (const match of scanned.matchAll(/\b(?:\d{1,3}\.){3}\d{1,3}\b/gu)) {
+    const octets = match[0].split(".").map(Number)
+    if (octets.every((octet) => octet <= 255) && octets[0] !== 127) {
+      fail("NON_LOOPBACK_NETWORK_VALUE_DETECTED")
+    }
+  }
+
+  const withoutLoopbackUris = scanned.replace(
+    /\b[a-z][a-z0-9+.-]*:\/\/(?:localhost|127\.0\.0\.1|\[::1\])(?::[0-9]+)?(?:\/[^\s"')\]}]*)?/giu,
+    "LOOPBACK_NETWORK_URI",
+  )
+  if (/(?:^|[\x20\t\r\n"'`([{=,:])\/+[A-Za-z0-9._~+-]/u.test(withoutLoopbackUris)) {
+    fail("PRIVATE_VALUE_DETECTED")
   }
 }
 
-const assertNoPrivateValues = (value) => {
-  const visit = (current) => {
+const decodeJsonEscapesForPrivacyScan = (text) => text.replace(
+  /\\u([0-9a-fA-F]{4})|\\(["\\/bfnrt])/gu,
+  (match, hexadecimal, escaped) => {
+    if (hexadecimal !== undefined) return String.fromCharCode(Number.parseInt(hexadecimal, 16))
+    return JSON_ESCAPED_CHARACTER_VALUES.get(escaped)
+  },
+)
+
+const privacyScanViews = (text, code) => {
+  const views = [text]
+  let current = text
+  for (let iteration = 0; iteration < 32; iteration += 1) {
+    const decoded = decodeJsonEscapesForPrivacyScan(current)
+    if (decoded === current) return views
+    views.push(decoded)
+    current = decoded
+  }
+  if (decodeJsonEscapesForPrivacyScan(current) !== current) fail(code)
+  return views
+}
+
+const decodeRawJsonStringToken = (token, code) => {
+  let decoded = ""
+  let cursor = 1
+  while (cursor < token.length - 1) {
+    const character = token[cursor]
+    if (character !== "\\") {
+      if (character.charCodeAt(0) <= 0x1f) fail(code)
+      decoded += character
+      cursor += 1
+      continue
+    }
+    cursor += 1
+    const escaped = token[cursor]
+    if (escaped === "u") {
+      const hexadecimal = token.slice(cursor + 1, cursor + 5)
+      if (!/^[0-9a-fA-F]{4}$/u.test(hexadecimal)) fail(code)
+      decoded += String.fromCharCode(Number.parseInt(hexadecimal, 16))
+      cursor += 5
+      continue
+    }
+    if (!JSON_ESCAPED_CHARACTER_VALUES.has(escaped)) fail(code)
+    decoded += JSON_ESCAPED_CHARACTER_VALUES.get(escaped)
+    cursor += 1
+  }
+  return decoded
+}
+
+const rawJsonStringTokens = (text, code) => {
+  const tokens = []
+  let cursor = 0
+  while (cursor < text.length) {
+    if (text[cursor] !== "\"") {
+      cursor += 1
+      continue
+    }
+    const start = cursor
+    cursor += 1
+    let closed = false
+    while (cursor < text.length) {
+      const character = text[cursor]
+      if (character === "\\") {
+        cursor += 1
+        if (text[cursor] === "u") cursor += 4
+      } else if (character === "\"") {
+        cursor += 1
+        closed = true
+        break
+      }
+      cursor += 1
+    }
+    if (!closed) fail(code)
+    const decoded = decodeRawJsonStringToken(text.slice(start, cursor), code)
+    let after = cursor
+    while (JSON_WHITESPACE.has(text[after]) || /\p{White_Space}/u.test(text[after] ?? "")) {
+      after += 1
+    }
+    tokens.push({ start, end: cursor, decoded, isKey: text[after] === ":" })
+  }
+  return tokens
+}
+
+const assertNoPrivateRawJsonText = (text, code, allowedTaskPath, nestingDepth = 0) => {
+  if (typeof text !== "string") fail(code)
+  if (nestingDepth > 8) fail(code)
+  const tokens = rawJsonStringTokens(text, code)
+  for (let index = 0; index < tokens.length; index += 1) {
+    const { decoded, isKey, start } = tokens[index]
+    const previous = tokens[index - 1]
+    const isTaskPathFieldValue =
+      !isKey &&
+      previous?.isKey === true &&
+      TASK_PATH_FIELD_KEYS.has(previous.decoded) &&
+      /^[ \t\r\n]*:[ \t\r\n]*$/u.test(text.slice(previous.end, start))
+    const views = privacyScanViews(decoded, code)
+    const nestedJson = views.find((view) => {
+      const trimmed = view.replace(/^[ \t\r\n]+|[ \t\r\n]+$/gu, "")
+      return (trimmed.startsWith("{") && trimmed.endsWith("}")) ||
+        (trimmed.startsWith("[") && trimmed.endsWith("]"))
+    })
+    if (!isKey && nestedJson !== undefined) {
+      assertNoPrivateRawJsonText(nestedJson, code, allowedTaskPath, nestingDepth + 1)
+      continue
+    }
+    for (const view of views) {
+      assertNoPrivateText(view, allowedTaskPath, isTaskPathFieldValue)
+      if (isKey && forbiddenKey(view)) fail("PRIVATE_KEY_DETECTED")
+    }
+  }
+  const rawViews = privacyScanViews(text, code)
+  assertNoPrivateText(rawViews.at(-1), allowedTaskPath, false, true)
+  for (const view of rawViews) {
+    for (const match of view.matchAll(/"([^"\\\r\n]*)"[ \t\r\n]*:/gu)) {
+      if (forbiddenKey(match[1])) fail("PRIVATE_KEY_DETECTED")
+    }
+  }
+}
+
+const assertNoPrivateValues = (value, allowedTaskPath) => {
+  const visit = (current, fieldKey) => {
     if (typeof current === "string") {
-      assertNoPrivateText(current)
+      const views = privacyScanViews(current, "PRIVATE_VALUE_ENCODING_DEPTH_EXCEEDED")
+      const nestedJson = views.find((view) => {
+        const trimmed = view.replace(/^[ \t\r\n]+|[ \t\r\n]+$/gu, "")
+        return (trimmed.startsWith("{") && trimmed.endsWith("}")) ||
+          (trimmed.startsWith("[") && trimmed.endsWith("]"))
+      })
+      if (nestedJson !== undefined) {
+        assertNoPrivateRawJsonText(
+          nestedJson,
+          "PRIVATE_VALUE_NESTED_JSON_INVALID",
+          allowedTaskPath,
+        )
+        return
+      }
+      for (const view of views) {
+        assertNoPrivateText(
+          view,
+          allowedTaskPath,
+          TASK_PATH_FIELD_KEYS.has(fieldKey),
+        )
+      }
       return
     }
     if (Array.isArray(current)) {
-      for (const item of current) visit(item)
+      for (const item of current) visit(item, undefined)
       return
     }
     if (current === null || typeof current !== "object") return
     for (const [key, nested] of Object.entries(current)) {
-      if (forbiddenKey(key)) fail("PRIVATE_KEY_DETECTED")
-      visit(nested)
+      for (const view of privacyScanViews(key, "PRIVATE_KEY_ENCODING_DEPTH_EXCEEDED")) {
+        if (forbiddenKey(view)) fail("PRIVATE_KEY_DETECTED")
+      }
+      visit(nested, key)
     }
   }
   visit(value)
@@ -191,20 +527,25 @@ const readHead = (repositoryRoot) => {
   }
 }
 
-const parseRollout = (path) => {
-  let text
+const parseRollout = (path, taskPath) => {
+  let bytes
   try {
     if (!statSync(path).isFile()) fail("ROLLOUT_NOT_FILE")
-    text = readFileSync(path, "utf8")
+    bytes = readFileSync(path)
   } catch (error) {
     if (error?.code === "ROLLOUT_NOT_FILE") throw error
     fail("ROLLOUT_NOT_READABLE")
   }
+  const text = bytes.toString("utf8")
+  if (!bytes.equals(Buffer.from(text, "utf8"))) fail("ROLLOUT_UTF8_INVALID")
   if (text.length === 0 || !text.endsWith("\n")) fail("ROLLOUT_JSONL_INVALID")
   const records = []
   for (const line of text.slice(0, -1).split("\n")) {
     if (line.length === 0) fail("ROLLOUT_JSONL_INVALID")
-    records.push(parseJson(line, "ROLLOUT_JSONL_INVALID"))
+    assertNoPrivateRawJsonText(line, "ROLLOUT_PRIVATE_SCAN_INVALID", taskPath)
+    const record = parseJsonStrict(line, "ROLLOUT_JSONL_INVALID")
+    assertNoPrivateValues(record, taskPath)
+    records.push(record)
   }
   return records
 }
@@ -223,7 +564,6 @@ const extractReceipt = ({
   taskPath,
   reportInputPath,
   repositoryCommit,
-  rawSpawnJson,
   repositoryRoot: repositoryRootOverride,
 }) => {
   if (!TASK_PATH_PATTERN.test(taskPath) || taskPath.length > 1_024) fail("TASK_PATH_INVALID")
@@ -236,22 +576,16 @@ const extractReceipt = ({
   const reportBytes = readFileSync(reportLocation.absolute)
   const reportText = reportBytes.toString("utf8")
   if (!reportBytes.equals(Buffer.from(reportText, "utf8"))) fail("REPORT_UTF8_INVALID")
-  const report = parseJson(reportText, "REPORT_JSON_INVALID")
+  assertNoPrivateRawJsonText(reportText, "REPORT_PRIVATE_SCAN_INVALID", taskPath)
+  const report = parseJsonStrict(reportText, "REPORT_JSON_INVALID")
   if (report === null || typeof report !== "object" || Array.isArray(report)) {
     fail("REPORT_JSON_INVALID")
   }
-  if (report.taskPath !== taskPath) fail("REPORT_TASK_JOIN_FAILED")
-  if (report.repositoryCommit !== repositoryCommit) fail("REPORT_COMMIT_JOIN_FAILED")
+  assertNoPrivateValues(report, taskPath)
+  if (report.taskPath !== taskPath) fail("REPORT_TASK_CONSISTENCY_FAILED")
+  if (report.repositoryCommit !== repositoryCommit) fail("REPORT_COMMIT_CONSISTENCY_FAILED")
   const normalizedReportBytes = Buffer.from(`${JSON.stringify(report, null, 2)}\n`, "utf8")
   if (!reportBytes.equals(normalizedReportBytes)) fail("REPORT_NOT_NORMALIZED")
-
-  const rawSpawnBytes = Buffer.from(rawSpawnJson, "utf8")
-  if (!rawSpawnBytes.equals(Buffer.from(rawSpawnBytes.toString("utf8"), "utf8"))) {
-    fail("RAW_SPAWN_UTF8_INVALID")
-  }
-  const rawSpawn = parseJson(rawSpawnJson, "RAW_SPAWN_JSON_INVALID")
-  exactKeys(rawSpawn, ["task_name"], "RAW_SPAWN_SHAPE_INVALID")
-  if (rawSpawn.task_name !== taskPath) fail("RAW_SPAWN_TASK_JOIN_FAILED")
 
   let stateDbReal
   let rolloutReal
@@ -294,8 +628,8 @@ const extractReceipt = ({
 
   if (threadRows.length !== 1) fail("TASK_THREAD_CARDINALITY_FAILED")
   const thread = threadRows[0]
-  if (thread.agent_path !== taskPath) fail("TASK_THREAD_JOIN_FAILED")
-  if (thread.git_sha !== repositoryCommit) fail("THREAD_COMMIT_JOIN_FAILED")
+  if (thread.agent_path !== taskPath) fail("TASK_THREAD_CONSISTENCY_FAILED")
+  if (thread.git_sha !== repositoryCommit) fail("THREAD_COMMIT_CONSISTENCY_FAILED")
   if (thread.thread_source !== "subagent") fail("THREAD_SOURCE_INVALID")
   if (!UUID_PATTERN.test(thread.id)) fail("SESSION_UUID_INVALID")
   if (!Number.isSafeInteger(thread.created_at_ms)) fail("THREAD_CREATED_AT_INVALID")
@@ -304,7 +638,7 @@ const extractReceipt = ({
     sessionUuidTime > thread.created_at_ms ||
     thread.created_at_ms - sessionUuidTime > MAX_PRE_START_ADJACENT_DELAY_MS
   ) {
-    fail("SESSION_CREATED_AT_JOIN_FAILED")
+    fail("SESSION_CREATED_AT_CONSISTENCY_FAILED")
   }
   let recordedRolloutReal
   try {
@@ -312,9 +646,11 @@ const extractReceipt = ({
   } catch {
     fail("DB_ROLLOUT_NOT_READABLE")
   }
-  if (recordedRolloutReal !== rolloutReal) fail("ROLLOUT_PATH_JOIN_FAILED")
+  if (recordedRolloutReal !== rolloutReal) fail("ROLLOUT_PATH_CONSISTENCY_FAILED")
 
-  const dbSource = parseJson(thread.source, "THREAD_PROVENANCE_INVALID")
+  assertNoPrivateRawJsonText(thread.source, "THREAD_PROVENANCE_PRIVATE_SCAN_INVALID", taskPath)
+  const dbSource = parseJsonStrict(thread.source, "THREAD_PROVENANCE_INVALID")
+  assertNoPrivateValues(dbSource, taskPath)
   exactKeys(dbSource, ["subagent"], "THREAD_PROVENANCE_INVALID")
   exactKeys(dbSource.subagent, ["thread_spawn"], "THREAD_PROVENANCE_INVALID")
   const dbSpawn = dbSource.subagent.thread_spawn
@@ -322,7 +658,7 @@ const extractReceipt = ({
     fail("THREAD_PROVENANCE_INVALID")
   }
   if (dbSpawn.agent_path !== taskPath || !UUID_PATTERN.test(dbSpawn.parent_thread_id)) {
-    fail("THREAD_PROVENANCE_JOIN_FAILED")
+    fail("THREAD_PROVENANCE_CONSISTENCY_FAILED")
   }
   if (!Number.isInteger(dbSpawn.depth) || dbSpawn.depth < 1 || dbSpawn.depth > 32) {
     fail("THREAD_DEPTH_INVALID")
@@ -336,10 +672,10 @@ const extractReceipt = ({
     typeof edge.status !== "string" ||
     edge.status.length === 0
   ) {
-    fail("SPAWN_EDGE_JOIN_FAILED")
+    fail("SPAWN_EDGE_CONSISTENCY_FAILED")
   }
 
-  const records = parseRollout(rolloutReal)
+  const records = parseRollout(rolloutReal, taskPath)
   const matchingSessionMeta = records.filter(
     (record) => record?.type === "session_meta" && record?.payload?.id === thread.id,
   )
@@ -357,9 +693,9 @@ const extractReceipt = ({
     metaSpawn?.depth !== dbSpawn.depth ||
     meta.git?.commit_hash !== repositoryCommit
   ) {
-    fail("SESSION_META_JOIN_FAILED")
+    fail("SESSION_META_CONSISTENCY_FAILED")
   }
-  if (!SAFE_ORIGINATOR_PATTERN.test(meta.originator)) fail("ORIGINATOR_INVALID")
+  if (!CODEX_ORIGINATOR_PATTERN.test(meta.originator)) fail("ORIGINATOR_INVALID")
   const sessionMetaEventTimestamp = sessionMeta.timestamp
   if (!canonicalDateTime(sessionMetaEventTimestamp)) fail("SESSION_META_TIMESTAMP_INVALID")
   const sessionMetaTime = Date.parse(sessionMetaEventTimestamp)
@@ -367,7 +703,7 @@ const extractReceipt = ({
     thread.created_at_ms > sessionMetaTime ||
     sessionMetaTime - thread.created_at_ms > MAX_PRE_START_ADJACENT_DELAY_MS
   ) {
-    fail("SESSION_META_TIME_JOIN_FAILED")
+    fail("SESSION_META_TIME_CONSISTENCY_FAILED")
   }
 
   const currentSessionEvents = records
@@ -392,7 +728,7 @@ const extractReceipt = ({
     records.indexOf(sessionMeta) >= started.index ||
     started.index >= completed.index
   ) {
-    fail("CURRENT_TURN_JOIN_FAILED")
+    fail("CURRENT_TURN_CONSISTENCY_FAILED")
   }
   const completionTurnId = completed.record.payload.turn_id
   const taskStartEventTimestamp = started.record.timestamp
@@ -404,14 +740,14 @@ const extractReceipt = ({
     !Number.isInteger(started.record.payload.started_at) ||
     Math.floor(taskStartTime / 1_000) !== started.record.payload.started_at
   ) {
-    fail("TASK_START_TIMESTAMP_JOIN_FAILED")
+    fail("TASK_START_TIMESTAMP_CONSISTENCY_FAILED")
   }
   const completionTurnTime = uuidV7Time(completionTurnId, "COMPLETION_TURN_ID_INVALID")
   if (
     completionTurnTime > taskStartTime ||
     taskStartTime - completionTurnTime > MAX_PRE_START_ADJACENT_DELAY_MS
   ) {
-    fail("TASK_START_TURN_TIME_JOIN_FAILED")
+    fail("TASK_START_TURN_TIME_CONSISTENCY_FAILED")
   }
   const completionEventTimestamp = completed.record.timestamp
   if (!canonicalDateTime(completionEventTimestamp)) fail("COMPLETION_TIMESTAMP_INVALID")
@@ -421,7 +757,7 @@ const extractReceipt = ({
     !Number.isInteger(completed.record.payload.completed_at) ||
     Math.floor(completionTime / 1_000) !== completed.record.payload.completed_at
   ) {
-    fail("COMPLETION_TIMESTAMP_JOIN_FAILED")
+    fail("COMPLETION_TIMESTAMP_CONSISTENCY_FAILED")
   }
   const completionMessage = completed.record.payload.last_agent_message
   if (typeof completionMessage !== "string" || completionMessage.length === 0) {
@@ -452,16 +788,14 @@ const extractReceipt = ({
     fail("RAW_COMPLETION_EVENT_MISMATCH")
   }
 
-  const completionJson = parseJson(completionMessage, "COMPLETION_MESSAGE_NOT_JSON")
+  assertNoPrivateRawJsonText(completionMessage, "COMPLETION_PRIVATE_SCAN_INVALID", taskPath)
+  const completionJson = parseJsonStrict(completionMessage, "COMPLETION_MESSAGE_NOT_JSON")
   if (completionJson === null || typeof completionJson !== "object" || Array.isArray(completionJson)) {
     fail("COMPLETION_MESSAGE_NOT_JSON")
   }
   const completionNormalizedBytes = Buffer.from(`${JSON.stringify(completionJson, null, 2)}\n`, "utf8")
   if (!completionNormalizedBytes.equals(reportBytes)) fail("COMPLETION_REPORT_MISMATCH")
 
-  assertNoPrivateValues(rawSpawn)
-  assertNoPrivateValues(report)
-  assertNoPrivateText(completionMessage)
   assertNoPrivateText(meta.originator)
 
   const completionBytes = Buffer.from(completionMessage, "utf8")
@@ -484,22 +818,19 @@ const extractReceipt = ({
     reportPath: reportLocation.portable,
     reportSha256: sha256(reportBytes),
     repositoryCommit,
-    rawSpawn: rawByteRecord("caller-supplied-exposed-spawn-response", rawSpawnBytes),
     rawCompletion: rawByteRecord(
       "local-rollout-task_complete.last_agent_message",
       completionBytes,
     ),
     safeReceiptHashAlgorithm: SAFE_RECEIPT_HASH_ALGORITHM,
   }
-  assertNoPrivateValues({
-    ...receiptPayload,
-    rawSpawn: { ...receiptPayload.rawSpawn, bytesBase64: "" },
-    rawCompletion: { ...receiptPayload.rawCompletion, bytesBase64: "" },
-  })
-  return {
+  assertNoPrivateValues(receiptPayload, taskPath)
+  const receipt = {
     ...receiptPayload,
     safeReceiptSha256: sha256(Buffer.from(JSON.stringify(receiptPayload), "utf8")),
   }
+  assertNoPrivateValues(receipt, taskPath)
+  return receipt
 }
 
 const parseArguments = (argv) => {
@@ -510,7 +841,6 @@ const parseArguments = (argv) => {
     "--task-path",
     "--report",
     "--repository-commit",
-    "--raw-spawn-json",
   ])
   if (argv.length !== allowed.size * 2) fail("ARGUMENT_SET_INVALID")
   const parsed = {}
@@ -530,7 +860,6 @@ const parseArguments = (argv) => {
     taskPath: parsed["--task-path"],
     reportInputPath: parsed["--report"],
     repositoryCommit: parsed["--repository-commit"],
-    rawSpawnJson: parsed["--raw-spawn-json"],
   }
 }
 
@@ -608,12 +937,67 @@ const makeSyntheticFixture = (root, mutation = "none") => {
   if (mutation === "private-value") report.operatorContact = "private@example.invalid"
   if (mutation === "report-task") report.taskPath = "/root/synthetic_parent/retargeted_lane"
   if (mutation === "report-commit") report.repositoryCommit = "f".repeat(40)
-  const completionMessage = JSON.stringify(report)
+  let completionMessage = JSON.stringify(report)
+  if (mutation === "duplicate-completion-key") {
+    completionMessage = completionMessage.replace(
+      `"taskPath":${JSON.stringify(taskPath)}`,
+      `"taskPath":${JSON.stringify(taskPath)},"taskPath":${JSON.stringify(taskPath)}`,
+    )
+  } else if (mutation === "completion-task-path-prefix-private-path") {
+    completionMessage = completionMessage.replace("synthetic-pass", `${taskPath}/secret.json`)
+  }
   const reportPath = resolve(repositoryRoot, "research", "synthetic-review.json")
   mkdirSync(dirname(reportPath), { recursive: true })
-  const reportBytes = mutation === "report-mismatch"
-    ? Buffer.from(`${JSON.stringify({ ...report, result: "different" }, null, 2)}\n`, "utf8")
-    : Buffer.from(`${JSON.stringify(report, null, 2)}\n`, "utf8")
+  let reportText = mutation === "report-mismatch"
+    ? `${JSON.stringify({ ...report, result: "different" }, null, 2)}\n`
+    : `${JSON.stringify(report, null, 2)}\n`
+  if (mutation === "duplicate-report-key") {
+    reportText = reportText.replace(
+      `  "taskPath": ${JSON.stringify(taskPath)},`,
+      `  "taskPath": ${JSON.stringify(taskPath)},\n  "taskPath": ${JSON.stringify(taskPath)},`,
+    )
+  } else if (mutation === "escaped-private-key") {
+    reportText = reportText.replace(
+      "  \"result\":",
+      "  \"\\u0068ost\": \"private-machine\",\n  \"result\":",
+    )
+  } else if (mutation === "escaped-private-value") {
+    reportText = reportText.replace("synthetic-pass", "private\\u0040example.invalid")
+  } else if (mutation === "unicode-escaped-private-path") {
+    reportText = reportText.replace("synthetic-pass", "\\u002fhome\\u002fprivate\\u002fstate.json")
+  } else if (mutation === "slash-escaped-private-path") {
+    reportText = reportText.replace("synthetic-pass", "\\/home\\/private\\/state.json")
+  } else if (mutation === "escaped-private-network") {
+    reportText = reportText.replace(
+      "synthetic-pass",
+      "http:\\/\\/192\\u002e168\\u002e1\\u002e7:4173",
+    )
+  } else if (mutation === "private-posix-absolute-path") {
+    reportText = reportText.replace("synthetic-pass", "/home/private/state.json")
+  } else if (mutation === "private-windows-absolute-path") {
+    reportText = reportText.replace("synthetic-pass", "C:\\\\Users\\\\private\\\\state.json")
+  } else if (mutation === "private-windows-forward-slash-path") {
+    reportText = reportText.replace("synthetic-pass", "C:/Users/private/state.json")
+  } else if (mutation === "unlisted-private-absolute-path") {
+    reportText = reportText.replace("synthetic-pass", "/usr/local/private/state.json")
+  } else if (mutation === "dot-segment-private-absolute-path") {
+    reportText = reportText.replace("synthetic-pass", "/./data/private/state.json")
+  } else if (mutation === "double-slash-private-absolute-path") {
+    reportText = reportText.replace("synthetic-pass", "//data/private/state.json")
+  } else if (mutation === "task-path-prefix-private-path") {
+    reportText = reportText.replace("synthetic-pass", `${taskPath}/secret.json`)
+  } else if (mutation === "task-path-in-non-task-field") {
+    reportText = reportText.replace("synthetic-pass", taskPath)
+  } else if (mutation === "bare-ipv6-network") {
+    reportText = reportText.replace("synthetic-pass", "fd00::1234")
+  } else if (mutation === "non-http-network-uri") {
+    reportText = reportText.replace("synthetic-pass", "ws:\\/\\/192.168.1.7:4173/socket")
+  } else if (mutation === "nbsp-json-whitespace") {
+    reportText = reportText.replace("\"schemaVersion\":", "\"schemaVersion\"\u00a0:")
+  } else if (mutation === "em-space-json-whitespace") {
+    reportText = reportText.replace("\"schemaVersion\":", "\"schemaVersion\"\u2003:")
+  }
+  const reportBytes = Buffer.from(reportText, "utf8")
   writeFileSync(reportPath, reportBytes)
 
   const source = {
@@ -635,9 +1019,9 @@ const makeSyntheticFixture = (root, mutation = "none") => {
       payload: {
         id: mutation === "session-mismatch" ? secondSessionUuid : sessionUuid,
         source,
-        originator: "codex_exec",
+        originator: mutation === "non-codex-originator" ? "other_agent" : "codex_exec",
         thread_source: "subagent",
-        agent_path: taskPath,
+        agent_path: mutation === "rollout-retargeted-task" ? "/root/synthetic_parent/retargeted_lane" : taskPath,
         parent_thread_id: parentThreadId,
         git: { commit_hash: repositoryCommit },
       },
@@ -706,7 +1090,26 @@ const makeSyntheticFixture = (root, mutation = "none") => {
       },
     )
   }
-  writeFileSync(rolloutPath, `${records.map((record) => JSON.stringify(record)).join("\n")}\n`)
+  const rolloutLines = records.map((record) => JSON.stringify(record))
+  if (mutation === "duplicate-rollout-key") {
+    rolloutLines[1] = rolloutLines[1].replace(
+      '"type":"event_msg"',
+      '"type":"event_msg","type":"event_msg"',
+    )
+  } else if (mutation === "rollout-unicode-whitespace") {
+    rolloutLines[1] = rolloutLines[1].replace('"type":', '"type"\u202f:')
+  } else if (mutation === "rollout-escaped-private-path") {
+    rolloutLines[1] = rolloutLines[1].replace(
+      '"payload":{',
+      '"payload":{"note":"\\u002fhome\\u002fprivate\\u002fdevice.json",',
+    )
+  } else if (mutation === "rollout-task-path-prefix-private-path") {
+    rolloutLines[1] = rolloutLines[1].replace(
+      '"payload":{',
+      `"payload":{"note":${JSON.stringify(`${taskPath}/secret.json`)},`,
+    )
+  }
+  writeFileSync(rolloutPath, `${rolloutLines.join("\n")}\n`)
 
   const stateDbPath = resolve(root, "synthetic-state.sqlite")
   const database = new DatabaseSync(stateDbPath)
@@ -726,11 +1129,27 @@ const makeSyntheticFixture = (root, mutation = "none") => {
       status TEXT NOT NULL
     );
   `)
-  const dbRolloutPath = mutation === "rollout-join" ? resolve(root, "missing-rollout.jsonl") : rolloutPath
+  const dbRolloutPath = mutation === "rollout-path-consistency" ? resolve(root, "missing-rollout.jsonl") : rolloutPath
+  let dbSourceJson = JSON.stringify(source)
+  if (mutation === "duplicate-db-key") {
+    dbSourceJson = dbSourceJson.replace('"depth":1', '"depth":1,"depth":1')
+  } else if (mutation === "db-escaped-duplicate-key") {
+    dbSourceJson = dbSourceJson.replace('"depth":1', '"depth":1,"de\\u0070th":1')
+  } else if (mutation === "db-escaped-private-key") {
+    dbSourceJson = dbSourceJson.replace(
+      '"thread_spawn":{',
+      '"thread_spawn":{"\\u0064evice":"workstation-7",',
+    )
+  } else if (mutation === "db-unicode-whitespace") {
+    dbSourceJson = dbSourceJson.replace('"subagent":', '"subagent"\u1680:')
+  }
+  const dbTaskPath = mutation === "db-retargeted-task"
+    ? "/root/synthetic_parent/retargeted_lane"
+    : taskPath
   database.prepare(`
     INSERT INTO threads (id, rollout_path, source, thread_source, agent_path, git_sha, created_at_ms)
     VALUES (?, ?, ?, ?, ?, ?, ?)
-  `).run(sessionUuid, dbRolloutPath, JSON.stringify(source), "subagent", taskPath, repositoryCommit, databaseCreatedAt)
+  `).run(sessionUuid, dbRolloutPath, dbSourceJson, "subagent", dbTaskPath, repositoryCommit, databaseCreatedAt)
   if (mutation === "duplicate-task") {
     database.prepare(`
       INSERT INTO threads (id, rollout_path, source, thread_source, agent_path, git_sha, created_at_ms)
@@ -749,7 +1168,6 @@ const makeSyntheticFixture = (root, mutation = "none") => {
     taskPath,
     reportInputPath: reportPath,
     repositoryCommit: mutation === "retargeted-commit" ? "0".repeat(40) : repositoryCommit,
-    rawSpawnJson: JSON.stringify({ task_name: mutation === "raw-spawn-task" ? "/root/synthetic_parent/retargeted_lane" : taskPath }),
     repositoryRoot,
   }
 }
@@ -759,17 +1177,35 @@ const runSelfTest = async () => {
   const negativeCases = [
     "db-before-uuid",
     "db-delay-over-bound",
+    "db-escaped-duplicate-key",
+    "db-escaped-private-key",
+    "db-retargeted-task",
+    "db-unicode-whitespace",
+    "duplicate-completion-key",
+    "duplicate-db-key",
+    "duplicate-report-key",
+    "duplicate-rollout-key",
     "duplicate-task",
+    "em-space-json-whitespace",
+    "escaped-private-key",
+    "escaped-private-network",
+    "escaped-private-value",
     "incomplete-turn",
     "multiple-turns",
+    "nbsp-json-whitespace",
+    "non-codex-originator",
+    "private-posix-absolute-path",
     "private-value",
+    "private-windows-absolute-path",
     "raw-mismatch",
-    "raw-spawn-task",
     "report-commit",
     "report-mismatch",
     "report-task",
     "retargeted-commit",
-    "rollout-join",
+    "rollout-escaped-private-path",
+    "rollout-path-consistency",
+    "rollout-retargeted-task",
+    "rollout-unicode-whitespace",
     "session-meta-before-db",
     "session-meta-delay-over-bound",
     "session-meta-timestamp-invalid",
@@ -781,21 +1217,45 @@ const runSelfTest = async () => {
     "task-start-timestamp-invalid",
     "task-start-turn-mismatch",
     "task-start-turn-time-after-event",
+    "unicode-escaped-private-path",
     "wrong-parent",
+    "slash-escaped-private-path",
   ]
-  const expectedTimingFailureCodes = new Map([
-    ["db-before-uuid", "SESSION_CREATED_AT_JOIN_FAILED"],
-    ["db-delay-over-bound", "SESSION_CREATED_AT_JOIN_FAILED"],
-    ["session-meta-before-db", "SESSION_META_TIME_JOIN_FAILED"],
-    ["session-meta-delay-over-bound", "SESSION_META_TIME_JOIN_FAILED"],
+  const expectedFailureCodes = new Map([
+    ["db-before-uuid", "SESSION_CREATED_AT_CONSISTENCY_FAILED"],
+    ["db-delay-over-bound", "SESSION_CREATED_AT_CONSISTENCY_FAILED"],
+    ["db-escaped-duplicate-key", "THREAD_PROVENANCE_INVALID"],
+    ["db-escaped-private-key", "PRIVATE_KEY_DETECTED"],
+    ["db-retargeted-task", "TASK_THREAD_CARDINALITY_FAILED"],
+    ["db-unicode-whitespace", "THREAD_PROVENANCE_INVALID"],
+    ["duplicate-completion-key", "COMPLETION_MESSAGE_NOT_JSON"],
+    ["duplicate-db-key", "THREAD_PROVENANCE_INVALID"],
+    ["duplicate-report-key", "REPORT_JSON_INVALID"],
+    ["duplicate-rollout-key", "ROLLOUT_JSONL_INVALID"],
+    ["em-space-json-whitespace", "REPORT_JSON_INVALID"],
+    ["escaped-private-key", "PRIVATE_KEY_DETECTED"],
+    ["escaped-private-network", "NON_LOOPBACK_NETWORK_VALUE_DETECTED"],
+    ["escaped-private-value", "PRIVATE_VALUE_DETECTED"],
+    ["nbsp-json-whitespace", "REPORT_JSON_INVALID"],
+    ["non-codex-originator", "ORIGINATOR_INVALID"],
+    ["private-posix-absolute-path", "PRIVATE_VALUE_DETECTED"],
+    ["private-windows-absolute-path", "PRIVATE_VALUE_DETECTED"],
+    ["report-task", "PRIVATE_VALUE_DETECTED"],
+    ["rollout-escaped-private-path", "PRIVATE_VALUE_DETECTED"],
+    ["rollout-retargeted-task", "PRIVATE_VALUE_DETECTED"],
+    ["rollout-unicode-whitespace", "ROLLOUT_JSONL_INVALID"],
+    ["session-meta-before-db", "SESSION_META_TIME_CONSISTENCY_FAILED"],
+    ["session-meta-delay-over-bound", "SESSION_META_TIME_CONSISTENCY_FAILED"],
     ["session-meta-timestamp-invalid", "SESSION_META_TIMESTAMP_INVALID"],
-    ["task-start-before-session-meta", "TASK_START_TIMESTAMP_JOIN_FAILED"],
-    ["task-start-delay-over-bound", "TASK_START_TIMESTAMP_JOIN_FAILED"],
-    ["task-start-not-before-completion", "COMPLETION_TIMESTAMP_JOIN_FAILED"],
-    ["task-start-seconds-mismatch", "TASK_START_TIMESTAMP_JOIN_FAILED"],
+    ["task-start-before-session-meta", "TASK_START_TIMESTAMP_CONSISTENCY_FAILED"],
+    ["task-start-delay-over-bound", "TASK_START_TIMESTAMP_CONSISTENCY_FAILED"],
+    ["task-start-not-before-completion", "COMPLETION_TIMESTAMP_CONSISTENCY_FAILED"],
+    ["task-start-seconds-mismatch", "TASK_START_TIMESTAMP_CONSISTENCY_FAILED"],
     ["task-start-timestamp-invalid", "TASK_START_TIMESTAMP_INVALID"],
-    ["task-start-turn-mismatch", "CURRENT_TURN_JOIN_FAILED"],
-    ["task-start-turn-time-after-event", "TASK_START_TURN_TIME_JOIN_FAILED"],
+    ["task-start-turn-mismatch", "CURRENT_TURN_CONSISTENCY_FAILED"],
+    ["task-start-turn-time-after-event", "TASK_START_TURN_TIME_CONSISTENCY_FAILED"],
+    ["unicode-escaped-private-path", "PRIVATE_VALUE_DETECTED"],
+    ["slash-escaped-private-path", "PRIVATE_VALUE_DETECTED"],
   ])
   try {
     const positiveRoot = resolve(root, "positive")
@@ -810,6 +1270,9 @@ const runSelfTest = async () => {
     if (
       receipt.schemaVersion !== SCHEMA_VERSION ||
       receipt.authenticationStatus !== AUTHENTICATION_STATUS ||
+      receipt.authenticationLimitation !== AUTHENTICATION_LIMITATION ||
+      receipt.provenanceClass !== PROVENANCE_CLASS ||
+      JSON.stringify(Object.keys(payload)) !== JSON.stringify(SAFE_RECEIPT_PAYLOAD_KEYS) ||
       receipt.safeReceiptSha256 !== sha256(Buffer.from(JSON.stringify(payload), "utf8")) ||
       receipt.completionMessageSha256 !== receipt.rawCompletion.sha256 ||
       !canonicalDateTime(receipt.taskStartEventTimestamp) ||
@@ -825,7 +1288,7 @@ const runSelfTest = async () => {
         extractReceipt(makeSyntheticFixture(resolve(root, mutation), mutation))
       } catch (error) {
         rejected = true
-        const expectedCode = expectedTimingFailureCodes.get(mutation)
+        const expectedCode = expectedFailureCodes.get(mutation)
         if (expectedCode !== undefined && error?.code !== expectedCode) {
           fail("SELF_TEST_NEGATIVE_WRONG_GATE")
         }
@@ -833,7 +1296,7 @@ const runSelfTest = async () => {
       if (!rejected) fail("SELF_TEST_NEGATIVE_FAILED")
     }
     return {
-      schemaVersion: "codex-task-safe-receipt-extractor-self-test-v1",
+      schemaVersion: "codex-task-safe-receipt-extractor-self-test-v2",
       status: "passed",
       positiveCases: 2,
       negativeCases: negativeCases.length,

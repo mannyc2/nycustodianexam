@@ -129,10 +129,12 @@ export const coverageContract = Object.freeze({
 
 export const keyboardEvidenceContract = Object.freeze({
   classification: "native-document-focus-order-round-trip",
-  forwardTraversal: "Native Tab visits every derived enabled rendered logical document focus stop exactly once in forward order and records the exact focused element coordinate.",
-  returnTraversal: "Native Shift+Tab visits the exact reverse logical document focus-stop order, records each exact engine-specific focused element coordinate, and returns to the first logical stop.",
+  forwardTraversal: "Native Tab visits every derived enabled, rendered, visible logical document focus stop in forward order through the last stop, recording each exact engine-specific focused element coordinate and visible focus observation.",
+  returnTraversal: "From the last stop, native Shift+Tab visits every preceding logical document focus stop in reverse order through the first stop, recording each exact engine-specific focused element coordinate and visible focus observation.",
   programmaticElementFocusUsed: false,
-  firefoxAutomationLimitation: "After the final document stop, Playwright Firefox sends forward focus to browser chrome but exposes document.activeElement as the last link indefinitely; 100 additional native Tab presses in both headless and headed Xvfb runs did not expose or re-enter that chrome path. Therefore this evidence does not claim an observable forward-Tab wrap in Firefox."
+  forwardTabFromFinalStopPerformed: false,
+  absenceOfForwardTabTrapAtFinalStopProved: false,
+  finalForwardTabLimitation: "No forward Tab is sent from the final document stop. The round trip does not observe browser chrome and does not prove the absence of a forward-Tab trap at the final control."
 })
 
 const researchDirectory = dirname(fileURLToPath(import.meta.url))
@@ -292,8 +294,25 @@ export const validateBrowserCase = (browserCase, allowlist = axePolicy.allowlist
     const visitedStopShape = (value) => exactShape(value, ["logicalStopId", "coordinate", "focusVisible"]) &&
       expectedStopShape({ logicalStopId: value.logicalStopId, coordinate: value.coordinate }) &&
       value.focusVisible === true
+    const keyboardShape = [
+      "performed",
+      "mode",
+      "expectedFocusableCount",
+      "expectedOrder",
+      "returnExpectedOrder",
+      "forwardTabPressCount",
+      "returnShiftTabPressCount",
+      "forwardTabFromFinalStopPerformed",
+      "absenceOfForwardTabTrapAtFinalStopProved",
+      "forwardOrderObserved",
+      "returnOrderObserved",
+      "allObservedFocusVisible",
+      "visited",
+      "returnVisited"
+    ]
+    if (!exactShape(keyboard, keyboardShape)) errors.push("keyboard-traversal-shape")
     if (keyboard?.performed !== true) errors.push("keyboard-traversal-missing")
-    if (keyboard?.mode !== "native-Tab-forward-and-Shift-Tab-return-cycle") errors.push("keyboard-traversal-not-native-tab-cycle")
+    if (keyboard?.mode !== "native-document-focus-order-round-trip") errors.push("keyboard-traversal-mode")
     if (!Number.isInteger(keyboard?.expectedFocusableCount) || keyboard.expectedFocusableCount < 1) errors.push("keyboard-focusable-count")
     if (!Array.isArray(keyboard?.expectedOrder) || keyboard.expectedOrder.length !== keyboard.expectedFocusableCount || !keyboard.expectedOrder.every(expectedStopShape)) errors.push("keyboard-expected-order-count-or-shape")
     if (!Array.isArray(keyboard?.returnExpectedOrder) ||
@@ -301,8 +320,10 @@ export const validateBrowserCase = (browserCase, allowlist = axePolicy.allowlist
       !keyboard.returnExpectedOrder.every(expectedStopShape)) errors.push("keyboard-return-expected-order-count-or-shape")
     if (!Array.isArray(keyboard?.visited) || keyboard.visited.length !== keyboard.expectedFocusableCount || !keyboard.visited.every(visitedStopShape)) errors.push("keyboard-visited-count-or-shape")
     if (!Array.isArray(keyboard?.returnVisited) || keyboard.returnVisited.length !== keyboard.expectedFocusableCount - 1 || !keyboard.returnVisited.every(visitedStopShape)) errors.push("keyboard-return-visited-count-or-shape")
-    if (!Number.isInteger(keyboard?.stepCount) || keyboard.stepCount !== keyboard.expectedFocusableCount) errors.push("keyboard-step-count")
-    if (!Number.isInteger(keyboard?.tabPressCount) || keyboard.tabPressCount !== 2 * keyboard.expectedFocusableCount - 1) errors.push("keyboard-tab-press-count")
+    if (!Number.isInteger(keyboard?.forwardTabPressCount) || keyboard.forwardTabPressCount !== keyboard.expectedFocusableCount) errors.push("keyboard-forward-tab-press-count")
+    if (!Number.isInteger(keyboard?.returnShiftTabPressCount) || keyboard.returnShiftTabPressCount !== keyboard.expectedFocusableCount - 1) errors.push("keyboard-return-shift-tab-press-count")
+    if (keyboard?.forwardTabFromFinalStopPerformed !== false) errors.push("keyboard-final-forward-tab-must-not-be-performed")
+    if (keyboard?.absenceOfForwardTabTrapAtFinalStopProved !== false) errors.push("keyboard-final-forward-tab-trap-absence-must-remain-unproved")
     const expectedLogicalOrder = Array.isArray(keyboard?.expectedOrder) ? keyboard.expectedOrder.map(({ logicalStopId }) => logicalStopId) : []
     const expectedCoordinateOrder = Array.isArray(keyboard?.expectedOrder) ? keyboard.expectedOrder.map(({ coordinate }) => coordinate) : []
     const returnExpectedLogicalOrder = Array.isArray(keyboard?.returnExpectedOrder) ? keyboard.returnExpectedOrder.map(({ logicalStopId }) => logicalStopId) : []
@@ -321,17 +342,12 @@ export const validateBrowserCase = (browserCase, allowlist = axePolicy.allowlist
         if (forwardStop !== undefined && forwardStop.coordinate !== returnStop.coordinate && !(browserCase.browserProject === "webkit" && returnStop.logicalStopId.startsWith("radio-group:"))) errors.push("keyboard-directional-coordinate-drift")
       }
     }
-    if (!uniqueVisitedStops || !uniqueReturnVisitedStops || keyboard?.allStopsUnique !== true) errors.push("keyboard-observed-duplicate-or-trap")
+    if (!uniqueVisitedStops || !uniqueReturnVisitedStops) errors.push("keyboard-observed-duplicate-stop")
     if (Array.isArray(keyboard?.expectedOrder) && JSON.stringify(visitedOrder) !== JSON.stringify(keyboard.expectedOrder)) errors.push("keyboard-observed-order-mismatch")
     if (Array.isArray(keyboard?.returnExpectedOrder) && JSON.stringify(returnVisitedOrder) !== JSON.stringify(keyboard.returnExpectedOrder)) errors.push("keyboard-return-order-mismatch")
-    if (keyboard?.exactOrder !== true) errors.push("keyboard-exact-order-false")
-    if (keyboard?.returnOrderExact !== true) errors.push("keyboard-return-order-exact-false")
-    if (keyboard?.returnedToFirst !== true ||
-      keyboard?.cycleReturnLogicalStopId !== keyboard?.expectedOrder?.[0]?.logicalStopId ||
-      keyboard?.cycleReturnCoordinate !== keyboard?.returnExpectedOrder?.at(-1)?.coordinate) errors.push("keyboard-cycle-return")
-    if (keyboard?.cycleReturnFocusVisible !== true) errors.push("keyboard-cycle-return-focus-invisible")
-    if (keyboard?.noTrap !== true) errors.push("keyboard-trap")
-    if (keyboard?.allVisitedFocusVisible !== true ||
+    if (keyboard?.forwardOrderObserved !== true) errors.push("keyboard-forward-order-not-observed")
+    if (keyboard?.returnOrderObserved !== true) errors.push("keyboard-return-order-not-observed")
+    if (keyboard?.allObservedFocusVisible !== true ||
       keyboard?.visited?.some(({ focusVisible }) => focusVisible !== true) ||
       keyboard?.returnVisited?.some(({ focusVisible }) => focusVisible !== true)) errors.push("keyboard-focus-not-visible")
     if (!Number.isFinite(browserCase.actionTargetMinimumCssPx) || browserCase.actionTargetMinimumCssPx < 44) errors.push("action-target")
@@ -420,7 +436,7 @@ const passingCaseFixture = (overrides = {}) => ({
   axeFindings: [],
   keyboardTraversal: {
     performed: true,
-    mode: "native-Tab-forward-and-Shift-Tab-return-cycle",
+    mode: "native-document-focus-order-round-trip",
     expectedFocusableCount: 4,
     expectedOrder: [
       { logicalStopId: "element:#first", coordinate: "#first" },
@@ -433,17 +449,13 @@ const passingCaseFixture = (overrides = {}) => ({
       { logicalStopId: "element:#second", coordinate: "#second" },
       { logicalStopId: "element:#first", coordinate: "#first" }
     ],
-    stepCount: 4,
-    tabPressCount: 7,
-    cycleReturnLogicalStopId: "element:#first",
-    cycleReturnCoordinate: "#first",
-    cycleReturnFocusVisible: true,
-    returnedToFirst: true,
-    allStopsUnique: true,
-    exactOrder: true,
-    returnOrderExact: true,
-    noTrap: true,
-    allVisitedFocusVisible: true,
+    forwardTabPressCount: 4,
+    returnShiftTabPressCount: 3,
+    forwardTabFromFinalStopPerformed: false,
+    absenceOfForwardTabTrapAtFinalStopProved: false,
+    forwardOrderObserved: true,
+    returnOrderObserved: true,
+    allObservedFocusVisible: true,
     visited: [
       { logicalStopId: "element:#first", coordinate: "#first", focusVisible: true },
       { logicalStopId: "element:#second", coordinate: "#second", focusVisible: true },
@@ -580,9 +592,8 @@ export const runBrowserContractAdversarialTests = () => {
     ...requiredFirefoxCase,
     keyboardTraversal: {
       ...requiredFirefoxCase.keyboardTraversal,
-      returnedToFirst: false,
-      noTrap: false,
-      allVisitedFocusVisible: false
+      returnOrderObserved: false,
+      allObservedFocusVisible: false
     }
   }))
 
@@ -591,10 +602,18 @@ export const runBrowserContractAdversarialTests = () => {
     keyboardTraversal: {
       ...requiredFirefoxCase.keyboardTraversal,
       visited: requiredFirefoxCase.keyboardTraversal.visited.slice(0, -1),
-      stepCount: requiredFirefoxCase.keyboardTraversal.stepCount - 1
+      forwardTabPressCount: requiredFirefoxCase.keyboardTraversal.forwardTabPressCount - 1
     }
   }))
-  expectRejected("keyboard-duplicate-or-trap", () => validateBrowserCase({
+  expectRejected("keyboard-skipped-return-to-first", () => validateBrowserCase({
+    ...requiredFirefoxCase,
+    keyboardTraversal: {
+      ...requiredFirefoxCase.keyboardTraversal,
+      returnVisited: requiredFirefoxCase.keyboardTraversal.returnVisited.slice(0, -1),
+      returnShiftTabPressCount: requiredFirefoxCase.keyboardTraversal.returnShiftTabPressCount - 1
+    }
+  }))
+  expectRejected("keyboard-duplicate-observed-stop", () => validateBrowserCase({
     ...requiredFirefoxCase,
     keyboardTraversal: {
       ...requiredFirefoxCase.keyboardTraversal,
@@ -602,10 +621,7 @@ export const runBrowserContractAdversarialTests = () => {
         ...requiredFirefoxCase.keyboardTraversal.visited.slice(0, -1),
         requiredFirefoxCase.keyboardTraversal.visited[1]
       ],
-      allStopsUnique: false,
-      returnedToFirst: false,
-      noTrap: false,
-      cycleReturnCoordinate: "#second"
+      forwardOrderObserved: false
     }
   }))
   expectRejected("keyboard-late-invisible-focus", () => validateBrowserCase({
@@ -615,7 +631,17 @@ export const runBrowserContractAdversarialTests = () => {
       visited: requiredFirefoxCase.keyboardTraversal.visited.map((entry, index, entries) => index === entries.length - 1
         ? { ...entry, focusVisible: false }
         : entry),
-      allVisitedFocusVisible: false
+      allObservedFocusVisible: false
+    }
+  }))
+  expectRejected("keyboard-return-first-invisible-focus", () => validateBrowserCase({
+    ...requiredFirefoxCase,
+    keyboardTraversal: {
+      ...requiredFirefoxCase.keyboardTraversal,
+      returnVisited: requiredFirefoxCase.keyboardTraversal.returnVisited.map((entry, index, entries) => index === entries.length - 1
+        ? { ...entry, focusVisible: false }
+        : entry),
+      allObservedFocusVisible: false
     }
   }))
   expectRejected("keyboard-wrong-order", () => validateBrowserCase({
@@ -627,7 +653,7 @@ export const runBrowserContractAdversarialTests = () => {
         requiredFirefoxCase.keyboardTraversal.visited[0],
         ...requiredFirefoxCase.keyboardTraversal.visited.slice(2)
       ],
-      exactOrder: false
+      forwardOrderObserved: false
     }
   }))
   const radioLogicalStopId = 'radio-group:["no-form","fixture-choice"]'
@@ -701,13 +727,13 @@ export const runBrowserContractAdversarialTests = () => {
       visited: requiredFirefoxCase.keyboardTraversal.visited.map((entry, index) => index === 2 ? { ...entry, logicalStopId: requiredFirefoxCase.keyboardTraversal.visited[1].logicalStopId } : entry)
     }
   }))
-  expectRejected("keyboard-cycle-logical-stop-drift", () => validateBrowserCase({
+  expectRejected("keyboard-forward-tab-from-final-stop-claimed", () => validateBrowserCase({
     ...requiredFirefoxCase,
-    keyboardTraversal: { ...requiredFirefoxCase.keyboardTraversal, cycleReturnLogicalStopId: "element:#second" }
+    keyboardTraversal: { ...requiredFirefoxCase.keyboardTraversal, forwardTabFromFinalStopPerformed: true }
   }))
-  expectRejected("keyboard-cycle-coordinate-drift", () => validateBrowserCase({
+  expectRejected("keyboard-final-control-boundary-overclaim", () => validateBrowserCase({
     ...requiredFirefoxCase,
-    keyboardTraversal: { ...requiredFirefoxCase.keyboardTraversal, cycleReturnCoordinate: "#second" }
+    keyboardTraversal: { ...requiredFirefoxCase.keyboardTraversal, absenceOfForwardTabTrapAtFinalStopProved: true }
   }))
 
   const printCase = passingPresentationFixture("print", { browserProject: "chromium" })
@@ -929,19 +955,19 @@ const nativeKeyboardTraversal = async (page, browserProject) => {
   if (new Set(expectedOrder.map(({ logicalStopId }) => logicalStopId)).size !== expectedOrder.length) throw new Error("derived sequential focus order contains duplicate logical stops")
   if (new Set(expectedOrder.map(({ coordinate }) => coordinate)).size !== expectedOrder.length) throw new Error("derived sequential focus order contains duplicate element coordinates")
   const visited = []
-  let tabPressCount = 0
+  let forwardTabPressCount = 0
   for (let step = 0; step < expectedOrder.length; step += 1) {
     await page.keyboard.press("Tab")
-    tabPressCount += 1
+    forwardTabPressCount += 1
     const observation = await page.evaluate(activeFocusObservation)
-    if (observation === null) break
+    if (observation === null) throw new Error(`forward Tab stop ${step + 1} left the observable document before the final expected stop`)
     visited.push(observation)
   }
-  // Firefox headless correctly transfers forward Tab focus to browser chrome
-  // after the final document stop but does not expose that native-chrome path
-  // to page automation. A native Shift+Tab return traversal is therefore the
-  // only cross-engine, DOM-observable proof of a complete no-trap round trip.
-  // No document control is focused programmatically.
+  // The forward traversal ends as soon as the last derived document stop is
+  // observed. Do not send forward Tab from that stop: this evidence neither
+  // exercises a final-control forward-Tab handler nor observes browser chrome.
+  // The native reverse traversal starts from the still-focused final stop; no
+  // document control is focused programmatically.
   const backwardDocumentOrder = await page.evaluate(focusableSnapshot, { direction: "backward", browserProject })
   const forwardLogicalOrder = expectedOrder.map(({ logicalStopId }) => logicalStopId)
   const backwardLogicalOrder = backwardDocumentOrder.map(({ logicalStopId }) => logicalStopId)
@@ -953,48 +979,100 @@ const nativeKeyboardTraversal = async (page, browserProject) => {
   }
   const returnExpectedOrder = backwardDocumentOrder.slice(0, -1).reverse()
   const returnVisited = []
+  let returnShiftTabPressCount = 0
   for (let step = 0; step < returnExpectedOrder.length; step += 1) {
     await page.keyboard.press("Shift+Tab")
-    tabPressCount += 1
+    returnShiftTabPressCount += 1
     const observation = await page.evaluate(activeFocusObservation)
-    if (observation === null) break
+    if (observation === null) throw new Error(`return Shift+Tab stop ${step + 1} left the observable document before the first expected stop`)
     returnVisited.push(observation)
   }
   const visitedOrder = visited.map(({ logicalStopId, coordinate }) => ({ logicalStopId, coordinate }))
   const returnVisitedOrder = returnVisited.map(({ logicalStopId, coordinate }) => ({ logicalStopId, coordinate }))
   const returnExpectedLogicalOrder = returnExpectedOrder.map(({ logicalStopId }) => logicalStopId)
   if (JSON.stringify(returnExpectedLogicalOrder) !== JSON.stringify(forwardLogicalOrder.slice(0, -1).reverse())) throw new Error("return traversal does not reverse the logical focus-stop order")
-  const allStopsUnique =
-    new Set(visitedOrder.map(({ logicalStopId }) => logicalStopId)).size === visitedOrder.length &&
-    new Set(visitedOrder.map(({ coordinate }) => coordinate)).size === visitedOrder.length &&
-    new Set(returnVisitedOrder.map(({ logicalStopId }) => logicalStopId)).size === returnVisitedOrder.length &&
-    new Set(returnVisitedOrder.map(({ coordinate }) => coordinate)).size === returnVisitedOrder.length
-  const exactOrder = JSON.stringify(visitedOrder) === JSON.stringify(expectedOrder)
-  const returnOrderExact = JSON.stringify(returnVisitedOrder) === JSON.stringify(returnExpectedOrder)
-  const cycleReturn = returnVisited.at(-1) ?? null
-  const returnedToFirst = cycleReturn?.logicalStopId === expectedOrder[0].logicalStopId &&
-    cycleReturn?.coordinate === returnExpectedOrder.at(-1)?.coordinate
+  const forwardOrderObserved = JSON.stringify(visitedOrder) === JSON.stringify(expectedOrder)
+  const returnOrderObserved = JSON.stringify(returnVisitedOrder) === JSON.stringify(returnExpectedOrder)
   return {
     performed: true,
-    mode: "native-Tab-forward-and-Shift-Tab-return-cycle",
+    mode: "native-document-focus-order-round-trip",
     expectedFocusableCount: expectedOrder.length,
     expectedOrder,
     returnExpectedOrder,
-    stepCount: visited.length,
-    tabPressCount,
-    cycleReturnLogicalStopId: cycleReturn?.logicalStopId ?? null,
-    cycleReturnCoordinate: cycleReturn?.coordinate ?? null,
-    cycleReturnFocusVisible: cycleReturn?.focusVisible ?? false,
-    returnedToFirst,
-    allStopsUnique,
-    exactOrder,
-    returnOrderExact,
-    noTrap: exactOrder && returnOrderExact && allStopsUnique && returnedToFirst,
-    allVisitedFocusVisible: visited.length > 0 &&
+    forwardTabPressCount,
+    returnShiftTabPressCount,
+    forwardTabFromFinalStopPerformed: false,
+    absenceOfForwardTabTrapAtFinalStopProved: false,
+    forwardOrderObserved,
+    returnOrderObserved,
+    allObservedFocusVisible: visited.length > 0 &&
       visited.every(({ focusVisible }) => focusVisible) &&
       returnVisited.every(({ focusVisible }) => focusVisible),
     visited,
     returnVisited
+  }
+}
+
+export const runFinalControlForwardTabBoundarySelfTest = async () => {
+  const browser = await chromium.launch()
+  const context = await browser.newContext({ locale: "en-US", serviceWorkers: "block", timezoneId: "UTC" })
+  const page = await context.newPage()
+  try {
+    await page.setContent(`<!doctype html>
+      <html lang="en">
+        <head>
+          <style>
+            button:focus-visible { outline: 3px solid currentColor; outline-offset: 2px; }
+          </style>
+        </head>
+        <body data-prevented-final-forward-tabs="0">
+          <button id="synthetic-first" type="button">First</button>
+          <button id="synthetic-middle" type="button">Middle</button>
+          <button id="synthetic-final" type="button">Final</button>
+          <script>
+            document.querySelector("#synthetic-final").addEventListener("keydown", (event) => {
+              if (event.key !== "Tab" || event.shiftKey) return
+              event.preventDefault()
+              const current = Number(document.body.dataset.preventedFinalForwardTabs)
+              document.body.dataset.preventedFinalForwardTabs = String(current + 1)
+            })
+          </script>
+        </body>
+      </html>`)
+
+    const traversal = await nativeKeyboardTraversal(page, "chromium")
+    if (!traversal.forwardOrderObserved || !traversal.returnOrderObserved || !traversal.allObservedFocusVisible) throw new Error("synthetic round-trip fixture did not satisfy its claimed document-order observations")
+    if (traversal.forwardTabFromFinalStopPerformed !== false || traversal.absenceOfForwardTabTrapAtFinalStopProved !== false) throw new Error("synthetic round-trip fixture overclaimed the untested final-forward-Tab boundary")
+    const afterEvidence = await page.evaluate(() => ({
+      activeId: document.activeElement?.id ?? null,
+      preventedFinalForwardTabCount: Number(document.body.dataset.preventedFinalForwardTabs)
+    }))
+    if (afterEvidence.activeId !== "synthetic-first" || afterEvidence.preventedFinalForwardTabCount !== 0) throw new Error("claimed round-trip exercised the excluded final-forward-Tab fixture boundary")
+
+    // The evidence traversal is complete and has returned to the first stop.
+    // Move natively to the final stop without tabbing from it, then perform one
+    // deliberate out-of-contract probe against the synthetic preventDefault
+    // handler. This demonstrates the final-control behavior that remains
+    // outside the narrower round-trip observation.
+    for (let step = 1; step < traversal.expectedFocusableCount; step += 1) await page.keyboard.press("Tab")
+    const beforeProbe = await page.evaluate(activeFocusObservation)
+    if (beforeProbe?.coordinate !== "#synthetic-final") throw new Error("synthetic boundary probe did not reach the final control")
+    await page.keyboard.press("Tab")
+    const afterProbe = await page.evaluate(() => ({
+      activeId: document.activeElement?.id ?? null,
+      preventedFinalForwardTabCount: Number(document.body.dataset.preventedFinalForwardTabs)
+    }))
+    if (afterProbe.activeId !== "synthetic-final" || afterProbe.preventedFinalForwardTabCount !== 1) throw new Error("synthetic final-control preventDefault fixture did not retain focus")
+
+    return {
+      fixtureId: "final-control-forward-Tab-preventDefault",
+      preventedFinalForwardTabCount: afterProbe.preventedFinalForwardTabCount,
+      evidenceForwardTabFromFinalStopPerformed: traversal.forwardTabFromFinalStopPerformed,
+      evidenceAbsenceOfForwardTabTrapAtFinalStopProved: traversal.absenceOfForwardTabTrapAtFinalStopProved
+    }
+  } finally {
+    await context.close()
+    await browser.close()
   }
 }
 
@@ -1114,10 +1192,9 @@ export const captureCase = async ({ browser, requested, baseURL, caseId }) => {
         mediaMatches: forced.mediaMatches,
         adaptation: forced.adaptation,
         stableAdaptationSha256: sha256(JSON.stringify(forced.adaptation)),
-        nativeFocusObserved: keyboardTraversal.returnedToFirst === true &&
-          keyboardTraversal.exactOrder === true &&
-          keyboardTraversal.allVisitedFocusVisible === true &&
-          keyboardTraversal.cycleReturnFocusVisible === true
+        nativeFocusObserved: keyboardTraversal.forwardOrderObserved === true &&
+          keyboardTraversal.returnOrderObserved === true &&
+          keyboardTraversal.allObservedFocusVisible === true
       }
     } else if (requested.presentation === "zoom-400") {
       presentationEvidence = {
@@ -1208,10 +1285,10 @@ const applyConsumerState = async (page, consumer) => {
   }
   if (state === "focus-by-tab") {
     const traversal = await nativeKeyboardTraversal(page, "chromium")
-    if (!traversal.noTrap || !traversal.allVisitedFocusVisible || !traversal.cycleReturnFocusVisible) throw new Error("token focus observation could not complete an exact visibly focused Tab cycle")
+    if (!traversal.forwardOrderObserved || !traversal.returnOrderObserved || !traversal.allObservedFocusVisible) throw new Error("token focus observation could not complete the visibly focused native document-order round trip")
     for (let step = 0; step < traversal.expectedFocusableCount; step += 1) {
       if (await page.evaluate((candidate) => document.activeElement?.matches(candidate) === true, selector)) return
-      await page.keyboard.press("Tab")
+      if (step < traversal.expectedFocusableCount - 1) await page.keyboard.press("Tab")
     }
     throw new Error(`token focus observation could not reach ${selector} through native Tab order`)
   }
@@ -1522,7 +1599,8 @@ const invokedDirectly = process.argv[1] !== undefined && resolve(process.argv[1]
 if (invokedDirectly) {
   if (process.argv.length === 3 && process.argv[2] === "--self-test") {
     const attacks = runBrowserContractAdversarialTests()
-    process.stdout.write(`Browser evidence contract adversarial tests passed: ${attacks.join(", ")}.\n`)
+    const boundary = await runFinalControlForwardTabBoundarySelfTest()
+    process.stdout.write(`Browser evidence contract adversarial tests passed: ${attacks.join(", ")}. Synthetic keyboard boundary self-test passed: ${boundary.fixtureId} prevented ${boundary.preventedFinalForwardTabCount} out-of-contract forward Tab while the receipt kept that boundary unobserved.\n`)
   } else {
     const sourceArguments = process.argv.filter((argument) => argument.startsWith("--source-sha="))
     const portArguments = process.argv.filter((argument) => argument.startsWith("--port="))

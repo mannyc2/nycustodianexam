@@ -217,8 +217,8 @@
         "historicalFutureReviewInterfaceDisposition",
         "notHumanUsabilityTested",
         "requiredDependency",
-        "independence",
         "rubrics",
+        "reviewAccounting",
         "reviewRecordContract",
         "reviewRecords",
         "decisionRule",
@@ -238,7 +238,7 @@
             "activeContractPath": { "const": "plans/006-select-consumer-visual-system.md" },
             "mayPopulateReviewRecords": { "const": false },
             "maySelectOrPromote": { "const": false },
-            "reason": { "const": "arbitrary-agentTaskId-and-self-attested-independence-interface-superseded-by-exact-native-task-receipt-contract" },
+            "reason": { "const": "arbitrary-task-labels-and-self-attested-independence-interface-superseded-by-unauthenticated-local-correlation-contract" },
             "status": { "const": "superseded-non-executable" }
           }
         },
@@ -254,15 +254,17 @@
             "status": { "const": "awaiting-coordinator-supplied-exact-sha" }
           }
         },
-        "independence": {
+        "reviewAccounting": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["agentReviewsAreNotUserResearch", "agentsAreNonhumanEvidence", "distinctAgentTaskIdsRequired", "onePrimaryRubricPerAgentTaskId"],
+          "required": ["agentReviewsAreNotUserResearch", "agentsAreNonhumanEvidence", "crossOutputObservationStatus", "nativeSpawnBytesAvailability", "reviewUnit", "taskCorrelationEvidenceClass"],
           "properties": {
             "agentReviewsAreNotUserResearch": { "const": true },
             "agentsAreNonhumanEvidence": { "const": true },
-            "distinctAgentTaskIdsRequired": { "const": true },
-            "onePrimaryRubricPerAgentTaskId": { "const": true }
+            "crossOutputObservationStatus": { "const": "not-observable" },
+            "nativeSpawnBytesAvailability": { "const": "unavailable" },
+            "reviewUnit": { "const": "task-scoped-codex-review" },
+            "taskCorrelationEvidenceClass": { "const": "unauthenticated-local-correlation" }
           }
         },
         "rubrics": { "type": "array", "minItems": 3, "maxItems": 3, "items": { "$ref": "#/$defs/codexReviewRubric" } },
@@ -272,11 +274,11 @@
           "required": ["criterionClosureRule", "dissentFields", "evidenceCoordinateFields", "evidenceCoordinateFormat", "fixedFields", "requiredFields", "scoreMaximum", "scoreMinimum", "territoryIds", "territoryScoreFields"],
           "properties": {
             "criterionClosureRule": { "const": "each-rubric-criterion-scored-exactly-once-per-territory" },
-            "dissentFields": { "const": ["agentTaskId", "territoryId", "reason", "evidenceCoordinates"] },
+            "dissentFields": { "const": ["taskPath", "territoryId", "reason", "evidenceCoordinates"] },
             "evidenceCoordinateFields": { "const": ["path", "anchor", "claim"] },
             "evidenceCoordinateFormat": { "const": "repository-relative-path#stable-anchor-or-Lline" },
-            "fixedFields": { "const": { "crossReviewOutputsReadBeforeSubmission": false, "evidenceClass": "nonhuman-codex-review-not-user-research", "independentReview": true, "notHumanUsabilityTested": true } },
-            "requiredFields": { "const": ["agentTaskId", "rubricId", "sourceSha", "prototypeSha256", "evidenceClass", "notHumanUsabilityTested", "independentReview", "crossReviewOutputsReadBeforeSubmission", "reviewedAt", "territoryScores", "evidenceCoordinates", "consensusPosition", "dissent"] },
+            "fixedFields": { "const": { "crossOutputObservationStatus": "not-observable", "evidenceClass": "nonhuman-codex-review-not-user-research", "nativeSpawnBytesAvailability": "unavailable", "notHumanUsabilityTested": true, "taskCorrelationEvidenceClass": "unauthenticated-local-correlation" } },
+            "requiredFields": { "const": ["taskPath", "rubricId", "sourceSha", "prototypeSha256", "evidenceClass", "notHumanUsabilityTested", "taskCorrelationEvidenceClass", "nativeSpawnBytesAvailability", "crossOutputObservationStatus", "reviewedAt", "territoryScores", "evidenceCoordinates", "consensusPosition", "dissent"] },
             "scoreMaximum": { "const": 5 },
             "scoreMinimum": { "const": 1 },
             "territoryIds": { "const": ["A", "B", "C"] },
@@ -287,13 +289,13 @@
         "decisionRule": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["aggregation", "blockingFindingRule", "dissentRule", "minimumIndependentReviewCount", "requiredDistinctRubricCount", "selectionRule", "tieRule", "unresolvedDissentPreventsSelection"],
+          "required": ["aggregation", "blockingFindingRule", "dissentRule", "requiredDistinctRubricCount", "requiredTaskScopedCodexReviewCount", "selectionRule", "tieRule", "unresolvedDissentPreventsSelection"],
           "properties": {
             "aggregation": { "const": "sum-unweighted-criterion-scores-by-territory" },
             "blockingFindingRule": { "const": "any-blocking-finding-prevents-selection" },
             "dissentRule": { "const": "preserve-all-non-consensus-positions-and-evidence-coordinates" },
-            "minimumIndependentReviewCount": { "const": 3 },
             "requiredDistinctRubricCount": { "const": 3 },
+            "requiredTaskScopedCodexReviewCount": { "const": 3 },
             "selectionRule": { "const": "unique-highest-nonblocked-total" },
             "tieRule": { "const": "pending-no-selection" },
             "unresolvedDissentPreventsSelection": { "const": true }
@@ -302,11 +304,11 @@
         "consensus": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["dissent", "status", "supportingAgentTaskIds", "territoryId"],
+          "required": ["dissent", "status", "supportingTaskPaths", "territoryId"],
           "properties": {
             "dissent": { "type": "array", "maxItems": 0 },
             "status": { "const": "not-run-awaiting-exact-step-2-sha" },
-            "supportingAgentTaskIds": { "type": "array", "maxItems": 0 },
+            "supportingTaskPaths": { "type": "array", "maxItems": 0 },
             "territoryId": { "type": "null" }
           }
         }
@@ -551,13 +553,13 @@
         "selectionInputContract": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["minimumIndependentCodexReviews", "protocolId", "prototypeStatus", "requiredMergedStep2Sha", "requiredPrototypeSha256", "status"],
+          "required": ["protocolId", "prototypeStatus", "requiredMergedStep2Sha", "requiredPrototypeSha256", "requiredTaskScopedCodexReviewCount", "status"],
           "properties": {
-            "minimumIndependentCodexReviews": { "const": 3 },
             "protocolId": { "const": "CODEX-ONLY-UIUX-V1" },
             "prototypeStatus": { "const": "not-built" },
             "requiredMergedStep2Sha": { "type": "null" },
             "requiredPrototypeSha256": { "type": "null" },
+            "requiredTaskScopedCodexReviewCount": { "const": 3 },
             "status": { "const": "blocked-awaiting-exact-step-2-sha" }
           }
         },
@@ -600,7 +602,7 @@
         "humanReviewRequired",
         "notHumanUsabilityTested",
         "codexReviewCount",
-        "codexReviewTaskIds",
+        "codexReviewTaskPaths",
         "codexConsensusStatus",
         "advancingTerritoryIds",
         "finalistTerritoryIds",
@@ -618,7 +620,7 @@
         "humanReviewRequired": { "const": false },
         "notHumanUsabilityTested": { "const": true },
         "codexReviewCount": { "const": 0 },
-        "codexReviewTaskIds": { "type": "array", "maxItems": 0 },
+        "codexReviewTaskPaths": { "type": "array", "maxItems": 0 },
         "codexConsensusStatus": { "const": "not-run-awaiting-exact-step-2-sha" },
         "advancingTerritoryIds": { "type": "array", "maxItems": 0 },
         "finalistTerritoryIds": { "type": "array", "maxItems": 0 },
@@ -900,12 +902,12 @@
     "codexReviewRubric": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["agentTaskId", "criteria", "reviewStatus", "rubricId"],
+      "required": ["criteria", "reviewStatus", "rubricId", "taskPath"],
       "properties": {
-        "agentTaskId": { "type": "null" },
         "criteria": { "type": "array", "minItems": 5, "maxItems": 5, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
         "reviewStatus": { "const": "blocked-awaiting-exact-step-2-sha" },
-        "rubricId": { "enum": ["consumer-trust-anti-ai-slop", "accessibility-cognitive-load", "visual-component-coherence"] }
+        "rubricId": { "enum": ["consumer-trust-anti-ai-slop", "accessibility-cognitive-load", "visual-component-coherence"] },
+        "taskPath": { "type": "null" }
       }
     }
   }

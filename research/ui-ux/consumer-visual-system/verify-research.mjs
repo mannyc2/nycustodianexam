@@ -26,9 +26,9 @@ const RUBRIC_IDS = Object.freeze([
   "visual-component-coherence"
 ])
 const REVIEW_TASK_PATHS = Object.freeze({
-  "consumer-trust-anti-ai-slop": "/root/audit_lifecycle_precommit/review_consumer_trust_r4",
-  "accessibility-cognitive-load": "/root/audit_lifecycle_precommit/review_consumer_trust_r4/review_accessibility_r4",
-  "visual-component-coherence": "/root/audit_lifecycle_precommit/review_consumer_trust_r4/review_visual_coherence_r4"
+  "consumer-trust-anti-ai-slop": "/root/review_cohort_r5/review_consumer_trust_r5",
+  "accessibility-cognitive-load": "/root/review_cohort_r5/review_consumer_trust_r5/review_accessibility_r5",
+  "visual-component-coherence": "/root/review_cohort_r5/review_consumer_trust_r5/review_visual_coherence_r5"
 })
 const REVIEW_PROMPT_PATHS = Object.freeze(Object.fromEntries(RUBRIC_IDS.map((rubricId) => [rubricId, `${researchRoot}/review-prompts/${rubricId}.md`])))
 const REVIEW_OUTPUT_PATHS = Object.freeze({
@@ -36,23 +36,44 @@ const REVIEW_OUTPUT_PATHS = Object.freeze({
   "accessibility-cognitive-load": `${researchRoot}/reviews/accessibility-cognitive-load.json`,
   "visual-component-coherence": `${researchRoot}/reviews/visual-component-coherence.json`
 })
+const REJECTED_PRE_RECEIPT_SOURCE_SHAS = new Set([
+  "82d5be8a50fdafd38e5a34ffa965f48e3ea949cf",
+  "7712c8eef15f4f975ca78cfb88c763f391a5fb5a",
+  "a9aa490f493b50231304d541a1a1c73d2cf7db65",
+  "882e49bb9bbb9963b5b6497c88a87aa38b1fb0a9"
+])
 const REJECTED_REVIEW_SUBJECT_SHAS = new Set([
   "7fcc776e6941c7f41a504dda59ea59af88ba31fb",
   "f1a566f3eabb5bc972d75a555038e3b315a211a2",
-  "58275cab4ae1a22b148831ba454f994cc644cd31"
+  "58275cab4ae1a22b148831ba454f994cc644cd31",
+  "8a106b256e4a083d69dd90a0b5bac1fa42e1b70e"
 ])
-const REVIEW_AUDIT_PARENT_THREAD_ID = "01a04a64-3e78-72b2-8045-a25334d3f1be"
+const REJECTED_STEP3_EVIDENCE_SHAS = new Set([...REJECTED_PRE_RECEIPT_SOURCE_SHAS, ...REJECTED_REVIEW_SUBJECT_SHAS])
+const REVIEW_COHORT_THREAD_ID = "PENDING-FRESH-COHORT-THREAD-ID"
 const REJECTED_REVIEW_SESSION_UUIDS = new Set([
   "01a04a02-5ef1-79a3-b612-3179d9ee5fea",
   "01a04a02-b7b2-7fd2-aaea-3496b38b0393",
   "01a04a03-1263-7101-bdff-5ad2ff732ba4",
   "01a04a9e-6fcb-7b53-858d-5dc3a36c7f74",
   "01a04a9f-32bf-7b72-a6f1-2d014196c9a6",
-  "01a04aa8-e9da-7e60-a440-7cee636da6be"
+  "01a04aa8-e9da-7e60-a440-7cee636da6be",
+  "01a04ad2-bbdf-76a1-9f4b-f8ac8dc080d8",
+  "01a04ad3-d015-7fd1-b2d9-c68247fa85f9",
+  "01a04ad5-6300-7921-a627-0cd870dd6474"
 ])
-const RECEIPT_AUTHENTICATION_LIMITATION = "Local Codex state and rollout records are not cryptographic proof of task identity, timing, or cross-output non-observability; ordinary CI can validate only the committed receipt bytes and declared joins."
-const TRUST_LANE_ORCHESTRATION_INSTRUCTION = `Topology duty for this lane only: after the parent audit task has completed and freed its slot, call spawn_agent with leaf task_name=review_accessibility_r4 and leaf task_name=review_visual_coherence_r4, fork_turns=none, and their exact rendered task messages. Require the exposed returned canonical task paths to equal ${REVIEW_TASK_PATHS["accessibility-cognitive-load"]} and ${REVIEW_TASK_PATHS["visual-component-coherence"]}. Send only each exact exposed raw spawn response JSON to /root; do not request, read, or relay either child output. Then complete this trust review while both child lanes remain active.`
-const CHILD_LANE_RELEASE_INSTRUCTION = "Output barrier for this lane: analyze independently, but do not write or send the final JSON until /root sends the exact release token RELEASE_REVIEW_OUTPUT after the trust lane has completed. While waiting, do not request or read any other lane output."
+const REJECTED_REVIEW_COMPLETION_TURN_IDS = new Set([
+  "01a04a02-5f55-7c53-ac54-290f6fee9268",
+  "01a04a02-b7f7-7f41-bffe-74cf2bc32db4",
+  "01a04a03-12b1-75c1-b925-bd0bc673cadc",
+  "01a04a9e-7012-7ce2-81e3-3a9d9761b59a",
+  "01a04ab5-52b6-78a3-8e6a-f08bc4f99d55",
+  "01a04aa8-ea20-7a93-8c28-e6988137467c",
+  "01a04ad2-bc32-7430-b03f-74862f253e55",
+  "01a04ae2-ad01-7953-b86a-1be3d3e6319d",
+  "01a04ad5-633e-7de1-978b-43e7c101bddd"
+])
+const RECEIPT_AUTHENTICATION_LIMITATION = "Local Codex state and rollout records are not cryptographic proof of task identity, timing, or cross-output non-observability. Native spawn call/result bytes are unavailable from the retained source, and no caller-supplied spawn context is acceptance evidence; ordinary CI can validate only the committed receipt bytes and declared joins."
+const REVIEW_OPERATIONAL_INDEPENDENCE_INSTRUCTION = "Operational independence rule: complete this rubric without requesting or reading another lane's output. Available local task records do not expose the first output-sharing time, so this instruction is sequencing policy rather than proof of cross-output non-observability."
 const HISTORICAL_PREWORK_SHA = "74c6799fbcef587e44c5c5f3854258db516a9aaa"
 const RUBRIC_CRITERIA = Object.freeze({
   "consumer-trust-anti-ai-slop": [
@@ -159,10 +180,12 @@ const REPRESENTATIVE_COVERAGE_CONTRACT = Object.freeze({
 })
 const KEYBOARD_EVIDENCE_CONTRACT = Object.freeze({
   classification: "native-document-focus-order-round-trip",
-  forwardTraversal: "Native Tab visits every derived enabled rendered logical document focus stop exactly once in forward order and records the exact focused element coordinate.",
-  returnTraversal: "Native Shift+Tab visits the exact reverse logical document focus-stop order, records each exact engine-specific focused element coordinate, and returns to the first logical stop.",
+  forwardTraversal: "Native Tab visits every derived enabled, rendered, visible logical document focus stop in forward order through the last stop, recording each exact engine-specific focused element coordinate and visible focus observation.",
+  returnTraversal: "From the last stop, native Shift+Tab visits every preceding logical document focus stop in reverse order through the first stop, recording each exact engine-specific focused element coordinate and visible focus observation.",
   programmaticElementFocusUsed: false,
-  firefoxAutomationLimitation: "After the final document stop, Playwright Firefox sends forward focus to browser chrome but exposes document.activeElement as the last link indefinitely; 100 additional native Tab presses in both headless and headed Xvfb runs did not expose or re-enter that chrome path. Therefore this evidence does not claim an observable forward-Tab wrap in Firefox."
+  forwardTabFromFinalStopPerformed: false,
+  absenceOfForwardTabTrapAtFinalStopProved: false,
+  finalForwardTabLimitation: "No forward Tab is sent from the final document stop. The round trip does not observe browser chrome and does not prove the absence of a forward-Tab trap at the final control."
 })
 const PROTOTYPE_PATHS = Object.freeze([
   `${researchRoot}/prototype.css`,
@@ -311,7 +334,8 @@ const readText = (path) => decodeText(readBytes(path), path)
 // retains the fail-closed property needed by evidence and schema files.
 const parseJsonStrict = (text, path) => {
   let cursor = 0
-  const whitespace = () => { while (/\s/u.test(text[cursor] ?? "")) cursor += 1 }
+  const jsonWhitespace = new Set([" ", "\t", "\n", "\r"])
+  const whitespace = () => { while (jsonWhitespace.has(text[cursor])) cursor += 1 }
   const parseString = () => {
     const start = cursor
     assert(text[cursor] === '"', `${path}: JSON string expected at ${cursor}`)
@@ -561,7 +585,7 @@ const preReceiptSourcePaths = (sourceSha) => {
     for (const key of ["release_ledger_path", "phone_path", "print_path"]) paths.add(row[key])
     for (const key of ["review_coordinate", "gate_coordinate"]) paths.add(coordinateFilePath(row[key], `asset row ${index + 2} ${key}`))
     let rights
-    try { rights = JSON.parse(row.rights_coordinates_json) } catch { fail(`asset row ${index + 2}: rights coordinates JSON invalid`) }
+    try { rights = parseJsonStrict(row.rights_coordinates_json, `asset row ${index + 2}: rights coordinates JSON`) } catch { fail(`asset row ${index + 2}: rights coordinates JSON invalid`) }
     assert(Array.isArray(rights) && rights.length >= 1, `asset row ${index + 2}: rights coordinates required`)
     for (const coordinate of rights) paths.add(coordinateFilePath(coordinate, `asset row ${index + 2} rights`))
   }
@@ -984,11 +1008,11 @@ const validateBrowser = async (record, prototypeContext, receipt) => {
         assert(entry.logicalStopId.startsWith("radio-group:"), `${path}: canonical element: or radio-group: logical-stop ID required`)
         const encoded = entry.logicalStopId.slice("radio-group:".length)
         let tuple
-        try { tuple = JSON.parse(encoded) } catch { fail(`${path}: radio-group logical-stop tuple is not JSON`) }
+        try { tuple = parseJsonStrict(encoded, `${path}: radio-group logical-stop tuple`) } catch { fail(`${path}: radio-group logical-stop tuple is not strict JSON`) }
         assert(Array.isArray(tuple) && tuple.length === 2 && tuple.every((value) => typeof value === "string" && value.length > 0) && JSON.stringify(tuple) === encoded, `${path}: canonical [form-coordinate,name] radio-group logical-stop tuple required`)
       }
-      exactKeys(keyboard, ["performed", "mode", "expectedFocusableCount", "expectedOrder", "returnExpectedOrder", "stepCount", "tabPressCount", "cycleReturnLogicalStopId", "cycleReturnCoordinate", "cycleReturnFocusVisible", "returnedToFirst", "allStopsUnique", "exactOrder", "returnOrderExact", "noTrap", "allVisitedFocusVisible", "visited", "returnVisited"], `browser case ${browserCase.caseId}: screen keyboard traversal`)
-      assert(keyboard.performed === true && keyboard.mode === "native-Tab-forward-and-Shift-Tab-return-cycle", `browser case ${browserCase.caseId}: native keyboard traversal mode failure`)
+      exactKeys(keyboard, ["performed", "mode", "expectedFocusableCount", "expectedOrder", "returnExpectedOrder", "forwardTabPressCount", "returnShiftTabPressCount", "forwardTabFromFinalStopPerformed", "absenceOfForwardTabTrapAtFinalStopProved", "forwardOrderObserved", "returnOrderObserved", "allObservedFocusVisible", "visited", "returnVisited"], `browser case ${browserCase.caseId}: screen keyboard traversal`)
+      assert(keyboard.performed === true && keyboard.mode === "native-document-focus-order-round-trip", `browser case ${browserCase.caseId}: native document focus-order round-trip mode failure`)
       assert(Number.isInteger(keyboard.expectedFocusableCount) && keyboard.expectedFocusableCount >= 1, `browser case ${browserCase.caseId}: expected focusable count invalid`)
       for (const key of ["expectedOrder", "returnExpectedOrder"]) {
         assert(Array.isArray(keyboard[key]), `browser case ${browserCase.caseId}: ${key} array required`)
@@ -1011,7 +1035,8 @@ const validateBrowser = async (record, prototypeContext, receipt) => {
         assert(forwardStop !== undefined, `browser case ${browserCase.caseId}: return logical stop absent from forward closure`)
         if (forwardStop.coordinate !== returnStop.coordinate) assert(browserCase.browserProject === "webkit" && returnStop.logicalStopId.startsWith("radio-group:"), `browser case ${browserCase.caseId}: direction-specific element coordinate allowed only for a WebKit radio group`)
       }
-      assert(keyboard.stepCount === keyboard.expectedFocusableCount && keyboard.tabPressCount === 2 * keyboard.expectedFocusableCount - 1, `browser case ${browserCase.caseId}: keyboard step/keypress count drift`)
+      assert(keyboard.forwardTabPressCount === keyboard.expectedFocusableCount && keyboard.returnShiftTabPressCount === keyboard.expectedFocusableCount - 1, `browser case ${browserCase.caseId}: keyboard forward/return keypress count drift`)
+      assert(keyboard.forwardTabFromFinalStopPerformed === false && keyboard.absenceOfForwardTabTrapAtFinalStopProved === false, `browser case ${browserCase.caseId}: final-control forward-Tab boundary must remain explicitly unobserved`)
       for (const key of ["visited", "returnVisited"]) {
         assert(Array.isArray(keyboard[key]), `browser case ${browserCase.caseId}: ${key} array required`)
         for (const entry of keyboard[key]) {
@@ -1020,14 +1045,14 @@ const validateBrowser = async (record, prototypeContext, receipt) => {
           assert(entry.focusVisible === true, `browser case ${browserCase.caseId}: ${key} focus-visible receipt invalid`)
         }
       }
-      assert(keyboard.visited.length === keyboard.expectedFocusableCount && keyboard.returnVisited.length === keyboard.expectedFocusableCount - 1, `browser case ${browserCase.caseId}: full forward/return focus traversal required`)
+      assert(keyboard.visited.length === keyboard.expectedFocusableCount && keyboard.returnVisited.length === keyboard.expectedFocusableCount - 1, `browser case ${browserCase.caseId}: forward-through-last and reverse-to-first observations required`)
       const visitedOrder = keyboard.visited.map(({ logicalStopId, coordinate }) => ({ logicalStopId, coordinate }))
       const returnVisitedOrder = keyboard.returnVisited.map(({ logicalStopId, coordinate }) => ({ logicalStopId, coordinate }))
       assert(new Set(visitedOrder.map(({ logicalStopId }) => logicalStopId)).size === visitedOrder.length && new Set(visitedOrder.map(({ coordinate }) => coordinate)).size === visitedOrder.length, `browser case ${browserCase.caseId}: forward visited focus stops must be logically and physically unique`)
       assert(new Set(returnVisitedOrder.map(({ logicalStopId }) => logicalStopId)).size === returnVisitedOrder.length && new Set(returnVisitedOrder.map(({ coordinate }) => coordinate)).size === returnVisitedOrder.length, `browser case ${browserCase.caseId}: return visited focus stops must be logically and physically unique`)
       equal(visitedOrder, keyboard.expectedOrder, `browser case ${browserCase.caseId}: exact forward logical-stop/coordinate order`)
       equal(returnVisitedOrder, keyboard.returnExpectedOrder, `browser case ${browserCase.caseId}: exact return logical-stop/coordinate order`)
-      assert(keyboard.cycleReturnLogicalStopId === keyboard.expectedOrder[0].logicalStopId && keyboard.cycleReturnCoordinate === keyboard.returnExpectedOrder.at(-1)?.coordinate && keyboard.cycleReturnFocusVisible === true && keyboard.returnedToFirst === true && keyboard.allStopsUnique === true && keyboard.exactOrder === true && keyboard.returnOrderExact === true && keyboard.noTrap === true && keyboard.allVisitedFocusVisible === true, `browser case ${browserCase.caseId}: full-cycle logical-order/coordinate/trap/focus-visible proof failed`)
+      assert(keyboard.forwardOrderObserved === true && keyboard.returnOrderObserved === true && keyboard.allObservedFocusVisible === true, `browser case ${browserCase.caseId}: observed forward/return order and focus visibility proof failed`)
       assert(browserCase.actionTargetMinimumCssPx >= 44 && browserCase.printToolbarSuppressed === null && browserCase.printActionRowSuppressed === null && browserCase.printActionsSuppressed === null, `browser case ${browserCase.caseId}: screen target/print-observation contract failure`)
       assert(browserCase.printToolbarElementCount === null && browserCase.printActionRowElementCount === null && browserCase.printActionElementCount === null, `browser case ${browserCase.caseId}: screen print counts must be null`)
     }
@@ -1086,7 +1111,7 @@ const validateBrowser = async (record, prototypeContext, receipt) => {
   assert(forcedColorsCases.length === 3, "browser receipt requires exactly one forced-colors case per territory")
   const forcedColorsHashes = forcedColorsCases.map(({ presentationEvidence }) => presentationEvidence.stableAdaptationSha256)
   assert(new Set(forcedColorsHashes).size === 1 && receipt.suiteResult.forcedColorsStableAdaptationSha256 === forcedColorsHashes[0] && sha256Pattern.test(forcedColorsHashes[0]), "browser forced-colors adaptation hash must be stable across A/B/C")
-  equal(receipt.suiteResult.harnessAdversarialTests, ["missing-nonfocused-firefox-default-frame", "broken-nonfocused-firefox-default-frame", "keyboard-skipped-late-control", "keyboard-duplicate-or-trap", "keyboard-late-invisible-focus", "keyboard-wrong-order", "keyboard-retargeted-radio-member", "keyboard-logical-stop-drift", "keyboard-coherent-return-order-drift", "keyboard-element-coordinate-identity-drift", "keyboard-nonwebkit-radio-direction-drift", "keyboard-duplicate-logical-stop", "keyboard-cycle-logical-stop-drift", "keyboard-cycle-coordinate-drift", "unsuppressed-print-action", "zero-count-suppressed-print-action", "route-path-frame-drift", "repository-relative-url-drift", "fixture-request-path-drift", "viewport-width-drift", "semantic-signature-direct-text-erased", "large-text-root-ratio", "reduced-motion-not-matched", "forced-colors-adaptation-drift", "zoom-equivalence-drift", "moderate-axe-finding"], "browser harness adversarial receipts")
+  equal(receipt.suiteResult.harnessAdversarialTests, ["missing-nonfocused-firefox-default-frame", "broken-nonfocused-firefox-default-frame", "keyboard-skipped-late-control", "keyboard-skipped-return-to-first", "keyboard-duplicate-observed-stop", "keyboard-late-invisible-focus", "keyboard-return-first-invisible-focus", "keyboard-wrong-order", "keyboard-retargeted-radio-member", "keyboard-logical-stop-drift", "keyboard-coherent-return-order-drift", "keyboard-element-coordinate-identity-drift", "keyboard-nonwebkit-radio-direction-drift", "keyboard-duplicate-logical-stop", "keyboard-forward-tab-from-final-stop-claimed", "keyboard-final-control-boundary-overclaim", "unsuppressed-print-action", "zero-count-suppressed-print-action", "route-path-frame-drift", "repository-relative-url-drift", "fixture-request-path-drift", "viewport-width-drift", "semantic-signature-direct-text-erased", "large-text-root-ratio", "reduced-motion-not-matched", "forced-colors-adaptation-drift", "zoom-equivalence-drift", "moderate-axe-finding"], "browser harness adversarial receipts")
   equal(harness.runBrowserContractAdversarialTests(), receipt.suiteResult.harnessAdversarialTests, "browser live adversarial checks")
   const tokenEvidence = receipt.tokenEvidence
   exactKeys(tokenEvidence, ["observations", "computedAxes", "differentiation", "materialDifferentiationCount"], "browser token evidence")
@@ -1196,22 +1221,16 @@ const validatePromptTemplate = (text, rubricId, path) => {
     "rubricSha256={{RUBRIC_SHA256}}",
     "Evidence coordinates must use repository/path:L<positive-line>.",
     "Inspect all seven archetypes and every A/B/C frame in the representative 12-frame, 10-route comparison plus the committed browser special-presentation evidence; do not claim exhaustive legal-state coverage.",
-    "Keyboard evidence is a native document-focus-order round trip: forward Tab covers every derived enabled visible stop once, then Shift+Tab follows the exact reverse return order.",
-    "Firefox browser-chrome transition and forward re-entry are not observable through Playwright, so do not claim a forward-only wrap or programmatic-focus proof.",
+    "Keyboard evidence is a native document-focus-order round trip: forward Tab observes every derived enabled visible logical document stop in order through the final stop, then Shift+Tab observes the exact reverse order back to the first.",
+    "The capture does not press forward Tab from the final logical stop and therefore cannot prove the absence of a forward-Tab trap there. No browser-chrome transition or forward wrap is claimed.",
     "Do not write to the repository; read-only inspection and /tmp-only scratch work are allowed.",
     "Do not read or request another review lane's output before submitting your own result.",
     "Return exactly one JSON object and no Markdown fence.",
-    "The native completion message is hashed separately from the normalized committed review JSON."
+    "The completion message observed in the local rollout is hashed separately from the normalized committed review JSON."
   ]
   for (const literal of requiredLiterals) assert(text.split(literal).length === 2, `${path}: prompt-template literal must occur exactly once: ${literal}`)
   assert(text.split(REVIEW_COORDINATE_PATH_INSTRUCTION).length === 2, `${path}: exact evidence-coordinate path allowlist required once`)
-  if (rubricId === "consumer-trust-anti-ai-slop") {
-    assert(text.split(TRUST_LANE_ORCHESTRATION_INSTRUCTION).length === 2, `${path}: exact trust-lane spawn/non-observation instruction required once`)
-    assert(!text.includes(CHILD_LANE_RELEASE_INSTRUCTION), `${path}: trust lane must not carry the child output barrier`)
-  } else {
-    assert(text.split(CHILD_LANE_RELEASE_INSTRUCTION).length === 2, `${path}: exact child-lane root release barrier required once`)
-    assert(!text.includes(TRUST_LANE_ORCHESTRATION_INSTRUCTION), `${path}: child lane must not carry trust orchestration duty`)
-  }
+  assert(text.split(REVIEW_OPERATIONAL_INDEPENDENCE_INSTRUCTION).length === 2, `${path}: exact operational independence/non-observability instruction required once`)
   for (const criterionId of RUBRIC_CRITERIA[rubricId]) assert(text.split(criterionId).length === 2, `${path}: rubric criterion must occur exactly once: ${criterionId}`)
   for (const other of RUBRIC_IDS.filter((candidate) => candidate !== rubricId)) for (const criterionId of RUBRIC_CRITERIA[other]) assert(!text.includes(criterionId), `${path}: prompt template crosses into ${other} criterion ${criterionId}`)
   for (const key of REVIEW_OUTPUT_KEYS) assert(text.includes(`\`${key}\``), `${path}: exact review-output key contract omits ${key}`)
@@ -1298,8 +1317,6 @@ const validateTaskReceipts = (record, browserBytes, browserReceipt, loadedReview
   const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/u
   const trustTask = taskReceipt.tasks.find(({ rubricId }) => rubricId === "consumer-trust-anti-ai-slop")
   assert(trustTask !== undefined && uuidPattern.test(trustTask.safeReceipt?.sessionUuid), "trust-lane native session UUID absent")
-  const trustSessionUuid = trustTask.safeReceipt.sessionUuid
-  const trustCreatedAt = Number.parseInt(trustSessionUuid.replaceAll("-", "").slice(0, 12), 16)
   const safePayloadKeys = ["schemaVersion", "authenticationStatus", "authenticationLimitation", "taskPath", "sessionUuid", "parentThreadId", "provenanceClass", "threadSource", "originator", "depth", "taskStartEventTimestamp", "completionState", "completionEventTimestamp", "completionTurnId", "completionMessageSha256", "reportPath", "reportSha256", "repositoryCommit", "rawSpawn", "rawCompletion", "safeReceiptHashAlgorithm"]
   const rawKeys = ["source", "encoding", "byteLength", "sha256", "bytesBase64"]
   const decodeRaw = (raw, path, expectedSource) => {
@@ -1320,12 +1337,12 @@ const validateTaskReceipts = (record, browserBytes, browserReceipt, loadedReview
     assert(receipt.authenticationStatus === "unauthenticated-local-orchestration-summary" && receipt.authenticationLimitation === RECEIPT_AUTHENTICATION_LIMITATION, `safe receipt ${task.rubricId}: authentication boundary drift`)
     assert(REVIEW_TASK_PATHS[task.rubricId] === receipt.taskPath, `safe receipt ${task.rubricId}: exact native task path drift`)
     assert(uuidPattern.test(receipt.sessionUuid) && !REJECTED_REVIEW_SESSION_UUIDS.has(receipt.sessionUuid), `safe receipt ${task.rubricId}: invalid, old, or rejected session UUID`)
-    const isTrustLane = task.rubricId === "consumer-trust-anti-ai-slop"
-    const expectedParentThreadId = isTrustLane ? REVIEW_AUDIT_PARENT_THREAD_ID : trustSessionUuid
-    const expectedDepth = isTrustLane ? 2 : 3
-    assert(receipt.parentThreadId === expectedParentThreadId, `safe receipt ${task.rubricId}: fixed parent-thread topology drift`)
-    assert(receipt.provenanceClass === "native-codex-subagent-thread-spawn" && receipt.threadSource === "subagent" && typeof receipt.originator === "string" && /^[A-Za-z0-9][A-Za-z0-9 ._-]{0,63}$/u.test(receipt.originator) && receipt.depth === expectedDepth, `safe receipt ${task.rubricId}: provenance/depth drift`)
-    assert(receipt.completionState === "completed" && uuidPattern.test(receipt.completionTurnId), `safe receipt ${task.rubricId}: completion state/turn drift`)
+    const trustLane = task.rubricId === "consumer-trust-anti-ai-slop"
+    const expectedParentThreadId = trustLane ? REVIEW_COHORT_THREAD_ID : trustTask.safeReceipt.sessionUuid
+    const expectedDepth = trustLane ? 2 : 3
+    assert(receipt.parentThreadId === expectedParentThreadId, `safe receipt ${task.rubricId}: fixed fresh-cohort parent topology drift`)
+    assert(receipt.threadSource === "subagent" && typeof receipt.originator === "string" && /^[A-Za-z0-9][A-Za-z0-9 ._-]{0,63}$/u.test(receipt.originator) && receipt.depth === expectedDepth, `safe receipt ${task.rubricId}: provenance/depth drift`)
+    assert(receipt.completionState === "completed" && uuidPattern.test(receipt.completionTurnId) && !REJECTED_REVIEW_COMPLETION_TURN_IDS.has(receipt.completionTurnId), `safe receipt ${task.rubricId}: completion state/turn invalid, old, or rejected`)
     assert(receipt.repositoryCommit === record.reviews.reviewSubjectSha, `safe receipt ${task.rubricId}: retargeted repository commit`)
     const rawSpawnBytes = decodeRaw(receipt.rawSpawn, `safe receipt ${task.rubricId}.rawSpawn`, "caller-supplied-exposed-spawn-response")
     const rawCompletionBytes = decodeRaw(receipt.rawCompletion, `safe receipt ${task.rubricId}.rawCompletion`, "local-rollout-task_complete.last_agent_message")
@@ -1360,10 +1377,6 @@ const validateTaskReceipts = (record, browserBytes, browserReceipt, loadedReview
     assert(turnCreatedAt <= taskStartedAt && taskStartedAt - turnCreatedAt <= 1_000, `safe receipt ${task.rubricId}: turn/task-start triangulation invalid`)
     assert(taskStartedAt < completionAt, `safe receipt ${task.rubricId}: native task interval invalid`)
     assert(createdAt >= Date.parse(browserReceipt.completedAt), `safe receipt ${task.rubricId}: session predates browser evidence completion`)
-    if (!isTrustLane) {
-      assert(createdAt >= trustCreatedAt, `safe receipt ${task.rubricId}: child session predates trust parent session`)
-      assert(taskStartedAt >= Date.parse(trustTask.safeReceipt.taskStartEventTimestamp), `safe receipt ${task.rubricId}: child task start predates trust parent task start`)
-    }
     for (const literal of [
       `taskPath=${receipt.taskPath}`,
       `rubricId=${task.rubricId}`,
@@ -1384,11 +1397,7 @@ const validateTaskReceipts = (record, browserBytes, browserReceipt, loadedReview
   }
   const latestStart = Math.max(...taskReceipt.tasks.map(({ safeReceipt }) => Date.parse(safeReceipt.taskStartEventTimestamp)))
   const earliestCompletion = Math.min(...taskReceipt.tasks.map(({ safeReceipt }) => Date.parse(safeReceipt.completionEventTimestamp)))
-  assert(latestStart < earliestCompletion, "three observed Codex task intervals must have a nonempty common overlap")
-  const trustCompletion = Date.parse(trustTask.safeReceipt.completionEventTimestamp)
-  for (const task of taskReceipt.tasks.filter(({ rubricId }) => rubricId !== "consumer-trust-anti-ai-slop")) {
-    assert(trustCompletion <= Date.parse(task.safeReceipt.completionEventTimestamp), `safe receipt ${task.rubricId}: child completion must not predate trust-lane completion barrier`)
-  }
+  assert(latestStart < earliestCompletion, "three locally observed Codex task intervals must have a nonempty common overlap")
   return taskReceipt
 }
 const validateReviews = (record, browserBytes, browserReceipt, loadedReviews, taskReceipt, prompts) => {
@@ -1537,7 +1546,7 @@ const validateReportText = (record, report) => {
     `prototypeBundleSha256=${record.prototype.bundleSha256}`,
     `receiptAuthenticationLimitation=${RECEIPT_AUTHENTICATION_LIMITATION}`,
     `keyboardEvidenceClassification=${KEYBOARD_EVIDENCE_CONTRACT.classification}`,
-    `firefoxAutomationLimitation=${KEYBOARD_EVIDENCE_CONTRACT.firefoxAutomationLimitation}`,
+    `finalForwardTabLimitation=${KEYBOARD_EVIDENCE_CONTRACT.finalForwardTabLimitation}`,
     ...terminalCoverageLiterals(),
     ...Object.values(REVIEW_TASK_PATHS)
   ]) assert(report.includes(literal), `${reportPath}: terminal evidence literal absent: ${literal}`)
@@ -1551,7 +1560,7 @@ const validatePlanText = (record, plan) => {
     `prototypeBundleSha256=${record.prototype.bundleSha256}`,
     `receiptAuthenticationLimitation=${RECEIPT_AUTHENTICATION_LIMITATION}`,
     `keyboardEvidenceClassification=${KEYBOARD_EVIDENCE_CONTRACT.classification}`,
-    `firefoxAutomationLimitation=${KEYBOARD_EVIDENCE_CONTRACT.firefoxAutomationLimitation}`,
+    `finalForwardTabLimitation=${KEYBOARD_EVIDENCE_CONTRACT.finalForwardTabLimitation}`,
     ...terminalCoverageLiterals()
   ]) assert(plan.includes(literal), `plans/006-select-consumer-visual-system.md: terminal contract literal absent: ${literal}`)
   assertNoContradictoryClaimsOrPrivateData(plan, "plans/006-select-consumer-visual-system.md")
@@ -1639,6 +1648,20 @@ const validateCanonical = (record, prototypeContext, designSystemOverride = null
   assert(report.includes(`Territory ${selected}`), "research report selected territory drift")
 }
 
+const privateScanVariants = (text) => {
+  const variants = new Set([text])
+  let decoded = text
+  for (let pass = 0; pass < 4; pass += 1) {
+    const next = decoded
+      .replaceAll(/\\u([0-9a-fA-F]{4})/gu, (_, hexadecimal) => String.fromCodePoint(Number.parseInt(hexadecimal, 16)))
+      .replaceAll("\\/", "/")
+      .replaceAll("\\\\", "\\")
+    variants.add(next)
+    if (next === decoded) break
+    decoded = next
+  }
+  return [...variants]
+}
 const assertNoPrivateLocatorLiterals = (text, path) => {
   const locatorPatterns = [
     /(?:^|[\s"'`(])\/(?:home|Users|mnt|private\/var)\/[^\s"'`)]+/mu,
@@ -1646,22 +1669,47 @@ const assertNoPrivateLocatorLiterals = (text, path) => {
     /(?:^|[\s"'`(])\\\\[^\\\s]+\\[^\s"'`)]+/mu,
     /file:\/\/[^\s"'`)]+/iu
   ]
-  for (const pattern of locatorPatterns) assert(!pattern.test(text), `${path}: private host/device locator literal forbidden`)
-  for (const match of text.matchAll(/\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b/gu)) {
-    const octets = match[0].split(".").map(Number)
-    if (octets.every((value) => value <= 255)) assert(match[0].startsWith("127."), `${path}: non-loopback IPv4 value forbidden`)
+  for (const variant of privateScanVariants(text)) {
+    for (const pattern of locatorPatterns) assert(!pattern.test(variant), `${path}: private host/device locator literal forbidden`)
+    for (const match of variant.matchAll(/\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b/gu)) {
+      const octets = match[0].split(".").map(Number)
+      if (octets.every((value) => value <= 255)) assert(match[0].startsWith("127."), `${path}: non-loopback IPv4 value forbidden`)
+    }
   }
 }
 const assertNoPrivateData = (text, path) => {
   assertNoPrivateLocatorLiterals(text, path)
   const privatePatterns = [
     /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/iu,
-    /\b(?:phone|mobile|contactNumber)\s*[=:]\s*\+?[0-9() .-]{7,}/iu,
-    /\b(?:candidate|applicant)(?:[-_ ]?id)?\s*[=:]\s*[A-Za-z0-9_-]{3,}\b/iu,
-    /\b(?:contact|privateContact|locator|privateLocator|host(?:name)?|device(?:Id|Identifier|Name)?|machineId|serialNumber)\s*[=:]\s*(?!none\b|null\b|loopback\b)[^\s,;]+/iu,
-    /\b(?:serverUrl|baseUrl|networkOrigin)\s*[=:]\s*https?:\/\/(?!localhost(?::|\/)|127\.0\.0\.1(?::|\/)|\[::1\](?::|\/))[^\s"']+/iu
+    /\b(?:phone|mobile|contactNumber)["'`]?\s*[=:]\s*["'`]?\+?[0-9() .-]{7,}/iu,
+    /\b(?:candidate|applicant)(?:[-_ ]?id)?["'`]?\s*[=:]\s*["'`]?[A-Za-z0-9_-]{3,}\b/iu,
+    /\b(?:contact|privateContact|locator|privateLocator|host(?:name)?|device(?:Id|Identifier|Name)?|machineId|serialNumber)["'`]?\s*[=:]\s*["'`]?(?!none\b|null\b|loopback\b)[^\s,;]+/iu,
+    /\b(?:serverUrl|baseUrl|networkOrigin)["'`]?\s*[=:]\s*["'`]?https?:\/\/(?!localhost(?::|\/)|127\.0\.0\.1(?::|\/)|\[::1\](?::|\/))[^\s"']+/iu
   ]
-  for (const pattern of privatePatterns) assert(!pattern.test(text), `${path}: private contact/locator/identifier/host/device/network value forbidden`)
+  for (const variant of privateScanVariants(text)) for (const pattern of privatePatterns) assert(!pattern.test(variant), `${path}: private contact/locator/identifier/host/device/network value forbidden`)
+  const forbiddenKeys = new Set(["absolutepath", "applicantid", "baseurl", "candidateid", "contact", "contactid", "contactnumber", "cwd", "device", "deviceid", "deviceidentifier", "devicename", "email", "emailaddress", "homedir", "host", "hostname", "ipaddress", "locator", "macaddress", "machineid", "network", "networkorigin", "phone", "phonenumber", "privatecontact", "privatelocator", "privatepath", "rollout", "rolloutpath", "serialnumber", "serverurl", "socketaddress", "statedb", "username", "userhome", "workingdirectory"])
+  const scanStructured = (value, coordinate) => {
+    if (typeof value === "string") {
+      assertNoPrivateLocatorLiterals(value, coordinate)
+      for (const pattern of privatePatterns) assert(!pattern.test(value), `${coordinate}: private structured value forbidden`)
+      return
+    }
+    if (Array.isArray(value)) {
+      value.forEach((entry, index) => scanStructured(entry, `${coordinate}[${index}]`))
+      return
+    }
+    if (!isObject(value)) return
+    for (const [key, entry] of Object.entries(value)) {
+      const normalizedKey = key.toLowerCase().replaceAll(/[^a-z0-9]/gu, "")
+      assert(!forbiddenKeys.has(normalizedKey), `${coordinate}: private structured key ${JSON.stringify(key)} forbidden`)
+      scanStructured(entry, `${coordinate}.${key}`)
+    }
+  }
+  const trimmed = text.trim()
+  if ((trimmed.startsWith("{") && trimmed.endsWith("}")) || (trimmed.startsWith("[") && trimmed.endsWith("]"))) {
+    const parsed = parseJsonStrict(text, `${path}: strict private-data JSON scan`)
+    scanStructured(parsed, path)
+  }
 }
 const assertNoContradictoryClaimsOrPrivateData = (text, path) => {
   const forbiddenClaims = [
@@ -1766,9 +1814,10 @@ const assertSelectionNeutralSubjectText = (commit) => {
   }, commit)
 }
 const validatePreReceiptSourceCommit = (sourceSha, { requireHead = false } = {}) => {
-  assert(shaPattern.test(sourceSha) && !REJECTED_REVIEW_SUBJECT_SHAS.has(sourceSha), "pre-receipt source SHA invalid or rejected")
+  assert(shaPattern.test(sourceSha) && !REJECTED_STEP3_EVIDENCE_SHAS.has(sourceSha), "pre-receipt source SHA invalid or rejected")
   assert(gitSucceeds(["cat-file", "-e", `${sourceSha}^{commit}`]), "pre-receipt source commit unavailable")
-  assert(gitSucceeds(["merge-base", "--is-ancestor", STEP2_MERGE_SHA, sourceSha]), "pre-receipt source does not descend from accepted Step 2 merge")
+  const parentTokens = runGit(["rev-list", "--parents", "-n", "1", sourceSha]).trim().split(" ")
+  assert(parentTokens.length === 2 && parentTokens[1] === STEP2_MERGE_SHA, `pre-receipt source must be a direct child of accepted Step 2 merge ${STEP2_MERGE_SHA}`)
   if (requireHead) {
     assert(runGit(["rev-parse", "HEAD"]).trim() === sourceSha, "source phase requires HEAD equal the source SHA")
     validateCleanExactCommit()
@@ -1788,7 +1837,7 @@ const validatePreReceiptSourceCommit = (sourceSha, { requireHead = false } = {})
   return closure
 }
 const validateSubjectTopology = (subjectSha, browserReceipt, { requireHead = false } = {}) => {
-  assert(shaPattern.test(subjectSha) && !REJECTED_REVIEW_SUBJECT_SHAS.has(subjectSha), "review subject SHA invalid or rejected")
+  assert(shaPattern.test(subjectSha) && !REJECTED_STEP3_EVIDENCE_SHAS.has(subjectSha), "review subject SHA invalid or rejected")
   assert(gitSucceeds(["cat-file", "-e", `${subjectSha}^{commit}`]), "review subject commit unavailable")
   if (requireHead) {
     assert(runGit(["rev-parse", "HEAD"]).trim() === subjectSha, "subject phase requires HEAD equal review subject")
@@ -1979,6 +2028,24 @@ const expectReject = async (label, action) => {
 const runAdversarial = async ({ schemaBytes, schema, record, prototypeContext, assetRows, benchmarks, browserBytes, browserReceipt, browserContext, loadedReviews, taskReceipt, prompts }) => {
   const tests = []
   const reject = async (label, action) => { tests.push(label); await expectReject(label, action) }
+  for (const [label, text] of [
+    ["strict JSON duplicate key", '{"taskPath":"a","taskPath":"b"}'],
+    ["strict JSON decoded duplicate key", '{"taskPath":"a","ta\\u0073kPath":"b"}'],
+    ["strict JSON NBSP whitespace", '{"value":\u00a01}'],
+    ["strict JSON line-separator whitespace", '{"value":\u20281}'],
+    ["strict JSON BOM whitespace", '{"value":\ufeff1}'],
+    ["strict JSON vertical-tab whitespace", '{"value":\u000b1}'],
+    ["strict JSON form-feed whitespace", '{"value":\u000c1}'],
+    ["strict JSON nonfinite number", '{"value":1e9999}']
+  ]) await reject(label, () => parseJsonStrict(text, label))
+  equal(parseJsonStrict('{ \t\r\n"value" : 1 }', "strict JSON permitted whitespace"), { value: 1 }, "strict JSON permits only SP HT LF CR fixture")
+  for (const [label, text] of [
+    ["escaped private JSON key", '{"ho\\u0073t":"workstation-7"}'],
+    ["Unicode-escaped private JSON path", '{"result":"\\u002fhome\\u002fprivate\\u002fstate.json"}'],
+    ["slash-escaped private JSON path", '{"result":"\\/mnt\\/private\\/state.json"}'],
+    ["double-escaped private JSON path", '{"result":"\\\\u002fhome\\\\u002fprivate\\\\u002fstate.json"}'],
+    ["escaped non-loopback JSON network", '{"networkOrigin":"http:\\/\\/192.168.1.7:4173"}']
+  ]) await reject(label, () => assertNoContradictoryClaimsOrPrivateData(text, label))
   const schemaText = decoder.decode(schemaBytes)
   const schemaWeakening = [
     ["schema review-mode weakening", '"reviewMode": { "const": "codex-only" }', '"reviewMode": { "type": "string" }'],
@@ -2097,12 +2164,9 @@ const runAdversarial = async ({ schemaBytes, schema, record, prototypeContext, a
   }
   await reject("terminal report exhaustive legal-state overclaim", () => validateReportText(record, `${terminalReportText.trimEnd()}\n\nExhaustive legal-state validation passed.\n`))
   await reject("terminal report full-print overclaim", () => validateReportText(record, `${terminalReportText.trimEnd()}\n\nFull print coverage completed.\n`))
-  const trustPrompt = prompts.find(({ descriptor }) => descriptor.rubricId === "consumer-trust-anti-ai-slop")
-  const childPrompt = prompts.find(({ descriptor }) => descriptor.rubricId === "accessibility-cognitive-load")
-  assert(trustPrompt !== undefined && childPrompt !== undefined, "adversarial prompt topology fixtures absent")
-  await reject("trust prompt spawn/non-observation duty removed", () => validatePromptTemplate(trustPrompt.text.replace(TRUST_LANE_ORCHESTRATION_INSTRUCTION, "Topology omitted."), trustPrompt.descriptor.rubricId, trustPrompt.descriptor.path))
-  await reject("child prompt root release barrier removed", () => validatePromptTemplate(childPrompt.text.replace(CHILD_LANE_RELEASE_INSTRUCTION, "Barrier omitted."), childPrompt.descriptor.rubricId, childPrompt.descriptor.path))
-  await reject("child prompt given trust orchestration duty", () => validatePromptTemplate(`${childPrompt.text.trimEnd()}\n\n${TRUST_LANE_ORCHESTRATION_INSTRUCTION}\n`, childPrompt.descriptor.rubricId, childPrompt.descriptor.path))
+  const operationalPrompt = prompts.find(({ descriptor }) => descriptor.rubricId === "consumer-trust-anti-ai-slop")
+  assert(operationalPrompt !== undefined, "adversarial operational-independence prompt fixture absent")
+  await reject("prompt operational non-observability boundary removed", () => validatePromptTemplate(operationalPrompt.text.replace(REVIEW_OPERATIONAL_INDEPENDENCE_INSTRUCTION, "Operational boundary omitted."), operationalPrompt.descriptor.rubricId, operationalPrompt.descriptor.path))
 
   const fakeTaskReviews = clone(loadedReviews)
   for (const [index, fake] of ["/root/fake_a", "/root/fake_b", "/root/fake_c"].entries()) fakeTaskReviews[index].review.taskPath = fake
@@ -2113,19 +2177,9 @@ const runAdversarial = async ({ schemaBytes, schema, record, prototypeContext, a
   const totalDriftReviews = clone(loadedReviews)
   totalDriftReviews[0].review.territoryScores[0].total += 1
   await reject("review score total drift", () => validateReviews(record, browserBytes, browserReceipt, totalDriftReviews, taskReceipt, prompts))
-  for (const label of ["recommendation mismatch", "recommendation with blocker", "recommendation with dissent", "recommendation with unsupported lane", "recommendation with lane tie"]) {
-    const mutation = clone(loadedReviews)
-    mutation[0].review.recommendationTerritoryId = "A"
-    if (label.includes("blocker")) mutation[0].review.territoryScores[1].blockingFindings.push({ finding: "Adversarial recommendation blocker", evidenceCoordinates: [`${researchRoot}/prototype.html:L1`] })
-    if (label.includes("dissent")) mutation[0].review.dissent.push({ territoryId: "B", reason: "Adversarial recommendation dissent", evidenceCoordinates: [`${researchRoot}/prototype.html:L1`] })
-    if (label.includes("unsupported")) mutation[0].review.consensusPosition = "cannot-support-selection"
-    if (label.includes("tie")) {
-      const maximum = Math.max(...mutation[0].review.territoryScores.map(({ total }) => total))
-      mutation[0].review.territoryScores[0].total = maximum
-      mutation[0].review.territoryScores[1].total = maximum
-    }
-    await reject(label, () => validateReviews(record, browserBytes, browserReceipt, mutation, taskReceipt, prompts))
-  }
+  const recommendationFieldMutation = clone(loadedReviews)
+  recommendationFieldMutation[0].review.recommendationTerritoryId = "A"
+  await reject("review recommendation field is outside the closed contract", () => validateReviews(record, browserBytes, browserReceipt, recommendationFieldMutation, taskReceipt, prompts))
   const receiptDriftReviews = clone(loadedReviews)
   receiptDriftReviews[0].review.browserReceiptSha256 = "0".repeat(64)
   await reject("review browser receipt hash drift", () => validateReviews(record, browserBytes, browserReceipt, receiptDriftReviews, taskReceipt, prompts))
@@ -2192,16 +2246,16 @@ const runAdversarial = async ({ schemaBytes, schema, record, prototypeContext, a
   parentMutation.tasks[0].safeReceipt.parentThreadId = parentMutation.tasks[0].safeReceipt.sessionUuid
   recomputeSafeReceipt(parentMutation.tasks[0].safeReceipt)
   await reject("safe receipt parent lineage drift", () => validateTaskReceipts(record, browserBytes, browserReceipt, loadedReviews, parentMutation, prompts))
-  const childParentMutation = clone(taskReceipt)
-  const childParentTask = childParentMutation.tasks.find(({ rubricId }) => rubricId === "accessibility-cognitive-load")
-  childParentTask.safeReceipt.parentThreadId = REVIEW_AUDIT_PARENT_THREAD_ID
-  recomputeSafeReceipt(childParentTask.safeReceipt)
-  await reject("child receipt bypasses trust parent", () => validateTaskReceipts(record, browserBytes, browserReceipt, loadedReviews, childParentMutation, prompts))
+  const secondParentMutation = clone(taskReceipt)
+  const secondParentTask = secondParentMutation.tasks.find(({ rubricId }) => rubricId === "accessibility-cognitive-load")
+  secondParentTask.safeReceipt.parentThreadId = secondParentTask.safeReceipt.sessionUuid
+  recomputeSafeReceipt(secondParentTask.safeReceipt)
+  await reject("review receipt direct-parent drift", () => validateTaskReceipts(record, browserBytes, browserReceipt, loadedReviews, secondParentMutation, prompts))
   const depthMutation = clone(taskReceipt)
   const depthTask = depthMutation.tasks.find(({ rubricId }) => rubricId === "visual-component-coherence")
   depthTask.safeReceipt.depth = 2
   recomputeSafeReceipt(depthTask.safeReceipt)
-  await reject("child receipt depth drift", () => validateTaskReceipts(record, browserBytes, browserReceipt, loadedReviews, depthMutation, prompts))
+  await reject("review receipt depth drift", () => validateTaskReceipts(record, browserBytes, browserReceipt, loadedReviews, depthMutation, prompts))
   const safeDigestMutation = clone(taskReceipt)
   safeDigestMutation.tasks[0].safeReceipt.safeReceiptSha256 = "0".repeat(64)
   await reject("safe receipt digest drift", () => validateTaskReceipts(record, browserBytes, browserReceipt, loadedReviews, safeDigestMutation, prompts))
@@ -2231,16 +2285,6 @@ const runAdversarial = async ({ schemaBytes, schema, record, prototypeContext, a
   reversedTaskIntervalMutation.tasks[0].safeReceipt.taskStartEventTimestamp = reversedTaskIntervalMutation.tasks[0].safeReceipt.completionEventTimestamp
   recomputeSafeReceipt(reversedTaskIntervalMutation.tasks[0].safeReceipt)
   await reject("task start not before completion", () => validateTaskReceipts(record, browserBytes, browserReceipt, loadedReviews, reversedTaskIntervalMutation, prompts))
-  const selfTimestampMutation = clone(taskReceipt)
-  selfTimestampMutation.outputsFirstSharedAt = "2030-01-01T00:00:00.000Z"
-  await reject("self-authored output-share timestamp forbidden", () => validateTaskReceipts(record, browserBytes, browserReceipt, loadedReviews, selfTimestampMutation, prompts))
-  const prematureChildCompletionMutation = clone(taskReceipt)
-  const trustCompletion = Date.parse(prematureChildCompletionMutation.tasks.find(({ rubricId }) => rubricId === "consumer-trust-anti-ai-slop").safeReceipt.completionEventTimestamp)
-  const childTask = prematureChildCompletionMutation.tasks.find(({ rubricId }) => rubricId === "accessibility-cognitive-load")
-  childTask.safeReceipt.completionEventTimestamp = new Date(trustCompletion - 1).toISOString()
-  recomputeSafeReceipt(childTask.safeReceipt)
-  await reject("child completion before trust barrier", () => validateTaskReceipts(record, browserBytes, browserReceipt, loadedReviews, prematureChildCompletionMutation, prompts))
-
   const dissentReviews = clone(loadedReviews)
   dissentReviews[0].review.dissent.push({ territoryId: "A", reason: "Adversarial unresolved concern", evidenceCoordinates: [`${researchRoot}/prototype.html:L1`] })
   await reject("dissent hidden by selected decision", () => validateDecision(record, dissentReviews))
@@ -2284,28 +2328,32 @@ const runAdversarial = async ({ schemaBytes, schema, record, prototypeContext, a
   missingFirefoxReceipt.cases.splice(firefoxIndex, 1)
   await reject("missing nonfocused Firefox default frame", () => validateBrowser(record, prototypeContext, missingFirefoxReceipt))
   const brokenFirefoxReceipt = clone(browserReceipt)
-  brokenFirefoxReceipt.cases.find((entry) => entry.presentation === "default" && entry.browserProject === "firefox").keyboardTraversal.allVisitedFocusVisible = false
+  brokenFirefoxReceipt.cases.find((entry) => entry.presentation === "default" && entry.browserProject === "firefox").keyboardTraversal.allObservedFocusVisible = false
   await reject("broken nonfocused Firefox default frame", () => validateBrowser(record, prototypeContext, brokenFirefoxReceipt))
   const skippedLateControlReceipt = clone(browserReceipt)
   const skippedKeyboard = skippedLateControlReceipt.cases.find((entry) => entry.presentation === "default" && entry.browserProject === "firefox").keyboardTraversal
   skippedKeyboard.visited.pop()
   await reject("keyboard skipped late control", () => validateBrowser(record, prototypeContext, skippedLateControlReceipt))
-  const duplicateTrapReceipt = clone(browserReceipt)
-  const duplicateKeyboard = duplicateTrapReceipt.cases.find((entry) => entry.presentation === "default" && entry.browserProject === "firefox").keyboardTraversal
+  const duplicateStopReceipt = clone(browserReceipt)
+  const duplicateKeyboard = duplicateStopReceipt.cases.find((entry) => entry.presentation === "default" && entry.browserProject === "firefox").keyboardTraversal
   duplicateKeyboard.visited[duplicateKeyboard.visited.length - 1] = clone(duplicateKeyboard.visited[0])
-  duplicateKeyboard.allStopsUnique = false
-  duplicateKeyboard.noTrap = false
-  await reject("keyboard duplicate or trap", () => validateBrowser(record, prototypeContext, duplicateTrapReceipt))
+  duplicateKeyboard.forwardOrderObserved = false
+  await reject("keyboard duplicate logical stop", () => validateBrowser(record, prototypeContext, duplicateStopReceipt))
   const lateInvisibleReceipt = clone(browserReceipt)
   const invisibleKeyboard = lateInvisibleReceipt.cases.find((entry) => entry.presentation === "default" && entry.browserProject === "firefox").keyboardTraversal
   invisibleKeyboard.visited[invisibleKeyboard.visited.length - 1].focusVisible = false
-  invisibleKeyboard.allVisitedFocusVisible = false
+  invisibleKeyboard.allObservedFocusVisible = false
   await reject("keyboard late invisible focus", () => validateBrowser(record, prototypeContext, lateInvisibleReceipt))
   const wrongOrderReceipt = clone(browserReceipt)
   const wrongOrderKeyboard = wrongOrderReceipt.cases.find((entry) => entry.presentation === "default" && entry.browserProject === "firefox").keyboardTraversal
   ;[wrongOrderKeyboard.visited[0], wrongOrderKeyboard.visited[1]] = [wrongOrderKeyboard.visited[1], wrongOrderKeyboard.visited[0]]
-  wrongOrderKeyboard.exactOrder = false
+  wrongOrderKeyboard.forwardOrderObserved = false
   await reject("keyboard wrong order", () => validateBrowser(record, prototypeContext, wrongOrderReceipt))
+  const finalBoundaryOverclaimReceipt = clone(browserReceipt)
+  const finalBoundaryKeyboard = finalBoundaryOverclaimReceipt.cases.find((entry) => entry.presentation === "default" && entry.browserProject === "firefox").keyboardTraversal
+  finalBoundaryKeyboard.forwardTabFromFinalStopPerformed = true
+  finalBoundaryKeyboard.absenceOfForwardTabTrapAtFinalStopProved = true
+  await reject("keyboard final-control boundary overclaim", () => validateBrowser(record, prototypeContext, finalBoundaryOverclaimReceipt))
   const forgedReturnOrderReceipt = clone(browserReceipt)
   const forgedReturnKeyboard = forgedReturnOrderReceipt.cases.find((entry) => entry.presentation === "default" && entry.browserProject === "firefox").keyboardTraversal
   ;[forgedReturnKeyboard.returnExpectedOrder[0], forgedReturnKeyboard.returnExpectedOrder[1]] = [forgedReturnKeyboard.returnExpectedOrder[1], forgedReturnKeyboard.returnExpectedOrder[0]]
@@ -2341,12 +2389,6 @@ const runAdversarial = async ({ schemaBytes, schema, record, prototypeContext, a
   const nonWebkitDirectionalRadioReceipt = clone(browserReceipt)
   nonWebkitDirectionalRadioReceipt.cases.find(({ caseId }) => caseId === directionalRadioCase.caseId).browserProject = "firefox"
   await reject("keyboard non-WebKit direction-specific radio coordinate", () => validateBrowser(record, prototypeContext, nonWebkitDirectionalRadioReceipt))
-  const cycleLogicalDriftReceipt = clone(browserReceipt)
-  cycleLogicalDriftReceipt.cases.find((entry) => entry.presentation === "default" && entry.browserProject === "firefox").keyboardTraversal.cycleReturnLogicalStopId = "element:#drifted-cycle-stop"
-  await reject("keyboard cycle logical-stop drift", () => validateBrowser(record, prototypeContext, cycleLogicalDriftReceipt))
-  const cycleCoordinateDriftReceipt = clone(browserReceipt)
-  cycleCoordinateDriftReceipt.cases.find((entry) => entry.presentation === "default" && entry.browserProject === "firefox").keyboardTraversal.cycleReturnCoordinate = "#drifted-cycle-coordinate"
-  await reject("keyboard cycle coordinate drift", () => validateBrowser(record, prototypeContext, cycleCoordinateDriftReceipt))
   const coverageContractReceipt = clone(browserReceipt)
   coverageContractReceipt.coverageContract.deferredHazardVariants.pop()
   await reject("browser representative coverage contract weakening", () => validateBrowser(record, prototypeContext, coverageContractReceipt))
@@ -2455,8 +2497,14 @@ const runAdversarial = async ({ schemaBytes, schema, record, prototypeContext, a
 
   await reject("non-direct review-subject parent", () => assertReceiptOnlyDirectChildFacts(["subject", record.prototype.comparisonSourceSha, STEP2_MERGE_SHA], record.prototype.comparisonSourceSha, [{ status: "A", path: `${researchRoot}/browser-receipt.json` }], "adversarial subject"))
   await reject("extra source-to-subject diff", () => assertReceiptOnlyDirectChildFacts(["subject", record.prototype.comparisonSourceSha], record.prototype.comparisonSourceSha, [{ status: "A", path: `${researchRoot}/browser-receipt.json` }, { status: "M", path: `${researchRoot}/prototype.css` }], "adversarial subject"))
-  await reject("rejected r3 subject cannot become a new source", () => validatePreReceiptSourceCommit("58275cab4ae1a22b148831ba454f994cc644cd31"))
-  await reject("rejected r3 subject cannot be reviewed again", () => validateSubjectTopology("58275cab4ae1a22b148831ba454f994cc644cd31", browserReceipt))
+  for (const rejectedSha of REJECTED_PRE_RECEIPT_SOURCE_SHAS) {
+    await reject(`rejected source cannot be reused as source ${rejectedSha}`, () => validatePreReceiptSourceCommit(rejectedSha))
+    await reject(`rejected source cannot be role-swapped as subject ${rejectedSha}`, () => validateSubjectTopology(rejectedSha, browserReceipt))
+  }
+  for (const rejectedSha of REJECTED_REVIEW_SUBJECT_SHAS) {
+    await reject(`rejected subject cannot be role-swapped as source ${rejectedSha}`, () => validatePreReceiptSourceCommit(rejectedSha))
+    await reject(`rejected subject cannot be reviewed again ${rejectedSha}`, () => validateSubjectTopology(rejectedSha, browserReceipt))
+  }
   for (const [label, path] of [
     ["source already contains browser receipt", `${researchRoot}/browser-receipt.json`],
     ["source already contains evidence manifest", manifestPath],
