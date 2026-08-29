@@ -17,9 +17,9 @@
   "liveEnvironmentChangeAuthorization": "separate-required",
   "reviewCycleStatus": "prior-cycle-invalidated",
   "priorReviewReceiptsReusable": false,
-  "rejectedReviewHeadSha": "8fc6255e5b115cbf7733f5d663328ec1c8a146d3",
-  "reviewSubjectBaseSha": "15b625cfe8e3cde74a91cfe824b9c270d6a08f37",
+  "reviewSubjectBaseSha": "d823e928b0b57f589fd1c64a85db4ae0f6d2f0d1",
   "authorizationInterface": "CODEX-ONLY-UIUX-V1",
+  "reviewMode": "codex-only",
   "observedAtSha": "d823e928b0b57f589fd1c64a85db4ae0f6d2f0d1"
 }
 PLAN_009_METADATA_END -->
@@ -30,9 +30,15 @@ This packet is provisional prework only. It is not a final migration plan, an
 accepted upstream decision, implementation authorization, or production
 authorization.
 
+Checkpoint note (2026-08-29): the semantic-gate repair was interrupted before
+its self-test passed. A fresh checkpoint run still falsely classified a safe
+delayed-settings-load recovery fixture as an affirmative rollback claim. The
+current validator therefore remains development material and supplies no
+acceptance evidence.
+
 The metadata block above is the sole authorization and human-evidence status
 channel for this Markdown artifact. `CODEX-ONLY-UIUX-V1` applies only to UI/UX
-research, review, selection, decision, and plan sign-off: exact repository-
+research, review, selection, decision, and plan governance: exact repository-
 attested decisions, independent Codex subagent reviews, and CI certification.
 It does not replace, satisfy, or bypass the live GitHub production Environment
 control. The current index marks Plans 004 and 005 `DONE` under the Codex-only
@@ -174,7 +180,7 @@ curated content + accepted visual ledgers
 ### Tests, offline, print, and release
 
 - Root `bun run verify` covers the exact toolchain, maintained layout, module
-  boundaries, blocked/certified release record, visual hashes, content build,
+  boundaries, release-record state validation, visual hashes, content build,
   workspace and browser-harness typechecks, unit tests, site build, and artifact
   verification.
 - Playwright exercises Chromium, Firefox, and WebKit. Failure screenshots and
@@ -267,11 +273,11 @@ and production authorization.
 
 ## Dependency and decision slots
 
-All coordinates are `null` in this draft. Planning and decision values may be
-adopted only from accepted artifacts merged into the final plan's exact
+All coordinates are `null` in this draft. Planning and decision values must
+come only from accepted artifacts merged into the final plan's exact
 `origin/main` base. The production-authorization slot is different: it remains
-`null` when Plan 009 graduates because its evidence can exist only after the
-implemented candidate is merged, previewed, and certified.
+`null` during Plan 009 graduation. Candidate-bound production evidence belongs
+to a later, separately controlled technical process.
 
 | Slot | Canonical consumer | Current value | Required disposition before graduation or release use |
 |---|---|---:|---|
@@ -307,12 +313,20 @@ declare that mapping after it lands.
 Final review records use a two-commit evidence boundary. The repaired packet is
 first committed as an immutable review subject with an empty ledger. Each
 independent result must then name its task and occurrence IDs, review kind,
-subject/base commits, all three exact packet Git blob hashes, finding IDs and
-summary, evidence paths, disposition, consensus/dissent, and canonical record
-SHA-256. A second attestation-only commit may populate only the JSON ledger and
-the delimited review-record block in this plan. The validator must remain
-byte-identical to the reviewed subject and rejects every other post-review
-change.
+subject/base commits, all three exact packet Git blob hashes, and full-file byte
+intervals. It must also preserve the native allocation prompt, spawn receipt,
+allocation result, review rubric, exact follow-up prompt, and returned one-line
+result as canonical UTF-8 byte envelopes with lengths, SHA-256 digests, and
+base64 bytes. Finding IDs and summaries, evidence paths, disposition,
+consensus/dissent, and the canonical record SHA-256 remain bound to those native
+bytes. A self-authored task name or an unkeyed hash is not task proof. A second
+attestation-only commit may populate only the JSON ledger and the delimited
+review-record block in this plan. The validator must remain byte-identical to
+the reviewed subject and rejects every other post-review change.
+
+Every receipt produced for an earlier rejected review subject is invalid and
+cannot populate this ledger. The validator pins new task/occurrence identities,
+rejects both earlier subject commits, and requires another empty-ledger subject.
 
 <!-- PLAN_009_CODEX_REVIEW_RECORDS_START -->
 The current immutable-subject independent Codex reviews are pending. This block
@@ -386,8 +400,8 @@ durable-state behavior, privacy/analytics impact, cleanup condition, tests, and
 rollback semantics before implementation. A generic flag framework is not a
 specified fallback.
 
-Rollback eligibility is global and cannot be weakened by a tranche-local
-presentation boundary. Direct revert is permitted only for the current
+Tranche-local presentation boundaries cannot weaken the global dependency-
+closure rule. Direct revert is permitted only for the current
 unmerged tip or a dependency-closed suffix. Any earlier or nonclosed recovery
 requires a forward fix, full rebuild, inactive preview, and recertification.
 Atomic file groups below identify what must move together; they do not make an
@@ -397,7 +411,8 @@ earlier tranche, arbitrary range, or isolated presentation subset revertible.
 
 The following order is derived only from current dependency topology. Its IDs
 are provisional aliases. The accepted UI-foundations migration map and Step 5
-conditions must replace or explicitly ratify it after rebase.
+conditions must replace it or record an explicit repository disposition after
+rebase.
 
 ```text
 1 characterize
@@ -407,7 +422,7 @@ conditions must replace or explicitly ratify it after rebase.
   -> 5 question and review
   -> 6 hazard and simulation
   -> 7 local data, offline, correction, status, and print
-  -> 8 remove legacy projections and certify one closed candidate
+  -> 8 remove legacy projections and run candidate-bound closure
 ```
 
 ### Tranche 1: Characterize current behavior and close confounders
@@ -444,8 +459,8 @@ resolve in its own slice:
    and
 4. `apps/site/src/settings/react/settings.tsx`, which initializes default
    preferences with `busy=false`, begins the authoritative IndexedDB load
-   asynchronously, persists the current React projection, and leaves preference
-   controls plus Save active before restoration resolves. Require an explicit
+   asynchronously, persists the current React projection, and has no restoring-
+   state condition on preference controls or Save. Require an explicit
    restoring state and disable every preference control and Save until
    authoritative load or a visible handled failure completes.
 
@@ -601,10 +616,11 @@ authoritative persistence succeeds before any feedback read/reveal; retry is
 idempotent; practice and review use explicit correct variants; precommit output
 remains answer-free.
 
-**Review slice:** Make validated route/state identity select the accepted named
-composition. Keep renderer-neutral controllers and persistence unchanged unless
-a separate repository-attested correctness slice proves a necessary change. Static
-fallback and island semantics migrate together.
+**Review slice:** After the named composition dependency is repository-attested,
+make validated route/state identity project only that bound composition. Keep
+renderer-neutral controllers and persistence unchanged unless a separate
+repository-attested correctness slice proves a necessary change. Static fallback
+and island semantics migrate together.
 
 **Verification:** Commit failure/success/reconciliation; duplicate prevention;
 practice/review variant identity; DOM/accessibility-tree/chunk/source-map/cache
@@ -713,7 +729,7 @@ presented as empty, failed updates displacing the active pack, correction intake
 or remote collection becoming active, print clipping or key leakage, incomplete
 Codex technical print evidence, or null contract slots.
 
-### Tranche 8: Remove obsolete projections and certify one closed candidate
+### Tranche 8: Remove obsolete projections and run candidate-bound closure
 
 **Contract slots:** Every accepted Step 02–05 repository-attestation coordinate,
 the exact Step 04 inventory commit, every integrated-validation condition and disposition, and
@@ -749,7 +765,7 @@ service-worker/offline/update/cache rollover; no-JavaScript static closure;
 visual regression against accepted baselines; Codex-executed
 assistive-technology matrix; true
 400% zoom; Letter/A4 normal/large and grayscale physical print; canonical-host
-preview checks; certification validator; inventory reconciliation; and clean
+preview checks; release-closure validator; inventory reconciliation; and clean
 Git diff.
 
 **Rollback boundary:** Direct revert is permitted only for the current unmerged
@@ -903,7 +919,7 @@ consent, retention, deletion, redaction, network/offline behavior, security,
 accessibility, owner, and shutdown path before implementation.
 
 Rollout remains source/commit based, with branch-complete gates separated from
-merged-main certification:
+the merged-main closure run:
 
 1. review hard-cut tranche commits without production traffic;
 2. pass every branch-complete automated, inventory, and review gate;
@@ -918,7 +934,7 @@ There is no documented instant rollback workflow. Direct revert remains limited
 to the current unmerged tip or a dependency-closed suffix. Every earlier or
 nonclosed recovery uses a forward fix, full rebuild, inactive preview, and
 recertification. Platform version switching cannot bypass source dependency
-closure or compatibility with already-activated service-worker caches and
+closure or compatibility with existing service-worker caches and
 durable state.
 
 ## Ownership slots
@@ -953,13 +969,13 @@ control and is not UI/UX evidence.
 | Static/island parity | Shared classes and fallback/island markup can diverge | Migrate both representations in one tranche and test accessibility-tree parity | Global eligibility rule; static fallback and island presentation remain one atomic closure |
 | Runtime ownership | Multiple islands can dispose shared runtime state incorrectly | One documented document-root owner and lifecycle characterization | Global eligibility rule; no per-island runtime fallback or isolated presentation recovery |
 | Answer boundary | Hidden copy/assets/chunks/caches can reveal answers | Full DOM/chunk/source-map/filename/precache scan every tranche | Global eligibility rule plus a fresh answer-leak closure before candidate reuse |
-| IndexedDB | Forward schema change can make old code unsafe | No schema change by default; separate migration and compatibility proof | Forward fix unless the global direct-revert rule and backward-read proof both hold |
+| IndexedDB | Forward schema change can make old code unsafe | No schema change by default; separate migration and compatibility proof | Forward fix unless direct revert targets the current unmerged tip or a dependency-closed suffix and backward-read proof holds |
 | Service worker | New shell/cache activation can strand mixed clients | Active-client update tests and exact cache closure | Global eligibility rule plus cache compatibility and a complete rebuilt closure |
 | Offline pack | Route/asset change alters required navigation and receipts | Recompute descriptor/finalizer closure and prove old active pack survival | Preserve the prior active pack; use the global recovery rule for source changes |
 | Bundle size | Settings has six bytes gzip headroom | Per-tranche closure measurement; no speculative dependency | Global eligibility rule; otherwise remove excess through a forward fix and recertify |
 | Accessibility | Visual success can hide semantic/focus/AT regressions | Automated semantic gates plus Codex-executed exact-candidate matrix | Global eligibility rule; every recovery requires fresh affected accessibility evidence |
 | Print | Screen redesign can clip or mix keys into blank packets | Deterministic and physical Letter/A4/grayscale checks | Global eligibility rule; print projection and durable job/content identity remain atomic |
-| Release | No tested instant production rollback exists | Inactive preview, state/cache-compatible rehearsal, protected technical controls | Direct revert only under the global eligibility rule; otherwise mandatory forward-fix sequence |
+| Release | No tested instant production rollback exists | Inactive preview, state/cache-compatible rehearsal, protected technical controls | Apply the global rollback contract above; otherwise mandatory forward-fix sequence |
 
 ## Explicit production stop conditions
 

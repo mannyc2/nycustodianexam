@@ -15,9 +15,9 @@
   "liveEnvironmentChangeAuthorization": "separate-required",
   "reviewCycleStatus": "prior-cycle-invalidated",
   "priorReviewReceiptsReusable": false,
-  "rejectedReviewHeadSha": "8fc6255e5b115cbf7733f5d663328ec1c8a146d3",
-  "reviewSubjectBaseSha": "15b625cfe8e3cde74a91cfe824b9c270d6a08f37",
+  "reviewSubjectBaseSha": "d823e928b0b57f589fd1c64a85db4ae0f6d2f0d1",
   "authorizationInterface": "CODEX-ONLY-UIUX-V1",
+  "reviewMode": "codex-only",
   "observedAtSha": "d823e928b0b57f589fd1c64a85db4ae0f6d2f0d1"
 }
 PLAN_009_METADATA_END */
@@ -31,8 +31,87 @@ import { fileURLToPath } from "node:url"
 const repositoryRoot = fileURLToPath(new URL("../", import.meta.url))
 const observedAtSha = "d823e928b0b57f589fd1c64a85db4ae0f6d2f0d1"
 const historicalBaselineCiHeadSha = "9fc7dcacfc961752e5d9a2cedbc426deead54a05"
-const rejectedReviewHeadSha = "8fc6255e5b115cbf7733f5d663328ec1c8a146d3"
-const reviewSubjectBaseSha = "15b625cfe8e3cde74a91cfe824b9c270d6a08f37"
+/* PLAN_009_INVALIDATED_REVIEW_PROVENANCE_START */
+const invalidatedReviewProvenanceRegistry = Object.freeze({
+  subjectShas: Object.freeze([
+    "8fc6255e5b115cbf7733f5d663328ec1c8a146d3",
+    "8434567348b73004c84389bcb89a8848d5e1d84a",
+    "cd9920b6b3f14824919429858a65c8810a7b5638",
+    "15b625cfe8e3cde74a91cfe824b9c270d6a08f37"
+  ]),
+  packetBlobShas: Object.freeze([
+    "52b0c45f52e092e47854c33021d74a1f5e9a08b0",
+    "57497e26a5f76902544cc716b9bddb490d8fd53c",
+    "6e0ffe501e7a2363dbabca501c81006078afe6e5",
+    "1ee479603b06884280a457c268137faff81206cc",
+    "4cad8b94158e18b87633d38d6e7656bdce37fc98"
+  ]),
+  taskIds: Object.freeze([
+    "/root/auth_rollback_final_review",
+    "/root/topology_state_dependency_final_review",
+    "/root/validator_final_review",
+    "/root/auth_rollback_semantic_final_review",
+    "/root/topology_state_dependency_semantic_final_review",
+    "/root/validator_semantic_final_review",
+    "/root/auth_rollback_semantic_class_final_review",
+    "/root/topology_state_dependency_semantic_class_final_review",
+    "/root/validator_semantic_class_final_review",
+    "/root/p009_exact_subject_review_a4",
+    "/root/p009_exact_subject_review_b4",
+    "/root/p009_exact_subject_review_c4",
+    "/root/p009_exact_subject_review_a5",
+    "/root/p009_exact_subject_review_b5",
+    "/root/p009_exact_subject_review_c5",
+    "/root/p009_precommit_provenance_topology_audit_v8",
+    "/root/p009_precommit_rollback_state_audit_v8",
+    "/root/p009_precommit_semantic_audit_v8",
+    "/root/p009_semantic_repair_audit_v9",
+    "/root/p009_rollback_settings_repair_v9",
+    "/root/p009_precommit_semantic_audit_v9",
+    "/root/p009_precommit_rollback_state_v9",
+    "/root/p009_precommit_topology_provenance_v9",
+    "/root/p009_exact_subject_review_a6",
+    "/root/p009_exact_subject_review_b6",
+    "/root/p009_exact_subject_review_c6",
+    "/root/p009_worktree_rollback_design_v10",
+    "/root/p009_worktree_settings_design_v10"
+  ]),
+  reviewOccurrenceIds: Object.freeze([
+    "codex-only-uiux-v1-auth-rollback-rereview",
+    "codex-only-uiux-v1-topology-state-dependency-rereview",
+    "codex-only-uiux-v1-validator-rereview",
+    "codex-only-uiux-v1-auth-rollback-semantic-rereview",
+    "codex-only-uiux-v1-topology-state-dependency-semantic-rereview",
+    "codex-only-uiux-v1-validator-semantic-rereview",
+    "codex-only-uiux-v1-auth-rollback-semantic-class-rereview-v2",
+    "codex-only-uiux-v1-topology-state-dependency-semantic-class-rereview-v2",
+    "codex-only-uiux-v1-validator-semantic-class-rereview-v2",
+    "p009-exact-subject-review-a4",
+    "p009-exact-subject-review-b4",
+    "p009-exact-subject-review-c4",
+    "p009-exact-subject-review-a5",
+    "p009-exact-subject-review-b5",
+    "p009-exact-subject-review-c5",
+    "p009-precommit-provenance-topology-audit-v8",
+    "p009-precommit-rollback-state-audit-v8",
+    "p009-precommit-semantic-audit-v8",
+    "p009-semantic-repair-audit-v9",
+    "p009-rollback-settings-repair-v9",
+    "p009-precommit-semantic-audit-v9",
+    "p009-precommit-rollback-state-v9",
+    "p009-precommit-topology-provenance-v9",
+    "p009-exact-subject-review-a6",
+    "p009-exact-subject-review-b6",
+    "p009-exact-subject-review-c6",
+    "p009-worktree-rollback-design-v10",
+    "p009-worktree-settings-design-v10"
+  ])
+})
+/* PLAN_009_INVALIDATED_REVIEW_PROVENANCE_END */
+const invalidatedReviewProvenanceRegistrySha256 = "ae051a733484896d0186738850928f145eb6564ea521ac08c07260cfe34809c5"
+const invalidatedReviewProvenanceRegistrySourceSha256 = "0e5fa764be1c4802c932d5abc2d8156d6bab00a899fc611d4771a1a38f89c8a4"
+const invalidatedReviewSubjectShas = invalidatedReviewProvenanceRegistry.subjectShas
+const reviewSubjectBaseSha = "d823e928b0b57f589fd1c64a85db4ae0f6d2f0d1"
 const planPath = "plans/009-consumer-ui-migration-plan.draft.md"
 const mapPath = "plans/009-consumer-ui-current-file-map.json"
 const validatorPath = "plans/validate-009-migration-draft.mjs"
@@ -55,9 +134,9 @@ const requiredMetadata = Object.freeze({
   liveEnvironmentChangeAuthorization: "separate-required",
   reviewCycleStatus: "prior-cycle-invalidated",
   priorReviewReceiptsReusable: false,
-  rejectedReviewHeadSha,
   reviewSubjectBaseSha,
   authorizationInterface: "CODEX-ONLY-UIUX-V1",
+  reviewMode: "codex-only",
   observedAtSha
 })
 
@@ -181,21 +260,32 @@ const expectedOriginUrl = "https://github.com/mannyc2/nycustodianexam"
 
 let activeCodexReviewEntries = Object.freeze([])
 
+const nativeAllocationPromptUtf8 = "Allocation-only native Codex task receipt for a future exact-subject review. Do not inspect the repository, do not review any bytes, do not edit, commit, push, merge, deploy, contact humans, or claim a disposition. Reply only with: ALLOCATED-PENDING-EXACT-SUBJECT. Await a later follow-up containing the immutable subject, exact rubric, packet blobs, and byte intervals."
+
 const requiredCodexReviewTasks = Object.freeze([
   Object.freeze({
-    taskId: "/root/auth_rollback_semantic_final_review",
-    reviewOccurrenceId: "codex-only-uiux-v1-auth-rollback-semantic-rereview",
-    reviewKind: "authorization-and-rollback-review"
+    taskId: "/root/p009_exact_subject_review_a7",
+    reviewOccurrenceId: "p009-exact-subject-review-a7",
+    reviewKind: "authorization-and-rollback-review",
+    rubricId: "p009-auth-rollback-semantic-rubric-v4",
+    reviewRubricUtf8: "Independently audit the exact subject for free-form production/release authorization, human-study evidence, approval/pass/selection claims, Unicode or path masking, live User-reviewer gate contradictions, and every noncanonical rollback action. Exercise Markdown, decoded-map, and nested review-result surfaces. Report every blocker with a stable finding ID and exact path/line evidence. Return no hidden reasoning and no production authorization.",
+    nativeAllocationResultUtf8: "ALLOCATED-PENDING-EXACT-SUBJECT."
   }),
   Object.freeze({
-    taskId: "/root/topology_state_dependency_semantic_final_review",
-    reviewOccurrenceId: "codex-only-uiux-v1-topology-state-dependency-semantic-rereview",
-    reviewKind: "topology-state-and-dependency-review"
+    taskId: "/root/p009_exact_subject_review_b7",
+    reviewOccurrenceId: "p009-exact-subject-review-b7",
+    reviewKind: "topology-state-and-dependency-review",
+    rubricId: "p009-topology-state-provenance-rubric-v4",
+    reviewRubricUtf8: "Independently audit the exact subject for complete topology contracts, exact authority/areas/role/migration seams, service-worker ownership, settings restoration correctness, dependency and docs/OPEN bindings, tranche order, stop conditions, and native Codex review provenance. Verify all claims against exact repository bytes. Report stable finding IDs and exact path/line evidence. Return no hidden reasoning and no production authorization.",
+    nativeAllocationResultUtf8: "ALLOCATED-PENDING-EXACT-SUBJECT."
   }),
   Object.freeze({
-    taskId: "/root/validator_semantic_final_review",
-    reviewOccurrenceId: "codex-only-uiux-v1-validator-semantic-rereview",
-    reviewKind: "validator-integrity-rereview"
+    taskId: "/root/p009_exact_subject_review_c7",
+    reviewOccurrenceId: "p009-exact-subject-review-c7",
+    reviewKind: "validator-integrity-rereview",
+    rubricId: "p009-validator-adversarial-rubric-v4",
+    reviewRubricUtf8: "Adversarially audit the exact subject validator as a semantic class, including three-surface attacks, benign controls, normalization, invalid provenance exclusion, empty and populated ledger validity, source interval binding, Git parent/path/mode boundaries, attestation-only mutation, and rollback/settings contradictions. Report every accepted bypass or false-positive blocker with a stable finding ID and exact path/line evidence. Return no hidden reasoning and no production authorization.",
+    nativeAllocationResultUtf8: "ALLOCATED-PENDING-EXACT-SUBJECT."
   })
 ])
 
@@ -382,6 +472,8 @@ const allowedAuthorities = new Set([
   "release-gate"
 ])
 
+const criticalFileRecordContractSha256 = "9e9b499123e42f0419c3164f38445d6c0911c359638816dcf4a534a4dc85b66c"
+
 const exactDisclaimer = "This packet is provisional prework only. It is not a final migration plan, an accepted upstream decision, implementation authorization, or production authorization."
 
 const requiredPlanSections = [
@@ -417,6 +509,7 @@ const requiredTopologyTableRows = Object.freeze([
 ])
 
 const canonicalRollbackContract = "Direct revert is permitted only for the current unmerged tip or a dependency-closed suffix. Any earlier or nonclosed recovery requires a forward fix, full rebuild, inactive preview, and recertification."
+const exactSettingsRaceObservedFact = "The settings island initializes default preferences with busy false, begins authoritative IndexedDB restoration asynchronously, saves the current React projection, and leaves preference controls plus Save active while restoration is unresolved."
 const canonicalProductionDeploymentBoundary = "Production deployment is blocked and out of scope while the live production Environment requires a reviewer whose GitHub type is User. Codex cannot satisfy or bypass that rule, and Plan 009 cannot change the Environment. Any future Environment change requires separate authorization and repository attestation."
 
 const requiredTrancheLabels = [
@@ -483,6 +576,15 @@ const git = (arguments_, { allowFailure = false } = {}) => {
 }
 
 const nulPaths = (output) => output.split("\0").filter((path) => path.length > 0)
+
+const trackedRepositoryPathsAtObservedSha = new Set(nulPaths(
+  git(["ls-tree", "-r", "--name-only", "-z", observedAtSha]).stdout
+))
+
+const isValidatedRepositoryPathLiteral = (value) => {
+  const candidate = value.trim()
+  return trackedRepositoryPathsAtObservedSha.has(candidate) || packetPaths.includes(candidate) || candidate === indexPath
+}
 
 const parseJsonNoDuplicateKeys = (source, label) => {
   let cursor = 0
@@ -708,9 +810,279 @@ const decodePercentRuns = (source) => {
 }
 
 const semanticClaimProjection = (source, { preserveCommentBodies = true } = {}) => {
+  if (isValidatedRepositoryPathLiteral(source.trim())) return "repository_path"
   const destinations = []
-  const visible = source
+  const withValidatedPathSentinels = decodePercentRuns(source)
     .normalize("NFKC")
+    .normalize("NFKD")
+    .replace(/\p{M}/gu, "")
+    .replace(/\bcan['’]t\b/giu, "cannot")
+    .replace(/\bwon['’]t\b/giu, "will not")
+    .replace(/\b(?:isn['’]t|ain['’]t)\b/giu, "is not")
+    .replace(/\baren['’]t\b/giu, "are not")
+    .replace(/\bwasn['’]t\b/giu, "was not")
+    .replace(/\bweren['’]t\b/giu, "were not")
+    .replace(/\bhasn['’]t\b/giu, "has not")
+    .replace(/\bhaven['’]t\b/giu, "have not")
+    .replace(/\bhadn['’]t\b/giu, "had not")
+    .replace(/\bdidn['’]t\b/giu, "did not")
+    .replace(/\bdoesn['’]t\b/giu, "does not")
+    .replace(/\bdon['’]t\b/giu, "do not")
+    .replace(/(?<!`)`([^`\n]+)`(?!`)/gu, (_match, code) =>
+      isValidatedRepositoryPathLiteral(code) ? " REPOSITORYPATHSENTINEL " : ` ${code} `
+    )
+  const maskedSemanticLexemes = Object.freeze([
+    "accepted",
+    "active",
+    "adjust",
+    "adjusted",
+    "adjusting",
+    "adjusts",
+    "adopted",
+    "advised",
+    "ahead",
+    "agreement",
+    "allowed",
+    "applied",
+    "apply",
+    "available",
+    "backing",
+    "approved",
+    "approval",
+    "aligned",
+    "authorized",
+    "authorised",
+    "authorization",
+    "answer",
+    "answered",
+    "back",
+    "backed",
+    "backout",
+    "begin",
+    "blocked",
+    "cleared",
+    "choice",
+    "commentary",
+    "commit",
+    "committed",
+    "committing",
+    "commits",
+    "complete",
+    "completed",
+    "coalesced",
+    "continue",
+    "continued",
+    "continuing",
+    "consensus",
+    "consent",
+    "consulted",
+    "convened",
+    "criteria",
+    "certified",
+    "certify",
+    "decision",
+    "declared",
+    "deployed",
+    "deploy",
+    "deploying",
+    "deployment",
+    "disabled",
+    "downgrade",
+    "downgraded",
+    "downgrading",
+    "editable",
+    "edit",
+    "edited",
+    "editing",
+    "edits",
+    "enabled",
+    "embargo",
+    "ended",
+    "empowered",
+    "endorsed",
+    "endorsement",
+    "fallback",
+    "fall",
+    "fell",
+    "fail",
+    "failed",
+    "fails",
+    "falling",
+    "falls",
+    "feedback",
+    "finished",
+    "expired",
+    "execute",
+    "executed",
+    "forward",
+    "green",
+    "happening",
+    "hold",
+    "implementation",
+    "initiate",
+    "initiated",
+    "imminent",
+    "interviewed",
+    "learner",
+    "learners",
+    "light",
+    "lifted",
+    "listen",
+    "listened",
+    "live",
+    "load",
+    "loaded",
+    "loading",
+    "loads",
+    "locked",
+    "launch",
+    "made",
+    "may",
+    "modify",
+    "modified",
+    "modifies",
+    "modifying",
+    "occurred",
+    "objection",
+    "objections",
+    "online",
+    "opened",
+    "out",
+    "opted",
+    "participants",
+    "people",
+    "permitted",
+    "permission",
+    "perform",
+    "performed",
+    "possible",
+    "previous",
+    "published",
+    "publish",
+    "ready",
+    "recover",
+    "recovered",
+    "recovering",
+    "recovers",
+    "recovery",
+    "releasable",
+    "production",
+    "proceed",
+    "redeploy",
+    "redeployed",
+    "redeploying",
+    "redeploys",
+    "release",
+    "remarks",
+    "record",
+    "recorded",
+    "recording",
+    "records",
+    "resolved",
+    "restriction",
+    "restrictions",
+    "restore",
+    "restored",
+    "restoring",
+    "restoration",
+    "revert",
+    "reverted",
+    "revertible",
+    "reverting",
+    "reverts",
+    "reversion",
+    "revertibility",
+    "reverse",
+    "reversed",
+    "reversal",
+    "rollback",
+    "roll",
+    "rolled",
+    "rolling",
+    "rolls",
+    "rollout",
+    "resume",
+    "resumed",
+    "resuming",
+    "revise",
+    "revised",
+    "revises",
+    "revising",
+    "sanctioned",
+    "serving",
+    "selected",
+    "selection",
+    "settings",
+    "shadowed",
+    "ship",
+    "stands",
+    "started",
+    "store",
+    "stored",
+    "stores",
+    "storing",
+    "study",
+    "succeeded",
+    "successful",
+    "suggestion",
+    "suggestions",
+    "support",
+    "supported",
+    "supplied",
+    "switched",
+    "switch",
+    "switches",
+    "switching",
+    "talked",
+    "underway",
+    "undergo",
+    "underwent",
+    "unobstructed",
+    "undo",
+    "undid",
+    "undoes",
+    "undoing",
+    "undone",
+    "users",
+    "usability",
+    "validate",
+    "validated",
+    "victorious",
+    "waiver",
+    "withdrawn",
+    "witnessed",
+    "winner",
+    "won",
+    "persist",
+    "persisted",
+    "persisting",
+    "persists",
+    "run",
+    "ran",
+    "running",
+    "runs",
+    "save",
+    "saved",
+    "saves",
+    "saving",
+    "trigger",
+    "triggered",
+    "triggers",
+    "triggering",
+    "update",
+    "updated",
+    "updates",
+    "updating",
+    "write"
+  ])
+  const maskedJoiner = String.raw`[\p{M}\p{Cf}\p{P}\p{S}\s]*`
+  const visible = maskedSemanticLexemes.reduce((candidate, lexeme) => {
+    const letters = [...lexeme].map((letter) => letter.replace(/[.*+?^${}()|[\]\\]/gu, "\\$&"))
+    const pattern = new RegExp(`(?<![\\p{L}\\p{N}])${letters.join(maskedJoiner)}(?![\\p{L}\\p{N}])`, "giu")
+    return candidate.replace(pattern, (match) =>
+      /^\p{Lu}/u.test(match) ? `${lexeme[0].toUpperCase()}${lexeme.slice(1)}` : lexeme
+    )
+  }, withValidatedPathSentinels)
     .replace(/!?\[([^\]\n]*)\]\(([^)\n]*)\)/gu, (_match, text, destination) => {
       destinations.push(destination)
       return text
@@ -720,8 +1092,10 @@ const semanticClaimProjection = (source, { preserveCommentBodies = true } = {}) 
     .replace(/<!--([\s\S]*?)-->/gu, preserveCommentBodies ? "$1" : "")
     .replace(/\\([\\`*_[\]{}()#+\-.!|>~])/gu, "$1")
     .replace(/[*_~`]/gu, "")
+    .replace(/[ \t]+([.,;:!?])/gu, "$1")
     .replace(/\p{Cf}/gu, "")
   return decodePercentRuns(`${visible}\n\n${destinations.join("\n")}`)
+    .replace(/\n(?=[ \t]*(?:\||#{1,6}[ \t]|[-+*][ \t]|\d+\.[ \t]))/gu, "\u0000")
     .replace(/[ \t]*\n(?:[ \t]*\n)+[ \t]*/gu, "\u0000")
     .replace(/[ \t]*\n[ \t]*/gu, " ")
     .replaceAll("\u0000", "\n")
@@ -729,109 +1103,490 @@ const semanticClaimProjection = (source, { preserveCommentBodies = true } = {}) 
     .trim()
 }
 
-const semanticClaimClauses = (source) => semanticClaimProjection(source)
-  .split(/(?:[.!?;\u3002\uff01\uff1f]+|\n+|\b(?:but|however|whereas)\b)/giu)
-  .map((clause) => clause
-    .toLowerCase()
-    .replace(/[\p{P}\p{S}]+/gu, " ")
-    .replace(/\s+/gu, " ")
-    .trim())
-  .filter((clause) => clause.length > 0)
-
-const validateNoFreeFormSemanticClaims = (source, label) => {
-  const releaseActor = "(?:production(?: deployment| release| rollout| traffic)?|deployment(?: to production)?|release|candidate|build|site|application|app|website|version|rollout|traffic|launch|implementation|migration|plan(?: 009)?|packet|draft)"
-  const releaseStatus = "(?:permitted|allowed|authorized|approved|cleared|certified|ready|eligible|green lit|green light|go ahead|signed off|unblocked|no blockers?|set for rollout|cleared for rollout|ready for rollout)"
-  const permissionNoun = "(?:approval|permission|clearance|authorization|green light|go ahead|sign off|blessing)"
-  const releaseAction = "(?:go live|launch|ship|deploy(?: to production)?|release(?: to production)?|implement|proceed|move forward|begin|start|activate(?: production traffic)?|serve(?: production traffic)?|put(?: the)? (?:site|app|application|website|build|release)? into production|move(?: the)? (?:site|app|application|website|build|release)? into production|send(?: the)? (?:site|app|application|website|build|release)? into production)"
-  const actorLeadingReleaseAction = "(?:go live|launch|ship|deploy(?: to production)?|proceed|move forward|activate(?: production traffic)?|serve(?: production traffic)?|put(?: the)? (?:site|app|application|website|build|release)? into production|move(?: the)? (?:site|app|application|website|build|release)? into production|send(?: the)? (?:site|app|application|website|build|release)? into production)"
-  const authorityVerb = "(?:permits?|allows?|authorizes?|approves?|clears?|certifies?|green lights?)"
-  const releasePatterns = [
-    new RegExp(`\\b${releaseActor}\\b\\s+(?:(?:is|was|has been|had been|became|becomes|remains|stands|looks)\\s+)?${releaseStatus}\\b`, "iu"),
-    new RegExp(`\\b(?:we|codex|the team|the agent|${releaseActor})\\b(?:\\s+\\w+){0,6}\\s+(?:has|have|had|holds?|held|receives?|received|obtains?|obtained|gains?|gained|secures?|secured|gets?|got|was granted|were granted|was given|were given)\\s+(?:the\\s+)?${permissionNoun}\\b`, "iu"),
-    new RegExp(`\\b${releaseActor}\\b(?:\\s+\\w+){0,5}\\s+${permissionNoun}\\b(?:\\s+\\w+){0,4}\\s+(?:granted|given|received|issued|secured|complete|completed)\\b`, "iu"),
-    new RegExp(`\\b(?:we|codex|the team|the agent|${releaseActor})\\b(?:\\s+\\w+){0,6}\\s+(?:may|can|could|should|will|is able to|has permission to|has clearance to|has the go ahead to)\\s+${releaseAction}\\b`, "iu"),
-    new RegExp(`\\b(?:we|codex|the team|the agent)\\b(?:\\s+\\w+){0,5}\\s+${releaseStatus}\\b(?:\\s+\\w+){0,4}\\s+(?:to\\s+)?${releaseAction}\\b`, "iu"),
-    new RegExp(`\\b(?:we|codex|the team|the agent|${releaseActor})\\b(?:\\s+\\w+){0,5}\\s+${authorityVerb}\\b(?:\\s+\\w+){0,5}\\s+(?:the\\s+)?(?:${releaseActor}|${releaseAction})\\b`, "iu"),
-    new RegExp(`\\b${releaseActor}\\b(?:\\s+\\w+){0,5}\\s+(?:may|can|could|should|will)\\s+be\\s+(?:activated|launched|shipped|deployed|released|served|implemented)\\b`, "iu"),
-    new RegExp(`\\b(?:approved|authorized|cleared|green lit|ready|set)\\s+(?:for\\s+)?${releaseActor}\\b(?!\\s+(?:record|evidence|artifact|gate|workflow|check)\\b)`, "iu"),
-    new RegExp(`\\b${permissionNoun}\\b(?:\\s+\\w+){0,6}\\s+(?:for|to)\\s+(?:the\\s+)?${releaseActor}\\b`, "iu"),
-    new RegExp(`\\b${permissionNoun}\\b(?:\\s+\\w+){0,4}\\s+(?:granted|given|received|issued|secured|complete|completed)\\b(?:\\s+\\w+){0,5}\\s+(?:for|to)\\s+(?:the\\s+)?${releaseActor}\\b`, "iu"),
-    new RegExp(`\\b(?:no blockers?|gate passed|passed gate)\\b(?:\\s+\\w+){0,6}\\s+(?:for|on|to)\\s+(?:the\\s+)?${releaseActor}\\b`, "iu"),
-    new RegExp(`\\b(?:production|release|deployment|rollout)\\s+gate\\b(?:\\s+\\w+){0,4}\\s+(?:passed|cleared|approved)\\b`, "iu"),
-    new RegExp(`^(?:please\\s+)?${actorLeadingReleaseAction}\\b(?:\\s+\\w+){0,6}\\s+(?:with|on|for|the)?\\s*(?:the\\s+)?${releaseActor}\\b`, "iu")
+const semanticClaimClauses = (source, { project = true } = {}) => {
+  const candidate = project ? semanticClaimProjection(source) : source
+  const variants = candidate.includes("REPOSITORYPATHSENTINEL")
+    ? [
+        candidate,
+        candidate.replaceAll("REPOSITORYPATHSENTINEL", " "),
+        candidate.replace(/\s*REPOSITORYPATHSENTINEL\s*/gu, "")
+      ]
+    : [candidate]
+  return [...new Set(variants.flatMap((variant) => [
+    ...variant.split(/(?:[.!?;\u3002\uff01\uff1f]+|\n+)/giu),
+    ...variant.split(/(?:[.!?;\u3002\uff01\uff1f]+|\n+|\b(?:anyway|but|despite|even +though|however|whereas|although|yet|while|so)\b)/giu)
   ]
-
-  const humanActor = "(?:humans?|learners?|students?|testers?|respondents?|volunteers?|candidates?|participants?|users?|people|persons?|cohorts?|panels?)"
-  const count = "(?:[1-9]\\d*|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|a|an)"
-  const studyKind = "(?:(?:human|user|learner|participant|usability|research|validation|moderated) (?:study|test|testing|research|session|round|evaluation|trial|validation)|moderated validation|usability|user research|human research|research round)"
-  const studyResult = "(?:complete(?:d)?|conduct(?:ed)?|finish(?:ed)?|pass(?:ed)?|participat(?:e|ed)|join(?:ed)?|attend(?:ed)?|test(?:ed)?|evaluat(?:e|ed)|run|ran|perform(?:ed)?|succeed(?:ed)?|enroll(?:ed)?|recruit(?:ed)?|include(?:d)?|involve(?:d)?|observ(?:e|ed)|studied|interview(?:ed)?|watch(?:ed)?|survey(?:ed)?|sampl(?:e|ed)|happen(?:ed)?|occur(?:red)?|take part|took part|feedback|responses?|findings?|results?)"
-  const humanObservation = "(?:observed|studied|tested|interviewed|watched|surveyed|sampled|enrolled|recruited|feedback (?:was )?collected|responses? (?:were |was )?collected)"
-  const humanEvidenceNoun = "(?:feedback|results?|outcomes?|findings?|responses?|observations?|validation)"
-  const humanEvidenceResult = "(?:collected|gathered|received|recorded|reported|returned|completed|passed|positive|successful|available|final|observed)"
-  const humanActorPattern = new RegExp(`\\b${humanActor}\\b`, "iu")
-  const nonzeroCountPattern = new RegExp(`\\b${count}\\s+${humanActor}\\b|\\b${humanActor}\\s+(?:count(?:ed)?|number(?:ed)?|total(?:ed)?)\\s+${count}\\b`, "iu")
-  const studyKindPattern = new RegExp(`\\b${studyKind}\\b`, "iu")
-  const studyResultPattern = new RegExp(`\\b${studyResult}\\b`, "iu")
-  const humanObservationPatterns = [
-    new RegExp(`\\b${humanObservation}\\b(?:\\s+\\w+){0,6}\\s+${humanActor}\\b`, "iu"),
-    new RegExp(`\\b${humanActor}\\b(?:\\s+\\w+){0,6}\\s+${humanObservation}\\b`, "iu"),
-    new RegExp(`\\b${humanActor}\\b(?:\\s+\\w+){0,5}\\s+${humanEvidenceNoun}\\b(?:\\s+\\w+){0,5}\\s+${humanEvidenceResult}\\b`, "iu"),
-    new RegExp(`\\b${humanEvidenceNoun}\\b(?:\\s+\\w+){0,5}\\s+(?:from|by|of|for)\\s+(?:the\\s+)?${humanActor}\\b(?:\\s+\\w+){0,5}\\s+${humanEvidenceResult}\\b`, "iu"),
-    new RegExp(`\\b${humanEvidenceResult}\\b(?:\\s+\\w+){0,5}\\s+${humanActor}\\b(?:\\s+\\w+){0,5}\\s+${humanEvidenceNoun}\\b`, "iu")
-  ]
-
-  const decisionActor = "(?:review|reviewer|panel|committee|selector|decision|option|variant|direction|territory|archetype|proposal|candidate|plan(?: 009)?|packet|draft|migration)"
-  const decisionResult = "(?:approved|passed|selected|chosen|endorsed|ratified|signed off)"
-  const decisionPatterns = [
-    new RegExp(`\\b${decisionActor}\\b(?:\\s+\\w+){0,5}\\s+${decisionResult}\\b`, "iu"),
-    new RegExp(`\\b(?:approved|selected|chosen|endorsed|ratified)\\s+(?:the\\s+)?${decisionActor}\\b`, "iu"),
-    new RegExp(`\\b${decisionActor}\\b\\s+(?:(?:is|was|has been|had been|got)\\s+)?accepted\\b`, "iu")
-  ]
-
-  const negatedStatus = new RegExp(`\\b(?:not|never|no longer)\\s+${releaseStatus}\\b`, "giu")
-  const negatedPermission = new RegExp(`\\b(?:no|without|lacks?|lacking|missing)\\s+(?:the\\s+)?${permissionNoun}\\b`, "giu")
-  const negatedReleaseAction = new RegExp(`\\b(?:cannot|can not|may not|must not|will not|should not|is not able to)\\s+${releaseAction}\\b`, "giu")
-  const negatedDecision = new RegExp(`\\b(?:not|never|no longer)\\s+${decisionResult}\\b`, "giu")
-  const canonicalNegativeEvidence = /\b(?:not human usability tested|no human evidence|no participant evidence|human evidence (?:is )?none|participant evidence (?:is )?none|human participant count (?:is )?zero)\b/giu
-  const negatedStudyResult = new RegExp(`\\b(?:not|never|did not|was not|were not|has not|have not|had not)\\s+${studyResult}\\b`, "giu")
-  const negatedActorResult = new RegExp(`\\b${humanActor}\\s+(?:did not|was not|were not|has not|have not|had not|never)\\s+${studyResult}\\b`, "giu")
-  const studyWithNoActor = new RegExp(`\\b${studyKind}\\b(?:\\s+\\w+){0,6}\\s+${studyResult}(?:\\s+\\w+){0,4}\\s+(?:no|zero)\\s+${humanActor}\\b`, "giu")
-  const negatedHumanEvidence = new RegExp(`\\b${humanActor}\\b(?:\\s+\\w+){0,5}\\s+${humanEvidenceNoun}\\b(?:\\s+\\w+){0,4}\\s+(?:was not|were not|is not|are not|has not been|have not been|never)\\s+${humanEvidenceResult}\\b`, "giu")
-  const negatedHumanActor = new RegExp(`\\b(?:no|zero|without)\\s+${humanActor}(?:\\s+${studyResult})?\\b`, "giu")
-
-  for (const clause of semanticClaimClauses(source)) {
-    const affirmative = clause
-      .replace(canonicalNegativeEvidence, " negative_evidence ")
-      .replace(negatedStatus, " negative_state ")
-      .replace(negatedPermission, " negative_permission ")
-      .replace(negatedReleaseAction, " negative_action ")
-      .replace(negatedDecision, " negative_result ")
-      .replace(studyWithNoActor, " negative_study ")
-      .replace(negatedHumanEvidence, " negative_evidence ")
-      .replace(negatedActorResult, " negative_study ")
-      .replace(negatedStudyResult, " negative_result ")
-      .replace(negatedHumanActor, " negative_group ")
+    .map((clause) => clause
+      .toLowerCase()
+      .replace(/[\p{P}\p{S}]+/gu, " ")
       .replace(/\s+/gu, " ")
+      .trim())
+    .filter((clause) => clause.length > 0)))]
+}
+
+const semanticTokenIndexes = (tokens, predicate) => tokens
+  .map((token, index) => predicate(token) ? index : -1)
+  .filter((index) => index >= 0)
+
+const semanticHasRoot = (token, roots) => roots.some((root) => token === root || (root.length >= 4 && token.startsWith(root)))
+
+const semanticHasAnyRoot = (tokens, roots) => tokens.some((token) => semanticHasRoot(token, roots))
+
+const semanticHasPhrase = (clause, phrase) => new RegExp(
+  `(?:^| )${phrase.trim().split(/\s+/u).join(" +")}(?: |$)`,
+  "u"
+).test(clause)
+
+const semanticIndexIsNegated = (tokens, index) => {
+  const before = tokens.slice(Math.max(0, index - 3), index).join(" ")
+  const after = tokens.slice(index + 1, index + 5).join(" ")
+  return /(?:^| )(?:not|never|cannot|without|lacks?|lacking|missing|neither|nor|prohibited|unsafe|ineligible|separate)(?: |$)/u.test(before) ||
+    /(?:^| )(?:no|zero)(?: |$)/u.test(before) ||
+    /(?:^| )(?:future|must|need|needs|needed|provisional|required|requires|requiring|should)(?: |$)/u.test(before) ||
+    /^(?:(?:is|are|was|were|has|have|had|remain|remains|remained) )?(?:no|not|never|none|null|false|absent|missing|blocked|pending|provisional|required|requires|unresolved|undecided|zero)(?: |$)/u.test(after) ||
+    /(?:^| )(?:until|before|unless)(?: |$)/u.test(before)
+}
+
+const semanticHasAffirmativeRoot = (tokens, roots) => semanticTokenIndexes(
+  tokens,
+  (token) => semanticHasRoot(token, roots)
+).some((index) => !semanticIndexIsNegated(tokens, index))
+
+const semanticIsStructuralLabel = (tokens) => semanticHasAnyRoot(tokens, [
+  "artifact",
+  "boundary",
+  "contract",
+  "coordinate",
+  "dependency",
+  "evidence",
+  "field",
+  "identity",
+  "identifier",
+  "interface",
+  "ledger",
+  "metadata",
+  "path",
+  "record",
+  "requirement",
+  "rule",
+  "schema",
+  "slot",
+  "status",
+  "table",
+  "workflow"
+])
+
+const semanticHasAssertionConnector = (tokens) => semanticHasAnyRoot(tokens, [
+  "be",
+  "became",
+  "become",
+  "carry",
+  "exist",
+  "exists",
+  "face",
+  "gain",
+  "gave",
+  "get",
+  "given",
+  "got",
+  "grant",
+  "had",
+  "has",
+  "have",
+  "hold",
+  "issue",
+  "obtain",
+  "receive",
+  "secure",
+  "stand",
+  "was",
+  "were",
+  "went"
+])
+
+const closedStructuralSemanticEnums = Object.freeze({
+  reviewKind: new Set(requiredCodexReviewTasks.map((task) => task.reviewKind)),
+  disposition: new Set(["no-blocking-findings-on-exact-subject"]),
+  consensus: new Set(["root-and-independent-rereviews-agree"]),
+  dissent: new Set(["none-recorded-for-exact-subject"])
+})
+
+const isClosedStructuralSemanticEnum = (path, value) => {
+  const field = path.at(-1)
+  const exactLedgerField = path.length === 3 && path[0] === "codexReviewLedger" && /^\d+$/u.test(path[1])
+  return exactLedgerField && typeof field === "string" && own(closedStructuralSemanticEnums, field) &&
+    closedStructuralSemanticEnums[field].has(value)
+}
+
+const identifierProjection = (source) => decodePercentRuns(source)
+  .normalize("NFKC")
+  .normalize("NFKD")
+  .replace(/[\p{M}\p{Cf}]/gu, "")
+  .toLowerCase()
+  .replace(/[\p{P}\p{S}\s]+/gu, "")
+
+const invalidatedReviewIdentifiers = Object.freeze([
+  ...invalidatedReviewProvenanceRegistry.subjectShas,
+  ...invalidatedReviewProvenanceRegistry.packetBlobShas,
+  ...invalidatedReviewProvenanceRegistry.taskIds,
+  ...invalidatedReviewProvenanceRegistry.reviewOccurrenceIds
+])
+
+const validateNoInvalidatedReviewIdentifiers = (source, label) => {
+  const projected = identifierProjection(source)
+  for (const identifier of invalidatedReviewIdentifiers) {
+    assert(
+      !projected.includes(identifierProjection(identifier)),
+      `${label} contains invalidated review provenance identifier ${identifier}`
+    )
+  }
+}
+
+const validatorOutsideInvalidatedProvenanceRegistry = (source) => {
+  const markerPrefix = "/* PLAN_009_INVALIDATED_REVIEW_PROVENANCE_"
+  const startMarker = `${markerPrefix}START */`
+  const endMarker = `${markerPrefix}END */`
+  const start = source.indexOf(startMarker)
+  const end = source.indexOf(endMarker)
+  assert(start >= 0 && start === source.lastIndexOf(startMarker), "validator must contain exactly one invalidated-review provenance start marker")
+  assert(end > start && end === source.lastIndexOf(endMarker), "validator must contain exactly one invalidated-review provenance end marker")
+  assert(
+    createHash("sha256").update(JSON.stringify(invalidatedReviewProvenanceRegistry), "utf8").digest("hex") === invalidatedReviewProvenanceRegistrySha256,
+    "immutable invalidated-review provenance registry digest differs"
+  )
+  const afterEnd = end + endMarker.length
+  const sourceBlock = source.slice(start, afterEnd)
+  assert(
+    createHash("sha256").update(sourceBlock, "utf8").digest("hex") === invalidatedReviewProvenanceRegistrySourceSha256,
+    "immutable invalidated-review provenance registry source bytes differ"
+  )
+  return `${source.slice(0, start)}${source.slice(afterEnd)}`
+}
+
+const validateNoFreeFormSemanticClaims = (source, label, { project = true } = {}) => {
+  if (isValidatedRepositoryPathLiteral(source.trim())) return
+  for (const clause of semanticClaimClauses(source, { project })) {
+    const tokens = clause.split(" ")
+    const releaseActor = semanticHasAnyRoot(tokens, ["operator", "release", "team", "we"])
+    const releaseTarget = tokens.some((token) => /^(?:apps?|applications?|builds?|candidates?|deployments?|drafts?|implementation|launch|migration|packets?|plans?|products?|production|releases?|rollouts?|shipping|sites?|traffic|versions?|websites?)$/u.test(token))
+    const releaseObject = semanticHasAnyRoot(tokens, ["gate", "service", "traffic", "window"])
+    const releaseContext = releaseActor || releaseTarget || releaseObject
+    const permissionNounIndexes = semanticTokenIndexes(
+      tokens,
+      (token) => /^(?:approval|authority|authorization|blessing|certification|clearance|permission|signoff|waiver)$/u.test(token)
+    )
+    for (const phrase of [["green", "light"], ["go", "ahead"], ["sign", "off"], ["the", "nod"], ["thumbs", "up"], ["all", "clear"]]) {
+      const index = tokens.findIndex((token, tokenIndex) => token === phrase[0] && tokens[tokenIndex + 1] === phrase[1])
+      if (index >= 0) permissionNounIndexes.push(index)
+    }
+    const idiomaticPermission = semanticHasPhrase(clause, "green light") || semanticHasPhrase(clause, "go ahead") ||
+      semanticHasPhrase(clause, "sign off") || semanticHasPhrase(clause, "the nod") ||
+      semanticHasPhrase(clause, "thumbs up") || semanticHasPhrase(clause, "all clear")
+    const affirmativePermissionNoun = permissionNounIndexes.some((index) => !semanticIndexIsNegated(tokens, index))
+    const affirmativeReleaseStatus = semanticTokenIndexes(
+      tokens,
+      (token) => /^(?:allow(?:ed|s|ing)?|approv(?:e|ed|es|ing)|authoris(?:e|ed|es|ing)|authoriz(?:e|ed|es|ing)|bless(?:ed|es|ing)?|certif(?:y|ied|ies|ying)|clear(?:ed|s|ing)?|deployable|eligible|empower(?:ed|s|ing)?|endors(?:e|ed|es|ing)|grant(?:ed|s|ing)?|greenlit|okay(?:ed|s|ing)?|okayed|permit(?:ted|s|ting)?|publishable|ratif(?:y|ied|ies|ying)|ready|sanction(?:ed|s|ing)?|shippable|unblocked|unobstructed)$/u.test(token)
+    ).some((index) => !semanticIndexIsNegated(tokens, index))
+    const connectorBackedPermission = affirmativePermissionNoun && permissionNounIndexes.some((index) =>
+      !semanticIndexIsNegated(tokens, index) && semanticHasAssertionConnector(tokens.slice(Math.max(0, index - 3), index + 4))
+    )
+    const readinessOutcome = /(?:^| )(?:no(?: +\w+){0,2} +(?:barriers?|blockers?|impediments?|objections?|obstacles?|obstructions?)|zero +(?:barriers?|blockers?|impediments?|obstacles?)|all +(?:\w+ +){0,2}(?:barriers?|blockers?|impediments?|obstacles?|restrictions?)(?: +\w+){0,3} +(?:gone|lifted|removed|resolved|cleared)|nothing +blocks?|nothing +impedes?|nothing +stands?(?: +\w+){0,4} +between(?: +\w+){0,4} +(?:build|candidate|deployment|production|release|rollout)|all +set|everything +is +set +for(?: +the)? +(?:production +)?rollout|set +for +(?:production +)?rollout|good +to +go|(?:production|release|deployment|rollout|launch)(?: +\w+){0,2} +(?:is|was|stands?) +(?:a +)?go|(?:production|release|deployment|rollout|launch)(?: +\w+){0,3} +(?!not +authoriz)(?:not|no +longer) +(?:blocked|denied|forbidden|ineligible|prevented|prohibited|unauthorized|unapproved|uncleared|unready)|(?:release|deployment|production|rollout|launch) +gates?(?: +\w+){0,3} +(?!not )(?:open|pass\w*|clear\w*|green|satisf\w*)|(?:required|user|production|release) +gates?(?: +\w+){0,2} +no +longer +blocks?(?: +\w+){0,3} +(?:deployment|production|release|rollout)|(?:deployment|release|rollout)(?: +\w+){0,3} +(?:objections? +(?:are |were )?withdrawn|holds? +(?:are |were )?lifted|restrictions? +(?:are |were )?gone)|(?:deployment|release|rollout) +is +anything +but +blocked|there +are +no +obstructions? +to +(?:deployment|launch|release|rollout))(?: |$)/u.test(clause)
+    const invertedReleaseProhibition = /(?:^| )(?:nothing +(?:bars?|blocks?|forbids?|prevents?|prohibits?|restricts?|stops?)|no +(?:policy|restriction|rule)(?: +\w+){0,3} +(?:bars?|blocks?|forbids?|prevents?|prohibits?|restricts?|stops?))(?: +\w+){0,4} +(?:deployment|launch|production|release|rollout|shipping)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:deployment|launch|production|release|rollout)(?: +\w+){0,3} +(?:lacks? +no|is +not +lacking) +(?:approval|authority|authorization|clearance|permission)(?: |$)/u.test(clause)
+    const releaseConstraintRemoved = /(?:^| )(?:the +)?(?:embargo|gate|hold|restriction) +(?:on|to|for) +(?:deployment|launch|production|release|rollout)(?: +\w+){0,2} +(?:ended|expired|is +open|was +opened|has +ended|has +expired|has +been +lifted|has +been +removed|lifted|opened|removed|withdrawn)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:deployment|launch|production|release|rollout)(?: +\w+){0,2} +(?:embargo(?:es)?|gates?|holds?|objections?|restrictions?)(?: +\w+){0,2} +(?:ended|expired|is +open|are +open|was +opened|were +opened|has +ended|have +ended|has +expired|have +expired|has +been +lifted|have +been +lifted|has +been +removed|have +been +removed|gone|lifted|opened|removed|withdrawn)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:deployment|launch|production|release|rollout) +is +anything +but +blocked(?: |$)/u.test(clause) ||
+      /(?:^| )(?:deployment|launch|production|release|rollout)(?: +\w+){0,2} +is +free +of +(?:barriers?|blockers?|obstructions?)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:the +)?door +to +(?:deployment|launch|production|release|rollout) +is +open(?: |$)/u.test(clause) ||
+      /(?:^| )(?:the +)?(?:deployment|launch|production|release|rollout) +window +(?:is|was|stands?) +open(?: |$)/u.test(clause)
+    const releaseActionIndexes = semanticTokenIndexes(tokens, (token) => /^(?:began|begin|begins|beginning|begun|ship(?:ped|s|ping)?|launch(?:ed|es|ing)?|deploy(?:ed|s|ing)?|release|released|releasing|publish(?:ed|es|ing)?|promot(?:e|ed|es|ing)|proceed(?:ed|s|ing)?|continu(?:e|ed|es|ing)|resum(?:e|ed|es|ing)|commenc(?:e|ed|es|ing)|activat(?:e|ed|es|ing)|implement(?:ed|s|ing)?|start(?:ed|s|ing)?)$/u.test(token))
+    const explicitFreeToReleaseAction = /(?:^| )(?:(?:am|are|is|was|were) +(?:at +liberty|empowered|free)|(?:had|has|have) +liberty) +to +(?:begin|deploy|go +live|implement|launch|proceed|publish|rollout|ship|start)(?: |$)/u.test(clause)
+    const explicitReleaseImperative = /^(?:blocked +)?(?:(?:please +)?(?:deploy|greenlight|publish|release|ship) +(?:away|it|this|that|the|a|an|build|candidate|deployment|production|release|rollout|site|version|website)|(?:activate|begin|commence|continue|resume|start) +(?:deployment|implementation|launch|production|release|rollout)|put +(?:the +)?(?:site|website|build|candidate|production) +online|promote +(?:this +|the +)?build|cut +over +to +(?:the +)?candidate|route +(?:the +)?traffic +to +production|send +(?:the +)?(?:site|website|build|candidate) +live|push +(?:the +)?(?:build|candidate|site|website) +to +production|take +(?:the +)?(?:site|website|build|candidate) +live|turn +production +on|(?:roll +out|rollout) +(?:the +)?(?:build|candidate|site|website))(?: |$)/u.test(clause)
+    const releaseAuthorizationState = affirmativeReleaseStatus || connectorBackedPermission || idiomaticPermission || readinessOutcome
+    const releaseAction = releaseActionIndexes.some((index) => {
+      if (semanticIndexIsNegated(tokens, index)) return false
+      const token = tokens[index]
+      const inflected = /(?:ed|es|ing|s)$/u.test(token) && !/^(?:proceed|ship)$/u.test(token)
+      const before = tokens.slice(Math.max(0, index - 4), index)
+      const inherentlyReleaseAction = /^(?:deploy|launch|publish|release|ship)$/u.test(token)
+      const imperative = index === 0 && (
+        (tokens.length === 1 && inherentlyReleaseAction) ||
+        (["immediately", "now", "the", "this", "that", "to", "with"].includes(tokens[index + 1]) && inherentlyReleaseAction)
+      )
+      const statusInfinitive = before.includes("to") && affirmativeReleaseStatus
+      return inflected || imperative || statusInfinitive || before.some((entry) => ["can", "could", "may", "will"].includes(entry))
+    }) || /(?:^| )(?:(?:can|may|could|will) +(?:\w+ +){0,3})?(?:go +live|put(?: +the)?(?: +\w+){0,3} +into +production|enter +service|be +turned +on)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:applications?|products?|sites?|websites?)(?: +\w+){0,2} +(?:can|could|may|will) +(?:enter +service|be +launched|be +published)(?: |$)/u.test(clause) ||
+      /(?:^| )production(?: +\w+){0,2} +(?:can|could|may|will) +be +turned +on(?: |$)/u.test(clause) ||
+      explicitFreeToReleaseAction ||
+      /(?:^| )(?:moved|moving|move) +forward(?: |$)/u.test(clause) ||
+      /(?:^| )(?:became|become|goes|is|are|was|were|went) +live(?: |$)/u.test(clause)
+    const releaseActionNegated = /(?:^| )(?:cannot|not|never|must +not|may +not|will +not|should +not|do +not|does +not|did +not)(?: +\w+){0,4} +(?:go +live|beg\w*|start\w*|ship\w*|launch\w*|deploy\w*|publish\w*|proceed\w*|continu\w*|resum\w*|commenc\w*|activat\w*|move +forward|into +production)(?: |$)/u.test(clause)
+    const affirmativeReleaseCompletion = releaseContext && (
+      /(?:^| )(?:applications?|builds?|candidates?|deployments?|implementation|launch|production|releases?|rollouts?|sites?|traffic|versions?|websites?)(?: +\w+){0,3} +(?:is|are|was|were|has +been|have +been)? *(?:complete|completed|done|finished|happened|imminent|occurred|published|releasable|succeeded|successful|underway)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:applications?|builds?|candidates?|deployments?|implementation|launch|production|releases?|rollouts?|sites?|traffic|versions?|websites?)(?: +\w+){0,2} +(?:began|begun|completed|finished|happened|occurred|published|started|succeeded)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:traffic|production +traffic)(?: +\w+){0,2} +(?:cut +over|went +live)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:applications?|builds?|candidates?|products?|sites?|versions?|websites?)(?: +\w+){0,3} +(?:is|are|was|were)? *(?:fit|ready) +to +ship(?: |$)/u.test(clause) ||
+      /(?:^| )(?:applications?|builds?|candidates?|products?|sites?|versions?|websites?)(?: +\w+){0,3} +(?:is|are|was|were)? *fit +for +(?:launch|production)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:applications?|builds?|candidates?|products?|sites?|versions?|websites?)(?: +\w+){0,3} +(?:is|are|was|were)? *publishable(?: |$)/u.test(clause) ||
+      /(?:^| )(?:builds?|candidates?|deployments?|launch|releases?|rollouts?|sites?)(?: +\w+){0,3} +passed +(?:all +)?(?:checks?|gates?)(?: |$)/u.test(clause)
+    ) && !releaseActionNegated && !/(?:^| )(?:must|need|needs|needed|required|requires|requiring|should|future)(?: |$)/u.test(clause)
+    const affirmativeReleaseConsent = (
+      /(?:^| )(?:consent|authority|permission)(?: +\w+){0,3} +to +(?:deploy|launch|release|rollout|ship)(?: +\w+){0,3} +(?:gave|given|granted|received|was|were)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:deployments?|launch|production|releases?|rollouts?)(?: +\w+){0,3} +(?:has|have|received|was +given|were +given) +(?:consent|authority|permission)(?: |$)/u.test(clause)
+    ) && !/(?:^| )(?:no|not|never|without|pending|provisional)(?: |$)/u.test(clause)
+    const affirmativeReleaseProgress = (
+      /(?:^| )(?:can|could|may|will|we) *(?:can|could|may|will)? *(?:move +ahead|move +forward|proceed)(?: +\w+){0,4} +(?:deployment|launch|production|release|rollout)(?: |$)/u.test(clause) ||
+      /(?:^| )there +is +nothing(?: +\w+){0,3} +(?:blocking|preventing|stopping)(?: +\w+){0,3} +(?:deployment|launch|production|release|rollout)(?: |$)/u.test(clause)
+    ) && !releaseActionNegated
+    const affirmativeReleasePermissionReversal = /(?:^| )(?:deployment|launch|production|release|rollout)(?: +\w+){0,3} +(?:does +not +lack|is +not +without) +(?:approval|authority|authorization|clearance|permission)(?: |$)/u.test(clause) ||
+      /(?:^| )there +is +no +reason +not +to +(?:deploy|launch|publish|release|ship)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:deployment|release|rollout)(?: +\w+){0,3} +(?:waiver +(?:was |is )?(?:issued|received)|received +a +waiver)(?: |$)/u.test(clause) ||
+      /(?:^| )no +(?:further|outstanding|remaining|required)? *approval(?: +\w+){0,3} +(?:is +)?needed +for +(?:deployment|launch|production|release|rollout)(?: |$)/u.test(clause)
+    const affirmativeReleaseOperationalState = /(?:^| )(?:deployment|launch|production|release|rollout|site|website)(?: +\w+){0,3} +(?:is|are|was|were|remains?)? *(?:happening|in +progress|ongoing|online|serving +traffic)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:the +)?(?:build|candidate)(?: +\w+){0,3} +(?:meets?|satisfies?) +(?:the +)?launch +criteria(?: |$)/u.test(clause) ||
+      /(?:^| )(?:traffic|production +traffic)(?: +\w+){0,3} +(?:is|was|has +been)? *(?:cut +over|routed|switched) +to +production(?: |$)/u.test(clause) ||
+      /(?:^| )(?:deployment|launch|release)(?: +\w+){0,2} +can +happen(?: |$)/u.test(clause) ||
+      /(?:^| )(?:deployment|launch|release)(?: +\w+){0,2} +(?:entered +production|kicked +off|passed +muster|went +out)(?: |$)/u.test(clause)
+    const contrastReleaseAction = /(?:^| )(?:no +(?:release +)?approval|not +approved)(?: +\w+){0,4} +(?:deploy|launch|publish|release|ship)(?: +anyway| +now)?(?: |$)/u.test(clause)
+    const qualifiedReleaseStatus = /(?:^| )(?:deployment|launch|production|release|rollout|site|website)(?: +\w+){0,3} +(?:is|are|was|were|became|becomes?|remains?) +(?:enabled|public|qualified|unrestricted)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:enabled|public|qualified|unrestricted) +(?:deployment|launch|production|release|rollout)(?: |$)/u.test(clause)
+    const standaloneAffirmativeReleaseStatus = semanticTokenIndexes(
+      tokens,
+      (token) => /^(?:approv(?:e|ed|es|ing)|authoris(?:e|ed|es|ing)|authoriz(?:e|ed|es|ing)|bless(?:ed|es|ing)?|clear(?:ed|s|ing)?|greenlit|permit(?:ted|s|ting)?|sanction(?:ed|s|ing)?)$/u.test(token)
+    ).some((index) => !semanticIndexIsNegated(tokens, index))
+    const positiveReleaseFact = (
+      releaseContext && (releaseAuthorizationState || (releaseAction && !releaseActionNegated))
+    ) || contrastReleaseAction || invertedReleaseProhibition || releaseConstraintRemoved || affirmativeReleaseCompletion || affirmativeReleaseConsent || affirmativeReleaseProgress || affirmativeReleasePermissionReversal || qualifiedReleaseStatus ||
+      affirmativeReleaseOperationalState || (explicitReleaseImperative && !releaseActionNegated) ||
+      explicitFreeToReleaseAction || (affirmativeReleaseStatus && releaseAction && !releaseActionNegated) ||
+      (tokens.length <= 4 && (standaloneAffirmativeReleaseStatus || idiomaticPermission || releaseAction) &&
+        !/(?:^| )(?:no|not|never|without|blocked|pending|provisional|false)(?: |$)/u.test(clause))
 
     assert(
-      !releasePatterns.some((pattern) => pattern.test(affirmative)),
-      `${label} contains affirmative production or implementation authorization through a free-form authorization or release-status claim`
+      !positiveReleaseFact,
+      `${label} contains affirmative production or implementation authorization through a free-form authorization or release-status claim: ${JSON.stringify(clause)}`
     )
-    assert(
-      !decisionPatterns.some((pattern) => pattern.test(affirmative)),
-      `${label} contains a free-form approval, pass, or selection claim`
+
+    const nonCandidateHumanActor = semanticHasAnyRoot(tokens, [
+      "cohort",
+      "community",
+      "customer",
+      "folk",
+      "human",
+      "individual",
+      "applicant",
+      "interviewee",
+      "learner",
+      "panel",
+      "participant",
+      "people",
+      "person",
+      "reader",
+      "resident",
+      "respondent",
+      "student",
+      "tester",
+      "user",
+      "volunteer"
+    ])
+    const strongStudyContext = semanticHasAnyRoot(tokens, [
+      "evaluation",
+      "interview",
+      "journey",
+      "moderated",
+      "research",
+      "study",
+      "test",
+      "trial",
+      "usability",
+      "validat"
+    ])
+    const studyContext = strongStudyContext || semanticHasAnyRoot(tokens, ["round", "session"]) || semanticHasPhrase(clause, "focus group")
+    const humanArtifactContext = semanticHasAnyRoot(tokens, ["interface", "journey", "navigation", "prototype", "screen", "site", "website"])
+    const humanActor = nonCandidateHumanActor || semanticHasPhrase(clause, "test subject") || semanticHasPhrase(clause, "test subjects") || (
+      semanticHasAnyRoot(tokens, ["candidate"]) && (studyContext || humanArtifactContext)
     )
-    assert(
-      !nonzeroCountPattern.test(affirmative),
-      `${label} contains nonzero human usability evidence through a free-form nonzero human participant count`
+    const standaloneHumanStudyContext = semanticHasAnyRoot(tokens, ["interview", "moderated", "research", "study", "trial", "usability"]) ||
+      semanticHasPhrase(clause, "focus group") ||
+      /(?:^| )(?:human|learner|participant|user) +(?!interface\b)(?:evaluation|testing|validation)(?: |$)/u.test(clause)
+    const humanEvidenceNoun = semanticHasAnyRoot(tokens, [
+      "feedback",
+      "evidence",
+      "finding",
+      "comment",
+      "commentary",
+      "insight",
+      "input",
+      "note",
+      "observation",
+      "opinion",
+      "outcome",
+      "preference",
+      "reaction",
+      "recommendation",
+      "remark",
+      "response",
+      "result",
+      "sentiment",
+      "suggestion",
+      "verdict",
+      "view",
+      "voice"
+    ])
+    const humanResultVerbIndexes = semanticTokenIndexes(tokens, (token) => /^(?:advis(?:e|ed|es|ing)|answer(?:ed|s|ing)?|attend(?:ed|s|ing)?|collect(?:ed|s|ing)?|complet(?:e|ed|es|ing)|conclud(?:e|ed|es|ing)|conduct(?:ed|s|ing)?|consult(?:ed|s|ing)?|contribut(?:e|ed|es|ing)|conven(?:e|ed|es|ing)|driv(?:e|en|es|ing)|drove|evaluat(?:e|ed|es|ing)|exist(?:ed|s|ing)?|favor(?:ed|s|ing)?|finish(?:ed|es|ing)?|gather(?:ed|s|ing)?|gave|give|gives|giving|guid(?:e|ed|es|ing)|happen(?:ed|s|ing)?|held|hold|holds|holding|incorporat(?:e|ed|es|ing)|inform(?:ed|s|ing)?|influenc(?:e|ed|es|ing)|interview(?:ed|s|ing)?|involv(?:e|ed|es|ing)|join(?:ed|s|ing)?|listen(?:ed|s|ing)?|met|meet|meets|meeting|observ(?:e|ed|es|ing)|occur(?:red|s|ring)?|participat(?:e|ed|es|ing)|pass(?:ed|es|ing)|perform(?:ed|s|ing)?|produc(?:e|ed|es|ing)|provid(?:e|ed|es|ing)|ran|rat(?:e|ed|es|ing)|receiv(?:e|ed|es|ing)|record(?:ed|s|ing)?|recruit(?:ed|s|ing)?|reflect(?:ed|s|ing)?|report(?:ed|s|ing)?|research(?:ed|es|ing)|respond(?:ed|s|ing)?|return(?:ed|s|ing)?|review(?:ed|s|ing)|run|running|sampl(?:e|ed|es|ing)|saw|see|seen|shadow(?:ed|s|ing)?|shap(?:e|ed|es|ing)|shar(?:e|ed|es|ing)|spoke|speak|speaks|speaking|stud(?:ied|ies|ying)|suppl(?:y|ied|ies|ying)|support(?:ed|s|ing)?|survey(?:ed|s|ing)?|talk(?:ed|s|ing)?|test(?:ed|s)|tr(?:ied|ies|ying)|us(?:e|ed|es|ing)|validat(?:e|ed|es|ing)|watch(?:ed|es|ing)?|witness(?:ed|es|ing)?|yield(?:ed|s|ing)?)$/u.test(token))
+    const humanResultVerb = humanResultVerbIndexes.some((index) => !semanticIndexIsNegated(tokens, index)) ||
+      semanticHasPhrase(clause, "took place") || semanticHasPhrase(clause, "take place") || semanticHasPhrase(clause, "heard from") || semanticHasPhrase(clause, "weighed in")
+    const directHumanObservation = semanticTokenIndexes(
+      tokens,
+      (token) => /^(?:advis(?:e|ed|es|ing)|answer(?:ed|s|ing)?|ask(?:ed|s|ing)?|attend(?:ed|s|ing)?|consult(?:ed|s|ing)?|evaluat(?:e|ed|es|ing)|interview(?:ed|s|ing)?|join(?:ed|s|ing)?|listen(?:ed|s|ing)?|observ(?:e|ed|es|ing)|participat(?:e|ed|es|ing)|poll(?:ed|s|ing)?|rat(?:e|ed|es|ing)|recruit(?:ed|s|ing)?|respond(?:ed|s|ing)?|sampl(?:e|ed|es|ing)|saw|seen|shadow(?:ed|s|ing)?|spoke|speak|speaks|speaking|stud(?:ied|ies|ying)|survey(?:ed|s|ing)?|talk(?:ed|s|ing)?|test(?:ed|s)|tried|used|validat(?:e|ed|es|ing)|watch(?:ed|es|ing)?|witness(?:ed|es|ing)?)$/u.test(token)
+    ).some((index) => !semanticIndexIsNegated(tokens, index)) || semanticHasPhrase(clause, "heard from") || semanticHasPhrase(clause, "weighed in") || semanticHasPhrase(clause, "spoke with") || semanticHasPhrase(clause, "spoke to") || semanticHasPhrase(clause, "met with") || semanticHasPhrase(clause, "talked to") || semanticHasPhrase(clause, "listened to")
+    const directHumanInteraction = humanActor && (
+      /(?:^| )we +(?:heard|listened +to|met(?: +with)?|saw|spoke +to|spoke +with|talked +to|watched|witnessed)(?: +\w+){0,4} +(?:cohorts?|customers?|humans?|learners?|panels?|participants?|people|persons?|readers?|respondents?|students?|testers?|users?|volunteers?)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:cohorts?|community +members?|customers?|folks?|humans?|individuals?|interviewees?|learners?|panels?|participants?|people|persons?|readers?|residents?|respondents?|students?|test +subjects?|testers?|users?|volunteers?)(?: +\w+){0,3} +(?:answered|asked|attended|evaluated|joined|listened|met|participated|polled|reacted|responded|reviewed|spoke|suggested|tested|tried|used|were +heard|were +observed|were +watched|were +witnessed)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:prototype|screen|site|interface|journey)(?: +\w+){0,4} +(?:was|were|has +been|have +been) +(?:evaluated|reviewed|tested|tried|used)(?: +\w+){0,3} +by +(?:applicants?|candidates?|cohorts?|community +members?|folks?|humans?|individuals?|interviewees?|learners?|panels?|participants?|people|persons?|residents?|respondents?|students?|testers?|users?)(?: |$)/u.test(clause)
     )
-    assert(
-      !(studyKindPattern.test(affirmative) && (studyResultPattern.test(affirmative) || humanActorPattern.test(affirmative))),
-      `${label} contains nonzero human usability evidence, claims a human usability test, or contains nonzero participant results through a free-form human-study occurrence or result`
+    const humanExperienceOutcome = humanActor && humanArtifactContext && (
+      /(?:^| )(?:applicants?|candidates?|learners?|participants?|people|students?|testers?|users?)(?: +\w+){0,4} +(?:found|liked|loved|preferred|rated|reacted|responded)(?: +\w+){0,5} +(?:easy|helpful|positively|positive|simple|well)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:applications?|interfaces?|journeys?|navigation|prototypes?|screens?|sites?|websites?)(?: +\w+){0,4} +tested +(?:positively|well)(?: +\w+){0,3} +with +(?:applicants?|candidates?|learners?|participants?|people|students?|testers?|users?)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:applicants?|candidates?|learners?|participants?|people|students?|testers?|users?)(?: +\w+){0,3} +reacted +positively +to(?: +the)? +(?:interface|journey|navigation|prototype|screen|site|website)(?: |$)/u.test(clause)
     )
+    const studyOccurrenceVerb = semanticTokenIndexes(
+      tokens,
+      (token) => /^(?:began|complet(?:e|ed|es|ing)|conclud(?:e|ed|es|ing)|conduct(?:ed|s|ing)?|conven(?:e|ed|es|ing)|finish(?:ed|es|ing)?|happen(?:ed|s|ing)?|held|met|occur(?:red|s|ring)?|pass(?:ed|es|ing)|perform(?:ed|s|ing)?|ran|run|running)$/u.test(token)
+    ).some((index) => !semanticIndexIsNegated(tokens, index)) || semanticHasPhrase(clause, "took place") || semanticHasPhrase(clause, "take place")
+    const releaseCandidateReference = /(?:^| )(?:a|an|one|the)(?: +\w+){0,2} +(?:build|implementation|production|release)(?: +\w+){0,2} +candidate(?: |$)/u.test(clause)
+    const nonzeroHumanCount = humanActor && !releaseCandidateReference && /(?:^| )(?:[1-9]\d*|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|dozens?|scores?|several|multiple|many|a|an)(?: +\w+){0,2} +(?!nonhuman\b)(?:candidates?|cohorts?|community +members?|folks?|humans?|individuals?|interviewees?|learners?|panels?|participants?|people|persons?|residents?|respondents?|students?|test +subjects?|testers?|users?|volunteers?)(?: |$)/u.test(clause)
+    const explicitNonzeroHumanCount = /(?:^| )(?:human +)?participant +count(?: +\w+){0,3} +(?:[1-9]\d*|one|two|three|four|five|six|seven|eight|nine|ten|several|multiple|many)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:participants?|learners?|users?|people|testers?|panelists?)(?: +\w+){0,2} +numbered +(?:[1-9]\d*|one|two|three|four|five|six|seven|eight|nine|ten|several|multiple|many)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:cohort|community|human|individual|interviewee|learner|panel|participant|people|person|resident|respondent|student|subject|tester|user|volunteer) +(?:count|total)(?: +\w+){0,3} +(?:[1-9]\d*|one|two|three|four|five|six|seven|eight|nine|ten|several|multiple|many)(?: |$)/u.test(clause)
+    const explicitHumanMeeting = /^(?:the +)?(?:cohort|panel|participants?|learners?|users?|people|testers?) +(?:met|convened)$/u.test(clause)
+    const coordinatedHumanClaim = /(?:^| )(?:and|or)(?: |$)/u.test(clause)
+    const truthfulHumanNegative = /(?:^| )not +human +usability +tested$/u.test(clause) ||
+      /^(?:no +human +evidence|no +participant +evidence|human +evidence(?: +is)? +none|participant +evidence(?: +is)? +none|human +participant +count(?: +is)? +zero|(?:human|user|participant)(?: +usability)? +research +(?:is|remains?) +out +of +scope)(?: +\w+){0,2}$/u.test(clause) ||
+      (!coordinatedHumanClaim && /^(?:no|zero) +(?!release +candidate\b)(?:humans?|learners?|students?|testers?|respondents?|volunteers?|candidates?|participants?|users?|people|persons?|cohorts?|panels?)(?:$| +(?:completed|conducted|joined|participated +in|passed|performed|provided|tested)(?: +the)? +(?:human +|user +|usability +)?(?:evaluation|research|study|test|testing|trial))$/u.test(clause)) ||
+      (!coordinatedHumanClaim && /^(?:the +)?(?:humans?|learners?|students?|testers?|respondents?|volunteers?|candidates?|participants?|users?|people|persons?|cohorts?|panels?)(?: +\w+){0,3} +(?:did +not|was +not|were +not|has +not|have +not|had +not|never)(?: +\w+){0,8}$/u.test(clause)) ||
+      (!coordinatedHumanClaim && /^(?:the +)?(?:study|testing|research|validation|session)(?: +\w+){0,3} +(?:was +not|were +not|did +not|has +not|have +not|never)(?: +\w+){0,8}$/u.test(clause))
+    const humanContribution = humanActor && (
+      semanticHasPhrase(clause, "weighed in") || semanticHasPhrase(clause, "spoke with") ||
+      humanResultVerbIndexes.some((index) =>
+        !semanticIndexIsNegated(tokens, index) &&
+        /^(?:driv|drove|guid|incorporat|inform|influenc|shap|spoke|speak)/u.test(tokens[index])
+      )
+    ) && semanticHasAnyRoot(tokens, ["choice", "decision", "design", "interface", "journey", "screen"])
+    const humanDecisionContribution = humanActor && semanticTokenIndexes(
+      tokens,
+      (token) => /^(?:adopt(?:ed|s|ing)?|choos(?:e|es|ing)|chose|chosen|decid(?:e|ed|es|ing)|pick(?:ed|s|ing)?|prefer(?:red|s|ring)?|select(?:ed|s|ing)?|vot(?:e|ed|es|ing))$/u.test(token)
+    ).some((index) => !semanticIndexIsNegated(tokens, index))
+    const humanOccurrenceAction = humanActor && (
+      semanticTokenIndexes(
+        tokens,
+        (token) => /^(?:ask(?:ed|s|ing)?|attend(?:ed|s|ing)?|conven(?:e|ed|es|ing)|evaluat(?:e|ed|es|ing)|join(?:ed|s|ing)?|observ(?:e|ed|es|ing)|participat(?:e|ed|es|ing)|poll(?:ed|s|ing)?|respond(?:ed|s|ing)?|spoke|test(?:ed|s|ing)?|tr(?:ied|ies|ying)|us(?:e|ed|es|ing))$/u.test(token)
+      ).some((index) => !semanticIndexIsNegated(tokens, index)) ||
+      semanticHasPhrase(clause, "took part")
+    )
+    const humanEvidenceSourced = /(?:^| )(?:comments?|commentary|feedback|findings?|input|insights?|notes?|observations?|opinions?|outcomes?|preferences?|reactions?|recommendations?|remarks?|responses?|results?|sentiment|suggestions?|views?)(?: +\w+){0,4} +(?:came|originated|was +received|were +received)(?: +\w+){0,2} +from +(?:the +)?(?:cohorts?|community +members?|customers?|humans?|individuals?|interviewees?|learners?|panels?|participants?|people|persons?|residents?|respondents?|students?|testers?|users?|volunteers?)(?: |$)/u.test(clause)
+    const invertedHumanNegative = /(?:^| )(?:cannot +be +said +to +be|is +not|was +not|are +not|were +not) +absent(?: |$)/u.test(clause) ||
+      /(?:^| )(?:untrue|false) +that +no +human +evidence(?: |$)/u.test(clause) ||
+      /(?:^| )(?:participants?|people|learners?|users?|testers?)(?: +\w+){0,3} +(?:were|was) +not +unobserved(?: |$)/u.test(clause) ||
+      /(?:^| )(?:participants?|people|learners?|users?|testers?)(?: +\w+){0,3} +did +not +(?:go|remain) +untested(?: |$)/u.test(clause) ||
+      /(?:^| )no +(?:participants?|people|learners?|users?|testers?)(?: +\w+){0,3} +(?:were|was) +left +untested(?: |$)/u.test(clause)
+    const reviewerTypeUserReference = /(?:^| )(?:reviewer +of +(?:github +)?type +user|reviewer +whose +(?:github +)?type +is +user|user +reviewer|user +review +(?:boundary|condition|gate|requirement|rule))(?: |$)/u.test(clause)
+    const terseHumanEvidence = humanActor && humanEvidenceNoun && tokens.length <= 3
+    const standaloneHumanEvidence = standaloneHumanStudyContext && humanEvidenceNoun && humanResultVerb && !truthfulHumanNegative
+    const positiveHumanFact = invertedHumanNegative || (!truthfulHumanNegative && !reviewerTypeUserReference && (
+      nonzeroHumanCount || explicitNonzeroHumanCount || explicitHumanMeeting ||
+      (humanActor && studyContext) ||
+      terseHumanEvidence ||
+      (humanActor && directHumanObservation) ||
+      directHumanInteraction ||
+      humanExperienceOutcome ||
+      humanContribution ||
+      humanDecisionContribution ||
+      humanOccurrenceAction ||
+      humanEvidenceSourced ||
+      (humanActor && humanResultVerb && (humanEvidenceNoun || studyContext)) ||
+      (standaloneHumanStudyContext && studyOccurrenceVerb) ||
+      standaloneHumanEvidence
+    ))
+
     assert(
-      !humanObservationPatterns.some((pattern) => pattern.test(affirmative)),
-      `${label} contains a free-form human observation or evidence result`
+      !positiveHumanFact,
+      `${label} contains nonzero human usability evidence, claims a human usability test, or contains nonzero participant results, a human-study occurrence/result, human observation, or a nonzero participant count through free-form text: ${JSON.stringify(clause)}`
+    )
+
+    const decisionContext = semanticHasAnyRoot(tokens, [
+      "archetype",
+      "candidate",
+      "choice",
+      "committee",
+      "decision",
+      "direction",
+      "draft",
+      "migration",
+      "option",
+      "packet",
+      "panel",
+      "plan",
+      "proposal",
+      "recommendation",
+      "selection",
+      "selector",
+      "territory",
+      "variant",
+      "winner"
+    ])
+    const activeDecisionResult = semanticTokenIndexes(
+      tokens,
+      (token) => /^(?:adopt(?:ed|s|ing)?|advanc(?:e|ed|es|ing)|agree(?:d|s|ing)?|align(?:ed|s|ing)?|backed|backs|backing|beat|beats|beaten|broke|carried|choos(?:e|es|ing)|chose|chosen|coalesc(?:e|ed|es|ing)|converg(?:e|ed|es|ing)|decid(?:e|ed|es|ing)|declar(?:e|ed|es|ing)|emerg(?:e|ed|es|ing)|endors(?:e|ed|es|ing)|favor(?:ed|s|ing)?|greenlit|locked|made|make|makes|making|opt(?:ed|s|ing)?|pick(?:ed|s|ing)?|prefer(?:red|s|ring)?|prevail(?:ed|s|ing)?|ratif(?:y|ied|ies|ying)|recommend(?:ed|s|ing)?|resolv(?:e|ed|es|ing)|select(?:ed|s|ing)?|settle(?:d|s|ing)?|support(?:ed|s|ing)?|triumph(?:ed|s|ing)?|vot(?:e|ed|es|ing)|win|wins|winning|won)$/u.test(token)
+    ).some((index) => !semanticIndexIsNegated(tokens, index)) || semanticHasPhrase(clause, "green light") || semanticHasPhrase(clause, "go ahead") || semanticHasPhrase(clause, "the nod") || semanticHasPhrase(clause, "settled on") || semanticHasPhrase(clause, "went with") || semanticHasPhrase(clause, "went for") || semanticHasPhrase(clause, "landed on")
+    const decisionNounResultIndexes = semanticTokenIndexes(
+      tokens,
+      (token) => /^(?:accept(?:ance|ed)?|agreement|approval|blessing|choice|consensus|decision|endorsement|outcome|permission|recommendation|selection|verdict|vote|winner)$/u.test(token)
+    )
+    const passiveDecisionResult = decisionNounResultIndexes.some((index) => {
+      if (semanticIndexIsNegated(tokens, index)) return false
+      const nearby = tokens.slice(Math.max(0, index - 2), index + 3)
+      const localConnector = semanticHasAssertionConnector(nearby)
+      const actorBeforeAccepted = tokens[index] === "accepted" &&
+        /^(?:candidates?|decisions?|drafts?|migrations?|options?|packets?|panels?|plans?|proposals?|reviews?|variants?)$/u.test(tokens[index - 1] ?? "")
+      return localConnector || actorBeforeAccepted
+    })
+    const invertedPendingDecision = /(?:^| )(?:choice|decision|direction|selection|territory|option|variant)(?: +\w+){0,3} +(?:is|was|remains?|became)? *no +longer +(?:pending|provisional|undecided|unresolved)(?: |$)/u.test(clause)
+    const pendingDecisionReference = !invertedPendingDecision && (/(?:^| )(?:pending|provisional|undecided|unresolved)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:not|never)(?: +\w+){0,3} +(?:adopted|approved|chosen|made|passed|preferred|selected|settled|won)(?: |$)/u.test(clause)
+    )
+    const explicitDecisionOutcome = /(?:^| )(?:agreement|consensus|endorsement|recommendation|selection|verdict|winner)(?: +\w+){0,4} +(?:is|was|went|received|reached|declared|named|emerged|carried)(?: +\w+){0,3}(?: |$)/u.test(clause) ||
+      /(?:^| )(?:committee|panel|review +team|selector|team)(?: +\w+){0,3} +reached +(?:agreement|consensus)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:review|panel|committee)(?: +\w+){0,3} +outcome(?: +\w+){0,2} +(?:is|was)? *(?:positive|successful|supportive)(?: |$)/u.test(clause) ||
+      /^(?:the +)?(?:candidate|choice|committee|decision|draft|option|packet|panel|plan|proposal|review|selection|selector|variant) +(?:(?:is|was|has +been) +)?passed$/u.test(clause) ||
+      /(?:^| )(?:committee|panel|selector|team)(?: +\w+){0,2} +passed(?: +\w+){0,2} +(?:choice|decision|draft|option|packet|plan|proposal|review|selection|variant)(?: |$)/u.test(clause) ||
+      /(?:^| )committee +named(?: +the)? +(?:option|proposal|territory|variant)? *[a-z0-9]+(?: |$)/u.test(clause) ||
+      /(?:^| )(?:option|territory|variant)? *[a-z0-9]+ +(?:carried +the +vote|emerged +as +the +selection|received +the +panel +endorsement|was +declared +the +winner|was +victorious|advanced|beat(?: +\w+){0,2}|triumphed)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:final +)?(?:choice|decision)(?: +\w+){0,2} +(?:is|was|:) +(?:option +)?[a-z0-9]+(?: |$)/u.test(clause) ||
+      /(?:^| )final +(?:choice|decision) +(?:option +)?[a-z0-9]+(?: |$)/u.test(clause) ||
+      /(?:^| )(?:option|territory|variant) +[a-z0-9]+ +(?:is|was) +the +final +choice(?: |$)/u.test(clause) ||
+      /(?:^| )[a-z0-9]+ +(?:is|was) +(?:our|the) +(?:choice|decision|pick|preference|selection|winner)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:committee|group|panel|selector|team)(?: +\w+){0,3} +(?:landed +on|went +for|went +with)(?: +\w+){0,3}(?: |$)/u.test(clause) ||
+      /(?:^| )(?:committee|group|panel|selector|team) +(?:choice|decision|pick|preference|selection)(?: +is| +was| +on| +:)? +[a-z0-9]+(?: |$)/u.test(clause) ||
+      /(?:^| )(?:committee|group|panel|selector|team)(?: +\w+){0,3} +(?:aligned +on|coalesced +around|converged +on|supported)(?: +\w+){0,3}(?: |$)/u.test(clause) ||
+      /(?:^| )(?:the +)?vote +broke +for +(?:option +|territory +|variant +)?[a-z0-9]+(?: |$)/u.test(clause) ||
+      /(?:^| )(?:direction|option|territory|variant) +[a-z0-9]+ +(?:is|was|became|has +been) +(?:the +)?(?:chosen|locked|preferred|selected|settled) +(?:choice|direction|option|standard|territory|variant)?(?: |$)/u.test(clause) ||
+      /(?:^| )[a-z0-9]+ +became +(?:the +)?(?:chosen|locked|preferred|selected|settled) +(?:choice|direction|option|standard|territory|variant)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:direction|option|territory|variant) +[a-z0-9]+ +was +settled(?: |$)/u.test(clause) ||
+      /(?:^| )(?:consensus|verdict|winner)(?: +is| +was| +:)? +(?:direction +|option +|territory +|variant +)?(?:[a-z]|[0-9]+)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:direction|option|territory|variant) +locked +to +[a-z0-9]+(?: |$)/u.test(clause)
+      || /(?:^| )no +objections?(?: +\w+){0,4} +(?:committee|group|panel|selector|team)(?: +\w+){0,3} +(?:adopted|aligned|backed|chose|coalesced|decided|endorsed|picked|selected|settled|supported|voted)(?: +\w+){0,3}(?: |$)/u.test(clause)
+    const terseDecisionOutcome = /(?:^| )(?:committee|panel|selector|territory)(?: +\w+){0,2} +(?:choice|consensus|selection|verdict|winner)(?: +\w+){0,2}(?: |$)/u.test(clause) &&
+      !pendingDecisionReference
+    const positiveDecisionFact = invertedPendingDecision || (!pendingDecisionReference && (
+      (decisionContext && (activeDecisionResult || passiveDecisionResult)) ||
+      terseDecisionOutcome || explicitDecisionOutcome
+    ))
+
+    assert(
+      !positiveDecisionFact,
+      `${label} contains a free-form approval, pass, or selection claim: ${JSON.stringify(clause)}`
     )
   }
 }
@@ -862,10 +1617,11 @@ const validateMarkdownStateAssignments = (source) => {
     liveenvironmentreviewertype: "user",
     liveenvironmentchangeauthorization: "separate-required",
     reviewsubjectbasesha: reviewSubjectBaseSha,
-    authorizationinterface: "codex-only-uiux-v1"
+    authorizationinterface: "codex-only-uiux-v1",
+    reviewmode: "codex-only"
   })
   const assignments = source.matchAll(
-    /\b(decisionStatus|decision status|participantEvidence|participant evidence|humanEvidence|human evidence|humanParticipantCount|human participant count|notHumanUsabilityTested|not human usability tested|requiredDependencyShas|required dependency SHAs|productionAuthorization|production authorization|productionDeploymentStatus|production deployment status|productionDeploymentScope|production deployment scope|liveEnvironmentReviewerType|live environment reviewer type|liveEnvironmentChangeAuthorization|live environment change authorization|reviewSubjectBaseSha|review subject base SHA|authorizationInterface|authorization interface|status)[`"'\s*]*(?:[:=]|\||\bis\b)\s*[`"'\s*]*([^\s|,;`]+)/giu
+    /\b(decisionStatus|decision status|participantEvidence|participant evidence|humanEvidence|human evidence|humanParticipantCount|human participant count|notHumanUsabilityTested|not human usability tested|requiredDependencyShas|required dependency SHAs|productionAuthorization|production authorization|productionDeploymentStatus|production deployment status|productionDeploymentScope|production deployment scope|liveEnvironmentReviewerType|live environment reviewer type|liveEnvironmentChangeAuthorization|live environment change authorization|reviewSubjectBaseSha|review subject base SHA|authorizationInterface|authorization interface|reviewMode|review mode|status)[`"'\s*]*(?:[:=]|\||\bis\b)\s*[`"'\s*]*([^\s|,;`]+)/giu
   )
   for (const match of assignments) {
     const field = match[1].replaceAll(" ", "").toLowerCase()
@@ -883,7 +1639,7 @@ const validateNoUnstructuredStateAssignments = (source) => {
     ""
   )
   assert(
-    !/\b(?:decisionStatus|decision status|participantEvidence|participant evidence|humanEvidence|human evidence|humanParticipantCount|human participant count|notHumanUsabilityTested|not human usability tested|requiredDependencyShas|required dependency SHAs|productionAuthorization|production authorization|productionDeploymentStatus|production deployment status|productionDeploymentScope|production deployment scope|liveEnvironmentReviewerType|live environment reviewer type|liveEnvironmentChangeAuthorization|live environment change authorization|reviewCycleStatus|review cycle status|priorReviewReceiptsReusable|prior review receipts reusable|rejectedReviewHeadSha|rejected review head SHA|reviewSubjectBaseSha|review subject base SHA|authorizationInterface|authorization interface|status)[`"'\s*]*(?:[:=]|\||\bis\b)\s*[`"'\s*]*[^\s|,;`]+/iu.test(outsideMetadata),
+    !/\b(?:decisionStatus|decision status|participantEvidence|participant evidence|humanEvidence|human evidence|humanParticipantCount|human participant count|notHumanUsabilityTested|not human usability tested|requiredDependencyShas|required dependency SHAs|productionAuthorization|production authorization|productionDeploymentStatus|production deployment status|productionDeploymentScope|production deployment scope|liveEnvironmentReviewerType|live environment reviewer type|liveEnvironmentChangeAuthorization|live environment change authorization|reviewCycleStatus|review cycle status|priorReviewReceiptsReusable|prior review receipts reusable|reviewSubjectBaseSha|review subject base SHA|authorizationInterface|authorization interface|reviewMode|review mode|status)[`"'\s*]*(?:[:=]|\||\bis\b)\s*[`"'\s*]*[^\s|,;`]+/iu.test(outsideMetadata),
     "migration draft contains a state assignment outside structured metadata"
   )
 }
@@ -969,11 +1725,11 @@ const validateStructuredState = (value, label, path = []) => {
     if (key === "priorReviewReceiptsReusable") {
       assert(entry === false, `${location} must remain false`)
     }
-    if (key === "rejectedReviewHeadSha") {
-      assert(entry === rejectedReviewHeadSha, `${location} must remain the rejected published head`)
-    }
     if (key === "reviewSubjectBaseSha") {
       assert(entry === reviewSubjectBaseSha, `${location} must remain the integrated current-main subject base`)
+    }
+    if (key === "reviewMode") {
+      assert(entry === "codex-only", `${location} must remain codex-only`)
     }
     if (["acceptedDecisionSha", "mergeCommitSha", "ciRunId", "ciHeadSha", "independentReviewRecordSha256", "upstreamInputRef", "artifactSha256ByPath", "externalEvidenceId"].includes(key)) {
       assert(entry === null, `${location} must remain null until deliberate graduation`)
@@ -993,8 +1749,8 @@ const validateNoUnexpectedShaLiterals = (
   const allowed = new Set([
     observedAtSha,
     historicalBaselineCiHeadSha,
-    rejectedReviewHeadSha,
     reviewSubjectBaseSha,
+    ...invalidatedReviewSubjectShas,
     ...allowedLiterals
   ].map((literal) => literal.toLowerCase()))
   const matches = source.match(/\b[0-9a-f]{7,64}\b/giu) ?? []
@@ -1018,9 +1774,27 @@ const validateNoUnexpectedShaLiterals = (
   }
 }
 
-const validateNoAffirmativeAuthorization = (source, label) => {
+const validateNoAffirmativeAuthorization = (source, label, { projectSemantic = true } = {}) => {
   assert(!/^\s*deploy(?:ment)?(?: to)? production(?: now)?[.!]?\s*$/imu.test(source), `${label} contains a production deployment imperative`)
-  validateNoFreeFormSemanticClaims(source, label)
+  validateNoFreeFormSemanticClaims(source, label, { project: projectSemantic })
+  for (const clause of semanticClaimClauses(source, { project: projectSemantic })) {
+    const tokens = clause.split(" ")
+    const reviewerGateContext = semanticHasAnyRoot(tokens, ["reviewer"]) ||
+      /(?:^| )(?:required|user|production|release)(?: +\w+){0,3} +(?:gate|review|reviewer|condition|rule)(?: |$)/u.test(clause) ||
+      /(?:^| )production +environment(?: +\w+){0,2} +(?:review|reviewer|condition|gate)(?: |$)/u.test(clause) ||
+      /(?:^| )user +review(?:er)?(?: +\w+){0,2} +(?:condition|gate|rule)(?: |$)/u.test(clause)
+    const reviewerOutcomeIndexes = semanticTokenIndexes(
+      tokens,
+      (token) => /^(?:clear(?:ed|s|ing)?|complet(?:e|ed|es|ing)|done|fulfil(?:l|led|ls|ling)|met|pass(?:ed|es|ing)|satisf(?:y|ied|ies|ying))$/u.test(token)
+    )
+    const affirmativeReviewerOutcome = reviewerOutcomeIndexes.some((index) => !semanticIndexIsNegated(tokens, index)) ||
+      (semanticHasPhrase(clause, "signed off") && !/(?:^| )(?:cannot|not|never)(?: |$)/u.test(clause)) ||
+      (semanticHasPhrase(clause, "checked the box") && !/(?:^| )(?:cannot|not|never)(?: |$)/u.test(clause))
+    assert(
+      !(reviewerGateContext && affirmativeReviewerOutcome),
+      `${label} claims the live production reviewer condition is complete or satisfied`
+    )
+  }
   assert(
     !/\bcodex\b[^\n]{0,48}\b(?:satisfies|can satisfy|may satisfy|bypasses|can bypass|waives)\b[^\n]{0,64}\b(?:production environment|environment reviewer|required reviewer|user reviewer)\b/iu.test(source),
     `${label} claims Codex can satisfy or bypass the live production reviewer`
@@ -1034,6 +1808,17 @@ const validateNoAffirmativeAuthorization = (source, label) => {
     affirmativeReviewerStateClaims.length === 0,
     `${label} claims the live production reviewer is waived or satisfied`
   )
+  const reviewerSatisfactionPatterns = [
+    /\b(?:ci|codex|automation|the agent|the team)\b[^\n.!?]{0,64}\b(?:fulfilled|met|passed|satisfied|cleared)\b[^\n.!?]{0,64}\b(?:required[- ]review(?:er)? condition|required reviewer|user[- ]review(?:er)? (?:gate|rule)|production environment reviewer)\b/iu,
+    /\b(?:required[- ]review(?:er)? condition|required review|user[- ]review(?:er)? (?:gate|rule)|production environment reviewer)\b[^\n.!?]{0,64}\b(?:fulfilled|met|passed|satisfied|cleared)\b[^\n.!?]{0,64}\b(?:by\s+)?(?:ci|codex|automation|the agent|the team)\b/iu
+  ]
+  const reviewerSatisfactionClaims = reviewerSatisfactionPatterns
+    .map((pattern) => source.match(pattern)?.[0])
+    .filter((claim) => claim !== undefined && !/\b(?:cannot|can +not|not|never|unsatisfied|unfulfilled)\b/iu.test(claim))
+  assert(
+    reviewerSatisfactionClaims.length === 0,
+    `${label} claims Codex or automation fulfilled the live production reviewer condition`
+  )
   assert(
     !/\b(?:plan 009|this plan|this packet|codex)\b[^\n]{0,32}\b(?:authorizes|permits|allows|approves)\b[^\n]{0,48}\b(?:change|changing|modify|modifying|remove|removing|disable|disabling)\b[^\n]{0,48}\b(?:production environment|environment reviewer|required reviewer|user[- ]review rule)\b/iu.test(source),
     `${label} claims authority to change the live production Environment`
@@ -1041,27 +1826,235 @@ const validateNoAffirmativeAuthorization = (source, label) => {
 }
 
 const validateNoUnsafeRollbackClaims = (source, label) => {
-  const rollbackVerb = "(?:revert(?:ed|ing)?|roll(?:ed|ing)? back)"
-  const unsafeRollbackPatterns = [
-    /\brevert each slice independently\b/iu,
-    /\bui[- ]only changes revert normally\b/iu,
-    /\brevert (?:the )?(?:isolated )?presentation(?: subset)?\b/iu,
-    /\brevert (?:the )?(?:precise|exact|individual) tranche\b/iu,
-    /\brevert (?:the )?(?:ordered|arbitrary|nonclosed) migration range\b/iu,
-    /\brevert tranche\s+\d+\s+while later tranches remain\b/iu,
-    /\bserve an earlier version after (?:a )?compatibility check\b/iu,
-    /\b(?:any|each|every) tranche (?:can|may|should|will)?\s*(?:be )?revert(?:ed|ible) independently\b/iu,
-    new RegExp(`\\b${rollbackVerb}\\b[^\\n.!?]{0,40}\\b(?:isolated\\s+)?presentation(?:\\s+(?:layer|subset|changes?))?\\b`, "iu"),
-    /\brollback\s+(?:the\s+)?(?:isolated\s+)?presentation(?:\s+(?:layer|subset|changes?))?\b/iu,
-    new RegExp(`\\bpresentation(?:\\s+(?:layer|subset|changes?))?\\b[^\\n.!?]{0,48}\\b${rollbackVerb}\\b[^\\n.!?]{0,24}\\bindependently\\b`, "iu"),
-    new RegExp(`\\b${rollbackVerb}\\b[^\\n.!?]{0,40}\\b(?:arbitrary|ordered|nonclosed|non-closed)\\b[^\\n.!?]{0,24}\\b(?:tranche|migration)?\\s*range\\b`, "iu"),
-    /\brollback\s+(?:an?\s+|the\s+)?(?:arbitrary|ordered|nonclosed|non-closed)\b[^\n.!?]{0,24}\b(?:tranche|migration)?\s*range\b/iu,
-    new RegExp(`\\b(?:any|each|every|individual)\\s+(?:migration\\s+)?(?:tranche|slice)\\b[^\\n.!?]{0,48}\\b${rollbackVerb}\\b[^\\n.!?]{0,24}\\bindependently\\b`, "iu")
-  ]
-  const unsafeMatch = unsafeRollbackPatterns
-    .map((pattern) => source.match(pattern))
-    .find((match) => match !== null)
-  assert(unsafeMatch === undefined, `${label} contains an unsafe non-dependency-closed rollback claim: ${JSON.stringify(unsafeMatch?.[0])}`)
+  const projectedSource = semanticClaimProjection(source).toLowerCase()
+    .replace(/dependency[\p{Pd}_\s]+closed[\p{Pd}_\s]+suffix/gu, "dependency closed suffix")
+  const safeGitTarget = "(?:the +)?(?:current +unmerged +tip|dependency +closed +suffix)"
+  const recoveryAction = "(?:back +out|backout|downgrad\\w*|fall +back|fallback|recover\\w*|redeploy\\w*|restor\\w*|revers\\w*|revert\\w*|roll(?:ed|ing|s)?(?: +\\w+){0,5} +back|rollback|rollbacks|switch(?:ed|es|ing)? +back|undo\\w*)"
+  const crossClauseTargetExtension = new RegExp(
+    `(?:revert +the +current +unmerged +tip|(?:roll +back|rollback) +the +dependency +closed +suffix)\\s*[.;]\\s*(?:also +|include +)?(?:dns|(?:the +)?(?:application|build|database|deployment|file|layer|production|release|route|service|site|tranche|version|worker)(?: +worker)?)(?: +too)?`,
+    "u"
+  ).test(projectedSource) ||
+    new RegExp(`(?:revert +the +current +unmerged +tip|(?:roll +back|rollback) +the +dependency +closed +suffix)\\s*[.;]\\s*[^.!?;\\n]{0,180}${recoveryAction}`, "u").test(projectedSource)
+  assert(!crossClauseTargetExtension, `${label} contains an unsafe non-dependency-closed rollback claim across clauses`)
+
+  const exactSafeGitClaims = Object.freeze([
+    /^revert +the +current +unmerged +tip$/u,
+    /^(?:roll +back|rollback) +the +dependency +closed +suffix$/u,
+    /^direct +revert +is +permitted +only +for +the +current +unmerged +tip$/u,
+    /^a +dependency +closed +suffix +may +be +reverted$/u,
+    /^(?:rollback +boundary +)?direct +revert +is +permitted +only +for +the +current +unmerged +tip +or +a +dependency +closed +suffix$/u,
+    /^direct +revert +remains +limited +to +the +current +unmerged +tip +or +a +dependency +closed +suffix$/u,
+    /^no +tested +instant +cloudflare +production +rollback +exists +and +direct +source +revert +is +safe +only +for +the +current +unmerged +tip +or +a +dependency +closed +suffix$/u,
+    /^forward +fix +unless +direct +revert +targets +the +current +unmerged +tip +or +a +dependency +closed +suffix +and +backward +read +proof +holds$/u
+  ])
+  const exactSafeLocalClaims = Object.freeze([
+    /^restore +settings +from +(?:the +)?imported +backup$/u,
+    /^restore +stored +preferences +after +(?:the +)?authoritative +load$/u,
+    /^restore +the +local +study +session +after +indexeddb +opens$/u,
+    /^restore +settings +after +indexeddb +loads$/u,
+    /^restore +the +offline +pack$/u,
+    /^restore +focus +after +the +dialog +closes$/u,
+    /^undo +the +last +text +edit$/u
+  ])
+  const exactStructuralRecoveryReference = /^(?:(?:apply|document|record|rehearse|use) +(?:the +)?(?:actual +platform +|global +|supported +)?|(?:risk +and +)?)(?:rollback|recovery) +(boundary|contract|coordinates?|matrix|policy|proof|rehearsal|rule|semantics)(?: +(?:above|before +implementation|for +source +changes|in +the +record))?$/u
+  const exactStructuralRecoveryLabel = /^rollbacks? +(boundary|contract|coordinates?|failures?|matrix|path|policy|proof|rehearsal|rule|semantics|workflow)$/u
+
+  for (const clause of semanticClaimClauses(source)) {
+    if (exactSafeGitClaims.some((pattern) => pattern.test(clause)) || exactSafeLocalClaims.some((pattern) => pattern.test(clause))) continue
+    if (exactStructuralRecoveryLabel.test(clause) || exactStructuralRecoveryReference.test(clause)) continue
+
+    const tokens = clause.split(" ")
+    const eventIndexes = semanticTokenIndexes(tokens, (token) =>
+      /^(?:backout|downgrad(?:e|ed|es|ing)|fallback|recover(?:ed|ing|y)?|redeploy(?:ed|s|ing)?|restor(?:ation|e|ed|es|ing)|revers(?:al|e|ed|es|ing)|reversibility|revert(?:ed|ing|ible|s)?|reversion|revertibility|rollback|rollbacks|undo|undoes|undoing|undid|undone)$/u.test(token)
+    )
+    const phraseEventIndexes = semanticTokenIndexes(tokens, (token, index) =>
+      (["roll", "rolled", "rolling", "rolls"].includes(token) && tokens.slice(index + 1, index + 7).includes("back")) ||
+      (["switch", "switched", "switches", "switching", "fall", "falls", "falling", "fell"].includes(token) && tokens.slice(index + 1, index + 7).includes("back")) ||
+      (["back", "backed", "backing"].includes(token) && tokens.slice(index + 1, index + 7).includes("out"))
+    )
+    const recoveryEvents = [...new Set([...eventIndexes, ...phraseEventIndexes])]
+      .filter((index) => !(/^rollbacks?$/u.test(tokens[index]) && /^(?:boundary|contract|coordinates?|failures?|matrix|path|policy|proof|rehearsal|rule|semantics|workflow)$/u.test(tokens[index + 1] ?? "")))
+      .filter((index) => !(tokens[index] === "recovery" && /^(?:copy|description|label|text|wording)$/u.test(tokens[index + 1] ?? "")))
+      .sort((left, right) => left - right)
+    const previousReleaseObject = /(?:^| )(?:old|previous|prior|earlier|older) +(?:build|deployment|production +version|release|site +version|version)(?: |$)/u.test(clause)
+    if (recoveryEvents.length === 0 && !previousReleaseObject) continue
+
+    const actor = semanticHasAnyRoot(tokens, ["operator", "plan", "team", "we"])
+      ? "explicit-actor"
+      : (recoveryEvents.some((index) => index === 0 && /^(?:backout|downgrade|fallback|recover|redeploy|restore|reverse|revert|rollback|undo)$/u.test(tokens[index])) ? "imperative" : "implicit")
+    const targetTokens = [...new Set(recoveryEvents.flatMap((index) => tokens.slice(Math.max(0, index - 6), index + 7)))]
+    const targetClause = targetTokens.join(" ")
+    const distanceToTargetRoots = (roots) => Math.min(...tokens.flatMap((token, tokenIndex) =>
+      semanticHasRoot(token, roots)
+        ? recoveryEvents.map((eventIndex) => Math.abs(eventIndex - tokenIndex))
+        : []
+    ), Number.POSITIVE_INFINITY)
+    const gitCurrentTip = semanticHasPhrase(clause, "current unmerged tip")
+    const gitClosedSuffix = semanticHasPhrase(clause, "dependency closed suffix")
+    const repositoryPathObject = targetTokens.includes("repositorypathsentinel")
+    const releaseTargetRoots = ["application", "build", "deployment", "dns", "production", "release", "site", "traffic", "version", "website"]
+    const partialRuntimeTargetRoots = [
+      "asset", "backend", "change", "component", "css", "document", "file", "frontend", "layer", "module", "navigation",
+      "presentation", "range", "route", "service", "shell", "slice", "subset", "tranche", "ui", "visual", "worker"
+    ]
+    const localStateTargetRoots = [
+      "content", "dialog", "draft", "edit", "focus", "indexeddb", "job", "manifest", "offline", "pack", "preference", "preview", "record", "session", "setting", "text"
+    ]
+    const ambiguousStateTargetRoots = ["database", "data", "state", "stored"]
+    const releaseTargetDistance = distanceToTargetRoots(releaseTargetRoots)
+    const partialRuntimeTargetDistance = distanceToTargetRoots(partialRuntimeTargetRoots)
+    const localStateTargetDistance = distanceToTargetRoots(localStateTargetRoots)
+    const ambiguousStateTargetDistance = distanceToTargetRoots(ambiguousStateTargetRoots)
+    const releaseTarget = Number.isFinite(releaseTargetDistance)
+    const partialRuntimeTarget = Number.isFinite(partialRuntimeTargetDistance) || semanticHasPhrase(targetClause, "service worker")
+    const localStateTarget = Number.isFinite(localStateTargetDistance)
+    const ambiguousStateTarget = Number.isFinite(ambiguousStateTargetDistance)
+    const nearestTargetDistance = Math.min(releaseTargetDistance, partialRuntimeTargetDistance, localStateTargetDistance, ambiguousStateTargetDistance)
+    const target = gitCurrentTip || gitClosedSuffix
+      ? "git-source"
+      : (repositoryPathObject ? "partial-runtime"
+        : (releaseTargetDistance === nearestTargetDistance ? "production-release"
+          : (partialRuntimeTargetDistance === nearestTargetDistance ? "partial-runtime"
+            : (localStateTargetDistance === nearestTargetDistance ? "local-state"
+              : (ambiguousStateTargetDistance === nearestTargetDistance ? "ambiguous-state" : "unspecified")))))
+    const hasTargetExtension = /(?:^| )(?:and|plus|with|including|alongside|covering|along +with|together +with|as +well +as)(?: |$)/u.test(clause) &&
+      (releaseTarget || partialRuntimeTarget || repositoryPathObject || ambiguousStateTarget)
+
+    const eventIsNegated = (index) => {
+      let start = 0
+      let end = tokens.length
+      for (let cursor = index - 1; cursor >= 0; cursor -= 1) {
+        if (["and", "but", "however", "then", "whereas", "yet"].includes(tokens[cursor])) {
+          start = cursor + 1
+          break
+        }
+      }
+      for (let cursor = index + 1; cursor < tokens.length; cursor += 1) {
+        if (["and", "but", "however", "then", "whereas", "yet"].includes(tokens[cursor])) {
+          end = cursor
+          break
+        }
+      }
+      const segment = tokens.slice(start, end).join(" ")
+      const doubleNegative = /(?:^| )(?:not +(?!allowed|permitted)(?:blocked|forbidden|ineligible|prohibited|unsafe)|no +rollbacks? +(?:is +)?unavailable|nothing +prevents?|no +barrier|cannot +fail)(?: |$)/u.test(segment)
+      if (doubleNegative) return false
+      return /(?:^| )(?:cannot|do +not|must +not|may +not|never|no +longer|not +allowed|not +permitted|prohibited|unsafe|ineligible)(?: |$)/u.test(segment) ||
+        /(?:^| )(?:is|are|was|were|remains?) +(?:not +allowed|not +permitted|prohibited|unsafe|ineligible)(?: |$)/u.test(segment) ||
+        /^(?:there +is +)?no(?: |$)/u.test(segment) || /(?:^| )unless(?: |$)/u.test(segment)
+    }
+    const affirmativeEvents = recoveryEvents.filter((index) => !eventIsNegated(index))
+    const truthfulPreviousReleaseProhibition = /^(?:the +)?(?:old|previous|prior|earlier|older) +(?:build|deployment|production +version|release|site +version|version)(?: +is| +are| +remains?)? +(?:forbidden|prohibited|unsafe)$/u.test(clause) ||
+      /^never +(?:serve|use)(?: +the)? +(?:old|previous|prior|earlier|older) +(?:build|deployment|production +version|release|site +version|version)$/u.test(clause)
+    const previousReleaseAction = previousReleaseObject && /(?:^| )(?:deploy|fallback|publish|redeploy|restore|serve|switch|use)(?: |$)/u.test(clause)
+    if (truthfulPreviousReleaseProhibition) continue
+
+    const affirmativeState = affirmativeEvents.some((index) => {
+      const token = tokens[index]
+      const before = tokens.slice(Math.max(0, index - 5), index)
+      const after = tokens.slice(index + 1, index + 7)
+      const recoveryVerbForm = /^(?:backout|downgrade|fallback|recover|redeploy|restore|reverse|revert|rollback|undo)$/u.test(token) || phraseEventIndexes.includes(index)
+      const imperative = recoveryVerbForm && (index === 0 || before.at(-1) === "please")
+      const modal = recoveryVerbForm && before.slice(-2).some((entry) => /^(?:can|could|may|must|need|needs|plan|plans|requires?|should|will)$/u.test(entry))
+      const inflectedAction = /^(?:backout|downgraded|downgrading|redeployed|redeploying|restored|restoring|reversal|reversed|reversing|reverted|reverting|reversion|rolled|switched|switching|undid|undo|undoes|undoing|undone)$/u.test(token) &&
+        !(token === "restoring" && after[0] === "state")
+      const operationalStatus = after.some((entry) => /^(?:active|applied|available|began|capability|certified|complete|completed|configured|done|enabled|ended|executed|exists|failed|finished|happened|initiated|occurred|option|performed|permitted|possible|ready|required|running|safe|started|succeeded|successful|supported|underway|validated)$/u.test(entry))
+      const permissionState = recoveryVerbForm && (before.slice(-2).some((entry) => /^(?:allowed|available|eligible|permitted|safe|supported)$/u.test(entry)) || after.slice(0, 3).some((entry) => /^(?:allowed|available|eligible|permitted|safe|supported)$/u.test(entry)))
+      return imperative || modal || inflectedAction || operationalStatus || permissionState
+    })
+    const explicitActorAction = affirmativeEvents.length > 0 && actor === "explicit-actor" && /(?:^| )(?:operator|plan|team|we)(?: +\w+){0,5} +(?:back +out|backout|downgrad\w*|fall +back|fallback|initiat\w* +(?:the +)?rollback|perform\w* +(?:a +)?restoration|redeploy\w*|restor\w*|revers\w*|revert\w*|roll +back|rollback|switch +back|undo\w*)(?: |$)/u.test(clause)
+    const recoveryEligibilityState = affirmativeEvents.some((index) => tokens
+      .slice(Math.max(0, index - 4), index + 5)
+      .some((token) => /^(?:allow(?:ed|s)?|applies|configured|eligible|fine|independent|independently|permit(?:ted|s)?|reversibility|revertibility|revertible|rollbackable|safe|supported|targetable)$/u.test(token)))
+    const affirmativeEligibility = affirmativeEvents.length > 0 && (recoveryEligibilityState ||
+      /(?:^| )(?:nothing +prevents?|there +is +no +barrier|no +rollbacks? +(?:is +)?unavailable|rollbacks? +cannot +fail)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:compatibility|check)(?: +\w+){0,4} +proves?(?: +\w+){0,3} +(?:rollback|revertibility)(?: |$)/u.test(clause))
+    const activeFallback = affirmativeEvents.length > 0 && (/(?:^| )(?:activate|apply|enable|engage|include|includes|included|use|uses|used)(?: +\w+){0,3} +fallback(?: |$)/u.test(clause) ||
+      /(?:^| )fallback(?: +\w+){0,4} +(?:is|was|became|remains?)? *(?:active|applied|deployed|enabled|engaged|failed|happened|running|succeeded|used)(?: |$)/u.test(clause))
+    const targetStatus = affirmativeEvents.length > 0 && (releaseTarget || partialRuntimeTarget || repositoryPathObject) && /(?:^| )(?:backed +out|downgraded|fell +back|redeployed|restored|reversed|reverted|rolled +back|switched +back|undone)(?: |$)/u.test(clause)
+    const affirmativeRecovery = previousReleaseAction || targetStatus || affirmativeEligibility || affirmativeState || explicitActorAction || activeFallback
+    if (!affirmativeRecovery) continue
+
+    const safeGitFrame = target === "git-source" && !hasTargetExtension && !releaseTarget && !partialRuntimeTarget && !repositoryPathObject && !ambiguousStateTarget &&
+      ((gitCurrentTip && !gitClosedSuffix) || (!gitCurrentTip && gitClosedSuffix) || (gitCurrentTip && gitClosedSuffix)) &&
+      exactSafeGitClaims.some((pattern) => pattern.test(clause))
+    const safeLocalFrame = target === "local-state" && !repositoryPathObject
+    assert(
+      safeGitFrame || safeLocalFrame,
+      `${label} contains an unsafe non-dependency-closed rollback claim (${actor}; ${target}; affirmative): ${JSON.stringify(clause)}`
+    )
+  }
+}
+
+const validateNoSettingsRestorationContradictions = (source, label) => {
+  const wholeClauses = [...new Set(semanticClaimProjection(source)
+    .split(/(?:[.!?;\u3002\uff01\uff1f]+|\n+)/gu)
+    .flatMap((clause) => [clause, ...clause.split(/\b(?:and|but|however|whereas|yet)\b/giu)])
+    .map((clause) => clause.toLowerCase().replace(/[\p{P}\p{S}]+/gu, " ").replace(/\s+/gu, " ").trim())
+    .filter((clause) => clause.length > 0))]
+  for (const clause of wholeClauses) {
+    const settingsContext = /(?:^| )(?:controls?|current +settings|form|preference|preferences|settings)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:save|saving)(?: +button| +control)?(?: |$)/u.test(clause) || semanticHasPhrase(clause, "submit button") || semanticHasPhrase(clause, "write access")
+    const unresolvedAuthority = /(?:^| )(?:before|pending|prior +to|until|while)(?: +\w+){0,5} +(?:authoritative +)?(?:indexeddb +)?(?:load|restoration|restore)(?: +\w+){0,3} +(?:completes?|completed|fails?|failure|pending|resolves?|resolved|returns?|succeeds?)?(?: |$)/u.test(clause) ||
+      /(?:^| )pending +(?:the +)?(?:authoritative +)?(?:indexeddb +)?(?:load|restoration|restore)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:authoritative +)?(?:load|restoration)(?: +\w+){0,3} +(?:is +)?(?:pending|unresolved|unfinished)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:wait|waiting)(?: +\w+){0,3} +for +(?:the +)?(?:authoritative +)?(?:indexeddb +)?(?:load|restoration|restore)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:during|ahead +of) +(?:the +)?(?:authoritative +)?(?:indexeddb +)?(?:load|restoration|restore)(?: |$)/u.test(clause) ||
+      /(?:^| )before +indexeddb +finishes +(?:loading|initializing)(?: |$)/u.test(clause) ||
+      /(?:^| )pending +indexeddb +initialization(?: |$)/u.test(clause) ||
+      /(?:^| )while +(?:the +)?(?:authoritative +)?(?:indexeddb +)?(?:load|restoration|restore)(?: +is)? +(?:active|running|underway)(?: |$)/u.test(clause) ||
+      /(?:^| )while +(?:the +)?(?:authoritative +)?(?:indexeddb +)?(?:load|restoration|restore) +(?:runs?|continues?|proceeds?)(?: |$)/u.test(clause) ||
+      /(?:^| )while +(?:the +)?(?:authoritative +)?indexeddb(?: +read)? +(?:is +)?(?:loading|opening|pending|running|unresolved)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:as|while) +(?:the +)?(?:authoritative +)?(?:indexeddb +)?(?:load|read|restoration|restore)(?: +is)? +(?:continuing|loading|outstanding|pending|proceeding|running|unresolved)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:after|on) +(?:authoritative +)?(?:indexeddb +)?(?:load|restoration|restore) +failure(?: +\w+){0,12} +(?:before|until)(?: +the)? +(?:failure|error)(?: +is)? +handled(?: |$)/u.test(clause) ||
+      /(?:^| )(?:after|on|when) +(?:authoritative +)?(?:indexeddb +)?(?:load|restoration|restore) +fails?(?: +\w+){0,12} +(?:before|until)(?: +the)? +(?:(?:failure|error)(?: +is)? +handled|recovery +completes?)(?: |$)/u.test(clause) ||
+      /(?:^| )unhandled +(?:authoritative +|indexeddb +)?(?:load +|restoration +|restore +)?failure(?: |$)/u.test(clause)
+    const enablingDoubleNegative = /(?:^| )(?:must|should|will|can|could|may|need|needs)? *not +(?:block(?:ed|s|ing)?|disable(?:d|s|ing)?|prevent(?:ed|s|ing)?|prohibit(?:ed|s|ing)?)(?: +\w+){0,6} +(?:chang(?:e|ed|es|ing)|controls?|edit(?:ed|s|ing)?|persist(?:ed|s|ing)?|preferences?|save|saving|writ(?:e|es|ing|ten))(?: |$)/u.test(clause) ||
+      /(?:^| )(?:chang(?:e|ed|es|ing)|controls?|edit(?:ed|s|ing)?|persist(?:ed|s|ing)?|preferences?|save|saving|writ(?:e|es|ing|ten))(?: +\w+){0,5} +(?:is|are|was|were)? *not +(?:blocked|disabled|prevented|prohibited|restricted)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:controls?|form|preferences?|save|settings)(?: +\w+){0,5} +(?:are|is|was|were)? *not +(?:blocked|disabled|inactive|unavailable|locked|(?:turned +)?off|read +only|readonly|restricted)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:controls?|form|preferences?|save|settings)(?: +\w+){0,5} +(?:has|have|had) +not +been +(?:blocked|disabled|locked|prevented|prohibited|restricted)(?: |$)/u.test(clause) ||
+      /(?:^| )no +(?:blocked|disabled|locked|read +only|restricted) +state(?: +\w+){0,4} +(?:exists?|is +present)(?: +\w+){0,3} +(?:controls?|preferences?|save|settings)?(?: |$)/u.test(clause) ||
+      /(?:^| )(?:settings|controls?|save)(?: +\w+){0,4} +(?:are|is|was|were)? *not +required +to +(?:block|disable|lock|prevent|prohibit|restrict)(?: +\w+){0,5} +(?:changes?|controls?|editing|preferences?|save|saving|writes?|writing)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:settings +)?(?:saving|save|writing|writes?)(?: +\w+){0,4} +need +not +wait(?: |$)/u.test(clause) ||
+      /(?:^| )nothing(?: +\w+){0,3} +(?:blocks?|disables?|prevents?|prohibits?|restricts?|stops?)(?: +\w+){0,4} +(?:changes?|controls?|editing|preferences?|save|saving|writes?|writing)(?: |$)/u.test(clause)
+    const unsafeStateAction = enablingDoubleNegative ||
+      /(?:^| )(?:allow(?:ed|s|ing)?|can|could|enable(?:d|s|ing)?|has|have|keep|may|must|need(?:s)?|permit(?:ted|s|ting)?|requires?|should|will)(?: +\w+){0,6} +(?:accept(?:ed|s|ing)?|active|available|chang(?:e|ed|es|ing)|click(?:ed|s|ing)?|clickable|edit(?:able|ed|s|ing)?|interactive|modify|modified|operable|overwrite|overwritten|persist(?:ed|s|ing)?|possible|save(?:d|s|ing)?|stor(?:e|ed|es|ing)|submit(?:s|ted|ting)?|unlocked|unrestricted|usable|writ(?:e|es|ing|ten)|writable)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:active|available|chang(?:e|ed|es|ing)|clickable|controls?|edit(?:able|ed|s|ing)?|interactive|operable|persist(?:ed|s|ing)?|preferences?|save|saving|unrestricted|usable|writ(?:e|es|ing|ten)|writable)(?: +\w+){0,5} +(?:accepted|active|allow(?:ed|s)?|available|clickable|editable|enabled|interactive|open|operable|permitted|possible|read +write|safe|unrestricted|usable|works?|writable)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:controls?|preferences?|save|settings)(?: +\w+){0,5} +(?:are|is|remain|remains|remained|stay|stays|stayed)(?: +\w+){0,2} +(?:active|available|clickable|editable|enabled|interactive|open|operable|possible|read +write|unrestricted|usable|works?|writable)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:controls?|editing|preferences?|save|settings)(?: +\w+){0,5} +(?:are|is|remain|remains|stays?)? *(?:unblocked|unlocked)(?: |$)/u.test(clause) ||
+      /(?:^| )settings(?: +\w+){0,3} +(?:lets?|allows?)(?: +\w+){0,4} +(?:save|saving|write|writing)(?: |$)/u.test(clause) ||
+      /(?:^| )settings(?: +\w+){0,3} +(?:accepts?|accepted|modif(?:y|ied|ies)|overwrit(?:e|es|ing|ten)|persist(?:s|ed|ing)?|saved?|saving|stor(?:e|ed|es|ing)|writes?|writing|wrote)(?: +\w+){0,4} +(?:defaults?|edits?|preferences?|default +values?)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:current +)?(?:preferences?|settings)(?: +\w+){0,3} +(?:are|is|was|were|gets?|got)? *(?:committed|overwritten|persisted|recorded|saved|stored|updated|written)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:defaults?|default +values?)(?: +\w+){0,3} +(?:saved?|written)(?: +\w+){0,3} +by +settings(?: |$)/u.test(clause) ||
+      /(?:^| )(?:settings +)?save(?: +\w+){0,3} +(?:accepts?|clicked|received)(?: +\w+){0,2} +clicks?(?: |$)/u.test(clause) ||
+      /(?:^| )save(?: +\w+){0,3} +(?:was|is|gets?) +clicked(?: |$)/u.test(clause) ||
+      /(?:^| )(?:settings +)?save(?: +\w+){0,3} +works?(?: |$)/u.test(clause) ||
+      /(?:^| )settings(?: +\w+){0,3} +(?:has|have|keeps?|retains?|write) +write +access(?: +\w+){0,3} +(?:is|remains?|stays?)? *(?:available|enabled|open)?(?: |$)/u.test(clause) ||
+      /(?:^| )(?:users? +can +)?(?:modify|overwrite)(?: +\w+){0,3} +settings(?: |$)/u.test(clause) ||
+      /(?:^| )(?:settings +)?form(?: +\w+){0,3} +submit(?:s|ted|ting)?(?: |$)/u.test(clause) ||
+      /(?:^| )(?:settings +)?form(?: +\w+){0,3} +accept(?:s|ed|ing)? +(?:changes?|edits?|input|writes?)(?: |$)/u.test(clause) ||
+      /(?:^| )users?(?: +\w+){0,2} +(?:alter|change|edit|modify|update)(?: +\w+){0,2} +(?:preferences?|settings)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:current +)?settings(?: +\w+){0,3} +(?:are|is|was|were|gets?|got)? *(?:committed|overwritten|persisted|recorded|saved|stored|updated|written)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:clicking +)?save(?: +\w+){0,4} +(?:commits?|overwrites?|persists?|records?|stores?|writes?)(?: +\w+){0,3} +(?:defaults?|default +values?|preferences?)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:clicking +)?save(?: +\w+){0,4} +(?:commits?|overwrites?|persists?|records?|stores?|writes?)(?: +\w+){0,3} +(?:current +)?state(?: |$)/u.test(clause) ||
+      /(?:^| )(?:the +)?form(?: +\w+){0,4} +(?:commits?|overwrites?|persists?|records?|stores?|writes?)(?: +\w+){0,3} +(?:defaults?|default +values?|preferences?)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:defaults?|default +values?|preferences?)(?: +\w+){0,4} +(?:committed|overwritten|persisted|recorded|stored|written)(?: +\w+){0,3} +by +save(?: |$)/u.test(clause) ||
+      /(?:^| )(?:settings +)?saving(?: +\w+){0,3} +succeeds?(?: |$)/u.test(clause) ||
+      /(?:^| )settings(?: +\w+){0,3} +continues? +accepting +(?:changes?|edits?|input)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:settings +)?(?:changes?|edits?|saves?|saving|writes?|writing)(?: +\w+){0,3} +continue(?:s|d|ing)?(?: |$)/u.test(clause) ||
+      /(?:^| )settings(?: +\w+){0,3} +does +not +stop +(?:changes?|editing|edits?|input|saving|writes?)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:controls?|submit +button)(?: +\w+){0,4} +(?:accepts? +input|remain|remains|stay|stays)(?: +\w+){0,2} +(?:active|available|clickable|editable|enabled|open|usable|writable)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:controls?|submit +button)(?: +\w+){0,4} +accepts? +input(?: |$)/u.test(clause)
+    const truthfulDisable = !enablingDoubleNegative && (
+      /(?:^| )(?:cannot|disable(?:d|s|ing)?|must +not|not +allowed|not +permitted|prohibit(?:ed|s|ing)?)(?: +\w+){0,6} +(?:active|edit(?:ed|s|ing)?|persist(?:ed|s|ing)?|save(?:d|s|ing)?|writ(?:e|es|ing|ten))(?: |$)/u.test(clause) ||
+      /(?:^| )(?:active|edit(?:ed|s|ing)?|persist(?:ed|s|ing)?|save(?:d|s|ing)?|writ(?:e|es|ing|ten))(?: +\w+){0,5} +(?:disabled|prohibited)(?: |$)/u.test(clause) ||
+      /(?:^| )(?:settings|controls?|save)(?: +\w+){0,4} +does +not +allow(?: +\w+){0,3} +(?:editing|edits?|saving|writes?|writing)(?: |$)/u.test(clause)
+      || /^(?:no|zero) +(?:settings +)?(?:changes?|edits?|saves?|writes?)(?: +\w+){0,3} +(?:are|is) +allowed(?: |$)/u.test(clause)
+    )
+    assert(
+      !(settingsContext && unresolvedAuthority && unsafeStateAction && !truthfulDisable),
+      `${label} allows Settings to edit or save defaults before authoritative restoration completes: ${JSON.stringify(clause)}`
+    )
+  }
 }
 
 const validateNoGraduatedNarrativeClaims = (source, label) => {
@@ -1104,19 +2097,20 @@ const validateNoBoundUpstreamCoordinates = (source, label) => {
   )
 }
 
-const validateNoAffirmativeEvidenceClaims = (source, label) => {
+const validateNoAffirmativeEvidenceClaims = (source, label, { allowExactSettingsRaceObservation = false } = {}) => {
   assert(!/&(?:#\d+|#x[0-9a-f]+|[a-z][a-z0-9]+);/iu.test(source), `${label} cannot encode claims with HTML entities`)
   const candidates = [
-    [source, label],
-    [semanticClaimProjection(source), `${label} comment-preserving semantic projection`],
-    [semanticClaimProjection(source, { preserveCommentBodies: false }), `${label} comment-eliding semantic projection`]
+    [source, label, true],
+    [semanticClaimProjection(source), `${label} comment-preserving semantic projection`, false],
+    [semanticClaimProjection(source, { preserveCommentBodies: false }), `${label} comment-eliding semantic projection`, false]
   ]
-  for (const [candidate, candidateLabel] of candidates) {
+  for (const [candidate, candidateLabel, projectSemantic] of candidates) {
     validateNoGraduatedNarrativeClaims(candidate, candidateLabel)
     validateNoHumanGateClaims(candidate, candidateLabel)
     validateNoBoundUpstreamCoordinates(candidate, candidateLabel)
     validateNoUnsafeRollbackClaims(candidate, candidateLabel)
-    validateNoAffirmativeAuthorization(candidate, candidateLabel)
+    if (!allowExactSettingsRaceObservation) validateNoSettingsRestorationContradictions(candidate, candidateLabel)
+    validateNoAffirmativeAuthorization(candidate, candidateLabel, { projectSemantic })
     assert(
       !/\bparticipant evidence (?:is )?(?:present|nonzero|complete|completed|accepted|approved)\b/iu.test(candidate),
       `${candidateLabel} contains an affirmative participant-evidence claim`
@@ -1131,7 +2125,15 @@ const validateNoAffirmativeEvidenceClaims = (source, label) => {
 const validateDecodedStringClaims = (value, label, path = [], allowedShaLiterals = []) => {
   if (typeof value === "string") {
     const location = `${label}.${path.join(".") || "root"}`
-    validateNoAffirmativeEvidenceClaims(value, location)
+    validateNoInvalidatedReviewIdentifiers(value, location)
+    const exactSettingsRaceObservation = path.length === 3 &&
+      path[0] === "knownPreMigrationConfounders" && path[1] === "3" && path[2] === "observedFact" &&
+      value === exactSettingsRaceObservedFact
+    if (!isClosedStructuralSemanticEnum(path, value)) {
+      validateNoAffirmativeEvidenceClaims(value, location, {
+        allowExactSettingsRaceObservation: exactSettingsRaceObservation
+      })
+    }
     validateNoUnexpectedShaLiterals(value, location, { allowedLiterals: allowedShaLiterals })
     validateNoUnexpectedShaLiterals(semanticClaimProjection(value), `${location} semantic projection`, {
       allowedLiterals: allowedShaLiterals
@@ -1171,6 +2173,29 @@ const validateTrackedBlob = async (path) => {
   assert(match[1] === "100644" || match[1] === "100755", `${path} has unsupported Git mode ${match[1]}`)
   const stats = await lstat(resolve(repositoryRoot, path))
   assert(stats.isFile() && !stats.isSymbolicLink(), `${path} must be a current regular non-symlink file`)
+}
+
+const criticalFileRecordProjection = (record) => ({
+  path: record.path,
+  areas: record.areas,
+  role: record.role,
+  migrationSeam: record.migrationSeam,
+  authority: record.authority,
+  trancheOwnership: record.trancheOwnership ?? null
+})
+
+const validateCriticalFileRecordContracts = (records) => {
+  const recordsByPath = new Map(records.map((record) => [record?.path, record]))
+  const projection = criticalAnchors.map((path) => {
+    const record = recordsByPath.get(path)
+    assert(record !== undefined, `critical topology anchor missing: ${path}`)
+    return criticalFileRecordProjection(record)
+  })
+  const digest = createHash("sha256").update(JSON.stringify(projection), "utf8").digest("hex")
+  assert(
+    digest === criticalFileRecordContractSha256,
+    `critical topology contract digest differs: expected ${criticalFileRecordContractSha256}; received ${digest}`
+  )
 }
 
 const extractRouteIds = (source) => {
@@ -1274,6 +2299,7 @@ const validateFileRecords = async (records, { checkGit = true } = {}) => {
   }
   for (const area of requiredAreas) assert(coveredAreas.has(area), `topology area ${area} has no file record`)
   for (const path of criticalAnchors) assert(paths.has(path), `critical topology anchor missing: ${path}`)
+  validateCriticalFileRecordContracts(records)
   for (const [path, expected] of Object.entries(requiredFileRecordContracts)) {
     const record = records.find((entry) => entry.path === path)
     assert(record !== undefined, `required file-record contract missing: ${path}`)
@@ -1321,7 +2347,7 @@ const validateAuthorizationModel = (value) => {
     JSON.stringify(value.requiredEvidence) === JSON.stringify([
       "exact-repository-attested-step-02-through-step-05-decision-shas",
       "independent-codex-subagent-review-records",
-      "exact-ci-certification"
+      "exact-ci-certification-record"
     ]),
     "authorizationModel.requiredEvidence differs"
   )
@@ -1366,13 +2392,88 @@ const validateUpstreamDecisionInputs = (inputs) => {
   }
 }
 
-const codexReviewPayload = (entry) => ({
+const sha256Utf8 = (value) => createHash("sha256").update(value, "utf8").digest("hex")
+
+const encodeUtf8Evidence = (value) => ({
+  encoding: "base64",
+  byteLength: Buffer.byteLength(value, "utf8"),
+  sha256: sha256Utf8(value),
+  bytes: Buffer.from(value, "utf8").toString("base64")
+})
+
+const decodeUtf8Evidence = (value, label) => {
+  assertExactKeys(value, ["encoding", "byteLength", "sha256", "bytes"], label)
+  assert(value.encoding === "base64", `${label}.encoding must be base64`)
+  assert(Number.isSafeInteger(value.byteLength) && value.byteLength > 0, `${label}.byteLength must be a positive safe integer`)
+  assert(/^[0-9a-f]{64}$/u.test(value.sha256), `${label}.sha256 must be a lowercase SHA-256`)
+  assert(typeof value.bytes === "string" && value.bytes.length > 0, `${label}.bytes must be non-empty canonical base64`)
+  const decoded = Buffer.from(value.bytes, "base64")
+  assert(decoded.toString("base64") === value.bytes, `${label}.bytes is not canonical base64`)
+  assert(decoded.length === value.byteLength, `${label}.byteLength differs from decoded bytes`)
+  assert(createHash("sha256").update(decoded).digest("hex") === value.sha256, `${label}.sha256 differs from decoded bytes`)
+  const utf8 = decoded.toString("utf8")
+  assert(Buffer.from(utf8, "utf8").equals(decoded), `${label}.bytes is not canonical UTF-8`)
+  return utf8
+}
+
+const sourceManifestSha256 = (intervals) => sha256Utf8(JSON.stringify(intervals))
+
+const codexReviewResultPayload = (entry) => ({
+  protocol: "PLAN009-NATIVE-CODEX-REVIEW-RESULT-V1",
   taskId: entry.taskId,
   reviewOccurrenceId: entry.reviewOccurrenceId,
   reviewKind: entry.reviewKind,
   reviewedCommitSha: entry.reviewedCommitSha,
   reviewedBaseSha: entry.reviewedBaseSha,
   reviewedPacketBlobs: entry.reviewedPacketBlobs,
+  reviewedSourceManifestSha256: entry.reviewedSourceManifestSha256,
+  disposition: entry.disposition,
+  findingIds: entry.findingIds,
+  findingSummary: entry.findingSummary,
+  evidencePaths: entry.evidencePaths,
+  dissent: entry.dissent
+})
+
+const codexReviewPromptUtf8 = (entry, task) => JSON.stringify({
+  protocol: "PLAN009-NATIVE-CODEX-REVIEW-PROMPT-V1",
+  taskId: entry.taskId,
+  reviewOccurrenceId: entry.reviewOccurrenceId,
+  reviewKind: entry.reviewKind,
+  rubricId: entry.rubricId,
+  rubric: task.reviewRubricUtf8,
+  rubricSha256: sha256Utf8(task.reviewRubricUtf8),
+  reviewedCommitSha: entry.reviewedCommitSha,
+  reviewedBaseSha: entry.reviewedBaseSha,
+  reviewedPacketBlobs: entry.reviewedPacketBlobs,
+  reviewedSourceIntervals: entry.reviewedSourceIntervals,
+  reviewedSourceManifestSha256: entry.reviewedSourceManifestSha256,
+  requiredResult: {
+    encoding: "one-line-canonical-json-no-markdown",
+    protocol: "PLAN009-NATIVE-CODEX-REVIEW-RESULT-V1",
+    disposition: "no-blocking-findings-on-exact-subject",
+    requiredFields: Object.keys(codexReviewResultPayload(entry))
+  },
+  constraints: [
+    "read-only",
+    "exact-subject-only",
+    "no-hidden-reasoning",
+    "no-human-contact",
+    "no-production-authorization",
+    "return-blocking-findings-instead-of-attesting-if-any-exist"
+  ]
+})
+
+const codexReviewPayload = (entry) => ({
+  taskId: entry.taskId,
+  reviewOccurrenceId: entry.reviewOccurrenceId,
+  reviewKind: entry.reviewKind,
+  rubricId: entry.rubricId,
+  reviewedCommitSha: entry.reviewedCommitSha,
+  reviewedBaseSha: entry.reviewedBaseSha,
+  reviewedPacketBlobs: entry.reviewedPacketBlobs,
+  reviewedSourceIntervals: entry.reviewedSourceIntervals,
+  reviewedSourceManifestSha256: entry.reviewedSourceManifestSha256,
+  nativeEvidence: entry.nativeEvidence,
   findingIds: entry.findingIds,
   findingSummary: entry.findingSummary,
   evidencePaths: entry.evidencePaths,
@@ -1382,27 +2483,67 @@ const codexReviewPayload = (entry) => ({
 })
 
 const createCanonicalCodexReviewFixture = () => requiredCodexReviewTasks.map((task, index) => {
+  const reviewedSourceIntervals = Object.fromEntries(packetPaths.map((path, pathIndex) => {
+    const bytes = Buffer.from(`synthetic-reviewed-source-${index + 1}-${pathIndex + 1}`, "utf8")
+    return [path, {
+      startByte: 0,
+      endByte: bytes.length,
+      sha256: createHash("sha256").update(bytes).digest("hex")
+    }]
+  }))
   const entry = {
     taskId: task.taskId,
     reviewOccurrenceId: task.reviewOccurrenceId,
     reviewKind: task.reviewKind,
+    rubricId: task.rubricId,
     reviewedCommitSha: "1".repeat(40),
     reviewedBaseSha: reviewSubjectBaseSha,
     reviewedPacketBlobs: Object.fromEntries(packetPaths.map((path, pathIndex) => [path, String(pathIndex + 2).repeat(40)])),
+    reviewedSourceIntervals,
+    reviewedSourceManifestSha256: sourceManifestSha256(reviewedSourceIntervals),
     findingIds: [`SELF-TEST-${index + 1}`],
-    findingSummary: "Synthetic canonical no-blocking review record used only by validator self-tests.",
+    findingSummary: "Synthetic no-blocker result used only by validator self-tests.",
     evidencePaths: [...packetPaths],
     disposition: "no-blocking-findings-on-exact-subject",
     consensus: "root-and-independent-rereviews-agree",
     dissent: "none-recorded-for-exact-subject"
   }
+  const nativeEvidence = {
+    allocationPrompt: encodeUtf8Evidence(nativeAllocationPromptUtf8),
+    spawnReceipt: encodeUtf8Evidence(JSON.stringify({ task_name: task.taskId })),
+    allocationResult: encodeUtf8Evidence(task.nativeAllocationResultUtf8),
+    reviewRubric: encodeUtf8Evidence(task.reviewRubricUtf8),
+    reviewPrompt: encodeUtf8Evidence(codexReviewPromptUtf8(entry, task)),
+    reviewResult: encodeUtf8Evidence(JSON.stringify(codexReviewResultPayload(entry)))
+  }
+  const payload = { ...entry, nativeEvidence }
   return {
-    ...entry,
-    recordSha256: createHash("sha256").update(JSON.stringify(codexReviewPayload(entry)), "utf8").digest("hex")
+    ...payload,
+    recordSha256: sha256Utf8(JSON.stringify(codexReviewPayload(payload)))
   }
 })
 
-const validateCodexReviewLedger = (entries) => {
+const validateReviewSourceBindings = (entry, label) => {
+  assert(git(["cat-file", "-e", `${entry.reviewedCommitSha}^{commit}`], { allowFailure: true }).status === 0, `${label}.reviewedCommitSha is not a reachable commit`)
+  for (const path of packetPaths) {
+    const tree = git(["ls-tree", entry.reviewedCommitSha, "--", path]).stdout.trim()
+    const match = tree.match(/^100644\s+blob\s+([0-9a-f]{40})\t(.+)$/u)
+    assert(match !== null && match[2] === path, `${label}.${path} is not an exact 100644 reviewed blob`)
+    assert(match[1] === entry.reviewedPacketBlobs[path], `${label}.${path} reviewed Git blob differs`)
+    const result = spawnSync("git", ["cat-file", "blob", match[1]], {
+      cwd: repositoryRoot,
+      stdio: ["ignore", "pipe", "pipe"]
+    })
+    if (result.error !== undefined) throw result.error
+    assert(result.status === 0, `${label}.${path} reviewed blob bytes are unavailable`)
+    const bytes = result.stdout
+    const interval = entry.reviewedSourceIntervals[path]
+    assert(interval.startByte === 0 && interval.endByte === bytes.length, `${label}.${path} must bind the full source byte interval`)
+    assert(createHash("sha256").update(bytes).digest("hex") === interval.sha256, `${label}.${path} source interval SHA-256 differs`)
+  }
+}
+
+const validateCodexReviewLedger = (entries, { verifySourceBindings = false } = {}) => {
   assert(Array.isArray(entries), "codexReviewLedger must be an array")
   assert(
     entries.length === 0 || entries.length === requiredCodexReviewTasks.length,
@@ -1412,9 +2553,13 @@ const validateCodexReviewLedger = (entries) => {
     "taskId",
     "reviewOccurrenceId",
     "reviewKind",
+    "rubricId",
     "reviewedCommitSha",
     "reviewedBaseSha",
     "reviewedPacketBlobs",
+    "reviewedSourceIntervals",
+    "reviewedSourceManifestSha256",
+    "nativeEvidence",
     "findingIds",
     "findingSummary",
     "evidencePaths",
@@ -1427,12 +2572,15 @@ const validateCodexReviewLedger = (entries) => {
   for (const [index, entry] of entries.entries()) {
     const label = `codexReviewLedger[${index}]`
     assertExactKeys(entry, exactKeys, label)
+    validateNoInvalidatedReviewIdentifiers(JSON.stringify(entry), label)
     const expected = requiredCodexReviewTasks[index]
     const payload = codexReviewPayload(entry)
     assert(entry.taskId === requiredCodexReviewTasks[index].taskId, `${label}.taskId differs`)
     assert(entry.reviewKind === requiredCodexReviewTasks[index].reviewKind, `${label}.reviewKind differs`)
     assert(entry.reviewOccurrenceId === expected.reviewOccurrenceId, `${label}.reviewOccurrenceId differs`)
+    assert(entry.rubricId === expected.rubricId, `${label}.rubricId differs`)
     assert(/^[0-9a-f]{40}$/u.test(entry.reviewedCommitSha), `${label}.reviewedCommitSha must be a full lowercase Git SHA`)
+    assert(!invalidatedReviewSubjectShas.includes(entry.reviewedCommitSha), `${label}.reviewedCommitSha names an invalidated review subject`)
     assert(entry.reviewedBaseSha === reviewSubjectBaseSha, `${label}.reviewedBaseSha differs from the integrated current-main subject base`)
     assertExactKeys(entry.reviewedPacketBlobs, packetPaths, `${label}.reviewedPacketBlobs`)
     assert(
@@ -1441,16 +2589,68 @@ const validateCodexReviewLedger = (entries) => {
     )
     for (const path of packetPaths) {
       assert(/^[0-9a-f]{40}$/u.test(entry.reviewedPacketBlobs[path]), `${label}.reviewedPacketBlobs[${path}] is invalid`)
+      assert(
+        !invalidatedReviewProvenanceRegistry.packetBlobShas.includes(entry.reviewedPacketBlobs[path]),
+        `${label}.reviewedPacketBlobs[${path}] names a retired or rejected packet blob`
+      )
     }
+    assertExactKeys(entry.reviewedSourceIntervals, packetPaths, `${label}.reviewedSourceIntervals`)
+    assert(
+      JSON.stringify(Object.keys(entry.reviewedSourceIntervals)) === JSON.stringify(packetPaths),
+      `${label}.reviewedSourceIntervals must use canonical packet-path order`
+    )
+    for (const path of packetPaths) {
+      const interval = entry.reviewedSourceIntervals[path]
+      assertExactKeys(interval, ["startByte", "endByte", "sha256"], `${label}.reviewedSourceIntervals[${path}]`)
+      assert(interval.startByte === 0, `${label}.reviewedSourceIntervals[${path}].startByte must be 0`)
+      assert(Number.isSafeInteger(interval.endByte) && interval.endByte > 0, `${label}.reviewedSourceIntervals[${path}].endByte must be positive`)
+      assert(/^[0-9a-f]{64}$/u.test(interval.sha256), `${label}.reviewedSourceIntervals[${path}].sha256 is invalid`)
+    }
+    assert(/^[0-9a-f]{64}$/u.test(entry.reviewedSourceManifestSha256), `${label}.reviewedSourceManifestSha256 is invalid`)
+    assert(
+      entry.reviewedSourceManifestSha256 === sourceManifestSha256(entry.reviewedSourceIntervals),
+      `${label}.reviewedSourceManifestSha256 differs from its canonical intervals`
+    )
+    assertExactKeys(
+      entry.nativeEvidence,
+      ["allocationPrompt", "spawnReceipt", "allocationResult", "reviewRubric", "reviewPrompt", "reviewResult"],
+      `${label}.nativeEvidence`
+    )
+    const allocationPrompt = decodeUtf8Evidence(entry.nativeEvidence.allocationPrompt, `${label}.nativeEvidence.allocationPrompt`)
+    const spawnReceipt = decodeUtf8Evidence(entry.nativeEvidence.spawnReceipt, `${label}.nativeEvidence.spawnReceipt`)
+    const allocationResult = decodeUtf8Evidence(entry.nativeEvidence.allocationResult, `${label}.nativeEvidence.allocationResult`)
+    const reviewRubric = decodeUtf8Evidence(entry.nativeEvidence.reviewRubric, `${label}.nativeEvidence.reviewRubric`)
+    const reviewPrompt = decodeUtf8Evidence(entry.nativeEvidence.reviewPrompt, `${label}.nativeEvidence.reviewPrompt`)
+    const reviewResult = decodeUtf8Evidence(entry.nativeEvidence.reviewResult, `${label}.nativeEvidence.reviewResult`)
+    assert(allocationPrompt === nativeAllocationPromptUtf8, `${label} native allocation prompt bytes differ`)
+    assert(spawnReceipt === JSON.stringify({ task_name: expected.taskId }), `${label} native spawn receipt bytes differ`)
+    assert(allocationResult === expected.nativeAllocationResultUtf8, `${label} native allocation result bytes differ`)
+    assert(reviewRubric === expected.reviewRubricUtf8, `${label} review rubric bytes differ`)
+    assert(reviewPrompt === codexReviewPromptUtf8(entry, expected), `${label} exact review prompt bytes differ`)
     assertStringArray(entry.findingIds, `${label}.findingIds`, { unique: true })
     assertNonEmptyString(entry.findingSummary, `${label}.findingSummary`)
     assertStringArray(entry.evidencePaths, `${label}.evidencePaths`, { unique: true })
     assert(entry.disposition === "no-blocking-findings-on-exact-subject", `${label}.disposition differs`)
     assert(entry.consensus === "root-and-independent-rereviews-agree", `${label}.consensus differs`)
     assert(entry.dissent === "none-recorded-for-exact-subject", `${label}.dissent differs`)
+    const result = parseJsonNoDuplicateKeys(reviewResult, `${label}.nativeEvidence.reviewResult decoded JSON`)
+    assert(reviewResult === JSON.stringify(result), `${label} native review result must be one-line canonical JSON`)
+    assert(
+      JSON.stringify(result) === JSON.stringify(codexReviewResultPayload(entry)),
+      `${label} native review result differs from the attested finding fields`
+    )
+    for (const [findingIndex, findingId] of entry.findingIds.entries()) {
+      validateNoInvalidatedReviewIdentifiers(findingId, `${label}.findingIds[${findingIndex}]`)
+      validateNoAffirmativeEvidenceClaims(findingId, `${label}.findingIds[${findingIndex}]`)
+    }
+    validateNoInvalidatedReviewIdentifiers(entry.findingSummary, `${label}.findingSummary`)
+    validateNoAffirmativeEvidenceClaims(entry.findingSummary, `${label}.findingSummary`)
+    validateNoInvalidatedReviewIdentifiers(entry.dissent, `${label}.dissent`)
+    validateNoAffirmativeEvidenceClaims(entry.dissent, `${label}.dissent`)
     assert(/^[0-9a-f]{64}$/u.test(entry.recordSha256), `${label}.recordSha256 must be a lowercase SHA-256`)
     const actualHash = createHash("sha256").update(JSON.stringify(payload), "utf8").digest("hex")
     assert(entry.recordSha256 === actualHash, `${label}.recordSha256 differs from its canonical payload`)
+    if (verifySourceBindings) validateReviewSourceBindings(entry, label)
     hashes.push(actualHash)
   }
   return hashes
@@ -1465,6 +2665,9 @@ const reviewShaCounts = (entries) => {
   for (const entry of entries) {
     incrementCount(counts, entry.reviewedCommitSha)
     for (const path of packetPaths) incrementCount(counts, entry.reviewedPacketBlobs[path])
+    for (const path of packetPaths) incrementCount(counts, entry.reviewedSourceIntervals[path].sha256)
+    incrementCount(counts, entry.reviewedSourceManifestSha256)
+    for (const evidence of Object.values(entry.nativeEvidence)) incrementCount(counts, evidence.sha256)
     incrementCount(counts, entry.recordSha256)
   }
   return counts
@@ -1496,7 +2699,7 @@ const normalizeDelimitedReviewBlock = (source, startMarker, endMarker, label) =>
 const renderPlanReviewBlock = (entries) => {
   const introduction = entries.length === 0
     ? "The current immutable-subject independent Codex reviews are pending. This block\nwill be populated only after the repaired packet is committed, reviewed by\nexact commit and packet blob hashes, and found free of unresolved dissent."
-    : "Independent Codex review evidence for this immutable subject is recorded\nwithout hidden reasoning in `codexReviewLedger`. Each result binds the exact\nreview occurrence, subject/base commits, and all three packet Git blobs."
+    : "Independent Codex review evidence for this immutable subject is recorded\nwithout hidden reasoning in `codexReviewLedger`. Each result binds native\nallocation/prompt/result bytes, the exact review occurrence, subject/base\ncommits, all three packet Git blobs, and their full source byte intervals."
   const rows = entries.map((entry) =>
     `| \`${entry.taskId}\` | No blocking findings on exact subject | Root and independent rereviews agree / none recorded for exact subject | \`${entry.recordSha256}\` |`
   )
@@ -1937,7 +3140,7 @@ const validateSupportingRecordSchema = (value) => {
     "settings restoration race evidence differs"
   )
   assert(
-    settingsRace.observedFact === "The settings island initializes default preferences with busy false, begins authoritative IndexedDB restoration asynchronously, saves the current React projection, and leaves preference controls plus Save active while restoration is unresolved.",
+    settingsRace.observedFact === exactSettingsRaceObservedFact,
     "settings restoration race fact differs"
   )
   assert(
@@ -2018,11 +3221,10 @@ const validateMap = async (value, raw, options = {}) => {
   assert(value.scope.planIndexModified === false, "planIndexModified must remain false")
   validateAuthorizationModel(value.authorizationModel)
   validateUpstreamDecisionInputs(value.upstreamDecisionInputs)
-  validateCodexReviewLedger(value.codexReviewLedger)
+  validateCodexReviewLedger(value.codexReviewLedger, { verifySourceBindings: options.checkGit !== false })
   const reviewCounts = reviewShaCounts(value.codexReviewLedger)
   const mapShaCounts = new Map(reviewCounts)
-  incrementCount(mapShaCounts, rejectedReviewHeadSha, 1)
-  incrementCount(mapShaCounts, reviewSubjectBaseSha, 1 + value.codexReviewLedger.length)
+  incrementCount(mapShaCounts, reviewSubjectBaseSha, 2 + value.codexReviewLedger.length)
   incrementCount(mapShaCounts, historicalBaselineCiHeadSha, 1)
   validateDependencySlots(value.dependencySlots)
   assert(JSON.stringify(value.topologyAreas) === JSON.stringify(requiredAreas), "topologyAreas differ or are out of order")
@@ -2033,10 +3235,9 @@ const validateMap = async (value, raw, options = {}) => {
   validateDecodedStringClaims(value, "current-file map", [], [...reviewCounts.keys()])
   validateNoUnexpectedShaLiterals(raw, "current-file map", {
     allowedLiterals: [...reviewCounts.keys()],
-    expectedObservedCount: 1,
+    expectedObservedCount: 2 + value.codexReviewLedger.length,
     expectedLiteralCounts: mapShaCounts
   })
-  validateNoAffirmativeAuthorization(raw, "current-file map")
 
   const routeSource = await readUtf8("apps/site/src/route-registry.ts")
   const actualRouteIds = extractRouteIds(routeSource)
@@ -2085,6 +3286,7 @@ const validateMap = async (value, raw, options = {}) => {
 
 const validateMarkdown = (source, reviewEntries = activeCodexReviewEntries) => {
   validateMetadata(parseMarkedMetadata(source, "migration draft"), "migration draft")
+  validateNoInvalidatedReviewIdentifiers(source, "migration draft")
   validateNoMarkdownReferenceLinks(source)
   assert(
     extractDelimitedReviewBlock(source, planReviewStart, planReviewEnd, "migration draft") === renderPlanReviewBlock(reviewEntries),
@@ -2092,12 +3294,11 @@ const validateMarkdown = (source, reviewEntries = activeCodexReviewEntries) => {
   )
   const reviewCounts = new Map(reviewEntries.map((entry) => [entry.recordSha256, 1]))
   const planShaCounts = new Map(reviewCounts)
-  planShaCounts.set(rejectedReviewHeadSha, 1)
-  planShaCounts.set(reviewSubjectBaseSha, 1)
+  planShaCounts.set(reviewSubjectBaseSha, 3)
   planShaCounts.set(historicalBaselineCiHeadSha, 1)
   validateNoUnexpectedShaLiterals(source, "migration draft", {
     allowedLiterals: [...reviewCounts.keys()],
-    expectedObservedCount: 2,
+    expectedObservedCount: 3,
     expectedLiteralCounts: planShaCounts
   })
   validateNoUnexpectedShaLiterals(semanticClaimProjection(source), "migration draft semantic projection", {
@@ -2108,9 +3309,9 @@ const validateMarkdown = (source, reviewEntries = activeCodexReviewEntries) => {
     "migration draft comment-eliding semantic projection",
     { allowedLiterals: [...reviewCounts.keys()] }
   )
-  validateNoAffirmativeEvidenceClaims(source, "migration draft")
   validateMarkdownStateAssignments(source)
   validateNoUnstructuredStateAssignments(source)
+  validateNoAffirmativeEvidenceClaims(source, "migration draft")
   const visible = visibleMarkdown(source)
   validateMarkdownContainers(visible)
   assert(
@@ -2372,13 +3573,20 @@ const validateGitBoundary = (planIndex) => {
   )
   assert(git(["cat-file", "-e", `${reviewSubjectBaseSha}^{commit}`], { allowFailure: true }).status === 0, "reviewSubjectBaseSha is not a reachable commit")
   assert(
-    git(["show", "-s", "--format=%P", reviewSubjectBaseSha]).stdout.trim() === `${rejectedReviewHeadSha} ${observedAtSha}`,
-    "reviewSubjectBaseSha must be the exact merge of the rejected head and current origin/main"
+    reviewSubjectBaseSha === observedAtSha,
+    "reviewSubjectBaseSha must be the exact clean current-main commit"
   )
   assert(
     git(["merge-base", "--is-ancestor", reviewSubjectBaseSha, "HEAD"], { allowFailure: true }).status === 0,
     "reviewSubjectBaseSha is not an ancestor of HEAD"
   )
+  for (const invalidatedSubject of invalidatedReviewSubjectShas) {
+    assert(git(["cat-file", "-e", `${invalidatedSubject}^{commit}`], { allowFailure: true }).status === 0, `invalidated review subject is not locally reachable: ${invalidatedSubject}`)
+    assert(
+      git(["merge-base", "--is-ancestor", invalidatedSubject, "HEAD"], { allowFailure: true }).status !== 0,
+      `HEAD descends from invalidated review subject ${invalidatedSubject}`
+    )
+  }
   const originUrls = git(["remote", "get-url", "--all", "origin"]).stdout.trim().split("\n")
   const originPushUrls = git(["remote", "get-url", "--push", "--all", "origin"]).stdout.trim().split("\n")
   assert(JSON.stringify(originUrls) === JSON.stringify([expectedOriginUrl]), `origin fetch URL differs from the pinned repository: ${originUrls.join(", ")}`)
@@ -2462,6 +3670,13 @@ const runSelfTests = async ({ map, rawMap, markdown, planIndex, scriptMetadata, 
     renderPlanReviewBlock(canonicalReviewFixture)
   )
   validateMarkdown(canonicalReviewMarkdown, canonicalReviewFixture)
+  const canonicalPopulatedRawMap = rawMap.replace(
+    '  "codexReviewLedger": []',
+    `  "codexReviewLedger": ${JSON.stringify(canonicalReviewFixture, null, 2)}`
+  )
+  assert(canonicalPopulatedRawMap !== rawMap, "self-test fully populated canonical map was not constructed")
+  const canonicalPopulatedMap = parseJsonNoDuplicateKeys(canonicalPopulatedRawMap, "self-test fully populated canonical map")
+  await validateMap(canonicalPopulatedMap, canonicalPopulatedRawMap, { checkGit: false })
 
   const pendingSubjectRawMap = normalizeMapReviewRecords(rawMap)
   const pendingSubjectMarkdown = markdown.replace(
@@ -2491,6 +3706,122 @@ const runSelfTests = async ({ map, rawMap, markdown, planIndex, scriptMetadata, 
     ),
     "must be 100644"
   )
+
+  const rejectSemanticClaimOnAllSurfaces = async (name, claim, fragment = "contains") => {
+    await negative(
+      `markdown-semantic-${name}`,
+      () => validateMarkdown(`${markdown}\n${claim}\n`),
+      fragment
+    )
+    await negative(
+      `decoded-map-semantic-${name}`,
+      () => validateDecodedStringClaims({ nested: { values: [{ claim }] } }, "decoded semantic fixture"),
+      fragment
+    )
+    await negative(
+      `review-ledger-semantic-${name}`,
+      () => validateDecodedStringClaims(
+        { codexReviewLedger: [{ findingSummary: claim, nested: { evidence: [claim] } }] },
+        "review-ledger semantic fixture"
+      ),
+      fragment
+    )
+    await negative(
+      `review-ledger-nested-only-semantic-${name}`,
+      () => validateDecodedStringClaims(
+        {
+          codexReviewLedger: [{
+            reviewKind: "authorization-and-rollback-review",
+            findingSummary: "Synthetic validator fixture.",
+            nested: { evidence: [{ result: claim }] }
+          }]
+        },
+        "nested-only review-ledger semantic fixture"
+      ),
+      fragment
+    )
+  }
+
+  const requiredExactNegativeClaims = Object.freeze([
+    "The product can be launched",
+    "The production gate is open",
+    "Everything is set for the production rollout",
+    "The application may enter service",
+    "The website is publishable",
+    "The site is fit for launch",
+    "Production can be turned on",
+    "Publish the site",
+    "Users liked the prototype",
+    "Students found the navigation easy",
+    "The prototype tested well with applicants",
+    "Candidates reacted positively to the prototype.",
+    "Serve the old build.",
+    "Nothing blocks saving defaults while authoritative restoration is unresolved."
+  ])
+  const requiredExactSafeClaims = Object.freeze([
+    "Direct revert is permitted only for the current unmerged tip.",
+    "A dependency-closed suffix may be reverted.",
+    "Restore settings after IndexedDB loads.",
+    "Restore the offline pack.",
+    "Restore focus after the dialog closes.",
+    "Undo the last text edit."
+  ])
+  const exactSurfaceCounts = {
+    negative: { markdown: 0, decodedMap: 0, reviewLedger: 0 },
+    positive: { markdown: 0, decodedMap: 0, reviewLedger: 0 }
+  }
+  for (const [index, claim] of requiredExactNegativeClaims.entries()) {
+    await negative(
+      `required-exact-negative-markdown-${index + 1}`,
+      () => validateMarkdown(`${markdown}\n${claim}\n`),
+      ""
+    )
+    exactSurfaceCounts.negative.markdown += 1
+    await negative(
+      `required-exact-negative-decoded-map-${index + 1}`,
+      () => validateDecodedStringClaims(
+        { levelOne: [{ levelTwo: { claims: [{ value: claim }] } }] },
+        "required exact decoded-map fixture"
+      ),
+      ""
+    )
+    exactSurfaceCounts.negative.decodedMap += 1
+    await negative(
+      `required-exact-negative-review-ledger-${index + 1}`,
+      () => validateDecodedStringClaims(
+        {
+          codexReviewLedger: [{
+            reviewKind: "authorization-and-rollback-review",
+            findingSummary: "Synthetic validator fixture.",
+            nested: { findings: [{ evidence: { result: claim } }] }
+          }]
+        },
+        "required exact nested review-ledger fixture"
+      ),
+      ""
+    )
+    exactSurfaceCounts.negative.reviewLedger += 1
+  }
+  for (const [index, claim] of requiredExactSafeClaims.entries()) {
+    validateMarkdown(`${markdown}\n${claim}\n`)
+    exactSurfaceCounts.positive.markdown += 1
+    validateDecodedStringClaims(
+      { levelOne: [{ levelTwo: { claims: [{ value: claim }] } }] },
+      `required exact benign decoded-map fixture ${index + 1}`
+    )
+    exactSurfaceCounts.positive.decodedMap += 1
+    validateDecodedStringClaims(
+      {
+        codexReviewLedger: [{
+          reviewKind: "authorization-and-rollback-review",
+          findingSummary: "Synthetic validator fixture.",
+          nested: { findings: [{ evidence: { result: claim } }] }
+        }]
+      },
+      `required exact benign review-ledger fixture ${index + 1}`
+    )
+    exactSurfaceCounts.positive.reviewLedger += 1
+  }
 
   const freeFormEvidenceAttacks = [
     ["deployment-permitted", "Deployment to production is permitted.", "affirmative production or implementation authorization"],
@@ -2552,19 +3883,311 @@ const runSelfTests = async ({ map, rawMap, markdown, planIndex, scriptMetadata, 
     ["cohort-outcome-passive", "The outcome for the cohort was recorded.", "contains"],
     ["unicode-go-ahead", "The deployment has the go‑ahead.", "contains"],
     ["fullwidth-green-light", "The release has the ｇｒｅｅｎ　ｌｉｇｈｔ.", "contains"],
-    ["spaced-move-forward", "We  can\nmove   forward with the rollout.", "contains"]
+    ["spaced-move-forward", "We  can\nmove   forward with the rollout.", "contains"],
+    ["deployment-got-approved", "The deployment got approved.", "contains"],
+    ["green-light-result-first", "Green light: deployment.", "contains"],
+    ["release-carries-blessing", "The release carries our blessing.", "contains"],
+    ["rollout-received-blessing", "The production rollout received its blessing.", "contains"],
+    ["deployment-faces-no-blockers", "Deployment faces no blockers.", "contains"],
+    ["release-blockers-gone", "All blockers are gone for the release.", "contains"],
+    ["rollout-all-set", "The rollout is all set.", "contains"],
+    ["rollout-commence", "Rollout can commence.", "contains"],
+    ["deployment-proceeds", "Deployment proceeds.", "contains"],
+    ["proceeding-deployment", "We are proceeding with deployment.", "contains"],
+    ["moved-forward-rollout", "We moved forward with the rollout.", "contains"],
+    ["site-shipped", "The site shipped.", "contains"],
+    ["shipping-approved", "Shipping was approved.", "contains"],
+    ["proposal-received-approval", "The proposal received approval.", "contains"],
+    ["approval-went-proposal", "Approval went to the proposal.", "contains"],
+    ["committee-gave-blessing", "The committee gave its blessing.", "contains"],
+    ["panel-chose-proposal", "The panel chose the proposal.", "contains"],
+    ["selector-picked-option", "The selector picked option B.", "contains"],
+    ["option-green-light", "The option got the green light.", "contains"],
+    ["participants-gave-feedback", "Participants gave feedback.", "contains"],
+    ["feedback-received-participants", "Feedback was received from participants.", "contains"],
+    ["participant-feedback-informed", "Participant feedback informed the design.", "contains"],
+    ["user-panel-findings", "The user panel reported findings.", "contains"],
+    ["findings-by-panel", "Findings were reported by the panel.", "contains"],
+    ["usability-session-took-place", "A usability session took place.", "contains"],
+    ["moderated-sessions-people", "We ran moderated sessions with people.", "contains"],
+    ["cohort-validated-interface", "The cohort validated the interface.", "contains"],
+    ["panel-results-support-choice", "The panel’s results support the choice.", "contains"],
+    ["several-participants-feedback", "Several participants provided feedback.", "contains"],
+    ["learner-group-research", "The learner group completed research.", "contains"],
+    ["people-feedback-validation", "People contributed feedback during validation.", "contains"],
+    ["panel-outcome-favored", "The panel outcome favored the proposal.", "contains"],
+    ["deployment-given-green-light", "Deployment was given a green light.", "contains"],
+    ["release-no-remaining-blockers", "The release has no remaining blockers.", "contains"],
+    ["all-release-gates-passed", "All release gates passed.", "contains"],
+    ["release-blessed", "The release has been blessed.", "contains"],
+    ["users-positive-feedback", "Users gave positive feedback.", "contains"],
+    ["positive-feedback-cohort", "Positive feedback came from the cohort.", "contains"],
+    ["moderated-research-occurred", "A moderated research session took place.", "contains"],
+    ["users-validated-interface", "The users validated the interface.", "contains"],
+    ["production-is-go", "Production is a go.", "contains"],
+    ["build-got-nod", "The build got the nod.", "contains"],
+    ["nothing-blocks-deployment", "Nothing blocks deployment.", "contains"],
+    ["launch-gates-green", "Every launch gate is green.", "contains"],
+    ["proposal-got-nod", "The proposal got the nod.", "contains"],
+    ["committee-settled-option", "The committee settled on option B.", "contains"],
+    ["heard-from-users", "We heard from users.", "contains"],
+    ["learners-shared-reactions", "Learners shared reactions.", "contains"],
+    ["research-involved-users", "Research involved users.", "contains"],
+    ["panel-insights-guided", "Panel insights guided the design.", "contains"],
+    ["tester-responses-count", "Five responses were gathered from testers.", "contains"],
+    ["ci-met-reviewer", "CI met the required-reviewer condition.", "live production reviewer"],
+    ["user-gate-no-longer-blocks", "The User gate no longer blocks release.", "contains"],
+    ["review-fulfilled-codex", "Required review was fulfilled by Codex.", "live production reviewer"],
+    ["deployment-despite-user-rule", "Deployment may proceed despite the User-review rule.", "contains"],
+    ["blocked-and-can-ship", "Production is blocked and the site can ship.", "contains"],
+    ["negative-then-human-positive", "No participants completed the study, but users validated the interface.", "contains"],
+    ["negative-release-mixed-approval", "The site is not blocked and has approval.", "contains"],
+    ["negative-human-mixed-observation", "No technical errors exist and users validated the interface.", "contains"],
+    ["negative-participant-mixed-observation", "No participants completed research and users validated the interface.", "contains"],
+    ["authority-release-granted", "Authority to release was granted.", "contains"],
+    ["deployment-good-to-go", "Deployment good to go.", "contains"],
+    ["nothing-between-build-release", "Nothing stands between build and release.", "contains"],
+    ["rollout-not-blocked", "Rollout not blocked.", "contains"],
+    ["mixed-not-approved-may-start", "Production not approved yet rollout may start.", "contains"],
+    ["implementation-can-begin", "Implementation can begin.", "contains"],
+    ["implementation-has-started", "Implementation has started.", "contains"],
+    ["user-input-shaped-design", "User input shaped the design.", "contains"],
+    ["participant-views-shaped-design", "Participant views shaped the design.", "contains"],
+    ["screen-reader-users-passed", "Screen-reader users passed the journey.", "contains"],
+    ["learner-commentary-informed", "Learner commentary informed the interface.", "contains"],
+    ["negative-human-then-shaped-choice", "No human evidence whereas participants shaped the choice.", "contains"],
+    ["choice-made", "Choice made.", "contains"],
+    ["decision-made", "Decision made.", "contains"],
+    ["territory-b-won", "Territory B won.", "contains"],
+    ["panel-consensus-b", "Panel consensus on B.", "contains"],
+    ["committee-adopted-b", "Committee adopted B.", "contains"],
+    ["panel-choice-b", "Panel choice B.", "contains"],
+    ["slash-release-authorized", "release/authorized", "contains"],
+    ["slash-green-light", "the/green/light", "contains"],
+    ["combining-ship", "sh\u034Fip", "contains"],
+    ["hyphen-authorized", "auth-orized", "contains"],
+    ["slash-participant-feedback", "participants provided/feedback", "contains"],
+    ["slash-selection-winner", "selected/winner", "contains"],
+    ["backtick-slash-release-authorized", "`release/authorized`", "contains"],
+    ["backtick-slash-green-light", "`the/green/light`", "contains"],
+    ["backtick-hyphen-authorized", "`auth-orized`", "contains"],
+    ["backtick-participant-feedback", "`participants provided/feedback`", "contains"],
+    ["backtick-selection-winner", "`selected/winner`", "contains"],
+    ["free-to-deploy", "We are free to deploy.", "contains"],
+    ["site-went-live", "The site went live.", "contains"],
+    ["participant-opinions-drove-ui", "Participant opinions drove the UI.", "contains"],
+    ["panel-agreed-b", "The panel agreed on B.", "contains"],
+    ["long-punctuation-release-authorized", "The re/////lease is auth-----orized.", "contains"],
+    ["long-whitespace-release-authorized", "The re     lease is auth     orized.", "contains"],
+    ["site-can-be-released", "The site can be released.", "contains"],
+    ["site-deployable", "The site is deployable.", "contains"],
+    ["release-no-barriers", "The release has no barriers.", "contains"],
+    ["user-sentiment-drove-ui", "User sentiment drove the UI.", "contains"],
+    ["territory-prevailed", "Territory B prevailed.", "contains"],
+    ["deployment-complete", "The deployment is complete.", "contains"],
+    ["rollout-finished", "The rollout finished.", "contains"],
+    ["launch-succeeded", "The launch succeeded.", "contains"],
+    ["deployment-happened", "Deployment happened.", "contains"],
+    ["release-occurred", "The release occurred.", "contains"],
+    ["site-published", "The site was published.", "contains"],
+    ["site-can-publish", "The site can be published.", "contains"],
+    ["release-underway", "The release is underway.", "contains"],
+    ["site-fit-to-ship", "The site is fit to ship.", "contains"],
+    ["build-releasable", "The build is releasable.", "contains"],
+    ["launch-consent", "The launch has consent.", "contains"],
+    ["consent-to-deploy", "Consent to deploy was given.", "contains"],
+    ["move-ahead-deployment", "We may move ahead with deployment.", "contains"],
+    ["nothing-preventing-deployment", "There is nothing preventing deployment.", "contains"],
+    ["build-passed-checks", "The build passed all checks.", "contains"],
+    ["traffic-cut-over", "Traffic was cut over.", "contains"],
+    ["talked-to-users", "We talked to users.", "contains"],
+    ["users-consulted", "Users were consulted.", "contains"],
+    ["people-reviewed-interface", "People reviewed the interface.", "contains"],
+    ["interface-reflects-preferences", "The interface reflects learner preferences.", "contains"],
+    ["interviews-held", "Interviews were held.", "contains"],
+    ["focus-group-convened", "A focus group convened.", "contains"],
+    ["usability-sessions-convened", "Usability sessions convened.", "contains"],
+    ["shadowed-users", "We shadowed users.", "contains"],
+    ["customers-interviewed", "Customers were interviewed.", "contains"],
+    ["readers-evaluated-page", "Readers evaluated the page.", "contains"],
+    ["learners-advised-team", "Learners advised the team.", "contains"],
+    ["participants-supplied-remarks", "Participants supplied remarks.", "contains"],
+    ["committee-resolved-b", "The committee resolved to use B.", "contains"],
+    ["b-declared-winner", "B was declared the winner.", "contains"],
+    ["panel-backed-b", "The panel backed B.", "contains"],
+    ["committee-opted-b", "The committee opted for B.", "contains"],
+    ["territory-victorious", "Territory B was victorious.", "contains"],
+    ["review-outcome-positive", "The review outcome was positive.", "contains"],
+    ["b-carried-vote", "B carried the vote.", "contains"],
+    ["panel-reached-agreement", "The panel reached agreement on B.", "contains"],
+    ["review-team-consensus", "The review team reached consensus on B.", "contains"],
+    ["b-emerged-selection", "B emerged as the selection.", "contains"],
+    ["b-panel-endorsement", "B received the panel endorsement.", "contains"],
+    ["committee-named-b", "The committee named B.", "contains"],
+    ["option-b-advanced", "Option B advanced.", "contains"],
+    ["territory-b-triumphed", "Territory B triumphed.", "contains"],
+    ["panel-recommendation-b", "The panel recommendation is B.", "contains"],
+    ["masked-green-light", "The deployment has the gr-een light.", "contains"],
+    ["masked-stands-between", "Nothing st-ands between build and release.", "contains"],
+    ["masked-rollout-blocked", "Rollout is not blo-cked.", "contains"],
+    ["masked-may-start", "Production is not approved yet rollout m-ay start.", "contains"],
+    ["masked-implementation-begin", "Implementation can be-gin.", "contains"],
+    ["masked-screen-reader-users", "Screen-reader us-ers passed the journey.", "contains"],
+    ["masked-learner-commentary", "Lear-ner com-mentary informed the interface.", "contains"],
+    ["masked-observed-people", "We observed five peo-ple.", "contains"],
+    ["masked-usability-study", "Peo-ple completed usa-bility stu-dy.", "contains"],
+    ["masked-panel-consensus", "Panel con-sensus on B.", "contains"],
+    ["masked-choice-made", "Cho-ice ma-de.", "contains"],
+    ["masked-territory-won", "Territory B w-on.", "contains"],
+    ["inline-path-green-light", "The deployment has the green `apps/site/public/sw.js` light.", "contains"],
+    ["ship-it", "Ship it.", "contains"],
+    ["deploy-this-build", "Deploy this build.", "contains"],
+    ["release-it", "Release it.", "contains"],
+    ["begin-rollout", "Begin rollout.", "contains"],
+    ["start-deployment", "Start deployment.", "contains"],
+    ["activate-production", "Activate production.", "contains"],
+    ["commence-rollout", "Commence rollout.", "contains"],
+    ["implementation-began", "Implementation began.", "contains"],
+    ["deployment-sanctioned", "The deployment was sanctioned.", "contains"],
+    ["release-imminent", "The release is imminent.", "contains"],
+    ["masked-site-deploy", "The site can de-ploy.", "contains"],
+    ["masked-site-go-live", "The site can go l-ive.", "contains"],
+    ["users-rated-interface", "Users rated the interface.", "contains"],
+    ["participant-count-five", "Participant count was five.", "contains"],
+    ["participants-numbered-five", "Participants numbered five.", "contains"],
+    ["panel-met", "The panel met.", "contains"],
+    ["panel-decided-b", "Panel decided on B.", "contains"],
+    ["committee-voted-b", "Committee voted for B.", "contains"],
+    ["choice-is-b", "The choice is B.", "contains"],
+    ["decision-is-b", "The decision is B.", "contains"],
+    ["option-b-beat-a", "Option B beat A.", "contains"],
+    ["final-choice-b", "Final choice: option B.", "contains"],
+    ["option-b-final-choice", "Option B is the final choice.", "contains"]
+    , ["deployment-waiver-issued-v8", "A deployment waiver was issued.", "contains"]
+    , ["deployment-objections-withdrawn-v8", "Deployment objections were withdrawn.", "contains"]
+    , ["launch-hold-lifted-v8", "The hold on launch was lifted.", "contains"]
+    , ["release-restrictions-gone-v8", "Release restrictions are gone.", "contains"]
+    , ["deployment-unobstructed-v8", "Deployment is unobstructed.", "contains"]
+    , ["deployment-does-not-lack-permission-v8", "Deployment does not lack permission.", "contains"]
+    , ["production-not-without-approval-v8", "Production is not without approval.", "contains"]
+    , ["no-reason-not-deploy-v8", "There is no reason not to deploy.", "contains"]
+    , ["please-deploy-site-v8", "Please deploy the site.", "contains"]
+    , ["greenlight-deployment-v8", "Greenlight deployment.", "contains"]
+    , ["put-production-online-v8", "Put production online.", "contains"]
+    , ["promote-build-v8", "Promote this build.", "contains"]
+    , ["cut-over-candidate-v8", "Cut over to the candidate.", "contains"]
+    , ["route-traffic-production-v8", "Route traffic to production.", "contains"]
+    , ["publish-site-v8", "Publish the site.", "contains"]
+    , ["continue-deployment-v8", "Continue with deployment.", "contains"]
+    , ["resume-rollout-v8", "Resume rollout.", "contains"]
+    , ["deployment-in-progress-v8", "Deployment is in progress.", "contains"]
+    , ["release-ongoing-v8", "Release is ongoing.", "contains"]
+    , ["launch-happening-v8", "Launch is happening now.", "contains"]
+    , ["production-online-v8", "Production is online.", "contains"]
+    , ["website-serving-traffic-v8", "The website is serving traffic.", "contains"]
+    , ["release-authorised-v8", "The release is authorised.", "contains"]
+    , ["team-empowered-deploy-v8", "The team is empowered to deploy.", "contains"]
+    , ["candidate-meets-launch-criteria-v8", "The candidate meets launch criteria.", "contains"]
+    , ["blocked-so-ship-v8", "Production is blocked, so ship now.", "contains"]
+    , ["although-blocked-deploy-v8", "Although blocked, deploy the site.", "contains"]
+    , ["release-anything-but-blocked-v8", "Release is anything but blocked.", "contains"]
+    , ["rollout-waiver-v8", "The rollout received a waiver.", "contains"]
+    , ["website-fit-production-v8", "The website is fit for production.", "contains"]
+    , ["no-obstructions-launch-v8", "There are no obstructions to launch.", "contains"]
+    , ["liberty-publish-v8", "We are at liberty to publish.", "contains"]
+    , ["spoke-to-users-v8", "We spoke to users.", "contains"]
+    , ["met-with-users-v8", "We met with users.", "contains"]
+    , ["users-answered-questions-v8", "Users answered questions.", "contains"]
+    , ["people-used-prototype-v8", "People used the prototype.", "contains"]
+    , ["saw-users-use-site-v8", "We saw users use the site.", "contains"]
+    , ["witnessed-people-interface-v8", "We witnessed people using the interface.", "contains"]
+    , ["customer-suggestions-layout-v8", "Customer suggestions influenced the layout.", "contains"]
+    , ["listened-to-learners-v8", "We listened to learners.", "contains"]
+    , ["committee-went-with-b-v8", "The committee went with B.", "contains"]
+    , ["b-our-selection-v8", "B is our selection.", "contains"]
+    , ["launch-hold-removed-variant", "The launch hold was lifted.", "contains"]
+    , ["hold-on-deployment-removed-variant", "The hold on deployment was removed.", "contains"]
+    , ["deployment-restrictions-removed-variant", "Deployment restrictions were removed.", "contains"]
+    , ["deployment-free-blockers-variant", "Deployment is free of blockers.", "contains"]
+    , ["build-satisfies-criteria-variant", "The build satisfies launch criteria.", "contains"]
+    , ["traffic-routed-production-variant", "Traffic is routed to production.", "contains"]
+    , ["team-liberty-publish-variant", "The team has liberty to publish.", "contains"]
+    , ["met-users-variant", "We met users.", "contains"]
+    , ["heard-users-variant", "We heard users.", "contains"]
+    , ["participants-suggested-variant", "Participants suggested changes.", "contains"]
+    , ["users-tried-prototype-variant", "Users tried the prototype.", "contains"]
+    , ["committee-went-for-b-variant", "The committee went for B.", "contains"]
+    , ["group-landed-b-variant", "The group landed on B.", "contains"]
+    , ["committee-preference-b-variant", "Committee preference: B.", "contains"]
+    , ["launch-restriction-expired-v10", "The launch restriction expired.", "contains"]
+    , ["deployment-embargo-ended-v10", "The deployment embargo ended.", "contains"]
+    , ["release-hold-expired-v10", "The release hold expired.", "contains"]
+    , ["production-gate-opened-v10", "The production gate opened.", "contains"]
+    , ["door-release-open-v10", "The door to release is open.", "contains"]
+    , ["no-outstanding-approval-v10", "No outstanding approval is needed for launch.", "contains"]
+    , ["send-site-live-v10", "Send the site live.", "contains"]
+    , ["push-build-production-v10", "Push the build to production.", "contains"]
+    , ["take-website-live-v10", "Take the website live.", "contains"]
+    , ["turn-production-on-v10", "Turn production on.", "contains"]
+    , ["roll-out-build-v10", "Roll out the build.", "contains"]
+    , ["deploy-away-v10", "Deploy away.", "contains"]
+    , ["release-can-happen-v10", "The release can happen.", "contains"]
+    , ["launch-can-happen-v10", "Launch can happen.", "contains"]
+    , ["deployment-can-happen-v10", "Deployment can happen.", "contains"]
+    , ["release-kicked-off-v10", "Release kicked off.", "contains"]
+    , ["release-went-out-v10", "The release went out.", "contains"]
+    , ["traffic-switched-production-v10", "Traffic switched to production.", "contains"]
+    , ["launch-entered-production-v10", "The launch entered production.", "contains"]
+    , ["release-hyphen-approval-v10", "The release has appro-val.", "contains"]
+    , ["deployment-hyphen-permission-v10", "The deployment has per-mission.", "contains"]
+    , ["study-produced-findings-v10", "The study produced findings.", "contains"]
+    , ["research-yielded-insights-v10", "Research yielded insights.", "contains"]
+    , ["usability-feedback-exists-v10", "Usability feedback exists.", "contains"]
+    , ["interview-notes-exist-v10", "Interview notes exist.", "contains"]
+    , ["folks-tested-page-v10", "Folks tested the page.", "contains"]
+    , ["residents-evaluated-journey-v10", "Residents evaluated the journey.", "contains"]
+    , ["five-individuals-prototype-v10", "Five individuals tried the prototype.", "contains"]
+    , ["community-members-tested-v10", "Several community members tested the interface.", "contains"]
+    , ["test-subjects-used-v10", "Test subjects used the prototype.", "contains"]
+    , ["interviewees-responded-v10", "Interviewees responded to the design.", "contains"]
+    , ["user-count-five-v10", "User count was five.", "contains"]
+    , ["learner-total-five-v10", "The learner total is five.", "contains"]
+    , ["community-members-research-v10", "Five community members participated in research.", "contains"]
+    , ["zero-participant-positive-choice-v10", "Zero participants, with learner recommendations incorporated into the choice.", "contains"]
+    , ["negative-human-positive-selection-v10", "No human evidence even though learners selected B.", "contains"]
+    , ["direction-settled-v10", "Direction B was settled.", "contains"]
+    , ["committee-aligned-v10", "The committee aligned on B.", "contains"]
+    , ["panel-coalesced-v10", "The panel coalesced around B.", "contains"]
+    , ["vote-broke-v10", "The vote broke for B.", "contains"]
+    , ["selected-standard-v10", "B became the selected standard.", "contains"]
+    , ["deploy-immediately-v10", "Deploy immediately.", "contains"]
+    , ["release-window-open-v10", "The release window is open.", "contains"]
+    , ["release-passed-muster-v10", "The release passed muster.", "contains"]
+    , ["percent-authorized-v10", "The release is auth%2Dorized.", "contains"]
+    , ["path-split-authorized-v10", "The release is auth`apps/site/public/sw.js`orized.", "contains"]
+    , ["people-responded-v10", "People responded.", "contains"]
+    , ["panel-convened-yesterday-v10", "The panel convened yesterday.", "contains"]
+    , ["dozens-users-took-part-v10", "Dozens of users took part.", "contains"]
+    , ["prototype-tried-by-users-v10", "The prototype was tried by users.", "contains"]
+    , ["consensus-b-v10", "Consensus: B.", "contains"]
+    , ["panel-supported-b-v10", "The panel supported B.", "contains"]
+    , ["direction-locked-b-v10", "Direction locked to B.", "contains"]
+    , ["nothing-prohibits-deployment-v10", "Nothing prohibits deployment.", "contains"]
+    , ["no-rule-bars-release-v10", "No rule bars release.", "contains"]
+    , ["deployment-lacks-no-approval-v10", "Deployment lacks no approval.", "contains"]
+    , ["release-not-lacking-authorization-v10", "Release is not lacking authorization.", "contains"]
+    , ["not-approved-deploy-anyway-v10", "Not approved, deploy anyway.", "contains"]
+    , ["no-approval-launch-now-v10", "No release approval, launch now.", "contains"]
+    , ["no-objections-selected-b-v10", "No objections, committee selected B.", "contains"]
+    , ["selection-no-longer-pending-v10", "Territory selection is no longer pending.", "contains"]
+    , ["human-evidence-not-absent-v10", "Human evidence cannot be said to be absent.", "contains"]
+    , ["untrue-no-human-evidence-v10", "It is untrue that no human evidence exists.", "contains"]
+    , ["participants-not-unobserved-v10", "Participants were not unobserved.", "contains"]
+    , ["users-not-untested-v10", "Users did not go untested.", "contains"]
+    , ["no-users-left-untested-v10", "No users were left untested.", "contains"]
   ]
-  for (const [name, claim, fragment] of freeFormEvidenceAttacks) {
-    await negative(
-      `markdown-free-form-${name}`,
-      () => validateMarkdown(`${markdown}\n${claim}\n`),
-      fragment
-    )
-    await negative(
-      `decoded-map-free-form-${name}`,
-      () => validateDecodedStringClaims({ nested: { values: [{ claim }] } }, "decoded free-form fixture"),
-      fragment
-    )
+  for (const [name, claim] of freeFormEvidenceAttacks) {
+    await rejectSemanticClaimOnAllSurfaces(`free-form-${name}`, claim, "")
   }
 
   const semanticAuthorizationActors = ["deployment", "release", "candidate", "build", "site", "application", "website", "version", "rollout", "packet"]
@@ -2575,33 +4198,42 @@ const runSelfTests = async ({ map, rawMap, markdown, planIndex, scriptMetadata, 
     "is ready",
     "has the green light",
     "has the go-ahead",
-    "received the blessing"
+    "received the blessing",
+    "got approved",
+    "was given a green light",
+    "faces no remaining blockers",
+    "is all set",
+    "can commence",
+    "proceeds",
+    "shipped",
+    "has been blessed"
   ]
   for (const actor of semanticAuthorizationActors) {
     for (const result of semanticAuthorizationResults) {
       const name = `${actor}-${result}`.replace(/[^a-z0-9]+/gu, "-")
       const claim = `The ${actor} ${result}.`
-      await negative(`semantic-matrix-markdown-${name}`, () => validateMarkdown(`${markdown}\n${claim}\n`), "contains")
-      await negative(
-        `semantic-matrix-decoded-${name}`,
-        () => validateDecodedStringClaims({ outer: [{ inner: { claim } }] }, "nested semantic authorization fixture"),
-        "contains"
-      )
+      await rejectSemanticClaimOnAllSurfaces(`authorization-matrix-${name}`, claim)
     }
   }
 
   const semanticHumanActors = ["cohort", "panel", "people", "learners", "users", "participants", "students", "testers"]
-  const semanticHumanResults = ["completed", "passed", "conducted", "joined", "were observed in", "took part in"]
+  const semanticHumanResults = [
+    "completed",
+    "passed",
+    "conducted",
+    "joined",
+    "were observed in",
+    "took part in",
+    "gave feedback during",
+    "reported findings from",
+    "provided results for",
+    "validated the interface during"
+  ]
   for (const actor of semanticHumanActors) {
     for (const result of semanticHumanResults) {
       const name = `${actor}-${result}`.replace(/[^a-z0-9]+/gu, "-")
       const claim = `The ${actor} ${result} the usability research round.`
-      await negative(`human-matrix-markdown-${name}`, () => validateMarkdown(`${markdown}\n${claim}\n`), "free-form")
-      await negative(
-        `human-matrix-decoded-${name}`,
-        () => validateDecodedStringClaims({ outer: { values: [{ claim }] } }, "nested semantic human fixture"),
-        "free-form"
-      )
+      await rejectSemanticClaimOnAllSurfaces(`human-matrix-${name}`, claim, "human")
     }
   }
 
@@ -2611,12 +4243,48 @@ const runSelfTests = async ({ map, rawMap, markdown, planIndex, scriptMetadata, 
     for (const result of semanticDecisionResults) {
       const name = `${actor}-${result}`
       const claim = `The ${actor} was ${result}.`
-      await negative(`decision-matrix-markdown-${name}`, () => validateMarkdown(`${markdown}\n${claim}\n`), "contains")
-      await negative(
-        `decision-matrix-decoded-${name}`,
-        () => validateDecodedStringClaims({ outer: [{ claim }] }, "nested semantic decision fixture"),
-        "contains"
-      )
+      await rejectSemanticClaimOnAllSurfaces(`decision-matrix-${name}`, claim)
+    }
+  }
+
+  for (const [actor, verb, object] of [
+    ["panel", "chose", "proposal"],
+    ["selector", "picked", "option"],
+    ["committee", "endorsed", "direction"],
+    ["review", "favored", "variant"],
+    ["panel", "settled on", "option"]
+  ]) {
+    await rejectSemanticClaimOnAllSurfaces(
+      `decision-active-${actor}-${verb.replaceAll(" ", "-")}-${object}`,
+      `The ${actor} ${verb} the ${object}.`
+    )
+  }
+
+  const fullwidthSemanticFixture = (text) => [...text].map((character) => {
+    const codePoint = character.codePointAt(0)
+    if (codePoint === 0x20) return "\u3000"
+    if (codePoint >= 0x21 && codePoint <= 0x7e) return String.fromCodePoint(codePoint + 0xfee0)
+    return character
+  }).join("")
+  const semanticFormattingClaims = [
+    ["release", "The deployment was given a green light."],
+    ["action", "We moved forward with the rollout."],
+    ["human", "Participants provided feedback."],
+    ["study", "A moderated research session took place."],
+    ["decision", "The panel chose the proposal."]
+  ]
+  for (const [family, claim] of semanticFormattingClaims) {
+    const splitAt = Math.max(1, claim.search(/[A-Za-z]{6,}/u) + 3)
+    const transforms = [
+      ["uppercase", claim.toUpperCase()],
+      ["fullwidth", fullwidthSemanticFixture(claim)],
+      ["unicode-separators", claim.replaceAll(" ", "—")],
+      ["multiline-spacing", claim.replaceAll(" ", "  \n  ")],
+      ["markdown-formatting", `***${claim}***`],
+      ["comment-split", `${claim.slice(0, splitAt)}<!--semantic-split-->${claim.slice(splitAt)}`]
+    ]
+    for (const [transform, transformedClaim] of transforms) {
+      await rejectSemanticClaimOnAllSurfaces(`format-${family}-${transform}`, transformedClaim)
     }
   }
 
@@ -2638,23 +4306,78 @@ const runSelfTests = async ({ map, rawMap, markdown, planIndex, scriptMetadata, 
     )
   }
 
+  const allowSemanticClaimOnAllSurfaces = (name, claim) => {
+    validateMarkdown(`${markdown}\n${claim}\n`)
+    validateDecodedStringClaims({ nested: [{ claim }] }, `benign decoded semantic fixture ${name}`)
+    validateDecodedStringClaims(
+      { codexReviewLedger: [{ findingSummary: claim, nested: { evidence: [claim] } }] },
+      `benign review-ledger semantic fixture ${name}`
+    )
+  }
+
   for (const [name, claim] of [
     ["production-blocked", "Production deployment remains blocked and out of scope."],
+    ["blocked-production", "Blocked production."],
     ["site-cannot-go-live", "The site cannot go live."],
     ["candidate-not-approved", "The candidate is not approved for rollout."],
     ["application-no-permission", "The application has no permission to deploy."],
+    ["human-usability-out-of-scope", "Human usability research is out of scope."],
     ["no-human-evidence", "No human evidence exists."],
+    ["no-human-evidence-terse", "No human evidence."],
+    ["zero-participants", "Zero participants."],
     ["no-participants", "No participants completed the usability study."],
     ["study-not-conducted", "The usability study was not conducted."],
     ["panel-did-not-pass", "The panel did not pass usability testing."],
     ["not-human-usability-tested", "This packet is not human usability tested."],
+    ["not-human-usability-tested-hyphenated", "Not human-usability-tested."],
     ["review-pending", "The review remains pending."],
     ["packet-provisional", "This packet remains provisional prework."],
-    ["user-gate-unsatisfied", "The required User reviewer remains unsatisfied."]
+    ["territory-selection-pending", "Territory selection remains pending."],
+    ["user-gate-unsatisfied", "The required User reviewer remains unsatisfied."],
+    ["user-research-out-of-scope", "User research is out of scope."],
+    ["deployment-path", "The deployment workflow path is docs/DEPLOYMENT.md."],
+    ["raw-repository-path", "apps/site/public/sw.js"],
+    ["backticked-repository-path", "`apps/site/public/sw.js`"],
+    ["release-gates-listed", "Release gates are listed for future verification."],
+    ["shipped-document-wiring", "Shipped document wiring is a regression-test boundary."],
+    ["selected-target-sizes", "Selected target sizes are accessibility inputs."],
+    ["future-step-inputs", "Accepted future Step inputs remain null."],
+    ["launch-analytics-disabled", "Launch analytics are disabled."],
+    ["compiler-recovery", "Compiler recovery requires independent verification."],
+    ["independent-rollback-prohibited", "Independent rollback is prohibited."],
+    ["prohibited-independent-rollback", "Prohibited independent rollback."],
+    ["previous-release-prohibited", "The previous release is prohibited."],
+    ["never-use-previous-release", "Never use the previous release."],
+    ["allowed-current-tip-revert", "Revert the current unmerged tip."],
+    ["allowed-closed-suffix-rollback", "Roll back the dependency-closed suffix."],
+    ["canonical-rollback", canonicalRollbackContract],
+    ["rollback-boundary-label-v8", "Rollback boundary."],
+    ["rollback-policy-label-v8", "Rollback policy."],
+    ["rollback-rehearsal-label-v8", "Rollback rehearsal."],
+    ["restore-imported-settings-v8", "Restore settings from the imported backup."],
+    ["restore-preferences-after-load-v8", "Restore stored preferences after the authoritative load."],
+    ["restore-session-after-indexeddb-v8", "Restore the local study session after IndexedDB opens."],
+    ["settings-does-not-allow-saving-v8", "Settings does not allow saving before authoritative restoration completes."]
   ]) {
-    validateNoAffirmativeEvidenceClaims(claim, `benign semantic fixture ${name}`)
-    validateDecodedStringClaims({ nested: [{ claim }] }, `benign decoded semantic fixture ${name}`)
+    allowSemanticClaimOnAllSurfaces(name, claim)
   }
+  validateDecodedStringClaims(
+    { codexReviewLedger: [{ reviewKind: "authorization-and-rollback-review" }] },
+    "closed structural review enum fixture"
+  )
+  await negative(
+    "structural-review-kind-does-not-exempt-finding",
+    () => validateDecodedStringClaims(
+      {
+        codexReviewLedger: [{
+          reviewKind: "authorization-and-rollback-review",
+          findingSummary: "authorization-and-rollback-review: Deployment good to go."
+        }]
+      },
+      "structural review enum finding fixture"
+    ),
+    "contains"
+  )
 
   const metadataFixtures = [
     ["map", map.metadata],
@@ -2811,11 +4534,102 @@ const runSelfTests = async ({ map, rawMap, markdown, planIndex, scriptMetadata, 
   {
     const tampered = clone(canonicalReviewFixture)
     tampered[0].findingSummary += " Tampered."
-    await negative("tampered-review-record", () => validateCodexReviewLedger(tampered), "recordSha256 differs")
+    await negative("tampered-review-record", () => validateCodexReviewLedger(tampered), "native review result differs")
 
     const badHash = clone(canonicalReviewFixture)
     badHash[0].recordSha256 = "0".repeat(64)
     await negative("review-record-hash-mismatch", () => validateCodexReviewLedger(badHash), "recordSha256 differs")
+
+    const missingNativeEvidence = clone(canonicalReviewFixture)
+    delete missingNativeEvidence[0].nativeEvidence
+    await negative(
+      "review-record-missing-native-evidence",
+      () => validateCodexReviewLedger(missingNativeEvidence),
+      "keys differ"
+    )
+
+    const corruptNativeBytes = clone(canonicalReviewFixture)
+    corruptNativeBytes[0].nativeEvidence.reviewPrompt.bytes = Buffer.from("corrupt", "utf8").toString("base64")
+    await negative(
+      "review-record-corrupt-native-bytes",
+      () => validateCodexReviewLedger(corruptNativeBytes),
+      "byteLength differs"
+    )
+
+    for (const [name, evidenceKey, replacement, fragment] of [
+      ["allocation-prompt", "allocationPrompt", `${nativeAllocationPromptUtf8} mutated`, "native allocation prompt bytes differ"],
+      ["spawn-receipt", "spawnReceipt", JSON.stringify({ task_name: "/root/self-authored-review" }), "native spawn receipt bytes differ"],
+      ["allocation-result", "allocationResult", "ALLOCATED-BY-SELF-AUTHORED-NAME.", "native allocation result bytes differ"],
+      ["review-rubric", "reviewRubric", `${requiredCodexReviewTasks[0].reviewRubricUtf8} mutated`, "review rubric bytes differ"],
+      ["review-prompt", "reviewPrompt", `${codexReviewPromptUtf8(canonicalReviewFixture[0], requiredCodexReviewTasks[0])} `, "exact review prompt bytes differ"],
+      ["review-result", "reviewResult", `${JSON.stringify(codexReviewResultPayload(canonicalReviewFixture[0]))} `, "native review result must be one-line canonical JSON"]
+    ]) {
+      const value = clone(canonicalReviewFixture)
+      value[0].nativeEvidence[evidenceKey] = encodeUtf8Evidence(replacement)
+      await negative(`review-record-native-${name}`, () => validateCodexReviewLedger(value), fragment)
+    }
+
+    const nonzeroIntervalStart = clone(canonicalReviewFixture)
+    nonzeroIntervalStart[0].reviewedSourceIntervals[packetPaths[0]].startByte = 1
+    await negative(
+      "review-record-nonzero-source-start",
+      () => validateCodexReviewLedger(nonzeroIntervalStart),
+      "startByte must be 0"
+    )
+
+    const emptyInterval = clone(canonicalReviewFixture)
+    emptyInterval[0].reviewedSourceIntervals[packetPaths[0]].endByte = 0
+    await negative(
+      "review-record-empty-source-interval",
+      () => validateCodexReviewLedger(emptyInterval),
+      "endByte must be positive"
+    )
+
+    const invalidIntervalHash = clone(canonicalReviewFixture)
+    invalidIntervalHash[0].reviewedSourceIntervals[packetPaths[0]].sha256 = "not-a-sha"
+    await negative(
+      "review-record-invalid-source-interval-hash",
+      () => validateCodexReviewLedger(invalidIntervalHash),
+      "sha256 is invalid"
+    )
+
+    const wrongSourceManifest = clone(canonicalReviewFixture)
+    wrongSourceManifest[0].reviewedSourceManifestSha256 = "0".repeat(64)
+    await negative(
+      "review-record-wrong-source-manifest",
+      () => validateCodexReviewLedger(wrongSourceManifest),
+      "differs from its canonical intervals"
+    )
+
+    const promptUnboundInterval = clone(canonicalReviewFixture)
+    promptUnboundInterval[0].reviewedSourceIntervals[packetPaths[0]].endByte += 1
+    promptUnboundInterval[0].reviewedSourceManifestSha256 = sourceManifestSha256(promptUnboundInterval[0].reviewedSourceIntervals)
+    await negative(
+      "review-record-source-interval-not-bound-to-prompt",
+      () => validateCodexReviewLedger(promptUnboundInterval),
+      "exact review prompt bytes differ"
+    )
+
+    const refreshNativeResultAndRecord = (entry) => {
+      entry.nativeEvidence.reviewResult = encodeUtf8Evidence(JSON.stringify(codexReviewResultPayload(entry)))
+      entry.recordSha256 = sha256Utf8(JSON.stringify(codexReviewPayload(entry)))
+    }
+    const semanticFindingSummary = clone(canonicalReviewFixture)
+    semanticFindingSummary[0].findingSummary = "Deployment good to go."
+    refreshNativeResultAndRecord(semanticFindingSummary[0])
+    await negative(
+      "review-record-semantic-finding-summary",
+      () => validateCodexReviewLedger(semanticFindingSummary),
+      "affirmative production or implementation authorization"
+    )
+    const semanticFindingId = clone(canonicalReviewFixture)
+    semanticFindingId[0].findingIds = ["Territory B won."]
+    refreshNativeResultAndRecord(semanticFindingId[0])
+    await negative(
+      "review-record-semantic-finding-id",
+      () => validateCodexReviewLedger(semanticFindingId),
+      "free-form approval, pass, or selection claim"
+    )
 
     const badOccurrence = clone(canonicalReviewFixture)
     badOccurrence[0].reviewOccurrenceId = "codex-only-uiux-v1-invented"
@@ -2825,28 +4639,38 @@ const runSelfTests = async ({ map, rawMap, markdown, planIndex, scriptMetadata, 
     priorTask[0].taskId = "/root/" + ["topology", "fact", "check"].join("_")
     await negative("prior-cycle-review-task", () => validateCodexReviewLedger(priorTask), "taskId differs")
 
-    for (const [index, taskId] of [
-      "/root/auth_rollback_final_review",
-      "/root/topology_state_dependency_final_review",
-      "/root/validator_final_review"
-    ].entries()) {
-      const rejectedTask = clone(canonicalReviewFixture)
-      rejectedTask[index].taskId = taskId
-      await negative(`rejected-843-review-task-${index + 1}`, () => validateCodexReviewLedger(rejectedTask), "taskId differs")
+    for (const [cycle, taskIds] of [
+      ["843", invalidatedReviewProvenanceRegistry.taskIds.slice(0, 3)],
+      ["cd9920", invalidatedReviewProvenanceRegistry.taskIds.slice(3, 6)],
+      ["stale-v2", invalidatedReviewProvenanceRegistry.taskIds.slice(6, 9)],
+      ["stale-a4", invalidatedReviewProvenanceRegistry.taskIds.slice(9, 12)]
+    ]) {
+      for (const [index, taskId] of taskIds.entries()) {
+        const rejectedTask = clone(canonicalReviewFixture)
+        rejectedTask[index].taskId = taskId
+        await negative(
+          `rejected-${cycle}-review-task-${index + 1}`,
+          () => validateCodexReviewLedger(rejectedTask),
+          "contains invalidated review provenance identifier"
+        )
+      }
     }
 
-    for (const [index, occurrenceId] of [
-      "codex-only-uiux-v1-auth-rollback-rereview",
-      "codex-only-uiux-v1-topology-state-dependency-rereview",
-      "codex-only-uiux-v1-validator-rereview"
-    ].entries()) {
-      const rejectedOccurrence = clone(canonicalReviewFixture)
-      rejectedOccurrence[index].reviewOccurrenceId = occurrenceId
-      await negative(
-        `rejected-843-review-occurrence-${index + 1}`,
-        () => validateCodexReviewLedger(rejectedOccurrence),
-        "reviewOccurrenceId differs"
-      )
+    for (const [cycle, occurrenceIds] of [
+      ["843", invalidatedReviewProvenanceRegistry.reviewOccurrenceIds.slice(0, 3)],
+      ["cd9920", invalidatedReviewProvenanceRegistry.reviewOccurrenceIds.slice(3, 6)],
+      ["stale-v2", invalidatedReviewProvenanceRegistry.reviewOccurrenceIds.slice(6, 9)],
+      ["stale-a4", invalidatedReviewProvenanceRegistry.reviewOccurrenceIds.slice(9, 12)]
+    ]) {
+      for (const [index, occurrenceId] of occurrenceIds.entries()) {
+        const rejectedOccurrence = clone(canonicalReviewFixture)
+        rejectedOccurrence[index].reviewOccurrenceId = occurrenceId
+        await negative(
+          `rejected-${cycle}-review-occurrence-${index + 1}`,
+          () => validateCodexReviewLedger(rejectedOccurrence),
+          "contains invalidated review provenance identifier"
+        )
+      }
     }
 
     const priorDisposition = clone(canonicalReviewFixture)
@@ -2854,13 +4678,113 @@ const runSelfTests = async ({ map, rawMap, markdown, planIndex, scriptMetadata, 
     await negative("prior-cycle-review-disposition", () => validateCodexReviewLedger(priorDisposition), "disposition differs")
 
     const wrongBase = clone(canonicalReviewFixture)
-    wrongBase[0].reviewedBaseSha = observedAtSha
+    wrongBase[0].reviewedBaseSha = "0".repeat(40)
     await negative("review-record-wrong-base", () => validateCodexReviewLedger(wrongBase), "reviewedBaseSha differs")
+
+    for (const [index, invalidatedSubject] of invalidatedReviewSubjectShas.entries()) {
+      const reusedSubject = clone(canonicalReviewFixture)
+      reusedSubject[0].reviewedCommitSha = invalidatedSubject
+      await negative(
+        `invalidated-review-subject-${index + 1}`,
+        () => validateCodexReviewLedger(reusedSubject),
+        "contains invalidated review provenance identifier"
+      )
+    }
 
     const missingFinding = clone(canonicalReviewFixture)
     missingFinding[0].findingIds = []
     await negative("review-record-missing-finding-id", () => validateCodexReviewLedger(missingFinding), "must be non-empty")
+
+    for (const [identifierIndex, identifier] of invalidatedReviewIdentifiers.entries()) {
+      await negative(
+        `invalidated-provenance-markdown-${identifierIndex + 1}`,
+        () => validateMarkdown(`${markdown}\n${identifier}\n`),
+        "contains invalidated review provenance identifier"
+      )
+      await negative(
+        `invalidated-provenance-decoded-map-${identifierIndex + 1}`,
+        () => validateDecodedStringClaims(
+          { deep: { nested: [{ value: identifier }] } },
+          "invalidated decoded-map provenance fixture"
+        ),
+        "contains invalidated review provenance identifier"
+      )
+      const summary = clone(canonicalReviewFixture)
+      summary[0].findingSummary = `Invalidated receipt ${identifier}`
+      await negative(
+        `invalidated-provenance-finding-summary-${identifierIndex + 1}`,
+        () => validateCodexReviewLedger(summary),
+        "contains invalidated review provenance identifier"
+      )
+      const findingId = clone(canonicalReviewFixture)
+      findingId[0].findingIds[0] = identifier
+      await negative(
+        `invalidated-provenance-finding-id-${identifierIndex + 1}`,
+        () => validateCodexReviewLedger(findingId),
+        "contains invalidated review provenance identifier"
+      )
+    }
+    for (const [blobIndex, retiredBlob] of invalidatedReviewProvenanceRegistry.packetBlobShas.entries()) {
+      for (const field of ["subject", "map", "plan", "validator", "reviewedPacketBlob"]) {
+        await negative(
+          `retired-packet-blob-${blobIndex + 1}-${field}`,
+          () => validateDecodedStringClaims(
+            { packetIdentity: { [field]: retiredBlob } },
+            `retired packet blob ${field} fixture`
+          ),
+          "contains invalidated review provenance identifier"
+        )
+      }
+      await negative(
+        `retired-packet-blob-${blobIndex + 1}-deeply-nested`,
+        () => validateDecodedStringClaims(
+          { outer: [{ inner: { reviewedPacket: [{ blob: retiredBlob }] } }] },
+          "deeply nested retired packet blob fixture"
+        ),
+        "contains invalidated review provenance identifier"
+      )
+      const escapedBlob = `\\u${retiredBlob.codePointAt(0).toString(16).padStart(4, "0")}${retiredBlob.slice(1)}`
+      const escapedDecodedFixture = parseJsonNoDuplicateKeys(
+        `{"outer":{"reviewedPacketBlob":"${escapedBlob}"}}`,
+        "escaped retired packet blob fixture"
+      )
+      await negative(
+        `retired-packet-blob-${blobIndex + 1}-json-escaped`,
+        () => validateDecodedStringClaims(escapedDecodedFixture, "escaped retired packet blob fixture"),
+        "contains invalidated review provenance identifier"
+      )
+      const retiredReviewedBlob = clone(canonicalReviewFixture)
+      retiredReviewedBlob[0].reviewedPacketBlobs[packetPaths[0]] = retiredBlob
+      await negative(
+        `retired-packet-blob-${blobIndex + 1}-ledger-reviewed-packet-blob`,
+        () => validateCodexReviewLedger(retiredReviewedBlob),
+        "contains invalidated review provenance identifier"
+      )
+    }
+    const maskedInvalidIdentifier = invalidatedReviewProvenanceRegistry.taskIds[0]
+      .replace("review", "re-vie\u034Fw")
+      .replaceAll("_", "/")
+    await negative(
+      "masked-invalidated-provenance-decoded-map",
+      () => validateDecodedStringClaims({ nested: maskedInvalidIdentifier }, "masked invalidated provenance fixture"),
+      "contains invalidated review provenance identifier"
+    )
   }
+
+  await negative(
+    "invalidated-provenance-registry-source-tamper",
+    () => validatorOutsideInvalidatedProvenanceRegistry(
+      validatorSource.replace(invalidatedReviewProvenanceRegistry.taskIds[0], `${invalidatedReviewProvenanceRegistry.taskIds[0]}-tampered`)
+    ),
+    "registry source bytes differ"
+  )
+  await negative(
+    "invalidated-provenance-registry-duplicate-start",
+    () => validatorOutsideInvalidatedProvenanceRegistry(
+      `${validatorSource}\n${["/* PLAN", "009", "INVALIDATED", "REVIEW", "PROVENANCE", "START */"].join("_")}\n`
+    ),
+    "exactly one invalidated-review provenance start marker"
+  )
 
   {
     const populatedRawMap = rawMap.replace(
@@ -3045,7 +4969,7 @@ const runSelfTests = async ({ map, rawMap, markdown, planIndex, scriptMetadata, 
   }
   {
     const value = clone(map)
-    value.fileRecords[0].role = "Production is " + "authorized."
+    value.fileRecords.find((record) => !criticalAnchors.includes(record.path)).role = "Production is " + "authorized."
     await negative(
       "map-production-authorization-phrase",
       () => validateMap(value, JSON.stringify(value), { checkGit: false }),
@@ -3090,7 +5014,7 @@ const runSelfTests = async ({ map, rawMap, markdown, planIndex, scriptMetadata, 
   {
     const value = clone(map)
     const claim = `Step 02 uses ${("de" + "ad" + "be" + "ef").repeat(5)}.`
-    value.fileRecords[0].role = claim
+    value.fileRecords.find((record) => !criticalAnchors.includes(record.path)).role = claim
     const encodedClaim = [...claim]
       .map((character) => `\\u${character.codePointAt(0).toString(16).padStart(4, "0")}`)
       .join("")
@@ -3130,7 +5054,7 @@ const runSelfTests = async ({ map, rawMap, markdown, planIndex, scriptMetadata, 
       await negative(
         `required-file-seam-${testStem}`,
         () => validateFileRecords(records, { checkGit: false }),
-        `required file-record contract differs: ${contractPath}`
+        "critical topology contract digest differs"
       )
     }
     {
@@ -3139,7 +5063,7 @@ const runSelfTests = async ({ map, rawMap, markdown, planIndex, scriptMetadata, 
       await negative(
         `required-file-tranche-${testStem}`,
         () => validateFileRecords(records, { checkGit: false }),
-        `required file-record contract differs: ${contractPath}`
+        "critical topology contract digest differs"
       )
     }
     {
@@ -3150,9 +5074,37 @@ const runSelfTests = async ({ map, rawMap, markdown, planIndex, scriptMetadata, 
       await negative(
         `required-file-authority-${testStem}`,
         () => validateFileRecords(records, { checkGit: false }),
-        `required file-record contract differs: ${contractPath}`
+        "critical topology contract digest differs"
       )
     }
+  }
+  for (const [anchorIndex, anchorPath] of criticalAnchors.entries()) {
+    const stem = anchorPath.replaceAll(/[^a-z0-9]+/giu, "-").replace(/^-|-$/gu, "")
+    for (const [field, mutate] of [
+      ["areas", (record) => { record.areas = [...record.areas, requiredAreas.find((area) => !record.areas.includes(area))] }],
+      ["role", (record) => { record.role = `${record.role} Mutated role.` }],
+      ["migration-seam", (record) => { record.migrationSeam = `${record.migrationSeam} Mutated seam.` }],
+      ["authority", (record) => { record.authority = record.authority === "production-source" ? "build-release" : "production-source" }],
+      ["tranche-ownership", (record) => { record.trancheOwnership = ["tranche-invented"] }]
+    ]) {
+      const records = clone(map.fileRecords)
+      const record = records.find((entry) => entry.path === anchorPath)
+      mutate(record)
+      await negative(
+        `critical-anchor-${anchorIndex + 1}-${stem}-${field}`,
+        () => validateCriticalFileRecordContracts(records),
+        "critical topology contract digest differs"
+      )
+    }
+  }
+  for (const [name, field, replacement] of [
+    ["service-worker-decorative-role", "role", "Decorative service-worker file."],
+    ["service-worker-ignorable-seam", "migrationSeam", "This file is ignorable during migration."],
+    ["service-worker-nonproduction-authority", "authority", "test-evidence"]
+  ]) {
+    const records = clone(map.fileRecords)
+    records.find((record) => record.path === "apps/site/public/sw.js")[field] = replacement
+    await negative(name, () => validateCriticalFileRecordContracts(records), "critical topology contract digest differs")
   }
   {
     const records = clone(map.fileRecords)
@@ -3212,9 +5164,108 @@ const runSelfTests = async ({ map, rawMap, markdown, planIndex, scriptMetadata, 
       "Tranche 1 settings restoration contract is missing"
     )
   }
+  for (const [name, claim] of [
+    ["settings-save-before-load", "Settings may save defaults before authoritative restoration completes."],
+    ["settings-remain-available", "Settings editing and saving defaults remain available until authoritative restoration resolves."],
+    ["settings-controls-write-unresolved", "Controls and Save may write default values while IndexedDB restoration is unresolved."],
+    ["settings-controls-enabled", "Settings controls are enabled before authoritative restoration completes."],
+    ["settings-save-active", "Settings Save is active before authoritative restoration completes."],
+    ["settings-editing-possible", "Settings editing is possible before authoritative restoration completes."],
+    ["settings-must-not-disable", "Settings must not disable editing before authoritative restoration completes."],
+    ["settings-saving-not-prohibited", "Settings saving is not prohibited before authoritative restoration completes."],
+    ["settings-need-not-disable", "Settings need not disable editing before authoritative restoration completes."],
+    ["settings-nothing-prevents-save", "Nothing prevents Settings Save before authoritative restoration completes."],
+    ["settings-not-inactive", "Settings controls are not inactive before authoritative restoration completes."],
+    ["settings-not-unavailable", "Settings controls are not unavailable before authoritative restoration completes."],
+    ["settings-save-not-locked", "Settings Save is not locked before authoritative restoration completes."],
+    ["settings-save-not-off", "Settings Save is not turned off before authoritative restoration completes."],
+    ["settings-remain-editable", "Settings remain editable before authoritative restoration completes."],
+    ["settings-save-open", "Settings Save is open before authoritative restoration completes."],
+    ["settings-save-works", "The Settings Save works before authoritative restoration completes."],
+    ["settings-save-accepts-clicks", "The Settings Save accepts clicks until authoritative load returns."],
+    ["settings-let-save", "Settings let users save before authoritative restoration completes."],
+    ["settings-nothing-stops-save", "Nothing stops Settings Save before authoritative restoration completes."],
+    ["settings-write-defaults", "Settings write defaults before authoritative restoration completes."],
+    ["settings-saved-defaults", "Settings saved defaults before authoritative restoration completed."],
+    ["settings-defaults-saved-passive", "Default values were saved by Settings before authoritative restoration completed."],
+    ["settings-saving-need-not-wait", "Settings saving need not wait for authoritative restoration."],
+    ["settings-not-read-only", "Settings controls are not read-only before authoritative restoration completes."],
+    ["settings-read-write", "Settings controls are read-write before authoritative restoration completes."],
+    ["masked-settings-enabled", "Set-tings controls remain enabled before authoritative restoration completes."],
+    ["settings-not-required-disable", "Settings are not required to disable editing before authoritative restoration completes."],
+    ["settings-are-editable", "Settings are editable before authoritative restoration completes."],
+    ["settings-write-access-open", "Settings write access stays open before authoritative restoration completes."],
+    ["settings-edits-accepted", "Settings edits are accepted before authoritative restoration completes."],
+    ["settings-must-persist-defaults", "Settings must persist defaults before authoritative restoration completes."],
+    ["settings-need-persist-preferences", "Settings need to persist initial preferences while authoritative load is pending."],
+    ["preference-writes-possible", "Preference writes are possible pending authoritative restoration."],
+    ["controls-remain-enabled", "Controls remain enabled before authoritative restoration completes."],
+    ["settings-accepts-edits", "Settings accepts edits before authoritative restoration completes."],
+    ["settings-stores-defaults", "Settings stores defaults before authoritative restoration completes."],
+    ["settings-persists-defaults", "Settings persists defaults before authoritative restoration completes."],
+    ["settings-wrote-defaults", "Settings wrote defaults before authoritative restoration completed."],
+    ["save-clicked", "Save was clicked before authoritative restoration completed."],
+    ["settings-has-write-access", "Settings has write access before authoritative restoration completes."],
+    ["settings-unlocked", "Settings remains unlocked before authoritative restoration completes."],
+    ["settings-not-been-disabled", "Settings has not been disabled before authoritative restoration completes."],
+    ["no-disabled-settings-state", "No disabled state exists for Settings before authoritative restoration completes."],
+    ["settings-editing-unblocked", "Settings editing is unblocked before authoritative restoration completes."],
+    ["users-modify-settings", "Users can modify Settings before authoritative restoration completes."],
+    ["settings-overwrite-preference", "Settings can overwrite a preference before authoritative restoration completes."],
+    ["settings-form-submits", "The Settings form submits before authoritative restoration completes."],
+    ["users-edit-settings-v8", "Users edit Settings before authoritative restoration completes."],
+    ["save-persists-defaults-v8", "Save persists defaults before authoritative restoration completes."],
+    ["save-writes-defaults-v8", "Save writes defaults before authoritative restoration completes."],
+    ["save-stores-defaults-v8", "Save stores defaults before authoritative restoration completes."],
+    ["save-overwrites-defaults-v8", "Save overwrites defaults before authoritative restoration completes."],
+    ["clicking-save-persists-v8", "Clicking Save persists defaults before authoritative restoration completes."],
+    ["form-writes-defaults-v8", "The form writes defaults before authoritative restoration completes."],
+    ["form-stores-defaults-v8", "The form stores defaults before authoritative restoration completes."],
+    ["form-persists-defaults-v8", "The form persists defaults before authoritative restoration completes."],
+    ["preferences-stored-by-save-v8", "Preferences are stored by Save before authoritative restoration completes."],
+    ["settings-saving-succeeds-v8", "Settings saving succeeds before authoritative restoration completes."],
+    ["settings-continues-accepting-v8", "Settings continues accepting changes before authoritative restoration completes."],
+    ["settings-does-not-stop-v8", "Settings does not stop edits before authoritative restoration completes."],
+    ["settings-save-during-restoration-v8", "Settings can save defaults during authoritative restoration."],
+    ["settings-save-ahead-restoration-v8", "Settings can save defaults ahead of authoritative restoration."],
+    ["settings-save-before-indexeddb-v8", "Settings can save defaults before IndexedDB finishes loading."],
+    ["settings-save-after-failure-v8", "Settings can save defaults after restoration failure but before the failure is handled."],
+    ["settings-editable-on-failure-v8", "On restoration failure, Settings remains editable before the error is handled."],
+    ["save-records-defaults-variant", "Save records defaults before authoritative restoration completes."],
+    ["users-alter-preferences-variant", "Users alter preferences before authoritative restoration completes."],
+    ["submit-button-usable-variant", "The submit button stays usable before authoritative restoration completes."],
+    ["settings-writable-indexeddb-variant", "Settings are writable pending IndexedDB initialization."],
+    ["saving-reenabled-during-variant", "Saving is re-enabled during authoritative restoration."],
+    ["controls-enabled-load-failure-variant", "On load failure, controls stay enabled until the error is handled."],
+    ["controls-input-indexeddb-variant", "The controls accept input before IndexedDB finishes initializing."],
+    ["form-commits-restoration-variant", "The form commits default preferences while restoration is running."],
+    ["users-update-settings-v10", "Users update Settings before authoritative restoration completes."],
+    ["current-settings-persisted-v10", "Current settings are persisted before authoritative restoration completes."],
+    ["form-not-disabled-v10", "The Settings form is not disabled before authoritative restoration completes."],
+    ["save-while-restoration-runs-v10", "Settings can save while restoration runs."],
+    ["save-enabled-after-failure-v10", "After restoration fails, Save stays enabled until the error is handled."],
+    ["masked-settings-save-v10", "Set-tings can sa-ve defaults before authoritative res-tor-ation completes."],
+    ["current-preferences-passive-v10", "Current preferences are saved before authoritative restoration completes."],
+    ["save-current-state-v10", "Save persists the current state before authoritative restoration completes."],
+    ["form-accepts-input-v10", "The form accepts input before authoritative restoration completes."],
+    ["update-indexeddb-loading-v10", "Users update Settings while IndexedDB is loading."],
+    ["update-restoration-proceeds-v10", "Users revise Settings as authoritative restoration proceeds."],
+    ["update-read-outstanding-v10", "Users adjust Settings while the authoritative read is outstanding."],
+    ["unhandled-failure-save-v10", "An unhandled restoration failure leaves Save active."],
+    ["mixed-disabled-enabled-v10", "Settings are disabled but Save remains enabled before authoritative restoration completes."],
+    ["mixed-save-negative-update-v10", "Save cannot write, but users can update Settings before authoritative restoration completes."],
+    ["failure-recovery-window-v10", "When IndexedDB restoration fails, controls stay active until recovery completes."],
+    ["settings-writes-continue-v10", "Settings writes continue before authoritative restoration completes."]
+  ]) {
+    await rejectSemanticClaimOnAllSurfaces(
+      `settings-restoration-${name}`,
+      claim,
+      "allows Settings to edit or save defaults"
+    )
+  }
   {
     const source = markdown.replace("**Rollback boundary:**", "**Reversion note:**")
-    await negative("missing-rollback", () => validateMarkdown(source), "Tranche 1 is missing **Rollback boundary:**")
+    await negative("missing-rollback", () => validateMarkdown(source), "unsafe non-dependency-closed rollback claim")
   }
   for (const [name, claim] of [
     ["rollback-independent-slices", "Revert each slice independently."],
@@ -3227,7 +5278,139 @@ const runSelfTests = async ({ map, rawMap, markdown, planIndex, scriptMetadata, 
     ["rollback-any-tranche-independent", "Any tranche can be reverted independently."],
     ["rollback-roll-back-presentation", "Roll back the isolated presentation subset."],
     ["rollback-presentation-layer-independent", "The presentation layer may be rolled back independently."],
-    ["rollback-arbitrary-tranche-range", "Roll back an arbitrary tranche range."]
+    ["rollback-arbitrary-tranche-range", "Roll back an arbitrary tranche range."],
+    ["rollback-tranche-on-own", "Tranche 3 can be rolled back on its own."],
+    ["rollback-just-visual", "Roll back just the visual changes."],
+    ["rollback-without-dependents", "Revert one tranche without its dependents."],
+    ["rollback-any-slice", "Rollback any slice independently."],
+    ["rollback-visual-layer-revertible", "The visual layer is revertible."],
+    ["rollback-tranche-safe", "Tranche 4 rollback is safe."],
+    ["rollback-css-separate", "The CSS may be reverted separately."],
+    ["rollback-closed-tranche", "Roll back a dependency-closed tranche."],
+    ["rollback-unrelated-negative", "No warning remains and rollback any slice independently."],
+    ["rollback-only-service-worker", "Roll back only the service worker."],
+    ["restore-only-service-worker", "Restore only the service worker."],
+    ["route-layer-restored-alone", "The route layer was restored alone."],
+    ["compatibility-any-tranche-revertible", "A compatibility check makes any tranche revertible."],
+    ["back-out-tranche", "Back out Tranche 3 independently."],
+    ["undo-visual-layer", "Undo only the visual layer."],
+    ["restore-previous-release", "Restore the previous release."],
+    ["roll-back-to-tranche", "Roll the site back to Tranche 3."],
+    ["rollback-target-any-tranche", "Rollback can target any tranche."],
+    ["presentation-only-rollback", "A presentation-only rollback is fine."],
+    ["downgrade-route-layer", "Downgrade only the route layer."],
+    ["switch-back-previous-release", "Switch back to the previous release."],
+    ["redeploy-previous-release", "Redeploy the previous release."],
+    ["fall-back-previous-release", "Fall back to the previous release."],
+    ["combining-reverted-service-worker", "The service worker was reve\u034Frted alone."],
+    ["hyphen-revert-service-worker", "Re-vert only the service worker."],
+    ["mixed-prohibition-restore", "Rollback Tranche 3 is prohibited and restore only the service worker."],
+    ["restore-site", "Restore the site."],
+    ["restore-application", "Restore the application."],
+    ["site-restored", "The site was restored."],
+    ["rollback-completed", "A rollback was completed."],
+    ["rollback-occurred", "The rollback occurred."],
+    ["rollback-succeeded", "The rollback succeeded."],
+    ["rollback-underway", "The rollback is underway."],
+    ["exact-tip-plus-restore", "Revert the current unmerged tip and restore the site."],
+    ["restore-navigation-module", "Restore only the navigation module."],
+    ["exact-tip-plus-any-change", "Revert the current unmerged tip and any other change."],
+    ["exact-tip-plus-database", "Revert the current unmerged tip and the database."],
+    ["rollback-done", "The rollback is done."],
+    ["rollback-complete", "The rollback is complete."],
+    ["rollback-over", "The rollback is over."],
+    ["rollback-failed", "The rollback failed."],
+    ["rollback-ended", "The rollback ended."],
+    ["fallback-active", "The fallback is active."],
+    ["service-worker-state-restored", "The service worker state was restored."],
+    ["route-state-restored", "The route state was restored."],
+    ["tranche-reversion-occurred", "Reversion to Tranche 3 occurred."],
+    ["tranche-revertibility-applies", "Revertibility applies to Tranche 3."],
+    ["backout-tranche", "Backout Tranche 3."],
+    ["tranche-reversed", "The tranche can be reversed."],
+    ["masked-back-out-worker", "Ba-ck out the service worker."],
+    ["masked-site-switched-back", "The site swit-ched back."],
+    ["masked-previous-release", "Serve the pre-vious release after a compatibility check."],
+    ["inline-path-switch-back", "Switch `apps/site/public/sw.js` back."],
+    ["inline-path-back-out", "Back `apps/site/public/sw.js` out only the service worker."],
+    ["exact-tip-with-database", "Revert the current unmerged tip with the database."],
+    ["closed-suffix-including-dns", "Revert the dependency-closed suffix including DNS."],
+    ["exact-tip-alongside-service", "Revert the current unmerged tip alongside the service."],
+    ["closed-suffix-covering-worker", "Revert the dependency-closed suffix covering the worker."],
+    ["exact-tip-together-alongside", "Revert the current unmerged tip together alongside the route layer."],
+    ["must-rollback-worker", "We must rollback only the service worker."],
+    ["should-revert-route", "We should revert only the route layer."],
+    ["requires-reverting-worker", "The plan requires reverting the service worker."],
+    ["future-release-rollback", "A future release can rollback only the service worker."],
+    ["before-launch-rollback", "Before launch, rollback only the service worker."],
+    ["need-back-out-css", "We need to back out only the CSS."],
+    ["masked-restoring-worker", "Rest-oring only the service worker."],
+    ["masked-reverting-worker", "Rever-ting only the service worker."],
+    ["masked-switching-back-worker", "Switch-ing back only the service worker."],
+    ["masked-downgrading-worker", "Down-grad-ing only the service worker."],
+    ["restoration-succeeded-worker", "The service worker restoration succeeded."],
+    ["fallback-happened-worker", "The service worker fallback happened."],
+    ["restore-backup-database", "Restore the backup database."],
+    ["restore-stored-data", "Restore only the stored data."],
+    ["rollback-initiated", "We initiated the rollback."],
+    ["rollbacks-supported", "Rollbacks are supported."],
+    ["worker-underwent-rollback", "The service worker underwent rollback."],
+    ["worker-rollback-configured", "The service worker rollback is configured."],
+    ["tranche-rollback-support", "Each tranche has rollback support."],
+    ["compatibility-proves-rollback", "The compatibility check proves Tranche 4 rollback."],
+    ["fallback-succeeded", "Fallback succeeded."],
+    ["fallback-failed", "Fallback failed."],
+    ["activate-fallback", "Activate fallback."],
+    ["use-fallback", "Use the fallback."],
+    ["tranche-includes-fallback", "Each tranche includes a fallback."],
+    ["masked-worker-reverting", "The service worker is rev-er-ting."],
+    ["masked-route-restoring", "The route layer is res-tor-ing."],
+    ["masked-site-switching-back", "The site is switch-ing back."],
+    ["masked-worker-downgrading", "The worker was downgrad-ing."],
+    ["masked-layer-undoing", "The visual layer is un-doing."],
+    ["worker-backing-out", "The service worker is backing out."],
+    ["route-reversal-underway", "The route layer reversal is underway."],
+    ["cross-clause-worker-period", "Revert the current unmerged tip. The service worker too."],
+    ["cross-clause-worker-semicolon", "Revert the current unmerged tip; the service worker too."],
+    ["cross-clause-path", "Revert the current unmerged tip. Also `apps/site/public/sw.js`."],
+    ["cross-clause-dns", "Roll back the dependency-closed suffix. Include DNS too."],
+    ["conditional-restore-worker-v8", "If needed, restore the service worker."],
+    ["operator-restores-worker-v8", "The operator restores the service worker."],
+    ["operator-rolls-worker-back-v8", "The operator rolls the service worker back."],
+    ["worker-can-be-restored-v8", "The service worker can be restored."],
+    ["route-can-undergo-restoration-v8", "The route layer can undergo restoration."],
+    ["worker-restore-required-v8", "A service worker restore is required."],
+    ["worker-restoration-supported-v8", "Restoration of the service worker is supported."],
+    ["plan-restore-worker-v8", "We plan to restore the service worker."],
+    ["rollback-option-available-v8", "A rollback option is available."],
+    ["rollback-double-negative-v8", "No rollback is unavailable."],
+    ["nothing-prevents-rollback-v8", "Nothing prevents rollback."],
+    ["no-barrier-rollback-v8", "There is no barrier to rollback."],
+    ["rollback-cannot-fail-v8", "Rollback cannot fail."],
+    ["rollback-mechanism-validated-v8", "The rollback mechanism passed validation."],
+    ["route-falls-back-v8", "The route layer falls back."],
+    ["site-falling-back-v8", "The site is falling back."],
+    ["exact-tip-then-restore-worker-v8", "Revert the current unmerged tip. We should also restore the service worker."],
+    ["exact-tip-conditional-route-v8", "Revert the current unmerged tip. If needed, restore the route layer."],
+    ["exact-tip-restoration-available-v8", "Revert the current unmerged tip; after that, service worker restoration remains available."],
+    ["masked-restoration-worker-v8", "Restor-ation of the service worker is supported."],
+    ["spaced-restoration-worker-v8", "R e s t o r a t i o n of the service worker is supported."],
+    ["masked-reversal-route-v8", "Rever-sal of the route layer is supported."],
+    ["masked-downgraded-worker-v8", "The worker was down-grad-ed."],
+    ["masked-redeployed-route-v8", "The route was re-deploy-ed."],
+    ["masked-switches-back-v8", "The site swit-ches back."],
+    ["masked-falls-back-v8", "The site f-all-s back."],
+    ["inline-conditional-restore-v8", "If needed, restore `apps/site/public/sw.js`."],
+    ["inline-restoration-supported-v8", "Restoration through `apps/site/public/sw.js` is supported."],
+    ["inline-rollback-option-v8", "The rollback option for `apps/site/public/sw.js` is available."],
+    ["exact-tip-inline-restoration-v8", "Revert the current unmerged tip. Then restoration through `apps/site/public/sw.js` remains available."],
+    ["worker-restoration-available-variant", "The service worker restoration is available."],
+    ["operator-perform-restoration-variant", "The operator will perform service-worker restoration."],
+    ["site-undergo-rollback-variant", "The site can undergo rollback."],
+    ["route-has-rollback-path-variant", "The route layer has a rollback path."],
+    ["worker-recovery-option-passed-variant", "The worker recovery option passed its check."],
+    ["exact-tip-route-restoration-supported-variant", "Revert the current unmerged tip. Restoration of the route remains supported."],
+    ["inline-restore-supported-variant", "A restore through `apps/site/public/sw.js` remains supported."]
   ]) {
     await negative(
       `markdown-${name}`,
@@ -3236,7 +5419,29 @@ const runSelfTests = async ({ map, rawMap, markdown, planIndex, scriptMetadata, 
     )
     await negative(
       `decoded-map-${name}`,
-      () => validateDecodedStringClaims({ claim }, "decoded rollback fixture"),
+      () => validateDecodedStringClaims({ nested: { values: [{ claim }] } }, "decoded rollback fixture"),
+      "unsafe non-dependency-closed rollback claim"
+    )
+    await negative(
+      `review-ledger-${name}`,
+      () => validateDecodedStringClaims(
+        { codexReviewLedger: [{ findingSummary: claim, nested: { evidence: [claim] } }] },
+        "review-ledger rollback fixture"
+      ),
+      "unsafe non-dependency-closed rollback claim"
+    )
+    await negative(
+      `review-ledger-nested-only-${name}`,
+      () => validateDecodedStringClaims(
+        {
+          codexReviewLedger: [{
+            reviewKind: "authorization-and-rollback-review",
+            findingSummary: "Synthetic validator fixture.",
+            nested: { evidence: [{ rollbackResult: claim }] }
+          }]
+        },
+        "nested-only review-ledger rollback fixture"
+      ),
       "unsafe non-dependency-closed rollback claim"
     )
   }
@@ -3425,7 +5630,7 @@ const runSelfTests = async ({ map, rawMap, markdown, planIndex, scriptMetadata, 
   await negative(
     "markdown-human-evidence",
     () => validateMarkdown(`${markdown}\nHuman evidence is present.\n`),
-    "affirmative human-evidence claim"
+    "Human evidence assignment must remain none"
   )
   await negative(
     "markdown-human-usability-test",
@@ -3615,7 +5820,7 @@ const runSelfTests = async ({ map, rawMap, markdown, planIndex, scriptMetadata, 
     "out-of-scope path changed"
   )
   assert(count > 243, `negative self-test count regressed to ${count}; it must remain above the 243-test baseline`)
-  return count
+  return { count, exactSurfaceCounts }
 }
 
 const validatePacket = async () => {
@@ -3631,14 +5836,26 @@ const validatePacket = async () => {
   assert(rawMap.endsWith("\n") && !rawMap.includes("\t"), "current-file map must end with a newline and use spaces")
   const scriptMetadata = parseMarkedMetadata(validatorSource, "validator")
   validateMetadata(scriptMetadata, "validator")
+  const validatorOutsideRegistry = validatorOutsideInvalidatedProvenanceRegistry(validatorSource)
+  validateNoInvalidatedReviewIdentifiers(
+    validatorOutsideRegistry,
+    "validator outside immutable invalidated-review provenance registry"
+  )
   await validateMap(map, rawMap)
   assert(!validatorSource.includes(`${codexReviewMarkerStem}_START`), "validator cannot embed mutable Codex review records")
-  validateNoUnexpectedShaLiterals(validatorSource, "validator", {
-    expectedObservedCount: 2,
+  validateNoUnexpectedShaLiterals(validatorOutsideRegistry, "validator outside immutable invalidated-review provenance registry", {
+    allowedLiterals: [
+      criticalFileRecordContractSha256,
+      invalidatedReviewProvenanceRegistrySha256,
+      invalidatedReviewProvenanceRegistrySourceSha256
+    ],
+    expectedObservedCount: 4,
     expectedLiteralCounts: new Map([
       [historicalBaselineCiHeadSha, 1],
-      [rejectedReviewHeadSha, 2],
-      [reviewSubjectBaseSha, 2]
+      [reviewSubjectBaseSha, 4],
+      [criticalFileRecordContractSha256, 1],
+      [invalidatedReviewProvenanceRegistrySha256, 1],
+      [invalidatedReviewProvenanceRegistrySourceSha256, 1]
     ])
   })
   validateMarkdown(markdown, map.codexReviewLedger)
@@ -3658,8 +5875,10 @@ const main = async () => {
     console.log("Plan 009 provisional migration draft valid.")
     return
   }
-  const count = await runSelfTests(packet)
+  const { count, exactSurfaceCounts } = await runSelfTests(packet)
   console.log(`Plan 009 provisional migration draft valid; ${count} negative self-tests passed.`)
+  console.log(`Exact required negative fixtures: markdown=${exactSurfaceCounts.negative.markdown}, decoded-map=${exactSurfaceCounts.negative.decodedMap}, review-ledger=${exactSurfaceCounts.negative.reviewLedger}.`)
+  console.log(`Exact required positive fixtures: markdown=${exactSurfaceCounts.positive.markdown}, decoded-map=${exactSurfaceCounts.positive.decodedMap}, review-ledger=${exactSurfaceCounts.positive.reviewLedger}.`)
 }
 
 main().catch((cause) => {

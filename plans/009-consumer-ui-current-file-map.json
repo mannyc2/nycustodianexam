@@ -18,9 +18,9 @@
     "liveEnvironmentChangeAuthorization": "separate-required",
     "reviewCycleStatus": "prior-cycle-invalidated",
     "priorReviewReceiptsReusable": false,
-    "rejectedReviewHeadSha": "8fc6255e5b115cbf7733f5d663328ec1c8a146d3",
-    "reviewSubjectBaseSha": "15b625cfe8e3cde74a91cfe824b9c270d6a08f37",
+    "reviewSubjectBaseSha": "d823e928b0b57f589fd1c64a85db4ae0f6d2f0d1",
     "authorizationInterface": "CODEX-ONLY-UIUX-V1",
+    "reviewMode": "codex-only",
     "observedAtSha": "d823e928b0b57f589fd1c64a85db4ae0f6d2f0d1"
   },
   "observedAt": "2026-08-28",
@@ -43,7 +43,7 @@
     "requiredEvidence": [
       "exact-repository-attested-step-02-through-step-05-decision-shas",
       "independent-codex-subagent-review-records",
-      "exact-ci-certification"
+      "exact-ci-certification-record"
     ],
     "productionDeploymentControls": "separate-technical-gates-including-live-user-reviewer",
     "productionDeploymentStatus": "blocked-live-user-reviewer",
@@ -469,7 +469,7 @@
       "path": "apps/site/src/question-player/persistence.ts",
       "areas": ["state", "offline"],
       "role": "Question attempt validation, idempotent durable commit, lookup, and listing boundary.",
-      "migrationSeam": "Question UI rollback remains safe only while attempt identity and commit transaction semantics stay unchanged.",
+      "migrationSeam": "Attempt identity and commit transaction semantics stay unchanged across presentation work. Direct revert is permitted only for the current unmerged tip or a dependency-closed suffix.",
       "authority": "production-source"
     },
     {
@@ -609,7 +609,7 @@
       "path": "apps/site/src/simulation/persistence.ts",
       "areas": ["state", "offline"],
       "role": "Durable simulation session and final-submission storage operations.",
-      "migrationSeam": "Autosave, restoration, and final-submit reconciliation stay authoritative across presentation rollback.",
+      "migrationSeam": "Autosave, restoration, and final-submit reconciliation stay authoritative across presentation work. Direct revert is permitted only for the current unmerged tip or a dependency-closed suffix.",
       "authority": "production-source"
     },
     {
@@ -995,8 +995,8 @@
     {
       "path": "apps/content-compiler/src/release-activation.ts",
       "areas": ["content", "build", "deployment"],
-      "role": "Filesystem release activation with restoration of the prior release on activation failure.",
-      "migrationSeam": "Compiler rollback is distinct from UI deployment rollback and must remain independently verified.",
+      "role": "Filesystem compiled-output activation that renames the active directory to a backup, promotes staging, and on promotion failure renames that backup to active.",
+      "migrationSeam": "Compiler activation-failure recovery is distinct from site deployment recovery and requires its own focused verification.",
       "authority": "build-release"
     },
     {
@@ -1457,7 +1457,7 @@
     "Recovered or branch-only Plan 004 and Plan 005 artifacts are not accepted CODEX-ONLY-UIUX-V1 attestations or product authority.",
     "The existence of a current production seam does not authorize changing it.",
     "Codex-only UI/UX review and CI cannot satisfy or bypass the live production Environment reviewer of type User.",
-    "No prior review receipt from the rejected published head is reusable in the new ledger.",
+    "No review receipt from the rejected published head or either invalidated exact-subject cycle is reusable in the new ledger.",
     "Recorded baseline-CI counts remain historical provenance; this provisional draft's local reruns are verification only and never production authorization.",
     "This map does not authorize analytics, a runtime feature-flag framework, deployment, a database migration, or production traffic."
   ]
