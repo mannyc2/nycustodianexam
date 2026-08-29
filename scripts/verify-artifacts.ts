@@ -1129,9 +1129,14 @@ export const verify = async (): Promise<void> => {
   ]
   for (const route of expectedRoutes) assertCanonicalRouteId(route.routeId)
 
-  const capacityProfile = catalog.profiles.find((profile) => profile.layer === "jurisdiction")
-    ?? catalog.profiles[0]
-  if (capacityProfile === undefined) throw new Error("Published release has no practice profile")
+  // Must match the neutral profile selection in apps/site/scripts/generate-pages.tsx.
+  // CONTENT_DESIGN.md (SHARED-EXPLICIT-PROFILE-CONTEXT) forbids the statically
+  // generated practice page from defaulting to a jurisdiction layer or to an
+  // arbitrary first profile.
+  const capacityProfile = catalog.profiles.find((profile) => profile.layer === "statewide-series")
+  if (capacityProfile === undefined) {
+    throw new Error("Published release has no statewide-series profile for neutral practice context")
+  }
   const practiceSessions = derivePracticeSessions({
     releaseId: manifest.releaseId,
     packVersion: manifest.packVersion,

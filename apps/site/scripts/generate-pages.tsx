@@ -883,9 +883,16 @@ const buildPages = ({
     corrections: []
   })
 
-  const capacityProfile = catalog.profiles.find((profile) => profile.layer === "jurisdiction")
-    ?? catalog.profiles[0]
-  if (capacityProfile === undefined) throw new Error("Release requires a practice profile")
+  // The statically generated practice page has no selected profile, so it must
+  // present the neutral statewide series. CONTENT_DESIGN.md forbids silently
+  // defaulting to Nassau or to the first available profile
+  // (SHARED-EXPLICIT-PROFILE-CONTEXT); a jurisdiction layer may only scope a set
+  // after the learner chooses it explicitly. Fail loudly rather than falling
+  // back to an arbitrary profile.
+  const capacityProfile = catalog.profiles.find((profile) => profile.layer === "statewide-series")
+  if (capacityProfile === undefined) {
+    throw new Error("Release requires a statewide-series profile for neutral practice context")
+  }
   const capacityRecords = catalog.practiceCapacity.records.filter(
     (record) => record.profileId === capacityProfile.id
   )
@@ -1140,7 +1147,7 @@ const buildPages = ({
       const session = sessionByCapacity.get(`all:all:${length}`)
       return session === undefined
         ? `<article class="card"><h2>${length} questions</h2><p>Unavailable: the filtered bank cannot supply this length without repeats.</p><button class="button button-secondary" disabled type="button">${length} unavailable</button></article>`
-        : `<article class="card"><h2>${length} questions</h2><p>Site-designed set of ${session.questions.length} distinct reviewed objectives for ${escapeHtml(capacityProfile.label)}.</p><a class="button button-primary" href="/practice/session/${session.id}/question/1/">Start ${length}</a></article>`
+        : `<article class="card"><h2>${length} questions</h2><p>Site-designed set of ${session.questions.length} distinct reviewed objectives from the ${escapeHtml(capacityProfile.label)} series.</p><a class="button button-primary" href="/practice/session/${session.id}/question/1/">Start ${length}</a></article>`
     }).join("")}</section>
     <section class="section-gap" aria-labelledby="capacity-heading"><h2 id="capacity-heading">Filtered inventory capacity</h2><p>Each row is computed only from answer-independent memberships shared by every displayed option in release ${escapeHtml(manifest.releaseId)}. A disabled length means that exact filter cannot supply enough distinct reviewed objectives.</p><div class="comparison-table-wrap"><table class="comparison-table"><caption>Available site-designed set lengths by filter</caption><thead><tr><th scope="col">Filter</th><th scope="col">Reviewed objectives</th>${catalog.practiceCapacity.advertisedSetLengths.map((length) => `<th scope="col">${length}</th>`).join("")}</tr></thead><tbody>${capacityRecords.map((record) => `<tr><th scope="row">${escapeHtml(record.filterKind === "all" ? "All questions" : `${record.filterKind}: ${record.filterValue}`)}</th><td>${record.questionCount}</td>${catalog.practiceCapacity.advertisedSetLengths.map((length) => {
       const session = sessionByCapacity.get(`${record.filterKind}:${record.filterValue}:${length}`)
