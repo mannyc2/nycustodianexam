@@ -196,7 +196,7 @@ test("visual markers are durable before feedback fetch and restore exactly", asy
   expect(postcommitRequests).toBe(0)
   await page.getByRole("button", { name: "Submit scene response" }).click()
 
-  await expect(page.getByRole("heading", { name: /You found \d+ of \d+ hazards|no hazard to find|Response saved/ })).toBeFocused()
+  await expect(page.getByRole("heading", { name: /You found \d+ of \d+|no hazard to find|Response saved/ })).toBeFocused()
   expect(attemptObservedAtFetch).toMatchObject({
     id: visualAttemptId,
     sceneId: "s001",
@@ -253,7 +253,7 @@ test("visual markers are durable before feedback fetch and restore exactly", asy
   })
   await page.reload()
   await expect(page).toHaveURL(visualPath)
-  await expect(page.getByRole("heading", { name: /You found \d+ of \d+ hazards|no hazard to find|Response saved/ })).toBeFocused()
+  await expect(page.getByRole("heading", { name: /You found \d+ of \d+|no hazard to find|Response saved/ })).toBeFocused()
   await expect(page.getByRole("heading", { name: "Released scene image unavailable" }))
     .toHaveCount(0)
   expect(await readHazardAttempt(page, visualAttemptId)).toEqual(committed)
@@ -390,7 +390,7 @@ test("zero marks require neutral confirmation before durable commit and fetch", 
   expect(await readHazardAttempt(page, visualAttemptId)).toBeUndefined()
 
   await page.getByRole("button", { name: "Confirm and save no marks" }).click()
-  await expect(page.getByRole("heading", { name: /You found \d+ of \d+ hazards|no hazard to find|Response saved/ })).toBeFocused()
+  await expect(page.getByRole("heading", { name: /You found \d+ of \d+|no hazard to find|Response saved/ })).toBeFocused()
   expect(attemptObservedAtFetch).toMatchObject({
     id: visualAttemptId,
     markers: [],
@@ -423,7 +423,7 @@ test("an IndexedDB write failure focuses recovery and never requests or reveals 
   await page.getByRole("button", { name: "Submit scene response" }).click()
 
   await expect(page.getByRole("heading", { name: "Your response was not saved" })).toBeFocused()
-  await expect(page.getByRole("heading", { name: /You found \d+ of \d+ hazards|no hazard to find|Response saved/ })).toHaveCount(0)
+  await expect(page.getByRole("heading", { name: /You found \d+ of \d+|no hazard to find|Response saved/ })).toHaveCount(0)
   await expect(page.getByText("wide shallow wet patch", { exact: false })).toHaveCount(0)
   expect(postcommitRequests).toBe(0)
   expect(await readHazardAttempt(page, visualAttemptId)).toBeUndefined()
@@ -453,7 +453,7 @@ test("keyboard-only nonvisual zone selection commits before feedback", async ({ 
   await expect(page.getByRole("button", { name: "Submit scene response" })).toBeFocused()
   await page.keyboard.press("Enter")
 
-  await expect(page.getByRole("heading", { name: /You found \d+ of \d+ hazards|no hazard to find|Response saved/ })).toBeFocused()
+  await expect(page.getByRole("heading", { name: /You found \d+ of \d+|no hazard to find|Response saved/ })).toBeFocused()
   expect(attemptObservedAtFetch).toMatchObject({
     id: nonvisualAttemptId,
     mode: "nonvisual",
@@ -470,7 +470,7 @@ test("keyboard-only nonvisual zone selection commits before feedback", async ({ 
       retainedVisualAsset: null
     }
   })
-  await expect(page.getByRole("heading", { name: "Complete zoned text equivalent" })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "Full scene description by zone" })).toBeVisible()
   expect(postcommitRequests).toBe(1)
 })
 
@@ -490,7 +490,7 @@ test("a mismatched postcommit artifact leaves the durable response saved but unr
   await page.getByRole("button", { name: "Submit scene response" }).click()
 
   await expect(page.getByRole("heading", { name: "Your response is saved" })).toBeFocused()
-  await expect(page.getByRole("heading", { name: /You found \d+ of \d+ hazards|no hazard to find|Response saved/ })).toHaveCount(0)
+  await expect(page.getByRole("heading", { name: /You found \d+ of \d+|no hazard to find|Response saved/ })).toHaveCount(0)
   await expect(page.getByText("wide shallow wet patch", { exact: false })).toHaveCount(0)
   expect(await readHazardAttempt(page, visualAttemptId)).toMatchObject({
     id: visualAttemptId,

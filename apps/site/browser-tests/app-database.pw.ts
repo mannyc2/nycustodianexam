@@ -490,6 +490,6 @@ test("reopens the shared connection after a persisted page lifecycle", async ({ 
 
   await page.getByRole("button", { name: "Add marker at center" }).click()
   await page.getByRole("button", { name: "Submit scene response" }).click()
-  await expect(page.getByRole("heading", { name: /You found \d+ of \d+ hazards|no hazard to find|Response saved/ })).toBeFocused()
+  await expect(page.getByRole("heading", { name: /You found \d+ of \d+|no hazard to find|Response saved/ })).toBeFocused()
   expect(await readStore(page, appDatabaseStores.hazardAttempts)).toHaveLength(1)
 })

@@ -715,7 +715,7 @@ test("a correction submit never reaches the network until its pre-submit draft p
   await page.getByRole("button", { name: "Submit report" }).click()
   await expect(page.getByRole("heading", { name: "Report not submitted" })).toBeFocused()
   await expect(page.getByText(
-    "The draft could not be written to this device's storage before sending, so nothing was sent."
+    "The draft could not be written to this device\u2019s storage before sending, so nothing was sent."
   )).toBeVisible()
   await expect(page.getByText("quota exhausted")).toBeHidden()
   await page.getByText("Technical details").first().click()
@@ -857,10 +857,10 @@ test("IndexedDB preferences remain authoritative when the fast boot mirror is un
     }
   })
   await page.getByLabel("Prefer larger application text").check()
-  await page.getByRole("button", { name: "Save preferences locally" }).click()
+  await page.getByRole("button", { name: "Save preferences" }).click()
   await expect(page.getByRole("heading", { name: "Preferences saved" })).toBeFocused()
   await expect(page.getByText(/Preferences saved on this device and applied in this tab/)).toBeVisible()
-  await expect(page.getByText(/fast reload\/cross-tab preference mirror is unavailable/)).toBeVisible()
+  await expect(page.getByText(/quick-apply copy of your display choices/)).toBeVisible()
   await expect(page.locator("html")).toHaveAttribute("data-large-text", "")
   await page.evaluate(() => {
     const owner = window as typeof window & {
@@ -879,7 +879,7 @@ test("a failed preference write restores authoritative controls and applied docu
   await expect(page.getByText(/Default preferences are shown/)).toBeVisible()
   const largeText = page.getByLabel("Prefer larger application text")
   const reduceMotion = page.getByLabel("Reduce nonessential application motion")
-  const save = page.getByRole("button", { name: "Save preferences locally" })
+  const save = page.getByRole("button", { name: "Save preferences" })
 
   await largeText.check()
   await save.click()
@@ -909,7 +909,7 @@ test("a failed preference write restores authoritative controls and applied docu
 
   await save.click()
   await expect(page.getByRole("heading", { name: "This didn’t finish" })).toBeFocused()
-  await expect(page.getByText(/controls and applied preferences were restored from authoritative IndexedDB storage/))
+  await expect(page.getByText(/controls show the preferences still saved on this device/))
     .toBeVisible()
   await expect(largeText).toBeChecked()
   await expect(reduceMotion).not.toBeChecked()
@@ -955,7 +955,7 @@ test("a failed preference write restores authoritative controls and applied docu
 
   await save.click()
   await expect(page.getByRole("heading", { name: "This didn’t finish" })).toBeFocused()
-  await expect(page.getByText(/restored from the last known authoritative IndexedDB snapshot/))
+  await expect(page.getByText(/controls show the last known saved values/))
     .toBeVisible()
   await expect(largeText).toBeChecked()
   await expect(reduceMotion).not.toBeChecked()
@@ -989,7 +989,7 @@ test("saved preferences apply on reload and across tabs, while reset reports the
   await expect(page.getByText(/Default preferences are shown/)).toBeVisible()
   await page.getByLabel("Prefer larger application text").check()
   await page.getByLabel("Reduce nonessential application motion").check()
-  await page.getByRole("button", { name: "Save preferences locally" }).click()
+  await page.getByRole("button", { name: "Save preferences" }).click()
   await expect(page.getByText("Preferences saved on this device.")).toBeVisible()
   await expect(page.locator("html")).toHaveAttribute("data-large-text", "")
   await expect(page.locator("html")).toHaveAttribute("data-reduce-motion", "")
@@ -1002,7 +1002,7 @@ test("saved preferences apply on reload and across tabs, while reset reports the
   await page.reload()
   await expect(page.getByLabel("Prefer larger application text")).toBeChecked()
   await expect(page.getByLabel("Reduce nonessential application motion")).toBeChecked()
-  await page.getByLabel("Reset scope").selectOption("preferences")
+  await page.getByLabel("What to delete").selectOption("preferences")
   await page.getByRole("button", { name: "Preview delete" }).click()
   await expect(page.getByRole("heading", { name: "Delete preview: 1 record(s)" })).toBeVisible()
 
@@ -1077,6 +1077,10 @@ test("portable import previews unknown references, commits atomically, and expor
     })))
   })
   await page.getByRole("button", { name: "Check and preview import" }).click()
+  await expect(page.getByText(
+    "The file could not be read or checked, so nothing was imported."
+  )).toBeVisible()
+  await page.getByRole("alert").getByText("Technical details").click()
   await expect(page.getByText(/duplicate record IDs within one store/)).toBeVisible()
   await expect(page.getByRole("heading", { name: "Import preview — nothing written yet" })).toHaveCount(0)
 
@@ -1097,6 +1101,7 @@ test("portable import previews unknown references, commits atomically, and expor
     })))
   })
   await page.getByRole("button", { name: "Check and preview import" }).click()
+  await page.getByRole("alert").getByText("Technical details").click()
   await expect(page.getByText(/finite, non-negative safe-integer timestamp/)).toBeVisible()
   await expect(page.getByRole("heading", { name: "Import preview — nothing written yet" })).toHaveCount(0)
 
@@ -1117,6 +1122,7 @@ test("portable import previews unknown references, commits atomically, and expor
     })))
   })
   await page.getByRole("button", { name: "Check and preview import" }).click()
+  await page.getByRole("alert").getByText("Technical details").click()
   await expect(page.getByText(/invalid receipt identity/)).toBeVisible()
   await expect(page.getByRole("heading", { name: "Import preview — nothing written yet" })).toHaveCount(0)
 
@@ -1127,16 +1133,16 @@ test("portable import previews unknown references, commits atomically, and expor
   })
   await page.getByRole("button", { name: "Check and preview import" }).click()
   await expect(page.getByRole("heading", { name: "Import preview — nothing written yet" })).toBeFocused()
-  await expect(page.getByText("Checksum and schema validation passed. Review the no-write preview below."))
+  await expect(page.getByText("The file checked out. Review the preview below — nothing has been written yet."))
     .toBeVisible()
   await expect(
-    page.getByText("Unknown references to quarantine").locator("xpath=following-sibling::dd[1]")
+    page.getByText("Unknown references set aside").locator("xpath=following-sibling::dd[1]")
   ).toHaveText("1")
-  await page.getByLabel("Apply this exact preview without overwriting existing records").check()
+  await page.getByLabel("Apply exactly this preview without overwriting existing records").check()
   await page.getByRole("button", { name: "Apply import" }).click()
   await expect(page.getByRole("heading", { name: "Import complete" })).toBeFocused()
   await expect(page.getByText(
-    "Import committed atomically: 1 inserted, 0 matched, 1 quarantined. No existing record was overwritten."
+    "Import complete: 1 added, 0 already present, 1 set aside for review. Nothing already saved was overwritten."
   )).toBeVisible()
   await expect(page.locator("html")).toHaveAttribute("data-large-text", "")
   expect(await page.evaluate(({ databaseName, storeName }) => new Promise<number>((resolve, reject) => {
@@ -1234,10 +1240,10 @@ test("portable apply rechecks a drifted parent and quarantines its dependent ack
     record: { ...incomingAttempt, selectedOptionId: "adjustable-wrench", committedAt: 3 }
   })
 
-  await page.getByLabel("Apply this exact preview without overwriting existing records").check()
+  await page.getByLabel("Apply exactly this preview without overwriting existing records").check()
   await page.getByRole("button", { name: "Apply import" }).click()
   await expect(page.getByText(
-    "Import committed atomically: 0 inserted, 0 matched, 2 quarantined. No existing record was overwritten."
+    "Import complete: 0 added, 0 already present, 2 set aside for review. Nothing already saved was overwritten."
   )).toBeVisible()
   await expect(page.getByRole("heading", { name: "Import complete" })).toBeFocused()
 
@@ -1500,7 +1506,7 @@ test("an already-offline pack request performs no work and succeeds only after e
   await requestPack.click()
   await expect(page.getByRole("heading", { name: "This offline action stopped" }))
     .toBeFocused()
-  await expect(page.getByText("Go online before downloading or updating a pack.")).toBeVisible()
+  await expect(page.getByText("Go online before downloading or updating.")).toBeVisible()
   await expect(page.getByRole("status")).toContainText(
     "Update failed — your old copy, if you had one, still works."
   )
@@ -1533,7 +1539,7 @@ test("an already-offline pack request performs no work and succeeds only after e
     "Download complete and checked. It is not in use yet — turn it on when you are ready.",
     { timeout: 120_000 }
   )
-  const completion = page.getByRole("heading", { name: "Offline pack verified" })
+  const completion = page.getByRole("heading", { name: "Download checked" })
   await expect(completion).toBeVisible()
   await expect(completion).not.toBeFocused()
   const packs = await readPacks(page)
@@ -1579,21 +1585,21 @@ test("the sole unpinned active pack can be removed with its durable pointer and 
   const activeItem = page.getByRole("listitem").filter({
     hasText: `${active.descriptor.label} v${active.descriptor.packVersion}`
   })
-  await expect(activeItem).toContainText("Active for new sessions")
+  await expect(activeItem).toContainText("Ready offline")
   const remove = activeItem.getByRole("button", { name: "Preview and remove" })
   page.once("dialog", async (dialog) => {
-    expect(dialog.message()).toContain("0 historical attempt(s)")
+    expect(dialog.message()).toContain("0 saved attempt(s)")
     await dialog.accept()
   })
   await remove.click()
 
   await expect(activeItem).toHaveCount(0)
-  const completion = page.getByRole("heading", { name: "Offline pack removed" })
+  const completion = page.getByRole("heading", { name: "Download removed" })
   await expect(completion).toBeVisible()
   await expect(completion).not.toBeFocused()
   await expect(page.getByRole("heading", { name: "Downloads on this device" })).toBeFocused()
   await expect(page.getByRole("status")).toContainText(
-    "The selected pack bytes and activation record were removed. Study events were retained."
+    "The download was removed. Your study history stayed on this device."
   )
   expect((await readPacks(page)).some((pack) => pack.id === active.id)).toBe(false)
   expect((await readStoreRecords(page, appDatabaseStores.meta))
@@ -1703,11 +1709,11 @@ test("trusted retirement demotes the active generation and blocks stale activati
   let trustedDescriptor = retired
   await routeOfflineDescriptor(page, () => trustedDescriptor)
   await page.goto("/offline/?trusted-release=retired")
-  await expect(page.getByText("retired · EN", { exact: true })).toBeVisible()
+  await expect(page.getByText("Retired release · English", { exact: true })).toBeVisible()
   const stored = page.getByRole("listitem").filter({
     hasText: `${active.descriptor.label} v${active.descriptor.packVersion}`
   })
-  await expect(stored).toContainText("Retained for pinned history")
+  await expect(stored).toContainText("Kept for earlier sessions")
   await expect(page.getByRole("button", { name: /activate|download|retry/i })).toHaveCount(0)
 
   const meta = await readStoreRecords(page, appDatabaseStores.meta)
@@ -1752,6 +1758,7 @@ test("trusted retirement demotes the active generation and blocks stale activati
   await retained.getByRole("button", { name: /Turn on / }).click()
   await expect(page.getByRole("heading", { name: "This offline action stopped" }))
     .toBeFocused()
+  await page.getByRole("alert").getByText("Technical details").click()
   await expect(page.getByText(/durable retirement marker/)).toBeVisible()
   expect((await readPacks(page)).find((pack) => pack.id === active.id)?.status).toBe("retained")
 
@@ -1768,6 +1775,7 @@ test("trusted retirement demotes the active generation and blocks stale activati
   await page.getByRole("button", { name: "Download the update" }).click()
   await expect(page.getByRole("heading", { name: "This offline action stopped" }))
     .toBeFocused()
+  await page.getByRole("alert").getByText("Technical details").click()
   await expect(page.getByText(/durable retirement marker/)).toBeVisible()
   expect(await readPacks(page)).toEqual(beforePacks)
   expect(await readStoreRecords(page, appDatabaseStores.offlinePackOperations))
@@ -1809,11 +1817,12 @@ test("a quota failure during pack caching preserves the prior active generation 
   await page.getByRole("button", { name: "Download for offline use" }).click()
   const errorHeading = page.getByRole("heading", { name: "This offline action stopped" })
   await expect(errorHeading).toBeFocused()
+  await errorHeading.locator("..").getByText("Technical details").click()
   await expect(errorHeading.locator("..").getByText(/quota is exhausted/)).toBeVisible()
-  await expect(page.getByRole("heading", { name: "Offline pack verified" })).toHaveCount(0)
-  await expect(page.getByRole("link", { name: "Inspect and remove an inactive pack" }))
+  await expect(page.getByRole("heading", { name: "Download checked" })).toHaveCount(0)
+  await expect(page.getByRole("link", { name: "Remove an unused download" }))
     .toHaveAttribute("href", "#stored-packs-heading")
-  await expect(page.getByRole("link", { name: "export local records" }))
+  await expect(page.getByRole("link", { name: "export your local records" }))
     .toHaveAttribute("href", "/settings/#export-local-data")
 
   const packs = await readPacks(page)
@@ -1856,11 +1865,11 @@ test("an insufficient storage estimate disables pack download and exposes no-wri
   })
   await page.goto("/offline/")
 
-  await expect(page.getByText(/Storage capacity appears insufficient/)).toBeVisible()
+  await expect(page.getByText(/enough space for this download/)).toBeVisible()
   await expect(page.getByRole("button", { name: "Download for offline use" })).toBeDisabled()
-  await expect(page.getByRole("link", { name: "Inspect and remove an inactive pack" }))
+  await expect(page.getByRole("link", { name: "Remove an unused download" }))
     .toHaveAttribute("href", "#stored-packs-heading")
-  await expect(page.getByRole("link", { name: "export local records" }))
+  await expect(page.getByRole("link", { name: "export your local records" }))
     .toHaveAttribute("href", "/settings/#export-local-data")
   expect(await readPacks(page)).toEqual([])
   expect(await readStoreRecords(page, appDatabaseStores.offlinePackOperations)).toEqual([])
@@ -1885,13 +1894,15 @@ test("an exact simulation pin that commits before the removal claim blocks that 
   await expect(targetItem).toBeVisible()
   await installPinBeforeRemovalClaim(page, prepared.session)
   page.once("dialog", async (dialog) => {
-    expect(dialog.message()).toContain("0 historical attempt(s)")
+    expect(dialog.message()).toContain("0 saved attempt(s)")
     await dialog.accept()
   })
   await targetItem.getByRole("button", { name: "Preview and remove" }).click()
   await expect(page.getByRole("heading", { name: "This offline action stopped" }))
     .toBeFocused()
-  await expect(page.getByText(/1 active session pin\(s\) require this exact pack/)).toBeVisible()
+  await expect(page.getByText("The download could not be removed. Nothing was deleted.")).toBeVisible()
+  await page.getByRole("alert").getByText("Technical details").click()
+  await expect(page.getByText(/session pin/)).toBeVisible()
   await expect.poll(() => page.evaluate(() =>
     localStorage.getItem("pack-removal-pin-first"))).toBe("committed")
 
@@ -1942,16 +1953,16 @@ test("a removal claim that reaches removing first rejects the queued session pin
   await expect(targetItem).toBeVisible()
   await installRemovalBeforePinAttempt(page, prepared.session)
   page.once("dialog", async (dialog) => {
-    expect(dialog.message()).toContain("0 historical attempt(s)")
+    expect(dialog.message()).toContain("0 saved attempt(s)")
     await dialog.accept()
   })
   await targetItem.getByRole("button", { name: "Preview and remove" }).click()
-  const completion = page.getByRole("heading", { name: "Offline pack removed" })
+  const completion = page.getByRole("heading", { name: "Download removed" })
   await expect(completion).toBeVisible()
   await expect(completion).not.toBeFocused()
   await expect(page.getByRole("status").filter({
-    hasText: "The selected pack bytes"
-  })).toContainText("The selected pack bytes")
+    hasText: "The download was removed"
+  })).toContainText("The download was removed. Your study history stayed on this device.")
   await expect(targetItem).toHaveCount(0)
   await expect.poll(() => page.evaluate(() =>
     localStorage.getItem("pack-removal-claim-first"))).toMatch(/^rejected:removing:/)
@@ -2008,7 +2019,7 @@ test("a staged pack is rehashed before activation and serves atlas navigation an
   const retiredPack = page.getByRole("listitem").filter({
     hasText: "Retired historical pack v0"
   })
-  await expect(retiredPack).toContainText("Retained for pinned history")
+  await expect(retiredPack).toContainText("Kept for earlier sessions")
   await expect(retiredPack.getByRole("button", {
     name: /activate|download|retry/i
   })).toHaveCount(0)
@@ -2016,14 +2027,14 @@ test("a staged pack is rehashed before activation and serves atlas navigation an
   page.once("dialog", async (dialog) => dialog.dismiss())
   await cancelledRemoval.click()
   await expect(page.getByRole("status")).toContainText(
-    "Pack removal was cancelled; no bytes or records changed."
+    "Removal cancelled. Nothing changed."
   )
   await expect(cancelledRemoval).toBeFocused()
 
   await page.getByRole("button", { name: "Download for offline use" }).click()
   await expect(page.getByText(/Download complete and checked/))
     .toBeVisible({ timeout: 120_000 })
-  let completion = page.getByRole("heading", { name: "Offline pack verified" })
+  let completion = page.getByRole("heading", { name: "Download checked" })
   await expect(completion).toBeVisible()
   await expect(completion).not.toBeFocused()
   const activate = page.getByRole("button", { name: "Turn on this download" })
@@ -2054,7 +2065,7 @@ test("a staged pack is rehashed before activation and serves atlas navigation an
   await page.getByRole("button", { name: "Retry the download" }).first().click()
   await expect(page.getByText(/Download complete and checked/))
     .toBeVisible({ timeout: 120_000 })
-  completion = page.getByRole("heading", { name: "Offline pack verified" })
+  completion = page.getByRole("heading", { name: "Download checked" })
   await expect(completion).toBeVisible()
   await expect(completion).not.toBeFocused()
   packs = await readPacks(page)
@@ -2065,8 +2076,8 @@ test("a staged pack is rehashed before activation and serves atlas navigation an
   if (typeof replacementCacheName !== "string") throw new Error("Restaged pack has no cache namespace")
   expect(replacementCacheName).not.toBe(currentCacheName)
   await activate.click()
-  await expect(page.getByText(/verified pack is active for new sessions/)).toBeVisible()
-  completion = page.getByRole("heading", { name: "Offline pack activated" })
+  await expect(page.getByText(/now in use for new sessions/)).toBeVisible()
+  completion = page.getByRole("heading", { name: "Offline copy turned on" })
   await expect(completion).toBeVisible()
   await expect(completion).not.toBeFocused()
   packs = await readPacks(page)
@@ -2121,13 +2132,13 @@ test("a staged pack is rehashed before activation and serves atlas navigation an
     }
   })
   page.once("dialog", async (dialog) => {
-    expect(dialog.message()).toContain("1 historical attempt(s)")
+    expect(dialog.message()).toContain("1 saved attempt(s)")
     await dialog.accept()
   })
   const priorPack = page.getByRole("listitem").filter({ hasText: "Prior verified pack v0" })
   await priorPack.getByRole("button", { name: "Preview and remove" }).click()
   await expect(priorPack).toHaveCount(0)
-  completion = page.getByRole("heading", { name: "Offline pack removed" })
+  completion = page.getByRole("heading", { name: "Download removed" })
   await expect(completion).toBeVisible()
   await expect(completion).not.toBeFocused()
   expect(await page.evaluate(({ databaseName, stores, recordId }) => new Promise<{

@@ -116,7 +116,7 @@ const readPrintJobs = (
 test("generates, restores, and prints a separate deterministic question packet", async ({ page }) => {
   await page.goto("/print/")
   const printBootstrap = await readPrintBootstrap(page)
-  await expect(page.getByRole("heading", { name: "Build a deterministic print packet" })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "Choose what to print" })).toBeVisible()
   await expect(page.getByRole("radio", { name: "Blank hazard worksheet" })).toBeEnabled()
   await expect(page.getByRole("radio", { name: "Announcement-profile fact sheet" })).toBeDisabled()
   await expect(page.getByText(/No source-bound announcement fact history is published for this profile/)).toBeVisible()
@@ -130,7 +130,7 @@ test("generates, restores, and prints a separate deterministic question packet",
   expect(bootstrap).not.toContain('"targetRegions"')
 
   await page.getByLabel("Number of questions").fill("2")
-  await page.getByLabel("Deterministic seed").fill("browser-print-proof")
+  await page.getByLabel("Repeat this exact set").fill("browser-print-proof")
   await page.getByRole("button", { name: "Generate preview" }).click()
   await expect(page).toHaveURL(/\/print\/preview\/print-[a-f0-9-]+\/$/)
 
@@ -228,7 +228,7 @@ test("persists and restores the exact v2 announcement facts and source-line rece
   await product.check()
   await expect(page.getByLabel("Number of profiles")).toHaveValue("1")
   await expect(page.getByText("Available profiles: 1")).toBeVisible()
-  await page.getByLabel("Deterministic seed").fill("browser-source-bound-facts")
+  await page.getByLabel("Repeat this exact set").fill("browser-source-bound-facts")
   await page.getByRole("button", { name: "Generate preview" }).click()
 
   await expect(page.getByRole("heading", { level: 1, name: "Announcement-profile fact sheet" })).toBeFocused()
@@ -285,7 +285,7 @@ test("generates an answer key as its own product without question or rationale s
   await primePrintLocalClosure(page)
   await page.getByRole("radio", { name: "Separate answer key" }).check()
   await page.getByLabel("Number of questions").fill("2")
-  await page.getByLabel("Deterministic seed").fill("browser-print-proof")
+  await page.getByLabel("Repeat this exact set").fill("browser-print-proof")
   await page.getByLabel("Paper").selectOption("a4")
   await page.getByLabel("Margins").selectOption("wide")
   await page.getByLabel("Large print (at least 18pt)").check()
@@ -313,7 +313,7 @@ test("regenerates exact saved settings into a new durable job and replaces previ
 }) => {
   await page.goto("/print/")
   await page.getByLabel("Number of questions").fill("1")
-  await page.getByLabel("Deterministic seed").fill("browser-regenerate-exact")
+  await page.getByLabel("Repeat this exact set").fill("browser-regenerate-exact")
   await page.getByLabel("Paper").selectOption("a4")
   await page.getByLabel("Margins").selectOption("wide")
   await page.getByRole("button", { name: "Generate preview" }).click()
@@ -323,7 +323,7 @@ test("regenerates exact saved settings into a new durable job and replaces previ
   const originalJobs = await readPrintJobs(page)
   expect(originalJobs).toHaveLength(1)
 
-  await page.getByRole("button", { name: "Regenerate exact settings" }).click()
+  await page.getByRole("button", { name: "Regenerate this packet" }).click()
   await expect.poll(() => page.url()).not.toBe(originalUrl)
   await expect(page).toHaveURL(/\/print\/preview\/print-[a-f0-9-]+\/$/)
   const regeneratedJobs = await readPrintJobs(page)
@@ -341,7 +341,7 @@ test("regenerates exact saved settings into a new durable job and replaces previ
 test("keeps the previous preview and URL when durable regeneration fails", async ({ page }) => {
   await page.goto("/print/")
   await page.getByLabel("Number of questions").fill("1")
-  await page.getByLabel("Deterministic seed").fill("browser-regenerate-failure")
+  await page.getByLabel("Repeat this exact set").fill("browser-regenerate-failure")
   await page.getByRole("button", { name: "Generate preview" }).click()
   await expect(page).toHaveURL(/\/print\/preview\/print-[a-f0-9-]+\/$/)
   await expect(page.getByRole("heading", { name: "Original multiple-choice practice" })).toBeVisible()
@@ -378,13 +378,13 @@ test("keeps the previous preview and URL when durable regeneration fails", async
     })
   }, { originalId, storeName: appDatabaseStores.printJobs })
 
-  await page.getByRole("button", { name: "Regenerate exact settings" }).click()
+  await page.getByRole("button", { name: "Regenerate this packet" }).click()
   await expect(page.getByRole("heading", { name: "Print preview was not regenerated" })).toBeFocused()
   expect(page.url()).toBe(originalUrl)
   await expect(page.getByRole("heading", { name: "Questions", exact: true })).toBeVisible()
   expect(await readPrintJobs(page)).toHaveLength(1)
 
-  await page.getByRole("button", { name: "Regenerate exact settings" }).click()
+  await page.getByRole("button", { name: "Regenerate this packet" }).click()
   await expect.poll(() => page.url()).not.toBe(originalUrl)
   expect(await readPrintJobs(page)).toHaveLength(2)
 })
@@ -393,7 +393,7 @@ test("pairs separate jobs and page-breaks an appended key with optional explanat
   await page.goto("/print/")
   await primePrintLocalClosure(page)
   await page.getByLabel("Number of questions").fill("2")
-  await page.getByLabel("Deterministic seed").fill("browser-paired-set")
+  await page.getByLabel("Repeat this exact set").fill("browser-paired-set")
   await expect(page.getByLabel("Answer-key placement")).toHaveValue("separate-job")
   await page.getByRole("button", { name: "Generate preview" }).click()
   const questionPairing = await page.locator("[data-print-pairing-fingerprint]")
@@ -405,7 +405,7 @@ test("pairs separate jobs and page-breaks an appended key with optional explanat
   await page.goto("/print/")
   await page.getByRole("radio", { name: "Separate answer key" }).check()
   await page.getByLabel("Number of questions").fill("2")
-  await page.getByLabel("Deterministic seed").fill("browser-paired-set")
+  await page.getByLabel("Repeat this exact set").fill("browser-paired-set")
   await page.getByRole("button", { name: "Generate preview" }).click()
   await expect(page.locator("[data-print-pairing-fingerprint]")).toHaveAttribute(
     "data-print-pairing-fingerprint",
@@ -414,7 +414,7 @@ test("pairs separate jobs and page-breaks an appended key with optional explanat
 
   await page.goto("/print/")
   await page.getByLabel("Number of questions").fill("2")
-  await page.getByLabel("Deterministic seed").fill("browser-paired-set")
+  await page.getByLabel("Repeat this exact set").fill("browser-paired-set")
   await page.getByLabel("Answer-key placement").selectOption("new-section")
   await page.getByLabel("Append explanations after the answer key").check()
   await page.getByRole("button", { name: "Generate preview" }).click()
@@ -523,7 +523,7 @@ test("tool-family cards count complete families and retain exact verified images
   await expect(page.getByLabel("Content filter")).toHaveValue(selectedFamily.family)
   await expect(page.getByLabel("Number of families")).toHaveValue("1")
   await expect(page.getByText("Available families: 1")).toBeVisible()
-  await page.getByLabel("Deterministic seed").fill("browser-tool-family")
+  await page.getByLabel("Repeat this exact set").fill("browser-tool-family")
   await page.getByRole("button", { name: "Generate preview" }).click()
 
   await expect(page.getByRole("heading", { level: 1, name: "Tool-family contrast cards" })).toBeVisible()
@@ -591,11 +591,11 @@ test("hazard worksheet, annotated answers, and text equivalents remain separate 
   await expect(page.getByLabel("Number of scenes")).toBeVisible()
   await page.getByLabel("Content filter").selectOption("hallway/common area")
   await page.getByLabel("Number of scenes").fill("1")
-  await page.getByLabel("Deterministic seed").fill("paired-hazard-products")
+  await page.getByLabel("Repeat this exact set").fill("paired-hazard-products")
   await page.getByRole("button", { name: "Generate preview" }).click()
   await expect(page.getByRole("heading", { level: 1, name: "Blank hazard worksheet" })).toBeVisible()
   await expect(page.locator(".print-hazard-worksheet img")).toHaveAttribute("src", /^data:image\/png;base64,/)
-  await expect(page.getByText(/Reviewed claim/)).toHaveCount(0)
+  await expect(page.getByText(/Scene explanation/)).toHaveCount(0)
   await expect(page.getByText(/Conditions needing correction and proposed controls/)).toBeVisible()
   expect(postcommitRequests).toEqual([])
 
@@ -603,10 +603,10 @@ test("hazard worksheet, annotated answers, and text equivalents remain separate 
   await page.getByRole("radio", { name: "Annotated hazard-answer packet" }).check()
   await page.getByLabel("Content filter").selectOption("hallway/common area")
   await page.getByLabel("Number of scenes").fill("1")
-  await page.getByLabel("Deterministic seed").fill("paired-hazard-products")
+  await page.getByLabel("Repeat this exact set").fill("paired-hazard-products")
   await page.getByRole("button", { name: "Generate preview" }).click()
   await expect(page.getByRole("heading", { level: 1, name: "Annotated hazard-answer packet" })).toBeVisible()
-  await expect(page.getByText(/Reviewed claim/)).toBeVisible()
+  await expect(page.getByText(/Scene explanation/)).toBeVisible()
   await expect(page.locator(".print-annotated-scene svg polygon")).not.toHaveCount(0)
   expect(postcommitRequests).toHaveLength(0)
 
@@ -614,7 +614,7 @@ test("hazard worksheet, annotated answers, and text equivalents remain separate 
   await page.getByRole("radio", { name: "Text-equivalent\/nonvisual set" }).check()
   await page.getByLabel("Content filter").selectOption("hallway/common area")
   await page.getByLabel("Number of scenes").fill("1")
-  await page.getByLabel("Deterministic seed").fill("paired-hazard-products")
+  await page.getByLabel("Repeat this exact set").fill("paired-hazard-products")
   await page.getByRole("button", { name: "Generate preview" }).click()
   await expect(page.getByRole("heading", { level: 1, name: "Text-equivalent hazard set" })).toBeVisible()
   await expect(page.getByText(/text version covers the same knowledge; it is not the same task as marking the image/)).toBeVisible()

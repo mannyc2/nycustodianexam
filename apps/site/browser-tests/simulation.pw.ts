@@ -489,7 +489,7 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
     { databaseName: appDatabaseName, submissionsStore: appDatabaseStores.simulationSubmissions }
   )
   await page.goto("/simulations/")
-  await expect(page.getByRole("heading", { name: "Create a site-designed practice simulation." })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "Create a practice simulation." })).toBeVisible()
   await expect(page.getByLabel("Profile")).toHaveValue("nys-entry-level-custodians-janitors")
   await expect(page.getByLabel("Profile").locator("option")).not.toHaveCount(0)
   const serializedBootstrap = await page.locator("#simulation-bootstrap-data").textContent()
@@ -524,7 +524,7 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
   }
   await expect(lengthGroup.getByRole("radio", { name: /^90 items/ })).toBeChecked()
   await expect(page.getByRole("radio", { name: "Visual hazard scenes" })).toBeEnabled()
-  await expect(page.getByRole("radio", { name: "Nonvisual zoned hazard equivalents" })).toBeEnabled()
+  await expect(page.getByRole("radio", { name: "Hazard scenes — keyboard, no image" })).toBeEnabled()
 
   const contentMix = page.getByRole("group", { name: "Content mix" })
   const categoryOptions = (await contentMix.getByRole("checkbox").evaluateAll((elements) =>
@@ -571,7 +571,7 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
   })
   await expect(category).toBeChecked()
   await expect(contentMix).toContainText(
-    `Available unique items for selected mix: ${filteredCategory.count}`
+    `Available items for this mix: ${filteredCategory.count}`
   )
   for (const advertisedLength of bootstrap.advertisedLengths) {
     await expect(lengthGroup.getByRole("radio", {
@@ -590,7 +590,7 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
   await page.getByLabel("Timed practice").check()
   await page.getByLabel("Practice duration (minutes)").fill("120")
   await page.getByLabel("Start with timer hidden").check()
-  await expect(page.getByLabel("Strictly auto-submit when practice time expires")).not.toBeChecked()
+  await expect(page.getByLabel("Auto-submit when practice time expires")).not.toBeChecked()
 
   await page.locator("details", { has: page.getByLabel("Set code (seed)") }).evaluate((node) => { (node as HTMLDetailsElement).open = true })
   await page.getByLabel("Set code (seed)").fill("browser-restoration-seed")
@@ -625,9 +625,9 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
   expect(selectedOption.id).not.toBe("")
   expect(selectedOption.label).not.toBe("")
   await firstOption.check()
-  await expect(page.getByText("Saved on this device")).toBeVisible()
+  await expect(page.getByText("Saved on this device", { exact: true })).toBeVisible()
   await page.getByRole("button", { name: "Flag this question" }).click()
-  await expect(page.getByText("Saved on this device")).toBeVisible()
+  await expect(page.getByText("Saved on this device", { exact: true })).toBeVisible()
   await expect(page.getByRole("button", { name: "Flagged for review" })).toHaveAttribute("aria-pressed", "true")
 
   await page.reload()
@@ -682,9 +682,9 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
   await page.getByRole("button", { name: "Submit final answers" }).click()
   await expect(page).toHaveURL(/\/simulations\/session\/sim-[a-z0-9-]+\/results\/$/)
   await expect(page.getByRole("heading", { name: /Practice accuracy:/ })).toBeFocused()
-  await expect(page.getByText(/not an official converted score or pass prediction/i)).toBeVisible()
+  await expect(page.getByText(/not an official converted score or a pass prediction/i)).toBeVisible()
   await expect(page.getByText(/Elapsed time \d+ min \d+ sec/)).toBeVisible()
-  await expect(page.getByRole("heading", { name: "Actual generated distribution" })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "What this set contained" })).toBeVisible()
   await page.getByRole("link", { name: "Review item 1", exact: true }).click()
   await expect(page).toHaveURL(/#result-question-1$/)
   await expect(page.locator("#result-question-1")).toBeFocused()
@@ -751,7 +751,7 @@ test("trusted retirement preserves a pinned simulation but blocks every new sess
 
   await expect(page.getByRole("heading", { name: "Simulation was not created" }))
     .toBeFocused()
-  await expect(page.getByRole("alert")).toContainText(/active offline-pack pointer is unavailable/i)
+  await expect(page.getByRole("alert")).toContainText("The simulation could not be saved on this device.")
   expect(await readStore(page, appDatabaseStores.simulationSessions)).toHaveLength(1)
 })
 
@@ -841,7 +841,7 @@ test("restores a visual hazard simulation and keeps evaluated feedback after pac
   await expect(page.getByRole("heading", { name: "Hazard practice metrics" })).toBeVisible()
   await expect(page.getByRole("heading", { name: "Marker feedback" })).toBeVisible()
   await expect(page.getByRole("heading", {
-    name: "Scene explanation and complete post-submission description"
+    name: "Scene explanation and full post-submission description"
   })).toBeVisible()
   await expect(page.getByText("Reviewed scene overlay.", { exact: false })).toBeVisible()
   await expect(page.locator("[data-marker-kind]")).toHaveCount(1)
@@ -900,7 +900,7 @@ test("restores a nonvisual zoned hazard simulation and its self-contained result
   await observeHazardAnswerReads(context)
   await page.goto("/simulations/")
   await primeSimulationHazardClosure(page)
-  await page.getByRole("radio", { name: "Nonvisual zoned hazard equivalents" }).check()
+  await page.getByRole("radio", { name: "Hazard scenes — keyboard, no image" }).check()
   await page.locator('input[name="simulation-length"][value="1"]').check()
   await page.locator("details", { has: page.getByLabel("Set code (seed)") }).evaluate((node) => { (node as HTMLDetailsElement).open = true })
   await page.getByLabel("Set code (seed)").fill("browser-nonvisual-hazard")
@@ -949,7 +949,7 @@ test("restores a nonvisual zoned hazard simulation and its self-contained result
   await expect(page).toHaveURL(/\/simulations\/session\/sim-[a-z0-9-]+\/results\/$/)
   await expect(page.getByRole("heading", { name: "Hazard practice metrics" })).toBeVisible()
   await expect(page.getByRole("heading", { name: "Zone feedback" })).toBeVisible()
-  await expect(page.getByRole("heading", { name: "Complete zoned text equivalent" })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "Full scene description by zone" })).toBeVisible()
   const observations = await page.evaluate(() => JSON.parse(
     localStorage.getItem("simulation-hazard-durable-at-answer-read") ?? "[]"
   ) as Array<boolean>)
@@ -959,7 +959,7 @@ test("restores a nonvisual zoned hazard simulation and its self-contained result
   await page.evaluate((cacheName) => caches.delete(cacheName), verifiedContentCacheName)
   await page.reload()
   await expect(page.getByRole("heading", { name: "Zone feedback" })).toBeVisible()
-  await expect(page.getByRole("heading", { name: "Complete zoned text equivalent" })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "Full scene description by zone" })).toBeVisible()
   expect(postcommitRequests).toEqual([])
 })
 
@@ -1000,7 +1000,7 @@ test("retains an optimistic answer and flag through an IndexedDB failure and exa
 
   const option = page.locator(".question-card input[type=radio]").first()
   await option.check()
-  await expect(page.getByText("Saved on this device")).toBeVisible()
+  await expect(page.getByText("Saved on this device", { exact: true })).toBeVisible()
   await page.evaluate((sessionsStore) => {
     const prototype = IDBObjectStore.prototype
     const original = prototype.put
@@ -1035,7 +1035,7 @@ test("retains an optimistic answer and flag through an IndexedDB failure and exa
     "true"
   )
   await page.getByRole("button", { name: "Retry this exact local save" }).click()
-  await expect(page.getByText("Saved on this device")).toBeVisible()
+  await expect(page.getByText("Saved on this device", { exact: true })).toBeVisible()
   await page.reload()
   await expect(option).toBeChecked()
   await expect(page.getByRole("button", { name: "Flagged for review" })).toHaveAttribute(
@@ -1049,7 +1049,7 @@ test("strict practice auto-submit occurs only after explicit opt-in", async ({ p
   await primeSimulationResultCache(page)
   await page.getByLabel("Timed practice").check()
   await page.getByLabel("Practice duration (minutes)").fill("1")
-  await page.getByLabel("Strictly auto-submit when practice time expires").check()
+  await page.getByLabel("Auto-submit when practice time expires").check()
   await page.locator("details", { has: page.getByLabel("Set code (seed)") }).evaluate((node) => { (node as HTMLDetailsElement).open = true })
   await page.getByLabel("Set code (seed)").fill("browser-auto-submit")
   await page.getByRole("button", { name: "Start simulation" }).click()

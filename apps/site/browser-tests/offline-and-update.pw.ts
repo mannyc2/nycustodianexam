@@ -54,7 +54,7 @@ test("a committed question reloads from the controlled service worker while offl
 
   await page.getByRole("radio", { name: "Scrub brush" }).check()
   await page.getByRole("button", { name: "Submit answer" }).click()
-  await expect(page.getByRole("heading", { name: "Correct", exact: true })).toBeVisible()
+  await expect(page.getByRole("heading", { name: /^Correct — / })).toBeVisible()
 
   const verifiedCacheKey = verifiedContentCacheKey(new URL(page.url()).origin, {
     path: questionPostcommitPath,
@@ -88,7 +88,7 @@ test("a committed question reloads from the controlled service worker while offl
   await expect(page).toHaveURL(questionPath)
   await expect(page.locator("[data-connectivity-notice]")).toBeVisible()
   await expect(page.locator("html")).toHaveAttribute("data-freshness", "offline-stale")
-  await expect(page.getByRole("heading", { name: "Correct", exact: true })).toBeFocused()
+  await expect(page.getByRole("heading", { name: /^Correct — / })).toBeFocused()
   expect(await readStoredAttempt(page)).toEqual(committed)
 
   await context.setOffline(false)

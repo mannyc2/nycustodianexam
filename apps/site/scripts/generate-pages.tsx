@@ -531,7 +531,7 @@ const hazardPage = ({
 }): PageDefinition => ({
   canonicalPath,
   relativePath: `${canonicalPath.slice(1)}index.html`,
-  title: `${mode === "visual" ? "Hazard scene" : "Nonvisual hazard scene"} ${position} of ${count} — NY Custodian Exam`,
+  title: `${mode === "visual" ? "Hazard scene" : "Keyboard hazard scene"} ${position} of ${count} — NY Custodian Exam`,
   description: `${mode === "visual" ? "A visual" : "A keyboard, no-image"} workplace hazard exercise. Feedback appears only after you submit your response.`,
   robots: "noindex,follow",
   routeId: "hazard-player",

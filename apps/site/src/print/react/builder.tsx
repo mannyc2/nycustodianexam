@@ -135,7 +135,7 @@ export const PrintBuilder = ({
   return (
     <section aria-labelledby="print-builder-heading" className="print-builder screen-only">
       <p aria-live="polite" className="sr-only">{snapshot.announcementRequest?.message ?? ""}</p>
-      <h2 id="print-builder-heading">Build a printable practice packet</h2>
+      <h2 id="print-builder-heading">Choose what to print</h2>
       <p>
         Counts are limited by what this release contains. Each product is saved separately so
         questions, keys, and explanations can begin on distinct sheets.

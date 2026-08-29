@@ -92,7 +92,7 @@ test("print media removes application chrome and controls while retaining feedba
   await gotoReadyQuestion(page)
   await page.getByRole("radio", { name: "Scrub brush" }).check()
   await page.getByRole("button", { name: "Submit answer" }).click()
-  await expect(page.getByRole("heading", { name: "Correct", exact: true })).toBeVisible()
+  await expect(page.getByRole("heading", { name: /^Correct — / })).toBeVisible()
 
   await page.emulateMedia({ media: "print" })
   const printState = await page.evaluate(() => {
