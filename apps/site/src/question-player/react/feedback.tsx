@@ -1,3 +1,4 @@
+import { sourceEvidenceTierLabel } from "../../public-content-labels.ts"
 import { useQuestionPlayer } from "./context.tsx"
 
 export const QuestionFeedback = () => {
@@ -21,7 +22,7 @@ export const QuestionFeedback = () => {
               : "Your answer is saved"}
         </h2>
         <p>{state.message}</p>
-        {state.tag === "commit_failed" ? <p>Check storage access, then commit again.</p> : null}
+        {state.tag === "commit_failed" ? <p>Free up storage or close other tabs of this site, then submit again.</p> : null}
         {state.tag === "content_unavailable" ? (
           <button className="button button-secondary" onClick={actions.retryRestore} type="button">
             Check content again
@@ -41,7 +42,10 @@ export const QuestionFeedback = () => {
     state.payload.rationales.map((rationale) => [rationale.optionId, rationale])
   )
   const claims = new Map(state.payload.claims.map((claim) => [claim.id, claim]))
-  const sources = new Map(state.payload.sources.map((source) => [source.id, source]))
+  const objectiveClaim = state.payload.objectiveId === undefined
+    ? undefined
+    : claims.get(state.payload.objectiveId)
+  const hasAuthoredMixUp = (state.payload.tags?.confusionSetIds.length ?? 0) > 0
   const orderedRationaleIds = [
     state.payload.correctOptionId,
     ...(correct ? [] : [state.selectedOptionId]),
@@ -58,7 +62,9 @@ export const QuestionFeedback = () => {
   return (
     <section className={correct ? "feedback feedback-correct" : "feedback feedback-review"}>
       <h2 ref={meta.outcomeHeadingRef} tabIndex={-1}>
-        {correct ? "Correct" : "Review this one"}
+        {correct
+          ? `Correct — “${optionLabel(state.payload.correctOptionId)}” is the right answer.`
+          : `Not correct — the right answer is “${optionLabel(state.payload.correctOptionId)}”.`}
       </h2>
       <dl className="feedback-answer-summary">
         <div>
@@ -88,62 +94,57 @@ export const QuestionFeedback = () => {
                   : {optionLabel(optionId)}
                 </h4>
                 <p>{rationale?.message ?? "No rationale is available for this choice."}</p>
-                {rationale === undefined ? null : (
-                  <ul aria-label="Claims and sources for this explanation" className="rationale-sources">
-                    {rationale.claimIds.map((claimId) => {
-                      const claim = claims.get(claimId)
-                      return <li key={claimId}>
-                        {claim === undefined ? (
-                          <>Unavailable supported claim <code>{claimId}</code></>
-                        ) : (
-                          <>
-                            <span>{claim.text}</span>
-                            {claim.caveat === null ? null : (
-                              <p className="claim-caveat">
-                                <strong>Scope note:</strong> {claim.caveat}
-                              </p>
-                            )}
-                            <ul>
-                              {claim.sourceLineIds.map((sourceLineId) => {
-                                const source = sources.get(sourceLineId)
-                                return <li key={sourceLineId}>
-                                  {source === undefined
-                                    ? <>Unavailable source-line receipt <code>{sourceLineId}</code></>
-                                    : <><code>{source.id}</code> — {source.title} <code>{source.locator}</code></>}
-                                </li>
-                              })}
-                            </ul>
-                          </>
-                        )}
-                      </li>
-                    })}
-                  </ul>
-                )}
               </li>
             )
           })}
         </ol>
       </section>
+      {objectiveClaim === undefined ? null : (
+        <section className="feedback-claims">
+          <h3>Key distinction</h3>
+          <p>{objectiveClaim.text}</p>
+          {objectiveClaim.caveat === null ? null : (
+            <p className="claim-caveat"><strong>Scope note:</strong> {objectiveClaim.caveat}</p>
+          )}
+        </section>
+      )}
+      {hasAuthoredMixUp ? (
+        <section className="feedback-confusion">
+          <h3>Common mix-up</h3>
+          <p>{correct
+            ? objectiveClaim === undefined
+              ? `Compare “${optionLabel(state.payload.correctOptionId)}” with the other answer choices in the answer explanations above.`
+              : `Compare “${optionLabel(state.payload.correctOptionId)}” with the other answer choices using the key distinction above.`
+            : objectiveClaim === undefined
+              ? `You chose “${optionLabel(state.selectedOptionId)}.” Compare it with “${optionLabel(state.payload.correctOptionId)}” in the answer explanations above.`
+              : `You chose “${optionLabel(state.selectedOptionId)}.” Compare it with “${optionLabel(state.payload.correctOptionId)}” using the key distinction above.`}</p>
+        </section>
+      ) : null}
       <details className="feedback-sources">
-        <summary>Source receipts</summary>
+        <summary>Where this comes from</summary>
         <ul className="source-receipt-list">
           {state.payload.sources.map((source) => (
             <li key={source.id}>
-              <p><code>{source.id}</code> — <strong>{source.title}</strong></p>
+              <p><strong>{source.publisher}</strong> — {source.title} (verified <time dateTime={source.verifiedOn}>{source.verifiedOn}</time>)</p>
               <dl className="source-receipt-context">
-                <div><dt>Publisher</dt><dd>{source.publisher}</dd></div>
-                <div><dt>Source version</dt><dd>{source.version}</dd></div>
-                <div><dt>Verified</dt><dd>{source.verifiedOn}</dd></div>
-                <div><dt>Locator</dt><dd><code>{source.locator}</code></dd></div>
-                <div><dt>Evidence</dt><dd>{source.evidenceTier}</dd></div>
+                <div><dt>Evidence</dt><dd>{sourceEvidenceTierLabel(source.evidenceTier)}</dd></div>
               </dl>
               <blockquote className="source-receipt-excerpt">
                 <p>{source.excerpt}</p>
               </blockquote>
               <p className="source-receipt-rights">{source.rightsNotes}</p>
               {source.url === undefined ? null : (
-                <p>Source URL: <code>{source.url}</code></p>
+                <p><a href={source.url} rel="external noopener">Open the source</a></p>
               )}
+              <details className="source-note">
+                <summary>Technical details</summary>
+                <dl className="source-receipt-context">
+                  <div><dt>Source version</dt><dd>{source.version}</dd></div>
+                  <div><dt>Locator</dt><dd><code>{source.locator}</code></dd></div>
+                  <div><dt>Source line ID</dt><dd><code>{source.id}</code></dd></div>
+                  <div><dt>Source record ID</dt><dd><code>{source.sourceId}</code></dd></div>
+                </dl>
+              </details>
             </li>
           ))}
         </ul>

@@ -48,7 +48,7 @@ export const saveBootPreferences = (
   } catch {
     result = {
       mirrored: false,
-      detail: "The fast reload/cross-tab preference mirror is unavailable in this browser."
+      detail: "This browser could not store the quick-apply copy of your display choices, so they may not apply until a page finishes loading."
     }
   } finally {
     applyBootPreferences(preferences)
@@ -63,7 +63,7 @@ export const clearBootPreferences = (): BootPreferenceMirrorResult => {
   } catch {
     result = {
       mirrored: false,
-      detail: "The fast reload/cross-tab preference mirror could not be cleared in this browser."
+      detail: "This browser could not clear the quick-apply copy of your display choices."
     }
   } finally {
     applyBootPreferences(undefined)

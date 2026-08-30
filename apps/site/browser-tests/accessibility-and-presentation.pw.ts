@@ -16,8 +16,8 @@ test("ready and revealed states have no serious WCAG A/AA axe violations", async
   expect(await seriousAccessibilityViolations(page)).toEqual([])
 
   await page.getByRole("radio", { name: "Staple gun" }).check()
-  await page.getByRole("button", { name: "Commit answer" }).click()
-  await expect(page.getByRole("heading", { name: "Review this one" })).toBeFocused()
+  await page.getByRole("button", { name: "Submit answer" }).click()
+  await expect(page.getByRole("heading", { name: /Not correct — the right answer is/ })).toBeFocused()
   expect(await seriousAccessibilityViolations(page)).toEqual([])
 })
 
@@ -91,8 +91,8 @@ test("print media removes application chrome and controls while retaining feedba
 }) => {
   await gotoReadyQuestion(page)
   await page.getByRole("radio", { name: "Scrub brush" }).check()
-  await page.getByRole("button", { name: "Commit answer" }).click()
-  await expect(page.getByRole("heading", { name: "Correct", exact: true })).toBeVisible()
+  await page.getByRole("button", { name: "Submit answer" }).click()
+  await expect(page.getByRole("heading", { name: /^Correct — / })).toBeVisible()
 
   await page.emulateMedia({ media: "print" })
   const printState = await page.evaluate(() => {

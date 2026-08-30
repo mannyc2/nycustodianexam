@@ -114,7 +114,7 @@ test("Settings rebuild exposes pending/error/complete focus and remains idempote
   const rebuild = page.getByRole("button", { name: "Rebuild review queue" })
   await rebuild.click()
   await expect(page.getByRole("status").filter({
-    hasText: "Rebuilding the review projection from saved local events…"
+    hasText: "Rebuilding the review queue from the events saved on this device…"
   })).toBeVisible()
   await expect(page.getByRole("button", { name: "Rebuilding review queue…" })).toBeDisabled()
   releasePostcommit()
@@ -122,9 +122,9 @@ test("Settings rebuild exposes pending/error/complete focus and remains idempote
   const completed = page.getByRole("heading", { name: "Review queue rebuild complete" })
   await expect(completed).toBeFocused()
   const completionStatus = page.getByRole("status").filter({
-    hasText: "Read 1 validated attempt(s), derived 1 due item(s)"
+    hasText: "Read 1 saved attempt(s), found 1 due for review"
   })
-  await expect(completionStatus).toContainText("No study event or acknowledgement was written")
+  await expect(completionStatus).toContainText("Nothing in your history was changed")
   const firstCompletion = await completionStatus.textContent()
   expect(await readReviewInputs(page)).toEqual(originalInputs)
 
@@ -149,7 +149,7 @@ test("Settings rebuild exposes pending/error/complete focus and remains idempote
   await rebuild.click()
   const stopped = page.getByRole("heading", { name: "Review queue rebuild stopped" })
   await expect(stopped).toBeFocused()
-  await expect(page.getByText(/No saved attempt or review acknowledgement was changed/))
+  await expect(page.getByText(/No saved attempt or finished review was changed/))
     .toBeVisible()
   await expect(rebuild).toBeEnabled()
 

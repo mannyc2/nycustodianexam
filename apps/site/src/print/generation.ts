@@ -120,7 +120,7 @@ export const printProductAvailability = (
     return {
       product,
       available: false,
-      reason: "No source-bound announcement fact history is published for this profile; a generic profile summary is not substituted."
+      reason: "No reviewed announcement fact history is available for this profile; a generic profile summary is not substituted."
     }
   }
   if (product === "correction-change-log-excerpt" && bootstrap.corrections.length === 0) {
@@ -129,15 +129,15 @@ export const printProductAvailability = (
   const capacity = printProductCapacity(product, bootstrap, profileId)
   if (capacity === 0) {
     const reason = product === "tool-family-contrast-cards"
-      ? "No reviewed profile-compatible tool family has at least two released members."
-      : "No compatible validated content is available for this print product."
+      ? "No reviewed tool family with at least two entries is available for this profile."
+      : "No reviewed content for this profile is available for this print product."
     return { product, available: false, reason }
   }
   if (
     (product === "answer-key" || product === "explanations-and-sources") &&
     compatible(bootstrap.questions, profileId).some((question) => question.answerReceipt === null)
   ) {
-    return { product, available: false, reason: "Exact reviewed question-answer receipts are incomplete." }
+    return { product, available: false, reason: "The reviewed answers and explanations needed for this product are unavailable." }
   }
   return { product, available: true, reason: null }
 }

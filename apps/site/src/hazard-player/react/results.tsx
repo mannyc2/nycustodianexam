@@ -16,8 +16,8 @@ const markerFeedback = (
   if (assessment.kind === "false_positive") {
     return (
       <p>
-        This mark did not correspond to an authored condition. The scene model does not invent
-        meaning for an unauthored location.
+        This mark does not match a recorded condition. It counts as an extra mark, but the site
+        cannot say what that object means.
       </p>
     )
   }
@@ -26,9 +26,9 @@ const markerFeedback = (
     const decoy = payload.decoys.find((candidate) => candidate.id === assessment.inventoryId)
     return (
       <p>
-        <strong>Decoy false positive.</strong>{" "}
+        <strong>Safe as shown.</strong>{" "}
         {decoy === undefined
-          ? "The marked detail was an authored safe detail."
+          ? "The detail you marked is safe as depicted in this scene."
           : `${decoy.condition}; ${decoy.safeBecause}.`}
       </p>
     )
@@ -38,20 +38,20 @@ const markerFeedback = (
   if (assessment.kind === "duplicate") {
     return (
       <p>
-        <strong>Duplicate mark.</strong>{" "}
+        <strong>Already marked.</strong>{" "}
         {target === undefined
-          ? "Another marker already identified this authored condition."
-          : `Another marker already identified ${target.condition}.`}
+          ? "Another marker already covers this hazard."
+          : `Another marker already covers ${target.condition}.`}
       </p>
     )
   }
 
   return (
     <p>
-      <strong>Identified.</strong>{" "}
+      <strong>Hazard found.</strong>{" "}
       {target === undefined
-        ? "This marker corresponds to an authored condition needing correction."
-        : `${target.condition}. Correction concept: ${target.correction}.`}
+        ? "This marker matches a condition that needs correction."
+        : `${target.condition}. How to correct it: ${target.correction}.`}
     </p>
   )
 }
@@ -73,7 +73,7 @@ const VisualResults = ({
     <section aria-labelledby="visual-marker-feedback-heading">
       <h3 id="visual-marker-feedback-heading">Marker feedback</h3>
       {imageUrl === null
-        ? <p role="alert">The retained reviewed scene image is unavailable.</p>
+        ? <p role="alert">The saved scene image is unavailable.</p>
         : <AnnotatedHazardScene
             alt={sceneAlt}
             imageUrl={imageUrl}
@@ -93,16 +93,16 @@ const VisualResults = ({
         </ol>
       )}
       {assessment.missedInventoryIds.length === 0 ? (
-        <p>No authored correction condition was left unidentified.</p>
+        <p>No hazard was left unmarked.</p>
       ) : (
         <section aria-labelledby="missed-condition-heading">
-          <h4 id="missed-condition-heading">Conditions not marked</h4>
+          <h4 id="missed-condition-heading">Hazards you missed</h4>
           <ul>
             {assessment.missedInventoryIds.map((inventoryId) => {
               const target = payload.targets.find((candidate) => candidate.id === inventoryId)
               return target === undefined ? null : (
                 <li key={target.condition}>
-                  {target.condition}. Correction concept: {target.correction}.
+                  {target.condition}. How to correct it: {target.correction}.
                 </li>
               )
             })}
@@ -135,13 +135,12 @@ const NonvisualResults = ({ payload }: { readonly payload: PostcommitScene }) =>
     <section aria-labelledby="zone-feedback-heading">
       <h3 id="zone-feedback-heading">Zone feedback</h3>
       <p>
-        This zoned text activity is an equivalent knowledge task; it does not measure the same
-        visual-recognition construct as placing markers on the image.
+        This text version covers the same knowledge, but it is not the same task as finding
+        hazards on the image.
       </p>
       <p>
-        Your neutral zone selections are recorded separately from the more granular authored
-        locations in the complete equivalent below. Labels are not fuzzy-matched or scored as
-        though the two tasks were identical.
+        Your zone choices are saved exactly as you made them. They are not auto-matched or
+        scored against the more detailed locations described below.
       </p>
       <ol>
         {zones.map((zone) => (
@@ -150,8 +149,8 @@ const NonvisualResults = ({ payload }: { readonly payload: PostcommitScene }) =>
             <p>{zone.selected ? "You selected this zone." : "You did not select this zone."}</p>
             {postcommitLabels.has(zone.label) ? null : (
               <p>
-                No post-answer location uses this exact structural-zone label. This does not
-                classify your selection as safe or unsafe; use the complete equivalent below.
+                The full description below does not call out this exact zone. That does not
+                make your choice right or wrong — read the full description to compare.
               </p>
             )}
           </li>
@@ -163,9 +162,9 @@ const NonvisualResults = ({ payload }: { readonly payload: PostcommitScene }) =>
 
 const PostcommitEquivalent = ({ payload }: { readonly payload: PostcommitScene }) => (
   <section aria-labelledby="complete-zoned-equivalent-heading">
-    <h3 id="complete-zoned-equivalent-heading">Complete zoned text equivalent</h3>
+    <h3 id="complete-zoned-equivalent-heading">Full scene description by zone</h3>
     <p>
-      This is an equivalent knowledge presentation, not the same visual-recognition measure.
+      This covers the same knowledge in text form; it is not the same task as marking the image.
     </p>
     <ul>
       {payload.nonvisualZonedEquivalent.map((statement) => (
@@ -179,12 +178,22 @@ const PostcommitEquivalent = ({ payload }: { readonly payload: PostcommitScene }
 
 const FullFeedback = ({ payload }: { readonly payload: PostcommitScene }) => (
   <>
+    <details className="feedback-sources">
+      <summary>Where this comes from</summary>
+      <ul>
+        {payload.fullPostAnswer.sources.map((source) => (
+          <li key={source.id}>
+            <a href={source.url} rel="external noopener">{source.title}</a>, {source.locator}. {source.scope}
+          </li>
+        ))}
+      </ul>
+    </details>
     <section aria-labelledby="scene-explanation-heading">
       <h3 id="scene-explanation-heading">Scene explanation</h3>
       <p>{payload.claim}</p>
-      <h4>Conditions and immediate correction concepts</h4>
+      <h4>Hazards and how to correct them</h4>
       {payload.fullPostAnswer.targets.length === 0 ? (
-        <p>No condition needing correction was authored in this scene.</p>
+        <p>This scene contains no hazard that needs correction.</p>
       ) : (
         <ul>
           {payload.fullPostAnswer.targets.map((target) => (
@@ -194,7 +203,7 @@ const FullFeedback = ({ payload }: { readonly payload: PostcommitScene }) => (
           ))}
         </ul>
       )}
-      <h4>Authored safe details and decoys</h4>
+      <h4>Details that are safe as shown</h4>
       <ul>
         {payload.fullPostAnswer.decoys.map((decoy) => (
           <li key={`${decoy.condition}:${decoy.safeBecause}`}>
@@ -207,16 +216,6 @@ const FullFeedback = ({ payload }: { readonly payload: PostcommitScene }) => (
       </ul>
     </section>
     <PostcommitEquivalent payload={payload} />
-    <details className="feedback-sources">
-      <summary>Source receipts</summary>
-      <ul>
-        {payload.fullPostAnswer.sources.map((source) => (
-          <li key={source.id}>
-            <a href={source.url} rel="external noopener">{source.title}</a>, {source.locator}. {source.scope}
-          </li>
-        ))}
-      </ul>
-    </details>
   </>
 )
 
@@ -224,10 +223,26 @@ export const HazardResults = () => {
   const { meta, mode, scene, state } = useHazardPlayer()
   if (state.tag !== "revealed") return null
 
+  const assessment = mode === "visual"
+    ? assessVisualMarkers(draftFromState(state).markers, state.payload)
+    : null
+  const targetCount = state.payload.targets.length
+  const extraCount = assessment === null
+    ? 0
+    : assessment.markers.filter((marker) => marker.kind !== "hit").length
+  const extraSummary = extraCount === 0
+    ? "No extra or repeated marks were counted."
+    : `${extraCount} ${extraCount === 1 ? "extra or repeated mark was" : "extra or repeated marks were"} counted.`
+  const outcome = assessment === null
+    ? "Response saved — compare your zone choices below."
+    : targetCount === 0
+      ? `This scene has no hazard to find. ${extraSummary}`
+      : `You found ${targetCount - assessment.missedInventoryIds.length} of ${targetCount} ${targetCount === 1 ? "hazard" : "hazards"} in this scene. ${extraSummary}`
+
   return (
     <section className="hazard-player__results">
-      <h2 ref={meta.outcomeHeadingRef} tabIndex={-1}>Scene response recorded</h2>
-      <p>Your response was durably saved before this feedback loaded.</p>
+      <h2 ref={meta.outcomeHeadingRef} tabIndex={-1}>{outcome}</h2>
+      <p>Your response was saved on this device before this feedback loaded.</p>
       {mode === "visual"
         ? <VisualResults
             imageUrl={state.retainedVisualAsset?.dataUrl ?? null}

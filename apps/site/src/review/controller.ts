@@ -45,7 +45,15 @@ export interface ReviewController {
   readonly dispose: () => void
 }
 
-const errorDetail = (error: ReviewProjectionError): string => error.detail
+const errorDetail = (
+  error: ReviewProjectionError,
+  action: "load" | "acknowledge"
+): string => {
+  console.error("Review operation failed", error)
+  return action === "acknowledge"
+    ? "This item could not be removed from the current review list. Nothing in your history was changed — try again."
+    : "The saved review list could not be prepared. Nothing in your history was changed — reload or try again."
+}
 
 export const createReviewController = (
   bootstrap: ReviewQueueBootstrap,
@@ -92,7 +100,7 @@ export const createReviewController = (
         publish({
           tag: "recoverable_error",
           operation: "load",
-          detail: errorDetail(error),
+          detail: errorDetail(error, "load"),
           items: [],
           quarantined: []
         })
@@ -118,7 +126,7 @@ export const createReviewController = (
         publish({
           tag: "recoverable_error",
           operation: "acknowledge",
-          detail: errorDetail(error),
+          detail: errorDetail(error, "acknowledge"),
           items: state.items,
           quarantined: state.quarantined
         })

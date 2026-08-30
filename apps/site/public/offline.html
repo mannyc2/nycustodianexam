@@ -13,16 +13,16 @@
   <a class="skip-link" href="#main-content">Skip to main content</a>
   <main class="page-shell" id="main-content" tabindex="-1">
     <section class="hero">
-      <p class="eyebrow">Offline unavailable</p>
-      <h1>This study page is not available from the current local cache.</h1>
-      <p>Requested path: <code data-requested-target>the path shown in the address bar</code>.</p>
-      <p>The requested address remains in your browser. Your saved study history is still on this device; no substitute page or newer content was inferred.</p>
+      <p class="eyebrow">Offline</p>
+      <h1>This page is not saved on this device.</h1>
+      <p>Your saved study history is still on this device. Nothing was substituted for the page you asked for.</p>
+      <p class="source-note">Requested address: <code data-requested-target>the path shown in the address bar</code>.</p>
     </section>
     <section class="card-grid" aria-label="Recovery options">
-      <article class="card"><h2>Reconnect and retry</h2><p>Reconnect, then request the exact same address again.</p><a data-recovery-link="retry-requested-path" href="">Retry requested path</a></article>
-      <article class="card"><h2>Manage offline content</h2><p>Inspect already verified packs or remove an inactive pack to free space.</p><a data-recovery-link="offline-packs" href="/offline/">Open offline packs</a></article>
-      <article class="card"><h2>Use local settings</h2><p>Export or reset local study data without sending it anywhere.</p><a data-recovery-link="settings" href="/settings/">Open settings</a></article>
-      <article class="card"><h2>Return to a cached entry point</h2><p>Only links already present in the current shell or active pack will work offline.</p><a data-recovery-link="home" href="/">Return home</a></article>
+      <article class="card"><h2>Reconnect and retry</h2><p>Go back online, then request the same address again.</p><a data-recovery-link="retry-requested-path" href="">Retry this address</a></article>
+      <article class="card"><h2>Manage offline downloads</h2><p>Check what is saved on this device or remove an unused download to free space.</p><a data-recovery-link="offline-packs" href="/offline/">Use offline</a></article>
+      <article class="card"><h2>Use local settings</h2><p>Export or delete your local study data without sending it anywhere.</p><a data-recovery-link="settings" href="/settings/">Open settings</a></article>
+      <article class="card"><h2>Return to a saved page</h2><p>Only pages already saved on this device will open while you are offline.</p><a data-recovery-link="home" href="/">Return home</a></article>
     </section>
   </main>
   <script>(()=>{const target=document.querySelector("[data-requested-target]");if(target instanceof HTMLElement)target.textContent=window.location.pathname})()</script>

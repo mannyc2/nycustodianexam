@@ -68,7 +68,7 @@ describe("preference boot mirror failures", () => {
     expect(saveBootPreferences({ schemaVersion: 1, largeText: true, reduceMotion: false }))
       .toEqual({
         mirrored: false,
-        detail: "The fast reload/cross-tab preference mirror is unavailable in this browser."
+        detail: "This browser could not store the quick-apply copy of your display choices, so they may not apply until a page finishes loading."
       })
     expect(localStorage.setItem).toHaveBeenCalledWith(
       bootPreferencesKey,
@@ -89,7 +89,7 @@ describe("preference boot mirror failures", () => {
 
     expect(clearBootPreferences()).toEqual({
       mirrored: false,
-      detail: "The fast reload/cross-tab preference mirror could not be cleared in this browser."
+      detail: "This browser could not clear the quick-apply copy of your display choices."
     })
     expect(localStorage.removeItem).toHaveBeenCalledWith(bootPreferencesKey)
     expect(toggleAttribute).toHaveBeenNthCalledWith(1, "data-large-text", false)

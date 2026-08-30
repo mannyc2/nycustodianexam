@@ -12,14 +12,14 @@ deterministic unit and worker-harness checks.
 
 ## Current execution status
 
-Browser CI is configured as the complete cross-browser gate. The targeted M4
-simulation/print slice passes 42 cases across Chromium, Firefox, and WebKit on
-the merged M4 revision. Targeted standalone M5 cases also passed on their source
-revision. This integrated candidate must rerun the complete repository matrix,
-including the exact v4-to-v5 preservation and portable-data closure, before the
-document can record integrated browser evidence. Local Cloudflare/workerd cases
-separately prove constrained opaque-shell GET/HEAD routing and reject mutation
-methods.
+Browser CI is configured as the complete cross-browser gate. On 2026-08-30,
+this exact integrated candidate passed the complete Vite-preview matrix: 178
+tests passed and 26 project-specific cases were intentionally skipped across
+Chromium, Firefox, and WebKit. That run includes the v4-to-v5 preservation and
+portable-data closure. Four Chromium cases also passed against the local
+Cloudflare preview. The terminal-edge and dormant correction workerd smokes
+separately passed their constrained routing, failure-status, and closed-method
+checks.
 
 ## Configured automated coverage
 
@@ -66,8 +66,6 @@ adding a production-only update endpoint.
 
 ## Exact gates still open
 
-- The complete configured matrix above must run against this exact revision
-  before any browser-certification claim is made.
 - Playwright cannot portably set real browser UI zoom. The 320 CSS-pixel layout
   pressure equivalent is automated; a true 400% zoom pass in supported desktop
   browsers remains manual until a trustworthy browser-grid capability exists.
@@ -91,9 +89,9 @@ adding a production-only update endpoint.
 - Wrangler preview proves local workerd/static-asset routing only. Remote preview,
   deployment credentials, response-header policy, custom domain, canonical host,
   and any future Worker endpoint remain unconfigured.
-- The v4→v5 simulation/print preservation and portable-data integration proof,
-  plus the complete M5 cross-browser/manual certification matrix, remain open
-  until this integration candidate passes those exact gates.
+- The automated v4→v5 simulation/print preservation and portable-data
+  integration proof passed. The manual M5 certification work described above
+  remains open.
 - No lab/field performance run is introduced here; configured deterministic
   bundle budgets pass locally and remain the only automated performance evidence
   until this revision completes real-browser and release certification.

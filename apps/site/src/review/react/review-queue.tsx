@@ -5,15 +5,15 @@ import type { ReviewQuarantine, ReviewQueueItem, ReviewReason } from "../model.t
 const reasonLabel = (reason: ReviewReason): string => {
   switch (reason.tag) {
     case "flag":
-      return "You explicitly flagged this question for review."
+      return "You flagged this question for review."
     case "incorrect_answer":
-      return "This answer was incorrect; no directional concept relationship is inferred."
+      return "You answered this question incorrectly."
     case "hazard_miss":
-      return `Missed authored hazard: ${reason.inventoryId}.`
+      return "You missed a hazard in this scene."
     case "decoy_false_positive":
-      return `Marked an authored safe decoy: ${reason.inventoryId}.`
+      return "You marked a detail that is safe as shown in this scene."
     case "general_false_positive":
-      return `Placed a general false-positive marker: ${reason.markerId}.`
+      return "You marked a spot where this scene records no hazard."
   }
 }
 
@@ -55,7 +55,7 @@ const ReviewItems = ({
                 onClick={() => onAcknowledge(item.id)}
                 type="button"
               >
-                {acknowledging ? "Saving acknowledgement…" : "Acknowledge review"}
+                {acknowledging ? "Finishing review…" : "Finish review"}
               </button>
             </div>
           </article>
@@ -113,8 +113,8 @@ export const ReviewQueueIsland = ({ controller }: { readonly controller: ReviewC
         <h2 id="review-queue-heading">Loading your local review queue</h2>
         <p role="status">
           {state.action === "rebuild"
-            ? "Rebuilding from saved attempts and review acknowledgements…"
-            : "Reading validated attempts stored on this device…"}
+            ? "Rebuilding from your saved attempts and finished reviews…"
+            : "Reading the attempts saved on this device…"}
         </p>
       </section>
     )
@@ -125,8 +125,8 @@ export const ReviewQueueIsland = ({ controller }: { readonly controller: ReviewC
       <section className="review-state review-empty" aria-labelledby="review-queue-heading">
         <h2 id="review-queue-heading" ref={emptyHeadingRef} tabIndex={-1}>No review items are due</h2>
         <p>
-          This is a successful local result. Correct unflagged answers, nonvisual zone attempts,
-          and explicitly acknowledged items do not create a due item here.
+          Nothing is waiting for review. Correct answers you did not flag, keyboard zone
+          attempts, and items you have finished do not return here.
         </p>
         <div className="question-controls">
           <a className="button button-primary" href="/practice/">Practice questions</a>
@@ -148,11 +148,21 @@ export const ReviewQueueIsland = ({ controller }: { readonly controller: ReviewC
       <section className="review-state review-error" aria-labelledby="review-error-heading" role="alert">
         <h2 id="review-error-heading" ref={errorHeadingRef} tabIndex={-1}>
           {state.operation === "acknowledge"
-            ? "Review acknowledgement was not saved"
+            ? "Your finished review was not saved"
             : "Review queue could not be built"}
         </h2>
-        <p>{state.detail}</p>
+        <p>
+          {state.operation === "acknowledge"
+            ? "The change could not be written to this device's storage. The item stays in your queue."
+            : "Your saved attempts could not be read from this device's storage."}
+        </p>
         <p>No saved attempt was deleted or replaced.</p>
+        {state.detail.length === 0 ? null : (
+          <details className="feedback-sources">
+            <summary>Technical details</summary>
+            <p><code>{state.detail}</code></p>
+          </details>
+        )}
         <div className="question-controls">
           <button
             className="button button-primary"
@@ -201,8 +211,8 @@ export const ReviewQueueIsland = ({ controller }: { readonly controller: ReviewC
         </button>
       </div>
       <p className="source-note">
-        Opening feedback does not mark an item reviewed. Only the explicit acknowledgement below
-        removes its current reason set from this queue.
+        Opening feedback does not finish an item. Only the Finish review action below removes it
+        from this queue.
       </p>
       {state.items.length === 0 ? null : (
         <ReviewItems
@@ -214,7 +224,7 @@ export const ReviewQueueIsland = ({ controller }: { readonly controller: ReviewC
       )}
       <ReviewQuarantines quarantined={state.quarantined} />
       <p className="sr-only" aria-live="polite" aria-atomic="true">
-        {state.acknowledgingItemId === null ? "Review queue ready." : "Saving review acknowledgement."}
+        {state.acknowledgingItemId === null ? "Review queue ready." : "Saving your finished review."}
       </p>
     </section>
   )

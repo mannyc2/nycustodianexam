@@ -12,9 +12,12 @@ export const QuestionPrompt = () => {
   const { question } = useQuestionPlayer()
   return (
     <header className="question-prompt">
-      <p className="eyebrow">Hand tools · one question</p>
+      <p className="eyebrow">Practice question</p>
       <h1 id="question-heading">{question.prompt}</h1>
-      <p>Select one answer. Your choice is saved before the explanation is loaded.</p>
+      <p>
+        Select one answer — you can change it until you submit. Submitting locks your answer,
+        and the explanation opens only after it is saved on this device.
+      </p>
     </header>
   )
 }
@@ -77,7 +80,7 @@ export const QuestionControls = () => {
     <div className="question-controls">
       {state.tag === "revealed" ? (
         <a className="button button-primary" href="/atlas/">
-          Open the tool atlas
+          Open study tools
         </a>
       ) : (
         <button
@@ -90,12 +93,12 @@ export const QuestionControls = () => {
           type="submit"
         >
           {state.tag === "committing"
-            ? "Saving answer…"
+            ? "Saving your answer…"
             : isRestoreRetry
               ? "Reload question"
               : isRevealRetry
               ? "Retry explanation"
-              : "Commit answer"}
+              : "Submit answer"}
         </button>
       )}
       <button

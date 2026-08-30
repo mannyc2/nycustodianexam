@@ -54,7 +54,7 @@ export const AnnotatedHazardScene = ({
     </div>
     <figcaption>
       Reviewed scene overlay. Numbered markers match the marker feedback list; solid regions
-      identify authored correction targets and dashed regions identify authored decoys.
+      show conditions needing correction, and dashed regions show details that are safe as depicted.
     </figcaption>
   </figure>
 }

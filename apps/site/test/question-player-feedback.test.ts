@@ -53,8 +53,17 @@ const payload = new PostcommitQuestion({
     excerpt: "Exact offline source excerpt for supported claim one.",
     language: "en",
     verifiedOn: "2026-08-25",
-    supportedClaimIds: ["claim-1"]
-  }]
+    supportedClaimIds: ["claim-1"],
+    url: "https://example.test/source-one"
+  }],
+  tags: {
+    domain: "minor-maintenance-and-repair",
+    family: "test tools",
+    confusionSetIds: ["comparison.answer-a-answer-c"],
+    seriesScope: "entry-level-custodians-janitors",
+    editorialDifficulty: "contrast"
+  },
+  objectiveId: "claim-1"
 })
 
 const renderFeedback = (state: QuestionScreenState): string => {
@@ -116,25 +125,36 @@ describe("question feedback", () => {
     const selectedRationale = html.indexOf("Rationale for A.")
     const firstOtherRationale = html.indexOf("Rationale for B.")
     const secondOtherRationale = html.indexOf("Rationale for D.")
-    const sources = html.indexOf("Source receipt")
+    const keyDistinction = html.indexOf("Key distinction")
+    const commonMixUp = html.indexOf("Common mix-up")
+    const sources = html.indexOf("Where this comes from")
 
     expect(correctRationale).toBeGreaterThan(-1)
     expect(selectedRationale).toBeGreaterThan(correctRationale)
     expect(firstOtherRationale).toBeGreaterThan(selectedRationale)
     expect(secondOtherRationale).toBeGreaterThan(firstOtherRationale)
-    expect(sources).toBeGreaterThan(secondOtherRationale)
+    expect(keyDistinction).toBeGreaterThan(secondOtherRationale)
+    expect(commonMixUp).toBeGreaterThan(keyDistinction)
+    expect(sources).toBeGreaterThan(commonMixUp)
 
     for (const optionId of ["A", "B", "C", "D"]) {
       expect(occurrenceCount(html, `Rationale for ${optionId}.`)).toBe(1)
     }
-    expect(occurrenceCount(html, 'aria-label="Claims and sources for this explanation"')).toBe(4)
-    expect(occurrenceCount(html, "line-1")).toBe(5)
-    expect(occurrenceCount(html, "docs/source.md#L1")).toBe(5)
+    expect(html).not.toContain('aria-label="Claims and sources for this explanation"')
+    expect(occurrenceCount(html, "Supported claim one.")).toBe(1)
+    expect(html).toContain("You chose “Answer A.” Compare it with “Answer C”")
+    expect(occurrenceCount(html, "line-1")).toBe(1)
+    expect(occurrenceCount(html, "docs/source.md#L1")).toBe(1)
     expect(html).toContain("<strong>Scope note:</strong> This construction-industry provision")
     expect(html).toContain("Exact offline source excerpt for supported claim one.")
-    expect(html).toContain("<dt>Publisher</dt><dd>Publisher one</dd>")
+    expect(html).toContain("<strong>Publisher one</strong> — Source one")
+    expect(html).toContain("Maintained editorial summary")
+    expect(html).not.toContain("maintained-editorial-synthesis")
+    expect(html).toContain('href="https://example.test/source-one"')
     expect(html).toContain("<dt>Source version</dt><dd>source revision 1</dd>")
-    expect(html).toContain("<dt>Verified</dt><dd>2026-08-25</dd>")
+    expect(html).toContain('<time dateTime="2026-08-25">2026-08-25</time>')
+    expect(html.indexOf("Technical details")).toBeLessThan(html.indexOf("line-1"))
+    expect(html.indexOf("Technical details")).toBeLessThan(html.indexOf("source-1"))
   })
 
   it("does not duplicate the correct rationale when the learner chose it", () => {
@@ -149,6 +169,24 @@ describe("question feedback", () => {
     expect(html).toContain("<dt>Your answer</dt><dd>Answer C (correct)</dd>")
     expect(occurrenceCount(html, "Rationale for C.")).toBe(1)
     expect(html.indexOf("Rationale for C.")).toBeLessThan(html.indexOf("Rationale for A."))
-    expect(html.indexOf("Rationale for D.")).toBeLessThan(html.indexOf("Source receipt"))
+    expect(html.indexOf("Rationale for D.")).toBeLessThan(html.indexOf("Key distinction"))
+    expect(html).toContain("Compare “Answer C” with the other answer choices")
+    expect(html.indexOf("Common mix-up")).toBeLessThan(html.indexOf("Where this comes from"))
+  })
+
+  it("does not point to a key distinction when the saved payload has no objective claim", () => {
+    const { objectiveId: _objectiveId, ...withoutObjective } = payload
+    void _objectiveId
+    const html = renderFeedback({
+      tag: "revealed",
+      selectedOptionId: "a",
+      reviewIntent: "unflagged",
+      payload: new PostcommitQuestion(withoutObjective)
+    })
+
+    expect(html).toContain("Common mix-up")
+    expect(html).not.toContain("Key distinction")
+    expect(html).not.toContain("key distinction above")
+    expect(html).toContain("in the answer explanations above")
   })
 })

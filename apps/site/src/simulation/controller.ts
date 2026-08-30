@@ -76,13 +76,44 @@ export interface SimulationPlayerController {
   readonly dispose: () => void
 }
 
-const safeError = (cause: unknown): string =>
-  cause instanceof Error && cause.message.length > 0
-    ? cause.message
-    : typeof cause === "object" && cause !== null &&
-        "detail" in cause && typeof cause.detail === "string" && cause.detail.length > 0
-      ? cause.detail
-    : "The local simulation operation could not be completed."
+const safeError = (cause: unknown, fallback: string): string => {
+  console.error("Simulation operation failed", cause)
+  if (cause instanceof SimulationPersistenceError) {
+    switch (cause.operation) {
+      case "restore-session":
+        return "This simulation is not saved on this device. Start a new simulation."
+      case "restore-position":
+        return "That item is not part of this saved simulation. Return to the simulation start page."
+      case "restore-scene-asset":
+        return "The exact scene image is no longer saved on this device. Restore the offline download or start a new simulation."
+      case "prepare-local-content":
+      case "decode-answer":
+      case "decode-hazard-answer":
+      case "verify-answer":
+      case "verify-hazard-answer":
+      case "retain-hazard-image":
+        return "The exact reviewed content for this simulation is not available on this device. Restore the offline download or start a new simulation."
+      case "restore-submission":
+        return "No final submission is saved for this simulation. Return to simulations and start again."
+    }
+  }
+  return fallback
+}
+
+const saveError = (cause: unknown): string => safeError(
+  cause,
+  "This device could not complete the save. Your last confirmed saved state is unchanged — try again."
+)
+
+const restoreError = (cause: unknown): string => safeError(
+  cause,
+  "The saved simulation could not be read on this device. Return to simulations or try again."
+)
+
+const resultsError = (cause: unknown): string => safeError(
+  cause,
+  "Practice results could not be read on this device. Return to simulations or try again."
+)
 
 const loadSession = Effect.fn("Simulation.loadSession")(function*(sessionId: string) {
   const persistence = yield* SimulationPersistence
@@ -90,7 +121,7 @@ const loadSession = Effect.fn("Simulation.loadSession")(function*(sessionId: str
   if (session === undefined) {
     return yield* new SimulationPersistenceError({
       operation: "restore-session",
-      detail: "This simulation is not available on this device. Start a new site-designed simulation.",
+      detail: "This simulation is not saved on this device. Start a new simulation.",
       cause: new Error("Missing local simulation")
     })
   }
@@ -115,7 +146,7 @@ export const createLocallyClosedSimulation = Effect.fn(
       Effect.mapError((cause) =>
         new SimulationPersistenceError({
           operation: "prepare-local-content",
-          detail: `Availability metadata for the pinned result receipt ${itemId} could not be verified.`,
+          detail: `The saved record for item ${itemId} could not be verified on this device.`,
           cause
         })
       )
@@ -135,7 +166,7 @@ export const createLocallyClosedSimulation = Effect.fn(
         Effect.mapError((cause) =>
           new SimulationPersistenceError({
             operation: "prepare-local-content",
-            detail: `Availability metadata for the pinned scene asset ${itemId} could not be verified.`,
+            detail: `The saved scene image record for item ${itemId} could not be verified on this device.`,
             cause
           })
         )
@@ -253,7 +284,7 @@ export const createSimulationPlayerController = (input: {
         const visualAsset = yield* verifiedContent.loadCachedAssetBlob(item.visualAsset).pipe(
           Effect.mapError((cause) => new SimulationPersistenceError({
             operation: "restore-scene-asset",
-            detail: "The exact pinned scene image is no longer retained on this device.",
+            detail: "The exact scene image is no longer saved on this device.",
             cause
           }))
         )
@@ -281,7 +312,7 @@ export const createSimulationPlayerController = (input: {
       },
       (cause) => {
         if (!disposed) screen.publish(
-          { tag: "failure", detail: safeError(cause) },
+          { tag: "failure", detail: restoreError(cause) },
           { focus: "error", announce: "The saved simulation could not be restored." }
         )
       }
@@ -330,7 +361,7 @@ export const createSimulationPlayerController = (input: {
           saving: false,
           strictExpiryPending,
           visualAssetUrl: state.visualAssetUrl,
-          recoverableError: { kind: operation.kind, detail: safeError(cause) }
+          recoverableError: { kind: operation.kind, detail: saveError(cause) }
         }, {
           focus: "recoverable-error",
           announce: operation.failureAnnouncement
@@ -452,7 +483,7 @@ export const createSimulationPlayerController = (input: {
         saving: false,
         strictExpiryPending,
         visualAssetUrl: state.visualAssetUrl,
-        recoverableError: { kind: "submission", detail: safeError(cause) }
+        recoverableError: { kind: "submission", detail: saveError(cause) }
       }, {
         focus: "recoverable-error",
         announce: "The final submission was not saved. It can be retried without changing answers."
@@ -636,7 +667,7 @@ export const reconcileSimulation = Effect.fn("Simulation.reconcileResults")(
     if (submission === undefined || session.status === "active") {
       return yield* new SimulationPersistenceError({
         operation: "restore-submission",
-        detail: "No durable final submission exists for this simulation.",
+        detail: "No final submission is saved for this simulation.",
         cause: new Error("Missing final submission")
       })
     }
@@ -696,7 +727,7 @@ export const reconcileSimulation = Effect.fn("Simulation.reconcileResults")(
           if (item.visualAsset === null) {
             return yield* new SimulationPersistenceError({
               operation: "retain-hazard-image",
-              detail: "The submitted visual hazard has no pinned image receipt.",
+              detail: "The submitted visual hazard has no saved image record.",
               cause: new Error("Missing visual asset receipt")
             })
           }
@@ -711,7 +742,7 @@ export const reconcileSimulation = Effect.fn("Simulation.reconcileResults")(
             try: () => retainImageBlob(item.visualAsset as NonNullable<typeof item.visualAsset>, blob),
             catch: (cause) => new SimulationPersistenceError({
               operation: "retain-hazard-image",
-              detail: "The exact submitted scene image failed durable integrity verification.",
+              detail: "The saved scene image did not match this release, so it was not shown.",
               cause
             })
           })
@@ -772,7 +803,7 @@ export const createSimulationResultsController = (input: {
       },
       (cause) => {
         if (!disposed) screen.publish(
-          { tag: "failure", detail: safeError(cause) },
+          { tag: "failure", detail: resultsError(cause) },
           { focus: "error", announce: "Practice results are not available yet." }
         )
       }

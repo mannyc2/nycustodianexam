@@ -298,6 +298,39 @@ const savedResponse = (
 })
 
 describe("simulation player controller", () => {
+  it("reports a missing local session without exposing its internal diagnostic", async () => {
+    const persistence = SimulationPersistence.of({
+      createSession: () => Effect.die("not used"),
+      findSession: () => Effect.succeed(undefined),
+      saveResponse: () => Effect.die("not used"),
+      setPosition: () => Effect.die("not used"),
+      setTimerVisibility: () => Effect.die("not used"),
+      submit: () => Effect.die("not used"),
+      findSubmission: () => Effect.die("not used"),
+      complete: () => Effect.die("not used")
+    })
+    const consoleError = vi.spyOn(console, "error").mockImplementation(() => undefined)
+    const controller = createSimulationPlayerController({
+      runtime: runtimeFor(persistence),
+      sessionId: "sim-missing123",
+      position: 1,
+      replaceLocation: () => undefined
+    })
+
+    try {
+      controller.start()
+      await vi.waitFor(() => expect(controller.getSnapshot().state).toEqual({
+        tag: "failure",
+        detail: "This simulation is not saved on this device. Start a new simulation."
+      }))
+      expect(controller.getSnapshot().focusRequest?.target).toBe("error")
+      expect(JSON.stringify(controller.getSnapshot().state)).not.toContain("Missing local simulation")
+    } finally {
+      controller.dispose()
+      consoleError.mockRestore()
+    }
+  })
+
   it("flags an unanswered hazard without converting the flag into an answer", async () => {
     for (const format of ["visual-hazards", "nonvisual-hazards"] as const) {
       let session = hazardSessionFixture(format)
@@ -515,7 +548,10 @@ describe("simulation player controller", () => {
     await vi.waitFor(() => expect(controller.getSnapshot().state).toMatchObject({
       tag: "ready",
       saving: false,
-      recoverableError: { kind: "response", detail: "Injected local save failure" },
+      recoverableError: {
+        kind: "response",
+        detail: "This device could not complete the save. Your last confirmed saved state is unchanged — try again."
+      },
       session: {
         responses: [{
           questionId: current.question.id,
@@ -637,6 +673,45 @@ describe("simulation player controller", () => {
   })
 })
 
+describe("simulation results controller failures", () => {
+  it("reports a missing final submission without claiming one remains saved", async () => {
+    const active = sessionFixture(false)
+    const session = new SimulationSessionRecord({
+      ...active,
+      status: "submitted",
+      updatedAt: 2
+    })
+    const persistence = SimulationPersistence.of({
+      createSession: () => Effect.die("not used"),
+      findSession: () => Effect.succeed(session),
+      saveResponse: () => Effect.die("not used"),
+      setPosition: () => Effect.die("not used"),
+      setTimerVisibility: () => Effect.die("not used"),
+      submit: () => Effect.die("not used"),
+      findSubmission: () => Effect.succeed(undefined),
+      complete: () => Effect.die("not used")
+    })
+    const consoleError = vi.spyOn(console, "error").mockImplementation(() => undefined)
+    const controller = createSimulationResultsController({
+      runtime: runtimeFor(persistence),
+      sessionId: session.id
+    })
+
+    try {
+      controller.start()
+      await vi.waitFor(() => expect(controller.getSnapshot().state).toEqual({
+        tag: "failure",
+        detail: "No final submission is saved for this simulation. Return to simulations and start again."
+      }))
+      expect(controller.getSnapshot().focusRequest?.target).toBe("error")
+      expect(JSON.stringify(controller.getSnapshot().state)).not.toContain("Missing final submission")
+    } finally {
+      controller.dispose()
+      consoleError.mockRestore()
+    }
+  })
+})
+
 describe("self-contained evaluated simulation restoration", () => {
   const removedContent = (reads: { count: number }) => VerifiedContent.of({
     ensureAssetAvailable: () => Effect.die("verified cache was removed"),
@@ -732,8 +807,8 @@ describe("self-contained evaluated simulation restoration", () => {
     const html = await restoreTwice(session, submission)
     expect(html).toContain("Durable rationale for")
     expect(html).toContain("Durable source")
-    expect(html).toContain("Why this answer is correct")
-    expect(html).toContain("Open the separate local review queue")
+    expect(html).toContain("Answer explanations")
+    expect(html).toContain("Open your review queue")
   })
 
   it("restores v2 claims, caveats, and source-line excerpts from immutable results", async () => {
@@ -771,8 +846,17 @@ describe("self-contained evaluated simulation restoration", () => {
         excerpt: `Exact source-line excerpt for ${item.question.id}`,
         language: "en",
         verifiedOn: "2026-08-25",
-        supportedClaimIds: [`claim-${item.question.id}`]
-      }]
+        supportedClaimIds: [`claim-${item.question.id}`],
+        url: `https://example.test/${item.question.id}`
+      }],
+      tags: {
+        domain: "cleaning-tools-and-uses",
+        family: "test tools",
+        confusionSetIds: [`comparison-${item.question.id}`],
+        seriesScope: "entry-level-custodians-janitors",
+        editorialDifficulty: "contrast"
+      },
+      objectiveId: `claim-${item.question.id}`
       })
     })
     const postcommit = payloads.map((payload) => postcommitArtifact(payload))
@@ -796,7 +880,17 @@ describe("self-contained evaluated simulation restoration", () => {
     expect(html).toContain("Supported claim for")
     expect(html).toContain("Site-designed application context.")
     expect(html).toContain("Exact source-line excerpt for")
-    expect(html).toContain("Source-line receipts")
+    expect(html).toContain("Where this comes from")
+    expect(html).toContain("Key distinction")
+    expect(html).toContain("Common mix-up")
+    expect(html).toContain("Maintained editorial summary")
+    expect(html).not.toContain("maintained-editorial-synthesis")
+    expect(html).not.toContain("comparison-q1")
+    expect(html).toContain('href="https://example.test/q1"')
+    expect(html.split("Supported claim for q1").length - 1).toBe(1)
+    expect(html.indexOf("Key distinction")).toBeLessThan(html.indexOf("Common mix-up"))
+    expect(html.indexOf("Common mix-up")).toBeLessThan(html.indexOf("Where this comes from"))
+    expect(html.indexOf("Technical details")).toBeLessThan(html.indexOf("line-q1"))
   })
 
   it("restores hazard corrections, full descriptions, and sources after pack removal", async () => {
@@ -814,7 +908,10 @@ describe("self-contained evaluated simulation restoration", () => {
       answers: [{
         questionId: hazardScene.id,
         selectedOptionId: null,
-        markers: [{ id: "marker-1", x: 0.5, y: 0.7 }],
+        markers: [
+          { id: "marker-1", x: 0.5, y: 0.7 },
+          { id: "marker-2", x: 0.5, y: 0.5 }
+        ],
         selectedZoneOrders: [],
         zeroHazardsConfirmed: false,
         reviewIntent: "flagged"
@@ -856,11 +953,17 @@ describe("self-contained evaluated simulation restoration", () => {
     expect(html).toContain(firstTarget.condition)
     expect(html).toContain(firstTarget.correction)
     expect(html).toContain(firstSource.title)
+    expect(html).toContain(
+      "This mark does not match a recorded condition. It counts as an extra mark, but the site cannot say what that object means."
+    )
+    expect(html.indexOf("Where this comes from")).toBeLessThan(
+      html.indexOf("Scene explanation and full post-submission description")
+    )
     expect(html).toContain("Reviewed scene overlay")
     expect(html).toContain("data:image/png;base64,")
     expect(html).toContain('data-marker-kind="')
-    expect(html).toContain("Your flag is retained in this saved simulation result")
-    expect(html).toContain("not automatically added to the separate due review queue")
+    expect(html).toContain("Your flag stays with this saved result")
+    expect(html).toContain("do not automatically enter your review queue")
     expect(html).not.toContain("Open your flagged review queue")
   })
 })

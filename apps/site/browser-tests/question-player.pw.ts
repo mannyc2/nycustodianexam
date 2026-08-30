@@ -22,9 +22,9 @@ test("commit is durable before feedback fetch and survives reload", async ({ con
   })
 
   await page.getByRole("radio", { name: "Scrub brush" }).check()
-  await page.getByRole("button", { name: "Commit answer" }).click()
+  await page.getByRole("button", { name: "Submit answer" }).click()
 
-  await expect(page.getByRole("heading", { name: "Correct", exact: true })).toBeFocused()
+  await expect(page.getByRole("heading", { name: /^Correct — / })).toBeFocused()
   expect(attemptObservedAtFetch).toMatchObject({
     id: attemptId,
     questionId: "q001",
@@ -47,7 +47,7 @@ test("commit is durable before feedback fetch and survives reload", async ({ con
 
   await page.reload()
   await expect(page).toHaveURL(questionPath)
-  await expect(page.getByRole("heading", { name: "Correct", exact: true })).toBeFocused()
+  await expect(page.getByRole("heading", { name: /^Correct — / })).toBeFocused()
   expect(await readStoredAttempt(page)).toEqual(committed)
   expect(postcommitRequests).toBeGreaterThanOrEqual(1)
 })
@@ -89,10 +89,13 @@ test("schema-valid bytes with the wrong digest stay unrevealed until a clean ret
   })
 
   await page.getByRole("radio", { name: "Scrub brush" }).check()
-  await page.getByRole("button", { name: "Commit answer" }).click()
+  await page.getByRole("button", { name: "Submit answer" }).click()
 
   await expect(page.getByRole("heading", { name: "Your answer is saved" })).toBeFocused()
-  await expect(page.getByRole("heading", { name: "Correct", exact: true })).toHaveCount(0)
+  await expect(page.getByText(
+    "Your answer is saved, but the exact explanation could not be checked and loaded. Reconnect if you are offline, then try again."
+  )).toBeVisible()
+  await expect(page.getByRole("heading", { name: /^Correct — / })).toHaveCount(0)
   await expect(page.getByText(/Scrubs or rinses/)).toHaveCount(0)
   expect(attemptObservedAtFetch).toMatchObject({
     id: attemptId,
@@ -101,7 +104,7 @@ test("schema-valid bytes with the wrong digest stay unrevealed until a clean ret
   })
 
   await page.getByRole("button", { name: "Retry explanation" }).click()
-  await expect(page.getByRole("heading", { name: "Correct", exact: true })).toBeFocused()
+  await expect(page.getByRole("heading", { name: /^Correct — / })).toBeFocused()
   expect(postcommitRequests).toBe(2)
   expect(await readStoredAttempt(page)).toEqual(attemptObservedAtFetch)
 })
@@ -112,15 +115,15 @@ test("session start pushes history while Next replaces the current position", as
     .getByLabel("Available whole-bank practice lengths")
     .getByRole("link", { name: "Start 90" })
     .click()
-  await expect(page).toHaveURL("/practice/session/ps-cf8ff13c279a2b624cf0be81/question/1/")
+  await expect(page).toHaveURL("/practice/session/ps-84ce3cbb3913907fac6db8b7/question/1/")
   await expect(page.getByRole("radio").first()).toBeEnabled()
 
   await page.getByRole("link", { name: "Next question" }).click()
-  await expect(page).toHaveURL("/practice/session/ps-cf8ff13c279a2b624cf0be81/question/2/")
+  await expect(page).toHaveURL("/practice/session/ps-84ce3cbb3913907fac6db8b7/question/2/")
 
   await page.goBack({ waitUntil: "commit" })
   await expect(page).toHaveURL("/practice/")
-  await expect(page.getByRole("heading", { name: "Choose a set the bank can actually supply." }))
+  await expect(page.getByRole("heading", { name: "Choose a practice set." }))
     .toBeVisible()
 })
 
@@ -145,11 +148,11 @@ test("an injected IndexedDB write failure never reveals or requests feedback", a
   })
 
   await page.getByRole("radio", { name: "Scrub brush" }).check()
-  await page.getByRole("button", { name: "Commit answer" }).click()
+  await page.getByRole("button", { name: "Submit answer" }).click()
 
   const errorHeading = page.getByRole("heading", { name: "Your answer was not saved" })
   await expect(errorHeading).toBeFocused()
-  await expect(page.getByRole("heading", { name: "Correct", exact: true })).toHaveCount(0)
+  await expect(page.getByRole("heading", { name: /^Correct — / })).toHaveCount(0)
   await expect(page.getByText("Correct answer", { exact: true })).toHaveCount(0)
   expect(postcommitRequests).toBe(0)
   expect(await readStoredAttempt(page)).toBeUndefined()
@@ -165,10 +168,10 @@ test("keyboard selection drives focus and polite status announcements", async ({
   await expect(page.getByRole("radio", { name: "Scrub brush" })).toBeChecked()
 
   await page.keyboard.press("Tab")
-  await expect(page.getByRole("button", { name: "Commit answer" })).toBeFocused()
+  await expect(page.getByRole("button", { name: "Submit answer" })).toBeFocused()
   await page.keyboard.press("Enter")
 
-  await expect(page.getByRole("heading", { name: "Correct", exact: true })).toBeFocused()
+  await expect(page.getByRole("heading", { name: /^Correct — / })).toBeFocused()
   await expect
     .poll(() => recordedAnnouncements(page))
     .toEqual(
@@ -196,23 +199,27 @@ test("revealed safety evidence keeps its scope caveat and exact source excerpt a
   await page.getByRole("radio", {
     name: "Remove the unsafe wrench from use and obtain a serviceable tool."
   }).check()
-  await page.getByRole("button", { name: "Commit answer" }).click()
+  await page.getByRole("button", { name: "Submit answer" }).click()
 
-  await expect(page.getByRole("heading", { name: "Correct", exact: true })).toBeFocused()
+  await expect(page.getByRole("heading", { name: /^Correct — / })).toBeFocused()
   const caveat = page.locator(".claim-caveat").first()
   await expect(caveat).toContainText("Scope note:")
   await expect(caveat).toContainText(
     "29 CFR 1926.301(b) is a construction-industry provision cited as specific safety evidence"
   )
 
-  await page.getByText("Source receipts", { exact: true }).click()
+  await page.getByText("Where this comes from", { exact: true }).click()
   await expect(page.locator(".source-receipt-excerpt")).toContainText(
     "Wrenches, including adjustable, pipe, end, and socket wrenches shall not be used when jaws are sprung to the point that slippage occurs."
   )
   await expect(page.getByText("Occupational Safety and Health Administration", {
     exact: true
   })).toBeVisible()
-  await expect(page.getByText("29 CFR 1926.301(b)", { exact: true }).last()).toBeVisible()
+  const technicalDetails = page.locator(".feedback-sources details.source-note").first()
+  const sourceLocator = technicalDetails.getByText("29 CFR 1926.301(b)", { exact: true })
+  await expect(sourceLocator).toBeHidden()
+  await technicalDetails.locator("summary").click()
+  await expect(sourceLocator).toBeVisible()
   await expect(page.getByText("2026-08-25", { exact: true })).toBeVisible()
 })
 
@@ -281,8 +288,8 @@ test("Chromium back-forward cache restores the live island without restarting it
   })
 
   await page.getByRole("radio", { name: "Scrub brush" }).check()
-  await page.getByRole("button", { name: "Commit answer" }).click()
-  await expect(page.getByRole("heading", { name: "Correct", exact: true })).toBeFocused()
+  await page.getByRole("button", { name: "Submit answer" }).click()
+  await expect(page.getByRole("heading", { name: /^Correct — / })).toBeFocused()
   await expect.poll(() => page.evaluate(() =>
     (window as typeof window & {
       __nycustodianBfcacheLifecycle?: { readonly postcommitRequests: number }

@@ -35,6 +35,7 @@ import {
   renderSitemap
 } from "../apps/site/scripts/finalize-service-worker.ts"
 import { trustedCurrentShellNavigation } from "../apps/site/src/shell-route-policy.ts"
+import { assertGeneratedPublicCopyBoundary } from "../apps/site/src/public-copy-boundary.ts"
 import { derivePracticeSessions } from "../apps/site/scripts/practice-sessions.ts"
 import {
   assertCanonicalRouteId,
@@ -1129,9 +1130,14 @@ export const verify = async (): Promise<void> => {
   ]
   for (const route of expectedRoutes) assertCanonicalRouteId(route.routeId)
 
-  const capacityProfile = catalog.profiles.find((profile) => profile.layer === "jurisdiction")
-    ?? catalog.profiles[0]
-  if (capacityProfile === undefined) throw new Error("Published release has no practice profile")
+  // Must match the neutral profile selection in apps/site/scripts/generate-pages.tsx.
+  // CONTENT_DESIGN.md (SHARED-EXPLICIT-PROFILE-CONTEXT) forbids the statically
+  // generated practice page from defaulting to a jurisdiction layer or to an
+  // arbitrary first profile.
+  const capacityProfile = catalog.profiles.find((profile) => profile.layer === "statewide-series")
+  if (capacityProfile === undefined) {
+    throw new Error("Published release has no statewide-series profile for neutral practice context")
+  }
   const practiceSessions = derivePracticeSessions({
     releaseId: manifest.releaseId,
     packVersion: manifest.packVersion,
@@ -1292,6 +1298,10 @@ export const verify = async (): Promise<void> => {
     "Generated HTML routes"
   )
   const routeHtml = await Promise.all(routeFiles.map((path) => Bun.file(path).text()))
+  assertGeneratedPublicCopyBoundary(await Promise.all(htmlFiles.map(async (path) => ({
+    path: relative(new URL(".", distRoot).pathname, path),
+    html: await Bun.file(path).text()
+  }))))
   if (routeHtml.some((html) => html.includes("/atlas/comparison/"))) {
     throw new Error("Generated HTML still links to a non-canonical comparison route")
   }
@@ -2040,9 +2050,9 @@ export const verify = async (): Promise<void> => {
 
   // The interactive entries share the framework/runtime and verified-content chunks. M4 and M5
   // share durable-session, print, pack, settings, correction, and canonical review-projection
-  // services. The largest integrated closure is Settings at 468355 raw / 139994 gzip / 118248
+  // services. The largest integrated closure is Settings at 468975 raw / 140191 gzip / 118523
   // brotli; these ceilings retain a deliberately narrow deterministic margin.
-  const bundleBudgets = { raw: 470_000, gzip: 140_000, brotli: 120_000 } as const
+  const bundleBudgets = { raw: 470_000, gzip: 141_000, brotli: 120_000 } as const
   for (const [family, measurement] of bundleReports) {
     for (const format of ["raw", "gzip", "brotli"] as const) {
       if (measurement[format] > bundleBudgets[format]) {

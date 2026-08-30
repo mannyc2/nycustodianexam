@@ -52,10 +52,8 @@ export interface QuestionController {
   readonly dispose: () => void
 }
 
-const safeErrorMessage = (cause: unknown): string =>
-  cause instanceof Error && cause.message.length > 0
-    ? cause.message
-    : "The local study operation could not be completed."
+const savedExplanationFailure =
+  "Your answer is saved, but the exact explanation could not be checked and loaded. Reconnect if you are offline, then try again."
 
 export const createQuestionController = (
   question: PrecommitQuestion,
@@ -109,7 +107,7 @@ export const createQuestionController = (
           revealFailed(
             restoredState,
             restored.attempt.selectedOptionId,
-            restored.error.detail
+            savedExplanationFailure
           ),
           { focus: "commit-error" }
         )
@@ -161,14 +159,19 @@ export const createQuestionController = (
           })
           return
         }
-        publish(revealFailed(screen.getSnapshot().state, selectedId, result.error.detail), {
+        publish(revealFailed(screen.getSnapshot().state, selectedId, savedExplanationFailure), {
           focus: "commit-error"
         })
       })
       .catch((cause: unknown) => {
-        publish(commitFailed(screen.getSnapshot().state, safeErrorMessage(cause)), {
-          focus: "commit-error"
-        })
+        console.error("Unable to save the answer", cause)
+        publish(
+          commitFailed(
+            screen.getSnapshot().state,
+            "Your answer could not be saved to this device's storage. Your selection is still shown and stays editable."
+          ),
+          { focus: "commit-error" }
+        )
       })
   }
 
@@ -186,9 +189,15 @@ export const createQuestionController = (
         publish(revealQuestion(screen.getSnapshot().state, selectedId, payload), { focus: "outcome" })
       })
       .catch((cause: unknown) => {
-        publish(revealFailed(screen.getSnapshot().state, selectedId, safeErrorMessage(cause)), {
-          focus: "commit-error"
-        })
+        console.error("Unable to load the explanation", cause)
+        publish(
+          revealFailed(
+            screen.getSnapshot().state,
+            selectedId,
+            "The explanation could not be loaded. Your answer is saved on this device — reconnect if you are offline, then try again."
+          ),
+          { focus: "commit-error" }
+        )
       })
   }
 

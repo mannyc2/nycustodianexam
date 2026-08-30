@@ -57,19 +57,19 @@ export const SimulationHazardItem = ({
 
   return <article className="hazard-player" aria-labelledby="simulation-question-heading">
     <header className="hazard-player__prompt">
-      <p className="eyebrow">Site-designed simulation · Hazard item {position} of {total} · {item.mode === "visual" ? "visual" : "nonvisual"}</p>
+      <p className="eyebrow">Practice simulation · Hazard item {position} of {total} · {item.mode === "visual" ? "visual" : "keyboard, no image"}</p>
       <h1 id="simulation-question-heading">Inspect the {item.scene.environment}</h1>
       <p>{item.scene.neutralPreAnswer.overview}</p>
       <p>{item.mode === "visual"
-        ? "Mark every location that concerns you. Expected counts and feedback remain unavailable until the entire simulation is submitted."
-        : "Select every neutral zone that concerns you. This is an equivalent knowledge task, not the same visual-recognition construct."}</p>
+        ? "Mark every location that concerns you. Expected counts and feedback stay unavailable until the entire simulation is submitted."
+        : "Select every zone that concerns you. This text version covers the same knowledge, but it is not the same task as marking the image."}</p>
     </header>
 
     {item.mode === "visual" ? <section aria-labelledby="simulation-visual-scene-heading" className="hazard-player__visual">
-      <h2 id="simulation-visual-scene-heading">Pinned scene</h2>
+      <h2 id="simulation-visual-scene-heading">Scene image</h2>
       {visualAssetUrl === null ? <div className="feedback feedback-error" role="alert">
         <h3>Exact scene image unavailable</h3>
-        <p>This item cannot accept markers without its locally retained verified image.</p>
+        <p>This item cannot accept markers without the scene image saved on this device.</p>
       </div> : <>
         <div aria-label="Scene view controls" className="hazard-player__viewport-controls">
           <button className="button button-secondary" disabled={zoom <= 1} onClick={() => setZoom((current) => Math.max(1, current - 0.25))} type="button">Zoom out</button>
@@ -153,7 +153,7 @@ export const SimulationHazardItem = ({
       </section>
     </section> : <fieldset className="hazard-player__zones" disabled={answerEditBlocked}>
       <legend>Observable zones</legend>
-      <p>Select a zone when its neutral description gives you concern. Selecting does not reveal whether it is a target, decoy, or safe background.</p>
+      <p>Select a zone when its neutral description gives you concern. Selecting does not reveal whether the zone is safe or unsafe.</p>
       <ol>{item.scene.neutralPreAnswer.zones.map((zone) => <li key={zone.order}>
         <label>
           <input checked={selectedZoneOrders.has(zone.order)} name="simulation-hazard-zone" onChange={() => controller.dispatch({ tag: "toggle-hazard-zone", zoneOrder: zone.order })} type="checkbox" value={zone.order} />
