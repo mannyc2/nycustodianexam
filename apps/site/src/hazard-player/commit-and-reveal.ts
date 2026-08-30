@@ -1,4 +1,6 @@
-import { PostcommitScene as PostcommitSceneSchema } from "@nycustodian/content/model"
+import {
+  ReleasedPostcommitScene as ReleasedPostcommitSceneSchema
+} from "@nycustodian/content/model"
 import { Effect, Schema } from "effect"
 import type { HazardAttemptReceipt } from "../attempt-receipt.ts"
 import {
@@ -64,7 +66,7 @@ const loadPostcommit = Effect.fn("HazardWorkflow.loadPostcommit")(function*(
   )
 
   const payload = yield* Schema.decodeUnknownEffect(
-    PostcommitSceneSchema,
+    ReleasedPostcommitSceneSchema,
     { onExcessProperty: "error" }
   )(artifact.value).pipe(
     Effect.mapError(
@@ -143,7 +145,7 @@ const completeHazardFeedback = Effect.fn("HazardWorkflow.completeHazardFeedback"
     readonly mode: HazardInputMode
     readonly visualAssetReceipt: AssetContentReceipt | null
     readonly retainedVisualAsset?: RetainedImageAsset | null
-    readonly payload: typeof PostcommitSceneSchema.Type
+    readonly payload: typeof ReleasedPostcommitSceneSchema.Type
     readonly postcommitBase64: string
   }) {
     let retainedVisualAsset = input.retainedVisualAsset ?? null

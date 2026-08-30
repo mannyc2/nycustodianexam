@@ -33,7 +33,6 @@ import { hasValidPostcommitClosure } from "./assessment.ts"
 import type {
   HazardInputMode,
   HazardMarker,
-  PostcommitScene as PostcommitSceneValue,
   PrecommitScene,
   ReleasedPostcommitScene as ReleasedPostcommitSceneValue
 } from "./attempt.ts"
@@ -101,7 +100,7 @@ export interface FindHazardAttemptInput {
 
 export interface CompleteHazardAttemptInput extends FindHazardAttemptInput {
   readonly attempt: HazardAttemptRecord
-  readonly payload: PostcommitSceneValue
+  readonly payload: ReleasedPostcommitSceneValue
   readonly postcommitBase64: string
   readonly retainedVisualAsset: RetainedImageAsset | null
 }

@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto"
+import { readFileSync } from "node:fs"
 import { it } from "@effect/vitest"
 import { deepStrictEqual, strictEqual } from "@effect/vitest/utils"
 import { Effect, Layer } from "effect"
@@ -22,7 +23,8 @@ import {
 } from "../src/hazard-player/assessment.ts"
 import {
   commitHazardAndReveal,
-  restoreHazardAndReveal
+  restoreHazardAndReveal,
+  retryHazardReveal
 } from "../src/hazard-player/commit-and-reveal.ts"
 import {
   type AssetContentReceipt,
@@ -31,6 +33,7 @@ import {
 } from "../src/verified-content.ts"
 import {
   RetainedImageAsset,
+  decodeCanonicalBase64,
   encodeCanonicalBase64,
   retainImageBlob
 } from "../src/retained-image.ts"
@@ -182,6 +185,39 @@ const postcommitScene = (opaqueAssetId = "s001"): PostcommitScene => ({
 
 const postcommitBytes = (opaqueAssetId = "s001"): Uint8Array =>
   new TextEncoder().encode(JSON.stringify(postcommitScene(opaqueAssetId)))
+
+const legacyPostcommitBytes = new Uint8Array(readFileSync(
+  new URL("../../../packages/content/test/fixtures/legacy-scenes/s001.postcommit.json", import.meta.url)
+))
+const legacyPostcommitValue = JSON.parse(
+  new TextDecoder("utf-8", { fatal: true }).decode(legacyPostcommitBytes)
+) as unknown
+
+const legacyCompatiblePrecommitScene = (): PrecommitScene => ({
+  ...precommitScene(),
+  neutralPreAnswer: {
+    overview: "A hallway with four observable areas.",
+    policy: "Neutral before commitment.",
+    zones: [
+      { order: 1, label: "rear hallway", description: "Closed classroom doors." },
+      {
+        order: 2,
+        label: "left wall and alcove",
+        description: "A janitor cart is fully inside a side alcove."
+      },
+      {
+        order: 3,
+        label: "central floor",
+        description: "A wet patch crosses the central walking path."
+      },
+      {
+        order: 4,
+        label: "right wall",
+        description: "Fixed conduit and a bulletin frame are beside the route."
+      }
+    ]
+  }
+})
 
 const postcommitDigest = (bytes: Uint8Array): string =>
   createHash("sha256").update(bytes).digest("hex")
@@ -536,6 +572,77 @@ it.effect("keeps the response durable when the immutable feedback completion wri
       globalThis.fetch = originalFetch
     }))
   )
+})
+
+it.effect("restores and retries a committed response against its pinned legacy feedback", () => {
+  const currentReceipt = receipt("nonvisual", legacyPostcommitBytes)
+  const scene = legacyCompatiblePrecommitScene()
+  const committed = attempt({
+    receipt: currentReceipt,
+    allowedZoneOrders: [1, 2, 3, 4],
+    markers: [],
+    selectedZoneOrders: [3],
+    zeroHazardsConfirmed: false
+  })
+  const completions: Array<
+    Parameters<HazardPersistence["Service"]["completeAttempt"]>[0]
+  > = []
+  const persistenceLayer = Layer.succeed(
+    HazardPersistence,
+    HazardPersistence.of({
+      commitAttempt: () => Effect.die("not used"),
+      findAttempt: () => Effect.succeed(committed),
+      completeAttempt: (input) => Effect.sync(() => {
+        completions.push(input)
+        return completedAttempt(input)
+      }),
+      listAttempts: noAttempts
+    })
+  )
+  const legacyContentLayer = Layer.succeed(
+    VerifiedContent,
+    VerifiedContent.of({
+      ensureAssetAvailable: () => Effect.die("not used"),
+      ensureAvailable: () => Effect.die("not used"),
+      loadAssetBlob: () => Effect.die("not used"),
+      loadCachedAssetBlob: () => Effect.die("not used"),
+      loadCachedJson: () => Effect.die("not used"),
+      loadJsonArtifact: () => Effect.succeed({
+        bytes: legacyPostcommitBytes,
+        value: legacyPostcommitValue
+      }),
+      loadJson: () => Effect.succeed(legacyPostcommitValue)
+    })
+  )
+  const layer = Layer.merge(persistenceLayer, legacyContentLayer)
+
+  return Effect.gen(function*() {
+    const restored = yield* restoreHazardAndReveal({
+      receipt: currentReceipt,
+      scene,
+      mode: "nonvisual",
+      visualAssetReceipt: null
+    }).pipe(Effect.provide(layer))
+    if (restored?.tag !== "revealed") throw new Error("Expected legacy feedback restoration")
+
+    const retried = yield* retryHazardReveal({
+      receipt: currentReceipt,
+      scene,
+      mode: "nonvisual",
+      visualAssetReceipt: null
+    }).pipe(Effect.provide(layer))
+
+    strictEqual("schemaVersion" in restored.payload, false)
+    strictEqual("schemaVersion" in retried.payload, false)
+    strictEqual(completions.length, 2)
+    for (const completion of completions) {
+      deepStrictEqual(completion.payload, legacyPostcommitValue)
+      deepStrictEqual(
+        decodeCanonicalBase64(completion.postcommitBase64),
+        legacyPostcommitBytes
+      )
+    }
+  })
 })
 
 it.effect("does not request postcommit content while restoring an unanswered scene", () => {
