@@ -1,0 +1,180 @@
+{
+  "id": "scene.zero.classroom-orderly",
+  "opaqueAssetId": "s017",
+  "kind": "zero-hazard",
+  "hazardFamily": null,
+  "claim": "Zero-hazard control: all suspicious details are safe as depicted.",
+  "sourceIds": [
+    "OSHA_FLOOR",
+    "OSHA_ELEC",
+    "OSHA_LADDER"
+  ],
+  "targets": [],
+  "decoys": [
+    {
+      "id": "decoy-1",
+      "condition": "stepladder fully open on dry level floor with spreaders locked and no person on it",
+      "safeBecause": "it is stable, unused, and correctly opened"
+    },
+    {
+      "id": "decoy-2",
+      "condition": "extension cord covered by a low-profile floor cord protector at the wall edge",
+      "safeBecause": "it is undamaged, secured, and outside the central route"
+    },
+    {
+      "id": "decoy-3",
+      "condition": "portable fan with intact close-spaced guard",
+      "safeBecause": "the blades are fully guarded"
+    }
+  ],
+  "targetRegions": [],
+  "decoyRegions": [
+    {
+      "inventoryId": "decoy-1",
+      "polygons": [
+        [
+          [
+            0.77,
+            0.12
+          ],
+          [
+            0.94,
+            0.12
+          ],
+          [
+            0.94,
+            0.59
+          ],
+          [
+            0.77,
+            0.59
+          ]
+        ]
+      ]
+    },
+    {
+      "inventoryId": "decoy-2",
+      "polygons": [
+        [
+          [
+            0.33,
+            0.48
+          ],
+          [
+            0.67,
+            0.48
+          ],
+          [
+            0.67,
+            0.55
+          ],
+          [
+            0.33,
+            0.55
+          ]
+        ]
+      ]
+    },
+    {
+      "inventoryId": "decoy-3",
+      "polygons": [
+        [
+          [
+            0.65,
+            0.31
+          ],
+          [
+            0.77,
+            0.31
+          ],
+          [
+            0.77,
+            0.49
+          ],
+          [
+            0.65,
+            0.49
+          ]
+        ]
+      ]
+    }
+  ],
+  "fullPostAnswer": {
+    "claim": "Zero-hazard control: all suspicious details are safe as depicted.",
+    "targets": [],
+    "decoys": [
+      {
+        "condition": "stepladder fully open on dry level floor with spreaders locked and no person on it",
+        "safeBecause": "it is stable, unused, and correctly opened"
+      },
+      {
+        "condition": "extension cord covered by a low-profile floor cord protector at the wall edge",
+        "safeBecause": "it is undamaged, secured, and outside the central route"
+      },
+      {
+        "condition": "portable fan with intact close-spaced guard",
+        "safeBecause": "the blades are fully guarded"
+      }
+    ],
+    "safeBackground": [
+      "chairs tucked under desks",
+      "dry unobstructed aisle",
+      "closed supply cabinet"
+    ],
+    "sources": [
+      {
+        "id": "OSHA_FLOOR",
+        "title": "29 CFR 1910.22 General requirements",
+        "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.22",
+        "locator": "1910.22(a)(1)-(3)",
+        "scope": "Walking-working surfaces must be kept clean, orderly, sanitary, and free of hazards such as sharp or protruding objects, loose boards, corrosion, leaks, spills, snow, and ice."
+      },
+      {
+        "id": "OSHA_ELEC",
+        "title": "29 CFR 1910.334 Use of equipment",
+        "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.334",
+        "locator": "1910.334(a)(2) and (a)(4)",
+        "scope": "Damaged cord-and-plug equipment must be removed from service; equipment used where water contact is likely must be approved for that location."
+      },
+      {
+        "id": "OSHA_LADDER",
+        "title": "29 CFR 1910.23 Ladders",
+        "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.23",
+        "locator": "1910.23(b) and (c)",
+        "scope": "Ladders must be inspected, used only on stable and level surfaces unless secured/stabilized, and used according to their design."
+      }
+    ]
+  },
+  "nonvisualZonedEquivalent": [
+    {
+      "zone": "right-side ladder",
+      "role": "decoy",
+      "statement": "stepladder fully open on dry level floor with spreaders locked and no person on it; it is stable, unused, and correctly opened."
+    },
+    {
+      "zone": "wall-side cord and fan",
+      "role": "decoy",
+      "statement": "extension cord covered by a low-profile floor cord protector at the wall edge; it is undamaged, secured, and outside the central route."
+    },
+    {
+      "zone": "wall-side cord and fan",
+      "role": "decoy",
+      "statement": "portable fan with intact close-spaced guard; the blades are fully guarded."
+    },
+    {
+      "zone": "student desks",
+      "role": "safe-background",
+      "statement": "chairs tucked under desks"
+    },
+    {
+      "zone": "central aisle",
+      "role": "safe-background",
+      "statement": "dry unobstructed aisle"
+    },
+    {
+      "zone": "teacher wall",
+      "role": "safe-background",
+      "statement": "closed supply cabinet"
+    }
+  ]
+}

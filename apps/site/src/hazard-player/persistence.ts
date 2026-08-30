@@ -1,6 +1,6 @@
 import {
-  PostcommitScene,
-  PrecommitScene as PrecommitSceneSchema
+  PrecommitScene as PrecommitSceneSchema,
+  ReleasedPostcommitScene
 } from "@nycustodian/content/model"
 import { Clock, Context, Effect, Layer, Schema } from "effect"
 import {
@@ -34,7 +34,8 @@ import type {
   HazardInputMode,
   HazardMarker,
   PostcommitScene as PostcommitSceneValue,
-  PrecommitScene
+  PrecommitScene,
+  ReleasedPostcommitScene as ReleasedPostcommitSceneValue
 } from "./attempt.ts"
 
 const ZoneOrders = Schema.Array(Schema.Natural).check(
@@ -52,7 +53,7 @@ export const PersistedHazardMarker = Schema.Struct({
 export class HazardEvaluationRecord extends Schema.Class<HazardEvaluationRecord>(
   "@nycustodian/site/hazard-player/HazardEvaluationRecord"
 )({
-  payload: PostcommitScene,
+  payload: ReleasedPostcommitScene,
   postcommitBase64: Schema.String.check(
     Schema.isPattern(/^[A-Za-z0-9+/]*={0,2}$/, { expected: "canonical base64 postcommit bytes" })
   ),
@@ -234,7 +235,7 @@ const validatePostcommitBinding = async (input: {
 }): Promise<{
   readonly receipt: HazardAttemptReceiptValue
   readonly evaluation: HazardEvaluationRecord
-  readonly payload: PostcommitSceneValue
+  readonly payload: ReleasedPostcommitSceneValue
 }> => {
   const receipt = Schema.decodeUnknownSync(HazardAttemptReceipt)(input.receipt)
   const evaluation = Schema.decodeUnknownSync(HazardEvaluationRecord)(input.evaluation)
@@ -245,7 +246,10 @@ const validatePostcommitBinding = async (input: {
   ) {
     throw new Error("The saved hazard feedback bytes do not match their release receipt")
   }
-  const payload = Schema.decodeUnknownSync(PostcommitScene)(
+  const payload = Schema.decodeUnknownSync(
+    ReleasedPostcommitScene,
+    { onExcessProperty: "error" }
+  )(
     JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(postcommitBytes)) as unknown
   )
   if (

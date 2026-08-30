@@ -30,11 +30,7 @@ const loadInput = async (): Promise<CompileContentPackInput> => ({
   acceptedComparisons: await readJson(
     "content/authoring/visuals/releases/comparisons.json"
   ),
-  acceptedScenes: await readJson("content/authoring/visuals/releases/scenes.json"),
-  acceptedSceneRegions: await readJson("content/authoring/visuals/releases/regions.json"),
-  acceptedSceneAccessibility: await readJson(
-    "content/authoring/visuals/releases/accessibility.json"
-  )
+  acceptedScenes: await readJson("content/authoring/visuals/releases/scenes.json")
 })
 
 const sha256 = (text: string): string =>
@@ -306,8 +302,34 @@ describe("compileContentPack", () => {
     expect(compiled.scenes.map((scene) => scene.opaqueAssetId)).toEqual(
       Array.from({ length: 18 }, (_, index) => `s${String(index + 1).padStart(3, "0")}`)
     )
+    expect(compiled.catalog.schemaVersion).toBe(1)
+    expect(compiled.precommit.schemaVersion).toBe(1)
+    expect(compiled.postcommit.schemaVersion).toBe(2)
+    expect(compiled.postcommit.scenes.every(
+      (scene) =>
+        scene.schemaVersion === 2 &&
+        scene.version === 2 &&
+        scene.tags.domain === "health-and-safety" &&
+        scene.tags.family === "hazard-scene" &&
+        scene.tags.seriesScope === "entry-level-custodians-janitors" &&
+        scene.tags.editorialDifficulty === "application"
+    )).toBe(true)
     expect(compiled.postcommit.scenes.filter((scene) => scene.kind === "positive")).toHaveLength(16)
     expect(compiled.postcommit.scenes.filter((scene) => scene.kind === "zero-hazard")).toHaveLength(2)
+    const acceptedSceneEvidence = input.acceptedScenes as Array<{
+      claims: Array<{ id: string }>
+      sources: Array<{ id: string; sourceId: string }>
+    }>
+    const packedClaimIds = new Set(compiled.postcommit.claims.map((claim) => claim.id))
+    const packedSourceLineIds = new Set(compiled.postcommit.sourceLines.map((line) => line.id))
+    const packedSourceIds = new Set(compiled.postcommit.sources.map((source) => source.id))
+    expect(acceptedSceneEvidence.every((scene) =>
+      scene.claims.every((claim) => packedClaimIds.has(claim.id)) &&
+      scene.sources.every(
+        (source) =>
+          packedSourceLineIds.has(source.id) && packedSourceIds.has(source.sourceId)
+      )
+    )).toBe(true)
     expect(compiled.assets).toHaveLength(291)
     const statewideCapacity = compiled.catalog.practiceCapacity.records.find(
       (record) =>
@@ -390,6 +412,104 @@ describe("compileContentPack", () => {
     }
   })
 
+  it("accepts only the canonical version-2 scene release as compiler input", async () => {
+    const unversionedScenes = structuredClone(input.acceptedScenes) as Array<{
+      schemaVersion?: number
+      version?: number
+    }>
+    if (unversionedScenes[0] !== undefined) {
+      delete unversionedScenes[0].schemaVersion
+      delete unversionedScenes[0].version
+    }
+
+    await expect(
+      Effect.runPromise(compileContentPack({ ...input, acceptedScenes: unversionedScenes }))
+    ).rejects.toMatchObject({
+      _tag: "ContentValidationError",
+      stage: "schema",
+      path: "acceptedScenes"
+    })
+
+    const sceneWithObsoleteField = structuredClone(input.acceptedScenes) as Array<{
+      semanticManifest?: unknown
+    }>
+    if (sceneWithObsoleteField[0] !== undefined) {
+      sceneWithObsoleteField[0].semanticManifest = { legacy: true }
+    }
+
+    await expect(
+      Effect.runPromise(compileContentPack({
+        ...input,
+        acceptedScenes: sceneWithObsoleteField
+      }))
+    ).rejects.toMatchObject({
+      _tag: "ContentValidationError",
+      stage: "schema",
+      path: "acceptedScenes"
+    })
+  })
+
+  it("requires the accepted scene ledger to exactly close over the authored scene ids", async () => {
+    const acceptedScenes = structuredClone(input.acceptedScenes) as Array<{
+      sceneId: string
+      opaqueAssetId: string
+      slot: number
+    }>
+    const extraScene = structuredClone(acceptedScenes[0])
+    if (extraScene === undefined) throw new Error("Canonical scene fixture is empty")
+    extraScene.sceneId = "scene.extra.unselected"
+    extraScene.opaqueAssetId = "s999"
+    extraScene.slot = 999
+    acceptedScenes.push(extraScene)
+
+    await expect(
+      Effect.runPromise(compileContentPack({ ...input, acceptedScenes }))
+    ).rejects.toMatchObject({
+      _tag: "ContentValidationError",
+      stage: "closure",
+      path: "acceptedScenes",
+      detail: expect.stringContaining("exactly match authored scene ids")
+    })
+  })
+
+  it("requires shared scene receipts to have identical metadata and set-equal claim support", async () => {
+    type MutableReceipt = {
+      id: string
+      title: string
+      supportedClaimIds: string[]
+    }
+    type MutableScene = { sources: MutableReceipt[] }
+    const acceptedScenes = structuredClone(input.acceptedScenes) as MutableScene[]
+    const receiptsById = new Map<string, MutableReceipt[]>()
+    for (const scene of acceptedScenes) {
+      for (const receipt of scene.sources) {
+        const receipts = receiptsById.get(receipt.id) ?? []
+        receipts.push(receipt)
+        receiptsById.set(receipt.id, receipts)
+      }
+    }
+    const sharedReceipts = [...receiptsById.values()].find(
+      (receipts) => receipts.length > 1 && receipts[0]!.supportedClaimIds.length > 1
+    )
+    if (sharedReceipts?.[1] === undefined) {
+      throw new Error("Canonical scene fixture requires a shared multi-claim receipt")
+    }
+
+    sharedReceipts[1].supportedClaimIds.reverse()
+    await expect(
+      Effect.runPromise(compileContentPack({ ...input, acceptedScenes }))
+    ).resolves.toMatchObject({ postcommit: { schemaVersion: 2 } })
+
+    sharedReceipts[1].title = `${sharedReceipts[1].title} metadata drift`
+    await expect(
+      Effect.runPromise(compileContentPack({ ...input, acceptedScenes }))
+    ).rejects.toMatchObject({
+      _tag: "ContentValidationError",
+      stage: "relation",
+      detail: expect.stringContaining("conflicting global definitions")
+    })
+  })
+
   it("renders one-scene and one-question runtime boundaries with no unrelated answers", () => {
     const artifacts = renderReleaseArtifacts(compiled)
     const sceneArtifacts = artifacts.filter((artifact) => artifact.itemId === "s001")
@@ -404,8 +524,18 @@ describe("compileContentPack", () => {
       "scenes/s001.postcommit.json"
     ])
     expect(scenePostcommit).toBeDefined()
-    const scene = JSON.parse(scenePostcommit?.text ?? "null") as { id?: string; opaqueAssetId?: string }
-    expect(scene).toMatchObject({ id: "scene.slip.hallway-wet-floor", opaqueAssetId: "s001" })
+    const scene = JSON.parse(scenePostcommit?.text ?? "null") as {
+      schemaVersion?: number
+      version?: number
+      id?: string
+      opaqueAssetId?: string
+    }
+    expect(scene).toMatchObject({
+      schemaVersion: 2,
+      version: 2,
+      id: "scene.slip.hallway-wet-floor",
+      opaqueAssetId: "s001"
+    })
     expect(scenePostcommit?.text).not.toContain("scene.slip.lobby-raised-mat")
     expect(scenePostcommit?.text).not.toContain("questions")
 
@@ -585,7 +715,7 @@ describe("compileContentPack", () => {
     })
   })
 
-  it("rejects dangling rationale, master-region, zone-label, and nonvisual target relations", async () => {
+  it("rejects dangling rationale and broken canonical scene zones, regions, claims, and sources", async () => {
     const missingRationale = structuredClone(input.authoredPack) as {
       questions: Array<{ rationales: Array<unknown> }>
     }
@@ -598,106 +728,141 @@ describe("compileContentPack", () => {
       detail: expect.stringContaining("exactly one rationale")
     })
 
-    const wrongMaster = structuredClone(input.acceptedSceneRegions) as Array<{
-      masterSha256: string
+    const outOfBoundsRegion = structuredClone(input.acceptedScenes) as Array<{
+      targets: Array<{ polygons: Array<Array<number[]>> }>
     }>
-    if (wrongMaster[0] !== undefined) wrongMaster[0].masterSha256 = "0".repeat(64)
+    const firstPoint = outOfBoundsRegion[0]?.targets[0]?.polygons[0]?.[0]
+    if (firstPoint !== undefined) firstPoint[0] = 1.01
     await expect(
-      Effect.runPromise(compileContentPack({ ...input, acceptedSceneRegions: wrongMaster }))
+      Effect.runPromise(compileContentPack({ ...input, acceptedScenes: outOfBoundsRegion }))
     ).rejects.toMatchObject({
       _tag: "ContentValidationError",
       stage: "closure",
-      detail: expect.stringContaining("another master hash")
+      detail: expect.stringContaining("out-of-bounds region")
     })
 
-    const wrongZoneLabel = structuredClone(input.acceptedSceneRegions) as Array<{
-      zoneOrder: Array<{ order: number; label: string }>
+    const degenerateRegion = structuredClone(input.acceptedScenes) as Array<{
+      targets: Array<{ polygons: Array<Array<number[]>> }>
     }>
-    const firstZone = wrongZoneLabel[0]?.zoneOrder[0]
-    if (firstZone !== undefined) firstZone.label = "same order, different label"
+    const firstPolygon = degenerateRegion[0]?.targets[0]?.polygons[0]
+    if (firstPolygon !== undefined) firstPolygon.splice(1)
     await expect(
-      Effect.runPromise(compileContentPack({ ...input, acceptedSceneRegions: wrongZoneLabel }))
+      Effect.runPromise(compileContentPack({ ...input, acceptedScenes: degenerateRegion }))
     ).rejects.toMatchObject({
       _tag: "ContentValidationError",
-      stage: "closure",
-      detail: expect.stringContaining("zone labels and orders")
+      stage: "schema",
+      path: "acceptedScenes"
     })
 
-    const duplicateNeutralLabelAccessibility = structuredClone(
-      input.acceptedSceneAccessibility
-    ) as Array<{ neutralPreAnswer: { zones: Array<{ order: number; label: string }> } }>
-    const duplicateNeutralLabelRegions = structuredClone(
-      input.acceptedSceneRegions
-    ) as Array<{ zoneOrder: Array<{ order: number; label: string }> }>
-    const firstLabel = duplicateNeutralLabelAccessibility[0]?.neutralPreAnswer.zones[0]?.label
-    if (
-      firstLabel !== undefined &&
-      duplicateNeutralLabelAccessibility[0]?.neutralPreAnswer.zones[1] !== undefined &&
-      duplicateNeutralLabelRegions[0]?.zoneOrder[1] !== undefined
-    ) {
-      duplicateNeutralLabelAccessibility[0].neutralPreAnswer.zones[1].label = firstLabel
-      duplicateNeutralLabelRegions[0].zoneOrder[1].label = firstLabel
-    }
-    await expect(Effect.runPromise(compileContentPack({
-      ...input,
-      acceptedSceneAccessibility: duplicateNeutralLabelAccessibility,
-      acceptedSceneRegions: duplicateNeutralLabelRegions
-    }))).rejects.toMatchObject({
-      _tag: "ContentValidationError",
-      stage: "closure",
-      detail: expect.stringContaining("zone labels and orders")
-    })
-
-    const unknownStatementZone = structuredClone(input.acceptedSceneAccessibility) as Array<{
-      nonvisualZonedEquivalent: Array<{ zone: string }>
+    const unknownInventoryZone = structuredClone(input.acceptedScenes) as Array<{
+      targets: Array<{ zone: string }>
     }>
-    if (unknownStatementZone[0]?.nonvisualZonedEquivalent[0] !== undefined) {
-      unknownStatementZone[0].nonvisualZonedEquivalent[0].zone = "unknown released zone"
-    }
-    await expect(Effect.runPromise(compileContentPack({
-      ...input,
-      acceptedSceneAccessibility: unknownStatementZone
-    }))).rejects.toMatchObject({
+    const firstTarget = unknownInventoryZone[0]?.targets[0]
+    if (firstTarget !== undefined) firstTarget.zone = "unknown released zone"
+    await expect(
+      Effect.runPromise(compileContentPack({ ...input, acceptedScenes: unknownInventoryZone }))
+    ).rejects.toMatchObject({
       _tag: "ContentValidationError",
       stage: "closure",
       detail: expect.stringContaining("unknown neutral zone")
     })
 
-    const missingNonvisualTarget = structuredClone(input.acceptedSceneAccessibility) as Array<{
-      nonvisualZonedEquivalent: Array<{ role: string }>
+    const duplicateNeutralLabel = structuredClone(input.acceptedScenes) as Array<{
+      neutralPreAnswer: { zones: Array<{ order: number; label: string }> }
     }>
-    const firstAccessibility = missingNonvisualTarget[0]
-    if (firstAccessibility !== undefined) {
-      firstAccessibility.nonvisualZonedEquivalent =
-        firstAccessibility.nonvisualZonedEquivalent.filter((statement) => statement.role !== "target")
+    const firstLabel = duplicateNeutralLabel[0]?.neutralPreAnswer.zones[0]?.label
+    if (
+      firstLabel !== undefined &&
+      duplicateNeutralLabel[0]?.neutralPreAnswer.zones[1] !== undefined
+    ) {
+      duplicateNeutralLabel[0].neutralPreAnswer.zones[1].label = firstLabel
+    }
+    await expect(Effect.runPromise(compileContentPack({
+      ...input,
+      acceptedScenes: duplicateNeutralLabel
+    }))).rejects.toMatchObject({
+      _tag: "ContentValidationError",
+      stage: "closure",
+      detail: expect.stringContaining("unique labels")
+    })
+
+    const missingClaim = structuredClone(input.acceptedScenes) as Array<{
+      claims: Array<{ id: string }>
+    }>
+    missingClaim[0]?.claims.pop()
+    await expect(Effect.runPromise(compileContentPack({
+      ...input,
+      acceptedScenes: missingClaim
+    }))).rejects.toMatchObject({
+      _tag: "ContentValidationError",
+      stage: "closure",
+      detail: expect.stringContaining("missing global claim")
+    })
+
+    const unpairedEvidenceEdge = structuredClone(input.acceptedScenes) as Array<{
+      claims: Array<{ id: string; sourceLineIds: string[] }>
+      sources: Array<{ id: string; supportedClaimIds: string[] }>
+    }>
+    const receiptCounts = new Map<string, number>()
+    for (const scene of unpairedEvidenceEdge) {
+      for (const receipt of scene.sources) {
+        receiptCounts.set(receipt.id, (receiptCounts.get(receipt.id) ?? 0) + 1)
+      }
+    }
+    const sceneWithUniqueReceipt = unpairedEvidenceEdge.find((scene) =>
+      scene.sources.some((receipt) => receiptCounts.get(receipt.id) === 1)
+    )
+    const uniqueReceipt = sceneWithUniqueReceipt?.sources.find(
+      (receipt) => receiptCounts.get(receipt.id) === 1
+    )
+    const originalClaimId = uniqueReceipt?.supportedClaimIds.find((claimId) =>
+      sceneWithUniqueReceipt?.claims.some((claim) => claim.id === claimId)
+    )
+    const alternateClaim = sceneWithUniqueReceipt?.claims.find(
+      (claim) => claim.id !== originalClaimId && !claim.sourceLineIds.includes(uniqueReceipt?.id ?? "")
+    )
+    if (
+      uniqueReceipt === undefined ||
+      originalClaimId === undefined ||
+      alternateClaim === undefined
+    ) {
+      throw new Error("Canonical scene fixture requires one uniquely used source receipt")
+    }
+    uniqueReceipt.supportedClaimIds[
+      uniqueReceipt.supportedClaimIds.indexOf(originalClaimId)
+    ] = alternateClaim.id
+    await expect(
+      Effect.runPromise(
+        compileContentPack({ ...input, acceptedScenes: unpairedEvidenceEdge })
+      )
+    ).rejects.toMatchObject({
+      _tag: "ContentValidationError",
+      stage: "closure",
+      detail: expect.stringContaining("bidirectional evidence edge")
+    })
+
+    const missingSourceMetadata = structuredClone(input.acceptedScenes) as Array<{
+      sources: Array<{
+        id: string
+        scope?: string
+        sourceLocator?: string
+      }>
+    }>
+    const receiptIdWithoutScope = missingSourceMetadata[0]?.sources[0]?.id
+    if (receiptIdWithoutScope !== undefined) {
+      for (const scene of missingSourceMetadata) {
+        const receipt = scene.sources.find((candidate) => candidate.id === receiptIdWithoutScope)
+        if (receipt !== undefined) delete receipt.scope
+      }
     }
     await expect(
       Effect.runPromise(
-        compileContentPack({ ...input, acceptedSceneAccessibility: missingNonvisualTarget })
+        compileContentPack({ ...input, acceptedScenes: missingSourceMetadata })
       )
     ).rejects.toMatchObject({
       _tag: "ContentValidationError",
-      stage: "closure",
-      detail: expect.stringContaining("nonvisual equivalent")
-    })
-
-    const contradictoryNonvisual = structuredClone(
-      input.acceptedSceneAccessibility
-    ) as Array<{
-      nonvisualZonedEquivalent: Array<{ role: string; statement: string }>
-    }>
-    const targetStatement = contradictoryNonvisual[0]?.nonvisualZonedEquivalent.find(
-      (statement) => statement.role === "target"
-    )
-    if (targetStatement !== undefined) targetStatement.statement = "contradictory safe text"
-    await expect(
-      Effect.runPromise(
-        compileContentPack({ ...input, acceptedSceneAccessibility: contradictoryNonvisual })
-      )
-    ).rejects.toMatchObject({
-      _tag: "ContentValidationError",
-      stage: "closure",
-      detail: expect.stringContaining("exactly cover semantic inventories")
+      stage: "relation",
+      detail: expect.stringContaining("source scope and source locator")
     })
   })
 

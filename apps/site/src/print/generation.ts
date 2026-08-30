@@ -1,10 +1,10 @@
 import { Schema } from "effect"
 import {
   PrintJobManifest,
-  PrintPacketV2,
+  PrintPacketV3,
   PrintSettings,
   type PrintBuilderBootstrap,
-  type PrintPacketSectionV2,
+  type PrintPacketSectionV3,
   type PrintProduct,
   type PrintProductAvailability,
   type PrintQuestionAnswer,
@@ -12,7 +12,7 @@ import {
   type ReleasedPrintPacket,
   type ReleasedPrintPacketSection,
   type PrintRetainedAsset,
-  type PrintSceneAnswer,
+  type PrintSceneAnswerV2,
   type SupportedPrintProduct
 } from "./model.ts"
 import { questionCategoryFromSafeMetadata } from "../question-category.ts"
@@ -264,7 +264,7 @@ export const computePrintManifestFingerprint = (
 }))
 
 interface PrintPacketFingerprintInput {
-  readonly schemaVersion: 1 | 2
+  readonly schemaVersion: 1 | 2 | 3
   readonly title: string
   readonly statement: "Original practice — not an official or past exam"
   readonly sections: ReadonlyArray<ReleasedPrintPacketSection>
@@ -316,7 +316,7 @@ export interface GeneratePrintJobInput {
   readonly bootstrap: PrintBuilderBootstrap
   readonly settings: PrintSettings
   readonly answers?: ReadonlyArray<PrintQuestionAnswer>
-  readonly sceneAnswers?: ReadonlyArray<PrintSceneAnswer>
+  readonly sceneAnswers?: ReadonlyArray<PrintSceneAnswerV2>
   readonly retainedAssets?: ReadonlyArray<PrintRetainedAsset>
 }
 
@@ -450,7 +450,7 @@ export const generatePrintManifest = ({
         : []
     : []
   const withoutPairingFingerprint = {
-    schemaVersion: 2 as const,
+    schemaVersion: 3 as const,
     algorithmId: printAlgorithmId,
     releaseId: bootstrap.releaseId,
     contentVersion: bootstrap.contentVersion,
@@ -491,13 +491,13 @@ export const makePrintPacket = (
   manifest: PrintJobManifest,
   bootstrap: PrintBuilderBootstrap,
   answers: ReadonlyArray<PrintQuestionAnswer> = [],
-  sceneAnswers: ReadonlyArray<PrintSceneAnswer> = [],
+  sceneAnswers: ReadonlyArray<PrintSceneAnswerV2> = [],
   retainedAssets: ReadonlyArray<PrintRetainedAsset> = []
-): PrintPacketV2 => {
+): PrintPacketV3 => {
   const questionById = new Map(bootstrap.questions.map((question) => [question.id, question]))
   const answerById = new Map(answers.map((answer) => [answer.questionId, answer]))
   const sceneById = new Map(bootstrap.scenes.map((scene) => [scene.id, scene]))
-  const sceneAnswerById = new Map(sceneAnswers.map((answer) => [answer.sceneId, answer]))
+  const sceneAnswerById = new Map(sceneAnswers.map((answer) => [answer.opaqueAssetId, answer]))
   const retainedByPath = new Map(retainedAssets.map((asset) => [asset.receipt.path, asset]))
   const retainedAsset = (receipt: PrintRetainedAsset["receipt"]): PrintRetainedAsset | null => {
     if (!manifest.settings.includeImages) return null
@@ -519,7 +519,7 @@ export const makePrintPacket = (
       })
     }
   })
-  const answerKeySection = (): PrintPacketSectionV2 => ({
+  const answerKeySection = (): PrintPacketSectionV3 => ({
     tag: "answer-key",
     answers: orderedQuestions.map(({ question, options }, index) => {
       const answer = answerById.get(question.id)
@@ -529,7 +529,7 @@ export const makePrintPacket = (
       return { number: index + 1, optionLabel: printOptionLabel(answerIndex) }
     })
   })
-  const explanationSection = (): PrintPacketSectionV2 => ({
+  const explanationSection = (): PrintPacketSectionV3 => ({
     tag: "explanations",
     explanations: orderedQuestions.map(({ question, options }, index) => {
       const answer = answerById.get(question.id)
@@ -553,8 +553,8 @@ export const makePrintPacket = (
       }
     })
   })
-  let section: PrintPacketSectionV2
-  const appendedSections: Array<PrintPacketSectionV2> = []
+  let section: PrintPacketSectionV3
+  const appendedSections: Array<PrintPacketSectionV3> = []
   let title: string
   switch (manifest.settings.product) {
     case "blank-answer-sheet": {
@@ -653,10 +653,7 @@ export const makePrintPacket = (
           id,
           environment: scene.environment,
           asset: retainedAsset(scene.asset),
-          answer: {
-            ...answer,
-            sourceReferences: manifest.settings.includeSources ? answer.sourceReferences : []
-          }
+          answer
         }
       })
       const first = scenes[0]
@@ -673,10 +670,7 @@ export const makePrintPacket = (
         return {
           id,
           environment: scene.environment,
-          answer: {
-            ...answer,
-            sourceReferences: manifest.settings.includeSources ? answer.sourceReferences : []
-          }
+          answer
         }
       })
       const first = scenes[0]
@@ -715,7 +709,7 @@ export const makePrintPacket = (
   }
 
   const withoutFingerprint = {
-    schemaVersion: 2,
+    schemaVersion: 3,
     title,
     statement: "Original practice — not an official or past exam",
     sections: [section, ...appendedSections],
@@ -726,7 +720,7 @@ export const makePrintPacket = (
         : [])
     ]
   } as const
-  return new PrintPacketV2({
+  return new PrintPacketV3({
     ...withoutFingerprint,
     fingerprint: computePrintPacketFingerprint(withoutFingerprint)
   })

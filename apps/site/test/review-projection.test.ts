@@ -59,72 +59,107 @@ const scene: typeof PrecommitScene.Type = {
 }
 
 const sceneFeedback: typeof PostcommitScene.Type = {
-  id: "scene.original.hallway",
+  schemaVersion: 2,
+  version: 2,
+  id: "s001",
   opaqueAssetId: "s001",
   kind: "positive",
   hazardFamily: "slip-trip-fall",
-  claim: "The walking surface needs correction.",
-  sourceIds: ["source-1"],
+  tags: {
+    domain: "health-and-safety",
+    family: "hazard-scene",
+    environment: "hallway",
+    hazardCategory: "slip-trip-fall",
+    seriesScope: "entry-level-custodians-janitors",
+    editorialDifficulty: "application"
+  },
   targets: [
     {
       id: "target-1",
-      condition: "liquid across the walking route",
-      correction: "control the area and dry the surface"
+      zone: "floor",
+      polygons: [[[0.1, 0.1], [0.4, 0.1], [0.4, 0.4], [0.1, 0.4]]],
+      observableCondition: "Liquid extends across the walking route.",
+      conceptIds: ["wet-walking-surface"],
+      correctionCategory: "isolate-and-dry",
+      whyUnsafeClaimId: "claim-target-why",
+      likelyConsequenceClaimId: "claim-target-consequence",
+      immediateCorrectionClaimId: "claim-target-correction"
     }
   ],
   decoys: [
     {
       id: "decoy-1",
-      condition: "fixed conduit beside the route",
-      safeBecause: "it does not enter the walking surface"
-    }
-  ],
-  targetRegions: [
-    {
-      inventoryId: "target-1",
-      polygons: [[[0.1, 0.1], [0.4, 0.1], [0.4, 0.4], [0.1, 0.4]]]
-    }
-  ],
-  decoyRegions: [
-    {
-      inventoryId: "decoy-1",
-      polygons: [[[0.6, 0.6], [0.9, 0.6], [0.9, 0.9], [0.6, 0.9]]]
-    }
-  ],
-  fullPostAnswer: {
-    claim: "The walking surface needs correction.",
-    targets: [
-      {
-        condition: "liquid across the walking route",
-        correction: "control the area and dry the surface",
-        sourceIds: ["source-1"]
-      }
-    ],
-    decoys: [
-      {
-        condition: "fixed conduit beside the route",
-        safeBecause: "it does not enter the walking surface"
-      }
-    ],
-    safeBackground: ["closed door"],
-    sources: [
-      {
-        id: "source-1",
-        title: "Source title",
-        url: "https://example.com/source",
-        locator: "section 1",
-        scope: "Walking surfaces."
-      }
-    ]
-  },
-  nonvisualZonedEquivalent: [
-    { zone: "floor", role: "target", statement: "liquid across the walking route" },
-    {
       zone: "wall",
-      role: "decoy",
-      statement: "fixed conduit beside the route; it does not enter the walking surface."
+      polygons: [[[0.6, 0.6], [0.9, 0.6], [0.9, 0.9], [0.6, 0.9]]],
+      observableCondition: "Fixed conduit remains beside the route.",
+      conceptIds: ["fixed-conduit"],
+      suspiciousBecause: "It is close to the walking surface.",
+      safeAsDepictedClaimId: "claim-decoy-safe",
+      unsafeIfClaimId: "claim-decoy-unsafe-if"
+    }
+  ],
+  safeBackground: [{ zone: "wall", observableCondition: "The door is closed and intact." }],
+  claims: [
+    {
+      id: "claim-target-why",
+      text: "Liquid makes the walking surface hazardous.",
+      sourceLineIds: ["line-1"],
+      evidenceTier: "official-primary",
+      caveat: null
     },
-    { zone: "wall", role: "safe-background", statement: "closed door" }
+    {
+      id: "claim-target-consequence",
+      text: "A person could slip and fall.",
+      sourceLineIds: ["line-1"],
+      evidenceTier: "official-primary",
+      caveat: null
+    },
+    {
+      id: "claim-target-correction",
+      text: "Control the area and dry the surface.",
+      sourceLineIds: ["line-1"],
+      evidenceTier: "official-primary",
+      caveat: null
+    },
+    {
+      id: "claim-decoy-safe",
+      text: "The conduit does not enter the walking surface.",
+      sourceLineIds: ["line-1"],
+      evidenceTier: "official-primary",
+      caveat: null
+    },
+    {
+      id: "claim-decoy-unsafe-if",
+      text: "It would be unsafe if it entered the walking route.",
+      sourceLineIds: ["line-1"],
+      evidenceTier: "official-primary",
+      caveat: null
+    }
+  ],
+  sources: [
+    {
+      id: "line-1",
+      sourceId: "source-1",
+      title: "Source title",
+      publisher: "Official publisher",
+      evidenceTier: "official-primary",
+      version: "Current test edition",
+      rightsNotes: "Project-authored test source.",
+      locator: "section 1, exact line",
+      excerpt: "Walking surfaces must be kept in a safe condition.",
+      language: "en",
+      verifiedOn: "2026-08-30",
+      supportedClaimIds: [
+        "claim-target-why",
+        "claim-target-consequence",
+        "claim-target-correction",
+        "claim-decoy-safe",
+        "claim-decoy-unsafe-if"
+      ],
+      scope: "Walking surfaces.",
+      sourceLocator: "section 1",
+      url: "https://example.com/source"
+    }
   ]
 }
 

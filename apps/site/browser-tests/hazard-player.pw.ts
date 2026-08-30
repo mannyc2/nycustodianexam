@@ -5,10 +5,10 @@ const visualPath = "/hazards/session/launch-v1/scene/1/"
 const nonvisualPath = "/hazards/session/launch-v1-nonvisual/scene/1/"
 const postcommitPath = "/content/vertical-slice/scenes/s001.postcommit.json"
 const attemptsStore = "hazard-attempts"
-const visualAttemptId = "launch-v1:v2:launch-v1:hazard-visual:1"
-const nonvisualAttemptId = "launch-v1:v2:launch-v1-nonvisual:hazard-nonvisual:1"
-const postcommitBytes = 3_731
-const postcommitSha256 = "8c86b391298a92ca1e35a590a0b4831c2fe50947d7d21e9ed9f366508cc8b196"
+const visualAttemptId = "launch-v1:v3:launch-v1:hazard-visual:1"
+const nonvisualAttemptId = "launch-v1:v3:launch-v1-nonvisual:hazard-nonvisual:1"
+const postcommitBytes = 9_992
+const postcommitSha256 = "8b245799410f3f449a5e92b8a5d5a449bbb1de84a29e686103a8c143116962a7"
 const assetMasterSha256 = "5648c401bd764f44b1f23e1dbaa5aac3e79c4292990e68c98f1d47947037ff0d"
 const visualImagePath = "/content/assets/derivatives/scenes/s001-web.png"
 
@@ -28,7 +28,7 @@ interface StoredHazardReceipt {
 
 const hazardReceipt = (mode: "visual" | "nonvisual"): StoredHazardReceipt => ({
   releaseId: "launch-v1",
-  packVersion: 2,
+  packVersion: 3,
   sessionId: mode === "visual" ? "launch-v1" : "launch-v1-nonvisual",
   position: 1,
   postcommitPath,
@@ -222,6 +222,16 @@ test("visual markers are durable before feedback fetch and restore exactly", asy
     /^data:image\/png;base64,/
   )
   await expect(page.getByText("Reviewed scene overlay.", { exact: false })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "Scene explanation and evidence" })).toBeVisible()
+  await expect(page.getByText("The spill makes the travel surface non-dry and creates a recognized slip-and-fall condition.", { exact: true }).first()).toBeVisible()
+  await expect(page.getByText("A person could slip, fall, and be injured.", { exact: true }).first()).toBeVisible()
+  await expect(page.getByText("Guard or close off the wet section, stop the source if one is present, and clean and dry the surface before reopening it.", { exact: true }).first()).toBeVisible()
+  await expect(page.getByText("A long object near floor level can resemble something that crosses the walking route or catches a foot.", { exact: true }).first()).toBeVisible()
+  await expect(page.getByText("The conduit is fixed tight to the wall and remains outside the walking route; no loose or protruding condition is shown.", { exact: true }).first()).toBeVisible()
+  await expect(page.getByText("The conduit would become unsafe if it became loose, developed a sharp or projecting edge, or extended into the walking surface.", { exact: true }).first()).toBeVisible()
+  await page.locator("details.feedback-sources").first().locator(":scope > summary").click()
+  await expect(page.getByText("Workroom floors must be clean and, as far as feasible, dry.", { exact: true }).first()).toBeVisible()
+  await expect(page.getByText(/Concepts Wet surface, Spill control, Walking route; correction category Guard and correct surface/)).toBeVisible()
   await expect(page.locator(".hazard-result-overlay img")).toHaveAttribute(
     "src",
     /^data:image\/png;base64,/
@@ -237,7 +247,9 @@ test("visual markers are durable before feedback fetch and restore exactly", asy
   )).toBeVisible()
   expect(await page.locator(".hazard-player__results").evaluate((results) => {
     const sources = results.querySelector(".feedback-sources")
-    const equivalentHeading = results.querySelector("#complete-zoned-equivalent-heading")
+    const equivalentHeading = results.querySelector(
+      'section[aria-label="Full scene description by zone"] > h3'
+    )
     if (sources === null || equivalentHeading === null) return false
     return (sources.compareDocumentPosition(equivalentHeading) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0
   })).toBe(true)
@@ -485,6 +497,9 @@ test("keyboard-only nonvisual zone selection commits before feedback", async ({ 
     }
   })
   await expect(page.getByRole("heading", { name: "Full scene description by zone" })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "Scene explanation and evidence" })).toBeVisible()
+  await expect(page.getByText("Why unsafe: The spill makes the travel surface non-dry and creates a recognized slip-and-fall condition.", { exact: false }).first()).toBeVisible()
+  await expect(page.getByText("Condition that would make it unsafe: The conduit would become unsafe if it became loose, developed a sharp or projecting edge, or extended into the walking surface.", { exact: false }).first()).toBeVisible()
   expect(postcommitRequests).toBe(1)
 })
 

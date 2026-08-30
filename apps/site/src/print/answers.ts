@@ -1,12 +1,12 @@
 import {
-  PostcommitScene,
+  ReleasedPostcommitScene,
   ReleasedPostcommitQuestion
 } from "@nycustodian/content/model"
 import { Effect, Schema } from "effect"
 import { VerifiedContent, type VerifiedContentError } from "../verified-content.ts"
 import {
   PrintQuestionAnswer,
-  PrintSceneAnswer,
+  type PrintSceneAnswerV2,
   type PrintQuestionSource,
   type PrintSceneSource
 } from "./model.ts"
@@ -83,7 +83,10 @@ const loadOneSceneAnswer = Effect.fn("PrintAnswers.loadOneScene")(function*(
 ) {
   const verifiedContent = yield* VerifiedContent
   const unknown = yield* verifiedContent.loadCachedJson(scene.answerReceipt)
-  const answer = yield* Schema.decodeUnknownEffect(PostcommitScene)(unknown).pipe(
+  const answer = yield* Schema.decodeUnknownEffect(
+    ReleasedPostcommitScene,
+    { onExcessProperty: "error" }
+  )(unknown).pipe(
     Effect.mapError((cause) => new PrintAnswerMismatchError({
       questionId: scene.id,
       detail: "The exact reviewed scene answer did not match the expected schema.",
@@ -97,27 +100,20 @@ const loadOneSceneAnswer = Effect.fn("PrintAnswers.loadOneScene")(function*(
       cause: new Error(`Expected ${scene.id}; received ${answer.opaqueAssetId}`)
     })
   }
-  return new PrintSceneAnswer({
-    sceneId: scene.id,
-    kind: answer.kind,
-    hazardFamily: answer.hazardFamily,
-    claim: answer.claim,
-    targets: answer.targets,
-    decoys: answer.decoys,
-    targetRegions: answer.targetRegions,
-    nonvisualStatements: answer.nonvisualZonedEquivalent,
-    sourceReferences: answer.fullPostAnswer.sources.map((source) => ({
-      id: source.id,
-      label: source.title,
-      locator: source.locator
-    }))
-  })
+  if (!("schemaVersion" in answer)) {
+    return yield* new PrintAnswerMismatchError({
+      questionId: scene.id,
+      detail: "This historical scene-answer format can only be restored from its existing immutable print packet.",
+      cause: new Error("Legacy scene-answer material is not rewritten into a new packet")
+    })
+  }
+  return answer
 })
 
 export const loadPrintSceneAnswers = Effect.fn("PrintAnswers.loadSelectedScenes")(function*(
   scenes: ReadonlyArray<PrintSceneSource>
 ) {
-  const answers: Array<PrintSceneAnswer> = []
+  const answers: Array<PrintSceneAnswerV2> = []
   for (const scene of scenes) answers.push(yield* loadOneSceneAnswer(scene))
-  return answers as ReadonlyArray<PrintSceneAnswer>
+  return answers as ReadonlyArray<PrintSceneAnswerV2>
 })

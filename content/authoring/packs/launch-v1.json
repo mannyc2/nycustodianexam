@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "packId": "launch-v1",
-  "version": 2,
+  "version": 3,
   "locale": "en",
   "sources": [
     {
@@ -20,7 +20,7 @@
       "title": "Entry-level custodians and janitors content scope",
       "publisher": "NY Custodian Exam editorial project",
       "evidenceTier": "maintained-editorial-synthesis",
-      "version": "launch-v1 pack version 2",
+      "version": "launch-v1 pack version 3",
       "locator": "docs/SCOPE.md#official-blueprint",
       "scope": "Defines the supported three-domain series and prohibits official-weighting claims.",
       "rightsNotes": "Repository-authored educational synthesis; no third-party text is republished."

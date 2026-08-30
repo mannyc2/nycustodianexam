@@ -30,14 +30,6 @@ const acceptedScenesUrl = new URL(
   "content/authoring/visuals/releases/scenes.json",
   repositoryRoot
 )
-const acceptedSceneRegionsUrl = new URL(
-  "content/authoring/visuals/releases/regions.json",
-  repositoryRoot
-)
-const acceptedSceneAccessibilityUrl = new URL(
-  "content/authoring/visuals/releases/accessibility.json",
-  repositoryRoot
-)
 const releaseUrl = new URL("content/releases/vertical-slice/", repositoryRoot)
 const stagingUrl = new URL("content/releases/.vertical-slice-staging/", repositoryRoot)
 const backupUrl = new URL("content/releases/.vertical-slice-backup/", repositoryRoot)
@@ -121,22 +113,12 @@ const program = Effect.gen(function*() {
     "accepted comparison ledger"
   )
   const acceptedScenes = yield* readJson(acceptedScenesUrl, "accepted scene ledger")
-  const acceptedSceneRegions = yield* readJson(
-    acceptedSceneRegionsUrl,
-    "accepted scene-region ledger"
-  )
-  const acceptedSceneAccessibility = yield* readJson(
-    acceptedSceneAccessibilityUrl,
-    "accepted scene-accessibility ledger"
-  )
 
   const compiled = yield* compileContentPack({
     authoredPack,
     acceptedTools,
     acceptedComparisons,
-    acceptedScenes,
-    acceptedSceneRegions,
-    acceptedSceneAccessibility
+    acceptedScenes
   })
   const legacyQuestionCompatibilityFixture = yield* readJson(
     legacyQuestionCompatibilityFixtureUrl,

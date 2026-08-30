@@ -52,7 +52,8 @@ export class SupportedClaim extends Schema.Class<SupportedClaim>(
 /**
  * A self-contained, offline-safe source-line receipt. Individual postcommit
  * artifacts carry these instead of depending on an external source remaining
- * reachable.
+ * reachable. Scene releases also include source-level scope and locator
+ * metadata so the pack compiler can rebuild the global source registry.
  */
 export class SourceReceipt extends Schema.Class<SourceReceipt>(
   "@nycustodian/content/SourceReceipt"
@@ -71,5 +72,7 @@ export class SourceReceipt extends Schema.Class<SourceReceipt>(
     Schema.isPattern(/^\d{4}-\d{2}-\d{2}$/, { expected: "an ISO calendar date" })
   ),
   supportedClaimIds: Schema.NonEmptyArray(ArtifactPathSegment),
+  scope: Schema.optionalKey(Schema.NonEmptyString),
+  sourceLocator: Schema.optionalKey(Schema.NonEmptyString),
   url: Schema.optionalKey(Schema.NonEmptyString)
 }) {}

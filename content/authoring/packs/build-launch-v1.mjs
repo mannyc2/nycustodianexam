@@ -77,7 +77,7 @@ const sources = [
     "Entry-level custodians and janitors content scope",
     "NY Custodian Exam editorial project",
     "maintained-editorial-synthesis",
-    "launch-v1 pack version 2",
+    "launch-v1 pack version 3",
     "docs/SCOPE.md#official-blueprint",
     "Defines the supported three-domain series and prohibits official-weighting claims.",
     "Repository-authored educational synthesis; no third-party text is republished."
@@ -642,7 +642,7 @@ const questions = questionsWithoutReviews.map((question, index) => {
 const pack = {
   schemaVersion: 1,
   packId: "launch-v1",
-  version: 2,
+  version: 3,
   locale: "en",
   sources,
   sourceLines,

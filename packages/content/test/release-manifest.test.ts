@@ -23,11 +23,7 @@ const loadInput = async (): Promise<CompileContentPackInput> => ({
   acceptedComparisons: await readJson(
     "content/authoring/visuals/releases/comparisons.json"
   ),
-  acceptedScenes: await readJson("content/authoring/visuals/releases/scenes.json"),
-  acceptedSceneRegions: await readJson("content/authoring/visuals/releases/regions.json"),
-  acceptedSceneAccessibility: await readJson(
-    "content/authoring/visuals/releases/accessibility.json"
-  )
+  acceptedScenes: await readJson("content/authoring/visuals/releases/scenes.json")
 })
 
 const digestUtf8 = (text: string) =>

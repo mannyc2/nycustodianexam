@@ -1,6 +1,16 @@
-import type { HazardMarker, PostcommitScene, PrecommitScene } from "./attempt.ts"
-
-type SceneRegion = PostcommitScene["targetRegions"][number]
+import type {
+  HazardMarker,
+  PostcommitScene,
+  PrecommitScene,
+  ReleasedPostcommitScene
+} from "./attempt.ts"
+import {
+  decoyRegionsForScene,
+  isCurrentPostcommitScene,
+  targetRegionsForScene,
+  type HazardSceneRegion,
+  type LegacyPostcommitScene
+} from "./released-scene.ts"
 
 export type MarkerAssessmentKind =
   | "hit"
@@ -93,18 +103,20 @@ const pointTouchesPolygon = (
   return false
 }
 
-const markerTouchesRegion = (marker: HazardMarker, region: SceneRegion): boolean =>
+const markerTouchesRegion = (marker: HazardMarker, region: HazardSceneRegion): boolean =>
   region.polygons.some((polygon) => pointTouchesPolygon(marker, polygon))
 
 export const assessVisualMarkers = (
   markers: ReadonlyArray<HazardMarker>,
-  payload: PostcommitScene
+  payload: ReleasedPostcommitScene
 ): VisualHazardAssessment => {
   const matchedTargets = new Set<string>()
   const assessments: Array<MarkerAssessment> = []
+  const targetRegions = targetRegionsForScene(payload)
+  const decoyRegions = decoyRegionsForScene(payload)
 
   markers.forEach((marker, index) => {
-    const availableTarget = payload.targetRegions.find(
+    const availableTarget = targetRegions.find(
       (region) =>
         !matchedTargets.has(region.inventoryId) && markerTouchesRegion(marker, region)
     )
@@ -119,7 +131,7 @@ export const assessVisualMarkers = (
       return
     }
 
-    const duplicateTarget = payload.targetRegions.find((region) =>
+    const duplicateTarget = targetRegions.find((region) =>
       markerTouchesRegion(marker, region)
     )
     if (duplicateTarget !== undefined) {
@@ -132,7 +144,7 @@ export const assessVisualMarkers = (
       return
     }
 
-    const decoy = payload.decoyRegions.find((region) => markerTouchesRegion(marker, region))
+    const decoy = decoyRegions.find((region) => markerTouchesRegion(marker, region))
     assessments.push(
       decoy === undefined
         ? { marker, markerNumber: index + 1, kind: "false_positive" }
@@ -147,7 +159,7 @@ export const assessVisualMarkers = (
 
   return {
     markers: assessments,
-    missedInventoryIds: payload.targetRegions
+    missedInventoryIds: targetRegions
       .map((region) => region.inventoryId)
       .filter((inventoryId) => !matchedTargets.has(inventoryId))
   }
@@ -191,9 +203,9 @@ const isAbsoluteHttpsUrl = (value: string): boolean => {
   }
 }
 
-export const hasValidPostcommitClosure = (
+const hasValidLegacyPostcommitClosure = (
   scene: PrecommitScene,
-  payload: PostcommitScene
+  payload: LegacyPostcommitScene
 ): boolean => {
   const targetIds = payload.targets.map((target) => target.id)
   const targetRegionIds = payload.targetRegions.map((region) => region.inventoryId)
@@ -289,3 +301,102 @@ export const hasValidPostcommitClosure = (
         payload.targets.length > 0 &&
         payload.targetRegions.length > 0)
 }
+
+const uniqueStrings = (values: ReadonlyArray<string>): boolean =>
+  new Set(values).size === values.length
+
+const normalizedRegions = (
+  regions: ReadonlyArray<HazardSceneRegion>
+): boolean => regions.every((region) =>
+  region.polygons.every((polygon) =>
+    polygon.length >= 3 &&
+    polygon.every(([x, y]) =>
+      Number.isFinite(x) && x >= 0 && x <= 1 &&
+      Number.isFinite(y) && y >= 0 && y <= 1
+    )
+  )
+)
+
+const hasValidCurrentPostcommitClosure = (
+  scene: PrecommitScene,
+  payload: PostcommitScene
+): boolean => {
+  const targetIds = payload.targets.map((target) => target.id)
+  const decoyIds = payload.decoys.map((decoy) => decoy.id)
+  const inventoryIds = [...targetIds, ...decoyIds]
+  const zoneLabels = scene.neutralPreAnswer.zones.map((zone) => zone.label)
+  const zoneOrders = scene.neutralPreAnswer.zones.map((zone) => zone.order)
+  const zonedItems = [...payload.targets, ...payload.decoys, ...payload.safeBackground]
+  const safeBackgroundSignatures = payload.safeBackground.map(
+    (entry) => `${entry.zone}\u0000${entry.observableCondition}`
+  )
+  const claimIds = payload.claims.map((claim) => claim.id)
+  const referencedClaimIds = [...new Set([
+    ...payload.targets.flatMap((target) => [
+      target.whyUnsafeClaimId,
+      target.likelyConsequenceClaimId,
+      target.immediateCorrectionClaimId
+    ]),
+    ...payload.decoys.flatMap((decoy) => [
+      decoy.safeAsDepictedClaimId,
+      decoy.unsafeIfClaimId
+    ])
+  ])]
+  const sourceLineIds = payload.sources.map((source) => source.id)
+  const claimById = new Map(payload.claims.map((claim) => [claim.id, claim]))
+  const sourceById = new Map(payload.sources.map((source) => [source.id, source]))
+  const claimsClose = payload.claims.every((claim) =>
+    uniqueStrings(claim.sourceLineIds) &&
+    claim.sourceLineIds.every((sourceLineId) => {
+      const source = sourceById.get(sourceLineId)
+      return source !== undefined && source.supportedClaimIds.includes(claim.id)
+    })
+  )
+  const sourcesClose = payload.sources.every((source) =>
+    source.scope !== undefined &&
+    source.sourceLocator !== undefined &&
+    uniqueStrings(source.supportedClaimIds) &&
+    (source.url === undefined || isAbsoluteHttpsUrl(source.url)) &&
+    source.supportedClaimIds.every((claimId) => {
+      const claim = claimById.get(claimId)
+      return claim !== undefined && claim.sourceLineIds.includes(source.id)
+    })
+  )
+  const conceptIdsAreUnique = [...payload.targets, ...payload.decoys].every(
+    (item) => uniqueStrings(item.conceptIds)
+  )
+
+  return payload.opaqueAssetId === scene.asset.opaqueAssetId &&
+    payload.tags.environment === scene.environment &&
+    payload.tags.hazardCategory === payload.hazardFamily &&
+    uniqueStrings(inventoryIds) &&
+    uniqueStrings(zoneLabels) &&
+    uniqueStrings(zoneOrders.map(String)) &&
+    zoneOrders.every((order, index) => order === index + 1) &&
+    zonedItems.every((item) => zoneLabels.includes(item.zone)) &&
+    uniqueStrings(safeBackgroundSignatures) &&
+    conceptIdsAreUnique &&
+    normalizedRegions([
+      ...targetRegionsForScene(payload),
+      ...decoyRegionsForScene(payload)
+    ]) &&
+    uniqueStrings(claimIds) &&
+    exactSet(referencedClaimIds, claimIds) &&
+    uniqueStrings(sourceLineIds) &&
+    claimsClose &&
+    sourcesClose &&
+    (payload.kind === "zero-hazard"
+      ? payload.hazardFamily === null &&
+        payload.tags.hazardCategory === null &&
+        payload.targets.length === 0
+      : payload.hazardFamily !== null &&
+        payload.tags.hazardCategory !== null &&
+        payload.targets.length > 0)
+}
+
+export const hasValidPostcommitClosure = (
+  scene: PrecommitScene,
+  payload: ReleasedPostcommitScene
+): boolean => isCurrentPostcommitScene(payload)
+  ? hasValidCurrentPostcommitClosure(scene, payload)
+  : hasValidLegacyPostcommitClosure(scene, payload)

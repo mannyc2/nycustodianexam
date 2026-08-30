@@ -74,72 +74,109 @@ const precommitScene = (): PrecommitScene => ({
 })
 
 const postcommitScene = (opaqueAssetId = "s001"): PostcommitScene => ({
+  schemaVersion: 2,
+  version: 2,
   id: "s001",
   opaqueAssetId,
   kind: "positive",
   hazardFamily: "slip-trip-fall",
-  claim: "The walking surface needs correction.",
-  sourceIds: ["source-1"],
+  tags: {
+    domain: "health-and-safety",
+    family: "hazard-scene",
+    environment: "hallway",
+    hazardCategory: "slip-trip-fall",
+    seriesScope: "entry-level-custodians-janitors",
+    editorialDifficulty: "application"
+  },
   targets: [
     {
       id: "target-1",
-      condition: "liquid across the walking route",
-      correction: "control the area and dry the surface"
+      zone: "floor",
+      polygons: [[[0.1, 0.1], [0.4, 0.1], [0.4, 0.4], [0.1, 0.4]]],
+      observableCondition: "Liquid extends across the walking route.",
+      conceptIds: ["wet-walking-surface"],
+      correctionCategory: "isolate-and-dry",
+      whyUnsafeClaimId: "claim-target-why",
+      likelyConsequenceClaimId: "claim-target-consequence",
+      immediateCorrectionClaimId: "claim-target-correction"
     }
   ],
   decoys: [
     {
       id: "decoy-1",
-      condition: "fixed conduit beside the route",
-      safeBecause: "it does not enter the walking surface"
-    }
-  ],
-  targetRegions: [
-    {
-      inventoryId: "target-1",
-      polygons: [[[0.1, 0.1], [0.4, 0.1], [0.4, 0.4], [0.1, 0.4]]]
-    }
-  ],
-  decoyRegions: [
-    {
-      inventoryId: "decoy-1",
-      polygons: [[[0.6, 0.6], [0.9, 0.6], [0.9, 0.9], [0.6, 0.9]]]
-    }
-  ],
-  fullPostAnswer: {
-    claim: "The walking surface needs correction.",
-    targets: [
-      {
-        condition: "liquid across the walking route",
-        correction: "control the area and dry the surface",
-        sourceIds: ["source-1"]
-      }
-    ],
-    decoys: [
-      {
-        condition: "fixed conduit beside the route",
-        safeBecause: "it does not enter the walking surface"
-      }
-    ],
-    safeBackground: ["closed door"],
-    sources: [
-      {
-        id: "source-1",
-        title: "Source title",
-        url: "https://example.com/source",
-        locator: "section 1",
-        scope: "Walking surfaces."
-      }
-    ]
-  },
-  nonvisualZonedEquivalent: [
-    { zone: "floor", role: "target", statement: "liquid across the walking route" },
-    {
       zone: "wall",
-      role: "decoy",
-      statement: "fixed conduit beside the route; it does not enter the walking surface."
+      polygons: [[[0.6, 0.6], [0.9, 0.6], [0.9, 0.9], [0.6, 0.9]]],
+      observableCondition: "Fixed conduit remains beside the route.",
+      conceptIds: ["fixed-conduit"],
+      suspiciousBecause: "It is close to the walking surface.",
+      safeAsDepictedClaimId: "claim-decoy-safe",
+      unsafeIfClaimId: "claim-decoy-unsafe-if"
+    }
+  ],
+  safeBackground: [
+    { zone: "wall", observableCondition: "The door is closed and intact." }
+  ],
+  claims: [
+    {
+      id: "claim-target-why",
+      text: "Liquid makes the walking surface hazardous.",
+      sourceLineIds: ["source-line-1"],
+      evidenceTier: "official-primary",
+      caveat: null
     },
-    { zone: "wall", role: "safe-background", statement: "closed door" }
+    {
+      id: "claim-target-consequence",
+      text: "A person could slip and fall.",
+      sourceLineIds: ["source-line-1"],
+      evidenceTier: "official-primary",
+      caveat: null
+    },
+    {
+      id: "claim-target-correction",
+      text: "Control the area and dry the surface.",
+      sourceLineIds: ["source-line-1"],
+      evidenceTier: "official-primary",
+      caveat: null
+    },
+    {
+      id: "claim-decoy-safe",
+      text: "The conduit does not enter the walking surface.",
+      sourceLineIds: ["source-line-1"],
+      evidenceTier: "official-primary",
+      caveat: null
+    },
+    {
+      id: "claim-decoy-unsafe-if",
+      text: "It would be unsafe if it entered the walking route.",
+      sourceLineIds: ["source-line-1"],
+      evidenceTier: "official-primary",
+      caveat: null
+    }
+  ],
+  sources: [
+    {
+      id: "source-line-1",
+      sourceId: "source-1",
+      title: "Source title",
+      publisher: "Official publisher",
+      evidenceTier: "official-primary",
+      version: "Current test edition",
+      rightsNotes: "Project-authored test paraphrase.",
+      locator: "section 1, exact line",
+      excerpt: "Walking surfaces must be kept in a safe condition.",
+      language: "en",
+      verifiedOn: "2026-08-30",
+      supportedClaimIds: [
+        "claim-target-why",
+        "claim-target-consequence",
+        "claim-target-correction",
+        "claim-decoy-safe",
+        "claim-decoy-unsafe-if"
+      ],
+      scope: "Walking surfaces.",
+      sourceLocator: "section 1",
+      url: "https://example.com/source"
+    }
   ]
 })
 
@@ -295,6 +332,56 @@ it.effect("persists the complete marker response before requesting feedback", ()
         globalThis.fetch = originalFetch
       })
     )
+  )
+})
+
+it.effect("rejects current feedback carrying stale legacy answer keys", () => {
+  const originalFetch = globalThis.fetch
+  const hybridPayload = {
+    ...postcommitScene(),
+    claim: "Stale legacy summary that must not survive a current reveal.",
+    targetRegions: []
+  }
+  const hybridBytes = new TextEncoder().encode(JSON.stringify(hybridPayload))
+  let completionCount = 0
+  const layer = Layer.succeed(
+    HazardPersistence,
+    HazardPersistence.of({
+      commitAttempt: (input) => Effect.succeed(attempt(input)),
+      findAttempt: () => Effect.succeed(undefined),
+      completeAttempt: (input) => Effect.sync(() => {
+        completionCount += 1
+        return completedAttempt(input)
+      }),
+      listAttempts: noAttempts
+    })
+  )
+
+  return Effect.gen(function*() {
+    globalThis.fetch = Object.assign(
+      async () => new Response(JSON.stringify(hybridPayload), {
+        status: 200,
+        headers: { "content-type": "application/json" }
+      }),
+      { preconnect: originalFetch.preconnect }
+    )
+
+    const result = yield* commitHazardAndReveal({
+      receipt: receipt("visual", hybridBytes),
+      scene: precommitScene(),
+      mode: "visual",
+      draft: visualDraft,
+      visualAssetReceipt
+    }).pipe(Effect.provide(Layer.merge(layer, verifiedLayer)))
+
+    strictEqual(result.tag, "reveal_failed")
+    if (result.tag !== "reveal_failed") throw new Error("Expected strict current-scene rejection")
+    strictEqual(result.error._tag, "HazardRevealError")
+    strictEqual(completionCount, 0)
+  }).pipe(
+    Effect.ensuring(Effect.sync(() => {
+      globalThis.fetch = originalFetch
+    }))
   )
 })
 
@@ -560,10 +647,7 @@ it.effect("rejects a payload-only mutation when the retained postcommit bytes ar
     const payload = postcommitScene()
     const mutatedPayload: PostcommitScene = {
       ...payload,
-      fullPostAnswer: {
-        ...payload.fullPostAnswer,
-        safeBackground: ["different safe background"]
-      }
+      safeBackground: [{ zone: "wall", observableCondition: "A different safe detail." }]
     }
     const outcome = yield* Effect.tryPromise({
       try: () => validateHazardEvaluation({
@@ -664,7 +748,7 @@ it.effect("accepts an exact BOM-bearing postcommit artifact", () =>
     }))
 
     strictEqual(validated.postcommitBase64, postcommitBase64)
-    deepStrictEqual(validated.payload, postcommitScene())
+    deepStrictEqual(JSON.parse(JSON.stringify(validated.payload)), postcommitScene())
   })
 )
 
@@ -895,43 +979,29 @@ it.effect("rejects incomplete or contradictory postcommit closure", () =>
   Effect.sync(() => {
     const scene = precommitScene()
     const payload = postcommitScene()
-    const missingFullTarget: PostcommitScene = {
+    const missingClaim: PostcommitScene = {
       ...payload,
-      fullPostAnswer: { ...payload.fullPostAnswer, targets: [] }
+      claims: [payload.claims[1]!, ...payload.claims.slice(2)]
     }
-    const decoyStatement = payload.nonvisualZonedEquivalent.find(
-      (statement) => statement.role === "decoy"
-    )
-    if (decoyStatement === undefined) {
-      throw new Error("Test fixture requires one decoy statement")
-    }
-    const missingTargetStatement: PostcommitScene = {
+    const unknownClaimReference: PostcommitScene = {
       ...payload,
-      nonvisualZonedEquivalent: [decoyStatement]
+      targets: [{ ...payload.targets[0]!, whyUnsafeClaimId: "claim-not-released" }]
     }
     const unsafeSourceUrl: PostcommitScene = {
       ...payload,
-      fullPostAnswer: {
-        ...payload.fullPostAnswer,
-        sources: [{
-          ...payload.fullPostAnswer.sources[0],
-          url: "http://example.com/source"
-        }]
-      }
+      sources: [{ ...payload.sources[0]!, url: "http://example.com/source" }]
     }
-    const zeroStatements = payload.nonvisualZonedEquivalent.filter(
-      (statement) => statement.role !== "target"
-    )
-    const firstZeroStatement = zeroStatements[0]
-    if (firstZeroStatement === undefined) throw new Error("Expected a zero-scene statement")
     const validZero: PostcommitScene = {
       ...payload,
       kind: "zero-hazard",
       hazardFamily: null,
+      tags: { ...payload.tags, hazardCategory: null },
       targets: [],
-      targetRegions: [],
-      fullPostAnswer: { ...payload.fullPostAnswer, targets: [] },
-      nonvisualZonedEquivalent: [firstZeroStatement, ...zeroStatements.slice(1)]
+      claims: [payload.claims[3]!, payload.claims[4]!],
+      sources: [{
+        ...payload.sources[0]!,
+        supportedClaimIds: ["claim-decoy-safe", "claim-decoy-unsafe-if"]
+      }]
     }
     const invalidZeroFamily: PostcommitScene = {
       ...validZero,
@@ -939,37 +1009,26 @@ it.effect("rejects incomplete or contradictory postcommit closure", () =>
     }
     const invalidRegion: PostcommitScene = {
       ...payload,
-      targetRegions: [{
-        inventoryId: "target-1",
+      targets: [{
+        ...payload.targets[0]!,
         polygons: [[[1.2, 0.1], [1.4, 0.1], [1.4, 0.4], [1.2, 0.4]]]
       }]
     }
-    const unknownZoneStatements = payload.nonvisualZonedEquivalent.map((statement, index) =>
-      index === 0 ? { ...statement, zone: "unreleased zone" } : statement
-    )
-    const firstUnknownZoneStatement = unknownZoneStatements[0]
-    if (firstUnknownZoneStatement === undefined) throw new Error("Expected a zone statement")
     const unknownZone: PostcommitScene = {
       ...payload,
-      nonvisualZonedEquivalent: [firstUnknownZoneStatement, ...unknownZoneStatements.slice(1)]
+      targets: [{ ...payload.targets[0]!, zone: "unreleased zone" }]
     }
-    const contradictoryStatementValues = payload.nonvisualZonedEquivalent.map((statement) =>
-      statement.role === "target"
-        ? { ...statement, statement: "the floor is dry and clear" }
-        : statement.role === "decoy"
-          ? { ...statement, statement: "the conduit blocks the route" }
-          : statement
-    )
-    const firstContradictoryStatement = contradictoryStatementValues[0]
-    if (firstContradictoryStatement === undefined) {
-      throw new Error("Expected a contradictory statement fixture")
-    }
-    const contradictoryStatements: PostcommitScene = {
+    const oneWayEvidenceEdge: PostcommitScene = {
       ...payload,
-      nonvisualZonedEquivalent: [
-        firstContradictoryStatement,
-        ...contradictoryStatementValues.slice(1)
-      ]
+      sources: [{
+        ...payload.sources[0]!,
+        supportedClaimIds: [
+          "claim-target-consequence",
+          "claim-target-correction",
+          "claim-decoy-safe",
+          "claim-decoy-unsafe-if"
+        ]
+      }]
     }
     const sceneWithUnusedNeutralZone: PrecommitScene = {
       ...scene,
@@ -982,14 +1041,14 @@ it.effect("rejects incomplete or contradictory postcommit closure", () =>
       }
     }
 
-    strictEqual(hasValidPostcommitClosure(scene, missingFullTarget), false)
-    strictEqual(hasValidPostcommitClosure(scene, missingTargetStatement), false)
+    strictEqual(hasValidPostcommitClosure(scene, missingClaim), false)
+    strictEqual(hasValidPostcommitClosure(scene, unknownClaimReference), false)
     strictEqual(hasValidPostcommitClosure(scene, unsafeSourceUrl), false)
     strictEqual(hasValidPostcommitClosure(scene, validZero), true)
     strictEqual(hasValidPostcommitClosure(scene, invalidZeroFamily), false)
     strictEqual(hasValidPostcommitClosure(scene, invalidRegion), false)
     strictEqual(hasValidPostcommitClosure(scene, unknownZone), false)
-    strictEqual(hasValidPostcommitClosure(scene, contradictoryStatements), false)
+    strictEqual(hasValidPostcommitClosure(scene, oneWayEvidenceEdge), false)
     strictEqual(hasValidPostcommitClosure(sceneWithUnusedNeutralZone, payload), true)
   })
 )

@@ -1,6 +1,6 @@
 import {
-  PostcommitScene,
-  ReleasedPostcommitQuestion
+  ReleasedPostcommitQuestion,
+  ReleasedPostcommitScene
 } from "@nycustodian/content/model"
 import { Effect, Schema } from "effect"
 import { makeScreenStore, type ScreenSnapshot } from "../screen/store.ts"
@@ -675,7 +675,7 @@ export const reconcileSimulation = Effect.fn("Simulation.reconcileResults")(
 
     const postcommit: Array<
       Readonly<{
-        readonly payload: ReleasedPostcommitQuestion | typeof PostcommitScene.Type
+        readonly payload: ReleasedPostcommitQuestion | typeof ReleasedPostcommitScene.Type
         readonly postcommitBase64: string
       }>
     > = []
@@ -706,7 +706,10 @@ export const reconcileSimulation = Effect.fn("Simulation.reconcileResults")(
         }
         postcommit.push({ payload: answer, postcommitBase64 })
       } else {
-        const answer = yield* Schema.decodeUnknownEffect(PostcommitScene)(unknownAnswer).pipe(
+        const answer = yield* Schema.decodeUnknownEffect(
+          ReleasedPostcommitScene,
+          { onExcessProperty: "error" }
+        )(unknownAnswer).pipe(
           Effect.mapError((cause) =>
             new SimulationPersistenceError({
               operation: "decode-hazard-answer",

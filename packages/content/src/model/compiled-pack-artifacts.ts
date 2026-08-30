@@ -5,6 +5,7 @@ import {
 } from "./authored-pack.ts"
 import {
   ContentSource,
+  SourceReceipt,
   SourceLine,
   SupportedClaim
 } from "./source-evidence.ts"
@@ -26,12 +27,11 @@ import {
 } from "./question-artifacts.ts"
 import {
   AcceptedSceneDecoy,
+  AcceptedSceneSafeBackground,
+  AcceptedSceneTags,
   AcceptedSceneTarget,
-  FullSceneAccessibility,
   NeutralSceneAccessibility,
-  NonvisualSceneStatement,
-  ReleasedDerivativeAsset,
-  SceneRegion
+  ReleasedDerivativeAsset
 } from "./visual-release-inputs.ts"
 
 export const CompiledVisualAsset = Schema.Struct({
@@ -179,25 +179,100 @@ export const PostcommitPackQuestion = Schema.Struct({
   factKind: QuestionFactKind
 })
 
-export const PostcommitScene = Schema.Struct({
+const LegacySceneSource = Schema.Struct({
+  id: Schema.NonEmptyString,
+  title: Schema.NonEmptyString,
+  url: Schema.NonEmptyString,
+  locator: Schema.NonEmptyString,
+  scope: Schema.NonEmptyString
+})
+
+const LegacySceneTarget = Schema.Struct({
+  id: Schema.NonEmptyString,
+  condition: Schema.NonEmptyString,
+  correction: Schema.NonEmptyString
+})
+
+const LegacySceneDecoy = Schema.Struct({
+  id: Schema.NonEmptyString,
+  condition: Schema.NonEmptyString,
+  safeBecause: Schema.NonEmptyString
+})
+
+const LegacySceneRegion = Schema.Struct({
+  inventoryId: Schema.NonEmptyString,
+  polygons: Schema.NonEmptyArray(
+    Schema.NonEmptyArray(Schema.Tuple([Schema.Number, Schema.Number]))
+  )
+})
+
+const LegacyFullSceneTarget = Schema.Struct({
+  condition: Schema.NonEmptyString,
+  correction: Schema.NonEmptyString,
+  sourceIds: Schema.NonEmptyArray(Schema.NonEmptyString)
+})
+
+const LegacyFullSceneDecoy = Schema.Struct({
+  condition: Schema.NonEmptyString,
+  safeBecause: Schema.NonEmptyString
+})
+
+const LegacyFullSceneAccessibility = Schema.Struct({
+  claim: Schema.NonEmptyString,
+  targets: Schema.Array(LegacyFullSceneTarget),
+  decoys: Schema.NonEmptyArray(LegacyFullSceneDecoy),
+  safeBackground: Schema.Array(Schema.NonEmptyString),
+  sources: Schema.NonEmptyArray(LegacySceneSource)
+})
+
+const LegacyNonvisualSceneStatement = Schema.Struct({
+  zone: Schema.NonEmptyString,
+  role: Schema.Literals(["target", "decoy", "safe-background"]),
+  statement: Schema.NonEmptyString
+})
+
+/** Exact unversioned scene-answer shape published before canonical scene evidence. */
+export const LegacyPostcommitScene = Schema.Struct({
   id: Schema.NonEmptyString,
   opaqueAssetId: ArtifactPathSegment,
   kind: Schema.Literals(["positive", "zero-hazard"]),
   hazardFamily: Schema.NullOr(Schema.NonEmptyString),
   claim: Schema.NonEmptyString,
   sourceIds: Schema.NonEmptyArray(Schema.NonEmptyString),
+  targets: Schema.Array(LegacySceneTarget),
+  decoys: Schema.NonEmptyArray(LegacySceneDecoy),
+  targetRegions: Schema.Array(LegacySceneRegion),
+  decoyRegions: Schema.NonEmptyArray(LegacySceneRegion),
+  fullPostAnswer: LegacyFullSceneAccessibility,
+  nonvisualZonedEquivalent: Schema.NonEmptyArray(LegacyNonvisualSceneStatement)
+})
+
+export const PostcommitScene = Schema.Struct({
+  schemaVersion: Schema.Literal(2),
+  version: Schema.Literal(2),
+  id: ArtifactPathSegment,
+  opaqueAssetId: ArtifactPathSegment,
+  kind: Schema.Literals(["positive", "zero-hazard"]),
+  hazardFamily: Schema.NullOr(Schema.NonEmptyString),
+  tags: AcceptedSceneTags,
   targets: Schema.Array(AcceptedSceneTarget),
   decoys: Schema.NonEmptyArray(AcceptedSceneDecoy),
-  targetRegions: Schema.Array(SceneRegion),
-  decoyRegions: Schema.NonEmptyArray(SceneRegion),
-  fullPostAnswer: FullSceneAccessibility,
-  nonvisualZonedEquivalent: Schema.NonEmptyArray(NonvisualSceneStatement)
+  safeBackground: Schema.Array(AcceptedSceneSafeBackground),
+  claims: Schema.NonEmptyArray(SupportedClaim),
+  sources: Schema.NonEmptyArray(SourceReceipt)
 })
+
+export const ReleasedPostcommitScene = Schema.Union([
+  PostcommitScene,
+  LegacyPostcommitScene
+])
+
+export type ReleasedPostcommitScene = typeof ReleasedPostcommitScene.Type
 
 export class PostcommitPackArtifact extends Schema.Class<PostcommitPackArtifact>(
   "@nycustodian/content/PostcommitPackArtifact"
 )({
-  schemaVersion: Schema.Literal(1),
+  schemaVersion: Schema.Literal(2),
   packId: ArtifactPathSegment,
   version: Schema.Int,
   locale: ContentLocale,

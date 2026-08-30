@@ -859,8 +859,14 @@ test("restores a visual hazard simulation and keeps evaluated feedback after pac
   await expect(page.getByRole("heading", { name: "Hazard practice metrics" })).toBeVisible()
   await expect(page.getByRole("heading", { name: "Marker feedback" })).toBeVisible()
   await expect(page.getByRole("heading", {
-    name: "Scene explanation and full post-submission description"
+    name: "Scene explanation and evidence"
   })).toBeVisible()
+  await expect(page.getByText("Why this is unsafe", { exact: true })).toBeVisible()
+  await expect(page.getByText("Likely consequence", { exact: true })).toBeVisible()
+  await expect(page.getByText("Immediate correction", { exact: true })).toBeVisible()
+  await expect(page.getByText("Why it may look suspicious", { exact: true })).toBeVisible()
+  await expect(page.getByText("Why it is safe as depicted", { exact: true })).toBeVisible()
+  await expect(page.getByText("Condition that would make it unsafe", { exact: true })).toBeVisible()
   await expect(page.getByText("Reviewed scene overlay.", { exact: false })).toBeVisible()
   await expect(page.locator("[data-marker-kind]")).toHaveCount(1)
   const reviewedImage = page.locator(".hazard-result-overlay img")
@@ -874,13 +880,14 @@ test("restores a visual hazard simulation and keeps evaluated feedback after pac
 
   const submissions = await readStore(page, appDatabaseStores.simulationSubmissions)
   const result = (submissions[0]?.results as ReadonlyArray<{
-    readonly postcommit?: { readonly claim?: string }
+    readonly postcommit?: { readonly claims?: ReadonlyArray<{ readonly text?: string }> }
     readonly retainedVisualAsset?: {
       readonly dataUrl?: string
       readonly receipt?: { readonly path?: string }
     }
   }> | undefined)?.[0]
-  expect(result?.postcommit?.claim).toBeTruthy()
+  const durableClaim = result?.postcommit?.claims?.[0]?.text
+  expect(durableClaim).toBeTruthy()
   expect(result?.retainedVisualAsset?.dataUrl).toBe(reviewedImageDataUrl)
   expect(result?.retainedVisualAsset?.receipt?.path).toBeTruthy()
   await page.evaluate((cacheName) => caches.delete(cacheName), verifiedContentCacheName)
@@ -893,9 +900,9 @@ test("restores a visual hazard simulation and keeps evaluated feedback after pac
   })
   await page.reload()
   await expect(page.getByRole("heading", { name: /Practice accuracy:/ })).toBeVisible()
-  await expect(page.getByText(result?.postcommit?.claim ?? "missing durable claim", {
+  await expect(page.getByText(durableClaim ?? "missing durable claim", {
     exact: true
-  })).toBeVisible()
+  }).first()).toBeVisible()
   await expect(page.locator(".hazard-result-overlay img")).toHaveAttribute(
     "src",
     reviewedImageDataUrl ?? ""

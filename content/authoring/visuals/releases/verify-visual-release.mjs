@@ -56,6 +56,12 @@ function assertExactObject(actual, expected, label) {
   assertSameArray(Object.entries(actual), Object.entries(expected), label);
 }
 
+function asSentence(text) {
+  const trimmed = text.trim();
+  const capitalized = `${trimmed[0].toUpperCase()}${trimmed.slice(1)}`;
+  return /[.!?]$/.test(capitalized) ? capitalized : `${capitalized}.`;
+}
+
 function validateTaxonomyProvenance(toolInventory) {
   const provenance = readJson(taxonomyProvenance);
   assert(provenance.schemaVersion === 1, "taxonomy provenance schemaVersion must be 1");
@@ -218,14 +224,87 @@ function verifySceneRelease() {
   assertSceneCompanion(lineage, scenes, "scene lineage records");
   assertSceneCompanion(qa, scenes, "scene QA records");
 
+  const allClaimIds = scenes.flatMap((scene) => scene.claims.map((claim) => claim.id));
+  assertUnique(allClaimIds, "scene claim IDs");
+  const allClaimsById = new Map(
+    scenes.flatMap((scene) => scene.claims.map((claim) => [claim.id, claim])),
+  );
+  const canonicalReceiptById = new Map();
+
   scenes.forEach((scene, index) => {
+    assert(scene.schemaVersion === 2 && scene.version === 2, `${scene.sceneId} must use accepted-scene schema/version 2`);
+    assert(!Object.hasOwn(scene, "semanticManifest"), `${scene.sceneId} must not retain a peer semantic manifest`);
     assert(scene.productionStatus === "accepted", `${scene.sceneId} release must be accepted`);
     assert(scene.independentReviewStatus === "pass", `${scene.sceneId} independent review must pass`);
     assert(scene.opaqueAssetId === `s${String(index + 1).padStart(3, "0")}`, `${scene.sceneId} opaque ID drifted`);
+    assert(scene.tags?.domain === "health-and-safety", `${scene.sceneId} domain tag drifted`);
+    assert(scene.tags?.family === "hazard-scene", `${scene.sceneId} family tag drifted`);
+    assert(scene.tags?.environment === scene.environment, `${scene.sceneId} environment tag drifted`);
+    assert(scene.tags?.hazardCategory === scene.hazardFamily, `${scene.sceneId} hazard tag drifted`);
+    assert(scene.tags?.seriesScope === "entry-level-custodians-janitors", `${scene.sceneId} series tag drifted`);
+    assert(scene.tags?.editorialDifficulty === "application", `${scene.sceneId} difficulty tag drifted`);
     assert(regions[index].masterSha256 === scene.master.sha256, `${scene.sceneId} region master hash drifted`);
     assert(lineage[index].selectedCandidate.sha256 === scene.master.sha256, `${scene.sceneId} selected candidate hash drifted`);
     assert(qa[index].exactMasterSha256 === scene.master.sha256, `${scene.sceneId} QA master hash drifted`);
     assert(qa[index].overall === "accepted", `${scene.sceneId} QA status must be accepted`);
+
+    const targetRegions = scene.targets.map((target) => ({ inventoryId: target.id, polygons: target.polygons }));
+    const decoyRegions = scene.decoys.map((decoy) => ({ inventoryId: decoy.id, polygons: decoy.polygons }));
+    assertSameArray(regions[index].targetRegions, targetRegions, `${scene.sceneId} derived target regions`);
+    assertSameArray(regions[index].decoyRegions, decoyRegions, `${scene.sceneId} derived decoy regions`);
+    assert(accessibility[index].schemaVersion === 2, `${scene.sceneId} accessibility projection schemaVersion must be 2`);
+    assert(accessibility[index].derivedFrom === "content/authoring/visuals/releases/scenes.json", `${scene.sceneId} accessibility projection authority drifted`);
+    assertSameArray(accessibility[index].neutralPreAnswer, scene.neutralPreAnswer, `${scene.sceneId} neutral accessibility projection`);
+    assertSameArray(accessibility[index].fullPostAnswer.claims, scene.claims, `${scene.sceneId} claim accessibility projection`);
+    assertSameArray(accessibility[index].fullPostAnswer.sources, scene.sources, `${scene.sceneId} source accessibility projection`);
+
+    const neutralZoneByLabel = new Map(
+      scene.neutralPreAnswer.zones.map((zone) => [zone.label, zone]),
+    );
+    for (const item of [...scene.targets, ...scene.decoys, ...scene.safeBackground]) {
+      const neutralZone = neutralZoneByLabel.get(item.zone);
+      assert(neutralZone, `${scene.sceneId} observable references unknown neutral zone ${item.zone}`);
+      assert(
+        neutralZone.description.includes(asSentence(item.observableCondition)),
+        `${scene.sceneId} ${item.id ?? "safe-background observation"} is absent from its neutral zone ${item.zone}`,
+      );
+    }
+
+    assertUnique(scene.targets.map((target) => target.id), `${scene.sceneId} target IDs`);
+    assertUnique(scene.decoys.map((decoy) => decoy.id), `${scene.sceneId} decoy IDs`);
+    assertUnique(scene.claims.map((claim) => claim.id), `${scene.sceneId} local claim IDs`);
+    assertUnique(scene.sources.map((source) => source.id), `${scene.sceneId} local source-line receipts`);
+    const localClaimsById = new Map(scene.claims.map((claim) => [claim.id, claim]));
+    const localReceiptsById = new Map(scene.sources.map((source) => [source.id, source]));
+    for (const target of scene.targets) {
+      for (const claimId of [target.whyUnsafeClaimId, target.likelyConsequenceClaimId, target.immediateCorrectionClaimId]) {
+        assert(localClaimsById.has(claimId), `${scene.sceneId} target ${target.id} references missing claim ${claimId}`);
+      }
+    }
+    for (const decoy of scene.decoys) {
+      for (const claimId of [decoy.safeAsDepictedClaimId, decoy.unsafeIfClaimId]) {
+        assert(localClaimsById.has(claimId), `${scene.sceneId} decoy ${decoy.id} references missing claim ${claimId}`);
+      }
+    }
+    for (const claim of scene.claims) {
+      for (const sourceLineId of claim.sourceLineIds) {
+        const receipt = localReceiptsById.get(sourceLineId);
+        assert(receipt, `${scene.sceneId} claim ${claim.id} references missing source receipt ${sourceLineId}`);
+        assert(receipt.supportedClaimIds.includes(claim.id), `${scene.sceneId} claim ${claim.id} lacks reciprocal source receipt ${sourceLineId}`);
+      }
+    }
+    for (const receipt of scene.sources) {
+      assert(typeof receipt.scope === "string" && receipt.scope.length > 0, `${scene.sceneId} receipt ${receipt.id} must retain source scope`);
+      assert(typeof receipt.sourceLocator === "string" && receipt.sourceLocator.length > 0, `${scene.sceneId} receipt ${receipt.id} must retain the broad source locator`);
+      const prior = canonicalReceiptById.get(receipt.id);
+      if (prior === undefined) canonicalReceiptById.set(receipt.id, receipt);
+      else assertSameArray(receipt, prior, `shared source receipt ${receipt.id}`);
+      for (const claimId of receipt.supportedClaimIds) {
+        const claim = allClaimsById.get(claimId);
+        assert(claim, `${scene.sceneId} receipt ${receipt.id} references unknown claim ${claimId}`);
+        assert(claim.sourceLineIds.includes(receipt.id), `${scene.sceneId} receipt ${receipt.id} is not reciprocal with ${claimId}`);
+      }
+    }
   });
 
   const artifacts = scenes.flatMap(artifactsFromRelease);

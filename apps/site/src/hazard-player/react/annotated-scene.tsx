@@ -1,5 +1,6 @@
 import { assessVisualMarkers } from "../assessment.ts"
-import type { HazardMarker, PostcommitScene } from "../attempt.ts"
+import type { HazardMarker, ReleasedPostcommitScene } from "../attempt.ts"
+import { decoyRegionsForScene, targetRegionsForScene } from "../released-scene.ts"
 
 export const AnnotatedHazardScene = ({
   alt,
@@ -10,9 +11,11 @@ export const AnnotatedHazardScene = ({
   readonly alt: string
   readonly imageUrl: string
   readonly markers: ReadonlyArray<HazardMarker>
-  readonly payload: PostcommitScene
+  readonly payload: ReleasedPostcommitScene
 }) => {
   const assessment = assessVisualMarkers(markers, payload)
+  const targetRegions = targetRegionsForScene(payload)
+  const decoyRegions = decoyRegionsForScene(payload)
   return <figure className="hazard-result-figure">
     <div className="hazard-result-overlay">
       <img alt={alt} src={imageUrl} />
@@ -22,14 +25,14 @@ export const AnnotatedHazardScene = ({
         preserveAspectRatio="none"
         viewBox="0 0 1 1"
       >
-        {payload.targetRegions.flatMap((region) => region.polygons.map((polygon, index) => <polygon
+        {targetRegions.flatMap((region) => region.polygons.map((polygon, index) => <polygon
           className="hazard-result-region hazard-result-region--target"
           data-inventory-id={region.inventoryId}
           key={`target:${region.inventoryId}:${index}`}
           points={polygon.map(([x, y]) => `${x},${y}`).join(" ")}
           vectorEffect="non-scaling-stroke"
         />))}
-        {payload.decoyRegions.flatMap((region) => region.polygons.map((polygon, index) => <polygon
+        {decoyRegions.flatMap((region) => region.polygons.map((polygon, index) => <polygon
           className="hazard-result-region hazard-result-region--decoy"
           data-inventory-id={region.inventoryId}
           key={`decoy:${region.inventoryId}:${index}`}

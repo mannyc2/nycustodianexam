@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs"
 import { describe, expect, it } from "vitest"
 import { assertSafeBuildPaths } from "../scripts/finalize-service-worker.ts"
 import {
@@ -8,6 +9,7 @@ import {
   assertProtectedServiceWorkerPolicy,
   decodeAndAssertHazardAssetReceipt,
   decodeAndAssertHazardReceipt,
+  decodeCurrentPostcommitScene,
   decodeAndAssertQuestionReceipt,
   extractServiceWorkerShellUrls
 } from "../../../scripts/verify-artifacts.ts"
@@ -100,6 +102,22 @@ const assetReceipt = {
 }
 
 describe("artifact leak guards", () => {
+  it("rejects a current scene release carrying stale legacy answer keys", () => {
+    const currentScene = JSON.parse(readFileSync(
+      new URL(
+        "../../../content/releases/vertical-slice/scenes/s001.postcommit.json",
+        import.meta.url
+      ),
+      "utf8"
+    )) as unknown
+    expect(() => decodeCurrentPostcommitScene(currentScene)).not.toThrow()
+    expect(() => decodeCurrentPostcommitScene({
+      ...(currentScene as Record<string, unknown>),
+      claim: "Stale legacy summary that must not survive a current release.",
+      targetRegions: []
+    })).toThrow()
+  })
+
   it("rejects source maps and answer-bearing filenames", () => {
     expect(() => assertSafeBuildPaths(["assets/player.js.map"])).toThrow(/Source maps/)
     expect(() => assertSafeBuildPaths(["content/answer-key.json"])).toThrow(

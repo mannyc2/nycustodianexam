@@ -4,14 +4,20 @@ import {
   assessVisualMarkers,
   type MarkerAssessment
 } from "../assessment.ts"
-import type { PostcommitScene } from "../attempt.ts"
+import type { ReleasedPostcommitScene } from "../attempt.ts"
+import {
+  decoyFeedbackForScene,
+  targetFeedbackForScene,
+  zonedStatementsForScene
+} from "../released-scene.ts"
 import { draftFromState } from "../state.ts"
 import { AnnotatedHazardScene } from "./annotated-scene.tsx"
 import { useHazardPlayer } from "./context.tsx"
+import { HazardPostcommitEquivalent, HazardSceneFacts } from "./scene-feedback.tsx"
 
 const markerFeedback = (
   assessment: MarkerAssessment,
-  payload: PostcommitScene
+  payload: ReleasedPostcommitScene
 ): ReactNode => {
   if (assessment.kind === "false_positive") {
     return (
@@ -23,25 +29,25 @@ const markerFeedback = (
   }
 
   if (assessment.kind === "decoy_false_positive") {
-    const decoy = payload.decoys.find((candidate) => candidate.id === assessment.inventoryId)
+    const decoy = decoyFeedbackForScene(payload, assessment.inventoryId)
     return (
       <p>
         <strong>Safe as shown.</strong>{" "}
         {decoy === undefined
           ? "The detail you marked is safe as depicted in this scene."
-          : `${decoy.condition}; ${decoy.safeBecause}.`}
+          : `${decoy.observableCondition}. Safe as depicted: ${decoy.safeAsDepicted}`}
       </p>
     )
   }
 
-  const target = payload.targets.find((candidate) => candidate.id === assessment.inventoryId)
+  const target = targetFeedbackForScene(payload, assessment.inventoryId)
   if (assessment.kind === "duplicate") {
     return (
       <p>
         <strong>Already marked.</strong>{" "}
         {target === undefined
           ? "Another marker already covers this hazard."
-          : `Another marker already covers ${target.condition}.`}
+          : `Another marker already covers ${target.observableCondition}.`}
       </p>
     )
   }
@@ -51,7 +57,7 @@ const markerFeedback = (
       <strong>Hazard found.</strong>{" "}
       {target === undefined
         ? "This marker matches a condition that needs correction."
-        : `${target.condition}. How to correct it: ${target.correction}.`}
+        : `${target.observableCondition}. Immediate correction: ${target.immediateCorrection}`}
     </p>
   )
 }
@@ -62,7 +68,7 @@ const VisualResults = ({
   sceneAlt
 }: {
   readonly imageUrl: string | null
-  readonly payload: PostcommitScene
+  readonly payload: ReleasedPostcommitScene
   readonly sceneAlt: string
 }) => {
   const { state } = useHazardPlayer()
@@ -99,10 +105,10 @@ const VisualResults = ({
           <h4 id="missed-condition-heading">Hazards you missed</h4>
           <ul>
             {assessment.missedInventoryIds.map((inventoryId) => {
-              const target = payload.targets.find((candidate) => candidate.id === inventoryId)
+              const target = targetFeedbackForScene(payload, inventoryId)
               return target === undefined ? null : (
-                <li key={target.condition}>
-                  {target.condition}. How to correct it: {target.correction}.
+                <li key={inventoryId}>
+                  {target.observableCondition}. Immediate correction: {target.immediateCorrection}
                 </li>
               )
             })}
@@ -113,22 +119,11 @@ const VisualResults = ({
   )
 }
 
-const roleLabel = (role: "target" | "decoy" | "safe-background"): string => {
-  switch (role) {
-    case "target":
-      return "Condition needing correction"
-    case "decoy":
-      return "Safe detail that may look suspicious"
-    case "safe-background":
-      return "Safe background detail"
-  }
-}
-
-const NonvisualResults = ({ payload }: { readonly payload: PostcommitScene }) => {
+const NonvisualResults = ({ payload }: { readonly payload: ReleasedPostcommitScene }) => {
   const { scene, state } = useHazardPlayer()
   const zones = assessSelectedZones(draftFromState(state).selectedZoneOrders, scene)
   const postcommitLabels = new Set(
-    payload.nonvisualZonedEquivalent.map((statement) => statement.zone)
+    zonedStatementsForScene(payload).map((statement) => statement.zone)
   )
 
   return (
@@ -159,65 +154,6 @@ const NonvisualResults = ({ payload }: { readonly payload: PostcommitScene }) =>
     </section>
   )
 }
-
-const PostcommitEquivalent = ({ payload }: { readonly payload: PostcommitScene }) => (
-  <section aria-labelledby="complete-zoned-equivalent-heading">
-    <h3 id="complete-zoned-equivalent-heading">Full scene description by zone</h3>
-    <p>
-      This covers the same knowledge in text form; it is not the same task as marking the image.
-    </p>
-    <ul>
-      {payload.nonvisualZonedEquivalent.map((statement) => (
-        <li key={`${statement.zone}:${statement.role}:${statement.statement}`}>
-          <strong>{statement.zone} — {roleLabel(statement.role)}:</strong> {statement.statement}
-        </li>
-      ))}
-    </ul>
-  </section>
-)
-
-const FullFeedback = ({ payload }: { readonly payload: PostcommitScene }) => (
-  <>
-    <details className="feedback-sources">
-      <summary>Where this comes from</summary>
-      <ul>
-        {payload.fullPostAnswer.sources.map((source) => (
-          <li key={source.id}>
-            <a href={source.url} rel="external noopener">{source.title}</a>, {source.locator}. {source.scope}
-          </li>
-        ))}
-      </ul>
-    </details>
-    <section aria-labelledby="scene-explanation-heading">
-      <h3 id="scene-explanation-heading">Scene explanation</h3>
-      <p>{payload.claim}</p>
-      <h4>Hazards and how to correct them</h4>
-      {payload.fullPostAnswer.targets.length === 0 ? (
-        <p>This scene contains no hazard that needs correction.</p>
-      ) : (
-        <ul>
-          {payload.fullPostAnswer.targets.map((target) => (
-            <li key={`${target.condition}:${target.correction}`}>
-              <strong>{target.condition}.</strong> {target.correction}.
-            </li>
-          ))}
-        </ul>
-      )}
-      <h4>Details that are safe as shown</h4>
-      <ul>
-        {payload.fullPostAnswer.decoys.map((decoy) => (
-          <li key={`${decoy.condition}:${decoy.safeBecause}`}>
-            <strong>{decoy.condition}:</strong> {decoy.safeBecause}.
-          </li>
-        ))}
-        {payload.fullPostAnswer.safeBackground.map((detail) => (
-          <li key={detail}>{detail}</li>
-        ))}
-      </ul>
-    </section>
-    <PostcommitEquivalent payload={payload} />
-  </>
-)
 
 export const HazardResults = () => {
   const { meta, mode, scene, state } = useHazardPlayer()
@@ -250,7 +186,8 @@ export const HazardResults = () => {
             sceneAlt={scene.neutralPreAnswer.overview}
           />
         : <NonvisualResults payload={state.payload} />}
-      <FullFeedback payload={state.payload} />
+      <HazardSceneFacts payload={state.payload} />
+      <HazardPostcommitEquivalent payload={state.payload} />
     </section>
   )
 }

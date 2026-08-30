@@ -7,6 +7,14 @@ import {
 import { assessVisualMarkers } from "../../hazard-player/assessment.ts"
 import { AnnotatedHazardScene } from "../../hazard-player/react/annotated-scene.tsx"
 import {
+  decoyFeedbackForScene,
+  targetFeedbackForScene
+} from "../../hazard-player/released-scene.ts"
+import {
+  HazardPostcommitEquivalent,
+  HazardSceneFacts
+} from "../../hazard-player/react/scene-feedback.tsx"
+import {
   simulationItemId,
   type SimulationHazardResult,
   type SimulationHazardSessionItem,
@@ -138,14 +146,6 @@ const QuestionResultFeedback = ({
   </>
 }
 
-const hazardRoleLabel = (role: "target" | "decoy" | "safe-background"): string => {
-  switch (role) {
-    case "target": return "Condition needing correction"
-    case "decoy": return "Safe detail that may look suspicious"
-    case "safe-background": return "Safe background detail"
-  }
-}
-
 const VisualHazardResponseFeedback = ({
   answer,
   result
@@ -166,23 +166,19 @@ const VisualHazardResponseFeedback = ({
     <h4>Marker feedback</h4>
     {assessment.markers.length === 0 ? <p>You submitted no markers.</p> : <ol>
       {assessment.markers.map((marker) => {
-        const target = result.postcommit.targets.find(
-          (candidate) => candidate.id === marker.inventoryId
-        )
-        const decoy = result.postcommit.decoys.find(
-          (candidate) => candidate.id === marker.inventoryId
-        )
+        const target = targetFeedbackForScene(result.postcommit, marker.inventoryId)
+        const decoy = decoyFeedbackForScene(result.postcommit, marker.inventoryId)
         return <li key={marker.marker.id}>
           <h5>Marker {marker.markerNumber}</h5>
           {marker.kind === "hit" ? <p><strong>Hazard found.</strong> {target === undefined
             ? "This marker matches a condition that needs correction."
-            : `${target.condition}. How to correct it: ${target.correction}.`}</p>
+            : `${target.observableCondition}. Immediate correction: ${target.immediateCorrection}`}</p>
             : marker.kind === "duplicate" ? <p><strong>Already marked.</strong> {target === undefined
               ? "Another marker already covers this hazard."
-              : `Another marker already covers ${target.condition}.`}</p>
+              : `Another marker already covers ${target.observableCondition}.`}</p>
               : marker.kind === "decoy_false_positive" ? <p><strong>Safe as shown.</strong> {decoy === undefined
                 ? "The detail you marked is safe as depicted in this scene."
-                : `${decoy.condition}; ${decoy.safeBecause}.`}</p>
+                : `${decoy.observableCondition}. Safe as depicted: ${decoy.safeAsDepicted}`}</p>
                 : <p>This mark does not match a recorded condition. It counts as an extra mark, but the site cannot say what that object means.</p>}
         </li>
       })}
@@ -191,9 +187,9 @@ const VisualHazardResponseFeedback = ({
       ? <p>No hazard was left unmarked.</p>
       : <><h5>Hazards you missed</h5><ul>
         {assessment.missedInventoryIds.map((inventoryId) => {
-          const target = result.postcommit.targets.find((candidate) => candidate.id === inventoryId)
+          const target = targetFeedbackForScene(result.postcommit, inventoryId)
           return target === undefined ? null : <li key={inventoryId}>
-            {target.condition}. How to correct it: {target.correction}.
+            {target.observableCondition}. Immediate correction: {target.immediateCorrection}
           </li>
         })}
       </ul></>}
@@ -218,20 +214,6 @@ const NonvisualHazardResponseFeedback = ({
   </section>
 }
 
-const NonvisualHazardPostcommitEquivalent = ({
-  result
-}: {
-  readonly result: SimulationHazardResult
-}) => <section>
-  <h4>Full scene description by zone</h4>
-  <p>This covers the same knowledge in text form; it is not the same task as marking the image.</p>
-  <ul>{result.postcommit.nonvisualZonedEquivalent.map((statement) => <li
-    key={`${statement.zone}:${statement.role}:${statement.statement}`}
-  >
-    <strong>{statement.zone} — {hazardRoleLabel(statement.role)}:</strong> {statement.statement}
-  </li>)}</ul>
-</section>
-
 const HazardResultFeedback = ({
   answer,
   item,
@@ -247,30 +229,10 @@ const HazardResultFeedback = ({
   {item.mode === "visual"
     ? <VisualHazardResponseFeedback answer={answer} result={result} />
     : <NonvisualHazardResponseFeedback answer={answer} item={item} />}
-  <details className="feedback-sources">
-    <summary>Where this comes from</summary>
-    <ul>{result.postcommit.fullPostAnswer.sources.map((source) => <li key={source.id}>
-      <a href={source.url} rel="external noopener">{source.title}</a>, {source.locator}. {source.scope}
-    </li>)}</ul>
-  </details>
-  <section>
-    <h4>Scene explanation and full post-submission description</h4>
-    <p>{result.postcommit.claim}</p>
-    <h5>Hazards and how to correct them</h5>
-    {result.postcommit.fullPostAnswer.targets.length === 0
-      ? <p>This scene contains no hazard that needs correction.</p>
-      : <ul>{result.postcommit.fullPostAnswer.targets.map((target) => <li
-        key={`${target.condition}:${target.correction}`}
-      ><strong>{target.condition}.</strong> {target.correction}.</li>)}</ul>}
-    <h5>Details that are safe as shown</h5>
-    <ul>
-      {result.postcommit.fullPostAnswer.decoys.map((decoy) => <li
-        key={`${decoy.condition}:${decoy.safeBecause}`}
-      ><strong>{decoy.condition}:</strong> {decoy.safeBecause}.</li>)}
-      {result.postcommit.fullPostAnswer.safeBackground.map((detail) => <li key={detail}>{detail}</li>)}
-    </ul>
-  </section>
-  {item.mode === "nonvisual" ? <NonvisualHazardPostcommitEquivalent result={result} /> : null}
+  <HazardSceneFacts heading="h4" payload={result.postcommit} />
+  {item.mode === "nonvisual"
+    ? <HazardPostcommitEquivalent heading="h4" payload={result.postcommit} />
+    : null}
   <ResultActions flagged={answer.reviewIntent === "flagged"} />
 </>
 

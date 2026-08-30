@@ -115,11 +115,11 @@ test("session start pushes history while Next replaces the current position", as
     .getByLabel("Available whole-bank practice lengths")
     .getByRole("link", { name: "Start 90" })
     .click()
-  await expect(page).toHaveURL("/practice/session/ps-84ce3cbb3913907fac6db8b7/question/1/")
+  await expect(page).toHaveURL("/practice/session/ps-5c27f5ab2a5455a818503905/question/1/")
   await expect(page.getByRole("radio").first()).toBeEnabled()
 
   await page.getByRole("link", { name: "Next question" }).click()
-  await expect(page).toHaveURL("/practice/session/ps-84ce3cbb3913907fac6db8b7/question/2/")
+  await expect(page).toHaveURL("/practice/session/ps-5c27f5ab2a5455a818503905/question/2/")
 
   await page.goBack({ waitUntil: "commit" })
   await expect(page).toHaveURL("/practice/")

@@ -1,7 +1,11 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react"
 import { sourceEvidenceTierLabel } from "../../public-content-labels.ts"
 import type { PrintPreviewController, PrintPreviewState } from "../controller.ts"
-import type { PrintJobRecord, ReleasedPrintPacketSection } from "../model.ts"
+import type {
+  PrintJobRecord,
+  PrintSceneAnswerV2,
+  ReleasedPrintPacketSection
+} from "../model.ts"
 
 const sourceTechnicalDetails = (source: {
   readonly id: string
@@ -28,6 +32,74 @@ const printRoleLabel = (role: string): string =>
       : role === "safe-background"
         ? "Safe background detail"
         : role
+
+const claimText = (
+  answer: PrintSceneAnswerV2,
+  claimId: string
+): string => answer.claims.find((claim) => claim.id === claimId)?.text ??
+  "The reviewed explanation is unavailable."
+
+const CurrentHazardFeedback = ({
+  answer,
+  includeSources
+}: {
+  readonly answer: PrintSceneAnswerV2
+  readonly includeSources: boolean
+}) => (
+  <>
+    <p><strong>Scene classification:</strong> {answer.kind === "zero-hazard"
+      ? "No condition needing correction is depicted."
+      : `${answer.hazardFamily ?? "Hazard"} condition depicted.`}</p>
+    <p><strong>Scene tags:</strong> {[
+      answer.tags.domain,
+      answer.tags.family,
+      answer.tags.environment,
+      answer.tags.hazardCategory,
+      answer.tags.seriesScope,
+      answer.tags.editorialDifficulty
+    ].filter((value): value is string => value !== null).join("; ")}</p>
+    <h4>Conditions needing correction</h4>
+    {answer.targets.length === 0
+      ? <p>None. This is a reviewed zero-hazard control scene.</p>
+      : <ol>{answer.targets.map((target) => <li key={target.id}>
+        <p><strong>Observed:</strong> {target.observableCondition}</p>
+        <p><strong>Why unsafe:</strong> {claimText(answer, target.whyUnsafeClaimId)}</p>
+        <p><strong>Likely consequence:</strong> {claimText(answer, target.likelyConsequenceClaimId)}</p>
+        <p><strong>Immediate correction:</strong> {claimText(answer, target.immediateCorrectionClaimId)}</p>
+        <p><strong>Concepts:</strong> {target.conceptIds.join("; ")}. <strong>Correction category:</strong> {target.correctionCategory}.</p>
+      </li>)}</ol>}
+    <h4>Details that are safe as shown</h4>
+    <ul>{answer.decoys.map((decoy) => <li key={decoy.id}>
+      <p><strong>Observed:</strong> {decoy.observableCondition}</p>
+      <p><strong>Why it may look suspicious:</strong> {decoy.suspiciousBecause}</p>
+      <p><strong>Why safe as depicted:</strong> {claimText(answer, decoy.safeAsDepictedClaimId)}</p>
+      <p><strong>Condition that would make it unsafe:</strong> {claimText(answer, decoy.unsafeIfClaimId)}</p>
+      <p><strong>Concepts:</strong> {decoy.conceptIds.join("; ")}.</p>
+    </li>)}</ul>
+    {answer.safeBackground.length === 0 ? null : <>
+      <h4>Safe background details</h4>
+      <ul>{answer.safeBackground.map((detail, index) => <li key={`${detail.zone}-${index}`}>
+        <strong>{detail.zone}:</strong> {detail.observableCondition}
+      </li>)}</ul>
+    </>}
+    <h4>Evidence claims</h4>
+    <ul>{answer.claims.map((claim) => <li key={claim.id}>
+      {claim.text} <span>(Evidence: {sourceEvidenceTierLabel(claim.evidenceTier)})</span>
+      {claim.caveat === null ? null : <> <strong>Caveat:</strong> {claim.caveat}</>}
+    </li>)}</ul>
+    {!includeSources ? null : <>
+      <h4>Where this comes from</h4>
+      <ul>{answer.sources.map((source) => <li key={source.id}>
+        <p><strong>{source.publisher}</strong> — {source.title} (verified <time dateTime={source.verifiedOn}>{source.verifiedOn}</time>)</p>
+        <p><strong>Evidence:</strong> {sourceEvidenceTierLabel(source.evidenceTier)}</p>
+        <blockquote><p>{source.excerpt}</p></blockquote>
+        {source.scope === undefined ? null : <p><strong>Scope:</strong> {source.scope}</p>}
+        {source.url === undefined ? null : <p><a href={source.url} rel="external noopener">Open the source</a></p>}
+        {sourceTechnicalDetails(source)}
+      </li>)}</ul>
+    </>}
+  </>
+)
 
 const announcementFactStateLabel = (
   state: "verified" | "not_published" | "unverified" | "conflicting" | "superseded" | "not_applicable"
@@ -66,7 +138,10 @@ const announcementFactCategoryLabel = (
   }
 }
 
-const packetSection = (section: ReleasedPrintPacketSection) => {
+const packetSection = (
+  section: ReleasedPrintPacketSection,
+  includeSources: boolean
+) => {
   switch (section.tag) {
     case "answer-sheet":
       return (
@@ -169,26 +244,36 @@ const packetSection = (section: ReleasedPrintPacketSection) => {
       return (
         <section className="print-section print-hazard-answers" aria-labelledby="hazard-answers-heading">
           <h2 id="hazard-answers-heading">Annotated hazard-answer packet</h2>
-          {section.scenes.map((scene, index) => <article className="print-hazard-page" key={scene.id}>
-            <h3>Scene {index + 1}: {scene.environment}</h3>
-            {scene.asset === null ? null : <figure className="print-annotated-scene">
-              <img src={scene.asset.dataUrl} alt={`${scene.environment} scene with answer outlines`} />
-              <svg aria-label="Hazard-region outlines" preserveAspectRatio="none" role="img" viewBox="0 0 100 100">
-                {scene.answer.targetRegions.flatMap((region, regionIndex) =>
-                  region.polygons.map((polygon, polygonIndex) => <polygon
-                    key={`${region.inventoryId}-${polygonIndex}`}
-                    points={polygon.map(([x, y]) => `${x * 100},${y * 100}`).join(" ")}
-                    vectorEffect="non-scaling-stroke"
-                  ><title>{`Hazard region ${regionIndex + 1}`}</title></polygon>)
-                )}
-              </svg>
-            </figure>}
-            <p><strong>Scene explanation:</strong> {scene.answer.claim}</p>
-            <ol>{scene.answer.targets.map((target) => <li key={target.id}><strong>{target.condition}</strong> — {target.correction}</li>)}</ol>
-            <h4>Details that are safe as shown</h4>
-            <ul>{scene.answer.decoys.map((decoy) => <li key={decoy.id}>{decoy.condition}: {decoy.safeBecause}</li>)}</ul>
-            {scene.answer.sourceReferences.length === 0 ? null : <><h4>Source references</h4><ul>{scene.answer.sourceReferences.map((source) => <li key={source.id}>{source.label} — {source.locator}</li>)}</ul></>}
-          </article>)}
+          {section.scenes.map((scene, index) => {
+            const current = "schemaVersion" in scene.answer
+            const regions = current
+              ? scene.answer.targets.map((region) => ({ key: region.id, polygons: region.polygons }))
+              : scene.answer.targetRegions.map((region) => ({ key: region.inventoryId, polygons: region.polygons }))
+            return <article className="print-hazard-page" key={scene.id}>
+              <h3>Scene {index + 1}: {scene.environment}</h3>
+              {scene.asset === null ? null : <figure className="print-annotated-scene">
+                <img src={scene.asset.dataUrl} alt={`${scene.environment} scene with answer outlines`} />
+                <svg aria-label="Hazard-region outlines" preserveAspectRatio="none" role="img" viewBox="0 0 100 100">
+                  {regions.flatMap((region, regionIndex) =>
+                    region.polygons.map((polygon, polygonIndex) => <polygon
+                      key={`${region.key}-${polygonIndex}`}
+                      points={polygon.map(([x, y]) => `${x * 100},${y * 100}`).join(" ")}
+                      vectorEffect="non-scaling-stroke"
+                    ><title>{`Hazard region ${regionIndex + 1}`}</title></polygon>)
+                  )}
+                </svg>
+              </figure>}
+              {current
+                ? <CurrentHazardFeedback answer={scene.answer} includeSources={includeSources} />
+                : <>
+                  <p><strong>Scene explanation:</strong> {scene.answer.claim}</p>
+                  <ol>{scene.answer.targets.map((target) => <li key={target.id}><strong>{target.condition}</strong> — {target.correction}</li>)}</ol>
+                  <h4>Details that are safe as shown</h4>
+                  <ul>{scene.answer.decoys.map((decoy) => <li key={decoy.id}>{decoy.condition}: {decoy.safeBecause}</li>)}</ul>
+                  {scene.answer.sourceReferences.length === 0 ? null : <><h4>Source references</h4><ul>{scene.answer.sourceReferences.map((source) => <li key={source.id}>{source.label} — {source.locator}</li>)}</ul></>}
+                </>}
+            </article>
+          })}
         </section>
       )
     case "text-equivalent-scenes":
@@ -198,9 +283,20 @@ const packetSection = (section: ReleasedPrintPacketSection) => {
           <p>This text version covers the same knowledge; it is not the same task as marking the image.</p>
           {section.scenes.map((scene, index) => <article className="print-hazard-page" key={scene.id}>
             <h3>Scene {index + 1}: {scene.environment}</h3>
-            <p><strong>Scene explanation:</strong> {scene.answer.claim}</p>
-            <ol>{scene.answer.nonvisualStatements.map((statement, statementIndex) => <li key={`${statement.zone}-${statementIndex}`}><strong>{statement.zone} · {printRoleLabel(statement.role)}:</strong> {statement.statement}</li>)}</ol>
-            {scene.answer.sourceReferences.length === 0 ? null : <><h4>Source references</h4><ul>{scene.answer.sourceReferences.map((source) => <li key={source.id}>{source.label} — {source.locator}</li>)}</ul></>}
+            {"schemaVersion" in scene.answer
+              ? <>
+                <ol>
+                  {scene.answer.targets.map((target) => <li key={target.id}><strong>{target.zone} · Condition needing correction:</strong> {target.observableCondition}</li>)}
+                  {scene.answer.decoys.map((decoy) => <li key={decoy.id}><strong>{decoy.zone} · Safe detail that may look suspicious:</strong> {decoy.observableCondition}</li>)}
+                  {scene.answer.safeBackground.map((detail, detailIndex) => <li key={`${detail.zone}-${detailIndex}`}><strong>{detail.zone} · Safe background detail:</strong> {detail.observableCondition}</li>)}
+                </ol>
+                <CurrentHazardFeedback answer={scene.answer} includeSources={includeSources} />
+              </>
+              : <>
+                <p><strong>Scene explanation:</strong> {scene.answer.claim}</p>
+                <ol>{scene.answer.nonvisualStatements.map((statement, statementIndex) => <li key={`${statement.zone}-${statementIndex}`}><strong>{statement.zone} · {printRoleLabel(statement.role)}:</strong> {statement.statement}</li>)}</ol>
+                {scene.answer.sourceReferences.length === 0 ? null : <><h4>Source references</h4><ul>{scene.answer.sourceReferences.map((source) => <li key={source.id}>{source.label} — {source.locator}</li>)}</ul></>}
+              </>}
           </article>)}
         </section>
       )
@@ -438,7 +534,7 @@ export const PrintPreview = ({ controller }: { readonly controller: PrintPreview
       {job.packet.sections.map((section, index) => <div
         className={index === 0 ? undefined : "print-appended-section"}
         key={section.tag}
-      >{packetSection(section)}</div>)}
+      >{packetSection(section, manifest.settings.includeSources)}</div>)}
 
       <footer className="print-preview-actions screen-only">
         <p>System print and browser “Save as PDF” are the output path. Opening the dialog does not confirm that printing occurred.</p>
