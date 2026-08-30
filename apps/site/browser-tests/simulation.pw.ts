@@ -41,6 +41,11 @@ interface SeededSimulationPackClaim {
   readonly packVersion: number
 }
 
+const selectStatewideProfile = async (page: Page): Promise<void> => {
+  await page.getByLabel("Practicing for", { exact: true })
+    .selectOption("nys-entry-level-custodians-janitors")
+}
+
 const seedActiveSimulationPack = async (
   page: Page
 ): Promise<SeededSimulationPackClaim> => {
@@ -490,8 +495,11 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
   )
   await page.goto("/simulations/")
   await expect(page.getByRole("heading", { name: "Create a practice simulation." })).toBeVisible()
-  await expect(page.getByLabel("Profile")).toHaveValue("nys-entry-level-custodians-janitors")
-  await expect(page.getByLabel("Profile").locator("option")).not.toHaveCount(0)
+  const profileSelect = page.getByLabel("Practicing for")
+  await expect(profileSelect).toHaveValue("")
+  await expect(page.getByText("Choose a study profile to see the available content categories.")).toBeVisible()
+  await expect(page.getByRole("button", { name: "Start simulation" })).toBeDisabled()
+  await expect(profileSelect.locator("option")).not.toHaveCount(0)
   const serializedBootstrap = await page.locator("#simulation-bootstrap-data").textContent()
   if (serializedBootstrap === null) throw new Error("Simulation bootstrap was unavailable")
   expect(serializedBootstrap).not.toContain("correctOptionId")
@@ -503,6 +511,7 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
     readonly inventory: ReadonlyArray<{ readonly question: { readonly id: string } }>
     readonly profiles: ReadonlyArray<{
       readonly id: string
+      readonly label: string
       readonly version: number
       readonly compatibilityKey: string
     }>
@@ -514,7 +523,9 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
   const selectedProfile = bootstrap.profiles.find(
     ({ id }) => id === "nys-entry-level-custodians-janitors"
   )
-  if (selectedProfile === undefined) throw new Error("Default simulation profile was unavailable")
+  if (selectedProfile === undefined) throw new Error("Statewide simulation profile was unavailable")
+  await profileSelect.selectOption(selectedProfile.id)
+  await expect(page.getByText(/Practicing for: New York Entry-Level Custodians and Janitors\./)).toBeVisible()
   const activePackClaim = await primeSimulationResultCache(page)
   const lengthGroup = page.getByRole("group", { name: "Set length" })
   for (const advertisedLength of bootstrap.advertisedLengths) {
@@ -596,6 +607,10 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
   await page.getByLabel("Set code (seed)").fill("browser-restoration-seed")
   await page.getByRole("button", { name: "Start simulation" }).click()
   await expect(page).toHaveURL(/\/simulations\/session\/sim-[a-z0-9-]+\/question\/1\/$/)
+  await expect(page.getByText(`Practicing for: ${selectedProfile.label}.`, { exact: false })).toBeVisible()
+  await expect(page.getByRole("link", {
+    name: "Start a new simulation to choose a different profile"
+  })).toBeVisible()
   expect(postcommitRequests).toEqual([])
   expect(await page.evaluate(() =>
     localStorage.getItem("simulation-durable-states-at-postcommit-fetch"))).toBeNull()
@@ -720,6 +735,7 @@ test("trusted retirement preserves a pinned simulation but blocks every new sess
   page
 }) => {
   await page.goto("/simulations/")
+  await selectStatewideProfile(page)
   const activePackClaim = await primeSimulationResultCache(page)
   await page.locator("details", { has: page.getByLabel("Set code (seed)") }).evaluate((node) => { (node as HTMLDetailsElement).open = true })
   await page.getByLabel("Set code (seed)").fill("before-retirement")
@@ -745,6 +761,7 @@ test("trusted retirement preserves a pinned simulation but blocks every new sess
   }))
 
   await page.goto("/simulations/")
+  await selectStatewideProfile(page)
   await page.locator("details", { has: page.getByLabel("Set code (seed)") }).evaluate((node) => { (node as HTMLDetailsElement).open = true })
   await page.getByLabel("Set code (seed)").fill("after-retirement")
   await page.getByRole("button", { name: "Start simulation" }).click()
@@ -768,6 +785,7 @@ test("restores a visual hazard simulation and keeps evaluated feedback after pac
   })
   await observeHazardAnswerReads(context)
   await page.goto("/simulations/")
+  await selectStatewideProfile(page)
   await primeSimulationHazardClosure(page)
   await page.getByRole("radio", { name: "Visual hazard scenes" }).check()
   await page.locator('input[name="simulation-length"][value="1"]').check()
@@ -899,6 +917,7 @@ test("restores a nonvisual zoned hazard simulation and its self-contained result
   })
   await observeHazardAnswerReads(context)
   await page.goto("/simulations/")
+  await selectStatewideProfile(page)
   await primeSimulationHazardClosure(page)
   await page.getByRole("radio", { name: "Hazard scenes — keyboard, no image" }).check()
   await page.locator('input[name="simulation-length"][value="1"]').check()
@@ -974,6 +993,7 @@ test("does not create a session when offline result availability is not establis
     }
   })
   await page.goto("/simulations/")
+  await selectStatewideProfile(page)
   await page.locator("details", { has: page.getByLabel("Set code (seed)") }).evaluate((node) => { (node as HTMLDetailsElement).open = true })
   await page.getByLabel("Set code (seed)").fill("preserved-after-closure-failure")
   await context.setOffline(true)
@@ -992,6 +1012,7 @@ test("retains an optimistic answer and flag through an IndexedDB failure and exa
   page
 }) => {
   await page.goto("/simulations/")
+  await selectStatewideProfile(page)
   await primeSimulationResultCache(page)
   await page.locator("details", { has: page.getByLabel("Set code (seed)") }).evaluate((node) => { (node as HTMLDetailsElement).open = true })
   await page.getByLabel("Set code (seed)").fill("browser-save-retry")
@@ -1046,6 +1067,7 @@ test("retains an optimistic answer and flag through an IndexedDB failure and exa
 
 test("strict practice auto-submit occurs only after explicit opt-in", async ({ page }) => {
   await page.goto("/simulations/")
+  await selectStatewideProfile(page)
   await primeSimulationResultCache(page)
   await page.getByLabel("Timed practice").check()
   await page.getByLabel("Practice duration (minutes)").fill("1")

@@ -69,6 +69,54 @@ const readStoreRecords = (
   { databaseName: appDatabaseName, storeName }
 )
 
+const holdWritesToStore = async (page: Page, storeName: string): Promise<void> => {
+  await page.evaluate((targetStore) => {
+    const owner = window as typeof window & {
+      __nycustodianHeldWrite?: {
+        readonly originalPut: typeof IDBObjectStore.prototype.put
+        released: boolean
+      }
+    }
+    if (owner.__nycustodianHeldWrite !== undefined) {
+      throw new Error("A browser-test IndexedDB write is already held")
+    }
+    const state = {
+      originalPut: IDBObjectStore.prototype.put,
+      released: false
+    }
+    owner.__nycustodianHeldWrite = state
+    IDBObjectStore.prototype.put = function(value, key) {
+      const request = state.originalPut.call(this, value, key)
+      if (this.name !== targetStore) return request
+      const store = this
+      const keepAlive = (): void => {
+        if (state.released) return
+        const next = store.get("__nycustodian-browser-test-keepalive__")
+        next.onsuccess = keepAlive
+        next.onerror = keepAlive
+      }
+      keepAlive()
+      return request
+    }
+  }, storeName)
+}
+
+const releaseHeldStoreWrites = async (page: Page): Promise<void> => {
+  await page.evaluate(() => {
+    const owner = window as typeof window & {
+      __nycustodianHeldWrite?: {
+        readonly originalPut: typeof IDBObjectStore.prototype.put
+        released: boolean
+      }
+    }
+    const state = owner.__nycustodianHeldWrite
+    if (state === undefined) throw new Error("No browser-test IndexedDB write is held")
+    state.released = true
+    IDBObjectStore.prototype.put = state.originalPut
+    delete owner.__nycustodianHeldWrite
+  })
+}
+
 interface BrowserPackFixture {
   readonly id: string
   readonly packId: string
@@ -406,6 +454,8 @@ const createPinnedSessionTemplate = async (
   const target = packFixture(await generatedLaunchDescriptor(), generation, "active")
   await seedPackFixtures(page, [target], target.id)
   await primeSimulationResultReceipts(page)
+  await page.getByLabel("Practicing for", { exact: true })
+    .selectOption("nys-entry-level-custodians-janitors")
   await page.locator("details", { has: page.getByLabel("Set code (seed)") }).evaluate((node) => { (node as HTMLDetailsElement).open = true })
   await page.getByLabel("Set code (seed)").fill(seed)
   await page.getByRole("button", { name: "Start simulation" }).click()
@@ -621,7 +671,7 @@ test("correction drafts save explicitly, restore locally, and never POST while i
   await page.getByLabel("Optional public source URL").fill("https://example.gov/announcement")
   await page.getByLabel(/I did not include secure exam questions/).check()
   await page.getByRole("button", { name: "Save local draft" }).click()
-  await expect(page.getByText("Draft saved only on this device. It was not submitted.")).toBeVisible()
+  await expect(page.getByText(/Draft saved in this browser\. It was not submitted\. Browser data can be cleared/)).toBeVisible()
   expect(statusRequests).toBe(0)
   expect(posts).toBe(0)
 
@@ -634,7 +684,7 @@ test("correction drafts save explicitly, restore locally, and never POST while i
 
   await page.getByRole("button", { name: "Check whether reports can be sent" }).click()
   await expect(page.getByText(
-    "Reports cannot be sent right now — online intake is off. Your draft stays on this device until you delete it."
+    "Reports cannot be sent right now — online intake is off. Use Save draft on this device if you want to keep what is shown."
   )).toBeVisible()
   await expect(page.getByRole("button", { name: "Submit report" })).toHaveCount(0)
   await expect.poll(() => statusRequests).toBe(1)
@@ -647,6 +697,10 @@ test("a correction submit never reaches the network until its pre-submit draft p
   let statusChecks = 0
   let posts = 0
   let postedReport: Readonly<Record<string, unknown>> | null = null
+  let releasePost!: () => void
+  const postRelease = new Promise<void>((resolve) => {
+    releasePost = resolve
+  })
   await page.route("**/api/corrections/status", (route) => {
     statusChecks += 1
     return route.fulfill({
@@ -660,6 +714,7 @@ test("a correction submit never reaches the network until its pre-submit draft p
     postedReport = route.request().postDataJSON() as Readonly<Record<string, unknown>>
     const clientReceiptId = postedReport.clientReceiptId
     if (typeof clientReceiptId !== "string") throw new Error("Correction report omitted its receipt ID")
+    await postRelease
     await route.fulfill({
       status: 202,
       contentType: "application/json",
@@ -717,9 +772,9 @@ test("a correction submit never reaches the network until its pre-submit draft p
   await expect(page.getByText(
     "The draft could not be written to this device\u2019s storage before sending, so nothing was sent."
   )).toBeVisible()
-  await expect(page.getByText("quota exhausted")).toBeHidden()
-  await page.getByText("Technical details").first().click()
-  await expect(page.getByText("quota exhausted")).toBeVisible()
+  const correctionError = page.getByRole("alert")
+  await expect(correctionError.getByText("quota exhausted")).toHaveCount(0)
+  await expect(correctionError.getByText("Technical details")).toHaveCount(0)
   await expect(category).toHaveValue("accessibility")
   await expect(pagePath).toHaveValue("/atlas/tool/pipe-wrench/")
   await expect(summary).toHaveValue("Keyboard description correction")
@@ -747,6 +802,16 @@ test("a correction submit never reaches the network until its pre-submit draft p
     delete owner.__nycustodianOriginalCorrectionDraftPut
   })
   await page.getByRole("button", { name: "Submit report" }).click()
+
+  await expect.poll(() => posts).toBe(1)
+  await expect(category).toBeDisabled()
+  await expect(pagePath).toBeDisabled()
+  await expect(summary).toBeDisabled()
+  await expect(details).toBeDisabled()
+  await expect(publicSource).toBeDisabled()
+  await expect(affirmation).toBeDisabled()
+  await expect(page.getByRole("button", { name: "Delete local draft" })).toBeDisabled()
+  releasePost()
 
   await expect(page.getByRole("heading", { name: "Report receipt saved on this device" }))
     .toBeFocused()
@@ -835,11 +900,25 @@ test("a remotely accepted report never blindly resubmits when local receipt pers
     IDBObjectStore.prototype.put = owner.__nycustodianOriginalIdbPut
     delete owner.__nycustodianOriginalIdbPut
   })
+  await holdWritesToStore(page, appDatabaseStores.correctionDrafts)
   await page.getByRole("button", { name: "Retry saving the receipt" }).click()
+  await expect(page.getByRole("button", { name: "Delete local receipt" })).toBeDisabled()
+  await releaseHeldStoreWrites(page)
   await expect(page.getByRole("heading", { name: "Report receipt saved on this device" }))
     .toBeFocused()
   await expect(page.getByText(/Nothing new was sent/)).toBeVisible()
   expect(posts).toBe(1)
+
+  page.once("dialog", async (dialog) => {
+    expect(dialog.message()).toContain("will not withdraw the submitted report")
+    await dialog.accept()
+  })
+  await page.getByRole("button", { name: "Delete local receipt" }).click()
+  await expect(page.getByText(
+    "The local receipt was deleted. The report remains submitted; deleting its local receipt did not withdraw it."
+  )).toBeVisible()
+  expect(posts).toBe(1)
+  expect(await readStoreRecords(page, appDatabaseStores.correctionDrafts)).toEqual([])
 })
 
 test("IndexedDB preferences remain authoritative when the fast boot mirror is unavailable", async ({
@@ -870,6 +949,96 @@ test("IndexedDB preferences remain authoritative when the fast boot mirror is un
     Storage.prototype.setItem = owner.__nycustodianOriginalStorageSet
     delete owner.__nycustodianOriginalStorageSet
   })
+})
+
+test("settings controls cannot change a pending preference save or import", async ({ page }) => {
+  await page.goto("/settings/")
+  await expect(page.getByText(/Default preferences are shown/)).toBeVisible()
+  const language = page.getByLabel("Preferred content language")
+  const largeText = page.getByLabel("Prefer larger application text")
+  const reduceMotion = page.getByLabel("Reduce nonessential application motion")
+  const importFile = page.getByLabel("Local export JSON")
+  const includeDrafts = page.getByLabel(/Include correction drafts/)
+  const resetScope = page.getByLabel("What to delete")
+
+  await largeText.check()
+  await holdWritesToStore(page, appDatabaseStores.preferences)
+  await page.getByRole("button", { name: "Save preferences" }).click()
+
+  await expect(language).toBeDisabled()
+  await expect(largeText).toBeDisabled()
+  await expect(reduceMotion).toBeDisabled()
+  await expect(importFile).toBeDisabled()
+  await expect(includeDrafts).toBeDisabled()
+  await expect(resetScope).toBeDisabled()
+
+  await releaseHeldStoreWrites(page)
+  await expect(page.getByRole("heading", { name: "Preferences saved" })).toBeFocused()
+  await expect(largeText).toBeEnabled()
+  await expect(importFile).toBeEnabled()
+  await expect(includeDrafts).toBeEnabled()
+  await expect(resetScope).toBeEnabled()
+})
+
+test("the newest import-file selection wins when file reads finish out of order", async ({
+  page
+}) => {
+  await page.goto("/settings/")
+  await expect(page.getByText(/Default preferences are shown/)).toBeVisible()
+  const validImport = JSON.stringify(transferEnvelope({
+    schemaVersion: 1,
+    exportedAt: 1,
+    includesCorrectionDrafts: false,
+    questionAttempts: [],
+    hazardAttempts: [],
+    reviewAcknowledgements: [],
+    preferences: [],
+    correctionDrafts: []
+  }))
+
+  await page.evaluate(({ olderText, newerText }) => {
+    const owner = window as typeof window & {
+      __resolveOlderImportFileText?: () => void
+    }
+    const input = document.querySelector<HTMLInputElement>("#settings-import-file")
+    if (input === null) throw new Error("Missing settings import file input")
+    const older = new File([olderText], "older-invalid.json", { type: "application/json" })
+    Object.defineProperty(older, "text", {
+      value: () => new Promise<string>((resolve) => {
+        owner.__resolveOlderImportFileText = () => resolve(olderText)
+      })
+    })
+    const newer = new File([newerText], "newer-valid.json", { type: "application/json" })
+    const choose = (file: File): void => {
+      const transfer = new DataTransfer()
+      transfer.items.add(file)
+      input.files = transfer.files
+      input.dispatchEvent(new Event("change", { bubbles: true }))
+    }
+    choose(older)
+    choose(newer)
+  }, { olderText: "not valid JSON", newerText: validImport })
+
+  await expect(page.getByText(
+    "File loaded on this device. Nothing has been checked or written yet."
+  )).toBeVisible()
+  await page.evaluate(async () => {
+    const owner = window as typeof window & {
+      __resolveOlderImportFileText?: () => void
+    }
+    const resolveOlder = owner.__resolveOlderImportFileText
+    if (resolveOlder === undefined) throw new Error("Older import-file read was not pending")
+    resolveOlder()
+    delete owner.__resolveOlderImportFileText
+    await new Promise<void>((resolve) => requestAnimationFrame(() => {
+      requestAnimationFrame(() => resolve())
+    }))
+  })
+
+  await page.getByRole("button", { name: "Check and preview import" }).click()
+  await expect(page.getByRole("heading", { name: "Import preview — nothing written yet" }))
+    .toBeFocused()
+  await expect(page.getByRole("alert")).toHaveCount(0)
 })
 
 test("a failed preference write restores authoritative controls and applied document state", async ({
@@ -1080,8 +1249,9 @@ test("portable import previews unknown references, commits atomically, and expor
   await expect(page.getByText(
     "The file could not be read or checked, so nothing was imported."
   )).toBeVisible()
-  await page.getByRole("alert").getByText("Technical details").click()
-  await expect(page.getByText(/duplicate record IDs within one store/)).toBeVisible()
+  const importError = page.getByRole("alert")
+  await expect(importError.getByText("Technical details")).toHaveCount(0)
+  await expect(page.getByText(/duplicate record IDs within one store/)).toHaveCount(0)
   await expect(page.getByRole("heading", { name: "Import preview — nothing written yet" })).toHaveCount(0)
 
   await importInput.setInputFiles({
@@ -1101,8 +1271,11 @@ test("portable import previews unknown references, commits atomically, and expor
     })))
   })
   await page.getByRole("button", { name: "Check and preview import" }).click()
-  await page.getByRole("alert").getByText("Technical details").click()
-  await expect(page.getByText(/finite, non-negative safe-integer timestamp/)).toBeVisible()
+  await expect(page.getByText(
+    "The file could not be read or checked, so nothing was imported."
+  )).toBeVisible()
+  await expect(importError.getByText("Technical details")).toHaveCount(0)
+  await expect(page.getByText(/finite, non-negative safe-integer timestamp/)).toHaveCount(0)
   await expect(page.getByRole("heading", { name: "Import preview — nothing written yet" })).toHaveCount(0)
 
   await importInput.setInputFiles({
@@ -1122,8 +1295,11 @@ test("portable import previews unknown references, commits atomically, and expor
     })))
   })
   await page.getByRole("button", { name: "Check and preview import" }).click()
-  await page.getByRole("alert").getByText("Technical details").click()
-  await expect(page.getByText(/invalid receipt identity/)).toBeVisible()
+  await expect(page.getByText(
+    "The file could not be read or checked, so nothing was imported."
+  )).toBeVisible()
+  await expect(importError.getByText("Technical details")).toHaveCount(0)
+  await expect(page.getByText(/invalid receipt identity/)).toHaveCount(0)
   await expect(page.getByRole("heading", { name: "Import preview — nothing written yet" })).toHaveCount(0)
 
   await importInput.setInputFiles({
@@ -1353,7 +1529,7 @@ test("offline-pack reconciliation quarantines malformed rows without risking val
   })
 
   await page.goto("/offline/")
-  await expect(page.getByText("Prior verified pack v0")).toBeVisible()
+  await expect(page.getByText("Prior verified pack", { exact: true })).toBeVisible()
   await expect(page.getByRole("status")).toContainText(
     "Checked the downloads saved on this device. Nothing was downloaded or changed."
   )
@@ -1437,7 +1613,7 @@ test("an already-offline pack request performs no work and succeeds only after e
   const prior = packFixture(priorPackDescriptor(), "known-offline-prior-generation", "active", 21)
   await seedPackFixtures(page, [prior], prior.id)
   await page.goto("/offline/")
-  await expect(page.getByText("Prior verified pack v0")).toBeVisible()
+  await expect(page.getByText("Prior verified pack", { exact: true })).toBeVisible()
   await expect(page.getByRole("status")).toContainText(
     "Checked the downloads saved on this device. Nothing was downloaded or changed."
   )
@@ -1583,7 +1759,7 @@ test("the sole unpinned active pack can be removed with its durable pointer and 
 
   await page.goto("/offline/")
   const activeItem = page.getByRole("listitem").filter({
-    hasText: `${active.descriptor.label} v${active.descriptor.packVersion}`
+    hasText: active.descriptor.label
   })
   await expect(activeItem).toContainText("Ready offline")
   const remove = activeItem.getByRole("button", { name: "Preview and remove" })
@@ -1709,9 +1885,9 @@ test("trusted retirement demotes the active generation and blocks stale activati
   let trustedDescriptor = retired
   await routeOfflineDescriptor(page, () => trustedDescriptor)
   await page.goto("/offline/?trusted-release=retired")
-  await expect(page.getByText("Retired release · English", { exact: true })).toBeVisible()
+  await expect(page.getByText("Retired copy · English", { exact: true })).toBeVisible()
   const stored = page.getByRole("listitem").filter({
-    hasText: `${active.descriptor.label} v${active.descriptor.packVersion}`
+    hasText: active.descriptor.label
   })
   await expect(stored).toContainText("Kept for earlier sessions")
   await expect(page.getByRole("button", { name: /activate|download|retry/i })).toHaveCount(0)
@@ -1753,13 +1929,17 @@ test("trusted retirement demotes the active generation and blocks stale activati
   trustedDescriptor = published
   await page.goto("/offline/?trusted-release=stale-activation")
   const retained = page.getByRole("listitem").filter({
-    hasText: `${active.descriptor.label} v${active.descriptor.packVersion}`
+    hasText: active.descriptor.label
   })
   await retained.getByRole("button", { name: /Turn on / }).click()
   await expect(page.getByRole("heading", { name: "This offline action stopped" }))
     .toBeFocused()
-  await page.getByRole("alert").getByText("Technical details").click()
-  await expect(page.getByText(/durable retirement marker/)).toBeVisible()
+  const activationError = page.getByRole("alert")
+  await expect(activationError).toContainText(
+    "This download could not be confirmed as ready. Review the status below before starting a new session."
+  )
+  await expect(activationError.getByText("Technical details")).toHaveCount(0)
+  await expect(activationError.getByText(/durable retirement marker/)).toHaveCount(0)
   expect((await readPacks(page)).find((pack) => pack.id === active.id)?.status).toBe("retained")
 
   await page.evaluate(async () => {
@@ -1775,8 +1955,12 @@ test("trusted retirement demotes the active generation and blocks stale activati
   await page.getByRole("button", { name: "Download the update" }).click()
   await expect(page.getByRole("heading", { name: "This offline action stopped" }))
     .toBeFocused()
-  await page.getByRole("alert").getByText("Technical details").click()
-  await expect(page.getByText(/durable retirement marker/)).toBeVisible()
+  const stagingError = page.getByRole("alert")
+  await expect(stagingError).toContainText(
+    "The download did not finish or failed its check. Review the download status below, then retry or remove the failed copy."
+  )
+  await expect(stagingError.getByText("Technical details")).toHaveCount(0)
+  await expect(stagingError.getByText(/durable retirement marker/)).toHaveCount(0)
   expect(await readPacks(page)).toEqual(beforePacks)
   expect(await readStoreRecords(page, appDatabaseStores.offlinePackOperations))
     .toEqual(beforeOperations)
@@ -1799,7 +1983,7 @@ test("a quota failure during pack caching preserves the prior active generation 
   const prior = packFixture(priorPackDescriptor(), "quota-prior-generation", "active", 51)
   await seedPackFixtures(page, [prior], prior.id)
   await page.goto("/offline/")
-  await expect(page.getByText("Prior verified pack v0")).toBeVisible()
+  await expect(page.getByText("Prior verified pack", { exact: true })).toBeVisible()
   await page.evaluate((failingPath) => {
     const originalPut = Cache.prototype.put
     Cache.prototype.put = function(request: RequestInfo | URL, response: Response): Promise<void> {
@@ -1817,8 +2001,15 @@ test("a quota failure during pack caching preserves the prior active generation 
   await page.getByRole("button", { name: "Download for offline use" }).click()
   const errorHeading = page.getByRole("heading", { name: "This offline action stopped" })
   await expect(errorHeading).toBeFocused()
-  await errorHeading.locator("..").getByText("Technical details").click()
-  await expect(errorHeading.locator("..").getByText(/quota is exhausted/)).toBeVisible()
+  const quotaError = errorHeading.locator("..")
+  await expect(quotaError).toContainText(
+    "The download did not finish or failed its check. Review the download status below, then retry or remove the failed copy."
+  )
+  await expect(page.getByRole("status")).toContainText(
+    "Update failed \u2014 your old copy, if you had one, still works."
+  )
+  await expect(quotaError.getByText("Technical details")).toHaveCount(0)
+  await expect(quotaError.getByText(/quota is exhausted/)).toHaveCount(0)
   await expect(page.getByRole("heading", { name: "Download checked" })).toHaveCount(0)
   await expect(page.getByRole("link", { name: "Remove an unused download" }))
     .toHaveAttribute("href", "#stored-packs-heading")
@@ -1889,7 +2080,7 @@ test("an exact simulation pin that commits before the removal claim blocks that 
 
   await page.goto("/offline/")
   const targetItem = page.getByRole("listitem").filter({
-    hasText: `${target.descriptor.label} v${target.descriptor.packVersion}`
+    hasText: target.descriptor.label
   })
   await expect(targetItem).toBeVisible()
   await installPinBeforeRemovalClaim(page, prepared.session)
@@ -1900,9 +2091,12 @@ test("an exact simulation pin that commits before the removal claim blocks that 
   await targetItem.getByRole("button", { name: "Preview and remove" }).click()
   await expect(page.getByRole("heading", { name: "This offline action stopped" }))
     .toBeFocused()
-  await expect(page.getByText("The download could not be removed. Nothing was deleted.")).toBeVisible()
-  await page.getByRole("alert").getByText("Technical details").click()
-  await expect(page.getByText(/session pin/)).toBeVisible()
+  const removalError = page.getByRole("alert")
+  await expect(removalError).toContainText(
+    "The removal did not finish. Review the downloads still listed below before trying again."
+  )
+  await expect(removalError.getByText("Technical details")).toHaveCount(0)
+  await expect(removalError.getByText(/session pin/)).toHaveCount(0)
   await expect.poll(() => page.evaluate(() =>
     localStorage.getItem("pack-removal-pin-first"))).toBe("committed")
 
@@ -1948,7 +2142,7 @@ test("a removal claim that reaches removing first rejects the queued session pin
 
   await page.goto("/offline/")
   const targetItem = page.getByRole("listitem").filter({
-    hasText: `${target.descriptor.label} v${target.descriptor.packVersion}`
+    hasText: target.descriptor.label
   })
   await expect(targetItem).toBeVisible()
   await installRemovalBeforePinAttempt(page, prepared.session)
@@ -2015,21 +2209,21 @@ test("a staged pack is rehashed before activation and serves atlas navigation an
   await seedPackFixtures(page, [prior, retired], prior.id)
 
   await page.goto("/offline/")
-  await expect(page.getByText("Prior verified pack v0")).toBeVisible()
+  await expect(page.getByText("Prior verified pack", { exact: true })).toBeVisible()
   const retiredPack = page.getByRole("listitem").filter({
-    hasText: "Retired historical pack v0"
+    hasText: "Retired historical pack"
   })
   await expect(retiredPack).toContainText("Kept for earlier sessions")
   await expect(retiredPack.getByRole("button", {
     name: /activate|download|retry/i
   })).toHaveCount(0)
-  const cancelledRemoval = retiredPack.getByRole("button", { name: "Preview and remove" })
+  const canceledRemoval = retiredPack.getByRole("button", { name: "Preview and remove" })
   page.once("dialog", async (dialog) => dialog.dismiss())
-  await cancelledRemoval.click()
+  await canceledRemoval.click()
   await expect(page.getByRole("status")).toContainText(
-    "Removal cancelled. Nothing changed."
+    "Removal canceled. Nothing changed."
   )
-  await expect(cancelledRemoval).toBeFocused()
+  await expect(canceledRemoval).toBeFocused()
 
   await page.getByRole("button", { name: "Download for offline use" }).click()
   await expect(page.getByText(/Download complete and checked/))
@@ -2084,7 +2278,7 @@ test("a staged pack is rehashed before activation and serves atlas navigation an
   expect(packs.find((pack) => pack.id === prior.id)?.status).toBe("retained")
   expect(packs.find((pack) => pack.id === replacement?.id)?.status).toBe("active")
   await expect(page.getByRole("button", {
-    name: "Turn on Prior verified pack version 0"
+    name: "Turn on this saved copy of Prior verified pack"
   })).toHaveCount(0)
   expect(await page.evaluate(async ({ cacheName, pointerPath }) => {
     const cache = await caches.open(cacheName)
@@ -2135,7 +2329,7 @@ test("a staged pack is rehashed before activation and serves atlas navigation an
     expect(dialog.message()).toContain("1 saved attempt(s)")
     await dialog.accept()
   })
-  const priorPack = page.getByRole("listitem").filter({ hasText: "Prior verified pack v0" })
+  const priorPack = page.getByRole("listitem").filter({ hasText: "Prior verified pack" })
   await priorPack.getByRole("button", { name: "Preview and remove" }).click()
   await expect(priorPack).toHaveCount(0)
   completion = page.getByRole("heading", { name: "Download removed" })

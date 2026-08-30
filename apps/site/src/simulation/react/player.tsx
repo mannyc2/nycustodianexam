@@ -164,6 +164,10 @@ export const SimulationPlayer = ({
       session={session}
       strictExpiryPending={snapshot.state.strictExpiryPending}
     />
+    <p className="source-note">
+      <strong>Practicing for: {session.profile.label}.</strong>{" "}
+      <a href="/simulations/">Start a new simulation to choose a different profile</a>.
+    </p>
     {"question" in item ? <article className="question-card" aria-labelledby="simulation-question-heading">
       <header className="question-prompt">
         <p className="eyebrow">Practice simulation · Question {position} of {session.actualLength}</p>
@@ -253,7 +257,7 @@ export const SimulationPlayer = ({
 
     {snapshot.state.confirmation && <section className="reference-card section-gap" aria-labelledby="final-submit-heading">
       <h2 id="final-submit-heading" ref={confirmationRef} tabIndex={-1}>Submit final answers?</h2>
-      <p>{answered} of {session.actualLength} items are answered. {session.actualLength - answered} unanswered items will count as unanswered in the raw practice result.</p>
+      <p>{answered} of {session.actualLength} items are answered. {session.actualLength - answered} unanswered items will count as unanswered in the practice result.</p>
       <p>After final submission, answers cannot be edited. The submission is saved locally before any answer or explanation content is requested.</p>
       <div className="question-controls">
         <button className="button button-primary" disabled={saving} onClick={() => controller.dispatch({ tag: "submit-final" })} type="button">Submit final answers</button>

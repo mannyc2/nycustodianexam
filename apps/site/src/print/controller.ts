@@ -43,6 +43,7 @@ export type PrintPreviewState =
   | { readonly tag: "preview-ready"; readonly job: PrintJobRecord }
   | { readonly tag: "stale"; readonly job: PrintJobRecord }
   | { readonly tag: "system-print-requested"; readonly job: PrintJobRecord }
+  | { readonly tag: "request-print-error"; readonly job: PrintJobRecord; readonly detail: string }
   | { readonly tag: "regenerating"; readonly job: PrintJobRecord }
   | { readonly tag: "regenerate-error"; readonly job: PrintJobRecord; readonly detail: string }
   | { readonly tag: "content-unavailable"; readonly detail: string }
@@ -65,11 +66,31 @@ export interface PrintPreviewController {
   readonly dispose: () => void
 }
 
-const safeError = (cause: unknown): string => {
+const safeError = (cause: unknown, fallback: string): string => {
   if (cause instanceof LocalActionError) return cause.message
   console.error("Print operation failed", cause)
-  return "The print operation could not be completed on this device. The saved preview was not changed — try again."
+  return fallback
 }
+
+const builderError = (cause: unknown): string => safeError(
+  cause,
+  "The packet could not be created or saved on this device. No print preview was created — review the settings and try again."
+)
+
+const restoreError = (cause: unknown): string => safeError(
+  cause,
+  "The saved print preview could not be read on this device. Return to the print center or try again."
+)
+
+const regenerationError = (cause: unknown): string => safeError(
+  cause,
+  "The packet could not be regenerated. The previous saved preview remains available — try again."
+)
+
+const systemPrintError = (cause: unknown): string => safeError(
+  cause,
+  "The system print dialog could not be opened. The saved preview remains available — try again."
+)
 
 const exactJob = (job: PrintJobRecord, expectedId: string): PrintJobRecord => {
   if (job.id !== expectedId) {
@@ -99,7 +120,7 @@ export const createPrintBuilderController = (input: {
         id = decodePrintJobId(input.createId())
       } catch (cause) {
         screen.publish(
-          { tag: "recoverable-error", detail: safeError(cause) },
+          { tag: "recoverable-error", detail: builderError(cause) },
           { focus: "error-summary" }
         )
         return
@@ -109,7 +130,7 @@ export const createPrintBuilderController = (input: {
         .then((job) => input.navigate(printPreviewPath(exactJob(job, id).id)))
         .catch((cause: unknown) => {
           screen.publish(
-            { tag: "recoverable-error", detail: safeError(cause) },
+            { tag: "recoverable-error", detail: builderError(cause) },
             { focus: "error-summary" }
           )
         })
@@ -160,7 +181,7 @@ export const createPrintPreviewController = (input: {
       })
       .catch((cause: unknown) => {
         screen.publish(
-          { tag: "recoverable-error", detail: safeError(cause) },
+          { tag: "recoverable-error", detail: restoreError(cause) },
           { focus: "error-summary" }
         )
       })
@@ -169,7 +190,8 @@ export const createPrintPreviewController = (input: {
   const regenerate = (): void => {
     const state = screen.getSnapshot().state
     const job = state.tag === "preview-ready" || state.tag === "stale" ||
-        state.tag === "system-print-requested" || state.tag === "regenerate-error"
+        state.tag === "system-print-requested" || state.tag === "request-print-error" ||
+        state.tag === "regenerate-error"
       ? state.job
       : undefined
     if (job === undefined) return
@@ -178,7 +200,7 @@ export const createPrintPreviewController = (input: {
       id = decodePrintJobId(input.createId())
     } catch (cause) {
       screen.publish(
-        { tag: "regenerate-error", job, detail: safeError(cause) },
+        { tag: "regenerate-error", job, detail: regenerationError(cause) },
         { focus: "error-summary" }
       )
       return
@@ -205,7 +227,7 @@ export const createPrintPreviewController = (input: {
       input.replaceLocation(printPreviewPath(exactJob(created, id).id))
     }).catch((cause: unknown) => {
         screen.publish(
-          { tag: "regenerate-error", job, detail: safeError(cause) },
+          { tag: "regenerate-error", job, detail: regenerationError(cause) },
           {
             focus: "error-summary",
             announce: "The print job was not regenerated. The previous preview remains available."
@@ -223,7 +245,10 @@ export const createPrintPreviewController = (input: {
     regenerate,
     requestSystemPrint: () => {
       const state = screen.getSnapshot().state
-      if (state.tag !== "preview-ready" && state.tag !== "system-print-requested") return
+      if (
+        state.tag !== "preview-ready" && state.tag !== "system-print-requested" &&
+        state.tag !== "request-print-error"
+      ) return
       void input.runtime.runPromise(recordSystemPrintRequest(expectedId))
         .then((job) => {
           exactJob(job, expectedId)
@@ -235,8 +260,11 @@ export const createPrintPreviewController = (input: {
         })
         .catch((cause: unknown) => {
           screen.publish(
-            { tag: "recoverable-error", detail: safeError(cause) },
-            { focus: "error-summary" }
+            { tag: "request-print-error", job: state.job, detail: systemPrintError(cause) },
+            {
+              focus: "error-summary",
+              announce: "The system print dialog did not open. The saved preview remains available."
+            }
           )
         })
     },

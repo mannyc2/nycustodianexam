@@ -78,6 +78,8 @@ export interface LoadedHazardVisualAsset {
 }
 
 const restoringState: HazardScreenState = { tag: "restoring" }
+const savedSceneFeedbackFailure =
+  "Your response is saved, but the exact scene feedback could not be checked and loaded. Reconnect if you are offline, then try again."
 
 export const createHazardController = (input: {
   readonly scene: PrecommitScene
@@ -174,7 +176,7 @@ export const createHazardController = (input: {
           )
           return
         }
-        publish(hazardRevealFailed(screen.getSnapshot().state, draft, restored.error.detail), {
+        publish(hazardRevealFailed(screen.getSnapshot().state, draft, savedSceneFeedbackFailure), {
           focus: "commit-error"
         })
       })
@@ -224,7 +226,7 @@ export const createHazardController = (input: {
           return
         }
         publish(
-          hazardRevealFailed(screen.getSnapshot().state, committedDraft, result.error.detail),
+          hazardRevealFailed(screen.getSnapshot().state, committedDraft, savedSceneFeedbackFailure),
           { focus: "commit-error" }
         )
       })

@@ -92,6 +92,9 @@ test("schema-valid bytes with the wrong digest stay unrevealed until a clean ret
   await page.getByRole("button", { name: "Submit answer" }).click()
 
   await expect(page.getByRole("heading", { name: "Your answer is saved" })).toBeFocused()
+  await expect(page.getByText(
+    "Your answer is saved, but the exact explanation could not be checked and loaded. Reconnect if you are offline, then try again."
+  )).toBeVisible()
   await expect(page.getByRole("heading", { name: /^Correct — / })).toHaveCount(0)
   await expect(page.getByText(/Scrubs or rinses/)).toHaveCount(0)
   expect(attemptObservedAtFetch).toMatchObject({
@@ -212,7 +215,11 @@ test("revealed safety evidence keeps its scope caveat and exact source excerpt a
   await expect(page.getByText("Occupational Safety and Health Administration", {
     exact: true
   })).toBeVisible()
-  await expect(page.getByText("29 CFR 1926.301(b)", { exact: true }).last()).toBeVisible()
+  const technicalDetails = page.locator(".feedback-sources details.source-note").first()
+  const sourceLocator = technicalDetails.getByText("29 CFR 1926.301(b)", { exact: true })
+  await expect(sourceLocator).toBeHidden()
+  await technicalDetails.locator("summary").click()
+  await expect(sourceLocator).toBeVisible()
   await expect(page.getByText("2026-08-25", { exact: true })).toBeVisible()
 })
 

@@ -62,6 +62,7 @@ export const SettingsIsland = ({
   const lastAuthoritativePreferences = useRef(preferences)
   const [includeDrafts, setIncludeDrafts] = useState(false)
   const [importText, setImportText] = useState<string | null>(null)
+  const importFileGeneration = useRef(0)
   const [importPlan, setImportPlan] = useState<ImportPlan | null>(null)
   const [importConfirmed, setImportConfirmed] = useState(false)
   const [resetScope, setResetScope] = useState<ResetScope>("study-events")
@@ -212,11 +213,13 @@ export const SettingsIsland = ({
   }
 
   const chooseImportFile = async (file: File | undefined): Promise<void> => {
+    const generation = ++importFileGeneration.current
     setImportPlan(null)
     setImportConfirmed(false)
     setCompletion(null)
+    setProblem(null)
+    setImportText(null)
     if (file === undefined) {
-      setImportText(null)
       return
     }
     if (file.size > 10 * 1_024 * 1_024) {
@@ -224,8 +227,18 @@ export const SettingsIsland = ({
       setImportText(null)
       return
     }
-    setImportText(await file.text())
-    setNotice("File loaded on this device. Nothing has been checked or written yet.")
+    try {
+      const text = await file.text()
+      if (generation !== importFileGeneration.current) return
+      setImportText(text)
+      setNotice("File loaded on this device. Nothing has been checked or written yet.")
+    } catch (cause) {
+      if (generation !== importFileGeneration.current) return
+      setProblem(localFailureReport(
+        cause,
+        "The selected file could not be read. Choose the export file again."
+      ))
+    }
   }
 
   const previewImport = async (): Promise<void> => {
@@ -257,6 +270,7 @@ export const SettingsIsland = ({
     setBusy(true)
     setProblem(null)
     setCompletion(null)
+    let importApplied = false
     try {
       const result = await runtime.runPromise(Effect.gen(function*() {
         const transfer = yield* DataTransfer
@@ -265,6 +279,7 @@ export const SettingsIsland = ({
           bootstrap.trustedReleaseContentRegistry
         )
       }))
+      importApplied = true
       setNotice(`Import complete: ${result.imported} added, ${result.matched} already present, ${result.quarantined} set aside for review. Nothing already saved was overwritten.`)
       setImportPlan(null)
       setImportText(null)
@@ -281,7 +296,12 @@ export const SettingsIsland = ({
       }
       setCompletion("Import complete")
     } catch (cause) {
-      setProblem(localFailureReport(cause, "The import could not be applied. Nothing already saved was changed."))
+      setProblem(localFailureReport(
+        cause,
+        importApplied
+          ? "The import finished, but the saved display preferences could not be reloaded. The imported records remain saved; reload this page before changing preferences."
+          : "The import could not be applied. Nothing already saved was changed."
+      ))
     } finally {
       setBusy(false)
     }
@@ -374,7 +394,7 @@ export const SettingsIsland = ({
 
       <section className="reference-card" aria-labelledby="preferences-heading">
         <h2 id="preferences-heading">Preferences on this device</h2>
-        <fieldset className="form-field-group">
+        <fieldset className="form-field-group" disabled={busy}>
           <legend>Preference choices</legend>
           <div className="form-field">
             <label htmlFor="settings-language">Preferred content language</label>
@@ -412,8 +432,8 @@ export const SettingsIsland = ({
 
       <section id="export-local-data" className="reference-card" aria-labelledby="export-heading">
         <h2 id="export-heading">Export your local data</h2>
-        <p>Downloads one file with your study history and preferences that you can keep or move to another device. Offline downloads are not included, and the file carries a checksum so imports can be verified.</p>
-        <fieldset className="form-field-group">
+        <p>Downloads one file with your study history and preferences that you can keep or move to another device. Offline downloads are not included. The site checks the file before importing it.</p>
+        <fieldset className="form-field-group" disabled={busy}>
           <legend>Export options</legend>
           <label className="affirmation-control">
             <input type="checkbox" checked={includeDrafts} onChange={(event) => setIncludeDrafts(event.target.checked)} />
@@ -428,7 +448,7 @@ export const SettingsIsland = ({
       <section className="reference-card" aria-labelledby="import-heading">
         <h2 id="import-heading">Import exported data</h2>
         <p>Nothing is written until the file is checked, a preview is shown, and you confirm. Records that conflict or reference unknown content are set aside instead of overwriting anything.</p>
-        <fieldset className="form-field-group">
+        <fieldset className="form-field-group" disabled={busy}>
           <legend>Import file and confirmation</legend>
           <div className="form-field">
             <label htmlFor="settings-import-file">Local export JSON</label>
@@ -519,7 +539,7 @@ export const SettingsIsland = ({
       <section className="reference-card" aria-labelledby="reset-heading">
         <h2 id="reset-heading">Delete local data</h2>
         <p>Export first if you may need these records. Offline downloads are never deleted here; preview or remove them on the <a href="/offline/">Use offline page</a>.</p>
-        <fieldset className="form-field-group">
+        <fieldset className="form-field-group" disabled={busy}>
           <legend>Reset scope and confirmation</legend>
           <div className="form-field">
             <label htmlFor="reset-scope">What to delete</label>
@@ -531,7 +551,7 @@ export const SettingsIsland = ({
               <option value="study-events">Study and review events</option>
               <option value="preferences">Preferences</option>
               <option value="correction-drafts">Correction drafts and receipts</option>
-              <option value="transfer-quarantine">Import quarantine</option>
+              <option value="transfer-quarantine">Records set aside during import</option>
               <option value="all-portable-data">All portable local data</option>
             </select>
           </div>

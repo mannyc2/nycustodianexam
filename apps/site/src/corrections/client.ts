@@ -61,14 +61,14 @@ export const submitCorrectionReport = async (
   } catch {
     return {
       tag: "failed",
-      detail: "Correction intake status could not be verified. Your local draft was retained."
+      detail: "Correction intake status could not be verified. Your draft remains saved in this browser."
     }
   }
   if (statusResponse.status === 404) return { tag: "inactive" }
   if (!statusResponse.ok) {
     return {
       tag: "failed",
-      detail: "Correction intake is temporarily unavailable. Your local draft was retained."
+      detail: "Correction intake is temporarily unavailable. Your draft remains saved in this browser."
     }
   }
 
@@ -80,7 +80,7 @@ export const submitCorrectionReport = async (
   } catch {
     return {
       tag: "failed",
-      detail: "Correction intake returned an invalid status. Your local draft was retained."
+      detail: "Correction intake returned an invalid status. Your draft remains saved in this browser."
     }
   }
 
@@ -97,7 +97,7 @@ export const submitCorrectionReport = async (
       body: JSON.stringify(report)
     })
   } catch {
-    return { tag: "failed", detail: "The network request failed. Your local draft was retained." }
+    return { tag: "failed", detail: "The network request failed. Your draft remains saved in this browser." }
   }
 
   if (response.status === 429) {
@@ -116,19 +116,19 @@ export const submitCorrectionReport = async (
         ? { tag: "inactive" }
         : {
             tag: "failed",
-            detail: "Correction intake is active but temporarily unavailable. Your local draft was retained."
+            detail: "Correction intake is active but temporarily unavailable. Your draft remains saved in this browser."
           }
     } catch {
       return {
         tag: "failed",
-        detail: "Correction intake is temporarily unavailable. Your local draft was retained."
+        detail: "Correction intake is temporarily unavailable. Your draft remains saved in this browser."
       }
     }
   }
   if (!response.ok) {
     return {
       tag: "failed",
-      detail: "The report was not accepted. Your local draft was retained."
+      detail: "The report was not accepted. Your draft remains saved in this browser."
     }
   }
 
@@ -137,10 +137,10 @@ export const submitCorrectionReport = async (
       await decodeJson(response)
     )
     if (accepted.clientReceiptId !== report.clientReceiptId) {
-      return { tag: "failed", detail: "The service returned a mismatched receipt. Your draft was retained." }
+      return { tag: "failed", detail: "The service response did not match this report, so acceptance could not be confirmed. Your draft remains saved in this browser." }
     }
     return { tag: "accepted", clientReceiptId: accepted.clientReceiptId }
   } catch {
-    return { tag: "failed", detail: "The service returned an invalid receipt. Your draft was retained." }
+    return { tag: "failed", detail: "The service response could not be confirmed. Your draft remains saved in this browser." }
   }
 }

@@ -52,6 +52,9 @@ export interface QuestionController {
   readonly dispose: () => void
 }
 
+const savedExplanationFailure =
+  "Your answer is saved, but the exact explanation could not be checked and loaded. Reconnect if you are offline, then try again."
+
 export const createQuestionController = (
   question: PrecommitQuestion,
   runtime: EffectRunner,
@@ -104,7 +107,7 @@ export const createQuestionController = (
           revealFailed(
             restoredState,
             restored.attempt.selectedOptionId,
-            restored.error.detail
+            savedExplanationFailure
           ),
           { focus: "commit-error" }
         )
@@ -156,7 +159,7 @@ export const createQuestionController = (
           })
           return
         }
-        publish(revealFailed(screen.getSnapshot().state, selectedId, result.error.detail), {
+        publish(revealFailed(screen.getSnapshot().state, selectedId, savedExplanationFailure), {
           focus: "commit-error"
         })
       })

@@ -14,6 +14,10 @@ import {
   type SimulationSessionItem,
   type SimulationSubmittedAnswer
 } from "../model.ts"
+import {
+  hazardFamilyLabel,
+  sourceEvidenceTierLabel
+} from "../../public-content-labels.ts"
 
 type ResultsController = ReturnType<typeof createSimulationResultsController>
 
@@ -29,25 +33,24 @@ const QuestionEvidence = ({ result }: { readonly result: SimulationQuestionResul
     </details>
   }
 
-  return <>
-    <section className="feedback-claims">
-      <h4>Supported claims</h4>
-      <ul>{feedback.claims.map((claim) => <li key={claim.id}>
-        <p>{claim.text}</p>
-        <p><strong>Evidence tier:</strong> {claim.evidenceTier}</p>
-        {claim.caveat === null ? null : <p><strong>Caveat:</strong> {claim.caveat}</p>}
-      </li>)}</ul>
-    </section>
-    <details className="feedback-sources">
+  return <details className="feedback-sources">
       <summary>Where this comes from</summary>
       <ul>{feedback.sources.map((source) => <li key={source.id}>
-        <p><strong>{source.title}</strong> — {source.publisher}, {source.version}</p>
-        <p><code>{source.locator}</code> · verified {source.verifiedOn}</p>
+        <p><strong>{source.publisher}</strong> — {source.title} (verified <time dateTime={source.verifiedOn}>{source.verifiedOn}</time>)</p>
+        <p><strong>Evidence:</strong> {sourceEvidenceTierLabel(source.evidenceTier)}</p>
         <blockquote>{source.excerpt}</blockquote>
         {source.url === undefined ? null : <p><a href={source.url} rel="external noopener">Open the source</a></p>}
+        <details className="source-note">
+          <summary>Technical details</summary>
+          <dl>
+            <div><dt>Source version</dt><dd>{source.version}</dd></div>
+            <div><dt>Locator</dt><dd><code>{source.locator}</code></dd></div>
+            <div><dt>Source line ID</dt><dd><code>{source.id}</code></dd></div>
+            <div><dt>Source record ID</dt><dd><code>{source.sourceId}</code></dd></div>
+          </dl>
+        </details>
       </li>)}</ul>
     </details>
-  </>
 }
 
 const ResultActions = ({ flagged }: { readonly flagged: boolean }) => (
@@ -89,9 +92,13 @@ const QuestionResultFeedback = ({
   ]
   const optionLabel = (optionId: string | null): string =>
     optionId === null ? "No answer" : optionLabels.get(optionId) ?? "Unavailable answer choice"
-  const claimById = result.postcommit.schemaVersion === 2
-    ? new Map(result.postcommit.claims.map((claim) => [claim.id, claim]))
-    : new Map<string, never>()
+  const postcommit = result.postcommit
+  const objectiveId = postcommit.schemaVersion === 2 ? postcommit.objectiveId : undefined
+  const objectiveClaim = postcommit.schemaVersion === 2 && objectiveId !== undefined
+    ? postcommit.claims.find((claim) => claim.id === objectiveId)
+    : undefined
+  const hasAuthoredMixUp = postcommit.schemaVersion === 2 &&
+    (postcommit.tags?.confusionSetIds.length ?? 0) > 0
 
   return <>
     <dl className="feedback-answer-summary">
@@ -108,17 +115,24 @@ const QuestionResultFeedback = ({
               ? "Your answer"
               : "Other answer"}: {optionLabel(optionId)}</h5>
           <p>{rationales.get(optionId) ?? "No rationale is available for this choice."}</p>
-          {result.postcommit.schemaVersion === 1 ? null : <ul>
-            {result.postcommit.rationales
-              .find((rationale) => rationale.optionId === optionId)?.claimIds
-              .map((claimId) => {
-                const claim = claimById.get(claimId)
-                return claim === undefined ? null : <li key={claimId}>{claim.text}</li>
-              })}
-          </ul>}
         </li>)}
       </ol>
     </section>
+    {objectiveClaim === undefined ? null : <section className="feedback-claims">
+      <h4>Key distinction</h4>
+      <p>{objectiveClaim.text}</p>
+      {objectiveClaim.caveat === null ? null : <p><strong>Scope note:</strong> {objectiveClaim.caveat}</p>}
+    </section>}
+    {hasAuthoredMixUp ? <section className="feedback-confusion">
+      <h4>Common mix-up</h4>
+      <p>{selectedId !== null && selectedId !== result.correctOptionId
+        ? objectiveClaim === undefined
+          ? `You chose “${optionLabel(selectedId)}.” Compare it with “${optionLabel(result.correctOptionId)}” in the answer explanations above.`
+          : `You chose “${optionLabel(selectedId)}.” Compare it with “${optionLabel(result.correctOptionId)}” using the key distinction above.`
+        : objectiveClaim === undefined
+          ? `Compare “${optionLabel(result.correctOptionId)}” with the other answer choices in the answer explanations above.`
+          : `Compare “${optionLabel(result.correctOptionId)}” with the other answer choices using the key distinction above.`}</p>
+    </section> : null}
     <QuestionEvidence result={result} />
     <ResultActions flagged={answer.reviewIntent === "flagged"} />
   </>
@@ -169,7 +183,7 @@ const VisualHazardResponseFeedback = ({
               : marker.kind === "decoy_false_positive" ? <p><strong>Safe as shown.</strong> {decoy === undefined
                 ? "The detail you marked is safe as depicted in this scene."
                 : `${decoy.condition}; ${decoy.safeBecause}.`}</p>
-                : <p>This mark does not match any condition recorded in this scene, so it is not scored as right or wrong.</p>}
+                : <p>This mark does not match a recorded condition. It counts as an extra mark, but the site cannot say what that object means.</p>}
         </li>
       })}
     </ol>}
@@ -188,12 +202,10 @@ const VisualHazardResponseFeedback = ({
 
 const NonvisualHazardResponseFeedback = ({
   answer,
-  item,
-  result
+  item
 }: {
   readonly answer: SimulationSubmittedAnswer
   readonly item: SimulationHazardSessionItem
-  readonly result: SimulationHazardResult
 }) => {
   const selected = new Set(answer.selectedZoneOrders ?? [])
   return <section>
@@ -203,14 +215,22 @@ const NonvisualHazardResponseFeedback = ({
       <h5>Zone {zone.order}: {zone.label}</h5>
       <p>{selected.has(zone.order) ? "You selected this zone." : "You did not select this zone."}</p>
     </li>)}</ol>
-    <h5>Full scene description by zone</h5>
-    <ul>{result.postcommit.nonvisualZonedEquivalent.map((statement) => <li
-      key={`${statement.zone}:${statement.role}:${statement.statement}`}
-    >
-      <strong>{statement.zone} — {hazardRoleLabel(statement.role)}:</strong> {statement.statement}
-    </li>)}</ul>
   </section>
 }
+
+const NonvisualHazardPostcommitEquivalent = ({
+  result
+}: {
+  readonly result: SimulationHazardResult
+}) => <section>
+  <h4>Full scene description by zone</h4>
+  <p>This covers the same knowledge in text form; it is not the same task as marking the image.</p>
+  <ul>{result.postcommit.nonvisualZonedEquivalent.map((statement) => <li
+    key={`${statement.zone}:${statement.role}:${statement.statement}`}
+  >
+    <strong>{statement.zone} — {hazardRoleLabel(statement.role)}:</strong> {statement.statement}
+  </li>)}</ul>
+</section>
 
 const HazardResultFeedback = ({
   answer,
@@ -226,7 +246,13 @@ const HazardResultFeedback = ({
     : "No hazards selected or marked"}</p>
   {item.mode === "visual"
     ? <VisualHazardResponseFeedback answer={answer} result={result} />
-    : <NonvisualHazardResponseFeedback answer={answer} item={item} result={result} />}
+    : <NonvisualHazardResponseFeedback answer={answer} item={item} />}
+  <details className="feedback-sources">
+    <summary>Where this comes from</summary>
+    <ul>{result.postcommit.fullPostAnswer.sources.map((source) => <li key={source.id}>
+      <a href={source.url} rel="external noopener">{source.title}</a>, {source.locator}. {source.scope}
+    </li>)}</ul>
+  </details>
   <section>
     <h4>Scene explanation and full post-submission description</h4>
     <p>{result.postcommit.claim}</p>
@@ -244,12 +270,7 @@ const HazardResultFeedback = ({
       {result.postcommit.fullPostAnswer.safeBackground.map((detail) => <li key={detail}>{detail}</li>)}
     </ul>
   </section>
-  <details className="feedback-sources">
-    <summary>Where this comes from</summary>
-    <ul>{result.postcommit.fullPostAnswer.sources.map((source) => <li key={source.id}>
-      <a href={source.url} rel="external noopener">{source.title}</a>, {source.locator}. {source.scope}
-    </li>)}</ul>
-  </details>
+  {item.mode === "nonvisual" ? <NonvisualHazardPostcommitEquivalent result={result} /> : null}
   <ResultActions flagged={answer.reviewIntent === "flagged"} />
 </>
 
@@ -277,14 +298,14 @@ export const SimulationResults = ({ controller }: { readonly controller: Results
   if (snapshot.state.tag === "reconciling") {
     return <>{announcement}<section className="review-state" aria-busy="true">
       <h1>Checking your final submission</h1>
-      <p>Your final answers are already saved on this device. The answer records are loading to calculate practice-only results.</p>
+      <p>Checking this device for a saved final submission. If one is found, its answer records will be used to calculate practice-only results.</p>
     </section></>
   }
   if (snapshot.state.tag === "failure") {
     return <>{announcement}<section className="error-panel" role="alert">
       <h1 ref={errorRef} tabIndex={-1}>Results are not available yet</h1>
       <p>{snapshot.state.detail}</p>
-      <p>Your final submission remains saved on this device. Retrying never creates a second submission.</p>
+      <p>Retry only checks for a saved final submission; it does not create or resubmit one.</p>
       <button className="button button-primary" onClick={controller.retry} type="button">Retry loading results</button>
     </section></>
   }
@@ -305,7 +326,7 @@ export const SimulationResults = ({ controller }: { readonly controller: Results
     (result) => result.kind === "hazard"
   ) as ReadonlyArray<SimulationHazardResult>
   const hazardFamilySamples = [...hazardResults.reduce((groups, result) => {
-    const family = result.hazardFamily ?? "Zero-hazard control"
+    const family = hazardFamilyLabel(result.hazardFamily)
     const sample = groups.get(family) ?? { total: 0, correct: 0 }
     groups.set(family, {
       total: sample.total + 1,
@@ -403,7 +424,7 @@ export const SimulationResults = ({ controller }: { readonly controller: Results
             <h3 id={`result-question-${item.position}`} tabIndex={-1}>Hazard item {item.position}: {hazardResult?.correct ? "Found every hazard with no extra marks" : hazardResult?.answered ? "Needs review" : "Unanswered"}</h3>
             <p>{item.scene.neutralPreAnswer.overview}</p>
             <p><strong>Format:</strong> {item.mode === "visual" ? "Visual marker task" : "Keyboard zone task"}</p>
-            <p><strong>Hazard family:</strong> {hazardResult?.hazardFamily ?? "Zero-hazard control"}</p>
+            <p><strong>Hazard category:</strong> {hazardFamilyLabel(hazardResult?.hazardFamily ?? null)}</p>
             <p><strong>Hazards:</strong> {hazardResult?.hitCount ?? 0} found · {hazardResult?.missedCount ?? 0} missed · {hazardResult?.targetCount ?? 0} in this scene</p>
             <p><strong>Extra marks:</strong> {hazardResult?.decoyFalsePositiveCount ?? 0} on safe details · {hazardResult?.falsePositiveCount ?? 0} matching nothing · {hazardResult?.duplicateCount ?? 0} repeated</p>
             {hazardResult === undefined || answer === undefined

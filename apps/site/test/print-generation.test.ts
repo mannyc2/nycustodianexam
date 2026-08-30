@@ -34,6 +34,7 @@ import {
   PrintAnswerMismatchError
 } from "../src/print/answers.ts"
 import {
+  createPrintBuilderController,
   createPrintPreviewController,
   type PrintEffectRunner,
   type PrintPreviewController
@@ -195,7 +196,8 @@ const answers = questions.map((question) => new PrintQuestionAnswer({
     excerpt: `Exact source-line excerpt ${question.id}`,
     language: "en",
     verifiedOn: "2026-08-25",
-    supportedClaimIds: [`claim-${question.id}`]
+    supportedClaimIds: [`claim-${question.id}`],
+    url: `https://example.test/${question.id}`
   }]
 }))
 
@@ -235,6 +237,33 @@ const retainedAssets = [...bootstrap.tools, ...bootstrap.scenes].map((source) =>
     receipt: source.asset,
     dataUrl: `data:image/png;base64,${tinyPngBase64}`
   }))
+
+const renderPrintJob = (generated: ReturnType<typeof generatePrintJob>): string => {
+  const job = new PrintJobRecord({
+    id: "print-render1234",
+    ...generated,
+    status: "preview-ready",
+    updatedAt: 1
+  })
+  const snapshot = {
+    state: { tag: "preview-ready" as const, job },
+    revision: 1,
+    focusRequest: null,
+    announcementRequest: null
+  }
+  const controller: PrintPreviewController = {
+    getSnapshot: () => snapshot,
+    getHydrationSnapshot: () => snapshot,
+    subscribe: () => () => undefined,
+    start: () => undefined,
+    retryRestore: () => undefined,
+    regenerate: () => undefined,
+    requestSystemPrint: () => undefined,
+    acknowledgeViewRequest: () => undefined,
+    dispose: () => undefined
+  }
+  return renderToStaticMarkup(createElement(PrintPreview, { controller }))
+}
 
 describe("deterministic print generation", () => {
   it("normalizes bounded seeds and shares one exact print-job route identity", () => {
@@ -347,6 +376,41 @@ describe("deterministic print generation", () => {
     expect(JSON.stringify(explanations.packet)).toContain("Supported claim")
     expect(JSON.stringify(explanations.packet)).toContain("Site-designed application context.")
     expect(JSON.stringify(explanations.packet)).toContain("Exact source-line excerpt")
+  })
+
+  it("renders public evidence labels and keeps source coordinates in technical details", () => {
+    const generated = generatePrintJob({
+      bootstrap,
+      settings: settings("explanations-and-sources"),
+      answers
+    })
+    const section = generated.packet.sections[0]
+    if (section?.tag !== "explanations") throw new Error("Expected explanation packet")
+    const explanation = section.explanations[0]
+    if (explanation === undefined || !("claims" in explanation)) {
+      throw new Error("Expected current explanation evidence")
+    }
+    const source = explanation.sources[0]
+    const claim = explanation.claims[0]
+    if (source === undefined || !("title" in source) || claim === undefined) {
+      throw new Error("Expected current source and claim")
+    }
+    const html = renderPrintJob(generated)
+    const sourceLinePosition = html.indexOf(source.id)
+    const sourceDetailsPosition = html.lastIndexOf(
+      "<summary>Technical details</summary>",
+      sourceLinePosition
+    )
+
+    expect(html).toContain("Maintained editorial summary")
+    expect(html).not.toContain("maintained-editorial-synthesis")
+    expect(html).not.toContain(claim.id)
+    expect(html).toContain(`href="${source.url}"`)
+    expect(html).toContain(`<strong>${source.publisher}</strong> — ${source.title}`)
+    expect(sourceDetailsPosition).toBeGreaterThan(-1)
+    expect(sourceLinePosition).toBeGreaterThan(sourceDetailsPosition)
+    expect(html.indexOf(source.locator)).toBeGreaterThan(sourceDetailsPosition)
+    expect(html.indexOf(source.sourceId)).toBeGreaterThan(sourceDetailsPosition)
   })
 
   it("restores exact v1 print packets without rewriting or accepting v2 evidence under v1", () => {
@@ -768,7 +832,7 @@ describe("deterministic print generation", () => {
     expect(printProductAvailability("announcement-profile-fact-sheet", bootstrap, "profile-1")).toEqual({
       available: false,
       product: "announcement-profile-fact-sheet",
-      reason: "No source-bound announcement fact history is published for this profile; a generic profile summary is not substituted."
+      reason: "No reviewed announcement fact history is available for this profile; a generic profile summary is not substituted."
     })
     expect(printProductAvailability("correction-change-log-excerpt", bootstrap, "profile-1")).toEqual({
       available: false,
@@ -873,6 +937,23 @@ describe("deterministic print generation", () => {
     expect(text.manifest.assets).toEqual([])
     expect(JSON.stringify(text.packet)).toContain("Equivalent statement")
     expect(JSON.stringify(text.packet)).not.toContain("data:image")
+  })
+
+  it("uses a human hazard-region title instead of an inventory identifier", () => {
+    const configured = new PrintSettings({
+      ...settings("annotated-hazard-answer-packet", 1),
+      includeImages: true
+    })
+    const html = renderPrintJob(generatePrintJob({
+      bootstrap,
+      settings: configured,
+      sceneAnswers,
+      retainedAssets
+    }))
+
+    expect(html).toContain("<title>Hazard region 1</title>")
+    expect(html).not.toContain("<title>Target")
+    expect(html).not.toContain("<title>Hazard region 1:")
   })
 
   it("applies published category filters before capacity and deterministic selection", () => {
@@ -1074,6 +1155,10 @@ describe("deterministic print generation", () => {
       "superseded",
       "not_applicable"
     ]) expect(html).toContain(`data-fact-state="${state}"`)
+    expect(html).toContain("<strong>Status:</strong> Not published.")
+    expect(html).toContain("<strong>Status:</strong> Conflicting published information.")
+    expect(html).not.toContain("<strong>Status:</strong> not_published.")
+    expect(html).not.toContain("<strong>Category:</strong> filing period.")
     expect(html).toContain("The current fee is stated here.")
     expect(html).toContain("One document states 40 percent.")
     expect(html).toContain("Public record excerpt retained for verification.")
@@ -1197,7 +1282,7 @@ describe("deterministic print generation", () => {
       dispose: () => undefined
     }
     const html = renderToStaticMarkup(createElement(PrintPreview, { controller }))
-    expect(html).toContain("Historical fact-sheet format")
+    expect(html).toContain("Historical fact sheet; last reviewed")
     expect(html).toContain("January 2 through January 30")
     expect(html).toContain("historical announcement page 1")
 
@@ -1224,6 +1309,107 @@ describe("deterministic print generation", () => {
 })
 
 describe("semantic print preview", () => {
+  it("uses a stable initial-generation error without exposing raw diagnostics", async () => {
+    const rawDiagnostic = "IndexedDB transaction 47 aborted at internal/object-store.ts:91"
+    const consoleError = vi.spyOn(console, "error").mockImplementation(() => undefined)
+    const navigate = vi.fn()
+    const runtime: PrintEffectRunner = {
+      runPromise: <A, E>(_effect: Effect.Effect<A, E, PrintPersistence | VerifiedContent>) =>
+        Promise.reject(new Error(rawDiagnostic))
+    }
+    const controller = createPrintBuilderController({
+      bootstrap,
+      runtime,
+      createId: () => "print-initial123",
+      navigate
+    })
+
+    try {
+      controller.generate(settings("multiple-choice-questions"))
+      await vi.waitFor(() => expect(controller.getSnapshot().state).toMatchObject({
+        tag: "recoverable-error",
+        detail: "The packet could not be created or saved on this device. No print preview was created — review the settings and try again."
+      }))
+      expect(controller.getSnapshot().focusRequest?.target).toBe("error-summary")
+      expect(JSON.stringify(controller.getSnapshot().state)).not.toContain(rawDiagnostic)
+      expect(navigate).not.toHaveBeenCalled()
+    } finally {
+      controller.dispose()
+      consoleError.mockRestore()
+    }
+  })
+
+  it("retains the saved preview when the system print request fails", async () => {
+    const generated = generatePrintJob({
+      bootstrap,
+      settings: settings("multiple-choice-questions")
+    })
+    const original = new PrintJobRecord({
+      id: "print-dialog1234",
+      ...generated,
+      status: "preview-ready",
+      updatedAt: 1
+    })
+    const rawDiagnostic = "DOMException: print backend channel disconnected"
+    let callCount = 0
+    const consoleError = vi.spyOn(console, "error").mockImplementation(() => undefined)
+    const openSystemPrint = vi.fn()
+    const runtime: PrintEffectRunner = {
+      runPromise: <A, E>(_effect: Effect.Effect<A, E, PrintPersistence | VerifiedContent>) => {
+        callCount += 1
+        return callCount === 1
+          ? Promise.resolve(original as A)
+          : Promise.reject(new Error(rawDiagnostic))
+      }
+    }
+    const controller = createPrintPreviewController({
+      id: original.id,
+      bootstrap,
+      runtime,
+      createId: () => "print-unused1234",
+      replaceLocation: () => undefined,
+      openSystemPrint
+    })
+
+    try {
+      controller.start()
+      await vi.waitFor(() => expect(controller.getSnapshot().state).toMatchObject({
+        tag: "preview-ready",
+        job: { id: original.id }
+      }))
+      controller.requestSystemPrint()
+      await vi.waitFor(() => expect(controller.getSnapshot().state).toMatchObject({
+        tag: "request-print-error",
+        job: { id: original.id },
+        detail: "The system print dialog could not be opened. The saved preview remains available — try again."
+      }))
+      const snapshot = controller.getSnapshot()
+      expect(snapshot.state).toMatchObject({ job: original })
+      expect(snapshot.focusRequest?.target).toBe("error-summary")
+      expect(JSON.stringify(snapshot.state)).not.toContain(rawDiagnostic)
+      const renderedController: PrintPreviewController = {
+        ...controller,
+        getHydrationSnapshot: () => snapshot
+      }
+      const html = renderToStaticMarkup(createElement(PrintPreview, {
+        controller: renderedController
+      }))
+      expect(html).toContain("System print did not open")
+      expect(html).toContain(original.packet.title)
+      expect(html).toContain("The saved preview remains available — try again.")
+      expect(openSystemPrint).not.toHaveBeenCalled()
+
+      controller.regenerate()
+      await vi.waitFor(() => expect(controller.getSnapshot().state).toMatchObject({
+        tag: "regenerate-error",
+        job: { id: original.id }
+      }))
+    } finally {
+      controller.dispose()
+      consoleError.mockRestore()
+    }
+  })
+
   it("restores a self-contained historical job before and without current inventory", async () => {
     const generated = generatePrintJob({
       bootstrap,
@@ -1259,7 +1445,7 @@ describe("semantic print preview", () => {
     await vi.waitFor(() => expect(controller.getSnapshot().state).toMatchObject({
       tag: "regenerate-error",
       job: { id: original.id },
-      detail: "The print operation could not be completed on this device. The saved preview was not changed — try again."
+      detail: "The packet could not be regenerated. The previous saved preview remains available — try again."
     }))
     expect(loadBootstrap).toHaveBeenCalledTimes(1)
     controller.dispose()
@@ -1338,10 +1524,14 @@ describe("semantic print preview", () => {
     const html = renderToStaticMarkup(createElement(PrintPreview, { controller }))
 
     expect(html).toContain("Original practice — not an official or past exam")
-    expect(html).toContain("Statewide entry-level · version 3")
+    expect(html).toContain("<dt>Profile</dt><dd>Statewide entry-level</dd>")
+    expect(html).not.toContain("Statewide entry-level · version 3")
+    expect(html).toContain("<dt>Profile version</dt><dd>3</dd>")
     expect(html).toContain("Site-designed distribution")
     expect(html).toContain("Set pairing identifier")
     expect(html).toContain(generated.manifest.pairingFingerprint ?? "missing pairing identifier")
+    expect(html).toContain('<details class="source-note print-manifest-technical"><summary>Technical details</summary>')
+    expect(html).toContain("Manifest fingerprint")
     expect(html).toContain("print-us-letter")
     expect(html).toContain("print-size-normal")
     expect(html).not.toContain("Answer key")

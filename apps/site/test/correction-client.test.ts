@@ -1,5 +1,8 @@
 import { describe, expect, it, vi } from "vitest"
-import { submitCorrectionReport } from "../src/corrections/client.ts"
+import {
+  fetchCorrectionIntakeStatus,
+  submitCorrectionReport
+} from "../src/corrections/client.ts"
 import {
   correctionReportFromDraft,
   emptyCorrectionDraft,
@@ -15,6 +18,46 @@ const validDraft = () => new CorrectionDraftRecord({
 })
 
 describe("local correction workflow", () => {
+  it("classifies an explicitly checked active correction service", async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(new Response(JSON.stringify({
+      schemaVersion: 1,
+      mode: "active-v1",
+      acceptsReports: true
+    }), { status: 200, headers: { "content-type": "application/json" } }))
+
+    await expect(fetchCorrectionIntakeStatus(fetcher)).resolves.toBe("active")
+    expect(fetcher).toHaveBeenCalledWith("/api/corrections/status", {
+      cache: "no-store",
+      credentials: "omit",
+      headers: { accept: "application/json" }
+    })
+  })
+
+  it("classifies disabled and absent correction services as inactive", async () => {
+    const disabled = vi.fn<typeof fetch>().mockResolvedValueOnce(new Response(JSON.stringify({
+      schemaVersion: 1,
+      mode: "disabled",
+      acceptsReports: false
+    }), { status: 200, headers: { "content-type": "application/json" } }))
+    const absent = vi.fn<typeof fetch>().mockResolvedValueOnce(new Response(null, { status: 404 }))
+
+    await expect(fetchCorrectionIntakeStatus(disabled)).resolves.toBe("inactive")
+    await expect(fetchCorrectionIntakeStatus(absent)).resolves.toBe("inactive")
+  })
+
+  it("keeps transport, server, and malformed status failures unknown", async () => {
+    const rejected = vi.fn<typeof fetch>().mockRejectedValueOnce(new Error("offline sentinel"))
+    const unavailable = vi.fn<typeof fetch>().mockResolvedValueOnce(new Response(null, { status: 502 }))
+    const malformed = vi.fn<typeof fetch>().mockResolvedValueOnce(new Response("not-json", {
+      status: 200,
+      headers: { "content-type": "application/json" }
+    }))
+
+    await expect(fetchCorrectionIntakeStatus(rejected)).resolves.toBe("unknown")
+    await expect(fetchCorrectionIntakeStatus(unavailable)).resolves.toBe("unknown")
+    await expect(fetchCorrectionIntakeStatus(malformed)).resolves.toBe("unknown")
+  })
+
   it("turns a complete draft into the narrow anonymous request", () => {
     expect(correctionReportFromDraft(validDraft())).toEqual({
       schemaVersion: 1,
@@ -89,7 +132,7 @@ describe("local correction workflow", () => {
     await expect(submitCorrectionReport(outage, correctionReportFromDraft(validDraft())))
       .resolves.toEqual({
         tag: "failed",
-        detail: "Correction intake is active but temporarily unavailable. Your local draft was retained."
+        detail: "Correction intake is active but temporarily unavailable. Your draft remains saved in this browser."
       })
   })
 

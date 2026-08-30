@@ -391,7 +391,8 @@ describe("review projection", () => {
           id: `question:${questionAttemptId(retiredReceipt)}`,
           attemptId: questionAttemptId(retiredReceipt),
           kind: "question",
-          detail: "A saved question is unavailable in this exact release. It was not substituted."
+          detail:
+            "This saved question is unavailable in the current study material. It remains stored and was not replaced with a different question."
         }
       ])
     }).pipe(
@@ -416,7 +417,7 @@ describe("review projection", () => {
       const projection = yield* buildReviewQueue(bootstrap)
       expect(projection.items).toEqual([])
       expect(projection.quarantined).toHaveLength(1)
-      expect(projection.quarantined[0]?.detail).toContain("does not match this exact released item")
+      expect(projection.quarantined[0]?.detail).toContain("does not match the current version of the question")
       expect(requestedUrls).toEqual([])
     }).pipe(
       Effect.provide(layerFor({ questionAttempts: [replacedAttempt], requestedUrls }))

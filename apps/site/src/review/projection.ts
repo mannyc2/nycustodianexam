@@ -298,7 +298,7 @@ export const buildReviewQueue = Effect.fn("ReviewProjection.buildReviewQueue")(f
       ? Effect.fail(
           projectionError(
             "content",
-            "A saved question attempt predates release receipts and was quarantined without loading feedback.",
+            "This question attempt was saved by an older site version, so its exact feedback cannot be checked. It remains stored and was not added to the review list.",
             { attemptId: attempt.id, questionId: attempt.questionId }
           )
         )
@@ -306,7 +306,7 @@ export const buildReviewQueue = Effect.fn("ReviewProjection.buildReviewQueue")(f
       ? Effect.fail(
           projectionError(
             "content",
-            "A saved question is unavailable in this exact release. It was not substituted.",
+            "This saved question is unavailable in the current study material. It remains stored and was not replaced with a different question.",
             { attemptId: attempt.id, questionId: attempt.questionId }
           )
         )
@@ -315,7 +315,7 @@ export const buildReviewQueue = Effect.fn("ReviewProjection.buildReviewQueue")(f
       ? Effect.fail(
           projectionError(
             "content",
-            "A saved question receipt does not match this exact released item. It was not reinterpreted.",
+            "This saved answer does not match the current version of the question. It remains stored and was not applied to different content.",
             { attemptId: attempt.id, questionId: attempt.questionId }
           )
         )
@@ -333,7 +333,7 @@ export const buildReviewQueue = Effect.fn("ReviewProjection.buildReviewQueue")(f
       ? Effect.fail(
           projectionError(
             "content",
-            "A saved hazard attempt predates release receipts and was quarantined without loading feedback.",
+            "This hazard attempt was saved by an older site version, so its exact feedback cannot be checked. It remains stored and was not added to the review list.",
             { attemptId: attempt.id, sceneId: attempt.sceneId }
           )
         )
@@ -341,7 +341,7 @@ export const buildReviewQueue = Effect.fn("ReviewProjection.buildReviewQueue")(f
         ? Effect.fail(
             projectionError(
               "content",
-              "A saved hazard scene is unavailable in this exact release. It was not substituted.",
+              "This saved hazard scene is unavailable in the current study material. It remains stored and was not replaced with a different scene.",
               { attemptId: attempt.id, sceneId: attempt.sceneId }
             )
           )
@@ -353,7 +353,7 @@ export const buildReviewQueue = Effect.fn("ReviewProjection.buildReviewQueue")(f
         ? Effect.fail(
             projectionError(
               "content",
-              "A saved hazard receipt does not match this exact released scene. It was not reinterpreted.",
+              "This saved response does not match the current version of the hazard scene. It remains stored and was not applied to different content.",
               { attemptId: attempt.id, sceneId: attempt.sceneId }
             )
           )

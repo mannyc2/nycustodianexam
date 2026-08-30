@@ -34,8 +34,7 @@ export const SimulationSetup = ({
   readonly navigate: (path: string) => void
   readonly runtime: SimulationEffectRunner
 }) => {
-  const firstProfile = bootstrap.profiles[0]
-  const [profileId, setProfileId] = useState(firstProfile?.id ?? "")
+  const [profileId, setProfileId] = useState("")
   const [format, setFormat] = useState<SimulationFormat>("questions")
   const selectedProfile = bootstrap.profiles.find((profile) => profile.id === profileId)
   const categories = useMemo(
@@ -59,7 +58,7 @@ export const SimulationSetup = ({
     ])].sort((left, right) => left - right),
     [bootstrap.advertisedLengths, capacity, format]
   )
-  const [length, setLength] = useState(() => simulationCapacity(bootstrap.inventory))
+  const [length, setLength] = useState(0)
   const [seed, setSeed] = useState(`${bootstrap.releaseId}-practice`)
   const [timingMode, setTimingMode] = useState<"untimed" | "timed">("untimed")
   const [durationMinutes, setDurationMinutes] = useState(120)
@@ -133,18 +132,21 @@ export const SimulationSetup = ({
   return <div className="simulation-setup-panel">
     <section aria-labelledby="simulation-settings-heading" className="reference-card">
       <h2 id="simulation-settings-heading">Simulation settings</h2>
-      <label className="field-label" htmlFor="simulation-profile">Profile</label>
+      <label className="field-label" htmlFor="simulation-profile">Practicing for</label>
       <select
         disabled={status.tag === "creating"}
         id="simulation-profile"
         onChange={(event) => setProfileId(event.target.value)}
         value={profileId}
       >
+        <option disabled value="">Choose a study profile</option>
         {bootstrap.profiles.map((profile) => (
           <option key={profile.id} value={profile.id}>{profile.label} · {profile.jurisdiction}</option>
         ))}
       </select>
-      {selectedProfile === undefined ? null : <p className="source-note">{selectedProfile.disclaimer}</p>}
+      {selectedProfile === undefined
+        ? <p className="source-note">Choose the statewide series or a jurisdiction-specific profile before starting. The choice controls which practice content can appear.</p>
+        : <p className="source-note"><strong>Practicing for: {selectedProfile.label}.</strong> {selectedProfile.disclaimer}</p>}
       <fieldset>
         <legend>Practice format</legend>
         <label><input checked={format === "questions"} disabled={status.tag === "creating"} name="simulation-format" onChange={() => setFormat("questions")} type="radio" /> Multiple-choice questions</label>
@@ -165,7 +167,11 @@ export const SimulationSetup = ({
           /> {category} ({count} unique {count === 1 ? "item" : "items"})
         </label>)}
         <p><strong>Available items for this mix:</strong> {capacity}</p>
-        {capacity === 0 ? <p className="field-hint" role="status">Select at least one content category to create a simulation.</p> : null}
+        {selectedProfile === undefined
+          ? <p className="field-hint" role="status">Choose a study profile to see the available content categories.</p>
+          : capacity === 0
+            ? <p className="field-hint" role="status">Select at least one content category to create a simulation.</p>
+            : null}
       </fieldset>
       <fieldset>
         <legend>Set length</legend>
@@ -217,11 +223,11 @@ export const SimulationSetup = ({
           onChange={(event) => setSeed(event.target.value)}
           value={seed}
         />
-        <p>The same release, format, settings, and code produce the same item order. A saved simulation always restores exactly as it was created.</p>
+        <p>The same available release, format, settings, and code produce the same item order. A saved simulation records the exact items it was created with; it can restore them while that saved browser data remains available.</p>
       </details>
       <button
         className="button button-primary"
-        disabled={status.tag === "creating" || capacity === 0 || length > capacity || seed.trim().length === 0 || seed.trim().length > deterministicSeedMaxLength || !timingValid}
+        disabled={status.tag === "creating" || selectedProfile === undefined || capacity === 0 || length > capacity || seed.trim().length === 0 || seed.trim().length > deterministicSeedMaxLength || !timingValid}
         onClick={start}
         type="button"
       >{status.tag === "creating" ? "Preparing your simulation…" : "Start simulation"}</button>

@@ -1,6 +1,24 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react"
+import { sourceEvidenceTierLabel } from "../../public-content-labels.ts"
 import type { PrintPreviewController, PrintPreviewState } from "../controller.ts"
 import type { PrintJobRecord, ReleasedPrintPacketSection } from "../model.ts"
+
+const sourceTechnicalDetails = (source: {
+  readonly id: string
+  readonly locator: string
+  readonly sourceId: string
+  readonly version: string
+}) => (
+  <details className="source-note">
+    <summary>Technical details</summary>
+    <dl>
+      <div><dt>Source version</dt><dd>{source.version}</dd></div>
+      <div><dt>Locator</dt><dd><code>{source.locator}</code></dd></div>
+      <div><dt>Source line ID</dt><dd><code>{source.id}</code></dd></div>
+      <div><dt>Source record ID</dt><dd><code>{source.sourceId}</code></dd></div>
+    </dl>
+  </details>
+)
 
 const printRoleLabel = (role: string): string =>
   role === "target"
@@ -10,6 +28,43 @@ const printRoleLabel = (role: string): string =>
       : role === "safe-background"
         ? "Safe background detail"
         : role
+
+const announcementFactStateLabel = (
+  state: "verified" | "not_published" | "unverified" | "conflicting" | "superseded" | "not_applicable"
+): string => {
+  switch (state) {
+    case "verified": return "Verified"
+    case "not_published": return "Not published"
+    case "unverified": return "Unverified"
+    case "conflicting": return "Conflicting published information"
+    case "superseded": return "Superseded"
+    case "not_applicable": return "Not applicable"
+  }
+}
+
+const announcementFactCategoryLabel = (
+  category: "filing_period" | "exam_date" | "fee" | "jurisdictions" | "qualifications" |
+    "subjects" | "medium" | "counts" | "weights" | "scoring" | "review" |
+    "form_identity" | "seniority_credit" | "preparer_identity" | "administration_status"
+): string => {
+  switch (category) {
+    case "filing_period": return "Filing period"
+    case "exam_date": return "Exam date"
+    case "fee": return "Fee"
+    case "jurisdictions": return "Jurisdictions"
+    case "qualifications": return "Qualifications"
+    case "subjects": return "Subjects"
+    case "medium": return "Exam format"
+    case "counts": return "Counts"
+    case "weights": return "Weights"
+    case "scoring": return "Scoring"
+    case "review": return "Review process"
+    case "form_identity": return "Exam form"
+    case "seniority_credit": return "Seniority credit"
+    case "preparer_identity": return "Exam preparer"
+    case "administration_status": return "Administration status"
+  }
+}
 
 const packetSection = (section: ReleasedPrintPacketSection) => {
   switch (section.tag) {
@@ -55,15 +110,20 @@ const packetSection = (section: ReleasedPrintPacketSection) => {
               <h3>Question {explanation.number}: choice {explanation.correctOptionLabel}</h3>
               <dl>{explanation.rationales.map((rationale) => <div key={rationale.optionLabel}>
                 <dt>Choice {rationale.optionLabel}</dt><dd>{rationale.message}</dd>
-                {"claimIds" in rationale ? <dd>Supported claims: {rationale.claimIds.join(", ")}</dd> : null}
               </div>)}</dl>
               {"claims" in explanation ? <><h4>Supported claims</h4><ul>{explanation.claims.map((claim) => <li key={claim.id}>
-                {claim.text} <span>({claim.evidenceTier})</span>
+                {claim.text} <span>(Evidence: {sourceEvidenceTierLabel(claim.evidenceTier)})</span>
                 {claim.caveat === null ? null : <> <strong>Caveat:</strong> {claim.caveat}</>}
               </li>)}</ul></> : null}
-              {explanation.sources.length > 0 ? <><h4>{"claims" in explanation ? "Source-line receipts" : "Source references"}</h4><ul>{explanation.sources.map((source) => <li key={source.id}>
+              {explanation.sources.length > 0 ? <><h4>{"claims" in explanation ? "Where this comes from" : "Source references"}</h4><ul>{explanation.sources.map((source) => <li key={source.id}>
                 {"title" in source
-                  ? <><strong>{source.title}</strong> — {source.publisher}, {source.version}; {source.locator}. <q>{source.excerpt}</q></>
+                  ? <>
+                    <p><strong>{source.publisher}</strong> — {source.title} (verified <time dateTime={source.verifiedOn}>{source.verifiedOn}</time>)</p>
+                    <p><strong>Evidence:</strong> {sourceEvidenceTierLabel(source.evidenceTier)}</p>
+                    <blockquote><p>{source.excerpt}</p></blockquote>
+                    {source.url === undefined ? null : <p><a href={source.url} rel="external noopener">Open the source</a></p>}
+                    {sourceTechnicalDetails(source)}
+                  </>
                   : <>{source.label} — {source.locator}</>}
               </li>)}</ul></> : null}
             </article>
@@ -119,7 +179,7 @@ const packetSection = (section: ReleasedPrintPacketSection) => {
                     key={`${region.inventoryId}-${polygonIndex}`}
                     points={polygon.map(([x, y]) => `${x * 100},${y * 100}`).join(" ")}
                     vectorEffect="non-scaling-stroke"
-                  ><title>{`Target ${regionIndex + 1}: ${region.inventoryId}`}</title></polygon>)
+                  ><title>{`Hazard region ${regionIndex + 1}`}</title></polygon>)
                 )}
               </svg>
             </figure>}
@@ -151,7 +211,11 @@ const packetSection = (section: ReleasedPrintPacketSection) => {
           <section className="print-section print-profile-fact-sheet" aria-labelledby="profile-fact-sheet-heading">
             <h2 id="profile-fact-sheet-heading">Announcement-profile fact sheet</h2>
             <p><strong>{section.profileLabel}</strong> — {section.jurisdiction}</p>
-            <p>Historical fact-sheet format · version {factSheet.version}; last reviewed {factSheet.lastReviewedOn}.</p>
+            <p>Historical fact sheet; last reviewed {factSheet.lastReviewedOn}.</p>
+            <details className="source-note">
+              <summary>Technical details</summary>
+              <p>Fact-sheet version {factSheet.version}.</p>
+            </details>
             <p>{factSheet.controllingDocumentNotice}</p>
             <p>{factSheet.seriesScopeDisclaimer}</p>
             <h3>Verified facts</h3>
@@ -178,11 +242,14 @@ const packetSection = (section: ReleasedPrintPacketSection) => {
       const receipts = (sourceLineIds: ReadonlyArray<string>) => (
         <ul>{sourceLineIds.map((sourceLineId) => {
           const source = sourceLineById.get(sourceLineId)
-          if (source === undefined) return <li key={sourceLineId}>Missing source-line receipt {sourceLineId}</li>
+          if (source === undefined) return <li key={sourceLineId}>Source information is unavailable.</li>
           return <li key={source.id}>
-            <strong>{source.title}</strong> — {source.publisher}, {source.version}; {source.locator}. <q>{source.excerpt}</q>
-            <br />Evidence tier: {source.evidenceTier}; verified {source.verifiedOn}; language {source.language}; rights: {source.rightsNotes}.
-            {source.url === undefined ? null : <><br />Public source: {source.url}</>}
+            <p><strong>{source.publisher}</strong> — {source.title} (verified <time dateTime={source.verifiedOn}>{source.verifiedOn}</time>)</p>
+            <p><strong>Evidence:</strong> {sourceEvidenceTierLabel(source.evidenceTier)}</p>
+            <blockquote><p>{source.excerpt}</p></blockquote>
+            <p>Language: {source.language === "en" ? "English" : "Spanish"}. Rights: {source.rightsNotes}.</p>
+            {source.url === undefined ? null : <p><a href={source.url} rel="external noopener">Open the source</a></p>}
+            {sourceTechnicalDetails(source)}
           </li>
         })}</ul>
       )
@@ -190,24 +257,31 @@ const packetSection = (section: ReleasedPrintPacketSection) => {
         <section className="print-section print-profile-fact-sheet" aria-labelledby="profile-fact-sheet-heading">
           <h2 id="profile-fact-sheet-heading">Announcement-profile fact sheet</h2>
           <p><strong>{section.profileLabel}</strong> — {section.jurisdiction}</p>
-          <p>Fact-sheet version {factSheet.version}; last reviewed {factSheet.lastReviewedOn}.</p>
+          <p>Last reviewed {factSheet.lastReviewedOn}.</p>
+          <details className="source-note">
+            <summary>Technical details</summary>
+            <p>Fact-sheet version {factSheet.version}.</p>
+          </details>
           <p>{factSheet.controllingDocumentNotice}</p>
           <p>{factSheet.seriesScopeDisclaimer}</p>
           <h3>Facts by explicit publication state</h3>
           {factSheet.facts.map((fact) => <article key={fact.id} data-fact-state={fact.state}>
             <h4>{fact.label}</h4>
-            <p><strong>Status:</strong> {fact.state.replaceAll("_", " ")}. <strong>Category:</strong> {fact.category.replaceAll("_", " ")}.</p>
+            <p><strong>Status:</strong> {announcementFactStateLabel(fact.state)}. <strong>Category:</strong> {announcementFactCategoryLabel(fact.category)}.</p>
             {fact.value === null ? null : <p><strong>Recorded value:</strong> {fact.value}</p>}
             {fact.detail === null ? null : <p><strong>Detail:</strong> {fact.detail}</p>}
             <p><strong>Applies to exam numbers:</strong> {fact.appliesToExamNumbers.join(", ")}. <strong>Reviewed:</strong> {fact.reviewedOn}.</p>
             <p><strong>Effective interval:</strong> {fact.effectiveFrom === null
               ? "none asserted"
               : `${fact.effectiveFrom} through ${fact.effectiveThrough ?? "current"}`}.</p>
-            {fact.supersededByFactId === null ? null : <p><strong>Superseded by:</strong> {fact.supersededByFactId}</p>}
+            {fact.supersededByFactId === null ? null : <details className="source-note">
+              <summary>Technical details</summary>
+              <p><strong>Superseded by fact:</strong> <code>{fact.supersededByFactId}</code></p>
+            </details>}
             {fact.conflictingValues.length === 0 ? null : <><h5>Published conflicting values</h5><ol>{fact.conflictingValues.map((candidate) => <li key={candidate.value}>
               <strong>{candidate.value}</strong>{receipts(candidate.sourceLineIds)}
             </li>)}</ol></>}
-            {fact.sourceLineIds.length === 0 ? null : <><h5>Direct source-line receipts</h5>{receipts(fact.sourceLineIds)}</>}
+            {fact.sourceLineIds.length === 0 ? null : <><h5>Where this fact comes from</h5>{receipts(fact.sourceLineIds)}</>}
           </article>)}
           <h3>Change history</h3>
           <ol>{factSheet.changeHistory.map((change) => <li key={`${change.version}-${change.changedOn}`}>
@@ -233,8 +307,8 @@ const packetSection = (section: ReleasedPrintPacketSection) => {
 
 const readyJob = (state: PrintPreviewState): PrintJobRecord | undefined =>
   state.tag === "preview-ready" || state.tag === "stale" ||
-    state.tag === "system-print-requested" || state.tag === "regenerating" ||
-    state.tag === "regenerate-error"
+  state.tag === "system-print-requested" || state.tag === "regenerating" ||
+    state.tag === "regenerate-error" || state.tag === "request-print-error"
     ? state.job
     : undefined
 
@@ -246,6 +320,8 @@ export const PrintPreview = ({ controller }: { readonly controller: PrintPreview
   )
   const headingRef = useRef<HTMLHeadingElement>(null)
   const errorRef = useRef<HTMLHeadingElement>(null)
+  const previewRef = useRef<HTMLElement>(null)
+  const printDetailsState = useRef<ReadonlyArray<readonly [HTMLDetailsElement, boolean]> | null>(null)
   const [inspectionConfirmed, setInspectionConfirmed] = useState(false)
   const job = readyJob(snapshot.state)
 
@@ -260,6 +336,40 @@ export const PrintPreview = ({ controller }: { readonly controller: PrintPreview
       controller.acknowledgeViewRequest(snapshot.announcementRequest.id)
     }
   }, [controller, snapshot.announcementRequest])
+
+  useEffect(() => {
+    const printMedia = window.matchMedia("print")
+    const expandTechnicalDetails = (): void => {
+      if (printDetailsState.current !== null) return
+      const details = [...(previewRef.current?.querySelectorAll("details") ?? [])]
+      printDetailsState.current = details.map((detail) => [detail, detail.open] as const)
+      for (const detail of details) detail.open = true
+    }
+    const restoreTechnicalDetails = (): void => {
+      const previous = printDetailsState.current
+      if (previous === null) return
+      for (const [detail, wasOpen] of previous) {
+        if (detail.isConnected) detail.open = wasOpen
+      }
+      printDetailsState.current = null
+    }
+    const handlePrintMediaChange = (event: MediaQueryListEvent): void => {
+      if (event.matches) expandTechnicalDetails()
+      else restoreTechnicalDetails()
+    }
+
+    printMedia.addEventListener("change", handlePrintMediaChange)
+    window.addEventListener("beforeprint", expandTechnicalDetails)
+    window.addEventListener("afterprint", restoreTechnicalDetails)
+    if (printMedia.matches) expandTechnicalDetails()
+
+    return () => {
+      printMedia.removeEventListener("change", handlePrintMediaChange)
+      window.removeEventListener("beforeprint", expandTechnicalDetails)
+      window.removeEventListener("afterprint", restoreTechnicalDetails)
+      restoreTechnicalDetails()
+    }
+  }, [job?.id])
   const announcement = <p aria-live="polite" className="sr-only">{snapshot.announcementRequest?.message ?? ""}</p>
 
   if (snapshot.state.tag === "restoring") return <>{announcement}<p role="status">Restoring the saved print preview…</p></>
@@ -281,6 +391,7 @@ export const PrintPreview = ({ controller }: { readonly controller: PrintPreview
       className={`print-preview print-${manifest.settings.paper} print-margin-${manifest.settings.margin} print-size-${manifest.settings.printSize}${manifest.settings.grayscalePreview ? " print-grayscale" : ""}`}
       data-print-fingerprint={manifest.fingerprint}
       data-print-pairing-fingerprint={manifest.pairingFingerprint ?? undefined}
+      ref={previewRef}
     >
       {announcement}
       <header className="print-preview-header">
@@ -288,14 +399,20 @@ export const PrintPreview = ({ controller }: { readonly controller: PrintPreview
         <h1 ref={headingRef} tabIndex={-1}>{job.packet.title}</h1>
         <p className="print-original-statement"><strong>{job.packet.statement}</strong></p>
         <dl className="print-manifest-summary">
-          <div><dt>Profile</dt><dd>{manifest.profile.label} · version {manifest.profile.version}</dd></div>
-          <div><dt>Content</dt><dd>{manifest.releaseId} · version {manifest.contentVersion}</dd></div>
+          <div><dt>Profile</dt><dd>{manifest.profile.label}</dd></div>
           <div><dt>Actual length</dt><dd>{manifest.actualLength}</dd></div>
           <div><dt>Distribution</dt><dd>Site-designed distribution: {manifest.actualDistribution.map((entry) => `${entry.label} ${entry.count}`).join(", ")}</dd></div>
           <div><dt>Estimated page count</dt><dd>{manifest.pageCount}</dd></div>
-          {manifest.pairingFingerprint === null ? null : <div><dt>Set pairing identifier</dt><dd><code>{manifest.pairingFingerprint}</code></dd></div>}
-          <div><dt>Manifest</dt><dd><code>{manifest.fingerprint}</code></dd></div>
         </dl>
+        <details className="source-note print-manifest-technical">
+          <summary>Technical details</summary>
+          <dl className="print-manifest-summary">
+            <div><dt>Profile version</dt><dd>{manifest.profile.version}</dd></div>
+            <div><dt>Content release</dt><dd><code>{manifest.releaseId}</code> · version {manifest.contentVersion}</dd></div>
+            {manifest.pairingFingerprint === null ? null : <div><dt>Set pairing identifier</dt><dd><code>{manifest.pairingFingerprint}</code></dd></div>}
+            <div><dt>Manifest fingerprint</dt><dd><code>{manifest.fingerprint}</code></dd></div>
+          </dl>
+        </details>
       </header>
 
       {job.status === "stale" ? <p className="status-panel status-panel-warning">This job references corrected or removed content. Regenerate it before printing.</p> : null}
@@ -308,6 +425,14 @@ export const PrintPreview = ({ controller }: { readonly controller: PrintPreview
         <h2 id="print-regenerate-error-heading" ref={errorRef} tabIndex={-1}>Print preview was not regenerated</h2>
         <p>{snapshot.state.detail}</p>
         <p>The previous saved preview remains available at this address.</p>
+      </section> : null}
+      {snapshot.state.tag === "request-print-error" ? <section
+        aria-labelledby="print-request-error-heading"
+        className="status-panel status-panel-danger"
+        role="alert"
+      >
+        <h2 id="print-request-error-heading" ref={errorRef} tabIndex={-1}>System print did not open</h2>
+        <p>{snapshot.state.detail}</p>
       </section> : null}
       {job.packet.warnings.map((warning) => <p className="print-warning" key={warning}>{warning}</p>)}
       {job.packet.sections.map((section, index) => <div

@@ -35,6 +35,7 @@ import {
   renderSitemap
 } from "../apps/site/scripts/finalize-service-worker.ts"
 import { trustedCurrentShellNavigation } from "../apps/site/src/shell-route-policy.ts"
+import { assertGeneratedPublicCopyBoundary } from "../apps/site/src/public-copy-boundary.ts"
 import { derivePracticeSessions } from "../apps/site/scripts/practice-sessions.ts"
 import {
   assertCanonicalRouteId,
@@ -1297,6 +1298,10 @@ export const verify = async (): Promise<void> => {
     "Generated HTML routes"
   )
   const routeHtml = await Promise.all(routeFiles.map((path) => Bun.file(path).text()))
+  assertGeneratedPublicCopyBoundary(await Promise.all(htmlFiles.map(async (path) => ({
+    path: relative(new URL(".", distRoot).pathname, path),
+    html: await Bun.file(path).text()
+  }))))
   if (routeHtml.some((html) => html.includes("/atlas/comparison/"))) {
     throw new Error("Generated HTML still links to a non-canonical comparison route")
   }

@@ -91,7 +91,7 @@ test("an exact receipt mismatch is quarantined without loading or substituting f
       .getByRole("complementary", { name: "Saved attempts needing attention" })
       .getByRole("listitem")
   ).toContainText(
-    "A saved question receipt does not match this exact released item. It was not reinterpreted."
+    "This saved answer does not match the current version of the question. It remains stored and was not applied to different content."
   )
   await expect(page.getByRole("link", { name: "Open saved feedback" })).toHaveCount(0)
   await expect(page.getByRole("button", { name: "Finish review" })).toHaveCount(0)

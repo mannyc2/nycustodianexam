@@ -7,6 +7,7 @@ import {
   verifiedContentCacheKey,
   verifiedContentCacheName
 } from "../src/verified-content.ts"
+import { sourceEvidenceTierLabel } from "../src/public-content-labels.ts"
 import { waitForActiveServiceWorker } from "./service-worker-fixtures.ts"
 
 interface PrintCacheReceipt {
@@ -16,10 +17,27 @@ interface PrintCacheReceipt {
   readonly kind: "asset" | "postcommit"
 }
 
+const statewideProfileId = "nys-entry-level-custodians-janitors"
+
 const readPrintBootstrap = async (page: Page): Promise<PrintBuilderBootstrap> => {
   const raw = await page.locator("#print-builder-data").textContent()
   if (raw === null) throw new Error("Print bootstrap was unavailable")
   return JSON.parse(raw) as PrintBuilderBootstrap
+}
+
+const selectPrintProfile = async (
+  page: Page,
+  profileId: string = statewideProfileId
+): Promise<void> => {
+  await page.getByLabel("Practicing for", { exact: true }).selectOption(profileId)
+}
+
+const fillPrintSetCode = async (page: Page, code: string): Promise<void> => {
+  const details = page.locator("details", { hasText: "Repeat this exact set" })
+  if (!await details.evaluate((element) => (element as HTMLDetailsElement).open)) {
+    await details.locator("summary").click()
+  }
+  await details.getByLabel("Set code").fill(code)
 }
 
 const questionCategory = (
@@ -117,9 +135,13 @@ test("generates, restores, and prints a separate deterministic question packet",
   await page.goto("/print/")
   const printBootstrap = await readPrintBootstrap(page)
   await expect(page.getByRole("heading", { name: "Choose what to print" })).toBeVisible()
+  await expect(page.getByLabel("Practicing for", { exact: true })).toHaveValue("")
+  await expect(page.getByRole("button", { name: "Generate preview" })).toBeDisabled()
+  await expect(page.getByLabel("Set code")).toBeHidden()
+  await selectPrintProfile(page)
   await expect(page.getByRole("radio", { name: "Blank hazard worksheet" })).toBeEnabled()
   await expect(page.getByRole("radio", { name: "Announcement-profile fact sheet" })).toBeDisabled()
-  await expect(page.getByText(/No source-bound announcement fact history is published for this profile/)).toBeVisible()
+  await expect(page.getByText(/No reviewed announcement fact history is available for this profile/)).toBeVisible()
   await expect(page.getByRole("radio", { name: "Correction\/change-log excerpt" })).toBeDisabled()
   await expect(page.getByText(/No publishable structured correction or change-log record exists/)).toBeVisible()
 
@@ -130,7 +152,7 @@ test("generates, restores, and prints a separate deterministic question packet",
   expect(bootstrap).not.toContain('"targetRegions"')
 
   await page.getByLabel("Number of questions").fill("2")
-  await page.getByLabel("Repeat this exact set").fill("browser-print-proof")
+  await fillPrintSetCode(page, "browser-print-proof")
   await page.getByRole("button", { name: "Generate preview" }).click()
   await expect(page).toHaveURL(/\/print\/preview\/print-[a-f0-9-]+\/$/)
 
@@ -222,13 +244,13 @@ test("persists and restores the exact v2 announcement facts and source-line rece
   )
   if (sampleSourceLine === undefined) throw new Error("Fact sheet had no referenced source-line receipt")
 
-  await page.getByLabel("Profile", { exact: true }).selectOption(sourceBoundProfile.id)
+  await selectPrintProfile(page, sourceBoundProfile.id)
   const product = page.getByRole("radio", { name: "Announcement-profile fact sheet" })
   await expect(product).toBeEnabled()
   await product.check()
   await expect(page.getByLabel("Number of profiles")).toHaveValue("1")
   await expect(page.getByText("Available profiles: 1")).toBeVisible()
-  await page.getByLabel("Repeat this exact set").fill("browser-source-bound-facts")
+  await fillPrintSetCode(page, "browser-source-bound-facts")
   await page.getByRole("button", { name: "Generate preview" }).click()
 
   await expect(page.getByRole("heading", { level: 1, name: "Announcement-profile fact sheet" })).toBeFocused()
@@ -248,8 +270,15 @@ test("persists and restores the exact v2 announcement facts and source-line rece
   await expect(renderedReceipt).toContainText(sampleSourceLine.locator)
   await expect(renderedReceipt).toContainText(sampleSourceLine.excerpt)
   await expect(renderedReceipt).toContainText(
-    `Evidence tier: ${sampleSourceLine.evidenceTier}; verified ${sampleSourceLine.verifiedOn}; language ${sampleSourceLine.language}; rights: ${sampleSourceLine.rightsNotes}.`
+    `Evidence: ${sourceEvidenceTierLabel(sampleSourceLine.evidenceTier)}`
   )
+  const receiptTechnicalDetails = renderedReceipt.locator("details", {
+    hasText: "Technical details"
+  })
+  await expect(receiptTechnicalDetails.getByText(sampleSourceLine.locator, { exact: true })).toBeHidden()
+  await page.emulateMedia({ media: "print" })
+  await expect(receiptTechnicalDetails.getByText(sampleSourceLine.locator, { exact: true })).toBeVisible()
+  await page.emulateMedia({ media: "screen" })
 
   const jobs = await readPrintJobs(page)
   expect(jobs).toHaveLength(1)
@@ -282,10 +311,11 @@ test("persists and restores the exact v2 announcement facts and source-line rece
 
 test("generates an answer key as its own product without question or rationale sections", async ({ page }) => {
   await page.goto("/print/")
+  await selectPrintProfile(page)
   await primePrintLocalClosure(page)
   await page.getByRole("radio", { name: "Separate answer key" }).check()
   await page.getByLabel("Number of questions").fill("2")
-  await page.getByLabel("Repeat this exact set").fill("browser-print-proof")
+  await fillPrintSetCode(page, "browser-print-proof")
   await page.getByLabel("Paper").selectOption("a4")
   await page.getByLabel("Margins").selectOption("wide")
   await page.getByLabel("Large print (at least 18pt)").check()
@@ -312,8 +342,9 @@ test("regenerates exact saved settings into a new durable job and replaces previ
   page
 }) => {
   await page.goto("/print/")
+  await selectPrintProfile(page)
   await page.getByLabel("Number of questions").fill("1")
-  await page.getByLabel("Repeat this exact set").fill("browser-regenerate-exact")
+  await fillPrintSetCode(page, "browser-regenerate-exact")
   await page.getByLabel("Paper").selectOption("a4")
   await page.getByLabel("Margins").selectOption("wide")
   await page.getByRole("button", { name: "Generate preview" }).click()
@@ -340,8 +371,9 @@ test("regenerates exact saved settings into a new durable job and replaces previ
 
 test("keeps the previous preview and URL when durable regeneration fails", async ({ page }) => {
   await page.goto("/print/")
+  await selectPrintProfile(page)
   await page.getByLabel("Number of questions").fill("1")
-  await page.getByLabel("Repeat this exact set").fill("browser-regenerate-failure")
+  await fillPrintSetCode(page, "browser-regenerate-failure")
   await page.getByRole("button", { name: "Generate preview" }).click()
   await expect(page).toHaveURL(/\/print\/preview\/print-[a-f0-9-]+\/$/)
   await expect(page.getByRole("heading", { name: "Original multiple-choice practice" })).toBeVisible()
@@ -391,21 +423,28 @@ test("keeps the previous preview and URL when durable regeneration fails", async
 
 test("pairs separate jobs and page-breaks an appended key with optional explanations", async ({ page }) => {
   await page.goto("/print/")
+  await selectPrintProfile(page)
   await primePrintLocalClosure(page)
   await page.getByLabel("Number of questions").fill("2")
-  await page.getByLabel("Repeat this exact set").fill("browser-paired-set")
+  await fillPrintSetCode(page, "browser-paired-set")
   await expect(page.getByLabel("Answer-key placement")).toHaveValue("separate-job")
+  await expect(page.getByLabel("Answer-key placement").locator('option[value="new-section"]'))
+    .toHaveText("Append a separately labeled new section")
   await page.getByRole("button", { name: "Generate preview" }).click()
   const questionPairing = await page.locator("[data-print-pairing-fingerprint]")
     .getAttribute("data-print-pairing-fingerprint")
   expect(questionPairing).toMatch(/^[a-f0-9]{16}$/)
-  await expect(page.getByText("Set pairing identifier")).toBeVisible()
+  const technicalDetails = page.locator(".print-manifest-technical")
+  await expect(technicalDetails.getByText("Set pairing identifier")).toBeHidden()
+  await technicalDetails.locator("summary").click()
+  await expect(technicalDetails.getByText("Set pairing identifier")).toBeVisible()
   await expect(page.getByRole("heading", { name: "Answer key" })).toHaveCount(0)
 
   await page.goto("/print/")
+  await selectPrintProfile(page)
   await page.getByRole("radio", { name: "Separate answer key" }).check()
   await page.getByLabel("Number of questions").fill("2")
-  await page.getByLabel("Repeat this exact set").fill("browser-paired-set")
+  await fillPrintSetCode(page, "browser-paired-set")
   await page.getByRole("button", { name: "Generate preview" }).click()
   await expect(page.locator("[data-print-pairing-fingerprint]")).toHaveAttribute(
     "data-print-pairing-fingerprint",
@@ -413,8 +452,9 @@ test("pairs separate jobs and page-breaks an appended key with optional explanat
   )
 
   await page.goto("/print/")
+  await selectPrintProfile(page)
   await page.getByLabel("Number of questions").fill("2")
-  await page.getByLabel("Repeat this exact set").fill("browser-paired-set")
+  await fillPrintSetCode(page, "browser-paired-set")
   await page.getByLabel("Answer-key placement").selectOption("new-section")
   await page.getByLabel("Append explanations after the answer key").check()
   await page.getByRole("button", { name: "Generate preview" }).click()
@@ -497,10 +537,11 @@ test("tool-family cards count complete families and retain exact verified images
 }) => {
   await page.goto("/print/")
   const printBootstrap = await readPrintBootstrap(page)
-  const defaultProfile = printBootstrap.profiles[0]
-  if (defaultProfile === undefined) throw new Error("Print bootstrap had no default profile")
+  const selectedProfile = printBootstrap.profiles.find((profile) => profile.id === statewideProfileId)
+  if (selectedProfile === undefined) throw new Error("Print bootstrap had no statewide profile")
+  await selectPrintProfile(page, selectedProfile.id)
   const compatibleTools = printBootstrap.tools.filter((tool) =>
-    tool.profileIds.includes(defaultProfile.id)
+    tool.profileIds.includes(selectedProfile.id)
   )
   const toolsByFamily = new Map<string, Array<(typeof compatibleTools)[number]>>()
   for (const tool of compatibleTools) {
@@ -523,7 +564,7 @@ test("tool-family cards count complete families and retain exact verified images
   await expect(page.getByLabel("Content filter")).toHaveValue(selectedFamily.family)
   await expect(page.getByLabel("Number of families")).toHaveValue("1")
   await expect(page.getByText("Available families: 1")).toBeVisible()
-  await page.getByLabel("Repeat this exact set").fill("browser-tool-family")
+  await fillPrintSetCode(page, "browser-tool-family")
   await page.getByRole("button", { name: "Generate preview" }).click()
 
   await expect(page.getByRole("heading", { level: 1, name: "Tool-family contrast cards" })).toBeVisible()
@@ -586,12 +627,13 @@ test("hazard worksheet, annotated answers, and text equivalents remain separate 
   })
 
   await page.goto("/print/")
+  await selectPrintProfile(page)
   await primePrintLocalClosure(page)
   await page.getByRole("radio", { name: "Blank hazard worksheet" }).check()
   await expect(page.getByLabel("Number of scenes")).toBeVisible()
   await page.getByLabel("Content filter").selectOption("hallway/common area")
   await page.getByLabel("Number of scenes").fill("1")
-  await page.getByLabel("Repeat this exact set").fill("paired-hazard-products")
+  await fillPrintSetCode(page, "paired-hazard-products")
   await page.getByRole("button", { name: "Generate preview" }).click()
   await expect(page.getByRole("heading", { level: 1, name: "Blank hazard worksheet" })).toBeVisible()
   await expect(page.locator(".print-hazard-worksheet img")).toHaveAttribute("src", /^data:image\/png;base64,/)
@@ -600,10 +642,11 @@ test("hazard worksheet, annotated answers, and text equivalents remain separate 
   expect(postcommitRequests).toEqual([])
 
   await page.goto("/print/")
+  await selectPrintProfile(page)
   await page.getByRole("radio", { name: "Annotated hazard-answer packet" }).check()
   await page.getByLabel("Content filter").selectOption("hallway/common area")
   await page.getByLabel("Number of scenes").fill("1")
-  await page.getByLabel("Repeat this exact set").fill("paired-hazard-products")
+  await fillPrintSetCode(page, "paired-hazard-products")
   await page.getByRole("button", { name: "Generate preview" }).click()
   await expect(page.getByRole("heading", { level: 1, name: "Annotated hazard-answer packet" })).toBeVisible()
   await expect(page.getByText(/Scene explanation/)).toBeVisible()
@@ -611,10 +654,11 @@ test("hazard worksheet, annotated answers, and text equivalents remain separate 
   expect(postcommitRequests).toHaveLength(0)
 
   await page.goto("/print/")
+  await selectPrintProfile(page)
   await page.getByRole("radio", { name: "Text-equivalent\/nonvisual set" }).check()
   await page.getByLabel("Content filter").selectOption("hallway/common area")
   await page.getByLabel("Number of scenes").fill("1")
-  await page.getByLabel("Repeat this exact set").fill("paired-hazard-products")
+  await fillPrintSetCode(page, "paired-hazard-products")
   await page.getByRole("button", { name: "Generate preview" }).click()
   await expect(page.getByRole("heading", { level: 1, name: "Text-equivalent hazard set" })).toBeVisible()
   await expect(page.getByText(/text version covers the same knowledge; it is not the same task as marking the image/)).toBeVisible()
@@ -641,6 +685,7 @@ test("blocks an uncached online print image without fetching or retaining a part
     await route.fulfill({ body: "corrupt", contentType: "image/png", status: 200 })
   })
   await page.goto("/print/")
+  await selectPrintProfile(page)
   await page.getByRole("radio", { name: "Blank hazard worksheet" }).check()
   await page.getByLabel("Content filter").selectOption("hallway/common area")
   await page.getByLabel("Number of scenes").fill("1")

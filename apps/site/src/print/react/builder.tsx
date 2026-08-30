@@ -45,8 +45,8 @@ export const PrintBuilder = ({
     controller.getSnapshot,
     controller.getHydrationSnapshot
   )
-  const defaultProfile = bootstrap.profiles[0]
-  const [profileId, setProfileId] = useState(defaultProfile?.id ?? "")
+  const [profileId, setProfileId] = useState("")
+  const selectedProfile = bootstrap.profiles.find((profile) => profile.id === profileId)
   const [product, setProduct] = useState<SupportedPrintProduct>("multiple-choice-questions")
   const [count, setCount] = useState(Math.min(10, bootstrap.questions.length))
   const [seed, setSeed] = useState("practice-1")
@@ -104,9 +104,10 @@ export const PrintBuilder = ({
     product === "text-equivalent-set" ||
     appendedQuestionAnswers && includeExplanations
   useEffect(() => {
+    if (selectedProfile === undefined || capacity === 0) return
     setCount((current) => Math.max(1, Math.min(current, Math.max(1, capacity))))
-  }, [capacity])
-  const disabled = defaultProfile === undefined || capacity === 0 ||
+  }, [capacity, selectedProfile])
+  const disabled = selectedProfile === undefined || capacity === 0 ||
     snapshot.state.tag === "generating"
 
   const submit = (event: FormEvent<HTMLFormElement>): void => {
@@ -147,12 +148,16 @@ export const PrintBuilder = ({
         </section>
       ) : null}
       <form onSubmit={submit}>
-        <label htmlFor="print-profile">Profile</label>
+        <label htmlFor="print-profile">Practicing for</label>
         <select id="print-profile" value={profileId} onChange={(event) => setProfileId(event.target.value)}>
+          <option disabled value="">Choose a study profile</option>
           {bootstrap.profiles.map((profile) => (
-            <option key={profile.id} value={profile.id}>{profile.label} · version {profile.version}</option>
+            <option key={profile.id} value={profile.id}>{profile.label}</option>
           ))}
         </select>
+        {selectedProfile === undefined
+          ? <p className="source-note">Choose the statewide series or a jurisdiction-specific profile before building a packet. The choice controls which content can be printed.</p>
+          : <p className="source-note"><strong>Practicing for: {selectedProfile.label}.</strong> {selectedProfile.disclaimer}</p>}
 
         <fieldset>
           <legend>Product type</legend>
@@ -206,11 +211,6 @@ export const PrintBuilder = ({
             />
             <span className="field-hint">Available {countUnit}: {capacity}</span>
           </label>
-          <label htmlFor="print-seed">
-            Repeat this exact set (code)
-            <input id="print-seed" maxLength={deterministicSeedMaxLength} value={seed} onChange={(event) => setSeed(event.target.value)} />
-            <span className="field-hint">The same settings and code always produce the same items.</span>
-          </label>
           <label htmlFor="print-paper">
             Paper
             <select id="print-paper" value={paper} onChange={(event) => setPaper(event.target.value as "us-letter" | "a4")}>
@@ -227,6 +227,15 @@ export const PrintBuilder = ({
           </label>
         </div>
 
+        <details className="source-note">
+          <summary>Repeat this exact set</summary>
+          <label htmlFor="print-seed">
+            Set code
+            <input id="print-seed" maxLength={deterministicSeedMaxLength} value={seed} onChange={(event) => setSeed(event.target.value)} />
+            <span className="field-hint">The same settings and code always produce the same items.</span>
+          </label>
+        </details>
+
         <fieldset>
           <legend>Accessibility and output</legend>
           <label><input type="checkbox" checked={printSize === "large"} onChange={(event) => setPrintSize(event.target.checked ? "large" : "normal")} /> Large print (at least 18pt)</label>
@@ -242,7 +251,7 @@ export const PrintBuilder = ({
               value={product === "multiple-choice-questions" ? answerKeyPlacement : "separate-job"}
             >
               <option value="separate-job">Separate product and print job</option>
-              <option value="new-section">Append a separately labelled new section</option>
+              <option value="new-section">Append a separately labeled new section</option>
             </select>
           </label>
           <label><input

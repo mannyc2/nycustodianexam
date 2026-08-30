@@ -76,10 +76,44 @@ export interface SimulationPlayerController {
   readonly dispose: () => void
 }
 
-const safeError = (cause: unknown): string => {
+const safeError = (cause: unknown, fallback: string): string => {
   console.error("Simulation operation failed", cause)
-  return "This device's storage could not complete the operation. Everything already saved is unchanged — try again."
+  if (cause instanceof SimulationPersistenceError) {
+    switch (cause.operation) {
+      case "restore-session":
+        return "This simulation is not saved on this device. Start a new simulation."
+      case "restore-position":
+        return "That item is not part of this saved simulation. Return to the simulation start page."
+      case "restore-scene-asset":
+        return "The exact scene image is no longer saved on this device. Restore the offline download or start a new simulation."
+      case "prepare-local-content":
+      case "decode-answer":
+      case "decode-hazard-answer":
+      case "verify-answer":
+      case "verify-hazard-answer":
+      case "retain-hazard-image":
+        return "The exact reviewed content for this simulation is not available on this device. Restore the offline download or start a new simulation."
+      case "restore-submission":
+        return "No final submission is saved for this simulation. Return to simulations and start again."
+    }
+  }
+  return fallback
 }
+
+const saveError = (cause: unknown): string => safeError(
+  cause,
+  "This device could not complete the save. Your last confirmed saved state is unchanged — try again."
+)
+
+const restoreError = (cause: unknown): string => safeError(
+  cause,
+  "The saved simulation could not be read on this device. Return to simulations or try again."
+)
+
+const resultsError = (cause: unknown): string => safeError(
+  cause,
+  "Practice results could not be read on this device. Return to simulations or try again."
+)
 
 const loadSession = Effect.fn("Simulation.loadSession")(function*(sessionId: string) {
   const persistence = yield* SimulationPersistence
@@ -278,7 +312,7 @@ export const createSimulationPlayerController = (input: {
       },
       (cause) => {
         if (!disposed) screen.publish(
-          { tag: "failure", detail: safeError(cause) },
+          { tag: "failure", detail: restoreError(cause) },
           { focus: "error", announce: "The saved simulation could not be restored." }
         )
       }
@@ -327,7 +361,7 @@ export const createSimulationPlayerController = (input: {
           saving: false,
           strictExpiryPending,
           visualAssetUrl: state.visualAssetUrl,
-          recoverableError: { kind: operation.kind, detail: safeError(cause) }
+          recoverableError: { kind: operation.kind, detail: saveError(cause) }
         }, {
           focus: "recoverable-error",
           announce: operation.failureAnnouncement
@@ -449,7 +483,7 @@ export const createSimulationPlayerController = (input: {
         saving: false,
         strictExpiryPending,
         visualAssetUrl: state.visualAssetUrl,
-        recoverableError: { kind: "submission", detail: safeError(cause) }
+        recoverableError: { kind: "submission", detail: saveError(cause) }
       }, {
         focus: "recoverable-error",
         announce: "The final submission was not saved. It can be retried without changing answers."
@@ -769,7 +803,7 @@ export const createSimulationResultsController = (input: {
       },
       (cause) => {
         if (!disposed) screen.publish(
-          { tag: "failure", detail: safeError(cause) },
+          { tag: "failure", detail: resultsError(cause) },
           { focus: "error", announce: "Practice results are not available yet." }
         )
       }

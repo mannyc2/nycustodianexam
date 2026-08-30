@@ -301,6 +301,8 @@
     .print-preview h3,
     .print-preview h4 { break-after: avoid; }
     .print-preview p { orphans: 3; widows: 3; }
+    .print-preview details > summary { display: none; }
+    .print-preview details:not([open]) > :not(summary) { display: block; }
     .print-grayscale { filter: grayscale(1); }
   }
 }

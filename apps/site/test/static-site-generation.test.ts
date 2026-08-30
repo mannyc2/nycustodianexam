@@ -9,6 +9,7 @@ import {
   isPublicReleaseArtifact,
   printProfileBootstrap,
   renderProfileFact,
+  renderSeriesScopeDisclaimer,
   slugify
 } from "../scripts/generate-pages.tsx"
 import {
@@ -290,9 +291,10 @@ describe("static-site generator boundaries", () => {
       expect(html).toContain(`data-fact-state="${state}"`)
       expect(html).toContain(`Status: ${label}`)
       expect(html).toContain("Official source A")
-      expect(html).toContain(
-        "reviewed 2026-08-25 · profile version 7 · fact-sheet version 4"
-      )
+      expect(html).toContain("Exam 123 · reviewed 2026-08-25")
+      expect(html).toContain("<summary>Technical details</summary>")
+      expect(html).toContain("Profile version 7 · fact-sheet version 4")
+      expect(html.indexOf("Profile version 7")).toBeGreaterThan(html.indexOf("Technical details"))
     }
 
     const conflictingHtml = renderProfileFact(
@@ -314,6 +316,20 @@ describe("static-site generator boundaries", () => {
     )
     expect(supersededHtml).toContain("Effective 2026-06-11 through 2026-06-17")
     expect(supersededHtml).toContain("current-count")
+    expect(supersededHtml.indexOf("current-count")).toBeGreaterThan(
+      supersededHtml.indexOf("Technical details")
+    )
+
+    const disclaimerHtml = renderSeriesScopeDisclaimer({
+      version: 4,
+      lastReviewedOn: "2026-08-25",
+      seriesScopeDisclaimer: "This is not an official exam plan."
+    })
+    expect(disclaimerHtml).toContain("This is not an official exam plan.")
+    expect(disclaimerHtml).toContain("Reviewed 2026-08-25.")
+    expect(disclaimerHtml.indexOf("Fact-sheet version 4")).toBeGreaterThan(
+      disclaimerHtml.indexOf("Technical details")
+    )
 
     const printProfile = printProfileBootstrap(
       {

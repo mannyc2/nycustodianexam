@@ -39,6 +39,14 @@ const statusLabel = (status: OfflinePackRecord["status"]): string => {
   }
 }
 
+const lifecycleLabel = (lifecycle: OfflinePackDescriptor["lifecycle"]): string => {
+  switch (lifecycle) {
+    case "preview": return "Preview copy"
+    case "published": return "Current published copy"
+    case "retired": return "Retired copy"
+  }
+}
+
 const ensureServiceWorker = async (): Promise<void> => {
   if (!("serviceWorker" in navigator)) {
     throw new LocalActionError("This browser does not support the feature (a service worker) needed for offline navigation.")
@@ -198,7 +206,7 @@ export const OfflinePackManagerIsland = ({
       if (cause instanceof OfflinePackManagerError && cause.reason === "quota-limited") {
         setStorage((current) => ({ ...current, availability: "quota-limited" }))
       }
-      setProblem(localFailureReport(cause, "The download did not finish or failed its check. Nothing was changed on this device."))
+      setProblem(localFailureReport(cause, "The download did not finish or failed its check. Review the download status below, then retry or remove the failed copy."))
       setNotice("Update failed — your old copy, if you had one, still works.")
       if (!knownOffline) await refresh().catch(() => undefined)
     } finally {
@@ -217,7 +225,7 @@ export const OfflinePackManagerIsland = ({
       setNotice("This download is now in use for new sessions. Your previous copy was kept.")
       setCompletion("Offline copy turned on")
     } catch (cause) {
-      setProblem(localFailureReport(cause, "This download could not be turned on. Your previous copy is unchanged."))
+      setProblem(localFailureReport(cause, "This download could not be confirmed as ready. Review the status below before starting a new session."))
       await refresh().catch(() => undefined)
     } finally {
       setBusy(null)
@@ -244,7 +252,7 @@ export const OfflinePackManagerIsland = ({
       const confirmed = confirmRemoval(pack, impact)
       if (!confirmed) {
         cancelled = true
-        setNotice("Removal cancelled. Nothing changed.")
+        setNotice("Removal canceled. Nothing changed.")
         return
       }
       await run(removeOfflinePackClaim(pack.id, impact.historicalAttempts > 0))
@@ -254,7 +262,7 @@ export const OfflinePackManagerIsland = ({
       setCompletion("Download removed")
       requestAnimationFrame(() => storedPacksHeading.current?.focus())
     } catch (cause) {
-      setProblem(localFailureReport(cause, "The download could not be removed. Nothing was deleted."))
+      setProblem(localFailureReport(cause, "The removal did not finish. Review the downloads still listed below before trying again."))
       await refresh().catch(() => undefined)
     } finally {
       setBusy(null)
@@ -308,7 +316,7 @@ export const OfflinePackManagerIsland = ({
         </section>
       )}
       <section className="reference-card" aria-labelledby="available-pack-heading">
-        <p className="eyebrow">{`${descriptor.lifecycle[0]?.toUpperCase() ?? ""}${descriptor.lifecycle.slice(1)}`} release · {descriptor.locale === "en" ? "English" : descriptor.locale.toUpperCase()}</p>
+        <p className="eyebrow">{lifecycleLabel(descriptor.lifecycle)} · {descriptor.locale === "en" ? "English" : descriptor.locale.toUpperCase()}</p>
         <h2 id="available-pack-heading">{descriptor.label}</h2>
         <dl className="fact-list">
           <dt>Download size</dt><dd>{formatBytes(descriptor.estimatedDownloadBytes ?? descriptor.totalBytes)}</dd>
@@ -387,19 +395,18 @@ export const OfflinePackManagerIsland = ({
           <ul className="pack-record-list">
             {packs.map((pack) => (
               <li key={pack.id}>
-                <strong>{pack.descriptor.label} v{pack.descriptor.packVersion}</strong>
+                <strong>{pack.descriptor.label}</strong>
                 <span>{statusLabel(pack.status)} · {formatBytes(pack.downloadedBytes)} checked</span>
                 <details className="feedback-sources">
                   <summary>Technical details</summary>
-                  <p>Device generation {pack.generation} · shell build <code>{pack.shellBuildFingerprint.slice(0, 12)}</code></p>
-                  {pack.detail === null ? null : <p><code>{pack.detail}</code></p>}
+                  <p>Pack version {pack.descriptor.packVersion} · device generation {pack.generation} · shell build <code>{pack.shellBuildFingerprint.slice(0, 12)}</code></p>
                 </details>
                 <div className="question-controls">
                   {availableForNewSessions && pack.descriptor.lifecycle !== "retired" &&
                   pack.packId === descriptor.id &&
                   (pack.status === "staged" || pack.status === "retained") ? (
                     <button
-                      aria-label={`Turn on ${pack.descriptor.label} version ${pack.descriptor.packVersion}`}
+                      aria-label={`Turn on this saved copy of ${pack.descriptor.label}`}
                       className="button button-primary"
                       disabled={busy !== null}
                       onClick={() => void activate(pack.id)}
@@ -411,7 +418,7 @@ export const OfflinePackManagerIsland = ({
                   {availableForNewSessions && pack.descriptor.lifecycle !== "retired" &&
                   pack.packId === descriptor.id && pack.status === "quarantined" ? (
                     <button
-                      aria-label={`Retry the download of ${pack.descriptor.label} version ${pack.descriptor.packVersion}`}
+                      aria-label={`Retry this saved copy of ${pack.descriptor.label}`}
                       className="button button-secondary"
                       disabled={busy !== null}
                       onClick={() => void stage(pack.descriptor)}
@@ -482,7 +489,7 @@ const confirmRemoval = (
   pack: OfflinePackRecord,
   impact: OfflinePackRemovalImpact
 ): boolean => window.confirm(
-  `Remove ${pack.descriptor.label} version ${pack.descriptor.packVersion}? ` +
+  `Remove this saved copy of ${pack.descriptor.label}? ` +
   `${impact.historicalAttempts} saved attempt(s) will stay in your history, but their offline content may become unavailable. ` +
   "Your study history is not deleted."
 )

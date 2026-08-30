@@ -16,8 +16,8 @@ const markerFeedback = (
   if (assessment.kind === "false_positive") {
     return (
       <p>
-        This mark does not match any condition recorded in this scene, so it is not scored as
-        right or wrong.
+        This mark does not match a recorded condition. It counts as an extra mark, but the site
+        cannot say what that object means.
       </p>
     )
   }
@@ -178,6 +178,16 @@ const PostcommitEquivalent = ({ payload }: { readonly payload: PostcommitScene }
 
 const FullFeedback = ({ payload }: { readonly payload: PostcommitScene }) => (
   <>
+    <details className="feedback-sources">
+      <summary>Where this comes from</summary>
+      <ul>
+        {payload.fullPostAnswer.sources.map((source) => (
+          <li key={source.id}>
+            <a href={source.url} rel="external noopener">{source.title}</a>, {source.locator}. {source.scope}
+          </li>
+        ))}
+      </ul>
+    </details>
     <section aria-labelledby="scene-explanation-heading">
       <h3 id="scene-explanation-heading">Scene explanation</h3>
       <p>{payload.claim}</p>
@@ -206,16 +216,6 @@ const FullFeedback = ({ payload }: { readonly payload: PostcommitScene }) => (
       </ul>
     </section>
     <PostcommitEquivalent payload={payload} />
-    <details className="feedback-sources">
-      <summary>Where this comes from</summary>
-      <ul>
-        {payload.fullPostAnswer.sources.map((source) => (
-          <li key={source.id}>
-            <a href={source.url} rel="external noopener">{source.title}</a>, {source.locator}. {source.scope}
-          </li>
-        ))}
-      </ul>
-    </details>
   </>
 )
 
@@ -227,11 +227,17 @@ export const HazardResults = () => {
     ? assessVisualMarkers(draftFromState(state).markers, state.payload)
     : null
   const targetCount = state.payload.targets.length
+  const extraCount = assessment === null
+    ? 0
+    : assessment.markers.filter((marker) => marker.kind !== "hit").length
+  const extraSummary = extraCount === 0
+    ? "No extra or repeated marks were counted."
+    : `${extraCount} ${extraCount === 1 ? "extra or repeated mark was" : "extra or repeated marks were"} counted.`
   const outcome = assessment === null
     ? "Response saved — compare your zone choices below."
     : targetCount === 0
-      ? "This scene has no hazard to find. Your response is saved."
-      : `You found ${targetCount - assessment.missedInventoryIds.length} of ${targetCount} ${targetCount === 1 ? "hazard" : "hazards"} in this scene.`
+      ? `This scene has no hazard to find. ${extraSummary}`
+      : `You found ${targetCount - assessment.missedInventoryIds.length} of ${targetCount} ${targetCount === 1 ? "hazard" : "hazards"} in this scene. ${extraSummary}`
 
   return (
     <section className="hazard-player__results">

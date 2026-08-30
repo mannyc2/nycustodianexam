@@ -154,7 +154,7 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
         acceptedAt: null
       }))
       setDraft(saved)
-      setNotice("Draft saved only on this device. It was not submitted.")
+      setNotice("Draft saved in this browser. It was not submitted. Browser data can be cleared; export a backup from Settings if you want to keep it.")
     } catch (cause) {
       setProblem(localFailureReport(cause, "The draft could not be saved to this device\u2019s storage. What you typed is still shown."))
       setNotice("The draft was not saved, and nothing was sent.")
@@ -166,7 +166,7 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
   const submit = async (): Promise<void> => {
     if (acceptedRemotely !== null) return
     if (intakeStatus !== "active") {
-      setNotice("Reports cannot be sent right now. Nothing was sent — your draft stays on this device.")
+      setNotice("Reports cannot be sent right now. Nothing was sent. Use Save draft on this device if you want to keep what is shown.")
       return
     }
     setBusy(true)
@@ -199,7 +199,7 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
       const result = await submitCorrectionReport(fetch, report)
       if (result.tag === "inactive") {
         setIntakeStatus("inactive")
-        setNotice("Online intake is off, so nothing was sent. Your report stays a draft on this device.")
+        setNotice("Online intake is off, so nothing was sent. Your draft remains saved in this browser.")
         return
       }
       if (result.tag === "rate-limited") {
@@ -207,12 +207,12 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
           message: `Too many reports are arriving right now. Wait about ${result.retryAfterSeconds} seconds, then choose Submit again.`,
           diagnostic: null
         })
-        setNotice("Your draft stays on this device. It will not retry on its own.")
+        setNotice("Your draft remains saved in this browser. It will not retry on its own.")
         return
       }
       if (result.tag === "failed") {
         setProblem({ message: result.detail, diagnostic: null })
-        setNotice("Your draft stays on this device. It will not retry on its own.")
+        setNotice("Your draft remains saved in this browser. It will not retry on its own.")
         return
       }
 
@@ -233,7 +233,7 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
         setReceiptStorageProblem(true)
         setProblem(null)
         setNotice(
-          `The service accepted receipt ${result.clientReceiptId}, but the receipt could not be saved on this device. ` +
+          "The service accepted the report, but its receipt could not be saved on this device. " +
           "Do not submit this report again — retry only the receipt save."
         )
       }
@@ -274,7 +274,10 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
   }
 
   const deleteDraft = async (): Promise<void> => {
-    if (!window.confirm("Delete this local correction draft and receipt from this device?")) return
+    const deletingAcceptedReceipt = draft.submissionState === "accepted"
+    if (!window.confirm(deletingAcceptedReceipt
+      ? "Delete this accepted report\u2019s local receipt from this device? This will not withdraw the submitted report."
+      : "Delete this local correction draft from this device?")) return
     setBusy(true)
     setProblem(null)
     try {
@@ -287,9 +290,16 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
       setDraft(freshDraft())
       setAcceptedRemotely(null)
       setReceiptStorageProblem(false)
-      setNotice("The local draft was deleted. Nothing was submitted.")
+      setNotice(deletingAcceptedReceipt
+        ? "The local receipt was deleted. The report remains submitted; deleting its local receipt did not withdraw it."
+        : "The local draft was deleted. Nothing was submitted.")
     } catch (cause) {
-      setProblem(localFailureReport(cause, "The draft could not be deleted from this device\u2019s storage. Nothing was sent."))
+      setProblem(localFailureReport(
+        cause,
+        deletingAcceptedReceipt
+          ? "The accepted report\u2019s local receipt could not be deleted from this device\u2019s storage. The report remains submitted and was not withdrawn."
+          : "The draft could not be deleted from this device\u2019s storage. Nothing was sent."
+      ))
     } finally {
       setBusy(false)
     }
@@ -306,7 +316,10 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
             : "Report receipt saved on this device"}
         </h2>
         <p>{notice}</p>
-        <p><strong>Client receipt:</strong> <code>{draft.id}</code></p>
+        <details className="source-note">
+          <summary>Technical details</summary>
+          <p><strong>Client receipt ID:</strong> <code>{draft.id}</code></p>
+        </details>
         <div className="question-controls">
           {receiptStorageProblem ? (
             <button className="button button-primary" disabled={busy} onClick={() => void retryReceiptSave()} type="button">
@@ -316,7 +329,7 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
           <button className="button button-primary" disabled={busy} onClick={startAnotherReport} type="button">
             Start another report
           </button>
-          <button className="button button-secondary" onClick={() => void deleteDraft()} type="button">
+          <button className="button button-secondary" disabled={busy} onClick={() => void deleteDraft()} type="button">
             Delete local receipt
           </button>
         </div>
@@ -346,6 +359,7 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
       <div className="form-field">
         <label htmlFor="correction-category">Concern category</label>
         <select
+          disabled={busy}
           id="correction-category"
           value={draft.category}
           onChange={(event) => update("category", event.target.value as CorrectionDraftRecord["category"])}
@@ -363,6 +377,7 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
       <div className="form-field">
         <label htmlFor="correction-page">Public page path</label>
         <input
+          disabled={busy}
           id="correction-page"
           value={draft.pagePath}
           onChange={(event) => update("pagePath", event.target.value)}
@@ -381,6 +396,7 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
       <div className="form-field">
         <label htmlFor="correction-summary">Short summary</label>
         <input
+          disabled={busy}
           id="correction-summary"
           value={draft.summary}
           onChange={(event) => update("summary", event.target.value)}
@@ -396,6 +412,7 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
       <div className="form-field">
         <label htmlFor="correction-details">Details</label>
         <textarea
+          disabled={busy}
           id="correction-details"
           value={draft.details}
           onChange={(event) => update("details", event.target.value)}
@@ -412,6 +429,7 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
       <div className="form-field">
         <label htmlFor="correction-source">Optional public source URL</label>
         <input
+          disabled={busy}
           id="correction-source"
           value={draft.publicSourceUrl}
           onChange={(event) => update("publicSourceUrl", event.target.value)}
@@ -427,6 +445,7 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
       </div>
       <div className="affirmation-control">
         <input
+          disabled={busy}
           id="correction-security-affirmation"
           type="checkbox"
           checked={draft.affirmsNoSecureExamMaterial}
@@ -466,8 +485,8 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
             : intakeStatus === "checking"
               ? "Checking whether reports can be sent…"
               : intakeStatus === "inactive"
-                ? "Reports cannot be sent right now — online intake is off. Your draft stays on this device until you delete it."
-                : "Whether reports can be sent could not be checked; you may be offline. Your draft stays on this device."}
+                ? "Reports cannot be sent right now — online intake is off. Use Save draft on this device if you want to keep what is shown."
+                : "Whether reports can be sent could not be checked; you may be offline. Use Save draft on this device if you want to keep what is shown."}
           {intakeStatus === "unchecked" || intakeStatus === "inactive" || intakeStatus === "unknown" ? (
             <>
               {" "}
