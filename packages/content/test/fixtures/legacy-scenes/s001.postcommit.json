@@ -1,0 +1,151 @@
+{
+  "id": "scene.slip.hallway-wet-floor",
+  "opaqueAssetId": "s001",
+  "kind": "positive",
+  "hazardFamily": "slip-trip-fall",
+  "claim": "A wet walking surface without a visible control is a condition needing correction.",
+  "sourceIds": [
+    "OSHA_FLOOR"
+  ],
+  "targets": [
+    {
+      "id": "target-1",
+      "condition": "wide shallow wet patch across the central walking path with no warning control present",
+      "correction": "control the area and promptly clean/dry the walking surface"
+    }
+  ],
+  "decoys": [
+    {
+      "id": "decoy-1",
+      "condition": "fixed metal conduit running tightly along the base of the right wall",
+      "safeBecause": "it is fixed outside the walking route"
+    }
+  ],
+  "targetRegions": [
+    {
+      "inventoryId": "target-1",
+      "polygons": [
+        [
+          [
+            0.17,
+            0.55
+          ],
+          [
+            0.8,
+            0.55
+          ],
+          [
+            0.8,
+            0.92
+          ],
+          [
+            0.17,
+            0.92
+          ]
+        ]
+      ]
+    }
+  ],
+  "decoyRegions": [
+    {
+      "inventoryId": "decoy-1",
+      "polygons": [
+        [
+          [
+            0.72,
+            0.48
+          ],
+          [
+            0.99,
+            0.48
+          ],
+          [
+            0.99,
+            0.55
+          ],
+          [
+            0.72,
+            0.55
+          ]
+        ],
+        [
+          [
+            0.81,
+            0.55
+          ],
+          [
+            0.99,
+            0.55
+          ],
+          [
+            0.99,
+            0.76
+          ],
+          [
+            0.81,
+            0.76
+          ]
+        ]
+      ]
+    }
+  ],
+  "fullPostAnswer": {
+    "claim": "A wet walking surface without a visible control is a condition needing correction.",
+    "targets": [
+      {
+        "condition": "wide shallow wet patch across the central walking path with no warning control present",
+        "correction": "control the area and promptly clean/dry the walking surface",
+        "sourceIds": [
+          "OSHA_FLOOR"
+        ]
+      }
+    ],
+    "decoys": [
+      {
+        "condition": "fixed metal conduit running tightly along the base of the right wall",
+        "safeBecause": "it is fixed outside the walking route"
+      }
+    ],
+    "safeBackground": [
+      "closed classroom doors",
+      "wall-mounted bulletin frame with blank interior",
+      "janitor cart fully inside a side alcove"
+    ],
+    "sources": [
+      {
+        "id": "OSHA_FLOOR",
+        "title": "29 CFR 1910.22 General requirements",
+        "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.22",
+        "locator": "1910.22(a)(1)-(3)",
+        "scope": "Walking-working surfaces must be kept clean, orderly, sanitary, and free of hazards such as sharp or protruding objects, loose boards, corrosion, leaks, spills, snow, and ice."
+      }
+    ]
+  },
+  "nonvisualZonedEquivalent": [
+    {
+      "zone": "central floor",
+      "role": "target",
+      "statement": "wide shallow wet patch across the central walking path with no warning control present"
+    },
+    {
+      "zone": "right wall",
+      "role": "decoy",
+      "statement": "fixed metal conduit running tightly along the base of the right wall; it is fixed outside the walking route."
+    },
+    {
+      "zone": "rear hallway",
+      "role": "safe-background",
+      "statement": "closed classroom doors"
+    },
+    {
+      "zone": "right wall",
+      "role": "safe-background",
+      "statement": "wall-mounted bulletin frame with blank interior"
+    },
+    {
+      "zone": "left wall and alcove",
+      "role": "safe-background",
+      "statement": "janitor cart fully inside a side alcove"
+    }
+  ]
+}

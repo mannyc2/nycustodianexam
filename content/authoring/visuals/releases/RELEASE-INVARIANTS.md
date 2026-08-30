@@ -10,6 +10,18 @@ Lifecycle status has one canonical representation:
 - `comparisons.json` in this directory owns comparison `status`; and
 - `scenes.json` in this directory owns scene `productionStatus`.
 
+`scenes.json` is also the single accepted semantic authority for each current
+hazard scene. Its schema/version 2 records own the target and decoy regions,
+neutral pre-answer description, ordered explanations, evidence claims, and
+self-contained source-line receipts. `regions.json` and `accessibility.json`
+are mechanically derived authoring/review projections; the content compiler
+does not join them back into the release.
+
+Current scene source receipts retain the broad authored source locator and
+scope alongside each exact source-line locator. A source line reused across
+scenes carries one globally consistent `supportedClaimIds` set, reciprocal
+with every generated claim that cites it.
+
 Candidate-selection, lineage, review, and historical-source fields remain
 evidence. They do not override the active release ledgers. A superseded release
 remains immutable in `tool-release-history.json` and does not become active

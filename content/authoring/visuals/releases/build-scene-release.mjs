@@ -23,17 +23,6 @@ const replacementGeneratorOperators = new Map([
 ]);
 const pendingAccidentalHazardReviewer = "PENDING — independent reviewer required";
 const releaseDate = "2026-08-23";
-const hazardFamilies = [
-  "slip-trip-fall",
-  "egress",
-  "chemical",
-  "electrical",
-  "sharps-broken-material",
-  "material-handling-storage",
-  "biological-sanitation",
-  "machine-tool-safety",
-];
-
 const regionBoxes = {
   1: { target: [[0.17, 0.55, 0.80, 0.92]], decoy: [[[0.72, 0.48, 0.99, 0.55], [0.81, 0.55, 0.99, 0.76]]] },
   2: { target: [[0.47, 0.61, 0.69, 0.80]], decoy: [[0.83, 0.16, 0.96, 0.61]] },
@@ -279,6 +268,134 @@ for (const path of [releaseRoot, reviewRoot, masterRoot, derivativeRoot]) mkdirS
 for (const path of ["phone", "print", "overlays"].map((name) => resolve(reviewRoot, name))) mkdirSync(path, { recursive: true });
 
 const sourcesById = new Map(brief.sources.map((source) => [source.id, source]));
+const sourceLinesById = new Map(brief.sourceLines.map((line) => [line.id, line]));
+const supportedClaimIdsBySourceLine = new Map(
+  brief.sourceLines.map((line) => [line.id, []]),
+);
+
+if (brief.schemaVersion !== 2) throw new Error("Hazard-scene brief schemaVersion must be 2");
+if (sourcesById.size !== brief.sources.length) throw new Error("Hazard-scene source ids must be unique");
+if (sourceLinesById.size !== brief.sourceLines.length) throw new Error("Hazard-scene source-line ids must be unique");
+
+function sceneClaimId(opaqueId, inventoryId, field) {
+  return `claim.scene.${opaqueId}.${inventoryId}.${field}`;
+}
+
+function addSupportedClaim(sourceLineId, claimId) {
+  const sourceLine = sourceLinesById.get(sourceLineId);
+  if (!sourceLine) throw new Error(`${claimId} references unknown source line ${sourceLineId}`);
+  if (!sourcesById.has(sourceLine.sourceId)) {
+    throw new Error(`${sourceLineId} references unknown source ${sourceLine.sourceId}`);
+  }
+  const supportedClaimIds = supportedClaimIdsBySourceLine.get(sourceLineId);
+  if (!supportedClaimIds.includes(claimId)) supportedClaimIds.push(claimId);
+}
+
+function claimsForScene(scene, opaqueId) {
+  const claims = [];
+  for (const target of scene.targetInventory) {
+    const targetClaims = [
+      ["why-unsafe", target.whyUnsafe, target.sourceLineIds.whyUnsafe],
+      ["likely-consequence", target.likelyConsequence, target.sourceLineIds.likelyConsequence],
+      ["immediate-correction", target.immediateCorrection, target.sourceLineIds.immediateCorrection],
+    ];
+    for (const [field, text, sourceLineIds] of targetClaims) {
+      const id = sceneClaimId(opaqueId, target.id, field);
+      for (const sourceLineId of sourceLineIds) addSupportedClaim(sourceLineId, id);
+      claims.push({
+        id,
+        text,
+        sourceLineIds,
+        evidenceTier: "official-primary-synthesis",
+        caveat: target.evidenceCaveat,
+      });
+    }
+  }
+  for (const decoy of scene.decoyInventory) {
+    const decoyClaims = [
+      ["safe-as-depicted", decoy.safeAsDepicted],
+      ["unsafe-if", decoy.unsafeIf],
+    ];
+    for (const [field, text] of decoyClaims) {
+      const id = sceneClaimId(opaqueId, decoy.id, field);
+      for (const sourceLineId of decoy.sourceLineIds) addSupportedClaim(sourceLineId, id);
+      claims.push({
+        id,
+        text,
+        sourceLineIds: decoy.sourceLineIds,
+        evidenceTier: "official-primary-synthesis",
+        caveat: decoy.evidenceCaveat,
+      });
+    }
+  }
+  return claims;
+}
+
+const claimsBySceneId = new Map(
+  brief.scenes.map((scene) => {
+    const opaqueId = `s${String(scene.slot).padStart(3, "0")}`;
+    return [scene.id, claimsForScene(scene, opaqueId)];
+  }),
+);
+
+function sourceReceiptsForClaims(claims) {
+  const sourceLineIds = [...new Set(claims.flatMap((claim) => claim.sourceLineIds))];
+  return sourceLineIds.map((sourceLineId) => {
+    const line = sourceLinesById.get(sourceLineId);
+    const source = sourcesById.get(line.sourceId);
+    return {
+      id: line.id,
+      sourceId: line.sourceId,
+      title: source.title,
+      publisher: source.publisher,
+      evidenceTier: source.evidenceTier,
+      version: source.version,
+      rightsNotes: source.rightsNotes,
+      locator: line.locator,
+      excerpt: line.excerpt,
+      language: "en",
+      verifiedOn: line.verifiedOn,
+      supportedClaimIds: supportedClaimIdsBySourceLine.get(line.id),
+      scope: source.scope,
+      sourceLocator: source.locator,
+      ...(source.url === undefined ? {} : { url: source.url }),
+    };
+  });
+}
+
+function asSentence(text) {
+  const trimmed = text.trim();
+  const capitalized = `${trimmed[0].toUpperCase()}${trimmed.slice(1)}`;
+  return /[.!?]$/.test(capitalized) ? capitalized : `${capitalized}.`;
+}
+
+function neutralPreAnswerForScene(scene, accessZones) {
+  const observationsByZone = new Map(accessZones.neutral.map((label) => [label, []]));
+  scene.targetInventory.forEach((target, index) => {
+    observationsByZone.get(accessZones.targets[index]).push(target.observableCondition);
+  });
+  scene.decoyInventory.forEach((decoy, index) => {
+    observationsByZone.get(accessZones.decoys[index]).push(decoy.observableCondition);
+  });
+  scene.safeBackground.forEach((observableCondition, index) => {
+    observationsByZone.get(accessZones.safeBackground[index]).push(asSentence(observableCondition));
+  });
+  return {
+    overview: scene.neutralOverview,
+    zones: accessZones.neutral.map((label, index) => {
+      const observations = observationsByZone.get(label);
+      return {
+        order: index + 1,
+        label,
+        description: observations.length > 0
+          ? observations.join(" ")
+          : `The ${label} is visible within the ${scene.environment} setting.`,
+      };
+    }),
+    policy: "Describes visible conditions zone by zone without stating target or decoy roles, counts, or answers.",
+  };
+}
+
 const existingIndependentReview = existsSync(independentReviewPath) ? JSON.parse(readFileSync(independentReviewPath, "utf8")) : { entries: [] };
 const independentReviewByScene = new Map((existingIndependentReview.entries || []).map((entry) => [entry.sceneId, entry]));
 const releases = [];
@@ -370,36 +487,89 @@ for (const scene of brief.scenes) {
   };
   regions.push(regionRecord);
 
-  const sourceRecords = scene.sourceIds.map((id) => {
-    const source = sourcesById.get(id);
-    if (!source) throw new Error(`${opaqueId} references unknown source ${id}`);
-    return source;
-  });
   const accessZones = accessibilityZones[scene.slot];
   if (!accessZones) throw new Error(`${opaqueId} is missing explicit accessibility zones`);
   if (accessZones.neutral.length !== scene.zoneOrder.length) throw new Error(`${opaqueId} neutral-zone count mismatch`);
   if (accessZones.targets.length !== scene.targetInventory.length) throw new Error(`${opaqueId} accessibility target-zone count mismatch`);
   if (accessZones.decoys.length !== scene.decoyInventory.length) throw new Error(`${opaqueId} accessibility decoy-zone count mismatch`);
   if (accessZones.safeBackground.length !== scene.safeBackground.length) throw new Error(`${opaqueId} accessibility safe-background-zone count mismatch`);
+  const claims = claimsBySceneId.get(scene.id);
+  const sourceReceipts = sourceReceiptsForClaims(claims);
+  const targets = scene.targetInventory.map((item, index) => ({
+    id: item.id,
+    zone: accessZones.targets[index],
+    polygons: regionPolygons(boxes.target[index]).map(boxToPolygon),
+    observableCondition: item.observableCondition,
+    conceptIds: item.conceptIds,
+    correctionCategory: item.correctionCategory,
+    whyUnsafeClaimId: sceneClaimId(opaqueId, item.id, "why-unsafe"),
+    likelyConsequenceClaimId: sceneClaimId(opaqueId, item.id, "likely-consequence"),
+    immediateCorrectionClaimId: sceneClaimId(opaqueId, item.id, "immediate-correction"),
+  }));
+  const decoys = scene.decoyInventory.map((item, index) => ({
+    id: item.id,
+    zone: accessZones.decoys[index],
+    polygons: regionPolygons(boxes.decoy[index]).map(boxToPolygon),
+    observableCondition: item.observableCondition,
+    conceptIds: item.conceptIds,
+    suspiciousBecause: item.suspiciousBecause,
+    safeAsDepictedClaimId: sceneClaimId(opaqueId, item.id, "safe-as-depicted"),
+    unsafeIfClaimId: sceneClaimId(opaqueId, item.id, "unsafe-if"),
+  }));
+  const safeBackground = scene.safeBackground.map((observableCondition, index) => ({
+    zone: accessZones.safeBackground[index],
+    observableCondition: asSentence(observableCondition),
+  }));
+  const neutralPreAnswer = neutralPreAnswerForScene(scene, accessZones);
+  const claimById = new Map(claims.map((claim) => [claim.id, claim]));
   const accessRecord = {
+    schemaVersion: 2,
     sceneId: scene.id,
     opaqueAssetId: opaqueId,
-    neutralPreAnswer: {
-      overview: scene.neutralOverview,
-      zones: accessZones.neutral.map((label, index) => ({ order: index + 1, label, description: `The ${label} is visible within the ${scene.environment} setting.` })),
-      policy: "Does not state target or decoy counts and does not identify the answer.",
-    },
+    derivedFrom: "content/authoring/visuals/releases/scenes.json",
+    neutralPreAnswer,
     fullPostAnswer: {
-      claim: scene.claim,
-      targets: scene.targetInventory.map((item) => ({ condition: item.condition, correction: item.correction, sourceIds: scene.sourceIds })),
-      decoys: scene.decoyInventory.map((item) => ({ condition: item.condition, safeBecause: item.safeBecause })),
-      safeBackground: scene.safeBackground,
-      sources: sourceRecords.map(({ id, title, url, locator, scope }) => ({ id, title, url, locator, scope })),
+      targets: targets.map((target) => ({
+        id: target.id,
+        zone: target.zone,
+        observableCondition: target.observableCondition,
+        whyUnsafe: claimById.get(target.whyUnsafeClaimId).text,
+        likelyConsequence: claimById.get(target.likelyConsequenceClaimId).text,
+        immediateCorrection: claimById.get(target.immediateCorrectionClaimId).text,
+        conceptIds: target.conceptIds,
+        correctionCategory: target.correctionCategory,
+        claimIds: [
+          target.whyUnsafeClaimId,
+          target.likelyConsequenceClaimId,
+          target.immediateCorrectionClaimId,
+        ],
+      })),
+      decoys: decoys.map((decoy) => ({
+        id: decoy.id,
+        zone: decoy.zone,
+        observableCondition: decoy.observableCondition,
+        suspiciousBecause: decoy.suspiciousBecause,
+        safeAsDepicted: claimById.get(decoy.safeAsDepictedClaimId).text,
+        unsafeIf: claimById.get(decoy.unsafeIfClaimId).text,
+        conceptIds: decoy.conceptIds,
+        claimIds: [decoy.safeAsDepictedClaimId, decoy.unsafeIfClaimId],
+      })),
+      safeBackground,
+      claims,
+      sources: sourceReceipts,
     },
     nonvisualZonedEquivalent: [
-      ...scene.targetInventory.map((item, index) => ({ zone: accessZones.targets[index], role: "target", statement: item.condition })),
-      ...scene.decoyInventory.map((item, index) => ({ zone: accessZones.decoys[index], role: "decoy", statement: `${item.condition}; ${item.safeBecause}.` })),
-      ...scene.safeBackground.map((statement, index) => ({ zone: accessZones.safeBackground[index], role: "safe-background", statement })),
+      ...targets.map((target) => ({
+        zone: target.zone,
+        role: "target",
+        statement: `${target.observableCondition} ${claimById.get(target.whyUnsafeClaimId).text} ${claimById.get(target.likelyConsequenceClaimId).text} ${claimById.get(target.immediateCorrectionClaimId).text}`,
+      })),
+      ...decoys.map((decoy) => ({
+        zone: decoy.zone,
+        role: "decoy",
+        statement: `${decoy.observableCondition} ${decoy.suspiciousBecause} ${claimById.get(decoy.safeAsDepictedClaimId).text} ${claimById.get(decoy.unsafeIfClaimId).text}`,
+      })),
+      ...safeBackground.map((item) => ({ zone: item.zone, role: "safe-background", statement: item.observableCondition })),
     ],
   };
   accessibility.push(accessRecord);
@@ -450,6 +620,8 @@ for (const scene of brief.scenes) {
   });
 
   releases.push({
+    schemaVersion: 2,
+    version: 2,
     sceneId: scene.id,
     opaqueAssetId: opaqueId,
     slot: scene.slot,
@@ -457,26 +629,24 @@ for (const scene of brief.scenes) {
     hazardFamily: scene.hazardFamily,
     environment: scene.environment,
     productionStatus: independentStatus === "pass" ? "accepted" : independentStatus === "reject" ? "rejected-by-independent-review" : "review-ready-awaiting-independent-accidental-hazard-review",
-    generatorOperator,
-    accidentalHazardReviewer: resolvedAccidentalHazardReviewer,
     independentReviewStatus: independentStatus,
-    semanticManifest: {
-      claim: scene.claim,
-      sources: sourceRecords.map(({ id, title, url, locator, scope }) => ({ id, title, url, locator, scope })),
-      targets: scene.targetInventory,
-      decoys: scene.decoyInventory,
-      safeBackground: scene.safeBackground,
-      structuralBackground: [scene.environment, ...scene.zoneOrder],
-      negativeInventory: hazardFamilies.map((family) => ({ family, authoredPositiveTarget: scene.kind === "positive" && family === scene.hazardFamily, unauthoredConditionPolicy: "reject candidate" })),
-      requiredCues: scene.requiredCues,
-      forbiddenCues: scene.forbiddenCues,
-    },
     master: masterArtifact,
     derivatives: derivativeArtifacts,
-    regionRecord: "content/authoring/visuals/releases/regions.json",
-    accessibilityRecord: "content/authoring/visuals/releases/accessibility.json",
-    qaRecord: "content/authoring/visuals/releases/scene-qa-ledger.json",
     publicationGate: independentStatus === "pass" ? null : independentStatus === "reject" ? "Replace the rejected exact-pixel candidate and rerun all affected review and release stages." : "Independent reviewer must close accidental-hazard/decoy review against this exact master hash before production acceptance.",
+    tags: {
+      domain: "health-and-safety",
+      family: "hazard-scene",
+      environment: scene.environment,
+      hazardCategory: scene.hazardFamily,
+      seriesScope: "entry-level-custodians-janitors",
+      editorialDifficulty: "application",
+    },
+    neutralPreAnswer,
+    targets,
+    decoys,
+    safeBackground,
+    claims,
+    sources: sourceReceipts,
   });
 }
 
@@ -511,7 +681,7 @@ if (!existsSync(independentReviewPath)) {
 const acceptedCount = releases.filter((scene) => scene.productionStatus === "accepted").length;
 const rejectedCount = releases.filter((scene) => scene.productionStatus === "rejected-by-independent-review").length;
 const pendingCount = releases.length - acceptedCount - rejectedCount;
-const generatorOperators = [...new Set(releases.map((scene) => scene.generatorOperator))];
+const generatorOperators = [...new Set(qaLedger.map((scene) => scene.generatorOperator))];
 const gateSummary = pendingCount === 0 && rejectedCount === 0
   ? "Independent accidental-hazard review is closed against every exact master hash; all 18 scenes are accepted."
   : "Production acceptance remains blocked for any pending or rejected scene; no record claims that an unresolved gate is closed.";

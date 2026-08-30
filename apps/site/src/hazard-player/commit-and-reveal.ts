@@ -63,7 +63,10 @@ const loadPostcommit = Effect.fn("HazardWorkflow.loadPostcommit")(function*(
     )
   )
 
-  const payload = yield* Schema.decodeUnknownEffect(PostcommitSceneSchema)(artifact.value).pipe(
+  const payload = yield* Schema.decodeUnknownEffect(
+    PostcommitSceneSchema,
+    { onExcessProperty: "error" }
+  )(artifact.value).pipe(
     Effect.mapError(
       (cause) =>
         new HazardRevealError({

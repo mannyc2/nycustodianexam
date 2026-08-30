@@ -47,6 +47,13 @@ const repositoryRoot = new URL("../", import.meta.url)
 const distRoot = new URL("apps/site/dist/", repositoryRoot)
 const releaseRoot = new URL("content/releases/vertical-slice/", repositoryRoot)
 
+export const decodeCurrentPostcommitScene = (
+  value: unknown
+): typeof PostcommitScene.Type => Schema.decodeUnknownSync(
+  PostcommitScene,
+  { onExcessProperty: "error" }
+)(value)
+
 type Manifest = typeof ReleaseManifest.Type
 type ManifestArtifact = Manifest["artifacts"][number]
 
@@ -221,6 +228,8 @@ const forbiddenStructuredFields = new Set([
   "claimIds",
   "claims",
   "conceptId",
+  "conceptIds",
+  "correctionCategory",
   "correctOptionId",
   "decoys",
   "equivalenceGroupId",
@@ -229,12 +238,20 @@ const forbiddenStructuredFields = new Set([
   "hazardFamily",
   "nonvisualZonedEquivalent",
   "objectiveId",
+  "observableCondition",
   "optionConceptIds",
   "rationales",
+  "safeAsDepictedClaimId",
+  "safeBackground",
   "sources",
+  "suspiciousBecause",
   "tags",
   "targetRegions",
-  "targets"
+  "targets",
+  "unsafeIfClaimId",
+  "whyUnsafeClaimId",
+  "likelyConsequenceClaimId",
+  "immediateCorrectionClaimId"
 ])
 
 export const assertNoAnswerBearingStructuredFields = (
@@ -690,7 +707,7 @@ export const verify = async (): Promise<void> => {
   }
   if (
     manifest.releaseId !== "launch-v1" ||
-    manifest.packVersion !== 2 ||
+    manifest.packVersion !== 3 ||
     catalog.locale !== "en" ||
     catalog.tools.length !== 65 ||
     catalog.comparisons.length !== 14 ||
@@ -1534,7 +1551,7 @@ export const verify = async (): Promise<void> => {
           return expected === undefined ||
             profile.id !== expected.id ||
             profile.label !== expected.label ||
-            profile.version !== manifest.packVersion ||
+            profile.version !== expected.version ||
             profile.jurisdiction !== expected.jurisdiction ||
             profile.compatibilityKey !== expected.compatibilityKey ||
             profile.disclaimer !== expected.disclaimer
@@ -1761,6 +1778,8 @@ export const verify = async (): Promise<void> => {
         "fullPostAnswer",
         "hazardFamily",
         "nonvisualZonedEquivalent",
+        "safeBackground",
+        "tags",
         "targetRegions",
         "targets"
       ]) {
@@ -1911,10 +1930,14 @@ export const verify = async (): Promise<void> => {
       }
       for (const field of [
         "claim",
+        "claims",
         "decoys",
         "fullPostAnswer",
         "hazardFamily",
         "nonvisualZonedEquivalent",
+        "safeBackground",
+        "sources",
+        "tags",
         "targetRegions",
         "targets"
       ]) {
@@ -1974,21 +1997,27 @@ export const verify = async (): Promise<void> => {
       )
     }
     if (record.kind === "scene-postcommit") {
-      const payload = Schema.decodeUnknownSync(PostcommitScene)(
+      const payload = decodeCurrentPostcommitScene(
         JSON.parse(await text(new URL(record.path, releaseRoot)))
       )
       secretMaterial.push(
-        payload.claim,
-        ...payload.targets.flatMap((target) => [target.condition, target.correction]),
-        ...payload.decoys.flatMap((decoy) => [decoy.condition, decoy.safeBecause]),
-        ...payload.nonvisualZonedEquivalent.map((statement) => statement.statement),
-        payload.fullPostAnswer.claim,
-        ...payload.fullPostAnswer.targets.flatMap((target) => [target.condition, target.correction]),
-        ...payload.fullPostAnswer.decoys.flatMap((decoy) => [decoy.condition, decoy.safeBecause]),
-        ...payload.fullPostAnswer.safeBackground,
-        JSON.stringify(payload.targetRegions),
-        JSON.stringify(payload.decoyRegions),
-        JSON.stringify(payload.nonvisualZonedEquivalent)
+        ...payload.claims.flatMap((claim) => [claim.text, claim.caveat ?? ""]),
+        ...payload.sources.flatMap((source) => [
+          source.locator,
+          source.excerpt,
+          source.title,
+          source.scope ?? "",
+          source.sourceLocator ?? ""
+        ]),
+        // Observable conditions and zone labels are intentionally available in
+        // the neutral, nonvisual pre-answer description. Only geometry and
+        // interpretive feedback remain answer-bearing here.
+        ...payload.targets.map((target) => JSON.stringify(target.polygons)),
+        ...payload.decoys.flatMap((decoy) => [
+          decoy.suspiciousBecause,
+          JSON.stringify(decoy.polygons)
+        ]),
+        JSON.stringify(payload.tags)
       )
     }
   }
@@ -2050,9 +2079,9 @@ export const verify = async (): Promise<void> => {
 
   // The interactive entries share the framework/runtime and verified-content chunks. M4 and M5
   // share durable-session, print, pack, settings, correction, and canonical review-projection
-  // services. The largest integrated closure is Settings at 468975 raw / 140191 gzip / 118523
+  // services. The largest integrated closure is Settings at 475429 raw / 141746 gzip / 119790
   // brotli; these ceilings retain a deliberately narrow deterministic margin.
-  const bundleBudgets = { raw: 470_000, gzip: 141_000, brotli: 120_000 } as const
+  const bundleBudgets = { raw: 476_000, gzip: 142_500, brotli: 121_000 } as const
   for (const [family, measurement] of bundleReports) {
     for (const format of ["raw", "gzip", "brotli"] as const) {
       if (measurement[format] > bundleBudgets[format]) {

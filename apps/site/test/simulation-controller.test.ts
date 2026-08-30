@@ -6,7 +6,8 @@ import {
   PostcommitQuestion,
   PostcommitScene,
   PrecommitScene,
-  ReleaseManifest
+  ReleaseManifest,
+  ReleasedPostcommitScene
 } from "@nycustodian/content/model"
 import { renderToStaticMarkup } from "react-dom/server"
 import { Effect, Schema } from "effect"
@@ -15,6 +16,7 @@ import {
   createLocallyClosedSimulation,
   createSimulationPlayerController,
   createSimulationResultsController,
+  reconcileSimulation,
   type SimulationEffectRunner,
   type SimulationPlayerController
 } from "../src/simulation/controller.ts"
@@ -65,6 +67,15 @@ const hazardAssetBytes = new Uint8Array(readFileSync(
 const hazardPostcommitBytes = new Uint8Array(readFileSync(
   new URL(hazardArtifact.path, releaseRoot)
 ))
+const legacyHazardPostcommitBytes = new Uint8Array(readFileSync(
+  new URL("../../../packages/content/test/fixtures/legacy-scenes/s001.postcommit.json", import.meta.url)
+))
+const legacyHazardSceneAnswer = Schema.decodeUnknownSync(
+  ReleasedPostcommitScene,
+  { onExcessProperty: "error" }
+)(JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(
+  legacyHazardPostcommitBytes
+)) as unknown)
 
 const postcommitArtifact = <A>(
   payload: A,
@@ -893,6 +904,91 @@ describe("self-contained evaluated simulation restoration", () => {
     expect(html.indexOf("Technical details")).toBeLessThan(html.indexOf("line-q1"))
   })
 
+  it("reconciles an older pinned hazard receipt without rewriting its legacy answer", async () => {
+    const initial = hazardSessionFixture("nonvisual-hazards")
+    const active = withPostcommitReceipts(initial, [{
+      postcommitBase64: encodeCanonicalBase64(legacyHazardPostcommitBytes)
+    }])
+    const item = active.items[0]
+    if (item === undefined || "question" in item) {
+      throw new Error("Expected a nonvisual historical hazard fixture")
+    }
+    const targetZone = item.scene.neutralPreAnswer.zones.find(
+      (zone) => zone.label === "central floor"
+    )
+    if (targetZone === undefined) throw new Error("Expected the historical target zone")
+    const session = new SimulationSessionRecord({
+      ...active,
+      status: "submitted",
+      updatedAt: 2
+    })
+    const submission = new SimulationSubmissionRecord({
+      schemaVersion: 1,
+      id: `${session.id}:final`,
+      sessionId: session.id,
+      status: "submitted",
+      answers: [{
+        questionId: item.scene.id,
+        selectedOptionId: null,
+        markers: [],
+        selectedZoneOrders: [targetZone.order],
+        zeroHazardsConfirmed: false,
+        reviewIntent: "unflagged"
+      }],
+      submittedAt: 2
+    })
+    const persistence = SimulationPersistence.of({
+      createSession: () => Effect.die("not used"),
+      findSession: () => Effect.succeed(session),
+      saveResponse: () => Effect.die("not used"),
+      setPosition: () => Effect.die("not used"),
+      setTimerVisibility: () => Effect.die("not used"),
+      submit: () => Effect.die("not used"),
+      findSubmission: () => Effect.succeed(submission),
+      complete: (input) => Effect.succeed(Schema.decodeUnknownSync(SimulationSubmissionRecord)({
+        ...submission,
+        status: "evaluated",
+        evaluatedAt: 3,
+        results: input.results,
+        correctCount: input.correctCount
+      }))
+    })
+    const legacyJson = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(
+      legacyHazardPostcommitBytes
+    )) as unknown
+    const content = VerifiedContent.of({
+      ensureAssetAvailable: () => Effect.die("not used"),
+      ensureAvailable: () => Effect.die("not used"),
+      loadAssetBlob: () => Effect.die("not used"),
+      loadCachedAssetBlob: () => Effect.die("not used"),
+      loadCachedJson: () => Effect.die("parsed-only result reads are forbidden"),
+      loadJsonArtifact: () => Effect.succeed({
+        bytes: legacyHazardPostcommitBytes,
+        value: legacyJson
+      }),
+      loadJson: () => Effect.die("network result reads are forbidden")
+    })
+
+    const reconciled = await Effect.runPromise(reconcileSimulation(session.id).pipe(
+      Effect.provideService(SimulationPersistence, persistence),
+      Effect.provideService(VerifiedContent, content)
+    ))
+    const result = reconciled.submission.results?.[0]
+    if (result?.kind !== "hazard") throw new Error("Expected a historical hazard result")
+    expect("schemaVersion" in result.postcommit).toBe(false)
+    expect(result.postcommit).toEqual(legacyHazardSceneAnswer)
+    expect(decodeCanonicalBase64(result.postcommitBase64)).toEqual(legacyHazardPostcommitBytes)
+
+    const html = await restoreTwice(reconciled.session, reconciled.submission)
+    if ("schemaVersion" in legacyHazardSceneAnswer) {
+      throw new Error("Expected the frozen legacy answer branch")
+    }
+    expect(html).toContain(legacyHazardSceneAnswer.claim)
+    expect(html).toContain(legacyHazardSceneAnswer.targets[0]?.correction)
+    expect(html).toContain(legacyHazardSceneAnswer.fullPostAnswer.sources[0]?.title)
+    expect(html).toContain("older saved result keeps the source format published with its release")
+  })
+
   it("restores hazard corrections, full descriptions, and sources after pack removal", async () => {
     const active = hazardSessionFixture("visual-hazards")
     const activeItem = active.items[0]
@@ -943,21 +1039,39 @@ describe("self-contained evaluated simulation restoration", () => {
       JSON.parse(JSON.stringify(submission))
     )).toEqual(submission)
 
-    const firstTarget = hazardSceneAnswer.fullPostAnswer.targets[0]
-    const firstSource = hazardSceneAnswer.fullPostAnswer.sources[0]
+    const firstTarget = hazardSceneAnswer.targets[0]
+    const firstDecoy = hazardSceneAnswer.decoys[0]
+    const firstSource = hazardSceneAnswer.sources[0]
     if (firstTarget === undefined || firstSource === undefined) {
       throw new Error("Expected a positive hazard feedback fixture")
     }
     const html = await restoreTwice(session, submission)
-    expect(html).toContain(hazardSceneAnswer.claim)
-    expect(html).toContain(firstTarget.condition)
-    expect(html).toContain(firstTarget.correction)
+    expect(html).toContain(firstTarget.observableCondition)
+    expect(html).toContain(hazardSceneAnswer.claims.find(
+      (claim) => claim.id === firstTarget.whyUnsafeClaimId
+    )?.text)
+    expect(html).toContain(hazardSceneAnswer.claims.find(
+      (claim) => claim.id === firstTarget.likelyConsequenceClaimId
+    )?.text)
+    expect(html).toContain(hazardSceneAnswer.claims.find(
+      (claim) => claim.id === firstTarget.immediateCorrectionClaimId
+    )?.text)
+    expect(html).toContain("Why this is unsafe")
+    expect(html).toContain("Likely consequence")
+    expect(html).toContain("Immediate correction")
+    expect(html).toContain("Tags:")
+    if (firstDecoy !== undefined) {
+      expect(html).toContain(firstDecoy.suspiciousBecause)
+      expect(html).toContain("Condition that would make it unsafe")
+    }
     expect(html).toContain(firstSource.title)
+    expect(html).toContain(firstSource.excerpt)
+    expect(html).toContain("Exact source-line receipts")
     expect(html).toContain(
       "This mark does not match a recorded condition. It counts as an extra mark, but the site cannot say what that object means."
     )
-    expect(html.indexOf("Where this comes from")).toBeLessThan(
-      html.indexOf("Scene explanation and full post-submission description")
+    expect(html.indexOf("Scene explanation and evidence")).toBeLessThan(
+      html.indexOf("Exact source-line receipts")
     )
     expect(html).toContain("Reviewed scene overlay")
     expect(html).toContain("data:image/png;base64,")

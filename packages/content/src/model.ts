@@ -61,34 +61,24 @@ export {
 } from "./model/authored-pack.ts"
 
 export {
-  AcceptedSceneAccessibility,
   AcceptedComparisonMemberHash,
   AcceptedComparisonRelease,
   AcceptedComparisonReleaseLedger,
-  AcceptedSceneAccessibilityLedger,
   AcceptedSceneDecoy,
-  AcceptedSceneRegionLedger,
-  AcceptedSceneRegions,
   AcceptedSceneRelease,
   AcceptedSceneReleaseLedger,
-  AcceptedSceneSemanticManifest,
-  AcceptedSceneSource,
+  AcceptedSceneSafeBackground,
+  AcceptedSceneTags,
   AcceptedSceneTarget,
   AcceptedToolRelease,
   AcceptedToolReleaseLedger,
-  FullSceneAccessibility,
-  FullSceneDecoy,
-  FullSceneTarget,
   NeutralSceneAccessibility,
   NeutralSceneZone,
-  NonvisualSceneStatement,
   NormalizedPoint,
   RegionPolygon,
   RegionPolygons,
   ReleasedDerivativeAsset,
-  ReleasedMasterAsset,
-  SceneRegion,
-  SceneZone
+  ReleasedMasterAsset
 } from "./model/visual-release-inputs.ts"
 
 export {
@@ -97,6 +87,7 @@ export {
   CatalogPracticeCapacity,
   CatalogTool,
   CompiledVisualAsset,
+  LegacyPostcommitScene,
   PostcommitPackArtifact,
   PostcommitPackQuestion,
   PostcommitScene,
@@ -104,7 +95,8 @@ export {
   PrecommitPackQuestion,
   PrecommitScene,
   PracticeCapacityRecord,
-  PublicProfile
+  PublicProfile,
+  ReleasedPostcommitScene
 } from "./model/compiled-pack-artifacts.ts"
 
 export {

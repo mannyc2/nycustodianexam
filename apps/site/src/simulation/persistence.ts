@@ -1,6 +1,6 @@
 import {
-  PostcommitScene,
-  ReleasedPostcommitQuestion
+  ReleasedPostcommitQuestion,
+  ReleasedPostcommitScene
 } from "@nycustodian/content/model"
 import { Clock, Context, Effect, Layer, Schema } from "effect"
 import {
@@ -302,7 +302,10 @@ const decodeBoundPostcommitBytes = (
     if (result.kind !== "hazard") {
       throw new Error("Evaluated hazard feedback does not match its pinned receipt")
     }
-    const payload = Schema.decodeUnknownSync(PostcommitScene)(unknownPayload)
+    const payload = Schema.decodeUnknownSync(
+      ReleasedPostcommitScene,
+      { onExcessProperty: "error" }
+    )(unknownPayload)
     if (JSON.stringify(payload) !== JSON.stringify(result.postcommit)) {
       throw new Error("Evaluated hazard feedback payload does not match its retained bytes")
     }

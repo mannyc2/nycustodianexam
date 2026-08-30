@@ -293,8 +293,8 @@ test("persists and restores the exact v2 announcement facts and source-line rece
       readonly sections: ReadonlyArray<{ readonly tag: string; readonly factSheet?: unknown }>
     }
   }
-  expect(persisted.manifest.schemaVersion).toBe(2)
-  expect(persisted.packet.schemaVersion).toBe(2)
+  expect(persisted.manifest.schemaVersion).toBe(3)
+  expect(persisted.packet.schemaVersion).toBe(3)
   expect(persisted.manifest.profile.announcementFactSheet).toEqual(factSheet)
   expect(persisted.packet.sections).toEqual([
     expect.objectContaining({ tag: "announcement-profile-fact-sheet", factSheet })
@@ -498,7 +498,7 @@ test("pairs separate jobs and page-breaks an appended key with optional explanat
       }>
     }>
   }
-  expect(appendedPacket.schemaVersion).toBe(2)
+  expect(appendedPacket.schemaVersion).toBe(3)
   expect(appendedPacket.sections?.map(
     (section) => section.tag
   )).toEqual(["questions", "answer-key", "explanations"])
@@ -649,7 +649,15 @@ test("hazard worksheet, annotated answers, and text equivalents remain separate 
   await fillPrintSetCode(page, "paired-hazard-products")
   await page.getByRole("button", { name: "Generate preview" }).click()
   await expect(page.getByRole("heading", { level: 1, name: "Annotated hazard-answer packet" })).toBeVisible()
-  await expect(page.getByText(/Scene explanation/)).toBeVisible()
+  await expect(page.getByRole("heading", { name: "Conditions needing correction" })).toBeVisible()
+  await expect(page.getByText("Why unsafe:", { exact: true })).toBeVisible()
+  await expect(page.getByText("Likely consequence:", { exact: true })).toBeVisible()
+  await expect(page.getByText("Immediate correction:", { exact: true })).toBeVisible()
+  await expect(page.getByText("Why it may look suspicious:", { exact: true })).toBeVisible()
+  await expect(page.getByText("Why safe as depicted:", { exact: true })).toBeVisible()
+  await expect(page.getByText("Condition that would make it unsafe:", { exact: true })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "Evidence claims" })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "Where this comes from" })).toBeVisible()
   await expect(page.locator(".print-annotated-scene svg polygon")).not.toHaveCount(0)
   expect(postcommitRequests).toHaveLength(0)
 
@@ -662,6 +670,9 @@ test("hazard worksheet, annotated answers, and text equivalents remain separate 
   await page.getByRole("button", { name: "Generate preview" }).click()
   await expect(page.getByRole("heading", { level: 1, name: "Text-equivalent hazard set" })).toBeVisible()
   await expect(page.getByText(/text version covers the same knowledge; it is not the same task as marking the image/)).toBeVisible()
+  await expect(page.getByText("Why unsafe:", { exact: true })).toBeVisible()
+  await expect(page.getByText("Likely consequence:", { exact: true })).toBeVisible()
+  await expect(page.getByText("Immediate correction:", { exact: true })).toBeVisible()
   await expect(page.locator(".print-text-equivalent img")).toHaveCount(0)
 
   const jobs = await readPrintJobs(page)

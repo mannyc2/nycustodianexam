@@ -1,8 +1,8 @@
 import {
-  PostcommitScene,
   PrecommitQuestion,
   PrecommitScene,
   ReleasedPostcommitQuestion,
+  ReleasedPostcommitScene,
   ReleasedPrecommitQuestion
 } from "@nycustodian/content/model"
 import { Schema } from "effect"
@@ -272,7 +272,7 @@ export class SimulationHazardResult extends Schema.Class<SimulationHazardResult>
   postcommitBase64: Schema.String.check(
     Schema.isPattern(/^[A-Za-z0-9+/]*={0,2}$/, { expected: "canonical base64 postcommit bytes" })
   ),
-  postcommit: PostcommitScene
+  postcommit: ReleasedPostcommitScene
 }) {}
 
 export const SimulationResult = Schema.Union([
@@ -313,7 +313,7 @@ export interface EvaluateSimulationInput {
   readonly submission: SimulationSubmissionRecord
   readonly postcommit: ReadonlyArray<
     Readonly<{
-      readonly payload: ReleasedPostcommitQuestion | typeof PostcommitScene.Type
+      readonly payload: ReleasedPostcommitQuestion | typeof ReleasedPostcommitScene.Type
       readonly postcommitBase64: string
     }>
   >

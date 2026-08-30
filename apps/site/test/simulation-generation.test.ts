@@ -418,9 +418,7 @@ describe("deterministic simulation generation", () => {
     if (nonvisualItem === undefined || "question" in nonvisualItem) {
       throw new Error("Expected a nonvisual hazard simulation item")
     }
-    const targetLabel = releasedSceneAnswer.nonvisualZonedEquivalent.find(
-      (statement) => statement.role === "target"
-    )?.zone
+    const targetLabel = releasedSceneAnswer.targets[0]?.zone
     const targetZone = nonvisualItem.scene.neutralPreAnswer.zones.find(
       (zone) => zone.label === targetLabel
     )
@@ -1104,17 +1102,17 @@ describe("deterministic simulation generation", () => {
     })
     await expect(validateSimulationSubmissionIntegrity(session, exact)).resolves.toEqual(exact)
 
-    const firstClaimCharacter = releasedSceneAnswer.claim[0]
+    const firstClaim = releasedSceneAnswer.claims[0]
+    const firstClaimCharacter = firstClaim?.text[0]
     if (firstClaimCharacter === undefined) throw new Error("Expected a non-empty hazard claim")
     const mutatedClaim =
-      `${firstClaimCharacter === "A" ? "B" : "A"}${releasedSceneAnswer.claim.slice(1)}`
+      `${firstClaimCharacter === "A" ? "B" : "A"}${firstClaim.text.slice(1)}`
     const mutatedPayload = Schema.decodeUnknownSync(PostcommitScene)({
       ...releasedSceneAnswer,
-      claim: mutatedClaim,
-      fullPostAnswer: {
-        ...releasedSceneAnswer.fullPostAnswer,
-        claim: mutatedClaim
-      }
+      claims: [
+        { ...firstClaim, text: mutatedClaim },
+        ...releasedSceneAnswer.claims.slice(1)
+      ]
     })
     const mutatedArtifact = postcommitArtifact(mutatedPayload)
     expect(decodeCanonicalBase64(mutatedArtifact.postcommitBase64)).toHaveLength(

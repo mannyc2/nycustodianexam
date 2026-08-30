@@ -1,4 +1,4 @@
-import { PostcommitScene } from "@nycustodian/content/model"
+import { ReleasedPostcommitScene } from "@nycustodian/content/model"
 import { Schema } from "effect"
 import {
   HazardAttemptRecord,
@@ -73,7 +73,7 @@ export const validatePortableHazardAttemptIntegrity = async (
     throw new Error("Portable hazard feedback bytes do not match their release receipt")
   }
   const payload = Schema.decodeUnknownSync(
-    PostcommitScene,
+    ReleasedPostcommitScene,
     { onExcessProperty: "error" }
   )(JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(bytes)) as unknown)
   if (

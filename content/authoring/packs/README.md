@@ -24,7 +24,7 @@ node content/authoring/packs/build-launch-v1.mjs --check
 The content-compiler build runs `--check` and fails if the normalized JSON is
 stale.
 
-## v1 closure
+## Launch-pack closure
 
 The pack is English-only and covers the statewide entry-level series plus its
 Nassau layer. Its checked closure is:
@@ -59,11 +59,14 @@ shares it. Answer-correlated authored tags never cross the precommit boundary.
 
 Compiled per-item precommit records preserve the complete `profileIds`
 compatibility set. Their singular `profileId` is a legacy primary-profile field
-and must not be used to flatten multi-profile content. Compiled postcommit
-records preserve `version`, `objectiveId`, `equivalenceGroupId`, and `factKind`.
-The pack version was revised in place because v2 has never been published or
-used for durable learner data; there is therefore no production migration to
-perform.
+and must not be used to flatten multi-profile content. Compiled question
+postcommit records preserve `version`, `objectiveId`, `equivalenceGroupId`, and
+`factKind`. The current authoring cut advances the pack from version 2 to
+version 3 because hazard-scene postcommit artifacts now use the canonical
+scene-evidence schema. Version-2 receipts and durable records remain exact
+historical inputs to the one-hop released-scene decoder; version 3 does not
+rewrite or reinterpret their bytes. New compilation emits only the current
+scene schema.
 
 The Nassau `AnnouncementProfileFactSheet` uses six explicit fact states:
 `verified`, `not_published`, `unverified`, `conflicting`, `superseded`, and
@@ -93,7 +96,8 @@ The M4 print/restoration projection must copy each postcommit `SourceReceipt`
 without reducing it to a display label. `PrintSourceReference` receives
 `id`, `sourceId`, `title`, `publisher`, `evidenceTier`, `version`,
 `rightsNotes`, `locator`, `excerpt`, `language`, `verifiedOn`,
-`supportedClaimIds`, and optional `url`. It must also carry every linked
+`supportedClaimIds`, optional source `scope` and `sourceLocator`, and optional
+`url`. It must also carry every linked
 `SupportedClaim` with `id`, `text`, `sourceLineIds`, `evidenceTier`, and
 nullable `caveat`; the caveat renders adjacent to the claim/explanation. The
 same packet/restoration record pins question `id`/`version`, pack

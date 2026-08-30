@@ -3,7 +3,7 @@ import {
   AuthoredContentPack,
   ContentSource
 } from "../model/authored-pack.ts"
-import type {
+import {
   SourceLine,
   SupportedClaim
 } from "../model/source-evidence.ts"
@@ -22,9 +22,7 @@ import {
 } from "../model/question-artifacts.ts"
 import { AssetManifestRecord } from "../model/release-manifest.ts"
 import {
-  AcceptedSceneAccessibilityLedger,
   AcceptedComparisonReleaseLedger,
-  AcceptedSceneRegionLedger,
   AcceptedSceneReleaseLedger,
   AcceptedToolReleaseLedger
 } from "../model/visual-release-inputs.ts"
@@ -37,8 +35,7 @@ import type {
 import {
   firstDuplicate,
   isBlank,
-  sameMembers,
-  sameOrderedValues
+  sameMembers
 } from "./collection-invariants.ts"
 import {
   closureError,
@@ -51,10 +48,9 @@ import { questionReviewSha256 } from "./question-review.ts"
 const decodeAuthoredPack = Schema.decodeUnknownEffect(AuthoredContentPack)
 const decodeAcceptedTools = Schema.decodeUnknownEffect(AcceptedToolReleaseLedger)
 const decodeAcceptedComparisons = Schema.decodeUnknownEffect(AcceptedComparisonReleaseLedger)
-const decodeAcceptedScenes = Schema.decodeUnknownEffect(AcceptedSceneReleaseLedger)
-const decodeAcceptedSceneRegions = Schema.decodeUnknownEffect(AcceptedSceneRegionLedger)
-const decodeAcceptedSceneAccessibility = Schema.decodeUnknownEffect(
-  AcceptedSceneAccessibilityLedger
+const decodeAcceptedScenes = Schema.decodeUnknownEffect(
+  AcceptedSceneReleaseLedger,
+  { onExcessProperty: "error" }
 )
 const decodeCatalogArtifact = Schema.decodeUnknownEffect(CatalogArtifact)
 const decodePrecommitPackArtifact = Schema.decodeUnknownEffect(PrecommitPackArtifact)
@@ -132,27 +128,69 @@ const sameSource = (
   left.rightsNotes === right.rightsNotes &&
   left.url === right.url
 
-const sameSceneSource = (
+const sameSourceLine = (
   left: {
     readonly id: string
-    readonly title: string
+    readonly sourceId: string
     readonly locator: string
-    readonly scope: string
-    readonly url?: string
+    readonly excerpt: string
+    readonly language: string
+    readonly verifiedOn: string
+    readonly supportedClaimIds: ReadonlyArray<string>
   },
   right: {
     readonly id: string
-    readonly title: string
+    readonly sourceId: string
     readonly locator: string
-    readonly scope: string
-    readonly url?: string
+    readonly excerpt: string
+    readonly language: string
+    readonly verifiedOn: string
+    readonly supportedClaimIds: ReadonlyArray<string>
   }
 ): boolean =>
   left.id === right.id &&
-  left.title === right.title &&
+  left.sourceId === right.sourceId &&
   left.locator === right.locator &&
+  left.excerpt === right.excerpt &&
+  left.language === right.language &&
+  left.verifiedOn === right.verifiedOn
+
+const sameSourceReceipt = (
+  left: typeof SourceReceipt.Type,
+  right: typeof SourceReceipt.Type
+): boolean =>
+  sameSourceLine(left, right) &&
+  left.title === right.title &&
+  left.publisher === right.publisher &&
+  left.evidenceTier === right.evidenceTier &&
+  left.version === right.version &&
+  left.rightsNotes === right.rightsNotes &&
   left.scope === right.scope &&
-  left.url === right.url
+  left.sourceLocator === right.sourceLocator &&
+  left.url === right.url &&
+  sameMembers(left.supportedClaimIds, right.supportedClaimIds)
+
+const sameSupportedClaim = (
+  left: {
+    readonly id: string
+    readonly text: string
+    readonly sourceLineIds: ReadonlyArray<string>
+    readonly evidenceTier: string
+    readonly caveat: string | null
+  },
+  right: {
+    readonly id: string
+    readonly text: string
+    readonly sourceLineIds: ReadonlyArray<string>
+    readonly evidenceTier: string
+    readonly caveat: string | null
+  }
+): boolean =>
+  left.id === right.id &&
+  left.text === right.text &&
+  sameMembers(left.sourceLineIds, right.sourceLineIds) &&
+  left.evidenceTier === right.evidenceTier &&
+  left.caveat === right.caveat
 
 const assetManifestRecords = (
   usage: "tool-atlas" | "tool-comparison" | "hazard-scene",
@@ -187,12 +225,6 @@ export const compileContentPack = Effect.fn("Content.compileContentPack")(
     const acceptedScenes = yield* decodeAcceptedScenes(input.acceptedScenes).pipe(
       Effect.mapError((cause) => schemaError("acceptedScenes", cause))
     )
-    const acceptedSceneRegions = yield* decodeAcceptedSceneRegions(input.acceptedSceneRegions).pipe(
-      Effect.mapError((cause) => schemaError("acceptedSceneRegions", cause))
-    )
-    const acceptedSceneAccessibility = yield* decodeAcceptedSceneAccessibility(
-      input.acceptedSceneAccessibility
-    ).pipe(Effect.mapError((cause) => schemaError("acceptedSceneAccessibility", cause)))
 
     if (authoredPack.version <= 0) {
       return yield* relationError("pack version must be a positive integer", "authoredPack.version")
@@ -229,14 +261,23 @@ export const compileContentPack = Effect.fn("Content.compileContentPack")(
       ],
       ["accepted scene ids", acceptedScenes.map((scene) => scene.sceneId)],
       ["accepted scene opaque ids", acceptedScenes.map((scene) => scene.opaqueAssetId)],
-      ["scene region ids", acceptedSceneRegions.map((regions) => regions.sceneId)],
-      ["scene accessibility ids", acceptedSceneAccessibility.map((entry) => entry.sceneId)]
+      ["accepted scene slots", acceptedScenes.map((scene) => String(scene.slot))]
     ]
     for (const [label, values] of uniqueGroups) {
       const duplicate = firstDuplicate(values)
       if (duplicate !== undefined) {
         return yield* relationError(`${label} must be unique; duplicate ${duplicate}`)
       }
+    }
+
+    if (!sameMembers(
+      authoredPack.sceneIds,
+      acceptedScenes.map((scene) => scene.sceneId)
+    )) {
+      return yield* closureError(
+        "accepted scene releases must exactly match authored scene ids",
+        "acceptedScenes"
+      )
     }
 
     const sourceMap = new Map<string, ContentSource>()
@@ -1161,41 +1202,91 @@ export const compileContentPack = Effect.fn("Content.compileContentPack")(
       })
     }
 
-    const acceptedSceneMap = new Map(acceptedScenes.map((scene) => [scene.sceneId, scene]))
-    const regionMap = new Map(acceptedSceneRegions.map((regions) => [regions.sceneId, regions]))
-    const accessibilityMap = new Map(
-      acceptedSceneAccessibility.map((entry) => [entry.sceneId, entry])
+    const acceptedSceneClaims = acceptedScenes.flatMap((scene) => scene.claims)
+    const duplicateAcceptedSceneClaimId = firstDuplicate(
+      acceptedSceneClaims.map((claim) => claim.id)
     )
+    if (duplicateAcceptedSceneClaimId !== undefined) {
+      return yield* relationError(
+        `accepted scenes repeat claim ${duplicateAcceptedSceneClaimId}`,
+        "acceptedScenes"
+      )
+    }
+    const acceptedSceneClaimMap = new Map(
+      acceptedSceneClaims.map((claim) => [claim.id, claim])
+    )
+    const acceptedSceneSourceLineMap = new Map<
+      string,
+      typeof acceptedScenes[number]["sources"][number]
+    >()
+    for (const scene of acceptedScenes) {
+      for (const receipt of scene.sources) {
+        const existingReceipt = acceptedSceneSourceLineMap.get(receipt.id)
+        if (
+          existingReceipt !== undefined &&
+          !sameSourceReceipt(existingReceipt, receipt)
+        ) {
+          return yield* relationError(
+            `accepted scene source line ${receipt.id} has conflicting global definitions`,
+            `acceptedScenes.${scene.sceneId}.sources.${receipt.id}`
+          )
+        }
+        acceptedSceneSourceLineMap.set(receipt.id, receipt)
+      }
+    }
+    for (const receipt of acceptedSceneSourceLineMap.values()) {
+      const missingClaimId = receipt.supportedClaimIds.find(
+        (claimId) => !acceptedSceneClaimMap.has(claimId)
+      )
+      if (missingClaimId !== undefined) {
+        return yield* closureError(
+          `accepted scene source line ${receipt.id} references missing global claim ${missingClaimId}`,
+          `acceptedScenes.sources.${receipt.id}.supportedClaimIds`
+        )
+      }
+      for (const claimId of receipt.supportedClaimIds) {
+        if (!acceptedSceneClaimMap.get(claimId)!.sourceLineIds.includes(receipt.id)) {
+          return yield* closureError(
+            `accepted scene source line ${receipt.id} and global claim ${claimId} do not form a bidirectional evidence edge`,
+            `acceptedScenes.sources.${receipt.id}.supportedClaimIds`
+          )
+        }
+      }
+    }
+    for (const claim of acceptedSceneClaimMap.values()) {
+      const missingLineId = claim.sourceLineIds.find(
+        (lineId) => !acceptedSceneSourceLineMap.has(lineId)
+      )
+      if (missingLineId !== undefined) {
+        return yield* closureError(
+          `accepted scene claim ${claim.id} references missing global source line ${missingLineId}`,
+          `acceptedScenes.claims.${claim.id}.sourceLineIds`
+        )
+      }
+      for (const lineId of claim.sourceLineIds) {
+        if (!acceptedSceneSourceLineMap.get(lineId)!.supportedClaimIds.includes(claim.id)) {
+          return yield* closureError(
+            `accepted scene claim ${claim.id} and global source line ${lineId} do not form a bidirectional evidence edge`,
+            `acceptedScenes.claims.${claim.id}.sourceLineIds`
+          )
+        }
+      }
+    }
+
+    const acceptedSceneMap = new Map(acceptedScenes.map((scene) => [scene.sceneId, scene]))
     const precommitScenes: Array<unknown> = []
     const postcommitScenes: Array<unknown> = []
 
     for (const sceneId of authoredPack.sceneIds) {
       const scene = acceptedSceneMap.get(sceneId)
-      const regions = regionMap.get(sceneId)
-      const accessibility = accessibilityMap.get(sceneId)
       if (scene === undefined) {
         return yield* relationError(`scene ${sceneId} has no accepted release`, `sceneIds.${sceneId}`)
-      }
-      if (regions === undefined) {
-        return yield* relationError(`scene ${sceneId} has no accepted region record`, `sceneIds.${sceneId}`)
-      }
-      if (accessibility === undefined) {
-        return yield* relationError(
-          `scene ${sceneId} has no accepted accessibility record`,
-          `sceneIds.${sceneId}`
-        )
       }
       if (scene.publicationGate !== null) {
         return yield* relationError(`scene ${sceneId} retains a publication gate`, `sceneIds.${sceneId}`)
       }
-      if (
-        scene.opaqueAssetId !== regions.opaqueAssetId ||
-        scene.opaqueAssetId !== accessibility.opaqueAssetId
-      ) {
-        return yield* closureError(`scene ${sceneId} opaque asset bindings disagree`, `sceneIds.${sceneId}`)
-      }
-      if (scene.master.sha256 !== regions.masterSha256) {
-        return yield* closureError(`scene ${sceneId} region record targets another master hash`, sceneId)
+      if (scene.slot <= 0) {
+        return yield* relationError(`scene ${sceneId} slot must be positive`, `scenes.${sceneId}.slot`)
       }
       if (scene.master.path !== expectedMasterPath("scenes", scene.opaqueAssetId)) {
         return yield* closureError(
@@ -1211,169 +1302,257 @@ export const compileContentPack = Effect.fn("Content.compileContentPack")(
         return yield* closureError(derivativeError, `scenes.${sceneId}.derivatives`)
       }
 
-      const targetIds = scene.semanticManifest.targets.map((target) => target.id)
-      const regionTargetIds = regions.targetRegions.map((region) => region.inventoryId)
-      const decoyIds = scene.semanticManifest.decoys.map((decoy) => decoy.id)
-      const regionDecoyIds = regions.decoyRegions.map((region) => region.inventoryId)
-      if (firstDuplicate(targetIds) !== undefined || firstDuplicate(decoyIds) !== undefined) {
-        return yield* relationError(`scene ${sceneId} target and decoy ids must be unique`, sceneId)
+      if (
+        scene.tags.environment !== scene.environment ||
+        scene.tags.hazardCategory !== scene.hazardFamily
+      ) {
+        return yield* closureError(
+          `scene ${sceneId} tags must match its accepted environment and hazard family`,
+          `scenes.${sceneId}.tags`
+        )
       }
-      if (!sameMembers(targetIds, regionTargetIds)) {
-        return yield* closureError(`scene ${sceneId} target regions do not close over target inventory`, sceneId)
-      }
-      if (!sameMembers(decoyIds, regionDecoyIds)) {
-        return yield* closureError(`scene ${sceneId} decoy regions do not close over decoy inventory`, sceneId)
+      const targetIds = scene.targets.map((target) => target.id)
+      const decoyIds = scene.decoys.map((decoy) => decoy.id)
+      const duplicateInventoryId = firstDuplicate([...targetIds, ...decoyIds])
+      if (duplicateInventoryId !== undefined) {
+        return yield* relationError(
+          `scene ${sceneId} target and decoy ids must be unique; duplicate ${duplicateInventoryId}`,
+          `scenes.${sceneId}`
+        )
       }
       if (scene.kind === "positive") {
-        if (scene.hazardFamily === null || targetIds.length === 0) {
+        if (
+          scene.hazardFamily === null ||
+          scene.tags.hazardCategory === null ||
+          targetIds.length === 0
+        ) {
           return yield* relationError(
-            `positive scene ${sceneId} requires a hazard family and target`,
-            sceneId
+            `positive scene ${sceneId} requires a hazard family, hazard category, and target`,
+            `scenes.${sceneId}`
           )
         }
-      } else if (scene.hazardFamily !== null || targetIds.length !== 0) {
+      } else if (
+        scene.hazardFamily !== null ||
+        scene.tags.hazardCategory !== null ||
+        targetIds.length !== 0
+      ) {
         return yield* relationError(
-          `zero-hazard scene ${sceneId} must not contain a hazard family or target`,
-          sceneId
+          `zero-hazard scene ${sceneId} must not contain a hazard family, hazard category, or target`,
+          `scenes.${sceneId}`
         )
       }
 
-      const full = accessibility.fullPostAnswer
-      if (full.claim !== scene.semanticManifest.claim) {
-        return yield* closureError(`scene ${sceneId} accessibility claim does not match semantic claim`, sceneId)
-      }
+      const zoneOrders = scene.neutralPreAnswer.zones.map((zone) => String(zone.order))
+      const zoneLabels = scene.neutralPreAnswer.zones.map((zone) => zone.label)
       if (
-        !sameOrderedValues(
-          full.targets.map((target) => `${target.condition}\n${target.correction}`),
-          scene.semanticManifest.targets.map((target) => `${target.condition}\n${target.correction}`)
-        )
-      ) {
-        return yield* closureError(`scene ${sceneId} accessible targets do not match target inventory`, sceneId)
-      }
-      if (
-        !sameOrderedValues(
-          full.decoys.map((decoy) => `${decoy.condition}\n${decoy.safeBecause}`),
-          scene.semanticManifest.decoys.map((decoy) => `${decoy.condition}\n${decoy.safeBecause}`)
-        )
-      ) {
-        return yield* closureError(`scene ${sceneId} accessible decoys do not match decoy inventory`, sceneId)
-      }
-      if (!sameOrderedValues(full.safeBackground, scene.semanticManifest.safeBackground)) {
-        return yield* closureError(
-          `scene ${sceneId} accessible safe background does not match semantic inventory`,
-          sceneId
-        )
-      }
-      if (
-        !sameMembers(
-          full.sources.map((source) => source.id),
-          scene.semanticManifest.sources.map((source) => source.id)
-        )
-      ) {
-        return yield* closureError(`scene ${sceneId} accessible sources do not match semantic sources`, sceneId)
-      }
-      for (const source of scene.semanticManifest.sources) {
-        const accessibleSource = full.sources.find((candidate) => candidate.id === source.id)
-        if (accessibleSource === undefined || !sameSceneSource(source, accessibleSource)) {
-          return yield* closureError(`scene ${sceneId} source ${source.id} is inconsistent`, sceneId)
-        }
-        const publisher = source.id.startsWith("OSHA_")
-          ? "Occupational Safety and Health Administration"
-          : source.id.startsWith("NIOSH_") || source.id.startsWith("CDC_")
-            ? "Centers for Disease Control and Prevention"
-            : source.id.startsWith("FDA_")
-              ? "U.S. Food and Drug Administration"
-              : "U.S. government publisher named by the accepted scene record"
-        const compiledSource = new ContentSource({
-          id: source.id,
-          title: source.title,
-          publisher,
-          evidenceTier: "official-primary",
-          version: "accepted-scene-release-2026-08-23",
-          locator: source.locator,
-          scope: source.scope,
-          rightsNotes: "A short factual excerpt is retained for offline educational citation; the linked official source controls.",
-          url: source.url
-        })
-        const existing = sourceMap.get(source.id)
-        if (existing !== undefined && !sameSource(existing, compiledSource)) {
-          return yield* relationError(`source ${source.id} has conflicting definitions`, sceneId)
-        }
-        sourceMap.set(source.id, compiledSource)
-      }
-      for (const target of full.targets) {
-        const missingSource = target.sourceIds.find((sourceId) => !sourceMap.has(sourceId))
-        if (missingSource !== undefined) {
-          return yield* closureError(
-            `scene ${sceneId} target references missing source ${missingSource}`,
-            sceneId
-          )
-        }
-      }
-
-      const targetStatements = accessibility.nonvisualZonedEquivalent.filter(
-        (statement) => statement.role === "target"
-      )
-      const decoyStatements = accessibility.nonvisualZonedEquivalent.filter(
-        (statement) => statement.role === "decoy"
-      )
-      const safeBackgroundStatements = accessibility.nonvisualZonedEquivalent.filter(
-        (statement) => statement.role === "safe-background"
-      )
-      if (
-        !sameOrderedValues(
-          targetStatements.map((statement) => statement.statement),
-          scene.semanticManifest.targets.map((target) => target.condition)
-        ) ||
-        !sameOrderedValues(
-          decoyStatements.map((statement) => statement.statement),
-          scene.semanticManifest.decoys.map(
-            (decoy) => `${decoy.condition}; ${decoy.safeBecause}.`
-          )
-        ) ||
-        !sameOrderedValues(
-          safeBackgroundStatements.map((statement) => statement.statement),
-          scene.semanticManifest.safeBackground
-        )
-      ) {
-        return yield* closureError(
-          `scene ${sceneId} nonvisual equivalent does not exactly cover semantic inventories`,
-          sceneId
-        )
-      }
-      const zoneOrders = accessibility.neutralPreAnswer.zones.map((zone) => zone.order)
-      const zoneLabels = accessibility.neutralPreAnswer.zones.map((zone) => zone.label)
-      const zoneCoordinates = accessibility.neutralPreAnswer.zones.map(
-        (zone) => `${zone.order}\n${zone.label}`
-      )
-      if (
-        firstDuplicate(zoneOrders.map(String)) !== undefined ||
+        firstDuplicate(zoneOrders) !== undefined ||
         firstDuplicate(zoneLabels) !== undefined ||
-        !sameOrderedValues(
-          zoneCoordinates,
-          regions.zoneOrder.map((zone) => `${zone.order}\n${zone.label}`)
-        )
+        scene.neutralPreAnswer.zones.some((zone, index) => zone.order !== index + 1)
       ) {
         return yield* closureError(
-          `scene ${sceneId} neutral zone labels and orders do not match regions`,
-          sceneId
+          `scene ${sceneId} neutral zones require unique labels and consecutive one-based order`,
+          `scenes.${sceneId}.neutralPreAnswer.zones`
         )
       }
-      if (!accessibility.nonvisualZonedEquivalent.every(
-        (statement) => zoneLabels.includes(statement.zone)
-      )) {
+      const zonedItems = [...scene.targets, ...scene.decoys, ...scene.safeBackground]
+      const unknownZone = zonedItems.find((item) => !zoneLabels.includes(item.zone))
+      if (unknownZone !== undefined) {
         return yield* closureError(
-          `scene ${sceneId} nonvisual statements reference an unknown neutral zone`,
-          sceneId
+          `scene ${sceneId} inventory references unknown neutral zone ${unknownZone.zone}`,
+          `scenes.${sceneId}`
         )
       }
-      for (const region of [...regions.targetRegions, ...regions.decoyRegions]) {
-        for (const polygon of region.polygons) {
+      const duplicateSafeBackground = firstDuplicate(
+        scene.safeBackground.map(
+          (entry) => `${entry.zone}\n${entry.observableCondition}`
+        )
+      )
+      if (duplicateSafeBackground !== undefined) {
+        return yield* relationError(
+          `scene ${sceneId} repeats a safe-background observation`,
+          `scenes.${sceneId}.safeBackground`
+        )
+      }
+      for (const item of [...scene.targets, ...scene.decoys]) {
+        const duplicateConceptId = firstDuplicate(item.conceptIds)
+        if (duplicateConceptId !== undefined) {
+          return yield* relationError(
+            `scene ${sceneId} inventory ${item.id} repeats concept ${duplicateConceptId}`,
+            `scenes.${sceneId}.${item.id}.conceptIds`
+          )
+        }
+        for (const polygon of item.polygons) {
           for (const [x, y] of polygon) {
             if (x < 0 || x > 1 || y < 0 || y > 1) {
-              return yield* closureError(`scene ${sceneId} contains an out-of-bounds region`, sceneId)
+              return yield* closureError(
+                `scene ${sceneId} inventory ${item.id} contains an out-of-bounds region`,
+                `scenes.${sceneId}.${item.id}.polygons`
+              )
             }
           }
+        }
+      }
+
+      const sceneClaimIds = scene.claims.map((claim) => claim.id)
+      const duplicateClaimId = firstDuplicate(sceneClaimIds)
+      if (duplicateClaimId !== undefined) {
+        return yield* relationError(
+          `scene ${sceneId} repeats claim ${duplicateClaimId}`,
+          `scenes.${sceneId}.claims`
+        )
+      }
+      const referencedClaimIds = [...new Set([
+        ...scene.targets.flatMap((target) => [
+          target.whyUnsafeClaimId,
+          target.likelyConsequenceClaimId,
+          target.immediateCorrectionClaimId
+        ]),
+        ...scene.decoys.flatMap((decoy) => [
+          decoy.safeAsDepictedClaimId,
+          decoy.unsafeIfClaimId
+        ])
+      ])]
+      if (!sameMembers(referencedClaimIds, sceneClaimIds)) {
+        return yield* closureError(
+          `scene ${sceneId} claim registry must exactly match target and decoy claim references`,
+          `scenes.${sceneId}.claims`
+        )
+      }
+
+      const sceneSourceLineIds = scene.sources.map((source) => source.id)
+      const duplicateSourceLineId = firstDuplicate(sceneSourceLineIds)
+      if (duplicateSourceLineId !== undefined) {
+        return yield* relationError(
+          `scene ${sceneId} repeats source-line receipt ${duplicateSourceLineId}`,
+          `scenes.${sceneId}.sources`
+        )
+      }
+      const sceneClaimMap = new Map(scene.claims.map((claim) => [claim.id, claim]))
+      const sceneSourceLineMap = new Map(scene.sources.map((source) => [source.id, source]))
+      for (const claim of scene.claims) {
+        const duplicateLineId = firstDuplicate(claim.sourceLineIds)
+        if (duplicateLineId !== undefined) {
+          return yield* relationError(
+            `scene ${sceneId} claim ${claim.id} repeats source line ${duplicateLineId}`,
+            `scenes.${sceneId}.claims.${claim.id}.sourceLineIds`
+          )
+        }
+        const missingLineId = claim.sourceLineIds.find(
+          (lineId) => !sceneSourceLineMap.has(lineId)
+        )
+        if (missingLineId !== undefined) {
+          return yield* closureError(
+            `scene ${sceneId} claim ${claim.id} references missing source line ${missingLineId}`,
+            `scenes.${sceneId}.claims.${claim.id}.sourceLineIds`
+          )
+        }
+        for (const lineId of claim.sourceLineIds) {
+          if (!sceneSourceLineMap.get(lineId)!.supportedClaimIds.includes(claim.id)) {
+            return yield* closureError(
+              `scene ${sceneId} claim ${claim.id} and source line ${lineId} do not form a bidirectional evidence edge`,
+              `scenes.${sceneId}.claims.${claim.id}.sourceLineIds`
+            )
+          }
+        }
+      }
+      for (const receipt of scene.sources) {
+        if (receipt.scope === undefined || receipt.sourceLocator === undefined) {
+          return yield* relationError(
+            `scene ${sceneId} source receipt ${receipt.id} requires source scope and source locator metadata`,
+            `scenes.${sceneId}.sources.${receipt.id}`
+          )
+        }
+        const duplicateSupportedClaim = firstDuplicate(receipt.supportedClaimIds)
+        if (duplicateSupportedClaim !== undefined) {
+          return yield* relationError(
+            `scene ${sceneId} source receipt ${receipt.id} repeats claim ${duplicateSupportedClaim}`,
+            `scenes.${sceneId}.sources.${receipt.id}.supportedClaimIds`
+          )
+        }
+        const localSupportedClaimIds = receipt.supportedClaimIds.filter(
+          (claimId) => sceneClaimMap.has(claimId)
+        )
+        if (localSupportedClaimIds.length === 0) {
+          return yield* closureError(
+            `scene ${sceneId} source receipt ${receipt.id} must support at least one local claim`,
+            `scenes.${sceneId}.sources.${receipt.id}.supportedClaimIds`
+          )
+        }
+        const localClaimsUsingReceipt = scene.claims
+          .filter((claim) => claim.sourceLineIds.includes(receipt.id))
+          .map((claim) => claim.id)
+        if (!sameMembers(localSupportedClaimIds, localClaimsUsingReceipt)) {
+          return yield* closureError(
+            `scene ${sceneId} source receipt ${receipt.id} and its local claims do not form exact bidirectional evidence edges`,
+            `scenes.${sceneId}.sources.${receipt.id}.supportedClaimIds`
+          )
+        }
+      }
+
+      for (const claim of scene.claims) {
+        const existingClaim = claimMap.get(claim.id)
+        if (existingClaim !== undefined && !sameSupportedClaim(existingClaim, claim)) {
+          return yield* relationError(
+            `claim ${claim.id} has conflicting definitions`,
+            `scenes.${sceneId}.claims.${claim.id}`
+          )
+        }
+        claimMap.set(claim.id, claim)
+      }
+      for (const receipt of scene.sources) {
+        const compiledSource = new ContentSource({
+          id: receipt.sourceId,
+          title: receipt.title,
+          publisher: receipt.publisher,
+          evidenceTier: receipt.evidenceTier,
+          version: receipt.version,
+          locator: receipt.sourceLocator!,
+          scope: receipt.scope!,
+          rightsNotes: receipt.rightsNotes,
+          ...(receipt.url === undefined ? {} : { url: receipt.url })
+        })
+        const existingSource = sourceMap.get(receipt.sourceId)
+        if (existingSource !== undefined && !sameSource(existingSource, compiledSource)) {
+          return yield* relationError(
+            `source ${receipt.sourceId} has conflicting definitions`,
+            `scenes.${sceneId}.sources.${receipt.id}`
+          )
+        }
+        sourceMap.set(receipt.sourceId, compiledSource)
+
+        const compiledLine = new SourceLine({
+          id: receipt.id,
+          sourceId: receipt.sourceId,
+          locator: receipt.locator,
+          excerpt: receipt.excerpt,
+          language: receipt.language,
+          verifiedOn: receipt.verifiedOn,
+          supportedClaimIds: receipt.supportedClaimIds
+        })
+        const existingLine = sourceLineMap.get(receipt.id)
+        if (existingLine !== undefined && !sameSourceLine(existingLine, compiledLine)) {
+          return yield* relationError(
+            `source line ${receipt.id} has conflicting definitions`,
+            `scenes.${sceneId}.sources.${receipt.id}`
+          )
+        }
+        if (existingLine === undefined) {
+          sourceLineMap.set(receipt.id, compiledLine)
+        } else {
+          const supportedClaimIds = [...new Set([
+            ...existingLine.supportedClaimIds,
+            ...receipt.supportedClaimIds
+          ])]
+          const [firstSupportedClaimId, ...remainingSupportedClaimIds] = supportedClaimIds
+          sourceLineMap.set(receipt.id, new SourceLine({
+            id: existingLine.id,
+            sourceId: existingLine.sourceId,
+            locator: existingLine.locator,
+            excerpt: existingLine.excerpt,
+            language: existingLine.language,
+            verifiedOn: existingLine.verifiedOn,
+            supportedClaimIds: [firstSupportedClaimId!, ...remainingSupportedClaimIds]
+          }))
         }
       }
 
@@ -1387,21 +1566,26 @@ export const compileContentPack = Effect.fn("Content.compileContentPack")(
         id: scene.opaqueAssetId,
         environment: scene.environment,
         asset,
-        neutralPreAnswer: accessibility.neutralPreAnswer
+        neutralPreAnswer: scene.neutralPreAnswer
       })
       postcommitScenes.push({
+        schemaVersion: 2,
+        version: 2,
         id: scene.sceneId,
         opaqueAssetId: scene.opaqueAssetId,
         kind: scene.kind,
         hazardFamily: scene.hazardFamily,
-        claim: scene.semanticManifest.claim,
-        sourceIds: scene.semanticManifest.sources.map((source) => source.id),
-        targets: scene.semanticManifest.targets,
-        decoys: scene.semanticManifest.decoys,
-        targetRegions: regions.targetRegions,
-        decoyRegions: regions.decoyRegions,
-        fullPostAnswer: accessibility.fullPostAnswer,
-        nonvisualZonedEquivalent: accessibility.nonvisualZonedEquivalent
+        tags: scene.tags,
+        targets: scene.targets,
+        decoys: scene.decoys,
+        safeBackground: scene.safeBackground,
+        claims: scene.claims,
+        sources: scene.sources.map((receipt) => ({
+          ...receipt,
+          supportedClaimIds: receipt.supportedClaimIds.filter(
+            (claimId) => sceneClaimMap.has(claimId)
+          )
+        }))
       })
       assets.push(...assetManifestRecords("hazard-scene", scene.opaqueAssetId, scene.derivatives))
     }
@@ -1532,13 +1716,13 @@ export const compileContentPack = Effect.fn("Content.compileContentPack")(
     }).pipe(Effect.mapError((cause) => schemaError("compiled.precommit", cause)))
 
     const postcommit = yield* decodePostcommitPackArtifact({
-      schemaVersion: 1,
+      schemaVersion: 2,
       packId: authoredPack.packId,
       version: authoredPack.version,
       locale: authoredPack.locale,
       sources,
-      sourceLines: authoredPack.sourceLines,
-      claims: authoredPack.claims,
+      sourceLines: [...sourceLineMap.values()],
+      claims: [...claimMap.values()],
       questions: postcommitQuestions,
       scenes: postcommitScenes
     }).pipe(Effect.mapError((cause) => schemaError("compiled.postcommit", cause)))

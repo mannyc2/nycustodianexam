@@ -131,6 +131,23 @@ const expectedQuestionNumbers = (
 const optionLabels = (optionIds: ReadonlyArray<string>): ReadonlyArray<string> =>
   optionIds.map((_, index) => printOptionLabel(index))
 
+const sourceClaimEdgesAreReciprocal = (
+  claims: ReadonlyArray<{
+    readonly id: string
+    readonly sourceLineIds: ReadonlyArray<string>
+  }>,
+  sources: ReadonlyArray<{
+    readonly id: string
+    readonly supportedClaimIds: ReadonlyArray<string>
+  }>
+): boolean => {
+  const claimById = new Map(claims.map((claim) => [claim.id, claim]))
+  return sources.every((source) => source.supportedClaimIds.every((claimId) => {
+    const claim = claimById.get(claimId)
+    return claim !== undefined && claim.sourceLineIds.includes(source.id)
+  }))
+}
+
 const validateQuestionSection = (
   manifest: ReleasedPrintJobManifestValue,
   section: Extract<ReleasedPrintPacketSection, { readonly tag: "questions" }>
@@ -187,7 +204,7 @@ const validateAnswerKeySection = (
 const validateExplanationSection = (
   manifest: ReleasedPrintJobManifestValue,
   section: Extract<ReleasedPrintPacketSection, { readonly tag: "explanations" }>,
-  packetSchemaVersion: 1 | 2
+  packetSchemaVersion: 1 | 2 | 3
 ): void => {
   for (const [index, explanation] of section.explanations.entries()) {
     const coordinate = manifest.questions[index]
@@ -203,7 +220,7 @@ const validateExplanationSection = (
     ) {
       throw new Error("Saved explanations are outside the exact manifest coordinate closure")
     }
-    if (packetSchemaVersion === 2) {
+    if (packetSchemaVersion >= 2) {
       if (!("claims" in explanation)) {
         throw new Error("A v2 print packet is missing its source-line evidence closure")
       }
@@ -235,7 +252,11 @@ const validateExplanationSection = (
               const source = explanation.sources.find((candidate) => candidate.id === sourceLineId)
               return source === undefined || !source.supportedClaimIds.includes(claim.id)
             })
-          )
+          ) ||
+          (packetSchemaVersion === 3 && !sourceClaimEdgesAreReciprocal(
+            explanation.claims,
+            explanation.sources
+          ))
         ) {
           throw new Error("Saved explanations have an invalid source-line receipt closure")
         }
@@ -372,9 +393,42 @@ const validateNonQuestionSection = (
     case "text-equivalent-scenes":
       if (
         !exactSequence(section.scenes.map((scene) => scene.id), expectedIds) ||
-        section.scenes.some((scene) => scene.answer.sceneId !== scene.id)
+        section.scenes.some((scene) => "schemaVersion" in scene.answer
+          ? scene.answer.opaqueAssetId !== scene.id
+          : scene.answer.sceneId !== scene.id)
       ) {
         throw new Error("Saved hazard answers are outside the exact manifest item closure")
+      }
+      for (const scene of section.scenes) {
+        if (!("schemaVersion" in scene.answer)) continue
+        const answer = scene.answer
+        const targetIds = answer.targets.map((target) => target.id)
+        const decoyIds = answer.decoys.map((decoy) => decoy.id)
+        const claimIds = answer.claims.map((claim) => claim.id)
+        const referencedClaimIds = answer.targets.flatMap((target) => [
+          target.whyUnsafeClaimId,
+          target.likelyConsequenceClaimId,
+          target.immediateCorrectionClaimId
+        ]).concat(answer.decoys.flatMap((decoy) => [
+          decoy.safeAsDepictedClaimId,
+          decoy.unsafeIfClaimId
+        ]))
+        const sourceLineIds = answer.sources.map((source) => source.id)
+        const referencedSourceLineIds = answer.claims.flatMap((claim) => claim.sourceLineIds)
+        if (
+          new Set([...targetIds, ...decoyIds]).size !== targetIds.length + decoyIds.length ||
+          new Set(claimIds).size !== claimIds.length ||
+          new Set(sourceLineIds).size !== sourceLineIds.length ||
+          !sameMembers([...new Set(referencedClaimIds)], claimIds) ||
+          !sameMembers([...new Set(referencedSourceLineIds)], sourceLineIds) ||
+          answer.claims.some((claim) => claim.sourceLineIds.some((sourceLineId) => {
+            const source = answer.sources.find((candidate) => candidate.id === sourceLineId)
+            return source === undefined || !source.supportedClaimIds.includes(claim.id)
+          })) ||
+          !sourceClaimEdgesAreReciprocal(answer.claims, answer.sources)
+        ) {
+          throw new Error("Saved hazard answers have an invalid claim and source-line receipt closure")
+        }
       }
       return
     case "announcement-profile-fact-sheet":

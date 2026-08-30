@@ -35,8 +35,6 @@ export interface CompileContentPackInput {
   readonly acceptedTools: unknown
   readonly acceptedComparisons: unknown
   readonly acceptedScenes: unknown
-  readonly acceptedSceneRegions: unknown
-  readonly acceptedSceneAccessibility: unknown
 }
 
 export interface CompiledContentPack {

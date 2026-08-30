@@ -18,11 +18,14 @@ import {
   decodePrintJobId,
   LegacyPrintJobManifest,
   PrintJobManifest,
+  PrintJobManifestV2,
   PrintJobRecord,
   PrintPacket,
+  PrintPacketV2,
   PrintQuestionAnswer,
   PrintRetainedAsset,
   PrintSceneAnswer,
+  PrintSceneAnswerV2,
   PrintSettings,
   parsePrintPreviewPath,
   printPreviewPath,
@@ -31,6 +34,7 @@ import {
 import { PrintPreview } from "../src/print/react/preview.tsx"
 import {
   loadPrintAnswers,
+  loadPrintSceneAnswers,
   PrintAnswerMismatchError
 } from "../src/print/answers.ts"
 import {
@@ -201,36 +205,86 @@ const answers = questions.map((question) => new PrintQuestionAnswer({
   }]
 }))
 
-const sceneAnswers = bootstrap.scenes.map((scene, index) => new PrintSceneAnswer({
-  sceneId: scene.id,
-  kind: "positive",
-  hazardFamily: "housekeeping",
-  claim: `Reviewed claim ${index + 1}`,
-  targets: [{
-    id: `target-${index + 1}`,
-    condition: `Target condition ${index + 1}`,
-    correction: `Correction ${index + 1}`
-  }],
-  decoys: [{
-    id: `decoy-${index + 1}`,
-    condition: `Safe condition ${index + 1}`,
-    safeBecause: `Safe because ${index + 1}`
-  }],
-  targetRegions: [{
-    inventoryId: `target-${index + 1}`,
-    polygons: [[[0.1, 0.2], [0.8, 0.2], [0.8, 0.7]]]
-  }],
-  nonvisualStatements: [{
-    zone: "floor",
-    role: "target",
-    statement: `Equivalent statement ${index + 1}`
-  }],
-  sourceReferences: [{
-    id: `hazard-source-${index + 1}`,
-    label: `Hazard source ${index + 1}`,
-    locator: `section ${index + 1}`
-  }]
-}))
+const sceneAnswers = bootstrap.scenes.map((scene, index) => {
+  const suffix = index + 1
+  const claimIds = {
+    whyUnsafe: `claim-scene-${suffix}-why-unsafe`,
+    likelyConsequence: `claim-scene-${suffix}-likely-consequence`,
+    immediateCorrection: `claim-scene-${suffix}-immediate-correction`,
+    safeAsDepicted: `claim-scene-${suffix}-safe-as-depicted`,
+    unsafeIf: `claim-scene-${suffix}-unsafe-if`
+  }
+  const allClaimIds = Object.values(claimIds)
+  const sourceLineId = `line-hazard-source-${suffix}`
+  return Schema.decodeUnknownSync(PrintSceneAnswerV2)({
+    schemaVersion: 2,
+    version: 2,
+    id: `scene-semantic-${suffix}`,
+    opaqueAssetId: scene.id,
+    kind: "positive",
+    hazardFamily: "housekeeping",
+    tags: {
+      domain: "health-and-safety",
+      family: "hazard-scene",
+      environment: scene.environment,
+      hazardCategory: "housekeeping",
+      seriesScope: "entry-level-custodians-janitors",
+      editorialDifficulty: "application"
+    },
+    targets: [{
+      id: `target-${suffix}`,
+      zone: "floor",
+      polygons: [[[0.1, 0.2], [0.8, 0.2], [0.8, 0.7]]],
+      observableCondition: `Target condition ${suffix}`,
+      conceptIds: ["trip-hazard"],
+      correctionCategory: "correct-floor-condition",
+      whyUnsafeClaimId: claimIds.whyUnsafe,
+      likelyConsequenceClaimId: claimIds.likelyConsequence,
+      immediateCorrectionClaimId: claimIds.immediateCorrection
+    }],
+    decoys: [{
+      id: `decoy-${suffix}`,
+      zone: "wall",
+      polygons: [[[0.05, 0.1], [0.2, 0.1], [0.2, 0.3]]],
+      observableCondition: `Safe condition ${suffix}`,
+      conceptIds: ["safe-detail"],
+      suspiciousBecause: `Suspicious because ${suffix}`,
+      safeAsDepictedClaimId: claimIds.safeAsDepicted,
+      unsafeIfClaimId: claimIds.unsafeIf
+    }],
+    safeBackground: [{ zone: "aisle", observableCondition: `Safe background ${suffix}` }],
+    claims: [
+      [claimIds.whyUnsafe, `Why unsafe ${suffix}`],
+      [claimIds.likelyConsequence, `Likely consequence ${suffix}`],
+      [claimIds.immediateCorrection, `Correction ${suffix}`],
+      [claimIds.safeAsDepicted, `Safe because ${suffix}`],
+      [claimIds.unsafeIf, `Would become unsafe ${suffix}`]
+    ].map(([id, text]) => ({
+      id,
+      text,
+      sourceLineIds: [sourceLineId],
+      evidenceTier: "official-primary-synthesis",
+      caveat: null
+    })),
+    sources: [{
+      id: sourceLineId,
+      sourceId: `hazard-source-${suffix}`,
+      title: `Hazard source ${suffix}`,
+      publisher: "Fixture safety publisher",
+      evidenceTier: "official-primary",
+      version: "fixture revision 1",
+      rightsNotes: "Public test fixture.",
+      locator: `section ${suffix}`,
+      excerpt: `Exact hazard source-line excerpt ${suffix}`,
+      language: "en",
+      verifiedOn: "2026-08-30",
+      supportedClaimIds: allClaimIds,
+      scope: "Fixture hazard evidence.",
+      sourceLocator: "Fixture source",
+      url: `https://example.test/hazard-${suffix}`
+    }]
+  })
+})
 
 const retainedAssets = [...bootstrap.tools, ...bootstrap.scenes].map((source) =>
   new PrintRetainedAsset({
@@ -371,7 +425,7 @@ describe("deterministic print generation", () => {
     expect(JSON.stringify(key.packet)).not.toContain("Rationale")
     expect(explanations.packet.sections).toHaveLength(1)
     expect(explanations.packet.sections[0]?.tag).toBe("explanations")
-    expect(explanations.packet.schemaVersion).toBe(2)
+    expect(explanations.packet.schemaVersion).toBe(3)
     expect(JSON.stringify(explanations.packet)).toContain("Rationale")
     expect(JSON.stringify(explanations.packet)).toContain("Supported claim")
     expect(JSON.stringify(explanations.packet)).toContain("Site-designed application context.")
@@ -506,6 +560,69 @@ describe("deterministic print generation", () => {
       ...encoded,
       packet: currentPacket
     })).toThrow(/incompatible schema versions/)
+  })
+
+  it("restores an immutable v2 hazard packet with its frozen scene-answer shape", () => {
+    const currentManifest = generatePrintManifest({
+      bootstrap,
+      settings: settings("annotated-hazard-answer-packet", 1)
+    })
+    const {
+      fingerprint: _currentFingerprint,
+      schemaVersion: _currentSchemaVersion,
+      ...manifestFields
+    } = currentManifest
+    const withoutManifestFingerprint = {
+      schemaVersion: 2 as const,
+      ...manifestFields
+    }
+    const manifest = new PrintJobManifestV2({
+      ...withoutManifestFingerprint,
+      fingerprint: computePrintManifestFingerprint(withoutManifestFingerprint)
+    })
+    const sceneId = manifest.itemIds[0]
+    if (sceneId === undefined) throw new Error("Expected a pinned hazard scene")
+    const answer = new PrintSceneAnswer({
+      sceneId,
+      kind: "positive",
+      hazardFamily: "housekeeping",
+      claim: "Historical v2 scene explanation.",
+      targets: [{ id: "target-v2", condition: "Historical v2 target.", correction: "Historical v2 correction." }],
+      decoys: [{ id: "decoy-v2", condition: "Historical v2 decoy.", safeBecause: "Historical v2 safe reason." }],
+      targetRegions: [{ inventoryId: "target-v2", polygons: [[[0.1, 0.1], [0.2, 0.1], [0.2, 0.2]]] }],
+      nonvisualStatements: [{ zone: "floor", role: "target", statement: "Historical v2 target." }],
+      sourceReferences: [{ id: "source-v2", label: "Historical v2 source", locator: "section 2" }]
+    })
+    const withoutPacketFingerprint = {
+      schemaVersion: 2 as const,
+      title: "Historical v2 annotated hazard packet",
+      statement: "Original practice — not an official or past exam" as const,
+      sections: [{
+        tag: "annotated-hazard-answers" as const,
+        scenes: [{
+          id: sceneId,
+          environment: bootstrap.scenes.find((scene) => scene.id === sceneId)?.environment ?? "hallway",
+          asset: null,
+          answer
+        }] as const
+      }] as const,
+      warnings: []
+    }
+    const packet = new PrintPacketV2({
+      ...withoutPacketFingerprint,
+      fingerprint: computePrintPacketFingerprint(withoutPacketFingerprint)
+    })
+    const record = new PrintJobRecord({
+      id: "print-legacyv21234",
+      manifest,
+      packet,
+      status: "preview-ready",
+      updatedAt: 1
+    })
+
+    expect(validatePrintJobRecord(JSON.parse(JSON.stringify(record)))).toEqual(record)
+    expect(record.manifest.schemaVersion).toBe(2)
+    expect(record.packet.schemaVersion).toBe(2)
   })
 
   it("appends a page-separable key and optional explanations to a paired question packet", () => {
@@ -643,6 +760,107 @@ describe("deterministic print generation", () => {
     expect(() => validatePrintJobRecord({ ...valid, packet: changedOptionPacket })).toThrow(
       /exact manifest coordinate closure/
     )
+  })
+
+  it("rejects non-reciprocal source-to-claim edges in current print packets", () => {
+    const questionGenerated = generatePrintJob({
+      bootstrap,
+      settings: settings("explanations-and-sources"),
+      answers
+    })
+    if (questionGenerated.packet.schemaVersion !== 3) {
+      throw new Error("Expected the current print-packet schema")
+    }
+    const questionSection = questionGenerated.packet.sections[0]
+    if (questionSection?.tag !== "explanations") {
+      throw new Error("Expected a current explanations packet")
+    }
+    const firstExplanation = questionSection.explanations[0]
+    const firstQuestionSource = firstExplanation?.sources[0]
+    if (firstExplanation === undefined || firstQuestionSource === undefined) {
+      throw new Error("Expected current question evidence")
+    }
+    const tamperedQuestionSource = {
+      ...firstQuestionSource,
+      supportedClaimIds: [
+        firstQuestionSource.supportedClaimIds[0],
+        ...firstQuestionSource.supportedClaimIds.slice(1),
+        "claim-not-retained-by-this-explanation"
+      ] as const
+    }
+    const tamperedQuestionSection = {
+      ...questionSection,
+      explanations: [{
+        ...firstExplanation,
+        sources: [tamperedQuestionSource, ...firstExplanation.sources.slice(1)]
+      }, ...questionSection.explanations.slice(1)]
+    }
+    const questionPacketWithoutFingerprint = {
+      ...questionGenerated.packet,
+      sections: [tamperedQuestionSection]
+    }
+    const questionPacket = {
+      ...questionPacketWithoutFingerprint,
+      fingerprint: computePrintPacketFingerprint(questionPacketWithoutFingerprint)
+    }
+    expect(() => validatePrintJobRecord({
+      id: "print-question-edges1234",
+      manifest: questionGenerated.manifest,
+      packet: questionPacket,
+      status: "preview-ready",
+      updatedAt: 1
+    })).toThrow(/source-line receipt closure/)
+
+    const hazardGenerated = generatePrintJob({
+      bootstrap,
+      settings: settings("text-equivalent-set", 1),
+      sceneAnswers
+    })
+    if (hazardGenerated.packet.schemaVersion !== 3) {
+      throw new Error("Expected the current print-packet schema")
+    }
+    const hazardSection = hazardGenerated.packet.sections[0]
+    if (hazardSection?.tag !== "text-equivalent-scenes") {
+      throw new Error("Expected a current text-equivalent hazard packet")
+    }
+    const firstHazardScene = hazardSection.scenes[0]
+    const firstHazardSource = firstHazardScene.answer.sources[0]
+    const tamperedHazardSource = {
+      ...firstHazardSource,
+      supportedClaimIds: [
+        firstHazardSource.supportedClaimIds[0],
+        ...firstHazardSource.supportedClaimIds.slice(1),
+        "claim-not-retained-by-this-scene"
+      ] as const
+    }
+    const tamperedHazardSection = {
+      ...hazardSection,
+      scenes: [{
+        ...firstHazardScene,
+        answer: {
+          ...firstHazardScene.answer,
+          sources: [
+            tamperedHazardSource,
+            ...firstHazardScene.answer.sources.slice(1)
+          ] as const
+        }
+      }, ...hazardSection.scenes.slice(1)] as const
+    }
+    const hazardPacketWithoutFingerprint = {
+      ...hazardGenerated.packet,
+      sections: [tamperedHazardSection]
+    }
+    const hazardPacket = {
+      ...hazardPacketWithoutFingerprint,
+      fingerprint: computePrintPacketFingerprint(hazardPacketWithoutFingerprint)
+    }
+    expect(() => validatePrintJobRecord({
+      id: "print-hazard-edges1234",
+      manifest: hazardGenerated.manifest,
+      packet: hazardPacket,
+      status: "preview-ready",
+      updatedAt: 1
+    })).toThrow(/claim and source-line receipt closure/)
   })
 
   it("rejects unsafe print timestamps and malformed persisted integer domains after refingerprinting", () => {
@@ -905,7 +1123,7 @@ describe("deterministic print generation", () => {
       bootstrap.scenes.map((scene) => scene.asset.path).sort()
     )
     expect(serialized).toContain(`data:image/png;base64,${tinyPngBase64}`)
-    expect(serialized).not.toContain("Reviewed claim")
+    expect(serialized).not.toContain("Why unsafe")
     expect(serialized).not.toContain("Target condition")
     expect(serialized).not.toContain("Correction 1")
     expect(serialized).not.toContain("answerReceipt")
@@ -935,7 +1153,9 @@ describe("deterministic print generation", () => {
     expect(JSON.stringify(annotated.packet)).toContain(`data:image/png;base64,${tinyPngBase64}`)
     expect(text.packet.sections[0]?.tag).toBe("text-equivalent-scenes")
     expect(text.manifest.assets).toEqual([])
-    expect(JSON.stringify(text.packet)).toContain("Equivalent statement")
+    expect(JSON.stringify(text.packet)).toContain("Target condition")
+    expect(JSON.stringify(text.packet)).toContain("Why unsafe")
+    expect(JSON.stringify(text.packet)).toContain("Exact hazard source-line excerpt")
     expect(JSON.stringify(text.packet)).not.toContain("data:image")
   })
 
@@ -1134,8 +1354,8 @@ describe("deterministic print generation", () => {
     }
     const html = renderToStaticMarkup(createElement(PrintPreview, { controller }))
 
-    expect(generated.manifest.schemaVersion).toBe(2)
-    expect(generated.packet.schemaVersion).toBe(2)
+    expect(generated.manifest.schemaVersion).toBe(3)
+    expect(generated.packet.schemaVersion).toBe(3)
     expect(generated.packet.sections[0]?.tag).toBe("announcement-profile-fact-sheet")
     expect(new Set(sourceBound.profiles[0]?.announcementFactSheet?.facts.map(
       (fact) => fact.state
@@ -1585,6 +1805,55 @@ describe("print question evidence loading", () => {
         })),
         sources: [{ id: "source", label: "Source", locator: "section 1" }]
       }))
+    )).catch((cause: unknown) => cause)
+
+    expect(failure).toBeInstanceOf(PrintAnswerMismatchError)
+    expect(failure).toMatchObject({
+      detail: expect.stringMatching(/existing immutable print packet/)
+    })
+  })
+
+  it("retains the exact canonical v2 scene in a new print packet", async () => {
+    const scene = bootstrap.scenes[0]
+    const expected = sceneAnswers[0]
+    if (scene === undefined || expected === undefined) throw new Error("Missing scene fixture")
+    const loaded = await Effect.runPromise(loadPrintSceneAnswers([scene]).pipe(
+      Effect.provideService(VerifiedContent, contentWith(expected))
+    ))
+
+    expect(loaded).toEqual([expected])
+    expect(loaded[0]?.claims.map((claim) => claim.text)).toContain("Why unsafe 1")
+    expect(loaded[0]?.sources[0]?.excerpt).toBe("Exact hazard source-line excerpt 1")
+  })
+
+  it("does not rewrite a legacy scene answer into a new v3 print packet", async () => {
+    const scene = bootstrap.scenes[0]
+    if (scene === undefined) throw new Error("Missing scene fixture")
+    const legacy = {
+      id: "scene-semantic-legacy",
+      opaqueAssetId: scene.id,
+      kind: "positive",
+      hazardFamily: "housekeeping",
+      claim: "Historical scene explanation.",
+      sourceIds: ["source-legacy"],
+      targets: [{ id: "target-legacy", condition: "Historical target.", correction: "Historical correction." }],
+      decoys: [{ id: "decoy-legacy", condition: "Historical decoy.", safeBecause: "Historical safe reason." }],
+      targetRegions: [{ inventoryId: "target-legacy", polygons: [[[0.1, 0.1], [0.2, 0.1], [0.2, 0.2]]] }],
+      decoyRegions: [{ inventoryId: "decoy-legacy", polygons: [[[0.7, 0.7], [0.8, 0.7], [0.8, 0.8]]] }],
+      fullPostAnswer: {
+        claim: "Historical scene explanation.",
+        targets: [{ condition: "Historical target.", correction: "Historical correction.", sourceIds: ["source-legacy"] }],
+        decoys: [{ condition: "Historical decoy.", safeBecause: "Historical safe reason." }],
+        safeBackground: ["Historical safe background."],
+        sources: [{ id: "source-legacy", title: "Historical source", url: "https://example.test/legacy", locator: "section 1", scope: "Historical fixture." }]
+      },
+      nonvisualZonedEquivalent: [
+        { zone: "floor", role: "target", statement: "Historical target." },
+        { zone: "wall", role: "decoy", statement: "Historical decoy." }
+      ]
+    }
+    const failure = await Effect.runPromise(loadPrintSceneAnswers([scene]).pipe(
+      Effect.provideService(VerifiedContent, contentWith(legacy))
     )).catch((cause: unknown) => cause)
 
     expect(failure).toBeInstanceOf(PrintAnswerMismatchError)

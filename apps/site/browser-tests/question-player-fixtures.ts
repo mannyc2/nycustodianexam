@@ -4,7 +4,7 @@ export const questionPath = "/practice/session/launch-v1/question/1/"
 export const databaseName = "nycustodian-study-v1"
 export const attemptsStore = "attempts"
 export const questionId = "q001"
-export const attemptId = "launch-v1:v2:launch-v1:question:1"
+export const attemptId = "launch-v1:v3:launch-v1:question:1"
 export const questionPostcommitPath =
   "/content/vertical-slice/questions/q001.postcommit.json"
 
@@ -21,7 +21,7 @@ export interface StoredQuestionReceipt {
 
 export const questionReceipt: StoredQuestionReceipt = {
   releaseId: "launch-v1",
-  packVersion: 2,
+  packVersion: 3,
   sessionId: "launch-v1",
   position: 1,
   postcommitPath: questionPostcommitPath,

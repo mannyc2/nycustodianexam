@@ -11,7 +11,10 @@ import {
   decodeDurableTimestamp
 } from "../durable-values.ts"
 import { printJobIdPattern, printPreviewPathPattern } from "./identity.ts"
-import { SafeQuestionMembership } from "@nycustodian/content/model"
+import {
+  PostcommitScene,
+  SafeQuestionMembership
+} from "@nycustodian/content/model"
 
 const UniqueStrings = Schema.Array(Schema.NonEmptyString).check(
   Schema.makeFilter((values) =>
@@ -400,6 +403,14 @@ export class PrintSceneAnswer extends Schema.Class<PrintSceneAnswer>(
   sourceReferences: Schema.Array(PrintSourceReference)
 }) {}
 
+/**
+ * Current hazard-answer packets retain the exact canonical postcommit scene.
+ * The unversioned PrintSceneAnswer above remains frozen for v1/v2 packet
+ * restoration and is never used to manufacture a new packet.
+ */
+export const PrintSceneAnswerV2 = PostcommitScene
+export type PrintSceneAnswerV2 = typeof PrintSceneAnswerV2.Type
+
 export class PrintCorrectionSource extends Schema.Class<PrintCorrectionSource>(
   "@nycustodian/site/print/PrintCorrectionSource"
 )({
@@ -488,16 +499,25 @@ export class LegacyPrintJobManifest extends Schema.Class<LegacyPrintJobManifest>
   profile: LegacyPrintProfile
 }) {}
 
-export class PrintJobManifest extends Schema.Class<PrintJobManifest>(
-  "@nycustodian/site/print/PrintJobManifest"
+export class PrintJobManifestV2 extends Schema.Class<PrintJobManifestV2>(
+  "@nycustodian/site/print/PrintJobManifestV2"
 )({
   schemaVersion: Schema.Literal(2),
   ...printJobManifestFields,
   profile: PrintProfile
 }) {}
 
+export class PrintJobManifest extends Schema.Class<PrintJobManifest>(
+  "@nycustodian/site/print/PrintJobManifest"
+)({
+  schemaVersion: Schema.Literal(3),
+  ...printJobManifestFields,
+  profile: PrintProfile
+}) {}
+
 export const ReleasedPrintJobManifest = Schema.Union([
   LegacyPrintJobManifest,
+  PrintJobManifestV2,
   PrintJobManifest
 ])
 
@@ -608,6 +628,25 @@ const PrintTextEquivalentScenesSection = Schema.Struct({
   }))
 })
 
+const PrintAnnotatedHazardAnswersSectionV3 = Schema.Struct({
+  tag: Schema.Literal("annotated-hazard-answers"),
+  scenes: Schema.NonEmptyArray(Schema.Struct({
+    id: Schema.NonEmptyString,
+    environment: Schema.NonEmptyString,
+    asset: Schema.NullOr(PrintRetainedAsset),
+    answer: PrintSceneAnswerV2
+  }))
+})
+
+const PrintTextEquivalentScenesSectionV3 = Schema.Struct({
+  tag: Schema.Literal("text-equivalent-scenes"),
+  scenes: Schema.NonEmptyArray(Schema.Struct({
+    id: Schema.NonEmptyString,
+    environment: Schema.NonEmptyString,
+    answer: PrintSceneAnswerV2
+  }))
+})
+
 const LegacyPrintAnnouncementProfileFactSheetSection = Schema.Struct({
   tag: Schema.Literal("announcement-profile-fact-sheet"),
   profileLabel: Schema.NonEmptyString,
@@ -633,13 +672,13 @@ const commonPacketSections = [
   PrintAnswerKeySection,
   PrintToolFamilyCardsSection,
   PrintHazardWorksheetSection,
-  PrintAnnotatedHazardAnswersSection,
-  PrintTextEquivalentScenesSection,
   PrintCorrectionChangeLogExcerptSection
 ] as const
 
 export const PrintPacketSection = Schema.Union([
   ...commonPacketSections,
+  PrintAnnotatedHazardAnswersSection,
+  PrintTextEquivalentScenesSection,
   LegacyPrintAnnouncementProfileFactSheetSection,
   LegacyPrintExplanationsSection
 ])
@@ -648,15 +687,28 @@ export type PrintPacketSection = typeof PrintPacketSection.Type
 
 export const PrintPacketSectionV2 = Schema.Union([
   ...commonPacketSections,
+  PrintAnnotatedHazardAnswersSection,
+  PrintTextEquivalentScenesSection,
   PrintAnnouncementProfileFactSheetSectionV2,
   PrintExplanationsSectionV2
 ])
 
 export type PrintPacketSectionV2 = typeof PrintPacketSectionV2.Type
 
+export const PrintPacketSectionV3 = Schema.Union([
+  ...commonPacketSections,
+  PrintAnnotatedHazardAnswersSectionV3,
+  PrintTextEquivalentScenesSectionV3,
+  PrintAnnouncementProfileFactSheetSectionV2,
+  PrintExplanationsSectionV2
+])
+
+export type PrintPacketSectionV3 = typeof PrintPacketSectionV3.Type
+
 export const ReleasedPrintPacketSection = Schema.Union([
   PrintPacketSection,
-  PrintPacketSectionV2
+  PrintPacketSectionV2,
+  PrintPacketSectionV3
 ])
 
 export type ReleasedPrintPacketSection = typeof ReleasedPrintPacketSection.Type
@@ -687,9 +739,23 @@ export class PrintPacketV2 extends Schema.Class<PrintPacketV2>(
   warnings: Schema.Array(Schema.NonEmptyString)
 }) {}
 
+export class PrintPacketV3 extends Schema.Class<PrintPacketV3>(
+  "@nycustodian/site/print/PrintPacketV3"
+)({
+  schemaVersion: Schema.Literal(3),
+  fingerprint: Schema.String.check(
+    Schema.isPattern(/^[a-f0-9]{16}$/, { expected: "a 16-character print-packet fingerprint" })
+  ),
+  title: Schema.NonEmptyString,
+  statement: Schema.Literal("Original practice — not an official or past exam"),
+  sections: Schema.Array(PrintPacketSectionV3),
+  warnings: Schema.Array(Schema.NonEmptyString)
+}) {}
+
 export const ReleasedPrintPacket = Schema.Union([
   PrintPacket,
-  PrintPacketV2
+  PrintPacketV2,
+  PrintPacketV3
 ])
 
 export type ReleasedPrintPacket = typeof ReleasedPrintPacket.Type

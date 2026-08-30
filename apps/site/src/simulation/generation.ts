@@ -1,6 +1,11 @@
 import { Schema } from "effect"
 import { assessVisualMarkers, hasValidPostcommitClosure } from "../hazard-player/assessment.ts"
 import {
+  decoyZonesForScene,
+  targetRegionsForScene,
+  targetZonesForScene
+} from "../hazard-player/released-scene.ts"
+import {
   type SimulationFormat,
   SimulationHazardResult,
   type SimulationHazardSessionItem,
@@ -301,7 +306,7 @@ export const evaluateHazardAnswer = (
   let duplicateCount = 0
   if (item.mode === "visual") {
     const assessment = assessVisualMarkers(markers, payload)
-    targetCount = payload.targetRegions.length
+    targetCount = targetRegionsForScene(payload).length
     hitCount = assessment.markers.filter((marker) => marker.kind === "hit").length
     missedCount = assessment.missedInventoryIds.length
     decoyFalsePositiveCount = assessment.markers.filter(
@@ -312,12 +317,8 @@ export const evaluateHazardAnswer = (
     ).length
     duplicateCount = assessment.markers.filter((marker) => marker.kind === "duplicate").length
   } else {
-    const targetZones = new Set(payload.nonvisualZonedEquivalent
-      .filter((statement) => statement.role === "target")
-      .map((statement) => statement.zone))
-    const decoyZones = new Set(payload.nonvisualZonedEquivalent
-      .filter((statement) => statement.role === "decoy")
-      .map((statement) => statement.zone))
+    const targetZones = targetZonesForScene(payload)
+    const decoyZones = decoyZonesForScene(payload)
     const selectedLabels = new Set(item.scene.neutralPreAnswer.zones
       .filter((zone) => selectedZoneOrders.includes(zone.order))
       .map((zone) => zone.label))
