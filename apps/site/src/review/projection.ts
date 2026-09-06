@@ -240,6 +240,7 @@ type AttemptProjection =
 const containAttemptFailure = <Requirements>(
   attemptId: string,
   kind: ReviewQuarantine["kind"],
+  committedAt: number,
   effect: Effect.Effect<ReviewQueueItem | undefined, ReviewProjectionError, Requirements>
 ): Effect.Effect<AttemptProjection, never, Requirements> =>
   effect.pipe(
@@ -250,6 +251,7 @@ const containAttemptFailure = <Requirements>(
           id: `${kind}:${attemptId}`,
           attemptId,
           kind,
+          committedAt,
           detail: error.detail
         }
       }),
@@ -331,7 +333,7 @@ export const buildReviewQueue = Effect.fn("ReviewProjection.buildReviewQueue")(f
           )
         )
       : loadQuestionItem(attempt, source)
-    return containAttemptFailure(attempt.id, "question", effect)
+    return containAttemptFailure(attempt.id, "question", attempt.committedAt, effect)
   })
   const hazardEffects = hazardAttempts.map((attempt) => {
     const source = sceneById.get(attempt.sceneId)
@@ -371,7 +373,7 @@ export const buildReviewQueue = Effect.fn("ReviewProjection.buildReviewQueue")(f
         : attempt.mode === "nonvisual"
         ? Effect.succeed(undefined)
         : loadHazardItem(attempt, source)
-    return containAttemptFailure(attempt.id, "visual_hazard", effect)
+    return containAttemptFailure(attempt.id, "visual_hazard", attempt.committedAt, effect)
   })
 
   const projected = yield* Effect.all(

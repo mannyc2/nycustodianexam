@@ -533,7 +533,8 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
       name: new RegExp(`^${advertisedLength} items`)
     })).toBeEnabled()
   }
-  await expect(lengthGroup.getByRole("radio", { name: /^90 items/ })).toBeChecked()
+  await expect(lengthGroup.getByRole("radio", { name: /^45 items/ })).toBeChecked()
+  await expect(lengthGroup.getByRole("radio", { name: /^10 items/ })).toHaveCount(0)
   await expect(page.getByRole("radio", { name: "Visual hazard scenes" })).toBeEnabled()
   await expect(page.getByRole("radio", { name: "Hazard scenes — keyboard, no image" })).toBeEnabled()
 
@@ -588,6 +589,30 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
     await expect(lengthGroup.getByRole("radio", {
       name: new RegExp(`^${advertisedLength} items`)
     })).toBeDisabled()
+  }
+  await expect(lengthGroup.getByRole("radio", {
+    name: new RegExp(`^${filteredCategory.count} items`)
+  })).toBeChecked()
+
+  for (const option of categoryOptions) {
+    await contentMix.getByRole("checkbox", {
+      name: option.accessibleName,
+      exact: true
+    }).check()
+  }
+  await expect(lengthGroup.getByRole("radio", { name: /^45 items/ })).toBeChecked()
+  await expect(lengthGroup.locator("input:checked")).toHaveCount(1)
+  await lengthGroup.getByRole("radio", { name: /^60 items/ }).check()
+  await expect(lengthGroup.getByRole("radio", { name: /^60 items/ })).toBeChecked()
+  await lengthGroup.getByRole("radio", { name: /^90 items/ }).check()
+  await expect(lengthGroup.getByRole("radio", { name: /^90 items/ })).toBeChecked()
+  for (const option of categoryOptions) {
+    if (option.accessibleName !== filteredCategory.accessibleName) {
+      await contentMix.getByRole("checkbox", {
+        name: option.accessibleName,
+        exact: true
+      }).uncheck()
+    }
   }
   await expect(lengthGroup.getByRole("radio", {
     name: new RegExp(`^${filteredCategory.count} items`)

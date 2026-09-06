@@ -8,6 +8,7 @@ import {
   escapeJsonForHtml,
   isPublicReleaseArtifact,
   printProfileBootstrap,
+  renderAnnouncementMilestones,
   renderProfileFact,
   renderSeriesScopeDisclaimer,
   slugify
@@ -154,6 +155,52 @@ describe("static-site generator boundaries", () => {
     expect(isPublicReleaseArtifact(artifact("pack-precommit"))).toBe(true)
     expect(isPublicReleaseArtifact(artifact("question-postcommit"))).toBe(true)
     expect(isPublicReleaseArtifact(artifact("scene-postcommit"))).toBe(true)
+  })
+
+  it("keeps dated announcement evidence separate from unconfirmed administration and later filing", () => {
+    const sources = new Map([["announcement", {
+      id: "announcement",
+      title: "Custodian Exam 60112026 announcement",
+      publisher: "Civil Service Commission"
+    }]]) as unknown as Parameters<typeof renderAnnouncementMilestones>[2]
+    const lines = new Map([["filing", {
+      id: "filing", sourceId: "announcement", locator: "page 1",
+      excerpt: "Applications closed July 1, 2026."
+    }]]) as unknown as Parameters<typeof renderAnnouncementMilestones>[1]
+    const fact = {
+      id: "filing-date", category: "filing_period", state: "verified",
+      label: "Open-competitive filing", value: "Closed July 1, 2026 at 11:59 PM Eastern.",
+      detail: null, appliesToExamNumbers: [], reviewedOn: "2026-08-25",
+      effectiveFrom: null, effectiveThrough: null, sourceLineIds: ["filing"],
+      conflictingValues: [], supersededByFactId: null
+    } as const
+    const facts = [
+      fact,
+      { ...fact, id: "announced-date", category: "exam_date", label: "Announced exam date", value: "August 22, 2026." },
+      { ...fact, id: "administration", category: "administration_status", state: "unverified", label: "Administration", value: null, detail: "No official record confirming administration was located." },
+      { ...fact, id: "future-date", category: "exam_date", state: "unverified", value: "September 1, 2027." },
+      { ...fact, id: "old-date", state: "superseded", value: "Closed June 1, 2026." }
+    ] as Parameters<typeof renderAnnouncementMilestones>[0]
+    const html = renderAnnouncementMilestones(facts, lines, sources, "cycle")
+
+    expect(html).toContain("Closed July 1, 2026 at 11:59 PM Eastern.")
+    expect(html).toContain("August 22, 2026.")
+    expect(html).toContain("Administration: Not confirmed")
+    expect(html).toContain("No official record confirming administration was located.")
+    expect(html).toContain("Later announcements or filing periods may exist outside this reviewed record.")
+    expect(html).toContain("Next-cycle dates are not specified here.")
+    expect(html).not.toContain("September 1, 2027")
+    expect(html).not.toContain("Closed June 1, 2026")
+    expect(html).not.toMatch(/nothing is open|no filing (?:is )?open/i)
+    const publicProof = html.slice(0, html.indexOf("<details"))
+    expect(publicProof).toContain("Where this comes from:")
+    expect(publicProof).toContain("Civil Service Commission")
+    expect(publicProof).toContain("Custodian Exam announcement")
+    expect(publicProof).not.toContain("60112026")
+    expect(html.slice(html.indexOf("<details"))).toContain("Custodian Exam 60112026 announcement")
+    expect(publicProof).toContain("Checked August 25, 2026.")
+    expect(publicProof).not.toContain("page 1")
+    expect(renderAnnouncementMilestones([facts[3]!], lines, sources, "future")).toBe("")
   })
 
   it("renders all six profile fact states with sources and distinct profile/fact-sheet versions", () => {

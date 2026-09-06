@@ -10,6 +10,7 @@ export class StudyBootstrap extends Schema.Class<StudyBootstrap>(
   sceneCount: Schema.Natural,
   profileLabel: Schema.NonEmptyString,
   firstPractice: Schema.NullOr(Schema.Struct({
+    length: Schema.Literals([45, 60, 90]),
     href: Schema.String.check(Schema.isPattern(/^\/practice\/session\/[a-z0-9][a-z0-9._-]*\/question\/1\/$/)),
     label: Schema.NonEmptyString
   })),
@@ -18,11 +19,18 @@ export class StudyBootstrap extends Schema.Class<StudyBootstrap>(
 
 export interface StudyActivityRow {
   readonly id: string
+  readonly attemptId: string
   readonly kind: "questions" | "hazards" | "reviews"
   readonly recordedAt: number
   readonly label: string
   readonly outcome: string
-  readonly href: string
+  readonly href: string | null
+}
+
+export interface UnavailableStudyAttempt {
+  readonly id: string
+  readonly recordedAt: number | null
+  readonly label: string
 }
 
 export interface StudyActivity {
@@ -30,7 +38,7 @@ export interface StudyActivity {
   readonly questionCount: number
   readonly hazardCount: number
   readonly reviewCount: number
-  readonly otherAttemptCount: number
+  readonly unavailableAttempts: ReadonlyArray<UnavailableStudyAttempt>
 }
 
 export type StudyActivityState =

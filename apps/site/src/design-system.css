@@ -765,3 +765,92 @@
     .history-foot button { display: none; }
   }
 }
+
+@layer components {
+  .utility-page .local-data-stack { gap: var(--space-8); }
+  .settings-reading, .settings-data, .settings-unavailable, .pack-contents { display: grid; gap: var(--space-4); }
+  .preference-list { margin: 0; padding: 0 var(--space-6); border: 1px solid var(--color-border-hairline); border-radius: var(--radius-lg); background: var(--color-surface); }
+  .preference-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: var(--space-6); padding-block: var(--space-5); }
+  .preference-row + .preference-row { border-block-start: 1px solid var(--color-border-hairline); }
+  .preference-row h3 { margin: 0; font-size: var(--text-lg); }
+  .preference-row p { margin: var(--space-1) 0 0; max-inline-size: 66ch; color: var(--color-text-muted); font-size: var(--text-sm); }
+  .preference-row input { inline-size: 1.5rem; block-size: 1.5rem; margin: var(--space-1); accent-color: var(--color-action); cursor: pointer; }
+  .preference-row .preference-status { font-size: var(--text-xs); }
+  .preference-status:empty { display: none; }
+  .task-cards.settings-task-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .settings-task-cards .task-card { grid-template-rows: auto auto minmax(0, 1fr) auto; }
+  .settings-task-cards .button { inline-size: 100%; padding-inline: var(--space-3); }
+  .settings-card-action { display: grid; gap: var(--space-3); }
+  .settings-card-action .affirmation-control { align-items: start; font-size: var(--text-xs); }
+  .settings-card-action .affirmation-control input { flex: 0 0 auto; }
+  .settings-data .task-card p { font-size: var(--text-sm); }
+  .offline-pack-manager .pack-record-list { gap: 0; padding: 0 var(--space-6); border: 1px solid var(--color-border-hairline); border-radius: var(--radius-lg); background: var(--color-surface); }
+  .offline-pack-manager .pack-record-list > li { grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: var(--space-6); margin: 0; padding: var(--space-5) 0; border: 0; border-radius: 0; background: transparent; }
+  .offline-pack-manager .pack-record-list > li + li { border-block-start: 1px solid var(--color-border-hairline); }
+  .pack-record-copy { min-inline-size: 0; }
+  .pack-record-header { justify-content: start; gap: var(--space-2); }
+  .pack-record-header h3 { margin: 0; font-size: var(--text-lg); }
+  .pack-record-copy p { margin-block: var(--space-2); }
+  .pack-status { border: 0; background: var(--color-surface-subtle); }
+  .pack-status-active { color: var(--color-action); background: var(--color-action-surface, #e0f2fe); }
+  .pack-status-quarantined { color: var(--color-danger); background: var(--color-danger-surface); }
+  .pack-record-list .question-controls { flex-direction: column; align-items: stretch; }
+  .offline-pack-manager progress { max-inline-size: 100%; accent-color: var(--color-action); }
+  .offline-pack-manager .operation-preview { display: grid; gap: var(--space-4); padding: var(--space-6); }
+  .offline-pack-manager .operation-preview > :is(h2, p) { margin: 0; }
+}
+
+@layer overrides {
+  @media (max-width: 68rem) {
+    .task-cards.settings-task-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 40rem) {
+    .task-cards.settings-task-cards { grid-template-columns: minmax(0, 1fr); }
+    .preference-list { padding-inline: var(--space-4); }
+    .preference-row { gap: var(--space-3); }
+    .offline-pack-manager .pack-record-list { padding-inline: var(--space-4); }
+    .offline-pack-manager .pack-record-list > li { grid-template-columns: minmax(0, 1fr); gap: var(--space-3); }
+    .pack-record-list .question-controls { flex-direction: row; flex-wrap: wrap; }
+  }
+  @media (forced-colors: active) {
+    .pack-status { border: 1px solid CanvasText; }
+    .preference-list, .preference-row, .offline-pack-manager .pack-record-list, .offline-pack-manager .pack-record-list > li { border-color: CanvasText; }
+  }
+}
+
+@layer components {
+  .nav-utility a[aria-current="page"] { background: var(--color-selected-surface); color: var(--color-action-hover); font-weight: var(--weight-bold); }
+  .offline-how .numbered-sections { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-4); }
+  .offline-how .numbered-sections > li { grid-template-columns: minmax(0, 1fr); align-content: start; gap: var(--space-3); padding: var(--space-5); border: 1px solid var(--color-border-hairline); border-radius: var(--radius-lg); background: var(--color-surface); }
+  .offline-how .numbered-sections > li > span { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 1.5rem; }
+  .offline-how h3 { margin: 0 0 var(--space-2); font-size: var(--text-lg); }
+  .offline-how p { margin: 0; color: var(--color-text-muted); font-size: var(--text-sm); }
+  .offline-pack-manager .technical-details { border: 0; background: transparent; font-size: var(--text-xs); }
+  .offline-pack-manager .technical-details > summary { display: list-item; min-block-size: var(--target-default); padding: var(--space-3) 0; color: var(--color-action); }
+  .offline-pack-manager .technical-details dl { grid-template-columns: minmax(0, 9rem) minmax(0, 1fr); padding-inline: 0; }
+}
+@layer overrides {
+  @media (max-width: 64rem) { .offline-how .numbered-sections { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 40rem) { .offline-how .numbered-sections { grid-template-columns: minmax(0, 1fr); } }
+}
+
+@layer components {
+  .utility-content .local-data-stack { max-inline-size: none; margin-block-start: 0; }
+  .settings-task-cards .task-card .button { min-block-size: 3.25rem; }
+}
+
+@layer components {
+  .utility-content .section-header h2 { font-size: 1.5rem; }
+  .settings-data .task-card p { font-size: 0.875rem; }
+}
+@layer overrides {
+  @media (max-width: 40rem) {
+    .utility-content .section-header h2 { font-size: 1.125rem; }
+    .settings-task-cards .task-card { grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto 1fr; column-gap: var(--space-3); }
+    .settings-task-cards .task-card > svg { display: none; }
+    .settings-task-cards .task-card > :is(h3, p) { grid-column: 1; }
+    .settings-task-cards .task-card > .button { grid-column: 2; grid-row: 1 / span 2; align-self: center; max-inline-size: 8rem; }
+    .settings-task-cards .settings-card-action { grid-column: 1 / -1; }
+    .settings-task-cards .settings-card-action .button { justify-self: start; inline-size: auto; }
+  }
+}

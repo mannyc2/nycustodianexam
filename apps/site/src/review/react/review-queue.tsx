@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react"
 import { ActivityHistory } from "../../study/react/history.tsx"
+import { UnavailableAttempts } from "../../study/react/unavailable-attempts.tsx"
+import { includeUnavailableReviews } from "../../study/activity.ts"
 import type { StudyActivityState } from "../../study/model.ts"
 import type { ReviewController } from "../controller.ts"
-import type { ReviewQuarantine, ReviewQueueItem, ReviewReason } from "../model.ts"
+import type { ReviewQueueItem, ReviewReason } from "../model.ts"
 
 const savedDateFormat = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" })
 
@@ -29,22 +31,22 @@ const ReviewReasons = ({ reasons }: { readonly reasons: ReadonlyArray<ReviewReas
   </ul>
 )
 
-const ReviewItems = ({
-  acknowledgingItemId,
+const ReviewItem = ({
+  acknowledging,
   disabled,
-  items,
+  item,
   onAcknowledge
 }: {
-  readonly acknowledgingItemId: string | null
+  readonly acknowledging: boolean
   readonly disabled: boolean
-  readonly items: ReadonlyArray<ReviewQueueItem>
+  readonly item: ReviewQueueItem
   readonly onAcknowledge: (itemId: string) => void
-}) => (
-  <ol className="review-queue-list">
-    {items.map((item) => {
-      const acknowledging = acknowledgingItemId === item.id
-      return (
-        <li key={item.id}>
+}) => {
+  const [confirming, setConfirming] = useState(false)
+  const finishButton = useRef<HTMLButtonElement>(null)
+  const confirmationHeading = useRef<HTMLHeadingElement>(null)
+  useEffect(() => { if (confirming) confirmationHeading.current?.focus() }, [confirming])
+  return <li>
           <article className="review-item-card">
             <time className="history-date" dateTime={new Date(item.committedAt).toISOString()}>
               {savedDateFormat.format(item.committedAt)}
@@ -54,44 +56,29 @@ const ReviewItems = ({
               <ReviewReasons reasons={item.reasons} />
             </div>
             <div className="question-controls">
-              <a className="button button-secondary" href={item.itemUrl}>Open saved feedback</a>
+              <a className="button button-primary" href={item.itemUrl}>Read explanation</a>
               <button
-                className="button button-primary"
+                className="review-finish-action"
                 disabled={disabled}
-                onClick={() => onAcknowledge(item.id)}
+                ref={finishButton}
+                aria-expanded={confirming}
+                onClick={() => setConfirming(true)}
                 type="button"
               >
                 {acknowledging ? "Finishing review…" : "Finish review"}
               </button>
             </div>
+            {confirming ? <div className="review-finish-confirmation" role="group" aria-label="Confirm finished review">
+              <h4 ref={confirmationHeading} tabIndex={-1}>Finish this review?</h4>
+              <p>This removes the item from your ready queue. Your saved answer and explanation stay in your history.</p>
+              <div className="review-confirmation-actions">
+                <button className="button button-primary" type="button" disabled={disabled} onClick={() => { setConfirming(false); onAcknowledge(item.id) }}>Confirm finish review</button>
+                <button className="button button-secondary" type="button" disabled={disabled} onClick={() => { setConfirming(false); finishButton.current?.focus() }}>Keep in review</button>
+              </div>
+            </div> : null}
           </article>
         </li>
-      )
-    })}
-  </ol>
-)
-
-const ReviewQuarantines = ({
-  quarantined
-}: {
-  readonly quarantined: ReadonlyArray<ReviewQuarantine>
-}) => quarantined.length === 0 ? null : (
-  <aside className="review-quarantine" aria-labelledby="review-quarantine-heading">
-    <h3 id="review-quarantine-heading">Saved attempts needing attention</h3>
-    <p>
-      These attempts remain stored, but their exact feedback could not be verified. They were not
-      replaced with another item.
-    </p>
-    <ul>
-      {quarantined.map((entry) => (
-        <li key={entry.id}>
-          <strong>{entry.kind === "question" ? "Question attempt" : "Visual hazard attempt"}</strong>
-          {`: ${entry.detail}`}
-        </li>
-      ))}
-    </ul>
-  </aside>
-)
+}
 
 type ReviewScope = "all" | "missed" | "flagged"
 const scopes: ReadonlyArray<{ readonly id: ReviewScope; readonly label: string }> = [
@@ -111,6 +98,8 @@ export const ReviewQueueIsland = ({ controller, activityState, onRetryHistory }:
   const errorHeadingRef = useRef<HTMLHeadingElement>(null)
   const emptyHeadingRef = useRef<HTMLHeadingElement>(null)
   const filteredHeadingRef = useRef<HTMLHeadingElement>(null)
+  const queueHeadingRef = useRef<HTMLHeadingElement>(null)
+  const acknowledgementFocusId = useRef<string | null>(null)
   const focusError = state.tag === "recoverable_error"
   const focusCompletedEmpty = state.tag === "empty" && state.origin === "acknowledgement"
   const items = state.tag === "ready" || state.tag === "recoverable_error" ? state.items : []
@@ -119,10 +108,24 @@ export const ReviewQueueIsland = ({ controller, activityState, onRetryHistory }:
   const missed = items.filter((item) => inScope(item, "missed")).length
   const flagged = items.filter((item) => inScope(item, "flagged")).length
   const busy = state.tag === "ready" && state.acknowledgingItemId !== null
+  const quarantined = state.tag === "ready" || state.tag === "recoverable_error" ? state.quarantined : []
+  const historyState = activityState.tag === "ready"
+    ? { tag: "ready" as const, activity: includeUnavailableReviews(activityState.activity, quarantined) }
+    : activityState
 
   useEffect(() => { if (focusError) errorHeadingRef.current?.focus() }, [focusError])
   useEffect(() => { if (focusCompletedEmpty) emptyHeadingRef.current?.focus() }, [focusCompletedEmpty])
   useEffect(() => { if (filteredEmpty) filteredHeadingRef.current?.focus() }, [filteredEmpty])
+  useEffect(() => {
+    const pendingId = acknowledgementFocusId.current
+    if (pendingId === null || state.tag === "loading" || (state.tag === "ready" && state.acknowledgingItemId !== null)) return
+    if (state.tag === "ready" && !state.items.some((item) => item.id === pendingId)) {
+      acknowledgementFocusId.current = null
+      if (filtered.length > 0) queueHeadingRef.current?.focus()
+    } else if (state.tag === "empty" || state.tag === "recoverable_error") {
+      acknowledgementFocusId.current = null
+    }
+  }, [state, filtered.length])
 
   return <div className="review-page">
     {state.tag === "recoverable_error" ? <section className="review-state review-error" aria-labelledby="review-error-heading" role="alert">
@@ -141,7 +144,7 @@ export const ReviewQueueIsland = ({ controller, activityState, onRetryHistory }:
       <h1 id="review-queue-heading">{state.tag === "loading" ? "Loading your local review queue" : state.tag === "empty" ? "Your review queue is clear." : `${items.length} ${items.length === 1 ? "item" : "items"} to review`}</h1>
       <p>{state.tag === "loading" ? state.action === "rebuild" ? "Rebuilding from your saved attempts and finished reviews…" : "Reading the attempts saved on this device…" : state.tag === "empty" ? "Nothing is waiting for review. Try another practice set, explore a scene, or come back after your next saved answer." : "Revisit the questions you missed or flagged and the visual scenes that need another look. Untimed, with your original saved feedback."}</p>
       <div className="question-controls">
-        {items[0] === undefined ? <a className="button button-primary" href="/practice/#practice-sets">Choose a practice set</a> : <a className="button button-primary" href={items[0].itemUrl}>Open first review</a>}
+        {items[0] === undefined ? <a className="button button-primary" href="/practice/#practice-sets">Choose a practice set</a> : <a className="button button-primary" href={items[0].itemUrl}>Read first explanation</a>}
         <a className="button button-secondary" href="/practice/">Back to Study</a>
       </div>
       {state.tag === "loading" ? <span role="status" className="sr-only">Reading your review queue.</span> : <dl className="figure-strip">
@@ -155,12 +158,12 @@ export const ReviewQueueIsland = ({ controller, activityState, onRetryHistory }:
     {state.tag === "empty" ? <section className="study-section" aria-labelledby="review-empty-heading">
       <div className="section-header"><h2>What is ready</h2></div>
       <div className="empty-state review-empty">
-        <h3 className="empty-state-heading" id="review-empty-heading" ref={emptyHeadingRef} tabIndex={-1}>No review items are due</h3>
+        <h3 className="empty-state-heading" id="review-empty-heading" ref={emptyHeadingRef} tabIndex={-1}>No review items are ready</h3>
         <p>Missed or flagged questions and mistakes in visual hazard scenes build this queue. Correct answers you did not flag, keyboard zone attempts, and finished reviews do not return here.</p>
         <div className="empty-state-actions"><a className="button button-primary" href="/practice/#practice-sets">Practice questions</a><a className="button button-secondary" href="/hazards/">Practice hazard scanning</a></div>
       </div>
-    </section> : state.tag === "ready" || (state.tag === "recoverable_error" && items.length > 0) ? <section className="study-section" aria-labelledby="review-due-heading">
-      <div className="section-header"><h2 id="review-due-heading">What is ready</h2><p>Opening feedback does not finish an item. Use Finish review when you are done.</p></div>
+    </section> : (state.tag === "ready" || state.tag === "recoverable_error") && items.length > 0 ? <section className="study-section" aria-labelledby="review-due-heading">
+      <div className="section-header"><h2 id="review-due-heading" ref={queueHeadingRef} tabIndex={-1}>What is ready</h2><p>Read each explanation, then confirm Finish review when you are done.</p></div>
       <div className="tabs" role="tablist" aria-label="Review scope">{scopes.map((entry, index) => <button
         key={entry.id} id={`review-tab-${entry.id}`} role="tab" type="button"
         aria-selected={scope === entry.id} aria-controls="review-scope-panel" tabIndex={scope === entry.id ? 0 : -1}
@@ -177,17 +180,17 @@ export const ReviewQueueIsland = ({ controller, activityState, onRetryHistory }:
       >{entry.label}{" "}<span className="filter-count">{entry.id === "all" ? items.length : entry.id === "missed" ? missed : flagged}</span></button>)}</div>
       <div id="review-scope-panel" className={filtered.length > 0 ? "review-list-panel" : undefined} role="tabpanel" aria-labelledby={`review-tab-${scope}`}>
         <p className="review-scope-summary" role="status">Showing {filtered.length} {scope === "all" ? "review" : scope} {filtered.length === 1 ? "item" : "items"}, oldest saved answer first.</p>
-        {filtered.length === 0 ? <div className="empty-state"><h3 className="empty-state-heading" ref={filteredHeadingRef} tabIndex={-1}>No {scope === "all" ? "verified review" : scope} items in this view</h3><p>{items.length > 0 ? "Choose All to return to the complete queue." : "Any saved attempts needing attention are listed below."}</p>{items.length > 0 ? <div className="empty-state-actions"><button className="button button-secondary" type="button" onClick={() => setScope("all")}>Show all review items</button></div> : null}</div> : <ReviewItems acknowledgingItemId={state.tag === "ready" ? state.acknowledgingItemId : null} disabled={state.tag === "recoverable_error" || busy} items={filtered} onAcknowledge={(itemId) => controller.dispatch({ tag: "acknowledge", itemId })} />}
+        {filtered.length === 0 ? <div className="empty-state"><h3 className="empty-state-heading" ref={filteredHeadingRef} tabIndex={-1}>No {scope === "all" ? "review" : scope} items in this view</h3><p>{items.length > 0 ? "Choose All to return to the complete queue." : "Unavailable saved attempts are listed below."}</p>{items.length > 0 ? <div className="empty-state-actions"><button className="button button-secondary" type="button" onClick={() => setScope("all")}>Show all review items</button></div> : null}</div> : <ol className="review-queue-list">{filtered.map((item) => <ReviewItem key={item.id} acknowledging={state.tag === "ready" && state.acknowledgingItemId === item.id} disabled={state.tag === "recoverable_error" || busy} item={item} onAcknowledge={(itemId) => { acknowledgementFocusId.current = itemId; controller.dispatch({ tag: "acknowledge", itemId }) }} />)}</ol>}
       </div>
     </section> : null}
-    {state.tag === "ready" || state.tag === "recoverable_error" ? <ReviewQuarantines quarantined={state.quarantined} /> : null}
-    <ActivityHistory state={activityState} reviewsOnly onRetry={onRetryHistory} />
+    <UnavailableAttempts attempts={historyState.tag === "ready" ? historyState.activity.unavailableAttempts : quarantined.map((entry) => ({ id: entry.attemptId, recordedAt: entry.committedAt ?? null, label: entry.kind === "question" ? "Question attempt" : "Visual hazard attempt" }))} headingId="review-unavailable-heading" />
+    <ActivityHistory state={historyState} reviewsOnly onRetry={onRetryHistory} />
     <section className="study-section" aria-labelledby="review-how-heading">
       <div className="section-header"><h2 id="review-how-heading">How review works</h2></div>
       <dl className="review-rules">
         <div><dt>What gets queued</dt><dd>Missed and flagged questions, missed visual hazards, and safe details marked as hazards. An item can be both missed and flagged.</dd></div>
-        <div><dt>When you finish</dt><dd>Finish review saves an acknowledgement on this device. Your original answer and its feedback stay in your history.</dd></div>
-        <div><dt>If an item cannot be verified</dt><dd>Your attempt stays stored and is held out of the queue. It is never silently swapped for another question or scene.</dd></div>
+        <div><dt>When you finish</dt><dd>Confirm Finish review to remove the item from your ready queue. Your original answer and its explanation stay in your history.</dd></div>
+        <div><dt>If an attempt is unavailable</dt><dd>It stays in your saved history with the information that can be read.</dd></div>
         <div><dt>Where it lives</dt><dd>On this device only. <a href="/settings/#export-local-data">Export a backup in Settings</a> to keep a copy.</dd></div>
       </dl>
       {state.tag !== "recoverable_error" ? <div className="question-controls"><button className="button button-secondary" disabled={state.tag === "loading" || busy} onClick={() => controller.dispatch({ tag: "rebuild" })} type="button">Rebuild review queue</button><a href="/practice/">Choose another way to study</a></div> : null}

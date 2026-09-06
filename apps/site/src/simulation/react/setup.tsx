@@ -58,7 +58,13 @@ export const SimulationSetup = ({
     ])].sort((left, right) => left - right),
     [bootstrap.advertisedLengths, capacity, format]
   )
-  const [length, setLength] = useState(0)
+  const [requestedLength, setRequestedLength] = useState(0)
+  const preferredLength = format === "questions"
+    ? Math.min(capacity, ...bootstrap.advertisedLengths)
+    : capacity
+  const length = lengths.includes(requestedLength) && requestedLength <= capacity
+    ? requestedLength
+    : preferredLength
   const [seed, setSeed] = useState(`${bootstrap.releaseId}-practice`)
   const [timingMode, setTimingMode] = useState<"untimed" | "timed">("untimed")
   const [durationMinutes, setDurationMinutes] = useState(120)
@@ -78,16 +84,10 @@ export const SimulationSetup = ({
   }, [status.tag])
 
   useEffect(() => {
-    if (capacity > 0) setLength((current) => Math.min(Math.max(1, current), capacity))
-  }, [capacity])
-
-  useEffect(() => {
     const profileCategories = categories.map(({ category }) => category)
     setSelectedCategories(profileCategories)
-    setLength(format === "questions"
-      ? simulationCapacity(bootstrap.inventory, profileCategories, profileId)
-      : simulationHazardCapacity(bootstrap.hazards, profileCategories, profileId))
-  }, [bootstrap.hazards, bootstrap.inventory, categories, format, profileId])
+    setRequestedLength(0)
+  }, [categories])
 
   const start = (): void => {
     if (
@@ -185,7 +185,7 @@ export const SimulationSetup = ({
                 checked={length === candidate}
                 disabled={!available || status.tag === "creating"}
                 name="simulation-length"
-                onChange={() => setLength(candidate)}
+                onChange={() => setRequestedLength(candidate)}
                 type="radio"
                 value={candidate}
               />

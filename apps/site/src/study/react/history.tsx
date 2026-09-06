@@ -1,5 +1,6 @@
 import { Fragment, useEffect, useRef, useState } from "react"
 import type { StudyActivityRow, StudyActivityState } from "../model.ts"
+import { UnavailableAttempts } from "./unavailable-attempts.tsx"
 
 const dateFormat = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" })
 const monthFormat = new Intl.DateTimeFormat("en-US", { month: "long", year: "numeric" })
@@ -24,6 +25,7 @@ export const ActivityHistory = ({
   const rows = kind === "all" ? allRows : allRows.filter((row) => row.kind === kind)
   const visible = expanded ? rows : rows.slice(0, 6)
   const filteredEmpty = state.tag === "ready" && allRows.length > 0 && rows.length === 0
+  const hasUnavailableAttempts = state.tag === "ready" && state.activity.unavailableAttempts.length > 0
   useEffect(() => {
     if (filteredEmpty) filteredHeading.current?.focus()
   }, [filteredEmpty])
@@ -61,12 +63,13 @@ export const ActivityHistory = ({
         <p>Your history is unavailable. No saved attempt has been changed.</p>
         <button className="button button-secondary" onClick={onRetry} type="button">Retry reading history</button>
       </div>
+      : allRows.length === 0 && hasUnavailableAttempts && !reviewsOnly ? null
       : rows.length === 0 ? <div className="empty-state">
         <h3 className="empty-state-heading" ref={filteredHeading} tabIndex={-1}>
           {filteredEmpty ? `No ${kindLabels[kind].toLowerCase()} in this history` : reviewsOnly ? "No finished reviews yet" : "No saved activity in this release yet"}
         </h3>
         <p>{filteredEmpty ? "Try a different kind of activity to see your saved work." : reviewsOnly
-          ? "Use Finish review after opening an item's saved feedback. Your finished reviews will appear here."
+          ? "Read an item's explanation, then confirm Finish review. Your finished reviews will appear here."
           : "Submit a question or hazard response to start your history. Activity stays on this device."}</p>
         {filteredEmpty ? <div className="empty-state-actions"><button className="button button-secondary" type="button" onClick={() => setKind("all")}>Show all activity</button></div> : null}
       </div>
@@ -77,7 +80,7 @@ export const ActivityHistory = ({
             <time className="history-date" dateTime={new Date(row.recordedAt).toISOString()}>{dateFormat.format(row.recordedAt)}</time>
             <div className="history-session"><strong>{row.label}</strong><span>{kindLabels[row.kind]}</span></div>
             <span className="history-outcome">{row.outcome}</span>
-            <a href={row.href} aria-label={`Open saved feedback for ${row.label.toLowerCase()}`}>Feedback</a>
+            {row.href === null ? <span className="history-feedback-unavailable">Explanation unavailable</span> : <a href={row.href} aria-label={`Open saved feedback for ${row.label.toLowerCase()}`}>Feedback</a>}
           </li>)}</ul>
         </Fragment>)}
         {rows.length > 6 ? <div className="history-foot">
@@ -86,5 +89,6 @@ export const ActivityHistory = ({
         </div> : null}
       </div>}
     </div>
+    {state.tag === "ready" && !reviewsOnly ? <UnavailableAttempts attempts={state.activity.unavailableAttempts} headingId="study-unavailable-heading" /> : null}
   </section>
 }

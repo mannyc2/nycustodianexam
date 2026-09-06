@@ -1,6 +1,6 @@
 import type { Effect as EffectType } from "effect"
 import { Effect } from "effect"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, type RefObject } from "react"
 import type { HazardPersistence } from "../../hazard-player/persistence.ts"
 import {
   localFailureReport,
@@ -45,10 +45,31 @@ type ReviewRebuildState =
   | { readonly tag: "complete"; readonly receipt: ReviewRebuildReceipt }
   | { readonly tag: "recoverable_error"; readonly detail: string }
 
+type DisplayPreference = "largeText" | "reduceMotion"
+
+interface SettingsTaskCard {
+  readonly id?: string
+  readonly title: string
+  readonly description: string
+  readonly icon: string
+  readonly label: string
+  readonly run: () => void | Promise<void>
+  readonly expanded?: boolean
+  readonly controls?: string
+}
+
 interface SettingsEffectRunner {
   readonly runPromise: <A, E>(
     effect: EffectType.Effect<A, E, SettingsRequirements>
   ) => Promise<A>
+}
+
+const loadPreferences = Effect.flatMap(SettingsPersistence, (settings) => settings.loadPreferences())
+
+const useResultFocus = (result: unknown, heading: RefObject<HTMLHeadingElement | null>): void => {
+  useEffect(() => {
+    if (result !== null) heading.current?.focus()
+  }, [result, heading])
 }
 
 export const SettingsIsland = ({
@@ -60,6 +81,12 @@ export const SettingsIsland = ({
 }) => {
   const [preferences, setPreferences] = useState(defaultSitePreferences)
   const lastAuthoritativePreferences = useRef(preferences)
+  const [preferenceRead, setPreferenceRead] = useState<"loading" | "ready" | "unavailable">("loading")
+  const preferenceWrite = useRef(false)
+  const preferenceFocus = useRef<HTMLInputElement | null>(null)
+  const [preferenceStatus, setPreferenceStatus] = useState<Partial<Record<DisplayPreference, LocalFailureReport>>>({})
+  const [dataAction, setDataAction] = useState<"import" | "delete" | null>(null)
+  const actionHeading = useRef<HTMLHeadingElement>(null)
   const [includeDrafts, setIncludeDrafts] = useState(false)
   const [importText, setImportText] = useState<string | null>(null)
   const importFileGeneration = useRef(0)
@@ -80,7 +107,9 @@ export const SettingsIsland = ({
   const rebuildResultHeading = useRef<HTMLHeadingElement>(null)
   const completionHeading = useRef<HTMLHeadingElement>(null)
 
-  const synchronizeBootMirror = (stored: SitePreferencesRecord): string | null => {
+  const applySavedPreferences = (stored: SitePreferencesRecord): string | null => {
+    lastAuthoritativePreferences.current = stored
+    setPreferences(stored)
     const result = stored.updatedAt === 0
       ? clearBootPreferences()
       : saveBootPreferences({
@@ -91,111 +120,93 @@ export const SettingsIsland = ({
     return result.detail
   }
 
+  const beginOperation = (): void => {
+    setBusy(true)
+    setProblem(null)
+    setCompletion(null)
+  }
+
   useEffect(() => {
     let active = true
-    void runtime.runPromise(Effect.gen(function*() {
-      const settings = yield* SettingsPersistence
-      return yield* settings.loadPreferences()
-    })).then((stored) => {
+    void runtime.runPromise(loadPreferences).then((stored) => {
       if (!active) return
-      lastAuthoritativePreferences.current = stored
-      setPreferences(stored)
-      const mirrorDetail = synchronizeBootMirror(stored)
+      setPreferenceRead("ready")
+      const mirrorDetail = applySavedPreferences(stored)
       setNotice((stored.updatedAt === 0
-        ? "Default preferences are shown; nothing has been saved yet."
+        ? "Default preferences are shown."
         : "Your saved preferences loaded.") +
-        (mirrorDetail === null ? "" : ` ${mirrorDetail} The copy saved on this device remains authoritative.`))
+        (mirrorDetail === null ? "" : ` ${mirrorDetail} Saved preferences remain authoritative.`))
     }).catch((cause) => {
-      if (active) setProblem(localFailureReport(cause, "Saved settings could not be read from this device."))
+      if (active) {
+        setPreferenceRead("unavailable")
+        setNotice("Preferences unavailable. Saved-work controls remain available.")
+        setProblem(localFailureReport(cause, "Saved settings could not be read."))
+      }
     })
     return () => {
       active = false
     }
   }, [runtime])
 
-  useEffect(() => {
-    if (problem !== null) problemHeading.current?.focus()
-  }, [problem])
+  useResultFocus(problem, problemHeading)
+  useResultFocus(importPlan, resultHeading)
+  useResultFocus(resetPreview, resetResultHeading)
+  useResultFocus(completion, completionHeading)
+  useResultFocus(reviewRebuild.tag === "recoverable_error" ? reviewRebuild : null, rebuildErrorHeading)
+  useResultFocus(reviewRebuild.tag === "complete" ? reviewRebuild : null, rebuildResultHeading)
+  useResultFocus(dataAction, actionHeading)
 
   useEffect(() => {
-    if (importPlan !== null) resultHeading.current?.focus()
-  }, [importPlan])
+    if (busy || preferenceFocus.current === null) return
+    if (document.activeElement === document.body) preferenceFocus.current.focus()
+    preferenceFocus.current = null
+  }, [busy])
 
-  useEffect(() => {
-    if (resetPreview !== null) resetResultHeading.current?.focus()
-  }, [resetPreview])
-
-  useEffect(() => {
-    if (completion !== null) completionHeading.current?.focus()
-  }, [completion])
-
-  useEffect(() => {
-    if (reviewRebuild.tag === "recoverable_error") rebuildErrorHeading.current?.focus()
-    if (reviewRebuild.tag === "complete") rebuildResultHeading.current?.focus()
-  }, [reviewRebuild])
-
-  const savePreferences = async (): Promise<void> => {
+  const savePreference = async (field: DisplayPreference, value: boolean, control: HTMLInputElement): Promise<void> => {
+    if (preferenceWrite.current || busy || preferenceRead !== "ready") return
+    control.focus()
+    preferenceWrite.current = true
+    preferenceFocus.current = control
     setBusy(true)
-    setProblem(null)
-    setCompletion(null)
+    const next = new SitePreferencesRecord({ ...lastAuthoritativePreferences.current, [field]: value })
+    setPreferences(next)
+    const report = (message: string, diagnostic: string | null = null): void => {
+      setPreferenceStatus((current) => ({ ...current, [field]: { message, diagnostic } }))
+    }
+    report("Saving on this device…")
     try {
-      const saved = await runtime.runPromise(Effect.gen(function*() {
-        const settings = yield* SettingsPersistence
-        return yield* settings.savePreferences(preferences)
-      }))
-      lastAuthoritativePreferences.current = saved
-      setPreferences(saved)
-      const mirror = saveBootPreferences({
-        schemaVersion: 1,
-        largeText: saved.largeText,
-        reduceMotion: saved.reduceMotion
-      })
-      setNotice(mirror.mirrored
-        ? "Preferences saved on this device."
-        : `Preferences saved on this device and applied in this tab. ${mirror.detail}`)
-      setCompletion("Preferences saved")
+      const saved = await runtime.runPromise(Effect.flatMap(SettingsPersistence,
+        (settings) => settings.savePreferences(next)))
+      const mirrorDetail = applySavedPreferences(saved)
+      report(mirrorDetail === null
+        ? "Saved on this device."
+        : `Saved on this device; applied in this tab. ${mirrorDetail}`)
     } catch (cause) {
-      const writeFailure = localFailureReport(cause, "Your preferences were not saved.")
+      const writeFailure = localFailureReport(cause, "Preference save failed.")
       try {
-        const stored = await runtime.runPromise(Effect.gen(function*() {
-          const settings = yield* SettingsPersistence
-          return yield* settings.loadPreferences()
-        }))
-        lastAuthoritativePreferences.current = stored
-        setPreferences(stored)
-        const mirrorDetail = synchronizeBootMirror(stored)
-        setProblem({
-          message: `${writeFailure.message} The unsaved choices were set aside, and the controls ` +
-            "show the preferences still saved on this device." +
+        const stored = await runtime.runPromise(loadPreferences)
+        const mirrorDetail = applySavedPreferences(stored)
+        report(`${writeFailure.message} Your saved choices were restored.` +
             (mirrorDetail === null ? "" : ` ${mirrorDetail}`),
-          diagnostic: writeFailure.diagnostic
-        })
+          writeFailure.diagnostic)
       } catch (restoreCause) {
         console.error("Unable to reload the saved preferences", restoreCause)
-        const stored = lastAuthoritativePreferences.current
-        setPreferences(stored)
-        const mirrorDetail = synchronizeBootMirror(stored)
-        setProblem({
-          message: `${writeFailure.message} The saved preferences also could not be reloaded, ` +
-            "so the controls show the last known saved values." +
+        const mirrorDetail = applySavedPreferences(lastAuthoritativePreferences.current)
+        report(`${writeFailure.message} Reload failed too; your last saved choices are shown.` +
             (mirrorDetail === null ? "" : ` ${mirrorDetail}`),
-          diagnostic: writeFailure.diagnostic
-        })
+          writeFailure.diagnostic)
       }
     } finally {
+      preferenceWrite.current = false
       setBusy(false)
     }
   }
 
   const exportData = async (): Promise<void> => {
-    setBusy(true)
-    setProblem(null)
-    setCompletion(null)
+    beginOperation()
     try {
-      const envelope = await runtime.runPromise(Effect.gen(function*() {
-        const transfer = yield* DataTransfer
-        return yield* transfer.createExport(includeDrafts)
-      }))
+      const envelope = await runtime.runPromise(Effect.flatMap(DataTransfer,
+        (transfer) => transfer.createExport(includeDrafts)))
       const blob = new Blob([serializeDataExport(envelope)], { type: "application/json" })
       const href = URL.createObjectURL(blob)
       const anchor = document.createElement("a")
@@ -203,10 +214,10 @@ export const SettingsIsland = ({
       anchor.download = `nycustodian-local-data-${new Date(envelope.payload.exportedAt).toISOString().slice(0, 10)}.json`
       anchor.click()
       URL.revokeObjectURL(href)
-      setNotice(`Export ready with ${envelope.payload.questionAttempts.length + envelope.payload.hazardAttempts.length + envelope.payload.reviewAcknowledgements.length} event records. Correction drafts were ${includeDrafts ? "included because you chose to include them" : "excluded"}.`)
+      setNotice(`Export ready: ${envelope.payload.questionAttempts.length + envelope.payload.hazardAttempts.length + envelope.payload.reviewAcknowledgements.length} event records. Correction drafts ${includeDrafts ? "included" : "excluded"}.`)
       setCompletion("Export ready")
     } catch (cause) {
-      setProblem(localFailureReport(cause, "The export file could not be created. Nothing was changed."))
+      setProblem(localFailureReport(cause, "Export failed. Saved data is unchanged."))
     } finally {
       setBusy(false)
     }
@@ -231,34 +242,27 @@ export const SettingsIsland = ({
       const text = await file.text()
       if (generation !== importFileGeneration.current) return
       setImportText(text)
-      setNotice("File loaded on this device. Nothing has been checked or written yet.")
+      setNotice("File loaded. Preview it before importing; nothing is saved yet.")
     } catch (cause) {
       if (generation !== importFileGeneration.current) return
       setProblem(localFailureReport(
         cause,
-        "The selected file could not be read. Choose the export file again."
+        "File read failed. Choose the export again."
       ))
     }
   }
 
   const previewImport = async (): Promise<void> => {
     if (importText === null) return
-    setBusy(true)
-    setProblem(null)
-    setCompletion(null)
+    beginOperation()
     try {
-      const plan = await runtime.runPromise(Effect.gen(function*() {
-        const transfer = yield* DataTransfer
-        return yield* transfer.previewImport(
-          importText,
-          bootstrap.trustedReleaseContentRegistry
-        )
-      }))
+      const plan = await runtime.runPromise(Effect.flatMap(DataTransfer,
+        (transfer) => transfer.previewImport(importText, bootstrap.trustedReleaseContentRegistry)))
       setImportPlan(plan)
       setImportConfirmed(false)
-      setNotice("The file checked out. Review the preview below — nothing has been written yet.")
+      setNotice("File checked. Review the preview; nothing is saved yet.")
     } catch (cause) {
-      setProblem(localFailureReport(cause, "The file could not be read or checked, so nothing was imported."))
+      setProblem(localFailureReport(cause, "File check failed. Nothing imported."))
       setImportPlan(null)
     } finally {
       setBusy(false)
@@ -267,40 +271,34 @@ export const SettingsIsland = ({
 
   const applyImport = async (): Promise<void> => {
     if (importPlan === null || !importConfirmed) return
-    setBusy(true)
-    setProblem(null)
-    setCompletion(null)
+    beginOperation()
     let importApplied = false
     try {
-      const result = await runtime.runPromise(Effect.gen(function*() {
-        const transfer = yield* DataTransfer
-        return yield* transfer.applyImport(
-          importPlan,
-          bootstrap.trustedReleaseContentRegistry
-        )
-      }))
+      const result = await runtime.runPromise(Effect.flatMap(DataTransfer,
+        (transfer) => transfer.applyImport(importPlan, bootstrap.trustedReleaseContentRegistry)))
       importApplied = true
-      setNotice(`Import complete: ${result.imported} added, ${result.matched} already present, ${result.quarantined} set aside for review. Nothing already saved was overwritten.`)
+      setNotice(`Import saved: ${result.imported} added, ${result.matched} already present, ${result.quarantined} set aside. Existing records kept.`)
       setImportPlan(null)
       setImportText(null)
       setImportConfirmed(false)
-      const loaded = await runtime.runPromise(Effect.gen(function*() {
-        const settings = yield* SettingsPersistence
-        return yield* settings.loadPreferences()
-      }))
-      lastAuthoritativePreferences.current = loaded
-      setPreferences(loaded)
-      const mirrorDetail = synchronizeBootMirror(loaded)
+      const loaded = await runtime.runPromise(loadPreferences)
+      const mirrorDetail = applySavedPreferences(loaded)
+      setPreferenceRead("ready")
+      setPreferenceStatus({})
       if (mirrorDetail !== null) {
-        setNotice((current) => `${current} ${mirrorDetail} The imported preferences remain authoritative.`)
+        setNotice((current) => `${current} ${mirrorDetail} Imported preferences remain authoritative.`)
       }
       setCompletion("Import complete")
     } catch (cause) {
+      if (importApplied) {
+        setPreferenceRead("unavailable")
+        setPreferenceStatus({})
+      }
       setProblem(localFailureReport(
         cause,
         importApplied
-          ? "The import finished, but the saved display preferences could not be reloaded. The imported records remain saved; reload this page before changing preferences."
-          : "The import could not be applied. Nothing already saved was changed."
+          ? "Import saved. Preferences could not reload; reload this page before changing them."
+          : "Import failed. Existing records are unchanged."
       ))
     } finally {
       setBusy(false)
@@ -308,9 +306,7 @@ export const SettingsIsland = ({
   }
 
   const rebuildReviewQueue = async (): Promise<void> => {
-    setBusy(true)
-    setProblem(null)
-    setCompletion(null)
+    beginOperation()
     setReviewRebuild({ tag: "pending" })
     try {
       const receipt = await runtime.runPromise(
@@ -321,7 +317,7 @@ export const SettingsIsland = ({
       console.error("Unable to rebuild the review queue", cause)
       setReviewRebuild({
         tag: "recoverable_error",
-        detail: "The review queue could not be rebuilt from this device\u2019s storage."
+        detail: "Could not rebuild from this device’s storage."
       })
     } finally {
       setBusy(false)
@@ -329,19 +325,15 @@ export const SettingsIsland = ({
   }
 
   const previewResetOperation = async (): Promise<void> => {
-    setBusy(true)
-    setProblem(null)
-    setCompletion(null)
+    beginOperation()
     try {
-      const preview = await runtime.runPromise(Effect.gen(function*() {
-        const settings = yield* SettingsPersistence
-        return yield* settings.previewReset(resetScope)
-      }))
+      const preview = await runtime.runPromise(Effect.flatMap(SettingsPersistence,
+        (settings) => settings.previewReset(resetScope)))
       setResetPreview(preview)
       setResetConfirmed(false)
-      setNotice("The delete preview is ready. No record was changed.")
+      setNotice("Delete preview ready. Nothing changed.")
     } catch (cause) {
-      setProblem(localFailureReport(cause, "The delete preview could not be created. Nothing was changed."))
+      setProblem(localFailureReport(cause, "Could not preview deletion. Nothing changed."))
     } finally {
       setBusy(false)
     }
@@ -349,29 +341,24 @@ export const SettingsIsland = ({
 
   const applyReset = async (): Promise<void> => {
     if (resetPreview === null || !resetConfirmed) return
-    setBusy(true)
-    setProblem(null)
-    setCompletion(null)
+    beginOperation()
     try {
-      const receipt = await runtime.runPromise(Effect.gen(function*() {
-        const settings = yield* SettingsPersistence
-        return yield* settings.reset(resetPreview)
-      }))
-      setNotice(`Delete complete: ${receipt.records} record(s) removed. Offline downloads were not touched.`)
+      const receipt = await runtime.runPromise(Effect.flatMap(SettingsPersistence,
+        (settings) => settings.reset(resetPreview)))
+      setNotice(`Delete complete: ${receipt.records} record(s) removed. Offline downloads unchanged.`)
       setResetPreview(null)
       setResetConfirmed(false)
       if (resetPreview.scope === "preferences" || resetPreview.scope === "all-portable-data") {
-        const defaults = defaultSitePreferences()
-        lastAuthoritativePreferences.current = defaults
-        setPreferences(defaults)
-        const mirror = clearBootPreferences()
-        if (!mirror.mirrored) {
-          setNotice((current) => `${current} ${mirror.detail} Defaults were applied in this tab.`)
+        const mirrorDetail = applySavedPreferences(defaultSitePreferences())
+        setPreferenceRead("ready")
+        setPreferenceStatus({})
+        if (mirrorDetail !== null) {
+          setNotice((current) => `${current} ${mirrorDetail} Defaults applied in this tab.`)
         }
       }
       setCompletion("Delete complete")
     } catch (cause) {
-      setProblem(localFailureReport(cause, "The delete did not finish. Records outside the previewed scope were not touched."))
+      setProblem(localFailureReport(cause, "Delete failed. Records outside the preview were not touched."))
     } finally {
       setBusy(false)
     }
@@ -384,70 +371,95 @@ export const SettingsIsland = ({
           <h2 id="settings-error-heading" ref={problemHeading} tabIndex={-1}>This didn’t finish</h2>
           <p>{problem.message}</p>
           {problem.diagnostic === null ? null : (
-            <details className="feedback-sources">
-              <summary>Technical details</summary>
+            <details className="feedback-sources"><summary>Technical details</summary>
               <p><code>{problem.diagnostic}</code></p>
             </details>
           )}
         </section>
       )}
 
-      <section className="reference-card" aria-labelledby="preferences-heading">
-        <h2 id="preferences-heading">Preferences on this device</h2>
-        <fieldset className="form-field-group" disabled={busy}>
-          <legend>Preference choices</legend>
-          <div className="form-field">
-            <label htmlFor="settings-language">Preferred content language</label>
-            <select
-              id="settings-language"
-              value={preferences.preferredLocale}
-              onChange={(event) => setPreferences(new SitePreferencesRecord({
-                ...preferences,
-                preferredLocale: event.target.value as "en" | "es"
-              }))}
-            >
-              <option value="en">English</option>
-              <option value="es" disabled>Spanish (not available yet)</option>
-            </select>
+      <section className="settings-reading" aria-labelledby="preferences-heading">
+        <div className="section-header">
+          <h2 id="preferences-heading">Reading and motion</h2>
+          <p>Changes save automatically on this device.</p>
+        </div>
+        <fieldset className="preference-list" disabled={busy || preferenceRead !== "ready"}>
+          <legend className="sr-only">Reading and motion choices</legend>
+          <div className="preference-row">
+            <div><h3>Language</h3><p>All content is published in English.</p></div>
+            <strong>English</strong>
           </div>
-          <label className="affirmation-control">
-            <input type="checkbox" checked={preferences.lowDataMode} disabled />
-            Low-data mode (not available yet)
-          </label>
-          <label className="affirmation-control">
-            <input type="checkbox" checked={preferences.largeText} onChange={(event) =>
-              setPreferences(new SitePreferencesRecord({ ...preferences, largeText: event.target.checked }))} />
-            Prefer larger application text
-          </label>
-          <label className="affirmation-control">
-            <input type="checkbox" checked={preferences.reduceMotion} onChange={(event) =>
-              setPreferences(new SitePreferencesRecord({ ...preferences, reduceMotion: event.target.checked }))} />
-            Reduce nonessential application motion
-          </label>
-          <button className="button button-primary" disabled={busy} onClick={() => void savePreferences()} type="button">
-            Save preferences
-          </button>
+          {([
+            ["largeText", "Larger text", "125% text with full-size answer controls and reflowing pages."],
+            ["reduceMotion", "Reduce motion", "Turns off nonessential transitions. System motion preferences also apply."]
+          ] as const).map(([field, label, description]) => (
+            <div className="preference-row" key={field}>
+              <div>
+                <h3><label htmlFor={`settings-${field}`}>{label}</label></h3>
+                <p id={`settings-${field}-description`}>{description}</p>
+                <p role="status" aria-live="polite" aria-atomic="true" className="preference-status">
+                  {preferenceStatus[field]?.message ?? ""}
+                </p>
+                {preferenceStatus[field]?.diagnostic ? <details className="technical-details"><summary>Technical details</summary>
+                  <p>{preferenceStatus[field]?.diagnostic}</p>
+                </details> : null}
+              </div>
+              <input id={`settings-${field}`} type="checkbox" checked={preferences[field]}
+                aria-describedby={`settings-${field}-description`}
+                onChange={(event) => void savePreference(field, event.target.checked, event.currentTarget)} />
+            </div>
+          ))}
         </fieldset>
       </section>
 
-      <section id="export-local-data" className="reference-card" aria-labelledby="export-heading">
-        <h2 id="export-heading">Export your local data</h2>
-        <p>Downloads one file with your study history and preferences that you can keep or move to another device. Offline downloads are not included. The site checks the file before importing it.</p>
-        <fieldset className="form-field-group" disabled={busy}>
-          <legend>Export options</legend>
-          <label className="affirmation-control">
-            <input type="checkbox" checked={includeDrafts} onChange={(event) => setIncludeDrafts(event.target.checked)} />
-            Include correction drafts, which may contain sensitive free-form text
-          </label>
-          <button className="button button-secondary" disabled={busy} onClick={() => void exportData()} type="button">
-            Download export file
-          </button>
-        </fieldset>
+      <section className="settings-data" aria-labelledby="saved-work-heading">
+        <div className="section-header"><h2 id="saved-work-heading">Your saved work</h2></div>
+        <ul className="task-cards settings-task-cards">
+          {[
+            {
+              id: "export-local-data", title: "Export",
+              description: "History and preferences. Excludes offline downloads.",
+              icon: "export", label: "Export a file", run: exportData
+            },
+            {
+              title: "Import",
+              description: "Preview another device’s export, then confirm.",
+              icon: "import", label: "Choose a file", run: () => setDataAction("import"),
+              expanded: dataAction === "import", controls: "settings-import"
+            },
+            {
+              id: "rebuild-review-projection", title: "Rebuild review",
+              description: "From saved attempts and finished reviews. History stays unchanged.",
+              icon: "rebuild",
+              label: reviewRebuild.tag === "pending" ? "Rebuilding review queue…" : "Rebuild review queue", run: rebuildReviewQueue
+            },
+            {
+              title: "Delete",
+              description: "Preview counts, then confirm. Export first if needed.",
+              icon: "delete", label: "Choose what to delete", run: () => setDataAction("delete"),
+              expanded: dataAction === "delete", controls: "settings-delete"
+            }
+          ].map((task: SettingsTaskCard) => {
+            const exporting = task.id === "export-local-data"
+            const action = <button className="button button-secondary" type="button" disabled={busy || preferenceRead === "loading"}
+              aria-expanded={task.expanded} aria-controls={task.controls} onClick={task.run}>{task.label}</button>
+            return <li id={task.id} className="task-card" aria-labelledby={exporting ? "export-heading" : undefined} key={task.title}>
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><use href={`#settings-icon-${task.icon}`} /></svg>
+              <h3 id={exporting ? "export-heading" : undefined}>{task.title}</h3><p>{task.description}</p>
+              {exporting ? <div className="settings-card-action">
+                <label className="affirmation-control"><input type="checkbox" disabled={busy || preferenceRead === "loading"} checked={includeDrafts} onChange={(event) => setIncludeDrafts(event.target.checked)} />
+                  <span>Include correction drafts (may contain sensitive text)</span>
+                </label>
+                {action}
+              </div> : action}
+            </li>
+          })}
+        </ul>
       </section>
 
-      <section className="reference-card" aria-labelledby="import-heading">
-        <h2 id="import-heading">Import exported data</h2>
-        <p>Nothing is written until the file is checked, a preview is shown, and you confirm. Records that conflict or reference unknown content are set aside instead of overwriting anything.</p>
+      <section id="settings-import" className="reference-card" aria-labelledby="import-heading" hidden={dataAction !== "import"}>
+        <h2 id="import-heading" ref={dataAction === "import" ? actionHeading : undefined} tabIndex={-1}>Import exported data</h2>
+        <p>Conflicts and unknown references are set aside; saved records stay.</p>
         <fieldset className="form-field-group" disabled={busy}>
           <legend>Import file and confirmation</legend>
           <div className="form-field">
@@ -455,7 +467,7 @@ export const SettingsIsland = ({
             <input id="settings-import-file" type="file" accept="application/json,.json" onChange={(event) =>
               void chooseImportFile(event.target.files?.[0])} />
           </div>
-          <button className="button button-secondary" disabled={busy || importText === null} onClick={() => void previewImport()} type="button">
+          <button className="button button-secondary" type="button" disabled={busy || importText === null} onClick={previewImport}>
             Check and preview import
           </button>
           {importPlan === null ? null : (
@@ -469,11 +481,10 @@ export const SettingsIsland = ({
                 <dt>Correction drafts</dt><dd>{importPlan.preview.includesCorrectionDrafts ? "Included" : "Excluded"}</dd>
               </dl>
               <details className="source-note"><summary>Technical details</summary><p>Checksum <code>{importPlan.preview.checksum}</code></p></details>
-              <label className="affirmation-control">
-                <input type="checkbox" checked={importConfirmed} onChange={(event) => setImportConfirmed(event.target.checked)} />
+              <label className="affirmation-control"><input type="checkbox"  checked={importConfirmed} onChange={(event) => setImportConfirmed(event.target.checked)} />
                 Apply exactly this preview without overwriting existing records
               </label>
-              <button className="button button-primary" disabled={busy || !importConfirmed} onClick={() => void applyImport()} type="button">
+              <button className="button button-primary" type="button" disabled={busy || !importConfirmed} onClick={applyImport}>
                 Apply import
               </button>
             </div>
@@ -481,29 +492,10 @@ export const SettingsIsland = ({
         </fieldset>
       </section>
 
-      <section
-        id="rebuild-review-projection"
-        className="reference-card"
-        aria-labelledby="review-rebuild-heading"
-      >
-        <h2 id="review-rebuild-heading">Rebuild your review queue</h2>
-        <p>
-          Rebuild the review queue from your saved attempts and finished reviews. It does not
-          change your history or finish anything for you.
-        </p>
-        <button
-          className="button button-secondary"
-          disabled={busy}
-          onClick={() => void rebuildReviewQueue()}
-          type="button"
-        >
-          {reviewRebuild.tag === "pending"
-            ? "Rebuilding review queue…"
-            : "Rebuild review queue"}
-        </button>
+      <section className="settings-rebuild-result" aria-label="Review rebuild result" hidden={reviewRebuild.tag === "idle"}>
         {reviewRebuild.tag === "pending" ? (
           <p role="status" aria-live="polite" aria-atomic="true">
-            Rebuilding the review queue from the events saved on this device…
+            Rebuilding from saved events…
           </p>
         ) : null}
         {reviewRebuild.tag === "recoverable_error" ? (
@@ -520,25 +512,23 @@ export const SettingsIsland = ({
               Review queue rebuild stopped
             </h3>
             <p>{reviewRebuild.detail}</p>
-            <p>No saved attempt or finished review was changed. You can try the rebuild again.</p>
+            <p>History is unchanged. Try rebuilding again.</p>
           </section>
         ) : null}
         {reviewRebuild.tag === "complete" ? (
           <div className="operation-preview">
             <h3 ref={rebuildResultHeading} tabIndex={-1}>Review queue rebuild complete</h3>
             <p role="status" aria-live="polite" aria-atomic="true">
-              Read {reviewRebuild.receipt.attemptsRead} saved attempt(s), found {" "}
-              {reviewRebuild.receipt.dueItems} due for review, and set aside {" "}
-              {reviewRebuild.receipt.quarantinedAttempts} that could not be checked. Nothing in
-              your history was changed.
+              Read {reviewRebuild.receipt.attemptsRead} attempts: {reviewRebuild.receipt.dueItems} ready for review; {" "}
+              {reviewRebuild.receipt.quarantinedAttempts} could not be checked. History unchanged.
             </p>
           </div>
         ) : null}
       </section>
 
-      <section className="reference-card" aria-labelledby="reset-heading">
-        <h2 id="reset-heading">Delete local data</h2>
-        <p>Export first if you may need these records. Offline downloads are never deleted here; preview or remove them on the <a href="/offline/">Use offline page</a>.</p>
+      <section id="settings-delete" className="reference-card" aria-labelledby="reset-heading" hidden={dataAction !== "delete"}>
+        <h2 id="reset-heading" ref={dataAction === "delete" ? actionHeading : undefined} tabIndex={-1}>Delete local data</h2>
+        <p><a href="#export-local-data">Export your progress first</a> if needed. Manage offline downloads on the <a href="/offline/">Use offline page</a>; they are never deleted here.</p>
         <fieldset className="form-field-group" disabled={busy}>
           <legend>Reset scope and confirmation</legend>
           <div className="form-field">
@@ -555,19 +545,19 @@ export const SettingsIsland = ({
               <option value="all-portable-data">All portable local data</option>
             </select>
           </div>
-          <button className="button button-secondary" disabled={busy} onClick={() => void previewResetOperation()} type="button">
+          <button className="button button-secondary" type="button" disabled={busy} onClick={previewResetOperation}>
             Preview delete
           </button>
           {resetPreview === null ? null : (
             <div className="operation-preview">
-              <h3 ref={resetResultHeading} tabIndex={-1}>Delete preview: {resetPreview.records} record(s)</h3>
+              <h3 ref={resetResultHeading} tabIndex={-1}>Delete preview — nothing changed yet</h3>
+              <p>{resetPreview.records} record(s) in the selected scope will be removed.</p>
               <p>Offline downloads are not included.</p>
               <details className="source-note"><summary>Technical details</summary><ul>{resetPreview.stores.map((store) => <li key={store.name}><code>{store.name}</code>: {store.records}</li>)}</ul></details>
-              <label className="affirmation-control">
-                <input type="checkbox" checked={resetConfirmed} onChange={(event) => setResetConfirmed(event.target.checked)} />
+              <label className="affirmation-control"><input type="checkbox"  checked={resetConfirmed} onChange={(event) => setResetConfirmed(event.target.checked)} />
                 Delete exactly these previewed records from this device
               </label>
-              <button className="button button-primary" disabled={busy || !resetConfirmed} onClick={() => void applyReset()} type="button">
+              <button className="button button-primary" type="button" disabled={busy || !resetConfirmed} onClick={applyReset}>
                 Delete these records
               </button>
             </div>
@@ -575,11 +565,11 @@ export const SettingsIsland = ({
         </fieldset>
       </section>
       {completion === null ? (
-        <p role="status" aria-live="polite">{notice}</p>
+        <p role="status" aria-live="polite" aria-atomic="true">{notice}</p>
       ) : (
         <section className="local-data-state" aria-labelledby="settings-completion-heading">
           <h2 id="settings-completion-heading" ref={completionHeading} tabIndex={-1}>{completion}</h2>
-          <p role="status" aria-live="polite">{notice}</p>
+          <p role="status" aria-live="polite" aria-atomic="true">{notice}</p>
         </section>
       )}
     </div>

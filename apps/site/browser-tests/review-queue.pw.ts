@@ -7,9 +7,11 @@ import {
   attemptId,
   questionPostcommitPath,
   questionReceipt,
+  gotoReadyQuestion,
   readStoredAttempt,
   type StoredAttempt
 } from "./question-player-fixtures.ts"
+import { verifiedContentCacheName } from "../src/verified-content.ts"
 
 const optionIds = [
   "a",
@@ -84,17 +86,68 @@ test("an exact receipt mismatch is quarantined without loading or substituting f
   await page.goto("/review/")
 
   await expect(page.getByRole("heading", { name: "0 items to review" })).toBeVisible()
-  await expect(page.getByRole("heading", { name: "Saved attempts needing attention" }))
+  await expect(page.getByRole("heading", { name: "Unavailable saved attempts" }))
     .toBeVisible()
-  await expect(
-    page
-      .getByRole("complementary", { name: "Saved attempts needing attention" })
-      .getByRole("listitem")
-  ).toContainText(
-    "This saved answer does not match the current version of the question. It remains stored and was not applied to different content."
-  )
-  await expect(page.getByRole("link", { name: "Open saved feedback" })).toHaveCount(0)
+  const unavailable = page.getByRole("region", { name: "Unavailable saved attempts" })
+  await expect(unavailable.getByRole("listitem")).toContainText("This saved attempt can’t be displayed.")
+  await expect(unavailable.getByRole("listitem")).toContainText("Jan 1, 1970")
+  await expect(unavailable).not.toContainText("does not match")
+  await expect(unavailable.getByRole("link")).toHaveCount(0)
+  await expect(unavailable.getByRole("button")).toHaveCount(0)
+  await expect(page.getByRole("link", { name: "Read explanation", exact: true })).toHaveCount(0)
   await expect(page.getByRole("button", { name: "Finish review" })).toHaveCount(0)
   expect(postcommitRequests).toBe(0)
   expect(await readStoredAttempt(page)).toEqual(mismatchedAttempt)
+  await page.goto("/practice/")
+  await expect(page.getByRole("region", { name: "Unavailable saved attempts" })).toContainText("This saved attempt can’t be displayed.")
+  await expect(page.getByRole("heading", { name: "No saved activity in this release yet", exact: true })).toHaveCount(0)
+  expect(await readStoredAttempt(page)).toEqual(mismatchedAttempt)
+  expect(postcommitRequests).toBe(0)
+})
+
+test.describe("review history when feedback becomes unavailable", () => {
+  // Keep the feedback failure at the network boundary in every browser engine.
+  test.use({ serviceWorkers: "block" })
+
+  test("finishing one of several reviews retains keyboard focus and unavailable feedback preserves finished history", async ({ context, page }) => {
+    await gotoReadyQuestion(page)
+    for (let position = 1; position <= 2; position += 1) {
+      await page.getByRole("button", { name: "Flag for review", exact: true }).click()
+      await page.getByRole("radio").first().check()
+      await page.getByRole("button", { name: "Save answer", exact: true }).click()
+      await expect(page.locator(".feedback-rationales")).toBeVisible()
+      if (position === 1) await page.getByRole("link", { name: /^Next question/ }).click()
+    }
+    const savedAttempt = await readStoredAttempt(page)
+    await page.goto("/review/")
+    await expect(page.getByRole("heading", { name: "2 items to review", exact: true })).toBeVisible()
+    await page.getByRole("button", { name: "Finish review", exact: true }).first().click()
+    await page.getByRole("button", { name: "Confirm finish review", exact: true }).click()
+    await expect(page.getByRole("heading", { name: "1 item to review", exact: true })).toBeVisible()
+    await expect(page.getByRole("heading", { name: "What is ready", exact: true })).toBeFocused()
+    const history = page.getByRole("region", { name: "Review history", exact: true })
+    await expect(history.getByRole("listitem")).toHaveCount(1)
+    await expect(history).toContainText("Review finished")
+    const finishedDate = await history.locator("time").getAttribute("datetime")
+
+    await page.evaluate((name) => caches.delete(name), verifiedContentCacheName)
+    await context.route("**/*.postcommit.json", (route) => route.abort("blockedbyclient"))
+    await page.reload()
+    await expect(page.getByRole("region", { name: "Unavailable saved attempts", exact: true })).toBeVisible()
+    await expect(history.getByRole("listitem")).toHaveCount(1)
+    await expect(history).toContainText("Review finished")
+    await expect(history).toContainText("Explanation unavailable")
+    await expect(history.locator("time")).toHaveAttribute("datetime", finishedDate!)
+    await expect(history.getByRole("link")).toHaveCount(0)
+    await expect(page.getByRole("heading", { name: "No finished reviews yet", exact: true })).toHaveCount(0)
+    expect(await readStoredAttempt(page)).toEqual(savedAttempt)
+
+    await page.goto("/practice/")
+    await expect(page.getByRole("region", { name: "Unavailable saved attempts", exact: true })).toBeVisible()
+    await expect(page.locator(".figure-strip > div").filter({ has: page.locator("dt", { hasText: "Finished reviews" }) }).locator("dd")).toHaveText("1")
+    const activity = page.getByRole("region", { name: "Recent activity", exact: true })
+    await expect(activity.locator(".history-row")).toHaveCount(1)
+    await expect(activity.locator(".history-row")).toContainText("Review finished")
+    await expect(activity.locator(".history-row").getByRole("link")).toHaveCount(0)
+  })
 })

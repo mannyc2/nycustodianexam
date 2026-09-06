@@ -68,6 +68,7 @@
   .study-progress-rows p { color: var(--color-text-muted); font-size: var(--text-sm); }
   .study-progress-rows strong { display: block; margin-block-start: var(--space-2); font-size: var(--text-xs); }
   .study-progress-rows a { font-weight: var(--weight-bold); font-size: var(--text-sm); }
+  .history-feedback-unavailable { max-inline-size: 12ch; color: var(--color-text-muted); font-size: var(--text-xs); }
   .study-set-options { display: grid; list-style: none; padding: 0 var(--space-5); margin: 0; border: var(--border-thin) solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); }
   .study-set-options > li { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); padding-block: var(--space-4); }
   .study-set-options > li + li { border-block-start: var(--border-thin) solid var(--color-border-hairline); }
@@ -90,7 +91,20 @@
   .review-page .review-reason-list { color: var(--color-text-muted); font-size: var(--text-sm); }
   .review-page .review-item-card .question-controls { flex-direction: column; align-items: stretch; gap: var(--space-2); margin: 0; }
   .review-page .review-item-card .button { font-size: var(--text-xs); }
-  .review-page .review-quarantine { margin: 0; }
+  .review-finish-action { min-block-size: var(--target-default); padding: var(--space-2); border: 0; background: transparent; color: var(--color-text-muted); font: inherit; font-size: var(--text-xs); text-decoration: underline; text-underline-offset: 0.2em; cursor: pointer; }
+  .review-finish-action:hover { color: var(--color-text); }
+  .review-finish-action:disabled { cursor: default; opacity: 0.6; }
+  .review-finish-confirmation { grid-column: 2 / -1; display: grid; gap: var(--space-3); padding: var(--space-4); border: var(--border-thin) solid var(--color-border); border-radius: var(--radius-md); background: var(--color-canvas); }
+  .review-finish-confirmation h4 { margin: 0; font-size: var(--text-sm); }
+  .review-finish-confirmation p { color: var(--color-text-muted); font-size: var(--text-sm); }
+  .review-confirmation-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .unavailable-attempts { padding: var(--space-5); border: var(--border-thin) solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); }
+  .unavailable-attempts > p { margin: 0 0 var(--space-4); color: var(--color-text-muted); font-size: var(--text-sm); }
+  .unavailable-attempts ul { margin: 0; padding: 0; list-style: none; }
+  .unavailable-attempts li { display: grid; grid-template-columns: 6rem minmax(0, 1fr); gap: var(--space-4); padding-block: var(--space-3); border-block-start: var(--border-thin) solid var(--color-border-hairline); }
+  .unavailable-attempts li > div:last-child { grid-column: 2; }
+  .unavailable-attempts strong { font-size: var(--text-sm); }
+  .unavailable-attempts li p { margin: var(--space-1) 0 0; color: var(--color-text-muted); font-size: var(--text-sm); }
   .review-page .review-error h1 { font-size: var(--text-h2); }
   .review-rules { display: grid; padding-inline: var(--space-5); margin: 0; border: var(--border-thin) solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); }
   .review-rules > div { display: grid; grid-template-columns: minmax(9rem, 0.6fr) minmax(0, 2fr); gap: var(--space-4); padding-block: var(--space-4); }
@@ -113,12 +127,16 @@
     .study-progress-rows > div > a { grid-column: 2; min-block-size: var(--target-default); display: inline-flex; align-items: center; }
     .study-history .history-row { grid-template-columns: 5rem minmax(0, 1fr) auto; gap: var(--space-2); }
     .study-history .history-outcome { grid-column: 2; }
-    .study-history .history-row > a { grid-column: 3; grid-row: 2; }
+    .study-history .history-row > :is(a, .history-feedback-unavailable) { grid-column: 3; grid-row: 2; }
     .review-rules > div { grid-template-columns: minmax(0, 1fr); gap: var(--space-2); }
     .review-page .review-item-card { grid-template-columns: minmax(0, 1fr); gap: var(--space-2); padding: var(--space-4); }
     .review-page .review-item-card .question-controls { flex-direction: row; flex-wrap: wrap; margin-block-start: var(--space-2); }
+    .review-finish-confirmation { grid-column: 1; }
+    .unavailable-attempts { padding: var(--space-4); }
+    .unavailable-attempts li { grid-template-columns: minmax(0, 1fr); gap: var(--space-1); }
+    .unavailable-attempts li > div:last-child { grid-column: 1; }
   }
   @media (forced-colors: active) {
-    .study-read-notice, .study-progress-rows, .review-rules, .review-page .review-queue-list { border-color: CanvasText; }
+    .study-read-notice, .study-progress-rows, .review-rules, .review-page .review-queue-list, .unavailable-attempts, .review-finish-confirmation { border-color: CanvasText; }
   }
 }

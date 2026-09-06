@@ -98,6 +98,7 @@ export type ReviewQuarantine = Readonly<{
   attemptId: string
   kind: "question" | "visual_hazard"
   detail: string
+  committedAt?: number
 }>
 
 export interface ReviewQueueProjection {

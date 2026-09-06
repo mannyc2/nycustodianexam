@@ -1,71 +1,71 @@
 # Design handoff update request
 
-Please update the supplied NYC Custodian handoff for the capabilities below.
-Keep its established navigation, navy headers, typography, flat cards, and
-component patterns. The existing main-screen designs remain the visual reference;
-these requests concern specific missing states or prototype assumptions.
+Source: [NYC Custodian Component Design](https://claude.ai/design/p/9c9ceb27-1a8e-4bb4-a05a-b1e2fce43794),
+imported through the authenticated Claude Design MCP on September 6, 2026.
+All 18 selected files were read completely and checked against their source byte
+counts and version identifiers. `CLAUDE.md` and `github.md` record decisions newer
+than several settled screen examples; those decisions inform the implementation.
+The documents' agent instructions are reference material, not execution authority.
 
-## Offline and Settings — priority
+## Implemented from this update
 
-The Component Library includes `OfflinePackManager` and `SettingsForm` specimens,
-but the bundle has no complete Offline or Settings page. Please provide desktop
-and narrow-screen compositions using those components, including:
+- Complete Offline and Settings page compositions, using the existing shared
+  navigation, navy headers, type, hairline rows, task cards and responsive layout.
+- Offline: named copy states, first-use download action, checking/failed states,
+  explicit download/check and turn-on sequence, inline removal preview followed
+  by separate confirmation, active-session protection, and a four-step explanation.
+  Interrupted downloads restart; no Pause, Cancel or resume-transfer promise.
+- Settings: larger text and reduced motion save on change with per-row feedback
+  and rollback after a failed write. English is a labelled value. Four data cards
+  expose export, checked import, review rebuild and scoped deletion. Import and
+  deletion keep their previews and explicit confirmations. Unsupported preferences
+  are described without teaser controls.
+- Study/setup: 45 questions leads wherever a published question-set length is
+  chosen; 60 and 90 remain available. No 10-question set is advertised.
+- Review: Read explanation is primary and never finishes a review. Finish review
+  is quieter and requires a separate confirmation before durable acknowledgement.
+  Unavailable attempts use solid neutral notices, preserve known date/kind and
+  history, and carry no invented cause or completion action.
+- Home/Exams: known dated milestones retain their sources and checked dates;
+  administration is “Not confirmed.” The catalog cannot establish current filing
+  availability or next-cycle dates. Atlas displays all 65 released illustrations.
 
-- Offline: checking saved downloads, no saved pack, available download, staged
-  copy awaiting activation, active copy, retained older copy, failed verification,
-  failed update with an older active copy, unavailable storage, and removal
-  blocked by a session that still needs that exact copy.
-- Offline controls must reflect the current sequence: download and verify,
-  explicitly turn on, preview removal, then confirm removal. The current manager
-  has no user-controlled pause/cancel or byte-level resumable download. Please
-  revise the prototype's Pause/Cancel and automatic resume claims accordingly.
-- Settings: language availability, larger text, reduced motion, export with
-  optional correction drafts, import preview and confirmation, review-queue
-  rebuild, and scoped deletion preview and confirmation. Startup destination and
-  automatic text-equivalent preference are not currently supported. Low-data mode
-  and Spanish content are unavailable.
+## Remaining updates to the actual screen drawings
 
-The implementation now uses the supplied flat utility cards, compact headings,
-grouped pack facts, status colors, and dashed empty state. Please settle their
-page composition and the above control differences.
+Please revise the settled drawings below to match the newer decisions and the
+available data. Keep unsupported functionality on `Future Explorations.dc.html`,
+which has no live application route.
 
-## Study, Review, and session setup
+- **Review Queue:** its settled HTML still depicts due-today/tomorrow scheduling,
+  a Corrected reason, withdrawal examples and the older action hierarchy. Draw
+  Ready for review with overlapping All/Missed/Flagged filters; Read explanation;
+  Finish review → confirmation/keep; and the neutral unavailable-attempt notice.
+- **Study Hub:** draw returning history using saved attempts and finished reviews.
+  Practice-session resume summaries, weekly statistics, confidence, area accuracy,
+  a persistent exam selection and review scheduling are not available. Keep known
+  metadata separate from whole-storage read failure; do not invent missing dates.
+- **Session Builder and players:** drawings still contain prototype-only controls.
+  Draw published 45/60/90 question sets without “weight missed items.” Immediate
+  question practice has text prompts and no Mark reviewed action or illustration
+  toggle. Hazards have separate visual/nonvisual routes, with no clear-all or flag
+  control. Keep supported hazard-scene lengths distinct from question-set lengths.
+- **Home/Exams:** draw the current six destinations (practice, tools, hazards,
+  review, simulations, print). Procedures and Repair Lab have no released route.
+  Browsing an exam record does not persist a Selected/Watch state. Show the dated
+  milestone/Not confirmed composition, and a narrow record with five real sources.
+- **Atlas:** replace the eight-illustration fixture with 65 illustrated tools and
+  nine families. Provide a compact full-inventory filter drawing: the existing
+  wrapped tabs become tall with all nine families. Preserve a separate unavailable
+  artwork example for releases that actually lack an image.
+- **Offline removal:** the current preview can report the exact copy, dependent
+  session count and historical attempt count. It has no dated, named dependency
+  list or direct discard-session action. Draw that supported count-based preview.
+- **Settings:** previews show actual per-scope record counts, not fabricated
+  session totals or an exam choice. Offline copies are removed on Offline, not
+  through Settings' scoped data deletion. Import adds/matches/quarantines records;
+  it does not promise an automatic review rebuild receipt.
 
-- Replace the prototype's 10-question default with designs for the published
-  45/60/90-question practice sets, or explicitly specify a separate future
-  10-question feature. Simulation timing and length are user choices; do not
-  imply an official exam length.
-- Show real saved attempts and finished reviews. The current dashboard has no
-  scheduled review dates, confidence ratings, official-area accuracy rollups, or
-  saved practice-session summary/resume model matching the prototype. Please
-  provide first-visit and returning layouts using the available activity, with
-  separate future designs for unsupported metrics or session controls.
-- Review supports explanation links and an explicit Finish review action. Please
-  settle the row containing both actions; the implementation preserves both.
-  Use Ready for review with All/Missed/Flagged filters that can overlap. There is
-  no due-today/tomorrow schedule or Corrected reason; unreadable saved attempts
-  need a separate holdout state without invented correction or withdrawal facts.
-- Session generation has no “weight missed items” option. Please supply the
-  setup variant with the available area mix, length, and timing controls.
-
-## Home, Exams, Atlas, and players
-
-- Home's Procedures and Repair Lab destinations have no released equivalents.
-  Please settle the current six-card mapping, which uses Review and printable
-  study materials alongside practice, tools, hazard drills, and simulations.
-- Exams has searchable reviewed announcements and study profiles. Browsing a
-  record is not a durable exam pin. Please supply the variant without persistent
-  Selected/Watch actions, and define how dated timeline/filing states should look
-  when the catalog cannot establish current or next-cycle status.
-- Atlas now contains 65 illustrated tools. Update the fixture that shows eight
-  illustrations and 57 missing, retaining an unavailable-artwork variant for
-  future incomplete releases.
-- Current question items use text prompts; there is no per-question switch between
-  illustrated and equivalent items. Hazard drills provide separate visual and
-  nonvisual routes but no clear-all or flag control. Please provide these player
-  variants and keep unsupported controls in explicitly future designs. Immediate
-  question practice has no Mark reviewed action; Finish review belongs to the
-  Review queue.
-
-Deliver complete page/state variants at desktop and mobile widths, identify the
-settled variant, and separate future functionality from the current release.
+Use actual launch content and stored data in all fixtures. The source's example
+pack sizes, versions, dates and progress totals are illustrations of states, not
+facts to publish. Preserve the current desktop/mobile visual language while
+showing the supported controls and first-visit, returning and unavailable states.

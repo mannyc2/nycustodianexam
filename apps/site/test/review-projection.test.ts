@@ -29,7 +29,7 @@ import {
   deriveQuestionReviewItem,
   reviewReasonId
 } from "../src/review/projection.ts"
-import { projectStudyActivity } from "../src/study/activity.ts"
+import { includeUnavailableReviews, projectStudyActivity } from "../src/study/activity.ts"
 
 const sha = "a".repeat(64)
 
@@ -460,6 +460,7 @@ describe("review projection", () => {
           id: `question:${questionAttemptId(retiredReceipt)}`,
           attemptId: questionAttemptId(retiredReceipt),
           kind: "question",
+          committedAt: 2,
           detail:
             "This saved question is unavailable in the current study material. It remains stored and was not replaced with a different question."
         }
@@ -642,11 +643,31 @@ describe("study activity", () => {
     const projection = projectStudyActivity(sources, [questionAttempt, generated, unknown], [visualAttempt, nonvisualAttempt], [])
     expect(projection.questionCount).toBe(2)
     expect(projection.hazardCount).toBe(2)
-    expect(projection.otherAttemptCount).toBe(1)
+    expect(projection.unavailableAttempts).toEqual([{ id: unknown.id, recordedAt: unknown.committedAt, label: "Question attempt" }])
     expect(projection.rows[0]?.href).toBe("/practice/session/ps-generated/question/7/")
     expect(projection.rows.map((row) => row.id)).not.toContain(unknown.id)
     const changed = new QuestionAttemptRecord({ ...generated, receipt: { ...receipt, postcommitSha256: "f".repeat(64) } })
     expect(projectStudyActivity(sources, [changed], [], []).questionCount).toBe(0)
+  })
+
+  it("preserves known attempt metadata when feedback is unavailable and removes its feedback link", () => {
+    const acknowledgementInput = { itemId: "question-review", attemptId: questionAttempt.id, reasonIds: ["flag"] as const }
+    const acknowledgement = new ReviewAcknowledgementRecord({ ...acknowledgementInput, id: reviewAcknowledgementId(acknowledgementInput), acknowledgedAt: 10 })
+    const projection = projectStudyActivity(bootstrap, [questionAttempt], [visualAttempt], [acknowledgement])
+    const unavailable = includeUnavailableReviews(projection, [{
+      id: `question:${questionAttempt.id}`,
+      attemptId: questionAttempt.id,
+      kind: "question",
+      committedAt: questionAttempt.committedAt,
+      detail: "Internal failure details must not be used as a displayed cause."
+    }])
+    expect(unavailable.questionCount).toBe(1)
+    expect(unavailable.hazardCount).toBe(1)
+    expect(unavailable.reviewCount).toBe(1)
+    expect(unavailable.rows.map((row) => row.attemptId)).toEqual([questionAttempt.id, visualAttempt.id])
+    expect(unavailable.rows[0]).toMatchObject({ kind: "reviews", recordedAt: 10, outcome: "Review finished", href: null })
+    expect(unavailable.unavailableAttempts).toEqual([{ id: questionAttempt.id, recordedAt: questionAttempt.committedAt, label: "Question attempt" }])
+    expect(includeUnavailableReviews(unavailable, []).unavailableAttempts).toEqual(unavailable.unavailableAttempts)
   })
 
   it("shows finished reviews only beside the exact matching saved attempt and keeps newest first", () => {
