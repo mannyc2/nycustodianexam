@@ -60,8 +60,10 @@ export const QuestionFeedback = () => {
     optionLabels.get(optionId) ?? "Unavailable answer choice"
 
   return (
-    <section className={correct ? "feedback feedback-correct" : "feedback feedback-review"}>
+    <section className={correct ? "feedback feedback-correct player-feedback" : "feedback feedback-review player-feedback"}>
+      <div className="player-outcome">
       <h2 ref={meta.outcomeHeadingRef} tabIndex={-1}>
+        <span aria-hidden="true" className="player-outcome-icon">{correct ? "✓" : "✕"}</span>{" "}
         {correct
           ? `Correct — “${optionLabel(state.payload.correctOptionId)}” is the right answer.`
           : `Not correct — the right answer is “${optionLabel(state.payload.correctOptionId)}”.`}
@@ -78,6 +80,7 @@ export const QuestionFeedback = () => {
           </dd>
         </div>
       </dl>
+      </div>
       <section aria-labelledby={`${meta.instanceId}-rationales`} className="feedback-rationales">
         <h3 id={`${meta.instanceId}-rationales`}>Answer explanations</h3>
         <ol className="rationale-list">
@@ -85,14 +88,16 @@ export const QuestionFeedback = () => {
             const rationale = rationales.get(optionId)
             return (
               <li key={optionId}>
-                <h4>
-                  {optionId === state.payload.correctOptionId
-                    ? "Correct answer"
-                    : optionId === state.selectedOptionId
-                      ? "Your answer"
-                      : "Other answer"}
-                  : {optionLabel(optionId)}
-                </h4>
+                <div className="rationale-heading-row">
+                  <h4>{optionLabel(optionId)}</h4>
+                  <span className="rationale-verdict" data-verdict={optionId === state.payload.correctOptionId ? "correct" : optionId === state.selectedOptionId ? "incorrect" : "other"}>
+                    {optionId === state.payload.correctOptionId
+                      ? "Correct answer"
+                      : optionId === state.selectedOptionId
+                        ? "Your answer — not correct"
+                        : "Not correct"}
+                  </span>
+                </div>
                 <p>{rationale?.message ?? "No rationale is available for this choice."}</p>
               </li>
             )

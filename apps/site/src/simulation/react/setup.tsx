@@ -130,8 +130,10 @@ export const SimulationSetup = ({
   }
 
   return <div className="simulation-setup-panel">
-    <section aria-labelledby="simulation-settings-heading" className="reference-card">
+    <section aria-labelledby="simulation-settings-heading" className="reference-card simulation-settings">
+      <p className="eyebrow">Build your session</p>
       <h2 id="simulation-settings-heading">Simulation settings</h2>
+      <p className="player-selection-note">Choose a profile, content, and pace. Your answers stay editable until you submit the whole simulation.</p>
       <label className="field-label" htmlFor="simulation-profile">Practicing for</label>
       <select
         disabled={status.tag === "creating"}
@@ -147,14 +149,14 @@ export const SimulationSetup = ({
       {selectedProfile === undefined
         ? <p className="source-note">Choose the statewide series or a jurisdiction-specific profile before starting. The choice controls which practice content can appear.</p>
         : <p className="source-note"><strong>Practicing for: {selectedProfile.label}.</strong> {selectedProfile.disclaimer}</p>}
-      <fieldset>
+      <fieldset className="simulation-format-fields">
         <legend>Practice format</legend>
         <label><input checked={format === "questions"} disabled={status.tag === "creating"} name="simulation-format" onChange={() => setFormat("questions")} type="radio" /> Multiple-choice questions</label>
         <label><input checked={format === "visual-hazards"} disabled={status.tag === "creating" || bootstrap.hazards.length === 0} name="simulation-format" onChange={() => setFormat("visual-hazards")} type="radio" /> Visual hazard scenes</label>
         <label><input checked={format === "nonvisual-hazards"} disabled={status.tag === "creating" || bootstrap.hazards.length === 0} name="simulation-format" onChange={() => setFormat("nonvisual-hazards")} type="radio" /> Hazard scenes — keyboard, no image</label>
         <p className="field-hint">Visual and keyboard hazard results are tracked separately because they are different tasks.</p>
       </fieldset>
-      <fieldset>
+      <fieldset className="simulation-mix-fields">
         <legend>Content mix</legend>
         {categories.map(({ category, count }) => <label key={category}>
           <input
@@ -173,7 +175,7 @@ export const SimulationSetup = ({
             ? <p className="field-hint" role="status">Select at least one content category to create a simulation.</p>
             : null}
       </fieldset>
-      <fieldset>
+      <fieldset className="simulation-length-fields">
         <legend>Set length</legend>
         <div className="answer-list">
           {lengths.map((candidate) => {
@@ -194,10 +196,11 @@ export const SimulationSetup = ({
           })}
         </div>
       </fieldset>
-      <fieldset>
+      <fieldset className="simulation-timing-fields">
         <legend>Practice timing</legend>
         <label><input checked={timingMode === "untimed"} disabled={status.tag === "creating"} name="simulation-timing" onChange={() => setTimingMode("untimed")} type="radio" /> Untimed</label>
         <label><input checked={timingMode === "timed"} disabled={status.tag === "creating"} name="simulation-timing" onChange={() => setTimingMode("timed")} type="radio" /> Timed practice</label>
+        {timingMode === "timed" ? <>
         <label htmlFor="simulation-duration">Practice duration (minutes)</label>
         <input
           disabled={timingMode !== "timed" || status.tag === "creating"}
@@ -211,6 +214,7 @@ export const SimulationSetup = ({
         <label><input checked={timerHidden} disabled={timingMode !== "timed" || status.tag === "creating"} onChange={(event) => setTimerHidden(event.target.checked)} type="checkbox" /> Start with timer hidden</label>
         <label><input checked={autoSubmit} disabled={timingMode !== "timed" || status.tag === "creating"} onChange={(event) => setAutoSubmit(event.target.checked)} type="checkbox" /> Auto-submit when practice time expires</label>
         <p className="field-hint">Auto-submit is off unless you opt in. A timed simulation without it stays editable after the timer reaches zero.</p>
+        </> : null}
       </fieldset>
       <details className="source-note">
         <summary>Repeat this exact set</summary>
@@ -225,18 +229,32 @@ export const SimulationSetup = ({
         />
         <p>The same available release, format, settings, and code produce the same item order. A saved simulation records the exact items it was created with; it can restore them while that saved browser data remains available.</p>
       </details>
-      <button
-        className="button button-primary"
-        disabled={status.tag === "creating" || selectedProfile === undefined || capacity === 0 || length > capacity || seed.trim().length === 0 || seed.trim().length > deterministicSeedMaxLength || !timingValid}
-        onClick={start}
-        type="button"
-      >{status.tag === "creating" ? "Preparing your simulation…" : "Start simulation"}</button>
       {status.tag === "failure" && <section className="error-panel" role="alert">
         <h3 ref={failureRef} tabIndex={-1}>Simulation was not created</h3><p>{status.detail}</p>
       </section>}
     </section>
-    <aside className="reference-card" aria-labelledby="simulation-availability-heading">
-      <h2 id="simulation-availability-heading">Available in this release</h2>
+    <aside className="reference-card simulation-preview" aria-labelledby="simulation-availability-heading">
+      <p className="eyebrow">Before you start</p>
+      <h2 id="simulation-availability-heading">Your session</h2>
+      <dl className="simulation-preview-facts">
+        <div><dt>Practicing for</dt><dd>{selectedProfile?.label ?? "Choose a study profile"}</dd></div>
+        <div><dt>Format</dt><dd>{format === "questions" ? "Multiple-choice questions" : format === "visual-hazards" ? "Visual hazard scenes" : "Hazard scenes — keyboard, no image"}</dd></div>
+        <div><dt>Length</dt><dd>{capacity === 0 ? "Choose your content mix" : `${length} ${length === 1 ? "item" : "items"}`}</dd></div>
+        <div><dt>Timing</dt><dd>{timingMode === "untimed" ? "Untimed — work at your own pace" : timingValid ? `${durationMinutes} minutes${autoSubmit ? " · auto-submit on" : " · auto-submit off"}` : "Enter a duration from 1 to 240 minutes"}</dd></div>
+        <div><dt>Feedback</dt><dd>After final submission</dd></div>
+      </dl>
+      <p className="simulation-practice-note">This is original practice. The length, content mix, and results do not represent an official exam.</p>
+      <div className="player-action-bar">
+        <button
+          className="button button-primary"
+          disabled={status.tag === "creating" || selectedProfile === undefined || capacity === 0 || length > capacity || seed.trim().length === 0 || seed.trim().length > deterministicSeedMaxLength || !timingValid}
+          onClick={start}
+          type="button"
+        >{status.tag === "creating" ? "Preparing your simulation…" : "Start simulation"}</button>
+        <span className="player-action-note">No account needed · Saved on this device</span>
+      </div>
+      <details className="simulation-inclusions">
+      <summary>What your simulation includes</summary>
       <ul>
         <li>Multiple-choice question sets</li>
         <li>Visual hazard scenes, with the images saved on this device</li>
@@ -245,6 +263,7 @@ export const SimulationSetup = ({
         <li>Practice-only results with the set's actual mix — never an official score</li>
       </ul>
       <p>Your answers are saved on this device as you go. No answer or explanation is revealed until you submit the whole simulation.</p>
+      </details>
     </aside>
   </div>
 }

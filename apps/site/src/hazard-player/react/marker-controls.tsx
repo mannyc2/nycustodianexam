@@ -21,6 +21,7 @@ export const HazardMarkerControls = () => {
           {markers.map((marker, index) => (
             <li key={marker.id}>
               <p>
+                <span aria-hidden="true" className="player-marker-number">{index + 1}</span>{" "}
                 <strong>Marker {index + 1}</strong>: {Math.round(marker.x * 100)}% from the
                 left, {Math.round(marker.y * 100)}% from the top
               </p>

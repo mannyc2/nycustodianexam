@@ -117,6 +117,7 @@ export const OfflinePackManagerIsland = ({
   readonly runtime: OfflinePackEffectRunner
 }) => {
   const [packs, setPacks] = useState<ReadonlyArray<OfflinePackRecord>>([])
+  const [downloadsLoaded, setDownloadsLoaded] = useState(false)
   const [busy, setBusy] = useState<string | null>(null)
   const [notice, setNotice] = useState("Checking what is saved on this device…")
   const [problem, setProblem] = useState<LocalFailureReport | null>(null)
@@ -139,6 +140,7 @@ export const OfflinePackManagerIsland = ({
       return yield* manager.reconcileDescriptor(descriptor)
     }))
     setPacks(records)
+    setDownloadsLoaded(true)
   }
 
   const refreshStorage = async (): Promise<void> => {
@@ -302,7 +304,7 @@ export const OfflinePackManagerIsland = ({
   const insufficientCapacity = storage.availability === "quota-limited"
 
   return (
-    <div className="local-data-stack">
+    <div className="local-data-stack offline-pack-manager">
       {problem === null ? null : (
         <section className="local-data-error" role="alert" aria-labelledby="pack-error-heading">
           <h2 id="pack-error-heading" ref={errorHeading} tabIndex={-1}>This offline action stopped</h2>
@@ -318,12 +320,12 @@ export const OfflinePackManagerIsland = ({
       <section className="reference-card" aria-labelledby="available-pack-heading">
         <p className="eyebrow">{lifecycleLabel(descriptor.lifecycle)} · {descriptor.locale === "en" ? "English" : descriptor.locale.toUpperCase()}</p>
         <h2 id="available-pack-heading">{descriptor.label}</h2>
-        <dl className="fact-list">
-          <dt>Download size</dt><dd>{formatBytes(descriptor.estimatedDownloadBytes ?? descriptor.totalBytes)}</dd>
-          <dt>Included</dt><dd>{descriptor.counts.tools} tools, {descriptor.counts.questions} questions, {descriptor.counts.hazardScenes} hazard scenes</dd>
-          <dt>Works with</dt><dd>{descriptor.compatibility.map((entry) => entry.label).join(", ")}</dd>
+        <dl className="pack-facts">
+          <div><dt>Download size</dt><dd>{formatBytes(descriptor.estimatedDownloadBytes ?? descriptor.totalBytes)}</dd></div>
+          <div><dt>Included</dt><dd>{descriptor.counts.tools} tools, {descriptor.counts.questions} questions, {descriptor.counts.hazardScenes} hazard scenes</dd></div>
+          <div><dt>Works with</dt><dd>{descriptor.compatibility.map((entry) => entry.label).join(", ")}</dd></div>
         </dl>
-        <details className="source-note">
+        <details className="technical-details">
           <summary>Technical details</summary>
           <p>
             Pack version {descriptor.packVersion} · content {formatBytes(descriptor.totalBytes)} ·
@@ -331,7 +333,7 @@ export const OfflinePackManagerIsland = ({
             published {descriptor.publicationTime ?? "not yet (preview)"}
           </p>
         </details>
-        <p className="source-note">Nothing downloads until you choose the button below. A finished download is checked and then waits — turning it on is always a separate step.</p>
+        <p className="pack-help">Download and check the pack, then turn it on for new offline sessions.</p>
         <div className="question-controls">
           {!availableForNewSessions ? (
             <p className="source-note">
@@ -389,14 +391,22 @@ export const OfflinePackManagerIsland = ({
         ) : null}
       </section>
 
-      <section className="local-data-state" aria-labelledby="stored-packs-heading">
+      <section className="pack-downloads" aria-labelledby="stored-packs-heading">
         <h2 id="stored-packs-heading" ref={storedPacksHeading} tabIndex={-1}>Downloads on this device</h2>
-        {packs.length === 0 ? <p>Not downloaded. Nothing is saved for offline use yet.</p> : (
+        {!downloadsLoaded ? (
+          <p className="pack-help">{problem === null ? "Checking saved downloads…" : "Saved downloads could not be checked. Reload this page to try again."}</p>
+        ) : packs.length === 0 ? <div className="empty-state"><p>Not downloaded. Nothing is saved for offline use yet.</p></div> : (
           <ul className="pack-record-list">
             {packs.map((pack) => (
-              <li key={pack.id}>
-                <strong>{pack.descriptor.label}</strong>
-                <span>{statusLabel(pack.status)} · {formatBytes(pack.downloadedBytes)} checked</span>
+              <li key={pack.id} data-pack-state={pack.status}>
+                <div className="pack-record-header">
+                  <strong>{pack.descriptor.label}</strong>
+                  <span className={`pack-status pack-status-${pack.status}`}>{statusLabel(pack.status)}</span>
+                </div>
+                <dl className="pack-facts">
+                  <div><dt>Saved size</dt><dd>{formatBytes(pack.downloadedBytes)}</dd></div>
+                  <div><dt>Included</dt><dd>{pack.descriptor.counts.tools} tools, {pack.descriptor.counts.questions} questions, {pack.descriptor.counts.hazardScenes} hazard scenes</dd></div>
+                </dl>
                 <details className="feedback-sources">
                   <summary>Technical details</summary>
                   <p>Pack version {pack.descriptor.packVersion} · device generation {pack.generation} · shell build <code>{pack.shellBuildFingerprint.slice(0, 12)}</code></p>

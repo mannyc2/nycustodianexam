@@ -5,6 +5,9 @@ import { installSessionNavigation } from "../../session-navigation.ts"
 import { ReviewQueueIsland } from "./review-queue.tsx"
 import { createReviewController } from "../controller.ts"
 import { ReviewQueueBootstrap } from "../model.ts"
+import { questionAttemptId } from "../../attempt-receipt.ts"
+import { loadStudyActivity } from "../../study/activity.ts"
+import type { StudyActivityState } from "../../study/model.ts"
 
 const mount = document.querySelector<HTMLElement>("[data-review-queue]")
 const data = document.querySelector<HTMLScriptElement>("#review-bootstrap-data")
@@ -16,14 +19,15 @@ if (mount === null || data?.textContent === undefined || data.textContent === nu
 const bootstrap = Schema.decodeUnknownSync(ReviewQueueBootstrap)(JSON.parse(data.textContent))
 
 const questionIds = new Set<string>()
-for (const question of bootstrap.questions) {
+for (const question of [...bootstrap.questions, ...(bootstrap.practiceQuestions ?? [])]) {
+  const identity = questionAttemptId(question.receipt)
   if (
-    questionIds.has(question.id) ||
+    questionIds.has(identity) ||
     new Set(question.optionIds).size !== question.optionIds.length
   ) {
     throw new Error("Review bootstrap contains duplicate question or option identities")
   }
-  questionIds.add(question.id)
+  questionIds.add(identity)
   if (
     question.receipt.questionId !== question.id ||
     question.receipt.postcommitPath !==
@@ -62,7 +66,34 @@ for (const source of bootstrap.scenes) {
 const controller = createReviewController(bootstrap, appRuntime)
 const root = createRoot(mount)
 const removeSessionNavigation = installSessionNavigation()
-root.render(<ReviewQueueIsland controller={controller} />)
+let activityState: StudyActivityState = { tag: "loading" }
+let activityRead = 0
+let cleanedUp = false
+const render = (): void => {
+  if (!cleanedUp) root.render(<ReviewQueueIsland controller={controller} activityState={activityState} onRetryHistory={readActivity} />)
+}
+const readActivity = (): void => {
+  const revision = ++activityRead
+  activityState = { tag: "loading" }
+  render()
+  void appRuntime.runPromise(loadStudyActivity(bootstrap)).then(
+    (activity) => {
+      if (cleanedUp || revision !== activityRead) return
+      activityState = { tag: "ready", activity }
+      render()
+    },
+    () => {
+      if (cleanedUp || revision !== activityRead) return
+      activityState = { tag: "unavailable" }
+      render()
+    }
+  )
+}
+const unsubscribeHistory = controller.subscribe(() => {
+  const state = controller.getSnapshot().state
+  if (state.tag === "empty" || (state.tag === "ready" && state.acknowledgingItemId === null)) readActivity()
+})
+readActivity()
 queueMicrotask(() => controller.start())
 
 if ("serviceWorker" in navigator) {
@@ -71,11 +102,11 @@ if ("serviceWorker" in navigator) {
   })
 }
 
-let cleanedUp = false
 const cleanup = (): void => {
   if (cleanedUp) return
   cleanedUp = true
   removeSessionNavigation()
+  unsubscribeHistory()
   root.unmount()
   controller.dispose()
   void disposeAppRuntime()

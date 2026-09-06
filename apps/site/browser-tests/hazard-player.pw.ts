@@ -73,13 +73,13 @@ interface StoredHazardAttempt {
 const gotoReadyVisualHazard = async (page: Page): Promise<void> => {
   await page.goto(visualPath)
   await expect(page.getByRole("button", { name: "Add marker at center" })).toBeEnabled()
-  await expect(page.getByRole("button", { name: "Submit scene response" })).toBeVisible()
+  await expect(page.getByRole("button", { name: /^Save (marks|response)$/ })).toBeVisible()
 }
 
 const gotoReadyNonvisualHazard = async (page: Page): Promise<void> => {
   await page.goto(nonvisualPath)
   await expect(page.getByRole("checkbox").first()).toBeEnabled()
-  await expect(page.getByRole("button", { name: "Submit scene response" })).toBeVisible()
+  await expect(page.getByRole("button", { name: /^Save (marks|response)$/ })).toBeVisible()
 }
 
 const readHazardAttempt = (
@@ -133,7 +133,7 @@ for (const failure of ["missing", "corrupt"] as const) {
       )
     ).toBe(0)
     expect(
-      await page.getByRole("button", { name: "Submit scene response" }).evaluateAll(
+      await page.getByRole("button", { name: /^Save (marks|response)$/ }).evaluateAll(
         (buttons) => buttons.filter((button) => !(button as HTMLButtonElement).disabled).length
       )
     ).toBe(0)
@@ -194,7 +194,7 @@ test("visual markers are durable before feedback fetch and restore exactly", asy
 
   await page.getByRole("button", { name: "Add marker at center" }).click()
   expect(postcommitRequests).toBe(0)
-  await page.getByRole("button", { name: "Submit scene response" }).click()
+  await page.getByRole("button", { name: /^Save (marks|response)$/ }).click()
 
   await expect(page.getByRole("heading", {
     name: "You found 0 of 1 hazard in this scene. 1 extra or repeated mark was counted."
@@ -361,7 +361,7 @@ test("the verified visual Blob URL survives BFCache and is revoked on true unloa
   })
 
   await page.goto("/atlas/")
-  await expect(page.getByRole("heading", { name: "Recognize a tool by use and construction." }))
+  await expect(page.getByRole("heading", { name: "Tool atlas", level: 1 }))
     .toBeVisible()
   await page.goBack({ waitUntil: "commit" })
 
@@ -408,7 +408,7 @@ test("zero marks require neutral confirmation before durable commit and fetch", 
     await route.continue()
   })
 
-  await page.getByRole("button", { name: "Submit scene response" }).click()
+  await page.getByRole("button", { name: /^Save (marks|response)$/ }).click()
   await expect(
     page.getByRole("heading", { name: "Submit without marking a concern?" })
   ).toBeFocused()
@@ -446,7 +446,7 @@ test("an IndexedDB write failure focuses recovery and never requests or reveals 
   })
 
   await page.getByRole("button", { name: "Add marker at center" }).click()
-  await page.getByRole("button", { name: "Submit scene response" }).click()
+  await page.getByRole("button", { name: /^Save (marks|response)$/ }).click()
 
   await expect(page.getByRole("heading", { name: "Your response was not saved" })).toBeFocused()
   await expect(page.getByRole("heading", { name: /You found \d+ of \d+|no hazard to find|Response saved/ })).toHaveCount(0)
@@ -476,7 +476,7 @@ test("keyboard-only nonvisual zone selection commits before feedback", async ({ 
 
   const zoneCount = await page.getByRole("checkbox").count()
   for (let index = 0; index < zoneCount; index += 1) await page.keyboard.press("Tab")
-  await expect(page.getByRole("button", { name: "Submit scene response" })).toBeFocused()
+  await expect(page.getByRole("button", { name: /^Save (marks|response)$/ })).toBeFocused()
   await page.keyboard.press("Enter")
 
   await expect(page.getByRole("heading", { name: /You found \d+ of \d+|no hazard to find|Response saved/ })).toBeFocused()
@@ -516,7 +516,7 @@ test("a mismatched postcommit artifact leaves the durable response saved but unr
   })
 
   await page.getByRole("button", { name: "Add marker at center" }).click()
-  await page.getByRole("button", { name: "Submit scene response" }).click()
+  await page.getByRole("button", { name: /^Save (marks|response)$/ }).click()
 
   await expect(page.getByRole("heading", { name: "Your response is saved" })).toBeFocused()
   await expect(page.getByText(

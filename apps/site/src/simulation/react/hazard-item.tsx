@@ -55,9 +55,12 @@ export const SimulationHazardItem = ({
     })
   }
 
-  return <article className="hazard-player" aria-labelledby="simulation-question-heading">
+  return <article className="hazard-player study-player" aria-labelledby="simulation-question-heading">
     <header className="hazard-player__prompt">
-      <p className="eyebrow">Practice simulation · Hazard item {position} of {total} · {item.mode === "visual" ? "visual" : "keyboard, no image"}</p>
+      <div className="player-heading-row">
+        <span className="player-position">Hazard item {position} of {total}</span>
+        <span className="player-mode-label">Practice simulation · {item.mode === "visual" ? "Visual" : "Text version"}</span>
+      </div>
       <h1 id="simulation-question-heading">Inspect the {item.scene.environment}</h1>
       <p>{item.scene.neutralPreAnswer.overview}</p>
       <p>{item.mode === "visual"

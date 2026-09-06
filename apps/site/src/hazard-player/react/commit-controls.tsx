@@ -90,7 +90,7 @@ export const HazardCommitControls = () => {
       aria-labelledby={`${meta.instanceId}-commit-heading`}
       className="hazard-player__commit"
     >
-      <h2 id={`${meta.instanceId}-commit-heading`}>Save this response</h2>
+      <h2 className="sr-only" id={`${meta.instanceId}-commit-heading`}>Save this response</h2>
       {state.tag === "commit_failed" ? (
         <div className="feedback feedback-error" role="alert">
           <h3 ref={meta.errorHeadingRef} tabIndex={-1}>Your response was not saved</h3>
@@ -103,21 +103,24 @@ export const HazardCommitControls = () => {
           : `${selectedCount} ${selectedCount === 1 ? "location is" : "locations are"} ready to save.`}
       </p>
       <p>
-        You can change your choices until you submit. Feedback appears only after your response
+        You can change your choices until you save. Feedback appears only after your response
         is saved on this device.
       </p>
-      <button
-        className="button button-primary"
-        disabled={state.tag === "committing"}
-        onClick={state.tag === "commit_failed" ? actions.retryCommit : actions.requestCommit}
-        type="button"
-      >
-        {state.tag === "committing"
-          ? "Saving your response…"
-          : state.tag === "commit_failed"
-            ? "Retry saving response"
-            : "Submit scene response"}
-      </button>
+      <div className="player-action-bar">
+        <button
+          className="button button-primary"
+          disabled={state.tag === "committing"}
+          onClick={state.tag === "commit_failed" ? actions.retryCommit : actions.requestCommit}
+          type="button"
+        >
+          {state.tag === "committing"
+            ? "Saving your response…"
+            : state.tag === "commit_failed"
+              ? "Retry saving response"
+              : mode === "visual" ? "Save marks" : "Save response"}
+        </button>
+        <span className="player-action-note">Saved on this device before feedback opens</span>
+      </div>
     </section>
   )
 }

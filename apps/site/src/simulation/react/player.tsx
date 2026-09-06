@@ -61,12 +61,14 @@ const SimulationTimer = ({
           ? "Practice time expired. Automatic submission is waiting for the local queue to close."
           : "Practice time expired. Saving the opted-in final submission."
       : "Practice time expired. Answers remain editable because strict auto-submit is off."}</p> : null}
-    <button
-      className="button button-secondary"
+    <label className="simulation-timer-toggle">
+    <input
+      checked={session.timing.timerVisible}
       disabled={saving || retryRequired}
-      onClick={() => controller.dispatch({ tag: "toggle-timer" })}
-      type="button"
-    >{session.timing.timerVisible ? "Hide timer" : "Show timer"}</button>
+      onChange={() => controller.dispatch({ tag: "toggle-timer" })}
+      type="checkbox"
+    /> Show the timer
+    </label>
     <p className="field-hint">{session.timing.autoSubmit
       ? "Strict auto-submit is active for this saved simulation."
       : "Strict auto-submit is off; reaching zero does not submit."}</p>
@@ -134,6 +136,8 @@ export const SimulationPlayer = ({
     (candidate.selectedZoneOrders?.length ?? 0) > 0 ||
     candidate.zeroHazardsConfirmed === true
   ).length
+  const flagged = session.responses.filter((candidate) => candidate.reviewIntent === "flagged").length
+  const navigationBlocked = saving || recoverableError !== null
 
   return <>
     {announcement}
@@ -157,27 +161,25 @@ export const SimulationPlayer = ({
         type="button"
       >{recoverableError.kind === "submission" ? "Retry final submission" : "Retry this exact local save"}</button>
     </section>}
-    <SimulationTimer
-      controller={controller}
-      retryRequired={recoverableError !== null}
-      saving={saving}
-      session={session}
-      strictExpiryPending={snapshot.state.strictExpiryPending}
-    />
-    <p className="source-note">
+    <p className="source-note simulation-profile-note">
       <strong>Practicing for: {session.profile.label}.</strong>{" "}
       <a href="/simulations/">Start a new simulation to choose a different profile</a>.
     </p>
-    {"question" in item ? <article className="question-card" aria-labelledby="simulation-question-heading">
+    <div className="simulation-workspace">
+    <div className="simulation-main">
+    {"question" in item ? <article className="question-card study-player" aria-labelledby="simulation-question-heading">
+      <div className="player-heading-row">
+        <span className="player-position">Question {position} of {session.actualLength}</span>
+        <span className="player-mode-label">Practice simulation</span>
+      </div>
       <header className="question-prompt">
-        <p className="eyebrow">Practice simulation · Question {position} of {session.actualLength}</p>
         <h1 id="simulation-question-heading">{item.question.prompt}</h1>
         <p>Choose one answer. You can edit it until final submission. Feedback is not loaded during the simulation.</p>
       </header>
       <fieldset disabled={session.status !== "active" || answerEditBlocked}>
-        <legend className="sr-only">Answer choices</legend>
+        <legend className="player-choice-legend">Answer choices</legend>
         <div className="answer-list">
-          {item.optionOrder.map((optionId) => {
+          {item.optionOrder.map((optionId, index) => {
             const option = item.question.options.find((candidate) => candidate.id === optionId)
             if (option === undefined) return null
             return <label className="answer-option" key={option.id}>
@@ -188,12 +190,13 @@ export const SimulationPlayer = ({
                 type="radio"
                 value={option.id}
               />
+              <span aria-hidden="true" className="answer-letter">{String.fromCharCode(65 + index)}</span>
               <span>{option.label}</span>
             </label>
           })}
         </div>
       </fieldset>
-      <div className="question-controls">
+      <div className="question-controls player-action-bar">
         <button
           aria-pressed={response?.reviewIntent === "flagged"}
           className="button button-secondary"
@@ -201,7 +204,7 @@ export const SimulationPlayer = ({
           onClick={() => controller.dispatch({ tag: "toggle-flag" })}
           type="button"
         >{response?.reviewIntent === "flagged" ? "Flagged for review" : "Flag this question"}</button>
-        <span aria-live="polite" className="source-note">{saving
+        <span aria-live="polite" className="player-action-note">{saving
           ? "Saving locally…"
           : recoverableError === null
             ? "Saved on this device"
@@ -217,10 +220,26 @@ export const SimulationPlayer = ({
       total={session.actualLength}
       visualAssetUrl={snapshot.state.visualAssetUrl}
     />}
-
-    <nav className="simulation-navigator section-gap" aria-label="Simulation items">
-      <h2>Item navigator</h2>
-      <ol className="tag-list">
+    <nav aria-label="Previous and next simulation items" className="simulation-step-actions">
+      {position > 1 ? navigationBlocked
+        ? <button className="button button-secondary" disabled type="button">← Previous</button>
+        : <a className="button button-secondary" data-session-history="replace" href={simulationQuestionPath(session.id, position - 1)}>← Previous</a>
+        : <span />}
+      {position < session.actualLength ? navigationBlocked
+        ? <button className="button button-primary" disabled type="button">Next item →</button>
+        : <a className="button button-primary" data-session-history="replace" href={simulationQuestionPath(session.id, position + 1)}>Next item →</a>
+        : <a className="button button-secondary" href="#simulation-items-heading">Review your answers</a>}
+    </nav>
+    </div>
+    <aside className="simulation-rail" aria-label="Simulation progress and timing">
+    <nav className="simulation-navigator" aria-label="Simulation items">
+      <div className="player-heading-row">
+        <h2 id="simulation-items-heading">Item navigator</h2>
+        <span className="player-position">{position} / {session.actualLength}</span>
+      </div>
+      <label className="simulation-progress-label" htmlFor="simulation-progress">{answered} of {session.actualLength} answered</label>
+      <progress id="simulation-progress" max={session.actualLength} value={answered} />
+      <ol className="simulation-item-grid">
         {session.items.map((candidate) => {
           const candidateId = simulationItemId(candidate)
           const saved = session.responses.find((value) => value.questionId === candidateId)
@@ -234,19 +253,31 @@ export const SimulationPlayer = ({
             savedAnswered ? "answered" : "unanswered",
             saved?.reviewIntent === "flagged" ? "flagged" : undefined
           ].filter(Boolean).join(", ")
-          return <li key={candidateId}>
+          return <li
+            className="simulation-item"
+            data-answered={savedAnswered || undefined}
+            data-current={candidate.position === position || undefined}
+            data-flagged={saved?.reviewIntent === "flagged" || undefined}
+            key={candidateId}
+          >
             {saving || recoverableError !== null
-              ? <span aria-label={`${label}; navigation waits for local save`}>{candidate.position}</span>
+              ? <span aria-label={`${label}; navigation waits for local save`}>{candidate.position}<small aria-hidden="true">{saved?.reviewIntent === "flagged" ? "⚑" : savedAnswered ? "✓" : ""}</small></span>
               : <a
                   aria-current={candidate.position === position ? "step" : undefined}
                   aria-label={label}
                   data-session-history="replace"
                   href={simulationQuestionPath(session.id, candidate.position)}
-                >{candidate.position}</a>}
+                >{candidate.position}<small aria-hidden="true">{saved?.reviewIntent === "flagged" ? "⚑" : savedAnswered ? "✓" : ""}</small></a>}
           </li>
         })}
       </ol>
-      <p>{answered} answered · {session.actualLength - answered} unanswered</p>
+      <ul className="simulation-navigator-key">
+        <li><span aria-hidden="true" className="simulation-key-recorded" /> Recorded</li>
+        <li><span aria-hidden="true" className="simulation-key-unanswered" /> Unanswered</li>
+        <li><span aria-hidden="true" className="simulation-key-flagged" /> Flagged ⚑</li>
+        <li><span aria-hidden="true" className="simulation-key-current" /> Current</li>
+      </ul>
+      <p className="player-action-note">{answered} answered · {session.actualLength - answered} unanswered · {flagged} flagged</p>
       <button
         className="button button-primary"
         disabled={saving || recoverableError !== null}
@@ -254,8 +285,17 @@ export const SimulationPlayer = ({
         type="button"
       >Review and submit simulation</button>
     </nav>
+    <SimulationTimer
+      controller={controller}
+      retryRequired={recoverableError !== null}
+      saving={saving}
+      session={session}
+      strictExpiryPending={snapshot.state.strictExpiryPending}
+    />
+    </aside>
+    </div>
 
-    {snapshot.state.confirmation && <section className="reference-card section-gap" aria-labelledby="final-submit-heading">
+    {snapshot.state.confirmation && <section className="reference-card section-gap simulation-confirmation" aria-labelledby="final-submit-heading">
       <h2 id="final-submit-heading" ref={confirmationRef} tabIndex={-1}>Submit final answers?</h2>
       <p>{answered} of {session.actualLength} items are answered. {session.actualLength - answered} unanswered items will count as unanswered in the practice result.</p>
       <p>After final submission, answers cannot be edited. The submission is saved locally before any answer or explanation content is requested.</p>

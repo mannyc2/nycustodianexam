@@ -621,8 +621,9 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
   await expect(page.getByText(/^Correct answer:/)).toHaveCount(0)
   await expect(page.getByText(/Rationale/)).toHaveCount(0)
   await expect(page.locator("[data-simulation-timer-hidden]")).toBeVisible()
-  await page.getByRole("button", { name: "Show timer" }).click()
-  await expect(page.getByRole("button", { name: "Hide timer" })).toBeEnabled()
+  await page.getByRole("checkbox", { name: "Show the timer" }).check()
+  await expect(page.getByRole("checkbox", { name: "Show the timer" })).toBeChecked()
+  await expect(page.getByRole("checkbox", { name: "Show the timer" })).toBeEnabled()
   await page.reload()
   await expect(page.locator("[data-simulation-timer]")).toBeVisible()
 

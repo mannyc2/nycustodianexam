@@ -156,27 +156,61 @@ const readJson = async (url: URL): Promise<unknown> => JSON.parse(await Bun.file
 const currentPage = (current: NavSection, candidate: NavSection): string =>
   current === candidate ? ' aria-current="page"' : ""
 
+const publicDate = (value: string): string =>
+  new Date(`${value}T00:00:00Z`).toLocaleDateString("en-US", {
+    year: "numeric", month: "long", day: "numeric", timeZone: "UTC"
+  })
+
+const navIcon = (name: "study" | "library" | "exams" | "offline" | "settings" | "sources" | "menu" | "search"): string => {
+  const paths = {
+    study: '<path d="m2 9 10-5 10 5-10 5-10-5Z"/><path d="M6 11v6c4 3 8 3 12 0v-6M22 9v7"/>',
+    library: '<path d="M3 4h6a4 4 0 0 1 3 2 4 4 0 0 1 3-2h6v15h-6a4 4 0 0 0-3 2 4 4 0 0 0-3-2H3V4Zm9 2v15"/>',
+    exams: '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2h6v2M9 10h6M9 14h6M9 18h3"/>',
+    offline: '<path d="M12 3v12m-5-5 5 5 5-5M4 15v5h16v-5"/>',
+    settings: '<circle cx="12" cy="12" r="3"/><path d="m10 2-.5 3-3 1-2.5-1-2 4 2.5 2v3L2 16l2 4 3-1 2 1 1 2h4l1-2 2-1 3 1 2-4-2.5-2v-3L22 9l-2-4-2.5 1-3-1L14 2h-4Z"/>',
+    sources: '<path d="m12 2 8 3v6c0 5-5 9-8 11-3-2-8-6-8-11V5l8-3Z"/><path d="m8 12 3 3 5-6"/>',
+    menu: '<path d="M4 6h16M4 12h16M4 18h16"/>',
+    search: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/>'
+  }
+  return `<svg class="nav-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name]}</svg>`
+}
+
+const menuLinks = `
+  <div><strong>Study</strong><a href="/practice/">Study hub</a><a href="/review/">Review saved attempts</a><a href="/simulations/">Build a simulation</a><a href="/print/">Print center</a></div>
+  <div><strong>Library</strong><a href="/atlas/">Tool atlas</a><a href="/hazards/">Hazard lab · visual and text practice</a><a href="/exams/">Exams and announcements</a></div>
+  <div><strong>Site and sources</strong><a href="/offline/">Use offline</a><a href="/settings/">Settings</a><a href="/transparency/">Sources and methods</a><a href="/report/">Report a correction</a><a href="/transparency/privacy/">Privacy</a></div>`
+
 const header = (section: NavSection): string => `
   <header class="site-header">
     <div class="site-header-inner">
-      <a class="brand" href="/">NY Custodian Exam</a>
-      <nav class="site-nav" aria-label="Primary">
-        <a${currentPage(section, "exams")} href="/exams/">Exam profile</a>
-        <a${currentPage(section, "atlas")} href="/atlas/">Study tools</a>
-        <a${currentPage(section, "practice")} href="/practice/">Practice</a>
-        <a${currentPage(section, "hazards")} href="/hazards/">Hazards</a>
-        <a${currentPage(section, "transparency")} href="/transparency/">Sources and methods</a>
-        <a href="/offline/">Use offline</a>
-        <a href="/settings/">Settings</a>
+      <a class="brand"${currentPage(section, "home")} href="/">NY Custodian Exam</a>
+      <nav class="site-nav nav-primary" aria-label="Primary">
+        <a${currentPage(section, "practice")} href="/practice/">${navIcon("study")}Study</a>
+        <details class="site-nav-menu"><summary${section === "atlas" || section === "hazards" ? ' class="nav-active"' : ""}>${navIcon("library")}Library<span aria-hidden="true">⌄</span></summary><div class="nav-popover"><a${currentPage(section, "atlas")} href="/atlas/">Tool atlas</a><a${currentPage(section, "hazards")} href="/hazards/">Hazard lab · visual and text practice</a></div></details>
+        <a${currentPage(section, "exams")} href="/exams/">${navIcon("exams")}Exams</a>
+      </nav>
+      <a class="exam-context exam-chip" href="/exams/">Choose your exam</a>
+      <nav class="site-nav nav-utility" aria-label="Site and trust">
+        <a href="/offline/">${navIcon("offline")}<span>Offline</span></a>
+        <a href="/settings/">${navIcon("settings")}<span>Settings</span></a>
+        <a${currentPage(section, "transparency")} href="/transparency/">${navIcon("sources")}<span>Sources</span></a>
       </nav>
     </div>
+    <nav class="compact-nav" aria-label="Compact primary">
+      <a${currentPage(section, "practice")} href="/practice/">${navIcon("study")}Study</a>
+      <a${section === "atlas" || section === "hazards" ? ' aria-current="page"' : ""} href="/atlas/">${navIcon("library")}Library</a>
+      <a${currentPage(section, "exams")} href="/exams/">${navIcon("exams")}Exams</a>
+      <details class="compact-menu"><summary>${navIcon("menu")}Menu</summary><div class="compact-menu-sheet">${menuLinks}</div></details>
+    </nav>
   </header>`
 
 const footer = `
-  <footer class="site-footer">
+  <footer class="site-footer site-footer-prominent">
     <div class="site-footer-inner">
-      <p>Independent study project. Not affiliated with or endorsed by New York City or New York State.</p>
-      <nav aria-label="Site policies"><a href="/report/">Report a correction</a> · <a href="/transparency/privacy/">Privacy</a> · <a href="/transparency/security/">Security</a></nav>
+      <div class="footer-columns site-footer-columns"><div><strong>Independent and unofficial</strong><p>Free study for New York’s entry-level custodian exams. Not affiliated with or endorsed by New York City, New York State, or any civil service agency. Your official announcement and admission notice govern your exam.</p></div>
+      <nav aria-label="Where this comes from"><strong>Where this comes from</strong><a href="/transparency/">Sources and methods</a><a href="/report/">Report a correction</a><a href="/transparency/security/">Exam security</a></nav>
+      <nav aria-label="Site policies"><strong>Your study space</strong><a href="/offline/">Use offline</a><a href="/settings/">Settings and accessibility</a><a href="/transparency/privacy/">Privacy</a></nav></div>
+      <div class="footer-bottom site-footer-meta"><p>Original practice. No secure or recalled exam material.</p><p>Progress stays in this browser. <a href="/settings/#export-local-data">Export a backup</a> before browser data is cleared.</p></div>
     </div>
   </footer>`
 
@@ -210,9 +244,9 @@ const document = ({
 <body data-route-id="${routeId}">
 <a class="skip-link" href="#main-content">Skip to main content</a>
 ${connectivityNotice}
-${header(section)}
+${["question-player", "hazard-player", "review-player", "simulation-player"].includes(routeId) ? '<header class="site-header focused-session-header"><div class="site-header-inner"><span class="brand">NY Custodian Exam</span><nav aria-label="Session"><a class="button button-secondary" href="/practice/">Exit to Study</a></nav></div></header>' : header(section)}
 ${body}
-${footer}
+${["question-player", "hazard-player", "review-player", "simulation-player"].includes(routeId) ? '<footer class="site-footer focused-session-footer"><div class="site-footer-inner"><p>Original practice. Independent and unofficial.</p></div></footer>' : footer}
 </body>
 </html>
 `
@@ -793,7 +827,7 @@ const buildPages = ({
       })
     ]
   })
-  const reviewBootstrap = {
+  const canonicalReviewBootstrap = {
     schemaVersion: 1,
     questions: questions.map(({ value: question }, index) => {
       const artifact = questionPostcommitById.get(question.id)
@@ -802,6 +836,7 @@ const buildPages = ({
       }
       return {
         id: question.id,
+        prompt: question.prompt,
         optionIds: question.options.map((option) => option.id),
         receipt: questionReceipt(artifact, question.id, index + 1),
         itemUrl: `/review/session/${manifest.releaseId}/item/${index + 1}/`
@@ -972,6 +1007,78 @@ const buildPages = ({
     ])
   )
 
+  const subjectPlanFact = catalog.profiles.flatMap((profile) =>
+    profile.announcementFactSheet?.facts ?? []
+  ).find((fact) => fact.category === "subjects" && fact.state === "verified")
+  const subjectAreas = subjectPlanFact?.value?.replace(/\.$/, "").split("; ") ?? []
+  const subjectDescriptions: Readonly<Record<string, string>> = {
+    "Cleaning Tools and Their Uses": "Recognizing cleaning tools from a drawing or a description, and matching each one to the job it is meant for.",
+    "Tools Used for Minor Maintenance and Repair": "Hand tools for small repairs, choosing the right one for the task, and knowing when a tool has become unsafe to use.",
+    "Health and Safety Issues in Custodial Work": "Safe work practices, chemicals and protective equipment, and spotting what is wrong in a workplace scene."
+  }
+  const studyTasks = [
+    { title: "Practice questions", detail: `${questions.length} original questions, with reasoning and sources after you submit each answer.`, compactDetail: "Untimed practice sets", href: "/practice/", action: "Go to Study", icon: "study" as const },
+    { title: "Tool atlas", detail: `${releasedTools.length} illustrated tool references, with the features that tell look-alikes apart.`, compactDetail: `${releasedTools.length} illustrated tools`, href: "/atlas/", action: "Browse tools", icon: "library" as const },
+    { title: "Hazard lab", detail: `${scenes.length} workplace scenes. Mark the picture or use the text and keyboard version.`, compactDetail: `${scenes.length} scenes, with text versions`, href: "/hazards/", action: "Run a drill", icon: "sources" as const },
+    { title: "Practice simulation", detail: "Build a set and hold feedback until the end. Choose the length and timing that suit your study.", compactDetail: "Choose length and timing", href: "/simulations/", action: "Set one up", icon: "exams" as const },
+    { title: "Review saved attempts", detail: "Return to questions and scenes identified by your saved practice on this device.", compactDetail: "Return to saved practice", href: "/review/", action: "Open Review", icon: "study" as const },
+    { title: "Print center", detail: "Make a worksheet from the released study content, with an optional separate answer key.", compactDetail: "Worksheets and answers", href: "/print/", action: "Build a worksheet", icon: "offline" as const }
+  ]
+  const renderTaskCards = (tasks: readonly typeof studyTasks[number][], columnsClass: string): string =>
+    `<ul class="task-cards ${columnsClass}">${tasks.map((task, index) => `<li class="task-card${index === 0 ? " task-card-primary" : ""}"><a class="task-card-link" href="${task.href}" aria-labelledby="task-${slugify(task.title)}-title">${navIcon(task.icon)}<h3 class="task-card-title" id="task-${slugify(task.title)}-title">${task.title}</h3><p class="task-card-description">${escapeHtml(task.detail)}</p><p class="task-card-compact-summary">${escapeHtml(task.compactDetail)}</p><span class="task-card-cta button button-${index === 0 ? "primary" : "secondary"}">${task.action}</span></a></li>`).join("")}</ul>`
+  const studyTaskCards = renderTaskCards(studyTasks, "home-ways-grid")
+  const examTaskCards = renderTaskCards(
+    ["/practice/", "/simulations/", "/hazards/", "/atlas/"].flatMap((href) =>
+      studyTasks.filter((task) => task.href === href)
+    ),
+    "exam-ways-grid"
+  )
+  const scopeList = `<ol class="home-scope-list home-scope-list-framed">${subjectAreas.map((area, index) => `<li class="home-scope-row"><span aria-hidden="true">${index + 1}</span><div><h3>${escapeHtml(area)}</h3>${subjectDescriptions[area] === undefined ? "" : `<p>${escapeHtml(subjectDescriptions[area])}</p>`}</div><a class="button button-secondary" href="${index === 2 ? "/hazards/" : "/atlas/"}">${index === 2 ? "Hazard lab" : "Tool atlas"}</a></li>`).join("")}</ol>`
+  const reviewedDates = [...new Set(catalog.profiles.map((profile) => profile.contentAvailability.lastVerifiedOn))]
+  const reviewBootstrap = {
+    ...canonicalReviewBootstrap,
+    practiceQuestions: questionSessions.flatMap((session) => session.questions.map(({ value: question }, index) => {
+      const artifact = questionPostcommitById.get(question.id)
+      if (artifact === undefined) throw new Error(`Question ${question.id} has no study history receipt`)
+      return {
+        id: question.id,
+        prompt: question.prompt,
+        receipt: questionReceipt(artifact, question.id, index + 1, session.id),
+        optionIds: question.options.map((option) => option.id),
+        itemUrl: `/practice/session/${session.id}/question/${index + 1}/`
+      }
+    }))
+  }
+  const studyBootstrap = {
+    schemaVersion: 1,
+    toolCount: releasedTools.length,
+    questionCount: questions.length,
+    sceneCount: scenes.length,
+    profileLabel: capacityProfile.label,
+    firstPractice: (() => {
+      const session = questionSessions.filter((candidate) => candidate.record.filterKind === "all")
+        .sort((left, right) => left.length - right.length)[0]
+      return session === undefined ? null : {
+        href: `/practice/session/${session.id}/question/1/`,
+        label: `Start ${session.length} questions`
+      }
+    })(),
+    reviewQueue: reviewBootstrap
+  }
+  const examRecords = catalog.profiles.flatMap((profile) => {
+    const identities = profile.examIdentities.length === 0 ? [null] : profile.examIdentities
+    return identities.map((identity) => ({
+      id: identity === null ? slugify(profile.id) : `exam-${slugify(identity.examNumber)}`,
+      title: identity === null ? profile.label : identity.title,
+      kind: identity === null ? "Statewide study plan" : capitalize(identity.competitionType.replaceAll("-", " ")),
+      profile,
+      identity,
+      facts: profile.announcementFactSheet?.facts.filter((fact) =>
+        identity !== null && fact.appliesToExamNumbers.includes(identity.examNumber) && fact.state !== "superseded"
+      ) ?? []
+    }))
+  })
+
   const pages: PageDefinition[] = []
   pages.push({
     relativePath: "index.html",
@@ -982,21 +1089,18 @@ const buildPages = ({
     routeId: "home",
     section: "home",
     body: `
-  <main class="page-shell" id="main-content" tabindex="-1">
-    <section class="hero">
-      <h1>Study the work, not a mystery answer key.</h1>
-      <p>Free, independent study for the supported New York entry-level Custodians and Janitors series. It is unofficial — not affiliated with or endorsed by any government agency — and needs no account. Your submitted answers are saved in this browser. Browser data can be cleared, so <a href="/settings/#export-local-data">export a backup</a> if you want to keep them.</p>
-      <p>This release contains an original ${releasedTools.length}-tool reference, ${questions.length} practice questions, and ${scenes.length} workplace hazard scenes. Answers and explanations appear only after you submit each answer.</p>
-      <div class="question-controls">
-        <a class="button button-primary" href="/practice/">Start practice</a>
-        <a class="button button-secondary" href="/exams/">Check my exam</a>
-      </div>
+  <main class="page-shell home-page" id="main-content" tabindex="-1">
+    <section class="page-header-prominent home-hero">
+      <div class="page-header-copy"><h1>Free practice for New York’s entry-level custodian exam.</h1><p>Learn the tools, recognize workplace hazards, and understand the reasoning behind every answer. Study at your own pace, with no account required.</p></div>
+      <div class="question-controls"><a class="button button-primary" href="/practice/">Start practicing</a><a class="button button-secondary" href="/exams/">Not sure which exam? Check your announcement</a></div>
+      <dl class="figure-strip"><div><dt>Original questions</dt><dd>${questions.length}</dd></div><div><dt>Illustrated tools</dt><dd>${releasedTools.length}</dd></div><div><dt>Hazard scenes</dt><dd>${scenes.length}, each with a text version</dd></div><div><dt>Content reviewed</dt><dd>${reviewedDates.map(publicDate).map(escapeHtml).join(", ")}</dd></div></dl>
     </section>
-    <section class="card-grid" aria-label="More ways to study">
-      <article class="card"><h2>Learn the tools</h2><p>Compare ${releasedTools.length} illustrated, cited tool references by use and construction.</p><a href="/atlas/">Open study tools</a></article>
-      <article class="card"><h2>Practice spotting hazards</h2><p>Scan workplace scenes; which conditions are hazards is revealed only after you submit.</p><a href="/hazards/">Open hazard practice</a></article>
-      <article class="card"><h2>See where it comes from</h2><p>Every reference cites its public sources, and unknowns stay labeled as unknown.</p><a href="/transparency/">Open sources and methods</a></article>
-    </section>
+    <div class="home-content">
+      <section class="home-section" aria-labelledby="home-areas"><div class="section-header"><h2 id="home-areas">What the test covers</h2><p>Use the subject plan in your controlling announcement. Practice-set sizes are designed for this site.</p></div>${scopeList}${subjectPlanFact === undefined ? "" : `<details class="source-note"><summary>Where these subject areas come from</summary>${sourceLineLinks(subjectPlanFact.sourceLineIds, sourceLineById, sourceById)}<p>Reviewed ${escapeHtml(subjectPlanFact.reviewedOn)}.</p></details>`}</section>
+      <section class="home-section" aria-labelledby="home-ways"><div class="section-header"><h2 id="home-ways">Ways to study</h2><p>Save an <a href="/offline/">offline pack</a> to use its study content without a connection.</p></div>${studyTaskCards}</section>
+      <section class="home-section" aria-labelledby="home-announcement"><div class="section-header"><h2 id="home-announcement">Start with your announcement</h2><p>Dates, eligibility and instructions belong to a specific exam.</p></div><div class="source-note"><h3>Check the facts for your exam</h3><p>Read the published profiles, their source dates, and what remains unresolved. A study result is practice accuracy, never an official score or a passing-score prediction.</p><a class="button button-secondary" href="/exams/">Compare exam profiles</a></div></section>
+      <section class="home-section" aria-labelledby="home-trust"><div class="section-header"><h2 id="home-trust">Know what you’re using</h2></div><dl class="fact-table home-trust-list"><div><dt>Who runs it</dt><dd>An independent study project, unaffiliated with any civil service agency. <a href="/transparency/">Sources and methods</a></dd></div><div><dt>Where your data lives</dt><dd>Saved in this browser. Browser data can be cleared; <a href="/settings/#export-local-data">export a backup</a> to keep your records.</dd></div><div><dt>Where the facts come from</dt><dd>Public source records with review dates and visible uncertainty. <a href="/transparency/">Read the sources</a></dd></div><div><dt>How answers work</dt><dd>Submit an answer and save it on this device before its explanation and source support appear.</dd></div></dl></section>
+    </div>
   </main>`
   })
 
@@ -1010,15 +1114,13 @@ const buildPages = ({
     section: "practice",
     body: `
   <main class="page-shell" id="main-content" tabindex="-1">
-    ${breadcrumb([{ label: "Review" }])}
-    <section class="hero"><p class="eyebrow">Saved on this device</p><h1>Review what your saved attempts identified.</h1><p>This queue is rebuilt on this device from your saved question and hazard attempts — no account involved. Opening feedback does not finish an item, and nothing here claims mastery or an official schedule.</p></section>
     <div data-review-queue data-island="review-queue-bootstrap">
+      <section class="page-header"><h1>Your review queue</h1><p>Revisit questions and scenes identified by practice saved on this device.</p></section>
       <section class="review-state" aria-labelledby="review-queue-heading">
         <h2 id="review-queue-heading">Loading your local review queue</h2>
         <p>JavaScript and available browser storage are required to read your saved study attempts. No answers or feedback are embedded in this page.</p>
       </section>
     </div>
-    <section class="card-grid section-gap" aria-label="Continue studying"><article class="card"><h2>Question practice</h2><p>Items enter this queue only after an answer is saved.</p><a href="/practice/">Open question practice</a></article><article class="card"><h2>Hazard practice</h2><p>Missing a hazard, or marking a safe area as one, adds that scene here after you submit.</p><a href="/hazards/">Open hazard practice</a></article></section>
   </main>
   <script id="review-bootstrap-data" type="application/json">${escapeJsonForHtml(reviewBootstrap)}</script>
   <script type="module" src="/src/review/react/bootstrap.tsx"></script>`
@@ -1135,17 +1237,30 @@ const buildPages = ({
   pages.push({
     relativePath: "exams/index.html",
     canonicalPath: "/exams/",
-    title: "Exam profiles — NY Custodian Exam Study",
-    description: "The currently released New York entry-level custodian and janitor study profile.",
+    title: "Exams — NY Custodian Exam Study",
+    description: "Compare published exam announcements and the statewide entry-level custodian study plan, with sources and visible uncertainty.",
     robots: "index,follow",
     routeId: "exam-selector",
     section: "exams",
     body: `
-  <main class="page-shell" id="main-content" tabindex="-1">
-    ${breadcrumb([{ label: "Exam profiles" }])}
-    <section class="hero"><p class="eyebrow">${catalog.profiles.length} study profiles</p><h1>Does this match my exam?</h1><p>This release covers the New York statewide entry-level custodian and janitor series and a Nassau County announcement profile. Check the profile that matches your exam announcement before relying on a practice set. Neither profile is an official exam.</p></section>
-    <section class="card-grid" aria-label="Available profiles">${catalog.profiles.map((profile) => `<article class="card"><p class="eyebrow">${escapeHtml(layerLabel(profile.layer))}</p><h2>${escapeHtml(profile.label)}</h2><p>${escapeHtml(profile.audience)}</p><p>${escapeHtml(profile.disclaimer)}</p><a href="${profile.canonicalPath}">View this profile</a></article>`).join("")}</section>
-  </main>`
+  <main class="page-shell home-page exams-page" id="main-content" tabindex="-1">
+    <section class="page-header-prominent"><div class="page-header-copy"><h1>Which exam are you studying for?</h1><p class="lead">Find the announcement that matches your exam, then read its dates, eligibility and subjects. Each fact keeps its source and review date, including what remains unresolved.</p></div><div class="question-controls"><a class="button button-primary" href="#exams-board">Check your announcement</a><a class="button button-secondary" href="/practice/">Start practicing</a></div><dl class="figure-strip"><div><dt>Announcements</dt><dd>${examRecords.filter((record) => record.identity !== null).length}</dd></div><div><dt>Study profiles</dt><dd>${catalog.profiles.length}</dd></div><div><dt>Subject areas</dt><dd>${subjectAreas.length}</dd></div><div><dt>Content reviewed</dt><dd>${reviewedDates.map(publicDate).map(escapeHtml).join(", ")}</dd></div></dl></section>
+    <div class="home-content">
+      <section class="home-section" id="exams-board" data-exam-browser aria-labelledby="exam-board-heading"><div class="section-header"><h2 id="exam-board-heading">Find your exam</h2><p>Open an entry to compare its facts. Your official announcement and admission notice govern your exam.</p></div>
+        <div class="search-field" data-exam-search-field hidden><label class="sr-only" for="exam-search">Search announcements and study plans</label>${navIcon("search")}<input id="exam-search" type="search" data-exam-search placeholder="Title, jurisdiction, or exam number" autocomplete="off"></div>
+        <p class="source-note" data-exam-count role="status">${examRecords.length} entries in the published registry.</p>
+        <div class="record-board"><ul class="record-list" aria-label="Available profiles">${examRecords.map((record) => `<li data-exam-row data-exam-search-text="${escapeHtml(`${record.title} ${record.kind} ${record.profile.jurisdiction} ${record.identity?.examNumber ?? ""}`.toLowerCase())}"><a class="record-item" data-exam-choice="${record.id}" href="#${record.id}"><strong>${escapeHtml(record.title)}</strong><span class="record-kind">${escapeHtml(record.kind)}</span><span class="record-when">${escapeHtml(record.profile.jurisdiction)}</span><span class="status-chip">${record.identity === null ? "Study reference" : "Announcement on file"}</span></a></li>`).join("")}</ul>
+          <div class="record-detail-stack"><section class="record-detail" data-exam-prompt hidden><h3>Start with the title on your announcement</h3><p>Choose an entry to read its facts and source support. Reading an entry does not change your study settings.</p></section>${examRecords.map((record) => `<article class="record-detail" id="${record.id}" data-exam-panel tabindex="-1" aria-labelledby="${record.id}-heading"><div class="record-detail-header"><div><p class="record-kind">${escapeHtml(record.kind)}</p><h3 id="${record.id}-heading">${escapeHtml(record.title)}</h3><p>${escapeHtml(record.profile.audience)}</p></div><div class="record-detail-actions"><a class="button button-primary" href="${record.profile.canonicalPath}">Read the full profile</a><a class="button button-secondary" href="/practice/">Go to Study</a></div></div>
+            <div class="tabs" role="tablist" aria-label="${escapeHtml(record.title)} details" data-exam-tabs hidden><button type="button" id="${record.id}-facts-tab" role="tab" aria-selected="true" aria-controls="${record.id}-facts" data-record-tab="facts">Announcement facts</button><button type="button" id="${record.id}-subjects-tab" role="tab" aria-selected="false" aria-controls="${record.id}-subjects" data-record-tab="subjects" tabindex="-1">What it tests</button></div>
+            <section id="${record.id}-facts" data-record-tab-panel="facts"><h4>Announcement facts</h4>${record.identity === null ? `<p>${escapeHtml(record.profile.testPlanCompatibility.detail)}</p><p>This statewide study plan has no exam number or filing period. Use your jurisdiction’s announcement for those details.</p>` : `<dl class="fact-table">${record.facts.filter((fact) => ["filing_period", "exam_date", "fee", "qualifications", "jurisdictions", "administration_status"].includes(fact.category)).map((fact) => `<div><dt>${escapeHtml(fact.label)}</dt><dd>${fact.state === "verified" ? "" : `<span class="fact-state fact-state-${fact.state}">${factStateLabel(fact.state)}</span> `}${escapeHtml(fact.value ?? fact.detail ?? "No value asserted.")}<details class="source-note technical-details"><summary>Source and review date</summary>${sourceLineLinks(fact.sourceLineIds, sourceLineById, sourceById)}<p>Reviewed ${escapeHtml(fact.reviewedOn)}.</p></details></dd></div>`).join("")}</dl>`}<details class="source-note"><summary>Technical details</summary><p>${record.identity === null ? "No exam number at the statewide study-plan level." : `Exam number ${escapeHtml(record.identity.examNumber)}.`} Profile version ${record.profile.version}. Content reviewed ${escapeHtml(record.profile.contentAvailability.lastVerifiedOn)}.</p></details></section>
+            <section id="${record.id}-subjects" data-record-tab-panel="subjects"><h4>What it tests</h4><p>${escapeHtml(record.profile.testPlanCompatibility.detail)}</p>${scopeList}<p>Practice-set lengths and distributions are designed for this site. They do not establish the official question count or subject weights.</p>${sourceLineLinks(record.profile.testPlanCompatibility.sourceLineIds, sourceLineById, sourceById)}</section>
+          </article>`).join("")}</div>
+        </div><div class="empty-state" data-exam-empty hidden><h3 tabindex="-1">No entries match your search</h3><p>Clear your search to see every announcement and study plan in this published registry.</p><button class="button button-secondary" type="button" data-exam-clear>Clear search</button></div>
+      </section>
+      <section class="home-section"><div class="section-header"><h2>Start studying</h2><p>Explore the original practice and reference content without an account.</p></div>${examTaskCards}</section>
+    </div>
+  </main>
+  <script type="module" src="/src/static-browser.ts"></script>`
   })
 
   for (const profile of catalog.profiles) {
@@ -1195,21 +1310,21 @@ const buildPages = ({
   pages.push({
     relativePath: "practice/index.html",
     canonicalPath: "/practice/",
-    title: "Practice — NY Custodian Exam Study",
+    title: "Study — NY Custodian Exam Study",
     description: "Original practice questions. Answers and explanations open only after you submit each answer.",
     robots: "index,follow",
     routeId: "study-hub",
     section: "practice",
     body: `
   <main class="page-shell" id="main-content" tabindex="-1">
-    ${breadcrumb([{ label: "Practice" }])}
-    <section class="hero"><p class="eyebrow">${questions.length} original questions</p><h1>Choose a practice set.</h1><p>Each set draws distinct questions from this release with no repeats. The ${catalog.practiceCapacity.advertisedSetLengths.join(", ")} sizes and the displayed mix are a site-designed distribution — not official exam counts or weights.</p><div class="question-controls"><a class="button button-secondary" href="/simulations/">Build a simulation</a><a class="button button-secondary" href="/print/">Open print center</a></div></section>
-    <section class="card-grid" aria-label="Available whole-bank practice lengths">${catalog.practiceCapacity.advertisedSetLengths.map((length) => {
+    <div data-study-hub><section class="page-header"><h1>Your study space</h1><p>Choose a practice set, learn the tools, or revisit your saved attempts. No account required.</p><div class="question-controls"><a class="button button-primary" href="#practice-sets">Choose a practice set</a><a class="button button-secondary" href="/review/">Open Review</a></div></section><section class="section-gap" aria-labelledby="study-fallback-ways"><h2 id="study-fallback-ways">Ways to study</h2>${studyTaskCards}</section><p class="source-note">JavaScript and available browser storage are required to show progress saved on this device.</p></div>
+    <section class="section-gap" id="practice-sets"><div class="section-header"><h2>Choose a practice set</h2><p>Each set draws distinct questions with no repeats. These sizes and distributions are designed for this site.</p></div>
+    <ul class="study-set-options" aria-label="Available whole-bank practice lengths">${catalog.practiceCapacity.advertisedSetLengths.map((length) => {
       const session = sessionByCapacity.get(`all:all:${length}`)
       return session === undefined
-        ? `<article class="card"><h2>${length} questions</h2><p>Not available: this release cannot fill ${length} questions without repeats.</p></article>`
-        : `<article class="card"><h2>${length} questions</h2><p>${session.questions.length} distinct questions from the ${escapeHtml(capacityProfile.label)} series.</p><a class="button button-primary" href="/practice/session/${session.id}/question/1/">Start ${length}</a></article>`
-    }).join("")}</section>
+        ? `<li><div><h3>${length} questions</h3><p>Not available: this release cannot fill ${length} questions without repeats.</p></div></li>`
+        : `<li><div><h3>${length} questions</h3><p>${session.questions.length} distinct questions · untimed</p></div><a class="button button-secondary" href="/practice/session/${session.id}/question/1/">Start ${length}</a></li>`
+    }).join("")}</ul>
     <details class="section-gap"><summary>Why some set sizes are unavailable</summary><p>Every set is drawn without repeats, so a size is offered only when this release has enough distinct questions for that filter. The table shows the current counts.</p><div class="comparison-table-wrap"><table class="comparison-table"><caption>Available set sizes by filter</caption><thead><tr><th scope="col">Filter</th><th scope="col">Questions</th>${catalog.practiceCapacity.advertisedSetLengths.map((length) => `<th scope="col">${length}</th>`).join("")}</tr></thead><tbody>${capacityRecords.map((record) => `<tr><th scope="row">${escapeHtml(capacityLabel(record))}</th><td>${record.questionCount}</td>${catalog.practiceCapacity.advertisedSetLengths.map((length) => {
       const session = sessionByCapacity.get(`${record.filterKind}:${record.filterValue}:${length}`)
       return session === undefined
@@ -1217,28 +1332,33 @@ const buildPages = ({
         : `<td><a href="/practice/session/${session.id}/question/1/">Start ${length}</a></td>`
     }).join("")}</tr>`).join("")}</tbody></table></div></details>
     <p class="source-note"><strong>Scoring boundary:</strong> practice accuracy is not an official converted score or a pass prediction. Answers and their sourced explanations load only after each answer is submitted and saved on this device.</p>
-  </main>`
+    </section>
+  </main>
+  <script id="study-bootstrap-data" type="application/json">${escapeJsonForHtml(studyBootstrap)}</script>
+  <script type="module" src="/src/study/react/bootstrap.tsx"></script>`
   })
 
   pages.push({
     relativePath: "atlas/index.html",
     canonicalPath: "/atlas/",
-    title: "Study tools — NY Custodian Exam Study",
+    title: "Tool atlas — NY Custodian Exam Study",
     description: `Illustrated, cited reference pages for ${releasedTools.length} tools and ${catalog.comparisons.length} comparison panels.`,
     robots: "index,follow",
     routeId: "atlas-index",
     section: "atlas",
     body: `
   <main class="page-shell" id="main-content" tabindex="-1">
-    ${breadcrumb([{ label: "Study tools" }])}
-    <section class="hero"><p class="eyebrow">${releasedTools.length} tools · ${catalog.comparisons.length} comparison panels</p><h1>Recognize a tool by use and construction.</h1><p>Every tool page is illustrated and cites its public sources. Some entries are reference-only and never appear as scored practice questions; each one says so on its page.</p></section>
-    <section class="tool-grid" aria-label="Study tools">${toolEntries.map(({ slug, tool }) => `<article class="tool-card"><img src="${derivativePath(tool, "phone")}" width="320" height="320" alt="${escapeHtml(tool.neutralDescription)}"><div><p class="eyebrow">${escapeHtml(tool.family)} · ${escapeHtml(catalogToolEvidenceTierLabel(tool.evidenceTier))}</p><h2><a href="/atlas/tool/${slug}/">${escapeHtml(tool.canonicalTerm)}</a></h2><p>${escapeHtml(tool.useSummary)}</p>${tool.practiceEligibility === "atlas-only" ? '<p class="source-note"><strong>Reference-only:</strong> excluded from scored practice.</p>' : ""}</div></article>`).join("")}</section>
+    ${breadcrumb([{ href: "/atlas/", label: "Library" }, { label: "Tool atlas" }])}
+    <section class="page-header"><h1>Tool atlas</h1><p>Recognize a tool by its shape, use, and the features that tell look-alikes apart. Every published illustration has a written description and source support.</p><p class="source-note">${releasedTools.length} illustrated tools · ${catalog.comparisons.length} comparison panels</p></section>
+    <section class="atlas-browser" data-atlas-browser aria-label="Browse illustrated tools"><div class="tabs atlas-filters" role="tablist" aria-label="Visual family" data-atlas-filters hidden><button class="atlas-filter" id="atlas-family-all" type="button" role="tab" aria-selected="true" aria-controls="atlas-tools" data-atlas-family="all">All families <span class="filter-count">${releasedTools.length}</span></button>${[...families].map(([family, tools]) => `<button class="atlas-filter" id="atlas-family-${slugify(family)}" type="button" role="tab" aria-selected="false" aria-controls="atlas-tools" tabindex="-1" data-atlas-family="${escapeHtml(family)}">${escapeHtml(capitalize(family))} <span class="filter-count">${tools.length}</span></button>`).join("")}</div><p class="atlas-count" data-atlas-count role="status">Showing all ${releasedTools.length} illustrated tools.</p>
+    <div class="tool-grid" id="atlas-tools">${toolEntries.map(({ slug, tool }, index) => `<article class="tool-card" data-tool-family="${escapeHtml(tool.family)}"><img src="${derivativePath(tool, "phone")}" width="320" height="320" ${index >= 4 ? 'loading="lazy" ' : ""}alt="${escapeHtml(tool.neutralDescription)}"><div><h2><a href="/atlas/tool/${slug}/">${escapeHtml(tool.canonicalTerm)}</a></h2><p class="tool-family">${escapeHtml(capitalize(tool.family))}</p>${tool.practiceEligibility === "atlas-only" ? '<p class="source-note"><strong>Reference-only:</strong> excluded from scored practice.</p>' : ""}</div></article>`).join("")}</div></section>
     <section class="section-gap"><h2>Comparison panels</h2><p>Each panel lives on its tool-family page, together with any restriction that keeps it out of scored practice.</p><ul class="link-list">${comparisonEntries.map(({ canonicalPath, comparison }) => {
       const names = comparison.memberIds.map((id) => toolById.get(id)?.canonicalTerm ?? id)
       return `<li><a href="${canonicalPath}">${escapeHtml(names.join(" vs. "))}</a><span>${comparison.scoredUseGate.length === 0 ? "Can appear in scored practice" : "Reference-only"}</span></li>`
     }).join("")}</ul></section>
     ${comparableFamilies.length === 0 ? "" : `<section class="section-gap"><h2>Compare a tool family</h2><ul class="link-list">${comparableFamilies.map(([family, tools]) => `<li><a href="/atlas/family/${slugify(family)}/">${escapeHtml(family)} (${tools.length} tools)</a></li>`).join("")}</ul></section>`}
-  </main>`
+  </main>
+  <script type="module" src="/src/static-browser.ts"></script>`
   })
 
   for (const [family, tools] of comparableFamilies) {
@@ -1556,7 +1676,7 @@ const buildPages = ({
     routeId: "offline-packs",
     section: "utility",
     body: `
-  <main class="page-shell" id="main-content" tabindex="-1">
+  <main class="page-shell utility-page" id="main-content" tabindex="-1">
     ${breadcrumb([{ label: "Use offline" }])}
     <section class="hero"><p class="eyebrow">Offline study</p><h1>Use this site offline.</h1><p>Nothing downloads on page load. When you request the study pack, it downloads and is checked, then waits for you to turn it on. If an update fails, your old copy still works.</p></section>
     <div data-offline-pack-manager data-island="offline-pack-manager"><p>JavaScript and available browser storage are required to manage offline downloads. No download has started.</p></div>
@@ -1582,7 +1702,7 @@ const buildPages = ({
     routeId: "settings",
     section: "utility",
     body: `
-  <main class="page-shell" id="main-content" tabindex="-1">
+  <main class="page-shell utility-page" id="main-content" tabindex="-1">
     ${breadcrumb([{ label: "Settings" }])}
     <section class="hero"><p class="eyebrow">On this device</p><h1>Keep local data understandable and portable.</h1><p>Preferences, export, import, and reset work without an account. Removing an offline download stays on the Use offline page so an active study session cannot lose its content by accident.</p></section>
     <div data-settings data-island="settings"><p>JavaScript and browser storage are required to open local settings. Nothing changes while this view loads.</p></div>
@@ -1600,7 +1720,7 @@ const buildPages = ({
     routeId: "correction-submit",
     section: "utility",
     body: `
-  <main class="page-shell" id="main-content" tabindex="-1">
+  <main class="page-shell utility-page" id="main-content" tabindex="-1">
     ${breadcrumb([{ href: "/transparency/", label: "Sources and methods" }, { label: "Report a correction" }])}
     <section class="hero"><p class="eyebrow">Structured text only · no attachments</p><h1>Report a content, access, rights, or security concern.</h1><p>Do not include secure questions, answer options, reconstructed drawings, photographs, or review-session notes. Local drafting works offline. Going online never submits or retries a draft automatically.</p></section>
     <aside class="local-data-warning"><h2>Reports cannot be sent right now</h2><p>Online submission is turned off until the correction service is separately approved and turned on. You can still save a draft in this browser, but browser data can be cleared. <a href="/settings/#export-local-data">Export a backup</a> if you want to keep it. Nothing is sent unless intake is on and you submit it yourself.</p></aside>
@@ -1739,7 +1859,11 @@ export const generateSite = async (): Promise<void> => {
     new URL("public/print-bootstrap.json", siteRoot),
     `${JSON.stringify(printBootstrap)}\n`
   )
-  await cp(new URL("src/styles.css", siteRoot), new URL("public/styles.css", siteRoot))
+  const stylesheets = await Promise.all(
+    ["styles.css", "design-system.css", "player-design.css", "study-design.css"]
+      .map((file) => Bun.file(new URL(`src/${file}`, siteRoot)).text())
+  )
+  await Bun.write(new URL("public/styles.css", siteRoot), stylesheets.join("\n"))
 
   console.log(
     `generated ${pages.length} documents, ${release.catalog.tools.length} tool pages, ` +

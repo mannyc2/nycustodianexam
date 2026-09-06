@@ -29,6 +29,7 @@ import {
   deriveQuestionReviewItem,
   reviewReasonId
 } from "../src/review/projection.ts"
+import { projectStudyActivity } from "../src/study/activity.ts"
 
 const sha = "a".repeat(64)
 
@@ -355,6 +356,39 @@ const layerFor = (input?: {
 }
 
 describe("review projection", () => {
+  it.effect("reviews an explicitly released practice-session receipt without substituting the canonical attempt", () => {
+    const receipt = { ...questionReceipt, sessionId: "ps-generated", position: 7 }
+    const source = {
+      id: questionAttempt.questionId,
+      optionIds: ["a", "b"],
+      receipt,
+      itemUrl: "/practice/session/ps-generated/question/7/"
+    }
+    const generatedBootstrap = Schema.decodeUnknownSync(ReviewQueueBootstrap)({ ...bootstrap, practiceQuestions: [source] })
+    const attempt = new QuestionAttemptRecord({ ...questionAttempt, id: questionAttemptId(receipt), receipt })
+    const requestedUrls: Array<string> = []
+    return Effect.gen(function*() {
+      const projection = yield* buildReviewQueue(generatedBootstrap)
+      expect(projection.quarantined).toEqual([])
+      expect(projection.items).toHaveLength(1)
+      expect(projection.items[0]?.attemptId).toBe(attempt.id)
+      expect(projection.items[0]?.itemUrl).toBe(source.itemUrl)
+      expect(requestedUrls).toEqual([receipt.postcommitPath])
+    }).pipe(Effect.provide(layerFor({ questionAttempts: [attempt], requestedUrls })))
+  })
+
+  it.effect("holds out an unlisted practice-session coordinate even when the content digest is unchanged", () => {
+    const receipt = { ...questionReceipt, sessionId: "ps-unlisted", position: 7 }
+    const attempt = new QuestionAttemptRecord({ ...questionAttempt, id: questionAttemptId(receipt), receipt })
+    const requestedUrls: Array<string> = []
+    return Effect.gen(function*() {
+      const projection = yield* buildReviewQueue(bootstrap)
+      expect(projection.items).toEqual([])
+      expect(projection.quarantined).toHaveLength(1)
+      expect(requestedUrls).toEqual([])
+    }).pipe(Effect.provide(layerFor({ questionAttempts: [attempt], requestedUrls })))
+  })
+
   it.effect("derives question and visual-hazard reasons only after durable attempts", () => {
     const requestedUrls: Array<string> = []
     return Effect.gen(function*() {
@@ -546,6 +580,15 @@ describe("review projection", () => {
 })
 
 describe("review bootstrap trust boundary", () => {
+  it("rejects a practice feedback route belonging to another session", () => {
+    expect(() => Schema.decodeUnknownSync(ReviewQueueBootstrap)({
+      ...bootstrap,
+      practiceQuestions: [{
+        ...bootstrap.questions[0]!,
+        itemUrl: "/practice/session/other-session/question/1/"
+      }]
+    })).toThrow()
+  })
   it("rejects duplicate options and non-local or traversal-bearing URLs", () => {
     const base = {
       schemaVersion: 1,
@@ -583,5 +626,40 @@ describe("review bootstrap trust boundary", () => {
         }
       }]
     })).toThrow()
+  })
+})
+
+describe("study activity", () => {
+  it("counts exact current-release attempts, including generated practice, without merging unknown versions", () => {
+    const receipt = { ...questionReceipt, sessionId: "ps-generated", position: 7 }
+    const generated = new QuestionAttemptRecord({ ...questionAttempt, id: questionAttemptId(receipt), receipt, committedAt: 4 })
+    const unknownReceipt = { ...questionReceipt, sessionId: "ps-unknown" }
+    const unknown = new QuestionAttemptRecord({ ...questionAttempt, id: questionAttemptId(unknownReceipt), receipt: unknownReceipt })
+    const sources = Schema.decodeUnknownSync(ReviewQueueBootstrap)({
+      ...bootstrap,
+      practiceQuestions: [{ id: generated.questionId, optionIds: ["a", "b"], receipt, itemUrl: "/practice/session/ps-generated/question/7/" }]
+    })
+    const projection = projectStudyActivity(sources, [questionAttempt, generated, unknown], [visualAttempt, nonvisualAttempt], [])
+    expect(projection.questionCount).toBe(2)
+    expect(projection.hazardCount).toBe(2)
+    expect(projection.otherAttemptCount).toBe(1)
+    expect(projection.rows[0]?.href).toBe("/practice/session/ps-generated/question/7/")
+    expect(projection.rows.map((row) => row.id)).not.toContain(unknown.id)
+    const changed = new QuestionAttemptRecord({ ...generated, receipt: { ...receipt, postcommitSha256: "f".repeat(64) } })
+    expect(projectStudyActivity(sources, [changed], [], []).questionCount).toBe(0)
+  })
+
+  it("shows finished reviews only beside the exact matching saved attempt and keeps newest first", () => {
+    const acknowledgementInput = { itemId: "question-review", attemptId: questionAttempt.id, reasonIds: ["flag"] as const }
+    const acknowledgement = new ReviewAcknowledgementRecord({
+      ...acknowledgementInput,
+      id: reviewAcknowledgementId(acknowledgementInput),
+      acknowledgedAt: 10
+    })
+    const projection = projectStudyActivity(bootstrap, [questionAttempt], [], [acknowledgement])
+    expect(projection.reviewCount).toBe(1)
+    expect(projection.rows.map((row) => row.kind)).toEqual(["reviews", "questions"])
+    expect(projection.rows[0]?.href).toBe(bootstrap.questions[0]?.itemUrl)
+    expect(projectStudyActivity(bootstrap, [], [], [acknowledgement]).reviewCount).toBe(0)
   })
 })

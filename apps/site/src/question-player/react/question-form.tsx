@@ -3,20 +3,38 @@ import { selectedOptionId } from "../state.ts"
 import { useQuestionPlayer } from "./context.tsx"
 
 export const QuestionFrame = ({ children }: { readonly children: ReactNode }) => (
-  <article className="question-card" aria-labelledby="question-heading">
+  <article className="question-card study-player" aria-labelledby="question-heading">
     {children}
   </article>
 )
+
+export const QuestionHeader = () => {
+  const { actions, state } = useQuestionPlayer()
+  const canChangeFlag = state.tag === "ready" || state.tag === "commit_failed"
+  return (
+    <div className="player-heading-row">
+      <span className="player-position">Practice question · Text version</span>
+      <button
+        aria-pressed={state.reviewIntent === "flagged"}
+        className="button button-secondary player-flag"
+        disabled={!canChangeFlag}
+        onClick={actions.toggleFlag}
+        type="button"
+      >
+        <span aria-hidden="true">⚑</span>
+        {state.reviewIntent === "flagged" ? "Flagged for review" : "Flag for review"}
+      </button>
+    </div>
+  )
+}
 
 export const QuestionPrompt = () => {
   const { question } = useQuestionPlayer()
   return (
     <header className="question-prompt">
-      <p className="eyebrow">Practice question</p>
       <h1 id="question-heading">{question.prompt}</h1>
       <p>
-        Select one answer — you can change it until you submit. Submitting locks your answer,
-        and the explanation opens only after it is saved on this device.
+        Choose one answer. You can change your selection until you save it.
       </p>
     </header>
   )
@@ -29,9 +47,9 @@ export const QuestionOptions = () => {
 
   return (
     <fieldset aria-describedby={meta.statusId} disabled={locked}>
-      <legend className="sr-only">Answer choices</legend>
+      <legend className="player-choice-legend">Answer choices</legend>
       <div className="answer-list">
-        {question.options.map((option) => (
+        {question.options.map((option, index) => (
           <label className="answer-option" key={option.id}>
             <input
               checked={selected === option.id}
@@ -40,6 +58,7 @@ export const QuestionOptions = () => {
               type="radio"
               value={option.id}
             />
+            <span aria-hidden="true" className="answer-letter">{String.fromCharCode(65 + index)}</span>
             <span>{option.label}</span>
           </label>
         ))}
@@ -70,14 +89,17 @@ export const QuestionForm = ({ children }: { readonly children: ReactNode }) => 
 }
 
 export const QuestionControls = () => {
-  const { actions, state } = useQuestionPlayer()
+  const { state } = useQuestionPlayer()
   const selected = selectedOptionId(state)
   const isRevealRetry = state.tag === "reveal_failed"
   const isRestoreRetry = state.tag === "restore_failed"
-  const canChangeFlag = state.tag === "ready" || state.tag === "commit_failed"
 
   return (
-    <div className="question-controls">
+    <>
+    {state.tag === "ready" && selected !== null ? (
+      <p className="player-selection-note">Nothing is saved yet. Change your selection as often as you like, then press Save answer.</p>
+    ) : null}
+    <div className="question-controls player-action-bar">
       {state.tag === "revealed" ? (
         <a className="button button-primary" href="/atlas/">
           Open study tools
@@ -98,18 +120,13 @@ export const QuestionControls = () => {
               ? "Reload question"
               : isRevealRetry
               ? "Retry explanation"
-              : "Submit answer"}
+              : "Save answer"}
         </button>
       )}
-      <button
-        aria-pressed={state.reviewIntent === "flagged"}
-        className="button button-secondary"
-        disabled={!canChangeFlag}
-        onClick={actions.toggleFlag}
-        type="button"
-      >
-        {state.reviewIntent === "flagged" ? "Flagged for review" : "Flag for review"}
-      </button>
+      <span className="player-action-note">{state.tag === "revealed"
+        ? "Answer saved on this device"
+        : "Your answer is saved before feedback appears"}</span>
     </div>
+    </>
   )
 }

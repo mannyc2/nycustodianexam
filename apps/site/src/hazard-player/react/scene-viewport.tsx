@@ -9,7 +9,7 @@ import { draftFromState, isEditableHazardState } from "../state.ts"
 import { useHazardPlayer } from "./context.tsx"
 
 export const HazardFrame = ({ children }: { readonly children: ReactNode }) => (
-  <article className="hazard-player" aria-labelledby="hazard-scene-heading">
+  <article className="hazard-player study-player" aria-labelledby="hazard-scene-heading">
     {children}
   </article>
 )
@@ -18,17 +18,20 @@ export const HazardPrompt = () => {
   const { meta, mode, scene } = useHazardPlayer()
   return (
     <header className="hazard-player__prompt">
-      <p className="eyebrow">Hazard practice · original scene</p>
+      <div className="player-heading-row">
+        <span className="player-position">Hazard practice · Original scene</span>
+        <span className="player-mode-label">{mode === "visual" ? "Visual practice" : "Text version"}</span>
+      </div>
       <h1 id="hazard-scene-heading" ref={meta.sceneHeadingRef} tabIndex={-1}>
         Inspect the {scene.environment}
       </h1>
       <p>{scene.neutralPreAnswer.overview}</p>
       <p>
         {mode === "visual"
-          ? "Mark every location that concerns you. You may submit no markers after confirming that choice."
+          ? "Mark as many or as few places as you think need attention. Submitting no marks is a valid answer and asks for confirmation."
           : "Review each zone and select every area that concerns you. This text version covers the same knowledge, but it is not the same task as marking the image."}
       </p>
-      <p>No feedback or expected count is available until your response is saved.</p>
+      <p className="player-selection-note">Inspect the whole scene. Feedback appears after you save your response.</p>
     </header>
   )
 }

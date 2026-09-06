@@ -406,7 +406,7 @@ export const SettingsIsland = ({
                 preferredLocale: event.target.value as "en" | "es"
               }))}
             >
-              <option value="en">English (launch content available)</option>
+              <option value="en">English</option>
               <option value="es" disabled>Spanish (not available yet)</option>
             </select>
           </div>

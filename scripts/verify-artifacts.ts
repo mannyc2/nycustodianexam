@@ -21,6 +21,7 @@ import {
   QuestionAttemptReceipt
 } from "../apps/site/src/attempt-receipt.ts"
 import { ReviewQueueBootstrap } from "../apps/site/src/review/model.ts"
+import { StudyBootstrap } from "../apps/site/src/study/model.ts"
 import { SimulationBootstrap } from "../apps/site/src/simulation/model.ts"
 import { PrintBuilderBootstrap } from "../apps/site/src/print/model.ts"
 import { AssetContentReceipt } from "../apps/site/src/verified-content.ts"
@@ -1445,6 +1446,7 @@ export const verify = async (): Promise<void> => {
   const bundleReports = new Map<string, Awaited<ReturnType<typeof bundleMeasurement>>>()
   const referencedAssets = new Set<string>()
   const interactiveRouteIds = new Set([
+    "study-hub",
     "question-player",
     "review-player",
     "review-queue",
@@ -1497,13 +1499,24 @@ export const verify = async (): Promise<void> => {
       const bootScripts = [...html.matchAll(
         /<script type="module"[^>]+src="(\/assets\/preferences-boot-[^"]+\.js)"[^>]*>/g
       )]
-      if (bootScripts.length !== 1 || occurrenceCount(withoutInertJson, "<script") !== 1) {
+      const hasCatalogControls = route.routeId === "exam-selector" || route.routeId === "atlas-index"
+      const catalogScripts = [...html.matchAll(
+        /<script type="module"[^>]+src="(\/assets\/static-browser-[^"]+\.js)"[^>]*>/g
+      )]
+      const expectedModules = hasCatalogControls ? 2 : 1
+      if (
+        bootScripts.length !== 1 ||
+        catalogScripts.length !== (hasCatalogControls ? 1 : 0) ||
+        occurrenceCount(withoutInertJson, "<script") !== expectedModules
+      ) {
         throw new Error(
-          `Static route must include only the minimal preference boot module: ${route.canonicalPath}`
+          `Static route has an unexpected executable module: ${route.canonicalPath}`
         )
       }
       const bootClosure = await collectJavaScriptClosure(html, allJavaScriptPaths)
-      if (bootClosure.length !== 1) {
+      // The registry/atlas enhancement is standalone DOM code. Every reference
+      // route remains independent of React and the Effect study runtime.
+      if (bootClosure.length !== expectedModules) {
         throw new Error(
           `Static preference boot module imports an interactive runtime: ${route.canonicalPath}`
         )
@@ -1665,20 +1678,64 @@ export const verify = async (): Promise<void> => {
       continue
     }
 
-    if (route.routeId === "review-queue") {
-      const rawBootstrap = extractEmbeddedJson(html, "review-bootstrap-data")
+    if (route.routeId === "review-queue" || route.routeId === "study-hub") {
+      const study = route.routeId === "study-hub"
+        ? Schema.decodeUnknownSync(StudyBootstrap)(extractEmbeddedJson(html, "study-bootstrap-data"))
+        : undefined
+      if (study !== undefined && (
+        study.questionCount !== questions.length ||
+        study.sceneCount !== scenes.length ||
+        study.toolCount !== manifest.toolCount ||
+        !html.includes("data-study-hub") ||
+        !/<main\b[\s\S]*<h1\b/i.test(html) ||
+        (study.firstPractice !== null && !expectedRoutes.some((candidate) =>
+          candidate.routeId === "question-player" && candidate.canonicalPath === study.firstPractice?.href
+        ))
+      )) {
+        throw new Error("Study hub bootstrap or substantive fallback is incomplete")
+      }
+      const rawBootstrap = study?.reviewQueue ?? extractEmbeddedJson(html, "review-bootstrap-data")
       assertNoAnswerBearingStructuredFields(rawBootstrap, "Review queue bootstrap")
       const bootstrap = Schema.decodeUnknownSync(ReviewQueueBootstrap)(
         rawBootstrap
       )
       if (
-        !html.includes("data-review-queue") ||
+        !(study === undefined ? html.includes("data-review-queue") : html.includes("data-study-hub")) ||
         !/<script type="module"[^>]+src="\/assets\/[^"]+\.js"/.test(html) ||
         html.toLowerCase().includes("starter queue") ||
         bootstrap.questions.length !== questions.length ||
         bootstrap.scenes.length !== scenes.length
       ) {
         throw new Error("Review queue bootstrap or static fallback is incomplete")
+      }
+      const expectedPracticeRoutes = expectedRoutes.filter((candidate) =>
+        candidate.routeId === "question-player" && candidate.sessionId !== manifest.releaseId
+      )
+      const practiceSources = bootstrap.practiceQuestions ?? []
+      assertEqualSets(
+        new Set(practiceSources.map((source) => source.itemUrl)),
+        new Set(expectedPracticeRoutes.map((candidate) => candidate.canonicalPath)),
+        "Review generated-practice source URLs"
+      )
+      if (practiceSources.length !== expectedPracticeRoutes.length) {
+        throw new Error("Review generated-practice sources contain duplicate or missing entries")
+      }
+      for (const source of practiceSources) {
+        const expected = expectedPracticeRoutes.find((candidate) => candidate.canonicalPath === source.itemUrl)
+        const question = questions.find((candidate) => candidate.value.id === source.id)?.value
+        if (
+          expected === undefined || question === undefined ||
+          expected.precommit?.id !== source.id ||
+          source.receipt.sessionId !== expected.sessionId ||
+          source.receipt.position !== expected.position ||
+          source.receipt.releaseId !== manifest.releaseId ||
+          source.receipt.packVersion !== manifest.packVersion ||
+          source.receipt.questionId !== source.id ||
+          source.receipt.postcommitPath !== expected.postcommitPath ||
+          source.receipt.postcommitBytes !== expected.postcommitArtifact?.bytes ||
+          source.receipt.postcommitSha256 !== expected.postcommitArtifact?.sha256 ||
+          !isDeepStrictEqual(source.optionIds, question.options.map((option) => option.id))
+        ) throw new Error(`Review generated-practice receipt mismatch: ${source.itemUrl}`)
       }
       bootstrap.questions.forEach((source, index) => {
         const expectedQuestion = questions[index]
@@ -2079,9 +2136,10 @@ export const verify = async (): Promise<void> => {
 
   // The interactive entries share the framework/runtime and verified-content chunks. M4 and M5
   // share durable-session, print, pack, settings, correction, and canonical review-projection
-  // services. The largest integrated closure is Settings at 475429 raw / 141746 gzip / 119790
-  // brotli; these ceilings retain a deliberately narrow deterministic margin.
-  const bundleBudgets = { raw: 476_000, gzip: 142_500, brotli: 121_000 } as const
+  // services. The handoff's exact generated-practice receipt validation adds
+  // 733 raw bytes to Settings (476162 total); retain a narrow margin while
+  // preserving the existing compressed ceilings.
+  const bundleBudgets = { raw: 477_000, gzip: 142_500, brotli: 121_000 } as const
   for (const [family, measurement] of bundleReports) {
     for (const format of ["raw", "gzip", "brotli"] as const) {
       if (measurement[format] > bundleBudgets[format]) {

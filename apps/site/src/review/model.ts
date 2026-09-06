@@ -18,6 +18,13 @@ const ReviewHazardItemUrl = Schema.String.check(
   )
 )
 
+const PracticeQuestionItemUrl = Schema.String.check(
+  Schema.isPattern(
+    new RegExp(`^/practice/session/${safePathSegment}/question/[1-9][0-9]*/$`),
+    { expected: "an exact root-relative practice-player path" }
+  )
+)
+
 const UniqueOptionIds = Schema.NonEmptyArray(Schema.NonEmptyString).check(
   Schema.makeFilter((optionIds) =>
     new Set(optionIds).size === optionIds.length
@@ -28,10 +35,25 @@ const UniqueOptionIds = Schema.NonEmptyArray(Schema.NonEmptyString).check(
 
 export const ReviewQuestionBootstrap = Schema.Struct({
   id: Schema.NonEmptyString,
+  prompt: Schema.optionalKey(Schema.NonEmptyString),
   optionIds: UniqueOptionIds,
   receipt: QuestionAttemptReceipt,
   itemUrl: ReviewQuestionItemUrl
 })
+
+export const ReviewPracticeQuestionBootstrap = Schema.Struct({
+  id: Schema.NonEmptyString,
+  prompt: Schema.optionalKey(Schema.NonEmptyString),
+  optionIds: UniqueOptionIds,
+  receipt: QuestionAttemptReceipt,
+  itemUrl: PracticeQuestionItemUrl
+}).check(Schema.makeFilter((source) =>
+  source.id === source.receipt.questionId &&
+    source.itemUrl === `/practice/session/${source.receipt.sessionId}/question/${source.receipt.position}/` &&
+    source.receipt.postcommitPath === `/content/vertical-slice/questions/${source.id}.postcommit.json`
+    ? undefined
+    : "the practice feedback URL and content path must match the exact receipt"
+))
 
 export const ReviewSceneBootstrap = Schema.Struct({
   scene: PrecommitSceneSchema,
@@ -46,6 +68,7 @@ export class ReviewQueueBootstrap extends Schema.Class<ReviewQueueBootstrap>(
 )({
   schemaVersion: Schema.Literal(1),
   questions: Schema.Array(ReviewQuestionBootstrap),
+  practiceQuestions: Schema.optionalKey(Schema.Array(ReviewPracticeQuestionBootstrap)),
   scenes: Schema.Array(ReviewSceneBootstrap)
 }) {}
 
@@ -61,6 +84,7 @@ export type ReviewReason =
 
 export type ReviewQueueItem = Readonly<{
   id: string
+  label?: string
   attemptId: string
   committedAt: number
   itemUrl: string

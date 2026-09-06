@@ -35,9 +35,13 @@ export const HazardPlayer = {
 export const VisualHazardPractice = () => (
   <HazardPlayerPieces.Frame>
     <HazardPlayerPieces.Prompt />
-    <HazardPlayerPieces.VisualScene />
-    <HazardPlayerPieces.MarkerList />
-    <HazardPlayerPieces.Commit />
+    <div className="hazard-player__workspace">
+      <HazardPlayerPieces.VisualScene />
+      <div className="hazard-player__response-panel">
+        <HazardPlayerPieces.MarkerList />
+        <HazardPlayerPieces.Commit />
+      </div>
+    </div>
     <HazardPlayerPieces.Results />
     <HazardPlayerPieces.Status />
   </HazardPlayerPieces.Frame>

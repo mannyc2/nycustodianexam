@@ -4,7 +4,7 @@ import {
   type PostcommitQuestion
 } from "@nycustodian/content/model"
 import { Effect, Schema } from "effect"
-import { sameHazardReceipt, sameQuestionReceipt } from "../attempt-receipt.ts"
+import { questionAttemptId, sameHazardReceipt, sameQuestionReceipt } from "../attempt-receipt.ts"
 import { assessVisualMarkers, hasValidPostcommitClosure } from "../hazard-player/assessment.ts"
 import {
   HazardPersistence,
@@ -128,6 +128,7 @@ export const deriveQuestionReviewItem = Effect.fn(
       attemptId: attempt.id,
       committedAt: attempt.committedAt,
       itemUrl: source.itemUrl,
+      ...(source.prompt === undefined ? {} : { label: source.prompt }),
       kind: "question",
       reasons
     },
@@ -184,6 +185,7 @@ export const deriveVisualHazardReviewItem = Effect.fn(
       committedAt: attempt.committedAt,
       itemUrl: source.visualItemUrl,
       kind: "visual_hazard",
+      label: source.scene.neutralPreAnswer.overview,
       reasons
     },
     reasons
@@ -286,6 +288,15 @@ export const buildReviewQueue = Effect.fn("ReviewProjection.buildReviewQueue")(f
     catch: (cause) =>
       projectionError("projection", "The review question bootstrap is inconsistent.", cause)
   })
+  const questionByAttemptId = yield* Effect.try({
+    try: () => uniqueMap(
+      [...bootstrap.questions, ...(bootstrap.practiceQuestions ?? [])]
+        .map((source) => [questionAttemptId(source.receipt), source]),
+      "question receipt"
+    ),
+    catch: (cause) =>
+      projectionError("projection", "The review practice receipt bootstrap is inconsistent.", cause)
+  })
   const sceneById = yield* Effect.try({
     try: () => uniqueMap(bootstrap.scenes.map((source) => [source.scene.id, source]), "scene"),
     catch: (cause) =>
@@ -293,7 +304,7 @@ export const buildReviewQueue = Effect.fn("ReviewProjection.buildReviewQueue")(f
   })
 
   const questionEffects = questionAttempts.map((attempt) => {
-    const source = questionById.get(attempt.questionId)
+    const source = questionByAttemptId.get(attempt.id) ?? questionById.get(attempt.questionId)
     const effect = !hasBoundQuestionReceipt(attempt)
       ? Effect.fail(
           projectionError(
