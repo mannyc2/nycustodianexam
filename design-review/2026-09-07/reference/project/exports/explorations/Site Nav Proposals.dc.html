@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-25..200" />
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #e9edf1; color: #17202a; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+    a { color: #075985; }
+    a:hover { color: #0c4a6e; }
+    h1, h2, h3, h4, h5, p, dl, dd { margin: 0; }
+    ul { margin: 0; padding: 0; list-style: none; }
+  </style>
+</helmet>
+
+<section style="display: grid; gap: 2rem; padding: 3rem clamp(1.5rem, 3vw, 3rem) 0;">
+
+  <div style="display: grid; gap: 1.25rem; max-width: 74rem;">
+    <div style="display: flex; align-items: center; gap: 0.75rem;">
+      <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; background: #17202a; color: #ffffff; padding: 0.125rem 0.5rem; border-radius: 0.25rem;">Turn 2</span>
+      <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">1a + 1d-1 — where utility goes at ample width</span>
+    </div>
+    <h1 style="font-size: clamp(1.875rem, 1.45rem + 1.5vw, 2.75rem); letter-spacing: -0.025em; line-height: 1.2;">Study · Library · Exams, and a quieter right edge</h1>
+    <p style="max-width: 68ch; color: #4b5563; text-wrap: pretty;">Locked: the <a href="#1a">1a</a> structure and the <a href="#1d-1">1d-1</a> filled pill. Open: how the right edge behaves at ample width. <a href="#2a">2a</a> keeps the labeled cluster you preferred and lets it escalate when offline; <a href="#2b">2b</a> takes your other point literally and moves the whole lane to the footer.</p>
+
+    <div style="display: grid; gap: 0.75rem; padding: 1.25rem 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; max-width: 68ch;">
+      <h2 style="font-size: 1.0625rem;">Same in both</h2>
+      <ul style="display: grid; gap: 0.5rem; font-size: 0.9375rem; color: #4b5563;">
+        <li><strong style="color: #17202a;">Compact is unchanged from 1a.</strong> Four tabs — Study · Library · Exams · Menu — and Menu is the same grouped sheet. Small screens have no room to disclose anything progressively, so the sheet stays the whole inventory.</li>
+        <li><strong style="color: #17202a;">Three tabs, one primary.</strong> Study is the only route that owns resume, due counts and session construction.</li>
+        <li><strong style="color: #17202a;">Every link stays in the unenhanced HTML.</strong> Progressive disclosure hides things from the eye, never from the document — a no-JS visitor and a screen reader still reach Offline packs and Sources on every page.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start; padding-block-end: 4rem;">
+
+    <div id="2a" style="width: 76rem; flex: 0 0 auto; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff; overflow: hidden; scroll-margin: 2rem;">
+      <div style="display: grid; gap: 0.5rem; padding: 1.25rem 1.5rem; background: #edf2f7; border-block-end: 1px solid #b7c1cc;">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; background: #075985; color: #ffffff; padding: 0.125rem 0.5rem; border-radius: 0.25rem;">2a</span>
+          <h2 style="font-size: 1.375rem; letter-spacing: -0.02em;">Keep the labeled cluster</h2>
+        </div>
+        <p style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Offline · Settings · Sources stay visible at ample width, labeled and set off by a rule — <strong style="color: #17202a;">no dropdown, no chevron, nothing to open</strong>. Desktop has the pixels, so it spends them on saying where things are.</p>
+      </div>
+
+      <div style="padding: 1.5rem; background: #f7f8fa; border-block-end: 1px solid #b7c1cc; display: grid; gap: 0.625rem;">
+        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">Ample width — task lane left, exam and utility right</span>
+        <div style="border: 1px solid #b7c1cc; border-radius: 0.5rem; overflow: hidden; background: #ffffff; box-shadow: 0 0.25rem 1rem rgb(23 32 42 / 8%);">
+          <div style="display: flex; align-items: center; gap: 1.5rem; padding: 0 1.25rem; min-height: 3.75rem; border-block-end: 1px solid #b7c1cc;">
+            <a href="#2a" style="display: inline-flex; align-items: center; flex: 0 0 auto; white-space: nowrap; min-height: 2.75rem; font-weight: 700; color: #17202a; text-decoration: none; letter-spacing: -0.01em;">NY Custodian Exam</a>
+            <nav aria-label="Study" style="display: flex; align-items: center; gap: 0.25rem; margin-inline-end: auto;">
+              <a href="#2a" aria-current="page" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; background: #e0f2fe; color: #0c4a6e; font-weight: 700; font-size: 0.9375rem; text-decoration: none;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">school</span>Study</a>
+              <a href="#2a" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; font-size: 0.9375rem; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">book_2</span>Library</a>
+              <a href="#2a" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; font-size: 0.9375rem; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">assignment</span>Exams</a>
+            </nav>
+            <a href="#2a" style="display: inline-flex; align-items: center; flex: 0 0 auto; white-space: nowrap; gap: 0.375rem; min-height: 2.25rem; padding: 0.125rem 0.75rem; border: 1px solid #b7c1cc; border-radius: 999rem; font-size: 0.8125rem; color: #4b5563; text-decoration: none;" style-hover="background: #edf2f7;">Exam <strong style="color: #17202a; font-weight: 550;">Nassau custodian</strong> <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace;">v2026-08</code></a>
+            <nav aria-label="Site and trust" style="display: flex; align-items: center; flex: 0 0 auto; gap: 0.125rem; padding-inline-start: 1rem; border-inline-start: 1px solid #b7c1cc;">
+              <a href="#2a" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem; min-height: 2.75rem; min-width: 2.75rem; padding: 0 0.5rem; border-radius: 0.375rem; color: #075985; font-size: 0.875rem; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">download_for_offline</span><sc-if value="{{ showUtilityLabels }}" hint-placeholder-val="{{ true }}">Offline</sc-if></a>
+              <a href="#2a" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem; min-height: 2.75rem; min-width: 2.75rem; padding: 0 0.5rem; border-radius: 0.375rem; color: #075985; font-size: 0.875rem; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">settings</span><sc-if value="{{ showUtilityLabels }}" hint-placeholder-val="{{ true }}">Settings</sc-if></a>
+              <a href="#2a" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem; min-height: 2.75rem; min-width: 2.75rem; padding: 0 0.5rem; border-radius: 0.375rem; color: #075985; font-size: 0.875rem; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">verified_user</span><sc-if value="{{ showUtilityLabels }}" hint-placeholder-val="{{ true }}">Sources</sc-if></a>
+            </nav>
+          </div>
+          <div style="padding: 1.25rem; display: grid; gap: 0.375rem;">
+            <h3 style="font-size: 1.625rem; letter-spacing: -0.02em;">Study</h3>
+            <p style="font-size: 0.9375rem; color: #4b5563;">Nassau custodian · registry v2026-08 · pack v2.0.0</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 1.5rem; background: #f7f8fa; border-block-end: 1px solid #b7c1cc; display: grid; gap: 0.625rem;">
+        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">Offline — the Offline link becomes a status, in the same slot</span>
+        <div style="border: 1px solid #b7c1cc; border-radius: 0.5rem; overflow: hidden; background: #ffffff; box-shadow: 0 0.25rem 1rem rgb(23 32 42 / 8%);">
+          <div style="display: flex; align-items: center; gap: 1rem; padding: 0 1.25rem; min-height: 3.75rem; border-block-end: 1px solid #b7c1cc;">
+            <a href="#2a" style="display: inline-flex; align-items: center; flex: 0 0 auto; white-space: nowrap; min-height: 2.75rem; font-weight: 700; color: #17202a; text-decoration: none; letter-spacing: -0.01em;">NY Custodian Exam</a>
+            <nav aria-label="Study" style="display: flex; align-items: center; gap: 0.25rem; margin-inline-end: auto;">
+              <a href="#2a" aria-current="page" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; background: #e0f2fe; color: #0c4a6e; font-weight: 700; font-size: 0.9375rem; text-decoration: none;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">school</span>Study</a>
+              <a href="#2a" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; font-size: 0.9375rem; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">book_2</span>Library</a>
+              <a href="#2a" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; font-size: 0.9375rem; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">assignment</span>Exams</a>
+            </nav>
+            <a href="#2a" style="display: inline-flex; align-items: center; flex: 0 0 auto; white-space: nowrap; gap: 0.5rem; min-height: 2.25rem; padding: 0.125rem 0.75rem; border: 1px solid #d9b872; border-radius: 999rem; background: #fffaeb; font-size: 0.8125rem; color: #854d0e; font-weight: 700; text-decoration: none;" style-hover="background: #fdf3d7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.125rem; line-height: 1; font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;">cloud_off</span>Offline — pinned pack <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-weight: 550;">v2.0.0</code></a>
+            <a href="#2a" style="display: inline-flex; align-items: center; flex: 0 0 auto; white-space: nowrap; gap: 0.375rem; min-height: 2.25rem; padding: 0.125rem 0.75rem; border: 1px solid #b7c1cc; border-radius: 999rem; font-size: 0.8125rem; color: #4b5563; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="color: #17202a; font-weight: 550;">Nassau</strong> <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace;">v2026-08</code></a>
+            <nav aria-label="Site and trust" style="display: flex; align-items: center; flex: 0 0 auto; gap: 0.125rem; padding-inline-start: 1rem; border-inline-start: 1px solid #b7c1cc;">
+              <a href="#2a" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem; min-height: 2.75rem; min-width: 2.75rem; padding: 0 0.5rem; border-radius: 0.375rem; color: #075985; font-size: 0.875rem; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">settings</span><sc-if value="{{ showUtilityLabels }}" hint-placeholder-val="{{ true }}">Settings</sc-if></a>
+              <a href="#2a" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem; min-height: 2.75rem; min-width: 2.75rem; padding: 0 0.5rem; border-radius: 0.375rem; color: #075985; font-size: 0.875rem; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">verified_user</span><sc-if value="{{ showUtilityLabels }}" hint-placeholder-val="{{ true }}">Sources</sc-if></a>
+            </nav>
+          </div>
+          <div style="padding: 1.25rem; display: grid; gap: 0.375rem;">
+            <h3 style="font-size: 1.625rem; letter-spacing: -0.02em;">Study</h3>
+            <p style="font-size: 0.9375rem; color: #4b5563;">Answering works offline. New questions arrive when you reconnect.</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 1.5rem; display: flex; flex-wrap: wrap; gap: 1.5rem;">
+        <div style="flex: 1 1 20rem; min-width: 18rem; display: grid; gap: 0.625rem; align-content: start; font-size: 0.9375rem; color: #4b5563;">
+          <p><strong style="color: #17202a;">The cluster earns its slot by changing.</strong> Normally it is three quiet links. When the connection drops or a pack goes stale, the Offline link becomes an amber status in the same position — the escalation costs no new space and needs no explaining.</p>
+          <p><strong style="color: #17202a;">Two tiers, visibly.</strong> A rule and smaller, lighter type separate the utility lane from the task pills, so the five peers problem does not come back — Sources is present without pretending to be a place you study.</p>
+        </div>
+        <div style="flex: 1 1 20rem; min-width: 18rem; display: grid; gap: 0.625rem; align-content: start; font-size: 0.9375rem; color: #4b5563;">
+          <p><strong style="color: #17202a;">Behavior.</strong> Three ordinary links. Nothing toggles, nothing traps focus, nothing needs JS or hover — the whole right edge works in the unenhanced HTML.</p>
+          <p><strong style="color: #17202a;">Cost.</strong> Eight controls in the bar, and Review · Simulations · Print still have no ample-width home — they live on the Study page and in the footer. Labels also wrap first on a small laptop; below roughly 1100px they drop to icons with tooltips.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="2b" style="width: 76rem; flex: 0 0 auto; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff; overflow: hidden; scroll-margin: 2rem;">
+      <div style="display: grid; gap: 0.5rem; padding: 1.25rem 1.5rem; background: #edf2f7; border-block-end: 1px solid #b7c1cc;">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; background: #075985; color: #ffffff; padding: 0.125rem 0.5rem; border-radius: 0.25rem;">2b</span>
+          <h2 style="font-size: 1.375rem; letter-spacing: -0.02em;">No menu at all</h2>
+        </div>
+        <p style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">The bar is three tabs and your exam. Utility and trust move to <strong style="color: #17202a;">the footer</strong>, and offline moves <strong style="color: #17202a;">into the page that cares</strong> — disclosed by scrolling and by context instead of by a control.</p>
+      </div>
+
+      <div style="padding: 1.5rem; background: #f7f8fa; border-block-end: 1px solid #b7c1cc; display: grid; gap: 0.625rem;">
+        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">Ample width — five controls, no chevrons</span>
+        <div style="border: 1px solid #b7c1cc; border-radius: 0.5rem; overflow: hidden; background: #ffffff; box-shadow: 0 0.25rem 1rem rgb(23 32 42 / 8%);">
+          <div style="display: flex; align-items: center; gap: 1.5rem; padding: 0 1.25rem; min-height: 3.75rem; border-block-end: 1px solid #b7c1cc;">
+            <a href="#2b" style="display: inline-flex; align-items: center; flex: 0 0 auto; white-space: nowrap; min-height: 2.75rem; font-weight: 700; color: #17202a; text-decoration: none; letter-spacing: -0.01em;">NY Custodian Exam</a>
+            <nav aria-label="Study" style="display: flex; align-items: center; gap: 0.25rem; margin-inline-end: auto;">
+              <a href="#2b" aria-current="page" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; background: #e0f2fe; color: #0c4a6e; font-weight: 700; font-size: 0.9375rem; text-decoration: none;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">school</span>Study</a>
+              <a href="#2b" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; font-size: 0.9375rem; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">book_2</span>Library</a>
+              <a href="#2b" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; font-size: 0.9375rem; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">assignment</span>Exams</a>
+            </nav>
+            <a href="#2b" style="display: inline-flex; align-items: center; flex: 0 0 auto; white-space: nowrap; gap: 0.375rem; min-height: 2.25rem; padding: 0.125rem 0.75rem; border: 1px solid #b7c1cc; border-radius: 999rem; font-size: 0.8125rem; color: #4b5563; text-decoration: none;" style-hover="background: #edf2f7;">Exam <strong style="color: #17202a; font-weight: 550;">Nassau custodian</strong> <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace;">v2026-08</code></a>
+            <a href="#2b" style="display: inline-flex; align-items: center; flex: 0 0 auto; gap: 0.375rem; min-height: 2.75rem; padding: 0 0.75rem 0 0.5rem; border-radius: 0.375rem; color: #075985; font-weight: 550; font-size: 0.875rem; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">settings</span>Settings</a>
+          </div>
+          <div style="padding: 1.25rem; display: grid; gap: 0.375rem;">
+            <h3 style="font-size: 1.625rem; letter-spacing: -0.02em;">Study</h3>
+            <p style="font-size: 0.9375rem; color: #4b5563;">Nassau custodian · registry v2026-08 · pack v2.0.0</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 1.5rem; background: #f7f8fa; border-block-end: 1px solid #b7c1cc; display: grid; gap: 0.625rem;">
+        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">In context — offline is a fact about this page, stated on this page</span>
+        <div style="border: 1px solid #b7c1cc; border-radius: 0.5rem; overflow: hidden; background: #ffffff; box-shadow: 0 0.25rem 1rem rgb(23 32 42 / 8%); display: grid; gap: 1rem; padding: 1.25rem;">
+          <div style="display: grid; gap: 0.375rem;">
+            <h3 style="font-size: 1.625rem; letter-spacing: -0.02em;">Study</h3>
+            <p style="font-size: 0.9375rem; color: #4b5563;">Resume: Cleaning implements — 6 of 20 answered.</p>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1rem; padding: 0.75rem 1rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #f7f8fa;">
+            <span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">download_for_offline</span>
+            <p style="font-size: 0.9375rem;"><strong>All 240 questions are on this device.</strong> <span style="color: #4b5563;">Pack v2.0.0 · downloaded 3 days ago</span></p>
+            <a href="#2b" style="margin-inline-start: auto; display: inline-flex; align-items: center; min-height: 2.25rem; font-size: 0.9375rem;">Manage offline packs</a>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1rem; padding: 0.75rem 1rem; border: 1px solid #d9b872; border-radius: 0.5rem; background: #fffaeb;">
+            <span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; color: #854d0e; font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">cloud_off</span>
+            <p style="font-size: 0.9375rem; color: #854d0e;"><strong>You're offline.</strong> Answering works; new questions arrive when you reconnect.</p>
+            <a href="#2b" style="margin-inline-start: auto; display: inline-flex; align-items: center; min-height: 2.25rem; font-size: 0.9375rem; color: #854d0e;">What's stored</a>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 1.5rem; background: #f7f8fa; border-block-end: 1px solid #b7c1cc; display: grid; gap: 0.625rem;">
+        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">Footer — every page, no JS, nothing hidden behind a control</span>
+        <div style="border: 1px solid #b7c1cc; border-radius: 0.5rem; overflow: hidden; background: #ffffff; box-shadow: 0 0.25rem 1rem rgb(23 32 42 / 8%);">
+          <div style="padding: 1rem 1.25rem; color: #4b5563; font-size: 0.9375rem; border-block-end: 1px solid #edf2f7;">… end of Study</div>
+          <div style="padding: 1.5rem 1.25rem; background: #edf2f7; display: grid; gap: 1.5rem;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 1.5rem;">
+              <div style="display: grid; gap: 0.5rem; align-content: start;">
+                <h4 style="font-size: 0.8125rem; font-weight: 700; color: #4b5563;">Your study</h4>
+                <ul style="display: grid; gap: 0.375rem; font-size: 0.9375rem;">
+                  <li><a href="#2b">Review — {{ dueCount }} due</a></li>
+                  <li><a href="#2b">Simulations</a></li>
+                  <li><a href="#2b">Print packets</a></li>
+                </ul>
+              </div>
+              <div style="display: grid; gap: 0.5rem; align-content: start;">
+                <h4 style="font-size: 0.8125rem; font-weight: 700; color: #4b5563;">Your data</h4>
+                <ul style="display: grid; gap: 0.375rem; font-size: 0.9375rem;">
+                  <li><a href="#2b">Offline packs</a></li>
+                  <li><a href="#2b">Settings</a></li>
+                  <li><a href="#2b">Privacy</a></li>
+                </ul>
+              </div>
+              <div style="display: grid; gap: 0.5rem; align-content: start;">
+                <h4 style="font-size: 0.8125rem; font-weight: 700; color: #4b5563;">Sources &amp; corrections</h4>
+                <ul style="display: grid; gap: 0.375rem; font-size: 0.9375rem;">
+                  <li><a href="#2b">Where answers come from</a></li>
+                  <li><a href="#2b">Corrections log</a></li>
+                  <li><a href="#2b">Report a problem</a></li>
+                </ul>
+              </div>
+              <div style="display: grid; gap: 0.5rem; align-content: start;">
+                <h4 style="font-size: 0.8125rem; font-weight: 700; color: #4b5563;">About</h4>
+                <ul style="display: grid; gap: 0.375rem; font-size: 0.9375rem;">
+                  <li><a href="#2b">FAQ</a></li>
+                  <li><a href="#2b">How scoring works</a></li>
+                  <li><a href="#2b">Status</a></li>
+                </ul>
+              </div>
+            </div>
+            <p style="font-size: 0.875rem; color: #4b5563; max-width: 62ch; text-wrap: pretty;">Independent and unofficial. Not affiliated with any civil service commission. Registry <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace;">v2026-08</code> · question pack <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace;">v2.0.0</code>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 1.5rem; display: flex; flex-wrap: wrap; gap: 1.5rem;">
+        <div style="flex: 1 1 20rem; min-width: 18rem; display: grid; gap: 0.625rem; align-content: start; font-size: 0.9375rem; color: #4b5563;">
+          <p><strong style="color: #17202a;">Trust reads better at length.</strong> “Where answers come from” and a corrections log are sentences, not icons; a footer can spell them out where a 2.75rem square can't. Every one of them is one click, on every page, with no JS.</p>
+          <p><strong style="color: #17202a;">Offline stops being navigation.</strong> Nobody wants a packs manager — they want to know their questions are on the device. Saying so on Study answers the real question and leaves “manage” as the follow-up link.</p>
+        </div>
+        <div style="flex: 1 1 20rem; min-width: 18rem; display: grid; gap: 0.625rem; align-content: start; font-size: 0.9375rem; color: #4b5563;">
+          <p><strong style="color: #17202a;">Settings stays in the bar</strong> as the one account-shaped control, labeled, not an icon alone.</p>
+          <p><strong style="color: #17202a;">Cost.</strong> A footer only works if pages are short enough to reach — and on a long Library index it's a scroll away. Player routes have no footer at all, so a mid-session “what's stored?” has nowhere to go but back out.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section style="display: grid; gap: 2rem; padding: 3rem clamp(1.5rem, 3vw, 3rem) 4rem;">
+
+  <div style="display: grid; gap: 1.25rem; max-width: 74rem;">
+    <div style="display: flex; align-items: center; gap: 0.75rem;">
+      <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; background: #17202a; color: #ffffff; padding: 0.125rem 0.5rem; border-radius: 0.25rem;">Turn 1</span>
+      <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">SiteNav — structure, active state, icons</span>
+    </div>
+    <h1 style="font-size: clamp(1.875rem, 1.45rem + 1.5vw, 2.75rem); letter-spacing: -0.025em; line-height: 1.2;">Three navigation structures</h1>
+    <p style="max-width: 68ch; color: #4b5563; text-wrap: pretty;">All three keep every route ID, canonical path and no-JS fallback in <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">ROUTES.md</code>. What differs is the discovery hierarchy — which the contract explicitly leaves owner-locked (“exact labels, group count, membership, nesting, and order remain unresolved”). Pick a structure by id, and an active state from <a href="#1d">1d</a>.</p>
+
+    <div style="display: grid; gap: 0.75rem; padding: 1.25rem 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; max-width: 68ch;">
+      <h2 style="font-size: 1.0625rem;">What the current bar gets wrong</h2>
+      <ul style="display: grid; gap: 0.5rem; font-size: 0.9375rem; color: #4b5563;">
+        <li><strong style="color: #17202a;">Five peers, two jobs.</strong> Study, Atlas, Hazards and Sources sit as equals, so a task lane and a trust document read as the same kind of thing. <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">NAV-TWO-TIER</code> forbids exactly that.</li>
+        <li><strong style="color: #17202a;">“More” is a shrug.</strong> An unnamed index route is where Review, Simulations, Print, Offline packs and Settings currently vanish — five real destinations behind a word that promises nothing.</li>
+        <li><strong style="color: #17202a;">The active state is a hack.</strong> An <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">inset box-shadow</code> underline floating inside a rounded rectangle belongs to neither the pill nor the tab metaphor, and no icons means the compact bar is four near-identical grey words.</li>
+      </ul>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 21rem), 1fr)); gap: 1rem; max-width: 74rem;">
+      <div style="display: grid; gap: 0.625rem; align-content: start; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+        <h3 style="font-size: 0.8125rem; font-weight: 700; color: #075985;">Lane 1 — learner tasks</h3>
+        <p style="font-size: 0.9375rem; color: #4b5563;">Begins or continues study. <strong style="color: #17202a;">Study is the primary</strong> — it is the only route that owns resume, due counts and session construction.</p>
+        <ul style="display: grid; gap: 0.25rem; font-size: 0.875rem; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #4b5563;">
+          <li>study-hub · question-player</li>
+          <li>atlas-index · atlas-family · atlas-tool</li>
+          <li>procedures · repair-lab</li>
+          <li>hazards-index · hazard-player</li>
+          <li>review-queue · simulation-setup · print-center</li>
+          <li>exam-selector · exam-checker · profile</li>
+        </ul>
+      </div>
+      <div style="display: grid; gap: 0.625rem; align-content: start; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+        <h3 style="font-size: 0.8125rem; font-weight: 700; color: #075985;">Lane 2 — utility &amp; trust</h3>
+        <p style="font-size: 0.9375rem; color: #4b5563;">Your data, and the evidence the site is honest. <strong style="color: #17202a;">This is what “More” was hiding.</strong> Named groups, never a shrug.</p>
+        <ul style="display: grid; gap: 0.25rem; font-size: 0.875rem; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #4b5563;">
+          <li>offline-packs · settings</li>
+          <li>transparency-index · source · corrections</li>
+          <li>correction-submit · security · privacy</li>
+          <li>faq · about · scoring-explainer · status</li>
+        </ul>
+      </div>
+      <div style="display: grid; gap: 0.625rem; align-content: start; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+        <h3 style="font-size: 0.8125rem; font-weight: 700; color: #075985;">Not in the bar at all</h3>
+        <p style="font-size: 0.9375rem; color: #4b5563;">The four player routes use focused chrome: identity, exam context, session landmark, position, and one truthful exit. No global nav.</p>
+        <ul style="display: grid; gap: 0.25rem; font-size: 0.875rem; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #4b5563;">
+          <li>question-player</li>
+          <li>hazard-player</li>
+          <li>review-player</li>
+          <li>simulation-player</li>
+        </ul>
+        <p style="font-size: 0.9375rem; color: #4b5563;">And <strong style="color: #17202a;">Home is the wordmark</strong>, not a nav item — a link every visitor already knows, freeing a slot in a bar where slots are the scarce resource.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start;">
+
+    <div id="1a" style="width: 76rem; flex: 0 0 auto; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff; overflow: hidden; scroll-margin: 2rem;">
+      <div style="display: grid; gap: 0.5rem; padding: 1.25rem 1.5rem; background: #edf2f7; border-block-end: 1px solid #b7c1cc;">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; background: #075985; color: #ffffff; padding: 0.125rem 0.5rem; border-radius: 0.25rem;">1a</span>
+          <h2 style="font-size: 1.375rem; letter-spacing: -0.02em;">Three tasks, one Library</h2>
+        </div>
+        <p style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Study · Library · Exams. Atlas, procedures, repairs and hazard scenes combine into <strong style="color: #17202a;">Library</strong> — the reference lane — because they are all “look something up, then practice it”. Utility becomes an icon cluster on the right.</p>
+      </div>
+
+      <div style="padding: 1.5rem; background: #f7f8fa; border-block-end: 1px solid #b7c1cc; display: grid; gap: 0.625rem;">
+        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">Ample width — two visibly distinct regions in one row</span>
+        <div style="border: 1px solid #b7c1cc; border-radius: 0.5rem; overflow: hidden; background: #ffffff; box-shadow: 0 0.25rem 1rem rgb(23 32 42 / 8%);">
+          <div style="display: flex; align-items: center; gap: 1.5rem; padding: 0 1.25rem; min-height: 3.75rem; border-block-end: 1px solid #b7c1cc;">
+            <a href="#1a" style="display: inline-flex; align-items: center; flex: 0 0 auto; white-space: nowrap; min-height: 2.75rem; font-weight: 700; color: #17202a; text-decoration: none; letter-spacing: -0.01em;">NY Custodian Exam</a>
+            <nav aria-label="Study" style="display: flex; align-items: center; gap: 0.25rem; margin-inline-end: auto;">
+              <a href="#1a" aria-current="page" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; background: #e0f2fe; color: #0c4a6e; font-weight: 700; font-size: 0.9375rem; text-decoration: none;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">school</span>Study</a>
+              <a href="#1a" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; font-size: 0.9375rem; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">book_2</span>Library</a>
+              <a href="#1a" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; font-size: 0.9375rem; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">assignment</span>Exams</a>
+            </nav>
+            <a href="#1a" style="display: inline-flex; align-items: center; flex: 0 0 auto; white-space: nowrap; gap: 0.375rem; min-height: 2.25rem; padding: 0.125rem 0.75rem; border: 1px solid #b7c1cc; border-radius: 999rem; font-size: 0.8125rem; color: #4b5563; text-decoration: none;" style-hover="background: #edf2f7;">Exam <strong style="color: #17202a; font-weight: 550;">Nassau custodian</strong> <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace;">v2026-08</code></a>
+            <nav aria-label="Site and trust" style="display: flex; align-items: center; flex: 0 0 auto; gap: 0.125rem; padding-inline-start: 1rem; border-inline-start: 1px solid #b7c1cc;">
+              <a href="#1a" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem; min-height: 2.75rem; min-width: 2.75rem; padding: 0 0.5rem; border-radius: 0.375rem; color: #075985; font-size: 0.875rem; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">download_for_offline</span><sc-if value="{{ showUtilityLabels }}" hint-placeholder-val="{{ true }}">Offline</sc-if></a>
+              <a href="#1a" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem; min-height: 2.75rem; min-width: 2.75rem; padding: 0 0.5rem; border-radius: 0.375rem; color: #075985; font-size: 0.875rem; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">settings</span><sc-if value="{{ showUtilityLabels }}" hint-placeholder-val="{{ true }}">Settings</sc-if></a>
+              <a href="#1a" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem; min-height: 2.75rem; min-width: 2.75rem; padding: 0 0.5rem; border-radius: 0.375rem; color: #075985; font-size: 0.875rem; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">verified_user</span><sc-if value="{{ showUtilityLabels }}" hint-placeholder-val="{{ true }}">Sources</sc-if></a>
+            </nav>
+          </div>
+          <div style="padding: 1.25rem; display: grid; gap: 0.375rem;">
+            <h3 style="font-size: 1.625rem; letter-spacing: -0.02em;">Study</h3>
+            <p style="font-size: 0.9375rem; color: #4b5563;">Nassau custodian · registry v2026-08 · pack v2.0.0</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 1.5rem; display: flex; flex-wrap: wrap; gap: 1.5rem;">
+        <div style="display: grid; gap: 0.625rem;">
+          <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">Compact — 4 tabs</span>
+          <div style="width: 21.875rem; height: 34rem; border: 1px solid #b7c1cc; border-radius: 1.25rem; overflow: hidden; background: #ffffff; box-shadow: 0 0.5rem 1.5rem rgb(23 32 42 / 12%); display: grid; grid-template-rows: auto auto 1fr auto;">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; padding: 0.375rem 0.75rem; border-block-end: 1px solid #b7c1cc;">
+              <a href="#1a" style="display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 700; color: #17202a; text-decoration: none; font-size: 0.9375rem;">NY Custodian Exam</a>
+              <a href="#1a" style="display: inline-flex; align-items: center; gap: 0.375rem; min-height: 2.25rem; padding: 0.125rem 0.625rem; border: 1px solid #b7c1cc; border-radius: 999rem; font-size: 0.75rem; color: #4b5563; text-decoration: none;"><strong style="color: #17202a; font-weight: 550;">Nassau</strong> <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace;">v2026-08</code></a>
+            </div>
+            <div style="padding: 0.5rem 0.75rem; background: #fffaeb; border-block-end: 1px solid #b7c1cc; color: #854d0e; font-weight: 700; font-size: 0.8125rem; display: flex; align-items: center; gap: 0.5rem;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.125rem; line-height: 1; font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;">cloud_off</span> Offline — pinned pack v2.0.0</div>
+            <div style="padding: 1.25rem 1rem; display: grid; gap: 0.875rem; align-content: start; overflow: hidden;">
+              <h3 style="font-size: 1.5rem; letter-spacing: -0.02em;">Study</h3>
+              <p style="font-size: 0.875rem; color: #4b5563;">Resume: Cleaning implements — 6 of 20 answered.</p>
+              <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.5rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; cursor: pointer; font-size: 1rem;" style-hover="background: #0c4a6e;">Resume session</button>
+              <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.5rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; cursor: pointer; font-size: 1rem;" style-hover="background: #edf2f7;">Start 10 questions</button>
+              <p style="font-size: 0.875rem; color: #4b5563; padding-block-start: 0.25rem;">Review · <strong style="color: #17202a;">{{ dueCount }} due</strong> · Simulations · Print</p>
+            </div>
+            <nav aria-label="Study" style="display: grid; grid-template-columns: repeat(4, 1fr); border-block-start: 1px solid #b7c1cc; background: #ffffff; padding-block-end: 0.25rem;">
+              <a href="#1a" aria-current="page" style="display: grid; justify-items: center; gap: 0.125rem; min-height: 3.5rem; padding: 0.375rem 0.25rem; text-decoration: none; color: #0c4a6e; font-size: 0.6875rem; font-weight: 700;">
+                <span style="display: grid; place-items: center; width: 2.75rem; height: 1.75rem; border-radius: 999rem; background: #e0f2fe;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">school</span></span>Study</a>
+              <a href="#1a" style="display: grid; justify-items: center; gap: 0.125rem; min-height: 3.5rem; padding: 0.375rem 0.25rem; text-decoration: none; color: #4b5563; font-size: 0.6875rem; font-weight: 550;">
+                <span style="display: grid; place-items: center; width: 2.75rem; height: 1.75rem; border-radius: 999rem;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">book_2</span></span>Library</a>
+              <a href="#1a" style="display: grid; justify-items: center; gap: 0.125rem; min-height: 3.5rem; padding: 0.375rem 0.25rem; text-decoration: none; color: #4b5563; font-size: 0.6875rem; font-weight: 550;">
+                <span style="display: grid; place-items: center; width: 2.75rem; height: 1.75rem; border-radius: 999rem;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">assignment</span></span>Exams</a>
+              <a href="#1a" style="display: grid; justify-items: center; gap: 0.125rem; min-height: 3.5rem; padding: 0.375rem 0.25rem; text-decoration: none; color: #4b5563; font-size: 0.6875rem; font-weight: 550;">
+                <span style="display: grid; place-items: center; width: 2.75rem; height: 1.75rem; border-radius: 999rem;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">menu</span></span>Menu</a>
+            </nav>
+          </div>
+        </div>
+
+        <div style="display: grid; gap: 0.625rem;">
+          <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">Menu — a named sheet, not “More”</span>
+          <div style="width: 21.875rem; height: 34rem; border: 1px solid #b7c1cc; border-radius: 1.25rem; overflow: hidden; background: #ffffff; box-shadow: 0 0.5rem 1.5rem rgb(23 32 42 / 12%); display: grid; grid-template-rows: auto 1fr auto;">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; padding: 0.375rem 0.75rem; border-block-end: 1px solid #b7c1cc;">
+              <span style="display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 700; font-size: 0.9375rem;">Menu</span>
+              <a href="#1a" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; min-width: 2.75rem; border-radius: 0.375rem; color: #075985; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.5rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">close</span></a>
+            </div>
+            <div style="overflow: hidden; display: grid; align-content: start;">
+              <h4 style="font-size: 0.8125rem; font-weight: 700; color: #4b5563; padding: 0.875rem 1rem 0.375rem;">Your study</h4>
+              <a href="#1a" style="display: flex; align-items: center; gap: 0.75rem; min-height: 2.75rem; padding: 0.5rem 1rem; text-decoration: none; color: #17202a; font-size: 0.9375rem; border-block-start: 1px solid #edf2f7;" style-hover="background: #f7f8fa;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">history</span>Review<span style="margin-inline-start: auto; font-size: 0.8125rem; color: #4b5563;">{{ dueCount }} due</span></a>
+              <a href="#1a" style="display: flex; align-items: center; gap: 0.75rem; min-height: 2.75rem; padding: 0.5rem 1rem; text-decoration: none; color: #17202a; font-size: 0.9375rem; border-block-start: 1px solid #edf2f7;" style-hover="background: #f7f8fa;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">timer</span>Simulations</a>
+              <a href="#1a" style="display: flex; align-items: center; gap: 0.75rem; min-height: 2.75rem; padding: 0.5rem 1rem; text-decoration: none; color: #17202a; font-size: 0.9375rem; border-block-start: 1px solid #edf2f7;" style-hover="background: #f7f8fa;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">print</span>Print packets</a>
+              <h4 style="font-size: 0.8125rem; font-weight: 700; color: #4b5563; padding: 0.875rem 1rem 0.375rem;">Your data</h4>
+              <a href="#1a" style="display: flex; align-items: center; gap: 0.75rem; min-height: 2.75rem; padding: 0.5rem 1rem; text-decoration: none; color: #17202a; font-size: 0.9375rem; border-block-start: 1px solid #edf2f7;" style-hover="background: #f7f8fa;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">download_for_offline</span>Offline packs<span style="margin-inline-start: auto; font-size: 0.8125rem; color: #854d0e; font-weight: 700;">Stale</span></a>
+              <a href="#1a" style="display: flex; align-items: center; gap: 0.75rem; min-height: 2.75rem; padding: 0.5rem 1rem; text-decoration: none; color: #17202a; font-size: 0.9375rem; border-block-start: 1px solid #edf2f7;" style-hover="background: #f7f8fa;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">settings</span>Settings</a>
+              <h4 style="font-size: 0.8125rem; font-weight: 700; color: #4b5563; padding: 0.875rem 1rem 0.375rem;">About this site</h4>
+              <a href="#1a" style="display: flex; align-items: center; gap: 0.75rem; min-height: 2.75rem; padding: 0.5rem 1rem; text-decoration: none; color: #17202a; font-size: 0.9375rem; border-block-start: 1px solid #edf2f7;" style-hover="background: #f7f8fa;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">verified_user</span>Sources &amp; corrections</a>
+              <a href="#1a" style="display: flex; align-items: center; gap: 0.75rem; min-height: 2.75rem; padding: 0.5rem 1rem; text-decoration: none; color: #17202a; font-size: 0.9375rem; border-block-start: 1px solid #edf2f7;" style-hover="background: #f7f8fa;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">help</span>FAQ</a>
+            </div>
+            <nav aria-label="Study" style="display: grid; grid-template-columns: repeat(4, 1fr); border-block-start: 1px solid #b7c1cc; background: #ffffff; padding-block-end: 0.25rem;">
+              <a href="#1a" style="display: grid; justify-items: center; gap: 0.125rem; min-height: 3.5rem; padding: 0.375rem 0.25rem; text-decoration: none; color: #4b5563; font-size: 0.6875rem; font-weight: 550;">
+                <span style="display: grid; place-items: center; width: 2.75rem; height: 1.75rem; border-radius: 999rem;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">school</span></span>Study</a>
+              <a href="#1a" style="display: grid; justify-items: center; gap: 0.125rem; min-height: 3.5rem; padding: 0.375rem 0.25rem; text-decoration: none; color: #4b5563; font-size: 0.6875rem; font-weight: 550;">
+                <span style="display: grid; place-items: center; width: 2.75rem; height: 1.75rem; border-radius: 999rem;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">book_2</span></span>Library</a>
+              <a href="#1a" style="display: grid; justify-items: center; gap: 0.125rem; min-height: 3.5rem; padding: 0.375rem 0.25rem; text-decoration: none; color: #4b5563; font-size: 0.6875rem; font-weight: 550;">
+                <span style="display: grid; place-items: center; width: 2.75rem; height: 1.75rem; border-radius: 999rem;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">assignment</span></span>Exams</a>
+              <a href="#1a" aria-current="page" style="display: grid; justify-items: center; gap: 0.125rem; min-height: 3.5rem; padding: 0.375rem 0.25rem; text-decoration: none; color: #0c4a6e; font-size: 0.6875rem; font-weight: 700;">
+                <span style="display: grid; place-items: center; width: 2.75rem; height: 1.75rem; border-radius: 999rem; background: #e0f2fe;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">menu</span></span>Menu</a>
+            </nav>
+          </div>
+        </div>
+
+        <div style="flex: 1 1 16rem; min-width: 15rem; display: grid; gap: 0.625rem; align-content: start; font-size: 0.9375rem; color: #4b5563;">
+          <p><strong style="color: #17202a;">Home.</strong> The wordmark, everywhere. <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">/</code> stays a real indexable overview for search arrivals; nobody who is already studying needs a tab for it.</p>
+          <p><strong style="color: #17202a;">Library</strong> is <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">/atlas/</code>, <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">/procedures/</code>, <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">/repairs/</code> and <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">/hazards/</code> under one landing index. Four subject areas that already share a shape.</p>
+          <p><strong style="color: #17202a;">Menu is named and grouped.</strong> The same links exist in the unenhanced HTML; the tab is a native disclosure that restores focus to itself on dismiss.</p>
+          <p><strong style="color: #17202a;">Cost.</strong> Hazards — the most distinctive thing here — loses its top-level slot, and “Library” is a coined word learners must learn once.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="1b" style="width: 76rem; flex: 0 0 auto; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff; overflow: hidden; scroll-margin: 2rem;">
+      <div style="display: grid; gap: 0.5rem; padding: 1.25rem 1.5rem; background: #edf2f7; border-block-end: 1px solid #b7c1cc;">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; background: #075985; color: #ffffff; padding: 0.125rem 0.5rem; border-radius: 0.25rem;">1b</span>
+          <h2 style="font-size: 1.375rem; letter-spacing: -0.02em;">Four tasks, hazards kept out front</h2>
+        </div>
+        <p style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Practice · Hazards · Tools · Review. Hazard scenes stay top-level because they are the feature no competitor has; Atlas absorbs procedures and repairs as <strong style="color: #17202a;">Tools</strong>. Utility collapses to two icons.</p>
+      </div>
+
+      <div style="padding: 1.5rem; background: #f7f8fa; border-block-end: 1px solid #b7c1cc; display: grid; gap: 0.625rem;">
+        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">Ample width — task lane carries a live due count</span>
+        <div style="border: 1px solid #b7c1cc; border-radius: 0.5rem; overflow: hidden; background: #ffffff; box-shadow: 0 0.25rem 1rem rgb(23 32 42 / 8%);">
+          <div style="display: flex; align-items: center; gap: 1.25rem; padding: 0 1.25rem; min-height: 3.75rem; border-block-end: 1px solid #b7c1cc;">
+            <a href="#1b" style="display: inline-flex; align-items: center; flex: 0 0 auto; white-space: nowrap; min-height: 2.75rem; font-weight: 700; color: #17202a; text-decoration: none; letter-spacing: -0.01em;">NY Custodian Exam</a>
+            <nav aria-label="Study" style="display: flex; align-items: center; gap: 0.25rem; margin-inline-end: auto;">
+              <a href="#1b" aria-current="page" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; background: #e0f2fe; color: #0c4a6e; font-weight: 700; font-size: 0.9375rem; text-decoration: none;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">school</span>Practice</a>
+              <a href="#1b" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; font-size: 0.9375rem; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">report</span>Hazards</a>
+              <a href="#1b" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; font-size: 0.9375rem; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">handyman</span>Tools</a>
+              <a href="#1b" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; font-size: 0.9375rem; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">history</span>Review<span style="display: inline-flex; align-items: center; justify-content: center; min-width: 1.375rem; height: 1.375rem; padding: 0 0.375rem; border-radius: 999rem; background: #075985; color: #ffffff; font-size: 0.75rem; font-weight: 700;">{{ dueCount }}</span></a>
+            </nav>
+            <a href="#1b" style="display: inline-flex; align-items: center; flex: 0 0 auto; white-space: nowrap; gap: 0.375rem; min-height: 2.25rem; padding: 0.125rem 0.75rem; border: 1px solid #b7c1cc; border-radius: 999rem; font-size: 0.8125rem; color: #4b5563; text-decoration: none;" style-hover="background: #edf2f7;">Exam <strong style="color: #17202a; font-weight: 550;">Nassau custodian</strong> <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace;">v2026-08</code></a>
+            <nav aria-label="Site and trust" style="display: flex; align-items: center; gap: 0.125rem;">
+              <a href="#1b" title="Offline packs" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; min-width: 2.75rem; border-radius: 0.375rem; color: #075985; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">download_for_offline</span></a>
+              <a href="#1b" title="Site menu" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; min-width: 2.75rem; border-radius: 0.375rem; color: #075985; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">settings</span></a>
+            </nav>
+          </div>
+          <div style="padding: 1.25rem; display: grid; gap: 0.375rem;">
+            <h3 style="font-size: 1.625rem; letter-spacing: -0.02em;">Practice</h3>
+            <p style="font-size: 0.9375rem; color: #4b5563;">Nassau custodian · registry v2026-08 · pack v2.0.0</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 1.5rem; display: flex; flex-wrap: wrap; gap: 1.5rem;">
+        <div style="display: grid; gap: 0.625rem;">
+          <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">Compact — 5 tabs, labels at 11px</span>
+          <div style="width: 21.875rem; height: 34rem; border: 1px solid #b7c1cc; border-radius: 1.25rem; overflow: hidden; background: #ffffff; box-shadow: 0 0.5rem 1.5rem rgb(23 32 42 / 12%); display: grid; grid-template-rows: auto 1fr auto;">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; padding: 0.375rem 0.75rem; border-block-end: 1px solid #b7c1cc;">
+              <a href="#1b" style="display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 700; color: #17202a; text-decoration: none; font-size: 0.9375rem;">NY Custodian Exam</a>
+              <a href="#1b" style="display: inline-flex; align-items: center; gap: 0.375rem; min-height: 2.25rem; padding: 0.125rem 0.625rem; border: 1px solid #b7c1cc; border-radius: 999rem; font-size: 0.75rem; color: #4b5563; text-decoration: none;"><strong style="color: #17202a; font-weight: 550;">Nassau</strong> <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace;">v2026-08</code></a>
+            </div>
+            <div style="padding: 1.25rem 1rem; display: grid; gap: 0.875rem; align-content: start; overflow: hidden;">
+              <h3 style="font-size: 1.5rem; letter-spacing: -0.02em;">Hazards</h3>
+              <p style="font-size: 0.875rem; color: #4b5563;">12 reviewed scenes are available offline. Visual and text-keyboard variants are equally discoverable.</p>
+              <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.5rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; cursor: pointer; font-size: 1rem;" style-hover="background: #0c4a6e;">Start 5 scenes</button>
+              <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.5rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; cursor: pointer; font-size: 1rem;" style-hover="background: #edf2f7;">Text-only variant</button>
+            </div>
+            <nav aria-label="Study" style="display: grid; grid-template-columns: repeat(5, 1fr); border-block-start: 1px solid #b7c1cc; background: #ffffff; padding-block-end: 0.25rem;">
+              <a href="#1b" style="display: grid; justify-items: center; gap: 0.125rem; min-height: 3.5rem; padding: 0.375rem 0.125rem; text-decoration: none; color: #4b5563; font-size: 0.6875rem; font-weight: 550;">
+                <span style="display: grid; place-items: center; width: 2.5rem; height: 1.75rem; border-radius: 999rem;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">school</span></span>Practice</a>
+              <a href="#1b" aria-current="page" style="display: grid; justify-items: center; gap: 0.125rem; min-height: 3.5rem; padding: 0.375rem 0.125rem; text-decoration: none; color: #0c4a6e; font-size: 0.6875rem; font-weight: 700;">
+                <span style="display: grid; place-items: center; width: 2.5rem; height: 1.75rem; border-radius: 999rem; background: #e0f2fe;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">report</span></span>Hazards</a>
+              <a href="#1b" style="display: grid; justify-items: center; gap: 0.125rem; min-height: 3.5rem; padding: 0.375rem 0.125rem; text-decoration: none; color: #4b5563; font-size: 0.6875rem; font-weight: 550;">
+                <span style="display: grid; place-items: center; width: 2.5rem; height: 1.75rem; border-radius: 999rem;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">handyman</span></span>Tools</a>
+              <a href="#1b" style="display: grid; justify-items: center; gap: 0.125rem; min-height: 3.5rem; padding: 0.375rem 0.125rem; text-decoration: none; color: #4b5563; font-size: 0.6875rem; font-weight: 550; position: relative;">
+                <span style="display: grid; place-items: center; width: 2.5rem; height: 1.75rem; border-radius: 999rem;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">history</span></span>Review</a>
+              <a href="#1b" style="display: grid; justify-items: center; gap: 0.125rem; min-height: 3.5rem; padding: 0.375rem 0.125rem; text-decoration: none; color: #4b5563; font-size: 0.6875rem; font-weight: 550;">
+                <span style="display: grid; place-items: center; width: 2.5rem; height: 1.75rem; border-radius: 999rem;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">menu</span></span>Menu</a>
+            </nav>
+          </div>
+        </div>
+
+        <div style="display: grid; gap: 0.625rem;">
+          <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">Menu — utility &amp; trust only</span>
+          <div style="width: 21.875rem; height: 34rem; border: 1px solid #b7c1cc; border-radius: 1.25rem; overflow: hidden; background: #ffffff; box-shadow: 0 0.5rem 1.5rem rgb(23 32 42 / 12%); display: grid; grid-template-rows: auto 1fr;">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; padding: 0.375rem 0.75rem; border-block-end: 1px solid #b7c1cc;">
+              <span style="display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 700; font-size: 0.9375rem;">Menu</span>
+              <a href="#1b" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; min-width: 2.75rem; border-radius: 0.375rem; color: #075985; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.5rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">close</span></a>
+            </div>
+            <div style="overflow: hidden; display: grid; align-content: start;">
+              <h4 style="font-size: 0.8125rem; font-weight: 700; color: #4b5563; padding: 0.875rem 1rem 0.375rem;">Longer sets</h4>
+              <a href="#1b" style="display: flex; align-items: center; gap: 0.75rem; min-height: 2.75rem; padding: 0.5rem 1rem; text-decoration: none; color: #17202a; font-size: 0.9375rem; border-block-start: 1px solid #edf2f7;" style-hover="background: #f7f8fa;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">timer</span>Simulations</a>
+              <a href="#1b" style="display: flex; align-items: center; gap: 0.75rem; min-height: 2.75rem; padding: 0.5rem 1rem; text-decoration: none; color: #17202a; font-size: 0.9375rem; border-block-start: 1px solid #edf2f7;" style-hover="background: #f7f8fa;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">print</span>Print packets</a>
+              <a href="#1b" style="display: flex; align-items: center; gap: 0.75rem; min-height: 2.75rem; padding: 0.5rem 1rem; text-decoration: none; color: #17202a; font-size: 0.9375rem; border-block-start: 1px solid #edf2f7;" style-hover="background: #f7f8fa;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">checklist</span>Procedures</a>
+              <h4 style="font-size: 0.8125rem; font-weight: 700; color: #4b5563; padding: 0.875rem 1rem 0.375rem;">Your data</h4>
+              <a href="#1b" style="display: flex; align-items: center; gap: 0.75rem; min-height: 2.75rem; padding: 0.5rem 1rem; text-decoration: none; color: #17202a; font-size: 0.9375rem; border-block-start: 1px solid #edf2f7;" style-hover="background: #f7f8fa;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">download_for_offline</span>Offline packs</a>
+              <a href="#1b" style="display: flex; align-items: center; gap: 0.75rem; min-height: 2.75rem; padding: 0.5rem 1rem; text-decoration: none; color: #17202a; font-size: 0.9375rem; border-block-start: 1px solid #edf2f7;" style-hover="background: #f7f8fa;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">settings</span>Settings</a>
+              <h4 style="font-size: 0.8125rem; font-weight: 700; color: #4b5563; padding: 0.875rem 1rem 0.375rem;">About this site</h4>
+              <a href="#1b" style="display: flex; align-items: center; gap: 0.75rem; min-height: 2.75rem; padding: 0.5rem 1rem; text-decoration: none; color: #17202a; font-size: 0.9375rem; border-block-start: 1px solid #edf2f7;" style-hover="background: #f7f8fa;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">verified_user</span>Sources &amp; corrections</a>
+              <a href="#1b" style="display: flex; align-items: center; gap: 0.75rem; min-height: 2.75rem; padding: 0.5rem 1rem; text-decoration: none; color: #17202a; font-size: 0.9375rem; border-block-start: 1px solid #edf2f7;" style-hover="background: #f7f8fa;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">flag</span>Report a problem</a>
+            </div>
+          </div>
+        </div>
+
+        <div style="flex: 1 1 16rem; min-width: 15rem; display: grid; gap: 0.625rem; align-content: start; font-size: 0.9375rem; color: #4b5563;">
+          <p><strong style="color: #17202a;">Study renamed Practice.</strong> The route is <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">/practice/</code> and the verb is what learners came to do. Still the primary, still the only owner of resume and due counts.</p>
+          <p><strong style="color: #17202a;">Review earns a slot</strong> because it is the one destination with a number attached — a due count is a reason to return, and it should not live inside a sheet.</p>
+          <p><strong style="color: #17202a;">Cost.</strong> Five tabs at 320 CSS px puts “Practice” and “Hazards” at 11px on a 4.4rem column; it fits, but it is the tightest of the three. Two icon-only utility controls also lean on tooltips at desktop.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="1c" style="width: 76rem; flex: 0 0 auto; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff; overflow: hidden; scroll-margin: 2rem;">
+      <div style="display: grid; gap: 0.5rem; padding: 1.25rem 1.5rem; background: #edf2f7; border-block-end: 1px solid #b7c1cc;">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; background: #075985; color: #ffffff; padding: 0.125rem 0.5rem; border-radius: 0.25rem;">1c</span>
+          <h2 style="font-size: 1.375rem; letter-spacing: -0.02em;">Two-row header, no tab bar</h2>
+        </div>
+        <p style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">A utility strip above a tab row of six subjects — the shape of a reference site rather than an app. Compact width uses one sticky header and a named native disclosure, which is what <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">NAV-NATIVE-COMPACT</code> literally asks for.</p>
+      </div>
+
+      <div style="padding: 1.5rem; background: #f7f8fa; border-block-end: 1px solid #b7c1cc; display: grid; gap: 0.625rem;">
+        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">Ample width — lanes are separate rows, active state is a flush tab</span>
+        <div style="border: 1px solid #b7c1cc; border-radius: 0.5rem; overflow: hidden; background: #ffffff; box-shadow: 0 0.25rem 1rem rgb(23 32 42 / 8%);">
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 1rem; padding: 0.25rem 1.25rem; background: #edf2f7; border-block-end: 1px solid #b7c1cc; font-size: 0.8125rem; color: #4b5563;">
+            <span>Independent and unofficial</span>
+            <nav aria-label="Site and trust" style="display: flex; align-items: center; gap: 0.75rem; margin-inline-start: auto;">
+              <a href="#1c" style="display: inline-flex; align-items: center; gap: 0.375rem; min-height: 1.75rem; color: #075985; text-decoration: none;" style-hover="text-decoration: underline;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.125rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;">download_for_offline</span>Offline packs</a>
+              <a href="#1c" style="display: inline-flex; align-items: center; gap: 0.375rem; min-height: 1.75rem; color: #075985; text-decoration: none;" style-hover="text-decoration: underline;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.125rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;">verified_user</span>Sources</a>
+              <a href="#1c" style="display: inline-flex; align-items: center; gap: 0.375rem; min-height: 1.75rem; color: #075985; text-decoration: none;" style-hover="text-decoration: underline;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.125rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;">settings</span>Settings</a>
+              <a href="#1c" style="display: inline-flex; align-items: center; gap: 0.375rem; min-height: 1.75rem; color: #075985; text-decoration: none;" style-hover="text-decoration: underline;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.125rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;">help</span>Help</a>
+            </nav>
+          </div>
+          <div style="display: flex; align-items: flex-end; gap: 1.5rem; padding: 0 1.25rem; border-block-end: 1px solid #b7c1cc;">
+            <a href="#1c" style="display: inline-flex; align-items: center; flex: 0 0 auto; white-space: nowrap; min-height: 3.25rem; font-weight: 700; color: #17202a; text-decoration: none; letter-spacing: -0.01em;">NY Custodian Exam</a>
+            <nav aria-label="Study" style="display: flex; align-items: flex-end; gap: 0.25rem; margin-inline-end: auto;">
+              <a href="#1c" aria-current="page" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 3.25rem; padding: 0 0.75rem; margin-block-end: -1px; border-block-end: 0.1875rem solid #075985; color: #17202a; font-weight: 700; font-size: 0.9375rem; text-decoration: none;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">school</span>Study</a>
+              <a href="#1c" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 3.25rem; padding: 0 0.75rem; margin-block-end: -1px; border-block-end: 0.1875rem solid transparent; color: #075985; font-weight: 550; font-size: 0.9375rem; text-decoration: none;" style-hover="border-block-end-color: #b7c1cc;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">handyman</span>Tools</a>
+              <a href="#1c" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 3.25rem; padding: 0 0.75rem; margin-block-end: -1px; border-block-end: 0.1875rem solid transparent; color: #075985; font-weight: 550; font-size: 0.9375rem; text-decoration: none;" style-hover="border-block-end-color: #b7c1cc;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">checklist</span>Procedures</a>
+              <a href="#1c" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 3.25rem; padding: 0 0.75rem; margin-block-end: -1px; border-block-end: 0.1875rem solid transparent; color: #075985; font-weight: 550; font-size: 0.9375rem; text-decoration: none;" style-hover="border-block-end-color: #b7c1cc;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">build</span>Repairs</a>
+              <a href="#1c" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 3.25rem; padding: 0 0.75rem; margin-block-end: -1px; border-block-end: 0.1875rem solid transparent; color: #075985; font-weight: 550; font-size: 0.9375rem; text-decoration: none;" style-hover="border-block-end-color: #b7c1cc;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">report</span>Hazards</a>
+              <a href="#1c" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 3.25rem; padding: 0 0.75rem; margin-block-end: -1px; border-block-end: 0.1875rem solid transparent; color: #075985; font-weight: 550; font-size: 0.9375rem; text-decoration: none;" style-hover="border-block-end-color: #b7c1cc;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">history</span>Review</a>
+            </nav>
+            <a href="#1c" style="display: inline-flex; align-items: center; flex: 0 0 auto; white-space: nowrap; gap: 0.375rem; min-height: 2.25rem; margin-block-end: 0.5rem; padding: 0.125rem 0.75rem; border: 1px solid #b7c1cc; border-radius: 999rem; font-size: 0.8125rem; color: #4b5563; text-decoration: none;" style-hover="background: #edf2f7;">Exam <strong style="color: #17202a; font-weight: 550;">Nassau</strong> <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace;">v2026-08</code></a>
+          </div>
+          <div style="padding: 1.25rem; display: grid; gap: 0.375rem;">
+            <h3 style="font-size: 1.625rem; letter-spacing: -0.02em;">Study</h3>
+            <p style="font-size: 0.9375rem; color: #4b5563;">Nassau custodian · registry v2026-08 · pack v2.0.0</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 1.5rem; display: flex; flex-wrap: wrap; gap: 1.5rem;">
+        <div style="display: grid; gap: 0.625rem;">
+          <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">Compact — header only, all content height</span>
+          <div style="width: 21.875rem; height: 34rem; border: 1px solid #b7c1cc; border-radius: 1.25rem; overflow: hidden; background: #ffffff; box-shadow: 0 0.5rem 1.5rem rgb(23 32 42 / 12%); display: grid; grid-template-rows: auto auto 1fr;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.375rem 0.5rem 0.375rem 0.75rem; border-block-end: 1px solid #b7c1cc;">
+              <a href="#1c" style="display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 700; color: #17202a; text-decoration: none; font-size: 0.9375rem;">NY Custodian Exam</a>
+              <button type="button" aria-expanded="false" style="display: inline-flex; align-items: center; gap: 0.375rem; min-height: 2.75rem; margin-inline-start: auto; padding: 0 0.625rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">menu</span>Menu</button>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.375rem 0.75rem; background: #edf2f7; border-block-end: 1px solid #b7c1cc; font-size: 0.75rem; color: #4b5563;">Exam <strong style="color: #17202a; font-weight: 550;">Nassau custodian</strong> <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace;">v2026-08</code></div>
+            <div style="padding: 1.25rem 1rem; display: grid; gap: 0.875rem; align-content: start; overflow: hidden;">
+              <h3 style="font-size: 1.5rem; letter-spacing: -0.02em;">Study</h3>
+              <p style="font-size: 0.875rem; color: #4b5563;">Resume: Cleaning implements — 6 of 20 answered.</p>
+              <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.5rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; cursor: pointer; font-size: 1rem;" style-hover="background: #0c4a6e;">Resume session</button>
+              <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.5rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; cursor: pointer; font-size: 1rem;" style-hover="background: #edf2f7;">Start 10 questions</button>
+              <p style="font-size: 0.875rem; color: #4b5563;">Review · <strong style="color: #17202a;">{{ dueCount }} due</strong></p>
+              <p style="font-size: 0.875rem; color: #4b5563;">Hazard scenes · 12 offline</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: grid; gap: 0.625rem;">
+          <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">Disclosure open — grouped, not a flat list</span>
+          <div style="width: 21.875rem; height: 34rem; border: 1px solid #b7c1cc; border-radius: 1.25rem; overflow: hidden; background: #ffffff; box-shadow: 0 0.5rem 1.5rem rgb(23 32 42 / 12%); display: grid; grid-template-rows: auto 1fr;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.375rem 0.5rem 0.375rem 0.75rem; border-block-end: 1px solid #b7c1cc;">
+              <a href="#1c" style="display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 700; color: #17202a; text-decoration: none; font-size: 0.9375rem;">NY Custodian Exam</a>
+              <button type="button" aria-expanded="true" style="display: inline-flex; align-items: center; gap: 0.375rem; min-height: 2.75rem; margin-inline-start: auto; padding: 0 0.625rem; border: 1px solid #075985; border-radius: 0.5rem; background: #e0f2fe; color: #0c4a6e; font-weight: 700; font-size: 0.875rem; cursor: pointer;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">close</span>Close</button>
+            </div>
+            <div style="overflow: hidden; display: grid; align-content: start;">
+              <h4 style="font-size: 0.8125rem; font-weight: 700; color: #4b5563; padding: 0.75rem 1rem 0.25rem;">Study</h4>
+              <a href="#1c" aria-current="page" style="display: flex; align-items: center; gap: 0.75rem; min-height: 2.75rem; padding: 0.5rem 1rem; text-decoration: none; color: #0c4a6e; font-weight: 700; font-size: 0.9375rem; background: #e0f2fe; border-block-start: 1px solid #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">school</span>Study<span style="margin-inline-start: auto; font-size: 0.75rem; font-weight: 550;">You are here</span></a>
+              <a href="#1c" style="display: flex; align-items: center; gap: 0.75rem; min-height: 2.75rem; padding: 0.5rem 1rem; text-decoration: none; color: #17202a; font-size: 0.9375rem; border-block-start: 1px solid #edf2f7;" style-hover="background: #f7f8fa;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">history</span>Review<span style="margin-inline-start: auto; font-size: 0.8125rem; color: #4b5563;">{{ dueCount }} due</span></a>
+              <a href="#1c" style="display: flex; align-items: center; gap: 0.75rem; min-height: 2.75rem; padding: 0.5rem 1rem; text-decoration: none; color: #17202a; font-size: 0.9375rem; border-block-start: 1px solid #edf2f7;" style-hover="background: #f7f8fa;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">timer</span>Simulations</a>
+              <h4 style="font-size: 0.8125rem; font-weight: 700; color: #4b5563; padding: 0.75rem 1rem 0.25rem;">Reference</h4>
+              <a href="#1c" style="display: flex; align-items: center; gap: 0.75rem; min-height: 2.75rem; padding: 0.5rem 1rem; text-decoration: none; color: #17202a; font-size: 0.9375rem; border-block-start: 1px solid #edf2f7;" style-hover="background: #f7f8fa;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">handyman</span>Tools</a>
+              <a href="#1c" style="display: flex; align-items: center; gap: 0.75rem; min-height: 2.75rem; padding: 0.5rem 1rem; text-decoration: none; color: #17202a; font-size: 0.9375rem; border-block-start: 1px solid #edf2f7;" style-hover="background: #f7f8fa;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">checklist</span>Procedures</a>
+              <a href="#1c" style="display: flex; align-items: center; gap: 0.75rem; min-height: 2.75rem; padding: 0.5rem 1rem; text-decoration: none; color: #17202a; font-size: 0.9375rem; border-block-start: 1px solid #edf2f7;" style-hover="background: #f7f8fa;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">build</span>Repairs</a>
+              <a href="#1c" style="display: flex; align-items: center; gap: 0.75rem; min-height: 2.75rem; padding: 0.5rem 1rem; text-decoration: none; color: #17202a; font-size: 0.9375rem; border-block-start: 1px solid #edf2f7;" style-hover="background: #f7f8fa;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">report</span>Hazard scenes</a>
+              <h4 style="font-size: 0.8125rem; font-weight: 700; color: #4b5563; padding: 0.75rem 1rem 0.25rem;">Your data &amp; trust</h4>
+              <a href="#1c" style="display: flex; align-items: center; gap: 0.75rem; min-height: 2.75rem; padding: 0.5rem 1rem; text-decoration: none; color: #17202a; font-size: 0.9375rem; border-block-start: 1px solid #edf2f7;" style-hover="background: #f7f8fa;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">download_for_offline</span>Offline packs</a>
+            </div>
+          </div>
+        </div>
+
+        <div style="flex: 1 1 16rem; min-width: 15rem; display: grid; gap: 0.625rem; align-content: start; font-size: 0.9375rem; color: #4b5563;">
+          <p><strong style="color: #17202a;">Nothing is combined away.</strong> Six subjects stay addressable, which suits a site whose SEO surface is reference pages, not sessions.</p>
+          <p><strong style="color: #17202a;">Best 400%-zoom behavior.</strong> No persistent bottom bar means no permanent bite out of the viewport, and the compact header is two short rows.</p>
+          <p><strong style="color: #17202a;">Cost.</strong> Every compact navigation is two taps, and a study app with no tab bar can feel like a document. Six desktop links plus a chip is also the first thing to wrap on a small laptop.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="1d" style="width: 40rem; flex: 0 0 auto; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff; overflow: hidden; scroll-margin: 2rem;">
+      <div style="display: grid; gap: 0.5rem; padding: 1.25rem 1.5rem; background: #edf2f7; border-block-end: 1px solid #b7c1cc;">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; background: #075985; color: #ffffff; padding: 0.125rem 0.5rem; border-radius: 0.25rem;">1d</span>
+          <h2 style="font-size: 1.375rem; letter-spacing: -0.02em;">Active state — pick one</h2>
+        </div>
+        <p style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563;">Independent of structure. All four carry <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">aria-current="page"</code>; the question is what the eye gets.</p>
+      </div>
+      <div style="display: grid;">
+        <div style="display: grid; gap: 0.5rem; padding: 1.25rem 1.5rem; border-block-end: 1px solid #b7c1cc;">
+          <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #b42318;">current — inset underline inside a pill</span>
+          <div style="display: flex; align-items: center; gap: 0.25rem; padding: 0 0.75rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; min-height: 3.5rem;">
+            <a href="#1d" aria-current="page" style="display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0 0.75rem; border-radius: 0.375rem; color: #17202a; font-weight: 700; text-decoration: none; box-shadow: inset 0 -0.1875rem 0 #075985; font-size: 0.9375rem;">Study</a>
+            <a href="#1d" style="display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0 0.75rem; border-radius: 0.375rem; color: #075985; font-weight: 550; text-decoration: none; font-size: 0.9375rem;">Atlas</a>
+            <a href="#1d" style="display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0 0.75rem; border-radius: 0.375rem; color: #075985; font-weight: 550; text-decoration: none; font-size: 0.9375rem;">Hazards</a>
+          </div>
+          <p style="font-size: 0.875rem; color: #4b5563;">The rule is inset by 0 so it collides with the descenders of “Study”, and it sits inside a radius it does not follow.</p>
+        </div>
+        <div id="1d-1" style="display: grid; gap: 0.5rem; padding: 1.25rem 1.5rem; border-block-end: 1px solid #b7c1cc; scroll-margin: 2rem;">
+          <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">1d-1 — filled pill <strong style="color: #17202a;">(recommended)</strong></span>
+          <div style="display: flex; align-items: center; gap: 0.25rem; padding: 0 0.75rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; min-height: 3.5rem;">
+            <a href="#1d-1" aria-current="page" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; background: #e0f2fe; color: #0c4a6e; font-weight: 700; text-decoration: none; font-size: 0.9375rem;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">school</span>Study</a>
+            <a href="#1d-1" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; text-decoration: none; font-size: 0.9375rem;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">book_2</span>Library</a>
+            <a href="#1d-1" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; text-decoration: none; font-size: 0.9375rem;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">assignment</span>Exams</a>
+          </div>
+          <p style="font-size: 0.875rem; color: #4b5563;">Three cues, none of them color alone: <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">--color-selected-surface</code>, weight 700, and a filled icon. Same idiom as the compact tab, and it survives the forced-colors rule in §12 (<code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">[aria-current] { border-color: Highlight }</code>).</p>
+        </div>
+        <div id="1d-2" style="display: grid; gap: 0.5rem; padding: 1.25rem 1.5rem; border-block-end: 1px solid #b7c1cc; scroll-margin: 2rem;">
+          <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">1d-2 — flush tab rule</span>
+          <div style="display: flex; align-items: flex-end; gap: 0.25rem; padding: 0 0.75rem; border: 1px solid #b7c1cc; border-radius: 0.5rem 0.5rem 0 0; border-block-end: 1px solid #b7c1cc; background: #ffffff; min-height: 3.5rem;">
+            <a href="#1d-2" aria-current="page" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 3.25rem; padding: 0 0.75rem; margin-block-end: -1px; border-block-end: 0.1875rem solid #075985; color: #17202a; font-weight: 700; text-decoration: none; font-size: 0.9375rem;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">school</span>Study</a>
+            <a href="#1d-2" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 3.25rem; padding: 0 0.75rem; margin-block-end: -1px; border-block-end: 0.1875rem solid transparent; color: #075985; font-weight: 550; text-decoration: none; font-size: 0.9375rem;" style-hover="border-block-end-color: #b7c1cc;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">handyman</span>Tools</a>
+            <a href="#1d-2" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 3.25rem; padding: 0 0.75rem; margin-block-end: -1px; border-block-end: 0.1875rem solid transparent; color: #075985; font-weight: 550; text-decoration: none; font-size: 0.9375rem;" style-hover="border-block-end-color: #b7c1cc;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">report</span>Hazards</a>
+          </div>
+          <p style="font-size: 0.875rem; color: #4b5563;">A real tab: the rule replaces the header's own bottom border, so the active section reads as attached to the page below. Needs the nav flush to the header edge — it only works in <a href="#1c">1c</a>.</p>
+        </div>
+        <div id="1d-3" style="display: grid; gap: 0.5rem; padding: 1.25rem 1.5rem; scroll-margin: 2rem;">
+          <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">1d-3 — solid</span>
+          <div style="display: flex; align-items: center; gap: 0.25rem; padding: 0 0.75rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; min-height: 3.5rem;">
+            <a href="#1d-3" aria-current="page" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; background: #075985; color: #ffffff; font-weight: 700; text-decoration: none; font-size: 0.9375rem;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">school</span>Study</a>
+            <a href="#1d-3" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; text-decoration: none; font-size: 0.9375rem;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">book_2</span>Library</a>
+            <a href="#1d-3" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; text-decoration: none; font-size: 0.9375rem;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">assignment</span>Exams</a>
+          </div>
+          <p style="font-size: 0.875rem; color: #4b5563;">Unmissable, but a filled navy chip is the same treatment as the page's primary button — the nav starts competing with “Start 10 questions” for the eye.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="display: grid; gap: 0.75rem; max-width: 68ch; padding: 1.25rem 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+    <h2 style="font-size: 1.0625rem;">Icons</h2>
+    <p style="font-size: 0.9375rem; color: #4b5563;">Drawn here from Material Symbols Rounded so the shapes are real rather than invented. In the shipped site they become an inline SVG sprite using <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">currentColor</code> — §12 requires essential icons not be background images, and an offline-first site should not fetch a web font. Every icon is paired with a text label; none carries meaning alone.</p>
+  </div>
+
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;dueCount&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 12, &quot;tsType&quot;: &quot;number&quot;, &quot;min&quot;: 0, &quot;max&quot;: 99, &quot;section&quot;: &quot;Content&quot;},
+  &quot;showUtilityLabels&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Desktop bar&quot;}
+}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      dueCount: this.props.dueCount ?? 12,
+      showUtilityLabels: this.props.showUtilityLabels ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -29,7 +29,7 @@
   <div style="display: grid; gap: 1.25rem; max-width: 74rem;">
     <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.75rem;">
       <span style="flex: 0 0 auto; white-space: nowrap; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; background: #17202a; color: #ffffff; padding: 0.125rem 0.5rem; border-radius: 0.25rem;">Turn 3</span>
-      <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">route family 5 — <code>/practice/</code> (<code>study-hub</code>, the Practice pill); uses the new <a href="Component Library.dc.html#f-empty">EmptyState</a> and <a href="Component Library.dc.html#f-history">HistoryList</a> primitives</span>
+      <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">route family 5 — <code>/practice/</code> (<code>study-hub</code>, the Study pill); uses the new <a href="Component Library.dc.html#f-empty">EmptyState</a> and <a href="Component Library.dc.html#f-history">HistoryList</a> primitives</span>
       <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">45-question sets · <a href="Future Explorations.dc.html#study">the 10-question set is future</a></span>
     </div>
     <h1 style="font-size: clamp(1.875rem, 1.45rem + 1.5vw, 2.75rem); letter-spacing: -0.025em; line-height: 1.2;">Study hub — before the first set, and after the twenty-third</h1>
@@ -39,8 +39,7 @@
       <h2 style="font-size: 1.0625rem;">Calls I made here</h2>
       <ul style="display: grid; gap: 0.5rem; font-size: 0.9375rem; color: #4b5563;">
         <li><strong style="color: #17202a;">Start, not status.</strong> With nothing recorded, the figures strip carries what is here to study — 3 areas, 65 tool records, 18 scenes — instead of four zeros, and Ways to study moves up under the header. Where you stand keeps its name and its three rows, each saying what the area covers and “No attempts yet”, so the page does not reorganize after the first set; the rows just gain their bars.</li>
-        <li><strong style="color: #17202a;">Empty is a standard now.</strong> Due today and Recent sessions render the EmptyState: dashed border, a heading that names what is absent, one sentence on what creates it, at most two actions. Unavailable is never dashed: the read-failed state (tweak) puts a warning notice in the same slots.</li>
-        <li><strong style="color: #17202a;">The page states its own scope.</strong> Practice is not scoped to an announcement, so nothing here selects an exam. The header names the series and the one question bank, <a href="#covers">What practice covers</a> is the first section a first-time learner reads, and the exam section is a reading list of dates that says out loud that reading it changes nothing about practice. Set length changes how many questions you answer, never where they come from.</li>
+        <li><strong style="color: #17202a;">Empty is a standard now.</strong> Due today and Recent sessions render the EmptyState: dashed border, a heading that names what is absent, one sentence on what creates it, at most two actions. The exam slot is the same component carrying the one primary action nothing else on the page performs. Unavailable is never dashed: the read-failed state (tweak) puts a warning notice in the same slots.</li>
         <li><strong style="color: #17202a;">Recent sessions scales.</strong> Rows are date, session, outcome, link. Six show by default under month labels with “Showing the 6 most recent of 23”; Show all expands in place. A filter by kind sits above; filtering to Simulations, of which there are none, produces the filtered EmptyState with its heading focused. Under seven sessions none of this machinery appears.</li>
         <li><strong style="color: #17202a;">Figures follow the history.</strong> Twenty-three sessions means 690 questions answered and 40 hazard scenes, so the strip and the area bars are recomputed from the list rather than carried over from the four-session version.</li>
         <li><strong style="color: #17202a;">Unreadable is not missing.</strong> Two saved attempts that cannot be opened sit under their own “Unavailable saved attempts” heading in a solid-border list, each reading “This saved attempt can’t be displayed” with the date and length that are known. No cause is invented, they stay counted in the figures, and neither offers an action.</li>
@@ -364,7 +363,7 @@
         </section>
 
         <section id="s3r-sessions" style="display: grid; gap: 1rem; scroll-margin: 1.5rem;">
-          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem;"><h2 style="font-size: 1.5rem; letter-spacing: -0.02em;">Recent sessions</h2><div style="display: grid; gap: 0.375rem; justify-items: end; max-width: 52ch;"><p style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Every set, drill and simulation on this device, newest first. Outcomes are counts, not scores. All 23 are kept in this browser, on this device — no account, nothing uploaded.</p><div style="display: flex; flex-wrap: wrap; gap: 0.25rem 1rem;"><a href="Settings.dc.html" style="font-size: 0.8125rem; font-weight: 700;">Export or erase them</a><a href="Offline.dc.html" style="font-size: 0.8125rem; font-weight: 700;">Keep a copy offline</a></div></div></div>
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem;"><h2 style="font-size: 1.5rem; letter-spacing: -0.02em;">Recent sessions</h2><p style="max-width: 48ch; font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Every set, drill and simulation on this device, newest first. Outcomes are counts, not scores, and nothing here leaves this device.</p></div>
           <div role="tablist" aria-label="Filter sessions by kind" style="display: flex; flex-wrap: wrap; gap: 1.25rem; border-block-end: 1px solid #b7c1cc;">
             <button type="button" role="tab" aria-selected="{{ onAll }}" onClick="{{ setAll }}" style="{{ styleAll }}">All <span style="font-weight: 400; color: #4b5563;">23</span></button>
             <button type="button" role="tab" aria-selected="{{ onSet }}" onClick="{{ setSet }}" style="{{ styleSet }}">Sets <span style="font-weight: 400; color: #4b5563;">15</span></button>
@@ -408,7 +407,7 @@
         </section>
 
         <section id="s3r-ways" style="display: grid; gap: 1rem; scroll-margin: 1.5rem;">
-          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem;"><h2 style="font-size: 1.5rem; letter-spacing: -0.02em;">Ways to study</h2><div style="display: grid; gap: 0.375rem; justify-items: end; max-width: 48ch;"><p style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Sets of 45, 60 or 90, drills of 5, or the full two-hour simulation.</p><div style="display: flex; flex-wrap: wrap; gap: 0.25rem 1rem;"><a href="Settings.dc.html" style="font-size: 0.8125rem; font-weight: 700;">Larger text and reduced motion</a><a href="Offline.dc.html" style="font-size: 0.8125rem; font-weight: 700;">Download for offline use</a></div></div></div>
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem;"><h2 style="font-size: 1.5rem; letter-spacing: -0.02em;">Ways to study</h2><p style="max-width: 48ch; font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Sets of 45, 60 or 90, drills of 5, or the full two-hour simulation. Everything runs offline once the pack is on your device.</p></div>
           <ul style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin: 0; padding: 0; list-style: none;">
             <li style="display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; gap: 0.625rem; align-content: stretch; padding: 1.25rem; border: 1px solid #075985; border-radius: 0.5rem; background: #ffffff;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.75rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 32;">quiz</span><h3 style="font-size: 1.0625rem;">Practice set</h3><p style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">45, 60 or 90 questions from any mix of areas, untimed. Weight it toward area 2 if you want to move your lowest figure.</p><a href="Session Builder.dc.html" style="justify-self: stretch; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; font-size: 0.9375rem; text-decoration: none;" style-hover="background: #0c4a6e;">Build a set</a></li>
             <li style="display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; gap: 0.625rem; align-content: stretch; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.75rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 32;">warning</span><h3 style="font-size: 1.0625rem;">Hazard drill</h3><p style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">Five workplace scenes for area 3. Mark the hazard in the picture, or answer the text version.</p><a href="Hazard Player.dc.html" style="justify-self: stretch; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.5rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; text-decoration: none; font-size: 0.9375rem;" style-hover="background: #edf2f7;">Run a 5-scene drill</a></li>
@@ -1730,7 +1729,7 @@
 </section>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;readFailed&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Returning frame&quot;},&quot;progressDisplay&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;bars&quot;,&quot;counts&quot;],&quot;default&quot;:&quot;bars&quot;,&quot;tsType&quot;:&quot;\&quot;bars\&quot; | \&quot;counts\&quot;&quot;,&quot;section&quot;:&quot;Returning frame&quot;},&quot;offlineStale&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Returning frame&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;examChosen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;New learner frame&quot;},&quot;readFailed&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Returning frame&quot;},&quot;progressDisplay&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;bars&quot;,&quot;counts&quot;],&quot;default&quot;:&quot;bars&quot;,&quot;tsType&quot;:&quot;\&quot;bars\&quot; | \&quot;counts\&quot;&quot;,&quot;section&quot;:&quot;Returning frame&quot;},&quot;offlineStale&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Returning frame&quot;}}">
 const SET_ALL = '45 questions across all three areas, untimed';
 const S = (date, month, kind, name, detail, outcome, action, href) => ({ date, month, kind, name, detail, outcome, action, href });
 const SESSIONS = [
@@ -1775,6 +1774,7 @@ class Component extends DCLogic {
 
   renderVals() {
     const p = this.props;
+    const examChosen = p.examChosen ?? false;
     const readFailedR = p.readFailed ?? false;
     const offlineStale = p.offlineStale ?? false;
     const bars = (p.progressDisplay ?? 'bars') === 'bars';
@@ -1792,6 +1792,7 @@ class Component extends DCLogic {
     const on = k => scope === k;
     const hasMore = total > COLLAPSED;
     return {
+      examChosen, examNotChosen: !examChosen,
       readFailedR, readyR: !readFailedR,
       offlineStale, online: !offlineStale,
       progressBars: bars, progressCounts: !bars,
@@ -1804,7 +1805,9 @@ class Component extends DCLogic {
       onAll: on('all'), onSet: on('set'), onDrill: on('drill'), onSim: on('sim'),
       setAll: this.setScope('all'), setSet: this.setScope('set'), setDrill: this.setScope('drill'), setSim: this.setScope('sim'),
       styleAll: on('all') ? BTN_ON : BTN, styleSet: on('set') ? BTN_ON : BTN, styleDrill: on('drill') ? BTN_ON : BTN, styleSim: on('sim') ? BTN_ON : BTN,
-      captionNew: 'nothing on this device at all: the header starts a first set, What practice covers reads next, Ways to study follows, and Due today and Recent sessions stand as EmptyStates',
+      captionNew: examChosen
+        ? 'arrived from Exams with the Nassau exam pinned but nothing studied: the header starts a first set, the figures are the site’s, the exam table shows with no pack yet, and the two lists stand as EmptyStates'
+        : 'nothing on this device at all: the header starts a first set, the figures are the site’s, Ways to study sits first, and Due today, Recent sessions and Your exam are EmptyStates — the exam one carries the page’s only blue button',
       captionReturning: readFailedR
         ? 'projection read failed: a recovery notice replaces the header band, Due today and Where you stand carry warning notices (never dashed), and Recent sessions still reads from the intact attempt events'
         : 'a session to resume, 7 items due, three areas recomputed from 23 sessions, and Recent sessions as its own section — filter by kind, month groups, the 6 most recent with Show all',

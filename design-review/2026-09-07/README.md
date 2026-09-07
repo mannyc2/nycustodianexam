@@ -1,6 +1,7 @@
 # Design review snapshot — September 7, 2026
 
-Start with [the design-only brief](DESIGN-BRIEF.md). This snapshot makes the current
+Start with [the latest handoff review](LATEST-REVIEW.md) and
+[the design-only brief](DESIGN-BRIEF.md). This snapshot makes the current
 implementation and the latest received design reference available together on
 GitHub. The application is a working comparison source, not a claim of completed
 visual fidelity.
@@ -9,9 +10,10 @@ visual fidelity.
 
 - All 19 modified tracked files and the new navigation file from the local
   workspace based on commit `716d4250e1c72f3d9023ae59f2ce8b17b58d8871`.
-- The exact 32-file contents of `NYC Custodian Component Design-handoff(2).zip`
-  under [reference/](reference/). The extracted file contents are identical to
-  handoff(1).zip; a newer summary did not introduce different export bytes.
+- The exact 85-file contents of `NYC Custodian Component Design-handoff(3).zip`
+  under [reference/](reference/), including 22 new design screenshots and the
+  designer's [page/state index](reference/project/exports/INDEX.md). The previous
+  export is retained in Git history at `3821eb19b5570e2997ee20c5f6f2c685a0947a93`.
 - [34 current implementation screenshots](current-screenshots/) captured from a
   fresh build, with page/state/viewport coordinates in the
   [screenshot manifest](current-screenshots/manifest.json).
@@ -25,23 +27,23 @@ requirements and examples may conflict with the current decision in DESIGN-BRIEF
 
 | Page or state | Editable reference | Current desktop | Current mobile |
 | --- | --- | --- | --- |
-| Home | [Home](reference/project/Home.dc.html) | [1280](current-screenshots/home-1280.png) | [390](current-screenshots/home-390.png) |
-| Practice: first visit | [Study Hub, turn 3](reference/project/Study%20Hub.dc.html#turn-3) | [1280](current-screenshots/practice-first-visit-1280.png) | [390](current-screenshots/practice-first-visit-390.png) |
-| Practice: returning | [Study Hub, turn 3](reference/project/Study%20Hub.dc.html#turn-3) | [1280](current-screenshots/practice-returning-1280.png) | [390](current-screenshots/practice-returning-390.png) |
-| Library open | [Component Library](reference/project/Component%20Library.dc.html#f-shell) | [1280](current-screenshots/practice-library-open-1280.png) | [390](current-screenshots/practice-library-open-390.png) |
-| Practice: storage unavailable | [Study Hub](reference/project/Study%20Hub.dc.html#turn-3) | [1280](current-screenshots/practice-storage-unavailable-1280.png) | [390](current-screenshots/practice-storage-unavailable-390.png) |
-| Exams | [Landing (the Exams design)](reference/project/Landing.dc.html) | [1280](current-screenshots/exams-1280.png) | [390](current-screenshots/exams-390.png) |
-| Tool atlas | [Tool Atlas](reference/project/Tool%20Atlas.dc.html) | [1280 viewport](current-screenshots/atlas-1280.png) | [390 viewport](current-screenshots/atlas-390.png) |
-| Settings | [Settings](reference/project/Settings.dc.html) | [1280](current-screenshots/settings-1280.png) | [390](current-screenshots/settings-390.png) |
-| Offline: first visit | [Offline](reference/project/Offline.dc.html) | [1280](current-screenshots/offline-first-visit-1280.png) | [390](current-screenshots/offline-first-visit-390.png) |
-| Review: empty | [Review Queue](reference/project/Review%20Queue.dc.html) | [1280](current-screenshots/review-empty-1280.png) | [390](current-screenshots/review-empty-390.png) |
-| Review: ready | [Review Queue](reference/project/Review%20Queue.dc.html) | [1280](current-screenshots/review-ready-1280.png) | [390](current-screenshots/review-ready-390.png) |
-| Review: confirmation | [Review Queue](reference/project/Review%20Queue.dc.html) | [1280](current-screenshots/review-confirmation-1280.png) | [390](current-screenshots/review-confirmation-390.png) |
-| Question: unanswered | [Question Player](reference/project/Question%20Player.dc.html) | [1280](current-screenshots/question-unanswered-1280.png) | [390](current-screenshots/question-unanswered-390.png) |
-| Question: answered | [Question Player](reference/project/Question%20Player.dc.html) | [1280](current-screenshots/question-answered-1280.png) | [390](current-screenshots/question-answered-390.png) |
-| Simulation setup | [Session Builder](reference/project/Session%20Builder.dc.html) | [1280](current-screenshots/simulation-setup-1280.png) | [390](current-screenshots/simulation-setup-390.png) |
-| Print setup | [Component Library](reference/project/Component%20Library.dc.html) | [1280](current-screenshots/print-setup-1280.png) | [390](current-screenshots/print-setup-390.png) |
-| Hazard landing | [Hazard Player reference](reference/project/Hazard%20Player.dc.html) | [1280](current-screenshots/hazards-1280.png) | [390](current-screenshots/hazards-390.png) |
+| Home | [Home](reference/project/exports/current/Home.dc.html) | [1280](current-screenshots/home-1280.png) | [390](current-screenshots/home-390.png) |
+| Practice: first visit | [Study Hub, turn 3](reference/project/exports/current/Study%20Hub.dc.html#turn-3) | [1280](current-screenshots/practice-first-visit-1280.png) | [390](current-screenshots/practice-first-visit-390.png) |
+| Practice: returning | [Study Hub, turn 3](reference/project/exports/current/Study%20Hub.dc.html#turn-3) | [1280](current-screenshots/practice-returning-1280.png) | [390](current-screenshots/practice-returning-390.png) |
+| Library open | [Component Library](reference/project/exports/current/Component%20Library.dc.html#f-shell) | [1280](current-screenshots/practice-library-open-1280.png) | [390](current-screenshots/practice-library-open-390.png) |
+| Practice: storage unavailable | [Study Hub](reference/project/exports/current/Study%20Hub.dc.html#turn-3) | [1280](current-screenshots/practice-storage-unavailable-1280.png) | [390](current-screenshots/practice-storage-unavailable-390.png) |
+| Exams | [Landing (the Exams design)](reference/project/exports/current/Landing.dc.html) | [1280](current-screenshots/exams-1280.png) | [390](current-screenshots/exams-390.png) |
+| Tool atlas | [Tool Atlas](reference/project/exports/current/Tool%20Atlas.dc.html) | [1280 viewport](current-screenshots/atlas-1280.png) | [390 viewport](current-screenshots/atlas-390.png) |
+| Settings | [Settings](reference/project/exports/current/Settings.dc.html) | [1280](current-screenshots/settings-1280.png) | [390](current-screenshots/settings-390.png) |
+| Offline: first visit | [Offline](reference/project/exports/current/Offline.dc.html) | [1280](current-screenshots/offline-first-visit-1280.png) | [390](current-screenshots/offline-first-visit-390.png) |
+| Review: empty | [Review Queue](reference/project/exports/current/Review%20Queue.dc.html) | [1280](current-screenshots/review-empty-1280.png) | [390](current-screenshots/review-empty-390.png) |
+| Review: ready | [Review Queue](reference/project/exports/current/Review%20Queue.dc.html) | [1280](current-screenshots/review-ready-1280.png) | [390](current-screenshots/review-ready-390.png) |
+| Review: confirmation | [Review Queue](reference/project/exports/current/Review%20Queue.dc.html) | [1280](current-screenshots/review-confirmation-1280.png) | [390](current-screenshots/review-confirmation-390.png) |
+| Question: unanswered | [Question Player](reference/project/exports/current/Question%20Player.dc.html) | [1280](current-screenshots/question-unanswered-1280.png) | [390](current-screenshots/question-unanswered-390.png) |
+| Question: answered | [Question Player](reference/project/exports/current/Question%20Player.dc.html) | [1280](current-screenshots/question-answered-1280.png) | [390](current-screenshots/question-answered-390.png) |
+| Simulation setup | [Session Builder](reference/project/exports/current/Session%20Builder.dc.html) | [1280](current-screenshots/simulation-setup-1280.png) | [390](current-screenshots/simulation-setup-390.png) |
+| Print setup | [Component Library](reference/project/exports/current/Component%20Library.dc.html) | [1280](current-screenshots/print-setup-1280.png) | [390](current-screenshots/print-setup-390.png) |
+| Hazard landing | [Hazard Player reference](reference/project/exports/current/Hazard%20Player.dc.html) | [1280](current-screenshots/hazards-1280.png) | [390](current-screenshots/hazards-390.png) |
 
 GitHub displays HTML source; it does not execute these prototypes. Their `.dc.html`
 runtime and imports are included. Screenshot links show the actual built application
@@ -55,6 +57,10 @@ one flagged answer saved through the real player. The unavailable state delibera
 fails IndexedDB opening. They are fixtures for design comparison, not learner records.
 
 ## Verification
+
+The following implementation checks were completed for snapshot `3821eb1`.
+Handoff(3) adds reference files and review notes only; the application and its
+34 implementation captures have not changed, and these checks were not rerun.
 
 - Bun 1.4.0 and Node 22.22.0.
 - Root build and artifact verification: passed; 526 route documents, 90 questions,

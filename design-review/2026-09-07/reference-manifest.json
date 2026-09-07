@@ -1,7 +1,7 @@
 {
-  "sourceArchive": "NYC Custodian Component Design-handoff(2).zip",
-  "sourceArchiveSha256": "6c11ea6599c4ddc0746bd9c97e35d4ff25eb93b68ea47059c4b8e324bd0247ff",
-  "sameFileContentsAs": "NYC Custodian Component Design-handoff(1).zip",
+  "sourceArchive": "NYC Custodian Component Design-handoff(3).zip",
+  "sourceArchiveSha256": "d70788cae107ea0fb8d5659791e03f209f4a222a6af50cd85bf52f8b27b58c34",
+  "previousArchive": "NYC Custodian Component Design-handoff(2).zip",
   "files": [
     {
       "path": "reference/README.md",
@@ -10,8 +10,8 @@
     },
     {
       "path": "reference/project/.thumbnail",
-      "bytes": 23314,
-      "sha256": "7da4b837a9eb9f8906fb3dcb8fd92b455f3b7a147f86fb46d33db83b340e1351"
+      "bytes": 22260,
+      "sha256": "a514cd04dc25fde8160cd1a56678ec92f9c5af36af88d93123cd3b6233d78265"
     },
     {
       "path": "reference/project/CLAUDE.md",
@@ -20,8 +20,8 @@
     },
     {
       "path": "reference/project/Component Library.dc.html",
-      "bytes": 356645,
-      "sha256": "f4709bea70d5f94f995d97664afbc51d38f5a28f13be38072ce2567382ff7f66"
+      "bytes": 356769,
+      "sha256": "f5193360a7bd5cc67a3f88b2922f33b23f9c05bc0e7f907ce94d64c33941749d"
     },
     {
       "path": "reference/project/Future Explorations.dc.html",
@@ -35,18 +35,18 @@
     },
     {
       "path": "reference/project/Home.dc.html",
-      "bytes": 53902,
-      "sha256": "1fcedcb000cec1020330e99c1ee33766c932c208610971cf67826c42286a4b36"
+      "bytes": 53691,
+      "sha256": "66200ad45daff215cbb677fcbef048e45182e847470829d7cdfb8af363319397"
     },
     {
       "path": "reference/project/Landing.dc.html",
-      "bytes": 135732,
-      "sha256": "f45e882c3326ee8428b81e42c6fb3f3ac883ed6e07b9d43106d7b277da7390ac"
+      "bytes": 135534,
+      "sha256": "6799fe462f86c226d020138470d022f922dd1ac993340fe1eb6c2a9bbba5fdab"
     },
     {
       "path": "reference/project/Offline.dc.html",
-      "bytes": 73993,
-      "sha256": "d25aa232b1a9a9fb9e7ce29a80b7acbe03e0f4c072a7621d70fab046bca5ef3d"
+      "bytes": 76164,
+      "sha256": "ed1057748fb0ac39f4b5f761eb7f50784f2a2a4e70b4e803f53a32694aea970c"
     },
     {
       "path": "reference/project/Question Player.dc.html",
@@ -60,13 +60,13 @@
     },
     {
       "path": "reference/project/Session Builder.dc.html",
-      "bytes": 23497,
-      "sha256": "37c3842cf160e516df5b4c8aef946dd6f2ab45164d1f80894ecc7c6f6886a000"
+      "bytes": 23481,
+      "sha256": "3b3a0128d635a1b9da716cde1b0d200248f1203ac624a86626a40f8ecc4a7f51"
     },
     {
       "path": "reference/project/Settings.dc.html",
-      "bytes": 67325,
-      "sha256": "7559c5379f0d1100f88786c1b9fe17e1c2593f50cf0b60ea2ec997c11ee917c2"
+      "bytes": 69403,
+      "sha256": "5ebc1e7c99eda06155024169229b6f72067d78d3a4c90248ec833355ca46b88a"
     },
     {
       "path": "reference/project/Simulation Navigator.dc.html",
@@ -80,8 +80,8 @@
     },
     {
       "path": "reference/project/Study Hub.dc.html",
-      "bytes": 291693,
-      "sha256": "0f12e149b7755121c5f155329776044972818594e8671d2f2596b65fe4ef2c17"
+      "bytes": 292115,
+      "sha256": "b6f89257bad3748e1de320e734989a1e5fdc5d94da0007b13e155dd76cd45186"
     },
     {
       "path": "reference/project/Tool Atlas.dc.html",
@@ -144,9 +144,274 @@
       "sha256": "ec7ce4b5bdfb020972eecebd7a3d384fe58fa518a58b4e3311c95aa4cce32be6"
     },
     {
+      "path": "reference/project/exports/INDEX.md",
+      "bytes": 10902,
+      "sha256": "16075166368d37d0517d529522e5dbbd588165c66ab9f292876b1a919fe9970f"
+    },
+    {
+      "path": "reference/project/exports/current/Component Library.dc.html",
+      "bytes": 356764,
+      "sha256": "cb2022d7fd467b2c3e2ff2968d8814610fecf490ec327c301a0835b6c1a89b06"
+    },
+    {
+      "path": "reference/project/exports/current/DESIGN-DECISIONS.md",
+      "bytes": 11564,
+      "sha256": "ea6708c4b4872cd2ebac8a27877601caeb4b40c28a69ab58271b619daa43df2c"
+    },
+    {
+      "path": "reference/project/exports/current/Future Explorations.dc.html",
+      "bytes": 16081,
+      "sha256": "d8613b609f4aa6d0d769383de5c89c6466b7a121431be80516873ed42b57a0d0"
+    },
+    {
+      "path": "reference/project/exports/current/Hazard Player.dc.html",
+      "bytes": 26668,
+      "sha256": "b80ec8c6d389e3b9f33e38e1d4cb2d4ba4acfbb41a0d2f84af46adb47126c04c"
+    },
+    {
+      "path": "reference/project/exports/current/Home.dc.html",
+      "bytes": 53691,
+      "sha256": "66200ad45daff215cbb677fcbef048e45182e847470829d7cdfb8af363319397"
+    },
+    {
+      "path": "reference/project/exports/current/Landing.dc.html",
+      "bytes": 135534,
+      "sha256": "6799fe462f86c226d020138470d022f922dd1ac993340fe1eb6c2a9bbba5fdab"
+    },
+    {
+      "path": "reference/project/exports/current/Offline.dc.html",
+      "bytes": 74025,
+      "sha256": "815cd876ac7c7a304f49641efacb54ea617c529874406b635d170db69916212c"
+    },
+    {
+      "path": "reference/project/exports/current/Question Player.dc.html",
+      "bytes": 34661,
+      "sha256": "0f8ad02b6652d7a47337b1d48f94122f61226c646f80e72968fd25a1be6194ea"
+    },
+    {
+      "path": "reference/project/exports/current/Review Queue.dc.html",
+      "bytes": 57371,
+      "sha256": "8be1e58fae8896819db09dcc8734a4239d9b21832e659b8dfcd802ed7dd51d84"
+    },
+    {
+      "path": "reference/project/exports/current/Session Builder.dc.html",
+      "bytes": 23481,
+      "sha256": "3b3a0128d635a1b9da716cde1b0d200248f1203ac624a86626a40f8ecc4a7f51"
+    },
+    {
+      "path": "reference/project/exports/current/Settings.dc.html",
+      "bytes": 67267,
+      "sha256": "e8e5958c9b17905375e334cd2cd8972916b389b13e002eda07d8ef36fcc8ffee"
+    },
+    {
+      "path": "reference/project/exports/current/Simulation Navigator.dc.html",
+      "bytes": 6479,
+      "sha256": "9c03601fc61541226dcc042b8327b910b53467edd7f30025029e2206390e04ae"
+    },
+    {
+      "path": "reference/project/exports/current/Study Hub.dc.html",
+      "bytes": 291609,
+      "sha256": "6f97491a64bd475333f784f8b4740a9f8bd69ffd76f1d498898a062be5a28f02"
+    },
+    {
+      "path": "reference/project/exports/current/Tool Atlas.dc.html",
+      "bytes": 9823,
+      "sha256": "09378b356a6e6440345ecdceb5abbaa5ba13ce3fa43b2d5b086cf03d97586ed6"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/scenes/s003-phone.png",
+      "bytes": 260693,
+      "sha256": "4213808a50ec91260499d7e409d22211479cb071a5643e935aa98cb37d054171"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/scenes/s008-phone.png",
+      "bytes": 281712,
+      "sha256": "5c9baf1012aa80a741e45572e0a61486ae11b9608525759617a8b00f87149b2b"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/scenes/s009-phone.png",
+      "bytes": 277833,
+      "sha256": "b8ed8646a78b6e047f47c0750e859a13fa91e53a6a0a4b51d26d5a76acb019a6"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t001-phone.png",
+      "bytes": 84072,
+      "sha256": "20982817fe806bffa8da7e2cc06ce4f5caa85400da7a1412b07e55301177234f"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t002-phone.png",
+      "bytes": 70428,
+      "sha256": "baba2e79d2ada171771ea355aa6a2be3ffe0c886434970869d121e8127acd3eb"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t003-phone.png",
+      "bytes": 88826,
+      "sha256": "5511fcb6a43ac0c435e7405f4f77bfe19b67fc6c87a7f8af1bdbd5a211978e1f"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t004-phone.png",
+      "bytes": 62971,
+      "sha256": "72667701c86604f67f79f7d6276922fafbe8b4222f6b3e1ed5ecd468b05195d6"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t005-phone.png",
+      "bytes": 43561,
+      "sha256": "22e57a774aa6e324b12ddf80be3fea469d150a7837076d7323206350af878b7e"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t006-phone.png",
+      "bytes": 74561,
+      "sha256": "c4d39cd0758b807af4bbe3ca997d0370b49f67476191a88f0b19084a63ddd5fb"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t007-phone.png",
+      "bytes": 60587,
+      "sha256": "539e60f55898692a3e4379eb2da0a552b8b41d6cbff6b8e2f09a2acf7a7bb319"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t008-phone.png",
+      "bytes": 54322,
+      "sha256": "ec7ce4b5bdfb020972eecebd7a3d384fe58fa518a58b4e3311c95aa4cce32be6"
+    },
+    {
+      "path": "reference/project/exports/current/styles-additions.css",
+      "bytes": 58028,
+      "sha256": "6f871919a4fe0aa84929cc31a44a353a46259992c378ba5c42fff810fb75381f"
+    },
+    {
+      "path": "reference/project/exports/current/support.js",
+      "bytes": 69150,
+      "sha256": "8fe7df74405f3c55f49b7249c74ea1397e65d07dea2b1bd3b4a489bec2e28cbe"
+    },
+    {
+      "path": "reference/project/exports/explorations/README.md",
+      "bytes": 714,
+      "sha256": "547768e56ede949e1a49b095834ccbe7e2ae928bd5e66f391133fbca23fbd62c"
+    },
+    {
+      "path": "reference/project/exports/explorations/Site Nav Proposals.dc.html",
+      "bytes": 102122,
+      "sha256": "726f99474d946f1c978606c3dcc3d3d84b29060828dd8b399cea53cbab827bec"
+    },
+    {
+      "path": "reference/project/exports/explorations/support.js",
+      "bytes": 69150,
+      "sha256": "8fe7df74405f3c55f49b7249c74ea1397e65d07dea2b1bd3b4a489bec2e28cbe"
+    },
+    {
+      "path": "reference/project/exports/screenshots/01-home--first-visit--1248x2844.png",
+      "bytes": 535379,
+      "sha256": "4ef195e59e4a9f68734df449c9ee1c2dfa789e3bae3b1c264d549f80f47d671d"
+    },
+    {
+      "path": "reference/project/exports/screenshots/02-home--first-visit--384x2097.png",
+      "bytes": 199078,
+      "sha256": "73331ab38d98b3167c40cea647a3953fe942c2a38e6f3f26ebd29f27020c9c1d"
+    },
+    {
+      "path": "reference/project/exports/screenshots/03-home--library-open--1248x2844.png",
+      "bytes": 547717,
+      "sha256": "499ae66cba8e99e90d31a8d11f805e750220b9167693c095ac56d61763389559"
+    },
+    {
+      "path": "reference/project/exports/screenshots/04-home--library-sheet-open--384x2097.png",
+      "bytes": 201704,
+      "sha256": "36cb867004759dff3e5efab2c9930c91ca7cfc67dbbb9c8211eed98f3e5236b0"
+    },
+    {
+      "path": "reference/project/exports/screenshots/05-practice--first-visit--1248x3181.png",
+      "bytes": 608247,
+      "sha256": "72cd34f5965eeeb9ec566478a4e6e5b4cf061627839f77d3def07d6ba4698d61"
+    },
+    {
+      "path": "reference/project/exports/screenshots/06-practice--first-visit--384x2237.png",
+      "bytes": 214370,
+      "sha256": "ffb49067f27e652bced1e520f8782faa4cbe4c2ba7c9c70f1a3a4ffeb5322b96"
+    },
+    {
+      "path": "reference/project/exports/screenshots/07-practice--returning-unavailable-attempt--1248x3979.png",
+      "bytes": 648345,
+      "sha256": "fb9554223184adaf629036fab946518fad9dc5ecd47976fa6ba83a2f20e115a7"
+    },
+    {
+      "path": "reference/project/exports/screenshots/08-practice--returning--384x2083.png",
+      "bytes": 194285,
+      "sha256": "504fefa77105d7238c904908c3386ba26de486bad2de9b3714d6d053b5853138"
+    },
+    {
+      "path": "reference/project/exports/screenshots/09-exams--record-open--1248w.png",
+      "bytes": 551733,
+      "sha256": "cba44898e4942660deac6d7537001fbaf130bb7cf41e3883b095df09e4a15b1a"
+    },
+    {
+      "path": "reference/project/exports/screenshots/10-exams--first-visit--384w.png",
+      "bytes": 206447,
+      "sha256": "4b75e021e0b006147c1b285bdd03a3f4362c8a9d98a7bbe515649e3539b306b3"
+    },
+    {
+      "path": "reference/project/exports/screenshots/11-settings--returning--1248w.png",
+      "bytes": 347173,
+      "sha256": "f5b6b18bb5dee615d1f5ea6fc29a70425f9e96668743ad2780c977d048357143"
+    },
+    {
+      "path": "reference/project/exports/screenshots/12-settings--returning--384w.png",
+      "bytes": 166803,
+      "sha256": "2c123ea0276a09891d0aa3f0686176f8c5d22605744fac22959bc732f4d67423"
+    },
+    {
+      "path": "reference/project/exports/screenshots/13-settings--delete-preview-confirmation--608w.png",
+      "bytes": 54153,
+      "sha256": "d6a6606b665447afd17607ea282804227aa169cfce3506f463bd7e0c2f5323f4"
+    },
+    {
+      "path": "reference/project/exports/screenshots/14-settings--export-file-contents--608w.png",
+      "bytes": 65399,
+      "sha256": "f0e42df6e81e70f75acc7a0337557103eb057e1f684e1ffd867ba97c0b2c10e0"
+    },
+    {
+      "path": "reference/project/exports/screenshots/15-offline--turned-on--1248w.png",
+      "bytes": 443738,
+      "sha256": "18d5a309f861c832efae5d5d408bc9990f13638b153a9022fa92a5c191d54367"
+    },
+    {
+      "path": "reference/project/exports/screenshots/16-offline--turned-on--384w.png",
+      "bytes": 159716,
+      "sha256": "ed70079af259473bbf47794d085988e2dbcbf3ecddeb48cf93ad869028ef8485"
+    },
+    {
+      "path": "reference/project/exports/screenshots/17-offline--nothing-downloaded--1248w.png",
+      "bytes": 174840,
+      "sha256": "66e81155d7d8f52723f124a97706137e4977874628e0d1fe496f5447fc00897b"
+    },
+    {
+      "path": "reference/project/exports/screenshots/18-offline--removal-preview--608w.png",
+      "bytes": 59977,
+      "sha256": "bfb7b8f9501d12040e7a10e0d5e8c2d8220a0b18652746e6b05042b8afb15b03"
+    },
+    {
+      "path": "reference/project/exports/screenshots/19-offline--storage-unavailable--608w.png",
+      "bytes": 44826,
+      "sha256": "959cdf458c59eede087f7d427603d6213ec0a04ecd95a47527175b621e1c1f34"
+    },
+    {
+      "path": "reference/project/exports/screenshots/20-review--ready--1248w.png",
+      "bytes": 522389,
+      "sha256": "ed9f8292b822afe88ff1438996b3d7efc71850fd6e47845bcb16ed26a1401e31"
+    },
+    {
+      "path": "reference/project/exports/screenshots/21-review--ready--384w.png",
+      "bytes": 249248,
+      "sha256": "cdf69b90878fe5fb5e090f05fa60ffb0975783550f3addfa95888c09ff647977"
+    },
+    {
+      "path": "reference/project/exports/screenshots/22-session-builder--practice-set--1053w.png",
+      "bytes": 174955,
+      "sha256": "867ebba2e5584efbbc76bffd3fe4865dd6d5a2fd325c2112f7b5a6d12e057b82"
+    },
+    {
       "path": "reference/project/github.md",
-      "bytes": 27815,
-      "sha256": "17e8f74db1c60f4ec61394a5a16f4656ff36d141eac5419a8c5714c81b313b17"
+      "bytes": 32867,
+      "sha256": "fac59308b5d65ea000fe85764d557011a4192ed4ed3d519f332b8cc50c1f83b4"
     },
     {
       "path": "reference/project/screenshots/landing-board.jpg",

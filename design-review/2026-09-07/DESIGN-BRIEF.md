@@ -6,9 +6,16 @@ pass: update screen layouts, components, copy, responsive behavior, and interact
 states. Return an exported ZIP; Git access is for reading and no commits are needed
 from the design agent.
 
+Handoff(3) has now been received. Its five copy corrections and new screenshot
+package are useful progress; preserve them. Read [LATEST-REVIEW.md](LATEST-REVIEW.md)
+for the remaining pass. The export says it used the older `716d425` revision and
+did not see the implementation screenshots. Those screenshots are in this folder's
+`current-screenshots/`, not at the repository root. The comparison still needs to
+be made against the published review snapshot and its actual supported states.
+
 ## What to compare
 
-- `reference/project/` contains the latest received editable design files. Keep
+- `reference/project/exports/current/` contains the latest received editable design files. Keep
   the accepted visual direction. Older explorations in those files are historical.
 - `current-screenshots/` shows what the implementation actually renders at 1280
   and 390 pixels wide, including first visit, saved work, review confirmation,
@@ -36,7 +43,7 @@ choice is useful only when it changes that particular activity or output.
 Keep each started activity consistent when resumed, without introducing a
 learner-facing exam-pinning feature.
 
-## Remaining corrections in the received drawings
+## Copy corrections completed in handoff(3); preserve these changes
 
 1. **Settings:** remove “your exam choice” from export, deletion-preview, and
    deletion-complete copy.
