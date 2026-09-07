@@ -1,27 +1,27 @@
 {
-  "sourceArchive": "NYC Custodian Component Design-handoff(3).zip",
-  "sourceArchiveSha256": "d70788cae107ea0fb8d5659791e03f209f4a222a6af50cd85bf52f8b27b58c34",
-  "previousArchive": "NYC Custodian Component Design-handoff(2).zip",
+  "sourceArchive": "NYC Custodian Component Design-handoff(4).zip",
+  "sourceArchiveSha256": "9a85e62bb56ff80066967d089e8bb880b1f8e79fe2cacb9441b533fecc1e98ff",
+  "previousArchive": "NYC Custodian Component Design-handoff(3).zip",
   "files": [
     {
       "path": "reference/README.md",
-      "bytes": 1558,
-      "sha256": "d9b96e01559d3cd98800785a77d84cd16f3b6a0330f0586016fefe446dbb7e7f"
+      "bytes": 1682,
+      "sha256": "984ad39fbe3ca16d30ec349fb604c977487e39050148ff234e246e6bca7dd00c"
     },
     {
       "path": "reference/project/.thumbnail",
-      "bytes": 22260,
-      "sha256": "a514cd04dc25fde8160cd1a56678ec92f9c5af36af88d93123cd3b6233d78265"
+      "bytes": 41284,
+      "sha256": "c16663a26ed744d622b09b5ad51ea3190498018b015f28fa79882ed88ceacd40"
     },
     {
       "path": "reference/project/CLAUDE.md",
-      "bytes": 11564,
-      "sha256": "ea6708c4b4872cd2ebac8a27877601caeb4b40c28a69ab58271b619daa43df2c"
+      "bytes": 16702,
+      "sha256": "5756057a1a20e58662f0bb34c1c6e6a83922c3665edd65f15629fbb13ab2465b"
     },
     {
       "path": "reference/project/Component Library.dc.html",
-      "bytes": 356769,
-      "sha256": "f5193360a7bd5cc67a3f88b2922f33b23f9c05bc0e7f907ce94d64c33941749d"
+      "bytes": 358915,
+      "sha256": "fb3ddaf8e0c0473369bbd7cf10f93e65db0ef2e4fb4514cb4189c1c44406e1cd"
     },
     {
       "path": "reference/project/Future Explorations.dc.html",
@@ -35,28 +35,28 @@
     },
     {
       "path": "reference/project/Home.dc.html",
-      "bytes": 53691,
-      "sha256": "66200ad45daff215cbb677fcbef048e45182e847470829d7cdfb8af363319397"
+      "bytes": 52997,
+      "sha256": "a3da7424eb6ae344afebfdf768598126f78ab937bb49ce53c27bdf31b925623d"
     },
     {
       "path": "reference/project/Landing.dc.html",
-      "bytes": 135534,
-      "sha256": "6799fe462f86c226d020138470d022f922dd1ac993340fe1eb6c2a9bbba5fdab"
+      "bytes": 81398,
+      "sha256": "c41d5b62fb47623f7b5c4461fa7d2e66071b5ef639b6d54de1cdb719cc4b64a1"
     },
     {
       "path": "reference/project/Offline.dc.html",
-      "bytes": 76164,
-      "sha256": "ed1057748fb0ac39f4b5f761eb7f50784f2a2a4e70b4e803f53a32694aea970c"
+      "bytes": 76501,
+      "sha256": "0f4a36b940557a175d66daefa3b8f39f8909789a41d1e3244237435bb51d401e"
     },
     {
       "path": "reference/project/Question Player.dc.html",
-      "bytes": 34661,
-      "sha256": "0f8ad02b6652d7a47337b1d48f94122f61226c646f80e72968fd25a1be6194ea"
+      "bytes": 33971,
+      "sha256": "255ef5ff0a52b4a3968e1375aa990179541401b2697969486c03acf3b32d0b35"
     },
     {
       "path": "reference/project/Review Queue.dc.html",
-      "bytes": 57371,
-      "sha256": "8be1e58fae8896819db09dcc8734a4239d9b21832e659b8dfcd802ed7dd51d84"
+      "bytes": 71475,
+      "sha256": "faf0522603549ee7987420d931175968c6327701f3ab62590804f6d872288fe8"
     },
     {
       "path": "reference/project/Session Builder.dc.html",
@@ -65,13 +65,13 @@
     },
     {
       "path": "reference/project/Settings.dc.html",
-      "bytes": 69403,
-      "sha256": "5ebc1e7c99eda06155024169229b6f72067d78d3a4c90248ec833355ca46b88a"
+      "bytes": 69206,
+      "sha256": "42254c0b89812c81c38ad11e7e7a0872b59778bcdae9a85c6d1423a1004e3fb0"
     },
     {
       "path": "reference/project/Simulation Navigator.dc.html",
-      "bytes": 6479,
-      "sha256": "9c03601fc61541226dcc042b8327b910b53467edd7f30025029e2206390e04ae"
+      "bytes": 6520,
+      "sha256": "eb77cf69da011749c9058b3fcc68cd2dc928575c3a1bd1863ab236b4977b50d3"
     },
     {
       "path": "reference/project/Site Nav Proposals.dc.html",
@@ -80,8 +80,8 @@
     },
     {
       "path": "reference/project/Study Hub.dc.html",
-      "bytes": 292115,
-      "sha256": "b6f89257bad3748e1de320e734989a1e5fdc5d94da0007b13e155dd76cd45186"
+      "bytes": 111560,
+      "sha256": "825ce7bb716136f5a4633d452acff0907796a77386ddb499b1a06d264e08568f"
     },
     {
       "path": "reference/project/Tool Atlas.dc.html",
@@ -145,18 +145,18 @@
     },
     {
       "path": "reference/project/exports/INDEX.md",
-      "bytes": 10902,
-      "sha256": "16075166368d37d0517d529522e5dbbd588165c66ab9f292876b1a919fe9970f"
+      "bytes": 10819,
+      "sha256": "cd93ff76379fc45c534fdb35ceb2c0df928308c6bff8090ed14e6578d4bddae4"
     },
     {
       "path": "reference/project/exports/current/Component Library.dc.html",
-      "bytes": 356764,
-      "sha256": "cb2022d7fd467b2c3e2ff2968d8814610fecf490ec327c301a0835b6c1a89b06"
+      "bytes": 358915,
+      "sha256": "fb3ddaf8e0c0473369bbd7cf10f93e65db0ef2e4fb4514cb4189c1c44406e1cd"
     },
     {
       "path": "reference/project/exports/current/DESIGN-DECISIONS.md",
-      "bytes": 11564,
-      "sha256": "ea6708c4b4872cd2ebac8a27877601caeb4b40c28a69ab58271b619daa43df2c"
+      "bytes": 16702,
+      "sha256": "5756057a1a20e58662f0bb34c1c6e6a83922c3665edd65f15629fbb13ab2465b"
     },
     {
       "path": "reference/project/exports/current/Future Explorations.dc.html",
@@ -170,28 +170,28 @@
     },
     {
       "path": "reference/project/exports/current/Home.dc.html",
-      "bytes": 53691,
-      "sha256": "66200ad45daff215cbb677fcbef048e45182e847470829d7cdfb8af363319397"
+      "bytes": 52997,
+      "sha256": "a3da7424eb6ae344afebfdf768598126f78ab937bb49ce53c27bdf31b925623d"
     },
     {
       "path": "reference/project/exports/current/Landing.dc.html",
-      "bytes": 135534,
-      "sha256": "6799fe462f86c226d020138470d022f922dd1ac993340fe1eb6c2a9bbba5fdab"
+      "bytes": 81398,
+      "sha256": "c41d5b62fb47623f7b5c4461fa7d2e66071b5ef639b6d54de1cdb719cc4b64a1"
     },
     {
       "path": "reference/project/exports/current/Offline.dc.html",
-      "bytes": 74025,
-      "sha256": "815cd876ac7c7a304f49641efacb54ea617c529874406b635d170db69916212c"
+      "bytes": 76501,
+      "sha256": "0f4a36b940557a175d66daefa3b8f39f8909789a41d1e3244237435bb51d401e"
     },
     {
       "path": "reference/project/exports/current/Question Player.dc.html",
-      "bytes": 34661,
-      "sha256": "0f8ad02b6652d7a47337b1d48f94122f61226c646f80e72968fd25a1be6194ea"
+      "bytes": 33971,
+      "sha256": "255ef5ff0a52b4a3968e1375aa990179541401b2697969486c03acf3b32d0b35"
     },
     {
       "path": "reference/project/exports/current/Review Queue.dc.html",
-      "bytes": 57371,
-      "sha256": "8be1e58fae8896819db09dcc8734a4239d9b21832e659b8dfcd802ed7dd51d84"
+      "bytes": 71475,
+      "sha256": "faf0522603549ee7987420d931175968c6327701f3ab62590804f6d872288fe8"
     },
     {
       "path": "reference/project/exports/current/Session Builder.dc.html",
@@ -200,18 +200,18 @@
     },
     {
       "path": "reference/project/exports/current/Settings.dc.html",
-      "bytes": 67267,
-      "sha256": "e8e5958c9b17905375e334cd2cd8972916b389b13e002eda07d8ef36fcc8ffee"
+      "bytes": 69206,
+      "sha256": "42254c0b89812c81c38ad11e7e7a0872b59778bcdae9a85c6d1423a1004e3fb0"
     },
     {
       "path": "reference/project/exports/current/Simulation Navigator.dc.html",
-      "bytes": 6479,
-      "sha256": "9c03601fc61541226dcc042b8327b910b53467edd7f30025029e2206390e04ae"
+      "bytes": 6520,
+      "sha256": "eb77cf69da011749c9058b3fcc68cd2dc928575c3a1bd1863ab236b4977b50d3"
     },
     {
       "path": "reference/project/exports/current/Study Hub.dc.html",
-      "bytes": 291609,
-      "sha256": "6f97491a64bd475333f784f8b4740a9f8bd69ffd76f1d498898a062be5a28f02"
+      "bytes": 111560,
+      "sha256": "825ce7bb716136f5a4633d452acff0907796a77386ddb499b1a06d264e08568f"
     },
     {
       "path": "reference/project/exports/current/Tool Atlas.dc.html",
@@ -275,8 +275,8 @@
     },
     {
       "path": "reference/project/exports/current/styles-additions.css",
-      "bytes": 58028,
-      "sha256": "6f871919a4fe0aa84929cc31a44a353a46259992c378ba5c42fff810fb75381f"
+      "bytes": 58463,
+      "sha256": "655fd636ad66633db8c7726c7be4f4a59bbd7e81aaabd00d2316bd18c59a5140"
     },
     {
       "path": "reference/project/exports/current/support.js",
@@ -284,9 +284,14 @@
       "sha256": "8fe7df74405f3c55f49b7249c74ea1397e65d07dea2b1bd3b4a489bec2e28cbe"
     },
     {
+      "path": "reference/project/exports/explorations/Landing - archive.dc.html",
+      "bytes": 81525,
+      "sha256": "701e22c883758c36215fdccaf8394788b15e8d6568a22bd4581f604fa048d2ef"
+    },
+    {
       "path": "reference/project/exports/explorations/README.md",
-      "bytes": 714,
-      "sha256": "547768e56ede949e1a49b095834ccbe7e2ae928bd5e66f391133fbca23fbd62c"
+      "bytes": 1376,
+      "sha256": "e7b6bf3ea62283c8e6f828802bac1efb09f8a566c32992eacf0c85f30e49d591"
     },
     {
       "path": "reference/project/exports/explorations/Site Nav Proposals.dc.html",
@@ -294,14 +299,29 @@
       "sha256": "726f99474d946f1c978606c3dcc3d3d84b29060828dd8b399cea53cbab827bec"
     },
     {
+      "path": "reference/project/exports/explorations/Study Hub - archive.dc.html",
+      "bytes": 174578,
+      "sha256": "42e00134805bc1ad8954a5f2e7a9be6129c6ae37c20840e4f15049f3a521f7ba"
+    },
+    {
       "path": "reference/project/exports/explorations/support.js",
       "bytes": 69150,
       "sha256": "8fe7df74405f3c55f49b7249c74ea1397e65d07dea2b1bd3b4a489bec2e28cbe"
     },
     {
+      "path": "reference/project/exports/screenshots/01-home--first-visit--1248w.png",
+      "bytes": 524269,
+      "sha256": "eef34aa00788647bd3b98406bc973ba3f7b53fe24a05e2d472b058df8ceb34dd"
+    },
+    {
       "path": "reference/project/exports/screenshots/01-home--first-visit--1248x2844.png",
       "bytes": 535379,
       "sha256": "4ef195e59e4a9f68734df449c9ee1c2dfa789e3bae3b1c264d549f80f47d671d"
+    },
+    {
+      "path": "reference/project/exports/screenshots/02-home--first-visit--384w.png",
+      "bytes": 199078,
+      "sha256": "4ae8aae3aa4c74bdb2ea6896bf398d42b63e1f80482a9d11a60955cdb66081e2"
     },
     {
       "path": "reference/project/exports/screenshots/02-home--first-visit--384x2097.png",
@@ -319,74 +339,74 @@
       "sha256": "36cb867004759dff3e5efab2c9930c91ca7cfc67dbbb9c8211eed98f3e5236b0"
     },
     {
-      "path": "reference/project/exports/screenshots/05-practice--first-visit--1248x3181.png",
-      "bytes": 608247,
-      "sha256": "72cd34f5965eeeb9ec566478a4e6e5b4cf061627839f77d3def07d6ba4698d61"
+      "path": "reference/project/exports/screenshots/05-practice--first-visit--1248w.png",
+      "bytes": 472791,
+      "sha256": "b7b94d21e6db34d9f0c1ab9eb202120b44094d0a197fcc12fddd3c87f798ae11"
     },
     {
-      "path": "reference/project/exports/screenshots/06-practice--first-visit--384x2237.png",
-      "bytes": 214370,
-      "sha256": "ffb49067f27e652bced1e520f8782faa4cbe4c2ba7c9c70f1a3a4ffeb5322b96"
+      "path": "reference/project/exports/screenshots/06-practice--first-visit--384w.png",
+      "bytes": 218564,
+      "sha256": "c7d96744a344f31df62865ad420f89a40955d8fd5b2e8207d40fc732d175700b"
     },
     {
-      "path": "reference/project/exports/screenshots/07-practice--returning-unavailable-attempt--1248x3979.png",
-      "bytes": 648345,
-      "sha256": "fb9554223184adaf629036fab946518fad9dc5ecd47976fa6ba83a2f20e115a7"
+      "path": "reference/project/exports/screenshots/07-practice--returning--1248w.png",
+      "bytes": 600942,
+      "sha256": "9a5ca0e60a1aaa2cd39dbe39aa308ddba5de3ae63c9b20fb8a5d3752d655f024"
     },
     {
-      "path": "reference/project/exports/screenshots/08-practice--returning--384x2083.png",
-      "bytes": 194285,
-      "sha256": "504fefa77105d7238c904908c3386ba26de486bad2de9b3714d6d053b5853138"
+      "path": "reference/project/exports/screenshots/08-practice--returning--384w.png",
+      "bytes": 169644,
+      "sha256": "c7a8606d8ac31d3619c3d37b74702faaa57ba01928df9f95086149f6a3f2fddb"
     },
     {
       "path": "reference/project/exports/screenshots/09-exams--record-open--1248w.png",
-      "bytes": 551733,
-      "sha256": "cba44898e4942660deac6d7537001fbaf130bb7cf41e3883b095df09e4a15b1a"
+      "bytes": 542304,
+      "sha256": "1c9e331f039723a2582c744f6dca4b221a6badebcd9f5a1191431244b97c6c0b"
     },
     {
       "path": "reference/project/exports/screenshots/10-exams--first-visit--384w.png",
       "bytes": 206447,
-      "sha256": "4b75e021e0b006147c1b285bdd03a3f4362c8a9d98a7bbe515649e3539b306b3"
+      "sha256": "ba25c3fb7b5aeb1476bd65e26c090c306f63b7777b43c3716199bd0af9315178"
     },
     {
       "path": "reference/project/exports/screenshots/11-settings--returning--1248w.png",
-      "bytes": 347173,
-      "sha256": "f5b6b18bb5dee615d1f5ea6fc29a70425f9e96668743ad2780c977d048357143"
+      "bytes": 364231,
+      "sha256": "1a3455ac19fc1d93ae2f983be9ff9df5a8803604dd6cdda2a14f0f567efb39a5"
     },
     {
       "path": "reference/project/exports/screenshots/12-settings--returning--384w.png",
-      "bytes": 166803,
-      "sha256": "2c123ea0276a09891d0aa3f0686176f8c5d22605744fac22959bc732f4d67423"
+      "bytes": 167829,
+      "sha256": "0689409db189cf5170f6384e16054ef3e8e045a587c795c2e36dfcb6aeabdbb2"
     },
     {
-      "path": "reference/project/exports/screenshots/13-settings--delete-preview-confirmation--608w.png",
-      "bytes": 54153,
-      "sha256": "d6a6606b665447afd17607ea282804227aa169cfce3506f463bd7e0c2f5323f4"
+      "path": "reference/project/exports/screenshots/13-settings--delete-preview--608w.png",
+      "bytes": 50657,
+      "sha256": "d3b707bc8f6a0acb53bce8cde3973639d3a78ff3b9b689b011ea092ef9d1b915"
     },
     {
       "path": "reference/project/exports/screenshots/14-settings--export-file-contents--608w.png",
-      "bytes": 65399,
-      "sha256": "f0e42df6e81e70f75acc7a0337557103eb057e1f684e1ffd867ba97c0b2c10e0"
+      "bytes": 64031,
+      "sha256": "aba5f76851a2806052609650a53267de4952dc8d5508c2aa9d0a6b1bb6a29ffc"
     },
     {
       "path": "reference/project/exports/screenshots/15-offline--turned-on--1248w.png",
-      "bytes": 443738,
-      "sha256": "18d5a309f861c832efae5d5d408bc9990f13638b153a9022fa92a5c191d54367"
+      "bytes": 445780,
+      "sha256": "aad1ae2336df96b37dddf13de9c1c5e0e10297e079ced582d45cd55c0738d4ad"
     },
     {
       "path": "reference/project/exports/screenshots/16-offline--turned-on--384w.png",
-      "bytes": 159716,
-      "sha256": "ed70079af259473bbf47794d085988e2dbcbf3ecddeb48cf93ad869028ef8485"
+      "bytes": 160015,
+      "sha256": "6e6ce3d9a5419d22cf70495d07c9db487e53a09708a4a13b46a57f6f8f66e4be"
     },
     {
       "path": "reference/project/exports/screenshots/17-offline--nothing-downloaded--1248w.png",
-      "bytes": 174840,
-      "sha256": "66e81155d7d8f52723f124a97706137e4977874628e0d1fe496f5447fc00897b"
+      "bytes": 172819,
+      "sha256": "e8d9b421593ffe9bb9696959feba5085fc7720f28cd79a993da16895d1ffe3bf"
     },
     {
       "path": "reference/project/exports/screenshots/18-offline--removal-preview--608w.png",
-      "bytes": 59977,
-      "sha256": "bfb7b8f9501d12040e7a10e0d5e8c2d8220a0b18652746e6b05042b8afb15b03"
+      "bytes": 63839,
+      "sha256": "cc998c939fce8e2bf5f2588c7d8065fd75185735a17ef2e8844830fa475432a6"
     },
     {
       "path": "reference/project/exports/screenshots/19-offline--storage-unavailable--608w.png",
@@ -394,14 +414,14 @@
       "sha256": "959cdf458c59eede087f7d427603d6213ec0a04ecd95a47527175b621e1c1f34"
     },
     {
-      "path": "reference/project/exports/screenshots/20-review--ready--1248w.png",
-      "bytes": 522389,
-      "sha256": "ed9f8292b822afe88ff1438996b3d7efc71850fd6e47845bcb16ed26a1401e31"
+      "path": "reference/project/exports/screenshots/20-review--ready-with-confirmation--1248w.png",
+      "bytes": 459830,
+      "sha256": "2bbca0e53a2697fbc0307318015aad756a26fd4aed701472a6c18d5fba5cb16e"
     },
     {
       "path": "reference/project/exports/screenshots/21-review--ready--384w.png",
-      "bytes": 249248,
-      "sha256": "cdf69b90878fe5fb5e090f05fa60ffb0975783550f3addfa95888c09ff647977"
+      "bytes": 276934,
+      "sha256": "f7c3aa76e93e917f28e0000dc781d57aa35a2c5b07f80bd43ff6cf6e86c30787"
     },
     {
       "path": "reference/project/exports/screenshots/22-session-builder--practice-set--1053w.png",
@@ -409,9 +429,39 @@
       "sha256": "867ebba2e5584efbbc76bffd3fe4865dd6d5a2fd325c2112f7b5a6d12e057b82"
     },
     {
+      "path": "reference/project/exports/screenshots/23-review--cleared--608w.png",
+      "bytes": 61060,
+      "sha256": "931f2d9f069c9a617042592510caab1d0129110e90ef78161563d22541894e2c"
+    },
+    {
+      "path": "reference/project/exports/screenshots/24-review--read-failed--608w.png",
+      "bytes": 49958,
+      "sha256": "0bdc0fc35ee8b94bd98e3dcbdd9661a8c234b0208feb674c2c2a3e1434c4d460"
+    },
+    {
+      "path": "reference/project/exports/screenshots/25-review--finish-not-saved--608w.png",
+      "bytes": 66884,
+      "sha256": "a3f24118ef47182eecbfc472f88543df3fb37f22be68cd9393d37ced78eff86a"
+    },
+    {
+      "path": "reference/project/exports/screenshots/26-question-player--unanswered--800w.png",
+      "bytes": 168531,
+      "sha256": "3ed600f7daccfbfe436847b79c42805ecb6fd428dc3eb352fe97c43d29500b2f"
+    },
+    {
+      "path": "reference/project/exports/screenshots/27-question-player--answered--800w.png",
+      "bytes": 281384,
+      "sha256": "6990e79e544a653ec8c07c3d5ae0d90b61095a37d1aa0724ed72ceeb20134d19"
+    },
+    {
+      "path": "reference/project/exports/screenshots/28-simulation-navigator--45-items--928w.png",
+      "bytes": 88291,
+      "sha256": "4deabc74bc7fcf5ad487880f038b76dba8cbc0ea22841036e565d5177a8c1d54"
+    },
+    {
       "path": "reference/project/github.md",
-      "bytes": 32867,
-      "sha256": "fac59308b5d65ea000fe85764d557011a4192ed4ed3d519f332b8cc50c1f83b4"
+      "bytes": 39512,
+      "sha256": "9228039d96f5bbbafd0f864de64bc17fdeb6945be089580ec20ffbb7ef7dd982"
     },
     {
       "path": "reference/project/screenshots/landing-board.jpg",
@@ -420,8 +470,8 @@
     },
     {
       "path": "reference/project/styles-additions.css",
-      "bytes": 58028,
-      "sha256": "6f871919a4fe0aa84929cc31a44a353a46259992c378ba5c42fff810fb75381f"
+      "bytes": 58463,
+      "sha256": "655fd636ad66633db8c7726c7be4f4a59bbd7e81aaabd00d2316bd18c59a5140"
     },
     {
       "path": "reference/project/support.js",

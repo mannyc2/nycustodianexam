@@ -6,12 +6,12 @@ pass: update screen layouts, components, copy, responsive behavior, and interact
 states. Return an exported ZIP; Git access is for reading and no commits are needed
 from the design agent.
 
-Handoff(3) has now been received. Its five copy corrections and new screenshot
-package are useful progress; preserve them. Read [LATEST-REVIEW.md](LATEST-REVIEW.md)
-for the remaining pass. The export says it used the older `716d425` revision and
-did not see the implementation screenshots. Those screenshots are in this folder's
-`current-screenshots/`, not at the repository root. The comparison still needs to
-be made against the published review snapshot and its actual supported states.
+Handoff(4) has now been received and identifies the correct `1147c7a` review
+revision and implementation screenshots. Preserve its completed Practice and
+Review reconciliation, the earlier copy fixes, the mobile navigation, and the
+updated section-heading layout. Read [LATEST-REVIEW.md](LATEST-REVIEW.md) for the
+remaining focused work: Session Builder, Atlas, hazard/print, current component
+examples, and screenshot-index cleanup. Do not restart the completed screens.
 
 ## What to compare
 
@@ -26,8 +26,8 @@ be made against the published review snapshot and its actual supported states.
   deliberate design adjustment. An accidental layout difference in the app does
   not supersede the accepted design.
 
-Start with the shared navigation and Practice page, then carry the result through
-Home, Exams, Settings, Offline, Review, and the builder/player designs. For example,
+Keep the shared navigation and completed Practice/Review designs while finishing
+the remaining builder/player and reference details. For example,
 the accepted mobile navigation uses a bottom tab bar and a Library sheet; the
 implementation screenshots instead show header navigation and a popover. Identify
 that as an implementation difference and preserve the accepted design.

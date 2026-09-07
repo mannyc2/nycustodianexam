@@ -10,10 +10,10 @@ visual fidelity.
 
 - All 19 modified tracked files and the new navigation file from the local
   workspace based on commit `716d4250e1c72f3d9023ae59f2ce8b17b58d8871`.
-- The exact 85-file contents of `NYC Custodian Component Design-handoff(3).zip`
-  under [reference/](reference/), including 22 new design screenshots and the
+- The exact 95-file contents of `NYC Custodian Component Design-handoff(4).zip`
+  under [reference/](reference/), including 30 design screenshot files and the
   designer's [page/state index](reference/project/exports/INDEX.md). The previous
-  export is retained in Git history at `3821eb19b5570e2997ee20c5f6f2c685a0947a93`.
+  export is retained in Git history at `1147c7a13eaf6edc2ae0c8d4e8bfae31afc7416c`.
 - [34 current implementation screenshots](current-screenshots/) captured from a
   fresh build, with page/state/viewport coordinates in the
   [screenshot manifest](current-screenshots/manifest.json).
@@ -59,7 +59,7 @@ fails IndexedDB opening. They are fixtures for design comparison, not learner re
 ## Verification
 
 The following implementation checks were completed for snapshot `3821eb1`.
-Handoff(3) adds reference files and review notes only; the application and its
+Handoff(3) and handoff(4) add reference files and review notes only; the application and its
 34 implementation captures have not changed, and these checks were not rerun.
 
 - Bun 1.4.0 and Node 22.22.0.

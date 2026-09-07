@@ -52,7 +52,7 @@
   <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">Rendering <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #075985; font-weight: 700;">{{ wrapperName }}</code></p>
 
   <sc-if value="{{ showCard }}" hint-placeholder-val="{{ true }}">
-    <article style="display: grid; gap: 1.5rem; max-width: 50rem; margin-inline: auto; width: 100%; padding: clamp(1.5rem, 4vw, 3rem); border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff; box-shadow: 0 0.25rem 1rem rgb(23 32 42 / 14%);">
+    <article data-screen-label="Question player — {{ wrapperName }}" style="display: grid; gap: 1.5rem; max-width: 50rem; margin-inline: auto; width: 100%; padding: clamp(1.5rem, 4vw, 3rem); border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff; box-shadow: 0 0.25rem 1rem rgb(23 32 42 / 14%);">
 
       <header style="display: grid; gap: 0.75rem;">
         <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem;">
@@ -63,7 +63,7 @@
         <sc-if value="{{ isReview }}">
           <div style="display: grid; gap: 0.375rem; padding: 0.75rem 1rem; border-inline-start: 0.25rem solid #075985; background: #edf2f7;">
             <strong style="font-size: 0.9375rem;">Why this is in your review queue</strong>
-            <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">Missed on August 19, 2026, and corrected on August 24, 2026, after your attempt. Your result from then is unchanged.</p>
+            <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">You answered this question incorrectly on August 19, 2026, and you flagged it for review. Reading this explanation does not finish the review — that is confirmed back on the review page.</p>
           </div>
         </sc-if>
 
@@ -144,7 +144,7 @@
       <sc-if value="{{ showCommit }}">
         <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
           <button type="button" onClick="{{ commit }}" disabled="{{ commitDisabled }}" style="{{ commitStyle }}">Save answer</button>
-          <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; cursor: pointer;" style-hover="background: #edf2f7;">Skip for now</button>
+          <span style="display: inline-flex; align-items: center; min-height: 2.75rem; font-size: 0.875rem; color: #4b5563;">Your answer is saved before feedback appears.</span>
         </div>
       </sc-if>
 
@@ -227,18 +227,11 @@
 
           <sc-if value="{{ isAnswered }}">
             <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; padding-block-start: 0.25rem;">
-              <button type="button" onClick="{{ markReviewed }}" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; cursor: pointer;" style-hover="background: #edf2f7;">Mark reviewed</button>
+              <a href="Tool Atlas.dc.html" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; text-decoration: none;" style-hover="background: #0c4a6e;">Open study tools</a>
               <a href="#d-correction" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; text-decoration: none;" style-hover="background: #edf2f7;">Report a correction</a>
-              <button type="button" onClick="{{ next }}" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; cursor: pointer; margin-inline-start: auto;" style-hover="background: #0c4a6e;">Next question →</button>
+              <button type="button" onClick="{{ next }}" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; cursor: pointer; margin-inline-start: auto;" style-hover="background: #edf2f7;">Next question →</button>
             </div>
-          </sc-if>
-
-          <sc-if value="{{ isReviewed }}">
-            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; padding: 1rem 1.25rem; border: 1px solid #166534; border-radius: 0.5rem; background: #ecfdf3;">
-              <strong style="display: flex; align-items: center; gap: 0.5rem; color: #166534;"><span aria-hidden="true">✓</span> Marked reviewed</strong>
-              <span style="font-size: 0.9375rem; color: #4b5563;">Recorded because you chose to — never automatically.</span>
-              <button type="button" onClick="{{ next }}" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; cursor: pointer; margin-inline-start: auto;" style-hover="background: #0c4a6e;">Next question →</button>
-            </div>
+            <p style="margin: 0; font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">The answer is already saved on this device. There is nothing to mark here — a review is finished on the <a href="Review Queue.dc.html" style="font-weight: 700;">review page</a>, with its own confirmation.</p>
           </sc-if>
         </div>
       </sc-if>

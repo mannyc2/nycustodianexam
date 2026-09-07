@@ -21,7 +21,7 @@
   </style>
 </helmet>
 
-<div style="display: grid; gap: 1.25rem; max-width: 58rem; margin: clamp(1.5rem, 3vw, 2.5rem); padding: 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff;">
+<div data-screen-label="Simulation navigator" style="display: grid; gap: 1.25rem; max-width: 58rem; margin: clamp(1.5rem, 3vw, 2.5rem); padding: 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff;">
   <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem;">
     <h3 style="font-size: 1.125rem;">{{ currentLabel }}</h3>
     <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9375rem;"><input type="checkbox" checked="{{ timerOn }}" onChange="{{ toggleTimer }}" style="width: 1.25rem; height: 1.25rem; accent-color: #075985;" /> Show the timer</label>
