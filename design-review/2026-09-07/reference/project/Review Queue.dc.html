@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-25..200" />
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #e9edf1; color: #17202a; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+    a { color: #075985; }
+    a:hover { color: #0c4a6e; }
+    h1, h2, h3, h4, h5, p, dl, dd { margin: 0; }
+    ul, ol { margin: 0; }
+    ul { padding: 0; list-style: none; }
+    button, input, select, textarea { font: inherit; }
+    :focus-visible { outline: 0.1875rem solid #1d4ed8; outline-offset: 0.1875rem; }
+  </style>
+</helmet>
+
+<section id="settled" style="display: grid; gap: 2rem; padding: 3rem clamp(1.5rem, 3vw, 3rem) 4rem;">
+
+  <div style="display: grid; gap: 1.25rem; max-width: 74rem;">
+    <div style="display: flex; align-items: center; gap: 0.75rem;">
+      <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; background: #17202a; color: #ffffff; padding: 0.125rem 0.5rem; border-radius: 0.25rem;">Settled</span>
+      <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">route family 13 — <code>/review/</code> (<code>review-queue</code>), reached from <a href="Study Hub.dc.html">Study</a>; static shell with a lazy local-projection island, on the <a href="Component Library.dc.html#f-landing">§f-landing</a> primitives</span>
+    </div>
+    <h1 style="font-size: clamp(1.875rem, 1.45rem + 1.5vw, 2.75rem); letter-spacing: -0.025em; line-height: 1.2;">Review queue — what is due, and why</h1>
+    <p style="max-width: 68ch; color: #4b5563; text-wrap: pretty;">The page Study’s “Start review” lands on. It is the same structure as Study one level down: the dark header says how much is due and starts the run, the figures are the learner’s own, and the queue itself is a hairline list scoped by a row of tabs. Reasons are authored and grouped, never inferred; a withdrawn item is held out with its own notice rather than swapped for a newer version of itself.</p>
+
+    <div style="display: grid; gap: 0.75rem; padding: 1.25rem 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; max-width: 68ch;">
+      <h2 style="font-size: 1.0625rem;">Calls I made here</h2>
+      <ul style="display: grid; gap: 0.5rem; font-size: 0.9375rem; color: #4b5563;">
+        <li><strong style="color: #17202a;">Study stays the current pill.</strong> <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace;">ROUTES.md</code> places Review in the Study lane, so the pill carries the location and there is no breadcrumb. The link back is the pill itself.</li>
+        <li><strong style="color: #17202a;">The scope tabs scope the run.</strong> All, Missed, Flagged and Corrected are the Tabs row above the list — the same row the study hub uses for Recent sessions, counts as plain figures — and each renames the start button, so “Review the 2 you flagged” is one tap. The order inside a scope is the review schedule’s, oldest first.</li>
+        <li><strong style="color: #17202a;">Empty is success.</strong> Nothing due reads as a plain statement with the next due date and a session to build instead. No red, no exclamation, and the heading takes focus only after a finished run.</li>
+        <li><strong style="color: #17202a;">A failed read offers a rebuild; history stays.</strong> The recovery notice replaces the header band and the due list, but the history section still renders because it is read from the intact attempt events. Export comes before rebuild.</li>
+        <li><strong style="color: #17202a;">Quarantine, not substitution.</strong> The withdrawn item gets its own notice below the list, with the attempt and the correction one link away and the version ids under Technical details.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="display: grid; gap: 0.625rem;">
+    <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">Ample width — <strong style="color: #17202a;">{{ ampleCaption }}</strong></span>
+    <div data-screen-label="Review — ample" style="width: 78rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; overflow: hidden; background: #ffffff; box-shadow: 0 0.25rem 1rem rgb(23 32 42 / 8%);">
+
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.375rem 1.25rem; padding: 0.375rem 1.25rem; border-block-end: 1px solid #b7c1cc;">
+        <a href="Home.dc.html" style="display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 700; color: #17202a; text-decoration: none;">NY Custodian Exam</a>
+        <nav aria-label="Primary" style="display: flex; align-items: center; gap: 0.25rem; margin-inline-end: auto; font-size: 0.9375rem;">
+          <a href="Study Hub.dc.html" aria-current="true" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; background: #e0f2fe; color: #0c4a6e; font-weight: 700; text-decoration: none;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">school</span>Practice</a>
+          <details style="position: relative;">
+            <summary aria-label="Library — three collections" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; cursor: pointer; list-style: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">book_2</span>Library<span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.125rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">expand_more</span></summary>
+            <div style="position: absolute; inset-inline-start: 0; inset-block-start: calc(100% + 0.375rem); z-index: 40; width: 27rem; display: grid; gap: 0.125rem; padding: 0.375rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; box-shadow: 0 0.75rem 2rem rgb(23 32 42 / 16%);">
+            <a href="Tool Atlas.dc.html" style="display: grid; gap: 0.125rem; padding: 0.625rem 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">Tool atlas</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">All 65 tools, what each one is for, and the tools it gets mistaken for.</span></a>
+            <a href="Tool Atlas.dc.html" style="display: grid; gap: 0.125rem; padding: 0.625rem 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">Tool comparisons</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">The 14 pairs people mix up most, set side by side.</span></a>
+            <a href="Hazard Player.dc.html" style="display: grid; gap: 0.125rem; padding: 0.625rem 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">Hazard scenes</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">All 18 workplace scenes, each with a written version of the picture.</span></a>
+            <a href="Study Hub.dc.html#covers" style="display: grid; gap: 0.125rem; margin-block-start: 0.25rem; padding: 0.625rem 0.75rem; border-block-start: 1px solid #b7c1cc; border-radius: 0 0 0.375rem 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.875rem; color: #075985; font-weight: 700;">What practice covers</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Which of this material questions are drawn from, and what is left out.</span></a>
+            </div>
+          </details>
+          <a href="Landing.dc.html" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">assignment</span>Exams</a>
+        </nav>
+        <nav aria-label="Utility" style="display: flex; align-items: center;">
+          <a href="Settings.dc.html" style="display: inline-flex; align-items: center; gap: 0.375rem; min-height: 2.75rem; padding: 0 0.75rem; border-radius: 0.375rem; color: #075985; font-weight: 550; font-size: 0.875rem; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">settings</span>Settings</a>
+        </nav>
+      </div>
+
+      <div id="review-main" style="display: grid; gap: 1.5rem; padding: 3rem 2.5rem 2.5rem; background: #17202a; color: #ffffff;">
+        <sc-if value="{{ ready }}" hint-placeholder-val="{{ true }}">
+          <div style="display: grid; gap: 1rem; max-width: 48rem;">
+            <p style="font-size: 0.9375rem; font-weight: 700; color: #9fb0c0;">Review</p>
+            <h1 style="font-size: clamp(2rem, 1.5rem + 1.8vw, 2.875rem); letter-spacing: -0.025em; line-height: 1.15; text-wrap: pretty;">7 items are due today.</h1>
+            <p style="font-size: 1.125rem; color: #dbe3ea; text-wrap: pretty;">Four you missed, two you flagged, and one corrected since you answered it. Untimed; each item shows its reasoning and its source after you answer, and your earlier result stays as it was.</p>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem;">
+            <a href="Question Player.dc.html" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.5rem; border: 1px solid transparent; border-radius: 0.5rem; background: #ffffff; color: #0c4a6e; font-weight: 700; text-decoration: none;" style-hover="background: #e0f2fe;">{{ startLabel }}</a>
+            <a href="Session Builder.dc.html" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #9fb0c0; border-radius: 0.5rem; color: #ffffff; font-weight: 700; font-size: 0.9375rem; text-decoration: none;" style-hover="background: rgb(255 255 255 / 8%);">Build a practice session instead</a>
+          </div>
+          <dl style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin: 0; padding-block-start: 1.5rem; border-block-start: 1px solid #4b5563;">
+            <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">Due today</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">7 items</dd></div>
+            <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">Due tomorrow</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">3 items</dd></div>
+            <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">Reviewed this week</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">19 items</dd></div>
+            <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">Queue rebuilt from</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">112 saved attempts</dd></div>
+          </dl>
+        </sc-if>
+        <sc-if value="{{ empty }}">
+          <div style="display: grid; gap: 1rem; max-width: 48rem;">
+            <p style="font-size: 0.9375rem; font-weight: 700; color: #9fb0c0;">Review</p>
+            <h1 tabindex="-1" style="font-size: clamp(2rem, 1.5rem + 1.8vw, 2.875rem); letter-spacing: -0.025em; line-height: 1.15; text-wrap: pretty;">Nothing is due right now.</h1>
+            <p style="font-size: 1.125rem; color: #dbe3ea; text-wrap: pretty;">You cleared the queue at 9:14 this morning. Three items come back tomorrow on the review schedule; until then there is nothing to do here.</p>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem;">
+            <a href="Session Builder.dc.html" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.5rem; border: 1px solid transparent; border-radius: 0.5rem; background: #ffffff; color: #0c4a6e; font-weight: 700; text-decoration: none;" style-hover="background: #e0f2fe;">Build a practice session</a>
+            <a href="Hazard Player.dc.html" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #9fb0c0; border-radius: 0.5rem; color: #ffffff; font-weight: 700; font-size: 0.9375rem; text-decoration: none;" style-hover="background: rgb(255 255 255 / 8%);">Run a 5-scene hazard drill</a>
+          </div>
+          <dl style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin: 0; padding-block-start: 1.5rem; border-block-start: 1px solid #4b5563;">
+            <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">Due today</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">None</dd></div>
+            <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">Due tomorrow</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">3 items</dd></div>
+            <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">Reviewed this week</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">26 items</dd></div>
+            <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">Queue rebuilt from</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">119 saved attempts</dd></div>
+          </dl>
+        </sc-if>
+        <sc-if value="{{ failed }}">
+          <div style="display: grid; gap: 0.75rem; max-width: 48rem; padding: 1.25rem 1.5rem; border: 1px solid #b42318; border-radius: 0.625rem; background: #fef3f2; color: #17202a;">
+            <h1 tabindex="-1" style="display: flex; align-items: center; gap: 0.5rem; font-size: 1.5rem; letter-spacing: -0.02em; color: #b42318;"><span aria-hidden="true">✕</span> Your review queue could not be read</h1>
+            <p style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">The queue is rebuilt from your saved attempt history, and the rebuilt copy is unreadable. Your history itself is intact — the runs below still read from it — so nothing is lost and rebuilding is safe. Export first if you want a copy.</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; padding-block-start: 0.25rem;">
+              <a href="#review-main" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; font-size: 0.9375rem; text-decoration: none;" style-hover="background: #0c4a6e;">Rebuild review queue</a>
+              <a href="#review-main" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.9375rem; text-decoration: none;" style-hover="background: #edf2f7;">Export progress first</a>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+
+      <div style="padding: 2.25rem 2.5rem 2.75rem; background: #f7f8fa; display: grid; gap: 2.25rem;">
+
+        <section id="review-due" style="display: grid; gap: 1rem; scroll-margin: 1.5rem;">
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem;"><h2 style="font-size: 1.5rem; letter-spacing: -0.02em;">What is due</h2><p style="max-width: 48ch; font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Reasons are authored and grouped, never inferred. Pick a group to review only that; within a group the order is the schedule’s, oldest first.</p></div>
+          <sc-if value="{{ ready }}" hint-placeholder-val="{{ true }}">
+            <div role="tablist" aria-label="Scope" style="display: flex; flex-wrap: wrap; gap: 1.25rem; border-block-end: 1px solid #b7c1cc;">
+              <button type="button" role="tab" aria-selected="{{ scopeAll }}" onClick="{{ setAll }}" style="{{ styleAll }}">All <span style="font-weight: 400; color: #4b5563;">7</span></button>
+              <button type="button" role="tab" aria-selected="{{ scopeMissed }}" onClick="{{ setMissed }}" style="{{ styleMissed }}">Missed <span style="font-weight: 400; color: #4b5563;">4</span></button>
+              <button type="button" role="tab" aria-selected="{{ scopeFlagged }}" onClick="{{ setFlagged }}" style="{{ styleFlagged }}">Flagged <span style="font-weight: 400; color: #4b5563;">2</span></button>
+              <button type="button" role="tab" aria-selected="{{ scopeCorrected }}" onClick="{{ setCorrected }}" style="{{ styleCorrected }}">Corrected <span style="font-weight: 400; color: #4b5563;">1</span></button>
+            </div>
+            <div style="display: grid; padding: 0 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff;">
+              <p role="status" style="padding-block: 0.875rem 0.625rem; font-size: 0.8125rem; color: #4b5563;">{{ scopeSummary }}</p>
+              <sc-for list="{{ items }}" as="item" hint-placeholder-count="7">
+                <div style="display: grid; grid-template-columns: 7.5rem minmax(0, 1fr) auto; gap: 0 1.5rem; align-items: start; padding-block: 1rem; border-block-start: 1px solid #e2e7ec;">
+                  <span style="padding-block-start: 0.1875rem; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">{{ item.date }}</span>
+                  <div style="display: grid; gap: 0.25rem; min-width: 0;">
+                    <h3 style="font-size: 1rem; line-height: 1.4; text-wrap: pretty;">{{ item.stem }}</h3>
+                    <p style="max-width: 70ch; font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">{{ item.note }}</p>
+                    <sc-if value="{{ item.superseded }}"><span style="justify-self: start; display: inline-flex; align-items: center; gap: 0.25rem; margin-block-start: 0.125rem; padding: 0 0.5rem; border: 1px solid #854d0e; border-radius: 0.25rem; color: #854d0e; font-size: 0.8125rem; font-weight: 700;"><span aria-hidden="true">▲</span>Superseded: corrected August 28, 2026</span></sc-if>
+                  </div>
+                  <a href="Question Player.dc.html" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.5rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; text-decoration: none; white-space: nowrap;" style-hover="background: #edf2f7;">Review</a>
+                </div>
+              </sc-for>
+              <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem 1.5rem; padding-block: 1rem 1.25rem; border-block-start: 1px solid #e2e7ec;">
+                <a href="Question Player.dc.html" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; font-size: 0.9375rem; text-decoration: none;" style-hover="background: #0c4a6e;">{{ startLabel }}</a>
+                <p style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Answering commits to this device first, then shows the reasoning and its source.</p>
+              </div>
+            </div>
+            <sc-if value="{{ heldOut }}" hint-placeholder-val="{{ true }}">
+              <div style="display: grid; gap: 0.5rem; padding: 1.25rem 1.5rem; border: 1px solid #b42318; border-radius: 0.75rem; background: #fef3f2;">
+                <h3 style="display: flex; align-items: center; gap: 0.5rem; font-size: 1.0625rem; color: #b42318;"><span aria-hidden="true">✕</span> One more item is held out of this run</h3>
+                <p style="max-width: 70ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">A mop-wringer question you answered on August 24 was withdrawn on August 26, 2026. Your attempt and its result are kept exactly as they were, and the item stays out of the run rather than being swapped for the version that replaced it.</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; padding-block-start: 0.25rem;">
+                  <a href="#review-history" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.5rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; text-decoration: none; white-space: nowrap;" style-hover="background: #edf2f7;">See your attempt</a>
+                  <a href="#review-footer" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.5rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; text-decoration: none; white-space: nowrap;" style-hover="background: #edf2f7;">Read the correction</a>
+                </div>
+                <details style="font-size: 0.8125rem; color: #4b5563;"><summary style="display: list-item; min-height: 2.75rem; padding-block: 0.75rem; cursor: pointer; font-weight: 700; color: #075985;">Technical details</summary><dl style="display: grid; grid-template-columns: auto 1fr; gap: 0.25rem 0.75rem; margin: 0;"><dt>Withdrawn item</dt><dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">q041 v2</dd><dt>Replaced by</dt><dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">q041 v3</dd><dt>Your attempt pinned to</dt><dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">pack v2.0.0</dd></dl></details>
+              </div>
+            </sc-if>
+          </sc-if>
+          <sc-if value="{{ empty }}">
+            <div style="display: grid; gap: 0.375rem; justify-items: start; padding: 1.25rem 1.5rem; border: 1px dashed #667085; border-radius: 0.75rem; background: #ffffff;">
+              <h3 tabindex="-1" style="font-size: 1.0625rem; letter-spacing: -0.01em;">Nothing due until tomorrow</h3>
+              <p style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Three items come back on the review schedule; until then this list stays clear.</p>
+              <a href="#review-history" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; margin-block-start: 0.375rem; padding: 0.5rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; text-decoration: none;" style-hover="background: #edf2f7;">See your review history</a>
+            </div>
+          </sc-if>
+          <sc-if value="{{ failed }}">
+            <div style="display: grid; gap: 0.375rem; padding: 1.25rem 1.5rem; border: 1px solid #667085; border-radius: 0.75rem; background: #ffffff;">
+              <strong style="font-size: 0.9375rem;">This list can’t be shown until the queue is rebuilt</strong>
+              <p style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Your attempt history is intact and still shows below.</p>
+            </div>
+          </sc-if>
+        </section>
+
+        <section id="review-history" style="display: grid; gap: 1rem; scroll-margin: 1.5rem;">
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem;"><h2 style="font-size: 1.5rem; letter-spacing: -0.02em;">Review history</h2><p style="max-width: 48ch; font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Every run you finished on this device, newest first. Results stay as they were; a correction never edits them.</p></div>
+          <div style="display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 1rem; align-items: start;">
+            <ul style="display: grid; margin: 0; padding: 0.25rem 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff; list-style: none;">
+              <li style="display: grid; grid-template-columns: 6.5rem minmax(0, 1fr) 8rem auto; gap: 0 1.25rem; align-items: baseline; padding-block: 0.875rem;"><span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">September 1</span><div style="display: grid; gap: 0.125rem; min-width: 0;"><strong style="font-size: 0.9375rem;">Review of 5 items</strong><span style="font-size: 0.875rem; color: #4b5563;">Items you had missed or flagged</span></div><span style="font-size: 0.9375rem;">4 of 5 as keyed</span><a href="#review-history" style="font-size: 0.875rem; font-weight: 700; white-space: nowrap;">Results</a></li>
+              <li style="display: grid; grid-template-columns: 6.5rem minmax(0, 1fr) 8rem auto; gap: 0 1.25rem; align-items: baseline; padding-block: 0.875rem; border-block-start: 1px solid #e2e7ec;"><span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">August 30</span><div style="display: grid; gap: 0.125rem; min-width: 0;"><strong style="font-size: 0.9375rem;">Review of 6 items</strong><span style="font-size: 0.875rem; color: #4b5563;">Items you had missed</span></div><span style="font-size: 0.9375rem;">5 of 6 as keyed</span><a href="#review-history" style="font-size: 0.875rem; font-weight: 700; white-space: nowrap;">Results</a></li>
+              <li style="display: grid; grid-template-columns: 6.5rem minmax(0, 1fr) 8rem auto; gap: 0 1.25rem; align-items: baseline; padding-block: 0.875rem; border-block-start: 1px solid #e2e7ec;"><span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">August 28</span><div style="display: grid; gap: 0.125rem; min-width: 0;"><strong style="font-size: 0.9375rem;">Review of 3 items</strong><span style="font-size: 0.875rem; color: #4b5563;">Items corrected after you answered them</span></div><span style="font-size: 0.9375rem;">3 of 3 as keyed</span><a href="#review-history" style="font-size: 0.875rem; font-weight: 700; white-space: nowrap;">Results</a></li>
+              <li style="display: grid; grid-template-columns: 6.5rem minmax(0, 1fr) 8rem auto; gap: 0 1.25rem; align-items: baseline; padding-block: 0.875rem; border-block-start: 1px solid #e2e7ec;"><span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">August 26</span><div style="display: grid; gap: 0.125rem; min-width: 0;"><strong style="font-size: 0.9375rem;">Review of 8 items</strong><span style="font-size: 0.875rem; color: #4b5563;">Items you had missed or flagged; one was later withdrawn and its result stands</span></div><span style="font-size: 0.9375rem;">5 of 8 as keyed</span><a href="#review-history" style="font-size: 0.875rem; font-weight: 700; white-space: nowrap;">Results</a></li>
+            </ul>
+            <div style="display: grid; gap: 0.625rem; align-content: start; padding: 1.25rem 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff;">
+              <h3 style="font-size: 1.0625rem;">Where this lives</h3>
+              <p style="font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">On this device only. The queue is rebuilt from your saved attempts whenever it is unreadable, and you can export or erase both from Settings.</p>
+              <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; padding-block-start: 0.25rem;">
+                <a href="#review-main" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.5rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; text-decoration: none; white-space: nowrap;" style-hover="background: #edf2f7;">Export progress</a>
+                <a href="#review-main" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.5rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; text-decoration: none; white-space: nowrap;" style-hover="background: #edf2f7;">Rebuild the queue</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="review-how" style="display: grid; gap: 1rem; scroll-margin: 1.5rem;">
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem;"><h2 style="font-size: 1.5rem; letter-spacing: -0.02em;">How review works</h2><p style="max-width: 48ch; font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">The short version. Each row links to the full page.</p></div>
+          <dl style="display: grid; margin: 0; padding: 0 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff;">
+            <div style="display: grid; grid-template-columns: minmax(0, 12rem) minmax(0, 1fr) auto; gap: 0.25rem 1.5rem; align-items: baseline; padding-block: 1rem;"><dt style="font-size: 0.9375rem; font-weight: 700;">What gets queued</dt><dd style="margin: 0; max-width: 70ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Questions you missed, questions you flagged, and questions corrected after you answered them. Nothing is inferred from how long you took or how sure you seemed.</dd><a href="#review-footer" style="font-size: 0.875rem; font-weight: 700; white-space: nowrap;">Reasons</a></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 12rem) minmax(0, 1fr) auto; gap: 0.25rem 1.5rem; align-items: baseline; padding-block: 1rem; border-block-start: 1px solid #e2e7ec;"><dt style="font-size: 0.9375rem; font-weight: 700;">When it comes back</dt><dd style="margin: 0; max-width: 70ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">On the review schedule published with the pack, which spaces an item further out each time you answer it as keyed. Flagged items come back until you clear the flag.</dd><a href="#review-footer" style="font-size: 0.875rem; font-weight: 700; white-space: nowrap;">Schedule</a></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 12rem) minmax(0, 1fr) auto; gap: 0.25rem 1.5rem; align-items: baseline; padding-block: 1rem; border-block-start: 1px solid #e2e7ec;"><dt style="font-size: 0.9375rem; font-weight: 700;">If a question changes</dt><dd style="margin: 0; max-width: 70ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">A correction never edits your result. The item comes back once, marked Superseded, showing the version you saw beside the version that replaced it. A withdrawn item is held out, not swapped.</dd><a href="#review-footer" style="font-size: 0.875rem; font-weight: 700; white-space: nowrap;">Corrections</a></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 12rem) minmax(0, 1fr) auto; gap: 0.25rem 1.5rem; align-items: baseline; padding-block: 1rem; border-block-start: 1px solid #e2e7ec;"><dt style="font-size: 0.9375rem; font-weight: 700;">What it is not</dt><dd style="margin: 0; max-width: 70ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Not a score and not a prediction. Clearing the queue means you have seen your own misses again, nothing more.</dd><a href="#review-footer" style="font-size: 0.875rem; font-weight: 700; white-space: nowrap;">Scoring</a></div>
+          </dl>
+        </section>
+
+        <footer id="review-footer" style="display: grid; gap: 1.5rem; padding: 1.75rem; border-radius: 0.625rem; background: #17202a; color: #dbe3ea; scroll-margin: 1.5rem;">
+          <div style="display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr); gap: 1.5rem 2.5rem;">
+            <div style="display: grid; gap: 0.5rem; align-content: start;">
+              <strong style="font-size: 1.0625rem; color: #ffffff; letter-spacing: -0.01em;">Independent and unofficial</strong>
+              <p style="max-width: 48ch; font-size: 0.875rem; color: #9fb0c0; text-wrap: pretty;">Not affiliated with any civil service agency, and not a substitute for the official announcement or your admission notice. Questions here are written for this site — no secure or recalled test material is used.</p>
+            </div>
+            <nav aria-label="Where this comes from" style="display: grid; gap: 0.5rem; align-content: start;">
+              <strong style="font-size: 0.8125rem; color: #ffffff;">Where this comes from</strong>
+              <a href="#review-footer" style="font-size: 0.875rem; color: #dbe3ea; text-decoration: none;" style-hover="color: #ffffff; text-decoration: underline;">Every claim and its source</a>
+              <a href="#review-footer" style="font-size: 0.875rem; color: #dbe3ea; text-decoration: none;" style-hover="color: #ffffff; text-decoration: underline;">Corrections</a>
+              <a href="#review-footer" style="font-size: 0.875rem; color: #dbe3ea; text-decoration: none;" style-hover="color: #ffffff; text-decoration: underline;">The review schedule</a>
+            </nav>
+            <nav aria-label="Site" style="display: grid; gap: 0.5rem; align-content: start;">
+              <strong style="font-size: 0.8125rem; color: #ffffff;">Site</strong>
+              <a href="#review-footer" style="font-size: 0.875rem; color: #dbe3ea; text-decoration: none;" style-hover="color: #ffffff; text-decoration: underline;">Use offline</a>
+              <a href="#review-footer" style="font-size: 0.875rem; color: #dbe3ea; text-decoration: none;" style-hover="color: #ffffff; text-decoration: underline;">Export or erase your data</a>
+              <a href="#review-footer" style="font-size: 0.875rem; color: #dbe3ea; text-decoration: none;" style-hover="color: #ffffff; text-decoration: underline;">About this site</a>
+            </nav>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 2rem; padding-block-start: 1.125rem; border-block-start: 1px solid #4b5563; font-size: 0.8125rem; color: #9fb0c0;">
+            <p>Your attempts, review queue and settings live on <strong style="color: #ffffff;">this device only</strong>.</p>
+            <p>Announcement facts were read on <strong style="color: #ffffff;">August 25, 2026</strong>.</p>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: grid; gap: 0.625rem; justify-items: start;">
+    <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">Compact — <strong style="color: #17202a;">queue ready</strong>: the same order in one column, the scope tabs wrap, tab bar with Study current</span>
+    <div data-screen-label="Review — compact" style="width: 24rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; overflow: hidden; background: #ffffff; box-shadow: 0 0.25rem 1rem rgb(23 32 42 / 8%);">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0 0.875rem; min-height: 3.25rem; border-block-end: 1px solid #b7c1cc;">
+        <a href="Home.dc.html" style="display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 700; color: #17202a; text-decoration: none; font-size: 0.9375rem;">NY Custodian Exam</a>
+      </div>
+
+      <div id="review-c-main" style="display: grid; gap: 1rem; padding: 1.75rem 1.125rem 1.5rem; background: #17202a; color: #ffffff;">
+        <p style="font-size: 0.8125rem; font-weight: 700; color: #9fb0c0;">Review</p>
+        <h1 style="font-size: 1.625rem; letter-spacing: -0.02em; line-height: 1.2; text-wrap: pretty;">7 items are due today.</h1>
+        <p style="font-size: 0.9375rem; color: #dbe3ea; text-wrap: pretty;">Four you missed, two you flagged, one corrected since you answered. Untimed.</p>
+        <div style="display: grid; gap: 0.5rem;">
+          <a href="Question Player.dc.html" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid transparent; border-radius: 0.5rem; background: #ffffff; color: #0c4a6e; font-weight: 700; font-size: 0.9375rem; text-decoration: none;">Start review, all 7</a>
+          <a href="Session Builder.dc.html" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid #9fb0c0; border-radius: 0.5rem; color: #ffffff; font-weight: 700; font-size: 0.9375rem; text-decoration: none;">Build a practice session instead</a>
+        </div>
+        <dl style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem 1rem; margin: 0; padding-block-start: 1rem; border-block-start: 1px solid #4b5563;">
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.75rem; color: #9fb0c0;">Due today</dt><dd style="margin: 0; font-size: 1rem; font-weight: 700;">7 items</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.75rem; color: #9fb0c0;">Due tomorrow</dt><dd style="margin: 0; font-size: 1rem; font-weight: 700;">3 items</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.75rem; color: #9fb0c0;">Reviewed this week</dt><dd style="margin: 0; font-size: 1rem; font-weight: 700;">19 items</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.75rem; color: #9fb0c0;">Queue rebuilt from</dt><dd style="margin: 0; font-size: 1rem; font-weight: 700;">112 attempts</dd></div>
+        </dl>
+      </div>
+
+      <div style="padding: 1rem; background: #f7f8fa; display: grid; gap: 1.25rem;">
+        <section style="display: grid; gap: 0.625rem;">
+          <h2 style="font-size: 1.0625rem;">What is due</h2>
+          <div role="tablist" aria-label="Scope" style="display: flex; flex-wrap: wrap; gap: 1rem; border-block-end: 1px solid #b7c1cc;">
+            <button type="button" role="tab" aria-selected="{{ scopeAll }}" onClick="{{ setAll }}" style="{{ styleAllCompact }}">All <span style="font-weight: 400; color: #4b5563;">7</span></button>
+            <button type="button" role="tab" aria-selected="{{ scopeMissed }}" onClick="{{ setMissed }}" style="{{ styleMissedCompact }}">Missed <span style="font-weight: 400; color: #4b5563;">4</span></button>
+            <button type="button" role="tab" aria-selected="{{ scopeFlagged }}" onClick="{{ setFlagged }}" style="{{ styleFlaggedCompact }}">Flagged <span style="font-weight: 400; color: #4b5563;">2</span></button>
+            <button type="button" role="tab" aria-selected="{{ scopeCorrected }}" onClick="{{ setCorrected }}" style="{{ styleCorrectedCompact }}">Corrected <span style="font-weight: 400; color: #4b5563;">1</span></button>
+          </div>
+          <div style="display: grid; padding: 0 1rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+            <p role="status" style="padding-block: 0.75rem 0.5rem; font-size: 0.75rem; color: #4b5563;">{{ scopeSummary }}</p>
+            <sc-for list="{{ items }}" as="item" hint-placeholder-count="7">
+              <div style="display: grid; gap: 0.25rem; padding-block: 0.75rem; border-block-start: 1px solid #e2e7ec;">
+                <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">{{ item.date }}</span>
+                <strong style="font-size: 0.9375rem; line-height: 1.35; text-wrap: pretty;">{{ item.stem }}</strong>
+                <span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">{{ item.shortNote }}</span>
+                <sc-if value="{{ item.superseded }}"><span style="justify-self: start; display: inline-flex; align-items: center; gap: 0.25rem; padding: 0 0.5rem; border: 1px solid #854d0e; border-radius: 0.25rem; color: #854d0e; font-size: 0.75rem; font-weight: 700;"><span aria-hidden="true">▲</span>Superseded: corrected August 28, 2026</span></sc-if>
+              </div>
+            </sc-for>
+            <div style="padding-block: 0.75rem 1rem; border-block-start: 1px solid #e2e7ec;"><a href="Question Player.dc.html" style="display: flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; font-size: 0.9375rem; text-decoration: none;">{{ startLabel }}</a></div>
+          </div>
+          <div style="display: grid; gap: 0.375rem; padding: 0.875rem 1rem; border: 1px solid #b42318; border-radius: 0.5rem; background: #fef3f2;">
+            <strong style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9375rem; color: #b42318;"><span aria-hidden="true">✕</span> One more item is held out</strong>
+            <p style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">A mop-wringer question was withdrawn on August 26, 2026. Your attempt stands; the item is not swapped for its replacement.</p>
+            <a href="#review-c-main" style="font-size: 0.8125rem; font-weight: 700;">See your attempt</a>
+          </div>
+        </section>
+
+        <section style="display: grid; gap: 0.625rem;">
+          <h2 style="font-size: 1.0625rem;">Review history</h2>
+          <ul style="display: grid; margin: 0; padding: 0.25rem 1rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; list-style: none;">
+            <li style="display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); gap: 0 0.5rem; padding-block: 0.625rem;"><span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">September 1</span><div style="display: grid; gap: 0.125rem;"><strong style="font-size: 0.8125rem; line-height: 1.35;">Review of 5 items</strong><span style="display: flex; justify-content: space-between; gap: 0.75rem; font-size: 0.8125rem; color: #4b5563;"><span>4 of 5 as keyed</span><a href="#review-c-main" style="font-weight: 700;">Results</a></span></div></li>
+            <li style="display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); gap: 0 0.5rem; padding-block: 0.625rem; border-block-start: 1px solid #e2e7ec;"><span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">August 30</span><div style="display: grid; gap: 0.125rem;"><strong style="font-size: 0.8125rem; line-height: 1.35;">Review of 6 items</strong><span style="display: flex; justify-content: space-between; gap: 0.75rem; font-size: 0.8125rem; color: #4b5563;"><span>5 of 6 as keyed</span><a href="#review-c-main" style="font-weight: 700;">Results</a></span></div></li>
+            <li style="display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); gap: 0 0.5rem; padding-block: 0.625rem; border-block-start: 1px solid #e2e7ec;"><span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">August 28</span><div style="display: grid; gap: 0.125rem;"><strong style="font-size: 0.8125rem; line-height: 1.35;">Review of 3 items</strong><span style="display: flex; justify-content: space-between; gap: 0.75rem; font-size: 0.8125rem; color: #4b5563;"><span>3 of 3 as keyed</span><a href="#review-c-main" style="font-weight: 700;">Results</a></span></div></li>
+          </ul>
+        </section>
+
+        <section style="display: grid; gap: 0.625rem;">
+          <h2 style="font-size: 1.0625rem;">How review works</h2>
+          <dl style="display: grid; margin: 0; padding: 0.25rem 1rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+            <div style="display: grid; gap: 0.125rem; padding-block: 0.625rem; border-block-end: 1px solid #e2e7ec;"><dt style="font-size: 0.8125rem; font-weight: 700;">What gets queued</dt><dd style="margin: 0; font-size: 0.8125rem; color: #4b5563;">Misses, flags, and questions corrected after you answered. Nothing inferred.</dd></div>
+            <div style="display: grid; gap: 0.125rem; padding-block: 0.625rem; border-block-end: 1px solid #e2e7ec;"><dt style="font-size: 0.8125rem; font-weight: 700;">If a question changes</dt><dd style="margin: 0; font-size: 0.8125rem; color: #4b5563;">Your result is never edited; the item comes back once, marked Superseded.</dd></div>
+            <div style="display: grid; gap: 0.125rem; padding-block: 0.625rem;"><dt style="font-size: 0.8125rem; font-weight: 700;">Where it lives</dt><dd style="margin: 0; font-size: 0.8125rem; color: #4b5563;">On this device only; rebuilt from your saved attempts. <a href="#review-c-main" style="font-weight: 700;">Settings</a></dd></div>
+          </dl>
+        </section>
+
+        <footer style="display: grid; gap: 0.75rem; padding: 1.125rem 1rem; border-radius: 0.5rem; background: #17202a; color: #dbe3ea;">
+          <strong style="font-size: 0.9375rem; color: #ffffff;">Independent and unofficial</strong>
+          <p style="font-size: 0.8125rem; color: #9fb0c0; text-wrap: pretty;">Not affiliated with any civil service agency. Your attempts and review queue live on this device only.</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.375rem 1rem; font-size: 0.8125rem;">
+            <a href="#review-c-main" style="color: #dbe3ea;">Sources</a>
+            <a href="#review-c-main" style="color: #dbe3ea;">Corrections</a>
+            <a href="#review-c-main" style="color: #dbe3ea;">Use offline</a>
+            <a href="#review-c-main" style="color: #dbe3ea;">Export or erase</a>
+          </div>
+          <p style="font-size: 0.75rem; color: #9fb0c0;">Announcement facts read on August 25, 2026.</p>
+        </footer>
+      </div>
+
+      <nav aria-label="Primary" style="position: relative; display: grid; grid-template-columns: repeat(4, 1fr); border-block-start: 1px solid #b7c1cc; background: #ffffff; padding-block-end: 0.25rem;">
+        <a href="Study Hub.dc.html" aria-current="true" style="display: grid; justify-items: center; gap: 0.125rem; min-height: 3.5rem; padding: 0.375rem 0.25rem; font-size: 0.6875rem; font-weight: 700; color: #0c4a6e; text-decoration: none;"><span style="display: grid; place-items: center; width: 2.75rem; height: 1.75rem; border-radius: 999rem; background: #e0f2fe;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">school</span></span>Practice</a>
+        <details>
+          <summary style="display: grid; justify-items: center; gap: 0.125rem; min-height: 3.5rem; padding: 0.375rem 0.25rem; font-size: 0.6875rem; font-weight: 550; color: #4b5563; cursor: pointer; list-style: none;"><span style="display: grid; place-items: center; width: 2.75rem; height: 1.75rem; border-radius: 999rem;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">book_2</span></span>Library</summary>
+          <div style="position: absolute; inset-block-end: 100%; inset-inline: 0; z-index: 40; display: grid; gap: 0.125rem; padding: 0.5rem; border-block-start: 1px solid #b7c1cc; background: #ffffff; box-shadow: 0 -0.75rem 2rem rgb(23 32 42 / 18%);">
+            <a href="Tool Atlas.dc.html" style="display: grid; gap: 0.125rem; padding: 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">Tool atlas</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">All 65 tools, what each is for, and the tools it gets mistaken for.</span></a>
+            <a href="Tool Atlas.dc.html" style="display: grid; gap: 0.125rem; padding: 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">Tool comparisons</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">The 14 pairs people mix up most, set side by side.</span></a>
+            <a href="Hazard Player.dc.html" style="display: grid; gap: 0.125rem; padding: 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">Hazard scenes</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">All 18 workplace scenes, each with a written version.</span></a>
+            <a href="Study Hub.dc.html#covers" style="display: grid; gap: 0.125rem; padding: 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">What practice covers</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Which material questions come from, and what is left out.</span></a>
+          </div>
+        </details>
+        <a href="Landing.dc.html" style="display: grid; justify-items: center; gap: 0.125rem; min-height: 3.5rem; padding: 0.375rem 0.25rem; font-size: 0.6875rem; font-weight: 550; color: #4b5563; text-decoration: none;"><span style="display: grid; place-items: center; width: 2.75rem; height: 1.75rem; border-radius: 999rem;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">assignment</span></span>Exams</a>
+        <a href="Settings.dc.html" style="display: grid; justify-items: center; gap: 0.125rem; min-height: 3.5rem; padding: 0.375rem 0.25rem; font-size: 0.6875rem; font-weight: 550; color: #4b5563; text-decoration: none;"><span style="display: grid; place-items: center; width: 2.75rem; height: 1.75rem; border-radius: 999rem;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">settings</span></span>Settings</a>
+      </nav>
+    </div>
+  </div>
+
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;queueState&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;ready&quot;,&quot;empty&quot;,&quot;read failed&quot;],&quot;default&quot;:&quot;ready&quot;,&quot;tsType&quot;:&quot;\&quot;ready\&quot; | \&quot;empty\&quot; | \&quot;read failed\&quot;&quot;,&quot;section&quot;:&quot;Ample frame state&quot;},&quot;heldOutItem&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Ample frame state&quot;}}">
+const ITEMS = [
+  { date: 'August 27', reason: 'missed', stem: 'Which tool matches these features: a long straight handle, a flat rubber blade set square to it, and no bristles?', note: 'Missed. You chose Push broom; the key is Floor squeegee. Tool recognition, area 1.', shortNote: 'Missed. You chose Push broom; the key is Floor squeegee.' },
+  { date: 'August 27', reason: 'missed', stem: 'Which mop head is meant for applying floor finish rather than for cleaning?', note: 'Missed. You chose the looped-end wet mop; the key is the finish mop. Tool recognition, area 1.', shortNote: 'Missed. The key is the finish mop.' },
+  { date: 'August 27', reason: 'flagged', stem: 'How far should one wet-mop pass extend before the mop goes back to the bucket?', note: 'Flagged by you during a cleaning-procedures set. It comes back until you clear the flag.', shortNote: 'Flagged by you. Comes back until you clear the flag.' },
+  { date: 'August 27', reason: 'flagged', stem: 'Which label statement tells you a product must never be mixed with bleach?', note: 'Flagged by you during a cleaning-procedures set. It comes back until you clear the flag.', shortNote: 'Flagged by you. Comes back until you clear the flag.' },
+  { date: 'August 30', reason: 'missed', stem: 'Which of these is a counter brush?', note: 'Missed. You chose the deck brush; the key is the short-handled brush with soft bristles. Tool recognition, area 1.', shortNote: 'Missed. You chose the deck brush.' },
+  { date: 'August 30', reason: 'missed', stem: 'What is the first step before diluting a concentrated cleaner?', note: 'Missed. You chose measuring the water; the key is reading the label’s dilution ratio. Chemical handling, area 1.', shortNote: 'Missed. The key is reading the label first.' },
+  { date: 'August 26', reason: 'corrected', stem: 'Which brush is meant for grout lines?', note: 'Corrected since you answered. The key changed on August 28, 2026, after a public correction; your answer is kept against the version you saw.', shortNote: 'Corrected since you answered. Your result is kept as it was.' }
+];
+const LABELS = { all: 'all 7', missed: 'the 4 you missed', flagged: 'the 2 you flagged', corrected: 'the 1 corrected' };
+const SUMMARY = { all: 'Showing all 7, in schedule order.', missed: 'Showing the 4 you missed.', flagged: 'Showing the 2 you flagged.', corrected: 'Showing the 1 corrected since you answered.' };
+const BTN = { display: 'inline-flex', alignItems: 'baseline', gap: '0.375rem', minHeight: '2.75rem', padding: '0 0.125rem', marginBlockEnd: '-1px', border: 0, borderBlockEnd: '2px solid', borderBlockEndColor: 'transparent', background: 'transparent', color: '#4b5563', font: 'inherit', fontSize: '0.9375rem', fontWeight: 700, cursor: 'pointer' };
+const BTN_ON = { ...BTN, borderBlockEndColor: '#075985', color: '#0c4a6e' };
+const BTN_C = { ...BTN, fontSize: '0.875rem' };
+const BTN_C_ON = { ...BTN_ON, fontSize: '0.875rem' };
+
+class Component extends DCLogic {
+  state = { scope: 'all' };
+  renderVals() {
+    const p = this.props;
+    const qs = p.queueState ?? 'ready';
+    const ready = qs === 'ready', empty = qs === 'empty', failed = qs === 'read failed';
+    const scope = this.state.scope;
+    const items = ITEMS.filter(i => scope === 'all' || i.reason === scope).map(i => ({ ...i, superseded: i.reason === 'corrected' }));
+    const set = (s) => () => this.setState({ scope: s });
+    const on = (s) => scope === s;
+    const captions = {
+      'ready': 'queue ready: 7 due in three authored groups, one withdrawn item held out, history and rules below',
+      'empty': 'queue cleared: success, not an error — the header states the next due date and offers a session; the due list is the cleared EmptyState; history still shows',
+      'read failed': 'projection unreadable: the recovery notice replaces the header band and the due list becomes a solid-border notice; history still reads from the intact attempt events'
+    };
+    return {
+      ready, empty, failed,
+      items,
+      startLabel: scope === 'all' ? 'Start review, all 7' : 'Review ' + LABELS[scope],
+      scopeSummary: SUMMARY[scope],
+      scopeAll: on('all'), scopeMissed: on('missed'), scopeFlagged: on('flagged'), scopeCorrected: on('corrected'),
+      setAll: set('all'), setMissed: set('missed'), setFlagged: set('flagged'), setCorrected: set('corrected'),
+      styleAll: on('all') ? BTN_ON : BTN, styleMissed: on('missed') ? BTN_ON : BTN, styleFlagged: on('flagged') ? BTN_ON : BTN, styleCorrected: on('corrected') ? BTN_ON : BTN,
+      styleAllCompact: on('all') ? BTN_C_ON : BTN_C, styleMissedCompact: on('missed') ? BTN_C_ON : BTN_C, styleFlaggedCompact: on('flagged') ? BTN_C_ON : BTN_C, styleCorrectedCompact: on('corrected') ? BTN_C_ON : BTN_C,
+      heldOut: p.heldOutItem ?? true,
+      ampleCaption: captions[qs]
+    };
+  }
+}
+</script>
+</body>
+</html>

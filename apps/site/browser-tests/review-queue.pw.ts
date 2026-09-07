@@ -100,7 +100,7 @@ test("an exact receipt mismatch is quarantined without loading or substituting f
   expect(await readStoredAttempt(page)).toEqual(mismatchedAttempt)
   await page.goto("/practice/")
   await expect(page.getByRole("region", { name: "Unavailable saved attempts" })).toContainText("This saved attempt can’t be displayed.")
-  await expect(page.getByRole("heading", { name: "No saved activity in this release yet", exact: true })).toHaveCount(0)
+  await expect(page.getByRole("heading", { name: "No saved activity yet", exact: true })).toHaveCount(0)
   expect(await readStoredAttempt(page)).toEqual(mismatchedAttempt)
   expect(postcommitRequests).toBe(0)
 })

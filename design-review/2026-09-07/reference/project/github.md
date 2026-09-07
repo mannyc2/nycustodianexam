@@ -1,0 +1,139 @@
+repo: mannyc2/nycustodianexam
+branch: main
+path: product/, apps/site/src/styles.css, content/
+
+## Last sync
+
+date: 2026-09-06T05:10:00Z
+
+### Updated in this project
+
+- No stored exam, applied to the setup and player screens: `Session Builder.dc.html` rebuilt — the “Pinned for this session” exam/test-date/pack block is replaced by one scope panel (“What every set draws on”: 90 questions for the New York Entry-Level Custodians and Janitors series, links to what practice covers and to Exams), and every control now changes the activity: three subject areas as checkboxes with their counts and a live “n of 90 selected”, 45/60/90 length, hazard settings with 5/12/18 scenes and the two task constructs, simulation length with the weighted-distribution choice and the opt-in strict timer. The shortfall notice is computed from the chosen areas instead of being a static sentence, no-areas disables Start, and the exam number is gone from Technical details.
+- `Landing.dc.html` (`/exams/`) is reading only: the “Your exam” row and detail chips, the disabled Selected button and the pin action are removed with their state (`xSelected`, `pinned`, `isPinned`, `chipSelected/chipNone/chipLabel`, the `selectedExam` prop); each record's primary action is now “See what practice covers” pointing at `/practice/#covers`. The registry EmptyState no longer claims nothing is open for filing — it says what was read, when, and that later filing may exist unrecorded.
+- `Component Library.dc.html`: `ExamCard` loses the “Your exam” label, the disabled Selected and “Study for this exam” — both specimens are reading cards with a practice-material row; the stale exam chip left in the shell nav is removed; `ExamSelector` heading and actions read the announcement instead of selecting it, and its contract notes drop the durable-preference pending state; `SessionSummary` pins a pack version only and counts 45.
+- `Question Player.dc.html` and `Simulation Navigator.dc.html` moved to the 45-question lead length (position, completion summary, live-region announcements; the navigator grid is 45 items with 41 recorded and 3 flagged).
+- `Study Hub.dc.html` header names the series exactly: one question bank written for the New York Entry-Level Custodians and Janitors series.
+
+### Previously
+
+- New `Offline.dc.html` (`/offline/`, route family 20): the missing page composition for `OfflinePackManager` at 78rem and 24rem, plus every remaining list state at 38rem — checking saved downloads, downloading, ready to turn on, did not pass its check, update did not finish with the older copy still turned on, cannot be removed yet, removal preview, removed, and storage unavailable. Nothing downloaded yet is the dashed EmptyState with this page's one primary action; storage unavailable is a solid-border notice. A four-step “How a copy gets onto this device” section carries the sequence (download and check, turn on, study, remove) and states that an interrupted download starts again from the beginning.
+- New `Settings.dc.html` (`/settings/`, route family 19): `SettingsForm` composed at both widths with no Save button — larger text and reduced motion write as set, language is a labelled value while only `en-US` is published, and low-data mode and Spanish content are named as not available with a reason each. Four data actions on the TaskCard template (export with an optional correction-drafts checkbox, import, rebuild the review list, scoped delete), with the flows drawn step by step: import decoding → validated preview → applied; rebuild before and after; delete scope → counted preview → done; a failed preference write; storage unavailable.
+- Prototype claims revised in the specimens: `Component Library.dc.html` §d-packs loses the Pause and Cancel buttons and the `paused-offline` card that promised “it resumes from there” (now `recoverable-error`, retry starts the whole transfer), and states the no-pause/no-resume rule with the learner label mapping; §d-settings loses the “Open on” startup select and “Prefer text-equivalent items”, gains the language statement, and replaces “Save settings” with the applies-on-change status.
+- `CLAUDE.md` records the offline sequence, the settings rules and the `#future` section convention for capability the release does not have.
+- Owner decisions of 2026-09-06 applied: future capability moved out of the route DCs into one new `Future Explorations.dc.html` (no route, grouped by lane — the 10-question set, download Pause/Cancel, the resumable-download promise, “Open on”, “Prefer text-equivalent items”), each drawn inside a dashed frame and closed by a “why it is out” and a “to bring it back” line; `Offline.dc.html` and `Settings.dc.html` lost their `#future` sections and the `showFuture` tweak, keeping one sentence that points there.
+- `Study Hub.dc.html` settled turn 3 moved to 45-question sets — header, task cards, resume (“question 31 of 45”), Ways to study copy and the 23-session fixture, which now runs 45s with one 60 and one 90 and keeps simulations at zero so the filtered EmptyState still demonstrates. Figures recomputed (211 answered this week, 58% over 690, 40 hazard scenes). New “Unavailable saved attempts” block under Recent sessions: solid border, “This saved attempt can’t be displayed”, known date and length only, no cause and no action. Archived turns 2 and 1 predate the decision and are left as history.
+- `CLAUDE.md` records five more owner rules: 45 as the lead set length, the 10-question set as future only, exam dates with explicit uncertainty (no blanket “nothing is open” claim), Review rows with “Read explanation” primary and “Finish review” separate and confirmed, and the “Unavailable saved attempts” treatment.
+
+### Previously
+
+- Tabs row fix: the selected underline was declared as the shorthand `borderBlockEnd: '2px solid transparent'` with a `borderBlockEndColor` longhand override, so React never restored the shorthand on deselect and every tab ever selected kept a grey 2px rule. Both objects now carry the same key set (`borderBlockEnd: '2px solid'` + `borderBlockEndColor`) in `Tool Atlas.dc.html`, `Review Queue.dc.html` (both frames) and `Study Hub.dc.html`. The Component Library tab specimens are static markup and were unaffected.
+- `Tool Atlas.dc.html` swept to the settled direction: the family chips became the `.tabs` row (`role="tablist"`, `aria-selected`, plain counts, 2.75rem targets) and the Reset button is gone — “All families” is the reset. The count line reads as a HistoryList footer, a “Not published” notice states that 57 of the 65 records have no illustration yet with its proof line, and derivative ids, inventory files and the pack version moved under Technical details. New tweaks: `imagesAvailable` (offline-unavailable is a solid-border notice with the records still listed as text, never an EmptyState), `showFamilyCounts`, `showTechnicalDetails`.
+- Chip selectors retired: `.atlas-toolbar`, `.filter-chip` and their forced-colors and print rules are out of `styles-additions.css` (the `.tabs` rules already cover both); `.result-count` and `.atlas-grid` stay. The Component Library selector table records the swap.
+- `Review Queue.dc.html` is canonical form: badge reads Settled, section id `settled` (it is the only variant for route family 13).
+- Tabs over FilterGroup: a filter standing alone over a list is the `.tabs` row (hairline, selected kind underlined in action blue, plain `.filter-count` figures, `role="tablist"`); the boxed `.filter-group` is reserved for a toolbar beside a search field. Applied to `Study Hub.dc.html` Recent sessions, `Component Library.dc.html` §f-history, and both frames of `Review Queue.dc.html` (scope tabs); `styles-additions.css` and `CLAUDE.md` record the rule.
+- `Review Queue.dc.html`: Review history rows now use the HistoryList template (mono date, “Review of N items” with one scope sentence, “4 of 5 as keyed”, Results); cleared queue is the EmptyState, read-failed is a solid-border notice.
+- Record board made intrinsic (`.record-board`, `.record-detail`, `.record-detail-header` wrap by container width, no viewport media query) in `styles-additions.css`, `Landing.dc.html` settled and the §f-landing specimen.
+- Specimen sweep against the banned list: U.S. dates in `Question Player.dc.html` and `Hazard Player.dc.html`; pack versions, exam number and session code moved under Technical details in `Question Player.dc.html` and `Session Builder.dc.html`; proof line in the Sources block; session summary as a count, not a percentage.
+
+### Previously
+
+- 2026-09-03T12:05:00Z — `Study Hub.dc.html` turn 3 (settled; turns 2 and 1 archived): a new-learner version of `/practice/` — header as first action, site-fact figures, Ways to study first, three areas with “No attempts yet”, Due today / Recent sessions / Your exam as EmptyStates (ample and compact; `examChosen` tweak for the arrived-from-Exams path) — and a returning version with 23 sessions where Recent sessions is its own section: filter by kind, month groups, the 6 most recent with Show all, filtered-to-nothing EmptyState with focused heading; `readFailed` tweak shows warning notices, never dashed boxes.
+- `Component Library.dc.html` §f-empty: EmptyState standardized (one shape, three occasions, inline and compact placements, “not an EmptyState” counter-example, contract notes); §f-history: HistoryList (row template, thresholds, compact form). `styles-additions.css` gains `.empty-state*`, `.history-*` and `.filter-count`; `CLAUDE.md` records both rules.
+
+### Previously
+
+- New `Review Queue.dc.html` (`/review/`, route family 13): Study pill current, dark header with due count and start action, personal figures (due today, due tomorrow, reviewed this week, rebuilt from N attempts), a filter group that scopes the hairline due list and renames the start button, a held-out (quarantined) item notice with ids under Technical details, review history read from intact events, a how-it-works fact table; ready / empty / read-failed states; ample and compact.
+- `Landing.dc.html` canonical form: settled page first, turn 1 archived below; `CLAUDE.md` records the breadcrumb and TaskCard rules and that Home and Study are designed.
+
+### Previously
+
+- `Study Hub.dc.html` turn 2: `/practice/` rebuilt on the §f-landing primitives so it matches Home and Exams — dark header with the resume as headline and a personal figures strip, Due today and Where you stand (three official subject areas) as hairline tables, four task cards, Your exam as a fact table with proof line and Technical details, dark footer; tweaks for returning / first visit / read failed. Turn 1 (1a/1b) archived below it.
+- TaskCard primitive: fixed row template (glyph, name, sentence, action) so actions align across a row — applied to all 27 instances and `.task-card`.
+- Breadcrumbs: `DESIGN_SYSTEM.md` §242 limits them to nested reference pages and `ROUTES.md` §321 has them generated from the registry, so they were removed from the Study and Exams headers and the prominent-header specimen; the Atlas record shell keeps one, restyled as the SiteNav pill (`.breadcrumb` in `styles-additions.css`).
+
+### Previously
+
+- Route decision from `ROUTES.md` registry rows 1 and 5: `/` (`home`) is a public visitor landing — static overview and navigation, no personalized summaries; the study dashboard is `/practice/` (`study-hub`). `Home.dc.html` renamed `Study Hub.dc.html`; new `Home.dc.html` built on the §f-landing primitives (prominent header with one dominant Study action that changes only its label with local state, announcement checker as the secondary task, figures strip, three subject areas each linking to its catalog, six task cards, cycle notice with a hairline date list, five-row trust fact table, dark footer) at ample and compact widths. No nav pill is current; the wordmark carries the current-page state.
+- `CLAUDE.md` records the route decision and the canonical-form rule (one DC per route family, explorations archived below).
+
+### Previously
+
+- Owner rules recorded in `CLAUDE.md`: no uppercase or letter-spaced labels/chips anywhere (DESIGN_SYSTEM.md §type; CONTENT_DESIGN.md sentence case); no agency–type–series–number metadata strings; identifiers, versions and locators only under a native `Technical details` disclosure (`CL-LAYER-PROOF`); Fact chips only for non-default states; U.S. English.
+- `Component Library.dc.html`: uppercase/tracking swept from every specimen (Fact chips now “Verified”, “Not published”…); new §f-landing “Registry and landing primitives” promoted from `Landing.dc.html` turn 1 — prominent PageHeader + FigureStrip, SectionHeader, Timeline, StatusChip, SearchField + FilterGroup, RecordList + RecordDetail + Tabs, FactTable with proof/technical layers, NumberedSections, TaskCard, prominent SiteFooter. `styles-additions.css` gains the matching classes, an `.eyebrow`/`.fact-status` sentence-case override, and one proposed token `--color-border-hairline`.
+- `Landing.dc.html` turn 4: `/exams/` rebuilt as turn 1’s structure on those primitives, inside the bans (turn 3 replaced). Turn 1 retained below for comparison.
+- Sweep of the remaining designs: `Home.dc.html` (eyebrows → bold sentence-case labels; resume/exam metadata written as sentences with pack and registry versions under `Technical details`; filing date carries a “Where this comes from” line; U.S. dates), `Site Nav Proposals.dc.html` (menu-group and lane headings), the player specimens’ control labels, and the library’s VerifiedFact specimen (chip dropped in favor of its proof line). U.S. spelling applied to all design prose.
+
+### Previously
+
+- `Landing.dc.html` turn 2: resolved the route question against `ROUTES.md` — the page is family 2, `exam-selector` at `/exams/` (static published record list + lazy `ExamSelector` island), not `/` (Home is the wordmark and already lives in `Home.dc.html`). Rebuilt on Component Library primitives only: DocumentShell + two-lane SiteNav with the Exams pill current, PageHeader (Home / Exams breadcrumb, MetadataList), Field + SelectField in the ExamSelector composition with a polite result count, Notice (warning, info), ExamCard with six-state Fact rows (VERIFIED / NOT PUBLISHED / NOT APPLICABLE / SUPERSEDED with retained amendment history), Disclosure for “On this test”, EmptyState, `.claim-caveat`, Fact cards for the test format, DocumentShell footer. Clickable record rows and the tablist removed. Hero → Home; “Take a test now” → `/practice/`; resume strip → study-hub island. Turn 1 retained below for comparison.
+
+### Previously
+
+- New `Landing.dc.html` (route family 1 as a visitor landing page), built on the real launch pack rather than specimen exams: "Where the 2026 cycle stands" timeline (11 Jun opened → 1 Jul OC close → 5 Jul promotion close, Jericho-only → 22 Aug announced date, administration unresolved) with a no-filing-open band; an exam board of the two actual registry records — Nassau OC `60112026` / promotion `61012026` with real filing terms, $50.00 fee, residency and Farmingdale/Freeport exceptions, 41→43 jurisdiction amendments, §52.10(a) and seniority credit; plus the statewide plan record that carries no announcement fact sheet.
+- "What is on the test" is a first-class section: the three official areas (Cleaning Tools and Their Uses; Tools Used for Minor Maintenance and Repair; Health and Safety Issues in Custodial Work), each with a real pack item and what the pack holds; every exam record and test format names its areas. A "How the real test works" block quotes format, two-hour allowance, rating-of-70 and no-deduction rules, and states plainly that the official item count is unpublished.
+- Ample frame = returning visit (resume strip), compact = first visit (no local data) — the strip is the only difference, and no frame is labelled both ways.
+
+### Previously
+
+- `Home.dc.html` (route family 1, `/`) on the settled 2a shell — nav 1a + 1d-1 filled pill + labelled Offline · Settings · Sources cluster. Two arrangements to pick from (1a one column sequenced by time; 1b actions left / exam rail right), each at ample and compact width, plus the five other states: new learner, offline with a stale pack, projection read failure, superseded announcement, nothing due.
+
+### Previously
+
+- `Site Nav Proposals.dc.html`: three global-navigation structures (1a Study/Library/Exams, 1b Practice/Hazards/Tools/Review, 1c two-row header with no tab bar), each at ample and compact widths with the menu open, plus four active-state treatments (1d). Grounded in `ROUTES.md` `NAV-CODEX-1` (two-tier lanes, native compact disclosure, focused players) and `DESIGN_SYSTEM.md` §6/§12; icons added at both widths. Awaiting owner pick before the Component Library shell is changed.
+
+### Previously
+
+- Responsive SiteNav: inline top-bar links from 48rem, a persistent bottom tab bar below (Home, Study, Atlas, Hazards, More as an index route) — never a toggle menu; the exam chip compacts but stays visible. New `.site-tabbar` / `.exam-chip` blocks appended to `styles-additions.css`.
+- Renamed the learner-facing concept “profile” → “exam” across every specimen; `ProfileCard` → `ExamCard`, now select-only — pack size/download state moved to `OfflinePackManager`, blocking warnings to `ContentAvailability`. Internal record names (`Fact.ProfileVersion`, pin ids) unchanged pending a repo rename.
+- Added `ExamSelector` and `AnnouncementChecker` (route families 2–3) with ready ↔ empty, validating, and match / ambiguous / no-match compositions — no new selectors needed.
+- Re-baselined `styles-additions.css` against the shipped sheet (`.hazard-result-*` replaces `.scene-region-*`; `--text-lg`/`--shadow-card` still fixed here) and documented the new upstream shell patterns (`.connectivity-notice`, `[data-network-unavailable]`, `.source-receipt-*`, `.claim-caveat`).
+
+## Screen map
+
+| Screen / section | Built from |
+|---|---|
+| Boundary & rules | product/COMPONENT_ARCHITECTURE.md §1–3 |
+| Color, type, space, focus tokens | product/DESIGN_SYSTEM.md §3–7, §13; apps/site/src/styles.css `@layer tokens` |
+| SiteNav structure proposals (`Site Nav Proposals.dc.html`) | product/ROUTES.md §navigation contract (`NAV-CODEX-1` rules, 21-family registry); product/DESIGN_SYSTEM.md §6, §12 |
+| DocumentShell, responsive SiteNav, PageHeader, connectivity band | product/DESIGN_SYSTEM.md §6; COMPONENT_ARCHITECTURE.md §4; styles.css `.connectivity-notice`, `[data-network-unavailable]`; styles-additions.css `.site-tabbar`, `.exam-chip` |
+| Layout & prose foundations | product/DESIGN_SYSTEM.md §5, §10 |
+| Buttons, fields, ActionBar | product/DESIGN_SYSTEM.md §7–8; styles.css `.button*`, `.form-field`, `.answer-option` |
+| Feedback, progress, LiveRegion | product/DESIGN_SYSTEM.md §9; COMPONENT_ARCHITECTURE.md §10 |
+| Disclosure, Dialog, Figure, ImageViewport | product/DESIGN_SYSTEM.md §11; COMPONENT_ARCHITECTURE.md §4 |
+| Fact (six states) | COMPONENT_ARCHITECTURE.md §5; styles.css `.fact-state-*` |
+| ExamCard (renamed from ProfileCard), SourceCitation, CorrectionNotice, SessionSummary | COMPONENT_ARCHITECTURE.md §5; styles.css `.source-receipt-*`, `.claim-caveat`; content/authoring/questions/vertical-slice.json |
+| ContentAvailability, PageState | COMPONENT_ARCHITECTURE.md §5; DESIGN_SYSTEM.md §9 |
+| HomeDashboard specimen | COMPONENT_ARCHITECTURE.md §6, §9 (`home` route family) |
+| Registry and landing primitives (`Component Library.dc.html` §f-landing; `styles-additions.css` 2026-09-02 block) | product/CONTENT_DESIGN.md (`CL-CODEX-1` copy roles, vocabulary, exam-context contract); product/DESIGN_SYSTEM.md §type (no all-caps/tracking); `Landing.dc.html` turn 1 patterns |
+| Exam selector `/exams/` (`Landing.dc.html` turn 4) | product/ROUTES.md registry rows 1–4 (`home`, `exam-selector`, `exam-checker`, `profile`), `NAV-CODEX-1`; COMPONENT_ARCHITECTURE.md §4–6 (DocumentShell, PageHeader, Fact, ExamCard, ExamSelector, ContentAvailability); `Component Library.dc.html` §f-shell, §f-controls, §f-feedback, §f-structure, §c-fact, §c-profile, §c-source, §d-selector; content/authoring/packs/launch-v1.curated.mjs |
+| Landing page (`Landing.dc.html` turn 1) | content/authoring/packs/launch-v1.curated.mjs (registry records, announcement fact sheets `nassau.oc.60112026` / `nassau.promo.61012026`, unresolved administration fact, pack question stems); docs/FACTBASE.md §exam identity, §format & logistics, §scoring (three subject areas, two-hour allowance, rating 70, no-deduction, unpublished item count); COMPONENT_ARCHITECTURE.md §6, §9; ROUTES.md `NAV-CODEX-1` |
+| Home `/` (`Home.dc.html`) | product/ROUTES.md registry row 1 (`home`: static overview/navigation, resume/due summaries belong to `study-hub`), §Profile and Practice continuity (one dominant first action, both `Check my exam` and `Start practice` findable, never a silently selected exam), `NAV-CODEX-1`; `Component Library.dc.html` §f-landing; facts and area copy from `Landing.dc.html` (docs/FACTBASE.md, launch-v1.curated.mjs) |
+| Study hub `/practice/` (`Study Hub.dc.html` turn 3; turns 2 and 1 archived) | product/ROUTES.md registry row 5 (`study-hub`: no selected profile is a recoverable prerequisite state; insufficient inventory is explicit), cross-cutting capability table §198 (active profile, recent sessions, resumable session, compact progress/history summaries); SCREEN_STATES.md §229 (`ready`, route-level `empty` = no compatible inventory, `offline-stale`); DESIGN_SYSTEM.md behavior matrix §315 (`empty`: named composition, scope, heading focus after user-triggered change), §323–324 (never call unavailable empty); COMPONENT_ARCHITECTURE.md §138 (`EmptyState`), §6 (`HomeDashboard`); `Component Library.dc.html` §f-landing, §f-empty, §f-history; facts from `Home.dc.html` / `Landing.dc.html` |
+| EmptyState, HistoryList (`Component Library.dc.html` §f-empty, §f-history; `styles-additions.css` 2026-09-03 block) | COMPONENT_ARCHITECTURE.md §138 (`EmptyState` named feedback with recovery actions), §183 (`PageState` compositions); DESIGN_SYSTEM.md §314–324 behavior matrix; SCREEN_STATES.md §24 availability states; ROUTES.md §198 (recent sessions belong to `study-hub`) |
+| ExamSelector, AnnouncementChecker (`Component Library.dc.html` §d-selector) | COMPONENT_ARCHITECTURE.md §6; SCREEN_STATES.md route families 2–3 |
+| QuestionPlayer (`Question Player.dc.html`) | COMPONENT_ARCHITECTURE.md §6, §7, §10; SCREEN_STATES.md §"Immediate-feedback question", route family 11; content/authoring/visuals/inventory/{comparisons,taxonomy-inventory}.csv/json; `t006`/`t007` derivatives |
+| HazardPlayer (`Hazard Player.dc.html`) | COMPONENT_ARCHITECTURE.md §6; SCREEN_STATES.md §"Hazard item", route family 12; `s003` scene derivative; postcommit results map to styles.css `.hazard-result-*` |
+| Thirteen-state matrix | SCREEN_STATES.md §"State is a product", route families 11–14 |
+| ToolAtlas (`Tool Atlas.dc.html`) | COMPONENT_ARCHITECTURE.md §6; content/authoring/visuals/inventory/comparisons.json, taxonomy-inventory.csv; `t001`–`t008` |
+| SessionBuilder (`Session Builder.dc.html`) | COMPONENT_ARCHITECTURE.md §6 (`PracticeSessionSetup`, `HazardSessionSetup`, `SimulationSessionSetup`) |
+| Review queue `/review/` (`Review Queue.dc.html`) | product/ROUTES.md registry row 13 (`review-queue`: Home/Study → Review, static shell + lazy island, queue rebuilds from local events, empty queue is success, corrupt projection offers rebuild, missing object quarantined), §199; COMPONENT_ARCHITECTURE.md §272 (`ReviewQueue`: due summary, reason groups, scope filters, empty state, start action), §405; SCREEN_STATES.md §237, §303; `Component Library.dc.html` §d-review, §f-landing |
+| ReviewQueue | COMPONENT_ARCHITECTURE.md §6; SCREEN_STATES.md route family 13; styles.css `.review-*` |
+| SimulationNavigator (`Simulation Navigator.dc.html`) | COMPONENT_ARCHITECTURE.md §6; SCREEN_STATES.md §"Simulation", route family 14 |
+| ResultsSummary | COMPONENT_ARCHITECTURE.md §6; SCREEN_STATES.md route family 14 |
+| PrintBuilder, PrintPreview | COMPONENT_ARCHITECTURE.md §6; SCREEN_STATES.md §"Print job"; styles.css named `@page` rules, `.print-us-letter`/`.print-a4` × `.print-margin-*` × `.print-size-*`, `.print-grayscale` |
+| OfflinePackManager | COMPONENT_ARCHITECTURE.md §6; SCREEN_STATES.md §"Offline pack", route family 20; styles.css `.pack-record-list` |
+| SettingsForm, CorrectionForm | COMPONENT_ARCHITECTURE.md §6; SCREEN_STATES.md §"Correction/security report", §"Import, projection rebuild, and reset"; styles.css `html[data-large-text]`, `html[data-reduce-motion]` |
+| Offline packs `/offline/` (`Offline.dc.html`) | product/ROUTES.md registry row 20 (`offline-packs`: this route owns download, stage, verify, activate, update, remove, retention, quota, eviction warning; partial downloads quarantine, prior valid pack stays active, active-session pins block unsafe removal, retry is idempotent); SCREEN_STATES.md §"Offline pack", §244; COMPONENT_ARCHITECTURE.md §277, §415; `Component Library.dc.html` §d-packs, §f-landing, §f-empty. Divergence from the contract: no user-controlled pause/cancel and no resumable transfer in the implementation, so `paused-offline` is drawn as a plain recoverable failure |
+| Settings `/settings/` (`Settings.dc.html`) | product/ROUTES.md registry row 19 (`settings`: preference write `pending`/`recoverable-error`, destructive preview names exact scope, no sensitive settings in query/history); SCREEN_STATES.md §"Import, projection rebuild, and reset", §243; COMPONENT_ARCHITECTURE.md §278, §414; `Component Library.dc.html` §d-settings, §f-landing. Divergence: startup destination and automatic text-equivalent preference are unimplemented and are drawn only as future |
+| styles.css handoff | apps/site/src/styles.css (existing `@layer` order and class names) → `styles-additions.css`, re-baselined 2026-08-30 |
+
+## Sync history
+
+- 2026-09-05T14:22:00Z — canonical-form sweep of the six players and Tool Atlas; Tabs underline fix; record board made intrinsic.
+- 2026-09-03T11:40:08Z — `Review Queue.dc.html` (`/review/`); `Landing.dc.html` canonical form.
+- 2026-09-03T11:18:45Z — `Study Hub.dc.html` turn 2 on the shared structure (turn 1 archived); TaskCard row template; breadcrumbs limited to nested reference pages.
+- 2026-09-02T15:18:45Z — route decision recorded; `Home.dc.html` rebuilt as the public landing on §f-landing; former Home renamed `Study Hub.dc.html`.
+- 2026-09-02T10:36:16Z — owner bans recorded in `CLAUDE.md`; §f-landing primitives promoted to the Component Library and `styles-additions.css`; `Landing.dc.html` turn 4 (`/exams/` on the primitives); ban sweep across the remaining designs.
+- 2026-09-01T12:33:00Z — commit 0051bb7a1026: `Landing.dc.html` turn 1 (visitor landing on the launch pack: cycle timeline, exam board, subject areas per record, two arrival states).
+- 2026-08-28T10:41:00Z — pass 2–3 + handoff: QuestionPlayer and HazardPlayer with all six named wrappers each and the thirteen-state matrix; ToolAtlas, SessionBuilder, ReviewQueue, SimulationNavigator, ResultsSummary, PrintBuilder/PrintPreview, OfflinePackManager, SettingsForm, CorrectionForm; `styles-additions.css` with the `--text-lg`/`--shadow-card` fixes; interactive specimens split into their own Design Components (≈1000ms → ≈5ms per interaction).
+- 2026-08-27T09:57:47Z — pass 1: token layer, 14 foundations, shared compounds, HomeDashboard; copied 8 tool masters and 3 hazard scene derivatives from `content/assets/derivatives/`.

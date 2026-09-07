@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-25..200" />
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #e9edf1; color: #17202a; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+    a { color: #075985; }
+    a:hover { color: #0c4a6e; }
+    h1, h2, h3, h4, h5, p, dl, dd { margin: 0; }
+    ul, ol { margin: 0; }
+    ul { padding: 0; list-style: none; }
+    button, input, select, textarea { font: inherit; }
+    :focus-visible { outline: 0.1875rem solid #1d4ed8; outline-offset: 0.1875rem; }
+  </style>
+</helmet>
+
+<section id="settled" style="display: grid; gap: 2rem; padding: 3rem clamp(1.5rem, 3vw, 3rem) 4rem;">
+
+  <div style="display: grid; gap: 1.25rem; max-width: 74rem;">
+    <div style="display: flex; align-items: center; gap: 0.75rem;">
+      <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; background: #17202a; color: #ffffff; padding: 0.125rem 0.5rem; border-radius: 0.25rem;">Settled</span>
+      <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">route family 2 — <code>/exams/</code> (<code>exam-selector</code>, the Exams pill) on the <a href="Component Library.dc.html#f-landing">§f-landing</a> primitives; turn 1 is <a href="#turn-1">archived below</a></span>
+    </div>
+    <h1 style="font-size: clamp(1.875rem, 1.45rem + 1.5vw, 2.75rem); letter-spacing: -0.025em; line-height: 1.2;">Exams — which exam are you studying for</h1>
+    <p style="max-width: 68ch; color: #4b5563; text-wrap: pretty;">You preferred turn 1, so its structure became the library: a prominent PageHeader with a FigureStrip, SectionHeader, Timeline, StatusChip, SearchField and FilterGroup, RecordList with RecordDetail and Tabs, FactTable with proof and technical layers, NumberedSections, TaskCard and the prominent SiteFooter — each specified in the Component Library and appended to <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace;">styles-additions.css</code>. This page is turn 1 rebuilt from them, inside the two bans. Turn 3 is replaced rather than stacked.</p>
+
+    <div style="display: grid; gap: 0.75rem; padding: 1.25rem 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; max-width: 68ch;">
+      <h2 style="font-size: 1.0625rem;">Calls I made here</h2>
+      <ul style="display: grid; gap: 0.5rem; font-size: 0.9375rem; color: #4b5563;">
+        <li><strong style="color: #17202a;">Turn 1’s bones, kept.</strong> Dark header with four figures, section headers with a side note, the four-card timeline and the no-filing notice, the master–detail exam board with its two tabs, the four task cards, the dark footer, and the same two frames. Only the words and the banned surfaces changed.</li>
+        <li><strong style="color: #17202a;">The bans, applied.</strong> Every uppercase tracked label is gone: dates are mono but sentence case, footer column labels are bold sentence case, and status chips are sentence case. Rows and the detail header put competition type, filing dates and status in separate slots instead of one agency–type–series–number string. Fact chips are sentence case and appear only where the state changes the reading; exam numbers, registry version, fact-sheet ids and routes sit under Technical details.</li>
+        <li><strong style="color: #17202a;">Still <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace;">/exams/</code>.</strong> The prominent header now carries this route’s task — which exam are you studying for — rather than Home’s proposition, which stays on <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace;">Home.dc.html</code>. The four figures answer the visitor’s first questions: how many exams, whether anything is open, how many subject areas, when the facts were checked.</li>
+        <li><strong style="color: #17202a;">Reading, not choosing.</strong> Picking a row shows its detail, and that is the only selection on the page: nothing is stored, no exam becomes “yours”, and practice is identical before and after. So there is no header chip, no “Your exam” marker and no disabled Selected — the detail’s two actions lead to what practice covers and to the next cycle. Ample opens on the record a returning visitor last read; compact opens on the first entry.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="display: grid; gap: 0.625rem;">
+    <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">Ample width — <strong style="color: #17202a;">returning visit</strong>: the board opens on the record last read, and reading it changes nothing else on the site</span>
+    <div data-screen-label="Exams — ample" style="width: 78rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; overflow: hidden; background: #ffffff; box-shadow: 0 0.25rem 1rem rgb(23 32 42 / 8%);">
+
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.375rem 1.25rem; padding: 0.375rem 1.25rem; border-block-end: 1px solid #b7c1cc;">
+        <a href="#exams-main" style="display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 700; color: #17202a; text-decoration: none;">NY Custodian Exam</a>
+        <nav aria-label="Primary" style="display: flex; align-items: center; gap: 0.25rem; margin-inline-end: auto; font-size: 0.9375rem;">
+          <a href="Study Hub.dc.html" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">school</span>Practice</a>
+          <details style="position: relative;">
+            <summary aria-label="Library — three collections" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; cursor: pointer; list-style: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">book_2</span>Library<span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.125rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">expand_more</span></summary>
+            <div style="position: absolute; inset-inline-start: 0; inset-block-start: calc(100% + 0.375rem); z-index: 40; width: 27rem; display: grid; gap: 0.125rem; padding: 0.375rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; box-shadow: 0 0.75rem 2rem rgb(23 32 42 / 16%);">
+            <a href="Tool Atlas.dc.html" style="display: grid; gap: 0.125rem; padding: 0.625rem 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">Tool atlas</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">All 65 tools, what each one is for, and the tools it gets mistaken for.</span></a>
+            <a href="Tool Atlas.dc.html" style="display: grid; gap: 0.125rem; padding: 0.625rem 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">Tool comparisons</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">The 14 pairs people mix up most, set side by side.</span></a>
+            <a href="Hazard Player.dc.html" style="display: grid; gap: 0.125rem; padding: 0.625rem 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">Hazard scenes</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">All 18 workplace scenes, each with a written version of the picture.</span></a>
+            <a href="Study Hub.dc.html#covers" style="display: grid; gap: 0.125rem; margin-block-start: 0.25rem; padding: 0.625rem 0.75rem; border-block-start: 1px solid #b7c1cc; border-radius: 0 0 0.375rem 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.875rem; color: #075985; font-weight: 700;">What practice covers</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Which of this material questions are drawn from, and what is left out.</span></a>
+            </div>
+          </details>
+          <a href="Landing.dc.html" aria-current="page" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; background: #e0f2fe; color: #0c4a6e; font-weight: 700; text-decoration: none;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">assignment</span>Exams</a>
+        </nav>
+        <nav aria-label="Utility" style="display: flex; align-items: center;">
+          <a href="Settings.dc.html" style="display: inline-flex; align-items: center; gap: 0.375rem; min-height: 2.75rem; padding: 0 0.75rem; border-radius: 0.375rem; color: #075985; font-weight: 550; font-size: 0.875rem; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">settings</span>Settings</a>
+        </nav>
+      </div>
+
+      <sc-if value="{{ offlineStale }}">
+        <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.625rem 1.25rem; background: #fffaeb; border-block-end: 1px solid #b7c1cc; color: #854d0e; font-weight: 700; font-size: 0.9375rem;"><span aria-hidden="true">▲</span> You are offline. This list is the copy saved on this device on August 25, 2026 — newer announcements may exist.<a href="Offline.dc.html" style="margin-inline-start: auto; color: #854d0e; font-weight: 700; text-decoration: underline;">Manage downloads</a></div>
+      </sc-if>
+
+      <div id="exams-main" style="display: grid; gap: 1.5rem; padding: 3rem 2.5rem 2.5rem; background: #17202a; color: #ffffff;">
+        <div style="display: grid; gap: 1rem; max-width: 46rem;">
+          <h1 style="font-size: clamp(2rem, 1.5rem + 1.8vw, 2.875rem); letter-spacing: -0.025em; line-height: 1.15; text-wrap: pretty;">Exam announcements, and what each one says</h1>
+          <p style="font-size: 1.125rem; color: #dbe3ea; text-wrap: pretty;">What each announcement states, the day we read it, and how it lines up with the three subject areas this site practices. These pages are reading: none of them sets up practice, and nothing you do here changes your saved work.</p>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem;">
+          <a href="#exams-board" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.5rem; border: 1px solid transparent; border-radius: 0.5rem; background: #ffffff; color: #0c4a6e; font-weight: 700; text-decoration: none;" style-hover="background: #e0f2fe;">Not sure? Check your announcement</a>
+          <a href="#exams-tests" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #9fb0c0; border-radius: 0.5rem; color: #ffffff; font-weight: 700; font-size: 0.9375rem; text-decoration: none;" style-hover="background: rgb(255 255 255 / 8%);">Practice a set of 45</a>
+        </div>
+        <dl style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin: 0; padding-block-start: 1.5rem; border-block-start: 1px solid #4b5563;">
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">Exams listed</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">{{ registryCount }} — Nassau and the statewide plan</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">Last read</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">August 25, 2026</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">Subject areas</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">3, shared by every exam</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">Facts checked</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">August 25, 2026</dd></div>
+        </dl>
+      </div>
+
+      <div style="padding: 2.25rem 2.5rem 2.75rem; background: #f7f8fa; display: grid; gap: 2.25rem;">
+
+        <section id="exams-cycle" style="display: grid; gap: 1rem; scroll-margin: 1.5rem;">
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem;"><h2 style="font-size: 1.5rem; letter-spacing: -0.02em;">Where the 2026 cycle stands</h2><p style="max-width: 48ch; font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Every date is quoted from the controlling announcement. The announcement governs, not this page.</p></div>
+          <ol style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.75rem; padding: 0; list-style: none;">
+            <li style="display: grid; gap: 0.375rem; align-content: start; padding: 1rem 1.125rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;"><span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">June 11, 2026</span><strong>Both announcements opened</strong><span style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">Open competitive and promotion, sharing one test date</span></li>
+            <li style="display: grid; gap: 0.375rem; align-content: start; padding: 1rem 1.125rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;"><span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">July 1, 2026</span><strong>Open-competitive filing closed</strong><span style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">11:59 p.m. Eastern</span></li>
+            <li style="display: grid; gap: 0.375rem; align-content: start; padding: 1rem 1.125rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;"><span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">July 5, 2026</span><strong>Promotion filing closed</strong><span style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">This later date applied only to Jericho Public Library, added by the June 26 amendment</span></li>
+            <li style="display: grid; gap: 0.375rem; align-content: start; padding: 1rem 1.125rem; border: 1px solid #854d0e; border-radius: 0.5rem; background: #fffaeb;"><span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #854d0e;">August 22, 2026</span><strong style="display: flex; align-items: center; gap: 0.5rem; color: #854d0e;"><span aria-hidden="true">▲</span> Announced test date, now passed</strong><span style="font-size: 0.875rem; color: #17202a; text-wrap: pretty;">Whether the test was held has not been published; nothing was found in the August 25 read</span></li>
+          </ol>
+          <div style="display: grid; gap: 0.75rem; padding: 1.25rem 1.5rem; border: 1px solid #854d0e; border-radius: 0.625rem; background: #fffaeb;">
+            <h3 style="font-size: 1.125rem;">Nothing is open for filing right now</h3>
+            <p style="max-width: 76ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">This page will not tell you the test was held, or that it was not. Both 2026 announcements named August 22; that date has passed, and the August 25 read found no official notice either way, so the administration stays unresolved until a document says otherwise. The subject plan has not changed, so the question bank still applies to the next cycle.</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; padding-block-start: 0.25rem;">
+              <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid #854d0e; border-radius: 0.5rem; background: #ffffff; color: #854d0e; font-weight: 700; font-size: 0.9375rem; cursor: pointer;" style-hover="background: #fffaeb;">Watch for the next announcement</button>
+              <a href="#exams-footer" style="display: inline-flex; align-items: center; min-height: 2.75rem; color: #075985; font-weight: 700; font-size: 0.9375rem;">How this page checks</a>
+            </div>
+            <p style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Watching saves a flag on this device only, and it is rechecked the next time you update your offline copy. Nothing is sent, and no email is collected.</p>
+          </div>
+        </section>
+
+        <section id="exams-board" style="display: grid; gap: 1rem; scroll-margin: 1.5rem;">
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem;"><h2 style="font-size: 1.5rem; letter-spacing: -0.02em;">Exams in the registry</h2><p style="max-width: 48ch; font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Pick an entry to read its announcement facts and what it tests. A new jurisdiction arrives here as another entry, not another page.</p></div>
+
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.75rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; flex: 1 1 18rem; min-width: 12rem; min-height: 2.75rem; padding: 0 0.875rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+              <span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; color: #4b5563; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">search</span>
+              <input type="search" aria-label="Search exams" placeholder="Title, jurisdiction, or exam number" value="{{ bQuery }}" onChange="{{ onBQuery }}" style="flex: 1 1 auto; min-width: 0; border: 0; background: transparent; font-size: 0.9375rem; color: #17202a; outline: none;" />
+            </div>
+            <div role="group" aria-label="Filter by status" style="display: flex; flex-wrap: wrap; gap: 0.25rem; padding: 0.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+              <sc-for list="{{ filters }}" as="f" hint-placeholder-count="4">
+                <button type="button" onClick="{{ f.pick }}" aria-pressed="{{ f.on }}" style="min-height: 2.25rem; padding: 0 0.75rem; border: 0; border-radius: 0.25rem; font-size: 0.875rem; font-weight: 700; cursor: pointer; background: {{ f.bg }}; color: {{ f.fg }};">{{ f.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: start;">
+            <ul style="flex: 1 1 20rem; min-width: 0; display: grid; gap: 0.5rem; align-content: start; margin: 0; padding: 0; list-style: none;">
+              <sc-for list="{{ rows }}" as="row" hint-placeholder-count="3">
+                <li>
+                  <button type="button" onClick="{{ row.select }}" aria-pressed="{{ row.on }}" style="display: grid; gap: 0.25rem; justify-items: start; width: 100%; text-align: start; padding: 1rem; border-radius: 0.5rem; color: #17202a; cursor: pointer; border: 1px solid {{ row.border }}; background: {{ row.bg }}; box-shadow: {{ row.shadow }};">
+                    <strong style="font-size: 0.9375rem; line-height: 1.35;">{{ row.title }}</strong>
+                    <span style="font-size: 0.875rem; color: #4b5563;">{{ row.kind }}</span>
+                    <span style="font-size: 0.8125rem; color: #4b5563;">{{ row.when }}</span>
+                    <span style="display: flex; flex-wrap: wrap; gap: 0.375rem;"><span style="display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.125rem 0.5rem; border-radius: 0.25rem; font-size: 0.8125rem; font-weight: 700; border: 1px solid {{ row.chipBorder }}; background: {{ row.chipBg }}; color: {{ row.chipFg }};">{{ row.statusLabel }}</span></span>
+                  </button>
+                </li>
+              </sc-for>
+              <sc-if value="{{ noRows }}">
+                <li style="display: grid; gap: 0.5rem; padding: 1rem 1.125rem; border: 1px dashed #667085; border-radius: 0.5rem; background: #ffffff;">
+                  <strong style="font-size: 0.9375rem;">{{ emptyTitle }}</strong>
+                  <p style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">Nothing that was read on August 25, 2026 fits these filters. An announcement published since then may exist without being recorded here yet; when one is read, it appears as another entry.</p>
+                  <button type="button" onClick="{{ clearBoard }}" style="justify-self: start; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.9375rem; cursor: pointer; text-decoration: none;" style-hover="background: #edf2f7;">Clear filters</button>
+                </li>
+              </sc-if>
+            </ul>
+
+            <sc-if value="{{ hasShown }}" hint-placeholder-val="{{ true }}">
+              <article style="flex: 999 1 26rem; min-width: 0; display: grid; gap: 1.25rem; align-content: start; padding: 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff;">
+                <div style="display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; align-items: start;">
+                  <div style="flex: 1 1 20rem; min-width: 0; display: grid; gap: 0.375rem;">
+                    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.625rem;">
+                      <span style="font-size: 0.9375rem; font-weight: 700; color: #075985;">{{ d.kind }}</span>
+                      <span style="display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.125rem 0.5rem; border-radius: 0.25rem; font-size: 0.8125rem; font-weight: 700; border: 1px solid {{ d.chipBorder }}; background: {{ d.chipBg }}; color: {{ d.chipFg }};">{{ d.statusLabel }}</span>
+                    </div>
+                    <h3 style="font-size: 1.375rem; letter-spacing: -0.015em; line-height: 1.2;">{{ d.title }}</h3>
+                    <p style="max-width: 64ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">{{ d.blurb }}</p>
+                    <p style="max-width: 64ch; font-size: 0.9375rem; text-wrap: pretty;"><strong>Does this match your exam?</strong> {{ d.match }}</p>
+                  </div>
+                  <div style="flex: 0 1 auto; display: grid; gap: 0.5rem; min-width: 13rem;">
+                    <a href="Study Hub.dc.html#covers" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; font-size: 0.9375rem; text-decoration: none;" style-hover="background: #0c4a6e;">{{ d.action }}</a>
+                    <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.9375rem; cursor: pointer; text-decoration: none;" style-hover="background: #edf2f7;">{{ d.secondary }}</button>
+                  </div>
+                </div>
+
+                <div role="tablist" aria-label="Record detail" style="display: flex; flex-wrap: wrap; gap: 1.25rem; border-block-end: 1px solid #b7c1cc;">
+                  <sc-for list="{{ tabs }}" as="tab" hint-placeholder-count="2">
+                    <button type="button" role="tab" aria-selected="{{ tab.on }}" onClick="{{ tab.pick }}" style="min-height: 2.75rem; padding: 0 0.125rem; border: 0; border-block-end: 2px solid transparent; background: transparent; font-size: 0.9375rem; font-weight: 700; cursor: pointer; margin-block-end: -1px; color: {{ tab.fg }}; border-block-end-color: {{ tab.rule }};">{{ tab.label }}</button>
+                  </sc-for>
+                </div>
+
+                <sc-if value="{{ showFacts }}" hint-placeholder-val="{{ true }}">
+                  <div style="display: grid; gap: 1rem;">
+                    <dl style="display: grid; margin: 0;">
+                      <sc-for list="{{ d.facts }}" as="fact" hint-placeholder-count="6">
+                        <div style="display: grid; grid-template-columns: minmax(0, 10rem) minmax(0, 1fr); gap: 0.25rem 1.25rem; padding-block: 0.75rem; border-block-start: 1px solid #e2e7ec;">
+                          <dt style="font-size: 0.8125rem; font-weight: 700; color: #4b5563;">{{ fact.label }}</dt>
+                          <dd style="margin: 0; font-size: 0.9375rem; text-wrap: pretty; color: {{ fact.fg }};">{{ fact.value }}<sc-if value="{{ fact.hasChip }}"><span style="display: inline-flex; align-items: center; gap: 0.25rem; margin-inline-start: 0.5rem; padding: 0 0.5rem; border: 1px solid {{ fact.chipBorder }}; border-radius: 0.25rem; color: {{ fact.chipFg }}; font-size: 0.8125rem; font-weight: 700; vertical-align: middle;"><sc-if value="{{ fact.warn }}"><span aria-hidden="true">▲</span></sc-if>{{ fact.chipLabel }}</span></sc-if></dd>
+                        </div>
+                      </sc-for>
+                    </dl>
+                    <p style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;"><strong style="color: #17202a;">Where this comes from:</strong> {{ d.proof }}</p>
+                    <sc-if value="{{ showSourceReceipts }}" hint-placeholder-val="{{ true }}">
+                      <details style="border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+                        <summary style="display: flex; align-items: center; min-height: 2.75rem; padding: 0.5rem 1rem; cursor: pointer; font-weight: 550; font-size: 0.9375rem;">Technical details</summary>
+                        <dl style="display: grid; gap: 0.5rem; margin: 0; padding: 0 1rem 1rem; font-size: 0.8125rem;">
+                          <sc-for list="{{ d.tech }}" as="t" hint-placeholder-count="4">
+                            <div style="display: grid; grid-template-columns: minmax(0, 8rem) minmax(0, 1fr); gap: 0.75rem;"><dt style="color: #4b5563;">{{ t.label }}</dt><dd style="margin: 0;"><code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; overflow-wrap: anywhere;">{{ t.value }}</code></dd></div>
+                          </sc-for>
+                        </dl>
+                      </details>
+                    </sc-if>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ showAreas }}">
+                  <div style="display: grid; gap: 1rem;">
+                    <p style="max-width: 74ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">{{ d.areaNote }}</p>
+                    <div style="display: grid; gap: 0.875rem;">
+                      <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.375rem 1rem;">
+                        <strong style="font-size: 0.9375rem;">How this test is built</strong>
+                        <span style="font-size: 0.8125rem; color: #4b5563;">Every value is quoted. Your announcement governs if it says anything different.</span>
+                      </div>
+                      <dl style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 0.75rem; margin: 0;">
+                        <sc-for list="{{ built }}" as="b" hint-placeholder-count="4">
+                          <div style="display: grid; gap: 0.25rem; align-content: start; padding-inline: 1rem 0.75rem; border-inline-start: 2px solid #17202a;">
+                            <dt style="font-size: 0.8125rem; color: #4b5563;">{{ b.label }}</dt>
+                            <dd style="margin: 0; font-size: 1.125rem; font-weight: 700; line-height: 1.25; text-wrap: pretty;">{{ b.value }}</dd>
+                          </div>
+                        </sc-for>
+                      </dl>
+                      <p style="padding: 0.5rem 0.875rem; border-inline-start: 0.25rem solid #854d0e; background: #fffaeb; font-size: 0.875rem; color: #17202a; text-wrap: pretty;">Neither the number of questions nor the split between areas is published. This site does not estimate either — no practice-set length here is a claim about the real one.</p>
+                    </div>
+                    <ol style="display: grid; gap: 0; margin: 0; padding: 0; list-style: none;">
+                      <sc-for list="{{ d.areas }}" as="area" hint-placeholder-count="3">
+                        <li style="display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: 0 0.75rem; padding-block: 1.125rem; border-block-start: 1px solid #b7c1cc;">
+                          <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 1.75rem; font-weight: 700; line-height: 1; color: #b7c1cc;">{{ area.n }}</span>
+                          <div style="display: grid; gap: 0.75rem; min-width: 0;">
+                            <div style="display: grid; gap: 0.1875rem;">
+                              <h4 style="font-size: 1.125rem; letter-spacing: -0.015em;">{{ area.name }}</h4>
+                              <p style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">{{ area.gist }}</p>
+                            </div>
+                            <dl style="display: grid; gap: 0.4375rem; margin: 0;">
+                              <div style="display: grid; grid-template-columns: 8rem minmax(0, 1fr); gap: 0.125rem 1rem;"><dt style="font-size: 0.8125rem; font-weight: 700; color: #075985;">How it is asked</dt><dd style="margin: 0; font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">{{ area.asked }}</dd></div>
+                              <div style="display: grid; grid-template-columns: 8rem minmax(0, 1fr); gap: 0.125rem 1rem;"><dt style="font-size: 0.8125rem; font-weight: 700; color: #075985;">What this site has</dt><dd style="margin: 0; font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">{{ area.have }}</dd></div>
+                            </dl>
+                          </div>
+                        </li>
+                      </sc-for>
+                    </ol>
+                    <p style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;"><strong style="color: #17202a;">Where this comes from:</strong> New York State Department of Civil Service, Test Guide for the Entry-Level Custodians and Janitors Series, and the subjects section of each Nassau announcement, read August 25, 2026.</p>
+                  </div>
+                </sc-if>
+              </article>
+            </sc-if>
+          </div>
+
+          <p style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Your announcement controls the title, competition type, eligibility, participating jurisdictions, filing terms and subjects; your admission notice controls the day itself. This page quotes them; it never governs.</p>
+        </section>
+
+        <section id="exams-tests" style="display: grid; gap: 1rem; scroll-margin: 1.5rem;">
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem;"><h2 style="font-size: 1.5rem; letter-spacing: -0.02em;">Practice the three areas</h2><p style="max-width: 48ch; font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Every set draws on the same three areas these announcements list, so there is nothing to choose here first.</p></div>
+          <ul style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin: 0; padding: 0; list-style: none;">
+            <li style="display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; gap: 0.625rem; align-content: stretch; padding: 1.25rem; border: 1px solid #075985; border-radius: 0.5rem; background: #ffffff;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.75rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 32;">bolt</span><h3 style="font-size: 1.0625rem;">Quick set</h3><p style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">45 questions across all three areas, untimed. Reasoning and its source after every answer.</p><a href="#exams-tests" style="justify-self: stretch; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; font-size: 0.9375rem; cursor: pointer; text-decoration: none;" style-hover="background: #0c4a6e;">Start</a></li>
+            <li style="display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; gap: 0.625rem; align-content: stretch; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.75rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 32;">timer</span><h3 style="font-size: 1.0625rem;">Full-length set</h3><p style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">All three areas, timed to the two-hour allowance the guide states. Feedback held to the end.</p><a href="#exams-tests" style="justify-self: stretch; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.9375rem; cursor: pointer; text-decoration: none;" style-hover="background: #edf2f7;">Start</a></li>
+            <li style="display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; gap: 0.625rem; align-content: stretch; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.75rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 32;">warning</span><h3 style="font-size: 1.0625rem;">Hazard drill</h3><p style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">Area 3 only. Mark the hazard in the scene, or answer the text version instead.</p><a href="#exams-tests" style="justify-self: stretch; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.9375rem; cursor: pointer; text-decoration: none;" style-hover="background: #edf2f7;">Run a drill</a></li>
+            <li style="display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; gap: 0.625rem; align-content: stretch; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.75rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 32;">handyman</span><h3 style="font-size: 1.0625rem;">Study tools</h3><p style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">Areas 1 and 2 — 65 tool records, with the features that tell look-alikes apart.</p><a href="#exams-tests" style="justify-self: stretch; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.9375rem; cursor: pointer; text-decoration: none;" style-hover="background: #edf2f7;">Browse</a></li>
+          </ul>
+        </section>
+
+        <footer id="exams-footer" style="display: grid; gap: 1.5rem; padding: 1.75rem; border-radius: 0.625rem; background: #17202a; color: #dbe3ea; scroll-margin: 1.5rem;">
+          <div style="display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr); gap: 1.5rem 2.5rem;">
+            <div style="display: grid; gap: 0.5rem; align-content: start;">
+              <strong style="font-size: 1.0625rem; color: #ffffff; letter-spacing: -0.01em;">Independent and unofficial</strong>
+              <p style="max-width: 48ch; font-size: 0.875rem; color: #9fb0c0; text-wrap: pretty;">Not affiliated with any civil service agency, and not a substitute for the official announcement or your admission notice. Questions here are written for this site — no secure or recalled test material is used.</p>
+            </div>
+            <nav aria-label="Where this comes from" style="display: grid; gap: 0.5rem; align-content: start;">
+              <strong style="font-size: 0.8125rem; color: #ffffff;">Where this comes from</strong>
+              <a href="#exams-footer" style="font-size: 0.875rem; color: #dbe3ea; text-decoration: none;" style-hover="color: #ffffff; text-decoration: underline;">Every claim and its source</a>
+              <a href="#exams-footer" style="font-size: 0.875rem; color: #dbe3ea; text-decoration: none;" style-hover="color: #ffffff; text-decoration: underline;">Corrections</a>
+              <a href="#exams-cycle" style="font-size: 0.875rem; color: #dbe3ea; text-decoration: none;" style-hover="color: #ffffff; text-decoration: underline;">How this page checks</a>
+            </nav>
+            <nav aria-label="Site" style="display: grid; gap: 0.5rem; align-content: start;">
+              <strong style="font-size: 0.8125rem; color: #ffffff;">Site</strong>
+              <a href="#exams-main" style="font-size: 0.875rem; color: #dbe3ea; text-decoration: none;" style-hover="color: #ffffff; text-decoration: underline;">Use offline</a>
+              <a href="#exams-main" style="font-size: 0.875rem; color: #dbe3ea; text-decoration: none;" style-hover="color: #ffffff; text-decoration: underline;">Accessibility</a>
+              <a href="#exams-main" style="font-size: 0.875rem; color: #dbe3ea; text-decoration: none;" style-hover="color: #ffffff; text-decoration: underline;">About this site</a>
+            </nav>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 2rem; padding-block-start: 1.125rem; border-block-start: 1px solid #4b5563; font-size: 0.8125rem; color: #9fb0c0;">
+            <p>Announcement facts were read on <strong style="color: #ffffff;">August 25, 2026</strong>.</p>
+            <p>Every date on this page is quoted from the controlling announcement.</p>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: grid; gap: 0.625rem; justify-items: start;">
+    <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">Compact — <strong style="color: #17202a;">first visit</strong>: the same records, the same reading, nothing stored either way</span>
+    <div data-screen-label="Exams — compact" style="width: 24rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; overflow: hidden; background: #ffffff; box-shadow: 0 0.25rem 1rem rgb(23 32 42 / 8%);">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0 0.875rem; min-height: 3.25rem; border-block-end: 1px solid #b7c1cc;">
+        <a href="#exams-c-main" style="display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 700; color: #17202a; text-decoration: none; font-size: 0.9375rem;">NY Custodian Exam</a>
+      </div>
+      <sc-if value="{{ offlineStale }}">
+        <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.875rem; background: #fffaeb; border-block-end: 1px solid #b7c1cc; color: #854d0e; font-weight: 700; font-size: 0.8125rem;"><span aria-hidden="true">▲</span> Offline — showing the copy saved on this device on August 25</div>
+      </sc-if>
+
+      <div id="exams-c-main" style="display: grid; gap: 1rem; padding: 1.5rem 1.125rem; background: #17202a; color: #ffffff;">
+        <h1 style="font-size: 1.5rem; letter-spacing: -0.02em; line-height: 1.2; text-wrap: pretty;">Exam announcements, and what each one says</h1>
+        <p style="font-size: 0.9375rem; color: #dbe3ea; text-wrap: pretty;">What each announcement says and when we read it. Reading a page here does not change your practice.</p>
+        <div style="display: grid; gap: 0.5rem;">
+          <a href="#exams-c-board" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid transparent; border-radius: 0.5rem; background: #ffffff; color: #0c4a6e; font-weight: 700; font-size: 0.9375rem; text-decoration: none;">Not sure? Check your announcement</a>
+          <a href="#exams-c-tests" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid #9fb0c0; border-radius: 0.5rem; color: #ffffff; font-weight: 700; font-size: 0.9375rem; text-decoration: none;">Practice a set of 45</a>
+        </div>
+      </div>
+
+      <div style="padding: 1rem; background: #f7f8fa; display: grid; gap: 1.25rem;">
+        <section style="display: grid; gap: 0.625rem;">
+          <h2 style="font-size: 1.0625rem;">Where the cycle stands</h2>
+          <div style="display: grid; gap: 0.375rem; padding: 0.875rem 1rem; border: 1px solid #854d0e; border-radius: 0.5rem; background: #fffaeb;">
+            <strong style="font-size: 0.9375rem;">Nothing is open for filing</strong>
+            <p style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Both 2026 Nassau announcements closed in July. Their August 22 test date has passed, and whether the test was held has not been published.</p>
+            <button type="button" style="justify-self: start; display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0.5rem 0.875rem; border: 1px solid #854d0e; border-radius: 0.375rem; background: #ffffff; color: #854d0e; font-weight: 700; font-size: 0.875rem; cursor: pointer;">Watch for the next one</button>
+          </div>
+          <ol style="display: grid; gap: 0.375rem; margin: 0; padding: 0; list-style: none;">
+            <li style="display: flex; align-items: baseline; justify-content: space-between; gap: 0.75rem; padding: 0.625rem 0.875rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;"><span style="font-size: 0.875rem;">Open-competitive filing closed</span><span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563; white-space: nowrap;">July 1</span></li>
+            <li style="display: flex; align-items: baseline; justify-content: space-between; gap: 0.75rem; padding: 0.625rem 0.875rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;"><span style="font-size: 0.875rem;">Promotion filing closed <span style="color: #4b5563;">(Jericho only)</span></span><span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563; white-space: nowrap;">July 5</span></li>
+            <li style="display: flex; align-items: baseline; justify-content: space-between; gap: 0.75rem; padding: 0.625rem 0.875rem; border: 1px solid #854d0e; border-radius: 0.5rem; background: #ffffff;"><span style="font-size: 0.875rem;">Test date, not confirmed held</span><span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #854d0e; font-weight: 700; white-space: nowrap;">August 22</span></li>
+          </ol>
+        </section>
+
+        <section id="exams-c-board" style="display: grid; gap: 0.625rem;">
+          <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 0.5rem;">
+            <h2 style="font-size: 1.0625rem;">Exams</h2>
+            <span style="font-size: 0.75rem; color: #4b5563;">Nassau and statewide</span>
+          </div>
+          <ul style="display: grid; gap: 0.625rem; margin: 0; padding: 0; list-style: none;">
+            <sc-for list="{{ compactCards }}" as="card" hint-placeholder-count="3">
+              <li style="display: grid; gap: 0.5rem; padding: 1rem 1.125rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+                <span style="justify-self: start; display: inline-flex; align-items: center; padding: 0.125rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 700; border: 1px solid {{ card.chipBorder }}; background: {{ card.chipBg }}; color: {{ card.chipFg }};">{{ card.statusLabel }}</span>
+                <h3 style="font-size: 1rem;">{{ card.title }}</h3>
+                <p style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">{{ card.compactLine }}</p>
+                <details style="border: 1px solid #b7c1cc; border-radius: 0.375rem; background: #f7f8fa;">
+                  <summary style="display: flex; align-items: center; min-height: 2.75rem; padding: 0.5rem 0.875rem; cursor: pointer; font-weight: 550; font-size: 0.875rem;">{{ card.areasSummary }}</summary>
+                  <div style="display: grid; gap: 0.5rem; padding: 0 0.875rem 0.875rem;">
+                    <ol style="display: grid; gap: 0.25rem; margin: 0; padding: 0; list-style: none; font-size: 0.8125rem;">
+                      <sc-for list="{{ card.areas }}" as="area" hint-placeholder-count="3">
+                        <li style="display: grid; grid-template-columns: 1.25rem minmax(0, 1fr); gap: 0.375rem;"><span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #4b5563;">{{ area.n }}</span><span>{{ area.name }}</span></li>
+                      </sc-for>
+                    </ol>
+                    <span style="font-size: 0.75rem; color: #4b5563; text-wrap: pretty;">{{ card.areaNote }}</span>
+                  </div>
+                </details>
+                <a href="#exams-c-board" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; font-size: 0.9375rem; cursor: pointer; text-decoration: none;" style-hover="background: #0c4a6e;">{{ card.action }}</a>
+              </li>
+            </sc-for>
+          </ul>
+        </section>
+
+        <section id="exams-c-tests" style="display: grid; gap: 0.625rem;">
+          <h2 style="font-size: 1.0625rem;">Take a test now</h2>
+          <ul style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem; margin: 0; padding: 0; list-style: none;">
+            <li style="display: grid;"><a href="#exams-c-tests" style="display: grid; gap: 0.25rem; align-content: start; min-height: 2.75rem; padding: 0.875rem; border: 1px solid #075985; border-radius: 0.5rem; background: #ffffff; text-decoration: none; color: #17202a;" style-hover="background: #e0f2fe;"><strong style="font-size: 0.9375rem; color: #0c4a6e;">Quick set</strong><span style="font-size: 0.8125rem; color: #4b5563;">45 questions, untimed</span></a></li>
+            <li style="display: grid;"><a href="#exams-c-tests" style="display: grid; gap: 0.25rem; align-content: start; min-height: 2.75rem; padding: 0.875rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; text-decoration: none; color: #17202a;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem;">Full-length set</strong><span style="font-size: 0.8125rem; color: #4b5563;">All three areas, timed</span></a></li>
+            <li style="display: grid;"><a href="#exams-c-tests" style="display: grid; gap: 0.25rem; align-content: start; min-height: 2.75rem; padding: 0.875rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; text-decoration: none; color: #17202a;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem;">Hazard drill</strong><span style="font-size: 0.8125rem; color: #4b5563;">5 scenes</span></a></li>
+            <li style="display: grid;"><a href="#exams-c-tests" style="display: grid; gap: 0.25rem; align-content: start; min-height: 2.75rem; padding: 0.875rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; text-decoration: none; color: #17202a;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem;">Study tools</strong><span style="font-size: 0.8125rem; color: #4b5563;">65 tool records</span></a></li>
+          </ul>
+        </section>
+
+        <section style="display: grid; gap: 0.625rem;">
+          <h2 style="font-size: 1.0625rem;">How the real test works</h2>
+          <dl style="display: grid; gap: 0; margin: 0; padding: 0.25rem 1rem 0.875rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+            <div style="display: grid; grid-template-columns: 6rem minmax(0, 1fr); gap: 0.75rem; padding-block: 0.625rem; border-block-end: 1px solid #e2e7ec;"><dt style="font-size: 0.75rem; font-weight: 700; color: #4b5563;">Format</dt><dd style="margin: 0; font-size: 0.8125rem;">Multiple choice on paper, two hours for this series</dd></div>
+            <div style="display: grid; grid-template-columns: 6rem minmax(0, 1fr); gap: 0.75rem; padding-block: 0.625rem; border-block-end: 1px solid #e2e7ec;"><dt style="font-size: 0.75rem; font-weight: 700; color: #4b5563;">Drawings</dt><dd style="margin: 0; font-size: 0.8125rem;">All three areas, not necessarily to scale</dd></div>
+            <div style="display: grid; grid-template-columns: 6rem minmax(0, 1fr); gap: 0.75rem; padding-block: 0.625rem;"><dt style="font-size: 0.75rem; font-weight: 700; color: #4b5563;">Questions</dt><dd style="margin: 0; font-size: 0.8125rem; color: #4b5563;">Not published, so this site does not claim a number <span style="display: inline-flex; align-items: center; margin-inline-start: 0.375rem; padding: 0 0.375rem; border: 1px solid #667085; border-radius: 0.25rem; font-size: 0.6875rem; font-weight: 700; vertical-align: middle;">Not published</span></dd></div>
+          </dl>
+          <a href="#exams-c-main" style="font-size: 0.875rem; font-weight: 700;">Where the answers come from →</a>
+        </section>
+      </div>
+
+      <nav aria-label="Primary" style="position: relative; display: grid; grid-template-columns: repeat(4, 1fr); border-block-start: 1px solid #b7c1cc; background: #ffffff; padding-block-end: 0.25rem;">
+        <a href="Study Hub.dc.html" style="display: grid; justify-items: center; gap: 0.125rem; min-height: 3.5rem; padding: 0.375rem 0.25rem; font-size: 0.6875rem; font-weight: 550; color: #4b5563; text-decoration: none;"><span style="display: grid; place-items: center; width: 2.75rem; height: 1.75rem; border-radius: 999rem;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">school</span></span>Practice</a>
+        <details>
+          <summary style="display: grid; justify-items: center; gap: 0.125rem; min-height: 3.5rem; padding: 0.375rem 0.25rem; font-size: 0.6875rem; font-weight: 550; color: #4b5563; cursor: pointer; list-style: none;"><span style="display: grid; place-items: center; width: 2.75rem; height: 1.75rem; border-radius: 999rem;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">book_2</span></span>Library</summary>
+          <div style="position: absolute; inset-block-end: 100%; inset-inline: 0; z-index: 40; display: grid; gap: 0.125rem; padding: 0.5rem; border-block-start: 1px solid #b7c1cc; background: #ffffff; box-shadow: 0 -0.75rem 2rem rgb(23 32 42 / 18%);">
+            <a href="Tool Atlas.dc.html" style="display: grid; gap: 0.125rem; padding: 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">Tool atlas</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">All 65 tools, what each is for, and the tools it gets mistaken for.</span></a>
+            <a href="Tool Atlas.dc.html" style="display: grid; gap: 0.125rem; padding: 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">Tool comparisons</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">The 14 pairs people mix up most, set side by side.</span></a>
+            <a href="Hazard Player.dc.html" style="display: grid; gap: 0.125rem; padding: 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">Hazard scenes</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">All 18 workplace scenes, each with a written version.</span></a>
+            <a href="Study Hub.dc.html#covers" style="display: grid; gap: 0.125rem; padding: 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">What practice covers</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Which material questions come from, and what is left out.</span></a>
+          </div>
+        </details>
+        <a href="Landing.dc.html" aria-current="page" style="display: grid; justify-items: center; gap: 0.125rem; min-height: 3.5rem; padding: 0.375rem 0.25rem; font-size: 0.6875rem; font-weight: 700; color: #0c4a6e; text-decoration: none;"><span style="display: grid; place-items: center; width: 2.75rem; height: 1.75rem; border-radius: 999rem; background: #e0f2fe;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">assignment</span></span>Exams</a>
+        <a href="Settings.dc.html" style="display: grid; justify-items: center; gap: 0.125rem; min-height: 3.5rem; padding: 0.375rem 0.25rem; font-size: 0.6875rem; font-weight: 550; color: #4b5563; text-decoration: none;"><span style="display: grid; place-items: center; width: 2.75rem; height: 1.75rem; border-radius: 999rem;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">settings</span></span>Settings</a>
+      </nav>
+    </div>
+  </div>
+
+</section>
+
+<section id="turn-1" style="display: grid; gap: 2rem; padding: 3rem clamp(1.5rem, 3vw, 3rem) 4rem; border-block-start: 1px solid #b7c1cc;">
+
+  <div style="display: grid; gap: 1.25rem; max-width: 74rem;">
+    <div style="display: flex; align-items: center; gap: 0.75rem;">
+      <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; background: #17202a; color: #ffffff; padding: 0.125rem 0.5rem; border-radius: 0.25rem;">Turn 1 — archived</span>
+      <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">the origin of the structure, kept for comparison; superseded by the <a href="#settled">settled page</a> above. Written before the route decision, so it still calls itself <code>/</code>.</span>
+    </div>
+    <h2 style="font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem); letter-spacing: -0.02em; line-height: 1.2;">Archive — turn 1, the exams, then the tests you can take</h2>
+    <p style="max-width: 68ch; color: #4b5563; text-wrap: pretty;">A visitor's page. It answers <em>where the exam cycle stands</em>, <em>what the announcements actually say</em>, and <em>what a test here looks like</em> — before asking anyone to commit. Built on the real launch pack: two registry records, not a market of exams. The progressive study page you already have becomes <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace;">/study</code>; a returning learner gets a one-line resume strip here and lands on the dashboard from it.</p>
+
+    <div style="display: grid; gap: 0.75rem; padding: 1.25rem 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; max-width: 68ch;">
+      <h2 style="font-size: 1.0625rem;">Calls I made here</h2>
+      <ul style="display: grid; gap: 0.5rem; font-size: 0.9375rem; color: #4b5563;">
+        <li><strong style="color: #17202a;">Everything here comes from the launch pack.</strong> Nassau open-competitive <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace;">60112026</code> and promotion <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace;">61012026</code> with their real filing dates, $50.00 fee, residency rules, jurisdiction amendments and seniority credit — plus the statewide entry-level plan, which has no announcement fact sheet at all.</li>
+        <li><strong style="color: #17202a;">The honest headline is that nothing is open.</strong> Both announcements closed in July and their 22 August exam date has passed with no post-administration notice found, so the page says the administration is unconfirmed rather than implying a result. A landing page has to survive the between-cycles months.</li>
+        <li><strong style="color: #17202a;">Subject areas belong to a record, not to the page.</strong> The board is a filterable list of announcement records with a detail beside it, and <em>what is on the test</em> — the areas, how each is asked, what we hold for it, and what is not published — is a tab of that detail. Adding a jurisdiction adds a row, not a page; a record that tests two of the three areas says two.</li>
+        <li><strong style="color: #17202a;">One page, two arrival states.</strong> The resume strip is the <em>only</em> difference between a first visit and a returning one — it appears when there is local progress to point at, and the ample and compact frames below show each case rather than one page labeled both ways.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="display: grid; gap: 0.625rem;">
+    <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">Ample width — <strong style="color: #17202a;">returning visit</strong>: same page, plus the resume strip</span>
+    <div data-screen-label="Landing — ample" style="width: 78rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; overflow: hidden; background: #ffffff; box-shadow: 0 0.25rem 1rem rgb(23 32 42 / 8%);">
+
+      <div style="display: flex; align-items: center; gap: 1.5rem; padding: 0 1.25rem; min-height: 3.75rem; border-block-end: 1px solid #b7c1cc;">
+        <a href="#top" style="display: inline-flex; align-items: center; flex: 0 0 auto; white-space: nowrap; min-height: 2.75rem; font-weight: 700; color: #17202a; text-decoration: none; letter-spacing: -0.01em;">NY Custodian Exam</a>
+        <nav aria-label="Primary" style="display: flex; align-items: center; gap: 0.25rem; margin-inline-end: auto;">
+          <a href="#top" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; font-size: 0.9375rem; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">school</span>Study</a>
+          <a href="#top" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; font-size: 0.9375rem; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">book_2</span>Library</a>
+          <a href="#exam-board" aria-current="page" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; background: #e0f2fe; color: #0c4a6e; font-weight: 700; font-size: 0.9375rem; text-decoration: none;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">assignment</span>Exams</a>
+        </nav>
+        <a href="#exam-board" style="display: inline-flex; align-items: center; flex: 0 0 auto; white-space: nowrap; gap: 0.375rem; min-height: 2.25rem; padding: 0.125rem 0.75rem; border: 1px dashed #667085; border-radius: 999rem; font-size: 0.8125rem; color: #075985; font-weight: 700; text-decoration: none;" style-hover="background: #edf2f7;">Choose your exam</a>
+        <nav aria-label="Site and trust" style="display: flex; align-items: center; flex: 0 0 auto; gap: 0.125rem; padding-inline-start: 1rem; border-inline-start: 1px solid #b7c1cc;">
+          <a href="#top" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem; min-height: 2.75rem; padding: 0 0.5rem; border-radius: 0.375rem; color: #075985; font-size: 0.875rem; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">download_for_offline</span>Offline</a>
+          <a href="#top" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem; min-height: 2.75rem; padding: 0 0.5rem; border-radius: 0.375rem; color: #075985; font-size: 0.875rem; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">settings</span>Settings</a>
+          <a href="#footer" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem; min-height: 2.75rem; padding: 0 0.5rem; border-radius: 0.375rem; color: #075985; font-size: 0.875rem; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">verified_user</span>Sources</a>
+        </nav>
+      </div>
+
+      <div id="top" style="display: grid; gap: 1.75rem; padding: 3rem 2.5rem 2.75rem; background: #17202a; color: #ffffff;">
+        <div style="display: grid; gap: 1rem; max-width: 46rem;">
+          <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: #9fb0c0;">Free · unofficial · works offline · no account</span>
+          <h1 style="font-size: clamp(2rem, 1.5rem + 1.8vw, 2.875rem); letter-spacing: -0.03em; line-height: 1.15; text-wrap: pretty;">Practice for New York custodian and janitor civil service exams</h1>
+          <p style="font-size: 1.125rem; color: #dbe3ea; text-wrap: pretty;">Original questions written against the announcements themselves — every answer carries the document it came from and the date someone checked it. No exam is open for filing right now, so start with where the cycle stands, or take a test without choosing anything.</p>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem;">
+          <a href="#cycle" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.5rem; border: 1px solid transparent; border-radius: 0.5rem; background: #ffffff; color: #0c4a6e; font-weight: 700; font-size: 1rem; text-decoration: none;" style-hover="background: #e0f2fe;">Where the 2026 cycle stands</a>
+          <a href="#tests" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #9fb0c0; border-radius: 0.5rem; color: #ffffff; font-weight: 700; font-size: 0.9375rem; text-decoration: none;" style-hover="background: rgb(255 255 255 / 8%);">Practice a set of 45</a>
+        </div>
+        <dl style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin: 0; padding-block-start: 1.5rem; border-block-start: 1px solid #4b5563;">
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">Subject areas</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">3 from the official guide</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">Tool records</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">65 reviewed</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">Hazard scenes</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">18, all described in text</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">Registry</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700; font-family: ui-monospace, SFMono-Regular, Consolas, monospace;">v2026-08</dd></div>
+        </dl>
+      </div>
+
+      <sc-if value="{{ showContinueBand }}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem 1.5rem; padding: 0.875rem 2.5rem; background: #e0f2fe; border-block-end: 1px solid #b7c1cc;">
+          <p style="font-size: 0.9375rem; color: #0c4a6e;"><strong>You were on Tool recognition practice</strong> — 12 of 18 answered, and 7 items are due for review today.</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+            <a href="#top" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.25rem; padding: 0.375rem 1rem; border: 1px solid transparent; border-radius: 0.375rem; background: #075985; color: #ffffff; font-weight: 700; font-size: 0.875rem; text-decoration: none;" style-hover="background: #0c4a6e;">Resume at question 13</a>
+            <a href="#top" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.25rem; padding: 0.375rem 0.875rem; border: 1px solid #667085; border-radius: 0.375rem; color: #0c4a6e; font-weight: 700; font-size: 0.875rem; text-decoration: none;" style-hover="background: #ffffff;">Go to my study page</a>
+          </div>
+        </div>
+      </sc-if>
+
+      <div style="padding: 2.25rem 2.5rem 2.75rem; background: #f7f8fa; display: grid; gap: 2.25rem;">
+
+        <section id="cycle" style="display: grid; gap: 1rem; scroll-margin: 1.5rem;">
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem;">
+            <h2 style="font-size: 1.5rem; letter-spacing: -0.02em;">Where the 2026 cycle stands</h2>
+            <span style="font-size: 0.8125rem; color: #4b5563;">Every date is quoted from the controlling announcement. The announcement governs, not this page.</span>
+          </div>
+          <ol style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.75rem; padding: 0; list-style: none;">
+            <li style="display: grid; gap: 0.375rem; align-content: start; padding: 1rem 1.125rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+              <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: #4b5563;">11 Jun 2026</span>
+              <strong style="font-size: 1rem;">Both announcements opened</strong>
+              <span style="font-size: 0.875rem; color: #4b5563;">Open competitive <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace;">60112026</code> and promotion <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace;">61012026</code></span>
+            </li>
+            <li style="display: grid; gap: 0.375rem; align-content: start; padding: 1rem 1.125rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+              <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: #4b5563;">1 Jul 2026</span>
+              <strong style="font-size: 1rem;">Open-competitive filing closed</strong>
+              <span style="font-size: 0.875rem; color: #4b5563;">11:59 PM Eastern</span>
+            </li>
+            <li style="display: grid; gap: 0.375rem; align-content: start; padding: 1rem 1.125rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+              <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: #4b5563;">5 Jul 2026</span>
+              <strong style="font-size: 1rem;">Promotion filing closed</strong>
+              <span style="font-size: 0.875rem; color: #4b5563;">This date applied only to Jericho Public Library, added by the 26 Jun amendment</span>
+            </li>
+            <li style="display: grid; gap: 0.375rem; align-content: start; padding: 1rem 1.125rem; border: 1px solid #854d0e; border-radius: 0.5rem; background: #fffaeb;">
+              <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: #854d0e;">22 Aug 2026</span>
+              <strong style="font-size: 1rem;">Announced exam date — now passed</strong>
+              <span style="font-size: 0.875rem; color: #4b5563;">No post-administration notice or eligible list was found in the 25 Aug read</span>
+            </li>
+          </ol>
+          <div style="display: grid; gap: 0.75rem; padding: 1.25rem 1.5rem; border: 1px solid #854d0e; border-radius: 0.625rem; background: #fffaeb;">
+            <h3 style="font-size: 1.125rem;">Nothing is open for filing right now</h3>
+            <p style="max-width: 76ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">We will not tell you the test was held, or that it was not. Both 2026 announcements listed 22 August; that date has passed and the 25 August read-only refresh found no official notice either way, so the administration status stays unresolved until a document says otherwise. The subject plan has not changed, so the question bank still applies to the next cycle.</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; padding-block-start: 0.25rem;">
+              <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid #854d0e; border-radius: 0.5rem; background: #ffffff; color: #854d0e; font-weight: 700; font-size: 0.9375rem; cursor: pointer;" style-hover="background: #fffaeb;">Watch for the next announcement</button>
+              <a href="#footer" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; font-weight: 700; font-size: 0.9375rem;">How this page checks →</a>
+            </div>
+            <p style="font-size: 0.8125rem; color: #4b5563;">Watching stores a flag on this device only. It is rechecked when you next update an offline pack — nothing is sent anywhere and no email is collected.</p>
+          </div>
+        </section>
+
+        <section id="exam-board" style="display: grid; gap: 1rem; scroll-margin: 1.5rem;">
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem;">
+            <h2 style="font-size: 1.5rem; letter-spacing: -0.02em;">Exams in the registry</h2>
+            <span style="max-width: 48ch; font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Pick a record to read its announcement facts and the subject areas that record actually tests. A new jurisdiction arrives here as another record, not another page.</span>
+          </div>
+
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.75rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; flex: 1 1 18rem; min-width: 12rem; min-height: 2.75rem; padding: 0 0.875rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+              <span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; color: #4b5563; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">search</span>
+              <input type="search" aria-label="Search the registry" placeholder="Title, exam number or jurisdiction" value="{{ query }}" onChange="{{ onQuery }}" style="flex: 1 1 auto; min-width: 0; border: 0; background: transparent; font: inherit; font-size: 0.9375rem; color: #17202a; outline: none;">
+            </div>
+            <div role="group" aria-label="Filter by status" style="display: flex; flex-wrap: wrap; gap: 0.25rem; padding: 0.1875rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+              <sc-for list="{{ statusFilters }}" as="f" hint-placeholder-count="4">
+                <button type="button" onClick="{{ f.pick }}" aria-pressed="{{ f.on }}" style="min-height: 2.25rem; padding: 0 0.75rem; border: 0; border-radius: 0.375rem; font: inherit; font-size: 0.875rem; font-weight: 700; cursor: pointer; background: {{ f.bg }}; color: {{ f.fg }};">{{ f.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 20rem minmax(0, 1fr); gap: 1rem; align-items: start;">
+            <div style="display: grid; gap: 0.5rem; align-content: start;">
+              <sc-for list="{{ examRows }}" as="row" hint-placeholder-count="3">
+                <button type="button" onClick="{{ row.select }}" aria-pressed="{{ row.on }}" style="display: grid; gap: 0.3125rem; justify-items: start; text-align: start; padding: 0.875rem 1rem; border-radius: 0.5rem; font: inherit; color: #17202a; cursor: pointer; border: 1px solid {{ row.border }}; background: {{ row.bg }}; box-shadow: {{ row.shadow }};">
+                  <strong style="font-size: 0.9375rem; line-height: 1.35;">{{ row.title }}</strong>
+                  <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.5rem;">
+                    <span style="font-size: 0.875rem; color: #4b5563;">{{ row.kind }}</span>
+                    <sc-if value="{{ row.hasNumber }}" hint-placeholder-val="{{ true }}">
+                      <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.6875rem; padding: 0.0625rem 0.375rem; border: 1px solid #b7c1cc; border-radius: 0.25rem; background: #edf2f7; color: #4b5563;">{{ row.number }}</code>
+                    </sc-if>
+                    <sc-if value="{{ row.noNumber }}">
+                      <span style="font-size: 0.8125rem; color: #667085;">no exam number</span>
+                    </sc-if>
+                  </span>
+                  <span style="font-size: 0.8125rem; color: #4b5563;">{{ row.when }}</span>
+                  <span style="display: inline-flex; padding: 0.0625rem 0.4375rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 700; border: 1px solid {{ row.chipBorder }}; background: {{ row.chipBg }}; color: {{ row.chipFg }};">{{ row.statusLabel }}</span>
+                </button>
+              </sc-for>
+              <sc-if value="{{ noMatches }}">
+                <p style="padding: 1rem 1.125rem; border: 1px dashed #667085; border-radius: 0.5rem; background: #ffffff; font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">No record matches. Nothing in this registry is open for filing — both Nassau announcements closed in July 2026.</p>
+              </sc-if>
+            </div>
+
+            <sc-if value="{{ hasSelection }}" hint-placeholder-val="{{ true }}">
+              <article style="display: grid; gap: 1.25rem; align-content: start; padding: 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.625rem; background: #ffffff;">
+                <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1rem 1.5rem; align-items: start;">
+                  <div style="display: grid; gap: 0.375rem;">
+                    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.625rem;">
+                      <span style="font-size: 0.9375rem; font-weight: 700; color: #075985;">{{ sel.kind }}</span>
+                      <sc-if value="{{ sel.hasNumber }}" hint-placeholder-val="{{ true }}">
+                        <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; padding: 0.125rem 0.4375rem; border: 1px solid #b7c1cc; border-radius: 0.25rem; background: #edf2f7; color: #4b5563;">{{ sel.number }}</code>
+                      </sc-if>
+                      <sc-if value="{{ sel.noNumber }}">
+                        <span style="font-size: 0.8125rem; color: #667085;">no exam number</span>
+                      </sc-if>
+                      <span style="display: inline-flex; align-items: center; padding: 0.125rem 0.5rem; border-radius: 0.25rem; font-size: 0.8125rem; font-weight: 700; border: 1px solid {{ sel.chipBorder }}; background: {{ sel.chipBg }}; color: {{ sel.chipFg }};">{{ sel.statusLabel }}</span>
+                    </div>
+                    <h3 style="font-size: 1.375rem; letter-spacing: -0.015em;">{{ sel.title }}</h3>
+                    <p style="max-width: 64ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">{{ sel.blurb }}</p>
+                    <sc-if value="{{ sel.hasPath }}" hint-placeholder-val="{{ true }}">
+                      <p style="font-size: 0.8125rem; color: #4b5563;">{{ sel.scope }} — at <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace;">{{ sel.path }}</code></p>
+                    </sc-if>
+                  </div>
+                  <div style="display: grid; gap: 0.5rem; min-width: 13rem;">
+                    <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; font-size: 0.9375rem; cursor: pointer;" style-hover="background: #0c4a6e;">{{ sel.action }}</button>
+                    <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.9375rem; cursor: pointer;" style-hover="background: #edf2f7;">{{ sel.secondary }}</button>
+                  </div>
+                </div>
+
+                <div role="tablist" aria-label="Record detail" style="display: flex; flex-wrap: wrap; gap: 1.25rem; border-block-end: 1px solid #b7c1cc;">
+                  <sc-for list="{{ tabs1 }}" as="tab" hint-placeholder-count="2">
+                    <button type="button" role="tab" aria-selected="{{ tab.on }}" onClick="{{ tab.pick }}" style="min-height: 2.75rem; padding: 0 0.125rem; border: 0; border-block-end: 2px solid transparent; background: transparent; font: inherit; font-size: 0.9375rem; font-weight: 700; cursor: pointer; margin-block-end: -1px; color: {{ tab.fg }}; border-block-end-color: {{ tab.rule }};">{{ tab.label }}</button>
+                  </sc-for>
+                </div>
+
+                <sc-if value="{{ showFactsTab }}" hint-placeholder-val="{{ true }}">
+                  <div style="display: grid; gap: 0.75rem;">
+                    <dl style="display: grid; margin: 0;">
+                      <sc-for list="{{ selFacts }}" as="fact" hint-placeholder-count="6">
+                        <div style="display: grid; grid-template-columns: 10rem minmax(0, 1fr); gap: 0.25rem 1.25rem; padding-block: 0.6875rem; border-block-start: 1px solid #e2e7ec;">
+                          <dt style="font-size: 0.8125rem; font-weight: 700; color: #4b5563;">{{ fact.label }}</dt>
+                          <dd style="margin: 0; font-size: 0.9375rem; text-wrap: pretty;">{{ fact.value }}</dd>
+                        </div>
+                      </sc-for>
+                    </dl>
+                    <sc-if value="{{ showSourceReceipts }}" hint-placeholder-val="{{ true }}">
+                      <p style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563; border-block-start: 1px solid #b7c1cc; padding-block-start: 0.625rem;">{{ sel.receipt }}</p>
+                    </sc-if>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ showAreasTab }}">
+                  <div style="display: grid; gap: 1rem;" data-comment-anchor="99f1381a4a-div">
+                    <p style="max-width: 74ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">{{ sel.areaNote }}</p>
+
+                    <div style="display: grid; gap: 0.875rem;">
+                      <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.375rem 1rem;">
+                        <strong style="font-size: 0.9375rem;">How this test is built</strong>
+                        <span style="font-size: 0.8125rem; color: #4b5563;">Every value is quoted. Your announcement governs if it says anything different.</span>
+                      </div>
+                      <dl style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0;">
+                        <sc-for list="{{ formatFacts }}" as="f" hint-placeholder-count="4">
+                          <div style="display: grid; gap: 0.25rem; align-content: start; padding-inline: 1rem 0.75rem; border-inline-start: 2px solid #17202a;">
+                            <dt style="font-size: 1.125rem; font-weight: 700; letter-spacing: -0.01em; line-height: 1.25;">{{ f.value }}</dt>
+                            <dd style="margin: 0; font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">{{ f.label }}</dd>
+                          </div>
+                        </sc-for>
+                      </dl>
+                      <p style="padding: 0.5rem 0.875rem; border-inline-start: 0.25rem solid #854d0e; background: #fffaeb; font-size: 0.875rem; color: #17202a; text-wrap: pretty;">Neither the number of questions nor the split between areas is published. We do not estimate either — no practice-set length here is a claim about the real one.</p>
+                    </div>
+
+                    <div style="display: grid; gap: 0; padding-block-start: 0.25rem;">
+                      <sc-for list="{{ selAreas }}" as="area" hint-placeholder-count="3">
+                        <div style="display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: 0 0.75rem; padding-block: 1.125rem; border-block-start: 1px solid #b7c1cc;">
+                          <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 1.75rem; font-weight: 700; line-height: 1; color: #b7c1cc;">{{ area.n }}</span>
+                          <div style="display: grid; gap: 0.75rem; min-width: 0;">
+                            <div style="display: grid; gap: 0.1875rem;">
+                              <h4 style="font-size: 1.125rem; letter-spacing: -0.015em;">{{ area.name }}</h4>
+                              <p style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">{{ area.gist }}</p>
+                            </div>
+                            <dl style="display: grid; gap: 0.4375rem; margin: 0;">
+                              <sc-for list="{{ area.evidence }}" as="e" hint-placeholder-count="3">
+                                <div style="display: grid; grid-template-columns: 8rem minmax(0, 1fr); gap: 0.125rem 1rem;">
+                                  <dt style="font-size: 0.8125rem; font-weight: 700; color: #075985;">{{ e.label }}</dt>
+                                  <dd style="margin: 0; font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">{{ e.value }}</dd>
+                                </div>
+                              </sc-for>
+                            </dl>
+                            <sc-if value="{{ showSourceReceipts }}" hint-placeholder-val="{{ true }}">
+                              <p style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.6875rem; color: #667085;">{{ area.source }}</p>
+                            </sc-if>
+                          </div>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-if>
+              </article>
+            </sc-if>
+          </div>
+
+          <p style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">The announcement for a specific exam controls its title, competition type, eligibility, participating jurisdictions, filing terms and subjects; the admission notice controls administration-specific instructions.</p>
+        </section>
+
+        <section id="tests" style="display: grid; gap: 1rem; scroll-margin: 1.5rem;">
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem;">
+            <h2 style="font-size: 1.5rem; letter-spacing: -0.02em;">Take a test now — no exam chosen, no account</h2>
+            <span style="font-size: 0.8125rem; color: #4b5563;">Everything below runs offline once the pack is on your device.</span>
+          </div>
+          <ul style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem;">
+            <li style="display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; gap: 0.625rem; align-content: stretch; padding: 1.25rem; border: 1px solid #075985; border-radius: 0.5rem; background: #ffffff;">
+              <span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.75rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 32;">bolt</span>
+              <h3 style="font-size: 1.0625rem;">Quick set</h3>
+              <p style="font-size: 0.875rem; color: #4b5563;">10 questions mixed across all three areas, untimed. Reasoning and its source after every answer.</p>
+              <button type="button" style="justify-self: stretch; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; font-size: 0.9375rem; cursor: pointer;" style-hover="background: #0c4a6e;">Start</button>
+            </li>
+            <li style="display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; gap: 0.625rem; align-content: stretch; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+              <span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.75rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 32;">timer</span>
+              <h3 style="font-size: 1.0625rem;">Full-length set</h3>
+              <p style="font-size: 0.875rem; color: #4b5563;">All three areas, timed to the two-hour allowance the guide states. Feedback held to the end.</p>
+              <button type="button" style="justify-self: stretch; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.9375rem; cursor: pointer;" style-hover="background: #edf2f7;">Start</button>
+            </li>
+            <li style="display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; gap: 0.625rem; align-content: stretch; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+              <span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.75rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 32;">warning</span>
+              <h3 style="font-size: 1.0625rem;">Hazard drill</h3>
+              <p style="font-size: 0.875rem; color: #4b5563;">Area 3 only. Mark the hazard in the scene, or answer the text equivalent instead.</p>
+              <button type="button" style="justify-self: stretch; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.9375rem; cursor: pointer;" style-hover="background: #edf2f7;">Run a drill</button>
+            </li>
+            <li style="display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; gap: 0.625rem; align-content: stretch; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+              <span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.75rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 32;">handyman</span>
+              <h3 style="font-size: 1.0625rem;">Tool atlas</h3>
+              <p style="font-size: 0.875rem; color: #4b5563;">Areas 1 and 2 — 65 records, with the features that tell look-alikes apart.</p>
+              <button type="button" style="justify-self: stretch; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.9375rem; cursor: pointer;" style-hover="background: #edf2f7;">Browse</button>
+            </li>
+          </ul>
+        </section>
+
+        <footer id="footer" style="display: grid; gap: 1.5rem; padding: 1.75rem; border-radius: 0.625rem; background: #17202a; color: #dbe3ea; scroll-margin: 1.5rem;" data-comment-anchor="e68f34ad53-section">
+          <div style="display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr); gap: 1.5rem 2.5rem;">
+            <div style="display: grid; gap: 0.5rem; align-content: start;" data-comment-anchor="7daac2fa3f-div">
+              <strong style="font-size: 1.0625rem; color: #ffffff; letter-spacing: -0.01em;">Independent and unofficial</strong>
+              <p style="max-width: 48ch; font-size: 0.875rem; color: #9fb0c0; text-wrap: pretty;">Not affiliated with any civil service agency, and not a substitute for the official announcement or your admission notice. Questions here are written for this site — no secure or recalled test material is used.</p>
+            </div>
+            <nav aria-label="Provenance" style="display: grid; gap: 0.5rem; align-content: start;">
+              <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.6875rem; letter-spacing: 0.12em; text-transform: uppercase; color: #7f93a6;">Provenance</span>
+              <a href="#footer" style="font-size: 0.875rem; color: #dbe3ea; text-decoration: none;" style-hover="color: #ffffff; text-decoration: underline;">Every claim and its source</a>
+              <a href="#footer" style="font-size: 0.875rem; color: #dbe3ea; text-decoration: none;" style-hover="color: #ffffff; text-decoration: underline;">Corrections log</a>
+              <a href="#cycle" style="font-size: 0.875rem; color: #dbe3ea; text-decoration: none;" style-hover="color: #ffffff; text-decoration: underline;">How this page checks</a>
+            </nav>
+            <nav aria-label="Site" style="display: grid; gap: 0.5rem; align-content: start;">
+              <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.6875rem; letter-spacing: 0.12em; text-transform: uppercase; color: #7f93a6;">Site</span>
+              <a href="#top" style="font-size: 0.875rem; color: #dbe3ea; text-decoration: none;" style-hover="color: #ffffff; text-decoration: underline;">Offline packs</a>
+              <a href="#top" style="font-size: 0.875rem; color: #dbe3ea; text-decoration: none;" style-hover="color: #ffffff; text-decoration: underline;">Accessibility</a>
+              <a href="#top" style="font-size: 0.875rem; color: #dbe3ea; text-decoration: none;" style-hover="color: #ffffff; text-decoration: underline;">About this site</a>
+            </nav>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 2rem; padding-block-start: 1.125rem; border-block-start: 1px solid #4b5563; font-size: 0.8125rem; color: #9fb0c0;">
+            <p>Registry <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #dbe3ea;">v2026-08</code> — announcement facts re-read <strong style="color: #ffffff;">25 Aug 2026</strong>.</p>
+            <p>Every date on this page is quoted from the controlling announcement.</p>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: grid; gap: 0.625rem; justify-items: start;">
+    <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">Compact — <strong style="color: #17202a;">first visit</strong>: no local data, so no resume strip</span>
+    <div data-screen-label="Landing — compact" style="width: 24rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; overflow: hidden; background: #ffffff; box-shadow: 0 0.25rem 1rem rgb(23 32 42 / 8%);">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0 0.875rem; min-height: 3.25rem; border-block-end: 1px solid #b7c1cc;">
+        <a href="#top" style="display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 700; color: #17202a; text-decoration: none; font-size: 0.9375rem;">NY Custodian Exam</a>
+        <a href="#exam-board" style="display: inline-flex; align-items: center; min-height: 2rem; padding: 0.125rem 0.625rem; border: 1px dashed #667085; border-radius: 999rem; font-size: 0.75rem; color: #075985; font-weight: 700; text-decoration: none; white-space: nowrap;">Choose exam</a>
+      </div>
+
+      <div style="display: grid; gap: 1rem; padding: 1.5rem 1.125rem; background: #17202a; color: #ffffff;">
+        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; color: #9fb0c0;">Free · unofficial · offline</span>
+        <h1 style="font-size: 1.5rem; letter-spacing: -0.02em; line-height: 1.2;">Practice for NY custodian and janitor exams</h1>
+        <p style="font-size: 0.9375rem; color: #dbe3ea;">Source-backed questions for the Nassau and statewide entry-level plans. No account.</p>
+        <div style="display: grid; gap: 0.5rem;">
+          <a href="#cycle" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid transparent; border-radius: 0.5rem; background: #ffffff; color: #0c4a6e; font-weight: 700; font-size: 0.9375rem; text-decoration: none;">Where the cycle stands</a>
+          <a href="#tests" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid #9fb0c0; border-radius: 0.5rem; color: #ffffff; font-weight: 700; font-size: 0.9375rem; text-decoration: none;">Practice a set of 45</a>
+        </div>
+      </div>
+
+      <div style="padding: 1rem; background: #f7f8fa; display: grid; gap: 1.25rem;">
+        <section style="display: grid; gap: 0.625rem;">
+          <h2 style="font-size: 1.0625rem;">Where the cycle stands</h2>
+          <div style="display: grid; gap: 0.375rem; padding: 0.875rem 1rem; border: 1px solid #854d0e; border-radius: 0.5rem; background: #fffaeb;">
+            <strong style="font-size: 0.9375rem;">Nothing is open for filing</strong>
+            <p style="font-size: 0.8125rem; color: #4b5563;">Both 2026 Nassau announcements closed in July. Their 22 Aug exam date has passed and no notice of administration was found in the 25 Aug read.</p>
+            <button type="button" style="justify-self: start; display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0.5rem 0.875rem; border: 1px solid #854d0e; border-radius: 0.375rem; background: #ffffff; color: #854d0e; font-weight: 700; font-size: 0.875rem; cursor: pointer;">Watch for the next one</button>
+          </div>
+          <ol style="display: grid; gap: 0.375rem; padding: 0; list-style: none;">
+            <li style="display: flex; align-items: baseline; justify-content: space-between; gap: 0.75rem; padding: 0.625rem 0.875rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+              <span style="font-size: 0.875rem;">Open-competitive filing closed</span>
+              <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563; white-space: nowrap;">1 Jul</span>
+            </li>
+            <li style="display: flex; align-items: baseline; justify-content: space-between; gap: 0.75rem; padding: 0.625rem 0.875rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+              <span style="font-size: 0.875rem;">Promotion filing closed <span style="color: #4b5563;">(Jericho only)</span></span>
+              <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563; white-space: nowrap;">5 Jul</span>
+            </li>
+            <li style="display: flex; align-items: baseline; justify-content: space-between; gap: 0.75rem; padding: 0.625rem 0.875rem; border: 1px solid #854d0e; border-radius: 0.5rem; background: #ffffff;">
+              <span style="font-size: 0.875rem;">Announced exam date — unconfirmed</span>
+              <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #854d0e; font-weight: 700; white-space: nowrap;">22 Aug</span>
+            </li>
+          </ol>
+        </section>
+
+        <section style="display: grid; gap: 0.625rem;">
+          <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 0.5rem;">
+            <h2 style="font-size: 1.0625rem;">Exams</h2>
+            <span style="font-size: 0.75rem; color: #4b5563;">Nassau and statewide</span>
+          </div>
+          <ul style="display: grid; gap: 0.625rem;">
+            <li style="display: grid; gap: 0.5rem; padding: 1rem 1.125rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+              <span style="display: inline-flex; align-self: start; justify-self: start; padding: 0.125rem 0.5rem; border: 1px solid #854d0e; border-radius: 0.25rem; background: #fffaeb; color: #854d0e; font-size: 0.75rem; font-weight: 700;">Filing closed</span>
+              <h3 style="font-size: 1rem;">Nassau County Custodian</h3>
+              <p style="font-size: 0.8125rem; color: #4b5563;">Open competitive <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace;">60112026</code> and promotion <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace;">61012026</code> · $50.00 · exam date 22 Aug 2026, administration unconfirmed</p>
+              <div style="display: grid; gap: 0.375rem; padding: 0.75rem 0.875rem; border: 1px solid #b7c1cc; border-radius: 0.375rem; background: #f7f8fa;">
+                <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; color: #4b5563;">On this test — all three areas</span>
+                <ol style="display: grid; gap: 0.25rem; padding: 0; list-style: none; font-size: 0.8125rem;">
+                  <li>Cleaning Tools and Their Uses</li>
+                  <li>Tools Used for Minor Maintenance and Repair</li>
+                  <li>Health and Safety Issues in Custodial Work</li>
+                </ol>
+                <span style="font-size: 0.75rem; color: #4b5563;">Drawings can appear in all three. Wording unchanged from the 2017 and 2024 announcements.</span>
+              </div>
+              <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; font-size: 0.9375rem; cursor: pointer;" style-hover="background: #0c4a6e;">Study this exam</button>
+            </li>
+            <li style="display: grid; gap: 0.5rem; padding: 1rem 1.125rem; border: 1px dashed #667085; border-radius: 0.5rem; background: #ffffff;">
+              <span style="display: inline-flex; align-self: start; justify-self: start; padding: 0.125rem 0.5rem; border: 1px solid #b7c1cc; border-radius: 0.25rem; background: #f7f8fa; color: #4b5563; font-size: 0.75rem; font-weight: 700;">Plan only</span>
+              <h3 style="font-size: 1rem;">New York Entry-Level Custodians and Janitors</h3>
+              <p style="font-size: 0.8125rem; color: #4b5563;">The same three areas, but which of them appear on your test is set by your own announcement — and no filing window sits on this record.</p>
+              <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.9375rem; cursor: pointer;" style-hover="background: #edf2f7;">Check your announcement</button>
+            </li>
+          </ul>
+        </section>
+
+        <section style="display: grid; gap: 0.625rem;">
+          <h2 style="font-size: 1.0625rem;">Take a test now</h2>
+          <ul style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem;">
+            <li style="display: grid;"><a href="#tests" style="display: grid; gap: 0.25rem; align-content: start; min-height: 2.75rem; padding: 0.875rem; border: 1px solid #075985; border-radius: 0.5rem; background: #ffffff; text-decoration: none; color: #17202a;" style-hover="background: #e0f2fe;"><strong style="font-size: 0.9375rem; color: #0c4a6e;">Quick set</strong><span style="font-size: 0.8125rem; color: #4b5563;">10 questions, untimed</span></a></li>
+            <li style="display: grid;"><a href="#tests" style="display: grid; gap: 0.25rem; align-content: start; min-height: 2.75rem; padding: 0.875rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; text-decoration: none; color: #17202a;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem;">Full-length set</strong><span style="font-size: 0.8125rem; color: #4b5563;">All three subjects, timed</span></a></li>
+            <li style="display: grid;"><a href="#tests" style="display: grid; gap: 0.25rem; align-content: start; min-height: 2.75rem; padding: 0.875rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; text-decoration: none; color: #17202a;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem;">Hazard drill</strong><span style="font-size: 0.8125rem; color: #4b5563;">5 scenes</span></a></li>
+            <li style="display: grid;"><a href="#tests" style="display: grid; gap: 0.25rem; align-content: start; min-height: 2.75rem; padding: 0.875rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; text-decoration: none; color: #17202a;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem;">Tool atlas</strong><span style="font-size: 0.8125rem; color: #4b5563;">65 records</span></a></li>
+          </ul>
+        </section>
+
+        <section style="display: grid; gap: 0.625rem;">
+          <h2 style="font-size: 1.0625rem;">How the real test works</h2>
+          <dl style="display: grid; gap: 0; margin: 0; padding: 0.25rem 1rem 0.875rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+            <div style="display: grid; grid-template-columns: 6rem minmax(0, 1fr); gap: 0.75rem; padding-block: 0.625rem; border-block-end: 1px solid #e2e7ec;">
+              <dt style="font-size: 0.75rem; font-weight: 700; color: #4b5563;">Format</dt>
+              <dd style="margin: 0; font-size: 0.8125rem;">Multiple choice on paper, two hours for this series</dd>
+            </div>
+            <div style="display: grid; grid-template-columns: 6rem minmax(0, 1fr); gap: 0.75rem; padding-block: 0.625rem; border-block-end: 1px solid #e2e7ec;">
+              <dt style="font-size: 0.75rem; font-weight: 700; color: #4b5563;">Drawings</dt>
+              <dd style="margin: 0; font-size: 0.8125rem;">All three areas, not necessarily to scale</dd>
+            </div>
+            <div style="display: grid; grid-template-columns: 6rem minmax(0, 1fr); gap: 0.75rem; padding-block: 0.625rem;">
+              <dt style="font-size: 0.75rem; font-weight: 700; color: #4b5563;">Item count</dt>
+              <dd style="margin: 0; font-size: 0.8125rem; color: #4b5563;">Not published, so we do not claim one</dd>
+            </div>
+          </dl>
+          <a href="#footer" style="font-size: 0.875rem; font-weight: 700;">Where the answers come from →</a>
+        </section>
+      </div>
+
+      <nav aria-label="Primary" style="display: grid; grid-template-columns: repeat(4, 1fr); border-block-start: 1px solid #b7c1cc; background: #ffffff;">
+        <a href="#top" style="display: grid; justify-items: center; gap: 0.125rem; padding: 0.5rem 0.25rem 0.625rem; min-height: 3.5rem; color: #075985; font-size: 0.6875rem; text-decoration: none;"><span aria-hidden="true" style="display: inline-flex; align-items: center; justify-content: center; min-width: 3.25rem; padding: 0.125rem 0; font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1.3; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">school</span>Study</a>
+        <a href="#top" style="display: grid; justify-items: center; gap: 0.125rem; padding: 0.5rem 0.25rem 0.625rem; min-height: 3.5rem; color: #075985; font-size: 0.6875rem; text-decoration: none;"><span aria-hidden="true" style="display: inline-flex; align-items: center; justify-content: center; min-width: 3.25rem; padding: 0.125rem 0; font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1.3; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">book_2</span>Library</a>
+        <a href="#exam-board" aria-current="page" style="display: grid; justify-items: center; gap: 0.125rem; padding: 0.5rem 0.25rem 0.625rem; min-height: 3.5rem; color: #0c4a6e; font-size: 0.6875rem; font-weight: 700; text-decoration: none;"><span aria-hidden="true" style="display: inline-flex; align-items: center; justify-content: center; min-width: 3.25rem; padding: 0.125rem 0; border-radius: 999rem; background: #e0f2fe; font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1.3; font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">assignment</span>Exams</a>
+        <a href="#top" style="display: grid; justify-items: center; gap: 0.125rem; padding: 0.5rem 0.25rem 0.625rem; min-height: 3.5rem; color: #075985; font-size: 0.6875rem; text-decoration: none;"><span aria-hidden="true" style="display: inline-flex; align-items: center; justify-content: center; min-width: 3.25rem; padding: 0.125rem 0; font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1.3; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">menu</span>Menu</a>
+      </nav>
+    </div>
+  </div>
+
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;offlineStale&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Arrival state&quot;},
+  &quot;showSourceReceipts&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Records&quot;},
+  &quot;showStatewidePlan&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Records&quot;},
+  &quot;showContinueBand&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Turn 1 — resume strip&quot;}
+}">
+class Component extends DCLogic {
+  state = { selectedId: 'nassau-oc', tab: 'facts', query: '', status: 'All records', bId: 'nassau-oc', bTab: 'facts', bQuery: '', bStatus: 'All' };
+
+  // Turn 4 — /exams/ (exam-selector) on the §f-landing primitives, copy per CONTENT_DESIGN.md
+  statusTones = {
+    closed: { chipBorder: '#854d0e', chipBg: '#fffaeb', chipFg: '#854d0e' },
+    plan: { chipBorder: '#b7c1cc', chipBg: '#f7f8fa', chipFg: '#4b5563' },
+    open: { chipBorder: '#075985', chipBg: '#e0f2fe', chipFg: '#0c4a6e' }
+  };
+  factTones = {
+    'not-published': { chipLabel: 'Not published', chipBorder: '#667085', chipFg: '#4b5563', fg: '#4b5563', warn: false },
+    'not-applicable': { chipLabel: 'Not applicable', chipBorder: '#667085', chipFg: '#4b5563', fg: '#4b5563', warn: false },
+    unverified: { chipLabel: 'Unverified', chipBorder: '#667085', chipFg: '#4b5563', fg: '#4b5563', warn: false },
+    superseded: { chipLabel: 'Superseded', chipBorder: '#854d0e', chipFg: '#854d0e', fg: '#854d0e', warn: true },
+    conflicting: { chipLabel: 'Conflicting', chipBorder: '#854d0e', chipFg: '#854d0e', fg: '#854d0e', warn: true }
+  };
+  fact(f) {
+    const tone = this.factTones[f.state];
+    return Object.assign({ chipLabel: '', chipBorder: 'transparent', chipFg: '#17202a', fg: '#17202a', warn: false }, tone || {}, f, { hasChip: !!tone });
+  }
+
+  areas2 = {
+    cleaning: { n: '1', name: 'Cleaning Tools and Their Uses', gist: 'Recognizing cleaning tools and matching each one to the job it is meant for.', asked: 'A tool is shown as a drawing or described in words, and you match it to the job it is meant for.', have: '65 tool records, each with the features that separate it from its look-alikes.' },
+    repair: { n: '2', name: 'Tools Used for Minor Maintenance and Repair', gist: 'Hand tools for small repairs, and knowing when one has become unsafe to use.', asked: 'Choosing the right tool for a small repair, telling near-identical tools apart, and recognizing one that should be taken out of service.', have: 'Every question names the guidance it was written from, so a disagreement can be checked rather than argued.' },
+    safety: { n: '3', name: 'Health and Safety Issues in Custodial Work', gist: 'Safe work practices, chemicals and protective equipment, and what is wrong in a workplace scene.', asked: 'Safe practices, chemical handling and protective equipment, plus scenes where something in the workplace is wrong.', have: '18 hazard scenes, each with a text version, so the drawing is never the only way to answer.' }
+  };
+
+  built = [
+    { label: 'Format', value: 'Paper booklet' },
+    { label: 'Time allowed', value: 'Two hours' },
+    { label: 'Drawings', value: 'All three areas' },
+    { label: 'Passing', value: 'Rating of 70' }
+  ];
+
+  records = [
+    {
+      id: 'nassau-oc', kind: 'Open competitive', statusKind: 'closed', statusLabel: 'Filing closed', when: 'Filed June 11 to July 1, 2026',
+      title: 'Nassau County custodian', agency: 'Nassau County Civil Service Commission', number: '60112026',
+      keywords: 'nassau county custodian open competitive 60112026 school district boces village freeport farmingdale suffolk cleaner',
+      blurb: 'Open to the public: you qualify by experience, not by holding a Nassau job. Filing closed July 1, 2026, and the announced test date has passed with no notice found either way.',
+      match: 'Your announcement should name the Nassau County Civil Service Commission, the title Custodian, and say open competitive.',
+      action: 'See what practice covers', secondary: 'Watch for the next cycle',
+      areasSummary: 'On this test: all three areas',
+      areaNote: 'The announcement sets a written test over all three entry-level areas. The wording is unchanged from the 2017 and 2024 Nassau announcements.',
+      areaIds: ['cleaning', 'repair', 'safety'],
+      compactLine: 'Open competitive. Filing closed July 1, 2026; whether the August 22 test was held has not been published.',
+      proof: 'Nassau County Civil Service Commission, announcement for exam 60112026 and its June amendments, read August 25, 2026.',
+      tech: [
+        { label: 'Exam number', value: '60112026' },
+        { label: 'Fact sheet', value: 'nassau.oc.60112026 · line.nassau.oc-filing, line.nassau.oc-subjects' },
+        { label: 'Effective', value: '2026-06-11 · registry v2026-08 · read 2026-08-25' },
+        { label: 'Exam details route', value: '/ny/nassau-county/custodian/60112026/' }
+      ],
+      facts: [
+        { label: 'Filing period', value: 'June 11 to July 1, 2026, closing at 11:59 p.m. Eastern.' },
+        { label: 'Test date', value: 'August 22, 2026, as announced.' },
+        { label: 'Whether the test was held', value: 'No notice or eligible list had been published as of August 25, 2026.', state: 'not-published' },
+        { label: 'Fee', value: '$50.00.' },
+        { label: 'Who could file', value: 'Anyone with a year of building cleaning and maintenance, six months in a listed trade, or a year as a Cleaner in a Nassau school district.' },
+        { label: 'Residence', value: 'One year in Nassau County, continuing to appointment. Farmingdale UFSD No. 22 also admits Suffolk residents for that district only; the Village of Freeport has its own rule.' },
+        { label: 'Covered', value: 'Nassau school districts, school district libraries, BOCES, villages and special districts.' }
+      ]
+    },
+    {
+      id: 'nassau-promo', kind: 'Promotion', statusKind: 'closed', statusLabel: 'Filing closed', when: 'Filed from June 11, 2026',
+      title: 'Nassau County custodian', agency: 'Nassau County Civil Service Commission', number: '61012026',
+      keywords: 'nassau county custodian promotion 61012026 cleaner seniority jericho lynbrook library jurisdictions',
+      blurb: 'Only for Cleaners already employed in a participating Nassau jurisdiction. Two June amendments added jurisdictions after opening; the announced test date has passed with no notice either way.',
+      match: 'Your announcement should name the Nassau County Civil Service Commission, the title Custodian, and say promotion.',
+      action: 'See what practice covers', secondary: 'Watch for the next cycle',
+      areasSummary: 'On this test: all three areas',
+      areaNote: 'The announcement sets a written test over all three entry-level areas, the same three the open-competitive exam uses.',
+      areaIds: ['cleaning', 'repair', 'safety'],
+      compactLine: 'Promotion. Filing has closed; the last date, July 5, applied to Jericho Public Library only. Whether the August 22 test was held has not been published.',
+      proof: 'Nassau County Civil Service Commission, announcement for exam 61012026 and the June 18 and June 26 amendments, read August 25, 2026.',
+      tech: [
+        { label: 'Exam number', value: '61012026' },
+        { label: 'Fact sheet', value: 'nassau.promo.61012026 · line.nassau.promo-filing, line.nassau.promo-amendments' },
+        { label: 'Effective', value: '2026-06-11 · registry v2026-08 · read 2026-08-25' },
+        { label: 'Exam details route', value: '/ny/nassau-county/custodian/61012026/' }
+      ],
+      facts: [
+        { label: 'Filing period', value: 'Opened June 11, 2026. Applications were accepted through July 5, 2026 for Jericho Public Library only.' },
+        { label: 'Test date', value: 'August 22, 2026, as announced.' },
+        { label: 'Whether the test was held', value: 'No notice had been published as of August 25, 2026.', state: 'not-published' },
+        { label: 'Fee', value: '$50.00.' },
+        { label: 'Who could file', value: 'Cleaners with two continuous years in the non-competitive class in the jurisdiction where promotion was sought, immediately before the test and continuing to appointment. Qualifying part-time and §52.10(a) provisional service count.' },
+        { label: 'Participating jurisdictions', value: '43 as of June 26, 2026, when Jericho Public Library was added. The announcement first named 41, and Lynbrook UFSD was added June 18. The earlier counts stay on record.', state: 'superseded' },
+        { label: 'Seniority credit', value: '0.10 point for each six months of qualifying service, up to 20 years and 4 points.' }
+      ]
+    },
+    {
+      id: 'statewide', kind: 'Statewide plan', statusKind: 'plan', statusLabel: 'Plan only', when: 'No filing window on this plan',
+      title: 'New York entry-level custodians and janitors', agency: 'New York State Department of Civil Service', number: '',
+      keywords: 'new york statewide entry level custodians janitors plan test guide department of civil service',
+      blurb: 'For any other New York jurisdiction whose announcement uses the state\u2019s entry-level plan. No filing window, fee or date sits on this plan, and this page does not invent one.',
+      match: 'Your announcement is from a New York jurisdiction other than Nassau and refers to the state\u2019s entry-level Custodians and Janitors plan. If you are not sure, check your announcement.',
+      action: 'See what practice covers', secondary: 'Check your announcement',
+      areasSummary: 'On this test: the three areas the guide names',
+      areaNote: 'The guide names these three areas. Which of them appear on your test is set by your own announcement, not by this plan.',
+      areaIds: ['cleaning', 'repair', 'safety'],
+      compactLine: 'The plan beneath jurisdiction announcements. Which of the three areas your test uses is set by your own announcement.',
+      proof: 'New York State Department of Civil Service, Test Guide for the Entry-Level Custodians and Janitors Series, read August 25, 2026.',
+      tech: [
+        { label: 'Fact sheet', value: 'none attached · line.state.entry-level-guide' },
+        { label: 'Registry', value: 'v2026-08 · read 2026-08-25' },
+        { label: 'Exam details route', value: '/ny/' }
+      ],
+      facts: [
+        { label: 'The controlling document', value: 'Test Guide for the Entry-Level Custodians and Janitors Series, New York State Department of Civil Service.' },
+        { label: 'Filing period and fee', value: 'This is a plan, not an announcement. Your jurisdiction\u2019s announcement sets them.', state: 'not-applicable' },
+        { label: 'Test date', value: 'Set by your jurisdiction\u2019s announcement.', state: 'not-applicable' },
+        { label: 'Which areas your test uses', value: 'The guide names three. Your announcement says which of them appear.' }
+      ]
+    }
+  ];
+
+  formatFacts = [
+    { value: 'Paper booklet', label: 'Multiple choice, on a machine-scored answer sheet' },
+    { value: 'Two hours', label: 'The allowance stated for this series' },
+    { value: 'All three areas', label: 'Use drawings, and not necessarily to scale' },
+    { value: 'Rating of 70', label: 'A converted rating, not percent correct — and nothing deducted for a wrong answer' }
+  ];
+
+  areas = {
+    cleaning: {
+      n: '1',
+      name: 'Cleaning Tools and Their Uses',
+      gist: 'Recognizing cleaning tools and matching each one to the job it is meant for.',
+      evidence: [
+        { label: 'How it is asked', value: 'A tool is shown as a drawing or described in words, and you match it to the job it is meant for.' },
+        { label: 'What we hold', value: '65 reviewed tool records, each carrying the observable features that separate it from its look-alikes.' },
+        { label: 'Named in', value: 'Listed by name in the state test guide, and repeated unchanged in both Nassau announcements.' }
+      ],
+      source: 'line.state.entry-level-guide, line.nassau.oc-subjects · re-read 2026-08-25'
+    },
+    repair: {
+      n: '2',
+      name: 'Tools Used for Minor Maintenance and Repair',
+      gist: 'Hand tools for small repairs, and knowing when one has become unsafe to use.',
+      evidence: [
+        { label: 'How it is asked', value: 'Choosing the right tool for a small repair, telling near-identical tools apart, and recognizing one that should be taken out of service.' },
+        { label: 'What we hold', value: 'Every question cites the guidance it was written from, so a disagreement can be checked rather than argued.' },
+        { label: 'Named in', value: 'Listed by name in the state test guide, and carried verbatim into the 2017, 2024 and 2026 Nassau announcements.' }
+      ],
+      source: 'line.state.entry-level-guide, line.nassau.oc-subjects · re-read 2026-08-25'
+    },
+    safety: {
+      n: '3',
+      name: 'Health and Safety Issues in Custodial Work',
+      gist: 'Safe work practices, chemicals and protective equipment, and what is wrong in a workplace scene.',
+      evidence: [
+        { label: 'How it is asked', value: 'Safe practices, chemical handling and protective equipment, plus scenes where something in the workplace is wrong.' },
+        { label: 'What we hold', value: '18 hazard scenes, each with a text equivalent so the drawing is never the only way to answer.' },
+        { label: 'Named in', value: 'The third area the state test guide names, and the one both Nassau announcements list last.' }
+      ],
+      source: 'line.state.entry-level-guide, line.nassau.oc-subjects · re-read 2026-08-25'
+    }
+  };
+
+  exams = [
+    {
+      id: 'nassau-oc',
+      title: 'Nassau County Custodian',
+      kind: 'Open competitive',
+      number: '60112026',
+      hasNumber: true,
+      status: 'closed',
+      statusLabel: 'Filing closed',
+      when: 'Filed 11 Jun – 1 Jul 2026',
+      keywords: 'nassau county custodian open competitive 60112026 school district boces village freeport farmingdale suffolk cleaner',
+      blurb: 'Nassau County Civil Service Commission — the entry-level series layer over the statewide plan. Filing closed on 1 July and the announced 22 August exam date has passed with no post-administration notice found.',
+      scope: 'Nassau school districts, libraries, BOCES, villages and special districts',
+      path: '/ny/nassau-county/custodian/',
+      action: 'Practice these areas',
+      secondary: 'Watch for the next cycle',
+      receipt: 'line.nassau.oc-filing · effective 2026-06-11 · re-read 2026-08-25',
+      facts: [
+        { label: 'Filing', value: '11 Jun – 1 Jul 2026, 11:59 PM Eastern' },
+        { label: 'Exam date', value: '22 Aug 2026, as announced — administration unconfirmed' },
+        { label: 'Fee', value: '$50.00' },
+        { label: 'Who could file', value: 'One of three experience routes — a year of building cleaning and maintenance, six months in a listed trade, or a year as a Cleaner in a Nassau school district' },
+        { label: 'Residence', value: 'One year in Nassau, continuing to appointment. Farmingdale UFSD No. 22 admits Suffolk residents for that district only; Village of Freeport carries its own rule' },
+        { label: 'Covered', value: 'Nassau school districts, school district libraries, BOCES, villages and special districts' }
+      ],
+      areaIds: ['cleaning', 'repair', 'safety'],
+      areaNote: 'The announcement specifies a written test over all three entry-level areas. Wording is unchanged from the 2017 and 2024 Nassau announcements.'
+    },
+    {
+      id: 'nassau-promo',
+      title: 'Nassau County Custodian',
+      kind: 'Promotion',
+      number: '61012026',
+      hasNumber: true,
+      status: 'closed',
+      statusLabel: 'Filing closed',
+      when: 'Filed from 11 Jun 2026',
+      keywords: 'nassau county custodian promotion 61012026 cleaner seniority jericho lynbrook library jurisdictions',
+      blurb: 'The promotion route for serving Cleaners in a participating Nassau jurisdiction. Two June amendments added jurisdictions after opening; the announced 22 August exam date has passed with no notice either way.',
+      scope: '43 jurisdictions after the two June amendments',
+      path: '/ny/nassau-county/custodian/',
+      action: 'Practice these areas',
+      secondary: 'Watch for the next cycle',
+      receipt: 'line.nassau.promo-filing, line.nassau.promo-amendments · effective 2026-06-11 · re-read 2026-08-25',
+      facts: [
+        { label: 'Filing', value: 'Opened 11 Jun 2026. Accepted to 5 Jul 2026 for Jericho Public Library alone' },
+        { label: 'Exam date', value: '22 Aug 2026, as announced — administration unconfirmed' },
+        { label: 'Fee', value: '$50.00' },
+        { label: 'Who could file', value: 'Two continuous years as Cleaner in the non-competitive class in the jurisdiction where promotion was sought, immediately before the written test and continuing to appointment. Qualifying part-time service counts, as does provisional time under §52.10(a)' },
+        { label: 'Jurisdictions', value: '41 named at first; Lynbrook UFSD (S185) added 18 Jun and Jericho Public Library (L345) added 26 Jun — 43 in all' },
+        { label: 'Seniority', value: '0.10 point per six months of qualifying service, capped at 20 years and 4 points' }
+      ],
+      areaIds: ['cleaning', 'repair', 'safety'],
+      areaNote: 'The announcement specifies a written test over all three entry-level areas — the same three the open-competitive exam uses.'
+    },
+    {
+      id: 'statewide',
+      title: 'New York Entry-Level Custodians and Janitors',
+      kind: 'Statewide plan',
+      number: '',
+      hasNumber: false,
+      status: 'plan',
+      statusLabel: 'Plan only',
+      when: 'No filing window on this record',
+      keywords: 'new york statewide entry level custodians janitors plan test guide department of civil service',
+      blurb: 'For any jurisdiction whose controlling announcement uses the statewide entry-level plan. No filing window, fee or date sits on this record, and we do not invent one.',
+      scope: 'Any jurisdiction whose announcement uses the statewide plan',
+      path: '',
+      action: 'Practice these areas',
+      secondary: 'Check your announcement',
+      receipt: 'line.state.entry-level-guide · re-read 2026-08-25',
+      facts: [
+        { label: 'Source', value: 'Test Guide for the Entry-Level Custodians and Janitors Series, NYS Department of Civil Service' },
+        { label: 'Fact sheet', value: 'None — no announcement is attached to this record' },
+        { label: 'Filing', value: 'Set by whichever announcement covers your jurisdiction' },
+        { label: 'Fee', value: 'Set by that announcement' },
+        { label: 'Check yours', value: 'Paste what your announcement says and we will tell you whether this pack matches it' }
+      ],
+      areaIds: ['cleaning', 'repair', 'safety'],
+      areaNote: 'The guide names these three areas, but which of them appear on your test is set by your own announcement — not by this record.'
+    }
+  ];
+
+  tone(status) {
+    if (status === 'closed') return { chipBorder: '#854d0e', chipBg: '#fffaeb', chipFg: '#854d0e' };
+    if (status === 'plan') return { chipBorder: '#b7c1cc', chipBg: '#f7f8fa', chipFg: '#4b5563' };
+    return { chipBorder: '#075985', chipBg: '#e0f2fe', chipFg: '#0c4a6e' };
+  }
+
+  matches(exam, query, status) {
+    const q = query.trim().toLowerCase();
+    const hitQuery = !q || (exam.title + ' ' + exam.kind + ' ' + exam.number + ' ' + exam.keywords).toLowerCase().includes(q);
+    const hitStatus = status === 'All records'
+      || (status === 'Open for filing' && exam.status === 'open')
+      || (status === 'Closed' && exam.status === 'closed')
+      || (status === 'Plan only' && exam.status === 'plan');
+    return hitQuery && hitStatus;
+  }
+
+  renderVals() {
+    const s = this.state;
+    const showStatewidePlan = this.props.showStatewidePlan ?? true;
+    const pool = this.exams.filter(e => showStatewidePlan || e.id !== 'statewide');
+    const visible = pool.filter(e => this.matches(e, s.query, s.status));
+    const sel = visible.find(e => e.id === s.selectedId) || visible[0] || null;
+
+    const examRows = visible.map(e => {
+      const on = !!sel && e.id === sel.id;
+      return Object.assign({}, this.tone(e.status), {
+        id: e.id,
+        kind: e.kind,
+        number: e.number,
+        hasNumber: e.hasNumber,
+        noNumber: !e.hasNumber,
+        title: e.title,
+        when: e.when,
+        statusLabel: e.statusLabel,
+        on,
+        border: on ? '#075985' : '#b7c1cc',
+        bg: on ? '#e0f2fe' : '#ffffff',
+        shadow: on ? 'inset 0.1875rem 0 0 #075985' : 'none',
+        select: () => this.setState({ selectedId: e.id })
+      });
+    });
+
+    const tabDefs = [['facts', 'Announcement facts'], ['areas', 'On the test']];
+    const tabs = tabDefs.map(([id, label]) => ({
+      label,
+      on: s.tab === id,
+      fg: s.tab === id ? '#0c4a6e' : '#4b5563',
+      rule: s.tab === id ? '#075985' : 'transparent',
+      pick: () => this.setState({ tab: id })
+    }));
+
+    const statusFilters = ['All records', 'Open for filing', 'Closed', 'Plan only'].map(label => ({
+      label,
+      on: s.status === label,
+      bg: s.status === label ? '#17202a' : 'transparent',
+      fg: s.status === label ? '#ffffff' : '#4b5563',
+      pick: () => this.setState({ status: label })
+    }));
+
+    // Turn 4 — exam-selector route
+    const offlineStale = this.props.offlineStale ?? false;
+    const pool4 = this.records.filter(r => showStatewidePlan || r.id !== 'statewide');
+    const bq = s.bQuery.trim().toLowerCase();
+    const statusOk = (r) => s.bStatus === 'All'
+      || (s.bStatus === 'Open for filing' && r.statusKind === 'open')
+      || (s.bStatus === 'Filing closed' && r.statusKind === 'closed')
+      || (s.bStatus === 'Plan only' && r.statusKind === 'plan');
+    const visible4 = pool4.filter(r => (!bq || (r.title + ' ' + r.kind + ' ' + r.number + ' ' + r.agency + ' ' + r.keywords).toLowerCase().includes(bq)) && statusOk(r));
+    const shown = visible4.find(r => r.id === s.bId) || visible4[0] || null;
+    const rows = visible4.map(r => {
+      const on = !!shown && r.id === shown.id;
+      return Object.assign({}, this.statusTones[r.statusKind], {
+        id: r.id, title: r.title, kind: r.kind, when: r.when, statusLabel: r.statusLabel, on,
+        border: on ? '#075985' : '#b7c1cc',
+        bg: on ? '#e0f2fe' : '#ffffff',
+        shadow: on ? 'inset 0.25rem 0 0 #075985' : 'none',
+        select: () => this.setState({ bId: r.id })
+      });
+    });
+    const filters = ['All', 'Open for filing', 'Filing closed', 'Plan only'].map(label => ({
+      label,
+      on: s.bStatus === label,
+      bg: s.bStatus === label ? '#17202a' : 'transparent',
+      fg: s.bStatus === label ? '#ffffff' : '#4b5563',
+      pick: () => this.setState({ bStatus: label })
+    }));
+    const tabs4 = [['facts', 'Announcement facts'], ['areas', 'On the test']].map(([id, label]) => ({
+      label,
+      on: s.bTab === id,
+      fg: s.bTab === id ? '#0c4a6e' : '#4b5563',
+      rule: s.bTab === id ? '#075985' : 'transparent',
+      pick: () => this.setState({ bTab: id })
+    }));
+    const d = shown ? Object.assign({}, this.statusTones[shown.statusKind], {
+      kind: shown.kind, statusLabel: shown.statusLabel, title: shown.title, blurb: shown.blurb, match: shown.match,
+      action: shown.action, secondary: shown.secondary,
+      facts: shown.facts.map(f => this.fact(f)),
+      proof: shown.proof, tech: shown.tech, areaNote: shown.areaNote,
+      areas: shown.areaIds.map(id => this.areas2[id])
+    }) : {};
+    const compactCards = pool4.map(r => Object.assign({}, this.statusTones[r.statusKind], {
+      id: r.id, title: r.title, statusLabel: r.statusLabel, compactLine: r.compactLine, areaNote: r.areaNote,
+      areasSummary: r.areasSummary, areas: r.areaIds.map(id => this.areas2[id]), action: r.action
+    }));
+    const emptyTitle = 'No exam matches ' + (bq ? '\u201c' + s.bQuery.trim() + '\u201d' : 'this filter');
+
+    return {
+      offlineStale,
+      online: !offlineStale,
+      registryCount: pool4.length,
+      bQuery: s.bQuery,
+      onBQuery: (ev) => this.setState({ bQuery: ev.target.value }),
+      clearBoard: () => this.setState({ bQuery: '', bStatus: 'All' }),
+      filters,
+      rows,
+      noRows: visible4.length === 0,
+      emptyTitle,
+      hasShown: !!shown,
+      d,
+      tabs: tabs4,
+      showFacts: s.bTab === 'facts',
+      showAreas: s.bTab === 'areas',
+      built: this.built,
+      compactCards,
+
+      showContinueBand: this.props.showContinueBand ?? true,
+      showSourceReceipts: this.props.showSourceReceipts ?? true,
+      showStatewidePlan,
+      query: s.query,
+      onQuery: (ev) => this.setState({ query: ev.target.value }),
+      statusFilters,
+      examRows,
+      noMatches: visible.length === 0,
+      hasSelection: !!sel,
+      sel: sel ? Object.assign({}, this.tone(sel.status), sel, { hasPath: !!sel.path, noNumber: !sel.hasNumber }) : {},
+      formatFacts: this.formatFacts,
+      selFacts: sel ? sel.facts : [],
+      selAreas: sel ? sel.areaIds.map(id => this.areas[id]) : [],
+      tabs1: tabs,
+      showFactsTab: s.tab === 'facts',
+      showAreasTab: s.tab === 'areas'
+    };
+  }
+}
+</script>
+</body>
+</html>

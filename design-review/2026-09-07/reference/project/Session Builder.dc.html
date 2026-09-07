@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #e9edf1; color: #17202a; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+    a { color: #075985; }
+    a:hover { color: #0c4a6e; }
+    h1, h2, h3, h4, h5, p, dl, dd { margin: 0; }
+    ul, ol { margin: 0; }
+    ul { padding: 0; list-style: none; }
+    button, input, select, textarea { font: inherit; }
+    :focus-visible { outline: 0.1875rem solid #1d4ed8; outline-offset: 0.1875rem; }
+  </style>
+</helmet>
+
+<div data-screen-label="Session setup" style="display: grid; gap: 1.5rem; padding: clamp(1.5rem, 3vw, 2.5rem);">
+  <div style="display: grid; gap: 0.5rem;">
+    <span style="font-size: 0.8125rem; font-weight: 700; color: #4b5563;">Set up</span>
+    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+      <sc-for list="{{ chips }}" as="chip" hint-placeholder-count="3">
+        <button type="button" aria-pressed="{{ chip.pressed }}" onClick="{{ chip.onClick }}" style="{{ chip.style }}">{{ chip.label }}</button>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="display: grid; gap: 1.25rem; max-width: 58rem; padding: 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff;">
+    <div style="display: grid; gap: 0.5rem; padding: 1rem 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #f7f8fa;">
+      <strong style="font-size: 0.9375rem;">What every set draws on</strong>
+      <p style="margin: 0; max-width: 68ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">One bank of 90 questions written for the New York Entry-Level Custodians and Janitors series, across the three subject areas its test guide names. What you choose below changes how many questions you answer and which areas they come from — nothing here is set to a particular announcement.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; padding-block-start: 0.25rem;">
+        <a href="Study Hub.dc.html#covers" style="font-size: 0.875rem; font-weight: 700;">What practice covers</a>
+        <a href="Landing.dc.html" style="font-size: 0.875rem; font-weight: 700;">Compare with your announcement</a>
+      </div>
+    </div>
+
+    <sc-if value="{{ isPractice }}" hint-placeholder-val="{{ true }}">
+      <fieldset style="display: grid; gap: 1.25rem; border: 0; margin: 0; padding: 0; min-inline-size: 0;">
+        <legend style="padding: 0 0 0.5rem; font-weight: 700; font-size: clamp(1.125rem, 1.05rem + 0.3vw, 1.375rem);">Practice set</legend>
+
+        <div role="group" aria-labelledby="sb-areas-label" style="display: grid; gap: 0.625rem;">
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.375rem 1rem;">
+            <span id="sb-areas-label" style="font-weight: 700;">Subject areas</span>
+            <span style="font-size: 0.875rem; color: #4b5563;">{{ areaSummary }}</span>
+          </div>
+          <sc-for list="{{ areaOptions }}" as="area" hint-placeholder-count="3">
+            <label style="display: grid; grid-template-columns: 1.25rem minmax(0, 1fr) auto; gap: 0 0.75rem; align-items: baseline; min-height: 2.75rem; padding-block: 0.5rem; border-block-start: 1px solid #e2e7ec; cursor: pointer;">
+              <input type="checkbox" checked="{{ area.checked }}" onChange="{{ area.onChange }}" style="width: 1.25rem; height: 1.25rem; accent-color: #075985;" />
+              <span style="display: grid; gap: 0.125rem; min-width: 0;">
+                <strong style="font-size: 0.9375rem;">{{ area.label }}</strong>
+                <span style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">{{ area.gist }}</span>
+              </span>
+              <span style="font-size: 0.875rem; color: #4b5563; white-space: nowrap;">{{ area.countLabel }}</span>
+            </label>
+          </sc-for>
+        </div>
+
+        <div role="radiogroup" aria-labelledby="sb-length-label" style="display: grid; gap: 0.5rem;">
+          <span id="sb-length-label" style="font-weight: 700;">How many questions</span>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem;">
+            <sc-for list="{{ lengthOptions }}" as="opt" hint-placeholder-count="3">
+              <label style="display: flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; cursor: pointer;">
+                <input type="radio" name="sb-length" checked="{{ opt.checked }}" onChange="{{ opt.onChange }}" style="width: 1.25rem; height: 1.25rem; accent-color: #075985;" />
+                <span style="font-size: 0.9375rem; font-weight: 550;">{{ opt.label }}</span>
+              </label>
+            </sc-for>
+          </div>
+          <p style="margin: 0; font-size: 0.875rem; color: #4b5563;">Forty-five is the shortest set the test guide publishes; ninety is the whole bank. None of the three is a claim about how long your test will be.</p>
+        </div>
+
+        <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">Feedback after every committed answer is what a practice set is. It is not a switch on this form. Illustrated and written questions are drawn together as the areas you picked contain them.</p>
+      </fieldset>
+    </sc-if>
+
+    <sc-if value="{{ isHazard }}">
+      <fieldset style="display: grid; gap: 1.25rem; border: 0; margin: 0; padding: 0; min-inline-size: 0;">
+        <legend style="padding: 0 0 0.5rem; font-weight: 700; font-size: clamp(1.125rem, 1.05rem + 0.3vw, 1.375rem);">Hazard drill</legend>
+        <p style="margin: 0; max-width: 68ch; font-size: 0.9375rem; color: #4b5563;">Eighteen reviewed workplace scenes cover area 3, health and safety in custodial work. A drill is scenes only; it is counted apart from question sets.</p>
+        <label style="display: grid; gap: 0.5rem; max-width: 26rem;"><span style="font-weight: 700;">Setting</span><select value="{{ setting }}" onChange="{{ onSetting }}" style="width: 100%; min-height: 2.75rem; padding: 0.75rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff;"><option value="all">All reviewed settings — 18 scenes</option><option value="stairs">Stairwells and corridors — 6 scenes</option><option value="restrooms">Restrooms — 5 scenes</option><option value="classrooms">Classrooms — 7 scenes</option></select></label>
+        <div role="radiogroup" aria-labelledby="sb-scenes-label" style="display: grid; gap: 0.5rem;">
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.375rem 1rem;">
+            <span id="sb-scenes-label" style="font-weight: 700;">How many scenes</span>
+            <span style="font-size: 0.875rem; color: #4b5563;">{{ sceneAvailLabel }}</span>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem;">
+            <sc-for list="{{ sceneOptions }}" as="opt" hint-placeholder-count="3">
+              <label style="display: flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; cursor: pointer;">
+                <input type="radio" name="sb-scenes" checked="{{ opt.checked }}" onChange="{{ opt.onChange }}" style="width: 1.25rem; height: 1.25rem; accent-color: #075985;" />
+                <span style="font-size: 0.9375rem; font-weight: 550;">{{ opt.label }}</span>
+              </label>
+            </sc-for>
+          </div>
+        </div>
+        <div role="radiogroup" aria-labelledby="sb-construct-label" style="display: grid; gap: 0.5rem;">
+          <span id="sb-construct-label" style="font-weight: 700;">How you answer</span>
+          <sc-for list="{{ constructOptions }}" as="opt" hint-placeholder-count="2">
+            <label style="display: grid; grid-template-columns: 1.25rem minmax(0, 1fr); gap: 0 0.75rem; align-items: baseline; min-height: 2.75rem; padding-block: 0.5rem; border-block-start: 1px solid #e2e7ec; cursor: pointer;">
+              <input type="radio" name="sb-construct" checked="{{ opt.checked }}" onChange="{{ opt.onChange }}" style="width: 1.25rem; height: 1.25rem; accent-color: #075985;" />
+              <span style="display: grid; gap: 0.125rem; min-width: 0;">
+                <strong style="font-size: 0.9375rem;">{{ opt.label }}</strong>
+                <span style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">{{ opt.gist }}</span>
+              </span>
+            </label>
+          </sc-for>
+          <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">Both are keyboard operable and both stay available. This choice decides which measurement you are taking, and the two are reported separately.</p>
+        </div>
+      </fieldset>
+    </sc-if>
+
+    <sc-if value="{{ isSimulation }}">
+      <fieldset style="display: grid; gap: 1.25rem; border: 0; margin: 0; padding: 0; min-inline-size: 0;">
+        <legend style="padding: 0 0 0.5rem; font-weight: 700; font-size: clamp(1.125rem, 1.05rem + 0.3vw, 1.375rem);">Full simulation</legend>
+        <div style="display: flex; align-items: start; gap: 0.5rem; padding: 0.75rem 1rem; border: 1px solid #854d0e; border-radius: 0.5rem; background: #fffaeb; color: #854d0e; font-size: 0.9375rem;"><span aria-hidden="true">▲</span><span>This is a practice run on this site, not the examination. Its length, its mix and its result are ours, and no official test length or passing mark is implied anywhere in it.</span></div>
+        <div role="radiogroup" aria-labelledby="sb-sim-length-label" style="display: grid; gap: 0.5rem;">
+          <span id="sb-sim-length-label" style="font-weight: 700;">How many questions</span>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem;">
+            <sc-for list="{{ simLengthOptions }}" as="opt" hint-placeholder-count="2">
+              <label style="display: flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; cursor: pointer;">
+                <input type="radio" name="sb-sim-length" checked="{{ opt.checked }}" onChange="{{ opt.onChange }}" style="width: 1.25rem; height: 1.25rem; accent-color: #075985;" />
+                <span style="font-size: 0.9375rem; font-weight: 550;">{{ opt.label }}</span>
+              </label>
+            </sc-for>
+          </div>
+          <p style="margin: 0; font-size: 0.875rem; color: #4b5563;">All three areas, in the order the test guide lists them. Feedback is held until you submit.</p>
+        </div>
+        <sc-if value="{{ offerWeighted }}">
+          <div role="radiogroup" aria-labelledby="sb-dist-label" style="display: grid; gap: 0.5rem;">
+            <span id="sb-dist-label" style="font-weight: 700;">Which questions</span>
+            <sc-for list="{{ distOptions }}" as="opt" hint-placeholder-count="2">
+              <label style="display: grid; grid-template-columns: 1.25rem minmax(0, 1fr); gap: 0 0.75rem; align-items: baseline; min-height: 2.75rem; padding-block: 0.5rem; border-block-start: 1px solid #e2e7ec; cursor: pointer;">
+                <input type="radio" name="sb-dist" checked="{{ opt.checked }}" onChange="{{ opt.onChange }}" style="width: 1.25rem; height: 1.25rem; accent-color: #075985;" />
+                <span style="display: grid; gap: 0.125rem; min-width: 0;">
+                  <strong style="font-size: 0.9375rem;">{{ opt.label }}</strong>
+                  <span style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">{{ opt.gist }}</span>
+                </span>
+              </label>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ noWeighted }}">
+          <p style="margin: 0; max-width: 68ch; font-size: 0.9375rem; color: #4b5563;">Questions are spread evenly across the three areas. Weighting the mix toward what you have missed needs at least one finished set on this device.</p>
+        </sc-if>
+        <label style="display: flex; align-items: start; gap: 0.75rem; font-weight: 700; max-width: 68ch; cursor: pointer;"><input type="checkbox" checked="{{ timerOn }}" onChange="{{ toggleTimer }}" style="flex: 0 0 auto; width: 1.25rem; height: 1.25rem; margin-block-start: 0.25rem; accent-color: #075985;" /><span>Use a strict timer<span style="display: block; font-weight: 400; font-size: 0.9375rem; color: #4b5563;">Two hours, the allowance the test guide states. Opting in before you start is the only way expiry can submit for you; it can never be turned on part-way through.</span></span></label>
+      </fieldset>
+    </sc-if>
+
+    <sc-if value="{{ short }}">
+      <div style="display: flex; align-items: start; gap: 0.5rem; padding: 0.75rem 1rem; border: 1px solid #854d0e; border-radius: 0.5rem; background: #fffaeb; color: #854d0e; font-size: 0.9375rem;"><span aria-hidden="true">▲</span><span>{{ shortNote }}</span></div>
+    </sc-if>
+
+    <sc-if value="{{ noAreas }}">
+      <div style="display: flex; align-items: start; gap: 0.5rem; padding: 0.75rem 1rem; border: 1px solid #854d0e; border-radius: 0.5rem; background: #fffaeb; color: #854d0e; font-size: 0.9375rem;"><span aria-hidden="true">▲</span><span><strong>Pick at least one area.</strong> With none selected there are no questions to draw, so nothing can start.</span></div>
+    </sc-if>
+
+    <div style="display: grid; gap: 0.5rem; padding: 1rem 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #f7f8fa;">
+      <strong style="font-size: 0.9375rem;">{{ previewHeading }}</strong>
+      <p style="margin: 0; max-width: 68ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">{{ previewLine }}</p>
+      <details style="font-size: 0.8125rem; color: #4b5563;"><summary style="display: list-item; min-height: 2.75rem; padding-block: 0.625rem; cursor: pointer; font-weight: 700; color: #075985;">Technical details</summary><dl style="display: grid; grid-template-columns: auto 1fr; gap: 0.25rem 0.75rem; margin: 0;"><dt>Session code</dt><dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">9f2c-4471</dd><dt>Question bank</dt><dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">bank.entry-level-custodian.90</dd><dt>Content pack</dt><dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">launch v2.0.0</dd></dl></details>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+      <button type="button" disabled="{{ startDisabled }}" style="{{ startStyle }}">{{ startLabel }}</button>
+      <button type="button" onClick="{{ regenerate }}" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; cursor: pointer;" style-hover="background: #edf2f7;">Regenerate preview</button>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1000, &quot;height&quot;: 900}, &quot;defaultLength&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;45&quot;, &quot;options&quot;: [&quot;45&quot;, &quot;60&quot;, &quot;90&quot;], &quot;tsType&quot;: &quot;'45' | '60' | '90'&quot;, &quot;section&quot;: &quot;Practice set&quot;}, &quot;offerWeightedSimulation&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Full simulation&quot;}}">
+class Component extends DCLogic {
+  AREAS = [
+    { key: "cleaning", label: "Cleaning tools and their uses", gist: "Recognizing a tool from a drawing or a description, and matching it to the job.", count: 34 },
+    { key: "repair", label: "Tools for minor maintenance and repair", gist: "Hand tools for small repairs, and when a tool has become unsafe to use.", count: 26 },
+    { key: "safety", label: "Health and safety in custodial work", gist: "Safe practices, chemicals, protective equipment, and what is wrong in a scene.", count: 30 }
+  ];
+
+  SETTINGS = [
+    { key: "all", label: "All reviewed settings", scenes: 18 },
+    { key: "stairs", label: "Stairwells and corridors", scenes: 6 },
+    { key: "restrooms", label: "Restrooms", scenes: 5 },
+    { key: "classrooms", label: "Classrooms", scenes: 7 }
+  ];
+
+  state = {
+    setup: "practice",
+    picked: { cleaning: true, repair: true, safety: true },
+    length: null,
+    setting: "all",
+    scenes: 5,
+    construct: "mark",
+    simLength: 45,
+    dist: "even",
+    timer: false
+  };
+
+  chip(on) {
+    return "display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.5rem 1rem; border-radius: 0.375rem; font-size: 0.9375rem; font-weight: 700; cursor: pointer; border: 1px solid " +
+      (on ? "#075985" : "#667085") + "; background: " + (on ? "#075985" : "#ffffff") + "; color: " + (on ? "#ffffff" : "#17202a") + ";";
+  }
+
+  radios(values, current, set, label) {
+    return values.map((v) => ({
+      key: String(v),
+      label: label(v),
+      checked: current === v,
+      onChange: () => set(v)
+    }));
+  }
+
+  renderVals() {
+    const s = this.state;
+    const length = s.length ?? Number(this.props.defaultLength ?? 45);
+    const offerWeighted = this.props.offerWeightedSimulation ?? true;
+
+    const areaOptions = this.AREAS.map((a) => ({
+      key: a.key,
+      label: a.label,
+      gist: a.gist,
+      countLabel: a.count + " questions",
+      checked: !!s.picked[a.key],
+      onChange: () => this.setState((p) => ({ picked: Object.assign({}, p.picked, { [a.key]: !p.picked[a.key] }) }))
+    }));
+
+    const chosen = this.AREAS.filter((a) => s.picked[a.key]);
+    const available = chosen.reduce((n, a) => n + a.count, 0);
+    const actual = Math.min(length, available);
+    const illustrated = Math.round(actual * 0.45);
+    const areaWord = chosen.length === 3 ? "all three areas" : chosen.length === 1 ? "one area" : chosen.length + " areas";
+
+    const setting = this.SETTINGS.find((x) => x.key === s.setting) || this.SETTINGS[0];
+    const sceneAvail = setting.scenes;
+    const actualScenes = Math.min(s.scenes, sceneAvail);
+    const settingWord = setting.key === "all" ? "all reviewed settings" : setting.label.toLowerCase();
+
+    let previewHeading = "Your set, before you start";
+    let previewLine = actual + " questions from " + areaWord + ": " + illustrated + " illustrated, " + (actual - illustrated) +
+      " written. Untimed, with the reasoning and its source after every answer. Rebuilding this set gives exactly the same questions; its code is under Technical details.";
+    if (s.setup === "hazard") {
+      previewHeading = "Your drill, before you start";
+      previewLine = actualScenes + " scenes from " + settingWord + ", answered by " + (s.construct === "mark" ? "marking the scene" : "listing the zones in order") +
+        ". Untimed. Drills are counted apart from question sets, and rebuilding this drill gives the same scenes in the same order.";
+    } else if (s.setup === "simulation") {
+      previewHeading = "Your simulation, before you start";
+      previewLine = s.simLength + " questions across all three areas, " + (s.timer ? "timed to two hours" : "untimed") + ", " +
+        (offerWeighted && s.dist === "weighted" ? "weighted toward questions you have missed" : "spread evenly across the areas") +
+        ". Feedback is held until you submit, and the result is practice only.";
+    }
+
+    const noAreas = s.setup === "practice" && chosen.length === 0;
+    const shortPractice = s.setup === "practice" && chosen.length > 0 && available < length;
+    const shortHazard = s.setup === "hazard" && sceneAvail < s.scenes;
+    const short = shortPractice || shortHazard;
+    const shortNote = shortHazard
+      ? (setting.key === "all" ? "All reviewed settings hold " : setting.label + " holds ") + sceneAvail +
+        " reviewed scenes, so the drill will contain " + sceneAvail + " rather than " + s.scenes + ". The shortfall is stated here rather than showing a scene twice."
+      : "The bank holds fewer questions than you asked for. " + available + " questions match " + areaWord +
+        ", so the set will contain " + available + " rather than " + length + ". The shortfall is stated here rather than padded with repeats.";
+    const startDisabled = noAreas ? "disabled" : undefined;
+
+    return {
+      chips: [
+        { key: "practice", label: "Practice set" },
+        { key: "hazard", label: "Hazard drill" },
+        { key: "simulation", label: "Full simulation" }
+      ].map((c) => ({
+        key: c.key,
+        label: c.label,
+        pressed: s.setup === c.key ? "true" : "false",
+        style: this.chip(s.setup === c.key),
+        onClick: () => this.setState({ setup: c.key })
+      })),
+      isPractice: s.setup === "practice",
+      isHazard: s.setup === "hazard",
+      isSimulation: s.setup === "simulation",
+
+      areaOptions,
+      areaSummary: available + " of 90 questions selected",
+      lengthOptions: this.radios([45, 60, 90], length, (v) => this.setState({ length: v }), (v) => v + " questions"),
+
+      setting: s.setting,
+      onSetting: (ev) => this.setState({ setting: ev.target.value }),
+      sceneAvailLabel: sceneAvail + " scenes in " + settingWord,
+      sceneOptions: this.radios([5, 12, 18], s.scenes, (v) => this.setState({ scenes: v }), (v) => v === sceneAvail ? "All " + v + " scenes" : v + " scenes"),
+      constructOptions: [
+        { key: "mark", label: "Mark the scene", gist: "Place a mark on every place in the picture a custodian should act on." },
+        { key: "zones", label: "List the zones in order", gist: "Choose the named zones from a written description of the same scene, most urgent first." }
+      ].map((o) => ({
+        key: o.key, label: o.label, gist: o.gist,
+        checked: s.construct === o.key,
+        onChange: () => this.setState({ construct: o.key })
+      })),
+
+      simLengthOptions: this.radios([45, 90], s.simLength, (v) => this.setState({ simLength: v }), (v) => v + " questions"),
+      offerWeighted,
+      noWeighted: !offerWeighted,
+      distOptions: [
+        { key: "even", label: "Spread evenly across the three areas", gist: "The same mix whatever you have answered before." },
+        { key: "weighted", label: "Weighted toward questions you have missed", gist: "Draws more from the areas your recorded attempts got wrong." }
+      ].map((o) => ({
+        key: o.key, label: o.label, gist: o.gist,
+        checked: s.dist === o.key,
+        onChange: () => this.setState({ dist: o.key })
+      })),
+      timerOn: s.timer,
+      toggleTimer: () => this.setState((p) => ({ timer: !p.timer })),
+
+      short,
+      shortNote,
+      noAreas,
+      previewHeading,
+      previewLine,
+      startDisabled,
+      startLabel: s.setup === "hazard" ? "Start drill" : s.setup === "simulation" ? "Start simulation" : "Start set",
+      startStyle:
+        "display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.5rem; border: 1px solid transparent; border-radius: 0.5rem; font-weight: 700; background: " +
+        (noAreas ? "#e5e7eb" : "#075985") + "; color: " + (noAreas ? "#4b5563" : "#ffffff") + "; cursor: " + (noAreas ? "not-allowed" : "pointer") + ";",
+      regenerate: () => this.forceUpdate()
+    };
+  }
+}
+</script>
+</body>
+</html>

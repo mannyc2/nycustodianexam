@@ -157,7 +157,10 @@ const validateControlledDocument = async (expectedMarkup: string): Promise<void>
   }
 }
 
-if (typeof document !== "undefined") applyBootPreferences(readBootPreferences())
+if (typeof document !== "undefined") {
+  applyBootPreferences(readBootPreferences())
+  enhanceSiteNavigation()
+}
 if (typeof window !== "undefined") {
   if (navigator.onLine === false) {
     applyFreshDocumentStatus(false)
@@ -174,3 +177,4 @@ if (typeof window !== "undefined") {
     if (event.key === bootPreferencesKey) applyBootPreferences(readBootPreferences())
   })
 }
+import { enhanceSiteNavigation } from "../site-navigation.ts"

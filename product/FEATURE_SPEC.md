@@ -15,7 +15,7 @@ The site provides **free, independent, original visual preparation for the New Y
 
 A learner must be able to:
 
-1. select the correct exam/announcement profile without invented facts;
+1. check the relevant exam/announcement information without invented facts;
 2. learn tool families and visually confusable concepts;
 3. answer original multiple-choice questions before seeing correctness;
 4. mark hazards in original scenes before reveal;
@@ -132,7 +132,7 @@ A page must explain why content is unavailable and offer a relevant recovery act
 
 # 4. Global interaction principles
 
-- Always expose the active exam/profile and profile version where it affects content.
+- Expose the scope and profile version that actually control the current task; do not imply a saved global active exam.
 - Show online/offline status only when it changes available behavior.
 - Maintain visible keyboard focus and a skip link.
 - Announce save/update/error status programmatically.
@@ -145,7 +145,17 @@ A page must explain why content is unavailable and offer a relevant recovery act
 
 # 5. Exam/profile UX
 
-## Selector
+## Exam information and study scope
+
+`/exams/` is a reference browser. Opening an announcement or profile does not
+change study preferences. Practice uses the explicitly displayed statewide
+Entry-Level Custodians and Janitors series. Simulation and print each require
+their own profile choice before generation; the resulting session or job keeps
+that profile/version. The product currently has no saved global active exam.
+
+The earlier proposal for durable profile selection is unimplemented. It must
+receive an explicit behavior and persistence contract before the interface
+offers a global `Use this profile` or `Choose your exam` action.
 
 Search/browse by exam number, title, jurisdiction, year, competition type, and series level. Never infer level merely from number formatting. A title spanning multiple levels requires confirmation.
 
@@ -156,7 +166,8 @@ Profile cards expose only data-backed fields and visibly distinguish:
 - verified date/number/jurisdiction facts;
 - current content availability and last verification.
 
-Switching profiles during a session must preserve the existing session against its pinned profile/version.
+Choosing a different profile for a new simulation or print job must preserve
+existing sessions and jobs against their pinned profile/version.
 
 ## Announcement checker
 
@@ -176,7 +187,7 @@ Must distinguish:
 6. what site content is original;
 7. profile change history;
 8. controlling-document notice;
-9. actions to select, study, print, and inspect sources.
+9. explicit destinations to practice, print, and inspect sources; reference browsing does not select study scope.
 
 ---
 
@@ -440,6 +451,12 @@ Export/import must be schema/version/checksum validated, event-ID based, preview
 
 The core browser experience must work without installation; installability is an enhancement.
 
+Settings exposes offline downloads in a dedicated section. Contextual download,
+recovery, and footer links may also lead to `/offline/`; offline downloads are
+not a permanent header action. Sources remains available in the footer and
+beside the content it supports. The standard header uses Practice, Library
+(Tool atlas and Hazard lab), Exam information, and Settings on the right.
+
 Required offline architecture conceptually includes:
 
 - web-app manifest and service worker;
@@ -580,7 +597,7 @@ Progress integrity rules:
 
 V1 is not releasable until all of these are demonstrably true:
 
-1. Profiles can be selected/changed without series conflation and unresolved facts render explicitly.
+1. Exam information exposes unresolved facts; Practice shows its statewide scope; simulation and print accept explicit profile choices without series conflation or implying global selection.
 2. Unknown item counts/weights/scoring do not break simulations or cause fake official claims.
 3. Questions cannot reveal answers before explicit commitment.
 4. Every published distractor has rationale + source-backed explanation.

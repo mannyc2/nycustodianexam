@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div style="display: grid; gap: 1rem; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff;">
+
+  <div role="tablist" aria-label="Visual family" style="display: flex; flex-wrap: wrap; gap: 1.25rem; border-block-end: 1px solid #b7c1cc;">
+    <sc-for list="{{ tabs }}" as="tab" hint-placeholder-count="5">
+      <button type="button" role="tab" aria-selected="{{ tab.selected }}" onClick="{{ tab.onClick }}" style="{{ tab.style }}">{{ tab.label }} <span style="{{ tab.countStyle }}">{{ tab.count }}</span></button>
+    </sc-for>
+  </div>
+
+  <p role="status" style="margin: 0; font-size: 0.9375rem; color: #4b5563;">{{ count }}</p>
+
+  <sc-if value="{{ imagesReady }}" hint-placeholder-val="{{ true }}">
+    <div style="display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr));">
+      <sc-for list="{{ tools }}" as="tool" hint-placeholder-count="8">
+        <article style="display: grid; gap: 0; align-content: start; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff; overflow: hidden;">
+          <img src="{{ tool.src }}" alt="{{ tool.alt }}" style="display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; background: #edf2f7;" />
+          <div style="display: grid; gap: 0.375rem; padding: 0.875rem 1rem;">
+            <strong style="font-size: 0.9375rem;">{{ tool.name }}</strong>
+            <span style="font-size: 0.8125rem; color: #4b5563;">{{ tool.family }}</span>
+          </div>
+        </article>
+      </sc-for>
+    </div>
+
+    <div style="display: grid; gap: 0.375rem; padding: 1rem 1.25rem; border: 1px solid #667085; border-radius: 0.75rem; background: #ffffff;">
+      <strong style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem; font-size: 0.9375rem;">57 of the 65 tool records have no illustration yet<span style="padding: 0 0.5rem; border: 1px solid #667085; border-radius: 0.25rem; font-size: 0.8125rem; font-weight: 700; color: #4b5563;">Not published</span></strong>
+      <p style="max-width: 70ch; margin: 0; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">The taxonomy inventory names all 65, and every one of them has its written record with the features that tell look-alikes apart. Only 8 have been drawn so far, so the rest read as text until their drawing is reviewed.</p>
+      <p style="margin: 0; font-size: 0.875rem; color: #4b5563;">Where this comes from: illustrations drawn for this site from the reviewed tool inventory, read on August 25, 2026.</p>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ imagesMissing }}">
+    <div style="display: grid; gap: 0.5rem; padding: 1.25rem 1.5rem; border: 1px solid #667085; border-radius: 0.75rem; background: #ffffff;">
+      <h3 style="font-size: 1.0625rem;">The illustrations are not saved on this device</h3>
+      <p style="max-width: 70ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Pictures are the one part of the atlas that is not saved for offline use by default — they are the largest files in the pack. Every tool record and its features are here either way, as text.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; padding-block-start: 0.25rem;">
+        <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; font-size: 0.9375rem; cursor: pointer;" style-hover="background: #0c4a6e;">Save the illustrations, 4.2 MB</button>
+        <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.9375rem; cursor: pointer;" style-hover="background: #edf2f7;">Keep reading without them</button>
+      </div>
+    </div>
+    <ul style="display: grid; margin: 0; padding: 0.25rem 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff; list-style: none;">
+      <sc-for list="{{ tools }}" as="tool" hint-placeholder-count="8">
+        <li style="{{ tool.rowStyle }}">
+          <strong style="font-size: 0.9375rem;">{{ tool.name }}</strong>
+          <span style="font-size: 0.875rem; color: #4b5563;">{{ tool.family }}</span>
+        </li>
+      </sc-for>
+    </ul>
+  </sc-if>
+
+  <sc-if value="{{ technical }}" hint-placeholder-val="{{ true }}">
+    <details style="font-size: 0.875rem; color: #4b5563;">
+      <summary style="display: list-item; min-height: 2.75rem; padding-block: 0.75rem; cursor: pointer; font-weight: 700; color: #075985;">Technical details</summary>
+      <dl style="display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.25rem 0.75rem; margin: 0;">
+        <dt>Records shown</dt>
+        <dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">{{ ids }}</dd>
+        <dt>Inventory</dt>
+        <dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">taxonomy-inventory.csv, comparisons.json</dd>
+        <dt>Illustrations pinned to</dt>
+        <dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">pack v2.0.0</dd>
+      </dl>
+    </details>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: {&quot;width&quot;: 1000, &quot;height&quot;: 760},
+  &quot;imagesAvailable&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Availability&quot;},
+  &quot;showFamilyCounts&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Filter&quot;},
+  &quot;showTechnicalDetails&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Proof layer&quot;}
+}">
+const TOOLS = [
+  { id: "t001", name: "Scrub brush", family: "cleaning implements", alt: "Scrub brush: a short block of stiff bristles with a hand-sized grip across its back." },
+  { id: "t002", name: "Staple gun", family: "articulated hand tools", alt: "Staple gun: a hand-squeezed body with a flat nose and a hinged lever along the top." },
+  { id: "t003", name: "Protective gloves (generic)", family: "PPE", alt: "Protective gloves: a pair of unlined gauntlet-cuff gloves shown palms forward." },
+  { id: "t004", name: "Push broom", family: "cleaning implements", alt: "Push broom: a wide flat brush block on a long handle set into it at an angle." },
+  { id: "t005", name: "Angle broom", family: "cleaning implements", alt: "Angle broom: a narrow broom head cut on a slant, bristles flared at one corner." },
+  { id: "t006", name: "Dust mop", family: "soft or deformable tools", alt: "Dust mop: a wide flat rectangular frame carrying dense soft yarn across its whole face." },
+  { id: "t007", name: "Wet/string mop", family: "soft or deformable tools", alt: "Wet or string mop: loose strands gathered into a central band at the end of a handle." },
+  { id: "t008", name: "Flat mop", family: "soft or deformable tools", alt: "Flat mop: a thin rectangular pad on a swivel plate, no strands." }
+];
+const FAMILIES = ["all", "cleaning implements", "soft or deformable tools", "articulated hand tools", "PPE"];
+const TAB = { display: 'inline-flex', alignItems: 'baseline', gap: '0.375rem', minHeight: '2.75rem', padding: '0 0.125rem', marginBlockEnd: '-1px', border: 0, borderBlockEnd: '2px solid', borderBlockEndColor: 'transparent', background: 'transparent', color: '#4b5563', font: 'inherit', fontSize: '0.9375rem', fontWeight: 700, cursor: 'pointer' };
+const TAB_ON = { ...TAB, borderBlockEndColor: '#075985', color: '#0c4a6e' };
+const COUNT = 'font-weight: 400; color: #4b5563;';
+const ROW = { display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 14rem)', gap: '0 1.25rem', alignItems: 'baseline', paddingBlock: '0.75rem' };
+const ROW_RULED = { ...ROW, borderBlockStart: '1px solid #e2e7ec' };
+
+const sentence = (s) => s === 'PPE' ? 'PPE' : s.charAt(0).toUpperCase() + s.slice(1);
+
+class Component extends DCLogic {
+  state = { family: "all" };
+
+  renderVals() {
+    const f = this.state.family;
+    const shown = TOOLS.filter((t) => f === "all" || t.family === f);
+    const showCounts = this.props.showFamilyCounts ?? true;
+    const ready = (this.props.imagesAvailable ?? true);
+    return {
+      tabs: FAMILIES.map((k) => ({
+        label: k === "all" ? "All families" : sentence(k),
+        selected: f === k,
+        count: showCounts ? (k === "all" ? TOOLS.length : TOOLS.filter((t) => t.family === k).length) : "",
+        countStyle: showCounts ? COUNT : "display: none;",
+        style: f === k ? TAB_ON : TAB,
+        onClick: () => this.setState({ family: k })
+      })),
+      tools: shown.map((t, i) => ({
+        name: t.name,
+        family: sentence(t.family),
+        rowStyle: i === 0 ? ROW : ROW_RULED,
+        src: "content/assets/derivatives/tools/" + t.id + "-phone.png",
+        alt: t.alt
+      })),
+      count: f === "all"
+        ? "Showing all 8 illustrated tools, in inventory order."
+        : "Showing the " + shown.length + " illustrated in " + f + ".",
+      imagesReady: ready,
+      imagesMissing: !ready,
+      technical: this.props.showTechnicalDetails ?? true,
+      ids: shown.map((t) => t.id).join(", ")
+    };
+  }
+}
+
+</script>
+</body>
+</html>

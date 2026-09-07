@@ -16,12 +16,16 @@ for (const path of ["/", "/exams/", "/atlas/", "/practice/", "/review/", "/simul
     await page.setViewportSize({ height: 720, width: 320 })
     await page.goto(path)
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible()
-    const compactNavigation = page.getByRole("navigation", { name: "Compact primary", exact: true })
-    await expect(compactNavigation).toBeVisible()
+    const navigation = page.getByRole("navigation", { name: "Primary", exact: true })
+    await expect(navigation).toBeVisible()
+    await expect(navigation.getByRole("link", { name: "Practice", exact: true })).toBeVisible()
+    await expect(page.locator(".site-header").getByRole("link", { name: "Settings", exact: true })).toBeVisible()
+    await expect(page.locator(".site-header a[href='/offline/'], .site-header a[href='/transparency/'], .exam-chip")).toHaveCount(0)
     await expectPageReflow(page)
 
-    await compactNavigation.locator("summary").click()
-    await expect(compactNavigation.getByRole("link", { name: "Build a simulation" })).toBeVisible()
+    await navigation.locator("summary").click()
+    await expect(navigation.getByRole("link", { name: /^Tool atlas/ })).toBeVisible()
+    await expect(navigation.getByRole("link", { name: /^Hazard lab/ })).toBeVisible()
     await expectPageReflow(page)
 
     const scan = await new AxeBuilder({ page })
@@ -33,6 +37,54 @@ for (const path of ["/", "/exams/", "/atlas/", "/practice/", "/review/", "/simul
       .toEqual([])
   })
 }
+
+test("Library supports keyboard dismissal, outside clicks, and normal link navigation", async ({ page }) => {
+  await page.goto("/")
+  const menu = page.locator("[data-library-menu]")
+  const trigger = menu.locator("summary")
+  await trigger.focus()
+  await page.keyboard.press("Enter")
+  await page.keyboard.press("Tab")
+  await expect(menu.getByRole("link", { name: /^Tool atlas/ })).toBeFocused()
+  await page.keyboard.press("Escape")
+  await expect(trigger).toBeFocused()
+  await expect(menu).not.toHaveAttribute("open")
+  await trigger.click()
+  await page.mouse.click(8, 400)
+  await expect(menu).not.toHaveAttribute("open")
+  await trigger.click()
+  await menu.getByRole("link", { name: /^Hazard lab/ }).click()
+  await expect(page).toHaveURL(/\/hazards\/$/)
+})
+
+test("enlarged text keeps Settings on the right and the Library panel within the viewport", async ({ page }) => {
+  for (const width of [320, 800, 900, 1280]) {
+    await page.setViewportSize({ width, height: 900 })
+    await page.goto("/")
+    await page.evaluate(() => document.documentElement.setAttribute("data-large-text", ""))
+    await page.locator("[data-library-menu] summary").click()
+    await expectPageReflow(page)
+    const header = await page.locator(".site-header-inner").boundingBox()
+    const settings = await page.locator(".nav-utility").boundingBox()
+    expect(header).not.toBeNull()
+    expect(settings).not.toBeNull()
+    expect(settings!.x + settings!.width).toBeCloseTo(header!.x + header!.width, 0)
+  }
+})
+
+test("Library links and Settings downloads remain reachable without JavaScript", async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 320, height: 720 } })
+  const page = await context.newPage()
+  await page.goto("/")
+  const navigation = page.getByRole("navigation", { name: "Primary", exact: true })
+  await navigation.locator("summary").click()
+  await expect(navigation.getByRole("link", { name: /^Hazard lab/ })).toBeVisible()
+  await expectPageReflow(page)
+  await page.locator(".site-header").getByRole("link", { name: "Settings", exact: true }).click()
+  await expect(page.getByRole("link", { name: "Manage offline downloads", exact: true })).toHaveAttribute("href", "/offline/")
+  await expect(page.locator(".site-footer").getByRole("link", { name: "Sources and methods", exact: true })).toBeVisible()
+  await context.close()
+})
 
 test("atlas family tabs filter the released tools and restore the selected family", async ({ page }) => {
   await page.setViewportSize({ height: 720, width: 320 })

@@ -1514,7 +1514,7 @@ export const verify = async (): Promise<void> => {
         )
       }
       const bootClosure = await collectJavaScriptClosure(html, allJavaScriptPaths)
-      // The registry/atlas enhancement is standalone DOM code. Every reference
+      // Navigation and registry/atlas controls are standalone DOM code. Every reference
       // route remains independent of React and the Effect study runtime.
       if (bootClosure.length !== expectedModules) {
         throw new Error(
@@ -2137,9 +2137,10 @@ export const verify = async (): Promise<void> => {
   // The interactive entries share the framework/runtime and verified-content chunks. M4 and M5
   // share durable-session, print, pack, settings, correction, and canonical review-projection
   // services. The handoff's exact generated-practice receipt validation adds
-  // 733 raw bytes to Settings (476162 total); retain a narrow margin while
-  // preserving the existing compressed ceilings.
-  const bundleBudgets = { raw: 477_000, gzip: 142_500, brotli: 121_000 } as const
+  // 733 raw bytes to Settings (476162 total). Shared Library keyboard/dismissal
+  // behavior keeps the raw ceiling and measures 142575 bytes gzip; allow a
+  // further 250 gzip bytes for this shared navigation, retaining the Brotli ceiling.
+  const bundleBudgets = { raw: 477_000, gzip: 142_750, brotli: 121_000 } as const
   for (const [family, measurement] of bundleReports) {
     for (const format of ["raw", "gzip", "brotli"] as const) {
       if (measurement[format] > bundleBudgets[format]) {

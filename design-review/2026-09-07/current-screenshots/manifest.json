@@ -1,0 +1,281 @@
+{
+  "browser": "Chromium",
+  "locale": "en-US",
+  "timezone": "UTC",
+  "fixedTime": "2026-09-07T12:00:00Z",
+  "captures": [
+    {
+      "file": "home-1280.png",
+      "route": "/",
+      "state": "First visit; no saved attempts or downloads",
+      "width": 1280,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "practice-first-visit-1280.png",
+      "route": "/practice/",
+      "state": "First visit; no saved attempts or downloads",
+      "width": 1280,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "exams-1280.png",
+      "route": "/exams/",
+      "state": "First visit; no saved attempts or downloads",
+      "width": 1280,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "atlas-1280.png",
+      "route": "/atlas/",
+      "state": "First visit; no saved attempts or downloads",
+      "width": 1280,
+      "height": 900,
+      "fullPage": false
+    },
+    {
+      "file": "review-empty-1280.png",
+      "route": "/review/",
+      "state": "First visit; no saved attempts or downloads",
+      "width": 1280,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "settings-1280.png",
+      "route": "/settings/",
+      "state": "First visit; no saved attempts or downloads",
+      "width": 1280,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "offline-first-visit-1280.png",
+      "route": "/offline/",
+      "state": "First visit; no saved attempts or downloads",
+      "width": 1280,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "simulation-setup-1280.png",
+      "route": "/simulations/",
+      "state": "First visit; no saved attempts or downloads",
+      "width": 1280,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "print-setup-1280.png",
+      "route": "/print/",
+      "state": "First visit; no saved attempts or downloads",
+      "width": 1280,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "hazards-1280.png",
+      "route": "/hazards/",
+      "state": "First visit; no saved attempts or downloads",
+      "width": 1280,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "practice-library-open-1280.png",
+      "route": "/practice/",
+      "state": "First visit; Library disclosure open",
+      "width": 1280,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "question-unanswered-1280.png",
+      "route": "/practice/session/ps-a0bb1562365390d297a4a3e5/question/1/",
+      "state": "First question of the actual 45-question set; no answer selected",
+      "width": 1280,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "question-answered-1280.png",
+      "route": "/practice/session/ps-a0bb1562365390d297a4a3e5/question/1/",
+      "state": "One flagged answer saved using the real player",
+      "width": 1280,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "practice-returning-1280.png",
+      "route": "/practice/",
+      "state": "Returning learner with one real saved and flagged answer",
+      "width": 1280,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "review-ready-1280.png",
+      "route": "/review/",
+      "state": "One flagged answer ready for review",
+      "width": 1280,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "review-confirmation-1280.png",
+      "route": "/review/",
+      "state": "Finish review confirmation open; item remains in queue",
+      "width": 1280,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "practice-storage-unavailable-1280.png",
+      "route": "/practice/",
+      "state": "Explicit test fixture: IndexedDB open fails",
+      "width": 1280,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "home-390.png",
+      "route": "/",
+      "state": "First visit; no saved attempts or downloads",
+      "width": 390,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "practice-first-visit-390.png",
+      "route": "/practice/",
+      "state": "First visit; no saved attempts or downloads",
+      "width": 390,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "exams-390.png",
+      "route": "/exams/",
+      "state": "First visit; no saved attempts or downloads",
+      "width": 390,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "atlas-390.png",
+      "route": "/atlas/",
+      "state": "First visit; no saved attempts or downloads",
+      "width": 390,
+      "height": 900,
+      "fullPage": false
+    },
+    {
+      "file": "review-empty-390.png",
+      "route": "/review/",
+      "state": "First visit; no saved attempts or downloads",
+      "width": 390,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "settings-390.png",
+      "route": "/settings/",
+      "state": "First visit; no saved attempts or downloads",
+      "width": 390,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "offline-first-visit-390.png",
+      "route": "/offline/",
+      "state": "First visit; no saved attempts or downloads",
+      "width": 390,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "simulation-setup-390.png",
+      "route": "/simulations/",
+      "state": "First visit; no saved attempts or downloads",
+      "width": 390,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "print-setup-390.png",
+      "route": "/print/",
+      "state": "First visit; no saved attempts or downloads",
+      "width": 390,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "hazards-390.png",
+      "route": "/hazards/",
+      "state": "First visit; no saved attempts or downloads",
+      "width": 390,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "practice-library-open-390.png",
+      "route": "/practice/",
+      "state": "First visit; Library disclosure open",
+      "width": 390,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "question-unanswered-390.png",
+      "route": "/practice/session/ps-a0bb1562365390d297a4a3e5/question/1/",
+      "state": "First question of the actual 45-question set; no answer selected",
+      "width": 390,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "question-answered-390.png",
+      "route": "/practice/session/ps-a0bb1562365390d297a4a3e5/question/1/",
+      "state": "One flagged answer saved using the real player",
+      "width": 390,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "practice-returning-390.png",
+      "route": "/practice/",
+      "state": "Returning learner with one real saved and flagged answer",
+      "width": 390,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "review-ready-390.png",
+      "route": "/review/",
+      "state": "One flagged answer ready for review",
+      "width": 390,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "review-confirmation-390.png",
+      "route": "/review/",
+      "state": "Finish review confirmation open; item remains in queue",
+      "width": 390,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "practice-storage-unavailable-390.png",
+      "route": "/practice/",
+      "state": "Explicit test fixture: IndexedDB open fails",
+      "width": 390,
+      "height": 900,
+      "fullPage": true
+    }
+  ],
+  "pageErrors": []
+}

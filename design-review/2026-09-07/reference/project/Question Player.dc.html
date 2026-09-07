@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #e9edf1; color: #17202a; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+    a { color: #075985; }
+    a:hover { color: #0c4a6e; }
+    h1, h2, h3, h4, h5, p, dl, dd { margin: 0; }
+    ul, ol { margin: 0; }
+    ul { padding: 0; list-style: none; }
+    button, input, select, textarea { font: inherit; }
+    :focus-visible { outline: 0.1875rem solid #1d4ed8; outline-offset: 0.1875rem; }
+  </style>
+</helmet>
+
+<div style="display: grid; gap: 1rem; padding: clamp(1.5rem, 3vw, 2.5rem);">
+  <div role="group" aria-label="Specimen controls" style="display: grid; gap: 0.75rem; padding: 1rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
+      <span style="font-size: 0.8125rem; font-weight: 700; color: #4b5563; min-width: 5.5rem;">Workflow</span>
+      <sc-for list="{{ workflowChips }}" as="chip" hint-placeholder-count="3">
+        <button type="button" aria-pressed="{{ chip.pressed }}" onClick="{{ chip.onClick }}" style="{{ chip.style }}">{{ chip.label }}</button>
+      </sc-for>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
+      <span style="font-size: 0.8125rem; font-weight: 700; color: #4b5563; min-width: 5.5rem;">Modality</span>
+      <sc-for list="{{ modalityChips }}" as="chip" hint-placeholder-count="2">
+        <button type="button" aria-pressed="{{ chip.pressed }}" onClick="{{ chip.onClick }}" style="{{ chip.style }}">{{ chip.label }}</button>
+      </sc-for>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
+      <span style="font-size: 0.8125rem; font-weight: 700; color: #4b5563; min-width: 5.5rem;">Snapshot</span>
+      <sc-for list="{{ stateChips }}" as="chip" hint-placeholder-count="11">
+        <button type="button" aria-pressed="{{ chip.pressed }}" disabled="{{ chip.disabled }}" onClick="{{ chip.onClick }}" style="{{ chip.style }}">{{ chip.label }}</button>
+      </sc-for>
+    </div>
+    <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">{{ illegalNote }}</p>
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding-block-start: 0.5rem; border-block-start: 1px solid #edf2f7;">
+      <span style="font-size: 0.8125rem; font-weight: 700; color: #4b5563; min-width: 5.5rem;">Test hook</span>
+      <button type="button" onClick="{{ toggleFail }}" style="{{ failStyle }}">{{ failLabel }}</button>
+      <span style="font-size: 0.875rem; color: #4b5563;">Drives the storage-failure path through the real commit.</span>
+    </div>
+  </div>
+
+  <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">Rendering <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #075985; font-weight: 700;">{{ wrapperName }}</code></p>
+
+  <sc-if value="{{ showCard }}" hint-placeholder-val="{{ true }}">
+    <article style="display: grid; gap: 1.5rem; max-width: 50rem; margin-inline: auto; width: 100%; padding: clamp(1.5rem, 4vw, 3rem); border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff; box-shadow: 0 0.25rem 1rem rgb(23 32 42 / 14%);">
+
+      <header style="display: grid; gap: 0.75rem;">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem;">
+          <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">{{ position }}</span>
+          <button type="button" style="display: inline-flex; align-items: center; gap: 0.375rem; min-height: 2.75rem; padding: 0.5rem 0.875rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.9375rem; cursor: pointer;" style-hover="background: #edf2f7;"><span aria-hidden="true">⚑</span> Flag for review</button>
+        </div>
+
+        <sc-if value="{{ isReview }}">
+          <div style="display: grid; gap: 0.375rem; padding: 0.75rem 1rem; border-inline-start: 0.25rem solid #075985; background: #edf2f7;">
+            <strong style="font-size: 0.9375rem;">Why this is in your review queue</strong>
+            <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">Missed on August 19, 2026, and corrected on August 24, 2026, after your attempt. Your result from then is unchanged.</p>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isStale }}">
+          <div style="display: grid; gap: 0.375rem; padding: 0.75rem 1rem; border: 1px solid #854d0e; border-radius: 0.5rem; background: #fffaeb; font-size: 0.9375rem;">
+            <div style="display: flex; align-items: start; gap: 0.5rem; color: #854d0e;"><span aria-hidden="true">▲</span><span><strong>This session continues on the content it started with.</strong> The update you downloaded applies when this session ends — never mid-session.</span></div>
+            <details style="font-size: 0.8125rem; color: #4b5563;"><summary style="display: list-item; min-height: 2.75rem; padding-block: 0.625rem; cursor: pointer; font-weight: 700; color: #075985;">Technical details</summary><dl style="display: grid; grid-template-columns: auto 1fr; gap: 0.25rem 0.75rem; margin: 0;"><dt>Session pinned to</dt><dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">pack v1.8.0</dd><dt>Downloaded</dt><dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">pack v2.0.0</dd></dl></details>
+          </div>
+        </sc-if>
+      </header>
+
+      <sc-if value="{{ isRestoring }}">
+        <div style="display: grid; gap: 0.75rem; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #f7f8fa;">
+          <p role="status" style="margin: 0; font-weight: 700;">Reading your saved session</p>
+          <p style="margin: 0; color: #4b5563; font-size: 0.9375rem;">Your saved answers are coming back exactly as you left them.</p>
+          <div aria-hidden="true" style="display: grid; gap: 0.5rem;">
+            <span style="display: block; height: 0.875rem; width: 70%; border-radius: 0.25rem; background: #e5e7eb;"></span>
+            <span style="display: block; height: 0.875rem; width: 45%; border-radius: 0.25rem; background: #e5e7eb;"></span>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ showBody }}">
+        <div style="display: grid; gap: 1.25rem;">
+          <sc-if value="{{ isVisual }}">
+            <div style="display: grid; gap: 1rem;">
+              <h3 tabindex="-1" style="font-size: clamp(1.25rem, 1.12rem + 0.55vw, 1.625rem); scroll-margin-block-start: 5rem;">Which tool is shown?</h3>
+              <figure style="display: grid; gap: 0.75rem; margin: 0;">
+                <div style="overflow: auto; max-height: 20rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #f7f8fa;">
+                  <img src="content/assets/derivatives/tools/t006-phone.png" alt="{{ imageAlt }}" style="display: block; width: {{ zoomWidth }}; max-width: none; height: auto;" />
+                </div>
+                <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
+                  <button type="button" onClick="{{ zoomOut }}" aria-label="Zoom out" style="display: inline-flex; align-items: center; justify-content: center; min-width: 2.75rem; min-height: 2.75rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; font-weight: 700; cursor: pointer;" style-hover="background: #edf2f7;">−</button>
+                  <button type="button" onClick="{{ zoomIn }}" aria-label="Zoom in" style="display: inline-flex; align-items: center; justify-content: center; min-width: 2.75rem; min-height: 2.75rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; font-weight: 700; cursor: pointer;" style-hover="background: #edf2f7;">+</button>
+                  <button type="button" onClick="{{ zoomReset }}" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.5rem 0.875rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; font-weight: 700; font-size: 0.9375rem; cursor: pointer;" style-hover="background: #edf2f7;">Reset view</button>
+                  <span style="font-size: 0.875rem; color: #4b5563;">{{ zoomLabel }}</span>
+                </div>
+                <figcaption style="font-size: 0.9375rem; color: #4b5563;">Original reviewed artwork, shown whole. Before you answer, the image description says only what you can observe — it never names the tool. <a href="#question-player">Use the text-only version instead</a>.</figcaption>
+              </figure>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isNonvisual }}">
+            <div style="display: grid; gap: 1rem;">
+              <h3 tabindex="-1" style="font-size: clamp(1.25rem, 1.12rem + 0.55vw, 1.625rem); scroll-margin-block-start: 5rem;">Which tool matches these observable features?</h3>
+              <ol style="display: grid; gap: 0.5rem; margin: 0; padding-inline-start: 1.5rem; max-width: 68ch; color: #17202a;">
+                <li>A long, straight handle.</li>
+                <li>A swivel yoke where the handle meets the head.</li>
+                <li>A wide, flat, rectangular frame at the head.</li>
+                <li>Dense soft yarn strands across the whole face of that frame.</li>
+                <li>No bristles set into a solid block.</li>
+              </ol>
+              <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">Authored equivalent, not a caption generated from the image. This is a separate task construct and its results are reported separately. <a href="#question-player">Open the illustrated version</a>.</p>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ showChoices }}">
+        <fieldset id="qp-choices" style="border: 0; margin: 0; padding: 0; min-inline-size: 0;">
+          <legend style="padding: 0 0 0.75rem; font-weight: 700;">Choose one answer</legend>
+          <div style="display: grid; gap: 0.75rem;">
+            <sc-for list="{{ options }}" as="opt" hint-placeholder-count="4">
+              <label style="{{ opt.style }}">
+                <input type="radio" id="{{ opt.inputId }}" name="qp-choice" checked="{{ opt.checked }}" disabled="{{ opt.disabled }}" onChange="{{ opt.onChange }}" style="width: 1.25rem; height: 1.25rem; accent-color: #075985;" />
+                <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-weight: 700; color: #4b5563;">{{ opt.letter }}</span>
+                <span>{{ opt.label }}</span>
+              </label>
+            </sc-for>
+          </div>
+        </fieldset>
+      </sc-if>
+
+      <sc-if value="{{ isSelected }}">
+        <p style="margin: 0; padding: 0.75rem 1rem; border-inline-start: 0.25rem solid #075985; background: #edf2f7; font-size: 0.9375rem; color: #4b5563;">Nothing is saved yet — change your selection as often as you like, then press Save answer.</p>
+      </sc-if>
+
+      <sc-if value="{{ showCommit }}">
+        <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+          <button type="button" onClick="{{ commit }}" disabled="{{ commitDisabled }}" style="{{ commitStyle }}">Save answer</button>
+          <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; cursor: pointer;" style-hover="background: #edf2f7;">Skip for now</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isCommitting }}">
+        <div role="status" style="display: flex; align-items: start; gap: 0.5rem; padding: 1rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #f7f8fa;"><span aria-hidden="true">◴</span><span><strong>Saving your answer.</strong> Your selection stays visible; changing it or moving on is paused until saving finishes.</span></div>
+      </sc-if>
+
+      <sc-if value="{{ isError }}">
+        <div tabindex="-1" role="alert" style="display: grid; gap: 0.75rem; padding: 1.25rem; border: 2px solid #b42318; border-radius: 0.5rem; background: #fef3f2;">
+          <h4 style="display: flex; align-items: center; gap: 0.5rem; font-size: clamp(1.125rem, 1.05rem + 0.3vw, 1.375rem); color: #b42318;"><span aria-hidden="true">✕</span> Your answer was not saved</h4>
+          <p style="margin: 0;">This device could not finish saving. Nothing was revealed and nothing was recorded.</p>
+          <ul style="display: grid; gap: 0.25rem; margin: 0; padding-inline-start: 1.25rem;">
+            <li><a href="#qp-choices">Your selection is retained and editable — {{ choiceLabel }}</a></li>
+          </ul>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+            <button type="button" onClick="{{ retry }}" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; cursor: pointer;" style-hover="background: #0c4a6e;">Try saving again</button>
+            <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; cursor: pointer;" style-hover="background: #ffffff;">Export progress</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isRecorded }}">
+        <div style="display: grid; gap: 0.75rem; padding: 1.25rem; border: 1px solid #1e40af; border-radius: 0.5rem; background: #eff6ff;">
+          <strong style="display: flex; align-items: center; gap: 0.5rem; color: #1e40af;"><span aria-hidden="true">i</span> Answer recorded</strong>
+          <p style="margin: 0; font-size: 0.9375rem;">Change it as often as you like until you submit the session. No outcome, rationale, or source is available for a simulation item before final submission.</p>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem;">
+          <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; cursor: pointer;" style-hover="background: #edf2f7;">← Previous</button>
+          <button type="button" onClick="{{ next }}" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; cursor: pointer;" style-hover="background: #0c4a6e;">Next →</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isRevealed }}">
+        <div style="display: grid; gap: 1.25rem;">
+          <div style="{{ outcomeStyle }}">
+            <h4 tabindex="-1" style="{{ outcomeHeadStyle }}"><span aria-hidden="true">{{ outcomeIcon }}</span> {{ outcomeTitle }}</h4>
+            <dl style="display: grid; gap: 0.5rem; margin: 0; color: #17202a;">
+              <div style="display: grid; grid-template-columns: minmax(7rem, 0.25fr) minmax(0, 1fr); gap: 0.75rem;">
+                <dt style="font-weight: 700;">Your answer</dt>
+                <dd style="margin: 0;">{{ choiceLabel }}</dd>
+              </div>
+              <div style="display: grid; grid-template-columns: minmax(7rem, 0.25fr) minmax(0, 1fr); gap: 0.75rem;">
+                <dt style="font-weight: 700;">Key</dt>
+                <dd style="margin: 0;">B. Dust mop</dd>
+              </div>
+            </dl>
+          </div>
+
+          <sc-if value="{{ showConfusion }}">
+            <div style="display: grid; gap: 0.5rem; padding: 1.25rem; border: 1px solid #1e40af; border-radius: 0.5rem; background: #eff6ff;">
+              <strong style="display: flex; align-items: center; gap: 0.5rem; color: #1e40af;"><span aria-hidden="true">i</span> A commonly confused pair</strong>
+              <p style="margin: 0; font-size: 0.9375rem;">Dust mop and wet/string mop are often mistaken for each other. The decisive distinction is frame and head form: a flat frame carrying a yarn face, against strands hanging loose from a central band.</p>
+              <a href="#d-atlas" style="justify-self: start; font-weight: 550;">Compare both in the atlas</a>
+            </div>
+          </sc-if>
+
+          <section style="display: grid; gap: 0.75rem;">
+            <h4 style="font-size: clamp(1.125rem, 1.05rem + 0.3vw, 1.375rem);">Why each option is right or wrong</h4>
+            <ol style="display: grid; gap: 1rem; margin: 0; padding-inline-start: 1.5rem;">
+              <sc-for list="{{ rationales }}" as="r" hint-placeholder-count="4">
+                <li style="display: grid; gap: 0.375rem;">
+                  <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
+                    <strong>{{ r.heading }}</strong>
+                    <span style="{{ r.verdictStyle }}">{{ r.verdict }}</span>
+                  </div>
+                  <p style="margin: 0; color: #17202a;">{{ r.why }}</p>
+                </li>
+              </sc-for>
+            </ol>
+          </section>
+
+          <section style="display: grid; gap: 0.75rem;">
+            <h4 style="font-size: clamp(1.125rem, 1.05rem + 0.3vw, 1.375rem);">Sources</h4>
+            <div style="display: grid; gap: 0.5rem; padding: 1rem 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #f7f8fa;">
+              <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;"><strong style="color: #17202a;">Where this comes from:</strong> NY Custodian Exam editorial project, reviewed launch tool facts and question blueprints, August 25, 2026.</p>
+              <blockquote style="margin: 0.25rem 0 0; padding-inline-start: 1rem; border-inline-start: 0.25rem solid #b7c1cc; color: #4b5563;">“Frame/head form and material.”</blockquote>
+              <span style="font-size: 0.875rem; color: #4b5563;">Written by this project’s editorial team, not an official exam source.</span>
+            </div>
+          </section>
+
+          <sc-if value="{{ isAnswered }}">
+            <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; padding-block-start: 0.25rem;">
+              <button type="button" onClick="{{ markReviewed }}" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; cursor: pointer;" style-hover="background: #edf2f7;">Mark reviewed</button>
+              <a href="#d-correction" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; text-decoration: none;" style-hover="background: #edf2f7;">Report a correction</a>
+              <button type="button" onClick="{{ next }}" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; cursor: pointer; margin-inline-start: auto;" style-hover="background: #0c4a6e;">Next question →</button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isReviewed }}">
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; padding: 1rem 1.25rem; border: 1px solid #166534; border-radius: 0.5rem; background: #ecfdf3;">
+              <strong style="display: flex; align-items: center; gap: 0.5rem; color: #166534;"><span aria-hidden="true">✓</span> Marked reviewed</strong>
+              <span style="font-size: 0.9375rem; color: #4b5563;">Recorded because you chose to — never automatically.</span>
+              <button type="button" onClick="{{ next }}" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; cursor: pointer; margin-inline-start: auto;" style-hover="background: #0c4a6e;">Next question →</button>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <p aria-live="polite" style="margin: 0; padding: 0.625rem 0.875rem; border: 1px dashed #b7c1cc; border-radius: 0.375rem; background: #f7f8fa; font-size: 0.875rem; color: #4b5563;"><span style="font-weight: 700; color: #17202a;">LiveRegion:</span> {{ announce }}</p>
+    </article>
+  </sc-if>
+
+  <sc-if value="{{ isUnavailable }}">
+    <div style="display: grid; gap: 1rem; max-width: 50rem; margin-inline: auto; width: 100%; padding: 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff;">
+      <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">PageState.ContentUnavailable</span>
+      <h3 tabindex="-1" style="font-size: clamp(1.25rem, 1.12rem + 0.55vw, 1.625rem);">This item cannot be shown</h3>
+      <p style="margin: 0; max-width: 68ch; color: #4b5563;">The illustration this item needs is not downloaded on this device. Nothing has been substituted — a newer or similar item is never swapped in.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+        <a href="#d-packs" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; text-decoration: none;" style-hover="background: #0c4a6e;">Download required pack</a>
+        <a href="#home-dashboard" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; text-decoration: none;" style-hover="background: #edf2f7;">Return to parent</a>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isCompleted }}">
+    <div style="display: grid; gap: 1rem; max-width: 50rem; margin-inline: auto; width: 100%; padding: 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff;">
+      <span style="font-size: 0.8125rem; font-weight: 700; color: #075985;">SessionSummary handoff</span>
+      <h3 tabindex="-1" style="font-size: clamp(1.25rem, 1.12rem + 0.55vw, 1.625rem);">Session complete — 45 of 45 answered</h3>
+      <p style="margin: 0; max-width: 68ch; color: #4b5563;">31 of the 45 items you answered were as keyed. Practice only — this is not an official score and predicts nothing.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+        <a href="#d-results" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; text-decoration: none;" style-hover="background: #0c4a6e;">See the summary</a>
+        <a href="#d-review" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; text-decoration: none;" style-hover="background: #edf2f7;">Add missed items to review</a>
+      </div>
+    </div>
+  </sc-if>
+
+  <p style="margin: 0; max-width: 68ch; padding: 0.75rem 1rem; border-inline-start: 0.25rem solid #075985; background: #ffffff; color: #4b5563; font-size: 0.9375rem;">Inspect the DOM in any precommit state. There is no key, no correctness class, no rationale, no answer-bearing excerpt, and no naming description in the alternative text or the asset filename.</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 900, &quot;height&quot;: 1100}}">
+class Component extends DCLogic {
+  state = {
+    workflow: "practice",
+    modality: "visual",
+    snap: "ready",
+    choice: null,
+    fail: false,
+    index: 7,
+    zoom: 100,
+    announce: "Question 7 of 45 ready."
+  };
+
+  timer = null;
+
+  componentWillUnmount() { clearTimeout(this.timer); }
+
+  legal = {
+    practice: ["restoring", "ready", "selected", "committing", "answered-revealed", "reviewed", "recoverable-error", "content-unavailable", "offline-stale", "completed"],
+    review: ["restoring", "ready", "selected", "committing", "answered-revealed", "reviewed", "recoverable-error", "content-unavailable", "offline-stale", "completed"],
+    simulation: ["restoring", "ready", "selected", "committing", "recorded", "recoverable-error", "content-unavailable", "offline-stale", "completed"]
+  };
+
+  chip(on) {
+    return "display: inline-flex; align-items: center; justify-content: center; min-height: 2.25rem; padding: 0.4375rem 0.75rem; border-radius: 0.375rem; font-size: 0.875rem; font-weight: 700; cursor: pointer; border: 1px solid " +
+      (on ? "#075985" : "#667085") + "; background: " + (on ? "#075985" : "#ffffff") + "; color: " + (on ? "#ffffff" : "#17202a") + ";";
+  }
+
+  setWorkflow = (w) => this.setState((s) => ({ workflow: w, snap: this.legal[w].includes(s.snap) ? s.snap : "ready" }));
+  setModality = (m) => this.setState({ modality: m });
+  setSnap = (v) => this.setState({ snap: v });
+  toggleFail = () => this.setState((s) => ({ fail: !s.fail }));
+
+  pick = (id) =>
+    this.setState((s) =>
+      ["ready", "selected", "recorded", "recoverable-error"].includes(s.snap)
+        ? { choice: id, snap: s.snap === "recorded" ? "recorded" : "selected" }
+        : null
+    );
+
+  commit = () => {
+    clearTimeout(this.timer);
+    this.setState({ snap: "committing", announce: "Saving your answer." });
+    this.timer = setTimeout(() => {
+      this.setState((s) => {
+        if (s.fail) return { snap: "recoverable-error", announce: "Could not save. Your selection is unchanged." };
+        if (s.workflow === "simulation") return { snap: "recorded", announce: "Answer recorded." };
+        return { snap: "answered-revealed", announce: "Answer saved." };
+      });
+    }, 700);
+  };
+
+  retry = () => this.setState({ fail: false }, this.commit);
+  markReviewed = () => this.setState({ snap: "reviewed", announce: "Marked reviewed." });
+
+  next = () => {
+    clearTimeout(this.timer);
+    this.setState((s) => ({ snap: "restoring", choice: null, index: Math.min(45, s.index + 1) }));
+    this.timer = setTimeout(() => this.setState((s) => ({ snap: "ready", announce: "Question " + s.index + " of 45 ready." })), 500);
+  };
+
+  renderVals() {
+    const s = this.state;
+    const cap = (t) => t.charAt(0).toUpperCase() + t.slice(1);
+    const KEY = "b";
+    const OPTIONS = [
+      { id: "a", letter: "A", label: "Push broom", why: "A sweeping head: bristles set into a wide block. No yarn face and no swivel yoke." },
+      { id: "b", letter: "B", label: "Dust mop", why: "A wide flat frame carrying dense soft yarn across its whole face, joined to the handle by a swivel yoke." },
+      { id: "c", letter: "C", label: "Wet/string mop", why: "Strands hang loose from a central band. There is no flat frame behind them." },
+      { id: "d", letter: "D", label: "Flat mop", why: "A flat rectangular head as well, but it carries a thin removable pad rather than deep yarn." }
+    ];
+
+    const q = s.snap;
+    const editable = ["ready", "selected", "recorded", "recoverable-error"].includes(q);
+    const revealed = q === "answered-revealed" || q === "reviewed";
+    const correct = s.choice === KEY;
+    const chosen = OPTIONS.find((o) => o.id === s.choice);
+
+    return {
+      wrapperName: cap(s.workflow) + (s.modality === "visual" ? "Visual" : "Nonvisual") + "Question",
+      workflowChips: ["practice", "review", "simulation"].map((w) => ({
+        key: w, label: cap(w), pressed: s.workflow === w ? "true" : "false",
+        style: this.chip(s.workflow === w), onClick: () => this.setWorkflow(w)
+      })),
+      modalityChips: [
+        { key: "visual", label: "Visual body", pressed: s.modality === "visual" ? "true" : "false", style: this.chip(s.modality === "visual"), onClick: () => this.setModality("visual") },
+        { key: "nonvisual", label: "Nonvisual body", pressed: s.modality === "nonvisual" ? "true" : "false", style: this.chip(s.modality === "nonvisual"), onClick: () => this.setModality("nonvisual") }
+      ],
+      stateChips: ["restoring", "ready", "selected", "committing", "answered-revealed", "recorded", "reviewed", "recoverable-error", "content-unavailable", "offline-stale", "completed"].map((key) => {
+        const ok = this.legal[s.workflow].includes(key);
+        return {
+          key, label: key, disabled: !ok,
+          pressed: ok && key === q ? "true" : "false",
+          style: ok
+            ? this.chip(key === q)
+            : "display: inline-flex; align-items: center; justify-content: center; min-height: 2.25rem; padding: 0.4375rem 0.75rem; border-radius: 0.375rem; font-size: 0.875rem; font-weight: 700; border: 1px dashed #b7c1cc; background: #e5e7eb; color: #4b5563; cursor: not-allowed; text-decoration: line-through;",
+          onClick: ok ? () => this.setSnap(key) : undefined
+        };
+      }),
+      illegalNote: s.workflow === "simulation"
+        ? "answered-revealed and reviewed are struck through: a simulation item cannot hold correctness before final session submission."
+        : "recorded is struck through: an immediate-feedback item settles to answered-revealed, never to a silent recording.",
+
+      isVisual: s.modality === "visual",
+      isNonvisual: s.modality === "nonvisual",
+      isReview: s.workflow === "review",
+      isRestoring: q === "restoring",
+      isSelected: q === "selected",
+      isCommitting: q === "committing",
+      isRecorded: q === "recorded",
+      isReviewed: q === "reviewed",
+      isAnswered: q === "answered-revealed",
+      isError: q === "recoverable-error",
+      isUnavailable: q === "content-unavailable",
+      isStale: q === "offline-stale",
+      isCompleted: q === "completed",
+      isRevealed: revealed,
+      showCard: !["content-unavailable", "completed"].includes(q),
+      showBody: q !== "restoring",
+      showChoices: q !== "restoring",
+      showCommit: ["ready", "selected", "recoverable-error"].includes(q),
+      commitDisabled: !s.choice,
+      commitStyle:
+        "display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 700; border: 1px solid transparent; cursor: " +
+        (s.choice ? "pointer" : "not-allowed") + "; background: " + (s.choice ? "#075985" : "#e5e7eb") + "; color: " + (s.choice ? "#ffffff" : "#4b5563") + ";",
+      position: "Question " + s.index + " of 45 in this session",
+      imageAlt: revealed
+        ? "Dust mop: a wide flat rectangular frame carrying dense soft yarn across its whole face, joined to a long straight handle by a swivel yoke."
+        : "A long straight handle joined by a swivel yoke to a wide flat rectangular head. The head carries dense soft strands across its full width and depth.",
+      options: OPTIONS.map((o) => {
+        const on = s.choice === o.id;
+        return {
+          id: o.id, inputId: "qp-" + o.id, letter: o.letter, label: o.label,
+          checked: on, disabled: !editable, onChange: () => this.pick(o.id),
+          style: "display: flex; align-items: center; gap: 0.75rem; min-height: 2.75rem; padding: 1rem; border-radius: 0.5rem; cursor: " +
+            (editable ? "pointer" : "not-allowed") + "; border: 1px solid " + (on ? "#075985" : "#667085") +
+            "; background: " + (on ? "#e0f2fe" : "#ffffff") + "; box-shadow: " + (on ? "inset 0 0 0 1px #075985" : "none") +
+            "; color: " + (editable ? "#17202a" : "#4b5563") + ";"
+        };
+      }),
+      rationales: OPTIONS.map((o) => {
+        const isKey = o.id === KEY;
+        const isYours = o.id === s.choice;
+        return {
+          id: o.id,
+          heading: o.letter + ". " + o.label,
+          verdict: isKey ? "Key" : isYours ? "Your answer — not the key" : "Not the key",
+          verdictStyle: "display: inline-flex; align-items: center; gap: 0.375rem; padding: 0.125rem 0.5rem; border: 1px solid currentColor; border-radius: 0.25rem; font-size: 0.8125rem; font-weight: 700; color: " +
+            (isKey ? "#166534" : isYours ? "#b42318" : "#4b5563") + ";",
+          why: o.why
+        };
+      }),
+      showConfusion: revealed && s.choice === "c",
+      outcomeTitle: correct ? "Correct" : "Not correct",
+      outcomeIcon: correct ? "✓" : "✕",
+      outcomeStyle: "display: grid; gap: 0.75rem; padding: 1.25rem; border-radius: 0.75rem; border: 1px solid " +
+        (correct ? "#166534" : "#b42318") + "; background: " + (correct ? "#ecfdf3" : "#fef3f2") + ";",
+      outcomeHeadStyle: "display: flex; align-items: center; gap: 0.5rem; font-size: clamp(1.125rem, 1.05rem + 0.3vw, 1.375rem); color: " +
+        (correct ? "#166534" : "#b42318") + ";",
+      choiceLabel: chosen ? chosen.letter + ". " + chosen.label : "No option selected",
+      failLabel: s.fail ? "Next commit will fail" : "Next commit will succeed",
+      failStyle: this.chip(s.fail),
+      toggleFail: this.toggleFail,
+      commit: this.commit,
+      retry: this.retry,
+      markReviewed: this.markReviewed,
+      next: this.next,
+      announce: s.announce,
+      zoomWidth: s.zoom + "%",
+      zoomLabel: s.zoom === 100 ? "Whole authored view" : s.zoom + "% of the authored view",
+      zoomIn: () => this.setState((p) => ({ zoom: Math.min(400, p.zoom + 50) })),
+      zoomOut: () => this.setState((p) => ({ zoom: Math.max(100, p.zoom - 50) })),
+      zoomReset: () => this.setState({ zoom: 100 })
+    };
+  }
+}
+</script>
+</body>
+</html>

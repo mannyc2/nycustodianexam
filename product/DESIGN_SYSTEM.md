@@ -14,7 +14,7 @@ default, and **MAY** is optional.
 ## 1. Design goals
 
 The interface should feel calm, trustworthy, legible, and practical rather than
-gamified. It must make source status, uncertainty, active profile/version,
+gamified. It must make source status, uncertainty, task scope/profile version,
 learner intent, and recovery actions obvious without artificial urgency.
 
 The design system follows these rules:
@@ -225,8 +225,9 @@ skip link
 site header
   independent/unofficial site identity
   primary navigation
-  active profile/version context when relevant
+  Settings utility
 main
+  task scope/profile version when relevant
 footer
 ```
 
@@ -235,8 +236,18 @@ footer
 - Primary navigation uses links and `aria-current="page"`. A compact menu uses a
   named native button/disclosure pattern and remains usable without precision or
   animation. Closing it restores focus to the trigger.
-- The current profile and version are visible on routes where they affect
-  content. They are not hidden inside a menu on compact layouts.
+- The standard header presents Practice, a Library disclosure with Tool atlas
+  and Hazard lab, and Exam information. Settings is the sole utility on the
+  right. There is no global exam-selection chip or persistent Offline/Sources
+  header action.
+- Library uses a coherent trigger and a readable panel of ordinary links. Each
+  destination has a short title; any description occupies its own line. The
+  trigger must not require hover, and the links remain reachable without
+  JavaScript.
+- Scope is visible beside the task: statewide-series scope on Practice, a
+  per-setup profile choice in simulation/print, and pinned profile/version in a
+  session. It is not hidden inside a menu on compact layouts or represented as
+  a global active exam.
 - Online/offline status appears only when it changes available behavior. A stale
   profile or pack has a separate labeled status from merely being offline.
 - Breadcrumbs appear on nested reference pages and use a labeled navigation
@@ -244,11 +255,14 @@ footer
 - Main content gets a stable focus target for route navigation and recovery.
 - The shell footer includes the unofficial-status statement and direct routes to
   sources, corrections, security, and privacy.
+- Settings includes a dedicated offline-download entry; contextual and footer
+  links may also reach downloads and recovery.
 
-At wider available widths, identity, primary navigation, and profile context may
-share a row. When they no longer fit without wrapping controls below their target
-size, the profile context moves to its own row and navigation becomes a compact
-disclosure. The header is sticky only if testing proves that it does not reduce
+At wider available widths, identity, primary navigation, and Settings may share
+a row. When they no longer fit without wrapping controls below their target
+size, navigation becomes a compact disclosure with direct task links as space
+allows; Settings remains visible. Task scope stays with the page content. The
+header is sticky only if testing proves that it does not reduce
 usable 400% reflow space; sticky primary study actions take precedence.
 
 ## 7. Controls, targets, and focus

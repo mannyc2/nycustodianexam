@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-25..200" />
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #e9edf1; color: #17202a; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+    a { color: #075985; }
+    a:hover { color: #0c4a6e; }
+    h1, h2, h3, h4, h5, p, dl, dd { margin: 0; }
+    ol, ul { margin: 0; padding: 0; list-style: none; }
+    fieldset { border: 0; margin: 0; padding: 0; min-inline-size: 0; }
+    button, input, select, textarea { font: inherit; }
+    :focus-visible { outline: 0.1875rem solid #1d4ed8; outline-offset: 0.1875rem; }
+  </style>
+</helmet>
+
+<section id="settled" style="display: grid; gap: 2rem; padding: 3rem clamp(1.5rem, 3vw, 3rem) 2rem;">
+
+  <div style="display: grid; gap: 1.25rem; max-width: 74rem;">
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem;">
+      <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; background: #17202a; color: #ffffff; padding: 0.125rem 0.5rem; border-radius: 0.25rem;">Settled</span>
+      <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">route family 19 — <code>/settings/</code> (<code>settings</code>, the Settings utility link); composes <a href="Component Library.dc.html#d-settings">SettingsForm</a> on the <a href="Component Library.dc.html#f-landing">§f-landing</a> primitives</span>
+    </div>
+    <h1 style="font-size: clamp(1.875rem, 1.45rem + 1.5vw, 2.75rem); letter-spacing: -0.025em; line-height: 1.2;">Settings — two preferences and everything you can do with your own data</h1>
+    <p style="max-width: 68ch; color: #4b5563; text-wrap: pretty;">Small on purpose. Three things a learner can change, four things they can do with what they have saved, and an honest list of what this page cannot do yet. The prototype’s startup destination and automatic text-equivalent preference are gone — no code reads either.</p>
+
+    <div style="display: grid; gap: 0.75rem; padding: 1.25rem 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; max-width: 68ch;">
+      <h2 style="font-size: 1.0625rem;">Calls I made here</h2>
+      <ul style="display: grid; gap: 0.5rem; font-size: 0.9375rem; color: #4b5563;">
+        <li><strong style="color: #17202a;">No Save button.</strong> Larger text and reduced motion change the page the moment you set them, so a Save that appears to be pending would be the only untrue thing on the screen. Each row carries its own quiet status, and a failed write puts the control back the way it was and says so in the same row.</li>
+        <li><strong style="color: #17202a;">Language is a statement, not a control.</strong> One published language means no picker to fake. The row says English, and Spanish is marked not available with the reason beside it. A <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">spanishAvailable</code> tweak shows the row as the select it becomes when a second language is reviewed.</li>
+        <li><strong style="color: #17202a;">Four data actions, one row template.</strong> Export, import, rebuild the review queue and delete are task cards with the glyph, name, sentence, action template, so the actions align. Export offers the correction drafts as a checkbox inside the card rather than as a second card.</li>
+        <li><strong style="color: #17202a;">Destructive means preview, then confirm, and export offered first.</strong> Import and delete both run choose → preview → confirm, and the preview says in its heading that nothing has been written. Delete is scoped: the preview counts exactly what each scope would take.</li>
+        <li><strong style="color: #17202a;">Not available is on the page, not hidden.</strong> Low-data mode and Spanish content are the two things learners ask for that do not exist; they sit in a hairline table with a reason each. Startup destination and automatic text equivalents were prototype inventions and moved to the future section instead — nobody asked for them.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="display: grid; gap: 0.625rem;">
+    <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">Ample — <strong style="color: #17202a;">a returning learner</strong> with 23 sessions saved</span>
+    <div data-screen-label="Settings — ample" style="width: 78rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; overflow: hidden; background: #ffffff; box-shadow: 0 0.25rem 1rem rgb(23 32 42 / 8%);">
+
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.375rem 1.25rem; padding: 0.375rem 1.25rem; border-block-end: 1px solid #b7c1cc;">
+        <a href="Home.dc.html" style="display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 700; color: #17202a; text-decoration: none;">NY Custodian Exam</a>
+        <nav aria-label="Primary" style="display: flex; align-items: center; gap: 0.25rem; margin-inline-end: auto; font-size: 0.9375rem;">
+          <a href="Study Hub.dc.html" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">school</span>Practice</a>
+          <details style="position: relative;">
+            <summary aria-label="Library — three collections" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; cursor: pointer; list-style: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">book_2</span>Library<span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.125rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">expand_more</span></summary>
+            <div style="position: absolute; inset-inline-start: 0; inset-block-start: calc(100% + 0.375rem); z-index: 40; width: 27rem; display: grid; gap: 0.125rem; padding: 0.375rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; box-shadow: 0 0.75rem 2rem rgb(23 32 42 / 16%);">
+            <a href="Tool Atlas.dc.html" style="display: grid; gap: 0.125rem; padding: 0.625rem 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">Tool atlas</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">All 65 tools, what each one is for, and the tools it gets mistaken for.</span></a>
+            <a href="Tool Atlas.dc.html" style="display: grid; gap: 0.125rem; padding: 0.625rem 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">Tool comparisons</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">The 14 pairs people mix up most, set side by side.</span></a>
+            <a href="Hazard Player.dc.html" style="display: grid; gap: 0.125rem; padding: 0.625rem 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">Hazard scenes</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">All 18 workplace scenes, each with a written version of the picture.</span></a>
+            <a href="Study Hub.dc.html#covers" style="display: grid; gap: 0.125rem; margin-block-start: 0.25rem; padding: 0.625rem 0.75rem; border-block-start: 1px solid #b7c1cc; border-radius: 0 0 0.375rem 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.875rem; color: #075985; font-weight: 700;">What practice covers</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Which of this material questions are drawn from, and what is left out.</span></a>
+            </div>
+          </details>
+          <a href="Landing.dc.html" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">assignment</span>Exams</a>
+        </nav>
+        <nav aria-label="Utility" style="display: flex; align-items: center;">
+          <a href="Settings.dc.html" aria-current="page" style="display: inline-flex; align-items: center; gap: 0.375rem; min-height: 2.75rem; padding: 0 0.75rem; border-radius: 0.375rem; background: #e0f2fe; color: #0c4a6e; font-weight: 700; font-size: 0.875rem; text-decoration: none;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">settings</span>Settings</a>
+        </nav>
+      </div>
+
+      <div id="sa-main" style="display: grid; gap: 1.5rem; padding: 3rem 2.5rem 2.5rem; background: #17202a; color: #ffffff;">
+        <div style="display: grid; gap: 1rem; max-width: 48rem;">
+          <p style="font-size: 0.9375rem; font-weight: 700; color: #9fb0c0;">Your settings</p>
+          <h1 style="font-size: clamp(2rem, 1.5rem + 1.8vw, 2.875rem); letter-spacing: -0.025em; line-height: 1.15; text-wrap: pretty;">All of this lives on this device.</h1>
+          <p style="font-size: 1.125rem; color: #dbe3ea; text-wrap: pretty;">There is no account and no server copy of your work. That is why export exists, why deleting is scoped and previewed, and why changing browsers means starting again unless you take a file with you.</p>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem;">
+          <a href="#sa-data" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.5rem; border: 1px solid transparent; border-radius: 0.5rem; background: #ffffff; color: #0c4a6e; font-weight: 700; text-decoration: none;" style-hover="background: #e0f2fe;">Export my progress</a>
+          <span style="font-size: 0.9375rem; color: #9fb0c0;">One file, readable by you, importable on another device.</span>
+        </div>
+        <dl style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin: 0; padding-block-start: 1.5rem; border-block-start: 1px solid #4b5563;">
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">Saved here</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">23 sessions, 214 attempts</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">Language</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">English</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">Text size</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">Standard</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">Motion</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">Reduced</dd></div>
+        </dl>
+      </div>
+
+      <div style="padding: 2.25rem 2.5rem 2.75rem; background: #f7f8fa; display: grid; gap: 2.25rem;">
+
+        <section id="sa-reading" style="display: grid; gap: 1rem; scroll-margin: 1.5rem;">
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem;"><h2 style="font-size: 1.5rem; letter-spacing: -0.02em;">Reading and motion</h2><p style="max-width: 48ch; font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">These save as you set them. Both follow your system settings until you decide otherwise here.</p></div>
+          <fieldset style="display: grid; padding: 0 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff;">
+            <legend style="padding: 0; position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%);">Reading and motion</legend>
+            <sc-if value="{{ spanishUnavailable }}" hint-placeholder-val="{{ true }}">
+              <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.25rem 1.5rem; align-items: start; padding-block: 1.25rem;">
+                <div style="display: grid; gap: 0.25rem; min-width: 0;">
+                  <h3 style="font-size: 1.0625rem;">Language</h3>
+                  <p style="max-width: 66ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">The site, the questions and the explanations are published in English. A Spanish version has not been written or reviewed, so there is nothing to switch to. <span style="display: inline-flex; align-items: center; gap: 0.25rem; margin-inline-start: 0.25rem; padding: 0 0.5rem; border: 1px solid #854d0e; border-radius: 0.25rem; color: #854d0e; font-size: 0.8125rem; font-weight: 700; vertical-align: middle;"><span aria-hidden="true">▲</span>Not available</span></p>
+                </div>
+                <span style="font-size: 0.9375rem; font-weight: 700; white-space: nowrap;">English</span>
+              </div>
+            </sc-if>
+            <sc-if value="{{ spanishAvailable }}">
+              <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.25rem 1.5rem; align-items: start; padding-block: 1.25rem;">
+                <div style="display: grid; gap: 0.25rem; min-width: 0;">
+                  <h3 style="font-size: 1.0625rem;"><label for="sa-lang">Language</label></h3>
+                  <p style="max-width: 66ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Changes the site, the questions and the explanations. Your saved attempts are not translated — they keep the wording you answered.</p>
+                </div>
+                <select id="sa-lang" style="min-width: 12rem; min-height: 2.75rem; padding: 0.5rem 0.75rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff;"><option>English</option><option>Español</option></select>
+              </div>
+            </sc-if>
+            <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.25rem 1.5rem; align-items: start; padding-block: 1.25rem; border-block-start: 1px solid #e2e7ec;">
+              <div style="display: grid; gap: 0.25rem; min-width: 0;">
+                <h3 style="font-size: 1.0625rem;"><label for="sa-text">Larger text</label></h3>
+                <p style="max-width: 66ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Sets everything to 125%. Pages reflow into one column rather than making you scroll sideways, and the players keep their full-size answer targets.</p>
+              </div>
+              <input id="sa-text" type="checkbox" style="width: 1.5rem; height: 1.5rem; margin: 0.5rem 0 0; accent-color: #075985;" />
+            </div>
+            <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.25rem 1.5rem; align-items: start; padding-block: 1.25rem; border-block-start: 1px solid #e2e7ec;">
+              <div style="display: grid; gap: 0.25rem; min-width: 0;">
+                <h3 style="font-size: 1.0625rem;"><label for="sa-motion">Reduce motion</label></h3>
+                <p style="max-width: 66ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Turns off the few transitions this site uses. Your system already asks for reduced motion; this keeps it that way even if that changes.</p>
+                <p role="status" style="font-size: 0.8125rem; color: #4b5563;">Saved on this device at 9:52 a.m.</p>
+              </div>
+              <input id="sa-motion" type="checkbox" checked="{{ true }}" onChange="{{ noop }}" style="width: 1.5rem; height: 1.5rem; margin: 0.5rem 0 0; accent-color: #075985;" />
+            </div>
+          </fieldset>
+        </section>
+
+        <section id="sa-data" style="display: grid; gap: 1rem; scroll-margin: 1.5rem;">
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem;"><h2 style="font-size: 1.5rem; letter-spacing: -0.02em;">Your saved work</h2><p style="max-width: 48ch; font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">23 sessions and 214 attempts, saved here since June 2. Anything that removes or replaces them shows you the exact numbers first.</p></div>
+          <ul style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem;">
+            <li style="display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; gap: 0.625rem; padding: 1.25rem; border: 1px solid #075985; border-radius: 0.5rem; background: #ffffff;">
+              <span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.75rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 32;">download</span>
+              <h3 style="font-size: 1.0625rem;">Export</h3>
+              <p style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">One file with your 23 sessions, 214 attempts, review queue and exam choice. Nothing is sent anywhere.</p>
+              <div style="display: grid; gap: 0.625rem;">
+                <label style="display: flex; align-items: start; gap: 0.5rem; font-size: 0.8125rem; color: #4b5563;"><input type="checkbox" style="flex: 0 0 auto; width: 1.125rem; height: 1.125rem; margin-block-start: 0.125rem; accent-color: #075985;" /><span>Include my 2 correction drafts</span></label>
+                <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; font-size: 0.9375rem; cursor: pointer;" style-hover="background: #0c4a6e;">Export a file</button>
+              </div>
+            </li>
+            <li style="display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; gap: 0.625rem; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+              <span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.75rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 32;">upload</span>
+              <h3 style="font-size: 1.0625rem;">Import</h3>
+              <p style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">Bring in a file from another device. You see what it holds and confirm before anything is written.</p>
+              <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.9375rem; cursor: pointer;" style-hover="background: #edf2f7;">Choose a file</button>
+            </li>
+            <li style="display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; gap: 0.625rem; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+              <span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.75rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 32;">restart_alt</span>
+              <h3 style="font-size: 1.0625rem;">Rebuild review</h3>
+              <p style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">Builds your review list again from your 214 attempts. Use it if the list looks wrong or empty when it should not be.</p>
+              <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.9375rem; cursor: pointer;" style-hover="background: #edf2f7;">Rebuild the list</button>
+            </li>
+            <li style="display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; gap: 0.625rem; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+              <span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.75rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 32;">download_for_offline</span>
+              <h3 style="font-size: 1.0625rem;">Use this site offline</h3>
+              <p style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">Download the study pack — 18.4 MB — so questions, scenes and tool records work without a connection. You have 2 copies, 35.6 MB, on this device.</p>
+              <a href="Offline.dc.html" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.9375rem; text-decoration: none;" style-hover="background: #edf2f7;">Manage downloads</a>
+            </li>
+            <li style="display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; gap: 0.625rem; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+              <span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.75rem; line-height: 1; color: #b42318; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 32;">delete</span>
+              <h3 style="font-size: 1.0625rem;">Delete</h3>
+              <p style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">Choose what to remove — attempts, review list, settings, offline copies — and see the counts before you confirm.</p>
+              <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid #b42318; border-radius: 0.5rem; background: #ffffff; color: #b42318; font-weight: 700; font-size: 0.9375rem; cursor: pointer;" style-hover="background: #fef3f2;">Choose what to delete</button>
+            </li>
+          </ul>
+        </section>
+
+        <section id="sa-not" style="display: grid; gap: 1rem; scroll-margin: 1.5rem;">
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem;"><h2 style="font-size: 1.5rem; letter-spacing: -0.02em;">Asked for often, not here yet</h2><p style="max-width: 48ch; font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Listed so you are not looking for a switch that does not exist.</p></div>
+          <dl style="display: grid; padding: 0 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff;">
+            <div style="display: grid; grid-template-columns: minmax(0, 12rem) minmax(0, 1fr) auto; gap: 0.25rem 1.5rem; align-items: baseline; padding-block: 1rem;"><dt style="font-size: 0.9375rem; font-weight: 700;">Spanish content</dt><dd style="margin: 0; max-width: 70ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Not written or reviewed. Translating questions without review would change what they test, so nothing is machine-translated.</dd><span style="display: inline-flex; align-items: center; gap: 0.25rem; padding: 0 0.5rem; border: 1px solid #854d0e; border-radius: 0.25rem; color: #854d0e; font-size: 0.8125rem; font-weight: 700; white-space: nowrap;"><span aria-hidden="true">▲</span>Not available</span></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 12rem) minmax(0, 1fr) auto; gap: 0.25rem 1.5rem; align-items: baseline; padding-block: 1rem; border-block-start: 1px solid #e2e7ec;"><dt style="font-size: 0.9375rem; font-weight: 700;">Low-data mode</dt><dd style="margin: 0; max-width: 70ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">No setting for it. Illustrations load only when you open the record that uses them, and one offline copy is the way to stop loading anything at all.</dd><a href="Offline.dc.html" style="font-size: 0.875rem; font-weight: 700; white-space: nowrap;">Offline</a></div>
+          </dl>
+          <p style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;"><strong style="color: #17202a;">Where this comes from:</strong> the published content registry for the launch pack, read September 5, 2026.</p>
+          <sc-if value="{{ showTechnical }}" hint-placeholder-val="{{ true }}">
+            <details style="font-size: 0.8125rem; color: #4b5563;"><summary style="display: list-item; min-height: 2.75rem; padding-block: 0.75rem; cursor: pointer; font-weight: 700; color: #075985;">Technical details</summary><dl style="display: grid; grid-template-columns: auto 1fr; gap: 0.25rem 0.75rem; margin: 0;"><dt>Published locales</dt><dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">en-US</dd><dt>Preferences held</dt><dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">large-text, reduce-motion</dd><dt>Events on this device</dt><dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">1,284 since 2026-06-02</dd><dt>Route</dt><dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">/settings/</dd></dl></details>
+          </sc-if>
+        </section>
+
+        <footer id="sa-footer" style="display: grid; gap: 1.5rem; padding: 1.75rem; border-radius: 0.625rem; background: #17202a; color: #dbe3ea; scroll-margin: 1.5rem;">
+          <div style="display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr); gap: 1.5rem 2.5rem;">
+            <div style="display: grid; gap: 0.5rem; align-content: start;">
+              <strong style="font-size: 1.0625rem; color: #ffffff; letter-spacing: -0.01em;">Independent and unofficial</strong>
+              <p style="max-width: 48ch; font-size: 0.875rem; color: #9fb0c0; text-wrap: pretty;">Not affiliated with any civil service agency, and not a substitute for the official announcement or your admission notice. Questions here are written for this site — no secure or recalled test material is used.</p>
+            </div>
+            <nav aria-label="Study" style="display: grid; gap: 0.375rem; align-content: start; font-size: 0.875rem;">
+              <strong style="color: #ffffff;">Study</strong>
+              <a href="Study Hub.dc.html" style="color: #dbe3ea;">Practice</a>
+              <a href="Review Queue.dc.html" style="color: #dbe3ea;">Review</a>
+              <a href="Tool Atlas.dc.html" style="color: #dbe3ea;">Tool atlas</a>
+            </nav>
+            <nav aria-label="This device" style="display: grid; gap: 0.375rem; align-content: start; font-size: 0.875rem;">
+              <strong style="color: #ffffff;">This device</strong>
+              <a href="Offline.dc.html" style="color: #dbe3ea;">Offline copies</a>
+              <a href="#sa-main" style="color: #dbe3ea;">Settings</a>
+              <a href="#sa-footer" style="color: #dbe3ea;">Sources and corrections</a>
+            </nav>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: grid; gap: 0.625rem; justify-items: start;">
+    <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">Compact — <strong style="color: #17202a;">same order</strong>; preference rows put the control under the sentence, data actions stack full width</span>
+    <div data-screen-label="Settings — compact" style="width: 24rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; overflow: hidden; background: #ffffff; box-shadow: 0 0.25rem 1rem rgb(23 32 42 / 8%);">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0 0.875rem; min-height: 3.25rem; border-block-end: 1px solid #b7c1cc;">
+        <a href="Home.dc.html" style="display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 700; color: #17202a; text-decoration: none; font-size: 0.9375rem;">NY Custodian Exam</a>
+      </div>
+
+      <div style="display: grid; gap: 1rem; padding: 1.75rem 1.125rem 1.5rem; background: #17202a; color: #ffffff;">
+        <p style="font-size: 0.8125rem; font-weight: 700; color: #9fb0c0;">Your settings</p>
+        <h1 style="font-size: 1.625rem; letter-spacing: -0.02em; line-height: 1.2; text-wrap: pretty;">All of this lives on this device.</h1>
+        <p style="font-size: 0.9375rem; color: #dbe3ea; text-wrap: pretty;">No account, no server copy. That is why export exists and why deleting is previewed first.</p>
+        <a href="#sc-data" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid transparent; border-radius: 0.5rem; background: #ffffff; color: #0c4a6e; font-weight: 700; font-size: 0.9375rem; text-decoration: none;">Export my progress</a>
+        <dl style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem 1rem; margin: 0; padding-block-start: 1rem; border-block-start: 1px solid #4b5563;">
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.75rem; color: #9fb0c0;">Saved here</dt><dd style="margin: 0; font-size: 1rem; font-weight: 700;">23 sessions</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.75rem; color: #9fb0c0;">Attempts</dt><dd style="margin: 0; font-size: 1rem; font-weight: 700;">214</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.75rem; color: #9fb0c0;">Language</dt><dd style="margin: 0; font-size: 1rem; font-weight: 700;">English</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.75rem; color: #9fb0c0;">Motion</dt><dd style="margin: 0; font-size: 1rem; font-weight: 700;">Reduced</dd></div>
+        </dl>
+      </div>
+
+      <div style="padding: 1rem; background: #f7f8fa; display: grid; gap: 1.25rem;">
+        <section style="display: grid; gap: 0.625rem;">
+          <h2 style="font-size: 1.0625rem;">Reading and motion</h2>
+          <fieldset style="display: grid; padding: 0 1rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+            <legend style="padding: 0; position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%);">Reading and motion</legend>
+            <div style="display: grid; gap: 0.125rem; padding-block: 0.875rem;">
+              <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 0.75rem;"><strong style="font-size: 0.9375rem;">Language</strong><span style="font-size: 0.9375rem; font-weight: 700;">English</span></div>
+              <span style="font-size: 0.8125rem; color: #4b5563;">Published in English only. <span style="display: inline-flex; align-items: center; gap: 0.25rem; padding: 0 0.375rem; border: 1px solid #854d0e; border-radius: 0.25rem; color: #854d0e; font-size: 0.75rem; font-weight: 700;"><span aria-hidden="true">▲</span>Not available</span></span>
+            </div>
+            <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.125rem 0.75rem; align-items: start; padding-block: 0.875rem; border-block-start: 1px solid #e2e7ec;">
+              <label for="sc-text" style="font-size: 0.9375rem; font-weight: 700;">Larger text</label>
+              <input id="sc-text" type="checkbox" style="grid-row: span 2; width: 1.5rem; height: 1.5rem; margin: 0.25rem 0 0; accent-color: #075985;" />
+              <span style="font-size: 0.8125rem; color: #4b5563;">Everything at 125%, reflowed into one column.</span>
+            </div>
+            <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.125rem 0.75rem; align-items: start; padding-block: 0.875rem; border-block-start: 1px solid #e2e7ec;">
+              <label for="sc-motion" style="font-size: 0.9375rem; font-weight: 700;">Reduce motion</label>
+              <input id="sc-motion" type="checkbox" checked="{{ true }}" onChange="{{ noop }}" style="grid-row: span 3; width: 1.5rem; height: 1.5rem; margin: 0.25rem 0 0; accent-color: #075985;" />
+              <span style="font-size: 0.8125rem; color: #4b5563;">Turns off the few transitions this site uses.</span>
+              <span role="status" style="font-size: 0.75rem; color: #4b5563;">Saved at 9:52 a.m.</span>
+            </div>
+          </fieldset>
+        </section>
+
+        <section id="sc-data" style="display: grid; gap: 0.625rem; scroll-margin: 1rem;">
+          <h2 style="font-size: 1.0625rem;">Your saved work</h2>
+          <p style="font-size: 0.8125rem; color: #4b5563;">23 sessions and 214 attempts since June 2.</p>
+          <ul style="display: grid; gap: 0.5rem;">
+            <li style="display: grid; gap: 0.5rem; padding: 0.875rem; border: 1px solid #075985; border-radius: 0.5rem; background: #ffffff;">
+              <div style="display: grid; gap: 0.125rem;"><strong style="font-size: 0.9375rem; color: #0c4a6e;">Export</strong><span style="font-size: 0.8125rem; color: #4b5563;">One file with your sessions, attempts and review list.</span></div>
+              <label style="display: flex; align-items: start; gap: 0.5rem; font-size: 0.8125rem; color: #4b5563;"><input type="checkbox" style="flex: 0 0 auto; width: 1.125rem; height: 1.125rem; margin-block-start: 0.125rem; accent-color: #075985;" /><span>Include my 2 correction drafts</span></label>
+              <button type="button" style="min-height: 2.75rem; padding: 0.5rem 1rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #0c4a6e;">Export a file</button>
+            </li>
+            <li style="display: grid; gap: 0.5rem; padding: 0.875rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+              <div style="display: grid; gap: 0.125rem;"><strong style="font-size: 0.9375rem;">Import</strong><span style="font-size: 0.8125rem; color: #4b5563;">You see what the file holds and confirm before anything is written.</span></div>
+              <button type="button" style="min-height: 2.75rem; padding: 0.5rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #edf2f7;">Choose a file</button>
+            </li>
+            <li style="display: grid; gap: 0.5rem; padding: 0.875rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+              <div style="display: grid; gap: 0.125rem;"><strong style="font-size: 0.9375rem;">Rebuild review</strong><span style="font-size: 0.8125rem; color: #4b5563;">Builds the review list again from your 214 attempts.</span></div>
+              <button type="button" style="min-height: 2.75rem; padding: 0.5rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #edf2f7;">Rebuild the list</button>
+            </li>
+            <li style="display: grid; gap: 0.5rem; padding: 0.875rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+            <div style="display: grid; gap: 0.125rem;"><strong style="font-size: 0.9375rem;">Use this site offline</strong><span style="font-size: 0.8125rem; color: #4b5563;">Download the 18.4 MB pack so practice works without a connection. 2 copies here now.</span></div>
+            <a href="Offline.dc.html" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.5rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; text-decoration: none;" style-hover="background: #edf2f7;">Manage downloads</a>
+          </li>
+          <li style="display: grid; gap: 0.5rem; padding: 0.875rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+              <div style="display: grid; gap: 0.125rem;"><strong style="font-size: 0.9375rem;">Delete</strong><span style="font-size: 0.8125rem; color: #4b5563;">Choose what to remove and see the counts before you confirm.</span></div>
+              <button type="button" style="min-height: 2.75rem; padding: 0.5rem 1rem; border: 1px solid #b42318; border-radius: 0.5rem; background: #ffffff; color: #b42318; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #fef3f2;">Choose what to delete</button>
+            </li>
+          </ul>
+        </section>
+
+        <section style="display: grid; gap: 0.625rem;">
+          <h2 style="font-size: 1.0625rem;">Asked for often, not here yet</h2>
+          <dl style="display: grid; padding: 0 1rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+            <div style="display: grid; gap: 0.125rem; padding-block: 0.875rem;"><dt style="font-size: 0.9375rem; font-weight: 700;">Spanish content</dt><dd style="margin: 0; font-size: 0.8125rem; color: #4b5563;">Not written or reviewed. Nothing is machine-translated.</dd></div>
+            <div style="display: grid; gap: 0.125rem; padding-block: 0.875rem; border-block-start: 1px solid #e2e7ec;"><dt style="font-size: 0.9375rem; font-weight: 700;">Low-data mode</dt><dd style="margin: 0; font-size: 0.8125rem; color: #4b5563;">No setting. One offline copy is the way to stop loading anything.</dd></div>
+          </dl>
+        </section>
+
+        <footer style="display: grid; gap: 0.5rem; padding: 1.125rem; border-radius: 0.5rem; background: #17202a; color: #9fb0c0;">
+          <strong style="font-size: 0.9375rem; color: #ffffff;">Independent and unofficial</strong>
+          <p style="font-size: 0.8125rem; text-wrap: pretty;">Not affiliated with any civil service agency. Questions are written for this site.</p>
+        </footer>
+      </div>
+
+      <nav aria-label="Sections" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-block-start: 1px solid #b7c1cc; background: #ffffff;">
+        <a href="Home.dc.html" style="display: grid; justify-items: center; gap: 0.125rem; padding: 0.5rem 0.25rem; min-height: 3.25rem; color: #4b5563; font-size: 0.6875rem; text-decoration: none;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">home</span>Home</a>
+        <a href="Study Hub.dc.html" style="display: grid; justify-items: center; gap: 0.125rem; padding: 0.5rem 0.25rem; min-height: 3.25rem; color: #4b5563; font-size: 0.6875rem; text-decoration: none;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">school</span>Study</a>
+        <a href="Tool Atlas.dc.html" style="display: grid; justify-items: center; gap: 0.125rem; padding: 0.5rem 0.25rem; min-height: 3.25rem; color: #4b5563; font-size: 0.6875rem; text-decoration: none;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">book_2</span>Atlas</a>
+        <a href="Hazard Player.dc.html" style="display: grid; justify-items: center; gap: 0.125rem; padding: 0.5rem 0.25rem; min-height: 3.25rem; color: #4b5563; font-size: 0.6875rem; text-decoration: none;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">warning</span>Hazards</a>
+        <a href="#sc-data" aria-current="page" style="display: grid; justify-items: center; gap: 0.125rem; padding: 0.5rem 0.25rem; min-height: 3.25rem; background: #e0f2fe; color: #0c4a6e; font-size: 0.6875rem; font-weight: 700; text-decoration: none;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">more_horiz</span>More</a>
+      </nav>
+    </div>
+  </div>
+
+  <div style="display: grid; gap: 1rem; max-width: 74rem;">
+    <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem;">
+      <h2 style="font-size: 1.5rem; letter-spacing: -0.02em;">The four flows, step by step</h2>
+      <p style="max-width: 52ch; font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Each panel opens in place under the card it belongs to, at 38rem — the width it has to survive on a narrow screen. Import and delete both go choose, preview, confirm.</p>
+    </div>
+    <ul style="display: flex; flex-wrap: wrap; gap: 1.25rem;">
+
+      <li style="display: grid; gap: 0.5rem; width: 38rem;">
+        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">Export — what the file will hold, before you make it</span>
+        <div data-screen-label="Settings — export" style="display: grid; gap: 0.625rem; padding: 1.25rem 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+          <h3 style="font-size: 1.0625rem;">Export my progress</h3>
+          <p style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">A single file saved wherever your browser puts downloads. It is yours: nothing is uploaded, and importing it on another device gives you this history there.</p>
+          <dl style="display: grid; padding: 0 1rem; border: 1px solid #b7c1cc; border-radius: 0.5rem;">
+            <div style="display: grid; grid-template-columns: minmax(0, 9rem) minmax(0, 1fr); gap: 0.25rem 1rem; align-items: baseline; padding-block: 0.75rem;"><dt style="font-size: 0.875rem; font-weight: 700;">Included</dt><dd style="margin: 0; font-size: 0.875rem; color: #4b5563;">23 sessions, 214 attempts, your review list, your exam choice, and these settings</dd></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 9rem) minmax(0, 1fr); gap: 0.25rem 1rem; align-items: baseline; padding-block: 0.75rem; border-block-start: 1px solid #e2e7ec;"><dt style="font-size: 0.875rem; font-weight: 700;">Not included</dt><dd style="margin: 0; font-size: 0.875rem; color: #4b5563;">The offline copies themselves. They are 18.4 MB each and can be downloaded again on the other device.</dd></div>
+          </dl>
+          <label style="display: flex; align-items: start; gap: 0.625rem; max-width: 62ch; font-size: 0.9375rem;"><input type="checkbox" style="flex: 0 0 auto; width: 1.25rem; height: 1.25rem; margin-block-start: 0.1875rem; accent-color: #075985;" /><span><strong>Include my 2 correction drafts</strong><span style="display: block; font-size: 0.875rem; color: #4b5563;">Reports you started but have not sent. Left out by default, since they contain what you were about to say to us rather than what you have studied.</span></span></label>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; padding-block-start: 0.25rem;">
+            <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #0c4a6e;">Export the file</button>
+            <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #edf2f7;">Not now</button>
+          </div>
+        </div>
+      </li>
+
+      <li style="display: grid; gap: 0.5rem; width: 38rem;">
+        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">Import, step 1 of 3 — reading the file</span>
+        <div data-screen-label="Settings — import decoding" style="display: grid; gap: 0.625rem; padding: 1.25rem 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+          <div style="display: flex; align-items: center; gap: 0.625rem;">
+            <span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; color: #4b5563; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">hourglass_top</span>
+            <h3 style="font-size: 1.0625rem;">Reading <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">custodian-progress-2026-09-04.json</code></h3>
+          </div>
+          <p role="status" style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Checking that the file decodes and that every attempt in it refers to a question this device can show. Nothing has been written yet, and nothing will be until you have seen what is in it.</p>
+        </div>
+      </li>
+
+      <li style="display: grid; gap: 0.5rem; width: 38rem;">
+        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">Import, step 2 of 3 — preview; the heading says nothing is written</span>
+        <div data-screen-label="Settings — import preview" style="display: grid; gap: 0.625rem; padding: 1.25rem 1.5rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff;">
+          <h3 tabindex="-1" style="font-size: 1.0625rem;">What this file would add — nothing has been written yet</h3>
+          <dl style="display: grid; padding: 0 1rem; border: 1px solid #b7c1cc; border-radius: 0.5rem;">
+            <div style="display: grid; grid-template-columns: minmax(0, 9rem) minmax(0, 1fr); gap: 0.25rem 1rem; align-items: baseline; padding-block: 0.75rem;"><dt style="font-size: 0.875rem; font-weight: 700;">Adds</dt><dd style="margin: 0; font-size: 0.875rem; color: #4b5563;">211 attempts and 21 sessions from June 2 to August 26, and one exam choice</dd></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 9rem) minmax(0, 1fr); gap: 0.25rem 1rem; align-items: baseline; padding-block: 0.75rem; border-block-start: 1px solid #e2e7ec;"><dt style="font-size: 0.875rem; font-weight: 700;">Already here</dt><dd style="margin: 0; font-size: 0.875rem; color: #4b5563;">3 attempts match what this device already holds. They are recognized as the same attempt, not counted twice.</dd></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 9rem) minmax(0, 1fr); gap: 0.25rem 1rem; align-items: baseline; padding-block: 0.75rem; border-block-start: 1px solid #e2e7ec;"><dt style="font-size: 0.875rem; font-weight: 700;">Kept but unreadable</dt><dd style="margin: 0; font-size: 0.875rem; color: #4b5563;">3 attempts refer to a question version this device does not have. They are kept as records of what you did — the question itself cannot be shown, and no newer version is substituted for it.</dd></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 9rem) minmax(0, 1fr); gap: 0.25rem 1rem; align-items: baseline; padding-block: 0.75rem; border-block-start: 1px solid #e2e7ec;"><dt style="font-size: 0.875rem; font-weight: 700;">Replaced</dt><dd style="margin: 0; font-size: 0.875rem; color: #4b5563;">Nothing. Your existing sessions and attempts stay exactly as they are.</dd></div>
+          </dl>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; padding-block-start: 0.25rem;">
+            <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #0c4a6e;">Add these 211 attempts</button>
+            <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #edf2f7;">Discard this file</button>
+          </div>
+        </div>
+      </li>
+
+      <li style="display: grid; gap: 0.5rem; width: 38rem;">
+        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">Import, step 3 of 3 — written, and what changed because of it</span>
+        <div data-screen-label="Settings — import applied" style="display: grid; gap: 0.625rem; padding: 1.25rem 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+          <h3 tabindex="-1" style="font-size: 1.0625rem;">211 attempts and 21 sessions are on this device</h3>
+          <p role="status" style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Your history now starts on June 2. The review list was rebuilt from the combined attempts and holds 12 items. The 3 unreadable attempts are marked as such in your history rather than hidden.</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; padding-block-start: 0.25rem;">
+            <a href="Review Queue.dc.html" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; text-decoration: none;" style-hover="background: #edf2f7;">Open the review list</a>
+            <a href="Study Hub.dc.html" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; text-decoration: none;" style-hover="background: #edf2f7;">See my history</a>
+          </div>
+        </div>
+      </li>
+
+      <li style="display: grid; gap: 0.5rem; width: 38rem;">
+        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">Rebuild the review list — what it does, and the same panel once it is done</span>
+        <div data-screen-label="Settings — rebuild" style="display: grid; gap: 1rem; padding: 1.25rem 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+          <div style="display: grid; gap: 0.5rem;">
+            <h3 style="font-size: 1.0625rem;">Rebuild the review list</h3>
+            <p style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Your review list is worked out from your attempts rather than stored on its own, so it can always be built again. Rebuilding reads all 214 attempts and replaces the list in one step. It cannot change what you answered or whether it was right.</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; padding-block-start: 0.25rem;">
+              <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #edf2f7;">Rebuild it now</button>
+            </div>
+          </div>
+          <div style="display: grid; gap: 0.375rem; padding: 1rem 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #f7f8fa;">
+            <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">after</span>
+            <h4 tabindex="-1" style="font-size: 0.9375rem;">The review list is rebuilt</h4>
+            <p role="status" style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">Read 214 attempts. The list holds 12 items — 3 more than before, because 3 questions you missed in August had been left out.</p>
+          </div>
+        </div>
+      </li>
+
+      <li style="display: grid; gap: 0.5rem; width: 38rem;">
+        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">Delete, step 1 of 3 — choose the scope; export offered before anything else</span>
+        <div data-screen-label="Settings — delete scope" style="display: grid; gap: 0.625rem; padding: 1.25rem 1.5rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff;">
+          <h3 style="font-size: 1.0625rem;">What should be deleted?</h3>
+          <p style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Nothing is selected and nothing has been removed. You will see exact counts before you confirm.</p>
+          <div style="display: grid; gap: 0.5rem; padding: 1rem 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #f7f8fa;">
+            <strong style="font-size: 0.9375rem;">Take a copy first?</strong>
+            <p style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">There is no server copy of any of this. An export takes a few seconds and can be imported back.</p>
+            <button type="button" style="justify-self: start; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.5rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #ffffff;">Export my progress first</button>
+          </div>
+          <fieldset style="display: grid; gap: 0.75rem; padding-block-start: 0.25rem;">
+            <legend style="padding: 0 0 0.5rem; font-size: 0.9375rem; font-weight: 700;">Choose one or more</legend>
+            <label style="display: flex; align-items: start; gap: 0.625rem; font-size: 0.9375rem;"><input type="checkbox" style="flex: 0 0 auto; width: 1.25rem; height: 1.25rem; margin-block-start: 0.1875rem; accent-color: #075985;" /><span><strong>My attempts and sessions</strong><span style="display: block; font-size: 0.875rem; color: #4b5563;">214 attempts, 23 sessions. Your review list goes with them.</span></span></label>
+            <label style="display: flex; align-items: start; gap: 0.625rem; font-size: 0.9375rem;"><input type="checkbox" style="flex: 0 0 auto; width: 1.25rem; height: 1.25rem; margin-block-start: 0.1875rem; accent-color: #075985;" /><span><strong>My review list only</strong><span style="display: block; font-size: 0.875rem; color: #4b5563;">12 items. It can be built again from your attempts at any time.</span></span></label>
+            <label style="display: flex; align-items: start; gap: 0.625rem; font-size: 0.9375rem;"><input type="checkbox" style="flex: 0 0 auto; width: 1.25rem; height: 1.25rem; margin-block-start: 0.1875rem; accent-color: #075985;" /><span><strong>These settings</strong><span style="display: block; font-size: 0.875rem; color: #4b5563;">Reduced motion. Reading and motion go back to their defaults.</span></span></label>
+            <label style="display: flex; align-items: start; gap: 0.625rem; font-size: 0.9375rem;"><input type="checkbox" style="flex: 0 0 auto; width: 1.25rem; height: 1.25rem; margin-block-start: 0.1875rem; accent-color: #075985;" /><span><strong>Offline copies</strong><span style="display: block; font-size: 0.875rem; color: #4b5563;">2 copies, 35.6 MB. Managed on the Offline page, where removal shows what depends on each copy.</span></span></label>
+          </fieldset>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; padding-block-start: 0.25rem;">
+            <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #edf2f7;">See what this would delete</button>
+            <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #edf2f7;">Cancel</button>
+          </div>
+        </div>
+      </li>
+
+      <li style="display: grid; gap: 0.5rem; width: 38rem;">
+        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">Delete, step 2 of 3 — the exact counts, and the one destructive button</span>
+        <div data-screen-label="Settings — delete preview" style="display: grid; gap: 0.625rem; padding: 1.25rem 1.5rem; border: 1px solid #b42318; border-radius: 0.5rem; background: #fef3f2;">
+          <h3 tabindex="-1" style="font-size: 1.0625rem;">This would delete 214 attempts and 23 sessions — nothing has been removed yet</h3>
+          <dl style="display: grid; padding: 0 1rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+            <div style="display: grid; grid-template-columns: minmax(0, 9rem) minmax(0, 1fr); gap: 0.25rem 1rem; align-items: baseline; padding-block: 0.75rem;"><dt style="font-size: 0.875rem; font-weight: 700;">Deleted</dt><dd style="margin: 0; font-size: 0.875rem; color: #4b5563;">214 attempts and 23 sessions from June 2 to September 4, and the 12 items in your review list</dd></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 9rem) minmax(0, 1fr); gap: 0.25rem 1rem; align-items: baseline; padding-block: 0.75rem; border-block-start: 1px solid #e2e7ec;"><dt style="font-size: 0.875rem; font-weight: 700;">Kept</dt><dd style="margin: 0; font-size: 0.875rem; color: #4b5563;">Your exam choice, these settings, and both offline copies. The site still works; it just has nothing of yours in it.</dd></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 9rem) minmax(0, 1fr); gap: 0.25rem 1rem; align-items: baseline; padding-block: 0.75rem; border-block-start: 1px solid #e2e7ec;"><dt style="font-size: 0.875rem; font-weight: 700;">Recoverable</dt><dd style="margin: 0; font-size: 0.875rem; color: #4b5563;">Only from a file you exported. There is no undo and no copy on a server.</dd></div>
+          </dl>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; padding-block-start: 0.25rem;">
+            <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #b42318; color: #ffffff; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #8f1c13;">Delete 214 attempts</button>
+            <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #ffffff;">Keep everything</button>
+          </div>
+        </div>
+      </li>
+
+      <li style="display: grid; gap: 0.5rem; width: 38rem;">
+        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">Delete, step 3 of 3 — done; a plain statement, no green, no congratulations</span>
+        <div data-screen-label="Settings — deleted" style="display: grid; gap: 0.625rem; padding: 1.25rem 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+          <h3 tabindex="-1" style="font-size: 1.0625rem;">Your attempts and sessions are deleted</h3>
+          <p role="status" style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">214 attempts, 23 sessions and 12 review items are gone from this device. Your exam choice and both offline copies are still here, so you can start a set straight away.</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; padding-block-start: 0.25rem;">
+            <a href="Study Hub.dc.html" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; text-decoration: none;" style-hover="background: #edf2f7;">Start a set</a>
+          </div>
+        </div>
+      </li>
+
+      <li style="display: grid; gap: 0.5rem; width: 38rem;">
+        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">A preference did not save — the control goes back, in the row it belongs to</span>
+        <div data-screen-label="Settings — write failed" style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.25rem 1.5rem; align-items: start; padding: 1.25rem 1.5rem; border: 1px solid #854d0e; border-radius: 0.5rem; background: #fffaeb;">
+          <div style="display: grid; gap: 0.25rem; min-width: 0;">
+            <h3 style="font-size: 1.0625rem;">Larger text</h3>
+            <p style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Sets everything to 125%. Pages reflow into one column rather than making you scroll sideways.</p>
+            <p role="status" tabindex="-1" style="display: flex; align-items: start; gap: 0.375rem; max-width: 62ch; font-size: 0.875rem; font-weight: 700; color: #854d0e;"><span aria-hidden="true">▲</span><span>This did not save, so it is switched back off. This device would not accept the write — usually storage is full or private browsing is on.</span></p>
+            <button type="button" style="justify-self: start; display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0.5rem 0.5rem; margin-inline-start: -0.5rem; border: 0; background: none; color: #075985; font-weight: 700; font-size: 0.875rem; cursor: pointer; text-decoration: underline;">Try turning it on again</button>
+          </div>
+          <input type="checkbox" style="width: 1.5rem; height: 1.5rem; margin: 0.5rem 0 0; accent-color: #075985;" />
+        </div>
+      </li>
+
+      <li style="display: grid; gap: 0.5rem; width: 38rem;">
+        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">Storage unavailable — the whole data section says so once, not four times</span>
+        <div data-screen-label="Settings — storage unavailable" style="display: grid; gap: 0.625rem; padding: 1.25rem 1.5rem; border: 1px solid #854d0e; border-radius: 0.5rem; background: #fffaeb;">
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span aria-hidden="true" style="color: #854d0e;">▲</span>
+            <h3 tabindex="-1" style="font-size: 1.0625rem;">This device is not letting the site read or write anything</h3>
+          </div>
+          <p style="max-width: 62ch; font-size: 0.9375rem; text-wrap: pretty;">Export, import, rebuilding and deleting all need saved data, so none of them can run and no count can be shown. This does not mean your work is gone — it means it cannot be reached right now.</p>
+          <p style="max-width: 62ch; font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">Private browsing and a full disk are the two usual causes. Reading and motion still work; they just will not be remembered after you close the tab.</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; padding-block-start: 0.25rem;">
+            <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #ffffff;">Check again</button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<div style="display: grid; gap: 0.5rem; max-width: 74rem; padding: 1.5rem clamp(1.5rem, 3vw, 3rem) 3rem; border-block-start: 1px solid #b7c1cc;">
+  <h2 style="font-size: 1.0625rem;">Preferences this page does not have</h2>
+  <p style="max-width: 68ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">The “Open on” startup destination and the automatic text-equivalent preference were removed rather than shown as disabled. Both are kept as drawings, with the reason and what would have to exist first, in <a href="Future Explorations.dc.html">Future explorations</a>. Nothing on this page renders them.</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;spanishAvailable&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Fixture&quot;},&quot;showTechnicalDetails&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Fixture&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const spanishAvailable = this.props.spanishAvailable ?? false;
+    return {
+      spanishAvailable,
+      spanishUnavailable: !spanishAvailable,
+      showTechnical: this.props.showTechnicalDetails ?? true,
+      noop: () => {}
+    };
+  }
+}
+</script>
+</body>
+</html>

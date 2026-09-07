@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-25..200" />
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #e9edf1; color: #17202a; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+    a { color: #075985; }
+    a:hover { color: #0c4a6e; }
+    h1, h2, h3, h4, h5, p, dl, dd { margin: 0; }
+    ol, ul { margin: 0; padding: 0; list-style: none; }
+    button, input, select, textarea { font: inherit; }
+    :focus-visible { outline: 0.1875rem solid #1d4ed8; outline-offset: 0.1875rem; }
+  </style>
+</helmet>
+
+<section id="settled" style="display: grid; gap: 2rem; padding: 3rem clamp(1.5rem, 3vw, 3rem) 2rem;">
+
+  <div style="display: grid; gap: 1.25rem; max-width: 74rem;">
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem;">
+      <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; background: #17202a; color: #ffffff; padding: 0.125rem 0.5rem; border-radius: 0.25rem;">Settled</span>
+      <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">route family 20 — <code>/offline/</code> (<code>offline-packs</code>, the Offline utility link); composes <a href="Component Library.dc.html#d-packs">OfflinePackManager</a> on the <a href="Component Library.dc.html#f-landing">§f-landing</a> primitives</span>
+    </div>
+    <h1 style="font-size: clamp(1.875rem, 1.45rem + 1.5vw, 2.75rem); letter-spacing: -0.025em; line-height: 1.2;">Offline — four deliberate steps, no background magic</h1>
+    <p style="max-width: 68ch; color: #4b5563; text-wrap: pretty;">The page that owns download, check, turn on and remove. Every state the implementation can reach is drawn here at the width it has to survive, and the two controls the prototype invented — Pause, Cancel — are gone, along with the claim that an interrupted download picks up where it stopped.</p>
+
+    <div style="display: grid; gap: 0.75rem; padding: 1.25rem 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; max-width: 68ch;">
+      <h2 style="font-size: 1.0625rem;">Calls I made here</h2>
+      <ul style="display: grid; gap: 0.5rem; font-size: 0.9375rem; color: #4b5563;">
+        <li><strong style="color: #17202a;">The sequence is the page.</strong> “How a copy gets onto this device” is a four-step numbered section, not a footnote: download and check, turn on, study, remove. Each step carries the one thing a learner would otherwise assume wrongly — that a partial download is kept, that a checked copy is already in use, that a running session follows the newest copy, that space is freed for you.</li>
+        <li><strong style="color: #17202a;">Nothing to press while it downloads.</strong> The downloading row shows bytes and says plainly that leaving or losing the connection starts it again from the beginning. No Pause, no Cancel, no “resumes from there”. The interrupted row is the same sentence, not a distinct “paused” status that implies stored progress.</li>
+        <li><strong style="color: #17202a;">Status is a label, not a border colour.</strong> The settled list is one hairline table with a status chip per row, so three copies read as three rows of one thing. Coloured borders are reserved for the states where the colour is the message — failed check, failed update, blocked removal, storage gone.</li>
+        <li><strong style="color: #17202a;">Removal is two screens.</strong> Preview names the exact sessions and attempts that depend on the copy and writes nothing; confirm is a separate act. When a paused session needs that exact copy, removal is not offered at all — the row explains what to finish first.</li>
+        <li><strong style="color: #17202a;">No saved copy is an EmptyState; no storage is not.</strong> Nothing downloaded yet gets the dashed slot with the one primary action this page exists to perform. A device that refuses to save gets a solid-border notice, because that is unavailable, not absent.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="display: grid; gap: 0.625rem;">
+    <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">Ample — <strong style="color: #17202a;">one copy turned on</strong>, an older copy kept, and a newer one published</span>
+    <div data-screen-label="Offline — turned on, ample" style="width: 78rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; overflow: hidden; background: #ffffff; box-shadow: 0 0.25rem 1rem rgb(23 32 42 / 8%);">
+
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.375rem 1.25rem; padding: 0.375rem 1.25rem; border-block-end: 1px solid #b7c1cc;">
+        <a href="Home.dc.html" style="display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 700; color: #17202a; text-decoration: none;">NY Custodian Exam</a>
+        <nav aria-label="Primary" style="display: flex; align-items: center; gap: 0.25rem; margin-inline-end: auto; font-size: 0.9375rem;">
+          <a href="Study Hub.dc.html" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">school</span>Practice</a>
+          <details style="position: relative;">
+            <summary aria-label="Library — three collections" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; cursor: pointer; list-style: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">book_2</span>Library<span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.125rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">expand_more</span></summary>
+            <div style="position: absolute; inset-inline-start: 0; inset-block-start: calc(100% + 0.375rem); z-index: 40; width: 27rem; display: grid; gap: 0.125rem; padding: 0.375rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; box-shadow: 0 0.75rem 2rem rgb(23 32 42 / 16%);">
+            <a href="Tool Atlas.dc.html" style="display: grid; gap: 0.125rem; padding: 0.625rem 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">Tool atlas</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">All 65 tools, what each one is for, and the tools it gets mistaken for.</span></a>
+            <a href="Tool Atlas.dc.html" style="display: grid; gap: 0.125rem; padding: 0.625rem 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">Tool comparisons</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">The 14 pairs people mix up most, set side by side.</span></a>
+            <a href="Hazard Player.dc.html" style="display: grid; gap: 0.125rem; padding: 0.625rem 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">Hazard scenes</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">All 18 workplace scenes, each with a written version of the picture.</span></a>
+            <a href="Study Hub.dc.html#covers" style="display: grid; gap: 0.125rem; margin-block-start: 0.25rem; padding: 0.625rem 0.75rem; border-block-start: 1px solid #b7c1cc; border-radius: 0 0 0.375rem 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.875rem; color: #075985; font-weight: 700;">What practice covers</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Which of this material questions are drawn from, and what is left out.</span></a>
+            </div>
+          </details>
+          <a href="Landing.dc.html" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">assignment</span>Exams</a>
+        </nav>
+        <nav aria-label="Utility" style="display: flex; align-items: center;">
+          <a href="Settings.dc.html" aria-current="true" style="display: inline-flex; align-items: center; gap: 0.375rem; min-height: 2.75rem; padding: 0 0.75rem; border-radius: 0.375rem; background: #e0f2fe; color: #0c4a6e; font-weight: 700; font-size: 0.875rem; text-decoration: none;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">settings</span>Settings</a>
+        </nav>
+      </div>
+
+      <div id="oa-main" style="display: grid; gap: 1.5rem; padding: 3rem 2.5rem 2.5rem; background: #17202a; color: #ffffff;">
+        <div style="display: grid; gap: 1rem; max-width: 48rem;">
+          <p style="font-size: 0.9375rem; font-weight: 700; color: #9fb0c0;">Studying offline</p>
+          <h1 style="font-size: clamp(2rem, 1.5rem + 1.8vw, 2.875rem); letter-spacing: -0.025em; line-height: 1.15; text-wrap: pretty;">Your exam is on this device.</h1>
+          <p style="font-size: 1.125rem; color: #dbe3ea; text-wrap: pretty;">One copy is turned on, so sets, drills and simulations run with no connection. Downloading a copy, turning it on and removing it are all things you do on purpose — nothing is fetched, replaced or deleted in the background.</p>
+        </div>
+        <sc-if value="{{ updateAvailable }}" hint-placeholder-val="{{ true }}">
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem;">
+            <a href="#oa-copies" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.5rem; border: 1px solid transparent; border-radius: 0.5rem; background: #ffffff; color: #0c4a6e; font-weight: 700; text-decoration: none;" style-hover="background: #e0f2fe;">Download the newer copy</a>
+            <span style="font-size: 0.9375rem; color: #9fb0c0;">Version 2.1.0 was published September 3. The copy you have keeps working either way.</span>
+          </div>
+        </sc-if>
+        <dl style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin: 0; padding-block-start: 1.5rem; border-block-start: 1px solid #4b5563;">
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">Turned on</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">Launch pack 2.0.0</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">What it holds</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">90 questions, 18 scenes</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">Space used</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">35.6 MB, two copies</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">Space left</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">About 22 MB</dd></div>
+        </dl>
+      </div>
+
+      <div style="padding: 2.25rem 2.5rem 2.75rem; background: #f7f8fa; display: grid; gap: 2.25rem;">
+
+        <section id="oa-copies" style="display: grid; gap: 1rem; scroll-margin: 1.5rem;">
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem;"><h2 style="font-size: 1.5rem; letter-spacing: -0.02em;">Copies on this device</h2><p style="max-width: 48ch; font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Only the copy that is turned on can start a new offline session. An older copy is kept when something you have already done depends on it.</p></div>
+          <ol style="display: grid; padding: 0 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff;">
+            <sc-if value="{{ updateAvailable }}" hint-placeholder-val="{{ true }}">
+              <li style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.5rem 1.5rem; align-items: start; padding-block: 1.25rem;">
+                <div style="display: grid; gap: 0.375rem; min-width: 0;">
+                  <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.625rem;">
+                    <h3 style="font-size: 1.125rem; letter-spacing: -0.015em;">Launch pack 2.1.0</h3>
+                    <span style="display: inline-flex; align-items: center; padding: 0 0.5rem; border: 1px solid #075985; border-radius: 0.25rem; color: #075985; font-size: 0.8125rem; font-weight: 700;">Not downloaded</span>
+                  </div>
+                  <p style="max-width: 66ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">19.1 MB, published September 3, 2026. It adds 12 questions and 2 hazard scenes and corrects 4 explanations.</p>
+                  <p style="max-width: 66ch; font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">Downloading it does not turn it on, and does not touch the copy you are using.</p>
+                </div>
+                <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.5rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; font-size: 0.875rem; cursor: pointer; white-space: nowrap;" style-hover="background: #0c4a6e;">Download and check</button>
+              </li>
+            </sc-if>
+            <li style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.5rem 1.5rem; align-items: start; padding-block: 1.25rem; border-block-start: 1px solid #e2e7ec;">
+              <div style="display: grid; gap: 0.375rem; min-width: 0;">
+                <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.625rem;">
+                  <h3 style="font-size: 1.125rem; letter-spacing: -0.015em;">Launch pack 2.0.0</h3>
+                  <span style="display: inline-flex; align-items: center; gap: 0.25rem; padding: 0 0.5rem; border: 1px solid #166534; border-radius: 0.25rem; color: #166534; font-size: 0.8125rem; font-weight: 700;"><span aria-hidden="true">✓</span>Turned on</span>
+                </div>
+                <p style="max-width: 66ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">18.4 MB. 90 questions, 18 hazard scenes and 65 tool records. Checked and turned on August 25, 2026.</p>
+                <p style="max-width: 66ch; font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">Everything you start from now runs from this copy, with or without a connection.</p>
+              </div>
+              <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.5rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; cursor: pointer; white-space: nowrap;" style-hover="background: #edf2f7;">Check for a newer copy</button>
+            </li>
+            <li style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.5rem 1.5rem; align-items: start; padding-block: 1.25rem; border-block-start: 1px solid #e2e7ec;">
+              <div style="display: grid; gap: 0.375rem; min-width: 0;">
+                <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.625rem;">
+                  <h3 style="font-size: 1.125rem; letter-spacing: -0.015em;">Launch pack 1.8.0</h3>
+                  <span style="display: inline-flex; align-items: center; padding: 0 0.5rem; border: 1px solid #4b5563; border-radius: 0.25rem; color: #4b5563; font-size: 0.8125rem; font-weight: 700;">Kept for older work</span>
+                </div>
+                <p style="max-width: 66ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">17.2 MB. 41 of your saved attempts were answered against this version, so it stays readable until you remove it.</p>
+                <p style="max-width: 66ch; font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">Removing it frees 17.2 MB and makes those 41 attempts unreadable. You see the full list before anything happens.</p>
+              </div>
+              <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.5rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; cursor: pointer; white-space: nowrap;" style-hover="background: #edf2f7;">Preview removal</button>
+            </li>
+          </ol>
+          <p style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">About 22 MB of storage is left. Nothing is removed to make room — if a download will not fit, it stops before it starts and says so.</p>
+        </section>
+
+        <section id="oa-steps" style="display: grid; gap: 1rem; scroll-margin: 1.5rem;">
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem;"><h2 style="font-size: 1.5rem; letter-spacing: -0.02em;">How a copy gets onto this device</h2><p style="max-width: 48ch; font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Four steps, each one yours to start. This is the whole sequence — there is no background updater.</p></div>
+          <ol style="display: grid; padding: 0 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff;">
+            <li style="display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: 0 1rem; align-items: start; padding-block: 1.25rem;">
+              <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 1.75rem; font-weight: 700; line-height: 1; color: #b7c1cc;">1</span>
+              <div style="display: grid; gap: 0.25rem; min-width: 0;">
+                <h3 style="font-size: 1.125rem; letter-spacing: -0.015em;">Download and check</h3>
+                <p style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">The whole file arrives, then its checksum is compared with the published manifest. There is nothing to press while it runs: if the connection drops or you leave, the download starts again from the beginning, and a partly written copy is never kept.</p>
+              </div>
+            </li>
+            <li style="display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: 0 1rem; align-items: start; padding-block: 1.25rem; border-block-start: 1px solid #e2e7ec;">
+              <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 1.75rem; font-weight: 700; line-height: 1; color: #b7c1cc;">2</span>
+              <div style="display: grid; gap: 0.25rem; min-width: 0;">
+                <h3 style="font-size: 1.125rem; letter-spacing: -0.015em;">Turn it on yourself</h3>
+                <p style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">A copy that passed its check sits there ready and unused. Turning it on is the only thing that makes it the copy new sessions come from, so a download can never change what you are studying by surprise.</p>
+              </div>
+            </li>
+            <li style="display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: 0 1rem; align-items: start; padding-block: 1.25rem; border-block-start: 1px solid #e2e7ec;">
+              <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 1.75rem; font-weight: 700; line-height: 1; color: #b7c1cc;">3</span>
+              <div style="display: grid; gap: 0.25rem; min-width: 0;">
+                <h3 style="font-size: 1.125rem; letter-spacing: -0.015em;">Study with no connection</h3>
+                <p style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Sets, drills and simulations all run from the copy that is turned on. A session already in progress stays on the copy it started from, even after you turn on a newer one, so questions never change underneath you.</p>
+              </div>
+            </li>
+            <li style="display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: 0 1rem; align-items: start; padding-block: 1.25rem; border-block-start: 1px solid #e2e7ec;">
+              <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 1.75rem; font-weight: 700; line-height: 1; color: #b7c1cc;">4</span>
+              <div style="display: grid; gap: 0.25rem; min-width: 0;">
+                <h3 style="font-size: 1.125rem; letter-spacing: -0.015em;">Remove it when you want the space</h3>
+                <p style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Removal shows you first: how much space you get back, which saved sessions and attempts depend on that copy, and what becomes unreadable. Confirming is a second, separate act, and nothing is ever removed automatically to make room.</p>
+              </div>
+            </li>
+          </ol>
+        </section>
+
+        <section id="oa-holds" style="display: grid; gap: 1rem; scroll-margin: 1.5rem;">
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem;"><h2 style="font-size: 1.5rem; letter-spacing: -0.02em;">What the copy you have holds</h2><p style="max-width: 48ch; font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">The same content the site serves online, fixed at the version you turned on.</p></div>
+          <dl style="display: grid; padding: 0 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff;">
+            <div style="display: grid; grid-template-columns: minmax(0, 11rem) minmax(0, 1fr) auto; gap: 0.25rem 1.5rem; align-items: baseline; padding-block: 1rem;"><dt style="font-size: 0.9375rem; font-weight: 700;">Questions</dt><dd style="margin: 0; max-width: 70ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">90 across the three subject areas, each with its reasoning and the source it rests on.</dd><a href="Session Builder.dc.html" style="font-size: 0.875rem; font-weight: 700; white-space: nowrap;">Practice</a></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 11rem) minmax(0, 1fr) auto; gap: 0.25rem 1.5rem; align-items: baseline; padding-block: 1rem; border-block-start: 1px solid #e2e7ec;"><dt style="font-size: 0.9375rem; font-weight: 700;">Hazard scenes</dt><dd style="margin: 0; max-width: 70ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">18 workplace scenes, each with the picture and a text version that asks the same thing.</dd><a href="Hazard Player.dc.html" style="font-size: 0.875rem; font-weight: 700; white-space: nowrap;">Drill</a></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 11rem) minmax(0, 1fr) auto; gap: 0.25rem 1.5rem; align-items: baseline; padding-block: 1rem; border-block-start: 1px solid #e2e7ec;"><dt style="font-size: 0.9375rem; font-weight: 700;">Tool records</dt><dd style="margin: 0; max-width: 70ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">65 records with their look-alikes. 8 have their illustration in this copy; the other 57 are text only. <span style="display: inline-flex; align-items: center; gap: 0.25rem; margin-inline-start: 0.375rem; padding: 0 0.5rem; border: 1px solid #854d0e; border-radius: 0.25rem; color: #854d0e; font-size: 0.8125rem; font-weight: 700; vertical-align: middle;"><span aria-hidden="true">▲</span>Not published</span></dd><a href="Tool Atlas.dc.html" style="font-size: 0.875rem; font-weight: 700; white-space: nowrap;">Atlas</a></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 11rem) minmax(0, 1fr) auto; gap: 0.25rem 1.5rem; align-items: baseline; padding-block: 1rem; border-block-start: 1px solid #e2e7ec;"><dt style="font-size: 0.9375rem; font-weight: 700;">Your saved work</dt><dd style="margin: 0; max-width: 70ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Kept separately from the copy, on this device. Removing a copy never removes your attempts — it can only make older ones unreadable.</dd><a href="Settings.dc.html" style="font-size: 0.875rem; font-weight: 700; white-space: nowrap;">Export</a></div>
+          </dl>
+          <p style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;"><strong style="color: #17202a;">Where this comes from:</strong> the published pack manifest for the launch pack, read September 5, 2026.</p>
+          <sc-if value="{{ showTechnical }}" hint-placeholder-val="{{ true }}">
+            <details style="font-size: 0.8125rem; color: #4b5563;"><summary style="display: list-item; min-height: 2.75rem; padding-block: 0.75rem; cursor: pointer; font-weight: 700; color: #075985;">Technical details</summary><dl style="display: grid; grid-template-columns: auto 1fr; gap: 0.25rem 0.75rem; margin: 0;"><dt>Pack id</dt><dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">launch-v1</dd><dt>Turned-on version</dt><dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">2.0.0</dd><dt>Schema</dt><dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">2</dd><dt>Checksum</dt><dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a; overflow-wrap: anywhere;">sha256 e6f9119014b3c0a7d5f2</dd><dt>Route</dt><dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">/offline/</dd></dl></details>
+          </sc-if>
+        </section>
+
+        <footer id="oa-footer" style="display: grid; gap: 1.5rem; padding: 1.75rem; border-radius: 0.625rem; background: #17202a; color: #dbe3ea; scroll-margin: 1.5rem;">
+          <div style="display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr); gap: 1.5rem 2.5rem;">
+            <div style="display: grid; gap: 0.5rem; align-content: start;">
+              <strong style="font-size: 1.0625rem; color: #ffffff; letter-spacing: -0.01em;">Independent and unofficial</strong>
+              <p style="max-width: 48ch; font-size: 0.875rem; color: #9fb0c0; text-wrap: pretty;">Not affiliated with any civil service agency, and not a substitute for the official announcement or your admission notice. Questions here are written for this site — no secure or recalled test material is used.</p>
+            </div>
+            <nav aria-label="Study" style="display: grid; gap: 0.375rem; align-content: start; font-size: 0.875rem;">
+              <strong style="color: #ffffff;">Study</strong>
+              <a href="Study Hub.dc.html" style="color: #dbe3ea;">Practice</a>
+              <a href="Review Queue.dc.html" style="color: #dbe3ea;">Review</a>
+              <a href="Tool Atlas.dc.html" style="color: #dbe3ea;">Tool atlas</a>
+            </nav>
+            <nav aria-label="This device" style="display: grid; gap: 0.375rem; align-content: start; font-size: 0.875rem;">
+              <strong style="color: #ffffff;">This device</strong>
+              <a href="#oa-main" style="color: #dbe3ea;">Offline copies</a>
+              <a href="Settings.dc.html" style="color: #dbe3ea;">Settings</a>
+              <a href="#oa-footer" style="color: #dbe3ea;">Sources and corrections</a>
+            </nav>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: grid; gap: 0.625rem; justify-items: start;">
+    <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">Compact — <strong style="color: #17202a;">same order</strong>; the status chip moves under the name and each action fills the row</span>
+    <div data-screen-label="Offline — turned on, compact" style="width: 24rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; overflow: hidden; background: #ffffff; box-shadow: 0 0.25rem 1rem rgb(23 32 42 / 8%);">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0 0.875rem; min-height: 3.25rem; border-block-end: 1px solid #b7c1cc;">
+        <a href="Home.dc.html" style="display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 700; color: #17202a; text-decoration: none; font-size: 0.9375rem;">NY Custodian Exam</a>
+      </div>
+
+      <div style="display: grid; gap: 1rem; padding: 1.75rem 1.125rem 1.5rem; background: #17202a; color: #ffffff;">
+        <p style="font-size: 0.8125rem; font-weight: 700; color: #9fb0c0;">Studying offline</p>
+        <h1 style="font-size: 1.625rem; letter-spacing: -0.02em; line-height: 1.2; text-wrap: pretty;">Your exam is on this device.</h1>
+        <p style="font-size: 0.9375rem; color: #dbe3ea; text-wrap: pretty;">One copy is turned on, so everything runs with no connection. Downloading, turning on and removing are all things you do on purpose.</p>
+        <a href="#oc-copies" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid transparent; border-radius: 0.5rem; background: #ffffff; color: #0c4a6e; font-weight: 700; font-size: 0.9375rem; text-decoration: none;">Download the newer copy</a>
+        <dl style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem 1rem; margin: 0; padding-block-start: 1rem; border-block-start: 1px solid #4b5563;">
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.75rem; color: #9fb0c0;">Turned on</dt><dd style="margin: 0; font-size: 1rem; font-weight: 700;">Launch pack 2.0.0</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.75rem; color: #9fb0c0;">What it holds</dt><dd style="margin: 0; font-size: 1rem; font-weight: 700;">90 questions, 18 scenes</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.75rem; color: #9fb0c0;">Space used</dt><dd style="margin: 0; font-size: 1rem; font-weight: 700;">35.6 MB</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.75rem; color: #9fb0c0;">Space left</dt><dd style="margin: 0; font-size: 1rem; font-weight: 700;">About 22 MB</dd></div>
+        </dl>
+      </div>
+
+      <div style="padding: 1rem; background: #f7f8fa; display: grid; gap: 1.25rem;">
+        <section id="oc-copies" style="display: grid; gap: 0.625rem; scroll-margin: 1rem;">
+          <h2 style="font-size: 1.0625rem;">Copies on this device</h2>
+          <ol style="display: grid; padding: 0 1rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+            <li style="display: grid; gap: 0.5rem; padding-block: 1rem;">
+              <div style="display: grid; gap: 0.25rem;">
+                <strong style="font-size: 0.9375rem;">Launch pack 2.1.0</strong>
+                <span style="justify-self: start; padding: 0 0.5rem; border: 1px solid #075985; border-radius: 0.25rem; color: #075985; font-size: 0.75rem; font-weight: 700;">Not downloaded</span>
+                <span style="font-size: 0.8125rem; color: #4b5563;">19.1 MB, published September 3. Downloading it does not turn it on.</span>
+              </div>
+              <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.5rem 1rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #0c4a6e;">Download and check</button>
+            </li>
+            <li style="display: grid; gap: 0.5rem; padding-block: 1rem; border-block-start: 1px solid #e2e7ec;">
+              <div style="display: grid; gap: 0.25rem;">
+                <strong style="font-size: 0.9375rem;">Launch pack 2.0.0</strong>
+                <span style="justify-self: start; display: inline-flex; align-items: center; gap: 0.25rem; padding: 0 0.5rem; border: 1px solid #166534; border-radius: 0.25rem; color: #166534; font-size: 0.75rem; font-weight: 700;"><span aria-hidden="true">✓</span>Turned on</span>
+                <span style="font-size: 0.8125rem; color: #4b5563;">18.4 MB. 90 questions, 18 scenes, 65 tool records. Turned on August 25.</span>
+              </div>
+              <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.5rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #edf2f7;">Check for a newer copy</button>
+            </li>
+            <li style="display: grid; gap: 0.5rem; padding-block: 1rem; border-block-start: 1px solid #e2e7ec;">
+              <div style="display: grid; gap: 0.25rem;">
+                <strong style="font-size: 0.9375rem;">Launch pack 1.8.0</strong>
+                <span style="justify-self: start; padding: 0 0.5rem; border: 1px solid #4b5563; border-radius: 0.25rem; color: #4b5563; font-size: 0.75rem; font-weight: 700;">Kept for older work</span>
+                <span style="font-size: 0.8125rem; color: #4b5563;">17.2 MB. 41 saved attempts were answered against this version.</span>
+              </div>
+              <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.5rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #edf2f7;">Preview removal</button>
+            </li>
+          </ol>
+          <p style="font-size: 0.75rem; color: #4b5563;">About 22 MB left. Nothing is removed to make room.</p>
+        </section>
+
+        <section style="display: grid; gap: 0.625rem;">
+          <h2 style="font-size: 1.0625rem;">How a copy gets here</h2>
+          <ol style="display: grid; padding: 0 1rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+            <li style="display: grid; grid-template-columns: 1.75rem minmax(0, 1fr); gap: 0 0.5rem; padding-block: 0.75rem;"><span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 1.25rem; font-weight: 700; line-height: 1.2; color: #b7c1cc;">1</span><div style="display: grid; gap: 0.125rem;"><strong style="font-size: 0.9375rem; line-height: 1.35;">Download and check</strong><span style="font-size: 0.8125rem; color: #4b5563;">Nothing to press. Interrupted means it starts again from the beginning.</span></div></li>
+            <li style="display: grid; grid-template-columns: 1.75rem minmax(0, 1fr); gap: 0 0.5rem; padding-block: 0.75rem; border-block-start: 1px solid #e2e7ec;"><span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 1.25rem; font-weight: 700; line-height: 1.2; color: #b7c1cc;">2</span><div style="display: grid; gap: 0.125rem;"><strong style="font-size: 0.9375rem; line-height: 1.35;">Turn it on yourself</strong><span style="font-size: 0.8125rem; color: #4b5563;">A checked copy waits until you do. Downloads never switch what you study.</span></div></li>
+            <li style="display: grid; grid-template-columns: 1.75rem minmax(0, 1fr); gap: 0 0.5rem; padding-block: 0.75rem; border-block-start: 1px solid #e2e7ec;"><span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 1.25rem; font-weight: 700; line-height: 1.2; color: #b7c1cc;">3</span><div style="display: grid; gap: 0.125rem;"><strong style="font-size: 0.9375rem; line-height: 1.35;">Study with no connection</strong><span style="font-size: 0.8125rem; color: #4b5563;">A session in progress stays on the copy it started from.</span></div></li>
+            <li style="display: grid; grid-template-columns: 1.75rem minmax(0, 1fr); gap: 0 0.5rem; padding-block: 0.75rem; border-block-start: 1px solid #e2e7ec;"><span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 1.25rem; font-weight: 700; line-height: 1.2; color: #b7c1cc;">4</span><div style="display: grid; gap: 0.125rem;"><strong style="font-size: 0.9375rem; line-height: 1.35;">Remove it for the space</strong><span style="font-size: 0.8125rem; color: #4b5563;">You see what depends on it first, then confirm. Never automatic.</span></div></li>
+          </ol>
+        </section>
+
+        <footer style="display: grid; gap: 0.5rem; padding: 1.125rem; border-radius: 0.5rem; background: #17202a; color: #9fb0c0;">
+          <strong style="font-size: 0.9375rem; color: #ffffff;">Independent and unofficial</strong>
+          <p style="font-size: 0.8125rem; text-wrap: pretty;">Not affiliated with any civil service agency. Questions are written for this site.</p>
+        </footer>
+      </div>
+
+      <nav aria-label="Sections" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-block-start: 1px solid #b7c1cc; background: #ffffff;">
+        <a href="Home.dc.html" style="display: grid; justify-items: center; gap: 0.125rem; padding: 0.5rem 0.25rem; min-height: 3.25rem; color: #4b5563; font-size: 0.6875rem; text-decoration: none;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">home</span>Home</a>
+        <a href="Study Hub.dc.html" style="display: grid; justify-items: center; gap: 0.125rem; padding: 0.5rem 0.25rem; min-height: 3.25rem; color: #4b5563; font-size: 0.6875rem; text-decoration: none;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">school</span>Study</a>
+        <a href="Tool Atlas.dc.html" style="display: grid; justify-items: center; gap: 0.125rem; padding: 0.5rem 0.25rem; min-height: 3.25rem; color: #4b5563; font-size: 0.6875rem; text-decoration: none;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">book_2</span>Atlas</a>
+        <a href="Hazard Player.dc.html" style="display: grid; justify-items: center; gap: 0.125rem; padding: 0.5rem 0.25rem; min-height: 3.25rem; color: #4b5563; font-size: 0.6875rem; text-decoration: none;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">warning</span>Hazards</a>
+        <a href="#oc-copies" aria-current="page" style="display: grid; justify-items: center; gap: 0.125rem; padding: 0.5rem 0.25rem; min-height: 3.25rem; background: #e0f2fe; color: #0c4a6e; font-size: 0.6875rem; font-weight: 700; text-decoration: none;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">more_horiz</span>More</a>
+      </nav>
+    </div>
+  </div>
+
+  <div style="display: grid; gap: 0.625rem; justify-items: start;">
+    <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">Ample — <strong style="color: #17202a;">nothing downloaded yet</strong>; the dashed slot sits where the list will be, and this page owns the one primary action</span>
+    <div data-screen-label="Offline — nothing downloaded, ample" style="width: 78rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; overflow: hidden; background: #ffffff; box-shadow: 0 0.25rem 1rem rgb(23 32 42 / 8%);">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.375rem 1.25rem; padding: 0.375rem 1.25rem; border-block-end: 1px solid #b7c1cc;">
+        <a href="Home.dc.html" style="display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 700; color: #17202a; text-decoration: none;">NY Custodian Exam</a>
+        <nav aria-label="Primary" style="display: flex; align-items: center; gap: 0.25rem; margin-inline-end: auto; font-size: 0.9375rem;">
+          <a href="Study Hub.dc.html" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">school</span>Practice</a>
+          <details style="position: relative;">
+            <summary aria-label="Library — three collections" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; cursor: pointer; list-style: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">book_2</span>Library<span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.125rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">expand_more</span></summary>
+            <div style="position: absolute; inset-inline-start: 0; inset-block-start: calc(100% + 0.375rem); z-index: 40; width: 27rem; display: grid; gap: 0.125rem; padding: 0.375rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; box-shadow: 0 0.75rem 2rem rgb(23 32 42 / 16%);">
+            <a href="Tool Atlas.dc.html" style="display: grid; gap: 0.125rem; padding: 0.625rem 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">Tool atlas</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">All 65 tools, what each one is for, and the tools it gets mistaken for.</span></a>
+            <a href="Tool Atlas.dc.html" style="display: grid; gap: 0.125rem; padding: 0.625rem 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">Tool comparisons</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">The 14 pairs people mix up most, set side by side.</span></a>
+            <a href="Hazard Player.dc.html" style="display: grid; gap: 0.125rem; padding: 0.625rem 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">Hazard scenes</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">All 18 workplace scenes, each with a written version of the picture.</span></a>
+            <a href="Study Hub.dc.html#covers" style="display: grid; gap: 0.125rem; margin-block-start: 0.25rem; padding: 0.625rem 0.75rem; border-block-start: 1px solid #b7c1cc; border-radius: 0 0 0.375rem 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.875rem; color: #075985; font-weight: 700;">What practice covers</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Which of this material questions are drawn from, and what is left out.</span></a>
+            </div>
+          </details>
+          <a href="Landing.dc.html" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">assignment</span>Exams</a>
+        </nav>
+        <nav aria-label="Utility" style="display: flex; align-items: center;">
+          <a href="Settings.dc.html" aria-current="true" style="display: inline-flex; align-items: center; gap: 0.375rem; min-height: 2.75rem; padding: 0 0.75rem; border-radius: 0.375rem; background: #e0f2fe; color: #0c4a6e; font-weight: 700; font-size: 0.875rem; text-decoration: none;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">settings</span>Settings</a>
+        </nav>
+      </div>
+
+      <div id="oe-main" style="display: grid; gap: 1.5rem; padding: 3rem 2.5rem 2.5rem; background: #17202a; color: #ffffff;">
+        <div style="display: grid; gap: 1rem; max-width: 48rem;">
+          <p style="font-size: 0.9375rem; font-weight: 700; color: #9fb0c0;">Studying offline</p>
+          <h1 style="font-size: clamp(2rem, 1.5rem + 1.8vw, 2.875rem); letter-spacing: -0.025em; line-height: 1.15; text-wrap: pretty;">Study with no connection at all.</h1>
+          <p style="font-size: 1.125rem; color: #dbe3ea; text-wrap: pretty;">Download one copy of your exam content and every set, drill and simulation runs on the train, in a basement, on a dead phone plan. It is 18.4 MB, and you decide when it arrives, when it turns on and when it goes.</p>
+        </div>
+        <dl style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin: 0; padding-block-start: 1.5rem; border-block-start: 1px solid #4b5563;">
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">On this device</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">No copy yet</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">Copy to download</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">18.4 MB, one file</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">What it holds</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">90 questions, 18 scenes</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">Space left</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">About 58 MB</dd></div>
+        </dl>
+      </div>
+
+      <div style="padding: 2.25rem 2.5rem 2.75rem; background: #f7f8fa; display: grid; gap: 2.25rem;">
+        <section style="display: grid; gap: 1rem;">
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem;"><h2 style="font-size: 1.5rem; letter-spacing: -0.02em;">Copies on this device</h2><p style="max-width: 48ch; font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Practice works online without any of this. A copy is only for studying with no connection.</p></div>
+          <div style="display: grid; gap: 0.375rem; justify-items: start; padding: 1.5rem 1.75rem; border: 1px dashed #667085; border-radius: 0.75rem; background: #ffffff;">
+            <h3 tabindex="-1" style="font-size: 1.0625rem; letter-spacing: -0.01em;">Nothing downloaded yet</h3>
+            <p style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Downloading one copy puts the questions, hazard scenes and tool records on this device. It arrives as a single file, gets checked against the published manifest, and then waits for you to turn it on.</p>
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; padding-block-start: 0.75rem;">
+              <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; font-size: 0.9375rem; cursor: pointer;" style-hover="background: #0c4a6e;">Download the 18.4 MB copy</button>
+              <a href="#oe-steps" style="display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0.5rem; color: #075985; font-weight: 700; font-size: 0.875rem; text-decoration: none;">What happens when I do</a>
+            </div>
+          </div>
+        </section>
+
+        <section id="oe-steps" style="display: grid; gap: 1rem; scroll-margin: 1.5rem;">
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem;"><h2 style="font-size: 1.5rem; letter-spacing: -0.02em;">How a copy gets onto this device</h2><p style="max-width: 48ch; font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Four steps, each one yours to start.</p></div>
+          <ol style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem;">
+            <li style="display: grid; grid-template-rows: auto auto minmax(0, 1fr); gap: 0.5rem; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;"><span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 1.5rem; font-weight: 700; line-height: 1; color: #b7c1cc;">1</span><h3 style="font-size: 1rem;">Download and check</h3><p style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">One file, then a checksum against the manifest. Nothing to press; interrupted means it starts again.</p></li>
+            <li style="display: grid; grid-template-rows: auto auto minmax(0, 1fr); gap: 0.5rem; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;"><span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 1.5rem; font-weight: 700; line-height: 1; color: #b7c1cc;">2</span><h3 style="font-size: 1rem;">Turn it on yourself</h3><p style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">A checked copy sits unused until you turn it on. That is what makes it the copy sessions come from.</p></li>
+            <li style="display: grid; grid-template-rows: auto auto minmax(0, 1fr); gap: 0.5rem; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;"><span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 1.5rem; font-weight: 700; line-height: 1; color: #b7c1cc;">3</span><h3 style="font-size: 1rem;">Study with no connection</h3><p style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">A session in progress stays pinned to the copy it started from, whatever you download later.</p></li>
+            <li style="display: grid; grid-template-rows: auto auto minmax(0, 1fr); gap: 0.5rem; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;"><span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 1.5rem; font-weight: 700; line-height: 1; color: #b7c1cc;">4</span><h3 style="font-size: 1rem;">Remove it for the space</h3><p style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">You see what depends on it before anything happens, then confirm. Never automatic.</p></li>
+          </ol>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: grid; gap: 1rem; max-width: 74rem;">
+    <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem;">
+      <h2 style="font-size: 1.5rem; letter-spacing: -0.02em;">Every other state the list can be in</h2>
+      <p style="max-width: 52ch; font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Each card is the same list slot at 38rem, the width it has to survive on a narrow screen. Coloured borders appear only where the colour is the message.</p>
+    </div>
+    <ul style="display: flex; flex-wrap: wrap; gap: 1.25rem;">
+
+      <li style="display: grid; gap: 0.5rem; width: 38rem;">
+        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">Checking what is saved — on load, before the list can be trusted</span>
+        <div data-screen-label="Offline — checking" style="display: grid; gap: 0.625rem; padding: 1.25rem 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+          <div style="display: flex; align-items: center; gap: 0.625rem;">
+            <span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; color: #4b5563; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">hourglass_top</span>
+            <h3 style="font-size: 1.0625rem;">Checking what is saved on this device</h3>
+          </div>
+          <p role="status" style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Reading the saved records now. The list appears once it is certain what is here — a copy part-way through a download or a turn-on is reconciled first, and anything unsafe is discarded rather than shown.</p>
+          <div style="display: grid; gap: 0.5rem;" aria-hidden="true">
+            <span style="height: 1rem; width: 60%; border-radius: 0.25rem; background: #edf2f7;"></span>
+            <span style="height: 1rem; width: 85%; border-radius: 0.25rem; background: #edf2f7;"></span>
+          </div>
+        </div>
+      </li>
+
+      <li style="display: grid; gap: 0.5rem; width: 38rem;">
+        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">Downloading — no Pause, no Cancel, no stored progress</span>
+        <div data-screen-label="Offline — downloading" style="display: grid; gap: 0.625rem; padding: 1.25rem 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.625rem;">
+            <h3 style="font-size: 1.0625rem;">Launch pack 2.1.0</h3>
+            <span style="padding: 0 0.5rem; border: 1px solid #4b5563; border-radius: 0.25rem; color: #4b5563; font-size: 0.8125rem; font-weight: 700;">Downloading</span>
+          </div>
+          <div style="display: grid; gap: 0.375rem;">
+            <progress value="62" max="100" style="width: 100%; height: 0.75rem;"></progress>
+            <p role="status" style="font-size: 0.9375rem; color: #4b5563;">11.8 MB of 19.1 MB. Checking starts once the whole file has arrived.</p>
+          </div>
+          <p style="max-width: 62ch; font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">There is nothing to press while this runs. If the connection drops or you leave this page, the download starts again from the beginning — a partly written copy is never kept, and never turned on.</p>
+        </div>
+      </li>
+
+      <li style="display: grid; gap: 0.5rem; width: 38rem;">
+        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">Checked and waiting — the copy exists but is not in use</span>
+        <div data-screen-label="Offline — ready to turn on" style="display: grid; gap: 0.625rem; padding: 1.25rem 1.5rem; border: 1px solid #075985; border-radius: 0.5rem; background: #ffffff;">
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.625rem;">
+            <h3 style="font-size: 1.0625rem;">Launch pack 2.1.0</h3>
+            <span style="padding: 0 0.5rem; border: 1px solid #075985; border-radius: 0.25rem; color: #075985; font-size: 0.8125rem; font-weight: 700;">Ready to turn on</span>
+          </div>
+          <p style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">19.1 MB arrived and matched the published manifest on September 5, 2026. Nothing uses it yet: sets, drills and simulations still come from 2.0.0 until you turn this one on.</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; padding-block-start: 0.25rem;">
+            <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #0c4a6e;">Turn on 2.1.0</button>
+            <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #edf2f7;">Preview removal</button>
+          </div>
+          <p style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">A session running right now keeps using 2.0.0 until it ends, even after you turn this on.</p>
+        </div>
+      </li>
+
+      <li style="display: grid; gap: 0.5rem; width: 38rem;">
+        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">Failed its check — quarantined, and it says nothing about the content</span>
+        <div data-screen-label="Offline — failed check" style="display: grid; gap: 0.625rem; padding: 1.25rem 1.5rem; border: 1px solid #b42318; border-radius: 0.5rem; background: #fef3f2;">
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.625rem;">
+            <h3 style="font-size: 1.0625rem;">Launch pack 2.1.0</h3>
+            <span style="display: inline-flex; align-items: center; gap: 0.25rem; padding: 0 0.5rem; border: 1px solid #b42318; border-radius: 0.25rem; color: #b42318; font-size: 0.8125rem; font-weight: 700;"><span aria-hidden="true">✕</span>Did not pass its check</span>
+          </div>
+          <p style="max-width: 62ch; font-size: 0.9375rem; text-wrap: pretty;">The file that arrived does not match the published manifest, so it is being held aside and cannot be turned on. Version 2.0.0 stays turned on and untouched, and your saved work is unaffected.</p>
+          <p style="max-width: 62ch; font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">Downloading it again is safe and does not create a second copy. If it fails twice, reporting it helps — the report carries no question content.</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; padding-block-start: 0.25rem;">
+            <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #ffffff;">Discard and download again</button>
+            <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #ffffff;">Report this</button>
+          </div>
+          <details style="font-size: 0.8125rem; color: #4b5563;"><summary style="display: list-item; min-height: 2.75rem; padding-block: 0.75rem; cursor: pointer; font-weight: 700; color: #075985;">Technical details</summary><dl style="display: grid; grid-template-columns: auto 1fr; gap: 0.25rem 0.75rem; margin: 0;"><dt>Held aside</dt><dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">2026-09-05 09:41</dd><dt>Expected</dt><dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a; overflow-wrap: anywhere;">sha256 71ac4b0d…</dd><dt>Received</dt><dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a; overflow-wrap: anywhere;">sha256 0e42f7a1…</dd></dl></details>
+        </div>
+      </li>
+
+      <li style="display: grid; gap: 0.5rem; width: 38rem;">
+        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">Update did not finish — the copy you were using is still the one you are using</span>
+        <div data-screen-label="Offline — update failed" style="display: grid; gap: 0.625rem; padding: 1.25rem 1.5rem; border: 1px solid #854d0e; border-radius: 0.5rem; background: #fffaeb;">
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span aria-hidden="true" style="color: #854d0e;">▲</span>
+            <h3 style="font-size: 1.0625rem;">The update to 2.1.0 did not finish</h3>
+          </div>
+          <p style="max-width: 62ch; font-size: 0.9375rem; text-wrap: pretty;">The download stopped part-way through and nothing was written. <strong>Launch pack 2.0.0 is still turned on</strong>, everything still runs offline, and no session or saved attempt was affected.</p>
+          <p style="max-width: 62ch; font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">Trying again starts the 19.1 MB download from the beginning. You can leave it — 2.0.0 does not expire.</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; padding-block-start: 0.25rem;">
+            <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #0c4a6e;">Download again</button>
+            <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #ffffff;">Keep using 2.0.0</button>
+          </div>
+        </div>
+      </li>
+
+      <li style="display: grid; gap: 0.5rem; width: 38rem;">
+        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">Removal blocked — a paused session needs this exact copy, so removal is not offered</span>
+        <div data-screen-label="Offline — removal blocked" style="display: grid; gap: 0.625rem; padding: 1.25rem 1.5rem; border: 1px solid #854d0e; border-radius: 0.5rem; background: #fffaeb;">
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.625rem;">
+            <h3 style="font-size: 1.0625rem;">Launch pack 1.8.0</h3>
+            <span style="display: inline-flex; align-items: center; gap: 0.25rem; padding: 0 0.5rem; border: 1px solid #854d0e; border-radius: 0.25rem; color: #854d0e; font-size: 0.8125rem; font-weight: 700;"><span aria-hidden="true">▲</span>Cannot be removed yet</span>
+          </div>
+          <p style="max-width: 62ch; font-size: 0.9375rem; text-wrap: pretty;">A paused simulation from August 19 is halfway through and was built from this exact copy. Removing it now would end that session with no way to resume it, so removal is not offered until the session is finished or discarded.</p>
+          <ul style="display: grid; gap: 0.25rem; padding-inline-start: 1.125rem; list-style: disc; font-size: 0.875rem; color: #4b5563;">
+            <li>One paused simulation, 34 of 60 questions answered</li>
+            <li>41 saved attempts that were answered against this version</li>
+          </ul>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; padding-block-start: 0.25rem;">
+            <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #0c4a6e;">Finish that simulation</button>
+            <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #ffffff;">Discard that session</button>
+          </div>
+        </div>
+      </li>
+
+      <li style="display: grid; gap: 0.5rem; width: 38rem;">
+        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">Removal, step 1 of 2 — preview; nothing has been written</span>
+        <div data-screen-label="Offline — removal preview" style="display: grid; gap: 0.625rem; padding: 1.25rem 1.5rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff;">
+          <h3 style="font-size: 1.0625rem;">Remove Launch pack 1.8.0?</h3>
+          <p style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Nothing has been removed yet. This is what confirming would do.</p>
+          <dl style="display: grid; padding: 0 1rem; border: 1px solid #b7c1cc; border-radius: 0.5rem;">
+            <div style="display: grid; grid-template-columns: minmax(0, 9rem) minmax(0, 1fr); gap: 0.25rem 1rem; align-items: baseline; padding-block: 0.75rem;"><dt style="font-size: 0.875rem; font-weight: 700;">You get back</dt><dd style="margin: 0; font-size: 0.875rem; color: #4b5563;">17.2 MB of storage</dd></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 9rem) minmax(0, 1fr); gap: 0.25rem 1rem; align-items: baseline; padding-block: 0.75rem; border-block-start: 1px solid #e2e7ec;"><dt style="font-size: 0.875rem; font-weight: 700;">Becomes unreadable</dt><dd style="margin: 0; font-size: 0.875rem; color: #4b5563;">41 saved attempts from June 2 to August 12. They stay in your history as records, but the question they were about can no longer be shown.</dd></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 9rem) minmax(0, 1fr); gap: 0.25rem 1rem; align-items: baseline; padding-block: 0.75rem; border-block-start: 1px solid #e2e7ec;"><dt style="font-size: 0.875rem; font-weight: 700;">Unaffected</dt><dd style="margin: 0; font-size: 0.875rem; color: #4b5563;">Launch pack 2.0.0 stays turned on. Your review queue, exam choice and settings are untouched.</dd></div>
+          </dl>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; padding-block-start: 0.25rem;">
+            <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid #b42318; border-radius: 0.5rem; background: #ffffff; color: #b42318; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #fef3f2;">Remove this copy</button>
+            <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #edf2f7;">Keep it</button>
+            <a href="Settings.dc.html" style="display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0.5rem; color: #075985; font-weight: 700; font-size: 0.875rem; text-decoration: none;">Export my progress first</a>
+          </div>
+        </div>
+      </li>
+
+      <li style="display: grid; gap: 0.5rem; width: 38rem;">
+        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">Removal, step 2 of 2 — done; success without a colour</span>
+        <div data-screen-label="Offline — removed" style="display: grid; gap: 0.625rem; padding: 1.25rem 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+          <h3 tabindex="-1" style="font-size: 1.0625rem;">Launch pack 1.8.0 is removed</h3>
+          <p role="status" style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">17.2 MB is back — about 39 MB of storage is free now. Launch pack 2.0.0 is still turned on and everything still runs offline. The 41 attempts from that version are listed in your history as unreadable.</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; padding-block-start: 0.25rem;">
+            <a href="Study Hub.dc.html" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; text-decoration: none;" style-hover="background: #edf2f7;">Back to studying</a>
+          </div>
+        </div>
+      </li>
+
+      <li style="display: grid; gap: 0.5rem; width: 38rem;">
+        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">Storage unavailable — solid border, never the dashed slot</span>
+        <div data-screen-label="Offline — storage unavailable" style="display: grid; gap: 0.625rem; padding: 1.25rem 1.5rem; border: 1px solid #854d0e; border-radius: 0.5rem; background: #fffaeb;">
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span aria-hidden="true" style="color: #854d0e;">▲</span>
+            <h3 tabindex="-1" style="font-size: 1.0625rem;">This device is not letting the site save anything</h3>
+          </div>
+          <p style="max-width: 62ch; font-size: 0.9375rem; text-wrap: pretty;">Storage is blocked or full, so no copy can be downloaded, turned on or removed, and this list cannot be read. This is not the same as having no copy — whatever is saved is still there.</p>
+          <p style="max-width: 62ch; font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">Practice still works while you have a connection. Private browsing and a full disk are the two usual causes.</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; padding-block-start: 0.25rem;">
+            <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; cursor: pointer;" style-hover="background: #ffffff;">Check again</button>
+            <a href="Study Hub.dc.html" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; text-decoration: none;" style-hover="background: #ffffff;">Practice online instead</a>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<div style="display: grid; gap: 0.5rem; max-width: 74rem; padding: 1.5rem clamp(1.5rem, 3vw, 3rem) 3rem; border-block-start: 1px solid #b7c1cc;">
+  <h2 style="font-size: 1.0625rem;">Controls this page does not have</h2>
+  <p style="max-width: 68ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Pause and Cancel on a running download, and the paused state that promised an interrupted download would continue from where it stopped, were removed rather than redrawn. Both are kept as drawings, with the reason and what would have to exist first, in <a href="Future Explorations.dc.html">Future explorations</a>. Nothing on this page renders them.</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;updateAvailable&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Fixture&quot;},&quot;showTechnicalDetails&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Fixture&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      updateAvailable: this.props.updateAvailable ?? true,
+      showTechnical: this.props.showTechnicalDetails ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>

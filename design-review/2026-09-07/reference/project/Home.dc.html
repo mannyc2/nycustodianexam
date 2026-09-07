@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-25..200" />
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #e9edf1; color: #17202a; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+    a { color: #075985; }
+    a:hover { color: #0c4a6e; }
+    h1, h2, h3, h4, h5, p, dl, dd { margin: 0; }
+    ul, ol { margin: 0; }
+    ul { padding: 0; list-style: none; }
+    button, input, select, textarea { font: inherit; }
+    :focus-visible { outline: 0.1875rem solid #1d4ed8; outline-offset: 0.1875rem; }
+  </style>
+</helmet>
+
+<section style="display: grid; gap: 2rem; padding: 3rem clamp(1.5rem, 3vw, 3rem) 4rem;">
+
+  <div style="display: grid; gap: 1.25rem; max-width: 74rem;">
+    <div style="display: flex; align-items: center; gap: 0.75rem;">
+      <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; background: #17202a; color: #ffffff; padding: 0.125rem 0.5rem; border-radius: 0.25rem;">Turn 1</span>
+      <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">route family 1 — <code>/</code> (<code>home</code>), static overview and navigation on the <a href="Component Library.dc.html#f-landing">§f-landing</a> primitives</span>
+    </div>
+    <h1 style="font-size: clamp(1.875rem, 1.45rem + 1.5vw, 2.75rem); letter-spacing: -0.025em; line-height: 1.2;">Home — the public front door</h1>
+    <p style="max-width: 68ch; color: #4b5563; text-wrap: pretty;">The page a stranger lands on. It says what the site is, what the test covers, how to study for it and where the 2026 cycle stands — then hands off. Nothing here is personalized: resume and due summaries belong to <a href="Study Hub.dc.html">Study</a> (<code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace;">/practice/</code>), and the exam board belongs to <a href="Landing.dc.html">Exams</a>. Only the Study call to action changes with local state, as <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace;">ROUTES.md</code> allows.</p>
+
+    <div style="display: grid; gap: 0.75rem; padding: 1.25rem 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; max-width: 68ch;">
+      <h2 style="font-size: 1.0625rem;">Calls I made here</h2>
+      <ul style="display: grid; gap: 0.5rem; font-size: 0.9375rem; color: #4b5563;">
+        <li><strong style="color: #17202a;">One dominant action, both tasks findable.</strong> The white button is Study — “Start practicing” on a first visit, “Continue studying” once local state exists; the outline button is the announcement checker. Neither selects an exam for you.</li>
+        <li><strong style="color: #17202a;">No pill is current.</strong> The wordmark is the Home link and carries the current-page state; Study, Library and Exams stay at rest. The exam chip behaves as everywhere else — pinned series and version, or the dashed prompt.</li>
+        <li><strong style="color: #17202a;">Overview, not a second Exams page.</strong> The cycle appears as one notice plus a hairline date list linking to Exams; the timeline cards and the exam board are not repeated. The three subject areas are the spine of the page, each pointing at the catalog that teaches it.</li>
+        <li><strong style="color: #17202a;">Trust as a fact table.</strong> Who runs it, what it costs, where your data lives, where the facts come from, what it is not — five hairline rows, each with its link, instead of prose cards.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="display: grid; gap: 0.625rem;">
+    <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">Ample width — <strong style="color: #17202a;">{{ ampleCaption }}</strong></span>
+    <div data-screen-label="Home — ample" style="width: 78rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; overflow: hidden; background: #ffffff; box-shadow: 0 0.25rem 1rem rgb(23 32 42 / 8%);">
+
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.375rem 1.25rem; padding: 0.375rem 1.25rem; border-block-end: 1px solid #b7c1cc;">
+        <a href="#home-main" aria-current="page" style="display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 700; color: #17202a; text-decoration: none;">NY Custodian Exam</a>
+        <nav aria-label="Primary" style="display: flex; align-items: center; gap: 0.25rem; margin-inline-end: auto; font-size: 0.9375rem;">
+          <a href="Study Hub.dc.html" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">school</span>Practice</a>
+          <details style="position: relative;">
+            <summary aria-label="Library — three collections" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; cursor: pointer; list-style: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">book_2</span>Library<span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.125rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">expand_more</span></summary>
+            <div style="position: absolute; inset-inline-start: 0; inset-block-start: calc(100% + 0.375rem); z-index: 40; width: 27rem; display: grid; gap: 0.125rem; padding: 0.375rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; box-shadow: 0 0.75rem 2rem rgb(23 32 42 / 16%);">
+            <a href="Tool Atlas.dc.html" style="display: grid; gap: 0.125rem; padding: 0.625rem 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">Tool atlas</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">All 65 tools, what each one is for, and the tools it gets mistaken for.</span></a>
+            <a href="Tool Atlas.dc.html" style="display: grid; gap: 0.125rem; padding: 0.625rem 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">Tool comparisons</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">The 14 pairs people mix up most, set side by side.</span></a>
+            <a href="Hazard Player.dc.html" style="display: grid; gap: 0.125rem; padding: 0.625rem 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">Hazard scenes</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">All 18 workplace scenes, each with a written version of the picture.</span></a>
+            <a href="Study Hub.dc.html#covers" style="display: grid; gap: 0.125rem; margin-block-start: 0.25rem; padding: 0.625rem 0.75rem; border-block-start: 1px solid #b7c1cc; border-radius: 0 0 0.375rem 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.875rem; color: #075985; font-weight: 700;">What practice covers</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Which of this material questions are drawn from, and what is left out.</span></a>
+            </div>
+          </details>
+          <a href="Landing.dc.html" style="display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.875rem; border-radius: 0.375rem; color: #075985; font-weight: 550; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">assignment</span>Exams</a>
+        </nav>
+        <nav aria-label="Utility" style="display: flex; align-items: center;">
+          <a href="Settings.dc.html" style="display: inline-flex; align-items: center; gap: 0.375rem; min-height: 2.75rem; padding: 0 0.75rem; border-radius: 0.375rem; color: #075985; font-weight: 550; font-size: 0.875rem; text-decoration: none;" style-hover="background: #edf2f7;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">settings</span>Settings</a>
+        </nav>
+      </div>
+
+      <sc-if value="{{ offlineStale }}">
+        <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.625rem 1.25rem; background: #fffaeb; border-block-end: 1px solid #b7c1cc; color: #854d0e; font-weight: 700; font-size: 0.9375rem;"><span aria-hidden="true">▲</span> You are offline. This page is the copy saved on this device on August 25, 2026 — newer announcements may exist.<a href="Offline.dc.html" style="margin-inline-start: auto; color: #854d0e; font-weight: 700; text-decoration: underline;">Manage downloads</a></div>
+      </sc-if>
+
+      <div id="home-main" style="display: grid; gap: 1.5rem; padding: 3.5rem 2.5rem 2.5rem; background: #17202a; color: #ffffff;">
+        <div style="display: grid; gap: 1rem; max-width: 48rem;">
+          <h1 style="font-size: clamp(2rem, 1.5rem + 1.8vw, 2.875rem); letter-spacing: -0.025em; line-height: 1.15; text-wrap: pretty;">Free practice for New York’s entry-level custodian exam.</h1>
+          <p style="font-size: 1.125rem; color: #dbe3ea; text-wrap: pretty;">Questions written for the three subject areas every New York custodian and janitor announcement lists, each answered with its reasoning and its source. One question bank, no account, and the announcement quoted instead of guessed at.</p>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem;">
+          <sc-if value="{{ returning }}" hint-placeholder-val="{{ true }}">
+            <a href="Study Hub.dc.html" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.5rem; border: 1px solid transparent; border-radius: 0.5rem; background: #ffffff; color: #0c4a6e; font-weight: 700; text-decoration: none;" style-hover="background: #e0f2fe;">Continue studying</a>
+          </sc-if>
+          <sc-if value="{{ firstVisit }}">
+            <a href="Study Hub.dc.html" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.5rem; border: 1px solid transparent; border-radius: 0.5rem; background: #ffffff; color: #0c4a6e; font-weight: 700; text-decoration: none;" style-hover="background: #e0f2fe;">Start practicing</a>
+          </sc-if>
+          <a href="Landing.dc.html" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #9fb0c0; border-radius: 0.5rem; color: #ffffff; font-weight: 700; font-size: 0.9375rem; text-decoration: none;" style-hover="background: rgb(255 255 255 / 8%);">What practice covers</a>
+        </div>
+        <dl style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin: 0; padding-block-start: 1.5rem; border-block-start: 1px solid #4b5563;">
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">Subject areas</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">3, set by the state test guide</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">Tool records</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">65, with what tells look-alikes apart</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">Hazard scenes</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">18, each with a text version</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.8125rem; color: #9fb0c0;">Facts checked</dt><dd style="margin: 0; font-size: 1.25rem; font-weight: 700;">August 25, 2026</dd></div>
+        </dl>
+      </div>
+
+      <div style="padding: 2.25rem 2.5rem 2.75rem; background: #f7f8fa; display: grid; gap: 2.25rem;">
+
+        <section id="home-areas" style="display: grid; gap: 1rem; scroll-margin: 1.5rem;">
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem;"><h2 style="font-size: 1.5rem; letter-spacing: -0.02em;">What the test covers</h2><p style="max-width: 48ch; font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Three areas, named by the state test guide and repeated in every Nassau announcement. Neither the number of questions nor the split between areas is published.</p></div>
+          <ol style="display: grid; margin: 0; padding: 0 1.5rem; list-style: none; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff;">
+            <li style="display: grid; grid-template-columns: 3rem minmax(0, 1fr) auto; gap: 0 1rem; align-items: start; padding-block: 1.25rem;">
+              <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 1.75rem; font-weight: 700; line-height: 1; color: #b7c1cc;">1</span>
+              <div style="display: grid; gap: 0.25rem; min-width: 0;">
+                <h3 style="font-size: 1.125rem; letter-spacing: -0.015em;">Cleaning Tools and Their Uses</h3>
+                <p style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Recognizing cleaning tools from a drawing or a description, and matching each one to the job it is meant for.</p>
+              </div>
+              <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: end;">
+                <a href="Tool Atlas.dc.html" style="display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0.5rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; text-decoration: none; white-space: nowrap;" style-hover="background: #edf2f7;">Tool atlas</a>
+                <a href="#home-ways" style="display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0.5rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; text-decoration: none; white-space: nowrap;" style-hover="background: #edf2f7;">Procedures</a>
+              </div>
+            </li>
+            <li style="display: grid; grid-template-columns: 3rem minmax(0, 1fr) auto; gap: 0 1rem; align-items: start; padding-block: 1.25rem; border-block-start: 1px solid #e2e7ec;">
+              <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 1.75rem; font-weight: 700; line-height: 1; color: #b7c1cc;">2</span>
+              <div style="display: grid; gap: 0.25rem; min-width: 0;">
+                <h3 style="font-size: 1.125rem; letter-spacing: -0.015em;">Tools Used for Minor Maintenance and Repair</h3>
+                <p style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Hand tools for small repairs, choosing the right one for the task, and knowing when a tool has become unsafe to use.</p>
+              </div>
+              <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: end;">
+                <a href="#home-ways" style="display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0.5rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; text-decoration: none; white-space: nowrap;" style-hover="background: #edf2f7;">Repair lab</a>
+              </div>
+            </li>
+            <li style="display: grid; grid-template-columns: 3rem minmax(0, 1fr) auto; gap: 0 1rem; align-items: start; padding-block: 1.25rem; border-block-start: 1px solid #e2e7ec;">
+              <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 1.75rem; font-weight: 700; line-height: 1; color: #b7c1cc;">3</span>
+              <div style="display: grid; gap: 0.25rem; min-width: 0;">
+                <h3 style="font-size: 1.125rem; letter-spacing: -0.015em;">Health and Safety Issues in Custodial Work</h3>
+                <p style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Safe work practices, chemicals and protective equipment, and spotting what is wrong in a workplace scene.</p>
+              </div>
+              <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: end;">
+                <a href="Hazard Player.dc.html" style="display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0.5rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; text-decoration: none; white-space: nowrap;" style-hover="background: #edf2f7;">Hazard scenes</a>
+              </div>
+            </li>
+          </ol>
+          <p style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;"><strong style="color: #17202a;">Where this comes from:</strong> New York State Department of Civil Service, Test Guide for the Entry-Level Custodians and Janitors Series, and the subjects section of each Nassau announcement, read August 25, 2026.</p>
+        </section>
+
+        <section id="home-ways" style="display: grid; gap: 1rem; scroll-margin: 1.5rem;">
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem;"><h2 style="font-size: 1.5rem; letter-spacing: -0.02em;">Ways to study</h2><p style="max-width: 48ch; font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Everything here runs offline once the pack is on your device. No account, and nothing is sent anywhere.</p></div>
+          <ul style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin: 0; padding: 0; list-style: none;">
+            <li style="display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; gap: 0.625rem; align-content: stretch; padding: 1.25rem; border: 1px solid #075985; border-radius: 0.5rem; background: #ffffff;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.75rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 32;">quiz</span><h3 style="font-size: 1.0625rem;">Practice questions</h3><p style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">Sets of 45 across all three areas, untimed, with the reasoning and its source after every answer.</p><a href="Study Hub.dc.html" style="justify-self: stretch; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; font-size: 0.9375rem; text-decoration: none;" style-hover="background: #0c4a6e;">Go to Study</a></li>
+            <li style="display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; gap: 0.625rem; align-content: stretch; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.75rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 32;">handyman</span><h3 style="font-size: 1.0625rem;">Tool atlas</h3><p style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">65 records for areas 1 and 2, with the features that tell look-alikes apart.</p><a href="Tool Atlas.dc.html" style="justify-self: stretch; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.9375rem; text-decoration: none;" style-hover="background: #edf2f7;">Browse</a></li>
+            <li style="display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; gap: 0.625rem; align-content: stretch; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.75rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 32;">warning</span><h3 style="font-size: 1.0625rem;">Hazard scenes</h3><p style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">18 workplace scenes for area 3. Mark the hazard in the picture, or answer the text version.</p><a href="Hazard Player.dc.html" style="justify-self: stretch; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.9375rem; text-decoration: none;" style-hover="background: #edf2f7;">Run a drill</a></li>
+            <li style="display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; gap: 0.625rem; align-content: stretch; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.75rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 32;">cleaning_services</span><h3 style="font-size: 1.0625rem;">Cleaning procedures</h3><p style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">Step order, dilution and chemical handling for area 1, each step quoted from its source.</p><a href="#home-ways" style="justify-self: stretch; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.9375rem; text-decoration: none;" style-hover="background: #edf2f7;">Read</a></li>
+            <li style="display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; gap: 0.625rem; align-content: stretch; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.75rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 32;">build</span><h3 style="font-size: 1.0625rem;">Repair lab</h3><p style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">Entry-level repair tools for area 2, and the signs that one has become unsafe to use.</p><a href="#home-ways" style="justify-self: stretch; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.9375rem; text-decoration: none;" style-hover="background: #edf2f7;">Browse</a></li>
+            <li style="display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; gap: 0.625rem; align-content: stretch; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.75rem; line-height: 1; color: #075985; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 32;">timer</span><h3 style="font-size: 1.0625rem;">Full simulation</h3><p style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">All three areas, timed to the two-hour allowance the guide states, feedback held to the end. Never an official score.</p><a href="Simulation Navigator.dc.html" style="justify-self: stretch; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.9375rem; text-decoration: none;" style-hover="background: #edf2f7;">Set one up</a></li>
+          </ul>
+        </section>
+
+        <section id="home-cycle" style="display: grid; gap: 1rem; scroll-margin: 1.5rem;">
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem;"><h2 style="font-size: 1.5rem; letter-spacing: -0.02em;">Where the 2026 cycle stands</h2><p style="max-width: 48ch; font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Every date is quoted from the controlling announcement. The announcement governs, not this page.</p></div>
+          <div style="display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 1rem; align-items: start;">
+            <div style="display: grid; gap: 0.75rem; padding: 1.25rem 1.5rem; border: 1px solid #854d0e; border-radius: 0.625rem; background: #fffaeb;">
+              <h3 style="display: flex; align-items: center; gap: 0.5rem; font-size: 1.125rem; color: #854d0e;"><span aria-hidden="true">▲</span> Nothing is open for filing right now</h3>
+              <p style="max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Both 2026 Nassau announcements closed in July and named August 22 as the test date. That date has passed, and the August 25 read found no official notice of whether the test was held, so the administration stays unresolved. The subject plan has not changed, so everything here still applies to the next cycle.</p>
+              <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; padding-block-start: 0.25rem;">
+                <a href="Landing.dc.html" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid #854d0e; border-radius: 0.5rem; background: #ffffff; color: #854d0e; font-weight: 700; font-size: 0.9375rem; text-decoration: none;" style-hover="background: #fffaeb;">Read both announcements</a>
+                <button type="button" style="display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0.625rem 0.5rem; border: 0; background: transparent; color: #075985; font-weight: 700; font-size: 0.9375rem; cursor: pointer;">Watch for the next announcement</button>
+              </div>
+            </div>
+            <dl style="display: grid; margin: 0; padding: 0.25rem 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.625rem; background: #ffffff;">
+              <div style="display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: 0.75rem; padding-block: 0.75rem;"><dt style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">June 11, 2026</dt><dd style="margin: 0; font-size: 0.9375rem;">Both announcements opened</dd></div>
+              <div style="display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: 0.75rem; padding-block: 0.75rem; border-block-start: 1px solid #e2e7ec;"><dt style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">July 1, 2026</dt><dd style="margin: 0; font-size: 0.9375rem;">Open-competitive filing closed</dd></div>
+              <div style="display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: 0.75rem; padding-block: 0.75rem; border-block-start: 1px solid #e2e7ec;"><dt style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">July 5, 2026</dt><dd style="margin: 0; font-size: 0.9375rem;">Promotion filing closed <span style="color: #4b5563;">(Jericho Public Library only)</span></dd></div>
+              <div style="display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: 0.75rem; padding-block: 0.75rem; border-block-start: 1px solid #e2e7ec;"><dt style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #854d0e; font-weight: 700;">August 22, 2026</dt><dd style="margin: 0; font-size: 0.9375rem;">Announced test date, now passed <span style="display: inline-flex; align-items: center; gap: 0.25rem; margin-inline-start: 0.375rem; padding: 0 0.5rem; border: 1px solid #854d0e; border-radius: 0.25rem; color: #854d0e; font-size: 0.8125rem; font-weight: 700; vertical-align: middle;"><span aria-hidden="true">▲</span>Not published</span></dd></div>
+            </dl>
+          </div>
+        </section>
+
+        <section id="home-how" style="display: grid; gap: 1rem; scroll-margin: 1.5rem;">
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem;"><h2 style="font-size: 1.5rem; letter-spacing: -0.02em;">How this site works</h2><p style="max-width: 48ch; font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">The short version. Each row links to the full page.</p></div>
+          <dl style="display: grid; margin: 0; padding: 0 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff;">
+            <div style="display: grid; grid-template-columns: minmax(0, 12rem) minmax(0, 1fr) auto; gap: 0.25rem 1.5rem; align-items: baseline; padding-block: 1rem;"><dt style="font-size: 0.9375rem; font-weight: 700;">Who runs it</dt><dd style="margin: 0; max-width: 70ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">An independent editorial project. Not affiliated with any civil service agency, and not a substitute for the official announcement or your admission notice.</dd><a href="#home-footer" style="font-size: 0.875rem; font-weight: 700; white-space: nowrap;">About</a></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 12rem) minmax(0, 1fr) auto; gap: 0.25rem 1.5rem; align-items: baseline; padding-block: 1rem; border-block-start: 1px solid #e2e7ec;"><dt style="font-size: 0.9375rem; font-weight: 700;">What it costs</dt><dd style="margin: 0; max-width: 70ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Nothing, and there is no account to create. The offline pack is one download you control.</dd><a href="#home-footer" style="font-size: 0.875rem; font-weight: 700; white-space: nowrap;">Use offline</a></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 12rem) minmax(0, 1fr) auto; gap: 0.25rem 1.5rem; align-items: baseline; padding-block: 1rem; border-block-start: 1px solid #e2e7ec;"><dt style="font-size: 0.9375rem; font-weight: 700;">Where your data lives</dt><dd style="margin: 0; max-width: 70ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">On this device only. Your attempts, review queue and settings never leave it; you can export or erase them from Settings.</dd><a href="#home-footer" style="font-size: 0.875rem; font-weight: 700; white-space: nowrap;">Privacy</a></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 12rem) minmax(0, 1fr) auto; gap: 0.25rem 1.5rem; align-items: baseline; padding-block: 1rem; border-block-start: 1px solid #e2e7ec;"><dt style="font-size: 0.9375rem; font-weight: 700;">Where the facts come from</dt><dd style="margin: 0; max-width: 70ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Every claim names its publisher, document and date. When something is unpublished, the page says so rather than estimating, and corrections stay visible with the version they changed.</dd><a href="#home-footer" style="font-size: 0.875rem; font-weight: 700; white-space: nowrap;">Sources</a></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 12rem) minmax(0, 1fr) auto; gap: 0.25rem 1.5rem; align-items: baseline; padding-block: 1rem; border-block-start: 1px solid #e2e7ec;"><dt style="font-size: 0.9375rem; font-weight: 700;">What it is not</dt><dd style="margin: 0; max-width: 70ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Not the real test. Questions are written for this site — no secure or recalled material is used — and your practice accuracy is not a predicted score.</dd><a href="#home-footer" style="font-size: 0.875rem; font-weight: 700; white-space: nowrap;">Scoring</a></div>
+          </dl>
+        </section>
+
+        <footer id="home-footer" style="display: grid; gap: 1.5rem; padding: 1.75rem; border-radius: 0.625rem; background: #17202a; color: #dbe3ea; scroll-margin: 1.5rem;">
+          <div style="display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr); gap: 1.5rem 2.5rem;">
+            <div style="display: grid; gap: 0.5rem; align-content: start;">
+              <strong style="font-size: 1.0625rem; color: #ffffff; letter-spacing: -0.01em;">Independent and unofficial</strong>
+              <p style="max-width: 48ch; font-size: 0.875rem; color: #9fb0c0; text-wrap: pretty;">Not affiliated with any civil service agency, and not a substitute for the official announcement or your admission notice. Questions here are written for this site — no secure or recalled test material is used.</p>
+            </div>
+            <nav aria-label="Where this comes from" style="display: grid; gap: 0.5rem; align-content: start;">
+              <strong style="font-size: 0.8125rem; color: #ffffff;">Where this comes from</strong>
+              <a href="#home-footer" style="font-size: 0.875rem; color: #dbe3ea; text-decoration: none;" style-hover="color: #ffffff; text-decoration: underline;">Every claim and its source</a>
+              <a href="#home-footer" style="font-size: 0.875rem; color: #dbe3ea; text-decoration: none;" style-hover="color: #ffffff; text-decoration: underline;">Corrections</a>
+              <a href="#home-footer" style="font-size: 0.875rem; color: #dbe3ea; text-decoration: none;" style-hover="color: #ffffff; text-decoration: underline;">Questions people ask</a>
+            </nav>
+            <nav aria-label="Site" style="display: grid; gap: 0.5rem; align-content: start;">
+              <strong style="font-size: 0.8125rem; color: #ffffff;">Site</strong>
+              <a href="#home-footer" style="font-size: 0.875rem; color: #dbe3ea; text-decoration: none;" style-hover="color: #ffffff; text-decoration: underline;">Use offline</a>
+              <a href="#home-footer" style="font-size: 0.875rem; color: #dbe3ea; text-decoration: none;" style-hover="color: #ffffff; text-decoration: underline;">Accessibility</a>
+              <a href="#home-footer" style="font-size: 0.875rem; color: #dbe3ea; text-decoration: none;" style-hover="color: #ffffff; text-decoration: underline;">About this site</a>
+            </nav>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 2rem; padding-block-start: 1.125rem; border-block-start: 1px solid #4b5563; font-size: 0.8125rem; color: #9fb0c0;">
+            <p>Announcement facts were read on <strong style="color: #ffffff;">August 25, 2026</strong>.</p>
+            <p>Every date on this page is quoted from the controlling announcement.</p>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: grid; gap: 0.625rem; justify-items: start;">
+    <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">Compact — <strong style="color: #17202a;">first visit</strong>: no local state, so the button reads Start practicing and the chip is the dashed prompt</span>
+    <div data-screen-label="Home — compact" style="width: 24rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; overflow: hidden; background: #ffffff; box-shadow: 0 0.25rem 1rem rgb(23 32 42 / 8%);">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0 0.875rem; min-height: 3.25rem; border-block-end: 1px solid #b7c1cc;">
+        <a href="#home-c-main" aria-current="page" style="display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 700; color: #17202a; text-decoration: none; font-size: 0.9375rem;">NY Custodian Exam</a>
+      </div>
+      <sc-if value="{{ offlineStale }}">
+        <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.875rem; background: #fffaeb; border-block-end: 1px solid #b7c1cc; color: #854d0e; font-weight: 700; font-size: 0.8125rem;"><span aria-hidden="true">▲</span> Offline — showing the copy saved on this device on August 25</div>
+      </sc-if>
+
+      <div id="home-c-main" style="display: grid; gap: 1rem; padding: 1.75rem 1.125rem 1.5rem; background: #17202a; color: #ffffff;">
+        <h1 style="font-size: 1.625rem; letter-spacing: -0.02em; line-height: 1.2; text-wrap: pretty;">Free practice for New York’s entry-level custodian exam.</h1>
+        <p style="font-size: 0.9375rem; color: #dbe3ea; text-wrap: pretty;">Questions for the three official subject areas, each with its reasoning and source. Offline, no account.</p>
+        <div style="display: grid; gap: 0.5rem;">
+          <a href="Study Hub.dc.html" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid transparent; border-radius: 0.5rem; background: #ffffff; color: #0c4a6e; font-weight: 700; font-size: 0.9375rem; text-decoration: none;">Start practicing</a>
+          <a href="Landing.dc.html" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1rem; border: 1px solid #9fb0c0; border-radius: 0.5rem; color: #ffffff; font-weight: 700; font-size: 0.9375rem; text-decoration: none;">What practice covers</a>
+        </div>
+        <dl style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem 1rem; margin: 0; padding-block-start: 1rem; border-block-start: 1px solid #4b5563;">
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.75rem; color: #9fb0c0;">Subject areas</dt><dd style="margin: 0; font-size: 1rem; font-weight: 700;">3, set by the state</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.75rem; color: #9fb0c0;">Tool records</dt><dd style="margin: 0; font-size: 1rem; font-weight: 700;">65</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.75rem; color: #9fb0c0;">Hazard scenes</dt><dd style="margin: 0; font-size: 1rem; font-weight: 700;">18</dd></div>
+          <div style="display: grid; gap: 0.125rem;"><dt style="font-size: 0.75rem; color: #9fb0c0;">Facts checked</dt><dd style="margin: 0; font-size: 1rem; font-weight: 700;">August 25, 2026</dd></div>
+        </dl>
+      </div>
+
+      <div style="padding: 1rem; background: #f7f8fa; display: grid; gap: 1.25rem;">
+        <section style="display: grid; gap: 0.625rem;">
+          <h2 style="font-size: 1.0625rem;">What the test covers</h2>
+          <ol style="display: grid; margin: 0; padding: 0 1rem; list-style: none; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+            <li style="display: grid; grid-template-columns: 1.75rem minmax(0, 1fr); gap: 0 0.5rem; padding-block: 0.75rem;"><span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 1.25rem; font-weight: 700; line-height: 1.2; color: #b7c1cc;">1</span><div style="display: grid; gap: 0.25rem;"><strong style="font-size: 0.9375rem; line-height: 1.35;">Cleaning Tools and Their Uses</strong><a href="Tool Atlas.dc.html" style="font-size: 0.8125rem; font-weight: 700;">Tool atlas →</a></div></li>
+            <li style="display: grid; grid-template-columns: 1.75rem minmax(0, 1fr); gap: 0 0.5rem; padding-block: 0.75rem; border-block-start: 1px solid #e2e7ec;"><span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 1.25rem; font-weight: 700; line-height: 1.2; color: #b7c1cc;">2</span><div style="display: grid; gap: 0.25rem;"><strong style="font-size: 0.9375rem; line-height: 1.35;">Tools Used for Minor Maintenance and Repair</strong><a href="#home-c-ways" style="font-size: 0.8125rem; font-weight: 700;">Repair lab →</a></div></li>
+            <li style="display: grid; grid-template-columns: 1.75rem minmax(0, 1fr); gap: 0 0.5rem; padding-block: 0.75rem; border-block-start: 1px solid #e2e7ec;"><span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 1.25rem; font-weight: 700; line-height: 1.2; color: #b7c1cc;">3</span><div style="display: grid; gap: 0.25rem;"><strong style="font-size: 0.9375rem; line-height: 1.35;">Health and Safety Issues in Custodial Work</strong><a href="Hazard Player.dc.html" style="font-size: 0.8125rem; font-weight: 700;">Hazard scenes →</a></div></li>
+          </ol>
+          <p style="font-size: 0.75rem; color: #4b5563; text-wrap: pretty;">Neither the number of questions nor the split between areas is published.</p>
+        </section>
+
+        <section id="home-c-ways" style="display: grid; gap: 0.625rem;">
+          <h2 style="font-size: 1.0625rem;">Ways to study</h2>
+          <ul style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem; margin: 0; padding: 0; list-style: none;">
+            <li style="display: grid;"><a href="Study Hub.dc.html" style="display: grid; gap: 0.25rem; align-content: start; min-height: 2.75rem; padding: 0.875rem; border: 1px solid #075985; border-radius: 0.5rem; background: #ffffff; text-decoration: none; color: #17202a;" style-hover="background: #e0f2fe;"><strong style="font-size: 0.9375rem; color: #0c4a6e;">Practice questions</strong><span style="font-size: 0.8125rem; color: #4b5563;">Sets of 45, untimed</span></a></li>
+            <li style="display: grid;"><a href="Tool Atlas.dc.html" style="display: grid; gap: 0.25rem; align-content: start; min-height: 2.75rem; padding: 0.875rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; text-decoration: none; color: #17202a;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem;">Tool atlas</strong><span style="font-size: 0.8125rem; color: #4b5563;">65 records</span></a></li>
+            <li style="display: grid;"><a href="Hazard Player.dc.html" style="display: grid; gap: 0.25rem; align-content: start; min-height: 2.75rem; padding: 0.875rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; text-decoration: none; color: #17202a;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem;">Hazard scenes</strong><span style="font-size: 0.8125rem; color: #4b5563;">18 scenes</span></a></li>
+            <li style="display: grid;"><a href="#home-c-ways" style="display: grid; gap: 0.25rem; align-content: start; min-height: 2.75rem; padding: 0.875rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; text-decoration: none; color: #17202a;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem;">Cleaning procedures</strong><span style="font-size: 0.8125rem; color: #4b5563;">Steps and chemicals</span></a></li>
+            <li style="display: grid;"><a href="#home-c-ways" style="display: grid; gap: 0.25rem; align-content: start; min-height: 2.75rem; padding: 0.875rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; text-decoration: none; color: #17202a;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem;">Repair lab</strong><span style="font-size: 0.8125rem; color: #4b5563;">Entry-level repairs</span></a></li>
+            <li style="display: grid;"><a href="Simulation Navigator.dc.html" style="display: grid; gap: 0.25rem; align-content: start; min-height: 2.75rem; padding: 0.875rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; text-decoration: none; color: #17202a;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem;">Full simulation</strong><span style="font-size: 0.8125rem; color: #4b5563;">Two hours, timed</span></a></li>
+          </ul>
+        </section>
+
+        <section style="display: grid; gap: 0.625rem;">
+          <h2 style="font-size: 1.0625rem;">Where the cycle stands</h2>
+          <div style="display: grid; gap: 0.375rem; padding: 0.875rem 1rem; border: 1px solid #854d0e; border-radius: 0.5rem; background: #fffaeb;">
+            <strong style="font-size: 0.9375rem;">Nothing is open for filing</strong>
+            <p style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Both 2026 Nassau announcements closed in July. Their August 22 test date has passed, and whether the test was held has not been published.</p>
+            <a href="Landing.dc.html" style="justify-self: start; display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0.5rem 0.875rem; border: 1px solid #854d0e; border-radius: 0.375rem; background: #ffffff; color: #854d0e; font-weight: 700; font-size: 0.875rem; text-decoration: none;">Read both announcements</a>
+          </div>
+        </section>
+
+        <section style="display: grid; gap: 0.625rem;">
+          <h2 style="font-size: 1.0625rem;">How this site works</h2>
+          <dl style="display: grid; gap: 0; margin: 0; padding: 0.25rem 1rem 0.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+            <div style="display: grid; gap: 0.125rem; padding-block: 0.625rem; border-block-end: 1px solid #e2e7ec;"><dt style="font-size: 0.8125rem; font-weight: 700;">Who runs it</dt><dd style="margin: 0; font-size: 0.8125rem; color: #4b5563;">An independent project — not an agency, not a substitute for your announcement. <a href="#home-c-main" style="font-weight: 700;">About</a></dd></div>
+            <div style="display: grid; gap: 0.125rem; padding-block: 0.625rem; border-block-end: 1px solid #e2e7ec;"><dt style="font-size: 0.8125rem; font-weight: 700;">Where your data lives</dt><dd style="margin: 0; font-size: 0.8125rem; color: #4b5563;">On this device only; export or erase it from Settings. <a href="#home-c-main" style="font-weight: 700;">Privacy</a></dd></div>
+            <div style="display: grid; gap: 0.125rem; padding-block: 0.625rem;"><dt style="font-size: 0.8125rem; font-weight: 700;">Where the facts come from</dt><dd style="margin: 0; font-size: 0.8125rem; color: #4b5563;">Every claim names its publisher, document and date. <a href="#home-c-main" style="font-weight: 700;">Sources</a></dd></div>
+          </dl>
+        </section>
+
+        <footer style="display: grid; gap: 0.75rem; padding: 1.125rem 1rem; border-radius: 0.5rem; background: #17202a; color: #dbe3ea;">
+          <strong style="font-size: 0.9375rem; color: #ffffff;">Independent and unofficial</strong>
+          <p style="font-size: 0.8125rem; color: #9fb0c0; text-wrap: pretty;">Not affiliated with any civil service agency. Questions here are written for this site — no secure or recalled test material is used.</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.375rem 1rem; font-size: 0.8125rem;">
+            <a href="#home-c-main" style="color: #dbe3ea;">Sources</a>
+            <a href="#home-c-main" style="color: #dbe3ea;">Corrections</a>
+            <a href="#home-c-main" style="color: #dbe3ea;">Use offline</a>
+            <a href="#home-c-main" style="color: #dbe3ea;">About</a>
+          </div>
+          <p style="font-size: 0.75rem; color: #9fb0c0;">Facts read on August 25, 2026.</p>
+        </footer>
+      </div>
+
+      <nav aria-label="Primary" style="position: relative; display: grid; grid-template-columns: repeat(4, 1fr); border-block-start: 1px solid #b7c1cc; background: #ffffff; padding-block-end: 0.25rem;">
+        <a href="Study Hub.dc.html" style="display: grid; justify-items: center; gap: 0.125rem; min-height: 3.5rem; padding: 0.375rem 0.25rem; font-size: 0.6875rem; font-weight: 550; color: #4b5563; text-decoration: none;"><span style="display: grid; place-items: center; width: 2.75rem; height: 1.75rem; border-radius: 999rem;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">school</span></span>Practice</a>
+        <details>
+          <summary style="display: grid; justify-items: center; gap: 0.125rem; min-height: 3.5rem; padding: 0.375rem 0.25rem; font-size: 0.6875rem; font-weight: 550; color: #4b5563; cursor: pointer; list-style: none;"><span style="display: grid; place-items: center; width: 2.75rem; height: 1.75rem; border-radius: 999rem;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">book_2</span></span>Library</summary>
+          <div style="position: absolute; inset-block-end: 100%; inset-inline: 0; z-index: 40; display: grid; gap: 0.125rem; padding: 0.5rem; border-block-start: 1px solid #b7c1cc; background: #ffffff; box-shadow: 0 -0.75rem 2rem rgb(23 32 42 / 18%);">
+            <a href="Tool Atlas.dc.html" style="display: grid; gap: 0.125rem; padding: 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">Tool atlas</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">All 65 tools, what each is for, and the tools it gets mistaken for.</span></a>
+            <a href="Tool Atlas.dc.html" style="display: grid; gap: 0.125rem; padding: 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">Tool comparisons</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">The 14 pairs people mix up most, set side by side.</span></a>
+            <a href="Hazard Player.dc.html" style="display: grid; gap: 0.125rem; padding: 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">Hazard scenes</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">All 18 workplace scenes, each with a written version.</span></a>
+            <a href="Study Hub.dc.html#covers" style="display: grid; gap: 0.125rem; padding: 0.75rem; border-radius: 0.375rem; text-decoration: none;" style-hover="background: #edf2f7;"><strong style="font-size: 0.9375rem; color: #17202a; font-weight: 700;">What practice covers</strong><span style="font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Which material questions come from, and what is left out.</span></a>
+          </div>
+        </details>
+        <a href="Landing.dc.html" style="display: grid; justify-items: center; gap: 0.125rem; min-height: 3.5rem; padding: 0.375rem 0.25rem; font-size: 0.6875rem; font-weight: 550; color: #4b5563; text-decoration: none;"><span style="display: grid; place-items: center; width: 2.75rem; height: 1.75rem; border-radius: 999rem;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">assignment</span></span>Exams</a>
+        <a href="Settings.dc.html" style="display: grid; justify-items: center; gap: 0.125rem; min-height: 3.5rem; padding: 0.375rem 0.25rem; font-size: 0.6875rem; font-weight: 550; color: #4b5563; text-decoration: none;"><span style="display: grid; place-items: center; width: 2.75rem; height: 1.75rem; border-radius: 999rem;"><span aria-hidden="true" style="font-family: 'Material Symbols Rounded'; font-size: 1.375rem; line-height: 1; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">settings</span></span>Settings</a>
+      </nav>
+    </div>
+  </div>
+
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;returning&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Ample frame state&quot;},&quot;offlineStale&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Ample frame state&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const returning = this.props.returning ?? true;
+    const offlineStale = this.props.offlineStale ?? false;
+    return {
+      returning,
+      firstVisit: !returning,
+      chipSelected: returning,
+      chipNone: !returning,
+      offlineStale,
+      online: !offlineStale,
+      ampleCaption: returning
+        ? 'returning visit: local study state exists, so the button reads Continue studying and the chip carries the pinned exam'
+        : 'first visit: no local state, so the button reads Start practicing and the chip is the dashed prompt'
+    };
+  }
+}
+</script>
+</body>
+</html>

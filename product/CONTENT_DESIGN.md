@@ -176,15 +176,30 @@ exam fit to make the choice disappear.
 
 ### Exam context
 
-Start with “Does this match my exam?” Show the selected jurisdiction/title and
+Use “Exam information” for the reference destination and “Does this match your
+exam?” for contextual help. Show the record's jurisdiction/title and
 the controlling announcement before versions or registry data. Keep known,
 unknown, conflicting, superseded, and not-applicable states explicit. Put raw
 compatibility keys and fact-sheet history under technical details.
 
-Practice must never silently default to Nassau or the first available profile.
-If no profile is selected, show a neutral context and require an explicit choice
-before a jurisdiction-specific set starts. If a profile is selected, show
-“Practicing for: {profile label}” with a visible change action.
+Opening an exam record reads reference information; it does not set an active
+exam. Do not offer “Choose your exam” as a global selection action. Practice
+must state its neutral statewide-series scope near the start action and must
+never silently default to Nassau or the first available profile. Simulation
+and print require their own explicit profile choice; show “Practicing for:
+{profile label}” in that setup without implying a saved global preference.
+
+### Navigation and compact copy
+
+Use Practice for `/practice/`, Library for the disclosure containing Tool atlas
+and Hazard lab, and Exam information for `/exams/`. Settings is the only header
+utility on the right. Sources belongs in the footer. Offline downloads are
+available from Settings and contextual or footer links.
+
+Use a short task or destination label on its own. Do not join labels, storage
+notices, accessibility descriptions, or inventory counts with a middle dot.
+Explain material storage behavior and visual/text alternatives in adjacent
+sentences. State inventory counts in plain prose when they help a decision.
 
 ### Practice start
 

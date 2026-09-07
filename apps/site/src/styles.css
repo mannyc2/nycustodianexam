@@ -309,7 +309,6 @@
 
 @layer reset {
   *, *::before, *::after { box-sizing: border-box; }
-  html { min-width: 20rem; }
   body, h1, h2, h3, h4, p, dl, dd { margin: var(--space-0); }
   button, input, select, textarea { font: inherit; }
 }
@@ -327,7 +326,6 @@
     transition-duration: 0.001ms !important;
   }
   body {
-    min-width: 20rem;
     color: var(--color-text);
     background: var(--color-canvas);
     font-family: var(--font-sans);

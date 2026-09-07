@@ -9,7 +9,7 @@ test("a storage read failure is shown as unavailable rather than a new learner",
   await page.goto("/practice/")
   await expect(page.getByRole("heading", { name: "Your saved progress could not be read", exact: true })).toBeFocused()
   await expect(page.locator(".study-hero .figure-strip")).toHaveCount(0)
-  await expect(page.getByRole("heading", { name: "No saved activity in this release yet", exact: true })).toHaveCount(0)
+  await expect(page.getByRole("heading", { name: "No saved activity yet", exact: true })).toHaveCount(0)
   await expect(page.getByRole("heading", { name: "Saved activity could not be read", exact: true })).toBeVisible()
   await page.getByRole("button", { name: "Retry reading progress", exact: true }).click()
   await expect(page.getByRole("heading", { name: "Your saved progress could not be read", exact: true })).toBeFocused()
@@ -17,7 +17,7 @@ test("a storage read failure is shown as unavailable rather than a new learner",
 
 test("saved activity expands and filters with keyboard focus on an empty result", async ({ page }) => {
   await page.goto("/practice/")
-  await expect(page.getByRole("heading", { name: "No saved activity in this release yet" })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "No saved activity yet" })).toBeVisible()
   await page.evaluate(({ databaseName, storeName }) => new Promise<void>((resolve, reject) => {
     const data = document.querySelector("#study-bootstrap-data")?.textContent
     if (!data) throw new Error("Missing study fixture bootstrap")
@@ -64,9 +64,9 @@ test("saved activity expands and filters with keyboard focus on an empty result"
 
 test("a generated practice answer appears in Study and can be durably finished in Review", async ({ page }) => {
   await page.goto("/practice/")
-  await expect(page.getByRole("heading", { name: "No saved activity in this release yet" })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "No saved activity yet" })).toBeVisible()
   const firstPractice = page.locator("[data-study-hub] .study-hero a.button-primary")
-  await expect(page.getByRole("heading", { name: "Start with a set of 45.", exact: true })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "Practice and activity", exact: true })).toBeVisible()
   await expect(firstPractice).toHaveText("Start a 45-question set")
   const sessionPath = await firstPractice.getAttribute("href")
   expect(sessionPath).toMatch(/^\/practice\/session\/ps-[a-z0-9]+\/question\/1\/$/)
@@ -78,7 +78,7 @@ test("a generated practice answer appears in Study and can be durably finished i
   await expect(page.locator(".feedback-rationales")).toBeVisible()
 
   await page.goto("/practice/")
-  await expect(page.getByRole("heading", { name: "Keep building your practice." })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "Practice and activity" })).toBeVisible()
   const history = page.getByRole("region", { name: "Recent activity" })
   await expect(history.getByRole("listitem")).toHaveCount(1)
   await expect(history).toContainText("Answer saved · flagged")

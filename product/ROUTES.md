@@ -11,6 +11,10 @@ the human participant count is `0`; the direction is a contract-fit selection,
 not observed first-click, tree-test, task-success, preference, or
 assistive-technology evidence.
 
+**Maintainer update, 2026-09-06:** the navigation labels and placement below
+follow direct product direction. Exam information is reference browsing;
+there is no saved global active-exam preference in the current product.
+
 ## Machine-readable selected-direction closure
 
 ```json
@@ -145,11 +149,11 @@ destination families.
 
 | # / destination family | Stable route IDs and canonical path patterns | Parent navigation | Search / owner | Offline contract | Status and failure behavior | Milestone |
 |---|---|---|---|---|---|---|
-| 1. Home / study dashboard | `home` — `/` | global root | `index`; static overview/navigation. Personalized resume/due summaries belong to the `study-hub` island | Cached document remains fully useful | Missing local study state changes the Study call to action but is not a Home error; invalid selected profile links to profile recovery | M0 |
-| 2. Exam selector | `exam-selector` — `/exams/` | Home | `index`; static published profile list + lazy `ExamSelector` filtering/selection island | Uses the cached profile registry and visibly reports its verification/version age | Zero published profiles is `empty`; invalid registry is `content-unavailable`, never a guessed list | M1 |
+| 1. Home / study dashboard | `home` — `/` | global root | `index`; static overview/navigation. Personalized resume/due summaries belong to the `study-hub` island | Cached document remains fully useful | No saved study activity is a normal first-use state, not a Home error or missing exam preference | M0 |
+| 2. Exam information | `exam-selector` — `/exams/` | global learner navigation / Home | `index`; static published announcement/profile list with progressive search and record-detail enhancement | Uses the cached profile registry and visibly reports its verification/version age | Zero published profiles is `empty`; invalid registry is `content-unavailable`, never a guessed list; opening a record does not select study scope | M1 |
 | 3. “Not sure which exam?” checker | `exam-checker` — `/exams/check/` | Exam selector | `noindex`; static safety guidance + lazy `ExamChecker` form island | Works against cached profiles; offline results are explicitly limited to that registry | No match and multiple plausible matches are valid results; malformed input stays editable; never silently selects | M1 |
-| 4. State/jurisdiction/profile | `profile` — `/ny/`, `/ny/{jurisdictionSlug}/`, `/ny/{jurisdictionSlug}/{titleSlug}/{administrationId}/` | Home → state → jurisdiction | State hub `index`; jurisdiction `conditional`; administration `index` when reviewed; static facts + small select/resume island | Cached historical/profile documents remain readable; selection requires the referenced compatible pack or a clear download path | Unknown/conflicting facts render their fact states. Historical/superseded administrations retain URLs and link to the current jurisdiction hub. Unknown IDs are 404 | M1 |
-| 5. Study/practice hub | `study-hub` — `/practice/` | Home | `index`; static study-method/content overview + lazy `StudyHub` local actions island | Cached overview works; actions are enabled only for locally available compatible content | No selected profile is a recoverable prerequisite state; insufficient compatible inventory is explicit and links to profiles/packs | M1; local actions M2–M4 |
+| 4. State/jurisdiction/profile | `profile` — `/ny/`, `/ny/{jurisdictionSlug}/`, `/ny/{jurisdictionSlug}/{titleSlug}/{administrationId}/` | Home → state → jurisdiction | State hub `index`; jurisdiction `conditional`; administration `index` when reviewed; static reference facts | Cached historical/profile documents remain readable; browsing does not select a profile or download content | Unknown/conflicting facts render their fact states. Historical/superseded administrations retain URLs and link to the current jurisdiction hub. Unknown IDs are 404 | M1 |
+| 5. Practice hub | `study-hub` — `/practice/` | global learner navigation / Home | `index`; static practice overview and set links + lazy `StudyHub` saved activity/review island | Cached overview works; practice requires compatible available content | Practice uses visibly stated statewide-series scope without a global exam prerequisite; insufficient inventory and unavailable saved activity have explicit recovery | M1; local actions M2–M4 |
 | 6. Tool atlas index | `atlas-index` — `/atlas/` | Study | `index`; static catalog + lazy `AtlasFilters` island | Cached catalog and active-pack images remain usable; uncached media has a named unavailable state | No matching filter is `empty`; invalid taxonomy publication fails the build; missing media does not invent a tool description | M1 |
 | 7. Tool-family comparison | `atlas-family` — `/atlas/family/{familySlug}/` | Atlas | `conditional` on substantive reviewed comparison; primarily static, optional local-practice actions island | Cached page remains readable; uncached alternate imagery is omitted with status | Unknown slug is 404; unpublishable/thin family is not generated; retired family may redirect only after reviewed taxonomy mapping | M1 |
 | 8. Tool detail | `atlas-tool` — `/atlas/tool/{toolSlug}/` | Atlas → family | `index` after source/rights/accessibility review; primarily static, optional atlas media/practice island | Cached text and accepted derivatives remain readable; optional large/alternate views never auto-download | Unknown slug is 404; retired concept stays visible with correction/supersession notice when history exists | M1 |
@@ -161,10 +165,10 @@ destination families.
 | 14. Simulation | `simulation-setup` — `/simulations/`; `simulation-player` — `/simulations/session/{sessionId}/question/{position}/`; `simulation-results` — `/simulations/session/{sessionId}/results/` | Study → Simulations | Setup `index` with substantive static disclaimer + island; player/results `noindex` island routes | A simulation starts only after all pinned items/assets are local; it autosaves locally and remains pinned across connectivity changes | Insufficient inventory blocks start truthfully. No item reveal before final submission. Results never claim an official converted score/pass prediction | M4 |
 | 15. Print | `print-center` — `/print/`; `print-preview` — `/print/preview/{printJobId}/` | Study → Print | Center `index` with static print guidance + generator island; preview `noindex` island route and printable semantic HTML | Generation/preview work from locally retained validated content; system print needs no server | Missing inventory/asset, pagination warning, stale job, and generation failure retain settings and offer regeneration; key and question outputs stay separable | M2 fixture, full M4 |
 | 16. FAQ | `faq` — `/faq/` | global Help | `index`; static only | Cached document works fully | Unknown facts remain explicitly unknown and link to profile/source pages; build failure prevents stale hand-copied fact publication | M1 |
-| 17. Sources, corrections, FOIL, security, privacy | `transparency-index` — `/transparency/`; `source` — `/transparency/sources/` and `/transparency/sources/{sourceId}/`; `corrections` — `/transparency/corrections/`; `foil` — `/transparency/foil/`; `security` — `/transparency/security/`; `privacy` — `/transparency/privacy/` | global Transparency | `index` when reviewed; static only except optional local export links | Cached records remain readable; external links are visibly unavailable offline rather than simulated | Unknown source ID is 404; withdrawn/unsafe material gets a non-reproducing status record; unresolved and corrected claims remain visible | M1 for core records, M5 completion |
+| 17. Sources, corrections, FOIL, security, privacy | `transparency-index` — `/transparency/`; `source` — `/transparency/sources/` and `/transparency/sources/{sourceId}/`; `corrections` — `/transparency/corrections/`; `foil` — `/transparency/foil/`; `security` — `/transparency/security/`; `privacy` — `/transparency/privacy/` | footer Sources / contextual evidence links | `index` when reviewed; static only except optional local export links | Cached records remain readable; external links are visibly unavailable offline rather than simulated | Unknown source ID is 404; withdrawn/unsafe material gets a non-reproducing status record; unresolved and corrected claims remain visible | M1 for core records, M5 completion |
 | 18. Correction/security submission | `correction-submit` — `/report/` | Transparency / contextual Report links | `noindex`; static prohibition/privacy text + lazy `CorrectionForm` island | Drafting is local. Offline action is “save draft,” never “submitted”; explicit later submission is required | Validation/rate/network failures retain safe fields and a client receipt ID; suspected secure content is held nonpublicly and never echoed | M5 |
 | 19. Settings | `settings` — `/settings/` | global utility navigation | `noindex`; generated shell + lazy `Settings` island | All local preferences, export, pack-neutral reset preparation, and storage diagnostics work offline | Import is previewed/validated/quarantined before write; destructive reset requires explicit scope/confirmation and reports durable result | M5 |
-| 20. Offline packs / updates | `offline-packs` — `/offline/` | global utility navigation / Settings | `noindex`; static explanation + lazy `OfflinePackManager` island | This route owns download, stage, verify, activate, update, remove, retention, quota, and eviction-warning UI | Partial/invalid downloads quarantine; prior valid pack stays active; active-session pins block unsafe removal; retry is idempotent | M2 single-pack proof, full M5 |
+| 20. Offline packs / updates | `offline-packs` — `/offline/` | Settings / contextual download and recovery links / footer | `noindex`; static explanation + lazy `OfflinePackManager` island | This route owns download, stage, verify, activate, update, remove, retention, quota, and eviction-warning UI | Partial/invalid downloads quarantine; prior valid pack stays active; active-session pins block unsafe removal; retry is idempotent | M2 single-pack proof, full M5 |
 | 21. Explicit status/error/content unavailable | `status` — `/status/`; terminal 404/410/5xx documents render at the requested URL | global Help or nearest valid parent | `noindex`; static recovery guide + optional lazy local diagnostics island | A precached offline fallback links to cached Home, Offline, Settings, and available packs; it never masquerades as the requested page | Distinguish not found, withdrawn, invalid publication, offline-unavailable, storage-unavailable, and service failure; preserve safe user input/state where possible | M0 shell, full recovery M5 |
 
 ### Conditional publication gate
@@ -231,12 +235,12 @@ display structure below supersedes their old peer-flat presentation.
 
 ### Selected structural envelope
 
-Do not present every destination family as a peer. Global discovery separates
-links that begin or continue learner tasks from links for utility, data,
-evidence, policy, and operator trust. The two semantic roles are a promoted
-constraint, not selected display groups: exact labels, group count, membership,
-nesting, and order remain owner-locked unresolved questions. This contract does
-not create stable group IDs or infer a hierarchy from task popularity.
+Do not present every destination family as a peer. The standard header presents
+Practice, a Library disclosure containing Tool atlas and Hazard lab, and Exam
+information. Settings is the sole utility on the right. Sources belongs in the
+footer; offline downloads are reached through Settings and contextual or footer
+links. There is no Choose your exam chip. These placements follow maintainer
+direction, not inferred task popularity.
 
 Route IDs remain the stable identity. A contextual task, recovery, report, or
 evidence link may bypass the global regions. Downstream candidates must retain
@@ -255,10 +259,10 @@ implementation contracts; it may not be inferred from a path prefix.
 ### Wide and compact shells
 
 Global-navigation documents own the brand/Home link and the distinct
-learner-task and utility/trust regions. At ample widths the regions are visibly
-distinct. At compact widths, brand and current profile context remain visible
-while a named native disclosure holds navigation. Its exact summary and link
-grouping are unresolved; the unenhanced HTML contains all links, works with
+learner-task and Settings regions, with trust links in the footer. At ample
+widths the header regions are visibly distinct. At compact widths, brand and
+Settings remain visible while navigation reflows into a named native disclosure
+and direct task links. The unenhanced HTML contains all links, works with
 JavaScript disabled, exposes a programmatic name, supports keyboard operation,
 and restores focus to its trigger when dismissed.
 
@@ -269,23 +273,25 @@ current stable route ID for each rendered link (never shell, proposed group, or
 path-prefix inference) and applies to Settings, Offline, trust, and study
 destinations as well as the original five sections.
 
-When a compatible profile is selected, show `Profile: {label}` plus its relevant
-version outside the compact disclosure on study, setup, and focused routes.
-That context links to the profile document and may be enhanced by an island, but
-it is never available only through JavaScript or only inside a menu.
+Show the scope that actually controls content beside the task: the statewide
+series on Practice, the chosen profile in simulation/print setup, and the pinned
+profile/version in a session. Scope must not be hidden inside navigation. The
+header does not imply a saved global exam selection.
 
 ### Profile and Practice continuity
 
-Profile pages retain substantive static facts. A bounded `Use this profile`
-action owns durable selection through the existing authoritative preference and
-pack-recovery boundary; it must not introduce a second profile truth. After a
-successful selection, offer the next Practice action. Without JavaScript,
-profile facts and explicit destinations remain available and the page states
-truthfully that local selection/resume needs JavaScript.
+Exam information and profile pages retain substantive static facts. Opening a
+record changes only the displayed reference and its URL; it does not change
+Practice or saved preferences. Simulation and print each require a profile
+choice for that setup and pin it into the generated session or job.
 
-Practice never selects the first jurisdiction or Nassau implicitly. It either
-uses the visible selected profile or renders the existing recoverable
-prerequisite/neutral context. Feasible question-practice starts precede the
+The earlier durable `Use this profile` proposal remains unimplemented. A future
+global selection feature requires an explicit behavior and persistence contract;
+reference browsing must not claim to provide it.
+
+Practice uses the visibly stated statewide-series profile, never the first
+jurisdiction or Nassau implicitly. It needs no saved exam preference. Feasible
+question-practice starts precede the
 capacity diagnostics and state exact counts without timing estimates. Tool,
 procedure, repair, visual/nonvisual hazard, Review, simulation, longer-set, and
 print tasks remain discoverable from their fixed parent surfaces. The exact
@@ -333,8 +339,8 @@ In addition to the route acceptance list below, implementation must prove:
    link cloud;
 3. compact disclosure operation, semantic-region separation, focus restoration,
    and link closure work with keyboard and JavaScript disabled;
-4. selected profile/version remains visible outside the disclosure and Practice
-   never substitutes a profile;
+4. task scope remains visible outside navigation, Practice uses the stated
+   statewide series, and browsing exam records does not change study scope;
 5. every focused player has a named session landmark and a truthful explicit
    exit, with no acquisition/utility navigation;
 6. utility destinations receive correct current-page state;

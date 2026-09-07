@@ -66,7 +66,7 @@ export const ActivityHistory = ({
       : allRows.length === 0 && hasUnavailableAttempts && !reviewsOnly ? null
       : rows.length === 0 ? <div className="empty-state">
         <h3 className="empty-state-heading" ref={filteredHeading} tabIndex={-1}>
-          {filteredEmpty ? `No ${kindLabels[kind].toLowerCase()} in this history` : reviewsOnly ? "No finished reviews yet" : "No saved activity in this release yet"}
+          {filteredEmpty ? `No ${kindLabels[kind].toLowerCase()} in this history` : reviewsOnly ? "No finished reviews yet" : "No saved activity yet"}
         </h3>
         <p>{filteredEmpty ? "Try a different kind of activity to see your saved work." : reviewsOnly
           ? "Read an item's explanation, then confirm Finish review. Your finished reviews will appear here."

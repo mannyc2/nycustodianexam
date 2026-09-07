@@ -129,7 +129,6 @@ export const ReviewQueueIsland = ({ controller, activityState, onRetryHistory }:
 
   return <div className="review-page">
     {state.tag === "recoverable_error" ? <section className="review-state review-error" aria-labelledby="review-error-heading" role="alert">
-      <p className="eyebrow">Review · saved on this device</p>
       <h1 id="review-error-heading" ref={errorHeadingRef} tabIndex={-1}>{state.operation === "acknowledge" ? "Your finished review was not saved" : "Review queue could not be built"}</h1>
       <p>{state.operation === "acknowledge" ? "The change could not be written to this device's storage. The item stays in your queue." : "Your saved attempts could not be read from this device's storage."}</p>
       <p>No saved attempt was deleted or replaced.</p>
@@ -140,18 +139,16 @@ export const ReviewQueueIsland = ({ controller, activityState, onRetryHistory }:
         <a className="button button-secondary" href="/settings/#export-local-data">Export saved data</a>
       </div>
     </section> : <section className="page-header page-header-prominent study-hero" aria-labelledby="review-queue-heading">
-      <p className="eyebrow">Review · saved on this device</p>
-      <h1 id="review-queue-heading">{state.tag === "loading" ? "Loading your local review queue" : state.tag === "empty" ? "Your review queue is clear." : `${items.length} ${items.length === 1 ? "item" : "items"} to review`}</h1>
+      <h1 id="review-queue-heading">{state.tag === "loading" ? "Loading your review queue" : state.tag === "empty" ? "Your review queue is clear." : `${items.length} ${items.length === 1 ? "item" : "items"} to review`}</h1>
       <p>{state.tag === "loading" ? state.action === "rebuild" ? "Rebuilding from your saved attempts and finished reviews…" : "Reading the attempts saved on this device…" : state.tag === "empty" ? "Nothing is waiting for review. Try another practice set, explore a scene, or come back after your next saved answer." : "Revisit the questions you missed or flagged and the visual scenes that need another look. Untimed, with your original saved feedback."}</p>
       <div className="question-controls">
         {items[0] === undefined ? <a className="button button-primary" href="/practice/#practice-sets">Choose a practice set</a> : <a className="button button-primary" href={items[0].itemUrl}>Read first explanation</a>}
-        <a className="button button-secondary" href="/practice/">Back to Study</a>
+        <a className="button button-secondary" href="/practice/">Practice and activity</a>
       </div>
       {state.tag === "loading" ? <span role="status" className="sr-only">Reading your review queue.</span> : <dl className="figure-strip">
         <div><dt>Ready for review</dt><dd>{items.length} {items.length === 1 ? "item" : "items"}</dd></div>
         <div><dt>Missed or misidentified</dt><dd>{missed}</dd></div>
         <div><dt>Flagged by you</dt><dd>{flagged}</dd></div>
-        <div><dt>Storage</dt><dd className="study-scope-label">This device only</dd></div>
       </dl>}
     </section>}
 
@@ -191,7 +188,7 @@ export const ReviewQueueIsland = ({ controller, activityState, onRetryHistory }:
         <div><dt>What gets queued</dt><dd>Missed and flagged questions, missed visual hazards, and safe details marked as hazards. An item can be both missed and flagged.</dd></div>
         <div><dt>When you finish</dt><dd>Confirm Finish review to remove the item from your ready queue. Your original answer and its explanation stay in your history.</dd></div>
         <div><dt>If an attempt is unavailable</dt><dd>It stays in your saved history with the information that can be read.</dd></div>
-        <div><dt>Where it lives</dt><dd>On this device only. <a href="/settings/#export-local-data">Export a backup in Settings</a> to keep a copy.</dd></div>
+        <div><dt>Saved in this browser</dt><dd><a href="/settings/#export-local-data">Export a backup</a> before clearing browser data.</dd></div>
       </dl>
       {state.tag !== "recoverable_error" ? <div className="question-controls"><button className="button button-secondary" disabled={state.tag === "loading" || busy} onClick={() => controller.dispatch({ tag: "rebuild" })} type="button">Rebuild review queue</button><a href="/practice/">Choose another way to study</a></div> : null}
     </section>

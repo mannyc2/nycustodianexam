@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #e9edf1; color: #17202a; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+    a { color: #075985; }
+    a:hover { color: #0c4a6e; }
+    h1, h2, h3, h4, h5, p, dl, dd { margin: 0; }
+    ul, ol { margin: 0; }
+    ul { padding: 0; list-style: none; }
+    button, input, select, textarea { font: inherit; }
+    :focus-visible { outline: 0.1875rem solid #1d4ed8; outline-offset: 0.1875rem; }
+  </style>
+</helmet>
+
+<div style="display: grid; gap: 1rem; padding: clamp(1.5rem, 3vw, 2.5rem);">
+  <div role="group" aria-label="Hazard specimen controls" style="display: grid; gap: 0.75rem; padding: 1rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
+      <span style="font-size: 0.8125rem; font-weight: 700; color: #4b5563; min-width: 5.5rem;">Workflow</span>
+      <sc-for list="{{ workflowChips }}" as="chip" hint-placeholder-count="3">
+        <button type="button" aria-pressed="{{ chip.pressed }}" onClick="{{ chip.onClick }}" style="{{ chip.style }}">{{ chip.label }}</button>
+      </sc-for>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
+      <span style="font-size: 0.8125rem; font-weight: 700; color: #4b5563; min-width: 5.5rem;">Modality</span>
+      <sc-for list="{{ modalityChips }}" as="chip" hint-placeholder-count="2">
+        <button type="button" aria-pressed="{{ chip.pressed }}" onClick="{{ chip.onClick }}" style="{{ chip.style }}">{{ chip.label }}</button>
+      </sc-for>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
+      <span style="font-size: 0.8125rem; font-weight: 700; color: #4b5563; min-width: 5.5rem;">Snapshot</span>
+      <sc-for list="{{ stateChips }}" as="chip" hint-placeholder-count="11">
+        <button type="button" aria-pressed="{{ chip.pressed }}" disabled="{{ chip.disabled }}" onClick="{{ chip.onClick }}" style="{{ chip.style }}">{{ chip.label }}</button>
+      </sc-for>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding-block-start: 0.5rem; border-block-start: 1px solid #edf2f7;">
+      <span style="font-size: 0.8125rem; font-weight: 700; color: #4b5563; min-width: 5.5rem;">Test hook</span>
+      <button type="button" onClick="{{ toggleFail }}" style="{{ failStyle }}">{{ failLabel }}</button>
+    </div>
+  </div>
+
+  <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">Rendering <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #075985; font-weight: 700;">{{ wrapperName }}</code></p>
+
+  <sc-if value="{{ showCard }}" hint-placeholder-val="{{ true }}">
+    <article style="display: grid; gap: 1.5rem; max-width: 68rem; margin-inline: auto; width: 100%; padding: clamp(1.5rem, 4vw, 3rem); border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff; box-shadow: 0 0.25rem 1rem rgb(23 32 42 / 14%);">
+      <header style="display: grid; gap: 0.75rem;">
+        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">Scene 3 of 12 in this session</span>
+        <h3 tabindex="-1" style="font-size: clamp(1.25rem, 1.12rem + 0.55vw, 1.625rem); scroll-margin-block-start: 5rem;">Mark anything in this stairwell that a custodian should act on</h3>
+        <p style="margin: 0; max-width: 68ch; color: #4b5563;">Mark as many or as few places as you think are right. The number of marks you place is not a hint, and submitting none is a valid answer.</p>
+        <sc-if value="{{ isReview }}">
+          <div style="display: grid; gap: 0.375rem; padding: 0.75rem 1rem; border-inline-start: 0.25rem solid #075985; background: #edf2f7;">
+            <strong style="font-size: 0.9375rem;">Why this is in your review queue</strong>
+            <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">You flagged this scene on August 21, 2026, and its regions have not changed since your attempt.</p>
+          </div>
+        </sc-if>
+      </header>
+
+      <sc-if value="{{ isRestoring }}">
+        <div style="display: grid; gap: 0.75rem; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #f7f8fa;">
+          <p role="status" style="margin: 0; font-weight: 700;">Restoring your marks</p>
+          <p style="margin: 0; color: #4b5563; font-size: 0.9375rem;">Your marks come back exactly where you placed them. Pan and zoom start fresh.</p>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ showScene }}">
+        <div style="display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); align-items: start;">
+          <sc-if value="{{ isVisual }}">
+            <figure style="margin: 0; display: grid; gap: 0.75rem;">
+              <div onClick="{{ sceneClick }}" style="position: relative; border: 1px solid #b7c1cc; border-radius: 0.5rem; overflow: hidden; background: #f7f8fa; cursor: crosshair;">
+                <img src="content/assets/derivatives/scenes/s003-phone.png" alt="An interior stairwell. Two flights meet at a landing. Wall-mounted handrails run along both flights. Cartons are stacked on the landing. A door is set into the wall below the upper flight, and a ceiling fixture is above the landing." style="display: block; width: 100%; height: auto;" />
+                <sc-if value="{{ isRevealed }}">
+                  <span aria-hidden="true" style="position: absolute; left: 25%; top: 29%; width: 41%; height: 27%; border: 0.25rem solid #b42318; background: rgb(180 35 24 / 18%); border-radius: 0.25rem;"></span>
+                  <span aria-hidden="true" style="position: absolute; left: 22%; top: 53%; width: 30%; height: 14%; border: 0.25rem solid #b42318; background: rgb(180 35 24 / 18%); border-radius: 0.25rem;"></span>
+                  <span aria-hidden="true" style="position: absolute; left: 5%; top: 16%; width: 24%; height: 34%; border: 0.25rem dashed #1e40af; background: rgb(30 64 175 / 12%); border-radius: 0.25rem;"></span>
+                </sc-if>
+                <sc-for list="{{ markers }}" as="mk" hint-placeholder-count="2">
+                  <span style="{{ mk.pinStyle }}">{{ mk.n }}</span>
+                </sc-for>
+              </div>
+              <figcaption style="font-size: 0.9375rem; color: #4b5563;">Original reviewed scene. Clicking is one path, not the only one — the zone list marks the same regions from the keyboard.</figcaption>
+            </figure>
+          </sc-if>
+
+          <sc-if value="{{ isNonvisual }}">
+            <div style="display: grid; gap: 0.75rem;">
+              <h4 style="font-size: clamp(1.125rem, 1.05rem + 0.3vw, 1.375rem);">Ordered zones in this stairwell</h4>
+              <p style="margin: 0; color: #4b5563; font-size: 0.9375rem;">A neutral authored ordering. The order carries no meaning and the count is not a hint.</p>
+              <ol style="display: grid; gap: 0.5rem; margin: 0; padding-inline-start: 1.5rem;">
+                <li>Upper flight and its top landing.</li>
+                <li>The intermediate landing surface, where cartons are stacked.</li>
+                <li>The head and treads of the lower flight.</li>
+                <li>Wall handrails on both flights.</li>
+                <li>The door set into the wall at the base.</li>
+                <li>The ceiling fixture above the landing.</li>
+              </ol>
+            </div>
+          </sc-if>
+
+          <div style="display: grid; gap: 1rem; align-content: start;">
+            <div style="display: grid; gap: 0.5rem; padding: 1rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #f7f8fa;">
+              <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem;">
+                <strong style="font-size: 0.9375rem;">Your marks</strong>
+                <span style="font-size: 0.875rem; color: #4b5563;">{{ markCount }}</span>
+              </div>
+              <sc-if value="{{ hasMarks }}">
+                <ol style="display: grid; gap: 0.5rem; margin: 0; padding: 0; list-style: none;">
+                  <sc-for list="{{ markers }}" as="mk" hint-placeholder-count="2">
+                    <li style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0.625rem; border: 1px solid #b7c1cc; border-radius: 0.375rem; background: #ffffff;">
+                      <span aria-hidden="true" style="display: grid; place-items: center; min-width: 1.75rem; min-height: 1.75rem; border-radius: 999rem; background: #17202a; color: #ffffff; font-weight: 700; font-size: 0.8125rem;">{{ mk.n }}</span>
+                      <span style="flex: 1 1 auto; display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 0.625rem; font-size: 0.9375rem;"><span>{{ mk.label }}</span><span style="color: #4b5563; font-size: 0.875rem;">{{ mk.coords }}</span></span>
+                      <button type="button" aria-label="{{ mk.removeLabel }}" onClick="{{ mk.onRemove }}" style="display: inline-flex; align-items: center; justify-content: center; min-width: 2.75rem; min-height: 2.75rem; border: 1px solid #667085; border-radius: 0.375rem; background: #ffffff; font-weight: 700; cursor: pointer;" style-hover="background: #edf2f7;">✕</button>
+                    </li>
+                  </sc-for>
+                </ol>
+              </sc-if>
+              <sc-if value="{{ noMarks }}">
+                <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">Nothing marked yet. Submitting with no marks is allowed and needs one confirmation first.</p>
+              </sc-if>
+            </div>
+
+            <sc-if value="{{ isMarking }}">
+              <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+                <button type="button" onClick="{{ commit }}" style="{{ commitStyle }}">Save marks</button>
+                <button type="button" onClick="{{ submitZero }}" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; cursor: pointer;" style-hover="background: #edf2f7;">Submit with no marks</button>
+                <button type="button" onClick="{{ clearMarks }}" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; cursor: pointer;" style-hover="background: #edf2f7;">Clear all</button>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ isConfirmZero }}">
+              <div role="alertdialog" aria-label="Submit with no marks" style="display: grid; gap: 0.75rem; padding: 1.25rem; border: 2px solid #667085; border-radius: 0.5rem; background: #f7f8fa;">
+                <strong>Submit this scene with no marks?</strong>
+                <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">This records an attempt with zero marks. It does not tell you whether there was anything to mark, and it is not treated as a mistake.</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+                  <button type="button" onClick="{{ commit }}" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; cursor: pointer;" style-hover="background: #0c4a6e;">Yes, submit with none</button>
+                  <button type="button" onClick="{{ clearMarks }}" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; cursor: pointer;" style-hover="background: #edf2f7;">Keep marking</button>
+                </div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ isCommitting }}">
+              <div role="status" style="display: flex; align-items: start; gap: 0.5rem; padding: 1rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #f7f8fa;"><span aria-hidden="true">◴</span><span><strong>Saving your marks.</strong> They stay visible and can't be changed until saving finishes.</span></div>
+            </sc-if>
+
+            <sc-if value="{{ isError }}">
+              <div tabindex="-1" role="alert" style="display: grid; gap: 0.75rem; padding: 1.25rem; border: 2px solid #b42318; border-radius: 0.5rem; background: #fef3f2;">
+                <h4 style="display: flex; align-items: center; gap: 0.5rem; font-size: 1.0625rem; color: #b42318;"><span aria-hidden="true">✕</span> Your marks were not saved</h4>
+                <p style="margin: 0; font-size: 0.9375rem;">Every mark is retained exactly where you put it, and nothing about the scene has been revealed.</p>
+                <button type="button" onClick="{{ retry }}" style="justify-self: start; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; cursor: pointer;" style-hover="background: #0c4a6e;">Try saving again</button>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ isRecorded }}">
+              <div style="display: grid; gap: 0.5rem; padding: 1.25rem; border: 1px solid #1e40af; border-radius: 0.5rem; background: #eff6ff;">
+                <strong style="display: flex; align-items: center; gap: 0.5rem; color: #1e40af;"><span aria-hidden="true">i</span> Marks recorded</strong>
+                <p style="margin: 0; font-size: 0.9375rem;">Editable until you submit the simulation. No regions, decoys, or counts are available yet.</p>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ isRevealed }}">
+              <div style="display: grid; gap: 1rem;">
+                <div style="display: grid; gap: 0.5rem; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #f7f8fa;">
+                  <h4 tabindex="-1" style="font-size: clamp(1.125rem, 1.05rem + 0.3vw, 1.375rem);">Result for this scene</h4>
+                  <ul style="display: grid; gap: 0.25rem; margin: 0; padding-inline-start: 1.25rem; font-size: 0.9375rem;">
+                    <li>{{ resultFound }}</li>
+                    <li>{{ resultDecoy }}</li>
+                    <li>{{ resultElsewhere }}</li>
+                  </ul>
+                  <p style="margin: 0; font-size: 0.875rem; color: #4b5563;">Raw practice counts for this scene only. No score, no conversion, no prediction.</p>
+                </div>
+                <dl style="display: grid; gap: 0.75rem; margin: 0;">
+                  <div style="display: grid; gap: 0.25rem; padding: 0.75rem 1rem; border-inline-start: 0.25rem solid #b42318; background: #fef3f2;">
+                    <dt style="display: flex; align-items: center; gap: 0.5rem; font-weight: 700; color: #b42318;"><span aria-hidden="true">▮</span> Region A — the landing surface</dt>
+                    <dd style="margin: 0; font-size: 0.9375rem;">Cartons stacked on the landing reduce the width of the means of egress and have to be moved before anything else on this floor.</dd>
+                  </div>
+                  <div style="display: grid; gap: 0.25rem; padding: 0.75rem 1rem; border-inline-start: 0.25rem solid #b42318; background: #fef3f2;">
+                    <dt style="display: flex; align-items: center; gap: 0.5rem; font-weight: 700; color: #b42318;"><span aria-hidden="true">▮</span> Region B — the head of the lower flight</dt>
+                    <dd style="margin: 0; font-size: 0.9375rem;">The stack runs to the top tread, so someone descending meets an obstruction at the exact point where footing matters most.</dd>
+                  </div>
+                  <div style="display: grid; gap: 0.25rem; padding: 0.75rem 1rem; border-inline-start: 0.25rem dashed #1e40af; background: #eff6ff;">
+                    <dt style="display: flex; align-items: center; gap: 0.5rem; font-weight: 700; color: #1e40af;"><span aria-hidden="true">▯</span> Region C — the handrails</dt>
+                    <dd style="margin: 0; font-size: 0.9375rem;">A recorded decoy. Continuous graspable rail runs the length of both flights, so it is not a finding here.</dd>
+                  </div>
+                </dl>
+                <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">The overlay, the list, and your numbered marks use the same region letters and mark numbers. Nothing in the feedback depends on color alone.</p>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </sc-if>
+
+      <p aria-live="polite" style="margin: 0; padding: 0.625rem 0.875rem; border: 1px dashed #b7c1cc; border-radius: 0.375rem; background: #f7f8fa; font-size: 0.875rem; color: #4b5563;"><span style="font-weight: 700; color: #17202a;">LiveRegion:</span> {{ announce }}</p>
+    </article>
+  </sc-if>
+
+  <sc-if value="{{ isUnavailable }}">
+    <div style="display: grid; gap: 1rem; max-width: 50rem; margin-inline: auto; width: 100%; padding: 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff;">
+      <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">PageState.ContentUnavailable</span>
+      <h3 tabindex="-1" style="font-size: clamp(1.25rem, 1.12rem + 0.55vw, 1.625rem);">This scene cannot start</h3>
+      <p style="margin: 0; max-width: 68ch; color: #4b5563;">A hazard scene starts only when its image, regions, zone descriptions, and sources are all on this device. Part of this scene is missing from the download, so it is unavailable rather than partially playable.</p>
+      <a href="#d-packs" style="justify-self: start; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; text-decoration: none;" style-hover="background: #0c4a6e;">Download required pack</a>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1100, &quot;height&quot;: 900}}">
+class Component extends DCLogic {
+  state = {
+    workflow: "practice",
+    modality: "visual",
+    snap: "marking",
+    marks: [{ id: "mk1", x: 44, y: 41 }, { id: "mk2", x: 12, y: 31 }],
+    nextId: 3,
+    fail: false,
+    announce: "2 marks placed."
+  };
+
+  timer = null;
+
+  componentWillUnmount() { clearTimeout(this.timer); }
+
+  legal = {
+    practice: ["restoring", "ready", "marking", "confirm-zero", "committing", "answered-revealed", "reviewed", "recoverable-error", "content-unavailable", "completed"],
+    review: ["restoring", "ready", "marking", "confirm-zero", "committing", "answered-revealed", "reviewed", "recoverable-error", "content-unavailable", "completed"],
+    simulation: ["restoring", "ready", "marking", "confirm-zero", "committing", "recorded", "recoverable-error", "content-unavailable", "completed"]
+  };
+
+  chip(on) {
+    return "display: inline-flex; align-items: center; justify-content: center; min-height: 2.25rem; padding: 0.4375rem 0.75rem; border-radius: 0.375rem; font-size: 0.875rem; font-weight: 700; cursor: pointer; border: 1px solid " +
+      (on ? "#075985" : "#667085") + "; background: " + (on ? "#075985" : "#ffffff") + "; color: " + (on ? "#ffffff" : "#17202a") + ";";
+  }
+
+  setWorkflow = (w) => this.setState((s) => ({ workflow: w, snap: this.legal[w].includes(s.snap) ? s.snap : "ready" }));
+  setModality = (m) => this.setState({ modality: m });
+  setSnap = (v) => this.setState({ snap: v });
+  toggleFail = () => this.setState((s) => ({ fail: !s.fail }));
+
+  addMarker = (event) => {
+    if (!["ready", "marking"].includes(this.state.snap)) return;
+    const box = event.currentTarget.getBoundingClientRect();
+    const x = Math.round(((event.clientX - box.left) / box.width) * 1000) / 10;
+    const y = Math.round(((event.clientY - box.top) / box.height) * 1000) / 10;
+    this.setState((s) => {
+      const marks = s.marks.concat([{ id: "mk" + s.nextId, x, y }]);
+      return { marks, nextId: s.nextId + 1, snap: "marking", announce: marks.length + " marks placed." };
+    });
+  };
+
+  removeMarker = (id) =>
+    this.setState((s) => {
+      const marks = s.marks.filter((m) => m.id !== id);
+      return {
+        marks,
+        snap: marks.length ? "marking" : "ready",
+        announce: marks.length ? marks.length + " marks placed." : "No marks placed."
+      };
+    });
+
+  clearMarks = () => this.setState({ marks: [], snap: "ready", announce: "No marks placed." });
+  submitZero = () => this.setState({ snap: "confirm-zero" });
+
+  commit = () => {
+    clearTimeout(this.timer);
+    this.setState({ snap: "committing", announce: "Saving your marks." });
+    this.timer = setTimeout(() => {
+      this.setState((s) => {
+        if (s.fail) return { snap: "recoverable-error", announce: "Could not save. Your marks are unchanged." };
+        if (s.workflow === "simulation") return { snap: "recorded", announce: "Marks recorded." };
+        return { snap: "answered-revealed", announce: "Marks saved." };
+      });
+    }, 700);
+  };
+
+  retry = () => this.setState({ fail: false }, this.commit);
+
+  renderVals() {
+    const s = this.state;
+    const cap = (t) => t.charAt(0).toUpperCase() + t.slice(1);
+    const TARGETS = [{ id: "A", box: [25, 29, 41, 27] }, { id: "B", box: [22, 53, 30, 14] }];
+    const DECOY = [5, 16, 24, 34];
+    const inBox = (m, b) => m.x >= b[0] && m.x <= b[0] + b[2] && m.y >= b[1] && m.y <= b[1] + b[3];
+    const marks = s.marks;
+    const revealed = s.snap === "answered-revealed" || s.snap === "reviewed";
+    const found = TARGETS.filter((t) => marks.some((m) => inBox(m, t.box))).length;
+    const onDecoy = marks.filter((m) => inBox(m, DECOY)).length;
+    const elsewhere = marks.filter((m) => !TARGETS.some((t) => inBox(m, t.box)) && !inBox(m, DECOY)).length;
+
+    return {
+      wrapperName: (s.modality === "visual" ? "Visual" : "Nonvisual") + "Hazard" + cap(s.workflow),
+      workflowChips: ["practice", "review", "simulation"].map((w) => ({
+        key: w, label: cap(w), pressed: s.workflow === w ? "true" : "false",
+        style: this.chip(s.workflow === w), onClick: () => this.setWorkflow(w)
+      })),
+      modalityChips: [
+        { key: "visual", label: "Scene viewport", pressed: s.modality === "visual" ? "true" : "false", style: this.chip(s.modality === "visual"), onClick: () => this.setModality("visual") },
+        { key: "nonvisual", label: "Zone navigator", pressed: s.modality === "nonvisual" ? "true" : "false", style: this.chip(s.modality === "nonvisual"), onClick: () => this.setModality("nonvisual") }
+      ],
+      stateChips: ["restoring", "ready", "marking", "confirm-zero", "committing", "answered-revealed", "recorded", "reviewed", "recoverable-error", "content-unavailable", "completed"].map((key) => {
+        const ok = this.legal[s.workflow].includes(key);
+        return {
+          key, label: key, disabled: !ok,
+          pressed: ok && key === s.snap ? "true" : "false",
+          style: ok
+            ? this.chip(key === s.snap)
+            : "display: inline-flex; align-items: center; justify-content: center; min-height: 2.25rem; padding: 0.4375rem 0.75rem; border-radius: 0.375rem; font-size: 0.875rem; font-weight: 700; border: 1px dashed #b7c1cc; background: #e5e7eb; color: #4b5563; cursor: not-allowed; text-decoration: line-through;",
+          onClick: ok ? () => this.setSnap(key) : undefined
+        };
+      }),
+      isVisual: s.modality === "visual",
+      isNonvisual: s.modality === "nonvisual",
+      isReview: s.workflow === "review",
+      isRestoring: s.snap === "restoring",
+      isMarking: ["ready", "marking"].includes(s.snap),
+      isConfirmZero: s.snap === "confirm-zero",
+      isCommitting: s.snap === "committing",
+      isRecorded: s.snap === "recorded",
+      isError: s.snap === "recoverable-error",
+      isUnavailable: s.snap === "content-unavailable",
+      isRevealed: revealed,
+      showCard: s.snap !== "content-unavailable",
+      showScene: s.snap !== "restoring",
+      markers: marks.map((m, i) => ({
+        id: m.id,
+        n: i + 1,
+        label: "Mark " + (i + 1),
+        coords: m.x + "% across, " + m.y + "% down",
+        removeLabel: "Remove mark " + (i + 1),
+        onRemove: () => this.removeMarker(m.id),
+        pinStyle: "position: absolute; left: " + m.x + "%; top: " + m.y +
+          "%; translate: -50% -50%; display: grid; place-items: center; min-width: 1.75rem; min-height: 1.75rem; border-radius: 999rem; border: 2px solid #ffffff; background: #17202a; color: #ffffff; font-weight: 700; font-size: 0.8125rem; pointer-events: none;"
+      })),
+      hasMarks: marks.length > 0,
+      noMarks: marks.length === 0,
+      markCount: marks.length === 0 ? "No marks placed" : marks.length === 1 ? "1 mark placed" : marks.length + " marks placed",
+      commitStyle: "display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 700; border: 1px solid transparent; cursor: " +
+        (marks.length ? "pointer" : "not-allowed") + "; background: " + (marks.length ? "#075985" : "#e5e7eb") + "; color: " + (marks.length ? "#ffffff" : "#4b5563") + ";",
+      sceneClick: this.addMarker,
+      resultFound: found + " of 2 marked regions found",
+      resultDecoy: onDecoy === 1 ? "1 mark on a region that is not a finding" : onDecoy + " marks on regions that are not findings",
+      resultElsewhere: elsewhere === 1 ? "1 mark elsewhere" : elsewhere + " marks elsewhere",
+      failLabel: s.fail ? "Next commit will fail" : "Next commit will succeed",
+      failStyle: this.chip(s.fail),
+      toggleFail: this.toggleFail,
+      submitZero: this.submitZero,
+      commit: this.commit,
+      retry: this.retry,
+      clearMarks: this.clearMarks,
+      announce: s.announce
+    };
+  }
+}
+</script>
+</body>
+</html>

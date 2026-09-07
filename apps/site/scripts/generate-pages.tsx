@@ -176,33 +176,25 @@ const navIcon = (name: "study" | "library" | "exams" | "offline" | "settings" | 
   return `<svg class="nav-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name]}</svg>`
 }
 
-const menuLinks = `
-  <div><strong>Study</strong><a href="/practice/">Study hub</a><a href="/review/">Review saved attempts</a><a href="/simulations/">Build a simulation</a><a href="/print/">Print center</a></div>
-  <div><strong>Library</strong><a href="/atlas/">Tool atlas</a><a href="/hazards/">Hazard lab · visual and text practice</a><a href="/exams/">Exams and announcements</a></div>
-  <div><strong>Site and sources</strong><a href="/offline/">Use offline</a><a href="/settings/">Settings</a><a href="/transparency/">Sources and methods</a><a href="/report/">Report a correction</a><a href="/transparency/privacy/">Privacy</a></div>`
-
 const header = (section: NavSection, routeId?: RouteId): string => `
   <header class="site-header">
     <div class="site-header-inner">
       <a class="brand"${currentPage(section, "home")} href="/">NY Custodian Exam</a>
       <nav class="site-nav nav-primary" aria-label="Primary">
-        <a${currentPage(section, "practice")} href="/practice/">${navIcon("study")}Study</a>
-        <details class="site-nav-menu"><summary${section === "atlas" || section === "hazards" ? ' class="nav-active"' : ""}>${navIcon("library")}Library<span aria-hidden="true">⌄</span></summary><div class="nav-popover"><a${currentPage(section, "atlas")} href="/atlas/">Tool atlas</a><a${currentPage(section, "hazards")} href="/hazards/">Hazard lab · visual and text practice</a></div></details>
-        <a${currentPage(section, "exams")} href="/exams/">${navIcon("exams")}Exams</a>
+        <a${currentPage(section, "practice")} href="/practice/">Practice</a>
+        <details class="site-nav-menu" data-library-menu>
+          <summary${section === "atlas" || section === "hazards" ? ' class="nav-active"' : ""}>Library<svg class="nav-chevron" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></summary>
+          <div class="nav-popover">
+            <a${currentPage(section, "atlas")} href="/atlas/"><strong>Tool atlas</strong><span>Learn to identify tools and tell similar ones apart.</span></a>
+            <a${currentPage(section, "hazards")} href="/hazards/"><strong>Hazard lab</strong><span>Spot workplace hazards in pictures or text.</span></a>
+          </div>
+        </details>
+        <a${currentPage(section, "exams")} href="/exams/">Exam information</a>
       </nav>
-      <a class="exam-context exam-chip" href="/exams/">Choose your exam</a>
-      <nav class="site-nav nav-utility" aria-label="Site and trust">
-        <a${routeId === "offline-packs" ? ' aria-current="page"' : ""} href="/offline/">${navIcon("offline")}<span>Offline</span></a>
-        <a${routeId === "settings" ? ' aria-current="page"' : ""} href="/settings/">${navIcon("settings")}<span>Settings</span></a>
-        <a${currentPage(section, "transparency")} href="/transparency/">${navIcon("sources")}<span>Sources</span></a>
+      <nav class="site-nav nav-utility" aria-label="Settings">
+        <a${routeId === "settings" ? ' aria-current="page"' : ""} href="/settings/" aria-label="Settings">${navIcon("settings")}<span>Settings</span></a>
       </nav>
     </div>
-    <nav class="compact-nav" aria-label="Compact primary">
-      <a${currentPage(section, "practice")} href="/practice/">${navIcon("study")}Study</a>
-      <a${section === "atlas" || section === "hazards" ? ' aria-current="page"' : ""} href="/atlas/">${navIcon("library")}Library</a>
-      <a${currentPage(section, "exams")} href="/exams/">${navIcon("exams")}Exams</a>
-      <details class="compact-menu"><summary>${navIcon("menu")}Menu</summary><div class="compact-menu-sheet">${menuLinks}</div></details>
-    </nav>
   </header>`
 
 const footer = `
@@ -245,7 +237,7 @@ const document = ({
 <body data-route-id="${routeId}">
 <a class="skip-link" href="#main-content">Skip to main content</a>
 ${connectivityNotice}
-${["question-player", "hazard-player", "review-player", "simulation-player"].includes(routeId) ? '<header class="site-header focused-session-header"><div class="site-header-inner"><span class="brand">NY Custodian Exam</span><nav aria-label="Session"><a class="button button-secondary" href="/practice/">Exit to Study</a></nav></div></header>' : header(section, routeId)}
+${["question-player", "hazard-player", "review-player", "simulation-player"].includes(routeId) ? '<header class="site-header focused-session-header"><div class="site-header-inner"><span class="brand">NY Custodian Exam</span><nav aria-label="Session"><a class="button button-secondary" href="/practice/">Exit to Practice</a></nav></div></header>' : header(section, routeId)}
 ${body}
 ${["question-player", "hazard-player", "review-player", "simulation-player"].includes(routeId) ? '<footer class="site-footer focused-session-footer"><div class="site-footer-inner"><p>Original practice. Independent and unofficial.</p></div></footer>' : footer}
 </body>
@@ -1071,7 +1063,7 @@ const buildPages = ({
     "Health and Safety Issues in Custodial Work": "Safe work practices, chemicals and protective equipment, and spotting what is wrong in a workplace scene."
   }
   const studyTasks = [
-    { title: "Practice questions", detail: leadPracticeSession === undefined ? `${questions.length} original questions, with reasoning and sources after you submit each answer.` : `Start with ${leadPracticeSession.length} questions, untimed. Read the reasoning and sources after each saved answer.`, compactDetail: leadPracticeSession === undefined ? "Untimed practice sets" : `${leadPracticeSession.length} questions, untimed`, href: "/practice/", action: "Go to Study", icon: "study" as const },
+    { title: "Practice questions", detail: leadPracticeSession === undefined ? `${questions.length} original questions, with reasoning and sources after you submit each answer.` : `Start with ${leadPracticeSession.length} questions, untimed. Read the reasoning and sources after each saved answer.`, compactDetail: leadPracticeSession === undefined ? "Untimed practice sets" : `${leadPracticeSession.length} questions, untimed`, href: "/practice/", action: "Open practice", icon: "study" as const },
     { title: "Tool atlas", detail: `${releasedTools.length} illustrated tool references, with the features that tell look-alikes apart.`, compactDetail: `${releasedTools.length} illustrated tools`, href: "/atlas/", action: "Browse tools", icon: "library" as const },
     { title: "Hazard lab", detail: `${scenes.length} workplace scenes. Mark the picture or use the text and keyboard version.`, compactDetail: `${scenes.length} scenes, with text versions`, href: "/hazards/", action: "Run a drill", icon: "sources" as const },
     { title: "Practice simulation", detail: "Build a set and hold feedback until the end. Choose the length and timing that suit your study.", compactDetail: "Choose length and timing", href: "/simulations/", action: "Set one up", icon: "exams" as const },
@@ -1230,7 +1222,7 @@ const buildPages = ({
     body: `
   <main class="page-shell" id="main-content" tabindex="-1">
     ${breadcrumb([{ href: "/practice/", label: "Practice" }, { label: "Simulation" }])}
-    <section class="hero"><p class="eyebrow">Original practice · not an official exam</p><h1>Create a practice simulation.</h1><p>Build a multiple-choice or hazard-scene set — including a keyboard, no-image version — from the current release. It does not claim official exam length, question mix, score conversion, or a passing-score prediction.</p></section>
+    <section class="hero"><h1>Create a practice simulation.</h1><p>Build a multiple-choice or hazard-scene set — including a keyboard, no-image version — from the current release. It does not claim official exam length, question mix, score conversion, or a passing-score prediction.</p></section>
     <div data-simulation-setup data-island="simulation-setup-bootstrap">
       <section class="review-state"><h2>Loading simulation options</h2><p>JavaScript and available browser storage are required. No answer key is embedded in this setup page.</p></section>
     </div>
@@ -1299,14 +1291,14 @@ const buildPages = ({
     section: "exams",
     body: `
   <main class="page-shell home-page exams-page" id="main-content" tabindex="-1">
-    <section class="page-header-prominent"><div class="page-header-copy"><h1>Which exam are you studying for?</h1><p class="lead">Find the announcement that matches your exam, then read its dates, eligibility and subjects. Each fact keeps its source and review date, including what remains unresolved.</p></div><div class="question-controls"><a class="button button-primary" href="#exams-board">Check your announcement</a><a class="button button-secondary" href="${leadPracticeHref}">${leadPracticeSession === undefined ? "Choose a practice set" : `Start a ${leadPracticeSession.length}-question set`}</a></div><dl class="figure-strip"><div><dt>Announcements</dt><dd>${examRecords.filter((record) => record.identity !== null).length}</dd></div><div><dt>Study profiles</dt><dd>${catalog.profiles.length}</dd></div><div><dt>Subject areas</dt><dd>${subjectAreas.length}</dd></div><div><dt>Content reviewed</dt><dd>${reviewedDates.map(publicDate).map(escapeHtml).join(", ")}</dd></div></dl></section>
+    <section class="page-header-prominent"><div class="page-header-copy"><h1>Exam information</h1><p class="lead">Find the announcement that matches your exam, then read its dates, eligibility and subjects. Each fact keeps its source and review date, including what remains unresolved.</p></div><div class="question-controls"><a class="button button-primary" href="#exams-board">Check your announcement</a><a class="button button-secondary" href="/practice/">Explore entry-level practice</a></div><dl class="figure-strip"><div><dt>Announcements</dt><dd>${examRecords.filter((record) => record.identity !== null).length}</dd></div><div><dt>Study profiles</dt><dd>${catalog.profiles.length}</dd></div><div><dt>Subject areas</dt><dd>${subjectAreas.length}</dd></div><div><dt>Content reviewed</dt><dd>${reviewedDates.map(publicDate).map(escapeHtml).join(", ")}</dd></div></dl></section>
     <div class="home-content">
       ${renderAnnouncementMilestones(announcementFacts, sourceLineById, sourceById, "exams-cycle")}
       <section class="home-section" id="exams-board" data-exam-browser aria-labelledby="exam-board-heading"><div class="section-header"><h2 id="exam-board-heading">Find your exam</h2><p>Open an entry to compare its facts. Your official announcement and admission notice govern your exam.</p></div>
         <div class="search-field" data-exam-search-field hidden><label class="sr-only" for="exam-search">Search announcements and study plans</label>${navIcon("search")}<input id="exam-search" type="search" data-exam-search placeholder="Title, jurisdiction, or exam number" autocomplete="off"></div>
         <p class="source-note" data-exam-count role="status">${examRecords.length} entries in the published registry.</p>
         <div class="record-board"><ul class="record-list" aria-label="Available profiles">${examRecords.map((record) => `<li data-exam-row data-exam-search-text="${escapeHtml(`${record.title} ${record.kind} ${record.profile.jurisdiction} ${record.identity?.examNumber ?? ""}`.toLowerCase())}"><a class="record-item" data-exam-choice="${record.id}" href="#${record.id}"><strong>${escapeHtml(record.title)}</strong><span class="record-kind">${escapeHtml(record.kind)}</span><span class="record-when">${escapeHtml(record.profile.jurisdiction)}</span><span class="status-chip">${record.identity === null ? "Study reference" : "Announcement on file"}</span></a></li>`).join("")}</ul>
-          <div class="record-detail-stack"><section class="record-detail" data-exam-prompt hidden><h3>Start with the title on your announcement</h3><p>Choose an entry to read its facts and source support. Reading an entry does not change your study settings.</p></section>${examRecords.map((record) => `<article class="record-detail" id="${record.id}" data-exam-panel tabindex="-1" aria-labelledby="${record.id}-heading"><div class="record-detail-header"><div><p class="record-kind">${escapeHtml(record.kind)}</p><h3 id="${record.id}-heading">${escapeHtml(record.title)}</h3><p>${escapeHtml(record.profile.audience)}</p></div><div class="record-detail-actions"><a class="button button-primary" href="${record.profile.canonicalPath}">Read the full profile</a><a class="button button-secondary" href="/practice/">Go to Study</a></div></div>
+          <div class="record-detail-stack"><section class="record-detail" data-exam-prompt hidden><h3>Start with the title on your announcement</h3><p>Choose an entry to read its facts and source support. Reading an entry does not change your study settings.</p></section>${examRecords.map((record) => `<article class="record-detail" id="${record.id}" data-exam-panel tabindex="-1" aria-labelledby="${record.id}-heading"><div class="record-detail-header"><div><p class="record-kind">${escapeHtml(record.kind)}</p><h3 id="${record.id}-heading">${escapeHtml(record.title)}</h3><p>${escapeHtml(record.profile.audience)}</p></div><div class="record-detail-actions"><a class="button button-primary" href="${record.profile.canonicalPath}">Read the full profile</a><a class="button button-secondary" href="/practice/">Explore entry-level practice</a></div></div>
             ${sourceProofLine([...new Set(record.identity === null ? record.profile.testPlanCompatibility.sourceLineIds : record.facts.flatMap((fact) => [...fact.sourceLineIds, ...fact.conflictingValues.flatMap((value) => value.sourceLineIds)]))], record.identity === null ? [record.profile.contentAvailability.lastVerifiedOn] : record.facts.map((fact) => fact.reviewedOn), sourceLineById, sourceById)}
             <div class="tabs" role="tablist" aria-label="${escapeHtml(record.title)} details" data-exam-tabs hidden><button type="button" id="${record.id}-facts-tab" role="tab" aria-selected="true" aria-controls="${record.id}-facts" data-record-tab="facts">Announcement facts</button><button type="button" id="${record.id}-subjects-tab" role="tab" aria-selected="false" aria-controls="${record.id}-subjects" data-record-tab="subjects" tabindex="-1">What it tests</button></div>
             <section id="${record.id}-facts" data-record-tab-panel="facts"><h4>Announcement facts</h4>${record.identity === null ? `<p>${escapeHtml(record.profile.testPlanCompatibility.detail)}</p><p>This statewide study plan has no exam number or filing period. Use your jurisdiction’s announcement for those details.</p>` : `<dl class="fact-table">${record.facts.filter((fact) => ["filing_period", "exam_date", "fee", "qualifications", "jurisdictions", "administration_status"].includes(fact.category)).map((fact) => `<div><dt>${escapeHtml(fact.label)}</dt><dd>${fact.state === "verified" ? "" : `<span class="fact-state fact-state-${fact.state}">${fact.category === "administration_status" && fact.state === "unverified" ? "Not confirmed" : factStateLabel(fact.state)}</span> `}${escapeHtml(fact.value ?? fact.detail ?? "No value asserted.")}<details class="source-note technical-details"><summary>Technical details</summary>${sourceLineLinks(fact.sourceLineIds, sourceLineById, sourceById)}<p>Checked ${escapeHtml(publicDate(fact.reviewedOn))}.</p></details></dd></div>`).join("")}</dl>`}<details class="source-note"><summary>Technical details</summary><p>${record.identity === null ? "No exam number at the statewide study-plan level." : `Exam number ${escapeHtml(record.identity.examNumber)}.`} Profile version ${record.profile.version}. Content reviewed ${escapeHtml(publicDate(record.profile.contentAvailability.lastVerifiedOn))}.</p></details></section>
@@ -1367,20 +1359,20 @@ const buildPages = ({
   pages.push({
     relativePath: "practice/index.html",
     canonicalPath: "/practice/",
-    title: "Study — NY Custodian Exam Study",
+    title: "Practice and activity — NY Custodian Exam Study",
     description: "Original practice questions. Answers and explanations open only after you submit each answer.",
     robots: "index,follow",
     routeId: "study-hub",
     section: "practice",
     body: `
   <main class="page-shell" id="main-content" tabindex="-1">
-    <div data-study-hub><section class="page-header"><h1>Your study space</h1><p>Choose a practice set, learn the tools, or revisit your saved attempts. No account required.</p><div class="question-controls"><a class="button button-primary" href="#practice-sets">Choose a practice set</a><a class="button button-secondary" href="/review/">Open Review</a></div></section><section class="section-gap" aria-labelledby="study-fallback-ways"><h2 id="study-fallback-ways">Ways to study</h2>${studyTaskCards}</section><p class="source-note">JavaScript and available browser storage are required to show progress saved on this device.</p></div>
+    <div data-study-hub><section class="page-header"><h1>Practice and activity</h1><p>Practice for the New York entry-level Custodians and Janitors series. Choose a question set or revisit your saved attempts.</p><div class="question-controls"><a class="button button-primary" href="#practice-sets">Choose a practice set</a><a class="button button-secondary" href="/review/">Open Review</a></div></section><section class="section-gap" aria-labelledby="study-fallback-ways"><h2 id="study-fallback-ways">Ways to study</h2>${studyTaskCards}</section><p class="source-note">JavaScript and available browser storage are required to show progress saved on this device.</p></div>
     <section class="section-gap" id="practice-sets"><div class="section-header"><h2>Choose a practice set</h2><p>Each set draws distinct questions with no repeats. These sizes and distributions are designed for this site.</p></div>
     <ul class="study-set-options" aria-label="Available whole-bank practice lengths">${catalog.practiceCapacity.advertisedSetLengths.map((length) => {
       const session = sessionByCapacity.get(`all:all:${length}`)
       return session === undefined
         ? `<li><div><h3>${length} questions</h3><p>Not available: this release cannot fill ${length} questions without repeats.</p></div></li>`
-        : `<li><div><h3>${length} questions</h3><p>${session.questions.length} distinct questions · untimed</p></div><a class="button button-secondary" href="/practice/session/${session.id}/question/1/">Start ${length}</a></li>`
+        : `<li><div><h3>${length} questions</h3><p>Untimed, with no repeated questions.</p></div><a class="button button-secondary" href="/practice/session/${session.id}/question/1/">Start ${length}</a></li>`
     }).join("")}</ul>
     <details class="section-gap"><summary>Why some set sizes are unavailable</summary><p>Every set is drawn without repeats, so a size is offered only when this release has enough distinct questions for that filter. The table shows the current counts.</p><div class="comparison-table-wrap"><table class="comparison-table"><caption>Available set sizes by filter</caption><thead><tr><th scope="col">Filter</th><th scope="col">Questions</th>${catalog.practiceCapacity.advertisedSetLengths.map((length) => `<th scope="col">${length}</th>`).join("")}</tr></thead><tbody>${capacityRecords.map((record) => `<tr><th scope="row">${escapeHtml(capacityLabel(record))}</th><td>${record.questionCount}</td>${catalog.practiceCapacity.advertisedSetLengths.map((length) => {
       const session = sessionByCapacity.get(`${record.filterKind}:${record.filterValue}:${length}`)
@@ -1405,7 +1397,7 @@ const buildPages = ({
     section: "atlas",
     body: `
   <main class="page-shell" id="main-content" tabindex="-1">
-    <section class="page-header"><h1>Tool atlas</h1><p>Recognize a tool by its shape, use, and the features that tell look-alikes apart. Every published illustration has a written description and source support.</p><p class="source-note">${releasedTools.length} illustrated tools · ${catalog.comparisons.length} comparison panels</p></section>
+    <section class="page-header"><h1>Tool atlas</h1><p>Recognize a tool by its shape, use, and the features that tell look-alikes apart. Every published illustration has a written description and source support.</p></section>
     <section class="atlas-browser" data-atlas-browser aria-label="Browse illustrated tools"><div class="tabs atlas-filters" role="tablist" aria-label="Visual family" data-atlas-filters hidden><button class="atlas-filter" id="atlas-family-all" type="button" role="tab" aria-selected="true" aria-controls="atlas-tools" data-atlas-family="all">All families <span class="filter-count">${releasedTools.length}</span></button>${[...families].map(([family, tools]) => `<button class="atlas-filter" id="atlas-family-${slugify(family)}" type="button" role="tab" aria-selected="false" aria-controls="atlas-tools" tabindex="-1" data-atlas-family="${escapeHtml(family)}">${escapeHtml(capitalize(family))} <span class="filter-count">${tools.length}</span></button>`).join("")}</div><p class="atlas-count" data-atlas-count role="status">Showing all ${releasedTools.length} illustrated tools.</p>
     <div class="tool-grid" id="atlas-tools">${toolEntries.map(({ slug, tool }, index) => `<article class="tool-card" data-tool-family="${escapeHtml(tool.family)}"><img src="${derivativePath(tool, "phone")}" width="320" height="320" ${index >= 4 ? 'loading="lazy" ' : ""}alt="${escapeHtml(tool.neutralDescription)}"><div><h2><a href="/atlas/tool/${slug}/">${escapeHtml(tool.canonicalTerm)}</a></h2><p class="tool-family">${escapeHtml(capitalize(tool.family))}</p>${tool.practiceEligibility === "atlas-only" ? '<p class="source-note"><strong>Reference-only:</strong> excluded from scored practice.</p>' : ""}</div></article>`).join("")}</div></section>
     <section class="section-gap"><h2>Comparison panels</h2><p>Each panel lives on its tool-family page, together with any restriction that keeps it out of scored practice.</p><ul class="link-list">${comparisonEntries.map(({ canonicalPath, comparison }) => {
@@ -1471,7 +1463,7 @@ const buildPages = ({
     ${breadcrumb([{ href: "/atlas/", label: "Study tools" }, { label: tool.canonicalTerm }])}
     <div class="reference-layout">
       <article>
-        <p class="eyebrow">Study tools · ${escapeHtml(tool.family)}</p>
+        <p class="eyebrow">${escapeHtml(capitalize(tool.family))}</p>
         <h1>${escapeHtml(tool.canonicalTerm)}</h1>
         <p class="lead-copy">${escapeHtml(tool.fullDescription)}</p>
         <figure class="tool-figure"><picture><source media="print" srcset="${derivativePath(tool, "print")}"><img src="${derivativePath(tool, "phone")}" srcset="${derivativePath(tool, "phone")} 320w, ${derivativePath(tool, "web")} 960w" sizes="(max-width: 46rem) calc(100vw - 4rem), 38rem" width="960" height="960" alt="${escapeHtml(tool.neutralDescription)}"></picture><figcaption>${escapeHtml(tool.neutralDescription)}</figcaption></figure>
@@ -1760,7 +1752,7 @@ const buildPages = ({
     section: "utility",
     body: `
   <main class="page-shell home-page utility-page" id="main-content" tabindex="-1">
-    <section class="page-header-prominent"><div class="page-header-copy"><h1>All of this lives on this device.</h1><p class="lead">No account, no server copy. That is why export exists and why deleting is previewed first. Reading and motion preferences save as you change them.</p></div><div class="question-controls"><a class="button button-primary" href="#export-local-data">Export my progress</a></div></section>
+    <section class="page-header-prominent"><div class="page-header-copy"><h1>Settings</h1><p class="lead">Adjust reading preferences, manage offline downloads, and back up your progress. Your saved work stays in this browser.</p></div><div class="question-controls"><a class="button button-primary" href="#export-local-data">Export my progress</a></div></section>
     <div class="home-content utility-content">
       <svg aria-hidden="true" width="0" height="0" style="position:absolute"><defs>
         <symbol id="settings-icon-export" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></symbol>
@@ -1768,6 +1760,7 @@ const buildPages = ({
         <symbol id="settings-icon-rebuild" viewBox="0 0 24 24"><path d="M4 10a8 8 0 1 1 1 7M4 4v6h6"/></symbol>
         <symbol id="settings-icon-delete" viewBox="0 0 24 24"><path d="M4 6h16M9 6V3h6v3M6 6l1 15h10l1-15M10 10v7m4-7v7"/></symbol>
       </defs></svg>
+      <section class="settings-downloads" aria-labelledby="settings-downloads-heading"><div class="section-header"><h2 id="settings-downloads-heading">Offline downloads</h2><p>Save study material to use without an internet connection.</p></div><a class="button button-secondary" href="/offline/">Manage offline downloads</a></section>
       <div data-settings data-island="settings"><p>JavaScript and browser storage are required to open local settings. Nothing changes while this view loads.</p></div>
       <section class="settings-unavailable" aria-labelledby="settings-unavailable-heading">
         <div class="section-header"><h2 id="settings-unavailable-heading">Not available yet</h2><p>There is no setting to turn these on.</p></div>
@@ -1793,7 +1786,7 @@ const buildPages = ({
     body: `
   <main class="page-shell utility-page" id="main-content" tabindex="-1">
     ${breadcrumb([{ href: "/transparency/", label: "Sources and methods" }, { label: "Report a correction" }])}
-    <section class="hero"><p class="eyebrow">Structured text only · no attachments</p><h1>Report a content, access, rights, or security concern.</h1><p>Do not include secure questions, answer options, reconstructed drawings, photographs, or review-session notes. Local drafting works offline. Going online never submits or retries a draft automatically.</p></section>
+    <section class="hero"><h1>Report a content, access, rights, or security concern.</h1><p>Do not include secure questions, answer options, reconstructed drawings, photographs, or review-session notes. Local drafting works offline. Going online never submits or retries a draft automatically.</p></section>
     <aside class="local-data-warning"><h2>Reports cannot be sent right now</h2><p>Online submission is turned off until the correction service is separately approved and turned on. You can still save a draft in this browser, but browser data can be cleared. <a href="/settings/#export-local-data">Export a backup</a> if you want to keep it. Nothing is sent unless intake is on and you submit it yourself.</p></aside>
     <div data-correction-form data-island="correction-form"><p>JavaScript and browser storage are required to save a draft on this device. Nothing has been submitted.</p></div>
   </main>

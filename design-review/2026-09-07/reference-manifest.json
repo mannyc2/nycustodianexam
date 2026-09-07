@@ -1,0 +1,167 @@
+{
+  "sourceArchive": "NYC Custodian Component Design-handoff(2).zip",
+  "sourceArchiveSha256": "6c11ea6599c4ddc0746bd9c97e35d4ff25eb93b68ea47059c4b8e324bd0247ff",
+  "sameFileContentsAs": "NYC Custodian Component Design-handoff(1).zip",
+  "files": [
+    {
+      "path": "reference/README.md",
+      "bytes": 1558,
+      "sha256": "d9b96e01559d3cd98800785a77d84cd16f3b6a0330f0586016fefe446dbb7e7f"
+    },
+    {
+      "path": "reference/project/.thumbnail",
+      "bytes": 23314,
+      "sha256": "7da4b837a9eb9f8906fb3dcb8fd92b455f3b7a147f86fb46d33db83b340e1351"
+    },
+    {
+      "path": "reference/project/CLAUDE.md",
+      "bytes": 11564,
+      "sha256": "ea6708c4b4872cd2ebac8a27877601caeb4b40c28a69ab58271b619daa43df2c"
+    },
+    {
+      "path": "reference/project/Component Library.dc.html",
+      "bytes": 356645,
+      "sha256": "f4709bea70d5f94f995d97664afbc51d38f5a28f13be38072ce2567382ff7f66"
+    },
+    {
+      "path": "reference/project/Future Explorations.dc.html",
+      "bytes": 16081,
+      "sha256": "d8613b609f4aa6d0d769383de5c89c6466b7a121431be80516873ed42b57a0d0"
+    },
+    {
+      "path": "reference/project/Hazard Player.dc.html",
+      "bytes": 26668,
+      "sha256": "b80ec8c6d389e3b9f33e38e1d4cb2d4ba4acfbb41a0d2f84af46adb47126c04c"
+    },
+    {
+      "path": "reference/project/Home.dc.html",
+      "bytes": 53902,
+      "sha256": "1fcedcb000cec1020330e99c1ee33766c932c208610971cf67826c42286a4b36"
+    },
+    {
+      "path": "reference/project/Landing.dc.html",
+      "bytes": 135732,
+      "sha256": "f45e882c3326ee8428b81e42c6fb3f3ac883ed6e07b9d43106d7b277da7390ac"
+    },
+    {
+      "path": "reference/project/Offline.dc.html",
+      "bytes": 73993,
+      "sha256": "d25aa232b1a9a9fb9e7ce29a80b7acbe03e0f4c072a7621d70fab046bca5ef3d"
+    },
+    {
+      "path": "reference/project/Question Player.dc.html",
+      "bytes": 34661,
+      "sha256": "0f8ad02b6652d7a47337b1d48f94122f61226c646f80e72968fd25a1be6194ea"
+    },
+    {
+      "path": "reference/project/Review Queue.dc.html",
+      "bytes": 57371,
+      "sha256": "8be1e58fae8896819db09dcc8734a4239d9b21832e659b8dfcd802ed7dd51d84"
+    },
+    {
+      "path": "reference/project/Session Builder.dc.html",
+      "bytes": 23497,
+      "sha256": "37c3842cf160e516df5b4c8aef946dd6f2ab45164d1f80894ecc7c6f6886a000"
+    },
+    {
+      "path": "reference/project/Settings.dc.html",
+      "bytes": 67325,
+      "sha256": "7559c5379f0d1100f88786c1b9fe17e1c2593f50cf0b60ea2ec997c11ee917c2"
+    },
+    {
+      "path": "reference/project/Simulation Navigator.dc.html",
+      "bytes": 6479,
+      "sha256": "9c03601fc61541226dcc042b8327b910b53467edd7f30025029e2206390e04ae"
+    },
+    {
+      "path": "reference/project/Site Nav Proposals.dc.html",
+      "bytes": 102122,
+      "sha256": "726f99474d946f1c978606c3dcc3d3d84b29060828dd8b399cea53cbab827bec"
+    },
+    {
+      "path": "reference/project/Study Hub.dc.html",
+      "bytes": 291693,
+      "sha256": "0f12e149b7755121c5f155329776044972818594e8671d2f2596b65fe4ef2c17"
+    },
+    {
+      "path": "reference/project/Tool Atlas.dc.html",
+      "bytes": 9823,
+      "sha256": "09378b356a6e6440345ecdceb5abbaa5ba13ce3fa43b2d5b086cf03d97586ed6"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/scenes/s003-phone.png",
+      "bytes": 260693,
+      "sha256": "4213808a50ec91260499d7e409d22211479cb071a5643e935aa98cb37d054171"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/scenes/s008-phone.png",
+      "bytes": 281712,
+      "sha256": "5c9baf1012aa80a741e45572e0a61486ae11b9608525759617a8b00f87149b2b"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/scenes/s009-phone.png",
+      "bytes": 277833,
+      "sha256": "b8ed8646a78b6e047f47c0750e859a13fa91e53a6a0a4b51d26d5a76acb019a6"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t001-phone.png",
+      "bytes": 84072,
+      "sha256": "20982817fe806bffa8da7e2cc06ce4f5caa85400da7a1412b07e55301177234f"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t002-phone.png",
+      "bytes": 70428,
+      "sha256": "baba2e79d2ada171771ea355aa6a2be3ffe0c886434970869d121e8127acd3eb"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t003-phone.png",
+      "bytes": 88826,
+      "sha256": "5511fcb6a43ac0c435e7405f4f77bfe19b67fc6c87a7f8af1bdbd5a211978e1f"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t004-phone.png",
+      "bytes": 62971,
+      "sha256": "72667701c86604f67f79f7d6276922fafbe8b4222f6b3e1ed5ecd468b05195d6"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t005-phone.png",
+      "bytes": 43561,
+      "sha256": "22e57a774aa6e324b12ddf80be3fea469d150a7837076d7323206350af878b7e"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t006-phone.png",
+      "bytes": 74561,
+      "sha256": "c4d39cd0758b807af4bbe3ca997d0370b49f67476191a88f0b19084a63ddd5fb"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t007-phone.png",
+      "bytes": 60587,
+      "sha256": "539e60f55898692a3e4379eb2da0a552b8b41d6cbff6b8e2f09a2acf7a7bb319"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t008-phone.png",
+      "bytes": 54322,
+      "sha256": "ec7ce4b5bdfb020972eecebd7a3d384fe58fa518a58b4e3311c95aa4cce32be6"
+    },
+    {
+      "path": "reference/project/github.md",
+      "bytes": 27815,
+      "sha256": "17e8f74db1c60f4ec61394a5a16f4656ff36d141eac5419a8c5714c81b313b17"
+    },
+    {
+      "path": "reference/project/screenshots/landing-board.jpg",
+      "bytes": 37964,
+      "sha256": "5d7e445e805a7ea277d6f4860239462479615a650a57a29555505a668b06278a"
+    },
+    {
+      "path": "reference/project/styles-additions.css",
+      "bytes": 58028,
+      "sha256": "6f871919a4fe0aa84929cc31a44a353a46259992c378ba5c42fff810fb75381f"
+    },
+    {
+      "path": "reference/project/support.js",
+      "bytes": 69150,
+      "sha256": "8fe7df74405f3c55f49b7249c74ea1397e65d07dea2b1bd3b4a489bec2e28cbe"
+    }
+  ]
+}

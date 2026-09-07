@@ -16,7 +16,7 @@ const StudyIcon = ({ kind }: { readonly kind: keyof typeof studyIconPaths }) =>
   <svg className="study-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{studyIconPaths[kind]}</svg>
 
 const ways = [
-  { icon: "practice", title: "Practice set", description: "45, 60 or 90 questions, untimed. Start with 45, with reasoning and sources after each saved answer.", href: "#practice-sets", action: "Choose a set" },
+  { icon: "practice", title: "Practice set", description: "Answer questions at your own pace. Read the explanation and sources after each saved answer.", href: "#practice-sets", action: "Choose a set" },
   { icon: "hazard", title: "Hazard practice", description: "Look through a workplace scene and mark hazards, or use the keyboard zone version.", href: "/hazards/", action: "Explore the scenes" },
   { icon: "simulation", title: "Simulation", description: "Choose a practice length and your own timing. Feedback waits until you finish.", href: "/simulations/", action: "Set up a simulation" },
   { icon: "print", title: "Print a set", description: "Study on paper, with questions and their answer key on separate pages.", href: "/print/", action: "Open print center" }
@@ -39,20 +39,20 @@ export const StudyHub = ({ bootstrap, activityState, reviewController, onRetry }
   useEffect(() => { if (unavailable) headingRef.current?.focus() }, [unavailable])
   const firstPractice = bootstrap.firstPractice
   const waysSection = (<section className="study-section" aria-labelledby="study-ways-heading">
-      <div className="section-header"><h2 id="study-ways-heading">Ways to study</h2><p>Choose the format that fits the time you have.</p></div>
+      <div className="section-header"><h2 id="study-ways-heading">Practice formats</h2><p>Answer questions, find hazards, or make a worksheet.</p></div>
       <ul className="task-cards">{ways.map((way, index) => <li className={`task-card${index === 0 ? " task-card-primary" : ""}`} key={way.href}>
         <StudyIcon kind={way.icon} /><h3>{way.title}</h3><p>{way.description}</p>
         <a className={`button ${index === 0 ? "button-primary" : "button-secondary"}`} href={way.href}>{way.action}</a>
       </li>)}</ul>
     </section>)
   const progressSection = (<section className="study-section" aria-labelledby="study-progress-heading">
-      <div className="section-header"><h2 id="study-progress-heading">Where you stand</h2><p>Saved activity for this release. Practice is never an official score or a pass prediction.</p></div>
+      <div className="section-header"><h2 id="study-progress-heading">Saved activity</h2><p>Activity for the current study material. Your answers and reviews stay in this browser. Clearing browser data can delete them. <a href="/settings/#export-local-data">Export a backup</a> to keep a copy.</p></div>
       {activityState.tag === "unavailable" ? <div className="study-read-notice notice notice-warning"><h3>Progress is unavailable</h3><p>Your saved attempts could not be read. You can retry in Recent activity below.</p></div> :
         activityState.tag === "loading" ? <p className="study-read-notice" role="status">Reading your saved progress…</p> :
           <div className="study-progress-rows">
             <div><StudyIcon kind="practice" /><div><h3>Question practice</h3><p>Recognizing tools and choosing how to use them.</p><strong>{activityState.activity.questionCount === 0 ? "No saved answers in this release" : `${activityState.activity.questionCount} ${activityState.activity.questionCount === 1 ? "answer" : "answers"} saved`}</strong></div><a href="#practice-sets">Practice questions</a></div>
             <div><StudyIcon kind="hazard" /><div><h3>Hazard scanning</h3><p>Identifying unsafe conditions in workplace scenes.</p><strong>{activityState.activity.hazardCount === 0 ? "No saved scene responses in this release" : `${activityState.activity.hazardCount} scene ${activityState.activity.hazardCount === 1 ? "response" : "responses"} saved`}</strong></div><a href="/hazards/">Practice hazards</a></div>
-            <div><StudyIcon kind="library" /><div><h3>Tool reference</h3><p>Compare how tools look, what they do, and where their uses differ.</p><strong>{bootstrap.toolCount} tool records</strong></div><a href="/atlas/">Open the library</a></div>
+            <div><StudyIcon kind="library" /><div><h3>Tool reference</h3><p>Compare how tools look, what they do, and where their uses differ.</p><strong>{bootstrap.toolCount} tools</strong></div><a href="/atlas/">Browse tools</a></div>
           </div>}
     </section>)
   const reviewSection = (<section className="study-section" aria-labelledby="study-review-heading">
@@ -64,11 +64,11 @@ export const StudyHub = ({ bootstrap, activityState, reviewController, onRetry }
     </section>)
   return <div className="study-hub">
     <section className={`page-header study-hero${unavailable ? " study-hero-unavailable" : " page-header-prominent"}`} aria-labelledby="study-heading">
-      <p className="eyebrow">Study · saved on this device</p>
-      <h1 id="study-heading" ref={headingRef} tabIndex={-1}>{unavailable ? "Your saved progress could not be read" : hasActivity ? "Keep building your practice." : firstPractice === null ? "Choose a way to study." : `Start with a set of ${firstPractice.length}.`}</h1>
+      <h1 id="study-heading" ref={headingRef} tabIndex={-1}>{unavailable ? "Your saved progress could not be read" : "Practice and activity"}</h1>
+      <p>Practice for the {bootstrap.profileLabel} series. Start a set, review saved answers, or check your recent activity.</p>
       <p>{unavailable ? "The study data on this device did not load. Try reading it again, or choose a practice set below. Your saved attempts have not been changed." : hasActivity
-        ? "Pick up your review, try another set, or spend time with a tool you want to recognize. Your saved work is here when you come back."
-        : "Original questions, untimed, with the reasoning and its sources after each answer. Start a set when you are ready; there is no account to create."}</p>
+        ? "Use your history to reopen saved explanations. Finished reviews stay in your history."
+        : "These original questions are untimed. Each answer opens an explanation and its sources after it is saved."}</p>
       <div className="question-controls">
         {unavailable ? <button className="button button-primary" type="button" onClick={onRetry}>Retry reading progress</button> : firstPractice === null ? <a className="button button-primary" href="#practice-sets">See available practice</a> : <a className="button button-primary" href={firstPractice.href}>{firstPractice.label}</a>}
         <a className="button button-secondary" href={unavailable ? "#practice-sets" : hasActivity ? "/review/" : "/hazards/"}>{unavailable ? "Choose a practice set" : hasActivity ? "Open your review queue" : "Practice spotting hazards"}</a>
@@ -76,8 +76,7 @@ export const StudyHub = ({ bootstrap, activityState, reviewController, onRetry }
       {unavailable ? null : <dl className="figure-strip">
         <div><dt>{hasActivity ? "Questions answered" : "Original questions"}</dt><dd>{hasActivity ? activity.questionCount : bootstrap.questionCount}</dd></div>
         <div><dt>{hasActivity ? "Scene responses" : "Hazard scenes"}</dt><dd>{hasActivity ? activity.hazardCount : bootstrap.sceneCount}</dd></div>
-        <div><dt>{hasActivity ? "Finished reviews" : "Tool records"}</dt><dd>{hasActivity ? activity.reviewCount : bootstrap.toolCount}</dd></div>
-        <div><dt>Study scope</dt><dd className="study-scope-label">{bootstrap.profileLabel}</dd></div>
+        <div><dt>{hasActivity ? "Finished reviews" : "Tools"}</dt><dd>{hasActivity ? activity.reviewCount : bootstrap.toolCount}</dd></div>
         {activity !== undefined && activity.unavailableAttempts.length > 0 ? <div><dt>Unavailable saved attempts</dt><dd>{activity.unavailableAttempts.length}</dd></div> : null}
       </dl>}
     </section>
@@ -95,8 +94,9 @@ export const StudyHub = ({ bootstrap, activityState, reviewController, onRetry }
       </div>
     </>}
     <section className="study-section" aria-labelledby="study-exam-heading">
-      <div className="section-header"><h2 id="study-exam-heading">Your exam</h2><p>The official announcement controls your exam's scope and requirements.</p></div>
-      <div className="empty-state"><h3 className="empty-state-heading">Check which exam this study fits</h3><p>Compare your announcement with the supported profiles. Entry-level and higher-level series have different requirements.</p><div className="empty-state-actions"><a className="button button-primary" href="/exams/">Check your exam</a></div></div>
+      <div className="section-header"><h2 id="study-exam-heading">Does this match your exam?</h2></div>
+      <p>Compare the subjects in your official announcement with this site's entry-level study material. Higher-level series have different requirements.</p>
+      <a href="/exams/">Read exam information</a>
     </section>
   </div>
 }
