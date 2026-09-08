@@ -1,91 +1,108 @@
-# Handoff(4): core reconciliation completed; focused gaps remain
+# September 8 export: usable handoff; focused details remain
 
-The new archive contains 95 files, including 30 PNG screenshot files. The export
-index now identifies the correct review revision,
-`1147c7a13eaf6edc2ae0c8d4e8bfae31afc7416c`, and says the design brief, latest review,
-application source, and implementation captures were read. The earlier revision
-mismatch is resolved.
+`NYC Custodian Component Design(1).zip` contains 217 files and 39 design PNG
+screenshots. Its index identifies the correct comparison revision,
+`33fcdf7d4e014f1c8e6e26841223bd6b3d458e30`. The five areas requested after
+handoff(4) have substantial changes in the actual prototypes and captures.
+The completed designs are usable for implementation; another broad redesign is
+not needed before work starts on those screens.
 
-All imported bytes are preserved under `reference/` and recorded in
-`reference-manifest.json`. This update changes design references and review notes
-only. Application source and the 34 implementation captures remain unchanged.
+All imported file contents are preserved exactly. This export uses the project
+as its archive root, so files are mapped under `reference/project/` to preserve
+existing review links. The manifest records that mapping and every checksum.
+Application source and the 34 implementation captures remain unchanged.
 
-## What is now usable
+## Changes substantiated by this export
 
-The current Practice and Review screenshots substantiate the main corrections:
+- **Builder:** removes the missed-question weighting control and invented
+  illustrated/written split. It shows actual inventory, unavailable lengths,
+  an all-matching option, simulation duration/timer/auto-submit controls, and
+  visual versus written-zone hazard tasks. The ineffective hazard setting
+  picker is gone. Four setup captures cover practice, hazard, timed simulation,
+  and insufficient inventory.
+- **Atlas:** contains all 65 records and illustrations across nine families,
+  including 12 marked reference-only. The compact specimen uses a labelled
+  Family select and thumbnail rows. All 68 assets in the current export
+  (65 tools and three scenes) match the existing repository assets byte for byte.
+- **Hazard Player:** now draws zoom/pan/reset, adding and moving individual
+  markers, saving, zero-selection confirmation, saved feedback, and written-zone
+  tasks. Its state controls include storage, content, image, save, and feedback
+  failures. Three new captures show marking, revealed feedback, and written zones.
+- **Print:** replaces the old product checkboxes with the ten actual product
+  choices and availability reasons. The specimen includes bounded counts,
+  separate paper/margin controls, output flags, saved-preview facts, an
+  inspection gate, and a stale-job notice.
+- **Component examples:** HomeDashboard now starts practice; HistoryList
+  describes saved records and Feedback links. SessionSummary explicitly retains
+  genuine simulation sessions. Atlas specimens describe image loading failure
+  instead of claiming that released illustrations do not exist.
+- **Export index:** points to current Home 01/02 captures and adds the Practice
+  read-failed capture. Completed Practice, Review, navigation, and stacked section
+  headings are preserved.
 
-- Practice has first-visit and returning variants based on saved answers, scene
-  responses, and finished reviews. The old session-resume headline, scheduled
-  review, weekly totals, and per-area accuracy displays are removed from that page.
-- Review shows ready items and overlapping All/Missed/Flagged filters. Read
-  explanation is primary; Finish review opens an explicit confirmation. Cleared,
-  read-failed, and failed-finish states have separate screenshots.
-- The mobile bottom tabs and Library sheet remain the intended navigation.
-- Section headings now stack their supporting text beneath the heading. This is
-  a deliberate visual revision described in the export, not an implementation
-  fallback.
-- Question Player removes Skip for now and Mark reviewed; new question-player and
-  Simulation Navigator screenshots were added.
-- Settings/Offline drawings move toward actual record counts and counted removal
-  previews, and the obsolete header exam-chip exception is removed from the notes.
-- Historical Practice and Exams variants were moved out of their current files.
+## Remaining details, without reopening completed screens
 
-Use these improvements for the corresponding implementation work. They do not
-need another wholesale redesign while the following details are finished.
+1. **Synchronize the exported decisions document.**
+   `exports/current/DESIGN-DECISIONS.md` is unchanged from handoff(4) and still
+   claims that the entire product has no session object and that accuracy exists
+   nowhere. Those global statements conflict with the corrected Component
+   Library and genuine simulation behavior. Scope them to Practice's saved-record
+   dashboard. Imported notes do not override the confirmed decision: remove
+   global active-exam selection while retaining existing simulation sessions.
+2. **Finish Builder length copy and the area-change transition.** The 34-question
+   state offers “All 34 questions” while saying “Forty-five is the shortest set we
+   offer.” Call 45/60/90 preset lengths and explain the all-matching option.
+   The prototype also resets the selected length whenever an area changes and
+   automatically chooses a shorter valid length when needed. Its preview shows
+   the new length, but the prose promises no quiet shortening. Keep a still-valid
+   chosen length; if it becomes unavailable, make the replacement choice explicit
+   or clearly announce the change before Start. This is a focused interaction
+   detail, not a request to restore the removed controls.
+3. **Treat state and responsive coverage honestly.** The index explicitly lacks
+   Atlas images-unavailable/record-shell captures and several Hazard Player
+   confirmation/failure captures. Setup, players, simulation, and print also lack
+   equivalent compact captures. Their completed wider layouts can proceed;
+   missing states and compact behavior still need visual comparison as those
+   screens are implemented.
+4. **Use the screenshots with their documented limits.** Native checkbox and
+   radio marks are absent from the element captures; selected state must come
+   from the editable prototype. Print capture 38 combines configuring, generating,
+   failure, saved preview, and stale specimens; it is not one simultaneous product
+   state or a paginated print proof. The 03/04 Library-open images were renamed
+   but their bytes are unchanged from handoff(4), so use them for navigation and
+   use 01/02 for the current Home body. Separate or clearly label such specimens
+   when completing the remaining captures.
 
-## Remaining focused design work
+These are bounded follow-ups. Preserve the received design bytes and track the
+corrections here rather than silently rewriting the designer's export.
 
-1. **Session Builder is unchanged from handoff(3).** It still offers simulation
-   weighting toward missed questions, fabricates an illustrated/written split in
-   its preview, and shrinks a requested practice set when its fixture inventory is
-   short. Reconcile the visible controls, preview, and unavailable state with the
-   supported setup behavior. Do not reintroduce global exam selection.
-2. **Atlas is unchanged.** The reference still says only 8 of 65 tools have
-   illustrations. The implementation's released inventory has all 65. Complete
-   the full-inventory drawing and compact nine-family filtering treatment.
-3. **Hazard Player and print are explicitly unfinished.** The export says they
-   were not reconciled in this pass; Hazard Player's file is unchanged. Finish
-   those comparisons and add their state screenshots.
-4. **Some current component examples still lag behind the page designs.** The
-   Component Library HomeDashboard still renders Resume actions, and the
-   HistoryList notes still describe session Resume/Results links. Bring the
-   Practice dashboard/activity examples into line with the new page. Keep genuine
-   simulation session behavior separate: the design note claiming the entire
-   product has no session object is too broad.
-5. **Screenshot selection needs a small correction.** The index still lists the
-   previous `01-home--first-visit--1248x2844.png` and
-   `02-home--first-visit--384x2097.png`. New captures also exist as
-   `01-home--first-visit--1248w.png` and `02-home--first-visit--384w.png`; use the
-   latter for current Home. The older 03/04 Library-open captures remain useful
-   for the navigation state, but do not establish that the entire current Home
-   body matches. Remove or clearly label the superseded Home screenshots in the
-   next design export.
+## Design references for the changed areas
 
-Practice's read-failed state is still not captured. Add that screenshot when
-finishing state coverage; it does not require redesigning the ready states.
+These images are design references. The separate `current-screenshots/` directory
+shows the older application implementation and is not an approved visual target.
 
-## Current design screenshots to start from
-
-All links below point into the latest received export. These are design targets,
-unlike the separate `current-screenshots/` implementation evidence.
-
-| Design | Desktop or standalone | Mobile or other state |
+| Design | Prototype | Captured states |
 | --- | --- | --- |
-| Home | [Current Home](reference/project/exports/screenshots/01-home--first-visit--1248w.png) | [Current Home](reference/project/exports/screenshots/02-home--first-visit--384w.png) |
-| Practice, first visit | [Desktop](reference/project/exports/screenshots/05-practice--first-visit--1248w.png) | [Mobile](reference/project/exports/screenshots/06-practice--first-visit--384w.png) |
-| Practice, returning | [Desktop](reference/project/exports/screenshots/07-practice--returning--1248w.png) | [Mobile](reference/project/exports/screenshots/08-practice--returning--384w.png) |
-| Review, ready/confirmation | [Desktop](reference/project/exports/screenshots/20-review--ready-with-confirmation--1248w.png) | [Mobile](reference/project/exports/screenshots/21-review--ready--384w.png) |
-| Question Player | [Unanswered](reference/project/exports/screenshots/26-question-player--unanswered--800w.png) | [Answered](reference/project/exports/screenshots/27-question-player--answered--800w.png) |
-| Simulation Navigator | [45 items and confirmation](reference/project/exports/screenshots/28-simulation-navigator--45-items--928w.png) | Not captured |
+| Builder | [Session Builder](reference/project/exports/current/Session%20Builder.dc.html) | [Practice](reference/project/exports/screenshots/22-session-builder--practice-set--1053w.png), [hazard](reference/project/exports/screenshots/29-session-builder--hazard-drill--1053w.png), [timed](reference/project/exports/screenshots/30-session-builder--simulation-timed--1053w.png), [34 available](reference/project/exports/screenshots/31-session-builder--length-unavailable--1053w.png) |
+| Atlas | [Tool Atlas](reference/project/exports/current/Tool%20Atlas.dc.html) | [All families](reference/project/exports/screenshots/32-atlas--all-families--990w.png), [one family](reference/project/exports/screenshots/33-atlas--rigid-hand-tools--990w.png), [compact](reference/project/exports/screenshots/34-atlas--compact-family-select--384w.png) |
+| Hazard Player | [Hazard Player](reference/project/exports/current/Hazard%20Player.dc.html) | [Marking](reference/project/exports/screenshots/35-hazard-player--marking--990w.png), [feedback](reference/project/exports/screenshots/36-hazard-player--revealed--990w.png), [written zones](reference/project/exports/screenshots/37-hazard-player--keyboard-zones--990w.png) |
+| Print | [Component Library, print section](reference/project/exports/current/Component%20Library.dc.html#d-print) | [Builder and preview specimens](reference/project/exports/screenshots/38-print--builder-and-preview--699w.png) |
+| Practice recovery | [Study Hub](reference/project/exports/current/Study%20Hub.dc.html) | [Read failed](reference/project/exports/screenshots/39-practice--read-failed--1248w.png) |
+| Home | [Home](reference/project/exports/current/Home.dc.html) | [Desktop](reference/project/exports/screenshots/01-home--first-visit--1248w.png), [compact](reference/project/exports/screenshots/02-home--first-visit--384w.png) |
 
-## Verification limits
+## Verification and next implementation step
 
-The changed sources and selected screenshots were inspected; source-archive
-checksums and local review links were checked. These are artboard element
-captures at their stated widths, not application viewport captures. No browser
-interaction, accessibility, or screenshot-diff certification is claimed for the
-new designs. Application validation reported in README belongs to the unchanged
-implementation snapshot and was not rerun for this reference-only update.
+Checked the changed source files, selected design screenshots, all 217 imported
+file checksums, all 68 current artwork assets against the repository, and local
+review links. No application source changed in this update, so application tests
+were not rerun. Earlier build/type/browser results in README apply to the
+unchanged implementation snapshot. No interactive browser, accessibility,
+cross-device, or visual-diff certification is claimed for the imported prototypes.
 
-The design agent can return the remaining drawings in another ZIP. Application
-changes, Git operations, and implementation tests remain the coding agent's work.
+Implement the shared shell and completed Home/Practice/Review screens first, then
+the remaining page families. For each screen, compare the same state at the same
+CSS width and content bounds, preserving the accepted layout and responsive
+navigation. Use the editable prototype for controls and interaction details that
+the element captures omit. Application changes, tests, Git work, and those visual
+checks belong to the coding agent; design follow-ups remain layouts, copy, states,
+and exports.

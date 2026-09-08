@@ -6,17 +6,20 @@ pass: update screen layouts, components, copy, responsive behavior, and interact
 states. Return an exported ZIP; Git access is for reading and no commits are needed
 from the design agent.
 
-Handoff(4) has now been received and identifies the correct `1147c7a` review
-revision and implementation screenshots. Preserve its completed Practice and
-Review reconciliation, the earlier copy fixes, the mobile navigation, and the
-updated section-heading layout. Read [LATEST-REVIEW.md](LATEST-REVIEW.md) for the
-remaining focused work: Session Builder, Atlas, hazard/print, current component
-examples, and screenshot-index cleanup. Do not restart the completed screens.
+The export received September 8, `NYC Custodian Component Design(1).zip`, identifies
+the correct `33fcdf7` review revision. It substantially addresses the five focused
+items from handoff(4): Builder, Atlas, hazard/print, component examples, and the
+screenshot index. It is usable for implementation of the completed screens.
+Preserve those designs, the completed Practice and Review reconciliation, the
+mobile navigation, and the stacked section headings. Read
+[LATEST-REVIEW.md](LATEST-REVIEW.md) for small remaining copy, state, and export
+consistency issues. These do not require another broad redesign or block work on
+the completed screens.
 
 ## What to compare
 
-- `reference/project/exports/current/` contains the latest received editable design files. Keep
-  the accepted visual direction. Older explorations in those files are historical.
+- `reference/project/exports/current/` contains the latest received editable design
+  files. Keep the accepted visual direction. `exports/explorations/` is historical.
 - `current-screenshots/` shows what the implementation actually renders at 1280
   and 390 pixels wide, including first visit, saved work, review confirmation,
   and storage failure. These images document the current implementation; they are
@@ -26,8 +29,8 @@ examples, and screenshot-index cleanup. Do not restart the completed screens.
   deliberate design adjustment. An accidental layout difference in the app does
   not supersede the accepted design.
 
-Keep the shared navigation and completed Practice/Review designs while finishing
-the remaining builder/player and reference details. For example,
+Keep the shared navigation and completed page designs while resolving
+the remaining details. For example,
 the accepted mobile navigation uses a bottom tab bar and a Library sheet; the
 implementation screenshots instead show header navigation and a popover. Identify
 that as an implementation difference and preserve the accepted design.
@@ -52,8 +55,10 @@ learner-facing exam-pinning feature.
    current examples for selected-exam badges.
 3. **Offline:** replace “Your exam is on this device” with “Your practice material
    is available offline.”
-4. **Practice and Session Builder:** describe 45 questions as our shortest
-   available practice set. Do not say the official test guide publishes that set.
+4. **Practice and Session Builder:** 45, 60, and 90 are our preset lengths.
+   Do not say the official test guide publishes those sets. Where the builder
+   offers all matching questions and fewer than 45 match, do not also call 45
+   the shortest available set.
 5. **Home and compact copy:** name the New York Entry-Level Custodians and Janitors
    series. Do not imply that every New York or NYC custodian announcement has the
    same subjects or that the next unannounced cycle is already covered.
@@ -73,7 +78,9 @@ Return one ZIP containing:
 - Desktop and mobile screenshots for the current screens, labelled with viewport
   dimensions and state. Include first visit, returning learner, unavailable saved
   work, Library open, and relevant confirmation states. Use consistent example data
-  between each prototype and its screenshot.
+  between each prototype and its screenshot. Separate state specimens or label
+  them individually. Preserve selected checkbox/radio appearance where the export
+  tool supports it; otherwise identify that rendering limitation beside the image.
 - A short index mapping page, state, prototype, and screenshot, plus a concise list
   of visible changes and intentional differences from the current implementation.
 

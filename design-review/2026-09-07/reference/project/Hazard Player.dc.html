@@ -21,22 +21,22 @@
   </style>
 </helmet>
 
-<div style="display: grid; gap: 1rem; padding: clamp(1.5rem, 3vw, 2.5rem);">
+<div data-screen-label="Hazard player" style="display: grid; gap: 1rem; padding: clamp(1.5rem, 3vw, 2.5rem);">
   <div role="group" aria-label="Hazard specimen controls" style="display: grid; gap: 0.75rem; padding: 1rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
     <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
-      <span style="font-size: 0.8125rem; font-weight: 700; color: #4b5563; min-width: 5.5rem;">Workflow</span>
-      <sc-for list="{{ workflowChips }}" as="chip" hint-placeholder-count="3">
+      <span style="font-size: 0.8125rem; font-weight: 700; color: #4b5563; min-width: 5.5rem;">Where</span>
+      <sc-for list="{{ workflowChips }}" as="chip" hint-placeholder-count="2">
         <button type="button" aria-pressed="{{ chip.pressed }}" onClick="{{ chip.onClick }}" style="{{ chip.style }}">{{ chip.label }}</button>
       </sc-for>
     </div>
     <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
-      <span style="font-size: 0.8125rem; font-weight: 700; color: #4b5563; min-width: 5.5rem;">Modality</span>
+      <span style="font-size: 0.8125rem; font-weight: 700; color: #4b5563; min-width: 5.5rem;">Task</span>
       <sc-for list="{{ modalityChips }}" as="chip" hint-placeholder-count="2">
         <button type="button" aria-pressed="{{ chip.pressed }}" onClick="{{ chip.onClick }}" style="{{ chip.style }}">{{ chip.label }}</button>
       </sc-for>
     </div>
     <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
-      <span style="font-size: 0.8125rem; font-weight: 700; color: #4b5563; min-width: 5.5rem;">Snapshot</span>
+      <span style="font-size: 0.8125rem; font-weight: 700; color: #4b5563; min-width: 5.5rem;">State</span>
       <sc-for list="{{ stateChips }}" as="chip" hint-placeholder-count="11">
         <button type="button" aria-pressed="{{ chip.pressed }}" disabled="{{ chip.disabled }}" onClick="{{ chip.onClick }}" style="{{ chip.style }}">{{ chip.label }}</button>
       </sc-for>
@@ -52,145 +52,224 @@
   <sc-if value="{{ showCard }}" hint-placeholder-val="{{ true }}">
     <article style="display: grid; gap: 1.5rem; max-width: 68rem; margin-inline: auto; width: 100%; padding: clamp(1.5rem, 4vw, 3rem); border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff; box-shadow: 0 0.25rem 1rem rgb(23 32 42 / 14%);">
       <header style="display: grid; gap: 0.75rem;">
-        <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">Scene 3 of 12 in this session</span>
-        <h3 tabindex="-1" style="font-size: clamp(1.25rem, 1.12rem + 0.55vw, 1.625rem); scroll-margin-block-start: 5rem;">Mark anything in this stairwell that a custodian should act on</h3>
-        <p style="margin: 0; max-width: 68ch; color: #4b5563;">Mark as many or as few places as you think are right. The number of marks you place is not a hint, and submitting none is a valid answer.</p>
-        <sc-if value="{{ isReview }}">
-          <div style="display: grid; gap: 0.375rem; padding: 0.75rem 1rem; border-inline-start: 0.25rem solid #075985; background: #edf2f7;">
-            <strong style="font-size: 0.9375rem;">Why this is in your review queue</strong>
-            <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">You flagged this scene on August 21, 2026, and its regions have not changed since your attempt.</p>
-          </div>
-        </sc-if>
+        <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1rem;">
+          <span style="font-size: 0.875rem; color: #4b5563;">{{ positionLine }}</span>
+          <span style="font-size: 0.875rem; font-weight: 700; color: #4b5563;">{{ modeLabel }}</span>
+        </div>
+        <h3 tabindex="-1" style="font-size: clamp(1.25rem, 1.12rem + 0.55vw, 1.625rem); scroll-margin-block-start: 5rem;">Inspect the stairwell</h3>
+        <p style="margin: 0; max-width: 68ch; color: #4b5563;">An enclosed school stairwell with two flights, a landing, wall handrails, and several boxes.</p>
+        <p style="margin: 0; max-width: 68ch; color: #4b5563;">{{ taskLine }}</p>
+        <p style="margin: 0; max-width: 68ch; font-size: 0.9375rem; color: #4b5563;">Inspect the whole scene. Feedback appears after you save your response.</p>
       </header>
 
       <sc-if value="{{ isRestoring }}">
         <div style="display: grid; gap: 0.75rem; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #f7f8fa;">
-          <p role="status" style="margin: 0; font-weight: 700;">Restoring your marks</p>
-          <p style="margin: 0; color: #4b5563; font-size: 0.9375rem;">Your marks come back exactly where you placed them. Pan and zoom start fresh.</p>
+          <p role="status" style="margin: 0; font-weight: 700;">Restoring this scene</p>
+          <p style="margin: 0; color: #4b5563; font-size: 0.9375rem;">Checking this device for a saved response before accepting a new one. Your markers come back exactly where you placed them; the zoom and pan of the view start fresh.</p>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isRestoreFailed }}">
+        <div tabindex="-1" role="alert" style="display: grid; gap: 0.75rem; padding: 1.25rem; border: 2px solid #b42318; border-radius: 0.5rem; background: #fef3f2;">
+          <h4 style="display: flex; align-items: center; gap: 0.5rem; font-size: 1.0625rem; color: #b42318;"><span aria-hidden="true">✕</span> Study storage is unavailable</h4>
+          <p style="margin: 0; font-size: 0.9375rem;">This device would not open its study storage, so a saved response can neither be read nor accepted. Nothing has been deleted.</p>
+          <button type="button" style="justify-self: start; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; cursor: pointer;" style-hover="background: #0c4a6e;">Reload scene</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isAssetUnavailable }}">
+        <div tabindex="-1" role="alert" style="display: grid; gap: 0.75rem; padding: 1.25rem; border: 2px solid #b42318; border-radius: 0.5rem; background: #fef3f2;">
+          <h4 style="display: flex; align-items: center; gap: 0.5rem; font-size: 1.0625rem; color: #b42318;"><span aria-hidden="true">✕</span> Released scene image unavailable</h4>
+          <p style="margin: 0; font-size: 0.9375rem;">This activity cannot accept visual markers without its exact released image. The keyboard version of the same scene does not need it.</p>
+          <a href="Offline.dc.html" style="justify-self: start; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; text-decoration: none;" style-hover="background: #edf2f7;">Manage downloads</a>
         </div>
       </sc-if>
 
       <sc-if value="{{ showScene }}">
         <div style="display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); align-items: start;">
           <sc-if value="{{ isVisual }}">
-            <figure style="margin: 0; display: grid; gap: 0.75rem;">
-              <div onClick="{{ sceneClick }}" style="position: relative; border: 1px solid #b7c1cc; border-radius: 0.5rem; overflow: hidden; background: #f7f8fa; cursor: crosshair;">
-                <img src="content/assets/derivatives/scenes/s003-phone.png" alt="An interior stairwell. Two flights meet at a landing. Wall-mounted handrails run along both flights. Cartons are stacked on the landing. A door is set into the wall below the upper flight, and a ceiling fixture is above the landing." style="display: block; width: 100%; height: auto;" />
-                <sc-if value="{{ isRevealed }}">
-                  <span aria-hidden="true" style="position: absolute; left: 25%; top: 29%; width: 41%; height: 27%; border: 0.25rem solid #b42318; background: rgb(180 35 24 / 18%); border-radius: 0.25rem;"></span>
-                  <span aria-hidden="true" style="position: absolute; left: 22%; top: 53%; width: 30%; height: 14%; border: 0.25rem solid #b42318; background: rgb(180 35 24 / 18%); border-radius: 0.25rem;"></span>
-                  <span aria-hidden="true" style="position: absolute; left: 5%; top: 16%; width: 24%; height: 34%; border: 0.25rem dashed #1e40af; background: rgb(30 64 175 / 12%); border-radius: 0.25rem;"></span>
-                </sc-if>
-                <sc-for list="{{ markers }}" as="mk" hint-placeholder-count="2">
-                  <span style="{{ mk.pinStyle }}">{{ mk.n }}</span>
+            <section aria-labelledby="hz-scene-heading" style="display: grid; gap: 0.75rem;">
+              <h4 id="hz-scene-heading" style="font-size: 1.0625rem;">Scene</h4>
+              <div aria-label="Scene view controls" style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
+                <sc-for list="{{ viewControls }}" as="control" hint-placeholder-count="7">
+                  <button type="button" disabled="{{ control.disabled }}" onClick="{{ control.onClick }}" style="{{ control.style }}">{{ control.label }}</button>
                 </sc-for>
+                <span aria-live="polite" style="font-size: 0.875rem; color: #4b5563;">{{ zoomLabel }}</span>
               </div>
-              <figcaption style="font-size: 0.9375rem; color: #4b5563;">Original reviewed scene. Clicking is one path, not the only one — the zone list marks the same regions from the keyboard.</figcaption>
-            </figure>
+              <p id="hz-pointer-help" style="margin: 0; max-width: 60ch; font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">Pointer users may place a marker on the image. Keyboard and touch users can add a centered marker, then move it with the controls below. Use the pan controls to inspect a zoomed scene without dragging.</p>
+              <div role="region" aria-label="Pannable hazard scene" tabindex="0" style="position: relative; border: 1px solid #b7c1cc; border-radius: 0.5rem; overflow: hidden; background: #f7f8fa;">
+                <div aria-describedby="hz-pointer-help" onClick="{{ sceneClick }}" style="{{ layerStyle }}">
+                  <img src="content/assets/derivatives/scenes/s003-phone.png" alt="An enclosed school stairwell with two flights, a landing, wall handrails, and several boxes." draggable="false" style="display: block; width: 100%; height: auto;" />
+                  <sc-if value="{{ isRevealed }}">
+                    <span aria-hidden="true" style="position: absolute; left: 25%; top: 29%; width: 41%; height: 27%; border: 0.25rem solid #b42318; background: rgb(180 35 24 / 18%); border-radius: 0.25rem;"></span>
+                    <span aria-hidden="true" style="position: absolute; left: 22%; top: 53%; width: 30%; height: 14%; border: 0.25rem solid #b42318; background: rgb(180 35 24 / 18%); border-radius: 0.25rem;"></span>
+                    <span aria-hidden="true" style="position: absolute; left: 5%; top: 16%; width: 24%; height: 34%; border: 0.25rem dashed #1e40af; background: rgb(30 64 175 / 12%); border-radius: 0.25rem;"></span>
+                  </sc-if>
+                  <sc-for list="{{ markers }}" as="mk" hint-placeholder-count="2">
+                    <span style="{{ mk.pinStyle }}">{{ mk.n }}</span>
+                  </sc-for>
+                </div>
+              </div>
+              <sc-if value="{{ isEditable }}">
+                <button type="button" onClick="{{ addCenter }}" style="justify-self: start; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; cursor: pointer;" style-hover="background: #edf2f7;">Add marker at center</button>
+              </sc-if>
+            </section>
           </sc-if>
 
           <sc-if value="{{ isNonvisual }}">
-            <div style="display: grid; gap: 0.75rem;">
-              <h4 style="font-size: clamp(1.125rem, 1.05rem + 0.3vw, 1.375rem);">Ordered zones in this stairwell</h4>
-              <p style="margin: 0; color: #4b5563; font-size: 0.9375rem;">A neutral authored ordering. The order carries no meaning and the count is not a hint.</p>
-              <ol style="display: grid; gap: 0.5rem; margin: 0; padding-inline-start: 1.5rem;">
-                <li>Upper flight and its top landing.</li>
-                <li>The intermediate landing surface, where cartons are stacked.</li>
-                <li>The head and treads of the lower flight.</li>
-                <li>Wall handrails on both flights.</li>
-                <li>The door set into the wall at the base.</li>
-                <li>The ceiling fixture above the landing.</li>
+            <fieldset aria-describedby="hz-zone-help" style="display: grid; gap: 0.75rem; margin: 0; padding: 1rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; min-inline-size: 0;">
+              <legend style="padding: 0 0.375rem; font-weight: 700;">Observable zones</legend>
+              <p id="hz-zone-help" style="margin: 0; max-width: 60ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Select a zone when its neutral description gives you concern. Selecting does not submit. The order carries no meaning and the number of zones is not a hint.</p>
+              <ol style="display: grid; gap: 0; margin: 0; padding: 0; list-style: none;">
+                <sc-for list="{{ zones }}" as="zone" hint-placeholder-count="6">
+                  <li style="{{ zone.rowStyle }}">
+                    <label style="display: grid; grid-template-columns: 1.25rem minmax(0, 1fr); gap: 0 0.75rem; align-items: baseline; min-height: 2.75rem; padding-block: 0.5rem; cursor: pointer;">
+                      <input type="checkbox" checked="{{ zone.checked }}" disabled="{{ zone.disabled }}" onChange="{{ zone.onChange }}" style="width: 1.25rem; height: 1.25rem; accent-color: #075985;" />
+                      <span style="display: grid; gap: 0.125rem; min-width: 0;">
+                        <strong style="font-size: 0.9375rem;">{{ zone.label }}</strong>
+                        <span style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">{{ zone.description }}</span>
+                        <sc-if value="{{ zone.feedback }}">
+                          <span style="font-size: 0.875rem; color: #17202a;">{{ zone.feedbackText }}</span>
+                        </sc-if>
+                      </span>
+                    </label>
+                  </li>
+                </sc-for>
               </ol>
-            </div>
+            </fieldset>
           </sc-if>
 
           <div style="display: grid; gap: 1rem; align-content: start;">
-            <div style="display: grid; gap: 0.5rem; padding: 1rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #f7f8fa;">
-              <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem;">
-                <strong style="font-size: 0.9375rem;">Your marks</strong>
-                <span style="font-size: 0.875rem; color: #4b5563;">{{ markCount }}</span>
-              </div>
-              <sc-if value="{{ hasMarks }}">
-                <ol style="display: grid; gap: 0.5rem; margin: 0; padding: 0; list-style: none;">
-                  <sc-for list="{{ markers }}" as="mk" hint-placeholder-count="2">
-                    <li style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0.625rem; border: 1px solid #b7c1cc; border-radius: 0.375rem; background: #ffffff;">
-                      <span aria-hidden="true" style="display: grid; place-items: center; min-width: 1.75rem; min-height: 1.75rem; border-radius: 999rem; background: #17202a; color: #ffffff; font-weight: 700; font-size: 0.8125rem;">{{ mk.n }}</span>
-                      <span style="flex: 1 1 auto; display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 0.625rem; font-size: 0.9375rem;"><span>{{ mk.label }}</span><span style="color: #4b5563; font-size: 0.875rem;">{{ mk.coords }}</span></span>
-                      <button type="button" aria-label="{{ mk.removeLabel }}" onClick="{{ mk.onRemove }}" style="display: inline-flex; align-items: center; justify-content: center; min-width: 2.75rem; min-height: 2.75rem; border: 1px solid #667085; border-radius: 0.375rem; background: #ffffff; font-weight: 700; cursor: pointer;" style-hover="background: #edf2f7;">✕</button>
-                    </li>
-                  </sc-for>
-                </ol>
-              </sc-if>
-              <sc-if value="{{ noMarks }}">
-                <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">Nothing marked yet. Submitting with no marks is allowed and needs one confirmation first.</p>
-              </sc-if>
-            </div>
+            <sc-if value="{{ isVisual }}">
+              <section aria-labelledby="hz-marker-list" style="display: grid; gap: 0.5rem; padding: 1rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #f7f8fa;">
+                <h4 id="hz-marker-list" style="font-size: 1.0625rem;">Your markers</h4>
+                <p aria-live="polite" style="margin: 0; font-size: 0.9375rem; color: #4b5563;">{{ markCount }}</p>
+                <sc-if value="{{ hasMarks }}">
+                  <ol style="display: grid; gap: 0.5rem; margin: 0; padding: 0; list-style: none;">
+                    <sc-for list="{{ markers }}" as="mk" hint-placeholder-count="2">
+                      <li style="display: grid; gap: 0.5rem; padding: 0.625rem; border: 1px solid #b7c1cc; border-radius: 0.375rem; background: #ffffff;">
+                        <p style="margin: 0; display: flex; align-items: baseline; gap: 0.5rem; font-size: 0.9375rem;"><span aria-hidden="true" style="display: grid; place-items: center; min-width: 1.75rem; min-height: 1.75rem; border-radius: 999rem; background: #17202a; color: #ffffff; font-weight: 700; font-size: 0.8125rem;">{{ mk.n }}</span><span><strong>Marker {{ mk.n }}</strong>: {{ mk.coords }}</span></p>
+                        <sc-if value="{{ mk.editable }}">
+                          <div aria-label="{{ mk.moveLabel }}" style="display: flex; flex-wrap: wrap; gap: 0.375rem;">
+                            <sc-for list="{{ mk.moves }}" as="move" hint-placeholder-count="5">
+                              <button type="button" aria-label="{{ move.aria }}" onClick="{{ move.onClick }}" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; min-width: 2.75rem; padding: 0.5rem 0.75rem; border: 1px solid #667085; border-radius: 0.375rem; background: #ffffff; font-size: 0.875rem; font-weight: 700; cursor: pointer;" style-hover="background: #edf2f7;">{{ move.label }}</button>
+                            </sc-for>
+                          </div>
+                        </sc-if>
+                        <sc-if value="{{ mk.verdict }}">
+                          <p style="{{ mk.verdictStyle }}">{{ mk.verdictText }}</p>
+                        </sc-if>
+                      </li>
+                    </sc-for>
+                  </ol>
+                </sc-if>
+              </section>
+            </sc-if>
 
-            <sc-if value="{{ isMarking }}">
-              <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
-                <button type="button" onClick="{{ commit }}" style="{{ commitStyle }}">Save marks</button>
-                <button type="button" onClick="{{ submitZero }}" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; cursor: pointer;" style-hover="background: #edf2f7;">Submit with no marks</button>
-                <button type="button" onClick="{{ clearMarks }}" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; cursor: pointer;" style-hover="background: #edf2f7;">Clear all</button>
-              </div>
+            <sc-if value="{{ isCommitReady }}">
+              <section aria-labelledby="hz-commit-heading" style="display: grid; gap: 0.75rem; padding: 1rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+                <h4 id="hz-commit-heading" style="font-size: 1.0625rem;">Save this response</h4>
+                <p style="margin: 0; font-size: 0.9375rem;">{{ commitCount }}</p>
+                <p style="margin: 0; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">You can change your choices until you save. Feedback appears only after your response is saved on this device.</p>
+                <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem;">
+                  <button type="button" onClick="{{ commit }}" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.5rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; cursor: pointer;" style-hover="background: #0c4a6e;">{{ commitLabel }}</button>
+                  <span style="font-size: 0.875rem; color: #4b5563;">Saved on this device before feedback opens</span>
+                </div>
+              </section>
             </sc-if>
 
             <sc-if value="{{ isConfirmZero }}">
-              <div role="alertdialog" aria-label="Submit with no marks" style="display: grid; gap: 0.75rem; padding: 1.25rem; border: 2px solid #667085; border-radius: 0.5rem; background: #f7f8fa;">
-                <strong>Submit this scene with no marks?</strong>
-                <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">This records an attempt with zero marks. It does not tell you whether there was anything to mark, and it is not treated as a mistake.</p>
+              <section aria-labelledby="hz-zero-heading" style="display: grid; gap: 0.75rem; padding: 1.25rem; border: 2px solid #667085; border-radius: 0.5rem; background: #f7f8fa;">
+                <h4 id="hz-zero-heading" tabindex="-1" style="font-size: 1.0625rem;">Submit without marking a concern?</h4>
+                <p style="margin: 0; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">This records that you chose no locations. It does not indicate whether this scene contains a condition that needs correction.</p>
                 <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
-                  <button type="button" onClick="{{ commit }}" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; cursor: pointer;" style-hover="background: #0c4a6e;">Yes, submit with none</button>
-                  <button type="button" onClick="{{ clearMarks }}" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; cursor: pointer;" style-hover="background: #edf2f7;">Keep marking</button>
+                  <button type="button" onClick="{{ confirmZero }}" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; cursor: pointer;" style-hover="background: #0c4a6e;">Confirm and save no marks</button>
+                  <button type="button" onClick="{{ cancelZero }}" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; cursor: pointer;" style-hover="background: #edf2f7;">Return to the scene</button>
                 </div>
-              </div>
+              </section>
             </sc-if>
 
             <sc-if value="{{ isCommitting }}">
-              <div role="status" style="display: flex; align-items: start; gap: 0.5rem; padding: 1rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #f7f8fa;"><span aria-hidden="true">◴</span><span><strong>Saving your marks.</strong> They stay visible and can't be changed until saving finishes.</span></div>
+              <div role="status" style="display: flex; align-items: start; gap: 0.5rem; padding: 1rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #f7f8fa;"><span aria-hidden="true">◴</span><span><strong>Saving your response.</strong> Your choices stay visible and cannot be changed until saving finishes.</span></div>
             </sc-if>
 
-            <sc-if value="{{ isError }}">
+            <sc-if value="{{ isCommitFailed }}">
               <div tabindex="-1" role="alert" style="display: grid; gap: 0.75rem; padding: 1.25rem; border: 2px solid #b42318; border-radius: 0.5rem; background: #fef3f2;">
-                <h4 style="display: flex; align-items: center; gap: 0.5rem; font-size: 1.0625rem; color: #b42318;"><span aria-hidden="true">✕</span> Your marks were not saved</h4>
-                <p style="margin: 0; font-size: 0.9375rem;">Every mark is retained exactly where you put it, and nothing about the scene has been revealed.</p>
-                <button type="button" onClick="{{ retry }}" style="justify-self: start; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; cursor: pointer;" style-hover="background: #0c4a6e;">Try saving again</button>
+                <h4 style="display: flex; align-items: center; gap: 0.5rem; font-size: 1.0625rem; color: #b42318;"><span aria-hidden="true">✕</span> Your response was not saved</h4>
+                <p style="margin: 0; font-size: 0.9375rem;">Every choice is retained exactly as you made it, and nothing about the scene has been revealed.</p>
+                <button type="button" onClick="{{ retry }}" style="justify-self: start; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; cursor: pointer;" style-hover="background: #0c4a6e;">Retry saving response</button>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ isRevealFailed }}">
+              <div tabindex="-1" role="alert" style="display: grid; gap: 0.75rem; padding: 1.25rem; border: 2px solid #854d0e; border-radius: 0.5rem; background: #fffaeb;">
+                <h4 style="display: flex; align-items: center; gap: 0.5rem; font-size: 1.0625rem; color: #854d0e;"><span aria-hidden="true">▲</span> Your response is saved</h4>
+                <p style="margin: 0; font-size: 0.9375rem;">The matching feedback could not be loaded. Your saved marks can no longer be changed, and retrying only loads the feedback.</p>
+                <button type="button" onClick="{{ retryReveal }}" style="justify-self: start; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; cursor: pointer;" style-hover="background: #0c4a6e;">Retry feedback</button>
               </div>
             </sc-if>
 
             <sc-if value="{{ isRecorded }}">
               <div style="display: grid; gap: 0.5rem; padding: 1.25rem; border: 1px solid #1e40af; border-radius: 0.5rem; background: #eff6ff;">
-                <strong style="display: flex; align-items: center; gap: 0.5rem; color: #1e40af;"><span aria-hidden="true">i</span> Marks recorded</strong>
-                <p style="margin: 0; font-size: 0.9375rem;">Editable until you submit the simulation. No regions, decoys, or counts are available yet.</p>
+                <strong style="display: flex; align-items: center; gap: 0.5rem; color: #1e40af;"><span aria-hidden="true">i</span> Response recorded</strong>
+                <p style="margin: 0; font-size: 0.9375rem;">Editable until you submit the simulation. No conditions, safe details, or counts are available yet.</p>
               </div>
             </sc-if>
 
             <sc-if value="{{ isRevealed }}">
-              <div style="display: grid; gap: 1rem;">
-                <div style="display: grid; gap: 0.5rem; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #f7f8fa;">
-                  <h4 tabindex="-1" style="font-size: clamp(1.125rem, 1.05rem + 0.3vw, 1.375rem);">Result for this scene</h4>
-                  <ul style="display: grid; gap: 0.25rem; margin: 0; padding-inline-start: 1.25rem; font-size: 0.9375rem;">
-                    <li>{{ resultFound }}</li>
-                    <li>{{ resultDecoy }}</li>
-                    <li>{{ resultElsewhere }}</li>
-                  </ul>
-                  <p style="margin: 0; font-size: 0.875rem; color: #4b5563;">Raw practice counts for this scene only. No score, no conversion, no prediction.</p>
+              <section style="display: grid; gap: 1rem;">
+                <div style="display: grid; gap: 0.5rem;">
+                  <h4 tabindex="-1" style="font-size: clamp(1.125rem, 1.05rem + 0.3vw, 1.375rem);">{{ outcome }}</h4>
+                  <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">Your response was saved on this device before this feedback loaded.</p>
                 </div>
+
+                <sc-if value="{{ isNonvisual }}">
+                  <div style="display: grid; gap: 0.5rem; padding: 1rem 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #f7f8fa;">
+                    <strong style="font-size: 0.9375rem;">Zone feedback</strong>
+                    <p style="margin: 0; max-width: 68ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">This text version covers the same knowledge, but it is not the same task as finding hazards on the image.</p>
+                    <p style="margin: 0; max-width: 68ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Your zone choices are saved exactly as you made them. They are not auto-matched or scored against the more detailed locations described below.</p>
+                  </div>
+                </sc-if>
+
                 <dl style="display: grid; gap: 0.75rem; margin: 0;">
                   <div style="display: grid; gap: 0.25rem; padding: 0.75rem 1rem; border-inline-start: 0.25rem solid #b42318; background: #fef3f2;">
-                    <dt style="display: flex; align-items: center; gap: 0.5rem; font-weight: 700; color: #b42318;"><span aria-hidden="true">▮</span> Region A — the landing surface</dt>
-                    <dd style="margin: 0; font-size: 0.9375rem;">Cartons stacked on the landing reduce the width of the means of egress and have to be moved before anything else on this floor.</dd>
+                    <dt style="display: flex; align-items: center; gap: 0.5rem; font-weight: 700; color: #b42318;"><span aria-hidden="true">▮</span> Conditions needing correction — the landing surface</dt>
+                    <dd style="margin: 0; font-size: 0.9375rem;">Cartons stacked on the landing reduce the width of the means of egress. Immediate correction: move the cartons off the landing before any other work on this floor.</dd>
                   </div>
                   <div style="display: grid; gap: 0.25rem; padding: 0.75rem 1rem; border-inline-start: 0.25rem solid #b42318; background: #fef3f2;">
-                    <dt style="display: flex; align-items: center; gap: 0.5rem; font-weight: 700; color: #b42318;"><span aria-hidden="true">▮</span> Region B — the head of the lower flight</dt>
-                    <dd style="margin: 0; font-size: 0.9375rem;">The stack runs to the top tread, so someone descending meets an obstruction at the exact point where footing matters most.</dd>
+                    <dt style="display: flex; align-items: center; gap: 0.5rem; font-weight: 700; color: #b42318;"><span aria-hidden="true">▮</span> Conditions needing correction — the head of the lower flight</dt>
+                    <dd style="margin: 0; font-size: 0.9375rem;">The stack runs to the top tread, so someone descending meets an obstruction where footing matters most. Immediate correction: clear the tread and the approach to it.</dd>
                   </div>
                   <div style="display: grid; gap: 0.25rem; padding: 0.75rem 1rem; border-inline-start: 0.25rem dashed #1e40af; background: #eff6ff;">
-                    <dt style="display: flex; align-items: center; gap: 0.5rem; font-weight: 700; color: #1e40af;"><span aria-hidden="true">▯</span> Region C — the handrails</dt>
-                    <dd style="margin: 0; font-size: 0.9375rem;">A recorded decoy. Continuous graspable rail runs the length of both flights, so it is not a finding here.</dd>
+                    <dt style="display: flex; align-items: center; gap: 0.5rem; font-weight: 700; color: #1e40af;"><span aria-hidden="true">▯</span> Details that are safe as shown — the handrails</dt>
+                    <dd style="margin: 0; font-size: 0.9375rem;">A continuous smooth handrail has intact brackets and no visible loose or projecting part. Safe as depicted: nothing here needs correction.</dd>
                   </div>
                 </dl>
-                <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">The overlay, the list, and your numbered marks use the same region letters and mark numbers. Nothing in the feedback depends on color alone.</p>
-              </div>
+
+                <sc-if value="{{ hasMissed }}">
+                  <div style="display: grid; gap: 0.25rem;">
+                    <strong style="font-size: 0.9375rem;">Hazards you missed</strong>
+                    <ul style="display: grid; gap: 0.25rem; margin: 0; padding-inline-start: 1.25rem; font-size: 0.9375rem; list-style: disc;">
+                      <sc-for list="{{ missed }}" as="item" hint-placeholder-count="1">
+                        <li>{{ item.text }}</li>
+                      </sc-for>
+                    </ul>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ noMissed }}">
+                  <p style="margin: 0; font-size: 0.9375rem;">No hazard was left unmarked.</p>
+                </sc-if>
+
+                <details style="border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+                  <summary style="display: flex; align-items: center; min-height: 2.75rem; padding: 0.625rem 1rem; cursor: pointer; font-weight: 700;">Where this comes from</summary>
+                  <div style="display: grid; gap: 0.5rem; padding: 0 1rem 1rem; font-size: 0.9375rem; color: #4b5563;">
+                    <p style="margin: 0;">Scene facts and their evidence claims are published with the scene, and the written equivalent of this feedback carries the same statements in the same order.</p>
+                    <p style="margin: 0;">Read on August 25, 2026 from the accepted scene release for content pack v2.0.0.</p>
+                  </div>
+                </details>
+
+                <p style="margin: 0; max-width: 68ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">The overlay, the marker list and the written feedback use the same wording and the same marker numbers. Nothing in the feedback depends on color alone, and no count here is a score.</p>
+              </section>
             </sc-if>
           </div>
         </div>
@@ -203,23 +282,46 @@
   <sc-if value="{{ isUnavailable }}">
     <div style="display: grid; gap: 1rem; max-width: 50rem; margin-inline: auto; width: 100%; padding: 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff;">
       <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">PageState.ContentUnavailable</span>
-      <h3 tabindex="-1" style="font-size: clamp(1.25rem, 1.12rem + 0.55vw, 1.625rem);">This scene cannot start</h3>
-      <p style="margin: 0; max-width: 68ch; color: #4b5563;">A hazard scene starts only when its image, regions, zone descriptions, and sources are all on this device. Part of this scene is missing from the download, so it is unavailable rather than partially playable.</p>
-      <a href="#d-packs" style="justify-self: start; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; text-decoration: none;" style-hover="background: #0c4a6e;">Download required pack</a>
+      <h3 tabindex="-1" style="font-size: clamp(1.25rem, 1.12rem + 0.55vw, 1.625rem);">Required study content is unavailable</h3>
+      <p style="margin: 0; max-width: 68ch; color: #4b5563;">A hazard scene starts only when its image, its zone descriptions, its published feedback and its sources are all on this device. Part of this scene is missing from the download, so it is unavailable rather than partly playable.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+        <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; cursor: pointer;" style-hover="background: #0c4a6e;">Check content again</button>
+        <a href="Offline.dc.html" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; text-decoration: none;" style-hover="background: #edf2f7;">Manage downloads</a>
+      </div>
     </div>
   </sc-if>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1100, &quot;height&quot;: 900}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1100, &quot;height&quot;: 940}}">
+const ZONES = [
+  { order: 1, label: "Upper flight", description: "The upper flight of stairs and its top landing." },
+  { order: 2, label: "Intermediate landing", description: "The landing surface between the flights, where cartons are stacked." },
+  { order: 3, label: "Lower flight", description: "The head and the treads of the lower flight." },
+  { order: 4, label: "Wall handrails", description: "Handrails mounted along both flights." },
+  { order: 5, label: "Base door", description: "The door set into the wall at the base of the stairwell." },
+  { order: 6, label: "Ceiling fixture", description: "The lighting fixture above the landing." }
+];
+
+const TARGETS = [
+  { id: "A", box: [25, 29, 41, 27], condition: "Cartons stacked on the landing reduce the width of the means of egress", correction: "move the cartons off the landing before any other work on this floor" },
+  { id: "B", box: [22, 53, 30, 14], condition: "The stack runs to the top tread of the lower flight", correction: "clear the tread and the approach to it" }
+];
+const DECOY = [5, 16, 24, 34];
+
+const BTN = "display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.5rem 0.875rem; border: 1px solid #667085; border-radius: 0.375rem; background: #ffffff; color: #17202a; font-size: 0.875rem; font-weight: 700; cursor: pointer;";
+const BTN_OFF = "display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.5rem 0.875rem; border: 1px solid #b7c1cc; border-radius: 0.375rem; background: #f7f8fa; color: #667085; font-size: 0.875rem; font-weight: 700; cursor: not-allowed;";
+
 class Component extends DCLogic {
   state = {
     workflow: "practice",
     modality: "visual",
     snap: "marking",
     marks: [{ id: "mk1", x: 44, y: 41 }, { id: "mk2", x: 12, y: 31 }],
+    zones: [2],
     nextId: 3,
+    zoom: 1,
     fail: false,
-    announce: "2 marks placed."
+    announce: "2 markers placed."
   };
 
   timer = null;
@@ -227,9 +329,8 @@ class Component extends DCLogic {
   componentWillUnmount() { clearTimeout(this.timer); }
 
   legal = {
-    practice: ["restoring", "ready", "marking", "confirm-zero", "committing", "answered-revealed", "reviewed", "recoverable-error", "content-unavailable", "completed"],
-    review: ["restoring", "ready", "marking", "confirm-zero", "committing", "answered-revealed", "reviewed", "recoverable-error", "content-unavailable", "completed"],
-    simulation: ["restoring", "ready", "marking", "confirm-zero", "committing", "recorded", "recoverable-error", "content-unavailable", "completed"]
+    practice: ["restoring", "restore-failed", "ready", "marking", "confirm-zero", "committing", "commit-failed", "revealed", "reveal-failed", "asset-unavailable", "content-unavailable"],
+    simulation: ["restoring", "restore-failed", "ready", "marking", "confirm-zero", "committing", "commit-failed", "recorded", "asset-unavailable", "content-unavailable"]
   };
 
   chip(on) {
@@ -237,8 +338,14 @@ class Component extends DCLogic {
       (on ? "#075985" : "#667085") + "; background: " + (on ? "#075985" : "#ffffff") + "; color: " + (on ? "#ffffff" : "#17202a") + ";";
   }
 
-  setWorkflow = (w) => this.setState((s) => ({ workflow: w, snap: this.legal[w].includes(s.snap) ? s.snap : "ready" }));
-  setModality = (m) => this.setState({ modality: m });
+  setWorkflow = (w) => this.setState((s) => ({ workflow: w, snap: this.legal[w].includes(s.snap) ? s.snap : "marking" }));
+  setModality = (m) => this.setState((s) => ({
+    modality: m,
+    snap: m === "nonvisual" && s.snap === "asset-unavailable" ? "marking" : s.snap,
+    announce: m === "visual"
+      ? (s.marks.length === 1 ? "1 marker placed." : s.marks.length + " markers placed.")
+      : (s.zones.length === 1 ? "1 zone selected." : s.zones.length + " zones selected.")
+  }));
   setSnap = (v) => this.setState({ snap: v });
   toggleFail = () => this.setState((s) => ({ fail: !s.fail }));
 
@@ -247,11 +354,25 @@ class Component extends DCLogic {
     const box = event.currentTarget.getBoundingClientRect();
     const x = Math.round(((event.clientX - box.left) / box.width) * 1000) / 10;
     const y = Math.round(((event.clientY - box.top) / box.height) * 1000) / 10;
+    this.place(x, y);
+  };
+
+  addCenter = () => this.place(50, 50);
+
+  place(x, y) {
     this.setState((s) => {
       const marks = s.marks.concat([{ id: "mk" + s.nextId, x, y }]);
-      return { marks, nextId: s.nextId + 1, snap: "marking", announce: marks.length + " marks placed." };
+      return { marks, nextId: s.nextId + 1, snap: "marking", announce: marks.length + (marks.length === 1 ? " marker placed." : " markers placed.") };
     });
-  };
+  }
+
+  moveMarker = (id, dx, dy) =>
+    this.setState((s) => ({
+      marks: s.marks.map((m) => m.id === id
+        ? { id: m.id, x: Math.max(0, Math.min(100, m.x + dx)), y: Math.max(0, Math.min(100, m.y + dy)) }
+        : m),
+      announce: "Marker moved."
+    }));
 
   removeMarker = (id) =>
     this.setState((s) => {
@@ -259,53 +380,106 @@ class Component extends DCLogic {
       return {
         marks,
         snap: marks.length ? "marking" : "ready",
-        announce: marks.length ? marks.length + " marks placed." : "No marks placed."
+        announce: marks.length ? marks.length + (marks.length === 1 ? " marker placed." : " markers placed.") : "No markers placed."
       };
     });
 
-  clearMarks = () => this.setState({ marks: [], snap: "ready", announce: "No marks placed." });
-  submitZero = () => this.setState({ snap: "confirm-zero" });
+  toggleZone = (order) =>
+    this.setState((s) => {
+      const zones = s.zones.includes(order) ? s.zones.filter((z) => z !== order) : s.zones.concat([order]).sort();
+      return { zones, snap: "marking", announce: zones.length + (zones.length === 1 ? " zone selected." : " zones selected.") };
+    });
+
+  zoomBy = (delta) => this.setState((s) => ({ zoom: Math.max(1, Math.min(2.5, Math.round((s.zoom + delta) * 100) / 100)) }));
+  resetView = () => this.setState({ zoom: 1 });
 
   commit = () => {
-    clearTimeout(this.timer);
-    this.setState({ snap: "committing", announce: "Saving your marks." });
-    this.timer = setTimeout(() => {
-      this.setState((s) => {
-        if (s.fail) return { snap: "recoverable-error", announce: "Could not save. Your marks are unchanged." };
-        if (s.workflow === "simulation") return { snap: "recorded", announce: "Marks recorded." };
-        return { snap: "answered-revealed", announce: "Marks saved." };
-      });
-    }, 700);
+    const s = this.state;
+    const empty = s.modality === "visual" ? s.marks.length === 0 : s.zones.length === 0;
+    if (empty && s.snap !== "confirm-zero") {
+      this.setState({ snap: "confirm-zero", announce: "Confirm submitting without marking a concern." });
+      return;
+    }
+    this.runCommit();
   };
 
-  retry = () => this.setState({ fail: false }, this.commit);
+  confirmZero = () => this.runCommit();
+  cancelZero = () => this.setState({ snap: "marking", announce: "Returned to the scene." });
+
+  runCommit() {
+    clearTimeout(this.timer);
+    this.setState({ snap: "committing", announce: "Saving your response." });
+    this.timer = setTimeout(() => {
+      this.setState((s) => {
+        if (s.fail) return { snap: "commit-failed", announce: "Your response was not saved. Your choices are unchanged." };
+        if (s.workflow === "simulation") return { snap: "recorded", announce: "Response recorded." };
+        return { snap: "revealed", announce: "Response saved. Feedback is open." };
+      });
+    }, 700);
+  }
+
+  retry = () => this.setState({ fail: false }, () => this.runCommit());
+  retryReveal = () => this.setState({ snap: "revealed", announce: "Feedback is open." });
 
   renderVals() {
     const s = this.state;
-    const cap = (t) => t.charAt(0).toUpperCase() + t.slice(1);
-    const TARGETS = [{ id: "A", box: [25, 29, 41, 27] }, { id: "B", box: [22, 53, 30, 14] }];
-    const DECOY = [5, 16, 24, 34];
+    const visual = s.modality === "visual";
+    const revealed = s.snap === "revealed";
+    const editable = ["ready", "marking"].includes(s.snap);
     const inBox = (m, b) => m.x >= b[0] && m.x <= b[0] + b[2] && m.y >= b[1] && m.y <= b[1] + b[3];
-    const marks = s.marks;
-    const revealed = s.snap === "answered-revealed" || s.snap === "reviewed";
-    const found = TARGETS.filter((t) => marks.some((m) => inBox(m, t.box))).length;
-    const onDecoy = marks.filter((m) => inBox(m, DECOY)).length;
-    const elsewhere = marks.filter((m) => !TARGETS.some((t) => inBox(m, t.box)) && !inBox(m, DECOY)).length;
+    const hitTarget = (m) => TARGETS.find((t) => inBox(m, t.box));
+    const seen = [];
+    const marks = s.marks.map((m, i) => {
+      const target = hitTarget(m);
+      let kind = "false_positive";
+      if (target !== undefined) {
+        kind = seen.includes(target.id) ? "duplicate" : "hit";
+        seen.push(target.id);
+      } else if (inBox(m, DECOY)) {
+        kind = "decoy";
+      }
+      return { mark: m, n: i + 1, kind, target };
+    });
+    const found = TARGETS.filter((t) => marks.some((entry) => entry.kind === "hit" && entry.target.id === t.id));
+    const missedTargets = TARGETS.filter((t) => !found.includes(t));
+    const extras = marks.filter((entry) => entry.kind !== "hit").length;
+    const extraSummary = extras === 0
+      ? "No extra or repeated marks were counted."
+      : extras + (extras === 1 ? " extra or repeated mark was counted." : " extra or repeated marks were counted.");
+
+    const verdictFor = (entry) => {
+      if (entry.kind === "hit") return { text: "Hazard found. " + entry.target.condition + ". Immediate correction: " + entry.target.correction + ".", tone: "#b42318" };
+      if (entry.kind === "duplicate") return { text: "Already marked. Another marker already covers " + entry.target.condition.toLowerCase() + ".", tone: "#4b5563" };
+      if (entry.kind === "decoy") return { text: "Safe as shown. A continuous smooth handrail has intact brackets and no visible loose or projecting part. Safe as depicted: nothing here needs correction.", tone: "#1e40af" };
+      return { text: "This mark does not match a recorded condition. It counts as an extra mark, but the site cannot say what that object means.", tone: "#4b5563" };
+    };
+
+    const moves = (id) => [
+      { key: "left", label: "Left", dx: -2.5, dy: 0 },
+      { key: "right", label: "Right", dx: 2.5, dy: 0 },
+      { key: "up", label: "Up", dx: 0, dy: -2.5 },
+      { key: "down", label: "Down", dx: 0, dy: 2.5 }
+    ];
 
     return {
-      wrapperName: (s.modality === "visual" ? "Visual" : "Nonvisual") + "Hazard" + cap(s.workflow),
-      workflowChips: ["practice", "review", "simulation"].map((w) => ({
-        key: w, label: cap(w), pressed: s.workflow === w ? "true" : "false",
-        style: this.chip(s.workflow === w), onClick: () => this.setWorkflow(w)
+      wrapperName: (visual ? "Visual" : "Nonvisual") + "HazardPractice" + (s.workflow === "simulation" ? " · simulation item" : ""),
+      workflowChips: [
+        { key: "practice", label: "Hazard practice" },
+        { key: "simulation", label: "Inside a simulation" }
+      ].map((w) => ({
+        key: w.key, label: w.label,
+        pressed: s.workflow === w.key ? "true" : "false",
+        style: this.chip(s.workflow === w.key),
+        onClick: () => this.setWorkflow(w.key)
       })),
       modalityChips: [
-        { key: "visual", label: "Scene viewport", pressed: s.modality === "visual" ? "true" : "false", style: this.chip(s.modality === "visual"), onClick: () => this.setModality("visual") },
-        { key: "nonvisual", label: "Zone navigator", pressed: s.modality === "nonvisual" ? "true" : "false", style: this.chip(s.modality === "nonvisual"), onClick: () => this.setModality("nonvisual") }
+        { key: "visual", label: "Mark the image", pressed: visual ? "true" : "false", style: this.chip(visual), onClick: () => this.setModality("visual") },
+        { key: "nonvisual", label: "Keyboard, no image", pressed: visual ? "false" : "true", style: this.chip(!visual), onClick: () => this.setModality("nonvisual") }
       ],
-      stateChips: ["restoring", "ready", "marking", "confirm-zero", "committing", "answered-revealed", "recorded", "reviewed", "recoverable-error", "content-unavailable", "completed"].map((key) => {
-        const ok = this.legal[s.workflow].includes(key);
+      stateChips: ["restoring", "restore-failed", "ready", "marking", "confirm-zero", "committing", "commit-failed", "revealed", "reveal-failed", "recorded", "asset-unavailable", "content-unavailable"].map((key) => {
+        const ok = this.legal[s.workflow].includes(key) && !(key === "asset-unavailable" && !visual);
         return {
-          key, label: key, disabled: !ok,
+          key, label: key, disabled: ok ? undefined : "disabled",
           pressed: ok && key === s.snap ? "true" : "false",
           style: ok
             ? this.chip(key === s.snap)
@@ -313,45 +487,121 @@ class Component extends DCLogic {
           onClick: ok ? () => this.setSnap(key) : undefined
         };
       }),
-      isVisual: s.modality === "visual",
-      isNonvisual: s.modality === "nonvisual",
-      isReview: s.workflow === "review",
+
+      positionLine: s.workflow === "simulation" ? "Simulation item 3 · Original scene" : "Hazard practice · Original scene",
+      modeLabel: visual ? "Visual practice" : "Text version",
+      taskLine: visual
+        ? "Mark as many or as few places as you think need attention. Submitting no marks is a valid answer and asks for confirmation."
+        : "Review each zone and select every area that concerns you. This text version covers the same knowledge, but it is not the same task as marking the image.",
+
+      isVisual: visual,
+      isNonvisual: !visual,
       isRestoring: s.snap === "restoring",
-      isMarking: ["ready", "marking"].includes(s.snap),
+      isRestoreFailed: s.snap === "restore-failed",
+      isAssetUnavailable: s.snap === "asset-unavailable",
+      isCommitReady: editable,
+      isEditable: editable,
       isConfirmZero: s.snap === "confirm-zero",
       isCommitting: s.snap === "committing",
+      isCommitFailed: s.snap === "commit-failed",
+      isRevealFailed: s.snap === "reveal-failed",
       isRecorded: s.snap === "recorded",
-      isError: s.snap === "recoverable-error",
-      isUnavailable: s.snap === "content-unavailable",
       isRevealed: revealed,
+      isUnavailable: s.snap === "content-unavailable",
       showCard: s.snap !== "content-unavailable",
-      showScene: s.snap !== "restoring",
-      markers: marks.map((m, i) => ({
-        id: m.id,
-        n: i + 1,
-        label: "Mark " + (i + 1),
-        coords: m.x + "% across, " + m.y + "% down",
-        removeLabel: "Remove mark " + (i + 1),
-        onRemove: () => this.removeMarker(m.id),
-        pinStyle: "position: absolute; left: " + m.x + "%; top: " + m.y +
-          "%; translate: -50% -50%; display: grid; place-items: center; min-width: 1.75rem; min-height: 1.75rem; border-radius: 999rem; border: 2px solid #ffffff; background: #17202a; color: #ffffff; font-weight: 700; font-size: 0.8125rem; pointer-events: none;"
+      showScene: !["restoring", "restore-failed", "asset-unavailable"].includes(s.snap),
+
+      viewControls: [
+        { key: "out", label: "Zoom out", off: s.zoom <= 1, run: () => this.zoomBy(-0.25) },
+        { key: "in", label: "Zoom in", off: s.zoom >= 2.5, run: () => this.zoomBy(0.25) },
+        { key: "pl", label: "Pan left", off: s.zoom <= 1, run: () => {} },
+        { key: "pr", label: "Pan right", off: s.zoom <= 1, run: () => {} },
+        { key: "pu", label: "Pan up", off: s.zoom <= 1, run: () => {} },
+        { key: "pd", label: "Pan down", off: s.zoom <= 1, run: () => {} },
+        { key: "reset", label: "Reset view", off: s.zoom === 1, run: this.resetView }
+      ].map((c) => ({
+        key: c.key, label: c.label,
+        disabled: c.off ? "disabled" : undefined,
+        style: c.off ? BTN_OFF : BTN,
+        onClick: c.off ? undefined : c.run
       })),
-      hasMarks: marks.length > 0,
-      noMarks: marks.length === 0,
-      markCount: marks.length === 0 ? "No marks placed" : marks.length === 1 ? "1 mark placed" : marks.length + " marks placed",
-      commitStyle: "display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 700; border: 1px solid transparent; cursor: " +
-        (marks.length ? "pointer" : "not-allowed") + "; background: " + (marks.length ? "#075985" : "#e5e7eb") + "; color: " + (marks.length ? "#ffffff" : "#4b5563") + ";",
+      zoomLabel: Math.round(s.zoom * 100) + "% view",
+      layerStyle: "position: relative; width: " + Math.round(s.zoom * 100) + "%; cursor: " + (editable ? "crosshair" : "default") + ";",
       sceneClick: this.addMarker,
-      resultFound: found + " of 2 marked regions found",
-      resultDecoy: onDecoy === 1 ? "1 mark on a region that is not a finding" : onDecoy + " marks on regions that are not findings",
-      resultElsewhere: elsewhere === 1 ? "1 mark elsewhere" : elsewhere + " marks elsewhere",
-      failLabel: s.fail ? "Next commit will fail" : "Next commit will succeed",
+      addCenter: this.addCenter,
+
+      markers: marks.map((entry) => {
+        const verdict = revealed ? verdictFor(entry) : null;
+        return {
+          id: entry.mark.id,
+          n: entry.n,
+          coords: Math.round(entry.mark.x) + "% from the left, " + Math.round(entry.mark.y) + "% from the top",
+          editable,
+          moveLabel: "Move marker " + entry.n,
+          moves: moves(entry.mark.id).map((m) => ({
+            key: m.key,
+            label: m.label,
+            aria: "Move marker " + entry.n + " " + m.label.toLowerCase(),
+            onClick: () => this.moveMarker(entry.mark.id, m.dx, m.dy)
+          })).concat([{
+            key: "remove",
+            label: "Remove",
+            aria: "Remove marker " + entry.n,
+            onClick: () => this.removeMarker(entry.mark.id)
+          }]),
+          verdict: verdict !== null,
+          verdictText: verdict === null ? "" : verdict.text,
+          verdictStyle: verdict === null ? "" : "margin: 0; font-size: 0.9375rem; color: " + verdict.tone + ";",
+          pinStyle: "position: absolute; left: " + entry.mark.x + "%; top: " + entry.mark.y +
+            "%; translate: -50% -50%; display: grid; place-items: center; min-width: 1.75rem; min-height: 1.75rem; border-radius: 999rem; border: 2px solid #ffffff; background: #17202a; color: #ffffff; font-weight: 700; font-size: 0.8125rem; pointer-events: none;"
+        };
+      }),
+      hasMarks: visual && s.marks.length > 0,
+      markCount: s.marks.length === 0
+        ? "No markers placed."
+        : s.marks.length + (s.marks.length === 1 ? " marker placed." : " markers placed."),
+
+      zones: ZONES.map((z, i) => ({
+        key: String(z.order),
+        label: "Zone " + z.order + ": " + z.label,
+        description: z.description,
+        checked: s.zones.includes(z.order),
+        disabled: editable ? undefined : "disabled",
+        onChange: () => this.toggleZone(z.order),
+        rowStyle: i === 0 ? "display: grid;" : "display: grid; border-block-start: 1px solid #e2e7ec;",
+        feedback: revealed,
+        feedbackText: revealed
+          ? (s.zones.includes(z.order) ? "You selected this zone." : "You did not select this zone.")
+          : ""
+      })),
+
+      commitCount: visual
+        ? (s.marks.length === 0
+            ? "You have not marked a concern. Submitting opens a neutral confirmation."
+            : s.marks.length + (s.marks.length === 1 ? " location is ready to save." : " locations are ready to save."))
+        : (s.zones.length === 0
+            ? "You have not selected a zone. Submitting opens a neutral confirmation."
+            : s.zones.length + (s.zones.length === 1 ? " zone is ready to save." : " zones are ready to save.")),
+      commitLabel: visual ? "Save marks" : "Save response",
+      commit: this.commit,
+      confirmZero: this.confirmZero,
+      cancelZero: this.cancelZero,
+      retry: this.retry,
+      retryReveal: this.retryReveal,
+
+      outcome: visual
+        ? "You found " + found.length + " of " + TARGETS.length + " hazards in this scene. " + extraSummary
+        : "Response saved — compare your zone choices below.",
+      hasMissed: visual && missedTargets.length > 0,
+      noMissed: visual && missedTargets.length === 0,
+      missed: missedTargets.map((t) => ({
+        key: t.id,
+        text: t.condition + ". Immediate correction: " + t.correction + "."
+      })),
+
+      failLabel: s.fail ? "Next save will fail" : "Next save will succeed",
       failStyle: this.chip(s.fail),
       toggleFail: this.toggleFail,
-      submitZero: this.submitZero,
-      commit: this.commit,
-      retry: this.retry,
-      clearMarks: this.clearMarks,
       announce: s.announce
     };
   }

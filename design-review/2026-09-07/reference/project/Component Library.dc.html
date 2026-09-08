@@ -614,7 +614,7 @@
       <div style="display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));">
         <div role="status" style="display: grid; gap: 0.5rem; padding: 1rem 1.25rem; border: 1px solid #166534; border-inline-start: 0.25rem solid #166534; border-radius: 0.5rem; background: #ecfdf3;">
           <strong style="display: flex; align-items: center; gap: 0.5rem; color: #166534;"><span aria-hidden="true">✓</span> StatusMessage — success</strong>
-          <p style="margin: 0; color: #17202a; font-size: 0.9375rem;">Answer saved to this device. 12 of 18 attempted in this session.</p>
+          <p style="margin: 0; color: #17202a; font-size: 0.9375rem;">Answer saved on this device. The explanation and its sources are below.</p>
         </div>
         <div style="display: grid; gap: 0.5rem; padding: 1rem 1.25rem; border: 1px solid #854d0e; border-inline-start: 0.25rem solid #854d0e; border-radius: 0.5rem; background: #fffaeb;">
           <strong style="display: flex; align-items: center; gap: 0.5rem; color: #854d0e;"><span aria-hidden="true">▲</span> Notice — stale pack</strong>
@@ -661,12 +661,12 @@
           <figcaption style="padding: 0.5rem 0.875rem; background: #edf2f7; border-block-end: 1px solid #b7c1cc; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;">ProgressMeter, PositionLabel</figcaption>
           <div style="display: grid; gap: 1.25rem; padding: 1.5rem;">
             <div style="display: grid; gap: 0.5rem;">
-              <div style="display: flex; justify-content: space-between; gap: 0.75rem; font-size: 0.9375rem;"><span style="font-weight: 700;">This session</span><span style="color: #4b5563;">12 of 18 generated</span></div>
-              <div role="progressbar" aria-valuenow="12" aria-valuemin="0" aria-valuemax="18" aria-label="Session progress: 12 of 18 generated questions" style="height: 0.75rem; border: 1px solid #b7c1cc; border-radius: 999rem; background: #edf2f7; overflow: hidden;"><span style="display: block; height: 100%; width: 66.6%; background: #075985;"></span></div>
-              <span style="font-size: 0.875rem; color: #4b5563;">Actual generated length only — this is not an official exam length.</span>
+              <div style="display: flex; justify-content: space-between; gap: 0.75rem; font-size: 0.9375rem;"><span style="font-weight: 700;">This simulation</span><span style="color: #4b5563;">12 of 45 answered</span></div>
+              <div role="progressbar" aria-valuenow="12" aria-valuemin="0" aria-valuemax="45" aria-label="Simulation progress: 12 of 45 questions answered" style="height: 0.75rem; border: 1px solid #b7c1cc; border-radius: 999rem; background: #edf2f7; overflow: hidden;"><span style="display: block; height: 100%; width: 26.7%; background: #075985;"></span></div>
+              <span style="font-size: 0.875rem; color: #4b5563;">A simulation is the one activity with a length and a position. Question practice saves one record per answer and has neither.</span>
             </div>
             <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
-              <span style="display: inline-flex; align-items: center; min-height: 1.75rem; padding: 0.25rem 0.75rem; border: 1px solid #b7c1cc; border-radius: 999rem; background: #ffffff; font-size: 0.875rem;">Question 12 of 18</span>
+              <span style="display: inline-flex; align-items: center; min-height: 1.75rem; padding: 0.25rem 0.75rem; border: 1px solid #b7c1cc; border-radius: 999rem; background: #ffffff; font-size: 0.875rem;">Question 12 of 45</span>
               <span style="display: inline-flex; align-items: center; gap: 0.375rem; min-height: 1.75rem; padding: 0.25rem 0.75rem; border: 1px solid #854d0e; border-radius: 999rem; background: #fffaeb; color: #854d0e; font-size: 0.875rem; font-weight: 700;"><span aria-hidden="true">▲</span> Flagged</span>
               <span style="display: inline-flex; align-items: center; gap: 0.375rem; min-height: 1.75rem; padding: 0.25rem 0.75rem; border: 1px solid #b7c1cc; border-radius: 999rem; background: #edf2f7; font-size: 0.875rem;">Answered</span>
               <span style="display: inline-flex; align-items: center; gap: 0.375rem; min-height: 1.75rem; padding: 0.25rem 0.75rem; border: 1px dashed #667085; border-radius: 999rem; background: #ffffff; color: #4b5563; font-size: 0.875rem;">Unanswered</span>
@@ -700,8 +700,8 @@
           <figcaption style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem; padding: 0.5rem 0.875rem; background: #edf2f7; border-block-end: 1px solid #b7c1cc; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;"><span>Nothing recorded yet</span><span>.empty-state</span></figcaption>
           <div style="display: grid; gap: 1rem; padding: 1.5rem; background: #f7f8fa;">
             <div style="display: grid; gap: 0.375rem; justify-items: start; padding: 1.25rem 1.5rem; border: 1px dashed #667085; border-radius: 0.75rem; background: #ffffff;">
-              <h3 tabindex="-1" style="font-size: 1.0625rem; letter-spacing: -0.01em;">No sessions on this device yet</h3>
-              <p style="margin: 0; max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Every set, drill and simulation you run is listed here, newest first, with a link to its results.</p>
+              <h3 tabindex="-1" style="font-size: 1.0625rem; letter-spacing: -0.01em;">Nothing saved on this device yet</h3>
+              <p style="margin: 0; max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Every question you answer, every scene you respond to and every review you finish is listed here, newest first, with a link back to its explanation.</p>
               <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding-block-start: 0.5rem;"><a href="#f-empty" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.5rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; text-decoration: none; white-space: nowrap;" style-hover="background: #edf2f7;">Start a 45-question set</a></div>
             </div>
             <p style="margin: 0; font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">The heading says what is absent; the sentence says what creates it. The action is the activity that creates it, in the secondary style, because the page header already carries the dominant one. Drop the action when the header’s button is the same activity.</p>
@@ -712,9 +712,9 @@
           <figcaption style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem; padding: 0.5rem 0.875rem; background: #edf2f7; border-block-end: 1px solid #b7c1cc; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;"><span>Filtered to nothing</span><span>.empty-state.empty-state-filtered</span></figcaption>
           <div style="display: grid; gap: 1rem; padding: 1.5rem; background: #f7f8fa;">
             <div style="display: grid; gap: 0.375rem; justify-items: start; padding: 1.25rem 1.5rem; border: 1px dashed #667085; border-radius: 0.75rem; background: #ffffff;">
-              <h3 tabindex="-1" style="font-size: 1.0625rem; letter-spacing: -0.01em;">No simulations on this device yet</h3>
-              <p style="margin: 0; max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">You have 23 sessions; none is a full simulation. Sets and drills are still listed under All.</p>
-              <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding-block-start: 0.5rem;"><a href="#f-empty" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.5rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; text-decoration: none; white-space: nowrap;" style-hover="background: #edf2f7;">Show all sessions</a><a href="#f-empty" style="display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0.5rem 0.5rem; color: #075985; font-weight: 700; font-size: 0.875rem; text-decoration: none;">Set one up</a></div>
+              <h3 tabindex="-1" style="font-size: 1.0625rem; letter-spacing: -0.01em;">No hazard responses on this device yet</h3>
+              <p style="margin: 0; max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">You have 23 saved activities; none of them is a hazard response. Answers and finished reviews are still listed under All activity.</p>
+              <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding-block-start: 0.5rem;"><a href="#f-empty" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.5rem 1rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.875rem; text-decoration: none; white-space: nowrap;" style-hover="background: #edf2f7;">Show all activity</a><a href="#f-empty" style="display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0.5rem 0.5rem; color: #075985; font-weight: 700; font-size: 0.875rem; text-decoration: none;">Scan a scene</a></div>
             </div>
             <p style="margin: 0; font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">The scope is in the heading and the first action clears it. Records exist under another filter, so this is an empty result, not missing content — the same distinction the atlas makes. The heading takes focus when a filter change produced it.</p>
           </div>
@@ -740,13 +740,13 @@
             <div style="display: grid; padding: 0.25rem 1.25rem 1rem; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff;">
               <h3 style="padding-block: 0.875rem 0.5rem; font-size: 1.0625rem;">Recent activity</h3>
               <div style="display: grid; gap: 0.25rem; justify-items: start;">
-                <strong style="font-size: 0.9375rem;">No sessions on this device yet</strong>
-                <p style="margin: 0; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Every set, drill and simulation you run is listed here, newest first.</p>
+                <strong style="font-size: 0.9375rem;">Nothing saved on this device yet</strong>
+                <p style="margin: 0; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Every answer, scene response and finished review is listed here, newest first.</p>
               </div>
             </div>
             <div style="display: grid; gap: 0.25rem; justify-items: start; padding: 1rem; border: 1px dashed #667085; border-radius: 0.5rem; background: #ffffff;">
-              <strong tabindex="-1" style="font-size: 0.9375rem; line-height: 1.35;">Nothing is due yet</strong>
-              <p style="margin: 0; font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Review builds itself from your attempts. Your first items appear after your first set.</p>
+              <strong tabindex="-1" style="font-size: 0.9375rem; line-height: 1.35;">Nothing is ready for review yet</strong>
+              <p style="margin: 0; font-size: 0.8125rem; color: #4b5563; text-wrap: pretty;">Review builds itself from your attempts. Your first items appear after your first few answers.</p>
             </div>
           </div>
           <p style="margin: 0; padding: 0 1.5rem 1.5rem; font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">Inside a card the card keeps its solid border and the state drops its own. At compact width the slot keeps the dashed border, one size down.</p>
@@ -756,7 +756,7 @@
           <figcaption style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem; padding: 0.5rem 0.875rem; background: #edf2f7; border-block-end: 1px solid #b7c1cc; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;"><span>Not an EmptyState</span><span>.notice-warning</span></figcaption>
           <div style="display: grid; gap: 1rem; padding: 1.5rem; background: #f7f8fa;">
             <div style="display: grid; gap: 0.375rem; justify-items: start; padding: 1.25rem 1.5rem; border: 1px solid #854d0e; border-radius: 0.75rem; background: #fffaeb;">
-              <h3 style="display: flex; align-items: center; gap: 0.5rem; font-size: 1.0625rem; letter-spacing: -0.01em; color: #854d0e;"><span aria-hidden="true">▲</span> Your sessions could not be read</h3>
+              <h3 style="display: flex; align-items: center; gap: 0.5rem; font-size: 1.0625rem; letter-spacing: -0.01em; color: #854d0e;"><span aria-hidden="true">▲</span> Your saved activity could not be read</h3>
               <p style="margin: 0; max-width: 62ch; font-size: 0.9375rem; color: #17202a; text-wrap: pretty;">The study data on this device did not load. Nothing has been deleted; reload to try again.</p>
               <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding-block-start: 0.5rem;"><a href="#f-empty" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.5rem 1rem; border: 1px solid #854d0e; border-radius: 0.5rem; background: #ffffff; color: #854d0e; font-weight: 700; font-size: 0.875rem; text-decoration: none; white-space: nowrap;" style-hover="background: #fffaeb;">Reload this page</a></div>
             </div>
@@ -1035,20 +1035,20 @@
     <section id="c-session" style="display: grid; gap: 1.5rem; scroll-margin-block-start: 2rem;">
       <div style="display: grid; gap: 0.5rem; max-width: 68ch;">
         <h2 style="font-size: clamp(1.5rem, 1.25rem + 0.9vw, 2rem);">SessionSummary</h2>
-        <p style="color: #4b5563;">Pack version pinned for the session, actual length and distribution, mode label, seed or manifest reference where exposed, and a resume or start action. No exam is named: a session is scoped by what you chose to answer, not by an announcement.</p>
+        <p style="color: #4b5563;">A simulation is the one activity in this product that is a session: it has a length, a position, a pinned content pack and a resume action. Question practice and hazard scanning save one record per answer or response, so they have no session to summarize and nothing to resume. Pack version, actual length and its distribution across the subject areas, mode label, and a resume or start action. No exam is named: a session is scoped by what you chose to answer, not by an announcement.</p>
       </div>
       <div style="display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));">
         <article style="display: grid; gap: 1rem; align-content: start; padding: 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff;">
           <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem;">
-            <h3 style="font-size: 1.125rem;">Tool recognition practice</h3>
-            <span style="display: inline-flex; align-items: center; min-height: 1.75rem; padding: 0.125rem 0.625rem; border: 1px solid #b7c1cc; border-radius: 999rem; background: #edf2f7; font-size: 0.8125rem;">Paused</span>
+            <h3 style="font-size: 1.125rem;">Simulation · 45 questions</h3>
+            <span style="display: inline-flex; align-items: center; min-height: 1.75rem; padding: 0.125rem 0.625rem; border: 1px solid #b7c1cc; border-radius: 999rem; background: #edf2f7; font-size: 0.8125rem;">In progress</span>
           </div>
           <dl style="display: grid; gap: 0.5rem; font-size: 0.9375rem;">
             <div style="display: grid; grid-template-columns: minmax(0, 9rem) minmax(0, 1fr); gap: 0.75rem;"><dt style="color: #4b5563;">Progress</dt><dd style="margin: 0;">18 of 45 answered</dd></div>
-            <div style="display: grid; grid-template-columns: minmax(0, 9rem) minmax(0, 1fr); gap: 0.75rem;"><dt style="color: #4b5563;">Distribution</dt><dd style="margin: 0;">20 illustrated, 25 written</dd></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 9rem) minmax(0, 1fr); gap: 0.75rem;"><dt style="color: #4b5563;">Distribution</dt><dd style="margin: 0;">Cleaning tools 17, minor repair 13, health and safety 15</dd></div>
             <div style="display: grid; grid-template-columns: minmax(0, 9rem) minmax(0, 1fr); gap: 0.75rem;"><dt style="color: #4b5563;">Pinned</dt><dd style="margin: 0;">pack v2.0.0</dd></div>
-            <div style="display: grid; grid-template-columns: minmax(0, 9rem) minmax(0, 1fr); gap: 0.75rem;"><dt style="color: #4b5563;">Session code</dt><dd style="margin: 0;"><code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; overflow-wrap: anywhere;">9f2c-4471-b8e0</code></dd></div>
-          </dl>
+            </dl>
+          <details style="font-size: 0.8125rem; color: #4b5563;"><summary style="display: list-item; min-height: 2.75rem; padding-block: 0.625rem; cursor: pointer; font-weight: 700; color: #075985;">Technical details</summary><dl style="display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.25rem 0.75rem; margin: 0;"><dt>Session code</dt><dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">9f2c-4471-b8e0</dd><dt>Set code</dt><dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">launch-v1-practice</dd></dl></details>
           <button type="button" style="justify-self: start; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.5rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; cursor: pointer;" style-hover="background: #0c4a6e;">Resume at question 19</button>
         </article>
 
@@ -1060,8 +1060,8 @@
           <dl style="display: grid; gap: 0.5rem; font-size: 0.9375rem;">
             <div style="display: grid; grid-template-columns: minmax(0, 9rem) minmax(0, 1fr); gap: 0.75rem;"><dt style="color: #4b5563;">Progress</dt><dd style="margin: 0;">3 of 6 scenes committed</dd></div>
             <div style="display: grid; grid-template-columns: minmax(0, 9rem) minmax(0, 1fr); gap: 0.75rem;"><dt style="color: #4b5563;">Pinned</dt><dd style="margin: 0;">pack v1.8.0 — session continues on the retained version</dd></div>
-            <div style="display: grid; grid-template-columns: minmax(0, 9rem) minmax(0, 1fr); gap: 0.75rem;"><dt style="color: #4b5563;">Manifest</dt><dd style="margin: 0;"><code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; overflow-wrap: anywhere;">sim-2026-08-24-01</code></dd></div>
-          </dl>
+            </dl>
+          <details style="font-size: 0.8125rem; color: #4b5563;"><summary style="display: list-item; min-height: 2.75rem; padding-block: 0.625rem; cursor: pointer; font-weight: 700; color: #075985;">Technical details</summary><dl style="display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.25rem 0.75rem; margin: 0;"><dt>Session code</dt><dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">sim-2026-08-24-01</dd></dl></details>
           <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
             <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.5rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; cursor: pointer;" style-hover="background: #0c4a6e;">Resume on v1.8.0</button>
             <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.5rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; cursor: pointer;" style-hover="background: #edf2f7;">Start fresh on v2.0.0</button>
@@ -1107,9 +1107,9 @@
       <div style="display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 21rem), 1fr));">
         <div style="display: grid; gap: 0.75rem; align-content: start; padding: 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
           <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">loading</span>
-          <h3 style="font-size: 1.0625rem;">Building your practice session…</h3>
-          <div role="progressbar" aria-label="Building session" style="height: 0.5rem; border: 1px solid #b7c1cc; border-radius: 999rem; background: #edf2f7; overflow: hidden;"><span style="display: block; height: 100%; width: 40%; background: #075985;"></span></div>
-          <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">Choosing 18 items from pack v2.0.0. Focus stays where it is.</p>
+          <h3 style="font-size: 1.0625rem;">Building your simulation…</h3>
+          <div role="progressbar" aria-label="Building simulation" style="height: 0.5rem; border: 1px solid #b7c1cc; border-radius: 999rem; background: #edf2f7; overflow: hidden;"><span style="display: block; height: 100%; width: 40%; background: #075985;"></span></div>
+          <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">Choosing 45 items from pack v2.0.0. Focus stays where it is.</p>
           <button type="button" style="justify-self: start; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; font-weight: 700; cursor: pointer;" style-hover="background: #edf2f7;">Cancel</button>
         </div>
 
@@ -1199,10 +1199,10 @@
           <sc-if value="{{ homeReady }}" hint-placeholder-val="{{ true }}">
             <div style="display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));">
               <article style="display: grid; gap: 0.75rem; align-content: start; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
-                <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #075985;">Resume</span>
-                <h4 style="font-size: 1.0625rem;">Tool recognition practice</h4>
-                <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">12 of 18 answered, on pack v2.0.0</p>
-                <button type="button" style="justify-self: start; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; cursor: pointer;" style-hover="background: #0c4a6e;">Resume at 13</button>
+                <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #075985;">Practice</span>
+                <h4 style="font-size: 1.0625rem;">Start a set of 45 questions</h4>
+                <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">The shortest set we offer, drawn from all three subject areas.</p>
+                <button type="button" style="justify-self: start; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; cursor: pointer;" style-hover="background: #0c4a6e;">Start a 45-question set</button>
               </article>
               <article style="display: grid; gap: 0.75rem; align-content: start; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
                 <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #075985;">Ready for review</span>
@@ -1235,10 +1235,10 @@
           <sc-if value="{{ homeOffline }}">
             <div style="display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));">
               <article style="display: grid; gap: 0.75rem; align-content: start; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
-                <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #075985;">Resume</span>
-                <h4 style="font-size: 1.0625rem;">Tool recognition practice</h4>
-                <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">12 of 18 answered, continuing on pack v1.8.0</p>
-                <button type="button" style="justify-self: start; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; cursor: pointer;" style-hover="background: #0c4a6e;">Resume at 13</button>
+                <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #075985;">Practice</span>
+                <h4 style="font-size: 1.0625rem;">Start a set of 45 questions</h4>
+                <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">Works from the copy on this device, v1.8.0.</p>
+                <button type="button" style="justify-self: start; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; cursor: pointer;" style-hover="background: #0c4a6e;">Start a 45-question set</button>
               </article>
               <article style="display: grid; gap: 0.75rem; align-content: start; padding: 1.25rem; border: 1px solid #854d0e; border-radius: 0.5rem; background: #fffaeb;">
                 <strong style="display: flex; align-items: center; gap: 0.5rem; color: #854d0e; font-size: 0.9375rem;"><span aria-hidden="true">▲</span> Pack is two versions behind</strong>
@@ -1667,11 +1667,11 @@
           <h3 style="font-size: 1.0625rem;">Comparison: what tells them apart</h3>
           <div style="display: flex; gap: 0.75rem;">
             <figure style="margin: 0; display: grid; gap: 0.375rem; flex: 1 1 0;">
-              <img src="content/assets/derivatives/tools/t006-phone.png" alt="Dust mop: a wide flat rectangular frame carrying dense soft yarn across its whole face." style="display: block; width: 100%; height: auto; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #edf2f7;" />
+              <img src="content/assets/derivatives/tools/t006-phone.png" alt="An original black line illustration showing broad low-profile floor head and dry dusting yarn or pad; no brand or scale claim." style="display: block; width: 100%; height: auto; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #edf2f7;" />
               <figcaption style="font-size: 0.8125rem; color: #4b5563;">Dust mop</figcaption>
             </figure>
             <figure style="margin: 0; display: grid; gap: 0.375rem; flex: 1 1 0;">
-              <img src="content/assets/derivatives/tools/t007-phone.png" alt="Wet or string mop: loose strands gathered into a central band at the end of a handle." style="display: block; width: 100%; height: auto; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #edf2f7;" />
+              <img src="content/assets/derivatives/tools/t007-phone.png" alt="An original black line illustration showing absorbent string head and long floor-cleaning handle; no brand or scale claim." style="display: block; width: 100%; height: auto; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #edf2f7;" />
               <figcaption style="font-size: 0.8125rem; color: #4b5563;">Wet/string mop</figcaption>
             </figure>
           </div>
@@ -1708,18 +1708,15 @@
 
         <div style="display: grid; gap: 1rem; align-content: start;">
           <div style="display: grid; gap: 0.75rem; padding: 1.25rem; border: 1px solid #667085; border-radius: 0.75rem; background: #ffffff;">
-            <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">Filtered empty — not unavailable</span>
-            <h3 style="font-size: 1.0625rem;">No reviewed record matches “burnisher” in PPE</h3>
-            <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">Records exist for this term in another family. This is an empty result, not missing content, and it is worded so the two are never confused.</p>
-            <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
-              <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; cursor: pointer;" style-hover="background: #0c4a6e;">Clear filters</button>
-              <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; cursor: pointer;" style-hover="background: #edf2f7;">Search all families</button>
-            </div>
+            <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">No filtered-empty state here</span>
+            <h3 style="font-size: 1.0625rem;">A family tab cannot return nothing</h3>
+            <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">All 65 records are illustrated and every one of the nine families holds at least two, so the atlas has no way to reach zero results. The filtered EmptyState belongs to the lists a learner can narrow to nothing — saved activity and the review scopes — and putting one here would describe a state the route cannot produce.</p>
+            <a href="#f-empty" style="justify-self: start; font-weight: 550;">See where it does belong</a>
           </div>
           <div style="display: grid; gap: 0.75rem; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff;">
             <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #4b5563;">Per-item media unavailable</span>
-            <h3 style="font-size: 1.0625rem;">Pipe wrench — no illustration yet</h3>
-            <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">The illustration has not passed review yet. The record, its facts, and its text comparison are all readable — one missing image never empties the page.</p>
+            <h3 style="font-size: 1.0625rem;">Pipe wrench — its illustration did not load</h3>
+            <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">Every released record has an accepted illustration, so this is a read failure on this device, never a gap in the inventory. The record, its recognition cues and its written comparison stay readable — one image that fails never empties the page.</p>
             <a href="#c-availability" style="justify-self: start; font-weight: 550;">Use the nonvisual comparison</a>
           </div>
         </div>
@@ -1732,7 +1729,7 @@
       <div style="display: grid; gap: 0.5rem; max-width: 68ch;">
         <span style="font-size: 0.8125rem; font-weight: 700; color: #075985;">Three named route compositions</span>
         <h2 style="font-size: clamp(1.5rem, 1.25rem + 0.9vw, 2rem);">SessionBuilder</h2>
-        <p style="color: #4b5563; text-wrap: pretty;">One builder, three route compositions. Each includes only the controls and disclaimers that are valid for its workflow — there is no <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">isHazard</code> or <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">isSimulation</code> to set.</p>
+        <p style="color: #4b5563; text-wrap: pretty;">One builder, three route compositions. Each includes only the controls and disclaimers that are valid for its workflow — there is no <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">isHazard</code> or <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">isSimulation</code> to set. Every control here changes the activity that gets built: the areas decide what can be drawn, the length decides how much, the task decides which measurement, and the timing decides the clock. A length the selection cannot fill is shown as unavailable with its real count — a requested set is never quietly made shorter and never padded with a repeat — and nothing draws a personalized mix, so there is no weighting control.</p>
       </div>
 
       <dc-import name="Session Builder" hint-size="100%,48rem"></dc-import>
@@ -1905,54 +1902,108 @@
       <div style="display: grid; gap: 0.5rem; max-width: 68ch;">
         <span style="font-size: 0.8125rem; font-weight: 700; color: #075985;">Deterministic print job</span>
         <h2 style="font-size: clamp(1.5rem, 1.25rem + 0.9vw, 2rem);">PrintBuilder and PrintPreview</h2>
-        <p style="color: #4b5563; text-wrap: pretty;">The preview is the printed artifact — renderer-independent semantic HTML paginated by the existing <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">@page</code> rules. Questions and their key are separately controllable in every state, and opening the system dialog is never recorded as a print.</p>
+        <p style="color: #4b5563; text-wrap: pretty;">The preview is the printed artifact — renderer-independent semantic HTML paginated by the existing <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">@page</code> rules. One product per job, so a question packet can be handed out without its key, and opening the system dialog is never recorded as a print.</p>
       </div>
 
       <div style="display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); align-items: start;">
         <form style="display: grid; gap: 1.25rem; padding: 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff;" onSubmit="{{ noopSubmit }}">
           <div style="display: grid; gap: 0.375rem;">
             <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #075985;">PrintBuilder: configuring</span>
-            <h3 style="font-size: 1.125rem;">Build a print packet</h3>
+            <h3 style="font-size: 1.125rem;">Choose what to print</h3>
+            <p style="margin: 0; max-width: 60ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Counts are limited by what this release contains. Each product is saved separately so questions, keys, and explanations can begin on distinct sheets.</p>
           </div>
 
-          <fieldset style="display: grid; gap: 0.75rem; border: 1px solid #b7c1cc; padding: 1rem; min-inline-size: 0;">
-            <legend style="padding: 0 0.375rem; font-weight: 700;">Products</legend>
-            <label style="display: flex; align-items: start; gap: 0.75rem;"><input type="checkbox" checked="{{ true }}" onChange="{{ noop }}" style="flex: 0 0 auto; width: 1.25rem; height: 1.25rem; margin-block-start: 0.1875rem; accent-color: #075985;" /><span><strong>Question packet</strong><span style="display: block; font-size: 0.9375rem; color: #4b5563;">Prompts, options, and a separate answer sheet.</span></span></label>
-            <label style="display: flex; align-items: start; gap: 0.75rem;"><input type="checkbox" onChange="{{ noop }}" style="flex: 0 0 auto; width: 1.25rem; height: 1.25rem; margin-block-start: 0.1875rem; accent-color: #075985;" /><span><strong>Key and explanations</strong><span style="display: block; font-size: 0.9375rem; color: #4b5563;">A separate document, so a packet can be handed out without it.</span></span></label>
-            <label style="display: flex; align-items: start; gap: 0.75rem;"><input type="checkbox" onChange="{{ noop }}" style="flex: 0 0 auto; width: 1.25rem; height: 1.25rem; margin-block-start: 0.1875rem; accent-color: #075985;" /><span><strong>Tool cards</strong><span style="display: block; font-size: 0.9375rem; color: #4b5563;">One card per reviewed record with its accepted illustration.</span></span></label>
+          <fieldset style="display: grid; gap: 0.25rem; border: 1px solid #b7c1cc; padding: 1rem; min-inline-size: 0;">
+            <legend style="padding: 0 0.375rem; font-weight: 700;">Product type</legend>
+            <div style="display: grid; gap: 0.125rem;">
+              <label style="display: grid; grid-template-columns: 1.25rem minmax(0, 1fr); gap: 0 0.75rem; align-items: baseline; min-height: 2.75rem; padding-block: 0.375rem; cursor: pointer;"><input type="radio" name="cl-print-product" onChange="{{ noop }}" style="width: 1.25rem; height: 1.25rem; accent-color: #075985;" /><span style="font-size: 0.9375rem; color: #17202a;">Blank answer sheet</span></label>
+            </div>
+            <div style="display: grid; gap: 0.125rem;">
+              <label style="display: grid; grid-template-columns: 1.25rem minmax(0, 1fr); gap: 0 0.75rem; align-items: baseline; min-height: 2.75rem; padding-block: 0.375rem; cursor: pointer;"><input type="radio" name="cl-print-product" checked="{{ true }}" onChange="{{ noop }}" style="width: 1.25rem; height: 1.25rem; accent-color: #075985;" /><span style="font-size: 0.9375rem; color: #17202a;">Original multiple-choice questions</span></label>
+            </div>
+            <div style="display: grid; gap: 0.125rem;">
+              <label style="display: grid; grid-template-columns: 1.25rem minmax(0, 1fr); gap: 0 0.75rem; align-items: baseline; min-height: 2.75rem; padding-block: 0.375rem; cursor: pointer;"><input type="radio" name="cl-print-product" onChange="{{ noop }}" style="width: 1.25rem; height: 1.25rem; accent-color: #075985;" /><span style="font-size: 0.9375rem; color: #17202a;">Separate answer key</span></label>
+            </div>
+            <div style="display: grid; gap: 0.125rem;">
+              <label style="display: grid; grid-template-columns: 1.25rem minmax(0, 1fr); gap: 0 0.75rem; align-items: baseline; min-height: 2.75rem; padding-block: 0.375rem; cursor: pointer;"><input type="radio" name="cl-print-product" onChange="{{ noop }}" style="width: 1.25rem; height: 1.25rem; accent-color: #075985;" /><span style="font-size: 0.9375rem; color: #17202a;">Separate explanations and source references</span></label>
+            </div>
+            <div style="display: grid; gap: 0.125rem;">
+              <label style="display: grid; grid-template-columns: 1.25rem minmax(0, 1fr); gap: 0 0.75rem; align-items: baseline; min-height: 2.75rem; padding-block: 0.375rem; cursor: pointer;"><input type="radio" name="cl-print-product" onChange="{{ noop }}" style="width: 1.25rem; height: 1.25rem; accent-color: #075985;" /><span style="font-size: 0.9375rem; color: #17202a;">Tool-family contrast cards</span></label>
+            </div>
+            <div style="display: grid; gap: 0.125rem;">
+              <label style="display: grid; grid-template-columns: 1.25rem minmax(0, 1fr); gap: 0 0.75rem; align-items: baseline; min-height: 2.75rem; padding-block: 0.375rem; cursor: pointer;"><input type="radio" name="cl-print-product" onChange="{{ noop }}" style="width: 1.25rem; height: 1.25rem; accent-color: #075985;" /><span style="font-size: 0.9375rem; color: #17202a;">Blank hazard worksheet</span></label>
+            </div>
+            <div style="display: grid; gap: 0.125rem;">
+              <label style="display: grid; grid-template-columns: 1.25rem minmax(0, 1fr); gap: 0 0.75rem; align-items: baseline; min-height: 2.75rem; padding-block: 0.375rem; cursor: pointer;"><input type="radio" name="cl-print-product" onChange="{{ noop }}" style="width: 1.25rem; height: 1.25rem; accent-color: #075985;" /><span style="font-size: 0.9375rem; color: #17202a;">Annotated hazard-answer packet</span></label>
+            </div>
+            <div style="display: grid; gap: 0.125rem;">
+              <label style="display: grid; grid-template-columns: 1.25rem minmax(0, 1fr); gap: 0 0.75rem; align-items: baseline; min-height: 2.75rem; padding-block: 0.375rem; cursor: pointer;"><input type="radio" name="cl-print-product" onChange="{{ noop }}" style="width: 1.25rem; height: 1.25rem; accent-color: #075985;" /><span style="font-size: 0.9375rem; color: #17202a;">Text-equivalent/nonvisual set</span></label>
+            </div>
+            <div style="display: grid; gap: 0.125rem;">
+              <label style="display: grid; grid-template-columns: 1.25rem minmax(0, 1fr); gap: 0 0.75rem; align-items: baseline; min-height: 2.75rem; padding-block: 0.375rem; cursor: not-allowed;"><input type="radio" name="cl-print-product" disabled="{{ true }}" onChange="{{ noop }}" style="width: 1.25rem; height: 1.25rem; accent-color: #075985;" /><span style="font-size: 0.9375rem; color: #667085;">Announcement-profile fact sheet</span></label>
+              <p style="margin: 0 0 0 2rem; max-width: 60ch; font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">Unavailable: No reviewed announcement fact history is available for this profile; a generic profile summary is not substituted.</p>
+            </div>
+            <div style="display: grid; gap: 0.125rem;">
+              <label style="display: grid; grid-template-columns: 1.25rem minmax(0, 1fr); gap: 0 0.75rem; align-items: baseline; min-height: 2.75rem; padding-block: 0.375rem; cursor: not-allowed;"><input type="radio" name="cl-print-product" disabled="{{ true }}" onChange="{{ noop }}" style="width: 1.25rem; height: 1.25rem; accent-color: #075985;" /><span style="font-size: 0.9375rem; color: #667085;">Correction/change-log excerpt</span></label>
+              <p style="margin: 0 0 0 2rem; max-width: 60ch; font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">Unavailable: No publishable structured correction or change-log record exists in this release.</p>
+            </div>
           </fieldset>
+
+          <label style="display: grid; gap: 0.5rem;"><span style="font-weight: 700;">Content filter</span><select onChange="{{ noop }}" style="width: 100%; min-height: 2.75rem; padding: 0.75rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff;"><option>All compatible content</option><option>Cleaning tools and their uses</option><option>Tools for minor maintenance and repair</option><option>Health and safety in custodial work</option></select><span style="font-size: 0.875rem; color: #4b5563;">Filter by the published question category, tool family, or scene environment.</span></label>
 
           <div style="display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));">
-            <label style="display: grid; gap: 0.5rem;"><span style="font-weight: 700;">Domain</span><select style="width: 100%; min-height: 2.75rem; padding: 0.75rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff;"><option>All reviewed domains</option><option>Tools and equipment</option></select></label>
-            <label style="display: grid; gap: 0.5rem;"><span style="font-weight: 700;">Questions</span><input type="number" value="24" min="1" max="60" onChange="{{ noop }}" style="width: 100%; min-height: 2.75rem; padding: 0.75rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff;" /><span style="font-size: 0.9375rem; color: #4b5563;">Bounded to 60 so a job cannot exhaust the device.</span></label>
-            <label style="display: grid; gap: 0.5rem;"><span style="font-weight: 700;">Paper</span><select style="width: 100%; min-height: 2.75rem; padding: 0.75rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff;"><option>US Letter, standard margins</option><option>A4, wide margins</option></select></label>
+            <label style="display: grid; gap: 0.5rem;"><span style="font-weight: 700;">Number of questions</span><input type="number" value="24" min="1" max="90" onChange="{{ noop }}" style="width: 100%; min-height: 2.75rem; padding: 0.75rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff;" /><span style="font-size: 0.875rem; color: #4b5563;">Available questions: 90</span></label>
+            <label style="display: grid; gap: 0.5rem;"><span style="font-weight: 700;">Paper</span><select onChange="{{ noop }}" style="width: 100%; min-height: 2.75rem; padding: 0.75rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff;"><option>US Letter</option><option>A4</option></select></label>
+            <label style="display: grid; gap: 0.5rem;"><span style="font-weight: 700;">Margins</span><select onChange="{{ noop }}" style="width: 100%; min-height: 2.75rem; padding: 0.75rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff;"><option>Standard</option><option>Wide</option></select></label>
           </div>
 
           <fieldset style="display: grid; gap: 0.75rem; border: 1px solid #b7c1cc; padding: 1rem; min-inline-size: 0;">
-            <legend style="padding: 0 0.375rem; font-weight: 700;">Accessibility and images</legend>
-            <label style="display: flex; align-items: center; gap: 0.75rem;"><input type="checkbox" onChange="{{ noop }}" style="width: 1.25rem; height: 1.25rem; accent-color: #075985;" /> Large print (18pt)</label>
-            <label style="display: flex; align-items: center; gap: 0.75rem;"><input type="checkbox" checked="{{ true }}" onChange="{{ noop }}" style="width: 1.25rem; height: 1.25rem; accent-color: #075985;" /> Check grayscale legibility</label>
-            <label style="display: flex; align-items: center; gap: 0.75rem;"><input type="checkbox" checked="{{ true }}" onChange="{{ noop }}" style="width: 1.25rem; height: 1.25rem; accent-color: #075985;" /> Print the text equivalent under every illustration</label>
+            <legend style="padding: 0 0.375rem; font-weight: 700;">Accessibility and output</legend>
+            <label style="display: flex; align-items: center; gap: 0.75rem; min-height: 2.75rem; cursor: pointer;"><input type="checkbox" onChange="{{ noop }}" style="width: 1.25rem; height: 1.25rem; accent-color: #075985;" /> Large print (at least 18pt)</label>
+            <label style="display: flex; align-items: center; gap: 0.75rem; min-height: 2.75rem; cursor: pointer;"><input type="checkbox" checked="{{ true }}" onChange="{{ noop }}" style="width: 1.25rem; height: 1.25rem; accent-color: #075985;" /> Grayscale preview</label>
+            <label style="display: flex; align-items: center; gap: 0.75rem; min-height: 2.75rem; color: #667085;"><input type="checkbox" checked="{{ true }}" disabled="{{ true }}" onChange="{{ noop }}" style="width: 1.25rem; height: 1.25rem; accent-color: #075985;" /> Include released print images</label>
+            <label style="display: flex; align-items: center; gap: 0.75rem; min-height: 2.75rem; color: #667085;"><input type="checkbox" checked="{{ true }}" disabled="{{ true }}" onChange="{{ noop }}" style="width: 1.25rem; height: 1.25rem; accent-color: #075985;" /> Include source references</label>
+            <label style="display: grid; gap: 0.5rem;"><span style="font-weight: 700;">Answer-key placement</span><select onChange="{{ noop }}" style="width: 100%; min-height: 2.75rem; padding: 0.75rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff;"><option>Separate product and print job</option><option>Append a separately labeled new section</option></select></label>
+            <label style="display: flex; align-items: center; gap: 0.75rem; min-height: 2.75rem; color: #667085;"><input type="checkbox" disabled="{{ true }}" onChange="{{ noop }}" style="width: 1.25rem; height: 1.25rem; accent-color: #075985;" /> Append explanations after the answer key</label>
+            <p style="margin: 0; max-width: 60ch; font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">Two of these apply only to the products that carry images or sources, so they stay disabled for a plain question packet. Question sheets, answer sheets, keys and explanations printed with the same settings and code carry the same pairing label, so you can match them later.</p>
           </fieldset>
 
-          <div style="display: grid; gap: 0.5rem; padding: 1rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #f7f8fa;">
-            <strong style="font-size: 0.9375rem;">Repeatable packet</strong>
-            <p style="margin: 0; font-size: 0.9375rem; color: #4b5563;">The same job code on pack v2.0.0 always produces this exact packet.</p>
-            <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.875rem; overflow-wrap: anywhere;">job 4c81-90ab</code>
+          <details style="border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #f7f8fa;">
+            <summary style="display: flex; align-items: center; min-height: 2.75rem; padding: 0.625rem 1rem; cursor: pointer; font-weight: 700;">Repeat this exact set</summary>
+            <div style="display: grid; gap: 0.5rem; padding: 0 1rem 1rem;">
+              <label style="display: grid; gap: 0.375rem; max-width: 20rem;"><span style="font-weight: 700; font-size: 0.9375rem;">Set code</span><input type="text" value="practice-1" onChange="{{ noop }}" style="width: 100%; min-height: 2.75rem; padding: 0.75rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; font-family: ui-monospace, SFMono-Regular, Consolas, monospace;" /></label>
+              <p style="margin: 0; max-width: 60ch; font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">The same settings and code always produce the same items.</p>
+            </div>
+          </details>
+
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem;">
+            <button type="submit" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.5rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; cursor: pointer;">Generate preview</button>
+            <span role="status" style="font-size: 0.875rem; color: #4b5563;">Generating and saving preview…</span>
           </div>
 
-          <button type="submit" style="justify-self: start; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.5rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; cursor: pointer;" style-hover="background: #0c4a6e;">Generate preview</button>
+          <div role="alert" style="display: grid; gap: 0.5rem; padding: 1rem 1.25rem; border: 1px solid #b42318; border-radius: 0.5rem; background: #fef3f2;">
+            <strong tabindex="-1" style="display: flex; align-items: center; gap: 0.5rem; color: #b42318;"><span aria-hidden="true">✕</span> Print preview was not generated</strong>
+            <p style="margin: 0; font-size: 0.9375rem;">Nothing was saved on this device. Your settings are unchanged, so generating again is the only step.</p>
+          </div>
         </form>
 
         <div style="display: grid; gap: 1rem;">
           <div style="display: grid; gap: 0.75rem; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff;">
-            <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem;">
-              <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #075985;">PrintPreview: preview-ready</span>
-              <span role="status" style="font-size: 0.875rem; color: #4b5563;">6 pages, pagination checked</span>
+            <div style="display: grid; gap: 0.375rem;">
+              <span style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.75rem; color: #075985;">PrintPreview: saved print preview</span>
+              <h3 style="font-size: 1.125rem;">Practice packet: original multiple-choice questions</h3>
+              <p style="margin: 0; font-size: 0.9375rem;"><strong>Original practice written for this site. Not an official examination, an official answer key, or a score forecast.</strong></p>
             </div>
+            <dl style="display: grid; gap: 0.375rem; margin: 0; font-size: 0.9375rem;">
+              <div style="display: grid; grid-template-columns: minmax(0, 10rem) minmax(0, 1fr); gap: 0.25rem 1rem; padding-block: 0.375rem; border-block-start: 1px solid #e2e7ec;"><dt style="color: #4b5563;">Actual length</dt><dd style="margin: 0;">24 questions</dd></div>
+              <div style="display: grid; grid-template-columns: minmax(0, 10rem) minmax(0, 1fr); gap: 0.25rem 1rem; padding-block: 0.375rem; border-block-start: 1px solid #e2e7ec;"><dt style="color: #4b5563;">Distribution</dt><dd style="margin: 0;">Site-designed distribution: cleaning tools 9, minor repair 7, health and safety 8</dd></div>
+              <div style="display: grid; grid-template-columns: minmax(0, 10rem) minmax(0, 1fr); gap: 0.25rem 1rem; padding-block: 0.375rem; border-block-start: 1px solid #e2e7ec;"><dt style="color: #4b5563;">Estimated page count</dt><dd style="margin: 0;">6</dd></div>
+            </dl>
+            <details style="font-size: 0.8125rem; color: #4b5563;"><summary style="display: list-item; min-height: 2.75rem; padding-block: 0.625rem; cursor: pointer; font-weight: 700; color: #075985;">Technical details</summary><dl style="display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.25rem 0.75rem; margin: 0;"><dt>Content release</dt><dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">launch-v1 · version 2.0.0</dd><dt>Set pairing identifier</dt><dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">pair-4c81-90ab</dd><dt>Manifest fingerprint</dt><dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">9f2c4471b8e0c1d5</dd></dl></details>
+
             <div style="display: grid; gap: 1rem; padding: 1.5rem; border: 1px solid #b7c1cc; background: #ffffff; font-size: 0.875rem;">
               <div style="display: flex; justify-content: space-between; gap: 0.75rem; padding-block-end: 0.5rem; border-block-end: 2px solid #17202a;">
-                <strong>Practice packet: tools and equipment</strong>
+                <strong>Questions</strong>
                 <span>Page 1 of 6</span>
               </div>
               <div style="display: grid; gap: 0.5rem; padding-block-end: 0.75rem; border-block-end: 2px solid #17202a;">
@@ -1967,27 +2018,27 @@
               <div style="display: grid; gap: 0.5rem;">
                 <strong>2. Which tool is shown?</strong>
                 <div style="display: flex; gap: 0.75rem; align-items: start;">
-                  <img src="content/assets/derivatives/tools/t006-phone.png" alt="A long straight handle joined by a swivel yoke to a wide flat rectangular head carrying dense soft strands." style="width: 6rem; height: auto; border: 1px solid #b7c1cc;" />
-                  <p style="margin: 0; color: #4b5563;">Text equivalent printed beneath every illustration, so the packet works in grayscale and for a reader who cannot use the image.</p>
+                  <img src="content/assets/derivatives/tools/t006-phone.png" alt="An original black line illustration showing broad low-profile floor head and dry dusting yarn or pad; no brand or scale claim." style="width: 6rem; height: auto; border: 1px solid #b7c1cc;" />
+                  <p style="margin: 0; color: #4b5563;">The written description prints beneath every illustration, so the packet works in grayscale and for a reader who cannot use the image.</p>
                 </div>
               </div>
             </div>
-            <dl style="display: grid; gap: 0.5rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); margin: 0; font-size: 0.875rem;">
-              <div style="border: 1px solid #b7c1cc; padding: 0.625rem;"><dt style="font-weight: 700;">Job manifest</dt><dd style="margin: 0.25rem 0 0; color: #4b5563;"><code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; overflow-wrap: anywhere;">job 4c81-90ab</code></dd></div>
-              <div style="border: 1px solid #b7c1cc; padding: 0.625rem;"><dt style="font-weight: 700;">Content pin</dt><dd style="margin: 0.25rem 0 0; color: #4b5563;">pack v2.0.0</dd></div>
-              <div style="border: 1px solid #b7c1cc; padding: 0.625rem;"><dt style="font-weight: 700;">Grayscale</dt><dd style="margin: 0.25rem 0 0; color: #4b5563;">Legible — no color-only meaning</dd></div>
-            </dl>
-            <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
-              <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.5rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; cursor: pointer;" style-hover="background: #0c4a6e;">Open the system print dialog</button>
-              <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; cursor: pointer;" style-hover="background: #edf2f7;">Regenerate</button>
+
+            <div style="display: grid; gap: 0.75rem;">
+              <p style="margin: 0; max-width: 62ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">System print and the browser’s “Save as PDF” are the output path. Opening the dialog does not confirm that printing occurred.</p>
+              <label style="display: grid; grid-template-columns: 1.25rem minmax(0, 1fr); gap: 0 0.75rem; align-items: start; cursor: pointer;"><input type="checkbox" onChange="{{ noop }}" style="width: 1.25rem; height: 1.25rem; accent-color: #075985; margin-block-start: 0.25rem;" /><span style="font-size: 0.9375rem;">I inspected browser print preview for clipping, page breaks, grayscale readability, source readability, and product separation.</span></label>
+              <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem;">
+                <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; cursor: pointer;">Regenerate this packet</button>
+                <button type="button" disabled="{{ true }}" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #e5e7eb; color: #4b5563; font-weight: 700; cursor: not-allowed;">Open system print</button>
+              </div>
+              <p style="margin: 0; font-size: 0.875rem; color: #4b5563;">System print stays disabled until that box is checked, and again whenever the job is stale or being regenerated. Once requested, the status line reads “System print was requested; completion is not confirmed.”</p>
             </div>
-            <p style="margin: 0; font-size: 0.875rem; color: #4b5563;">We can record that system print was requested. We cannot know whether anything was printed, so nothing here claims it was.</p>
           </div>
 
-          <div style="display: grid; gap: 0.5rem; padding: 1.25rem; border: 1px solid #854d0e; border-radius: 0.75rem; background: #fffaeb; color: #854d0e;">
-            <strong style="display: flex; align-items: center; gap: 0.5rem;"><span aria-hidden="true">▲</span> This preview has gone stale</strong>
-            <p style="margin: 0; font-size: 0.9375rem; color: #17202a;">Question <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace;">q014</code> was corrected after this job was generated. The generated preview is retained and readable; regenerate to pick up the correction.</p>
-            <button type="button" style="justify-self: start; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; cursor: pointer;" style-hover="background: #ffffff;">Regenerate with the correction</button>
+          <div style="display: grid; gap: 0.5rem; padding: 1.25rem; border: 1px solid #854d0e; border-radius: 0.75rem; background: #fffaeb;">
+            <strong style="display: flex; align-items: center; gap: 0.5rem; color: #854d0e;"><span aria-hidden="true">▲</span> This job references corrected or removed content</strong>
+            <p style="margin: 0; font-size: 0.9375rem; color: #17202a;">Regenerate it before printing. The saved preview stays readable at this address, and system print is withheld while the job is stale.</p>
+            <button type="button" style="justify-self: start; display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; cursor: pointer;">Regenerate this packet</button>
           </div>
         </div>
       </div>
@@ -2400,9 +2451,9 @@
         <details style="border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
           <summary style="padding: 0.75rem 1rem; cursor: pointer; font-weight: 550; min-height: 2.75rem; display: flex; align-items: center;">Contract notes</summary>
           <div style="padding: 0 1rem 1rem; display: grid; gap: 0.5rem; max-width: 68ch; color: #4b5563; font-size: 0.9375rem;">
-            <p>Thresholds. Up to six sessions: the plain hairline list, no groups, no footer, no filters. Seven or more: month groups, a footer that states “Showing the 6 most recent of N” and expands in place, then collapses again. Twelve or more: a kind filter (all, sets, drills, simulations) as a Tabs row with counts beside each label. The boxed FilterGroup is reserved for a toolbar beside a search field, as on the exam registry; a filter standing alone over a list is always the Tabs row.</p>
-            <p>Rows never mix kind, scope and outcome into one dashed string. Kind and scope are the name and its sentence; the outcome is a count in its own column; the action is one link, “Resume” for an unfinished session and “Results” otherwise.</p>
-            <p>The list reads from the attempt events, so it stays available when the progress projection fails — the hub’s read-failed state replaces the header band and the summary sections and leaves this list in place, as the review queue does with its history.</p>
+            <p>Thresholds. Up to six saved records: the plain hairline list, no groups, no footer, no filters. Seven or more: month groups, a footer that states “Showing 6 of N saved activities.” and expands in place, then collapses again. Twelve or more: a kind filter (all activity, questions, hazards, reviews) as a Tabs row with counts beside each label. The boxed FilterGroup is reserved for a toolbar beside a search field, as on the exam registry; a filter standing alone over a list is always the Tabs row.</p>
+            <p>Rows never mix kind, scope and outcome into one dashed string. The label and its kind sit together; what was saved is a statement in its own column; the action is one link, “Feedback”, back to the explanation the answer was shown with. A record whose attempt can no longer be read reads “Explanation unavailable” in place of the link. There is no Resume and no Results: a saved record is a finished attempt, not a session.</p>
+            <p>The list reads from the attempt events, so it stays available when the review projection fails — the hub’s read-failed state replaces the header band and the summary sections and leaves this list in place, as the review queue does with its history. A simulation in progress is the one thing that is a session, and it appears on the simulation route, never as a row here.</p>
             <p>Selectors: <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">.history-list</code>, <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">.history-group-label</code>, <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">.history-row</code>, <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">.history-foot</code>; the kind filter reuses <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">.tabs</code> (<code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">role="tablist"</code>, <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">aria-selected</code>) with a <code style="font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em;">.filter-count</code> span in each tab.</p>
           </div>
         </details>

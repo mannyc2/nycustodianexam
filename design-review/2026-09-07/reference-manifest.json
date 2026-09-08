@@ -1,480 +1,1308 @@
 {
-  "sourceArchive": "NYC Custodian Component Design-handoff(4).zip",
-  "sourceArchiveSha256": "9a85e62bb56ff80066967d089e8bb880b1f8e79fe2cacb9441b533fecc1e98ff",
-  "previousArchive": "NYC Custodian Component Design-handoff(3).zip",
+  "sourceArchive": "NYC Custodian Component Design(1).zip",
+  "sourceArchiveSha256": "621ce1970b677adae9d8b183c2aec9263e355b70a2326c3fe59d5a670c316bb8",
+  "previousArchive": "NYC Custodian Component Design-handoff(4).zip",
+  "pathMapping": "Archive root is stored under reference/project/; all file contents are unchanged.",
   "files": [
     {
-      "path": "reference/README.md",
-      "bytes": 1682,
-      "sha256": "984ad39fbe3ca16d30ec349fb604c977487e39050148ff234e246e6bca7dd00c"
-    },
-    {
       "path": "reference/project/.thumbnail",
-      "bytes": 41284,
-      "sha256": "c16663a26ed744d622b09b5ad51ea3190498018b015f28fa79882ed88ceacd40"
+      "archivePath": ".thumbnail",
+      "bytes": 21744,
+      "sha256": "f697c724b91c0ba30da69f968a956bff16e39c8a99e6c8a14a6208b73560410c"
     },
     {
       "path": "reference/project/CLAUDE.md",
-      "bytes": 16702,
-      "sha256": "5756057a1a20e58662f0bb34c1c6e6a83922c3665edd65f15629fbb13ab2465b"
+      "archivePath": "CLAUDE.md",
+      "bytes": 21358,
+      "sha256": "360bccdf033098c0b62ae256c25a9be9d0a42f26bd399505139186cdfaf13fc2"
     },
     {
       "path": "reference/project/Component Library.dc.html",
-      "bytes": 358915,
-      "sha256": "fb3ddaf8e0c0473369bbd7cf10f93e65db0ef2e4fb4514cb4189c1c44406e1cd"
+      "archivePath": "Component Library.dc.html",
+      "bytes": 369873,
+      "sha256": "7393ff9ddc37d9946f8acdeb91d1aabe41136bd3e2e962fbae15a362db124d63"
     },
     {
       "path": "reference/project/Future Explorations.dc.html",
+      "archivePath": "Future Explorations.dc.html",
       "bytes": 16081,
       "sha256": "d8613b609f4aa6d0d769383de5c89c6466b7a121431be80516873ed42b57a0d0"
     },
     {
       "path": "reference/project/Hazard Player.dc.html",
-      "bytes": 26668,
-      "sha256": "b80ec8c6d389e3b9f33e38e1d4cb2d4ba4acfbb41a0d2f84af46adb47126c04c"
+      "archivePath": "Hazard Player.dc.html",
+      "bytes": 43505,
+      "sha256": "a705c575bde126ba5636eef64853b01a11fe1f0747e4c2b980bc4c5c1dfba60b"
     },
     {
       "path": "reference/project/Home.dc.html",
+      "archivePath": "Home.dc.html",
       "bytes": 52997,
       "sha256": "a3da7424eb6ae344afebfdf768598126f78ab937bb49ce53c27bdf31b925623d"
     },
     {
       "path": "reference/project/Landing.dc.html",
+      "archivePath": "Landing.dc.html",
       "bytes": 81398,
       "sha256": "c41d5b62fb47623f7b5c4461fa7d2e66071b5ef639b6d54de1cdb719cc4b64a1"
     },
     {
       "path": "reference/project/Offline.dc.html",
+      "archivePath": "Offline.dc.html",
       "bytes": 76501,
       "sha256": "0f4a36b940557a175d66daefa3b8f39f8909789a41d1e3244237435bb51d401e"
     },
     {
       "path": "reference/project/Question Player.dc.html",
+      "archivePath": "Question Player.dc.html",
       "bytes": 33971,
       "sha256": "255ef5ff0a52b4a3968e1375aa990179541401b2697969486c03acf3b32d0b35"
     },
     {
       "path": "reference/project/Review Queue.dc.html",
+      "archivePath": "Review Queue.dc.html",
       "bytes": 71475,
       "sha256": "faf0522603549ee7987420d931175968c6327701f3ab62590804f6d872288fe8"
     },
     {
       "path": "reference/project/Session Builder.dc.html",
-      "bytes": 23481,
-      "sha256": "3b3a0128d635a1b9da716cde1b0d200248f1203ac624a86626a40f8ecc4a7f51"
+      "archivePath": "Session Builder.dc.html",
+      "bytes": 24781,
+      "sha256": "a6b6cdcfc92f4608bc1cdf071df055d17216277a3e78f39d5206d1208bf5f1f0"
     },
     {
       "path": "reference/project/Settings.dc.html",
+      "archivePath": "Settings.dc.html",
       "bytes": 69206,
       "sha256": "42254c0b89812c81c38ad11e7e7a0872b59778bcdae9a85c6d1423a1004e3fb0"
     },
     {
       "path": "reference/project/Simulation Navigator.dc.html",
+      "archivePath": "Simulation Navigator.dc.html",
       "bytes": 6520,
       "sha256": "eb77cf69da011749c9058b3fcc68cd2dc928575c3a1bd1863ab236b4977b50d3"
     },
     {
       "path": "reference/project/Site Nav Proposals.dc.html",
+      "archivePath": "Site Nav Proposals.dc.html",
       "bytes": 102122,
       "sha256": "726f99474d946f1c978606c3dcc3d3d84b29060828dd8b399cea53cbab827bec"
     },
     {
       "path": "reference/project/Study Hub.dc.html",
+      "archivePath": "Study Hub.dc.html",
       "bytes": 111560,
       "sha256": "825ce7bb716136f5a4633d452acff0907796a77386ddb499b1a06d264e08568f"
     },
     {
       "path": "reference/project/Tool Atlas.dc.html",
-      "bytes": 9823,
-      "sha256": "09378b356a6e6440345ecdceb5abbaa5ba13ce3fa43b2d5b086cf03d97586ed6"
+      "archivePath": "Tool Atlas.dc.html",
+      "bytes": 27272,
+      "sha256": "532ad2b3937b4312936bcba4fcb00c0871c9c1e5b8216f4fff8d758289dec922"
     },
     {
       "path": "reference/project/content/assets/derivatives/scenes/s003-phone.png",
+      "archivePath": "content/assets/derivatives/scenes/s003-phone.png",
       "bytes": 260693,
       "sha256": "4213808a50ec91260499d7e409d22211479cb071a5643e935aa98cb37d054171"
     },
     {
       "path": "reference/project/content/assets/derivatives/scenes/s008-phone.png",
+      "archivePath": "content/assets/derivatives/scenes/s008-phone.png",
       "bytes": 281712,
       "sha256": "5c9baf1012aa80a741e45572e0a61486ae11b9608525759617a8b00f87149b2b"
     },
     {
       "path": "reference/project/content/assets/derivatives/scenes/s009-phone.png",
+      "archivePath": "content/assets/derivatives/scenes/s009-phone.png",
       "bytes": 277833,
       "sha256": "b8ed8646a78b6e047f47c0750e859a13fa91e53a6a0a4b51d26d5a76acb019a6"
     },
     {
       "path": "reference/project/content/assets/derivatives/tools/t001-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t001-phone.png",
       "bytes": 84072,
       "sha256": "20982817fe806bffa8da7e2cc06ce4f5caa85400da7a1412b07e55301177234f"
     },
     {
       "path": "reference/project/content/assets/derivatives/tools/t002-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t002-phone.png",
       "bytes": 70428,
       "sha256": "baba2e79d2ada171771ea355aa6a2be3ffe0c886434970869d121e8127acd3eb"
     },
     {
       "path": "reference/project/content/assets/derivatives/tools/t003-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t003-phone.png",
       "bytes": 88826,
       "sha256": "5511fcb6a43ac0c435e7405f4f77bfe19b67fc6c87a7f8af1bdbd5a211978e1f"
     },
     {
       "path": "reference/project/content/assets/derivatives/tools/t004-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t004-phone.png",
       "bytes": 62971,
       "sha256": "72667701c86604f67f79f7d6276922fafbe8b4222f6b3e1ed5ecd468b05195d6"
     },
     {
       "path": "reference/project/content/assets/derivatives/tools/t005-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t005-phone.png",
       "bytes": 43561,
       "sha256": "22e57a774aa6e324b12ddf80be3fea469d150a7837076d7323206350af878b7e"
     },
     {
       "path": "reference/project/content/assets/derivatives/tools/t006-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t006-phone.png",
       "bytes": 74561,
       "sha256": "c4d39cd0758b807af4bbe3ca997d0370b49f67476191a88f0b19084a63ddd5fb"
     },
     {
       "path": "reference/project/content/assets/derivatives/tools/t007-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t007-phone.png",
       "bytes": 60587,
       "sha256": "539e60f55898692a3e4379eb2da0a552b8b41d6cbff6b8e2f09a2acf7a7bb319"
     },
     {
       "path": "reference/project/content/assets/derivatives/tools/t008-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t008-phone.png",
       "bytes": 54322,
       "sha256": "ec7ce4b5bdfb020972eecebd7a3d384fe58fa518a58b4e3311c95aa4cce32be6"
     },
     {
+      "path": "reference/project/content/assets/derivatives/tools/t009-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t009-phone.png",
+      "bytes": 82352,
+      "sha256": "4381ca79ed3aec09f6e668ba56b295d3aa7dcff3115eb3d87b850b082576cb75"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t010-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t010-phone.png",
+      "bytes": 42813,
+      "sha256": "bb0d7be267e1e9c7ce4a5956fdcd27f61ada1785b78b5f3c01433cd059e60219"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t011-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t011-phone.png",
+      "bytes": 82099,
+      "sha256": "155515e1c91fdf6aa3fde415ba033664f948bed88566635661c8ca5bfdb9b628"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t012-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t012-phone.png",
+      "bytes": 56435,
+      "sha256": "c1e39c5e0811a43d651eda5d36b9fe3f3537a61320839801684197247b471b21"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t013-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t013-phone.png",
+      "bytes": 80689,
+      "sha256": "447e378383f401b20820fa16d4e59ade0b1bd4c7723b820ecab767def20ac233"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t014-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t014-phone.png",
+      "bytes": 62654,
+      "sha256": "40f1244daf7210267bc5ca16b770d9efa2688c2a007c7cb82ddaf834e884262b"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t015-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t015-phone.png",
+      "bytes": 52151,
+      "sha256": "93c0fff278f13eb0f221c49e088d2553eab76367ad6cfe31a040f4528310d594"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t016-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t016-phone.png",
+      "bytes": 60663,
+      "sha256": "a3f3dde82de10ebc81402bd889c55eed9a741f5dd4ef0af963f38bb58cee8619"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t017-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t017-phone.png",
+      "bytes": 74144,
+      "sha256": "76737db61a91b7b1af3122a18664ab4770418906021ff206172ded16af381aac"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t018-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t018-phone.png",
+      "bytes": 90000,
+      "sha256": "6af703652e2f3988bd855644cee388d699ef798694276a862239d63ef9a42e00"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t019-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t019-phone.png",
+      "bytes": 75080,
+      "sha256": "909ae744a39c96e9ecf6774f66b7959a4a5285df54179143a1eb06d69f743ab1"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t020-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t020-phone.png",
+      "bytes": 54561,
+      "sha256": "3e54d26a4f8350e0c9dcc767d198b6a5ece4ea69902c8587aefad92cee4ba1d4"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t021-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t021-phone.png",
+      "bytes": 57728,
+      "sha256": "aa8ba9e87361cc3100bf765b4ff565e50170a1f21d1ae924eb525a17ae4b94df"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t022-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t022-phone.png",
+      "bytes": 76995,
+      "sha256": "8d8698881c9b7c0282331b0b3af8e238a2d5b96f179e51460e0fdda1becbc221"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t023-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t023-phone.png",
+      "bytes": 81281,
+      "sha256": "e28acc82817e087d68d6ceec5b56ed024fadde0e4e5f497111fc309634d4854e"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t024-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t024-phone.png",
+      "bytes": 75022,
+      "sha256": "bd011277caf3b959d50bcc5c21943d23c14f892757f37506dad77541ca4c331f"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t025-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t025-phone.png",
+      "bytes": 73457,
+      "sha256": "f3591875bc37ecb344329c2c0f6a51b94d9802b3cd47e317c44ce7234bd8c830"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t026-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t026-phone.png",
+      "bytes": 77770,
+      "sha256": "96a3bd8940cd70c357813980f027b9ad521e952ff60581b5c99e24ad7f7f2b1c"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t027-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t027-phone.png",
+      "bytes": 76837,
+      "sha256": "f7497f9ec9c4a4b336c795de52aba25fbb4271cfd96bbd027b729590c12fa2ef"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t028-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t028-phone.png",
+      "bytes": 101766,
+      "sha256": "1029709ac57b5ab4da3504283464c8a50428616c87cba06ed26a3a80c4d222ef"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t029-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t029-phone.png",
+      "bytes": 95735,
+      "sha256": "dc8b94db0ca081b9e39cc15b6b1805bfd24286ae7f7bc21282eb905b9c9bfb0c"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t030-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t030-phone.png",
+      "bytes": 55717,
+      "sha256": "25a8b3ff1156e63bb084dcffa551ecfb4ccdc9d3ee17016c7dfecd83b13fdb01"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t031-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t031-phone.png",
+      "bytes": 60394,
+      "sha256": "56e17beae3220f11d3d6c21cc14b22f2a7ccbbe72eb2cf4ae082ccc882a3dbcf"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t032-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t032-phone.png",
+      "bytes": 59111,
+      "sha256": "5e0ba1369828c94b70e030cd79fd68f0febd43634d713575be5b14ae74ddc5ea"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t033-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t033-phone.png",
+      "bytes": 70744,
+      "sha256": "5a4a6e9b11895d7d9ee89aaca274589cedc39d0fae57b2f7931a8210fd31a45b"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t034-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t034-phone.png",
+      "bytes": 49345,
+      "sha256": "ad60f950781ee24f115d880887bef2eb6ecf476836782d090c79a02204f387c9"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t035-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t035-phone.png",
+      "bytes": 59221,
+      "sha256": "ee6de87329f9742fcc8094233e485d84d26ce67d756bc648d12d2c949609d34d"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t036-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t036-phone.png",
+      "bytes": 62147,
+      "sha256": "53b51d08c7f80ea4109bca467b0f8b46636083a6f22f5f490837d4621ab18e0e"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t037-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t037-phone.png",
+      "bytes": 65906,
+      "sha256": "1030db9971d5bcee354dda2a70317c90a1db963f5578827e6efbecb39ae20770"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t038-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t038-phone.png",
+      "bytes": 47062,
+      "sha256": "64e0752591acd91c6f41d062224cabca1fdb0254a2d12d959ceda09a59d59042"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t039-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t039-phone.png",
+      "bytes": 68647,
+      "sha256": "ac7a099c8efea286edf6df5eb5a8b2eab807c9f51fb22825d47268536a5559a5"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t040-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t040-phone.png",
+      "bytes": 61058,
+      "sha256": "3975ebe92b6fa3cd83e1bec0657af20be149a76482dae2307cca3cd950d6f2ce"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t041-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t041-phone.png",
+      "bytes": 54945,
+      "sha256": "1f146fa9e19f1d1e06aa0dbd0f4f10baaca9962e8a2915554b4da1129a2ab903"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t042-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t042-phone.png",
+      "bytes": 72652,
+      "sha256": "e11a453dbf68641c54c4ec2de959bbc5a891eafd4d1e2075cfdb0dde3f75bbd3"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t043-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t043-phone.png",
+      "bytes": 66791,
+      "sha256": "5c70939746af5e95970d084d35a3d11a211dfd311cb89e09cb8015e4e10af835"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t044-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t044-phone.png",
+      "bytes": 77072,
+      "sha256": "a2037e2d70866ecef23444a557775037578ffd8ca28e8edcb91799f779169ab6"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t045-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t045-phone.png",
+      "bytes": 58452,
+      "sha256": "d9b9edd4a9968046f90f6eb85cb082e427677408bc1e613155e348ce36b229d1"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t046-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t046-phone.png",
+      "bytes": 80798,
+      "sha256": "78d8da28706923d8d3e24f4f34b1bbeb8b62dcdd22f520174f54dbab61ea884f"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t047-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t047-phone.png",
+      "bytes": 63783,
+      "sha256": "3a32b57b18dd4cdb32649d057ff50828970c33ec0bf920bb3653f046554e22ce"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t048-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t048-phone.png",
+      "bytes": 59116,
+      "sha256": "2ffdc65a257626e4064b619d061b4befd7a2fddcb91bd6ed4543826ab0a30967"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t049-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t049-phone.png",
+      "bytes": 60049,
+      "sha256": "5ed09acff9026dfc956101698b7062b92fdc5921a9712314272e1ee431ab410b"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t050-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t050-phone.png",
+      "bytes": 64176,
+      "sha256": "614dc33a325c04c4b2505be04fd2bd84db2f75a08ea17cf87f79cf908442bbf3"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t051-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t051-phone.png",
+      "bytes": 48487,
+      "sha256": "993facb5d6d995b0bae8e0220c65a41d0937e2617d0d3671be8b5f57d16cb8a3"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t052-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t052-phone.png",
+      "bytes": 67026,
+      "sha256": "3c720218121095af0bfc603bd19a6e06d5c02aef330ce6781a52bb57b7c29c19"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t053-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t053-phone.png",
+      "bytes": 77051,
+      "sha256": "3e7da7653b31eae6a7f94ad2227a9c49f7cb46cfe14d1119abd4c78a28e18197"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t054-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t054-phone.png",
+      "bytes": 62798,
+      "sha256": "6465f91d147fdf09cb1d50e26ebd556bae4dc42d6e5464359d16e75016b0fd17"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t055-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t055-phone.png",
+      "bytes": 59712,
+      "sha256": "c48bc947e5b1803f6b62738e01f3440218a689d4811d9334ba17bb04d2c44571"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t056-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t056-phone.png",
+      "bytes": 74575,
+      "sha256": "d6660155cb6e7440850a164c9be8a73e16d196ec2e54bfea069f9d0fb6dfddc3"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t057-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t057-phone.png",
+      "bytes": 69592,
+      "sha256": "9e0f155b3c048692d616b2e34c3a9284eefc0f5ba20168b6fe3096e1655dba7d"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t058-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t058-phone.png",
+      "bytes": 67748,
+      "sha256": "1469ecff33792abd3724a8509556fca445befc45585f8200f96f7ce1974a2277"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t059-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t059-phone.png",
+      "bytes": 72617,
+      "sha256": "8e64ed5b907de0817c42d25eedd4c6b02a9efdd23eed81205f96072b8cb8668b"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t060-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t060-phone.png",
+      "bytes": 85458,
+      "sha256": "155a196749b1ca88760d1a5b5a402903917fe5d5be83563813d66dfc75a2b762"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t061-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t061-phone.png",
+      "bytes": 74860,
+      "sha256": "a90921239673b9511270b3d0e9df740ce414cd21477169e91f2fc4c79788c50b"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t062-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t062-phone.png",
+      "bytes": 58067,
+      "sha256": "ba837159528254024b0486b9206864e046dab8b994d6f66894f0f011e5a27618"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t063-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t063-phone.png",
+      "bytes": 63809,
+      "sha256": "dd0178635bf9041b27d13af59b9a17ce85ecb1e47a5d0c7c47ef18d7909cbdd8"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t064-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t064-phone.png",
+      "bytes": 64755,
+      "sha256": "42139d8c710f888d2e55566ac5dc5100d6c0e2d166ef37b8ba43ba2fd84e2241"
+    },
+    {
+      "path": "reference/project/content/assets/derivatives/tools/t065-phone.png",
+      "archivePath": "content/assets/derivatives/tools/t065-phone.png",
+      "bytes": 69586,
+      "sha256": "2a0732d387e5d54fef745e104f757e6eca558cfc1fc524fcfeaf9d9f2330a134"
+    },
+    {
       "path": "reference/project/exports/INDEX.md",
-      "bytes": 10819,
-      "sha256": "cd93ff76379fc45c534fdb35ceb2c0df928308c6bff8090ed14e6578d4bddae4"
+      "archivePath": "exports/INDEX.md",
+      "bytes": 13877,
+      "sha256": "f073710cce3ef511971ab5de67769c92ffd2c4c56b4852388931161b9943c17c"
     },
     {
       "path": "reference/project/exports/current/Component Library.dc.html",
-      "bytes": 358915,
-      "sha256": "fb3ddaf8e0c0473369bbd7cf10f93e65db0ef2e4fb4514cb4189c1c44406e1cd"
+      "archivePath": "exports/current/Component Library.dc.html",
+      "bytes": 369873,
+      "sha256": "7393ff9ddc37d9946f8acdeb91d1aabe41136bd3e2e962fbae15a362db124d63"
     },
     {
       "path": "reference/project/exports/current/DESIGN-DECISIONS.md",
+      "archivePath": "exports/current/DESIGN-DECISIONS.md",
       "bytes": 16702,
       "sha256": "5756057a1a20e58662f0bb34c1c6e6a83922c3665edd65f15629fbb13ab2465b"
     },
     {
       "path": "reference/project/exports/current/Future Explorations.dc.html",
+      "archivePath": "exports/current/Future Explorations.dc.html",
       "bytes": 16081,
       "sha256": "d8613b609f4aa6d0d769383de5c89c6466b7a121431be80516873ed42b57a0d0"
     },
     {
       "path": "reference/project/exports/current/Hazard Player.dc.html",
-      "bytes": 26668,
-      "sha256": "b80ec8c6d389e3b9f33e38e1d4cb2d4ba4acfbb41a0d2f84af46adb47126c04c"
+      "archivePath": "exports/current/Hazard Player.dc.html",
+      "bytes": 43505,
+      "sha256": "a705c575bde126ba5636eef64853b01a11fe1f0747e4c2b980bc4c5c1dfba60b"
     },
     {
       "path": "reference/project/exports/current/Home.dc.html",
+      "archivePath": "exports/current/Home.dc.html",
       "bytes": 52997,
       "sha256": "a3da7424eb6ae344afebfdf768598126f78ab937bb49ce53c27bdf31b925623d"
     },
     {
       "path": "reference/project/exports/current/Landing.dc.html",
+      "archivePath": "exports/current/Landing.dc.html",
       "bytes": 81398,
       "sha256": "c41d5b62fb47623f7b5c4461fa7d2e66071b5ef639b6d54de1cdb719cc4b64a1"
     },
     {
       "path": "reference/project/exports/current/Offline.dc.html",
+      "archivePath": "exports/current/Offline.dc.html",
       "bytes": 76501,
       "sha256": "0f4a36b940557a175d66daefa3b8f39f8909789a41d1e3244237435bb51d401e"
     },
     {
       "path": "reference/project/exports/current/Question Player.dc.html",
+      "archivePath": "exports/current/Question Player.dc.html",
       "bytes": 33971,
       "sha256": "255ef5ff0a52b4a3968e1375aa990179541401b2697969486c03acf3b32d0b35"
     },
     {
       "path": "reference/project/exports/current/Review Queue.dc.html",
+      "archivePath": "exports/current/Review Queue.dc.html",
       "bytes": 71475,
       "sha256": "faf0522603549ee7987420d931175968c6327701f3ab62590804f6d872288fe8"
     },
     {
       "path": "reference/project/exports/current/Session Builder.dc.html",
-      "bytes": 23481,
-      "sha256": "3b3a0128d635a1b9da716cde1b0d200248f1203ac624a86626a40f8ecc4a7f51"
+      "archivePath": "exports/current/Session Builder.dc.html",
+      "bytes": 24781,
+      "sha256": "a6b6cdcfc92f4608bc1cdf071df055d17216277a3e78f39d5206d1208bf5f1f0"
     },
     {
       "path": "reference/project/exports/current/Settings.dc.html",
+      "archivePath": "exports/current/Settings.dc.html",
       "bytes": 69206,
       "sha256": "42254c0b89812c81c38ad11e7e7a0872b59778bcdae9a85c6d1423a1004e3fb0"
     },
     {
       "path": "reference/project/exports/current/Simulation Navigator.dc.html",
+      "archivePath": "exports/current/Simulation Navigator.dc.html",
       "bytes": 6520,
       "sha256": "eb77cf69da011749c9058b3fcc68cd2dc928575c3a1bd1863ab236b4977b50d3"
     },
     {
       "path": "reference/project/exports/current/Study Hub.dc.html",
+      "archivePath": "exports/current/Study Hub.dc.html",
       "bytes": 111560,
       "sha256": "825ce7bb716136f5a4633d452acff0907796a77386ddb499b1a06d264e08568f"
     },
     {
       "path": "reference/project/exports/current/Tool Atlas.dc.html",
-      "bytes": 9823,
-      "sha256": "09378b356a6e6440345ecdceb5abbaa5ba13ce3fa43b2d5b086cf03d97586ed6"
+      "archivePath": "exports/current/Tool Atlas.dc.html",
+      "bytes": 27272,
+      "sha256": "532ad2b3937b4312936bcba4fcb00c0871c9c1e5b8216f4fff8d758289dec922"
     },
     {
       "path": "reference/project/exports/current/content/assets/derivatives/scenes/s003-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/scenes/s003-phone.png",
       "bytes": 260693,
       "sha256": "4213808a50ec91260499d7e409d22211479cb071a5643e935aa98cb37d054171"
     },
     {
       "path": "reference/project/exports/current/content/assets/derivatives/scenes/s008-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/scenes/s008-phone.png",
       "bytes": 281712,
       "sha256": "5c9baf1012aa80a741e45572e0a61486ae11b9608525759617a8b00f87149b2b"
     },
     {
       "path": "reference/project/exports/current/content/assets/derivatives/scenes/s009-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/scenes/s009-phone.png",
       "bytes": 277833,
       "sha256": "b8ed8646a78b6e047f47c0750e859a13fa91e53a6a0a4b51d26d5a76acb019a6"
     },
     {
       "path": "reference/project/exports/current/content/assets/derivatives/tools/t001-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t001-phone.png",
       "bytes": 84072,
       "sha256": "20982817fe806bffa8da7e2cc06ce4f5caa85400da7a1412b07e55301177234f"
     },
     {
       "path": "reference/project/exports/current/content/assets/derivatives/tools/t002-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t002-phone.png",
       "bytes": 70428,
       "sha256": "baba2e79d2ada171771ea355aa6a2be3ffe0c886434970869d121e8127acd3eb"
     },
     {
       "path": "reference/project/exports/current/content/assets/derivatives/tools/t003-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t003-phone.png",
       "bytes": 88826,
       "sha256": "5511fcb6a43ac0c435e7405f4f77bfe19b67fc6c87a7f8af1bdbd5a211978e1f"
     },
     {
       "path": "reference/project/exports/current/content/assets/derivatives/tools/t004-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t004-phone.png",
       "bytes": 62971,
       "sha256": "72667701c86604f67f79f7d6276922fafbe8b4222f6b3e1ed5ecd468b05195d6"
     },
     {
       "path": "reference/project/exports/current/content/assets/derivatives/tools/t005-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t005-phone.png",
       "bytes": 43561,
       "sha256": "22e57a774aa6e324b12ddf80be3fea469d150a7837076d7323206350af878b7e"
     },
     {
       "path": "reference/project/exports/current/content/assets/derivatives/tools/t006-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t006-phone.png",
       "bytes": 74561,
       "sha256": "c4d39cd0758b807af4bbe3ca997d0370b49f67476191a88f0b19084a63ddd5fb"
     },
     {
       "path": "reference/project/exports/current/content/assets/derivatives/tools/t007-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t007-phone.png",
       "bytes": 60587,
       "sha256": "539e60f55898692a3e4379eb2da0a552b8b41d6cbff6b8e2f09a2acf7a7bb319"
     },
     {
       "path": "reference/project/exports/current/content/assets/derivatives/tools/t008-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t008-phone.png",
       "bytes": 54322,
       "sha256": "ec7ce4b5bdfb020972eecebd7a3d384fe58fa518a58b4e3311c95aa4cce32be6"
     },
     {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t009-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t009-phone.png",
+      "bytes": 82352,
+      "sha256": "4381ca79ed3aec09f6e668ba56b295d3aa7dcff3115eb3d87b850b082576cb75"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t010-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t010-phone.png",
+      "bytes": 42813,
+      "sha256": "bb0d7be267e1e9c7ce4a5956fdcd27f61ada1785b78b5f3c01433cd059e60219"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t011-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t011-phone.png",
+      "bytes": 82099,
+      "sha256": "155515e1c91fdf6aa3fde415ba033664f948bed88566635661c8ca5bfdb9b628"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t012-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t012-phone.png",
+      "bytes": 56435,
+      "sha256": "c1e39c5e0811a43d651eda5d36b9fe3f3537a61320839801684197247b471b21"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t013-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t013-phone.png",
+      "bytes": 80689,
+      "sha256": "447e378383f401b20820fa16d4e59ade0b1bd4c7723b820ecab767def20ac233"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t014-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t014-phone.png",
+      "bytes": 62654,
+      "sha256": "40f1244daf7210267bc5ca16b770d9efa2688c2a007c7cb82ddaf834e884262b"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t015-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t015-phone.png",
+      "bytes": 52151,
+      "sha256": "93c0fff278f13eb0f221c49e088d2553eab76367ad6cfe31a040f4528310d594"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t016-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t016-phone.png",
+      "bytes": 60663,
+      "sha256": "a3f3dde82de10ebc81402bd889c55eed9a741f5dd4ef0af963f38bb58cee8619"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t017-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t017-phone.png",
+      "bytes": 74144,
+      "sha256": "76737db61a91b7b1af3122a18664ab4770418906021ff206172ded16af381aac"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t018-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t018-phone.png",
+      "bytes": 90000,
+      "sha256": "6af703652e2f3988bd855644cee388d699ef798694276a862239d63ef9a42e00"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t019-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t019-phone.png",
+      "bytes": 75080,
+      "sha256": "909ae744a39c96e9ecf6774f66b7959a4a5285df54179143a1eb06d69f743ab1"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t020-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t020-phone.png",
+      "bytes": 54561,
+      "sha256": "3e54d26a4f8350e0c9dcc767d198b6a5ece4ea69902c8587aefad92cee4ba1d4"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t021-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t021-phone.png",
+      "bytes": 57728,
+      "sha256": "aa8ba9e87361cc3100bf765b4ff565e50170a1f21d1ae924eb525a17ae4b94df"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t022-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t022-phone.png",
+      "bytes": 76995,
+      "sha256": "8d8698881c9b7c0282331b0b3af8e238a2d5b96f179e51460e0fdda1becbc221"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t023-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t023-phone.png",
+      "bytes": 81281,
+      "sha256": "e28acc82817e087d68d6ceec5b56ed024fadde0e4e5f497111fc309634d4854e"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t024-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t024-phone.png",
+      "bytes": 75022,
+      "sha256": "bd011277caf3b959d50bcc5c21943d23c14f892757f37506dad77541ca4c331f"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t025-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t025-phone.png",
+      "bytes": 73457,
+      "sha256": "f3591875bc37ecb344329c2c0f6a51b94d9802b3cd47e317c44ce7234bd8c830"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t026-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t026-phone.png",
+      "bytes": 77770,
+      "sha256": "96a3bd8940cd70c357813980f027b9ad521e952ff60581b5c99e24ad7f7f2b1c"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t027-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t027-phone.png",
+      "bytes": 76837,
+      "sha256": "f7497f9ec9c4a4b336c795de52aba25fbb4271cfd96bbd027b729590c12fa2ef"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t028-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t028-phone.png",
+      "bytes": 101766,
+      "sha256": "1029709ac57b5ab4da3504283464c8a50428616c87cba06ed26a3a80c4d222ef"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t029-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t029-phone.png",
+      "bytes": 95735,
+      "sha256": "dc8b94db0ca081b9e39cc15b6b1805bfd24286ae7f7bc21282eb905b9c9bfb0c"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t030-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t030-phone.png",
+      "bytes": 55717,
+      "sha256": "25a8b3ff1156e63bb084dcffa551ecfb4ccdc9d3ee17016c7dfecd83b13fdb01"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t031-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t031-phone.png",
+      "bytes": 60394,
+      "sha256": "56e17beae3220f11d3d6c21cc14b22f2a7ccbbe72eb2cf4ae082ccc882a3dbcf"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t032-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t032-phone.png",
+      "bytes": 59111,
+      "sha256": "5e0ba1369828c94b70e030cd79fd68f0febd43634d713575be5b14ae74ddc5ea"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t033-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t033-phone.png",
+      "bytes": 70744,
+      "sha256": "5a4a6e9b11895d7d9ee89aaca274589cedc39d0fae57b2f7931a8210fd31a45b"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t034-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t034-phone.png",
+      "bytes": 49345,
+      "sha256": "ad60f950781ee24f115d880887bef2eb6ecf476836782d090c79a02204f387c9"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t035-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t035-phone.png",
+      "bytes": 59221,
+      "sha256": "ee6de87329f9742fcc8094233e485d84d26ce67d756bc648d12d2c949609d34d"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t036-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t036-phone.png",
+      "bytes": 62147,
+      "sha256": "53b51d08c7f80ea4109bca467b0f8b46636083a6f22f5f490837d4621ab18e0e"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t037-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t037-phone.png",
+      "bytes": 65906,
+      "sha256": "1030db9971d5bcee354dda2a70317c90a1db963f5578827e6efbecb39ae20770"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t038-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t038-phone.png",
+      "bytes": 47062,
+      "sha256": "64e0752591acd91c6f41d062224cabca1fdb0254a2d12d959ceda09a59d59042"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t039-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t039-phone.png",
+      "bytes": 68647,
+      "sha256": "ac7a099c8efea286edf6df5eb5a8b2eab807c9f51fb22825d47268536a5559a5"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t040-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t040-phone.png",
+      "bytes": 61058,
+      "sha256": "3975ebe92b6fa3cd83e1bec0657af20be149a76482dae2307cca3cd950d6f2ce"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t041-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t041-phone.png",
+      "bytes": 54945,
+      "sha256": "1f146fa9e19f1d1e06aa0dbd0f4f10baaca9962e8a2915554b4da1129a2ab903"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t042-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t042-phone.png",
+      "bytes": 72652,
+      "sha256": "e11a453dbf68641c54c4ec2de959bbc5a891eafd4d1e2075cfdb0dde3f75bbd3"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t043-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t043-phone.png",
+      "bytes": 66791,
+      "sha256": "5c70939746af5e95970d084d35a3d11a211dfd311cb89e09cb8015e4e10af835"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t044-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t044-phone.png",
+      "bytes": 77072,
+      "sha256": "a2037e2d70866ecef23444a557775037578ffd8ca28e8edcb91799f779169ab6"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t045-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t045-phone.png",
+      "bytes": 58452,
+      "sha256": "d9b9edd4a9968046f90f6eb85cb082e427677408bc1e613155e348ce36b229d1"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t046-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t046-phone.png",
+      "bytes": 80798,
+      "sha256": "78d8da28706923d8d3e24f4f34b1bbeb8b62dcdd22f520174f54dbab61ea884f"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t047-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t047-phone.png",
+      "bytes": 63783,
+      "sha256": "3a32b57b18dd4cdb32649d057ff50828970c33ec0bf920bb3653f046554e22ce"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t048-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t048-phone.png",
+      "bytes": 59116,
+      "sha256": "2ffdc65a257626e4064b619d061b4befd7a2fddcb91bd6ed4543826ab0a30967"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t049-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t049-phone.png",
+      "bytes": 60049,
+      "sha256": "5ed09acff9026dfc956101698b7062b92fdc5921a9712314272e1ee431ab410b"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t050-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t050-phone.png",
+      "bytes": 64176,
+      "sha256": "614dc33a325c04c4b2505be04fd2bd84db2f75a08ea17cf87f79cf908442bbf3"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t051-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t051-phone.png",
+      "bytes": 48487,
+      "sha256": "993facb5d6d995b0bae8e0220c65a41d0937e2617d0d3671be8b5f57d16cb8a3"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t052-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t052-phone.png",
+      "bytes": 67026,
+      "sha256": "3c720218121095af0bfc603bd19a6e06d5c02aef330ce6781a52bb57b7c29c19"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t053-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t053-phone.png",
+      "bytes": 77051,
+      "sha256": "3e7da7653b31eae6a7f94ad2227a9c49f7cb46cfe14d1119abd4c78a28e18197"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t054-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t054-phone.png",
+      "bytes": 62798,
+      "sha256": "6465f91d147fdf09cb1d50e26ebd556bae4dc42d6e5464359d16e75016b0fd17"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t055-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t055-phone.png",
+      "bytes": 59712,
+      "sha256": "c48bc947e5b1803f6b62738e01f3440218a689d4811d9334ba17bb04d2c44571"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t056-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t056-phone.png",
+      "bytes": 74575,
+      "sha256": "d6660155cb6e7440850a164c9be8a73e16d196ec2e54bfea069f9d0fb6dfddc3"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t057-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t057-phone.png",
+      "bytes": 69592,
+      "sha256": "9e0f155b3c048692d616b2e34c3a9284eefc0f5ba20168b6fe3096e1655dba7d"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t058-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t058-phone.png",
+      "bytes": 67748,
+      "sha256": "1469ecff33792abd3724a8509556fca445befc45585f8200f96f7ce1974a2277"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t059-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t059-phone.png",
+      "bytes": 72617,
+      "sha256": "8e64ed5b907de0817c42d25eedd4c6b02a9efdd23eed81205f96072b8cb8668b"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t060-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t060-phone.png",
+      "bytes": 85458,
+      "sha256": "155a196749b1ca88760d1a5b5a402903917fe5d5be83563813d66dfc75a2b762"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t061-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t061-phone.png",
+      "bytes": 74860,
+      "sha256": "a90921239673b9511270b3d0e9df740ce414cd21477169e91f2fc4c79788c50b"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t062-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t062-phone.png",
+      "bytes": 58067,
+      "sha256": "ba837159528254024b0486b9206864e046dab8b994d6f66894f0f011e5a27618"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t063-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t063-phone.png",
+      "bytes": 63809,
+      "sha256": "dd0178635bf9041b27d13af59b9a17ce85ecb1e47a5d0c7c47ef18d7909cbdd8"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t064-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t064-phone.png",
+      "bytes": 64755,
+      "sha256": "42139d8c710f888d2e55566ac5dc5100d6c0e2d166ef37b8ba43ba2fd84e2241"
+    },
+    {
+      "path": "reference/project/exports/current/content/assets/derivatives/tools/t065-phone.png",
+      "archivePath": "exports/current/content/assets/derivatives/tools/t065-phone.png",
+      "bytes": 69586,
+      "sha256": "2a0732d387e5d54fef745e104f757e6eca558cfc1fc524fcfeaf9d9f2330a134"
+    },
+    {
       "path": "reference/project/exports/current/styles-additions.css",
+      "archivePath": "exports/current/styles-additions.css",
       "bytes": 58463,
       "sha256": "655fd636ad66633db8c7726c7be4f4a59bbd7e81aaabd00d2316bd18c59a5140"
     },
     {
       "path": "reference/project/exports/current/support.js",
+      "archivePath": "exports/current/support.js",
       "bytes": 69150,
       "sha256": "8fe7df74405f3c55f49b7249c74ea1397e65d07dea2b1bd3b4a489bec2e28cbe"
     },
     {
       "path": "reference/project/exports/explorations/Landing - archive.dc.html",
-      "bytes": 81525,
-      "sha256": "701e22c883758c36215fdccaf8394788b15e8d6568a22bd4581f604fa048d2ef"
+      "archivePath": "exports/explorations/Landing - archive.dc.html",
+      "bytes": 81410,
+      "sha256": "e747b13281abd2f7c2498c5ea3dffc544d14dc4e9e637da2e6eeaa774b3b4359"
     },
     {
       "path": "reference/project/exports/explorations/README.md",
+      "archivePath": "exports/explorations/README.md",
       "bytes": 1376,
       "sha256": "e7b6bf3ea62283c8e6f828802bac1efb09f8a566c32992eacf0c85f30e49d591"
     },
     {
       "path": "reference/project/exports/explorations/Site Nav Proposals.dc.html",
+      "archivePath": "exports/explorations/Site Nav Proposals.dc.html",
       "bytes": 102122,
       "sha256": "726f99474d946f1c978606c3dcc3d3d84b29060828dd8b399cea53cbab827bec"
     },
     {
       "path": "reference/project/exports/explorations/Study Hub - archive.dc.html",
+      "archivePath": "exports/explorations/Study Hub - archive.dc.html",
       "bytes": 174578,
       "sha256": "42e00134805bc1ad8954a5f2e7a9be6129c6ae37c20840e4f15049f3a521f7ba"
     },
     {
       "path": "reference/project/exports/explorations/support.js",
+      "archivePath": "exports/explorations/support.js",
       "bytes": 69150,
       "sha256": "8fe7df74405f3c55f49b7249c74ea1397e65d07dea2b1bd3b4a489bec2e28cbe"
     },
     {
       "path": "reference/project/exports/screenshots/01-home--first-visit--1248w.png",
+      "archivePath": "exports/screenshots/01-home--first-visit--1248w.png",
       "bytes": 524269,
       "sha256": "eef34aa00788647bd3b98406bc973ba3f7b53fe24a05e2d472b058df8ceb34dd"
     },
     {
-      "path": "reference/project/exports/screenshots/01-home--first-visit--1248x2844.png",
-      "bytes": 535379,
-      "sha256": "4ef195e59e4a9f68734df449c9ee1c2dfa789e3bae3b1c264d549f80f47d671d"
-    },
-    {
       "path": "reference/project/exports/screenshots/02-home--first-visit--384w.png",
+      "archivePath": "exports/screenshots/02-home--first-visit--384w.png",
       "bytes": 199078,
       "sha256": "4ae8aae3aa4c74bdb2ea6896bf398d42b63e1f80482a9d11a60955cdb66081e2"
     },
     {
-      "path": "reference/project/exports/screenshots/02-home--first-visit--384x2097.png",
-      "bytes": 199078,
-      "sha256": "73331ab38d98b3167c40cea647a3953fe942c2a38e6f3f26ebd29f27020c9c1d"
-    },
-    {
-      "path": "reference/project/exports/screenshots/03-home--library-open--1248x2844.png",
+      "path": "reference/project/exports/screenshots/03-home--library-open--1248w.png",
+      "archivePath": "exports/screenshots/03-home--library-open--1248w.png",
       "bytes": 547717,
       "sha256": "499ae66cba8e99e90d31a8d11f805e750220b9167693c095ac56d61763389559"
     },
     {
-      "path": "reference/project/exports/screenshots/04-home--library-sheet-open--384x2097.png",
+      "path": "reference/project/exports/screenshots/04-home--library-sheet-open--384w.png",
+      "archivePath": "exports/screenshots/04-home--library-sheet-open--384w.png",
       "bytes": 201704,
       "sha256": "36cb867004759dff3e5efab2c9930c91ca7cfc67dbbb9c8211eed98f3e5236b0"
     },
     {
       "path": "reference/project/exports/screenshots/05-practice--first-visit--1248w.png",
+      "archivePath": "exports/screenshots/05-practice--first-visit--1248w.png",
       "bytes": 472791,
       "sha256": "b7b94d21e6db34d9f0c1ab9eb202120b44094d0a197fcc12fddd3c87f798ae11"
     },
     {
       "path": "reference/project/exports/screenshots/06-practice--first-visit--384w.png",
+      "archivePath": "exports/screenshots/06-practice--first-visit--384w.png",
       "bytes": 218564,
       "sha256": "c7d96744a344f31df62865ad420f89a40955d8fd5b2e8207d40fc732d175700b"
     },
     {
       "path": "reference/project/exports/screenshots/07-practice--returning--1248w.png",
+      "archivePath": "exports/screenshots/07-practice--returning--1248w.png",
       "bytes": 600942,
       "sha256": "9a5ca0e60a1aaa2cd39dbe39aa308ddba5de3ae63c9b20fb8a5d3752d655f024"
     },
     {
       "path": "reference/project/exports/screenshots/08-practice--returning--384w.png",
+      "archivePath": "exports/screenshots/08-practice--returning--384w.png",
       "bytes": 169644,
       "sha256": "c7a8606d8ac31d3619c3d37b74702faaa57ba01928df9f95086149f6a3f2fddb"
     },
     {
       "path": "reference/project/exports/screenshots/09-exams--record-open--1248w.png",
+      "archivePath": "exports/screenshots/09-exams--record-open--1248w.png",
       "bytes": 542304,
       "sha256": "1c9e331f039723a2582c744f6dca4b221a6badebcd9f5a1191431244b97c6c0b"
     },
     {
       "path": "reference/project/exports/screenshots/10-exams--first-visit--384w.png",
+      "archivePath": "exports/screenshots/10-exams--first-visit--384w.png",
       "bytes": 206447,
       "sha256": "ba25c3fb7b5aeb1476bd65e26c090c306f63b7777b43c3716199bd0af9315178"
     },
     {
       "path": "reference/project/exports/screenshots/11-settings--returning--1248w.png",
+      "archivePath": "exports/screenshots/11-settings--returning--1248w.png",
       "bytes": 364231,
       "sha256": "1a3455ac19fc1d93ae2f983be9ff9df5a8803604dd6cdda2a14f0f567efb39a5"
     },
     {
       "path": "reference/project/exports/screenshots/12-settings--returning--384w.png",
+      "archivePath": "exports/screenshots/12-settings--returning--384w.png",
       "bytes": 167829,
       "sha256": "0689409db189cf5170f6384e16054ef3e8e045a587c795c2e36dfcb6aeabdbb2"
     },
     {
       "path": "reference/project/exports/screenshots/13-settings--delete-preview--608w.png",
+      "archivePath": "exports/screenshots/13-settings--delete-preview--608w.png",
       "bytes": 50657,
       "sha256": "d3b707bc8f6a0acb53bce8cde3973639d3a78ff3b9b689b011ea092ef9d1b915"
     },
     {
       "path": "reference/project/exports/screenshots/14-settings--export-file-contents--608w.png",
+      "archivePath": "exports/screenshots/14-settings--export-file-contents--608w.png",
       "bytes": 64031,
       "sha256": "aba5f76851a2806052609650a53267de4952dc8d5508c2aa9d0a6b1bb6a29ffc"
     },
     {
       "path": "reference/project/exports/screenshots/15-offline--turned-on--1248w.png",
+      "archivePath": "exports/screenshots/15-offline--turned-on--1248w.png",
       "bytes": 445780,
       "sha256": "aad1ae2336df96b37dddf13de9c1c5e0e10297e079ced582d45cd55c0738d4ad"
     },
     {
       "path": "reference/project/exports/screenshots/16-offline--turned-on--384w.png",
+      "archivePath": "exports/screenshots/16-offline--turned-on--384w.png",
       "bytes": 160015,
       "sha256": "6e6ce3d9a5419d22cf70495d07c9db487e53a09708a4a13b46a57f6f8f66e4be"
     },
     {
       "path": "reference/project/exports/screenshots/17-offline--nothing-downloaded--1248w.png",
+      "archivePath": "exports/screenshots/17-offline--nothing-downloaded--1248w.png",
       "bytes": 172819,
       "sha256": "e8d9b421593ffe9bb9696959feba5085fc7720f28cd79a993da16895d1ffe3bf"
     },
     {
       "path": "reference/project/exports/screenshots/18-offline--removal-preview--608w.png",
+      "archivePath": "exports/screenshots/18-offline--removal-preview--608w.png",
       "bytes": 63839,
       "sha256": "cc998c939fce8e2bf5f2588c7d8065fd75185735a17ef2e8844830fa475432a6"
     },
     {
       "path": "reference/project/exports/screenshots/19-offline--storage-unavailable--608w.png",
+      "archivePath": "exports/screenshots/19-offline--storage-unavailable--608w.png",
       "bytes": 44826,
       "sha256": "959cdf458c59eede087f7d427603d6213ec0a04ecd95a47527175b621e1c1f34"
     },
     {
       "path": "reference/project/exports/screenshots/20-review--ready-with-confirmation--1248w.png",
+      "archivePath": "exports/screenshots/20-review--ready-with-confirmation--1248w.png",
       "bytes": 459830,
       "sha256": "2bbca0e53a2697fbc0307318015aad756a26fd4aed701472a6c18d5fba5cb16e"
     },
     {
       "path": "reference/project/exports/screenshots/21-review--ready--384w.png",
+      "archivePath": "exports/screenshots/21-review--ready--384w.png",
       "bytes": 276934,
       "sha256": "f7c3aa76e93e917f28e0000dc781d57aa35a2c5b07f80bd43ff6cf6e86c30787"
     },
     {
       "path": "reference/project/exports/screenshots/22-session-builder--practice-set--1053w.png",
-      "bytes": 174955,
-      "sha256": "867ebba2e5584efbbc76bffd3fe4865dd6d5a2fd325c2112f7b5a6d12e057b82"
+      "archivePath": "exports/screenshots/22-session-builder--practice-set--1053w.png",
+      "bytes": 497259,
+      "sha256": "4ccccd36a3ab5ddcb1876f6339571889712177b5b864e459e3b86a29cf3d9332"
     },
     {
       "path": "reference/project/exports/screenshots/23-review--cleared--608w.png",
+      "archivePath": "exports/screenshots/23-review--cleared--608w.png",
       "bytes": 61060,
       "sha256": "931f2d9f069c9a617042592510caab1d0129110e90ef78161563d22541894e2c"
     },
     {
       "path": "reference/project/exports/screenshots/24-review--read-failed--608w.png",
+      "archivePath": "exports/screenshots/24-review--read-failed--608w.png",
       "bytes": 49958,
       "sha256": "0bdc0fc35ee8b94bd98e3dcbdd9661a8c234b0208feb674c2c2a3e1434c4d460"
     },
     {
       "path": "reference/project/exports/screenshots/25-review--finish-not-saved--608w.png",
+      "archivePath": "exports/screenshots/25-review--finish-not-saved--608w.png",
       "bytes": 66884,
       "sha256": "a3f24118ef47182eecbfc472f88543df3fb37f22be68cd9393d37ced78eff86a"
     },
     {
       "path": "reference/project/exports/screenshots/26-question-player--unanswered--800w.png",
+      "archivePath": "exports/screenshots/26-question-player--unanswered--800w.png",
       "bytes": 168531,
       "sha256": "3ed600f7daccfbfe436847b79c42805ecb6fd428dc3eb352fe97c43d29500b2f"
     },
     {
       "path": "reference/project/exports/screenshots/27-question-player--answered--800w.png",
+      "archivePath": "exports/screenshots/27-question-player--answered--800w.png",
       "bytes": 281384,
       "sha256": "6990e79e544a653ec8c07c3d5ae0d90b61095a37d1aa0724ed72ceeb20134d19"
     },
     {
       "path": "reference/project/exports/screenshots/28-simulation-navigator--45-items--928w.png",
+      "archivePath": "exports/screenshots/28-simulation-navigator--45-items--928w.png",
       "bytes": 88291,
       "sha256": "4deabc74bc7fcf5ad487880f038b76dba8cbc0ea22841036e565d5177a8c1d54"
     },
     {
+      "path": "reference/project/exports/screenshots/29-session-builder--hazard-drill--1053w.png",
+      "archivePath": "exports/screenshots/29-session-builder--hazard-drill--1053w.png",
+      "bytes": 457584,
+      "sha256": "d2a350830ddbb616f279d4f105120a8a481d21b3aab5da35fc02a4ed9cba514f"
+    },
+    {
+      "path": "reference/project/exports/screenshots/30-session-builder--simulation-timed--1053w.png",
+      "archivePath": "exports/screenshots/30-session-builder--simulation-timed--1053w.png",
+      "bytes": 630599,
+      "sha256": "05f298d258104a6922128b5315ce23f43662c0989a5c63a2c7a3784ad20c353f"
+    },
+    {
+      "path": "reference/project/exports/screenshots/31-session-builder--length-unavailable--1053w.png",
+      "archivePath": "exports/screenshots/31-session-builder--length-unavailable--1053w.png",
+      "bytes": 574491,
+      "sha256": "bcbaf288913571750cb11a5f9c4d38e67dac37d00941fa8202772dbfd7bb1735"
+    },
+    {
+      "path": "reference/project/exports/screenshots/32-atlas--all-families--990w.png",
+      "archivePath": "exports/screenshots/32-atlas--all-families--990w.png",
+      "bytes": 2189065,
+      "sha256": "b9fcbb4980fe4d395fbf95255c8aaf5dbde45473f4bb35aa5266ebbdde9d4803"
+    },
+    {
+      "path": "reference/project/exports/screenshots/33-atlas--rigid-hand-tools--990w.png",
+      "archivePath": "exports/screenshots/33-atlas--rigid-hand-tools--990w.png",
+      "bytes": 525156,
+      "sha256": "7af6c593f9dfe8e9687ba9742c9d7cab6664e397db132274f1c8c48e3c92e740"
+    },
+    {
+      "path": "reference/project/exports/screenshots/34-atlas--compact-family-select--384w.png",
+      "archivePath": "exports/screenshots/34-atlas--compact-family-select--384w.png",
+      "bytes": 247365,
+      "sha256": "ba1eecbe31f2b597cc30a19366ea71646f119cf2ae30e03a1963817b9161f420"
+    },
+    {
+      "path": "reference/project/exports/screenshots/35-hazard-player--marking--990w.png",
+      "archivePath": "exports/screenshots/35-hazard-player--marking--990w.png",
+      "bytes": 288084,
+      "sha256": "d5ea1584e4266c6a11063e7714cb996ed2e878dd4a89863599de18df15347277"
+    },
+    {
+      "path": "reference/project/exports/screenshots/36-hazard-player--revealed--990w.png",
+      "archivePath": "exports/screenshots/36-hazard-player--revealed--990w.png",
+      "bytes": 406074,
+      "sha256": "bb0d657fe4d286ef7023fa9c86cc5573df1677b53d82589f71803449243269c4"
+    },
+    {
+      "path": "reference/project/exports/screenshots/37-hazard-player--keyboard-zones--990w.png",
+      "archivePath": "exports/screenshots/37-hazard-player--keyboard-zones--990w.png",
+      "bytes": 153253,
+      "sha256": "25d3691f0af632180f62aec8b21e805693bb0b5236e8ecc63df7161872a57846"
+    },
+    {
+      "path": "reference/project/exports/screenshots/38-print--builder-and-preview--699w.png",
+      "archivePath": "exports/screenshots/38-print--builder-and-preview--699w.png",
+      "bytes": 401706,
+      "sha256": "78d23829b604a8855cf6d69b039f62576a4b17c5c514d9972c77f1c2dcd0dad0"
+    },
+    {
+      "path": "reference/project/exports/screenshots/39-practice--read-failed--1248w.png",
+      "archivePath": "exports/screenshots/39-practice--read-failed--1248w.png",
+      "bytes": 561738,
+      "sha256": "36c55403a64522293bb64078350c259c58e26b520d271508294aa51f199dbc64"
+    },
+    {
       "path": "reference/project/github.md",
-      "bytes": 39512,
-      "sha256": "9228039d96f5bbbafd0f864de64bc17fdeb6945be089580ec20ffbb7ef7dd982"
+      "archivePath": "github.md",
+      "bytes": 45930,
+      "sha256": "fb7578fbd0406e8cf01eba59bba1a37ae3923f0b435e7f871693749b786ec5ae"
     },
     {
       "path": "reference/project/screenshots/landing-board.jpg",
+      "archivePath": "screenshots/landing-board.jpg",
       "bytes": 37964,
       "sha256": "5d7e445e805a7ea277d6f4860239462479615a650a57a29555505a668b06278a"
     },
     {
       "path": "reference/project/styles-additions.css",
+      "archivePath": "styles-additions.css",
       "bytes": 58463,
       "sha256": "655fd636ad66633db8c7726c7be4f4a59bbd7e81aaabd00d2316bd18c59a5140"
     },
     {
       "path": "reference/project/support.js",
+      "archivePath": "support.js",
       "bytes": 69150,
       "sha256": "8fe7df74405f3c55f49b7249c74ea1397e65d07dea2b1bd3b4a489bec2e28cbe"
     }

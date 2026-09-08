@@ -7,95 +7,205 @@
 </head>
 <body>
 <x-dc>
-<div style="display: grid; gap: 1rem; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff;">
+<helmet>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #e9edf1; color: #17202a; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+    a { color: #075985; }
+    a:hover { color: #0c4a6e; }
+    h1, h2, h3, h4, h5, p, dl, dd { margin: 0; }
+    ul, ol { margin: 0; }
+    ul { padding: 0; list-style: none; }
+    button, input, select, textarea { font: inherit; }
+    :focus-visible { outline: 0.1875rem solid #1d4ed8; outline-offset: 0.1875rem; }
+  </style>
+</helmet>
 
-  <div role="tablist" aria-label="Visual family" style="display: flex; flex-wrap: wrap; gap: 1.25rem; border-block-end: 1px solid #b7c1cc;">
-    <sc-for list="{{ tabs }}" as="tab" hint-placeholder-count="5">
-      <button type="button" role="tab" aria-selected="{{ tab.selected }}" onClick="{{ tab.onClick }}" style="{{ tab.style }}">{{ tab.label }} <span style="{{ tab.countStyle }}">{{ tab.count }}</span></button>
-    </sc-for>
+<div data-screen-label="Tool atlas" style="display: grid; gap: 1.5rem; padding: clamp(1.25rem, 3vw, 2rem);">
+
+  <div style="display: grid; gap: 1rem; padding: 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff;">
+
+    <div role="tablist" aria-label="Visual family" style="display: flex; flex-wrap: wrap; gap: 0.75rem 1.25rem; border-block-end: 1px solid #b7c1cc;">
+      <sc-for list="{{ tabs }}" as="tab" hint-placeholder-count="10">
+        <button type="button" role="tab" aria-selected="{{ tab.selected }}" onClick="{{ tab.onClick }}" style="{{ tab.style }}">{{ tab.label }} <span style="{{ tab.countStyle }}">{{ tab.count }}</span></button>
+      </sc-for>
+    </div>
+
+    <p role="status" style="margin: 0; font-size: 0.9375rem; color: #4b5563;">{{ countLine }}</p>
+
+    <sc-if value="{{ ready }}" hint-placeholder-val="{{ true }}">
+      <div style="display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 11rem), 1fr));">
+        <sc-for list="{{ tools }}" as="tool" hint-placeholder-count="12">
+          <article style="display: grid; grid-template-rows: auto 1fr; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; overflow: hidden;">
+            <img src="{{ tool.src }}" alt="{{ tool.alt }}" loading="{{ tool.loading }}" width="320" height="320" style="display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: contain; background: #ffffff; border-block-end: 1px solid #edf2f7;" />
+            <div style="display: grid; gap: 0.25rem; align-content: start; padding: 0.75rem 0.875rem;">
+              <a href="#atlas-record" style="font-size: 0.9375rem; font-weight: 700; text-decoration: none;" style-hover="text-decoration: underline;">{{ tool.name }}</a>
+              <span style="font-size: 0.8125rem; color: #4b5563;">{{ tool.family }}</span>
+              <sc-if value="{{ tool.ref }}">
+                <span style="font-size: 0.8125rem; color: #4b5563;"><strong style="color: #17202a;">Reference-only:</strong> excluded from scored practice.</span>
+              </sc-if>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+
+      <div style="display: grid; gap: 0.375rem; padding: 1rem 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #f7f8fa;">
+        <strong style="font-size: 0.9375rem;">All 65 records are illustrated</strong>
+        <p style="max-width: 74ch; margin: 0; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Every record in the released inventory carries its own accepted illustration, a written description and a source trail. Fifty-three can appear as a scored question; the twelve marked reference-only stay out of scored practice while a source caution or a specialist review is still open, and they are still here to study.</p>
+        <p style="margin: 0; font-size: 0.875rem; color: #4b5563;">Where this comes from: the accepted tool release for content pack v2.0.0, read on August 25, 2026.</p>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ imagesMissing }}">
+      <div style="display: grid; gap: 0.375rem; padding: 1rem 1.25rem; border: 1px solid #854d0e; border-radius: 0.5rem; background: #fffaeb;">
+        <strong style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9375rem; color: #854d0e;"><span aria-hidden="true">▲</span> The illustrations are not on this device</strong>
+        <p style="max-width: 74ch; margin: 0; font-size: 0.9375rem; color: #17202a; text-wrap: pretty;">The records below are complete and readable without them. Download the study pack to see the illustrations, or keep reading the written descriptions.</p>
+        <a href="Offline.dc.html" style="justify-self: start; display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0.5rem 0; font-size: 0.875rem; font-weight: 700;">Manage downloads</a>
+      </div>
+      <ul style="display: grid; padding: 0 1.25rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+        <sc-for list="{{ tools }}" as="tool" hint-placeholder-count="12">
+          <li style="{{ tool.rowStyle }}">
+            <strong style="font-size: 0.9375rem;">{{ tool.name }}</strong>
+            <span style="font-size: 0.875rem; color: #4b5563;">{{ tool.family }}</span>
+            <span style="font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">{{ tool.alt }}</span>
+          </li>
+        </sc-for>
+      </ul>
+    </sc-if>
+
+    <sc-if value="{{ showTech }}">
+      <details style="font-size: 0.8125rem; color: #4b5563;">
+        <summary style="display: list-item; min-height: 2.75rem; padding-block: 0.625rem; cursor: pointer; font-weight: 700; color: #075985;">Technical details</summary>
+        <dl style="display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.25rem 0.75rem; margin: 0;">
+          <dt>Records shown</dt>
+          <dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">{{ ids }}</dd>
+          <dt>Inventory</dt>
+          <dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">taxonomy-inventory.csv, tools.json, comparisons.json</dd>
+          <dt>Illustrations pinned to</dt>
+          <dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">pack v2.0.0, 320 px phone derivative</dd>
+          <dt>Image alternative</dt>
+          <dd style="margin: 0; color: #17202a;">Generated per record from its accepted recognition cues, so the written form never lags the drawing.</dd>
+        </dl>
+      </details>
+    </sc-if>
   </div>
 
-  <p role="status" style="margin: 0; font-size: 0.9375rem; color: #4b5563;">{{ count }}</p>
-
-  <sc-if value="{{ imagesReady }}" hint-placeholder-val="{{ true }}">
-    <div style="display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr));">
-      <sc-for list="{{ tools }}" as="tool" hint-placeholder-count="8">
-        <article style="display: grid; gap: 0; align-content: start; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff; overflow: hidden;">
-          <img src="{{ tool.src }}" alt="{{ tool.alt }}" style="display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; background: #edf2f7;" />
-          <div style="display: grid; gap: 0.375rem; padding: 0.875rem 1rem;">
-            <strong style="font-size: 0.9375rem;">{{ tool.name }}</strong>
-            <span style="font-size: 0.8125rem; color: #4b5563;">{{ tool.family }}</span>
-          </div>
-        </article>
-      </sc-for>
+  <figure style="margin: 0; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff; overflow: hidden; max-width: 30rem;">
+    <figcaption style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem; padding: 0.5rem 0.875rem; background: #edf2f7; border-block-end: 1px solid #b7c1cc; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.8125rem; color: #4b5563;"><span>Compact — 24rem</span><span>nine families as one control</span></figcaption>
+    <div style="display: grid; gap: 0.75rem; padding: 1.25rem; background: #f7f8fa;">
+      <label style="display: grid; gap: 0.375rem; max-width: 22rem;">
+        <span style="font-weight: 700; font-size: 0.9375rem;">Family</span>
+        <select value="{{ family }}" onChange="{{ onFamily }}" style="width: 100%; min-height: 2.75rem; padding: 0.625rem 0.75rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff;">
+          <sc-for list="{{ familyOptions }}" as="opt" hint-placeholder-count="10">
+            <option value="{{ opt.value }}">{{ opt.label }}</option>
+          </sc-for>
+        </select>
+      </label>
+      <p role="status" style="margin: 0; font-size: 0.875rem; color: #4b5563;">{{ countLine }}</p>
+      <ul style="display: grid; gap: 0.5rem; max-width: 22rem;">
+        <sc-for list="{{ compactTools }}" as="tool" hint-placeholder-count="6">
+          <li style="display: grid; grid-template-columns: 3.5rem minmax(0, 1fr); gap: 0.75rem; align-items: center; padding: 0.5rem; border: 1px solid #b7c1cc; border-radius: 0.5rem; background: #ffffff;">
+            <img src="{{ tool.src }}" alt="" loading="lazy" width="320" height="320" style="display: block; width: 3.5rem; height: 3.5rem; object-fit: contain; background: #ffffff;" />
+            <span style="display: grid; gap: 0.125rem; min-width: 0;">
+              <a href="#atlas-record" style="font-size: 0.9375rem; font-weight: 700; text-decoration: none;" style-hover="text-decoration: underline;">{{ tool.name }}</a>
+              <span style="font-size: 0.8125rem; color: #4b5563;">{{ tool.refLabel }}</span>
+            </span>
+          </li>
+        </sc-for>
+      </ul>
+      <p style="margin: 0; max-width: 60ch; font-size: 0.875rem; color: #4b5563; text-wrap: pretty;">Ten tabs do not fit a phone without wrapping into four rows of targets, so below 48rem the same nine families become one labelled control with the counts in its options. The list keeps the record name, the illustration at thumbnail size and the reference-only note; the family is already the control's value, so the row drops it.</p>
     </div>
-
-    <div style="display: grid; gap: 0.375rem; padding: 1rem 1.25rem; border: 1px solid #667085; border-radius: 0.75rem; background: #ffffff;">
-      <strong style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem; font-size: 0.9375rem;">57 of the 65 tool records have no illustration yet<span style="padding: 0 0.5rem; border: 1px solid #667085; border-radius: 0.25rem; font-size: 0.8125rem; font-weight: 700; color: #4b5563;">Not published</span></strong>
-      <p style="max-width: 70ch; margin: 0; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">The taxonomy inventory names all 65, and every one of them has its written record with the features that tell look-alikes apart. Only 8 have been drawn so far, so the rest read as text until their drawing is reviewed.</p>
-      <p style="margin: 0; font-size: 0.875rem; color: #4b5563;">Where this comes from: illustrations drawn for this site from the reviewed tool inventory, read on August 25, 2026.</p>
-    </div>
-  </sc-if>
-
-  <sc-if value="{{ imagesMissing }}">
-    <div style="display: grid; gap: 0.5rem; padding: 1.25rem 1.5rem; border: 1px solid #667085; border-radius: 0.75rem; background: #ffffff;">
-      <h3 style="font-size: 1.0625rem;">The illustrations are not saved on this device</h3>
-      <p style="max-width: 70ch; font-size: 0.9375rem; color: #4b5563; text-wrap: pretty;">Pictures are the one part of the atlas that is not saved for offline use by default — they are the largest files in the pack. Every tool record and its features are here either way, as text.</p>
-      <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; padding-block-start: 0.25rem;">
-        <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid transparent; border-radius: 0.5rem; background: #075985; color: #ffffff; font-weight: 700; font-size: 0.9375rem; cursor: pointer;" style-hover="background: #0c4a6e;">Save the illustrations, 4.2 MB</button>
-        <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0.625rem 1.25rem; border: 1px solid #667085; border-radius: 0.5rem; background: #ffffff; color: #17202a; font-weight: 700; font-size: 0.9375rem; cursor: pointer;" style-hover="background: #edf2f7;">Keep reading without them</button>
-      </div>
-    </div>
-    <ul style="display: grid; margin: 0; padding: 0.25rem 1.5rem; border: 1px solid #b7c1cc; border-radius: 0.75rem; background: #ffffff; list-style: none;">
-      <sc-for list="{{ tools }}" as="tool" hint-placeholder-count="8">
-        <li style="{{ tool.rowStyle }}">
-          <strong style="font-size: 0.9375rem;">{{ tool.name }}</strong>
-          <span style="font-size: 0.875rem; color: #4b5563;">{{ tool.family }}</span>
-        </li>
-      </sc-for>
-    </ul>
-  </sc-if>
-
-  <sc-if value="{{ technical }}" hint-placeholder-val="{{ true }}">
-    <details style="font-size: 0.875rem; color: #4b5563;">
-      <summary style="display: list-item; min-height: 2.75rem; padding-block: 0.75rem; cursor: pointer; font-weight: 700; color: #075985;">Technical details</summary>
-      <dl style="display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.25rem 0.75rem; margin: 0;">
-        <dt>Records shown</dt>
-        <dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">{{ ids }}</dd>
-        <dt>Inventory</dt>
-        <dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">taxonomy-inventory.csv, comparisons.json</dd>
-        <dt>Illustrations pinned to</dt>
-        <dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: #17202a;">pack v2.0.0</dd>
-      </dl>
-    </details>
-  </sc-if>
+  </figure>
 </div>
-
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{
-  &quot;$preview&quot;: {&quot;width&quot;: 1000, &quot;height&quot;: 760},
-  &quot;imagesAvailable&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Availability&quot;},
-  &quot;showFamilyCounts&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Filter&quot;},
-  &quot;showTechnicalDetails&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Proof layer&quot;}
-}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1100, &quot;height&quot;: 900}, &quot;imagesAvailable&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Availability&quot;}, &quot;showFamilyCounts&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Filter&quot;}, &quot;showTechnicalDetails&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Proof layer&quot;}}">
 const TOOLS = [
-  { id: "t001", name: "Scrub brush", family: "cleaning implements", alt: "Scrub brush: a short block of stiff bristles with a hand-sized grip across its back." },
-  { id: "t002", name: "Staple gun", family: "articulated hand tools", alt: "Staple gun: a hand-squeezed body with a flat nose and a hinged lever along the top." },
-  { id: "t003", name: "Protective gloves (generic)", family: "PPE", alt: "Protective gloves: a pair of unlined gauntlet-cuff gloves shown palms forward." },
-  { id: "t004", name: "Push broom", family: "cleaning implements", alt: "Push broom: a wide flat brush block on a long handle set into it at an angle." },
-  { id: "t005", name: "Angle broom", family: "cleaning implements", alt: "Angle broom: a narrow broom head cut on a slant, bristles flared at one corner." },
-  { id: "t006", name: "Dust mop", family: "soft or deformable tools", alt: "Dust mop: a wide flat rectangular frame carrying dense soft yarn across its whole face." },
-  { id: "t007", name: "Wet/string mop", family: "soft or deformable tools", alt: "Wet or string mop: loose strands gathered into a central band at the end of a handle." },
-  { id: "t008", name: "Flat mop", family: "soft or deformable tools", alt: "Flat mop: a thin rectangular pad on a swivel plate, no strands." }
+  { id: "t001", name: "Scrub brush", family: "cleaning implements", ref: false, alt: "An original black line illustration showing bristled working head and form intended for manual scrubbing; no brand or scale claim." },
+  { id: "t002", name: "Staple gun", family: "articulated hand tools", ref: false, alt: "An original black line illustration showing squeeze lever above the body and staple outlet at the nose; no brand or scale claim." },
+  { id: "t003", name: "Protective gloves (generic)", family: "PPE", ref: false, alt: "An original black line illustration showing paired hand coverings and separate finger shapes; no brand or scale claim." },
+  { id: "t004", name: "Push broom", family: "cleaning implements", ref: false, alt: "An original black line illustration showing broad horizontal bristle head and long handle; no brand or scale claim." },
+  { id: "t005", name: "Angle broom / household broom", family: "cleaning implements", ref: false, alt: "An original black line illustration showing angled bristle head and long household-broom handle; no brand or scale claim." },
+  { id: "t006", name: "Dust mop", family: "soft or deformable tools", ref: false, alt: "An original black line illustration showing broad low-profile floor head and dry dusting yarn or pad; no brand or scale claim." },
+  { id: "t007", name: "Wet/string mop", family: "soft or deformable tools", ref: false, alt: "An original black line illustration showing absorbent string head and long floor-cleaning handle; no brand or scale claim." },
+  { id: "t008", name: "Flat mop", family: "soft or deformable tools", ref: false, alt: "An original black line illustration showing low rectangular frame and flat replaceable or reusable pad; no brand or scale claim." },
+  { id: "t009", name: "Mop bucket and wringer", family: "carts/material-handling equipment", ref: false, alt: "An original black line illustration showing bucket basin and integrated wringer press; no brand or scale claim." },
+  { id: "t010", name: "Deck brush", family: "cleaning implements", ref: false, alt: "An original black line illustration showing stiff rectangular bristle head and long scrubbing handle; no brand or scale claim." },
+  { id: "t011", name: "Hand scrub brush", family: "cleaning implements", ref: false, alt: "An original black line illustration showing compact hand grip and short dense bristles; no brand or scale claim." },
+  { id: "t012", name: "Toilet bowl brush", family: "cleaning implements", ref: false, alt: "An original black line illustration showing narrow handle and rounded or curved bristle head for bowl access; no brand or scale claim." },
+  { id: "t013", name: "Duster / feather or synthetic duster", family: "soft or deformable tools", ref: false, alt: "An original black line illustration showing soft feather or synthetic fibers and lightweight handle; no brand or scale claim." },
+  { id: "t014", name: "Dustpan", family: "cleaning implements", ref: false, alt: "An original black line illustration showing shallow collection tray and straight pickup lip; no brand or scale claim." },
+  { id: "t015", name: "Floor squeegee", family: "cleaning implements", ref: false, alt: "An original black line illustration showing long handle and broad floor-width rubber blade; no brand or scale claim." },
+  { id: "t016", name: "Window squeegee", family: "cleaning implements", ref: false, alt: "An original black line illustration showing short handle and rubber blade held in a window channel; no brand or scale claim." },
+  { id: "t017", name: "Window washer / strip washer", family: "cleaning implements", ref: false, alt: "An original black line illustration showing short T-shaped holder and absorbent strip-washer sleeve; no brand or scale claim." },
+  { id: "t018", name: "Janitor cart", family: "carts/material-handling equipment", ref: false, alt: "An original black line illustration showing wheeled multi-compartment frame and shelves or bag supports; no brand or scale claim." },
+  { id: "t019", name: "Hand truck", family: "carts/material-handling equipment", ref: false, alt: "An original black line illustration showing upright frame with handles and two wheels and a bottom toe plate; no brand or scale claim." },
+  { id: "t020", name: "Equipment dolly", family: "carts/material-handling equipment", ref: false, alt: "An original black line illustration showing low load platform and small casters beneath the platform; no brand or scale claim." },
+  { id: "t021", name: "Upright vacuum", family: "powered cleaning equipment", ref: true, alt: "An original black line illustration showing upright handle and body and floor nozzle integrated at the base; no brand or scale claim." },
+  { id: "t022", name: "Canister vacuum", family: "powered cleaning equipment", ref: false, alt: "An original black line illustration showing separate wheeled canister and hose and wand assembly; no brand or scale claim." },
+  { id: "t023", name: "Wet/dry vacuum", family: "powered cleaning equipment", ref: false, alt: "An original black line illustration showing tank-style body and flexible suction hose; no brand or scale claim." },
+  { id: "t024", name: "Carpet extractor", family: "powered cleaning equipment", ref: true, alt: "An original black line illustration showing representative upright extraction body and solution-recovery floor head; no brand or scale claim." },
+  { id: "t025", name: "Steam-cleaning equipment", family: "powered cleaning equipment", ref: false, alt: "An original black line illustration showing steam-producing equipment body and hose or task attachment; no brand or scale claim." },
+  { id: "t026", name: "Low-speed rotary floor machine", family: "powered cleaning equipment", ref: true, alt: "An original black line illustration showing representative rotary floor-machine chassis and handle controlling a circular pad or brush; no brand or scale claim." },
+  { id: "t027", name: "High-speed burnisher", family: "powered cleaning equipment", ref: true, alt: "An original black line illustration showing representative burnisher chassis and floor-polishing pad housing; no brand or scale claim." },
+  { id: "t028", name: "Ride-on industrial vacuum cleaner", family: "powered cleaning equipment", ref: true, alt: "An original black line illustration showing operator seat and controls and large ride-on cleaning chassis; no brand or scale claim." },
+  { id: "t029", name: "Snow blower", family: "other", ref: true, alt: "An original black line illustration showing snow intake housing and discharge chute; no brand or scale claim." },
+  { id: "t030", name: "Hedge trimmer", family: "other", ref: true, alt: "An original black line illustration showing long reciprocating cutting bar and two-hand control form; no brand or scale claim." },
+  { id: "t031", name: "Claw hammer", family: "rigid hand tools", ref: false, alt: "An original black line illustration showing flat striking face and split curved claw; no brand or scale claim." },
+  { id: "t032", name: "Ball-peen hammer", family: "rigid hand tools", ref: false, alt: "An original black line illustration showing flat striking face and rounded hemispherical peen; no brand or scale claim." },
+  { id: "t033", name: "Rubber mallet", family: "rigid hand tools", ref: false, alt: "An original black line illustration showing nonmetal cylindrical head and two broad striking faces; no brand or scale claim." },
+  { id: "t034", name: "Flat/slotted screwdriver", family: "rigid hand tools", ref: false, alt: "An original black line illustration showing flat blade tip and single straight driving edge; no brand or scale claim." },
+  { id: "t035", name: "Phillips screwdriver", family: "rigid hand tools", ref: false, alt: "An original black line illustration showing cross-shaped driver tip and four driving flutes; no brand or scale claim." },
+  { id: "t036", name: "Adjustable wrench", family: "articulated hand tools", ref: false, alt: "An original black line illustration showing smooth parallel jaws and visible worm gear for jaw adjustment; no brand or scale claim." },
+  { id: "t037", name: "Pipe wrench", family: "articulated hand tools", ref: false, alt: "An original black line illustration showing serrated offset hook and heel jaws and long adjustable body; no brand or scale claim." },
+  { id: "t038", name: "Combination/open-end/box wrench", family: "rigid hand tools", ref: false, alt: "An original black line illustration showing fixed-size opening and open end and box end and or both; no brand or scale claim." },
+  { id: "t039", name: "Slip-joint pliers", family: "articulated hand tools", ref: false, alt: "An original black line illustration showing two-position sliding pivot and general-purpose gripping jaws; no brand or scale claim." },
+  { id: "t040", name: "Tongue-and-groove pliers", family: "articulated hand tools", ref: false, alt: "An original black line illustration showing multi-position tongue-and-groove channel and offset serrated jaws; no brand or scale claim." },
+  { id: "t041", name: "Needle-nose pliers", family: "articulated hand tools", ref: false, alt: "An original black line illustration showing long tapered gripping jaws and narrow pointed nose; no brand or scale claim." },
+  { id: "t042", name: "Diagonal cutting pliers", family: "articulated hand tools", ref: false, alt: "An original black line illustration showing opposed diagonal cutting edges and short cutting jaws; no brand or scale claim." },
+  { id: "t043", name: "Locking pliers", family: "articulated hand tools", ref: false, alt: "An original black line illustration showing locking linkage and handle release lever and adjustment screw; no brand or scale claim." },
+  { id: "t044", name: "C-clamp", family: "articulated hand tools", ref: false, alt: "An original black line illustration showing rigid C-shaped frame and threaded clamping screw; no brand or scale claim." },
+  { id: "t045", name: "Bar clamp", family: "articulated hand tools", ref: false, alt: "An original black line illustration showing long straight bar and fixed and sliding jaws; no brand or scale claim." },
+  { id: "t046", name: "Hand plane", family: "rigid hand tools", ref: false, alt: "An original black line illustration showing flat sole and cutting iron projecting through the body; no brand or scale claim." },
+  { id: "t047", name: "Crosscut saw", family: "rigid hand tools", ref: true, alt: "An original black line illustration showing hand-saw blade and tooth pattern intended for cross-grain cutting; no brand or scale claim." },
+  { id: "t048", name: "Rip saw", family: "rigid hand tools", ref: true, alt: "An original black line illustration showing hand-saw blade and tooth pattern intended for rip cutting; no brand or scale claim." },
+  { id: "t049", name: "Hacksaw", family: "rigid hand tools", ref: false, alt: "An original black line illustration showing narrow replaceable blade under tension and open metal frame; no brand or scale claim." },
+  { id: "t050", name: "Utility knife", family: "articulated hand tools", ref: false, alt: "An original black line illustration showing short replaceable blade and handle that guards or retracts the blade; no brand or scale claim." },
+  { id: "t051", name: "Putty knife", family: "rigid hand tools", ref: false, alt: "An original black line illustration showing broad flexible spreading blade and straight handle behind the blade; no brand or scale claim." },
+  { id: "t052", name: "Paint scraper", family: "rigid hand tools", ref: false, alt: "An original black line illustration showing scraping blade and handle geometry arranged for scraping force; no brand or scale claim." },
+  { id: "t053", name: "Tape measure", family: "articulated hand tools", ref: false, alt: "An original black line illustration showing marked flexible tape and retracting case; no brand or scale claim." },
+  { id: "t054", name: "Level", family: "rigid hand tools", ref: false, alt: "An original black line illustration showing straight rigid body and one or more bubble vials; no brand or scale claim." },
+  { id: "t055", name: "Carpenter square / combination square", family: "rigid hand tools", ref: false, alt: "An original black line illustration showing right-angle reference surfaces and rigid blade and stock or L-shaped body; no brand or scale claim." },
+  { id: "t056", name: "Plunger - cup", family: "soft or deformable tools", ref: false, alt: "An original black line illustration showing plain flexible cup and no extended lower toilet flange; no brand or scale claim." },
+  { id: "t057", name: "Plunger - flange", family: "soft or deformable tools", ref: false, alt: "An original black line illustration showing flexible cup and extended lower toilet flange; no brand or scale claim." },
+  { id: "t058", name: "Hand auger / drain snake", family: "soft or deformable tools", ref: true, alt: "An original black line illustration showing coiled flexible cable and manual crank or feed housing; no brand or scale claim." },
+  { id: "t059", name: "Pipe reamer", family: "rigid hand tools", ref: true, alt: "An original black line illustration showing tapered reaming head and pipe-deburring cutting edges; no brand or scale claim." },
+  { id: "t060", name: "Soldering gun", family: "other", ref: true, alt: "An original black line illustration showing pistol-grip body and heated loop or tip at the nose; no brand or scale claim." },
+  { id: "t061", name: "Stepladder", family: "ladders/access equipment", ref: false, alt: "An original black line illustration showing self-supporting A-frame and spreaders or bracing between sides; no brand or scale claim." },
+  { id: "t062", name: "Extension ladder", family: "ladders/access equipment", ref: false, alt: "An original black line illustration showing overlapping rail sections and non-self-supporting straight form; no brand or scale claim." },
+  { id: "t063", name: "Safety glasses", family: "PPE", ref: false, alt: "An original black line illustration showing transparent protective lenses and side coverage or wraparound eye frame; no brand or scale claim." },
+  { id: "t064", name: "Protective ear plugs", family: "PPE", ref: false, alt: "An original black line illustration showing pair of small ear-insert protectors and corded or uncorded form; no brand or scale claim." },
+  { id: "t065", name: "Wet-floor warning sign/cone", family: "other", ref: false, alt: "An original black line illustration showing high-visibility freestanding sign or cone and wet-floor warning symbol or wording; no brand or scale claim." }
 ];
-const FAMILIES = ["all", "cleaning implements", "soft or deformable tools", "articulated hand tools", "PPE"];
+
+const FAMILIES = [
+  "cleaning implements",
+  "articulated hand tools",
+  "PPE",
+  "soft or deformable tools",
+  "carts/material-handling equipment",
+  "powered cleaning equipment",
+  "other",
+  "rigid hand tools",
+  "ladders/access equipment"
+];
+
 const TAB = { display: 'inline-flex', alignItems: 'baseline', gap: '0.375rem', minHeight: '2.75rem', padding: '0 0.125rem', marginBlockEnd: '-1px', border: 0, borderBlockEnd: '2px solid', borderBlockEndColor: 'transparent', background: 'transparent', color: '#4b5563', font: 'inherit', fontSize: '0.9375rem', fontWeight: 700, cursor: 'pointer' };
 const TAB_ON = { ...TAB, borderBlockEndColor: '#075985', color: '#0c4a6e' };
-const COUNT = 'font-weight: 400; color: #4b5563;';
-const ROW = { display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 14rem)', gap: '0 1.25rem', alignItems: 'baseline', paddingBlock: '0.75rem' };
-const ROW_RULED = { ...ROW, borderBlockStart: '1px solid #e2e7ec' };
+const COUNT = { fontWeight: 400, color: '#4b5563' };
+const ROW = "display: grid; gap: 0.125rem; padding-block: 0.875rem;";
+const ROW_RULED = ROW + " border-block-start: 1px solid #e2e7ec;";
 
-const sentence = (s) => s === 'PPE' ? 'PPE' : s.charAt(0).toUpperCase() + s.slice(1);
+const sentence = (value) => value.charAt(0).toUpperCase() + value.slice(1);
 
 class Component extends DCLogic {
   state = { family: "all" };
@@ -104,34 +214,50 @@ class Component extends DCLogic {
     const f = this.state.family;
     const shown = TOOLS.filter((t) => f === "all" || t.family === f);
     const showCounts = this.props.showFamilyCounts ?? true;
-    const ready = (this.props.imagesAvailable ?? true);
+    const ready = this.props.imagesAvailable ?? true;
+    const scope = f === "all" ? "" : " in " + f;
+
     return {
-      tabs: FAMILIES.map((k) => ({
+      family: f,
+      onFamily: (ev) => this.setState({ family: ev.target.value }),
+      familyOptions: [{ value: "all", label: "All families — 65 records" }].concat(
+        FAMILIES.map((k) => ({
+          value: k,
+          label: sentence(k) + " — " + TOOLS.filter((t) => t.family === k).length + " records"
+        }))
+      ),
+      tabs: ["all"].concat(FAMILIES).map((k) => ({
         label: k === "all" ? "All families" : sentence(k),
-        selected: f === k,
+        selected: f === k ? "true" : "false",
         count: showCounts ? (k === "all" ? TOOLS.length : TOOLS.filter((t) => t.family === k).length) : "",
         countStyle: showCounts ? COUNT : "display: none;",
         style: f === k ? TAB_ON : TAB,
         onClick: () => this.setState({ family: k })
       })),
+      countLine: f === "all"
+        ? "Showing all 65 illustrated tools."
+        : "Showing " + shown.length + " illustrated " + (shown.length === 1 ? "tool" : "tools") + scope + ".",
       tools: shown.map((t, i) => ({
         name: t.name,
         family: sentence(t.family),
-        rowStyle: i === 0 ? ROW : ROW_RULED,
+        ref: t.ref,
+        alt: t.alt,
         src: "content/assets/derivatives/tools/" + t.id + "-phone.png",
-        alt: t.alt
+        loading: i < 4 ? "eager" : "lazy",
+        rowStyle: i === 0 ? ROW : ROW_RULED
       })),
-      count: f === "all"
-        ? "Showing all 8 illustrated tools, in inventory order."
-        : "Showing the " + shown.length + " illustrated in " + f + ".",
-      imagesReady: ready,
+      compactTools: shown.slice(0, 6).map((t) => ({
+        name: t.name,
+        src: "content/assets/derivatives/tools/" + t.id + "-phone.png",
+        refLabel: t.ref ? "Reference-only" : "In scored practice"
+      })),
+      ready,
       imagesMissing: !ready,
-      technical: this.props.showTechnicalDetails ?? true,
-      ids: shown.map((t) => t.id).join(", ")
+      showTech: this.props.showTechnicalDetails ?? true,
+      ids: shown.length === TOOLS.length ? "t001–t065" : shown.map((t) => t.id).join(", ")
     };
   }
 }
-
 </script>
 </body>
 </html>
