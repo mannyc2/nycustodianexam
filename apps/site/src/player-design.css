@@ -172,7 +172,7 @@
   .simulation-settings fieldset > label:has(input:is([type="radio"], [type="checkbox"])) { display: flex; gap: var(--space-3); align-items: start; min-block-size: var(--target-default); padding: var(--space-3); border: var(--border-thin) solid var(--color-border); border-radius: var(--radius-md); }
   .simulation-settings fieldset > label:has(input:checked) { border-color: var(--color-action); background: var(--color-selected-surface); }
   .simulation-settings input:is([type="radio"], [type="checkbox"]) { flex: 0 0 auto; inline-size: 1.25rem; block-size: 1.25rem; margin-block-start: var(--space-1); accent-color: var(--color-action); }
-  .simulation-settings :is(select, input[type="number"], .text-input) { inline-size: 100%; min-inline-size: 0; min-block-size: var(--target-default); padding: var(--space-3); border: var(--border-thin) solid var(--color-border-control); border-radius: var(--radius-md); background: var(--color-surface); color: var(--color-text); font: inherit; }
+  .simulation-setup-panel :is(select, input[type="number"], .text-input) { inline-size: 100%; min-inline-size: 0; min-block-size: var(--target-default); padding: var(--space-3); border: var(--border-thin) solid var(--color-border-control); border-radius: var(--radius-md); background: var(--color-surface); color: var(--color-text); font: inherit; }
   .simulation-settings > .field-label { display: block; margin-block-start: var(--space-5); font-weight: var(--weight-bold); }
   .simulation-settings .field-hint { color: var(--color-text-muted); font-size: var(--text-sm); }
   .simulation-preview .player-action-bar { margin-block-start: var(--space-5); }
@@ -221,5 +221,57 @@
     .hazard-player__workspace { display: block; }
     .study-player.question-card,
     .study-player.hazard-player { border: 0; box-shadow: none; padding: 0; }
+  }
+}
+
+@layer overrides {
+  .simulation-setup-panel { max-inline-size: 65.8125rem; padding: 1.5rem; gap: 1.5rem; border-radius: 0.5rem; }
+  .setup-scope-note { padding: 1.25rem; margin-block-end: 1.5rem; border: 1px solid var(--color-border); border-radius: 0.5rem; background: var(--color-canvas); }
+  .setup-scope-note :is(h2, h3) { font-size: 1rem; }
+  .setup-scope-note p { max-inline-size: 80ch; color: var(--color-text-muted); font-size: 0.9375rem; }
+  .setup-scope-note a { font-weight: 700; }
+  .simulation-settings > fieldset { padding: 0; border: 0; gap: 0; }
+  .simulation-settings legend { margin-block-end: 0.75rem; font-size: 1rem; }
+  .simulation-settings :is(.simulation-mix-fields, .simulation-format-fields),
+  .simulation-settings .simulation-length-fields .answer-list { grid-template-columns: minmax(0, 1fr); }
+  .simulation-settings fieldset > label:has(input:is([type="radio"], [type="checkbox"])),
+  .simulation-settings .simulation-length-fields .answer-option { min-block-size: 3rem; padding: 0.875rem 0.5rem; border: 0; border-block-start: 1px solid var(--color-border-hairline); border-radius: 0; background: transparent; box-shadow: none; }
+  .simulation-settings fieldset > label:has(input:checked), .simulation-settings .answer-option:has(input:checked) { background: var(--color-surface-subtle); }
+  .simulation-settings .field-hint { margin-block: 0.75rem; }
+  .simulation-settings .simulation-timing-fields > input[type="number"] { max-inline-size: 18rem; }
+  .simulation-settings .simulation-timing-fields > label[for="simulation-duration"] { font-weight: 700; margin-block: 0.75rem; }
+  .simulation-preview.reference-card { padding: 1.25rem; border: 1px solid var(--color-border); border-radius: 0.5rem; background: var(--color-canvas); }
+  .simulation-preview h2 { font-size: 1.0625rem; }
+  .simulation-preview-facts { border: 0; padding: 0; gap: 0; }
+  .simulation-preview-facts > div { padding-block: 0.75rem; border-block-start: 1px solid var(--color-border-hairline); }
+  .simulation-preview-facts dt { font-weight: 400; color: var(--color-text-muted); }
+  .simulation-preview-facts dd { margin: 0; color: var(--color-text); }
+  @media (max-width: 47.99rem) {
+    .simulation-setup-panel { padding: 1rem; }
+    .setup-scope-note, .simulation-preview.reference-card { padding: 1rem; }
+    .simulation-preview-facts > div { grid-template-columns: minmax(0, 1fr); gap: 0.25rem; }
+  }
+}
+
+@layer overrides {
+  .print-builder { max-inline-size: 65.8125rem; margin-inline: auto; padding: 1.5rem; border: 1px solid var(--color-border); border-radius: 0.5rem; background: var(--color-surface); }
+  .print-builder h2 { font-size: 1.5rem; }
+  .print-builder > p { font-size: 0.9375rem; color: var(--color-text-muted); }
+  .print-builder .print-config-fields { padding: 0; margin: 0; border: 0; display: grid; gap: 1.25rem; min-inline-size: 0; }
+  .print-builder .print-config-fields > fieldset { border: 0; margin: 0; padding: 0; min-inline-size: 0; }
+  .print-builder legend { font-size: 1rem; font-weight: 700; margin-block-end: 0.5rem; }
+  .print-builder .print-product-list { gap: 0; }
+  .print-builder .print-product-option { padding: 0.75rem 0; border-block-end: 1px solid var(--color-border-hairline); }
+  .print-builder label:has(input[type="radio"]), .print-builder label:has(input[type="checkbox"]) { display: flex; align-items: baseline; gap: 0.75rem; min-block-size: 2.75rem; }
+  .print-builder input:is([type="radio"], [type="checkbox"]) { inline-size: 1.125rem; block-size: 1.125rem; flex: none; accent-color: var(--color-action); }
+  .print-builder :is(select, input:not([type="radio"]):not([type="checkbox"])) { display: block; inline-size: 100%; min-block-size: 2.75rem; min-inline-size: 0; padding: 0.5rem 0.75rem; border: 1px solid var(--color-border-control); border-radius: 0.5rem; background: var(--color-surface); color: var(--color-text); }
+  .print-builder .field-hint { font-size: 0.8125rem; color: var(--color-text-muted); }
+  .print-builder .print-product-option .field-hint { margin-block: 0; padding-inline-start: 1.875rem; }
+  .print-builder .print-control-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+  .print-builder button[type="submit"] { justify-self: start; }
+  @media (max-width: 47.99rem) {
+    .print-builder { padding: 1rem; }
+    .print-builder .print-control-grid { grid-template-columns: minmax(0, 1fr); }
+    .print-builder button[type="submit"] { justify-self: stretch; }
   }
 }

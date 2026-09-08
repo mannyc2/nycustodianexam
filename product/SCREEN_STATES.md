@@ -221,9 +221,12 @@ document machine (`ready`, `offline-stale`, `not-found|withdrawn`) and normal
 document history; they introduce no application state.
 
 Exam information has no durable selection transition. Practice uses the
-displayed statewide-series scope. Simulation and print begin without a chosen
-profile and require an explicit choice within that setup; generation pins the
-choice into the session or job. No global active-exam preference exists.
+displayed statewide-series scope. Simulation and practice-print products use
+the same bank without a profile picker; generation retains its compatibility
+coordinate in the session or job. A fact-sheet product names its reviewed
+document. No global active-exam preference exists. A simulation length that no
+longer fits the selected inventory disables Start and requests an explicit
+replacement; a still-fitting length remains selected.
 
 | # / route IDs | Legal route-specific states and transitions | Recovery and focus | History / reload | Offline behavior |
 |---|---|---|---|---|

@@ -16,6 +16,7 @@ import {
   type SimulationFormat,
   simulationQuestionPath
 } from "../model.ts"
+import { studyContentProfileId } from "../../study-content.ts"
 import { deterministicSeedMaxLength } from "../../deterministic-seed.ts"
 
 const createSessionId = (): string => `sim-${crypto.randomUUID().toLowerCase()}`
@@ -34,7 +35,7 @@ export const SimulationSetup = ({
   readonly navigate: (path: string) => void
   readonly runtime: SimulationEffectRunner
 }) => {
-  const [profileId, setProfileId] = useState("")
+  const profileId = studyContentProfileId
   const [format, setFormat] = useState<SimulationFormat>("questions")
   const selectedProfile = bootstrap.profiles.find((profile) => profile.id === profileId)
   const categories = useMemo(
@@ -49,22 +50,25 @@ export const SimulationSetup = ({
   const capacity = format === "questions"
     ? simulationCapacity(bootstrap.inventory, selectedCategories, profileId)
     : simulationHazardCapacity(bootstrap.hazards, selectedCategories, profileId)
-  const lengths = useMemo(
-    () => [...new Set([
-      ...(capacity > 0 ? [capacity] : []),
-      ...(format === "questions"
-        ? bootstrap.advertisedLengths
-        : [1, 5, 10].filter((candidate) => candidate <= capacity))
-    ])].sort((left, right) => left - right),
-    [bootstrap.advertisedLengths, capacity, format]
-  )
-  const [requestedLength, setRequestedLength] = useState(0)
-  const preferredLength = format === "questions"
-    ? Math.min(capacity, ...bootstrap.advertisedLengths)
-    : capacity
-  const length = lengths.includes(requestedLength) && requestedLength <= capacity
-    ? requestedLength
-    : preferredLength
+  const [requestedLength, setRequestedLength] = useState(Math.min(...bootstrap.advertisedLengths))
+  const lengths = [...new Set([
+    ...(format === "questions" ? bootstrap.advertisedLengths : [1, 5, 10]),
+    ...(capacity > 0 ? [capacity] : []),
+    requestedLength
+  ])].sort((left, right) => left - right)
+  const length = requestedLength
+  const lengthValid = length > 0 && length <= capacity
+  const changeFormat = (next: SimulationFormat): void => {
+    if (next === format) return
+    const nextCategories = next === "questions"
+      ? simulationCategoryCapacities(bootstrap.inventory, profileId)
+      : simulationHazardCategoryCapacities(bootstrap.hazards, profileId)
+    setFormat(next)
+    if ((next === "questions") !== (format === "questions")) {
+      setSelectedCategories(nextCategories.map(({ category }) => category))
+      setRequestedLength(next === "questions" ? Math.min(...bootstrap.advertisedLengths) : 1)
+    }
+  }
   const [seed, setSeed] = useState(`${bootstrap.releaseId}-practice`)
   const [timingMode, setTimingMode] = useState<"untimed" | "timed">("untimed")
   const [durationMinutes, setDurationMinutes] = useState(120)
@@ -83,15 +87,9 @@ export const SimulationSetup = ({
     if (status.tag === "failure") failureRef.current?.focus()
   }, [status.tag])
 
-  useEffect(() => {
-    const profileCategories = categories.map(({ category }) => category)
-    setSelectedCategories(profileCategories)
-    setRequestedLength(0)
-  }, [categories])
-
   const start = (): void => {
     if (
-      status.tag === "creating" || selectedProfile === undefined || capacity === 0 || length > capacity ||
+      status.tag === "creating" || selectedProfile === undefined || capacity === 0 || !lengthValid ||
       seed.trim().length === 0 || seed.trim().length > deterministicSeedMaxLength || !timingValid
     ) return
     setStatus({ tag: "creating" })
@@ -131,32 +129,22 @@ export const SimulationSetup = ({
 
   return <div className="simulation-setup-panel">
     <section aria-labelledby="simulation-settings-heading" className="reference-card simulation-settings">
-      <p className="eyebrow">Build your session</p>
-      <h2 id="simulation-settings-heading">Simulation settings</h2>
-      <p className="player-selection-note">Choose a profile, content, and pace. Your answers stay editable until you submit the whole simulation.</p>
-      <label className="field-label" htmlFor="simulation-profile">Practicing for</label>
-      <select
-        disabled={status.tag === "creating"}
-        id="simulation-profile"
-        onChange={(event) => setProfileId(event.target.value)}
-        value={profileId}
-      >
-        <option disabled value="">Choose a study profile</option>
-        {bootstrap.profiles.map((profile) => (
-          <option key={profile.id} value={profile.id}>{profile.label} · {profile.jurisdiction}</option>
-        ))}
-      </select>
-      {selectedProfile === undefined
-        ? <p className="source-note">Choose the statewide series or a jurisdiction-specific profile before starting. The choice controls which practice content can appear.</p>
-        : <p className="source-note"><strong>Practicing for: {selectedProfile.label}.</strong> {selectedProfile.disclaimer}</p>}
+      <div className="setup-scope-note">
+        <h2>What every set draws on</h2>
+        <p>One bank of {bootstrap.inventory.length} original questions for the New York Entry-Level Custodians and Janitors series. Your choices change how many items you answer and which subject areas they come from. Nothing here selects an examination.</p>
+        <p><a href="/practice/#covers">What practice covers</a>{" · "}<a href="/exams/">Compare with your announcement</a></p>
+      </div>
+      <h2 id="simulation-settings-heading">Full simulation</h2>
+      <p className="player-selection-note">Choose content and timing. Your answers stay editable until you submit the whole simulation. This is original practice, never an official test or score.</p>
+      {selectedProfile === undefined ? <p className="notice notice-warning" role="alert">The shared study bank is unavailable in this release. A different bank will not be substituted.</p> : null}
       <fieldset className="simulation-format-fields">
         <legend>Practice format</legend>
-        <label><input checked={format === "questions"} disabled={status.tag === "creating"} name="simulation-format" onChange={() => setFormat("questions")} type="radio" /> Multiple-choice questions</label>
-        <label><input checked={format === "visual-hazards"} disabled={status.tag === "creating" || bootstrap.hazards.length === 0} name="simulation-format" onChange={() => setFormat("visual-hazards")} type="radio" /> Visual hazard scenes</label>
-        <label><input checked={format === "nonvisual-hazards"} disabled={status.tag === "creating" || bootstrap.hazards.length === 0} name="simulation-format" onChange={() => setFormat("nonvisual-hazards")} type="radio" /> Hazard scenes — keyboard, no image</label>
+        <label><input checked={format === "questions"} disabled={status.tag === "creating"} name="simulation-format" onChange={() => changeFormat("questions")} type="radio" /> Multiple-choice questions</label>
+        <label><input checked={format === "visual-hazards"} disabled={status.tag === "creating" || bootstrap.hazards.length === 0} name="simulation-format" onChange={() => changeFormat("visual-hazards")} type="radio" /> Visual hazard scenes</label>
+        <label><input checked={format === "nonvisual-hazards"} disabled={status.tag === "creating" || bootstrap.hazards.length === 0} name="simulation-format" onChange={() => changeFormat("nonvisual-hazards")} type="radio" /> Hazard scenes — keyboard, no image</label>
         <p className="field-hint">Visual and keyboard hazard results are tracked separately because they are different tasks.</p>
       </fieldset>
-      <fieldset className="simulation-mix-fields">
+      {format === "questions" || categories.length > 1 ? <fieldset className="simulation-mix-fields">
         <legend>Content mix</legend>
         {categories.map(({ category, count }) => <label key={category}>
           <input
@@ -169,27 +157,26 @@ export const SimulationSetup = ({
           /> {category} ({count} unique {count === 1 ? "item" : "items"})
         </label>)}
         <p><strong>Available items for this mix:</strong> {capacity}</p>
-        {selectedProfile === undefined
-          ? <p className="field-hint" role="status">Choose a study profile to see the available content categories.</p>
-          : capacity === 0
-            ? <p className="field-hint" role="status">Select at least one content category to create a simulation.</p>
-            : null}
-      </fieldset>
+        {capacity === 0 ? <p className="field-hint" role="status">Select at least one content category to create a simulation.</p> : null}
+        <p className="field-hint">Items are shuffled once across the selected areas. There is no missed-question weighting or illustrated/written quota.</p>
+      </fieldset> : <p className="setup-inventory-note">All {capacity} released scenes are available. The visual task uses markers; the keyboard task uses written zones.</p>}
       <fieldset className="simulation-length-fields">
         <legend>Set length</legend>
+        <p className="field-hint">45, 60 and 90 are preset question lengths. You can also use all matching items. No set is padded with repeats or quietly shortened.</p>
+        {!lengthValid && capacity > 0 ? <p className="notice notice-warning" role="status">Your chosen length of {length} no longer fits: {capacity} items match. Choose a replacement length before starting.</p> : null}
         <div className="answer-list">
           {lengths.map((candidate) => {
             const available = candidate <= capacity
             return <label className="answer-option" key={candidate}>
               <input
-                checked={length === candidate}
+                checked={lengthValid && length === candidate}
                 disabled={!available || status.tag === "creating"}
                 name="simulation-length"
                 onChange={() => setRequestedLength(candidate)}
                 type="radio"
                 value={candidate}
               />
-              <span>{candidate} items{available
+              <span>{candidate} items{candidate === capacity ? " — all matching" : ""}{available
                 ? " — available without repeats"
                 : ` — unavailable; ${capacity} unique items in this release`}</span>
             </label>
@@ -216,6 +203,33 @@ export const SimulationSetup = ({
         <p className="field-hint">Auto-submit is off unless you opt in. A timed simulation without it stays editable after the timer reaches zero.</p>
         </> : null}
       </fieldset>
+      {status.tag === "failure" && <section className="error-panel" role="alert">
+        <h3 ref={failureRef} tabIndex={-1}>Simulation was not created</h3><p>{status.detail}</p>
+      </section>}
+    </section>
+    <aside className="reference-card simulation-preview" aria-labelledby="simulation-availability-heading">
+      <p className="eyebrow">Before you start</p>
+      <h2 id="simulation-availability-heading">Your simulation, before you start</h2>
+      <dl className="simulation-preview-facts">
+        <div><dt>Format</dt><dd>{format === "questions" ? "Multiple-choice questions" : format === "visual-hazards" ? "Visual hazard scenes" : "Hazard scenes — keyboard, no image"}</dd></div>
+        <div><dt>Length</dt><dd>{capacity === 0 ? "Choose your content mix" : !lengthValid ? "Choose a replacement length" : `${length} ${length === 1 ? "item" : "items"}`}</dd></div>
+        <div><dt>Timing</dt><dd>{timingMode === "untimed" ? "Untimed — work at your own pace" : timingValid ? `${durationMinutes} minutes${autoSubmit ? " · auto-submit on" : " · auto-submit off"}` : "Enter a duration from 1 to 240 minutes"}</dd></div>
+        <div><dt>Feedback</dt><dd>After final submission</dd></div>
+        <div><dt>Saved</dt><dd>Answers and flags stay editable on this device until you submit.</dd></div>
+      </dl>
+      <p className="simulation-practice-note">This is original practice. The length, content mix, and results do not represent an official exam.</p>
+      <details className="simulation-inclusions">
+      <summary>What your simulation includes</summary>
+      <ul>
+        <li>Multiple-choice question sets</li>
+        <li>Visual hazard scenes, with the images saved on this device</li>
+        <li>Keyboard hazard scenes with no image</li>
+        <li>Answers and flags that autosave on this device and stay editable until you finish</li>
+        <li>Practice-only results with the set's actual mix — never an official score</li>
+      </ul>
+      <p>Your answers are saved on this device as you go. No answer or explanation is revealed until you submit the whole simulation.</p>
+      </details>
+    </aside>
       <details className="source-note">
         <summary>Repeat this exact set</summary>
         <label className="field-label" htmlFor="simulation-seed">Set code (seed)</label>
@@ -229,41 +243,14 @@ export const SimulationSetup = ({
         />
         <p>The same available release, format, settings, and code produce the same item order. A saved simulation records the exact items it was created with; it can restore them while that saved browser data remains available.</p>
       </details>
-      {status.tag === "failure" && <section className="error-panel" role="alert">
-        <h3 ref={failureRef} tabIndex={-1}>Simulation was not created</h3><p>{status.detail}</p>
-      </section>}
-    </section>
-    <aside className="reference-card simulation-preview" aria-labelledby="simulation-availability-heading">
-      <p className="eyebrow">Before you start</p>
-      <h2 id="simulation-availability-heading">Your session</h2>
-      <dl className="simulation-preview-facts">
-        <div><dt>Practicing for</dt><dd>{selectedProfile?.label ?? "Choose a study profile"}</dd></div>
-        <div><dt>Format</dt><dd>{format === "questions" ? "Multiple-choice questions" : format === "visual-hazards" ? "Visual hazard scenes" : "Hazard scenes — keyboard, no image"}</dd></div>
-        <div><dt>Length</dt><dd>{capacity === 0 ? "Choose your content mix" : `${length} ${length === 1 ? "item" : "items"}`}</dd></div>
-        <div><dt>Timing</dt><dd>{timingMode === "untimed" ? "Untimed — work at your own pace" : timingValid ? `${durationMinutes} minutes${autoSubmit ? " · auto-submit on" : " · auto-submit off"}` : "Enter a duration from 1 to 240 minutes"}</dd></div>
-        <div><dt>Feedback</dt><dd>After final submission</dd></div>
-      </dl>
-      <p className="simulation-practice-note">This is original practice. The length, content mix, and results do not represent an official exam.</p>
       <div className="player-action-bar">
         <button
           className="button button-primary"
-          disabled={status.tag === "creating" || selectedProfile === undefined || capacity === 0 || length > capacity || seed.trim().length === 0 || seed.trim().length > deterministicSeedMaxLength || !timingValid}
+          disabled={status.tag === "creating" || selectedProfile === undefined || capacity === 0 || !lengthValid || seed.trim().length === 0 || seed.trim().length > deterministicSeedMaxLength || !timingValid}
           onClick={start}
           type="button"
         >{status.tag === "creating" ? "Preparing your simulation…" : "Start simulation"}</button>
         <span className="player-action-note">No account needed · Saved on this device</span>
       </div>
-      <details className="simulation-inclusions">
-      <summary>What your simulation includes</summary>
-      <ul>
-        <li>Multiple-choice question sets</li>
-        <li>Visual hazard scenes, with the images saved on this device</li>
-        <li>Keyboard hazard scenes with no image</li>
-        <li>Answers and flags that autosave on this device and stay editable until you finish</li>
-        <li>Practice-only results with the set's actual mix — never an official score</li>
-      </ul>
-      <p>Your answers are saved on this device as you go. No answer or explanation is revealed until you submit the whole simulation.</p>
-      </details>
-    </aside>
   </div>
 }

@@ -199,7 +199,7 @@ so they cannot disappear between data-model and page implementation.
 
 | Capability | Owning route(s) |
 |---|---|
-| Active profile, recent sessions, resumable session, and compact progress/history summaries | `study-hub`; Home links there but does not load the study runtime |
+| Saved activity and review summaries | `study-hub`; Home links there but does not load the study runtime. Genuine simulations retain their own resume routes; no global active profile exists. |
 | Due reasons and detailed review history | `review-queue`; immutable attempt detail remains reachable from the applicable player/result history representation |
 | Session construction and inventory shortfall | The relevant `question-player` landing, `hazards-index`, or `simulation-setup`; shared controls come from `SessionBuilder` composition |
 | Import, validated preview, export, projection rebuild, and scoped reset | `settings` |

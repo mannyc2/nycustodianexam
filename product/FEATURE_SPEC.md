@@ -149,13 +149,13 @@ A page must explain why content is unavailable and offer a relevant recovery act
 
 `/exams/` is a reference browser. Opening an announcement or profile does not
 change study preferences. Practice uses the explicitly displayed statewide
-Entry-Level Custodians and Janitors series. Simulation and print each require
-their own profile choice before generation; the resulting session or job keeps
-that profile/version. The product currently has no saved global active exam.
+Entry-Level Custodians and Janitors series. Simulation and practice-print
+products use that same bank without an exam/profile prerequisite. Saved sessions
+and jobs retain their internal profile/version and exact content references.
+Announcement fact sheets name the reviewed document being printed.
 
-The earlier proposal for durable profile selection is unimplemented. It must
-receive an explicit behavior and persistence contract before the interface
-offers a global `Use this profile` or `Choose your exam` action.
+The site-wide active-exam feature is removed, not deferred. Do not offer a
+global `Use this profile` or `Choose your exam` action.
 
 Search/browse by exam number, title, jurisdiction, year, competition type, and series level. Never infer level merely from number formatting. A title spanning multiple levels requires confirmation.
 
@@ -166,8 +166,8 @@ Profile cards expose only data-backed fields and visibly distinguish:
 - verified date/number/jurisdiction facts;
 - current content availability and last verification.
 
-Choosing a different profile for a new simulation or print job must preserve
-existing sessions and jobs against their pinned profile/version.
+Changing the settings of a new simulation or print job must preserve existing
+sessions and jobs against their pinned profile/content versions.
 
 ## Announcement checker
 
@@ -330,11 +330,11 @@ Before commitment provide a neutral overview, ordered zones, and observable fact
 
 ## Session assembly
 
-Inputs include profile/version, content-pack/version, mode, requested length, selected domains/families/confusion sets, format preferences, timing/hint settings, recent-item exclusions, deterministic seed, and review priorities.
+Inputs include the internal shared-bank profile/version, content-pack/version, mode, requested length, available content categories, visual or written format, timing settings, and deterministic seed. The current builder does not weight missed questions, impose illustrated/written quotas, or infer review priorities. A category without single-domain membership remains visibly mixed/scenario content; do not invent a domain assignment to match design fixtures.
 
 Every generated set stores/displays the actual length and actual distribution. When no official blueprint exists, label it **site-designed distribution**.
 
-Never satisfy insufficient inventory by silently importing another series, unverified concepts, or unmarked repeats.
+Never satisfy insufficient inventory by silently importing another series, unverified concepts, or unmarked repeats. The 45/60/90 lengths are presets; an all-matching option can be shorter. Retain the chosen length while it fits. When it no longer fits, require an explicit replacement before Start; the preview must not quietly substitute another length.
 
 Given the same versions/settings/seed/progress snapshot, deterministic session generation should reproduce the same ordered item IDs and option order; this supports print regeneration and diagnostics.
 
@@ -379,7 +379,7 @@ The print center creates deterministic low-ink materials from validated content.
 - announcement-profile fact sheet;
 - correction/change-log excerpt where relevant.
 
-Controls include profile, product type, filters, site-selected count bounded by inventory, image inclusion, large-print mode, grayscale preview, answer-key placement, explanation/source inclusion, deterministic seed, and paper/margin choices.
+Controls include product type, a reviewed-document choice only when it changes an announcement fact sheet, filters, site-selected count bounded by inventory, image inclusion, large-print mode, grayscale preview, answer-key placement, explanation/source inclusion, deterministic seed, and paper/margin choices.
 
 Every practice packet says **Original practice — not an official or past exam** and includes profile/content version and actual generated distribution. No count is labeled official.
 

@@ -1,0 +1,314 @@
+{
+  "captures": [
+    {
+      "file": "simulation-setup-1053.png",
+      "viewportFile": "simulation-setup-1053-viewport.png",
+      "state": "Whole bank, 45 items, untimed",
+      "selector": ".simulation-setup-panel",
+      "width": 1053,
+      "bounds": {
+        "x": 26.328125,
+        "y": -0.203125,
+        "width": 1000.34375,
+        "height": 2165.859375
+      },
+      "route": "/simulations/"
+    },
+    {
+      "file": "simulation-timed-1053.png",
+      "viewportFile": "simulation-timed-1053-viewport.png",
+      "state": "120-minute timer, hidden and auto-submit options off",
+      "selector": ".simulation-setup-panel",
+      "width": 1053,
+      "bounds": {
+        "x": 26.328125,
+        "y": -978.203125,
+        "width": 1000.34375,
+        "height": 2424.703125
+      },
+      "route": "/simulations/"
+    },
+    {
+      "file": "simulation-length-replacement-1053.png",
+      "viewportFile": "simulation-length-replacement-1053-viewport.png",
+      "state": "30 available; chosen 45 blocked pending explicit replacement",
+      "selector": ".simulation-setup-panel",
+      "width": 1053,
+      "bounds": {
+        "x": 26.328125,
+        "y": -347.203125,
+        "width": 1000.34375,
+        "height": 2549.296875
+      },
+      "route": "/simulations/"
+    },
+    {
+      "file": "simulation-all-matching-1053.png",
+      "viewportFile": "simulation-all-matching-1053-viewport.png",
+      "state": "Explicitly selected all 30 matching questions",
+      "selector": ".simulation-setup-panel",
+      "width": 1053,
+      "bounds": {
+        "x": 26.328125,
+        "y": -347.203125,
+        "width": 1000.34375,
+        "height": 2490.5
+      },
+      "route": "/simulations/"
+    },
+    {
+      "file": "simulation-hazards-1053.png",
+      "viewportFile": "simulation-hazards-1053-viewport.png",
+      "state": "Visual hazard task; all 18 scenes available, length 1",
+      "selector": ".simulation-setup-panel",
+      "width": 1053,
+      "bounds": {
+        "x": 26.328125,
+        "y": -347.203125,
+        "width": 1000.34375,
+        "height": 2938.5
+      },
+      "route": "/simulations/"
+    },
+    {
+      "file": "simulation-written-zones-1053.png",
+      "viewportFile": "simulation-written-zones-1053-viewport.png",
+      "state": "Written-zone task; same scene inventory, distinct construct",
+      "selector": ".simulation-setup-panel",
+      "width": 1053,
+      "bounds": {
+        "x": 26.328125,
+        "y": -347.203125,
+        "width": 1000.34375,
+        "height": 2938.5
+      },
+      "route": "/simulations/"
+    },
+    {
+      "file": "print-builder-1053.png",
+      "viewportFile": "print-builder-1053-viewport.png",
+      "state": "Question worksheet configuration, ten products, no exam prerequisite",
+      "selector": ".print-builder",
+      "width": 1053,
+      "bounds": {
+        "x": 26.328125,
+        "y": -0.265625,
+        "width": 1000.34375,
+        "height": 2004.0625
+      },
+      "route": "/print/"
+    },
+    {
+      "file": "print-fact-sheet-1053.png",
+      "viewportFile": "print-fact-sheet-1053-viewport.png",
+      "state": "Reviewed Nassau announcement document, one available fact sheet",
+      "selector": ".print-builder",
+      "width": 1053,
+      "bounds": {
+        "x": 26.328125,
+        "y": -483.265625,
+        "width": 1000.34375,
+        "height": 2072.859375
+      },
+      "route": "/print/"
+    },
+    {
+      "file": "simulation-setup-384.png",
+      "viewportFile": "simulation-setup-384-viewport.png",
+      "state": "Whole bank, 45 items, untimed",
+      "selector": ".simulation-setup-panel",
+      "width": 384,
+      "bounds": {
+        "x": 16,
+        "y": 0.3125,
+        "width": 352,
+        "height": 2954.71875
+      },
+      "route": "/simulations/"
+    },
+    {
+      "file": "simulation-timed-384.png",
+      "viewportFile": "simulation-timed-384-viewport.png",
+      "state": "120-minute timer, hidden and auto-submit options off",
+      "selector": ".simulation-setup-panel",
+      "width": 384,
+      "bounds": {
+        "x": 16,
+        "y": -1497.6875,
+        "width": 352,
+        "height": 3282.65625
+      },
+      "route": "/simulations/"
+    },
+    {
+      "file": "simulation-length-replacement-384.png",
+      "viewportFile": "simulation-length-replacement-384-viewport.png",
+      "state": "30 available; chosen 45 blocked pending explicit replacement",
+      "selector": ".simulation-setup-panel",
+      "width": 384,
+      "bounds": {
+        "x": 16,
+        "y": -630.6875,
+        "width": 352,
+        "height": 3506.4375
+      },
+      "route": "/simulations/"
+    },
+    {
+      "file": "simulation-all-matching-384.png",
+      "viewportFile": "simulation-all-matching-384-viewport.png",
+      "state": "Explicitly selected all 30 matching questions",
+      "selector": ".simulation-setup-panel",
+      "width": 384,
+      "bounds": {
+        "x": 16,
+        "y": -1261.6875,
+        "width": 352,
+        "height": 3373.25
+      },
+      "route": "/simulations/"
+    },
+    {
+      "file": "simulation-hazards-384.png",
+      "viewportFile": "simulation-hazards-384-viewport.png",
+      "state": "Visual hazard task; all 18 scenes available, length 1",
+      "selector": ".simulation-setup-panel",
+      "width": 384,
+      "bounds": {
+        "x": 16,
+        "y": -178.6875,
+        "width": 352,
+        "height": 3798.65625
+      },
+      "route": "/simulations/"
+    },
+    {
+      "file": "simulation-written-zones-384.png",
+      "viewportFile": "simulation-written-zones-384-viewport.png",
+      "state": "Written-zone task; same scene inventory, distinct construct",
+      "selector": ".simulation-setup-panel",
+      "width": 384,
+      "bounds": {
+        "x": 16,
+        "y": -178.6875,
+        "width": 352,
+        "height": 3798.65625
+      },
+      "route": "/simulations/"
+    },
+    {
+      "file": "print-builder-384.png",
+      "viewportFile": "print-builder-384-viewport.png",
+      "state": "Question worksheet configuration, ten products, no exam prerequisite",
+      "selector": ".print-builder",
+      "width": 384,
+      "bounds": {
+        "x": 16,
+        "y": 0.453125,
+        "width": 352,
+        "height": 2401.796875
+      },
+      "route": "/print/"
+    },
+    {
+      "file": "print-fact-sheet-384.png",
+      "viewportFile": "print-fact-sheet-384-viewport.png",
+      "state": "Reviewed Nassau announcement document, one available fact sheet",
+      "selector": ".print-builder",
+      "width": 384,
+      "bounds": {
+        "x": 16,
+        "y": -593.546875,
+        "width": 352,
+        "height": 2520.1875
+      },
+      "route": "/print/"
+    },
+    {
+      "file": "atlas-all-990.png",
+      "viewportFile": "atlas-all-990-viewport.png",
+      "state": "All 65 released records; nine families",
+      "selector": ".atlas-browser",
+      "width": 990,
+      "bounds": {
+        "x": 24.75,
+        "y": 0.140625,
+        "width": 940.5,
+        "height": 7245.859375
+      },
+      "route": "/atlas/"
+    },
+    {
+      "file": "atlas-rigid-990.png",
+      "viewportFile": "atlas-rigid-990-viewport.png",
+      "state": "Rigid hand tools, 15 records",
+      "selector": ".atlas-browser",
+      "width": 990,
+      "bounds": {
+        "x": 24.75,
+        "y": 0.140625,
+        "width": 940.5,
+        "height": 1884.09375
+      },
+      "route": "/atlas/"
+    },
+    {
+      "file": "atlas-images-unavailable-990.png",
+      "viewportFile": "atlas-images-unavailable-990-viewport.png",
+      "state": "Image requests fail; records and family control remain available",
+      "selector": ".atlas-browser",
+      "width": 990,
+      "bounds": {
+        "x": 24.75,
+        "y": 0.140625,
+        "width": 940.5,
+        "height": 2254.34375
+      },
+      "route": "/atlas/"
+    },
+    {
+      "file": "atlas-all-384.png",
+      "viewportFile": "atlas-all-384-viewport.png",
+      "state": "All 65 released records; nine families",
+      "selector": ".atlas-browser",
+      "width": 384,
+      "bounds": {
+        "x": 16,
+        "y": 0.1875,
+        "width": 352,
+        "height": 6742.875
+      },
+      "route": "/atlas/"
+    },
+    {
+      "file": "atlas-rigid-384.png",
+      "viewportFile": "atlas-rigid-384-viewport.png",
+      "state": "Rigid hand tools, 15 records",
+      "selector": ".atlas-browser",
+      "width": 384,
+      "bounds": {
+        "x": 16,
+        "y": 0.1875,
+        "width": 352,
+        "height": 1677.828125
+      },
+      "route": "/atlas/"
+    },
+    {
+      "file": "atlas-images-unavailable-384.png",
+      "viewportFile": "atlas-images-unavailable-384-viewport.png",
+      "state": "Image requests fail; records and family control remain available",
+      "selector": ".atlas-browser",
+      "width": 384,
+      "bounds": {
+        "x": 16,
+        "y": 0.1875,
+        "width": 352,
+        "height": 2584.15625
+      },
+      "route": "/atlas/"
+    }
+  ],
+  "pageErrors": [],
+  "browser": "Chromium"
+}

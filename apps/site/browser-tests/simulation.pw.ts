@@ -41,9 +41,9 @@ interface SeededSimulationPackClaim {
   readonly packVersion: number
 }
 
-const selectStatewideProfile = async (page: Page): Promise<void> => {
-  await page.getByLabel("Practicing for", { exact: true })
-    .selectOption("nys-entry-level-custodians-janitors")
+const expectSharedStudyBank = async (page: Page): Promise<void> => {
+  await expect(page.getByLabel("Practicing for", { exact: true })).toHaveCount(0)
+  await expect(page.getByRole("button", { name: "Start simulation" })).toBeEnabled()
 }
 
 const seedActiveSimulationPack = async (
@@ -495,11 +495,7 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
   )
   await page.goto("/simulations/")
   await expect(page.getByRole("heading", { name: "Create a practice simulation." })).toBeVisible()
-  const profileSelect = page.getByLabel("Practicing for")
-  await expect(profileSelect).toHaveValue("")
-  await expect(page.getByText("Choose a study profile to see the available content categories.")).toBeVisible()
-  await expect(page.getByRole("button", { name: "Start simulation" })).toBeDisabled()
-  await expect(profileSelect.locator("option")).not.toHaveCount(0)
+  await expectSharedStudyBank(page)
   const serializedBootstrap = await page.locator("#simulation-bootstrap-data").textContent()
   if (serializedBootstrap === null) throw new Error("Simulation bootstrap was unavailable")
   expect(serializedBootstrap).not.toContain("correctOptionId")
@@ -524,8 +520,7 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
     ({ id }) => id === "nys-entry-level-custodians-janitors"
   )
   if (selectedProfile === undefined) throw new Error("Statewide simulation profile was unavailable")
-  await profileSelect.selectOption(selectedProfile.id)
-  await expect(page.getByText(/Practicing for: New York Entry-Level Custodians and Janitors\./)).toBeVisible()
+
   const activePackClaim = await primeSimulationResultCache(page)
   const lengthGroup = page.getByRole("group", { name: "Set length" })
   for (const advertisedLength of bootstrap.advertisedLengths) {
@@ -592,7 +587,9 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
   }
   await expect(lengthGroup.getByRole("radio", {
     name: new RegExp(`^${filteredCategory.count} items`)
-  })).toBeChecked()
+  })).not.toBeChecked()
+  await expect(page.getByRole("button", { name: "Start simulation" })).toBeDisabled()
+  await expect(page.getByRole("status")).toContainText("Choose a replacement length")
 
   for (const option of categoryOptions) {
     await contentMix.getByRole("checkbox", {
@@ -616,7 +613,8 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
   }
   await expect(lengthGroup.getByRole("radio", {
     name: new RegExp(`^${filteredCategory.count} items`)
-  })).toBeChecked()
+  })).not.toBeChecked()
+  await lengthGroup.getByRole("radio", { name: new RegExp(`^${filteredCategory.count} items`) }).check()
 
   await category.uncheck()
   await expect(page.getByText("Select at least one content category to create a simulation.")).toBeVisible()
@@ -632,9 +630,9 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
   await page.getByLabel("Set code (seed)").fill("browser-restoration-seed")
   await page.getByRole("button", { name: "Start simulation" }).click()
   await expect(page).toHaveURL(/\/simulations\/session\/sim-[a-z0-9-]+\/question\/1\/$/)
-  await expect(page.getByText(`Practicing for: ${selectedProfile.label}.`, { exact: false })).toBeVisible()
+  await expect(page.getByText(`Study material: ${selectedProfile.label}.`, { exact: false })).toBeVisible()
   await expect(page.getByRole("link", {
-    name: "Start a new simulation to choose a different profile"
+    name: "Set up another simulation"
   })).toBeVisible()
   expect(postcommitRequests).toEqual([])
   expect(await page.evaluate(() =>
@@ -761,7 +759,7 @@ test("trusted retirement preserves a pinned simulation but blocks every new sess
   page
 }) => {
   await page.goto("/simulations/")
-  await selectStatewideProfile(page)
+  await expectSharedStudyBank(page)
   const activePackClaim = await primeSimulationResultCache(page)
   await page.locator("details", { has: page.getByLabel("Set code (seed)") }).evaluate((node) => { (node as HTMLDetailsElement).open = true })
   await page.getByLabel("Set code (seed)").fill("before-retirement")
@@ -787,7 +785,7 @@ test("trusted retirement preserves a pinned simulation but blocks every new sess
   }))
 
   await page.goto("/simulations/")
-  await selectStatewideProfile(page)
+  await expectSharedStudyBank(page)
   await page.locator("details", { has: page.getByLabel("Set code (seed)") }).evaluate((node) => { (node as HTMLDetailsElement).open = true })
   await page.getByLabel("Set code (seed)").fill("after-retirement")
   await page.getByRole("button", { name: "Start simulation" }).click()
@@ -811,7 +809,7 @@ test("restores a visual hazard simulation and keeps evaluated feedback after pac
   })
   await observeHazardAnswerReads(context)
   await page.goto("/simulations/")
-  await selectStatewideProfile(page)
+  await expectSharedStudyBank(page)
   await primeSimulationHazardClosure(page)
   await page.getByRole("radio", { name: "Visual hazard scenes" }).check()
   await page.locator('input[name="simulation-length"][value="1"]').check()
@@ -950,7 +948,7 @@ test("restores a nonvisual zoned hazard simulation and its self-contained result
   })
   await observeHazardAnswerReads(context)
   await page.goto("/simulations/")
-  await selectStatewideProfile(page)
+  await expectSharedStudyBank(page)
   await primeSimulationHazardClosure(page)
   await page.getByRole("radio", { name: "Hazard scenes — keyboard, no image" }).check()
   await page.locator('input[name="simulation-length"][value="1"]').check()
@@ -1026,7 +1024,7 @@ test("does not create a session when offline result availability is not establis
     }
   })
   await page.goto("/simulations/")
-  await selectStatewideProfile(page)
+  await expectSharedStudyBank(page)
   await page.locator("details", { has: page.getByLabel("Set code (seed)") }).evaluate((node) => { (node as HTMLDetailsElement).open = true })
   await page.getByLabel("Set code (seed)").fill("preserved-after-closure-failure")
   await context.setOffline(true)
@@ -1045,7 +1043,7 @@ test("retains an optimistic answer and flag through an IndexedDB failure and exa
   page
 }) => {
   await page.goto("/simulations/")
-  await selectStatewideProfile(page)
+  await expectSharedStudyBank(page)
   await primeSimulationResultCache(page)
   await page.locator("details", { has: page.getByLabel("Set code (seed)") }).evaluate((node) => { (node as HTMLDetailsElement).open = true })
   await page.getByLabel("Set code (seed)").fill("browser-save-retry")
@@ -1100,7 +1098,7 @@ test("retains an optimistic answer and flag through an IndexedDB failure and exa
 
 test("strict practice auto-submit occurs only after explicit opt-in", async ({ page }) => {
   await page.goto("/simulations/")
-  await selectStatewideProfile(page)
+  await expectSharedStudyBank(page)
   await primeSimulationResultCache(page)
   await page.getByLabel("Timed practice").check()
   await page.getByLabel("Practice duration (minutes)").fill("1")
@@ -1166,4 +1164,23 @@ test("serves only scoped opaque local-product shells through Static Assets @clou
     expect(response.status(), method).not.toBe(200)
     expect(await response.text(), method).not.toContain('data-route-id="simulation-player"')
   }
+})
+
+test("keeps a fitting length and requires a replacement when the subject selection becomes too small", async ({ page }) => {
+  await page.goto("/simulations/")
+  const lengths = page.getByRole("group", { name: "Set length" })
+  const areas = page.getByRole("group", { name: "Content mix" })
+  await lengths.getByRole("radio", { name: /^60 items/ }).check()
+  await areas.getByRole("checkbox", { name: /^Health and safety/ }).uncheck()
+  await expect(lengths.getByRole("radio", { name: /^60 items/ })).toBeChecked()
+  await expect(page.getByRole("button", { name: "Start simulation" })).toBeEnabled()
+  await areas.getByRole("checkbox", { name: /^Minor maintenance and repair/ }).uncheck()
+  await areas.getByRole("checkbox", { name: /^Mixed-domain/ }).uncheck()
+  await expect(lengths.locator("input:checked")).toHaveCount(0)
+  await expect(page.getByRole("button", { name: "Start simulation" })).toBeDisabled()
+  await expect(lengths.getByRole("status")).toContainText("Choose a replacement length")
+  await lengths.getByRole("radio", { name: /^30 items/ }).check()
+  await areas.getByRole("checkbox", { name: /^Minor maintenance and repair/ }).check()
+  await expect(lengths.getByRole("radio", { name: /^30 items/ })).toBeChecked()
+  await expect(page.getByRole("button", { name: "Start simulation" })).toBeEnabled()
 })

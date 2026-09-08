@@ -18,6 +18,7 @@ import {
   type PrintProduct,
   type SupportedPrintProduct
 } from "../model.ts"
+import { studyContentProfileId } from "../../study-content.ts"
 import { deterministicSeedMaxLength } from "../../deterministic-seed.ts"
 
 const products: ReadonlyArray<{ readonly id: PrintProduct; readonly label: string }> = [
@@ -45,9 +46,11 @@ export const PrintBuilder = ({
     controller.getSnapshot,
     controller.getHydrationSnapshot
   )
-  const [profileId, setProfileId] = useState("")
-  const selectedProfile = bootstrap.profiles.find((profile) => profile.id === profileId)
+  const factProfiles = bootstrap.profiles.filter((profile) => profile.announcementFactSheet !== null)
+  const [factProfileId, setFactProfileId] = useState(factProfiles[0]?.id ?? "")
   const [product, setProduct] = useState<SupportedPrintProduct>("multiple-choice-questions")
+  const profileId = product === "announcement-profile-fact-sheet" ? factProfileId : studyContentProfileId
+  const selectedProfile = bootstrap.profiles.find((profile) => profile.id === profileId)
   const [count, setCount] = useState(Math.min(10, bootstrap.questions.length))
   const [seed, setSeed] = useState("practice-1")
   const [paper, setPaper] = useState<"us-letter" | "a4">("us-letter")
@@ -75,8 +78,8 @@ export const PrintBuilder = ({
   }, [controller, snapshot.announcementRequest])
 
   const availability = useMemo(
-    () => new Map(products.map(({ id }) => [id, printProductAvailability(id, bootstrap, profileId)])),
-    [bootstrap, profileId]
+    () => new Map(products.map(({ id }) => [id, printProductAvailability(id, bootstrap, id === "announcement-profile-fact-sheet" ? factProfileId : studyContentProfileId)])),
+    [bootstrap, factProfileId]
   )
   const filterOptions = useMemo(
     () => printProductFilterOptions(product, bootstrap, profileId),
@@ -148,17 +151,8 @@ export const PrintBuilder = ({
         </section>
       ) : null}
       <form onSubmit={submit}>
-        <label htmlFor="print-profile">Practicing for</label>
-        <select id="print-profile" value={profileId} onChange={(event) => setProfileId(event.target.value)}>
-          <option disabled value="">Choose a study profile</option>
-          {bootstrap.profiles.map((profile) => (
-            <option key={profile.id} value={profile.id}>{profile.label}</option>
-          ))}
-        </select>
-        {selectedProfile === undefined
-          ? <p className="source-note">Choose the statewide series or a jurisdiction-specific profile before building a packet. The choice controls which content can be printed.</p>
-          : <p className="source-note"><strong>Practicing for: {selectedProfile.label}.</strong> {selectedProfile.disclaimer}</p>}
-
+        <fieldset className="print-config-fields" disabled={snapshot.state.tag === "generating"}><legend className="sr-only">Print settings</legend>
+        <div className="setup-scope-note"><h3>One shared study bank</h3><p>Practice products use the entry-level study bank. A fact sheet reproduces the reviewed announcement named on it; it does not select an exam for your practice.</p><a href="/practice/#covers">What practice covers</a></div>
         <fieldset>
           <legend>Product type</legend>
           <div className="print-product-list">
@@ -184,6 +178,7 @@ export const PrintBuilder = ({
           </div>
         </fieldset>
 
+        {product === "announcement-profile-fact-sheet" ? factProfiles.length > 1 ? <label htmlFor="print-fact-profile">Announcement document<select id="print-fact-profile" value={factProfileId} onChange={(event) => setFactProfileId(event.target.value)}>{factProfiles.map((profile) => <option key={profile.id} value={profile.id}>{profile.label}</option>)}</select></label> : <p className="source-note">Announcement document: {selectedProfile?.label ?? "Unavailable"}</p> : null}
         <label htmlFor="print-filter">Content filter</label>
         <select
           disabled={filterOptions.length === 0}
@@ -266,9 +261,10 @@ export const PrintBuilder = ({
         <p className="status-text" role="status" aria-live="polite">
           {snapshot.state.tag === "generating" ? "Generating and saving preview…" : ""}
         </p>
-        <button className="button" type="submit" disabled={disabled || seed.trim().length === 0 || seed.trim().length > deterministicSeedMaxLength || count < 1 || count > capacity}>
+        <button className="button button-primary" type="submit" disabled={disabled || !Number.isSafeInteger(count) || seed.trim().length === 0 || seed.trim().length > deterministicSeedMaxLength || count < 1 || count > capacity}>
           Generate preview
         </button>
+        </fieldset>
       </form>
     </section>
   )

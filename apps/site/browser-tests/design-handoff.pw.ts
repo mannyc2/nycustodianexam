@@ -86,11 +86,14 @@ test("Library links and Settings downloads remain reachable without JavaScript",
   await context.close()
 })
 
-test("atlas family tabs filter the released tools and restore the selected family", async ({ page }) => {
+test("atlas family controls filter the released tools and restore the selected family", async ({ page }) => {
   await page.setViewportSize({ height: 720, width: 320 })
   await page.goto("/atlas/")
-  const familyTabs = page.getByRole("tablist", { name: "Visual family" })
-  await expect(familyTabs).toBeVisible()
+  const familyTabs = page.getByRole("tablist", { name: "Visual family", includeHidden: true })
+  await expect(familyTabs).toBeHidden()
+  const familySelect = page.getByRole("combobox", { name: "Family", exact: true })
+  await expect(familySelect).toBeVisible()
+  await expect(familySelect.getByRole("option")).toHaveCount(10)
   const family = familyTabs.locator('[data-atlas-family]:not([data-atlas-family="all"])').first()
   const familyName = await family.getAttribute("data-atlas-family")
   expect(familyName).not.toBeNull()
@@ -99,7 +102,7 @@ test("atlas family tabs filter the released tools and restore the selected famil
   familyName)
   expect(expected).toBeGreaterThan(0)
 
-  await family.click()
+  await familySelect.selectOption(familyName!)
   await expect(family).toHaveAttribute("aria-selected", "true")
   await expect(page.locator("[data-tool-family]:visible")).toHaveCount(expected)
   await expect(page.locator("[data-atlas-count]")).toContainText(`Showing ${expected} illustrated`)
@@ -109,6 +112,9 @@ test("atlas family tabs filter the released tools and restore the selected famil
   await page.reload()
   await expect(family).toHaveAttribute("aria-selected", "true")
   await expect(page.locator("[data-tool-family]:visible")).toHaveCount(expected)
+  await page.setViewportSize({ width: 1248, height: 900 })
+  await expect(familyTabs).toBeVisible()
+  await expect(familySelect).toBeHidden()
   await family.focus()
   await page.keyboard.press("Home")
   const all = familyTabs.getByRole("tab", { name: /^All families/ })
@@ -172,4 +178,18 @@ test("compact navigation stays at the viewport bottom and all Library destinatio
   await page.locator("[data-library-menu] summary").click()
   await page.locator(".nav-popover").getByRole("link", { name: /^What practice covers/ }).click()
   await expect(page.getByRole("heading", { name: "What practice covers", exact: true })).toBeInViewport()
+})
+
+test("Atlas preserves written records when released illustrations cannot load", async ({ page }) => {
+  await page.route("**/content/**", async (route) => {
+    if (route.request().resourceType() === "image") await route.abort()
+    else await route.continue()
+  })
+  await page.setViewportSize({ width: 384, height: 800 })
+  await page.goto("/atlas/")
+  const firstCard = page.locator("[data-tool-family]").first()
+  await expect(firstCard.locator("[data-atlas-image-notice]")).toBeVisible()
+  await expect(firstCard.getByRole("link")).toBeVisible()
+  await expect(page.getByRole("combobox", { name: "Family", exact: true })).toBeEnabled()
+  await expectPageReflow(page)
 })

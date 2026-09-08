@@ -31,7 +31,23 @@ const enhanceAtlas = (root: HTMLElement): void => {
   const panel = root.querySelector<HTMLElement>("#atlas-tools")
   const buttons = [...root.querySelectorAll<HTMLButtonElement>("[data-atlas-family]")]
   const cards = [...root.querySelectorAll<HTMLElement>("[data-tool-family]")]
+  const compactSelect = root.querySelector<HTMLSelectElement>("[data-atlas-select]")
+  const compactField = root.querySelector<HTMLElement>("[data-atlas-select-field]")
+  const compact = window.matchMedia("(max-width: 47.99rem)")
   if (filters === null || count === null || panel === null || buttons.length === 0) return
+
+  for (const card of cards) {
+    const illustration = card.querySelector<HTMLImageElement>("img")
+    const notice = card.querySelector<HTMLElement>("[data-atlas-image-notice]")
+    if (illustration === null || notice === null) continue
+    const unavailable = (): void => {
+      illustration.hidden = true
+      notice.hidden = false
+      card.setAttribute("data-image-unavailable", "")
+    }
+    illustration.addEventListener("error", unavailable)
+    if (illustration.complete && illustration.naturalWidth === 0) unavailable()
+  }
 
   const select = (button: HTMLButtonElement, updateUrl: boolean): void => {
     const family = button.dataset.atlasFamily ?? "all"
@@ -44,7 +60,8 @@ const enhanceAtlas = (root: HTMLElement): void => {
       card.hidden = family !== "all" && card.dataset.toolFamily !== family
       if (!card.hidden) visible += 1
     }
-    panel.setAttribute("aria-labelledby", button.id)
+    if (compactSelect !== null) compactSelect.value = family
+    panel.setAttribute("aria-labelledby", compact.matches ? "atlas-family-select" : button.id)
     count.textContent = family === "all"
       ? `Showing all ${visible} illustrated tools.`
       : `Showing ${visible} illustrated ${visible === 1 ? "tool" : "tools"} in ${family}.`
@@ -53,11 +70,23 @@ const enhanceAtlas = (root: HTMLElement): void => {
 
   for (const button of buttons) button.addEventListener("click", () => select(button, true))
   keyboardTabs(buttons)
-  panel.setAttribute("role", "tabpanel")
+  const adaptControls = (): void => {
+    if (compact.matches) panel.removeAttribute("role")
+    else panel.setAttribute("role", "tabpanel")
+    const selected = buttons.find((button) => button.getAttribute("aria-selected") === "true")
+    if (selected !== undefined) panel.setAttribute("aria-labelledby", compact.matches ? "atlas-family-select" : selected.id)
+  }
+  compactSelect?.addEventListener("change", () => {
+    const selected = buttons.find((button) => button.dataset.atlasFamily === compactSelect.value)
+    if (selected !== undefined) select(selected, true)
+  })
+  compact.addEventListener("change", adaptControls)
+  adaptControls()
   const family = new URL(window.location.href).searchParams.get("family")
   const initial = buttons.find((button) => button.dataset.atlasFamily === family) ?? buttons[0]
   if (initial !== undefined) select(initial, false)
   filters.hidden = false
+  if (compactField !== null) compactField.hidden = false
 }
 
 const enhanceExams = (root: HTMLElement): void => {

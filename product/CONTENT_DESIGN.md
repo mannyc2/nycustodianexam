@@ -186,13 +186,15 @@ Opening an exam record reads reference information; it does not set an active
 exam. Do not offer “Choose your exam” as a global selection action. Practice
 must state its neutral statewide-series scope near the start action and must
 never silently default to Nassau or the first available profile. Simulation
-and print require their own explicit profile choice; show “Practicing for:
-{profile label}” in that setup without implying a saved global preference.
+and practice-print setup use that same shared bank without a profile picker.
+Keep the internal profile/version coordinate in saved sessions and jobs. A
+printed announcement fact sheet names its actual document; a document chooser
+is useful only when more than one reviewed document is available.
 
 ### Navigation and compact copy
 
 Use Practice for `/practice/`, Library for the disclosure containing Tool atlas
-and Hazard lab, and Exam information for `/exams/`. Settings is the only header
+and Tool comparisons, Hazard scenes, and What practice covers; use Exams for `/exams/`. Settings is the only header
 utility on the right. Sources belongs in the footer. Offline downloads are
 available from Settings and contextual or footer links.
 

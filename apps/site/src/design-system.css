@@ -946,3 +946,33 @@
     :is([data-route-id="home"], [data-route-id="study-hub"], [data-route-id="review-queue"]) .site-footer-meta { font-size: 0.75rem; }
   }
 }
+
+@layer overrides {
+  .atlas-family-select { display: none; }
+  .atlas-eligibility-note { font-size: 0.9375rem; color: var(--color-text-muted); max-inline-size: 80ch; }
+  .atlas-browser { gap: 1rem; }
+  .atlas-browser .tool-eligibility { font-size: 0.8125rem; color: var(--color-text-muted); }
+  .atlas-browser .tool-card { border-radius: 0.5rem; }
+  .atlas-browser .tool-card h2 { font-size: 1rem; }
+  .atlas-browser .tool-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  @media (max-width: 47.99rem) {
+    .atlas-filters { display: none; }
+    .atlas-family-select:not([hidden]) { display: grid; gap: 0.375rem; order: -1; }
+    .atlas-family-select label { font-weight: 700; }
+    .atlas-family-select select { inline-size: 100%; min-block-size: 2.75rem; padding: 0.5rem 0.75rem; border: 1px solid var(--color-border-control); border-radius: 0.5rem; background: var(--color-surface); color: var(--color-text); }
+    .atlas-browser .tool-grid { grid-template-columns: minmax(0, 1fr); gap: 0.5rem; }
+    .atlas-browser .tool-card:not([hidden]) { display: grid; grid-template-columns: 3.25rem minmax(0, 1fr); gap: 0.75rem; align-items: center; padding: 0.75rem; }
+    .atlas-browser .tool-card img { inline-size: 3.25rem; block-size: 3.25rem; border: 0; object-fit: contain; }
+    .atlas-browser .tool-card > div { padding: 0; }
+    .atlas-browser .tool-card .tool-family { display: none; }
+    .atlas-browser .tool-card h2, .atlas-browser .tool-card p { margin: 0; }
+    .atlas-browser .tool-card h2 a { display: inline-flex; min-block-size: 2.75rem; align-items: center; }
+  }
+}
+@layer overrides {
+  .atlas-browser [data-atlas-image-notice] { font-size: 0.8125rem; color: var(--color-text-muted); }
+  .atlas-browser .tool-card[data-image-unavailable]::before { content: '—'; display: grid; place-items: center; aspect-ratio: 1; color: var(--color-text-muted); background: var(--color-surface-subtle); }
+  @media (max-width: 47.99rem) {
+    .atlas-browser .tool-card[data-image-unavailable] > div { grid-column: 2; }
+  }
+}

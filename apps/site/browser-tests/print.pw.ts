@@ -29,7 +29,12 @@ const selectPrintProfile = async (
   page: Page,
   profileId: string = statewideProfileId
 ): Promise<void> => {
-  await page.getByLabel("Practicing for", { exact: true }).selectOption(profileId)
+  await expect(page.getByLabel("Practicing for", { exact: true })).toHaveCount(0)
+  if (profileId !== statewideProfileId) {
+    await page.getByRole("radio", { name: "Announcement-profile fact sheet" }).check()
+    const documentSelect = page.getByLabel("Announcement document", { exact: true })
+    if (await documentSelect.count() > 0) await documentSelect.selectOption(profileId)
+  }
 }
 
 const fillPrintSetCode = async (page: Page, code: string): Promise<void> => {
@@ -135,13 +140,12 @@ test("generates, restores, and prints a separate deterministic question packet",
   await page.goto("/print/")
   const printBootstrap = await readPrintBootstrap(page)
   await expect(page.getByRole("heading", { name: "Choose what to print" })).toBeVisible()
-  await expect(page.getByLabel("Practicing for", { exact: true })).toHaveValue("")
-  await expect(page.getByRole("button", { name: "Generate preview" })).toBeDisabled()
+  await expect(page.getByLabel("Practicing for", { exact: true })).toHaveCount(0)
+  await expect(page.getByRole("button", { name: "Generate preview" })).toBeEnabled()
   await expect(page.getByLabel("Set code")).toBeHidden()
   await selectPrintProfile(page)
   await expect(page.getByRole("radio", { name: "Blank hazard worksheet" })).toBeEnabled()
-  await expect(page.getByRole("radio", { name: "Announcement-profile fact sheet" })).toBeDisabled()
-  await expect(page.getByText(/No reviewed announcement fact history is available for this profile/)).toBeVisible()
+  await expect(page.getByRole("radio", { name: "Announcement-profile fact sheet" })).toBeEnabled()
   await expect(page.getByRole("radio", { name: "Correction\/change-log excerpt" })).toBeDisabled()
   await expect(page.getByText(/No publishable structured correction or change-log record exists/)).toBeVisible()
 

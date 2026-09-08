@@ -399,12 +399,14 @@
     inset-block-start: var(--space-2);
     inset-inline-start: var(--space-2);
     translate: 0 -200%;
+    opacity: 0;
+    pointer-events: none;
     padding: var(--space-3) var(--space-4);
     color: var(--color-on-action);
     background: var(--color-action);
     font-weight: var(--weight-bold);
   }
-  .skip-link:focus { translate: 0; }
+  .skip-link:focus { translate: 0; opacity: 1; pointer-events: auto; }
   .connectivity-notice {
     display: none;
     margin: 0;

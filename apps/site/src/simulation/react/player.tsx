@@ -162,8 +162,8 @@ export const SimulationPlayer = ({
       >{recoverableError.kind === "submission" ? "Retry final submission" : "Retry this exact local save"}</button>
     </section>}
     <p className="source-note simulation-profile-note">
-      <strong>Practicing for: {session.profile.label}.</strong>{" "}
-      <a href="/simulations/">Start a new simulation to choose a different profile</a>.
+      <strong>Study material: {session.profile.label}.</strong>{" "}
+      <a href="/simulations/">Set up another simulation</a>.
     </p>
     <div className="simulation-workspace">
     <div className="simulation-main">
