@@ -66,7 +66,7 @@ test("a generated practice answer appears in Study and can be durably finished i
   await page.goto("/practice/")
   await expect(page.getByRole("heading", { name: "No saved activity yet" })).toBeVisible()
   const firstPractice = page.locator("[data-study-hub] .study-hero a.button-primary")
-  await expect(page.getByRole("heading", { name: "Practice and activity", exact: true })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "Start with a set of 45.", exact: true })).toBeVisible()
   await expect(firstPractice).toHaveText("Start a 45-question set")
   const sessionPath = await firstPractice.getAttribute("href")
   expect(sessionPath).toMatch(/^\/practice\/session\/ps-[a-z0-9]+\/question\/1\/$/)
@@ -78,7 +78,7 @@ test("a generated practice answer appears in Study and can be durably finished i
   await expect(page.locator(".feedback-rationales")).toBeVisible()
 
   await page.goto("/practice/")
-  await expect(page.getByRole("heading", { name: "Practice and activity" })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "Start another set of 45." })).toBeVisible()
   const history = page.getByRole("region", { name: "Recent activity" })
   await expect(history.getByRole("listitem")).toHaveCount(1)
   await expect(history).toContainText("Answer saved · flagged")

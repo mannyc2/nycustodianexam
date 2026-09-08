@@ -25,7 +25,7 @@ for (const path of ["/", "/exams/", "/atlas/", "/practice/", "/review/", "/simul
 
     await navigation.locator("summary").click()
     await expect(navigation.getByRole("link", { name: /^Tool atlas/ })).toBeVisible()
-    await expect(navigation.getByRole("link", { name: /^Hazard lab/ })).toBeVisible()
+    await expect(navigation.getByRole("link", { name: /^Hazard scenes/ })).toBeVisible()
     await expectPageReflow(page)
 
     const scan = await new AxeBuilder({ page })
@@ -53,7 +53,7 @@ test("Library supports keyboard dismissal, outside clicks, and normal link navig
   await page.mouse.click(8, 400)
   await expect(menu).not.toHaveAttribute("open")
   await trigger.click()
-  await menu.getByRole("link", { name: /^Hazard lab/ }).click()
+  await menu.getByRole("link", { name: /^Hazard scenes/ }).click()
   await expect(page).toHaveURL(/\/hazards\/$/)
 })
 
@@ -68,7 +68,7 @@ test("enlarged text keeps Settings on the right and the Library panel within the
     const settings = await page.locator(".nav-utility").boundingBox()
     expect(header).not.toBeNull()
     expect(settings).not.toBeNull()
-    expect(settings!.x + settings!.width).toBeCloseTo(header!.x + header!.width, 0)
+    expect(settings!.x + settings!.width).toBeCloseTo(width < 768 ? width : header!.x + header!.width, 0)
   }
 })
 
@@ -78,7 +78,7 @@ test("Library links and Settings downloads remain reachable without JavaScript",
   await page.goto("/")
   const navigation = page.getByRole("navigation", { name: "Primary", exact: true })
   await navigation.locator("summary").click()
-  await expect(navigation.getByRole("link", { name: /^Hazard lab/ })).toBeVisible()
+  await expect(navigation.getByRole("link", { name: /^Hazard scenes/ })).toBeVisible()
   await expectPageReflow(page)
   await page.locator(".site-header").getByRole("link", { name: "Settings", exact: true }).click()
   await expect(page.getByRole("link", { name: "Manage offline downloads", exact: true })).toHaveAttribute("href", "/offline/")
@@ -151,4 +151,25 @@ test("exam search, record selection, and detail tabs use the published records",
   await expect(search).toBeFocused()
   await expect(search).toHaveValue("")
   await expect(page.locator("[data-exam-row]:visible")).toHaveCount(total)
+})
+
+test("compact navigation stays at the viewport bottom and all Library destinations resolve", async ({ page }) => {
+  await page.setViewportSize({ width: 384, height: 800 })
+  await page.goto("/practice/")
+  await expect(page.getByRole("heading", { name: "Start with a set of 45.", exact: true })).toBeVisible()
+  const primary = page.getByRole("navigation", { name: "Primary", exact: true })
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
+  const bar = await primary.boundingBox()
+  expect(bar!.y + bar!.height).toBe(800)
+  await primary.locator("summary").click()
+  const panel = page.locator(".nav-popover")
+  const sheet = await panel.boundingBox()
+  expect(sheet!.x).toBe(0)
+  expect(sheet!.width).toBe(384)
+  expect(Math.abs(sheet!.y + sheet!.height - bar!.y)).toBeLessThanOrEqual(1)
+  await panel.getByRole("link", { name: /^Tool comparisons/ }).click()
+  await expect(page.locator("#comparisons")).toBeInViewport()
+  await page.locator("[data-library-menu] summary").click()
+  await page.locator(".nav-popover").getByRole("link", { name: /^What practice covers/ }).click()
+  await expect(page.getByRole("heading", { name: "What practice covers", exact: true })).toBeInViewport()
 })

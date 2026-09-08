@@ -139,6 +139,7 @@ export const ReviewQueueIsland = ({ controller, activityState, onRetryHistory }:
         <a className="button button-secondary" href="/settings/#export-local-data">Export saved data</a>
       </div>
     </section> : <section className="page-header page-header-prominent study-hero" aria-labelledby="review-queue-heading">
+      <p className="eyebrow">Review</p>
       <h1 id="review-queue-heading">{state.tag === "loading" ? "Loading your review queue" : state.tag === "empty" ? "Your review queue is clear." : `${items.length} ${items.length === 1 ? "item" : "items"} to review`}</h1>
       <p>{state.tag === "loading" ? state.action === "rebuild" ? "Rebuilding from your saved attempts and finished reviews…" : "Reading the attempts saved on this device…" : state.tag === "empty" ? "Nothing is waiting for review. Try another practice set, explore a scene, or come back after your next saved answer." : "Revisit the questions you missed or flagged and the visual scenes that need another look. Untimed, with your original saved feedback."}</p>
       <div className="question-controls">
@@ -160,7 +161,7 @@ export const ReviewQueueIsland = ({ controller, activityState, onRetryHistory }:
         <div className="empty-state-actions"><a className="button button-primary" href="/practice/#practice-sets">Practice questions</a><a className="button button-secondary" href="/hazards/">Practice hazard scanning</a></div>
       </div>
     </section> : (state.tag === "ready" || state.tag === "recoverable_error") && items.length > 0 ? <section className="study-section" aria-labelledby="review-due-heading">
-      <div className="section-header"><h2 id="review-due-heading" ref={queueHeadingRef} tabIndex={-1}>What is ready</h2><p>Read each explanation, then confirm Finish review when you are done.</p></div>
+      <div className="section-header"><h2 id="review-due-heading" ref={queueHeadingRef} tabIndex={-1}>What is ready</h2><p>Read each explanation, then confirm Finish review when you are done. Reading one never removes it.</p></div>
       <div className="tabs" role="tablist" aria-label="Review scope">{scopes.map((entry, index) => <button
         key={entry.id} id={`review-tab-${entry.id}`} role="tab" type="button"
         aria-selected={scope === entry.id} aria-controls="review-scope-panel" tabIndex={scope === entry.id ? 0 : -1}
