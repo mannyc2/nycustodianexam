@@ -1,4 +1,5 @@
-import { hazardFamilyLabel, sourceEvidenceTierLabel } from "../../public-content-labels.ts"
+import { HazardClaimSources } from "./sources.tsx"
+import { hazardFamilyLabel } from "../../public-content-labels.ts"
 import type { ReleasedPostcommitScene } from "../attempt.ts"
 import {
   isCurrentPostcommitScene,
@@ -10,44 +11,6 @@ type HeadingTag = "h3" | "h4"
 
 const displayTag = (value: string): string =>
   value.replaceAll("-", " ").replace(/^./, (letter) => letter.toUpperCase())
-
-const SourceLineReceipt = ({
-  payload,
-  sourceLineId
-}: {
-  readonly payload: PostcommitScene
-  readonly sourceLineId: string
-}) => {
-  const source = payload.sources.find((candidate) => candidate.id === sourceLineId)
-  if (source === undefined) {
-    return <li>The exact released source-line receipt is unavailable.</li>
-  }
-
-  return <li>
-    <p>
-      <strong>{source.publisher}</strong> — {source.title} (verified{" "}
-      <time dateTime={source.verifiedOn}>{source.verifiedOn}</time>)
-    </p>
-    <p><strong>Evidence:</strong> {sourceEvidenceTierLabel(source.evidenceTier)}</p>
-    <blockquote>{source.excerpt}</blockquote>
-    {source.url === undefined
-      ? null
-      : <p><a href={source.url} rel="external noopener">Open the official source</a></p>}
-    {source.scope === undefined ? null : <p><strong>Scope note:</strong> {source.scope}</p>}
-    <details className="source-note">
-      <summary>Receipt details</summary>
-      <dl>
-        <div><dt>Source version</dt><dd>{source.version}</dd></div>
-        <div><dt>Exact line locator</dt><dd><code>{source.locator}</code></dd></div>
-        {source.sourceLocator === undefined
-          ? null
-          : <div><dt>Source document locator</dt><dd><code>{source.sourceLocator}</code></dd></div>}
-        <div><dt>Source-line ID</dt><dd><code>{source.id}</code></dd></div>
-        <div><dt>Source record ID</dt><dd><code>{source.sourceId}</code></dd></div>
-      </dl>
-    </details>
-  </li>
-}
 
 const ClaimFeedback = ({
   label,
@@ -68,14 +31,7 @@ const ClaimFeedback = ({
     <dd>
       <p>{claim.text}</p>
       {claim.caveat === null ? null : <p><strong>Scope note:</strong> {claim.caveat}</p>}
-      <details className="feedback-sources">
-        <summary>Exact source-line receipts</summary>
-        <ul>{claim.sourceLineIds.map((sourceLineId) => <SourceLineReceipt
-          key={`${claim.id}:${sourceLineId}`}
-          payload={payload}
-          sourceLineId={sourceLineId}
-        />)}</ul>
-      </details>
+      <HazardClaimSources payload={payload} sourceLineIds={claim.sourceLineIds} claimId={claim.id} />
     </dd>
   </div>
 }
