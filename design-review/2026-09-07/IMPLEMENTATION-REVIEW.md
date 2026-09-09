@@ -155,3 +155,40 @@ builder and detailed coverage. Compact hero coverage-link ordering, placement of
 settings/offline links, remaining coverage density, and the separate preset chooser
 still need final reconciliation. This update does not certify all integrated
 captures as visually complete.
+
+## Responsive Practice and compact Review reconciliation
+
+Reading the complete Study Hub prototype established an intentional width-specific
+order: first-visit desktop coverage precedes the activities; compact coverage
+follows recent activity. The previous shared ordering matched compact only.
+Practice now subscribes to the compact media query and renders the corresponding
+DOM order, including the hero coverage link and settings links. This keeps reading
+and keyboard order aligned with the visible layout, instead of reordering
+interactive content only with CSS. Compact coverage is a single card preserving
+subject scope, original-content limits, announcement independence, and source
+links. The repeated closing announcement section was removed because coverage
+already includes that destination.
+
+The functional builder remains visible. The legacy whole-bank preset links and
+capacity table remain in a native Quick preset sets disclosure with the same
+`#practice-sets` target, available without JavaScript. Compact activity-card rules
+now cover the entire compact range through 47.99rem, fixing the one-column gap
+between 640px and 768px.
+
+Review reference 21 uses two-column summary facts, no repeated paragraph above
+its filters, and vertically stacked primary/secondary actions. Applied that
+compact composition, including full-width confirmation actions. Finish review
+still opens explicit confirmation; reading an explanation never acknowledges it.
+The fuller unavailable-attempt rule and recovery actions are retained. Real
+fixture counts differ from the supplied five-item example.
+
+Validation: root build/artifact verification, site and browser typechecks pass.
+Twenty-one Practice/builder checks pass across Chromium, Firefox, and WebKit,
+including a new 700px-to-1248px reading-order/keyboard check and no-JavaScript
+preset navigation. Six Review tests pass across those browsers, covering exact
+receipt quarantine, confirmation focus, and unavailable feedback history. The
+24 integrated captures were refreshed without unexpected page errors. Inspected
+compact Practice hero/activity entry and Review's confirmation page against the
+accepted references. Final compact confirmation widths were then corrected and
+recaptured. Review's multi-item/unavailable inventory comparison and the remaining
+full-page families still need final visual verification.

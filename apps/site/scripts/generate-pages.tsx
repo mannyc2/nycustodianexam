@@ -1388,7 +1388,7 @@ const buildPages = ({
     body: `
   <main class="page-shell" id="main-content" tabindex="-1">
     <div data-study-hub><section class="page-header"><h1>Practice and activity</h1><p>Practice for the New York entry-level Custodians and Janitors series. Choose a question set or revisit your saved attempts.</p><div class="question-controls"><a class="button button-primary" href="#practice-sets">Choose a practice set</a><a class="button button-secondary" href="/review/">Open Review</a></div></section><section class="section-gap" id="covers" aria-labelledby="study-fallback-ways"><h2 id="study-fallback-ways">What practice covers</h2><p>One original question bank for the New York Entry-Level Custodians and Janitors series: cleaning tools, minor maintenance tools, and health and safety. Reading an exam page does not select an exam or change this bank.</p>${studyTaskCards}</section><p class="source-note">JavaScript and available browser storage are required to show progress saved on this device.</p></div>
-    <section class="section-gap" id="practice-sets"><div class="section-header"><h2>Choose a practice set</h2><p>Each set draws distinct questions with no repeats. These sizes and distributions are designed for this site.</p></div>
+    <details class="section-gap study-quick-presets" id="practice-sets"><summary>Quick preset sets</summary><div class="section-header"><h2>Choose a practice set</h2><p>Each set draws distinct questions with no repeats. These sizes and distributions are designed for this site.</p></div>
     <ul class="study-set-options" aria-label="Available whole-bank practice lengths">${catalog.practiceCapacity.advertisedSetLengths.map((length) => {
       const session = sessionByCapacity.get(`all:all:${length}`)
       return session === undefined
@@ -1402,7 +1402,7 @@ const buildPages = ({
         : `<td><a href="/practice/session/${session.id}/question/1/">Start ${length}</a></td>`
     }).join("")}</tr>`).join("")}</tbody></table></div></details>
     <p class="source-note"><strong>Scoring boundary:</strong> practice accuracy is not an official converted score or a pass prediction. Answers and their sourced explanations load only after each answer is submitted and saved on this device.</p>
-    </section>
+    </details>
   </main>
   <script id="study-bootstrap-data" type="application/json">${escapeJsonForHtml(studyBootstrap)}</script>
   <script type="module" src="/src/study/react/bootstrap.tsx"></script>`

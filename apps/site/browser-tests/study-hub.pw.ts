@@ -109,3 +109,31 @@ test("a generated practice answer appears in Study and can be durably finished i
   await expect(page.getByRole("heading", { name: "No review items are ready", exact: true })).toBeVisible()
   await expect(page.getByRole("region", { name: "Review history" }).getByRole("listitem")).toHaveCount(1)
 })
+
+
+test("Practice follows the responsive reading order and preserves quick presets without JavaScript", async ({ page, browser }) => {
+  await page.setViewportSize({ width: 700, height: 900 })
+  await page.goto("/practice/")
+  await expect(page.getByRole("heading", { name: "No saved activity yet", exact: true })).toBeVisible()
+  const sectionNames = () => page.locator(".study-hub > .study-section").evaluateAll(elements => elements.map(element => element.getAttribute("aria-labelledby")))
+  expect((await sectionNames()).indexOf("study-ways-heading")).toBeLessThan((await sectionNames()).indexOf("study-coverage-heading"))
+  const coverageLink = page.locator(".study-hero .study-coverage-link")
+  await coverageLink.focus()
+  await page.keyboard.press("Tab")
+  await expect(page.locator(".study-hero .button-primary")).toBeFocused()
+  const cards = page.locator(".study-ways-grid > li")
+  const first = await cards.nth(0).boundingBox()
+  const second = await cards.nth(1).boundingBox()
+  expect(first?.y).toBe(second?.y)
+  await page.setViewportSize({ width: 1248, height: 900 })
+  await expect.poll(async () => (await sectionNames()).indexOf("study-coverage-heading")).toBe(0)
+  await expect(page.locator("#covers")).toHaveCount(1)
+  const noScript = await browser.newContext({ javaScriptEnabled: false })
+  try {
+    const fallback = await noScript.newPage()
+    await fallback.goto("/practice/")
+    await fallback.getByText("Quick preset sets", { exact: true }).click()
+    await fallback.locator(".study-set-options").getByRole("link", { name: "Start 45", exact: true }).click()
+    await expect(fallback).toHaveURL(/\/practice\/session\/[^/]+\/question\/1\/$/)
+  } finally { await noScript.close() }
+})

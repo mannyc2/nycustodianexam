@@ -23,12 +23,22 @@ const ways = [
   { icon: "print", title: "Print a set", compactDescription: "Paper, with answer key", description: "Study on paper, with questions and their answer key on separate pages.", href: "/print/", action: "Open print center" }
 ] as const
 
+const compactQuery = "(max-width: 47.99rem)"
+const subscribeCompactLayout = (onChange: () => void) => {
+  const query = window.matchMedia(compactQuery)
+  query.addEventListener("change", onChange)
+  return () => query.removeEventListener("change", onChange)
+}
+const readCompactLayout = () => window.matchMedia(compactQuery).matches
+const serverCompactLayout = () => false
+
 export const StudyHub = ({ bootstrap, activityState, reviewController, onRetry }: {
   readonly bootstrap: StudyBootstrap
   readonly activityState: StudyActivityState
   readonly reviewController: ReviewController
   readonly onRetry: () => void
 }) => {
+  const compact = useSyncExternalStore(subscribeCompactLayout, readCompactLayout, serverCompactLayout)
   const review = useSyncExternalStore(reviewController.subscribe, reviewController.getSnapshot, reviewController.getHydrationSnapshot).state
   const historyState: StudyActivityState = activityState.tag === "ready" && (review.tag === "ready" || review.tag === "recoverable_error")
     ? { tag: "ready", activity: includeUnavailableReviews(activityState.activity, review.quarantined) }
@@ -50,8 +60,10 @@ export const StudyHub = ({ bootstrap, activityState, reviewController, onRetry }
     }
   }, [activityState.tag, review.tag])
   const firstPractice = bootstrap.firstPractice
+  const settingsLinks = <p className="study-settings-links"><a href="/settings/">Larger text and reduced motion</a>{compact ? null : <>{" · "}<a href="/offline/">Download for offline use</a></>}</p>
+  const coverageLink = !unavailable && !hasActivity ? <a className="study-coverage-link" href="#covers">What practice covers</a> : null
   const waysSection = (<section className="study-section" aria-labelledby="study-ways-heading">
-      <div className="section-header"><h2 id="study-ways-heading">Ways to practice</h2><p><a href="/settings/">Larger text and reduced motion</a>{" · "}<a href="/offline/">Download for offline use</a></p></div>
+      <div className="section-header"><h2 id="study-ways-heading">Ways to practice</h2>{compact ? null : settingsLinks}</div>
       <ul className="task-cards study-ways-grid">{ways.map((way, index) => <li className={`task-card${index === 0 ? " task-card-primary" : ""}`} key={way.href}>
         <a className="task-card-link" href={way.href} aria-labelledby={`study-way-${way.icon}`}>
           <StudyIcon kind={way.icon} /><h3 className="task-card-title" id={`study-way-${way.icon}`}>{way.title}</h3>
@@ -59,6 +71,7 @@ export const StudyHub = ({ bootstrap, activityState, reviewController, onRetry }
           <span className={`task-card-cta button ${index === 0 ? "button-primary" : "button-secondary"}`}>{way.action}</span>
         </a>
       </li>)}</ul>
+      {compact ? settingsLinks : null}
     </section>)
   const progressSection = (<section className="study-section" aria-labelledby="study-progress-heading">
       <div className="section-header"><h2 id="study-progress-heading">Saved activity</h2></div>
@@ -80,7 +93,13 @@ export const StudyHub = ({ bootstrap, activityState, reviewController, onRetry }
     </section>)
   const coverageSection = <section className="study-section" id="covers" aria-labelledby="study-coverage-heading">
     <div className="section-header"><h2 id="study-coverage-heading">What practice covers</h2></div>
-    <div className="study-coverage-grid">
+    {compact ? <article className="study-read-notice study-coverage-compact">
+      <h3>One bank of {bootstrap.questionCount}, the three announced areas</h3>
+      <p>Cleaning tools and their uses; tools for minor maintenance and repair; health and safety in custodial work. Choosing a set length changes how many questions you answer, never the bank they come from.</p>
+      <p>Reading an exam page does not select an exam or change your practice. Questions are original, with no secure or recalled test material. Saved activity keeps counts, not an official score.</p>
+      <p className="study-source-note"><a href="/exams/">Read the subject plans and their sources</a>. Your official announcement governs your exam.</p>
+      <a className="button button-secondary" href="/exams/">Compare with your announcement</a>
+    </article> : <div className="study-coverage-grid">
       <article className="study-read-notice"><h3>One question bank, the three announced areas</h3>
         <p>{bootstrap.questionCount} original questions for the New York Entry-Level Custodians and Janitors series. Choosing a set length changes how many you answer, never the bank they come from.</p>
         <ol className="study-coverage-areas">
@@ -94,7 +113,7 @@ export const StudyHub = ({ bootstrap, activityState, reviewController, onRetry }
         <li>It has no questions written for a single announcement, and no secure or recalled test material.</li>
         <li>Saved activity counts are records of your practice, never an official score or a prediction of one.</li>
       </ul><a className="button button-secondary" href="/exams/">Compare with your announcement</a></article>
-    </div>
+    </div>}
   </section>
   return <div className={`study-hub${hasActivity ? " study-returning" : " study-first-visit"}`}>
     <section className={`page-header study-hero${unavailable ? " study-hero-unavailable" : " page-header-prominent"}`} aria-labelledby="study-heading">
@@ -103,10 +122,11 @@ export const StudyHub = ({ bootstrap, activityState, reviewController, onRetry }
       <p>{unavailable ? "The study data on this device did not load. Try reading it again, or choose a practice set below. Your saved attempts have not been changed." : hasActivity
         ? `${activity.questionCount + activity.hazardCount} saved answers and scene responses are on this device. Open any saved answer again to reread its explanation.`
         : `Original questions across all three subject areas, untimed, with the reasoning and its source after every saved answer. Every set is drawn from one question bank written for the ${bootstrap.profileLabel} series.`}</p>
+      {compact ? coverageLink : null}
       <div className="question-controls">
         {unavailable ? <button className="button button-primary" type="button" onClick={onRetry}>Retry reading progress</button> : firstPractice === null ? <a className="button button-primary" href="#practice-sets">See available practice</a> : <a className="button button-primary" href={firstPractice.href}>{firstPractice.label}</a>}
-        {!unavailable && !hasActivity ? <a className="study-coverage-link" href="#covers">What practice covers</a> : null}
         <a className="button button-secondary" href={unavailable ? "#practice-sets" : hasActivity ? "/review/" : "/hazards/"}>{unavailable ? "Choose a practice set" : hasActivity ? "Open your review queue" : "Practice spotting hazards"}</a>
+        {compact ? null : coverageLink}
       </div>
       {unavailable ? null : <dl className="figure-strip">
         <div><dt>{hasActivity ? "Questions answered" : "Original questions"}</dt><dd>{hasActivity ? activity.questionCount : bootstrap.questionCount}</dd></div>
@@ -123,19 +143,15 @@ export const StudyHub = ({ bootstrap, activityState, reviewController, onRetry }
       {coverageSection}
       {waysSection}
     </> : <>
+      {compact ? null : coverageSection}
       {waysSection}
       {progressSection}
       <div className="study-activity-grid">
         {reviewSection}
         <ActivityHistory state={historyState} onRetry={onRetry} />
       </div>
-      {coverageSection}
+      {compact ? coverageSection : null}
     </>}
     <PracticeBuilder sources={bootstrap.reviewQueue.questions} />
-    <section className="study-section" aria-labelledby="study-exam-heading">
-      <div className="section-header"><h2 id="study-exam-heading">Does this match your exam?</h2></div>
-      <p>Compare the subjects in your official announcement with this site's entry-level study material. Higher-level series have different requirements.</p>
-      <a className="button button-secondary" href="/exams/">Read exam information</a>
-    </section>
   </div>
 }
