@@ -37,10 +37,12 @@ for pdf in sorted(root.glob("*.pdf")):
     results.append({"file": pdf.name, "pages": len(pages), "outOfPageWords": outside,
                     "orphanedReceiptLabels": orphaned_labels, "dominantTextSizePt": dominant, "expectedBodySizePt": expected,
                     "dominantTextMeetsBodySize": dominant >= expected,
+                    "minimumTextSizePt": min(characters),
+                    "largePrintMinimumMet": expected != 18 or min(characters) >= 18,
                     "charactersByPointSize": dict(sorted(characters.items()))})
 report = {"method": "Poppler bbox-layout and pdftohtml XML at zoom 1; dominant size by extracted character count. Small labels are not certified by this check.", "results": results}
 (root / "text-layout-audit.json").write_text(json.dumps(report, indent=2) + "\n")
 for result in results:
     print(result["file"], result["pages"], "pages; dominant text", result["dominantTextSizePt"], "pt; outside", len(result["outOfPageWords"]), "orphaned receipt labels", len(result["orphanedReceiptLabels"]))
-if any(result["outOfPageWords"] or result["orphanedReceiptLabels"] or not result["dominantTextMeetsBodySize"] for result in results):
+if any(result["outOfPageWords"] or result["orphanedReceiptLabels"] or not result["dominantTextMeetsBodySize"] or not result["largePrintMinimumMet"] for result in results):
     sys.exit(1)

@@ -299,6 +299,9 @@
     .print-size-large h2 { font-size: 1.25em; }
     .print-size-large h3 { font-size: 1.125em; }
     .print-size-large h4 { font-size: 1em; }
+    .print-size-large h5,
+    .print-size-large h6 { font-size: 1em; }
+    .print-preview-header > .eyebrow { display: none; }
 
     /* Nested grids can overlap later families after page fragmentation. */
     .print-section, .print-family-card, .print-question-list { display: block; }
