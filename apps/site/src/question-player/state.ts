@@ -1,8 +1,9 @@
+import { questionPresentationFields, type QuestionPresentation } from "../question-presentation.ts"
 import type { PostcommitQuestion } from "@nycustodian/content/model"
 
 export type ReviewIntent = "unflagged" | "flagged"
 
-export type QuestionScreenState =
+export type QuestionScreenState = { readonly presentation?: QuestionPresentation } & (
   | {
       readonly tag: "ready"
       readonly selectedOptionId: string | null
@@ -46,6 +47,8 @@ export type QuestionScreenState =
       readonly payload: PostcommitQuestion
     }
 
+)
+
 export const initialQuestionState = (): QuestionScreenState => ({
   tag: "ready",
   selectedOptionId: null,
@@ -72,7 +75,7 @@ export const selectOption = (state: QuestionScreenState, optionId: string): Ques
   switch (state.tag) {
     case "ready":
     case "commit_failed":
-      return { tag: "ready", selectedOptionId: optionId, reviewIntent: state.reviewIntent }
+      return { tag: "ready", selectedOptionId: optionId, ...questionPresentationFields(state), reviewIntent: state.reviewIntent }
     case "restoring":
     case "restore_failed":
     case "content_unavailable":
@@ -87,7 +90,7 @@ export const toggleReviewIntent = (state: QuestionScreenState): QuestionScreenSt
   state.tag === "ready" || state.tag === "commit_failed"
     ? {
         ...state,
-        reviewIntent: state.reviewIntent === "flagged" ? "unflagged" : "flagged"
+        ...questionPresentationFields(state), reviewIntent: state.reviewIntent === "flagged" ? "unflagged" : "flagged"
       }
     : state
 
@@ -96,7 +99,7 @@ export const beginCommit = (state: QuestionScreenState): QuestionScreenState => 
     return {
       tag: "committing",
       selectedOptionId: state.selectedOptionId,
-      reviewIntent: state.reviewIntent
+      ...questionPresentationFields(state), reviewIntent: state.reviewIntent
     }
   }
   return state
@@ -110,7 +113,7 @@ export const commitFailed = (
     ? {
         tag: "commit_failed",
         selectedOptionId: state.selectedOptionId,
-        reviewIntent: state.reviewIntent,
+        ...questionPresentationFields(state), reviewIntent: state.reviewIntent,
         message
       }
     : state
@@ -120,7 +123,7 @@ export const restoreFailed = (
   message: string
 ): QuestionScreenState => ({
   tag: "restore_failed",
-  reviewIntent: state.reviewIntent,
+  ...questionPresentationFields(state), reviewIntent: state.reviewIntent,
   message
 })
 
@@ -129,7 +132,7 @@ export const questionContentUnavailable = (
   message: string
 ): QuestionScreenState => ({
   tag: "content_unavailable",
-  reviewIntent: state.reviewIntent,
+  ...questionPresentationFields(state), reviewIntent: state.reviewIntent,
   message
 })
 
@@ -140,7 +143,7 @@ export const revealFailed = (
 ): QuestionScreenState => ({
   tag: "reveal_failed",
   selectedOptionId: selectedId,
-  reviewIntent: state.reviewIntent,
+  ...questionPresentationFields(state), reviewIntent: state.reviewIntent,
   message
 })
 
@@ -151,6 +154,10 @@ export const revealQuestion = (
 ): QuestionScreenState => ({
   tag: "revealed",
   selectedOptionId: selectedId,
-  reviewIntent: state.reviewIntent,
+  ...questionPresentationFields(state), reviewIntent: state.reviewIntent,
   payload
 })
+
+
+export const selectPresentation = (state: QuestionScreenState, presentation: QuestionPresentation): QuestionScreenState =>
+  state.tag === "ready" || state.tag === "commit_failed" ? { ...state, presentation } : state

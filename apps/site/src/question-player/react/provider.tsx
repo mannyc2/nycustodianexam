@@ -45,6 +45,7 @@ export const QuestionPlayerProvider = ({
 
   const actions: QuestionActions = useMemo(
     () => ({
+      selectPresentation: (presentation) => controller.dispatch({ tag: "select-presentation", presentation }),
       selectOption: (optionId) => controller.dispatch({ tag: "select-option", optionId }),
       submitSelection: () => controller.dispatch({ tag: "submit-selection" }),
       retryReveal: () => controller.dispatch({ tag: "retry-reveal" }),

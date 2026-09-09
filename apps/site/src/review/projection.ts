@@ -1,3 +1,4 @@
+import { questionPresentationFields } from "../question-presentation.ts"
 import { createReviewSourceIndex } from "./source-index.ts"
 import {
   PostcommitQuestion as PostcommitQuestionSchema,
@@ -126,10 +127,11 @@ export const deriveQuestionReviewItem = Effect.fn(
   return itemWithReasons(
     {
       id: `question:${attempt.id}`,
+      ...questionPresentationFields(attempt),
       attemptId: attempt.id,
       committedAt: attempt.committedAt,
       itemUrl: source.itemUrl,
-      ...(source.prompt === undefined ? {} : { label: source.prompt }),
+      ...(attempt.presentation === "nonvisual" ? { label: source.nonvisualPrompt ?? "Saved nonvisual question answer" } : source.prompt === undefined ? {} : { label: source.prompt }),
       kind: "question",
       reasons
     },

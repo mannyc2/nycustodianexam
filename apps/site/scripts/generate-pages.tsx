@@ -962,6 +962,7 @@ const buildPages = ({
       return {
         id: question.id,
         prompt: question.prompt,
+        ...(question.illustration?.nonvisualEquivalent === undefined ? {} : { nonvisualPrompt: question.illustration.nonvisualEquivalent.prompt }),
         optionIds: question.options.map((option) => option.id),
         receipt: questionReceipt(artifact, question.id, index + 1),
         category: questionCategoryFromSafeMetadata(question),
@@ -1206,6 +1207,7 @@ const buildPages = ({
       return {
         id: question.id,
         prompt: question.prompt,
+        ...(question.illustration?.nonvisualEquivalent === undefined ? {} : { nonvisualPrompt: question.illustration.nonvisualEquivalent.prompt }),
         receipt: questionReceipt(artifact, question.id, index + 1, session.id),
         optionIds: question.options.map((option) => option.id),
         itemUrl: `/practice/session/${session.id}/question/${index + 1}/`

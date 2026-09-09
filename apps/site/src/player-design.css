@@ -350,3 +350,8 @@
   .setup-summary .simulation-preview-facts > div { padding-block: 0.5rem; }
   .setup-summary > p { margin: 0; font-size: 0.875rem; color: var(--color-text-muted); }
 }
+
+
+.question-nonvisual-body ol { padding-inline-start: 1.5rem; margin-block: 1rem; }
+.question-nonvisual-body li + li { margin-block-start: .75rem; }
+.question-presentation-toggle { margin-block: .75rem; }

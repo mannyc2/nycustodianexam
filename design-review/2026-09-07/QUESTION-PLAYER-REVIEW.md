@@ -592,3 +592,32 @@ browsers. The new v4 q091 export/import test initially waited incorrectly for a
 fresh response after Review had already fetched feedback; corrected exact-receipt
 and original-stimulus assertions pass in Chromium, Firefox, and WebKit (3 checks).
 This verifies saved-record round trips, not yet a real installed v4-to-v5 upgrade.
+
+
+### Nonvisual Practice and Review presentation
+
+The q091 player now offers an explicit switch between the illustration and the
+reviewed nonvisual prompt/ordered facts. Exactly one body is displayed. The
+switch remains keyboard-focused when its label changes, leaves answer selection
+editable before saving, and locks when commitment begins. The durable answer
+record carries an optional visual/nonvisual presentation; old records remain
+readable. Idempotent saves compare presentation alongside the existing immutable
+fields. Failed saves retain it, and restoration rejects an unavailable authored
+nonvisual body instead of substituting the illustration.
+
+Saved feedback and Review identify the presentation used. Current Review sources
+include the authored nonvisual prompt so the queue does not ask the learner to
+identify an unseen illustration. Actual save/reload/export/import restores the
+nonvisual body and label. No feedback GET occurs before commitment in the new
+browser workflow.
+
+Validation: 32 focused unit tests; site and browser typechecks; full 1,352-route
+build; 24 historical/nonvisual browser checks across Chromium, Firefox, and WebKit.
+The 21 existing illustration checks also passed before the final Review prompt
+metadata addition. Six captures in `nonvisual-question-audit/` cover unanswered,
+answered, and Review at 1053/384 CSS pixels. Compact unanswered and desktop Review
+were visually inspected: ordered facts and controls remain readable without
+horizontal overflow. This new state has no supplied matching screenshot, so it
+adapts the accepted text-player spacing and hierarchy rather than claiming pixel
+identity. Simulation presentation/result persistence, nonvisual print/no-JS
+adaptation, and actual installed v4-to-v5 upgrade remain outstanding.

@@ -1,3 +1,4 @@
+import type { QuestionPresentation } from "../../question-presentation.ts"
 import type { PrecommitQuestion } from "@nycustodian/content/model"
 import {
   createContext,
@@ -12,6 +13,7 @@ import type {
 } from "../view-requests.ts"
 
 export interface QuestionActions {
+  readonly selectPresentation: (presentation: QuestionPresentation) => void
   readonly selectOption: (optionId: string) => void
   readonly submitSelection: () => void
   readonly retryReveal: () => void

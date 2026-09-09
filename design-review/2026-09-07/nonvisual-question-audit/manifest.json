@@ -1,0 +1,65 @@
+{
+  "captures": [
+    {
+      "file": "unanswered-1053.png",
+      "width": 1053,
+      "bounds": {
+        "x": 126.5,
+        "y": 0.21875,
+        "width": 800,
+        "height": 905.484375
+      }
+    },
+    {
+      "file": "answered-1053.png",
+      "width": 1053,
+      "bounds": {
+        "x": 126.5,
+        "y": -33.78125,
+        "width": 800,
+        "height": 1890.890625
+      }
+    },
+    {
+      "file": "review-1053.png",
+      "width": 1053,
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 1053,
+        "height": 1566.015625
+      }
+    },
+    {
+      "file": "unanswered-384.png",
+      "width": 384,
+      "bounds": {
+        "x": 16,
+        "y": 0.046875,
+        "width": 352,
+        "height": 1153.09375
+      }
+    },
+    {
+      "file": "answered-384.png",
+      "width": 384,
+      "bounds": {
+        "x": 16,
+        "y": -440.953125,
+        "width": 352,
+        "height": 2815.09375
+      }
+    },
+    {
+      "file": "review-384.png",
+      "width": 384,
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 384,
+        "height": 2002.203125
+      }
+    }
+  ],
+  "errors": []
+}

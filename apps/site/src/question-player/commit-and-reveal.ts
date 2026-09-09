@@ -1,3 +1,4 @@
+import { questionPresentationFields, type QuestionPresentation } from "../question-presentation.ts"
 import { PostcommitQuestion } from "@nycustodian/content/model"
 import { Effect, Schema } from "effect"
 import type { QuestionAttemptReceipt } from "../attempt-receipt.ts"
@@ -114,6 +115,7 @@ const loadPostcommit = Effect.fn("QuestionWorkflow.loadPostcommit")(function*(
 })
 
 export const commitSelectionAndReveal = Effect.fn("QuestionWorkflow.commitSelectionAndReveal")(function*(input: {
+  readonly presentation?: QuestionPresentation
   readonly receipt: QuestionAttemptReceipt
   readonly optionIds: readonly string[]
   readonly selectedOptionId: string
@@ -130,6 +132,7 @@ export const commitSelectionAndReveal = Effect.fn("QuestionWorkflow.commitSelect
 
   const persistence = yield* QuestionPersistence
   const attempt = yield* persistence.commitAttempt({
+    ...questionPresentationFields(input),
     receipt: input.receipt,
     optionIds: input.optionIds,
     selectedOptionId: input.selectedOptionId,

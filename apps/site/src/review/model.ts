@@ -1,3 +1,4 @@
+import type { QuestionPresentation } from "../question-presentation.ts"
 import { matchesVersionedItemPath } from "../versioned-item-path.ts"
 import { PrecommitScene as PrecommitSceneSchema } from "@nycustodian/content/model"
 import { Schema } from "effect"
@@ -39,6 +40,7 @@ export const ReviewQuestionBootstrap = Schema.Struct({
   category: Schema.optionalKey(Schema.NonEmptyString),
   id: Schema.NonEmptyString,
   prompt: Schema.optionalKey(Schema.NonEmptyString),
+  nonvisualPrompt: Schema.optionalKey(Schema.NonEmptyString),
   optionIds: UniqueOptionIds,
   receipt: QuestionAttemptReceipt,
   itemUrl: ReviewQuestionItemUrl
@@ -47,6 +49,7 @@ export const ReviewQuestionBootstrap = Schema.Struct({
 export const ReviewPracticeQuestionBootstrap = Schema.Struct({
   id: Schema.NonEmptyString,
   prompt: Schema.optionalKey(Schema.NonEmptyString),
+  nonvisualPrompt: Schema.optionalKey(Schema.NonEmptyString),
   optionIds: UniqueOptionIds,
   receipt: QuestionAttemptReceipt,
   itemUrl: PracticeQuestionItemUrl
@@ -93,6 +96,7 @@ export type ReviewReason =
 export type ReviewQueueItem = Readonly<{
   id: string
   label?: string
+  presentation?: QuestionPresentation
   attemptId: string
   committedAt: number
   itemUrl: string

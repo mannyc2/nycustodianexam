@@ -75,6 +75,7 @@ const renderFeedback = (state: QuestionScreenState): string => {
       submitSelection: () => undefined,
       retryReveal: () => undefined,
       retryRestore: () => undefined,
+      selectPresentation: () => undefined,
       toggleFlag: () => undefined
     },
     meta: {

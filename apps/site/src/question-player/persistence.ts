@@ -1,3 +1,4 @@
+import { QuestionPresentation, questionPresentationFields } from "../question-presentation.ts"
 import { Clock, Context, Effect, Layer, Schema } from "effect"
 import {
   QuestionAttemptReceipt,
@@ -26,6 +27,7 @@ export class QuestionAttemptRecord extends Schema.Class<QuestionAttemptRecord>(
   id: Schema.NonEmptyString,
   questionId: Schema.NonEmptyString,
   selectedOptionId: Schema.NonEmptyString,
+  presentation: Schema.optionalKey(QuestionPresentation),
   reviewIntent: Schema.Union([Schema.Literal("unflagged"), Schema.Literal("flagged")]),
   committedAt: DurableTimestamp,
   receipt: Schema.optionalKey(QuestionAttemptReceipt),
@@ -42,6 +44,7 @@ export class QuestionPersistenceError extends Schema.TaggedError<QuestionPersist
 ) {}
 
 export interface CommitAttemptInput {
+  readonly presentation?: QuestionPresentation
   readonly receipt: QuestionAttemptReceiptValue
   readonly optionIds: ReadonlyArray<string>
   readonly selectedOptionId: string
@@ -117,6 +120,9 @@ const validateExpectation = (
 const validateCommitInput = (input: CommitAttemptInput): QuestionPersistenceError | undefined => {
   const invalidExpectation = validateExpectation(input)
   if (invalidExpectation !== undefined) return invalidExpectation
+  if (input.presentation !== undefined && !Schema.is(QuestionPresentation)(input.presentation)) {
+    return persistenceError("validate-commit", new Error("Unknown question presentation"))
+  }
   if (!input.optionIds.includes(input.selectedOptionId)) {
     return persistenceError(
       "validate-commit",
@@ -164,7 +170,8 @@ const matchesExpectation = (attempt: QuestionAttemptRecord, input: FindAttemptIn
 const sameCommittedInput = (attempt: QuestionAttemptRecord, input: CommitAttemptInput): boolean =>
   matchesExpectation(attempt, input) &&
   attempt.selectedOptionId === input.selectedOptionId &&
-  attempt.reviewIntent === input.reviewIntent
+  attempt.reviewIntent === input.reviewIntent &&
+  attempt.presentation === input.presentation
 
 const commitAttempt = Effect.fn("QuestionPersistence.commitAttempt")(function*(
   database: IDBDatabase,
@@ -198,6 +205,7 @@ const commitAttempt = Effect.fn("QuestionPersistence.commitAttempt")(function*(
             } else {
               committed = new QuestionAttemptRecord({
                 id,
+                ...questionPresentationFields(input),
                 questionId: input.receipt.questionId,
                 selectedOptionId: input.selectedOptionId,
                 reviewIntent: input.reviewIntent,

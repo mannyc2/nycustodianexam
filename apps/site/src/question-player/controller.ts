@@ -1,3 +1,4 @@
+import { questionPresentationFields, type QuestionPresentation } from "../question-presentation.ts"
 import type { PrecommitQuestion } from "@nycustodian/content/model"
 import type { Effect } from "effect"
 import type { QuestionAttemptReceipt } from "../attempt-receipt.ts"
@@ -13,6 +14,7 @@ import {
   revealQuestion,
   restoreFailed,
   selectOption,
+  selectPresentation,
   toggleReviewIntent,
   type QuestionScreenState
 } from "./state.ts"
@@ -30,6 +32,7 @@ export interface EffectRunner {
 }
 
 export type QuestionCommand =
+  | { readonly tag: "select-presentation"; readonly presentation: QuestionPresentation }
   | { readonly tag: "select-option"; readonly optionId: string }
   | { readonly tag: "submit-selection" }
   | { readonly tag: "retry-reveal" }
@@ -75,7 +78,12 @@ export const createQuestionController = (
       .runPromise(restoreSelectionAndReveal({ receipt, optionIds }))
       .then((restored) => {
         if (restored === undefined) {
-          publish(initialQuestionState())
+          publish({ ...initialQuestionState(), ...(question.illustration === undefined ? {} : { presentation: "visual" as const }) })
+          return
+        }
+        if ("attempt" in restored && restored.attempt.presentation === "nonvisual" && question.illustration?.nonvisualEquivalent === undefined) {
+          publish(questionContentUnavailable(screen.getSnapshot().state,
+            "The saved nonvisual version is unavailable for this question. Its answer has not been changed."))
           return
         }
         if (restored.tag === "content_unavailable") {
@@ -91,6 +99,7 @@ export const createQuestionController = (
         if (restored.tag === "revealed") {
           const restoredState = {
             ...screen.getSnapshot().state,
+            ...questionPresentationFields(restored.attempt),
             reviewIntent: restored.attempt.reviewIntent
           }
           publish(
@@ -101,7 +110,8 @@ export const createQuestionController = (
         }
         const restoredState = {
           ...screen.getSnapshot().state,
-          reviewIntent: restored.attempt.reviewIntent
+          ...questionPresentationFields(restored.attempt),
+            reviewIntent: restored.attempt.reviewIntent
         }
         publish(
           revealFailed(
@@ -136,6 +146,7 @@ export const createQuestionController = (
       .runPromise(
         commitSelectionAndReveal({
           receipt,
+          ...questionPresentationFields(state),
           optionIds,
           selectedOptionId: selectedId,
           reviewIntent
@@ -180,7 +191,7 @@ export const createQuestionController = (
     if (state.tag !== "reveal_failed") return
     const selectedId = state.selectedOptionId
     publish(
-      { tag: "committing", selectedOptionId: selectedId, reviewIntent: state.reviewIntent },
+      { tag: "committing", ...questionPresentationFields(state), selectedOptionId: selectedId, reviewIntent: state.reviewIntent },
       { announce: "Retrying the saved answer explanation." }
     )
     void runtime
@@ -208,6 +219,11 @@ export const createQuestionController = (
     subscribe: screen.subscribe,
     dispatch: (command) => {
       switch (command.tag) {
+        case "select-presentation":
+          if (question.illustration?.nonvisualEquivalent !== undefined) {
+            publish(selectPresentation(screen.getSnapshot().state, command.presentation))
+          }
+          return
         case "select-option":
           publish(selectOption(screen.getSnapshot().state, command.optionId))
           return

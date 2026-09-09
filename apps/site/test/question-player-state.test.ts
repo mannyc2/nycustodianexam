@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest"
 import {
   beginCommit,
+  commitFailed,
+  selectPresentation,
   initialQuestionState,
   questionContentUnavailable,
   selectOption,
@@ -8,6 +10,17 @@ import {
 } from "../src/question-player/state.ts"
 
 describe("question state machine", () => {
+  it("preserves presentation through selection and a failed save, and locks it during commitment", () => {
+    const nonvisual = selectPresentation(initialQuestionState(), "nonvisual")
+    const selected = selectOption(nonvisual, "b")
+    const committing = beginCommit(selected)
+    expect(committing.presentation).toBe("nonvisual")
+    expect(selectPresentation(committing, "visual")).toBe(committing)
+    const retry = commitFailed(committing, "Storage failed")
+    expect(retry.presentation).toBe("nonvisual")
+    expect(selectPresentation(retry, "visual").presentation).toBe("visual")
+  })
+
   it("cannot commit before a selection", () => {
     expect(beginCommit(initialQuestionState())).toEqual(initialQuestionState())
   })

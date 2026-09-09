@@ -53,6 +53,7 @@ const ReviewItem = ({
             </time>
             <div className="review-item-copy">
               <h3>{item.label ?? (item.kind === "question" ? "Saved question answer" : "Saved visual hazard response")}</h3>
+              {item.presentation === undefined ? null : <p className="source-note">Answered using the {item.presentation === "nonvisual" ? "nonvisual" : "illustrated"} version.</p>}
               <ReviewReasons reasons={item.reasons} />
             </div>
             <div className="question-controls">

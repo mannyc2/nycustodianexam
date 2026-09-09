@@ -14,7 +14,7 @@ export const QuestionHeader = ({ positionLabel = "Practice question" }: { readon
   const canChangeFlag = state.tag === "ready" || state.tag === "commit_failed"
   return (
     <div className="player-heading-row">
-      <span className="player-position">{positionLabel} · {question.illustration === undefined ? "Text version" : "Illustrated question"}</span>
+      <span className="player-position">{positionLabel} · {state.presentation === "nonvisual" ? "Nonvisual version" : question.illustration === undefined ? "Text version" : "Illustrated question"}</span>
       <button
         aria-pressed={state.reviewIntent === "flagged"}
         className="button button-secondary player-flag"
@@ -29,12 +29,34 @@ export const QuestionHeader = ({ positionLabel = "Practice question" }: { readon
   )
 }
 
+export const QuestionVisualBody = () => {
+  const { question } = useQuestionPlayer()
+  return <><h1 id="question-heading">{question.prompt}</h1><QuestionIllustration illustration={question.illustration} /></>
+}
+
+export const QuestionNonvisualBody = () => {
+  const { question } = useQuestionPlayer()
+  const equivalent = question.illustration?.nonvisualEquivalent
+  if (equivalent === undefined) return <p role="alert">The saved nonvisual version is unavailable for this question.</p>
+  return <section className="question-nonvisual-body" aria-labelledby="question-heading">
+    <h1 id="question-heading">{equivalent.prompt}</h1>
+    <ol>{equivalent.observations.map((observation, index) => <li key={index}>{observation}</li>)}</ol>
+  </section>
+}
+
 export const QuestionPrompt = () => {
-  const { question, state } = useQuestionPlayer()
+  const { question, state, actions } = useQuestionPlayer()
   return (
     <header className="question-prompt">
-      <h1 id="question-heading">{question.prompt}</h1>
-      <QuestionIllustration illustration={question.illustration} />
+      {state.presentation === "nonvisual" ? <QuestionNonvisualBody /> : <QuestionVisualBody />}
+      {question.illustration?.nonvisualEquivalent === undefined ? null :
+        <button type="button" className="button button-secondary question-presentation-toggle"
+          disabled={state.tag !== "ready" && state.tag !== "commit_failed"}
+          onClick={() => actions.selectPresentation(state.presentation === "nonvisual" ? "visual" : "nonvisual")}>
+          {state.presentation === "nonvisual" ? "Use illustrated version" : "Use nonvisual version"}
+        </button>}
+      {state.tag === "revealed" && state.presentation !== undefined ?
+        <p className="source-note">Answered using the {state.presentation === "nonvisual" ? "nonvisual" : "illustrated"} version.</p> : null}
       <p>
         {state.tag === "revealed"
           ? "Your answer is saved. Read the explanation, then continue when you are ready."
