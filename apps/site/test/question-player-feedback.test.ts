@@ -2,7 +2,7 @@ import { PostcommitQuestion, PrecommitQuestion } from "@nycustodian/content/mode
 import { createElement, createRef, type ReactNode } from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import { describe, expect, it } from "vitest"
-import { QuestionPlayerPieces, ReviewVisualQuestion } from "../src/question-player/react/player.tsx"
+import { QuestionPlayer, QuestionPlayerPieces, ReviewVisualQuestion } from "../src/question-player/react/player.tsx"
 import {
   QuestionPlayerContract,
   type QuestionPlayerValue
@@ -215,5 +215,21 @@ describe("saved Review question context", () => {
     const html = renderFeedback({ tag: "revealed", selectedOptionId: "c", reviewIntent: "unflagged", payload }, createElement(ReviewVisualQuestion))
     expect(html).toContain("No incorrect-answer or flag reason is recorded")
     expect(html).not.toContain("Answered incorrectly")
+  })
+})
+
+
+describe("independently composed feedback leaves", () => {
+  it("withholds every postcommit leaf even without the feedback frame", () => {
+    for (const Piece of [QuestionPlayer.Outcome, QuestionPlayer.Rationales, QuestionPlayer.ConfusionFeedback, QuestionPlayer.Sources]) {
+      expect(renderFeedback(initialQuestionState(), createElement(Piece))).toBe("")
+    }
+  })
+
+  it("renders source receipts independently without also rendering an outcome or rationales", () => {
+    const html = renderFeedback({ tag: "revealed", selectedOptionId: "a", reviewIntent: "unflagged", payload }, createElement(QuestionPlayer.Sources))
+    expect(html).toContain("Exact offline source excerpt")
+    expect(html).not.toContain("Correct answer")
+    expect(html).not.toContain("Rationale for")
   })
 })

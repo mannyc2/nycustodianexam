@@ -2,10 +2,23 @@ import type { ReactNode } from "react"
 import { useQuestionPlayer } from "./context.tsx"
 import {
   QuestionFeedback,
+  QuestionFeedbackFrame,
+  QuestionOutcome,
+  QuestionRationales,
+  QuestionConfusionFeedback,
+  QuestionSources,
   QuestionStatus
 } from "./feedback.tsx"
 import {
   QuestionControls,
+  QuestionPosition,
+  QuestionFlagAction,
+  QuestionCommitAction,
+  QuestionReviewActions,
+  QuestionNavigation,
+  QuestionSelectionNote,
+  QuestionActionBar,
+  QuestionSaveNotice,
   QuestionForm,
   QuestionFrame,
   QuestionHeader,
@@ -36,8 +49,19 @@ export const QuestionPlayer = {
   Form: QuestionPlayerPieces.Form,
   Prompt: QuestionPlayerPieces.Prompt,
   Choices: QuestionPlayerPieces.Options,
-  CommitAction: QuestionPlayerPieces.Controls,
-  Outcome: QuestionPlayerPieces.Feedback,
+  Position: QuestionPosition,
+  FlagAction: QuestionFlagAction,
+  CommitAction: QuestionCommitAction,
+  ReviewActions: QuestionReviewActions,
+  Navigation: QuestionNavigation,
+  SelectionNote: QuestionSelectionNote,
+  ActionBar: QuestionActionBar,
+  SaveNotice: QuestionSaveNotice,
+  FeedbackFrame: QuestionFeedbackFrame,
+  Outcome: QuestionOutcome,
+  Rationales: QuestionRationales,
+  ConfusionFeedback: QuestionConfusionFeedback,
+  Sources: QuestionSources,
   CommitStatus: QuestionPlayerPieces.Status
 } as const
 
@@ -45,12 +69,26 @@ interface PracticeQuestionProps { readonly positionLabel?: string; readonly next
 
 export const PracticeQuestion = ({ positionLabel, nextHref, completionLink, children }: PracticeQuestionProps & { readonly children: ReactNode }) => (
   <QuestionPlayerPieces.Frame>
-    <QuestionPlayerPieces.Header {...(positionLabel === undefined ? {} : { positionLabel })} />
+    <QuestionPlayer.Header>
+      <QuestionPlayer.Position {...(positionLabel === undefined ? {} : { positionLabel })} />
+      <QuestionPlayer.FlagAction />
+    </QuestionPlayer.Header>
     <QuestionPlayerPieces.Prompt>{children}</QuestionPlayerPieces.Prompt>
     <QuestionPlayerPieces.Form>
       <QuestionPlayerPieces.Options />
-      <QuestionPlayerPieces.Feedback />
-      <QuestionPlayerPieces.Controls {...(nextHref === undefined ? {} : { nextHref })} {...(completionLink === undefined ? {} : { completionLink })} />
+      <QuestionPlayer.FeedbackFrame>
+        <QuestionPlayer.Outcome />
+        <QuestionPlayer.Rationales />
+        <QuestionPlayer.ConfusionFeedback />
+        <QuestionPlayer.Sources />
+      </QuestionPlayer.FeedbackFrame>
+      <QuestionPlayer.SelectionNote />
+      <QuestionPlayer.ActionBar>
+        <QuestionPlayer.ReviewActions />
+        <QuestionPlayer.CommitAction />
+        <QuestionPlayer.Navigation {...(nextHref === undefined ? {} : { nextHref })} {...(completionLink === undefined ? {} : { completionLink })} />
+        <QuestionPlayer.SaveNotice />
+      </QuestionPlayer.ActionBar>
     </QuestionPlayerPieces.Form>
     <QuestionPlayerPieces.Status />
   </QuestionPlayerPieces.Frame>

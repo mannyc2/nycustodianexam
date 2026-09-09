@@ -1,9 +1,38 @@
+import type { ReactNode } from "react"
 import { sourceEvidenceTierLabel } from "../../public-content-labels.ts"
 import { useQuestionPlayer } from "./context.tsx"
 
-export const QuestionFeedback = () => {
-  const { actions, meta, question, state } = useQuestionPlayer()
+const useRevealedQuestion = () => {
+  const { meta, question, state } = useQuestionPlayer()
+  if (state.tag !== "revealed") return null
+  const correct = state.selectedOptionId === state.payload.correctOptionId
+  const optionLabels = new Map(question.options.map((option) => [option.id, option.label]))
+  const rationales = new Map(
+    state.payload.rationales.map((rationale) => [rationale.optionId, rationale])
+  )
+  const claims = new Map(state.payload.claims.map((claim) => [claim.id, claim]))
+  const objectiveClaim = state.payload.objectiveId === undefined
+    ? undefined
+    : claims.get(state.payload.objectiveId)
+  const hasAuthoredMixUp = (state.payload.tags?.confusionSetIds.length ?? 0) > 0
+  const orderedRationaleIds = [
+    state.payload.correctOptionId,
+    ...(correct ? [] : [state.selectedOptionId]),
+    ...question.options
+      .map((option) => option.id)
+      .filter(
+        (optionId) =>
+          optionId !== state.payload.correctOptionId && optionId !== state.selectedOptionId
+      )
+  ]
+  const optionLabel = (optionId: string): string =>
+    optionLabels.get(optionId) ?? "Unavailable answer choice"
 
+  return { meta, question, state, correct, optionLabel, rationales, orderedRationaleIds, objectiveClaim, hasAuthoredMixUp }
+}
+
+export const QuestionFeedbackFrame = ({ children }: { readonly children: ReactNode }) => {
+  const { actions, meta, state } = useQuestionPlayer()
   if (
     state.tag === "content_unavailable" ||
     state.tag === "restore_failed" ||
@@ -32,35 +61,16 @@ export const QuestionFeedback = () => {
     )
   }
 
-  if (state.tag !== "revealed") {
-    return null
-  }
-
+  if (state.tag !== "revealed") return null
   const correct = state.selectedOptionId === state.payload.correctOptionId
-  const optionLabels = new Map(question.options.map((option) => [option.id, option.label]))
-  const rationales = new Map(
-    state.payload.rationales.map((rationale) => [rationale.optionId, rationale])
-  )
-  const claims = new Map(state.payload.claims.map((claim) => [claim.id, claim]))
-  const objectiveClaim = state.payload.objectiveId === undefined
-    ? undefined
-    : claims.get(state.payload.objectiveId)
-  const hasAuthoredMixUp = (state.payload.tags?.confusionSetIds.length ?? 0) > 0
-  const orderedRationaleIds = [
-    state.payload.correctOptionId,
-    ...(correct ? [] : [state.selectedOptionId]),
-    ...question.options
-      .map((option) => option.id)
-      .filter(
-        (optionId) =>
-          optionId !== state.payload.correctOptionId && optionId !== state.selectedOptionId
-      )
-  ]
-  const optionLabel = (optionId: string): string =>
-    optionLabels.get(optionId) ?? "Unavailable answer choice"
+  return <section className={correct ? "feedback feedback-correct player-feedback" : "feedback feedback-review player-feedback"}>{children}</section>
+}
 
-  return (
-    <section className={correct ? "feedback feedback-correct player-feedback" : "feedback feedback-review player-feedback"}>
+export const QuestionOutcome = () => {
+  const revealed = useRevealedQuestion()
+  if (revealed === null) return null
+  const { meta, state, correct, optionLabel } = revealed
+  return <>
       <div className="player-outcome">
       <h2 ref={meta.outcomeHeadingRef} tabIndex={-1}>
         <span aria-hidden="true" className="player-outcome-icon">{correct ? "✓" : "✕"}</span>{" "}
@@ -81,6 +91,15 @@ export const QuestionFeedback = () => {
         </div>
       </dl>
       </div>
+
+  </>
+}
+
+export const QuestionRationales = () => {
+  const revealed = useRevealedQuestion()
+  if (revealed === null) return null
+  const { meta, question, state, optionLabel, rationales, orderedRationaleIds } = revealed
+  return <>
       <section aria-labelledby={`${meta.instanceId}-rationales`} className="feedback-rationales">
         <h3 id={`${meta.instanceId}-rationales`}>Answer explanations</h3>
         <ol className="rationale-list">
@@ -104,6 +123,15 @@ export const QuestionFeedback = () => {
           })}
         </ol>
       </section>
+
+  </>
+}
+
+export const QuestionConfusionFeedback = () => {
+  const revealed = useRevealedQuestion()
+  if (revealed === null) return null
+  const { state, correct, optionLabel, objectiveClaim, hasAuthoredMixUp } = revealed
+  return <>
       {objectiveClaim === undefined ? null : (
         <section className="feedback-claims">
           <h3>Key distinction</h3>
@@ -125,6 +153,15 @@ export const QuestionFeedback = () => {
               : `You chose “${optionLabel(state.selectedOptionId)}.” Compare it with “${optionLabel(state.payload.correctOptionId)}” using the key distinction above.`}</p>
         </section>
       ) : null}
+
+  </>
+}
+
+export const QuestionSources = () => {
+  const revealed = useRevealedQuestion()
+  if (revealed === null) return null
+  const { state } = revealed
+  return <>
       <details className="feedback-sources">
         <summary>Where this comes from</summary>
         <ul className="source-receipt-list">
@@ -154,9 +191,15 @@ export const QuestionFeedback = () => {
           ))}
         </ul>
       </details>
-    </section>
-  )
+  </>
 }
+
+export const QuestionFeedback = () => <QuestionFeedbackFrame>
+  <QuestionOutcome />
+  <QuestionRationales />
+  <QuestionConfusionFeedback />
+  <QuestionSources />
+</QuestionFeedbackFrame>
 
 export const QuestionStatus = () => {
   const { meta } = useQuestionPlayer()

@@ -1,4 +1,4 @@
-import { QuestionIllustration } from "./illustration.tsx"
+import { VisualQuestionBody, NonvisualQuestionBody } from "./question-body.tsx"
 import { type FormEvent, type ReactNode } from "react"
 import { selectedOptionId } from "../state.ts"
 import { useQuestionPlayer } from "./context.tsx"
@@ -9,12 +9,15 @@ export const QuestionFrame = ({ children }: { readonly children: ReactNode }) =>
   </article>
 )
 
-export const QuestionHeader = ({ positionLabel = "Practice question" }: { readonly positionLabel?: string }) => {
-  const { actions, question, state } = useQuestionPlayer()
+export const QuestionPosition = ({ positionLabel = "Practice question" }: { readonly positionLabel?: string }) => {
+  const { question, state } = useQuestionPlayer()
+  return <span className="player-position">{positionLabel} · {state.presentation === "nonvisual" ? "Nonvisual version" : question.illustration === undefined ? "Text version" : "Illustrated question"}</span>
+}
+
+export const QuestionFlagAction = () => {
+  const { actions, state } = useQuestionPlayer()
   const canChangeFlag = state.tag === "ready" || state.tag === "commit_failed"
   return (
-    <div className="player-heading-row">
-      <span className="player-position">{positionLabel} · {state.presentation === "nonvisual" ? "Nonvisual version" : question.illustration === undefined ? "Text version" : "Illustrated question"}</span>
       <button
         aria-pressed={state.reviewIntent === "flagged"}
         className="button button-secondary player-flag"
@@ -25,23 +28,21 @@ export const QuestionHeader = ({ positionLabel = "Practice question" }: { readon
         <span aria-hidden="true">⚑</span>
         {state.reviewIntent === "flagged" ? "Flagged for review" : "Flag for review"}
       </button>
-    </div>
   )
 }
 
+export const QuestionHeader = ({ children }: { readonly children: ReactNode }) => <div className="player-heading-row">{children}</div>
+
 export const QuestionVisualBody = () => {
   const { question } = useQuestionPlayer()
-  return <><h1 id="question-heading">{question.prompt}</h1><QuestionIllustration illustration={question.illustration} /></>
+  return <VisualQuestionBody prompt={question.prompt} illustration={question.illustration} headingId="question-heading" />
 }
 
 export const QuestionNonvisualBody = () => {
   const { question } = useQuestionPlayer()
-  const equivalent = question.illustration?.nonvisualEquivalent
-  if (equivalent === undefined) return <p role="alert">The saved nonvisual version is unavailable for this question.</p>
-  return <section className="question-nonvisual-body" aria-labelledby="question-heading">
-    <h1 id="question-heading">{equivalent.prompt}</h1>
-    <ol>{equivalent.observations.map((observation, index) => <li key={index}>{observation}</li>)}</ol>
-  </section>
+  return <NonvisualQuestionBody illustration={question.illustration} headingId="question-heading">
+    <p role="alert">The saved nonvisual version is unavailable for this question.</p>
+  </NonvisualQuestionBody>
 }
 
 export const QuestionPrompt = ({ children }: { readonly children: ReactNode }) => {
@@ -114,27 +115,24 @@ export const QuestionForm = ({ children }: { readonly children: ReactNode }) => 
   )
 }
 
-export const QuestionControls = ({ nextHref, completionLink }: { readonly nextHref?: string; readonly completionLink?: { readonly href: string; readonly label: string } }) => {
+export interface QuestionNavigationProps {
+  readonly nextHref?: string
+  readonly completionLink?: { readonly href: string; readonly label: string }
+}
+
+export const QuestionSelectionNote = () => {
   const { state } = useQuestionPlayer()
+  return state.tag === "ready" && selectedOptionId(state) !== null
+    ? <p className="player-selection-note">Nothing is saved yet. Change your selection as often as you like, then press Save answer.</p> : null
+}
+
+export const QuestionCommitAction = () => {
+  const { state } = useQuestionPlayer()
+  if (state.tag === "revealed") return null
   const selected = selectedOptionId(state)
   const isRevealRetry = state.tag === "reveal_failed"
   const isRestoreRetry = state.tag === "restore_failed"
-
   return (
-    <>
-    {state.tag === "ready" && selected !== null ? (
-      <p className="player-selection-note">Nothing is saved yet. Change your selection as often as you like, then press Save answer.</p>
-    ) : null}
-    <div className="question-controls player-action-bar">
-      {state.tag === "revealed" ? (
-        <>
-        <a className="button button-secondary" href="/atlas/">Open study tools</a>
-        <a className="button button-secondary" href="/report/">Report a correction</a>
-        <a className="button button-primary player-continue" data-session-history={completionLink !== undefined || nextHref === undefined ? undefined : "replace"} href={completionLink?.href ?? nextHref ?? "/practice/"}>
-          {completionLink?.label ?? (nextHref === undefined ? "Return to Practice" : "Next question")}
-        </a>
-        </>
-      ) : (
         <button
           className="button button-primary"
           disabled={
@@ -152,12 +150,45 @@ export const QuestionControls = ({ nextHref, completionLink }: { readonly nextHr
               ? "Retry explanation"
               : "Save answer"}
         </button>
-      )}
-      {nextHref !== undefined && (state.tag === "ready" || state.tag === "commit_failed") ? <a className="button button-secondary" data-session-history="replace" href={nextHref}>Skip for now</a> : null}
-      <span className="player-action-note">{state.tag === "revealed"
-        ? "Answer saved on this device"
-        : "Your answer is saved before feedback appears"}</span>
-    </div>
-    </>
   )
 }
+
+export const QuestionReviewActions = () => {
+  const { state } = useQuestionPlayer()
+  if (state.tag !== "revealed") return null
+  return <>
+    <a className="button button-secondary" href="/atlas/">Open study tools</a>
+    <a className="button button-secondary" href="/report/">Report a correction</a>
+  </>
+}
+
+export const QuestionNavigation = ({ nextHref, completionLink }: QuestionNavigationProps) => {
+  const { state } = useQuestionPlayer()
+  if (state.tag === "revealed") return (
+        <a className="button button-primary player-continue" data-session-history={completionLink !== undefined || nextHref === undefined ? undefined : "replace"} href={completionLink?.href ?? nextHref ?? "/practice/"}>
+          {completionLink?.label ?? (nextHref === undefined ? "Return to Practice" : "Next question")}
+        </a>
+  )
+  return <>
+      {nextHref !== undefined && (state.tag === "ready" || state.tag === "commit_failed") ? <a className="button button-secondary" data-session-history="replace" href={nextHref}>Skip for now</a> : null}
+  </>
+}
+
+export const QuestionSaveNotice = () => {
+  const { state } = useQuestionPlayer()
+  return <span className="player-action-note">{state.tag === "revealed"
+    ? "Answer saved on this device"
+    : "Your answer is saved before feedback appears"}</span>
+}
+
+export const QuestionActionBar = ({ children }: { readonly children: ReactNode }) => <div className="question-controls player-action-bar">{children}</div>
+
+export const QuestionControls = (props: QuestionNavigationProps) => <>
+  <QuestionSelectionNote />
+  <QuestionActionBar>
+    <QuestionReviewActions />
+    <QuestionCommitAction />
+    <QuestionNavigation {...props} />
+    <QuestionSaveNotice />
+  </QuestionActionBar>
+</>

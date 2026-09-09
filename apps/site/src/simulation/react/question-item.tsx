@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import { QuestionIllustration } from "../../question-player/react/illustration.tsx"
+import { VisualQuestionBody, NonvisualQuestionBody } from "../../question-player/react/question-body.tsx"
 import { useSimulationQuestion } from "./question-context.tsx"
 
 export const SimulationQuestion = ({ children }: { readonly children: ReactNode }) => {
@@ -65,21 +65,17 @@ export const SimulationVisualQuestion = () => {
   const { state: { item } } = useSimulationQuestion()
   const illustration = "illustration" in item.question ? item.question.illustration : undefined
   return <SimulationQuestion>
-    <h1 id="simulation-question-heading">{item.question.prompt}</h1>
-    <QuestionIllustration illustration={illustration} />
+    <VisualQuestionBody prompt={item.question.prompt} illustration={illustration} headingId="simulation-question-heading" />
   </SimulationQuestion>
 }
 
 export const SimulationNonvisualQuestion = () => {
   const { state: { item } } = useSimulationQuestion()
   const illustration = "illustration" in item.question ? item.question.illustration : undefined
-  const equivalent = illustration?.nonvisualEquivalent
   return <SimulationQuestion>
-    {equivalent === undefined ? <h1 id="simulation-question-heading">The saved nonvisual question is unavailable.</h1> :
-      <section className="question-nonvisual-body" aria-labelledby="simulation-question-heading">
-        <h1 id="simulation-question-heading">{equivalent.prompt}</h1>
-        <ol>{equivalent.observations.map((fact, index) => <li key={index}>{fact}</li>)}</ol>
-      </section>}
+    <NonvisualQuestionBody illustration={illustration} headingId="simulation-question-heading">
+      <h1 id="simulation-question-heading">The saved nonvisual question is unavailable.</h1>
+    </NonvisualQuestionBody>
   </SimulationQuestion>
 }
 
