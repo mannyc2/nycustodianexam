@@ -1,0 +1,103 @@
+{
+  "sourceCommit": "8934a27d514b9fd536513281df5e0854b3a78ee1",
+  "rasterOutput": "/tmp/nycustodian-print-final-products-pages",
+  "captures": [
+    {
+      "id": "explanations-and-sources-us-letter-normal",
+      "sha256": "05c35a603a465831270d21be78958ce21f940d6d9e2ae9def3960d0bc6cd2ef2",
+      "product": "explanations-and-sources",
+      "count": 2,
+      "paper": "us-letter",
+      "large": false,
+      "estimatedPages": 9,
+      "pages": 8,
+      "pageSize": "612 x 792 pts (letter)",
+      "searchableText": true
+    },
+    {
+      "id": "explanations-and-sources-us-letter-large-wide",
+      "sha256": "8386fb039f0e070744b4f184991734be8f2075e04b80e65c319e9e2d458210c3",
+      "product": "explanations-and-sources",
+      "count": 2,
+      "paper": "us-letter",
+      "large": true,
+      "estimatedPages": 14,
+      "pages": 13,
+      "pageSize": "612 x 792 pts (letter)",
+      "searchableText": true
+    },
+    {
+      "id": "explanations-and-sources-a4-normal",
+      "sha256": "8327601d1afa6d28c782ecdab4bef34aa20dcca334a4ec6e8388f9b4626c7086",
+      "product": "explanations-and-sources",
+      "count": 2,
+      "paper": "a4",
+      "large": false,
+      "estimatedPages": 9,
+      "pages": 7,
+      "pageSize": "594.96 x 841.92 pts (A4)",
+      "searchableText": true
+    },
+    {
+      "id": "explanations-and-sources-a4-large-wide",
+      "sha256": "5820f8ac82b6a8db1f19876e258b771a1893c54ea0336aa0380940ef8ae24381",
+      "product": "explanations-and-sources",
+      "count": 2,
+      "paper": "a4",
+      "large": true,
+      "estimatedPages": 13,
+      "pages": 13,
+      "pageSize": "594.96 x 841.92 pts (A4)",
+      "searchableText": true
+    },
+    {
+      "id": "announcement-profile-fact-sheet-us-letter-normal",
+      "sha256": "d3bc59c02a135b183bec9a491c3bb76f16b031486eac73f1acbb637f09aa843a",
+      "product": "announcement-profile-fact-sheet",
+      "count": 1,
+      "paper": "us-letter",
+      "large": false,
+      "estimatedPages": 35,
+      "pages": 30,
+      "pageSize": "612 x 792 pts (letter)",
+      "searchableText": true
+    },
+    {
+      "id": "announcement-profile-fact-sheet-us-letter-large-wide",
+      "sha256": "5567dd0ce99d8b56eb04561625ab70f8136d4dc18d1e92774bf5280bbab2a1a8",
+      "product": "announcement-profile-fact-sheet",
+      "count": 1,
+      "paper": "us-letter",
+      "large": true,
+      "estimatedPages": 62,
+      "pages": 63,
+      "pageSize": "612 x 792 pts (letter)",
+      "searchableText": true
+    },
+    {
+      "id": "announcement-profile-fact-sheet-a4-normal",
+      "sha256": "a427704f50b1fce3243cfcc320d64a70245979989bd9d72523449a9f41afb94d",
+      "product": "announcement-profile-fact-sheet",
+      "count": 1,
+      "paper": "a4",
+      "large": false,
+      "estimatedPages": 33,
+      "pages": 29,
+      "pageSize": "594.96 x 841.92 pts (A4)",
+      "searchableText": true
+    },
+    {
+      "id": "announcement-profile-fact-sheet-a4-large-wide",
+      "sha256": "18e2ef3113fbe461eacb43fc33163f77f597b874438eefebee5993e77ce35c8d",
+      "product": "announcement-profile-fact-sheet",
+      "count": 1,
+      "paper": "a4",
+      "large": true,
+      "estimatedPages": 59,
+      "pages": 60,
+      "pageSize": "594.96 x 841.92 pts (A4)",
+      "searchableText": true
+    }
+  ],
+  "errors": []
+}
