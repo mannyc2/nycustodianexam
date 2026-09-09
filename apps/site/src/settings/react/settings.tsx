@@ -47,16 +47,19 @@ type ReviewRebuildState =
 
 type DisplayPreference = "largeText" | "reduceMotion"
 
-interface SettingsTaskCard {
+type SettingsTaskCard = {
   readonly id?: string
   readonly title: string
   readonly description: string
   readonly icon: string
   readonly label: string
+} & ({
+  readonly href: string
+} | {
   readonly run: () => void | Promise<void>
   readonly expanded?: boolean
   readonly controls?: string
-}
+})
 
 interface SettingsEffectRunner {
   readonly runPromise: <A, E>(
@@ -434,6 +437,11 @@ export const SettingsIsland = ({
               label: reviewRebuild.tag === "pending" ? "Rebuilding review queue…" : "Rebuild review queue", run: rebuildReviewQueue
             },
             {
+              title: "Use this site offline",
+              description: "Download a study copy, turn it on, or manage copies on this device.",
+              icon: "export", label: "Manage downloads", href: "/offline/"
+            },
+            {
               title: "Delete",
               description: "Preview counts, then confirm. Export first if needed.",
               icon: "delete", label: "Choose what to delete", run: () => setDataAction("delete"),
@@ -441,7 +449,9 @@ export const SettingsIsland = ({
             }
           ].map((task: SettingsTaskCard) => {
             const exporting = task.id === "export-local-data"
-            const action = <button className={exporting ? "button button-primary" : "button button-secondary"} type="button" disabled={busy || preferenceRead === "loading"}
+            const action = "href" in task
+              ? <a className="button button-secondary" href={task.href}>{task.label}</a>
+              : <button className={exporting ? "button button-primary" : "button button-secondary"} type="button" disabled={busy || preferenceRead === "loading"}
               aria-expanded={task.expanded} aria-controls={task.controls} onClick={task.run}>{task.label}</button>
             return <li id={task.id} className="task-card" aria-labelledby={exporting ? "export-heading" : undefined} key={task.title}>
               <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><use href={`#settings-icon-${task.icon}`} /></svg>

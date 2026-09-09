@@ -779,7 +779,7 @@
   .preference-row input { inline-size: 1.5rem; block-size: 1.5rem; margin: var(--space-1); accent-color: var(--color-action); cursor: pointer; }
   .preference-row .preference-status { font-size: var(--text-xs); }
   .preference-status:empty { display: none; }
-  .task-cards.settings-task-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .task-cards.settings-task-cards { grid-template-columns: repeat(5, minmax(0, 1fr)); }
   .settings-task-cards .task-card { grid-template-rows: auto auto minmax(0, 1fr) auto; }
   .settings-task-cards .button { inline-size: 100%; padding-inline: var(--space-3); }
   .settings-card-action { display: grid; gap: var(--space-3); }
