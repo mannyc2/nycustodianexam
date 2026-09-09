@@ -1,3 +1,4 @@
+import { resolveCustomHazardSource } from "../practice/hazard-set.ts"
 import { resolveCustomReviewSource } from "../practice/review-source.ts"
 import { Effect } from "effect"
 import { questionAttemptId, sameHazardReceipt, sameQuestionReceipt } from "../attempt-receipt.ts"
@@ -44,7 +45,7 @@ export const projectStudyActivity = (
     questionCount += 1
   }
   for (const attempt of hazards) {
-    const source = sceneSources.get(attempt.sceneId)
+    const source = resolveCustomHazardSource(bootstrap.scenes, attempt) ?? sceneSources.get(attempt.sceneId)
     const unavailable = { id: attempt.id, recordedAt: attempt.committedAt, label: attempt.mode === "visual" ? "Visual hazard attempt" : "Keyboard hazard attempt" }
     if (source === undefined || attempt.receipt === undefined) {
       unavailableAttempts.push(unavailable)

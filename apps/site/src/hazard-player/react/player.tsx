@@ -32,9 +32,9 @@ export const HazardPlayer = {
   CommitStatus: HazardPlayerPieces.Status
 } as const
 
-export const VisualHazardPractice = () => (
+export const VisualHazardPractice = ({ positionLabel }: { readonly positionLabel?: string }) => (
   <HazardPlayerPieces.Frame>
-    <HazardPlayerPieces.Prompt />
+    <HazardPlayerPieces.Prompt {...(positionLabel === undefined ? {} : { positionLabel })} />
     <div className="hazard-player__workspace">
       <HazardPlayerPieces.VisualScene />
       <div className="hazard-player__response-panel">
@@ -47,9 +47,9 @@ export const VisualHazardPractice = () => (
   </HazardPlayerPieces.Frame>
 )
 
-export const NonvisualHazardPractice = () => (
+export const NonvisualHazardPractice = ({ positionLabel }: { readonly positionLabel?: string }) => (
   <HazardPlayerPieces.Frame>
-    <HazardPlayerPieces.Prompt />
+    <HazardPlayerPieces.Prompt {...(positionLabel === undefined ? {} : { positionLabel })} />
     <HazardPlayerPieces.ZoneNavigator />
     <HazardPlayerPieces.Commit />
     <HazardPlayerPieces.Results />

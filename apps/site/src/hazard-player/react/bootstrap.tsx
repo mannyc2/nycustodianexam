@@ -1,7 +1,10 @@
+import { ReviewSceneBootstrap } from "../../review/model.ts"
+import { assembleHazardDrill } from "../../practice/hazard-set.ts"
+import { parsePracticeSetId } from "../../practice/set.ts"
 import { PrecommitScene } from "@nycustodian/content/model"
 import { Effect, Schema } from "effect"
 import { createRoot } from "react-dom/client"
-import { HazardAttemptReceipt } from "../../attempt-receipt.ts"
+import { HazardAttemptReceipt, hazardAttemptId, sameHazardReceipt } from "../../attempt-receipt.ts"
 import { appRuntime, disposeAppRuntime } from "../../app-runtime.ts"
 import { retainImageBlob } from "../../retained-image.ts"
 import { installSessionNavigation } from "../../session-navigation.ts"
@@ -40,7 +43,7 @@ if (mode !== "visual" && mode !== "nonvisual") {
 }
 
 const scene = Schema.decodeUnknownSync(PrecommitScene)(JSON.parse(data.textContent))
-const receipt = Schema.decodeUnknownSync(HazardAttemptReceipt)(JSON.parse(receiptData.textContent))
+let receipt = Schema.decodeUnknownSync(HazardAttemptReceipt)(JSON.parse(receiptData.textContent))
 const expectedPostcommitPath =
   `/content/vertical-slice/scenes/${encodeURIComponent(scene.asset.opaqueAssetId)}.postcommit.json`
 if (
@@ -111,6 +114,51 @@ window.addEventListener("pagehide", (event) => {
 })
 
 const bootstrap = (): void => {
+  let positionLabel = mount.dataset.positionLabel
+  const params = new URLSearchParams(window.location.search)
+  if (params.has("set") || params.has("position")) {
+    try {
+      if (params.getAll("set").length !== 1 || params.getAll("position").length !== 1) throw new Error("Ambiguous drill link")
+      const spec = parsePracticeSetId(params.get("set")!, ["Workplace scenes"])
+      const text = params.get("position")!
+      const position = Schema.decodeUnknownSync(Schema.Int.check(Schema.isGreaterThan(0)))(Number(text))
+      if (spec === undefined || String(position) !== text) throw new Error("Invalid drill configuration")
+      const data = document.querySelector<HTMLScriptElement>("#hazard-drill-inventory")
+      const sources = Schema.decodeUnknownSync(Schema.Array(ReviewSceneBootstrap))(JSON.parse(data?.textContent ?? "null"))
+      const steps = assembleHazardDrill(sources, { ...spec, mode })
+      const step = steps[position - 1]
+      if (step === undefined || !sameHazardReceipt(step.canonicalReceipt, receipt) ||
+        step.source.scene.id !== scene.id || new URL(step.href, window.location.origin).pathname !== window.location.pathname) throw new Error("Drill item does not match this scene")
+      receipt = step.receipt
+      positionLabel = `Scene ${position} of ${steps.length}`
+      document.title = `${positionLabel} — Hazard practice`
+      const navigation = document.querySelector<HTMLElement>('.directional-nav[aria-label="Hazard scene navigation"]')
+      if (navigation !== null) {
+        navigation.replaceChildren()
+        for (const [target, label] of [[steps[position - 2], "← Previous scene"], [steps[position], "Next scene →"]] as const) {
+          const node = document.createElement(target === undefined ? "span" : "a")
+          node.textContent = target === undefined ? (label.startsWith("Next") ? "End of drill" : "") : label
+          if (node instanceof HTMLAnchorElement && target !== undefined) {
+            node.href = target.href
+            node.dataset.sessionHistory = "replace"
+          }
+          navigation.append(node)
+        }
+      }
+    } catch {
+      const heading = document.createElement("h1")
+      heading.textContent = "This hazard drill is unavailable"
+      const detail = document.createElement("p")
+      detail.textContent = "The drill link does not match this released scene. No response was saved."
+      const link = document.createElement("a")
+      link.href = "/hazards/"
+      link.textContent = "Return to Hazard practice"
+      mount.replaceChildren(heading, detail, link)
+      document.querySelector('.directional-nav[aria-label="Hazard scene navigation"]')?.remove()
+      return
+    }
+  }
+  mount.dataset.hazardAttemptId = hazardAttemptId(receipt)
   const controller = createHazardController({
     scene,
     mode,
@@ -125,7 +173,7 @@ const bootstrap = (): void => {
 
   root.render(
     <HazardPlayer.Provider controller={controller}>
-      {mode === "visual" ? <VisualHazardPractice /> : <NonvisualHazardPractice />}
+      {mode === "visual" ? <VisualHazardPractice {...(positionLabel === undefined ? {} : { positionLabel })} /> : <NonvisualHazardPractice {...(positionLabel === undefined ? {} : { positionLabel })} />}
     </HazardPlayer.Provider>
   )
 

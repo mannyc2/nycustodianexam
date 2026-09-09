@@ -20,7 +20,7 @@ import {
   HazardAttemptReceipt,
   QuestionAttemptReceipt
 } from "../apps/site/src/attempt-receipt.ts"
-import { ReviewQueueBootstrap } from "../apps/site/src/review/model.ts"
+import { ReviewQueueBootstrap, ReviewSceneBootstrap } from "../apps/site/src/review/model.ts"
 import { StudyBootstrap } from "../apps/site/src/study/model.ts"
 import { SimulationBootstrap } from "../apps/site/src/simulation/model.ts"
 import { PrintBuilderBootstrap } from "../apps/site/src/print/model.ts"
@@ -1446,6 +1446,7 @@ export const verify = async (): Promise<void> => {
   const bundleReports = new Map<string, Awaited<ReturnType<typeof bundleMeasurement>>>()
   const referencedAssets = new Set<string>()
   const interactiveRouteIds = new Set([
+    "hazards-index",
     "study-hub",
     "question-player",
     "review-player",
@@ -1867,6 +1868,19 @@ export const verify = async (): Promise<void> => {
       continue
     }
 
+    if (route.routeId === "hazards-index") {
+      const rawInventory = extractEmbeddedJson(html, "hazard-builder-data")
+      assertNoAnswerBearingStructuredFields(rawInventory, "Hazard builder inventory")
+      const inventory = Schema.decodeUnknownSync(Schema.Array(ReviewSceneBootstrap))(rawInventory)
+      // The Review contract below independently verifies every scene and receipt
+      // against the released manifest. Require this builder to use that exact bank.
+      const reviewHtml = await text(routeDocument("/review/"))
+      const review = Schema.decodeUnknownSync(ReviewQueueBootstrap)(extractEmbeddedJson(reviewHtml, "review-bootstrap-data"))
+      if (!isDeepStrictEqual(inventory, review.scenes) || !html.includes("data-hazard-builder") ||
+        !/<main\b[\s\S]*<h1\b/i.test(html)) throw new Error("Hazard builder inventory or fallback is incomplete")
+      continue
+    }
+
     if (
       route.position === undefined ||
       route.postcommitArtifact === undefined ||
@@ -2137,9 +2151,9 @@ export const verify = async (): Promise<void> => {
   // Shared closures include the versioned custom-practice receipt resolver.
   // It regenerates selected item order before accepting saved feedback, rather
   // than trusting an arbitrary session ID. September 9 integration measures
-  // Settings at 481058 raw bytes (+4261 over the prior implementation).
+  // Settings at 484180 raw bytes with both question and hazard receipt resolution.
   // Keep a bounded allowance for that feature, not an unconstrained exemption.
-  const bundleBudgets = { raw: 482_000, gzip: 144_500, brotli: 122_000 } as const
+  const bundleBudgets = { raw: 485_000, gzip: 146_000, brotli: 123_000 } as const
   for (const [family, measurement] of bundleReports) {
     for (const format of ["raw", "gzip", "brotli"] as const) {
       if (measurement[format] > bundleBudgets[format]) {

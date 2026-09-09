@@ -1,3 +1,4 @@
+import { resolveCustomHazardSource } from "../practice/hazard-set.ts"
 import { resolveCustomReviewSource } from "../practice/review-source.ts"
 import {
   PostcommitQuestion as PostcommitQuestionSchema,
@@ -337,7 +338,7 @@ export const buildReviewQueue = Effect.fn("ReviewProjection.buildReviewQueue")(f
     return containAttemptFailure(attempt.id, "question", attempt.committedAt, effect)
   })
   const hazardEffects = hazardAttempts.map((attempt) => {
-    const source = sceneById.get(attempt.sceneId)
+    const source = resolveCustomHazardSource(bootstrap.scenes, attempt) ?? sceneById.get(attempt.sceneId)
     const expectedReceipt = source === undefined
       ? undefined
       : attempt.mode === "visual"

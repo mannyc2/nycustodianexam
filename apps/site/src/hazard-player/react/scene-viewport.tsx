@@ -14,12 +14,12 @@ export const HazardFrame = ({ children }: { readonly children: ReactNode }) => (
   </article>
 )
 
-export const HazardPrompt = () => {
+export const HazardPrompt = ({ positionLabel = "Hazard practice" }: { readonly positionLabel?: string }) => {
   const { meta, mode, scene } = useHazardPlayer()
   return (
     <header className="hazard-player__prompt">
       <div className="player-heading-row">
-        <span className="player-position">Hazard practice · Original scene</span>
+        <span className="player-position">{positionLabel} · Original scene</span>
         <span className="player-mode-label">{mode === "visual" ? "Visual practice" : "Text version"}</span>
       </div>
       <h1 id="hazard-scene-heading" ref={meta.sceneHeadingRef} tabIndex={-1}>

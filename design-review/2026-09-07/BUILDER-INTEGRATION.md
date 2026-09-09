@@ -74,3 +74,6 @@ reordering, mode separation and changed receipt coordinates. Combined with the
 shared selection suite, 11 tests pass; all workspace typechecks also pass.
 This module is not yet called by the Hazard UI or saved-history projections;
 that integration is still required. Existing Hazard controllers are unchanged.
+
+Hazard integration is now implemented; see `HAZARD-BUILDER-REVIEW.md` for
+current behavior, evidence and remaining audit work.

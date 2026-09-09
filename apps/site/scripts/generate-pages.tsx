@@ -1,6 +1,6 @@
 import { setupDestinations } from "../src/practice/setup-navigation.ts"
 import { questionCategoryFromSafeMetadata } from "../src/question-category.ts"
-import { ReviewQuestionBootstrap, type ReviewQuestionSource } from "../src/review/model.ts"
+import { ReviewQuestionBootstrap, type ReviewQuestionSource, type ReviewSceneSource } from "../src/review/model.ts"
 import { createHash } from "node:crypto"
 import { cp, mkdir, rm } from "node:fs/promises"
 import {
@@ -621,6 +621,7 @@ const questionPage = ({
 
 const hazardPage = ({
   canonicalPath,
+  drillInventory,
   count,
   mode,
   nextPath,
@@ -631,6 +632,7 @@ const hazardPage = ({
 }: {
   readonly canonicalPath: string
   readonly count: number
+  readonly drillInventory?: ReadonlyArray<ReviewSceneSource>
   readonly mode: "nonvisual" | "visual"
   readonly nextPath?: string
   readonly position: number
@@ -651,6 +653,7 @@ const hazardPage = ({
     <div
       data-hazard-player
       data-hazard-mode="${mode}"
+      data-position-label="Scene ${position} of ${count}"
       data-hazard-attempt-id="${escapeHtml(hazardAttemptId(receipt))}"
       data-postcommit-url="${escapeHtml(receipt.postcommitPath)}"
     >
@@ -673,6 +676,7 @@ const hazardPage = ({
       ${nextPath === undefined ? "<span>End of session</span>" : `<a data-session-history="replace" href="${nextPath}">Next scene →</a>`}
     </nav>
   </main>
+  ${drillInventory === undefined ? "" : `<script id="hazard-drill-inventory" type="application/json">${escapeJsonForHtml(drillInventory)}</script>`}
   <script id="hazard-scene-data" type="application/json">${escapeJsonForHtml(scene)}</script>
   <script id="hazard-receipt-data" type="application/json">${escapeJsonForHtml(receipt)}</script>
   ${mode === "visual" ? `<script id="hazard-asset-receipt-data" type="application/json">${escapeJsonForHtml(visualAssetReceipt(scene))}</script>` : ""}
@@ -1508,8 +1512,11 @@ const buildPages = ({
     ${breadcrumb([{ label: "Hazards" }])}
     <nav class="setup-navigation" aria-label="Practice setup">${setupDestinations.map(({ id, label, href }) => `<a class="button ${id === "hazards" ? "button-primary" : "button-secondary"}" href="${href}"${id === "hazards" ? ' aria-current="page"' : ""}>${label}</a>`).join("")}</nav>
     <section class="hero"><p class="eyebrow">${scenes.length} hazard scenes</p><h1>Scan the whole workplace before you decide.</h1><p>Each scene starts with a neutral description only. Which conditions are hazards — and which are safe as shown — is revealed, with corrections and sources, only after you submit your response.</p><div class="question-controls"><a class="button button-primary" href="/hazards/session/${manifest.releaseId}/scene/1/">Start visual scene 1</a><a class="button button-secondary" href="/hazards/session/${manifest.releaseId}-nonvisual/scene/1/">Start keyboard scene 1 (no image)</a></div></section>
+    <div data-hazard-builder><p>Choose a scene above, or enable JavaScript to build a drill with a scene count and repeat code.</p></div>
     <section class="section-gap"><h2>Environments in this release</h2><ul class="tag-list">${[...new Set(scenes.map(({ value }) => value.environment))].map((environment) => `<li>${escapeHtml(environment)}</li>`).join("")}</ul></section>
-  </main>`
+  </main>
+  <script id="hazard-builder-data" type="application/json">${escapeJsonForHtml(canonicalReviewBootstrap.scenes)}</script>
+  <script type="module" src="/src/practice/hazard-builder-bootstrap.tsx"></script>`
   })
 
   pages.push({
@@ -1654,6 +1661,7 @@ const buildPages = ({
     pages.push(hazardPage({
       canonicalPath: `${base}${position}/`,
       count: scenes.length,
+      drillInventory: canonicalReviewBootstrap.scenes,
       mode: "visual",
       position,
       receipt: hazardReceipt(artifact, scene, "visual", position),
@@ -1665,6 +1673,7 @@ const buildPages = ({
     pages.push(hazardPage({
       canonicalPath: `${nonvisualBase}${position}/`,
       count: scenes.length,
+      drillInventory: canonicalReviewBootstrap.scenes,
       mode: "nonvisual",
       position,
       receipt: hazardReceipt(artifact, scene, "nonvisual", position),

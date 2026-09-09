@@ -52,3 +52,14 @@ export const resolveHazardDrill = (
     return undefined
   }
 }
+
+export const resolveCustomHazardSource = (
+  sources: ReadonlyArray<ReviewSceneSource>,
+  attempt: Parameters<typeof resolveHazardDrill>[1]
+): ReviewSceneSource | undefined => {
+  const step = resolveHazardDrill(sources, attempt)
+  if (step === undefined) return undefined
+  return attempt.mode === "visual"
+    ? { ...step.source, visualReceipt: step.receipt, visualItemUrl: step.href }
+    : { ...step.source, nonvisualReceipt: step.receipt, nonvisualItemUrl: step.href }
+}
