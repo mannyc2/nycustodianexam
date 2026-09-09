@@ -277,3 +277,31 @@ Brotli bytes, within the existing limits. No budget increase was needed.
 This verifies portable question/hazard records and activity navigation. Explicit
 offline upgrade, historical simulation compatibility, illustrated-item PDFs,
 and the remaining visual comparisons still require their own evidence.
+
+## Illustrated fallback and actual print output
+
+Generated question HTML now includes the reviewed illustration with neutral alt
+text and the same phone/web responsive selection as the interactive player.
+The no-JavaScript fallback keeps answer controls disabled. Browser coverage checks
+both 384px and 1053px, loaded image dimensions, responsive delivery, no horizontal
+overflow, and no postcommit requests. All 12 illustration cases pass across
+Chromium/Firefox/WebKit; site and browser typechecks and full build pass.
+
+`capture-print-illustrated.mjs` generates actual q091 packets using the released
+inventory, count 3, seed `illustrated-print-158` (q048/q091/q024). It first downloads
+the verified local pack, generates the packet, reloads the saved preview, verifies
+the retained PNG data URL, waits for fonts/image decoding, and exports/rasterizes
+Letter/A4 with normal and large/wide settings. `print-illustrated-audit/` retains
+four PDFs, eleven inspected page rasters, and the capture manifest. All eleven
+pages were visually inspected: the required tool features are visible; prompt,
+image, and choices stay together; no text/image overlap or clipping was observed.
+Letter normal: 2 pages; Letter large/wide: 4; A4 normal: 2; A4 large/wide: 3.
+These are Chromium PDF observations, not physical printer certification.
+
+Two confirmed follow-ups remain from this capture:
+- The page estimate is still 1 (normal) / 2 (large), undercounting the actual
+  illustrated packet. The estimator must account for required images and cover
+  metadata without claiming exact pagination across all browsers.
+- Generating this illustrated packet before downloading its required image fails
+  with the generic generation error. The local-content requirement is enforced,
+  but recovery must explain the missing download and offer the relevant action.

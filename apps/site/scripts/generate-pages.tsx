@@ -570,6 +570,18 @@ export const printProfileBootstrap = (
   announcementFactSheet: printAnnouncementFactSheet(profile, sourceLineById, sourceById)
 })
 
+const renderQuestionIllustrationFallback = (question: Question): string => {
+  const illustration = question.illustration
+  if (illustration === undefined) return ""
+  const web = illustration.derivatives.find(asset => asset.kind === "web")
+  const phone = illustration.derivatives.find(asset => asset.kind === "phone")
+  if (web === undefined) return '<p role="alert">The question illustration is unavailable. Skip this question for now.</p>'
+  return `<figure class="question-illustration"><picture>
+    ${phone === undefined ? "" : `<source media="(max-width: 30rem)" srcset="/${escapeHtml(phone.path)}">`}
+    <img src="/${escapeHtml(web.path)}" alt="${escapeHtml(illustration.neutralDescription)}">
+  </picture></figure>`
+}
+
 const renderQuestionFallback = (question: Question, position: number, count: number): string => `
       <article class="question-card" aria-labelledby="question-heading">
         <header class="question-prompt">
@@ -577,6 +589,7 @@ const renderQuestionFallback = (question: Question, position: number, count: num
           <h1 id="question-heading">${escapeHtml(question.prompt)}</h1>
           <p>Select one answer — you can change it until you submit. Submitting locks your answer, and the explanation opens only after it is saved on this device.</p>
         </header>
+        ${renderQuestionIllustrationFallback(question)}
         <fieldset disabled>
           <legend class="sr-only">Answer choices</legend>
           <div class="answer-list">

@@ -49,3 +49,24 @@ test("released illustrated question saves, reloads, and opens from Review", asyn
   await expect(page.getByRole("heading", { name: "Which tool is shown in the illustration?", exact: true })).toBeVisible()
   await expect(page.locator(".question-illustration img")).toBeVisible()
 })
+
+for (const width of [384, 1053]) {
+  test(`released illustration remains available without JavaScript at ${width}px`, async ({ browser, baseURL }) => {
+    if (baseURL === undefined) throw new Error("Browser test base URL is required")
+    const context = await browser.newContext({ baseURL, javaScriptEnabled: false, viewport: { width, height: 900 } })
+    try {
+      const page = await context.newPage()
+      const requests: string[] = []
+      page.on("request", request => requests.push(request.url()))
+      await page.goto("/practice/session/launch-v1/question/91/")
+      const image = page.locator(".question-illustration img")
+      await expect(image).toBeVisible()
+      await expect(image).toHaveAttribute("alt", /^A hand tool with a single handle/)
+      await expect.poll(() => image.evaluate(node => (node as HTMLImageElement).naturalWidth)).toBeGreaterThan(0)
+      expect(await image.evaluate(node => (node as HTMLImageElement).currentSrc)).toContain(width === 384 ? "t036-phone.png" : "t036-web.png")
+      await expect(page.getByRole("radio").first()).toBeDisabled()
+      expect(requests.some(url => url.includes(".postcommit.json"))).toBe(false)
+      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width)
+    } finally { await context.close() }
+  })
+}
