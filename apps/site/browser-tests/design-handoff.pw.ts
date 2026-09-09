@@ -128,6 +128,7 @@ test("atlas family controls filter the released tools and restore the selected f
 test("exam search, record selection, and detail tabs use the published records", async ({ page }) => {
   await page.setViewportSize({ height: 720, width: 320 })
   await page.goto("/exams/")
+  await page.getByText("Search and filter", { exact: true }).click()
   const search = page.getByRole("searchbox", { name: "Search announcements and study plans" })
   await expect(search).toBeVisible()
   const rows = page.locator("[data-exam-row]")
@@ -270,6 +271,7 @@ test("exam controls align on desktop and compact records omit the empty selectio
   for (const width of [1248, 384]) {
     await page.setViewportSize({ width, height: 900 })
     await page.goto("/exams/")
+    if (width === 384) await page.getByText("Search and filter", { exact: true }).click()
     const search = page.getByRole("searchbox")
     const filters = page.getByRole("group", { name: "Filing status at source review" })
     await expect(search).toBeVisible()
@@ -357,3 +359,31 @@ for (const javaScriptEnabled of [true, false]) {
     } finally { await context.close() }
   })
 }
+
+test("compact exam filters disclose on demand and recover visible controls across resize", async ({ page }) => {
+  await page.setViewportSize({ width: 384, height: 900 })
+  await page.goto("/exams/")
+  const disclosure = page.locator("[data-exam-filter-disclosure]")
+  const summary = disclosure.locator("summary")
+  const search = page.getByRole("searchbox")
+  await expect(disclosure).toBeVisible()
+  await expect(search).toBeHidden()
+  await summary.focus()
+  await page.keyboard.press("Enter")
+  await expect(search).toBeVisible()
+  await search.fill("no such announcement")
+  await summary.click()
+  await expect(search).toBeHidden()
+  await page.getByRole("button", { name: "Clear filters", exact: true }).click()
+  await expect(search).toBeFocused()
+  await expect(page.locator("[data-exam-row]:visible")).toHaveCount(3)
+  await summary.click()
+  await page.setViewportSize({ width: 1248, height: 900 })
+  await expect(search).toBeVisible()
+  await expect(summary).toBeHidden()
+  await page.setViewportSize({ width: 384, height: 900 })
+  await expect(search).toBeVisible()
+  await page.goto("/exams/?filing=plan")
+  await expect(search).toBeVisible()
+  await expect(page.locator("[data-exam-row]:visible")).toHaveCount(1)
+})

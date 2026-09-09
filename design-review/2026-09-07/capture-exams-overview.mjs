@@ -13,7 +13,7 @@ try {
     const page = await context.newPage();
     page.on('pageerror', error => errors.push(String(error)));
     await page.goto('http://127.0.0.1:4187/exams/');
-    await expect(page.getByRole('searchbox')).toBeVisible();
+    await expect(page.locator('[data-exam-filter-disclosure]')).toBeVisible();
     await page.evaluate(async () => { await document.fonts.ready; await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))); });
     await page.screenshot({ path: output + `page-${width}.png`, fullPage: true });
     captures.push({ file: `page-${width}.png`, width, fullPage: true });
@@ -35,6 +35,12 @@ try {
       await page.locator('.record-list').screenshot({ path: output + file, style: '.site-header-inner > .nav-primary, .site-header-inner > .nav-utility { opacity: 0; }' });
       captures.push({ file, width, subjectsExpanded: true });
       for (const card of await subjects.all()) await card.locator('summary').click();
+    }
+    if (width === 384) {
+      await page.getByText('Search and filter', { exact: true }).click();
+      const file = 'controls-open-384.png';
+      await page.locator('[data-exam-filter-disclosure]').screenshot({ path: output + file });
+      captures.push({ file, width, filtersExpanded: true });
     }
     for (const [status, count] of [['closed', 2], ['plan', 1], ['open', 0]]) {
       await page.locator(`[data-exam-status-filter="${status}"]`).click();

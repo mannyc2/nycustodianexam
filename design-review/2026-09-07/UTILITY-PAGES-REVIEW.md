@@ -324,3 +324,36 @@ six keyboard-disclosure checks covering JavaScript on/off. The checks verify
 all three subject names, open/closed reflow, unchanged URL, no selected record,
 and hidden compact coverage controls after resizing to desktop. Captures report
 no page errors.
+
+## Compact registry controls and footer reconciliation — September 9
+
+Search and filing filters now sit in a native Search and filter disclosure.
+It starts closed on compact first visits and remains open on desktop. A valid
+non-All filing filter restored from the URL opens it on compact screens.
+Clearing an empty result reopens the controls before focusing search. Resizing
+to desktop opens the controls and transfers focus from the disappearing summary
+to search when necessary; resizing back preserves the user's open controls.
+The result count remains outside the disclosure so a filtered list is identified
+even after the controls are collapsed. Without JavaScript the inactive controls
+and their disclosure remain hidden, while the full records remain readable.
+
+This is a documented adaptation of the compact specimen, which omits search
+and filters entirely, preserving the implemented reference-browser capability
+without placing the whole filter panel ahead of the cards. The compact footer
+also remains intentionally present: product/FEATURE_SPEC.md and product/ROUTES.md
+place Sources/trust destinations in the footer. Its compact wrapped-link layout
+retains access to those destinations and the independent/unofficial identity.
+
+Refreshed 24 overview captures, adding controls-open-384.png. Visually inspected
+the open controls, collapsed registry, and full compact page. The first-visit
+page now measures 3211px (previous 3363px; compact reference 2255px). Remaining
+height differences include retained source/review qualifications, functional
+controls, footer, and production copy. No pixel-equivalence claim is made.
+
+Validation: full build/artifact verification and both typechecks pass; all 69
+design-handoff checks pass across Chromium, Firefox, and WebKit. New regression
+coverage exercises keyboard opening, collapsed-filter empty-result recovery,
+focus restoration, desktop/compact resizing, and URL-restored filing filters.
+Existing search/filter composition, record tabs, no-JavaScript source access,
+compact subject disclosures, navigation, and reflow checks remain green. The
+updated capture script reports no page errors.

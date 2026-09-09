@@ -1139,3 +1139,14 @@
     .exam-card-coverage .exam-card-subjects > p { padding: 0 0.875rem 0.875rem; border: 0; font-size: 0.75rem; }
   }
 }
+
+@layer overrides {
+  .exam-filter-disclosure > summary { display: none; }
+  .exam-filter-disclosure > .source-note { margin-block: 0.75rem 0; }
+  @media (max-width: 47.99rem) {
+    .exam-filter-disclosure { border: var(--border-thin) solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); }
+    .exam-filter-disclosure > summary { display: list-item; padding: 0.625rem 0.875rem; min-block-size: 2.75rem; font-size: 0.875rem; cursor: pointer; }
+    .exam-filter-disclosure > .exam-search-controls { margin: 0 0.75rem; }
+    .exam-filter-disclosure > .source-note { margin: 0.75rem; padding: 0; border: 0; font-size: 0.75rem; }
+  }
+}

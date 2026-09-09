@@ -96,6 +96,7 @@ const enhanceExams = (root: HTMLElement): void => {
   const prompt = root.querySelector<HTMLElement>("[data-exam-prompt]")
   const search = root.querySelector<HTMLInputElement>("[data-exam-search]")
   const searchField = root.querySelector<HTMLElement>("[data-exam-search-field]")
+  const filterDisclosure = root.querySelector<HTMLDetailsElement>("[data-exam-filter-disclosure]")
   const count = root.querySelector<HTMLElement>("[data-exam-count]")
   const empty = root.querySelector<HTMLElement>("[data-exam-empty]")
   if (prompt === null || search === null || searchField === null || count === null || empty === null) return
@@ -178,6 +179,7 @@ const enhanceExams = (root: HTMLElement): void => {
     status = "all"
     replaceQuery("filing", null)
     filter()
+    if (filterDisclosure !== null) filterDisclosure.open = true
     search.focus()
   })
   const url = new URL(window.location.href)
@@ -187,6 +189,17 @@ const enhanceExams = (root: HTMLElement): void => {
   filter()
   if (statusGroup !== null) statusGroup.hidden = false
   searchField.hidden = false
+  if (filterDisclosure !== null) {
+    const desktop = window.matchMedia("(min-width: 48rem)")
+    filterDisclosure.open = desktop.matches || status !== "all"
+    filterDisclosure.hidden = false
+    desktop.addEventListener("change", () => {
+      if (!desktop.matches) return
+      const summaryFocused = document.activeElement === filterDisclosure.querySelector("summary")
+      filterDisclosure.open = true
+      if (summaryFocused) search.focus()
+    })
+  }
 }
 
 const atlas = document.querySelector<HTMLElement>("[data-atlas-browser]")
