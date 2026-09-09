@@ -85,3 +85,23 @@ study cards and five trust rows; compact retains the two-column study cards.
 Real destinations and qualified announcement facts remain intentional content
 differences. The extra compact information hierarchy and typography still need
 a focused reconciliation; this evidence does not certify full Home fidelity.
+
+## Compact Home trust hierarchy follow-up
+
+`home-compact-audit/` supersedes `home-final-audit/` for the current Home rendering.
+Compact Home now shows the reference's three trust topics: operator, saved data,
+and sources. Cost and exam-security rows remain on desktop; the compact hero
+still states that practice is free, and the footer retains the original-content
+qualification and links to exam security and offline use. Repeated introductory
+paragraphs above Ways to study and How this site works are omitted on compact
+Home. Source citations, uncertainty qualifications, and their disclosures remain
+available. The scope is Home only.
+
+Inspected the fresh compact trust and study-card crops: three separated trust
+rows, two-column cards, intact text, and visible links. Capture assertions verify
+three visible compact trust rows, retained footer security copy/offline link,
+44px subject targets, no horizontal overflow, and the Practice CTA destination.
+Root build/artifact verification passes. Existing Home mobile reflow/navigation
+and serious/critical axe checks pass in Chromium, Firefox, and WebKit (3 tests).
+The native-font wrapping, fuller footer, and additional source disclosures still
+differ from the supplied compact reference; full fidelity remains unproven.

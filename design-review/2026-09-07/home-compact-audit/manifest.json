@@ -1,0 +1,125 @@
+{
+  "captures": [
+    {
+      "file": "hero-1248.png",
+      "width": 1248,
+      "bounds": {
+        "x": 0,
+        "y": 57,
+        "width": 1248,
+        "height": 557.5
+      }
+    },
+    {
+      "file": "coverage-1248.png",
+      "width": 1248,
+      "bounds": {
+        "x": 40,
+        "y": 250.5,
+        "width": 1168,
+        "height": 649.359375
+      }
+    },
+    {
+      "file": "ways-1248.png",
+      "width": 1248,
+      "bounds": {
+        "x": 40,
+        "y": 179.859375,
+        "width": 1168,
+        "height": 540.984375
+      }
+    },
+    {
+      "file": "cycle-1248.png",
+      "width": 1248,
+      "bounds": {
+        "x": 40,
+        "y": 581.140625,
+        "width": 1168,
+        "height": 318.40625
+      }
+    },
+    {
+      "file": "trust-1248.png",
+      "width": 1248,
+      "bounds": {
+        "x": 40,
+        "y": 296.59375,
+        "width": 1168,
+        "height": 307.5625
+      }
+    },
+    {
+      "file": "footer-1248.png",
+      "width": 1248,
+      "bounds": {
+        "x": 40,
+        "y": 640.15625,
+        "width": 1168,
+        "height": 220.671875
+      }
+    },
+    {
+      "file": "hero-384.png",
+      "width": 384,
+      "bounds": {
+        "x": 0,
+        "y": 53,
+        "width": 384,
+        "height": 595.875
+      }
+    },
+    {
+      "file": "coverage-384.png",
+      "width": 384,
+      "bounds": {
+        "x": 16,
+        "y": 292.875,
+        "width": 352,
+        "height": 607.28125
+      }
+    },
+    {
+      "file": "ways-384.png",
+      "width": 384,
+      "bounds": {
+        "x": 16,
+        "y": 258.15625,
+        "width": 352,
+        "height": 383.234375
+      }
+    },
+    {
+      "file": "cycle-384.png",
+      "width": 384,
+      "bounds": {
+        "x": 16,
+        "y": 679.203125,
+        "width": 352,
+        "height": 221.09375
+      }
+    },
+    {
+      "file": "trust-384.png",
+      "width": 384,
+      "bounds": {
+        "x": 16,
+        "y": 320.6875,
+        "width": 352,
+        "height": 259.265625
+      }
+    },
+    {
+      "file": "footer-384.png",
+      "width": 384,
+      "bounds": {
+        "x": 16,
+        "y": 466.953125,
+        "width": 352,
+        "height": 432.765625
+      }
+    }
+  ],
+  "errors": []
+}

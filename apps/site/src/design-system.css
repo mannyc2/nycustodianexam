@@ -1012,3 +1012,11 @@
     .home-areas-section .home-scope-row > a::after { content: " →"; }
   }
 }
+
+@layer overrides {
+  @media (max-width: 47.99rem) {
+    .home-page .home-trust-list > .home-trust-ample { display: none; }
+    .home-page section[aria-labelledby="home-trust"] .section-header > p,
+    .home-page section[aria-labelledby="home-ways"] .section-header > p { display: none; }
+  }
+}
