@@ -480,18 +480,56 @@ export const generatePrintManifest = ({
   })
 }
 
+// Estimate the assembled hazard packet, including optional retained source text.
+// This is not browser pagination: fonts and fragmentation can change the result.
+export const finalizePrintJob = (
+  manifest: PrintJobManifest,
+  packet: PrintPacketV3
+): GeneratedPrintJob => {
+  const section = packet.sections[0]
+  const large = manifest.settings.printSize === "large"
+  const capacity = (large ? 1000 : 2400) * (manifest.settings.margin === "wide" ? 0.85 : 1)
+  let pages = 1 // Metadata precedes hazard content on its own sheet.
+  if (section?.tag === "hazard-worksheet") {
+    pages += section.scenes.length * (large ? 2 : 1)
+  } else if (section?.tag === "annotated-hazard-answers" || section?.tag === "text-equivalent-scenes") {
+    for (const scene of section.scenes) {
+      const answer = scene.answer
+      if (!("schemaVersion" in answer)) return { manifest, packet }
+      const claims = new Map(answer.claims.map(claim => [claim.id, claim.text]))
+      const feedback = [
+        ...answer.targets.flatMap(target => [target.observableCondition,
+          claims.get(target.whyUnsafeClaimId), claims.get(target.likelyConsequenceClaimId),
+          claims.get(target.immediateCorrectionClaimId)]),
+        ...answer.decoys.flatMap(decoy => [decoy.observableCondition, decoy.suspiciousBecause,
+          claims.get(decoy.safeAsDepictedClaimId), claims.get(decoy.unsafeIfClaimId)]),
+        ...answer.safeBackground.map(detail => detail.observableCondition),
+        ...answer.claims.map(claim => claim.text + (claim.caveat ?? ""))
+      ].join(" ")
+      const imagePage = section.tag === "annotated-hazard-answers" && "asset" in scene && scene.asset !== null ? 1 : 0
+      pages += imagePage + Math.max(1, Math.ceil((feedback.length + 400) / capacity))
+      if (manifest.settings.includeSources) {
+        // Each source has a heading, excerpt, scope, URL and technical receipt;
+        // keep it together when it fits, as the print stylesheet does.
+        pages += Math.ceil(answer.sources.reduce((total, source) =>
+          total + Math.max(large ? 1 : 0.5,
+            Object.values(source).filter(value => typeof value === "string").join(" ").length / capacity), 0))
+      }
+    }
+  } else return { manifest, packet }
+  const updated = { ...manifest, pageCount: pages }
+  return { manifest: new PrintJobManifest({ ...updated, fingerprint: computePrintManifestFingerprint(updated) }), packet }
+}
+
 export const generatePrintJob = (input: GeneratePrintJobInput): GeneratedPrintJob => {
   const manifest = generatePrintManifest(input)
-  return {
-    manifest,
-    packet: makePrintPacket(
+  return finalizePrintJob(manifest, makePrintPacket(
       manifest,
       input.bootstrap,
       input.answers ?? [],
       input.sceneAnswers ?? [],
       input.retainedAssets ?? []
-    )
-  }
+    ))
 }
 
 export const makePrintPacket = (

@@ -7,6 +7,7 @@ import {
 } from "./answers.ts"
 import {
   generatePrintManifest,
+  finalizePrintJob,
   makePrintPacket,
 } from "./generation.ts"
 import {
@@ -68,7 +69,7 @@ const renderPacket = (
   sceneAnswers: Parameters<typeof makePrintPacket>[3],
   retainedAssets: Parameters<typeof makePrintPacket>[4]
 ) => Effect.try({
-  try: () => makePrintPacket(manifest, bootstrap, answers, sceneAnswers, retainedAssets),
+  try: () => finalizePrintJob(manifest, makePrintPacket(manifest, bootstrap, answers, sceneAnswers, retainedAssets)),
   catch: (cause) => new PrintWorkflowGenerationError({
     detail: cause instanceof Error && cause.message.length > 0
       ? cause.message
@@ -162,7 +163,7 @@ export const createPrintJob = Effect.fn("PrintWorkflow.createPrintJob")(function
     ? yield* loadPrintSceneAnswers(selectedScenes)
     : []
   const retainedAssets = yield* retainAssets(manifest.assets)
-  const packet = yield* renderPacket(
+  const generated = yield* renderPacket(
     manifest,
     input.bootstrap,
     answers,
@@ -170,7 +171,7 @@ export const createPrintJob = Effect.fn("PrintWorkflow.createPrintJob")(function
     retainedAssets
   )
   const persistence = yield* PrintPersistence
-  return yield* persistence.savePrintJob({ id: input.id, manifest, packet })
+  return yield* persistence.savePrintJob({ id: input.id, ...generated })
 })
 
 export const restorePrintJob = Effect.fn("PrintWorkflow.restorePrintJob")(function*(id: string) {

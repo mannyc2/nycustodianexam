@@ -1,0 +1,288 @@
+{
+  "captures": [
+    {
+      "id": "letter-hazard-worksheet",
+      "product": "Blank hazard worksheet",
+      "count": 2,
+      "large": false,
+      "paper": "us-letter",
+      "typography": {
+        "headings": [
+          {
+            "text": "Blank hazard worksheet",
+            "pixels": 38.995
+          },
+          {
+            "text": "Blank hazard worksheet",
+            "pixels": 29.477
+          },
+          {
+            "text": "Scene 1: hallway/common area",
+            "pixels": 23.7115
+          },
+          {
+            "text": "Scene 2: classroom",
+            "pixels": 23.7115
+          }
+        ],
+        "urls": []
+      },
+      "images": 2,
+      "pages": 3,
+      "pageSize": "612 x 792 pts (letter)",
+      "searchableText": true,
+      "backgrounds": false
+    },
+    {
+      "id": "letter-hazard-answers",
+      "product": "Annotated hazard-answer packet",
+      "count": 2,
+      "large": false,
+      "paper": "us-letter",
+      "typography": {
+        "headings": [
+          {
+            "text": "Annotated hazard-answer packet",
+            "pixels": 38.995
+          },
+          {
+            "text": "Annotated hazard-answer packet",
+            "pixels": 29.477
+          },
+          {
+            "text": "Scene 1: hallway/common area",
+            "pixels": 23.7115
+          },
+          {
+            "text": "Conditions needing correction",
+            "pixels": 19.959
+          },
+          {
+            "text": "Details that are safe as shown",
+            "pixels": 19.959
+          },
+          {
+            "text": "Safe background details",
+            "pixels": 19.959
+          },
+          {
+            "text": "Evidence claims",
+            "pixels": 19.959
+          },
+          {
+            "text": "Where this comes from",
+            "pixels": 19.959
+          },
+          {
+            "text": "Scene 2: classroom",
+            "pixels": 23.7115
+          },
+          {
+            "text": "Conditions needing correction",
+            "pixels": 19.959
+          },
+          {
+            "text": "Details that are safe as shown",
+            "pixels": 19.959
+          },
+          {
+            "text": "Safe background details",
+            "pixels": 19.959
+          },
+          {
+            "text": "Evidence claims",
+            "pixels": 19.959
+          },
+          {
+            "text": "Where this comes from",
+            "pixels": 19.959
+          }
+        ],
+        "urls": [
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16
+        ]
+      },
+      "images": 2,
+      "pages": 11,
+      "pageSize": "612 x 792 pts (letter)",
+      "searchableText": true,
+      "backgrounds": false
+    },
+    {
+      "id": "a4-hazard-answers-large",
+      "product": "Annotated hazard-answer packet",
+      "count": 2,
+      "large": true,
+      "paper": "a4",
+      "typography": {
+        "headings": [
+          {
+            "text": "Annotated hazard-answer packet",
+            "pixels": 36
+          },
+          {
+            "text": "Annotated hazard-answer packet",
+            "pixels": 30
+          },
+          {
+            "text": "Scene 1: hallway/common area",
+            "pixels": 27
+          },
+          {
+            "text": "Conditions needing correction",
+            "pixels": 24
+          },
+          {
+            "text": "Details that are safe as shown",
+            "pixels": 24
+          },
+          {
+            "text": "Safe background details",
+            "pixels": 24
+          },
+          {
+            "text": "Evidence claims",
+            "pixels": 24
+          },
+          {
+            "text": "Where this comes from",
+            "pixels": 24
+          },
+          {
+            "text": "Scene 2: classroom",
+            "pixels": 27
+          },
+          {
+            "text": "Conditions needing correction",
+            "pixels": 24
+          },
+          {
+            "text": "Details that are safe as shown",
+            "pixels": 24
+          },
+          {
+            "text": "Safe background details",
+            "pixels": 24
+          },
+          {
+            "text": "Evidence claims",
+            "pixels": 24
+          },
+          {
+            "text": "Where this comes from",
+            "pixels": 24
+          }
+        ],
+        "urls": [
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24,
+          24
+        ]
+      },
+      "images": 2,
+      "pages": 19,
+      "pageSize": "594.96 x 841.92 pts (A4)",
+      "searchableText": true,
+      "backgrounds": false
+    },
+    {
+      "id": "a4-hazard-text",
+      "product": "Text-equivalent/nonvisual set",
+      "title": "Text-equivalent hazard set",
+      "count": 2,
+      "large": false,
+      "paper": "a4",
+      "typography": {
+        "headings": [
+          {
+            "text": "Text-equivalent hazard set",
+            "pixels": 38.995
+          },
+          {
+            "text": "Text-equivalent/nonvisual hazard set",
+            "pixels": 29.477
+          },
+          {
+            "text": "Scene 1: hallway/common area",
+            "pixels": 23.7115
+          },
+          {
+            "text": "Conditions needing correction",
+            "pixels": 19.959
+          },
+          {
+            "text": "Details that are safe as shown",
+            "pixels": 19.959
+          },
+          {
+            "text": "Safe background details",
+            "pixels": 19.959
+          },
+          {
+            "text": "Evidence claims",
+            "pixels": 19.959
+          },
+          {
+            "text": "Where this comes from",
+            "pixels": 19.959
+          },
+          {
+            "text": "Scene 2: classroom",
+            "pixels": 23.7115
+          },
+          {
+            "text": "Conditions needing correction",
+            "pixels": 19.959
+          },
+          {
+            "text": "Details that are safe as shown",
+            "pixels": 19.959
+          },
+          {
+            "text": "Safe background details",
+            "pixels": 19.959
+          },
+          {
+            "text": "Evidence claims",
+            "pixels": 19.959
+          },
+          {
+            "text": "Where this comes from",
+            "pixels": 19.959
+          }
+        ],
+        "urls": [
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16
+        ]
+      },
+      "images": 0,
+      "pages": 9,
+      "pageSize": "594.96 x 841.92 pts (A4)",
+      "searchableText": true,
+      "backgrounds": false
+    }
+  ],
+  "errors": []
+}

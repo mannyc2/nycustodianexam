@@ -1161,6 +1161,23 @@ describe("deterministic print generation", () => {
     expect(JSON.stringify(text.packet)).not.toContain("data:image")
   })
 
+  it("estimates retained hazard sources after assembly without changing selected scenes", () => {
+    const make = (includeSources: boolean, printSize: "normal" | "large") => generatePrintJob({
+      bootstrap,
+      settings: new PrintSettings({ ...settings("annotated-hazard-answer-packet", 1), includeImages: true, includeSources, printSize }),
+      sceneAnswers,
+      retainedAssets
+    })
+    const plain = make(false, "normal")
+    const sourced = make(true, "normal")
+    const large = make(true, "large")
+    expect(sourced.manifest.pageCount).toBeGreaterThan(plain.manifest.pageCount)
+    expect(large.manifest.pageCount).toBeGreaterThanOrEqual(sourced.manifest.pageCount)
+    expect(sourced.manifest.itemIds).toEqual(plain.manifest.itemIds)
+    expect(sourced.manifest.actualLength).toBe(1)
+    expect(make(true, "normal")).toEqual(sourced)
+  })
+
   it("uses a human hazard-region title instead of an inventory identifier", () => {
     const configured = new PrintSettings({
       ...settings("annotated-hazard-answer-packet", 1),

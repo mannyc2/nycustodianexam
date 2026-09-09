@@ -160,3 +160,42 @@ fresh Chromium capture assertions and actual PDF inspection.
 Source-inclusive hazard page estimation remains unfinished. Other large-print
 product PDFs need refreshing during final integrated print validation because
 the heading rule applies to all print products.
+
+
+## Source-aware hazard estimates
+
+Hazard page estimates are finalized after the verified packet is assembled and
+before it is durably saved. Selection still uses the original deterministic
+manifest; finalization changes only pageCount and its covering fingerprint.
+Existing retained jobs validate their own stored values and are not rewritten.
+The same finalizer serves the pure generator and runtime workflow.
+
+The estimate includes a metadata sheet, image pages, the selected feedback text,
+optional source records, large-print size, and margin choice. It approximates
+layout rather than querying browser pagination. Source records have a minimum
+space allowance because print CSS keeps each together when it fits. Other print
+products retain their existing estimates.
+
+`print-hazard-estimate-output/` contains fresh packets and per-page verification.
+For this paired two-scene example, estimated/observed counts are 3/3 worksheet,
+11/11 normal answers, 19/19 large answers, and 9/9 text equivalents. This does
+not establish exact prediction for every scene combination or browser. The
+previous typography captures remain visual evidence for the unchanged content
+layout; current metadata counts and fingerprints are updated. All current PDF
+text-boundary/collision checks pass.
+
+The new generation test verifies optional sources affect the estimate, large
+print never reduces this fixture's count, selected IDs stay unchanged, and
+repeated generation is deterministic. All 34 generation tests and five workspace
+typechecks pass. Root build/artifact checks pass with a bounded Settings-only
+allowance of 487500 raw / 146750 gzip / 123500 Brotli bytes; current measured
+Settings is 487309 / 146591 / 123099. Shared generation grew 1162 raw bytes.
+Moving the estimator to another module did not isolate that closure, so no
+unhelpful module split was retained. Other island budgets remain unchanged.
+
+The three-browser print run passed 26 checks; the remaining Chromium test hit
+an HTTP navigation failure while build output was being replaced. Its isolated
+rerun against stable output is recorded separately below.
+
+The isolated Chromium hazard-product rerun passed (1/1). All 27 print checks
+therefore passed across the original run and the stable-output rerun.
