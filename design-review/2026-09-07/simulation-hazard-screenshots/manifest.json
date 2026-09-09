@@ -1,0 +1,33 @@
+{
+  "captures": [
+    {
+      "width": 1008,
+      "mode": "visual",
+      "submitted": 1,
+      "flagged": 1,
+      "restoredBeforeSubmission": true
+    },
+    {
+      "width": 1008,
+      "mode": "keyboard",
+      "submitted": 1,
+      "flagged": 1,
+      "restoredBeforeSubmission": true
+    },
+    {
+      "width": 384,
+      "mode": "visual",
+      "submitted": 1,
+      "flagged": 1,
+      "restoredBeforeSubmission": true
+    },
+    {
+      "width": 384,
+      "mode": "keyboard",
+      "submitted": 1,
+      "flagged": 1,
+      "restoredBeforeSubmission": true
+    }
+  ],
+  "errors": []
+}
