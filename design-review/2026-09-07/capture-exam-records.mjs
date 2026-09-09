@@ -13,6 +13,7 @@ try {
     const page = await context.newPage();
     page.on('pageerror', error => errors.push(String(error)));
     await page.goto('http://127.0.0.1:4187/exams/');
+    await page.evaluate(() => document.fonts.ready);
     const storageBefore = await page.evaluate(() => JSON.stringify({ ...localStorage }));
     const choices = page.locator('[data-exam-choice]');
     for (let index = 0; index < await choices.count(); index++) {

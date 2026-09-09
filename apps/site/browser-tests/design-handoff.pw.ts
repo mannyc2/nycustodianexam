@@ -1,3 +1,4 @@
+import catalog from "../../../content/releases/vertical-slice/catalog.json" with { type: "json" }
 import AxeBuilder from "@axe-core/playwright"
 import { expect, test, type Page } from "@playwright/test"
 
@@ -262,4 +263,57 @@ test("filing filters compose with search, restore from the URL, and never select
   await expect(page.locator("[data-exam-prompt]")).toBeHidden()
   await expectPageReflow(page)
   expect(await page.evaluate(() => JSON.stringify({ ...localStorage }))).toBe(before)
+})
+
+
+test("exam controls align on desktop and compact records omit the empty selection panel", async ({ page }) => {
+  for (const width of [1248, 384]) {
+    await page.setViewportSize({ width, height: 900 })
+    await page.goto("/exams/")
+    const search = page.getByRole("searchbox")
+    const filters = page.getByRole("group", { name: "Filing status at source review" })
+    await expect(search).toBeVisible()
+    const searchBox = (await search.boundingBox())!
+    const filterBox = (await filters.boundingBox())!
+    if (width === 1248) expect(Math.abs(searchBox.y - filterBox.y)).toBeLessThan(10)
+    else {
+      expect(filterBox.y).toBeGreaterThan(searchBox.y + searchBox.height)
+      await expect(page.locator("[data-exam-prompt]")).toBeHidden()
+    }
+    await page.locator("[data-exam-choice]").first().click()
+    const panel = page.locator("[data-exam-panel]:visible")
+    await expect(panel.locator(".fact-table details")).toHaveCount(0)
+    await expect(panel.locator(".record-source-trail")).toHaveCount(1)
+    await panel.getByText("Sources for this record", { exact: true }).click()
+    await expect(panel.locator(".record-fact-sources")).toBeVisible()
+    await expectPageReflow(page)
+  }
+})
+
+test("every announcement fact keeps its exact source excerpt without JavaScript", async ({ browser, baseURL }) => {
+  if (baseURL === undefined) throw new Error("Browser base URL is required")
+  const context = await browser.newContext({ baseURL, javaScriptEnabled: false, viewport: { width: 384, height: 900 } })
+  try {
+    const page = await context.newPage()
+    await page.goto("/exams/")
+    const facts = catalog.profiles.flatMap(profile => profile.announcementFactSheet?.facts ?? [])
+    const expectedSourceRows = catalog.profiles.reduce((total, profile) => total + profile.examIdentities.reduce((count, identity) => count + (profile.announcementFactSheet?.facts.filter(fact => fact.state !== "superseded" && fact.appliesToExamNumbers.includes(identity.examNumber)).length ?? 0), 0), 0)
+    expect(expectedSourceRows).toBeGreaterThan(0)
+    await expect(page.locator("[data-source-fact]")).toHaveCount(expectedSourceRows)
+    const panels = page.locator("[data-exam-panel]")
+    for (const panel of await panels.all()) {
+      await panel.getByText("Sources for this record", { exact: true }).click()
+      for (const row of await panel.locator("[data-source-fact]").all()) {
+        const id = await row.getAttribute("data-source-fact")
+        const fact = facts.find(fact => fact.id === id)!
+        expect(fact).toBeDefined()
+        await expect(row.locator("dt")).toHaveText(fact.label)
+        for (const lineId of new Set([...fact.sourceLineIds, ...(fact.conflictingValues as ReadonlyArray<{ sourceLineIds: readonly string[] }>).flatMap(value => value.sourceLineIds)])) {
+          const line = catalog.sourceLines.find(line => line.id === lineId)!
+          await expect(row).toContainText(line.excerpt)
+          await expect(row).toContainText(line.locator)
+        }
+      }
+    }
+  } finally { await context.close() }
 })

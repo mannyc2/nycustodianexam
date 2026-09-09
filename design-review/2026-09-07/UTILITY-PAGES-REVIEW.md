@@ -229,3 +229,32 @@ and full build/artifact verification pass. The focused no-JavaScript scroll test
 passes across Chromium, Firefox, and WebKit after the scroll-padding correction.
 The complete shared-navigation/design-handoff browser suite passes after the
 shared scroll-padding change: 54 checks across all three browsers.
+
+## Exams record-source consolidation — September 9
+
+Desktop search and filing controls now share one row; compact controls stack.
+The empty choose-an-entry prompt is suppressed only at compact widths. Record
+facts no longer repeat technical disclosures. One Sources for this record
+disclosure follows both tab panels, retaining each applicable fact's label,
+review date, source excerpt, locator, and conflict-source links. The statewide
+plan retains its full subject-plan support. Exam/profile metadata remains in
+that disclosure. Reading records still does not select a study exam.
+
+Refreshed all 12 record/tab captures and the 20-state overview capture set.
+Visually inspected the first desktop record panel and full desktop record-open
+and compact first-visit pages against references 09/10 at 1248/384 CSS widths.
+The desktop full page is now 3065px tall (reference 2907px); compact first visit
+is 3505px (reference 2255px). These are observations, not fidelity certification.
+The three preceding layout issues are resolved. Further work remains: compact
+search/status/count copy and footer make the page longer than the reference,
+and its “How the real test works” section is absent. Review those differences
+against the maintained facts before adding any official-format assertions.
+Real jurisdiction restrictions and unconfirmed administration remain intact.
+
+Validation: full build/artifact verification passes (939 routes, 222 published
+item artifacts, 291 byte-identical assets); site and browser typechecks pass;
+25 generation/filing/timeline unit tests pass; all 60 design-handoff browser
+checks pass across Chromium, Firefox, and WebKit. New checks verify desktop
+control alignment, compact prompt suppression, expanded-source reflow, and
+nonzero exact fact-source row counts plus every referenced excerpt/locator
+without JavaScript. Capture scripts reported no page errors.

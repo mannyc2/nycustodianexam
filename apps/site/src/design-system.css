@@ -1093,3 +1093,17 @@
     .exams-cycle-summary .timeline-item-warning time { font-weight: 700; }
   }
 }
+
+
+@layer overrides {
+  .exam-search-controls { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-3); align-items: center; }
+  .exam-search-controls:not(:has(> :not([hidden]))) { display: none; }
+  .exam-search-controls .filter-group { margin: 0; }
+  .record-fact-sources { display: grid; gap: var(--space-5); }
+  .record-fact-sources dt { font-weight: var(--weight-bold); }
+  .record-fact-sources dd { margin: var(--space-2) 0 0; }
+  @media (max-width: 47.99rem) {
+    .exam-search-controls { grid-template-columns: minmax(0, 1fr); }
+    .exams-page [data-exam-prompt] { display: none; }
+  }
+}
