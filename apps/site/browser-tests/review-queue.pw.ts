@@ -1,6 +1,7 @@
 import { expect, test, type Page } from "@playwright/test"
 import {
   appDatabaseName,
+  appDatabaseVersion,
   appDatabaseStores
 } from "../src/study-storage/app-database.ts"
 import {
@@ -20,11 +21,11 @@ const optionIds = [
   "d"
 ] as const
 
-const seedQuestionAttempt = (page: Page, attempt: StoredAttempt): Promise<void> =>
+const seedQuestionAttempt = (page: Page, attempt: StoredAttempt, version = 2): Promise<void> =>
   page.evaluate(
-    ({ databaseName, record, stores }) =>
+    ({ databaseName, record, stores, version }) =>
       new Promise<void>((resolve, reject) => {
-        const request = indexedDB.open(databaseName, 2)
+        const request = indexedDB.open(databaseName, version)
         request.onupgradeneeded = () => {
           for (const storeName of stores) {
             if (!request.result.objectStoreNames.contains(storeName)) {
@@ -54,6 +55,7 @@ const seedQuestionAttempt = (page: Page, attempt: StoredAttempt): Promise<void> 
     {
       databaseName: appDatabaseName,
       record: attempt,
+      version,
       stores: Object.values(appDatabaseStores)
     }
   )
@@ -151,4 +153,26 @@ test.describe("review history when feedback becomes unavailable", () => {
     await expect(activity.locator(".history-row")).toContainText("Review finished")
     await expect(activity.locator(".history-row").getByRole("link")).toHaveCount(0)
   })
+
+  test("finishing the last available review focuses remaining unavailable records", async ({ page }) => {
+    await gotoReadyQuestion(page)
+    for (let position = 1; position <= 2; position += 1) {
+      await page.getByRole("button", { name: "Flag for review", exact: true }).click()
+      await page.getByRole("radio").first().check()
+      await page.getByRole("button", { name: "Save answer", exact: true }).click()
+      await expect(page.locator(".feedback-rationales")).toBeVisible()
+      if (position === 1) await page.getByRole("link", { name: "Next question", exact: true }).click()
+    }
+    const saved = await readStoredAttempt(page)
+    expect(saved).toBeDefined()
+    await seedQuestionAttempt(page, { ...saved!, receipt: { ...saved!.receipt, postcommitSha256: "f".repeat(64) } }, appDatabaseVersion)
+    await page.goto("/review/")
+    await expect(page.getByRole("heading", { name: "1 item to review", exact: true })).toBeVisible()
+    await page.getByRole("button", { name: "Finish review", exact: true }).click()
+    await page.getByRole("button", { name: "Confirm finish review", exact: true }).click()
+    await expect(page.getByRole("heading", { name: "0 items to review", exact: true })).toBeVisible()
+    await expect(page.getByRole("heading", { name: "Unavailable saved attempts", exact: true })).toBeFocused()
+    await expect(page.getByRole("region", { name: "Review history", exact: true }).getByRole("listitem")).toHaveCount(1)
+  })
+
 })

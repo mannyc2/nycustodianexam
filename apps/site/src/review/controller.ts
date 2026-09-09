@@ -1,3 +1,4 @@
+import { makeScreenStore, type ScreenSnapshot } from "../screen/store.ts"
 import type { Effect } from "effect"
 import type { HazardPersistence } from "../hazard-player/persistence.ts"
 import type { QuestionPersistence } from "../question-player/persistence.ts"
@@ -31,15 +32,13 @@ export type ReviewCommand =
   | { readonly tag: "retry" }
   | { readonly tag: "rebuild" }
 
-export interface ReviewControllerSnapshot {
-  readonly state: ReviewQueueState
-  readonly revision: number
-}
+export type ReviewControllerSnapshot = ScreenSnapshot<ReviewQueueState, "error" | "queue" | "empty">
 
 export interface ReviewController {
   readonly getSnapshot: () => ReviewControllerSnapshot
   readonly getHydrationSnapshot: () => ReviewControllerSnapshot
   readonly subscribe: (listener: () => void) => () => void
+  readonly acknowledgeRequest: (requestId: string) => void
   readonly dispatch: (command: ReviewCommand) => void
   readonly start: () => void
   readonly dispose: () => void
@@ -59,21 +58,13 @@ export const createReviewController = (
   bootstrap: ReviewQueueBootstrap,
   runtime: ReviewEffectRunner
 ): ReviewController => {
-  const hydrationSnapshot: ReviewControllerSnapshot = {
-    state: { tag: "loading", action: "initial" },
-    revision: 0
-  }
-  let snapshot = hydrationSnapshot
+  const screen = makeScreenStore<ReviewQueueState, "error" | "queue" | "empty">({
+    initialState: { tag: "loading", action: "initial" }, requestIdPrefix: "review-"
+  })
   let active = true
   let started = false
   let operationToken = 0
-  const listeners = new Set<() => void>()
-
-  const publish = (state: ReviewQueueState): void => {
-    if (!active) return
-    snapshot = { state, revision: snapshot.revision + 1 }
-    listeners.forEach((listener) => listener())
-  }
+  const publish = screen.publish
 
   const load = (
     action: "initial" | "retry" | "rebuild",
@@ -92,7 +83,8 @@ export const createReviewController = (
                 items: projection.items,
                 quarantined: projection.quarantined,
                 acknowledgingItemId: null
-              }
+              },
+          emptyOrigin === "acknowledgement" ? { focus: projection.items.length === 0 && projection.quarantined.length === 0 ? "empty" : "queue" } : undefined
         )
       },
       (error: ReviewProjectionError) => {
@@ -103,13 +95,13 @@ export const createReviewController = (
           detail: errorDetail(error, "load"),
           items: [],
           quarantined: []
-        })
+        }, { focus: "error" })
       }
     )
   }
 
   const acknowledge = (itemId: string): void => {
-    const state = snapshot.state
+    const state = screen.getSnapshot().state
     if (state.tag !== "ready" || state.acknowledgingItemId !== null) return
     const item = state.items.find((candidate) => candidate.id === itemId)
     if (item === undefined) return
@@ -129,19 +121,18 @@ export const createReviewController = (
           detail: errorDetail(error, "acknowledge"),
           items: state.items,
           quarantined: state.quarantined
-        })
+        }, { focus: "error" })
       }
     )
   }
 
   return {
-    getSnapshot: () => snapshot,
-    getHydrationSnapshot: () => hydrationSnapshot,
-    subscribe: (listener) => {
-      listeners.add(listener)
-      return () => listeners.delete(listener)
-    },
+    getSnapshot: screen.getSnapshot,
+    getHydrationSnapshot: screen.getHydrationSnapshot,
+    subscribe: screen.subscribe,
+    acknowledgeRequest: screen.acknowledgeRequest,
     dispatch: (command) => {
+      if (!active) return
       switch (command.tag) {
         case "acknowledge":
           acknowledge(command.itemId)
@@ -155,14 +146,14 @@ export const createReviewController = (
       }
     },
     start: () => {
-      if (started) return
+      if (started || !active) return
       started = true
       load("initial")
     },
     dispose: () => {
       active = false
       operationToken += 1
-      listeners.clear()
+      screen.dispose()
     }
   }
 }

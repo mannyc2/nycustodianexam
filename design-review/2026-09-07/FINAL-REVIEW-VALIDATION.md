@@ -33,3 +33,12 @@ The root `bun run verify` run passed toolchain, maintained layout (284 files), m
 The root command exited 1 at its final historical packet validator because a `git` subprocess returned sandbox `EPERM`. The exact unchanged validator was then rerun outside that sandbox and exited 0: four reviews, 41 sources, 19 promoted rules, seven unresolved rules and 61 mutation checks. This is a successful separate recheck of the final gate, not a single exit-0 root invocation. Transient logs: `/tmp/nyc-current-integrated-verify.log` and `/tmp/nyc-current-packet-recheck.log`.
 
 No browser suite was included in this run. Existing browser evidence retains its recorded revision and scope. The certification record remains valid and blocked, and the historical packet explicitly excludes the current implementation from its evidence scope.
+
+
+## Combined component checkpoint at 6bc18ea
+
+The integrated run after explicit question feedback/controls, shared question bodies, Simulation player/results providers and the setup controller passed all application gates: exact toolchain, layout (291 files), boundaries (151 modules), visual/content checks, five workspace typechecks, browser-test typecheck, 473 unit/integration tests (content 103, intake 3, compiler 15, correction worker 8, site 344), production build and artifact/bundle invariants. Output is 1,352 route documents, 224 item-scoped artifacts, 291 byte-identical assets and 60 safe shell URLs. Every island remains within its byte budget.
+
+The root command again exited 1 solely at the historical packet validator's sandbox-denied `git` subprocess (`EPERM`). The exact unchanged validator then passed separately outside that sandbox. Logs: `/tmp/nyc-component-integrated-verify.log`, `/tmp/nyc-component-packet-recheck.log`. This is not an exit-0 root invocation. Historical packet scope and blocked production certification remain unchanged.
+
+Browser verification remains separately recorded in QUESTION-COMPOSITION-AUDIT.md: the final setup controller passed all 27 Simulation cases; earlier question control/body changes have their own passing targeted suites. No new broad browser sweep or full visual acceptance is implied by this integrated checkpoint.

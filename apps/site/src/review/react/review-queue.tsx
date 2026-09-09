@@ -1,9 +1,7 @@
-import { useEffect, useRef, useState, useSyncExternalStore } from "react"
+import { ReviewQueueProvider, useReviewQueue, scopes, type ReviewProviderProps } from "./provider.tsx"
+import { useEffect, useRef, useState } from "react"
 import { ActivityHistory } from "../../study/react/history.tsx"
 import { UnavailableAttempts } from "../../study/react/unavailable-attempts.tsx"
-import { includeUnavailableReviews } from "../../study/activity.ts"
-import type { StudyActivityState } from "../../study/model.ts"
-import type { ReviewController } from "../controller.ts"
 import type { ReviewQueueItem, ReviewReason } from "../model.ts"
 
 const savedDateFormat = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" })
@@ -81,64 +79,19 @@ const ReviewItem = ({
         </li>
 }
 
-type ReviewScope = "all" | "missed" | "flagged"
-const scopes: ReadonlyArray<{ readonly id: ReviewScope; readonly label: string }> = [
-  { id: "all", label: "All" }, { id: "missed", label: "Missed" }, { id: "flagged", label: "Flagged" }
-]
-const inScope = (item: ReviewQueueItem, scope: ReviewScope): boolean =>
-  scope === "all" || item.reasons.some((reason) => scope === "flagged" ? reason.tag === "flag" : reason.tag !== "flag")
+export const ReviewQueueIsland = (props: ReviewProviderProps) => <ReviewQueueProvider {...props}><ReviewQueueView /></ReviewQueueProvider>
 
-export const ReviewQueueIsland = ({ controller, activityState, onRetryHistory }: {
-  readonly controller: ReviewController
-  readonly activityState: StudyActivityState
-  readonly onRetryHistory: () => void
-}) => {
-  const snapshot = useSyncExternalStore(controller.subscribe, controller.getSnapshot, controller.getHydrationSnapshot)
-  const state = snapshot.state
-  const [scope, setScope] = useState<ReviewScope>("all")
-  const errorHeadingRef = useRef<HTMLHeadingElement>(null)
-  const emptyHeadingRef = useRef<HTMLHeadingElement>(null)
-  const filteredHeadingRef = useRef<HTMLHeadingElement>(null)
-  const queueHeadingRef = useRef<HTMLHeadingElement>(null)
-  const acknowledgementFocusId = useRef<string | null>(null)
-  const focusError = state.tag === "recoverable_error"
-  const focusCompletedEmpty = state.tag === "empty" && state.origin === "acknowledgement"
-  const items = state.tag === "ready" || state.tag === "recoverable_error" ? state.items : []
-  const filtered = items.filter((item) => inScope(item, scope))
-  const filteredEmpty = state.tag === "ready" && items.length > 0 && filtered.length === 0
-  const missed = items.filter((item) => inScope(item, "missed")).length
-  const flagged = items.filter((item) => inScope(item, "flagged")).length
-  const busy = state.tag === "ready" && state.acknowledgingItemId !== null
-  const quarantined = state.tag === "ready" || state.tag === "recoverable_error" ? state.quarantined : []
-  const historyState = activityState.tag === "ready"
-    ? { tag: "ready" as const, activity: includeUnavailableReviews(activityState.activity, quarantined) }
-    : activityState
-
-  const unavailableAttempts = historyState.tag === "ready" ? historyState.activity.unavailableAttempts : quarantined.map((entry) => ({ id: entry.attemptId, recordedAt: entry.committedAt ?? null, label: entry.kind === "question" ? "Question attempt" : "Visual hazard attempt" }))
-
-  useEffect(() => { if (focusError) errorHeadingRef.current?.focus() }, [focusError])
-  useEffect(() => { if (focusCompletedEmpty) emptyHeadingRef.current?.focus() }, [focusCompletedEmpty])
-  useEffect(() => { if (filteredEmpty) filteredHeadingRef.current?.focus() }, [filteredEmpty])
-  useEffect(() => {
-    const pendingId = acknowledgementFocusId.current
-    if (pendingId === null || state.tag === "loading" || (state.tag === "ready" && state.acknowledgingItemId !== null)) return
-    if (state.tag === "ready" && !state.items.some((item) => item.id === pendingId)) {
-      acknowledgementFocusId.current = null
-      if (filtered.length > 0) queueHeadingRef.current?.focus()
-    } else if (state.tag === "empty" || state.tag === "recoverable_error") {
-      acknowledgementFocusId.current = null
-    }
-  }, [state, filtered.length])
-
-  return <div className="review-page">
+export const ReviewHeader = () => {
+  const { state: { queue: state, items, missed, flagged, unavailableAttempts }, actions, meta: { errorHeadingRef } } = useReviewQueue()
+  return <>
     {state.tag === "recoverable_error" ? <section className="review-state review-error" aria-labelledby="review-error-heading" role="alert">
       <h1 id="review-error-heading" ref={errorHeadingRef} tabIndex={-1}>{state.operation === "acknowledge" ? "Your finished review was not saved" : "Review queue could not be built"}</h1>
       <p>{state.operation === "acknowledge" ? "The change could not be written to this device's storage. The item stays in your queue." : "Your saved attempts could not be read from this device's storage."}</p>
       <p><strong>No saved attempt was deleted or replaced.</strong></p>
       {state.detail.length === 0 ? null : <details className="feedback-sources"><summary>Technical details</summary><p>{state.detail}</p></details>}
       <div className="question-controls">
-        <button className="button button-primary" onClick={() => controller.dispatch({ tag: "retry" })} type="button">Retry</button>
-        <button className="button button-secondary" onClick={() => controller.dispatch({ tag: "rebuild" })} type="button">Rebuild review queue</button>
+        <button className="button button-primary" onClick={() => actions.retry()} type="button">Retry</button>
+        <button className="button button-secondary" onClick={() => actions.rebuild()} type="button">Rebuild review queue</button>
         <a className="button button-secondary" href="/settings/#export-local-data">Export saved data</a>
       </div>
     </section> : <section className="page-header page-header-prominent study-hero" aria-labelledby="review-queue-heading">
@@ -157,15 +110,12 @@ export const ReviewQueueIsland = ({ controller, activityState, onRetryHistory }:
       </dl>}
     </section>}
 
-    {state.tag === "empty" ? <section className="study-section" aria-labelledby="review-empty-heading">
-      <div className="section-header"><h2>What is ready</h2></div>
-      <div className="empty-state review-empty">
-        <h3 className="empty-state-heading" id="review-empty-heading" ref={emptyHeadingRef} tabIndex={-1}>No review items are ready</h3>
-        <p>Missed or flagged questions and mistakes in visual hazard scenes build this queue. Correct answers you did not flag, keyboard zone attempts, and finished reviews do not return here.</p>
-        <div className="empty-state-actions"><a className="button button-secondary" href="/practice/#practice-sets">Practice questions</a><a className="button button-secondary" href="/hazards/">Practice hazard scanning</a></div>
-      </div>
-    </section> : (state.tag === "ready" || state.tag === "recoverable_error") && items.length > 0 ? <section className="study-section" aria-labelledby="review-due-heading">
-      <div className="section-header"><h2 id="review-due-heading" ref={queueHeadingRef} tabIndex={-1}>What is ready</h2><p>Read each explanation, then confirm Finish review when you are done. Reading one never removes it.</p></div>
+  </>
+}
+
+export const ReviewScopeFilters = () => {
+  const { state: { scope, items, missed, flagged }, actions: { setScope } } = useReviewQueue()
+  return <>
       <div className="tabs" role="tablist" aria-label="Review scope">{scopes.map((entry, index) => <button
         key={entry.id} id={`review-tab-${entry.id}`} role="tab" type="button"
         aria-selected={scope === entry.id} aria-controls="review-scope-panel" tabIndex={scope === entry.id ? 0 : -1}
@@ -180,13 +130,44 @@ export const ReviewQueueIsland = ({ controller, activityState, onRetryHistory }:
           event.currentTarget.parentElement?.querySelector<HTMLButtonElement>(`#review-tab-${selected.id}`)?.focus()
         }}
       >{entry.label}{" "}<span className="filter-count">{entry.id === "all" ? items.length : entry.id === "missed" ? missed : flagged}</span></button>)}</div>
+  </>
+}
+
+export const ReviewItems = () => {
+  const { state: { queue: state, scope, items, filtered, busy }, actions, meta: { emptyHeadingRef, filteredHeadingRef, queueHeadingRef } } = useReviewQueue()
+  const { setScope } = actions
+  return <>
+    {state.tag === "empty" ? <section className="study-section" aria-labelledby="review-empty-heading">
+      <div className="section-header"><h2>What is ready</h2></div>
+      <div className="empty-state review-empty">
+        <h3 className="empty-state-heading" id="review-empty-heading" ref={emptyHeadingRef} tabIndex={-1}>No review items are ready</h3>
+        <p>Missed or flagged questions and mistakes in visual hazard scenes build this queue. Correct answers you did not flag, keyboard zone attempts, and finished reviews do not return here.</p>
+        <div className="empty-state-actions"><a className="button button-secondary" href="/practice/#practice-sets">Practice questions</a><a className="button button-secondary" href="/hazards/">Practice hazard scanning</a></div>
+      </div>
+    </section> : (state.tag === "ready" || state.tag === "recoverable_error") && items.length > 0 ? <section className="study-section" aria-labelledby="review-due-heading">
+      <div className="section-header"><h2 id="review-due-heading" ref={queueHeadingRef} tabIndex={-1}>What is ready</h2><p>Read each explanation, then confirm Finish review when you are done. Reading one never removes it.</p></div>
+      <ReviewScopeFilters />
       <div id="review-scope-panel" className={filtered.length > 0 ? "review-list-panel" : undefined} role="tabpanel" aria-labelledby={`review-tab-${scope}`}>
         <p className="review-scope-summary" role="status">Showing {filtered.length} {scope === "all" ? "review" : scope} {filtered.length === 1 ? "item" : "items"}, oldest saved answer first.</p>
-        {filtered.length === 0 ? <div className="empty-state"><h3 className="empty-state-heading" ref={filteredHeadingRef} tabIndex={-1}>No {scope === "all" ? "review" : scope} items in this view</h3><p>{items.length > 0 ? "Choose All to return to the complete queue." : "Unavailable saved attempts are listed below."}</p>{items.length > 0 ? <div className="empty-state-actions"><button className="button button-secondary" type="button" onClick={() => setScope("all")}>Show all review items</button></div> : null}</div> : <ol className="review-queue-list">{filtered.map((item) => <ReviewItem key={item.id} acknowledging={state.tag === "ready" && state.acknowledgingItemId === item.id} disabled={state.tag === "recoverable_error" || busy} item={item} onAcknowledge={(itemId) => { acknowledgementFocusId.current = itemId; controller.dispatch({ tag: "acknowledge", itemId }) }} />)}</ol>}
+        {filtered.length === 0 ? <div className="empty-state"><h3 className="empty-state-heading" ref={filteredHeadingRef} tabIndex={-1}>No {scope === "all" ? "review" : scope} items in this view</h3><p>{items.length > 0 ? "Choose All to return to the complete queue." : "Unavailable saved attempts are listed below."}</p>{items.length > 0 ? <div className="empty-state-actions"><button className="button button-secondary" type="button" onClick={() => setScope("all")}>Show all review items</button></div> : null}</div> : <ol className="review-queue-list">{filtered.map((item) => <ReviewItem key={item.id} acknowledging={state.tag === "ready" && state.acknowledgingItemId === item.id} disabled={state.tag === "recoverable_error" || busy} item={item} onAcknowledge={actions.acknowledge} />)}</ol>}
       </div>
     </section> : null}
-    <UnavailableAttempts attempts={unavailableAttempts} headingId="review-unavailable-heading" />
-    <ActivityHistory state={historyState} reviewsOnly onRetry={onRetryHistory} />
+
+  </>
+}
+
+export const ReviewHistory = () => {
+  const { state: { historyState, unavailableAttempts }, actions, meta: { unavailableHeadingRef } } = useReviewQueue()
+  return <>
+    <UnavailableAttempts headingRef={unavailableHeadingRef} attempts={unavailableAttempts} headingId="review-unavailable-heading" />
+    <ActivityHistory state={historyState} reviewsOnly onRetry={actions.retryHistory} />
+
+  </>
+}
+
+export const ReviewGuidance = () => {
+  const { state: { queue: state, busy }, actions } = useReviewQueue()
+  return <>
     <section className="study-section" aria-labelledby="review-how-heading">
       <div className="section-header"><h2 id="review-how-heading">How review works</h2></div>
       <dl className="review-rules">
@@ -195,8 +176,23 @@ export const ReviewQueueIsland = ({ controller, activityState, onRetryHistory }:
         <div><dt>If an attempt is unavailable</dt><dd>It stays in your saved history with the information that can be read.</dd></div>
         <div><dt>Saved in this browser</dt><dd><a href="/settings/#export-local-data">Export a backup</a> before clearing browser data.</dd></div>
       </dl>
-      {state.tag !== "recoverable_error" ? <div className="question-controls"><button className="button button-secondary" disabled={state.tag === "loading" || busy} onClick={() => controller.dispatch({ tag: "rebuild" })} type="button">Rebuild review queue</button><a href="/practice/">Choose another way to study</a></div> : null}
+      {state.tag !== "recoverable_error" ? <div className="question-controls"><button className="button button-secondary" disabled={state.tag === "loading" || busy} onClick={() => actions.rebuild()} type="button">Rebuild review queue</button><a href="/practice/">Choose another way to study</a></div> : null}
     </section>
-    <p className="sr-only" aria-live="polite" aria-atomic="true">{busy ? "Saving your finished review." : state.tag === "ready" ? "Review queue ready." : ""}</p>
-  </div>
+
+  </>
 }
+
+export const ReviewStatus = () => {
+  const { state: { queue: state, busy } } = useReviewQueue()
+  return <>
+    <p className="sr-only" aria-live="polite" aria-atomic="true">{busy ? "Saving your finished review." : state.tag === "ready" ? "Review queue ready." : ""}</p>
+  </>
+}
+
+const ReviewQueueView = () => <div className="review-page">
+  <ReviewHeader />
+  <ReviewItems />
+  <ReviewHistory />
+  <ReviewGuidance />
+  <ReviewStatus />
+</div>
