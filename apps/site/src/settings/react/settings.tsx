@@ -459,6 +459,10 @@ export const SettingsIsland = ({
               <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><use href={`#settings-icon-${task.icon}`} /></svg>
               <h3 id={exporting ? "export-heading" : undefined}>{task.title}</h3><p>{task.description}</p>
               {exporting ? <div className="settings-card-action">
+                <details className="settings-export-contents">
+                  <summary>What the file includes</summary>
+                  <p>Saved answers, reviews, settings, simulations and print jobs. Excludes downloads and import quarantine; review is rebuilt. A readable file, never uploaded.</p>
+                </details>
                 <label className="affirmation-control"><input type="checkbox" disabled={busy || preferenceRead === "loading"} checked={includeDrafts} onChange={(event) => setIncludeDrafts(event.target.checked)} />
                   <span>Include correction drafts (may contain sensitive text)</span>
                 </label>

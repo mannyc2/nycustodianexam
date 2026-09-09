@@ -783,6 +783,9 @@
   .settings-task-cards .task-card { grid-template-rows: auto auto minmax(0, 1fr) auto; }
   .settings-task-cards .button { inline-size: 100%; padding-inline: var(--space-3); }
   .settings-card-action { display: grid; gap: var(--space-3); }
+  .settings-export-contents { font-size: var(--text-sm); }
+  .settings-export-contents summary { min-block-size: var(--target-default); padding-block: var(--space-2); color: var(--color-action); font-weight: var(--weight-bold); cursor: pointer; }
+
   .settings-card-action .affirmation-control { align-items: start; font-size: var(--text-xs); }
   .settings-card-action .affirmation-control input { flex: 0 0 auto; }
   .settings-data .task-card p { font-size: var(--text-sm); }

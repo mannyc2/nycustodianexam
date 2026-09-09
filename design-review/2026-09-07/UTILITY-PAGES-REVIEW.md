@@ -21,3 +21,9 @@ The deletion workflow now has the reference’s explicit Cancel action. It clear
 A new browser regression saves a preference, previews and confirms its deletion, cancels, reopens and confirms that a fresh preview requires fresh confirmation, then reloads to prove the preference survived. All four utility recovery tests, the production build and five workspace typechecks pass. `capture-settings-delete.mjs` records a real one-preference preview at 608/384 CSS pixels. The compact capture was visually inspected and the Cancel action remains visible.
 
 This does not close returning-summary or export-preview requirements. The deletion section remains in flow rather than a modal, preserving the existing application’s focus/recovery structure.
+
+## Export contents disclosure
+
+The Export card now has a native expandable “What the file includes” note before its download button. Its categories follow the actual transfer payload: answers, finished reviews, preferences, simulations and print jobs. Downloads and import quarantine are excluded, and the review projection is rebuilt. The existing optional-drafts checkbox remains explicit. No upload, extra approval step, or new persistence is introduced.
+
+The production build passes the unchanged closure budgets after keeping the note concise. `capture-settings-export.mjs` records the open disclosure at 608/384 CSS pixels. This provides contents guidance, not a live count preview; returning-record summaries remain outstanding.
