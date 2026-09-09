@@ -226,11 +226,9 @@ test("known-offline partial start blocks commitment when exact feedback is absen
   await waitForActiveServiceWorker(page)
   await page.goto("/practice/")
   await expect.poll(() => page.evaluate(() => navigator.serviceWorker.controller !== null)).toBe(true)
-  const start90 = page
-    .getByLabel("Available whole-bank practice lengths")
-    .getByRole("link", { name: "Start 90" })
-  const sessionHref = await start90.getAttribute("href")
-  if (sessionHref === null) throw new Error("The generated 90-question session has no path")
+  const start45 = page.getByRole("link", { name: "Start a 45-question set", exact: true })
+  const sessionHref = await start45.getAttribute("href")
+  if (sessionHref === null) throw new Error("The generated 45-question session has no path")
   const sessionPath = new URL(sessionHref, page.url()).pathname
   await page.goto(sessionPath)
   const currentOptionLabels = await page.locator("#question-data").evaluate((element) => {
@@ -285,9 +283,7 @@ test("known-offline partial start blocks commitment when exact feedback is absen
   })
   await context.setOffline(true)
   expect(await page.evaluate(() => navigator.onLine)).toBe(false)
-  await page
-    .getByLabel("Available whole-bank practice lengths")
-    .getByRole("link", { name: "Start 90" })
+  await page.getByRole("link", { name: "Start a 45-question set", exact: true })
     .click()
   await expect(page).toHaveURL(sessionPath)
   expect(await page.evaluate(() => navigator.onLine)).toBe(false)
