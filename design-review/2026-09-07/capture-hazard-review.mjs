@@ -1,11 +1,14 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
+import { resolve, sep } from 'node:path';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 const require = createRequire(new URL('../../apps/site/package.json', import.meta.url));
 const { chromium, expect } = require('@playwright/test');
-const output = fileURLToPath(new URL('./hazard-review-current/', import.meta.url));
+const output = process.env.NYCUSTODIAN_HAZARD_CAPTURE_OUTPUT
+  ? resolve(process.env.NYCUSTODIAN_HAZARD_CAPTURE_OUTPUT) + sep
+  : fileURLToPath(new URL('./hazard-review-current/', import.meta.url));
 await mkdir(output, { recursive: true });
 const sourceCommit = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
 const browser = await chromium.launch({ channel: 'chromium' });

@@ -1,0 +1,150 @@
+{
+  "sourceCommit": "933d11255311795fa7a0c75026842401bdd8cb16",
+  "captures": [
+    {
+      "file": "visual-missing-1042-page.png",
+      "width": 1042,
+      "mode": "visual",
+      "state": "missing",
+      "area": "page",
+      "path": "/hazards/session/launch-v1/scene/1/?review=1",
+      "sha256": "f932b1b21cf0a8efcc4a64145137407072855bcf2ab334197d0d77bed6fcf695"
+    },
+    {
+      "file": "visual-missing-1042-context.png",
+      "width": 1042,
+      "mode": "visual",
+      "state": "missing",
+      "area": "context",
+      "path": "/hazards/session/launch-v1/scene/1/?review=1",
+      "sha256": "8e988dc0a4d657d730a66979fc0d7ef545940604ae94f3c8b733fa03e2052c39"
+    },
+    {
+      "file": "visual-saved-1042-page.png",
+      "width": 1042,
+      "mode": "visual",
+      "state": "saved",
+      "area": "page",
+      "path": "/hazards/session/launch-v1/scene/1/?review=1",
+      "sha256": "e64ce4018c67d95c0bd703594fd999a98976f8e5a30be27842a17c385127bba8"
+    },
+    {
+      "file": "visual-saved-1042-context.png",
+      "width": 1042,
+      "mode": "visual",
+      "state": "saved",
+      "area": "context",
+      "path": "/hazards/session/launch-v1/scene/1/?review=1",
+      "sha256": "0894c37d07bd4f7a5569bc7c76b456d15b2f11a45b489cc0473cd69904a118e3"
+    },
+    {
+      "file": "nonvisual-missing-1042-page.png",
+      "width": 1042,
+      "mode": "nonvisual",
+      "state": "missing",
+      "area": "page",
+      "path": "/hazards/session/launch-v1-nonvisual/scene/1/?review=1",
+      "sha256": "f932b1b21cf0a8efcc4a64145137407072855bcf2ab334197d0d77bed6fcf695"
+    },
+    {
+      "file": "nonvisual-missing-1042-context.png",
+      "width": 1042,
+      "mode": "nonvisual",
+      "state": "missing",
+      "area": "context",
+      "path": "/hazards/session/launch-v1-nonvisual/scene/1/?review=1",
+      "sha256": "8e988dc0a4d657d730a66979fc0d7ef545940604ae94f3c8b733fa03e2052c39"
+    },
+    {
+      "file": "nonvisual-saved-1042-page.png",
+      "width": 1042,
+      "mode": "nonvisual",
+      "state": "saved",
+      "area": "page",
+      "path": "/hazards/session/launch-v1-nonvisual/scene/1/?review=1",
+      "sha256": "24ae65a13cd6ffe545ac349ba2e6767a96becec9163fc8033b4e7a8b9453a253"
+    },
+    {
+      "file": "nonvisual-saved-1042-context.png",
+      "width": 1042,
+      "mode": "nonvisual",
+      "state": "saved",
+      "area": "context",
+      "path": "/hazards/session/launch-v1-nonvisual/scene/1/?review=1",
+      "sha256": "d99e7e6e1ca8abf924699d35bfb4e268a379742f4519bd0dd15b355c4541a4ad"
+    },
+    {
+      "file": "visual-missing-384-page.png",
+      "width": 384,
+      "mode": "visual",
+      "state": "missing",
+      "area": "page",
+      "path": "/hazards/session/launch-v1/scene/1/?review=1",
+      "sha256": "50b7ef737723c1f6a59d61dfae4700e702c70f429134d15a40d6fd8434d7f0cd"
+    },
+    {
+      "file": "visual-missing-384-context.png",
+      "width": 384,
+      "mode": "visual",
+      "state": "missing",
+      "area": "context",
+      "path": "/hazards/session/launch-v1/scene/1/?review=1",
+      "sha256": "9a7c44d0462be7609edf7da05e4b53fe4a60b6012506d707e96e7158052a68c2"
+    },
+    {
+      "file": "visual-saved-384-page.png",
+      "width": 384,
+      "mode": "visual",
+      "state": "saved",
+      "area": "page",
+      "path": "/hazards/session/launch-v1/scene/1/?review=1",
+      "sha256": "83badfc639bd78460e5fc93baeda390f6a4eaa13995843d57edae162f6db5619"
+    },
+    {
+      "file": "visual-saved-384-context.png",
+      "width": 384,
+      "mode": "visual",
+      "state": "saved",
+      "area": "context",
+      "path": "/hazards/session/launch-v1/scene/1/?review=1",
+      "sha256": "bc20c17e76ce5072362042e9a8d38bd34c3d39aa169f6c47182d8ca9379041eb"
+    },
+    {
+      "file": "nonvisual-missing-384-page.png",
+      "width": 384,
+      "mode": "nonvisual",
+      "state": "missing",
+      "area": "page",
+      "path": "/hazards/session/launch-v1-nonvisual/scene/1/?review=1",
+      "sha256": "50b7ef737723c1f6a59d61dfae4700e702c70f429134d15a40d6fd8434d7f0cd"
+    },
+    {
+      "file": "nonvisual-missing-384-context.png",
+      "width": 384,
+      "mode": "nonvisual",
+      "state": "missing",
+      "area": "context",
+      "path": "/hazards/session/launch-v1-nonvisual/scene/1/?review=1",
+      "sha256": "9a7c44d0462be7609edf7da05e4b53fe4a60b6012506d707e96e7158052a68c2"
+    },
+    {
+      "file": "nonvisual-saved-384-page.png",
+      "width": 384,
+      "mode": "nonvisual",
+      "state": "saved",
+      "area": "page",
+      "path": "/hazards/session/launch-v1-nonvisual/scene/1/?review=1",
+      "sha256": "278252dab62a7a0b7dd2410a221d377d2cab323f95365a0d259429256503da69"
+    },
+    {
+      "file": "nonvisual-saved-384-context.png",
+      "width": 384,
+      "mode": "nonvisual",
+      "state": "saved",
+      "area": "context",
+      "path": "/hazards/session/launch-v1-nonvisual/scene/1/?review=1",
+      "sha256": "000803c3193926c27490eb91cf720be89b56d62efdf860be15199ba73b9c63ac"
+    }
+  ],
+  "errors": []
+}
