@@ -25,3 +25,18 @@ The complete configured suite ran against source `346ea8172707905ac4d6454303a8c1
 The fixture now constructs the expected review URL while retaining exact custom-set coordinates, expects the saved-review position label, verifies the saved-response context, and verifies absence of Save marks/Save response controls. The initial focused rerun reached Review but failed on the stale practice position label in all three engines. After correcting that expectation, all three export/import cases passed (15.4 seconds), covering visual and written Hazard responses plus the custom question response in a fresh browser. Browser TypeScript and diff whitespace checks passed. Application source did not change.
 
 Logs: `/tmp/nyc-current-full-browser.log`, `/tmp/nyc-custom-transfer-review-browser.log`, `/tmp/nyc-custom-transfer-final-browser.log`. This is a full sweep with three failures followed by a passing affected-test rerun, not a new all-green full-suite invocation. The 29 configured skips, broader lifecycle requirements, visual acceptance and production certification remain separate.
+
+
+## Current citation-era sweep — cc400cb
+
+The complete configured local suite passed against `cc400cb782947fc3ce71542b694971caeb9a6db1`: **442 passed, 26 explicitly skipped, zero failures** (468 cases, 12.0 minutes, exit 0). Application source and the built distribution stayed unchanged throughout the run. Only review documentation was edited while it ran.
+
+Command from `apps/site`:
+
+```sh
+NYCUSTODIAN_PLAYWRIGHT_BASE_URL=http://127.0.0.1:4187 NYCUSTODIAN_PREVIOUS_RELEASE_DIST=/tmp/nycustodian-upgrade-v4-8375c3e-dist NYCUSTODIAN_PREVIOUS_RELEASE_VERSION=4 node node_modules/@playwright/test/cli.js test --workers=2
+```
+
+Log: `/tmp/nyc-citations-full-browser.log`. The 26 skips are 13 named Chromium-only checks in each of Firefox and WebKit: two actual BFCache checks, five service-worker/offline navigation checks, and six Cache API/pack inspection checks. Their explicit guards were inspected in the test sources. They are not passing evidence for those engines. Other offline and actual retained-version upgrade workflows ran normally. Cloudflare-tagged cases are excluded by this local preview configuration and retain their separate evidence.
+
+This closes the pending full local browser run at this exact implementation revision. It does not certify manual accessibility, physical printing, production deployment, or remaining matching-reference visual comparisons.

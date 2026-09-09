@@ -34,7 +34,8 @@ The original [snapshot README](README.md), imported exports and `current-screens
 | Static Assets routing | [STATIC-ASSETS-SIMULATION.md](STATIC-ASSETS-SIMULATION.md) | Local Cloudflare simulation/print-shell routing; includes the original failure and isolated recheck. |
 | Installed release upgrade | [UPGRADE-V4-V5.md](UPGRADE-V4-V5.md) | Actual installed v4 content and saved simulation across the v5 update. |
 | Integrated verification | [INTEGRATED-VALIDATION.md](INTEGRATED-VALIDATION.md) | Root checks, source layout and explicitly historical packet validation; see latest checkpoint below. |
-| Full browser sweep | [FULL-BROWSER-SWEEP.md](FULL-BROWSER-SWEEP.md) | 414-case run, diagnosed fixture failures, and passing affected suites; no invented all-green sweep. |
+| Full browser sweep | [FULL-BROWSER-SWEEP.md](FULL-BROWSER-SWEEP.md) | Latest full run at cc400cb: 442 passed, 26 explicit Chromium-only skips, zero failures across 468 cases. Historical runs and corrections remain separately recorded. |
+| Static facts and citations | [REMAINING-COMPONENT-CONTRACT.md](REMAINING-COMPONENT-CONTRACT.md), [source citation review](source-citation-measure/REVIEW.md) | Named Fact states and shared source-line citations; source detail metadata and excerpts, compact reading-width correction, six three-engine browser checks and revision-specific captures. |
 
 Start visual review with the [comparison gallery](implementation-comparison.html), then follow each page family's later audit links. The gallery is the first-slice checkpoint; later corrections are documented in the linked reviews rather than silently relabeling older screenshots as current.
 
@@ -48,4 +49,4 @@ Start visual review with the [comparison gallery](implementation-comparison.html
 
 ## Latest automated checkpoint
 
-See `FINAL-REVIEW-VALIDATION.md` for the latest integrated checkpoint at `3a77b74` (506 tests, with a separately passing historical validator after sandbox EPERM). Earlier runs retain their exact source and scope in the individual documents; counts from separate runs are not summed into an invented single run.
+See [FINAL-REVIEW-VALIDATION.md](FINAL-REVIEW-VALIDATION.md) for the latest integrated checkpoint at `cc400cb` (514 tests, all typechecks, build/artifact checks, with a separately passing historical validator after sandbox Git EPERM). Earlier runs retain their exact source and scope in the individual documents; counts from separate runs are not summed into an invented single run.
