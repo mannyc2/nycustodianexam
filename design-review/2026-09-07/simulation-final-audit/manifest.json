@@ -1,0 +1,25 @@
+{
+  "captures": [
+    {
+      "width": 1008,
+      "answered": 3,
+      "flagged": 1,
+      "submitted": 45,
+      "timed": true,
+      "hiddenTimerRestored": true,
+      "resultsRestored": true,
+      "itemLinkFocusVerified": true
+    },
+    {
+      "width": 384,
+      "answered": 3,
+      "flagged": 1,
+      "submitted": 45,
+      "timed": true,
+      "hiddenTimerRestored": true,
+      "resultsRestored": true,
+      "itemLinkFocusVerified": true
+    }
+  ],
+  "errors": []
+}

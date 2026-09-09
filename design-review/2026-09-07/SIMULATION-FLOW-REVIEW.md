@@ -113,3 +113,37 @@ old pack claim/version/item array and responses remain pinned; with the origin
 disconnected, the old simulation submits to evaluated results. Original q091
 Practice feedback and a new v5 nonvisual answer also work offline. See
 UPGRADE-V4-V5.md for source coordinates, manifest hashes, and reproduction.
+
+
+## Final question-flow and Static Assets review — September 9, 2026
+
+`STATIC-ASSETS-SIMULATION.md` records local Wrangler/workerd proof for all 30
+Simulation cases across Chromium/Firefox/WebKit (29 initial passes and one
+unchanged WebKit rerun). The explicit Static Assets route gate passed in every
+project. The transient missing verified-image observation is retained there;
+this is not deployed-CDN certification.
+
+`capture-simulation-final.mjs` downloads and activates the real v5 pack through
+local Static Assets at port 8787. At 1008/384 CSS widths it creates a timed
+45-item set, records three answers and one flag, advances to item four, hides
+and restores the timer, submits and reloads 45 retained results. Fourteen
+images in `simulation-final-audit/` cover full player pages, workspace, timer,
+confirmation, results introduction and answered/unanswered explanations. The
+script verifies counts, flag retention, result-link focus and no results overflow.
+The first full-page attempt preceded complete hydration; those images were
+replaced after explicit navigator/timer and document-height waits.
+
+Both final full player pages, desktop confirmation and compact results/answer
+card were visually inspected. At desktop the navigator matches reference 28's
+928px bounds and 44px item controls. Current/recorded/flagged states remain
+independent; native checkboxes are visible. Compact content wraps within its
+352px workspace and retains the complete timer/footer. Actual counts (3/42/1)
+differ from the design fixture (41/4/3). The timer is a separate functional
+panel; the prototype's renderer-debug prose is omitted. Confirmation wording
+explains finality and unanswered results without making official-score claims.
+
+There is no dedicated full Simulation results mockup in the accepted export.
+The full-flow review therefore verifies readable adaptation and real retained
+behavior; it does not claim a pixel comparison against a nonexistent reference.
+No application source changed in this checkpoint. Final integrated validation,
+including a clean combined runtime run, remains.
