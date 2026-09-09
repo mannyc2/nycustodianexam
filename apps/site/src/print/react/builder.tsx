@@ -235,6 +235,7 @@ export const PrintBuilder = ({
           <legend>Accessibility and output</legend>
           <label><input type="checkbox" checked={printSize === "large"} onChange={(event) => setPrintSize(event.target.checked ? "large" : "normal")} /> Large print (at least 18pt)</label>
           <label><input type="checkbox" checked={grayscalePreview} onChange={(event) => setGrayscalePreview(event.target.checked)} /> Grayscale preview</label>
+          {product === "multiple-choice-questions" ? <p>Illustrations needed to answer a question are always included.</p> : null}
           <label><input type="checkbox" checked={includeImages} disabled={!imageProduct} onChange={(event) => setIncludeImages(event.target.checked)} /> Include released print images</label>
           <label><input type="checkbox" checked={includeSources} disabled={!sourceProduct} onChange={(event) => setIncludeSources(event.target.checked)} /> Include source references</label>
           <label htmlFor="print-key-placement">

@@ -338,6 +338,7 @@ export class PrintQuestionSource extends Schema.Class<PrintQuestionSource>(
         : "print question option IDs must be unique"
     })
   ),
+  illustration: Schema.optionalKey(Schema.Struct({ neutralDescription: Schema.NonEmptyString, asset: AssetContentReceipt })),
   answerReceipt: Schema.NullOr(PostcommitContentReceipt)
 }) {}
 
@@ -535,6 +536,7 @@ const PrintQuestionsSection = Schema.Struct({
     number: PositiveSafeInteger,
     id: Schema.NonEmptyString,
     prompt: Schema.NonEmptyString,
+    illustration: Schema.optionalKey(Schema.Struct({ neutralDescription: Schema.NonEmptyString, asset: PrintRetainedAsset })),
     options: Schema.Array(Schema.Struct({
       id: Schema.NonEmptyString,
       label: Schema.NonEmptyString,

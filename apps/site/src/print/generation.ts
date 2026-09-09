@@ -436,7 +436,12 @@ export const generatePrintManifest = ({
   const actualDistribution = [...distribution]
     .sort(([left], [right]) => left.localeCompare(right))
     .map(([label, count]) => ({ label, count }))
-  const assets = settings.includeImages
+  const assets = settings.product === "multiple-choice-questions"
+    ? itemIds.flatMap(id => {
+        const image = bootstrap.questions.find(question => question.id === id)?.illustration
+        return image === undefined ? [] : [image.asset]
+      })
+    : settings.includeImages
     ? settings.product === "tool-family-contrast-cards"
       ? selected.flatMap((family) =>
           eligibleContrastFamilies(bootstrap, settings.profileId)
@@ -545,7 +550,7 @@ export const makePrintPacket = (
   const sceneAnswerById = new Map(sceneAnswers.map((answer) => [answer.opaqueAssetId, answer]))
   const retainedByPath = new Map(retainedAssets.map((asset) => [asset.receipt.path, asset]))
   const retainedAsset = (receipt: PrintRetainedAsset["receipt"]): PrintRetainedAsset | null => {
-    if (!manifest.settings.includeImages) return null
+    if (!manifest.settings.includeImages && manifest.settings.product !== "multiple-choice-questions") return null
     const retained = retainedByPath.get(receipt.path)
     if (retained === undefined || JSON.stringify(retained.receipt) !== JSON.stringify(receipt)) {
       throw new PrintGenerationError("A pinned print image is not available as exact verified retained bytes.")
@@ -619,6 +624,10 @@ export const makePrintPacket = (
           number: index + 1,
           id: question.id,
           prompt: question.prompt,
+          ...(question.illustration === undefined ? {} : { illustration: {
+            neutralDescription: question.illustration.neutralDescription,
+            asset: retainedAsset(question.illustration.asset)!
+          } }),
           options: options.map((option, optionIndex) => ({
             id: option.id,
             label: printOptionLabel(optionIndex),

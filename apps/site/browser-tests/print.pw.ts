@@ -711,3 +711,28 @@ test("blocks an uncached online print image without fetching or retaining a part
   expect(await readPrintJobs(page)).toEqual([])
   expect(imageRequests).toBe(0)
 })
+
+// Synthetic image/question pairing exercises retention, not authored study content.
+test("required question images survive saved print preview restoration", async ({ page }) => {
+  await page.route("**/print/", async route => {
+    const response = await route.fetch()
+    const body = (await response.text()).replace(/(<script id="print-builder-data" type="application\/json">)([\s\S]*?)(<\/script>)/, (_, start, json, end) => {
+      const bootstrap = JSON.parse(json) as PrintBuilderBootstrap
+      return start + JSON.stringify({ ...bootstrap, questions: [{ ...bootstrap.questions[0], illustration: {
+        neutralDescription: "Required illustration retention fixture.", asset: bootstrap.tools[0]!.asset
+      } }] }) + end
+    })
+    await route.fulfill({ response, body })
+  })
+  await page.goto("/print/")
+  await primePrintLocalClosure(page)
+  await page.getByLabel("Number of questions").fill("1")
+  await page.getByRole("button", { name: "Generate preview" }).click()
+  await expect(page).toHaveURL(/\/print\/preview\/print-[a-f0-9-]+\/$/)
+  const image = page.getByRole("img", { name: "Required illustration retention fixture." })
+  await expect(image).toBeVisible()
+  await expect(image).toHaveAttribute("src", /^data:image\/png;base64,/)
+  await page.reload()
+  await expect(image).toBeVisible()
+  await expect.poll(() => image.evaluate(node => (node as HTMLImageElement).naturalWidth)).toBeGreaterThan(0)
+})

@@ -1930,3 +1930,27 @@ describe("print workflow local closure", () => {
     expect(saves).toBe(0)
   })
 })
+
+describe("required question illustrations in print", () => {
+  const image = retainedAssets[0]!
+  const illustrated = new PrintBuilderBootstrap({
+    ...bootstrap,
+    questions: [{ ...bootstrap.questions[0]!, illustration: {
+      neutralDescription: "A neutral description of the required question image.",
+      asset: image.receipt
+    } }]
+  })
+  it("retains the image even when optional images are disabled and restores exact bytes", async () => {
+    const generated = generatePrintJob({ bootstrap: illustrated, settings: settings("multiple-choice-questions", 1), retainedAssets: [image] })
+    expect(generated.manifest.settings.includeImages).toBe(false)
+    expect(generated.manifest.assets).toEqual([image.receipt])
+    const record = new PrintJobRecord({ id: "print-questionimage1", ...generated, status: "preview-ready", updatedAt: 100 })
+    await expect(validatePrintJobRecordIntegrity(JSON.parse(JSON.stringify(record)))).resolves.toEqual(record)
+    const html = renderPrintJob(generated)
+    expect(html).toContain(image.dataUrl)
+    expect(html).toContain('alt="A neutral description of the required question image."')
+  })
+  it("refuses to create a worksheet when required image bytes are missing", () => {
+    expect(() => generatePrintJob({ bootstrap: illustrated, settings: settings("multiple-choice-questions", 1) })).toThrow(/exact verified retained bytes/)
+  })
+})

@@ -161,6 +161,7 @@ const packetSection = (
             {section.questions.map((question) => (
               <li key={question.id} className="print-question">
                 <p>{question.prompt}</p>
+                {question.illustration === undefined ? null : <img className="print-question-image" src={question.illustration.asset.dataUrl} alt={question.illustration.neutralDescription} />}
                 <ol className="print-option-list">
                   {question.options.map((option) => <li key={option.label} data-option-label={option.label}>{option.text}</li>)}
                 </ol>

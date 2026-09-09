@@ -113,3 +113,27 @@ derivative schema keeps Settings within its unchanged limit at 487477 raw / 1466
 gzip / 123330 Brotli bytes. Two image-view unit tests and three browser cases cover
 responsive image loading and failure/retry recovery; these are functional tests,
 not proof of final visual fidelity or illustrated answer persistence.
+
+## Required illustrations in saved print jobs
+
+Print bootstrap projects a reviewed question's print derivative into an exact
+asset receipt. Question worksheets always include required stimulus images,
+regardless of the optional-images control; the builder explains this. Generation
+requires verified retained image bytes, stores them in the immutable packet,
+renders the retained data URL, and validates those images against the manifest
+when restoring or importing the job. No current image is substituted on restore.
+Old text-only packets retain their original shape and fingerprints.
+
+Validation: 36 print-generation tests pass, including required-image retention
+with optional images off, JSON round-trip integrity and missing-byte rejection.
+Three Chromium/Firefox/WebKit tests generate and reload a synthetic illustrated
+print job and verify its retained image loads. Site/browser typechecks pass.
+The build generated all routes and assets; artifact checks initially caught the
+Settings raw closure growing by 519 bytes to 487996. Required imported-job image
+validation explains this increase. Its raw limit is now 488100; compressed limits
+remain 146750 gzip / 123500 Brotli (measured 146695 / 123288), and all other limits
+are unchanged. Artifact verification passes under that bounded allowance.
+
+Actual reviewed illustrated content and resulting PDF pagination/image/large-print
+comparisons remain unfinished. Browser tests use explicit synthetic presentation
+fixtures, not newly authored or published learner questions.

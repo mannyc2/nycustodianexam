@@ -2157,9 +2157,10 @@ export const verify = async (): Promise<void> => {
   for (const [family, measurement] of bundleReports) {
     // Settings shares print generation for retained-job validation, including
     // source-aware hazard estimates (+1162 raw bytes), and its saved-work summary.
-    // Keep its small allowance local; all other island limits remain unchanged.
+    // Required question-image retention adds 519 raw bytes to this closure.
+    // Keep this measured allowance local; other island limits remain unchanged.
     const limit = family === "settings"
-      ? { raw: 487_500, gzip: 146_750, brotli: 123_500 }
+      ? { raw: 488_100, gzip: 146_750, brotli: 123_500 }
       : bundleBudgets
     for (const format of ["raw", "gzip", "brotli"] as const) {
       if (measurement[format] > limit[format]) {

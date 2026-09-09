@@ -982,6 +982,14 @@ const buildPages = ({
         memberships: question.memberships ?? [],
         prompt: question.prompt,
         options: question.options,
+        ...(question.illustration === undefined ? {} : { illustration: {
+          neutralDescription: question.illustration.neutralDescription,
+          asset: (() => {
+            const image = question.illustration.derivatives.find(asset => asset.kind === "print")
+            if (image === undefined) throw new Error(`Question ${question.id} has no print illustration`)
+            return { path: `/${image.path}`, bytes: image.bytes, sha256: image.sha256 }
+          })()
+        } }),
         answerReceipt: artifact === undefined
           ? null
           : {

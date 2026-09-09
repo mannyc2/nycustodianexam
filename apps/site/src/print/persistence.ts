@@ -463,6 +463,8 @@ const retainedPacketAssets = (
   sections: ReadonlyArray<ReleasedPrintPacketSection>
 ): ReadonlyArray<PrintRetainedAsset> => sections.flatMap((section) => {
   switch (section.tag) {
+    case "questions":
+      return section.questions.flatMap(question => question.illustration === undefined ? [] : [question.illustration.asset])
     case "tool-family-cards":
       return section.families.flatMap((family) =>
         family.tools.flatMap((tool) => tool.asset === null ? [] : [tool.asset])
