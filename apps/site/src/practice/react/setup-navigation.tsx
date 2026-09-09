@@ -1,4 +1,4 @@
-import { setupDestinations, type SetupDestination } from "./setup-navigation.ts"
+import { setupDestinations, type SetupDestination } from "../setup-navigation.ts"
 
 export const SetupNavigation = ({ current }: { readonly current: SetupDestination }) =>
   <nav className="setup-navigation" aria-label="Practice setup">

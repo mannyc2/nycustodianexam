@@ -1,5 +1,5 @@
 import { expect } from "@playwright/test"
-import { test } from "./offline-origin-fixture.ts"
+import { test } from "./offline-origin-fixtures.ts"
 
 test("downloaded illustrated question opens, saves, and restores feedback with its origin disconnected", async ({ page, offlineOrigin }) => {
   test.setTimeout(120000)

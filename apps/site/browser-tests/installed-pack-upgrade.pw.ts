@@ -1,6 +1,6 @@
 import { expect, type Page } from "@playwright/test"
 import { fileURLToPath } from "node:url"
-import { test } from "./offline-origin-fixture.ts"
+import { test } from "./offline-origin-fixtures.ts"
 
 const previousRoot = process.env.NYCUSTODIAN_PREVIOUS_RELEASE_DIST
 const previousVersion = Number(process.env.NYCUSTODIAN_PREVIOUS_RELEASE_VERSION ?? 3)

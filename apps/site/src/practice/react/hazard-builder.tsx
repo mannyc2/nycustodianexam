@@ -1,7 +1,7 @@
 import { useState } from "react"
-import type { ReviewSceneSource } from "../review/model.ts"
-import { assembleHazardDrill, type HazardPracticeMode } from "./hazard-set.ts"
-import { practiceSetSeedLimit } from "./set.ts"
+import type { ReviewSceneSource } from "../../review/model.ts"
+import { assembleHazardDrill, type HazardPracticeMode } from "../hazard-set.ts"
+import { practiceSetSeedLimit } from "../set.ts"
 
 export const HazardBuilder = ({ sources }: { readonly sources: ReadonlyArray<ReviewSceneSource> }) => {
   const [length, setLength] = useState(1)

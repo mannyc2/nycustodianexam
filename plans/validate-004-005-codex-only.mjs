@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto"
 import { execFileSync } from "node:child_process"
-import { access, readFile } from "node:fs/promises"
-import { dirname, resolve } from "node:path"
+import { access, readFile as readWorkingFile } from "node:fs/promises"
+import { dirname, relative, resolve } from "node:path"
 import { fileURLToPath } from "node:url"
 
 const fail = (message) => {
@@ -10,6 +10,25 @@ const fail = (message) => {
 
 const scriptDirectory = dirname(fileURLToPath(import.meta.url))
 const repositoryRoot = resolve(scriptDirectory, "..")
+const arguments_ = process.argv.slice(2)
+if (arguments_.length !== 0 && (arguments_.length !== 2 || arguments_[0] !== "--packet-commit" || !/^[0-9a-f]{40}$/.test(arguments_[1]))) {
+  fail("Usage: validate-004-005-codex-only.mjs [--packet-commit <full commit SHA>]")
+}
+const packetCommit = arguments_[1]
+if (packetCommit !== undefined) {
+  execFileSync("git", ["cat-file", "-e", packetCommit + "^{commit}"], { cwd: repositoryRoot, stdio: "ignore" })
+}
+const packetPathInRepository = (path) => {
+  const result = relative(repositoryRoot, path)
+  if (result.startsWith("../") || result === "..") fail("Packet path is outside the repository")
+  return result
+}
+const readFile = async (path, encoding) => {
+  if (packetCommit === undefined) return readWorkingFile(path, encoding)
+  const bytes = readGitBlob(packetCommit, packetPathInRepository(path))
+  return encoding === undefined ? bytes : bytes.toString(encoding)
+}
+
 const evidenceDirectory = resolve(repositoryRoot, "research/ui-ux/codex-only-v1")
 const manifestPath = resolve(evidenceDirectory, "evidence-manifest.json")
 const packetPath = resolve(scriptDirectory, "004-005-codex-only-evaluation.md")
@@ -954,6 +973,11 @@ const readGitBlob = (commit, path) =>
   })
 
 const assertAbsent = async (path) => {
+  if (packetCommit !== undefined) {
+    const listed = execFileSync("git", ["ls-tree", "--name-only", packetCommit, "--", packetPathInRepository(path)], { cwd: repositoryRoot, encoding: "utf8" })
+    if (listed.trim() !== "") fail("superseded volunteer artifact remains in packet: " + path)
+    return
+  }
   try {
     await access(path)
   } catch {
@@ -1405,3 +1429,5 @@ process.stdout.write(JSON.stringify({
   unresolvedRules: manifest.synthesis.rules.filter((rule) => rule.status === "unresolved").length,
   mutationChecks,
 }) + "\n")
+
+if (packetCommit !== undefined) console.log("Historical packet verified at " + packetCommit + "; current implementation is outside this evidence check.")

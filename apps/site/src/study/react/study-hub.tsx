@@ -1,4 +1,4 @@
-import { PracticeBuilder } from "../../practice/builder.tsx"
+import { PracticeBuilder } from "../../practice/react/builder.tsx"
 import { useEffect, useRef, useSyncExternalStore } from "react"
 import type { ReviewController } from "../../review/controller.ts"
 import { ActivityHistory } from "./history.tsx"

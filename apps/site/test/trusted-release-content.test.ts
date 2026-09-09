@@ -418,7 +418,18 @@ describe("trusted release-content registry", () => {
     expect(decoded.sceneIds).toEqual(
       Array.from({ length: 18 }, (_, index) => `s${String(index + 1).padStart(3, "0")}`)
     )
-    expect(decoded.trustedReleaseContentRegistry.entries).toHaveLength(253)
+    // v3 retains the original 90 questions; v4/v5 each retain 91. Every
+    // release also closes both presentation receipts for all 18 scenes.
+    const expectedCoordinates = [3, 4, 5].flatMap(version => [
+      ...Array.from({ length: version === 3 ? 90 : 91 }, (_, index) =>
+        `launch-v1:${version}:question:q${String(index + 1).padStart(3, "0")}`),
+      ...["hazard-visual", "hazard-nonvisual"].flatMap(variant =>
+        Array.from({ length: 18 }, (_, index) =>
+          `launch-v1:${version}:${variant}:s${String(index + 1).padStart(3, "0")}`))
+    ]).sort()
+    expect(decoded.trustedReleaseContentRegistry.entries.map(entry =>
+      `${entry.releaseId}:${entry.packVersion}:${entry.variant}:${entry.itemId}`
+    ).sort()).toEqual(expectedCoordinates)
     for (const answerBearingKey of [
       "correctOptionId",
       "rationales",

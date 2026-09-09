@@ -1,5 +1,5 @@
 import { expect } from "@playwright/test"
-import { test } from "./offline-origin-fixture.ts"
+import { test } from "./offline-origin-fixtures.ts"
 
 test("custom practice preserves the chosen length and saves exact feedback for Review", async ({ page }) => {
   await page.goto("/practice/")

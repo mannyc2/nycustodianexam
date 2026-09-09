@@ -1,5 +1,5 @@
 import { expect } from "@playwright/test"
-import { test } from "./offline-origin-fixture.ts"
+import { test } from "./offline-origin-fixtures.ts"
 
 for (const mode of ["visual", "nonvisual"] as const) {
   test(`custom ${mode} drill preserves order, saved feedback and history`, async ({ page }) => {

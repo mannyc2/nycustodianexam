@@ -1,6 +1,6 @@
 import { expect } from "@playwright/test"
 import { Schema } from "effect"
-import { test } from "./offline-origin-fixture.ts"
+import { test } from "./offline-origin-fixtures.ts"
 import historical from "../../../content/authoring/compatibility/launch-v1-v3-review.json" with { type: "json" }
 import { ReviewQueueBootstrap } from "../src/review/model.ts"
 import { questionAttemptId, hazardAttemptId } from "../src/attempt-receipt.ts"

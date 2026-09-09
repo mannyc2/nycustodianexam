@@ -1,4 +1,4 @@
-import { QuestionIllustration } from "../../question-illustration.tsx"
+import { QuestionIllustration } from "../../question-player/react/illustration.tsx"
 import { useEffect, useRef, useState, useSyncExternalStore } from "react"
 import type { SimulationPlayerController } from "../controller.ts"
 import {

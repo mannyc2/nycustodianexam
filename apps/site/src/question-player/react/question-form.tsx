@@ -1,4 +1,4 @@
-import { QuestionIllustration } from "../../question-illustration.tsx"
+import { QuestionIllustration } from "./illustration.tsx"
 import { type FormEvent, type ReactNode } from "react"
 import { selectedOptionId } from "../state.ts"
 import { useQuestionPlayer } from "./context.tsx"

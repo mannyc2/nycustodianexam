@@ -1,4 +1,4 @@
-import { SetupNavigation } from "../../practice/setup-navigation.tsx"
+import { SetupNavigation } from "../../practice/react/setup-navigation.tsx"
 import { useEffect, useMemo, useRef, useState } from "react"
 import {
   createLocallyClosedSimulation,

@@ -1632,7 +1632,7 @@ const buildPages = ({
     <details class="hazard-environments section-gap"><summary>Environments in this release</summary><ul class="tag-list">${[...new Set(scenes.map(({ value }) => value.environment))].map((environment) => `<li>${escapeHtml(environment)}</li>`).join("")}</ul></details>
   </main>
   <script id="hazard-builder-data" type="application/json">${escapeJsonForHtml(canonicalReviewBootstrap.scenes)}</script>
-  <script type="module" src="/src/practice/hazard-builder-bootstrap.tsx"></script>`
+  <script type="module" src="/src/practice/react/hazard-builder-bootstrap.tsx"></script>`
   })
 
   pages.push({

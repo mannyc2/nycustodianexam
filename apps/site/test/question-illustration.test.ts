@@ -1,7 +1,7 @@
 import { createElement } from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import { describe, expect, it } from "vitest"
-import { QuestionIllustration } from "../src/question-illustration.tsx"
+import { QuestionIllustration } from "../src/question-player/react/illustration.tsx"
 
 const illustration = {
   masterSha256: "a".repeat(64),

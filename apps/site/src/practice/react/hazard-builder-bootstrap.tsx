@@ -1,6 +1,6 @@
 import { Schema } from "effect"
 import { createRoot } from "react-dom/client"
-import { ReviewSceneBootstrap } from "../review/model.ts"
+import { ReviewSceneBootstrap } from "../../review/model.ts"
 import { HazardBuilder } from "./hazard-builder.tsx"
 
 const mount = document.querySelector<HTMLElement>("[data-hazard-builder]")

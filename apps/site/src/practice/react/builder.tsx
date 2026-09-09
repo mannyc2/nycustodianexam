@@ -1,9 +1,9 @@
 import { SetupNavigation } from "./setup-navigation.tsx"
 import { useMemo, useState } from "react"
-import type { ReviewQuestionSource } from "../review/model.ts"
-import { practiceInventoryFromReview } from "./review-source.ts"
-import { assemblePracticeQuestions } from "./question-set.ts"
-import { practiceSetSeedLimit } from "./set.ts"
+import type { ReviewQuestionSource } from "../../review/model.ts"
+import { practiceInventoryFromReview } from "../review-source.ts"
+import { assemblePracticeQuestions } from "../question-set.ts"
+import { practiceSetSeedLimit } from "../set.ts"
 
 const categoryDescriptions: Readonly<Record<string, string>> = {
   "Cleaning tools and uses": "Recognizing cleaning tools and matching each one to the job.",
