@@ -77,14 +77,20 @@ const localSessionShell = (request) => {
 
 // Custom set parameters select client-side order, never a different HTML
 // document. Share the canonical document cache entry while retaining the full
-// navigation URL for the player's exact receipt validation.
+// navigation URL for the player's exact receipt validation. Hazard review is
+// also a client-side view of that document, not a new content identity.
 const customPracticeDocument = (request) => {
   if (request.mode !== "navigate") return undefined
   const url = new URL(request.url)
   if (url.origin !== self.location.origin ||
     !/^\/(?:history\/[a-z0-9][a-z0-9._-]*-v[1-9][0-9]*\/)?(?:practice\/session\/[a-z0-9][a-z0-9._-]*\/question|hazards\/session\/[a-z0-9][a-z0-9._-]*\/scene)\/[1-9][0-9]*\/$/.test(url.pathname) ||
-    url.searchParams.getAll("set").length !== 1 || url.searchParams.getAll("position").length !== 1 ||
-    [...url.searchParams.keys()].some((key) => key !== "set" && key !== "position")) return undefined
+    [...url.searchParams.keys()].some((key) => key !== "set" && key !== "position" && key !== "review")) return undefined
+  const review = url.searchParams.getAll("review")
+  if (review.length > 0 && (review.length !== 1 || review[0] !== "1" || !url.pathname.includes("/hazards/session/"))) return undefined
+  const setCount = url.searchParams.getAll("set").length
+  const positionCount = url.searchParams.getAll("position").length
+  if (!(setCount === 1 && positionCount === 1) &&
+    !(review.length === 1 && setCount === 0 && positionCount === 0)) return undefined
   return `${url.origin}${url.pathname}`
 }
 

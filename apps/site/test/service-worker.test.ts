@@ -645,6 +645,13 @@ describe("custom practice document cache identity", () => {
           expect(normalize({ mode: "cors", url: canonical + query })).toBeUndefined()
           expect(normalize({ mode: "navigate", url: canonical.replace("study.example", "other.example") + query })).toBeUndefined()
         }
+        for (const query of ["?review=1", "?review=1&position=1&set=x", "?set=x&review=1&position=1"]) {
+          expect(normalize({ mode: "navigate", url: canonical + query })).toBe(path.startsWith("/hazards/") ? canonical : undefined)
+          expect(normalize({ mode: "cors", url: canonical + query })).toBeUndefined()
+        }
+        for (const query of ["?review=0", "?review=1&review=1", "?review=1&set=x", "?review=1&position=1", "?review=1&extra=1", "?review=1&set=x&position=1&position=2"]) {
+          expect(normalize({ mode: "navigate", url: canonical + query })).toBeUndefined()
+        }
         for (const query of ["?set=x", "?position=1", "?set=x&set=y&position=1", "?set=x&position=1&position=2", "?set=x&position=1&extra=1"]) {
           expect(normalize({ mode: "navigate", url: canonical + query })).toBeUndefined()
         }
