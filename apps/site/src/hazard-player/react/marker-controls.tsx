@@ -1,3 +1,4 @@
+import { MarkerMoves } from "./marker-moves.tsx"
 import type { ReactNode } from "react"
 import { assessVisualMarkers, type MarkerAssessment } from "../assessment.ts"
 import type { ReleasedPostcommitScene } from "../attempt.ts"
@@ -52,8 +53,6 @@ const markerFeedback = (
   )
 }
 
-const markerStep = 0.025
-
 export const HazardMarkerControls = () => {
   const { actions, meta, state } = useHazardPlayer()
   const editable = isEditableHazardState(state)
@@ -78,48 +77,7 @@ export const HazardMarkerControls = () => {
                 <strong>Marker {index + 1}</strong>: {Math.round(marker.x * 100)}% from the
                 left, {Math.round(marker.y * 100)}% from the top
               </p>
-              {saved ? null : <div aria-label={`Move marker ${index + 1}`} className="hazard-player__marker-moves">
-                <button
-                  aria-label={`Move marker ${index + 1} left`}
-                  disabled={!editable}
-                  onClick={() => actions.moveMarker(marker.id, -markerStep, 0)}
-                  type="button"
-                >
-                  Left
-                </button>
-                <button
-                  aria-label={`Move marker ${index + 1} right`}
-                  disabled={!editable}
-                  onClick={() => actions.moveMarker(marker.id, markerStep, 0)}
-                  type="button"
-                >
-                  Right
-                </button>
-                <button
-                  aria-label={`Move marker ${index + 1} up`}
-                  disabled={!editable}
-                  onClick={() => actions.moveMarker(marker.id, 0, -markerStep)}
-                  type="button"
-                >
-                  Up
-                </button>
-                <button
-                  aria-label={`Move marker ${index + 1} down`}
-                  disabled={!editable}
-                  onClick={() => actions.moveMarker(marker.id, 0, markerStep)}
-                  type="button"
-                >
-                  Down
-                </button>
-                <button
-                  aria-label={`Remove marker ${index + 1}`}
-                  disabled={!editable}
-                  onClick={() => actions.removeMarker(marker.id)}
-                  type="button"
-                >
-                  Remove
-                </button>
-              </div>}
+              {saved ? null : <MarkerMoves markerId={marker.id} number={index + 1} disabled={!editable} onMove={actions.moveMarker} onRemove={actions.removeMarker} />}
               {state.tag === "revealed" && assessment?.markers[index] !== undefined ? (
                 <div className={`hazard-player__marker-feedback hazard-marker-${assessment.markers[index].kind}`}>
                   {markerFeedback(assessment.markers[index], state.payload)}

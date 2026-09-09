@@ -1,3 +1,4 @@
+import { MarkerMoves } from "../../hazard-player/react/marker-moves.tsx"
 import { NeutralZoneInputs } from "../../hazard-player/react/neutral-zone-inputs.tsx"
 import { useCallback, useRef, useState, type ReactNode, type MouseEvent as ReactMouseEvent } from "react"
 import { useSimulationPlayer } from "./player-provider.tsx"
@@ -5,8 +6,6 @@ import type {
   SimulationHazardSessionItem,
   SimulationResponse
 } from "../model.ts"
-
-const markerStep = 0.025
 
 interface SimulationHazardProps {
   readonly answerEditBlocked: boolean
@@ -177,21 +176,7 @@ export const SimulationHazardMarkerList = ({ answerEditBlocked, response }: Pick
         {markers.length === 0 ? null : <ol className="hazard-player__marker-list">
           {markers.map((marker, index) => <li key={marker.id}>
             <p><strong>Marker {index + 1}</strong>: {Math.round(marker.x * 100)}% from the left, {Math.round(marker.y * 100)}% from the top</p>
-            <div aria-label={`Move marker ${index + 1}`} className="hazard-player__marker-moves">
-              {([
-                ["left", -markerStep, 0],
-                ["right", markerStep, 0],
-                ["up", 0, -markerStep],
-                ["down", 0, markerStep]
-              ] as const).map(([direction, deltaX, deltaY]) => <button
-                aria-label={`Move marker ${index + 1} ${direction}`}
-                disabled={answerEditBlocked}
-                key={direction}
-                onClick={() => actions.moveHazardMarker(marker.id, deltaX, deltaY)}
-                type="button"
-              >{direction[0]?.toUpperCase()}{direction.slice(1)}</button>)}
-              <button aria-label={`Remove marker ${index + 1}`} disabled={answerEditBlocked} onClick={() => actions.removeHazardMarker(marker.id)} type="button">Remove</button>
-            </div>
+            <MarkerMoves markerId={marker.id} number={index + 1} disabled={answerEditBlocked} onMove={actions.moveHazardMarker} onRemove={actions.removeHazardMarker} />
           </li>)}
         </ol>}
       </section>
