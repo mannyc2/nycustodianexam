@@ -1,3 +1,4 @@
+import { VisualHazardReview, NonvisualHazardReview } from "./review.tsx"
 import { ReviewSceneBootstrap } from "../../review/model.ts"
 import { assembleHazardDrill } from "../../practice/hazard-set.ts"
 import { parsePracticeSetId } from "../../practice/set.ts"
@@ -158,6 +159,10 @@ const bootstrap = (): void => {
       return
     }
   }
+  if (params.get("review") === "1") {
+    document.title = "Saved hazard review — NYC Custodian"
+    document.querySelector('.directional-nav[aria-label="Hazard scene navigation"]')?.remove()
+  }
   mount.dataset.hazardAttemptId = hazardAttemptId(receipt)
   const controller = createHazardController({
     scene,
@@ -173,7 +178,7 @@ const bootstrap = (): void => {
 
   root.render(
     <HazardPlayer.Provider controller={controller}>
-      {mode === "visual" ? <VisualHazardPractice {...(positionLabel === undefined ? {} : { positionLabel })} /> : <NonvisualHazardPractice {...(positionLabel === undefined ? {} : { positionLabel })} />}
+      {params.get("review") === "1" ? (mode === "visual" ? <VisualHazardReview /> : <NonvisualHazardReview />) : mode === "visual" ? <VisualHazardPractice {...(positionLabel === undefined ? {} : { positionLabel })} /> : <NonvisualHazardPractice {...(positionLabel === undefined ? {} : { positionLabel })} />}
     </HazardPlayer.Provider>
   )
 

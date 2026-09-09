@@ -1,3 +1,4 @@
+import { hazardReviewPath } from "../../hazard-player/review-path.ts"
 import { Fragment, useEffect, useRef, useState } from "react"
 import type { StudyActivityRow, StudyActivityState } from "../model.ts"
 import { UnavailableAttempts } from "./unavailable-attempts.tsx"
@@ -80,7 +81,7 @@ export const ActivityHistory = ({
             <time className="history-date" dateTime={new Date(row.recordedAt).toISOString()}>{dateFormat.format(row.recordedAt)}</time>
             <div className="history-session"><strong>{row.label}</strong><span>{kindLabels[row.kind]}</span></div>
             <span className="history-outcome">{row.outcome}</span>
-            {row.href === null ? <span className="history-feedback-unavailable">Explanation unavailable</span> : <a href={row.href} aria-label={`Open saved feedback for ${row.label.toLowerCase()}`}>Feedback</a>}
+            {row.href === null ? <span className="history-feedback-unavailable">Explanation unavailable</span> : <a href={row.kind === "hazards" ? hazardReviewPath(row.href) : row.href} aria-label={`Open saved feedback for ${row.label.toLowerCase()}`}>Feedback</a>}
           </li>)}</ul>
         </Fragment>)}
         {rows.length > 6 ? <div className="history-foot">

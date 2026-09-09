@@ -93,3 +93,16 @@ it("focuses broken Hazard closure recovery without navigating", async () => {
   expect(controller.getSnapshot().state.failure).toBe(false)
   controller.dispose()
 })
+
+it("adds Review intent without changing historical drill coordinates", async () => {
+  const { hazardReviewPath } = await import("../src/hazard-player/review-path.ts")
+  const path = "/history/release-a-v1/hazards/session/release-a-nonvisual/scene/2/?set=custom-test&position=2#feedback"
+  const review = hazardReviewPath(path)
+  const url = new URL(review, "https://local.invalid")
+  expect(url.pathname).toBe(new URL(path, "https://local.invalid").pathname)
+  expect(url.searchParams.get("set")).toBe("custom-test")
+  expect(url.searchParams.get("position")).toBe("2")
+  expect(url.hash).toBe("#feedback")
+  expect(url.searchParams.get("review")).toBe("1")
+  expect(hazardReviewPath(review)).toBe(review)
+})

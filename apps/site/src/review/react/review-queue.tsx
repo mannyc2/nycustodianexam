@@ -1,3 +1,4 @@
+import { hazardReviewPath } from "../../hazard-player/review-path.ts"
 import { ReviewQueueProvider, useReviewQueue, scopes, type ReviewProviderProps } from "./provider.tsx"
 import { useEffect, useRef, useState } from "react"
 import { ActivityHistory } from "../../study/react/history.tsx"
@@ -55,7 +56,7 @@ const ReviewItem = ({
               <ReviewReasons reasons={item.reasons} />
             </div>
             <div className="question-controls">
-              <a className="button button-primary" href={item.itemUrl}>Read explanation</a>
+              <a className="button button-primary" href={item.kind === "question" ? item.itemUrl : hazardReviewPath(item.itemUrl)}>Read explanation</a>
               <button
                 className="review-finish-action"
                 disabled={disabled}
@@ -99,7 +100,7 @@ export const ReviewHeader = () => {
       <h1 id="review-queue-heading">{state.tag === "loading" ? "Loading your review queue" : state.tag === "empty" ? "Your review queue is clear." : `${items.length} ${items.length === 1 ? "item" : "items"} to review`}</h1>
       <p>{state.tag === "loading" ? state.action === "rebuild" ? "Rebuilding from your saved attempts and finished reviews…" : "Reading the attempts saved on this device…" : state.tag === "empty" ? "Nothing is waiting for review. Try another practice set, explore a scene, or come back after your next saved answer." : "Revisit the questions you missed or flagged and the visual scenes that need another look. Untimed, with your original saved feedback."}</p>
       {state.tag === "empty" ? null : <div className="question-controls">
-        {items[0] === undefined ? <a className="button button-primary" href="/practice/#practice-sets">Choose a practice set</a> : <a className="button button-primary" href={items[0].itemUrl}>Read first explanation</a>}
+        {items[0] === undefined ? <a className="button button-primary" href="/practice/#practice-sets">Choose a practice set</a> : <a className="button button-primary" href={items[0].kind === "question" ? items[0].itemUrl : hazardReviewPath(items[0].itemUrl)}>Read first explanation</a>}
         <a className="button button-secondary" href="/practice/">Practice and activity</a>
       </div>}
       {state.tag === "empty" ? null : state.tag === "loading" ? <span role="status" className="sr-only">Reading your review queue.</span> : <dl className="figure-strip">
