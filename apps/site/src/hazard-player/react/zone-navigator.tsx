@@ -5,6 +5,7 @@ import { useHazardPlayer } from "./context.tsx"
 export const HazardZoneNavigator = () => {
   const { actions, meta, scene, state } = useHazardPlayer()
   const editable = isEditableHazardState(state)
+  const saved = state.tag === "revealed" || state.tag === "reveal_failed"
   const selected = new Set(draftFromState(state).selectedZoneOrders)
 
   return (
@@ -15,8 +16,9 @@ export const HazardZoneNavigator = () => {
     >
       <legend>Observable zones</legend>
       <p id={`${meta.instanceId}-zone-help`}>
-        Select a zone when its neutral description gives you concern. Selecting does not submit.
-        The order carries no meaning and the number of zones is not a hint.
+        {saved
+          ? "Your saved zone choices are shown below and cannot be changed. Compare them with the explanation."
+          : "Select a zone when its neutral description gives you concern. Selecting does not submit. The order carries no meaning and the number of zones is not a hint."}
       </p>
       <NeutralZoneInputs zones={scene.neutralPreAnswer.zones} selected={selected} name="hazard-zone" onToggle={actions.toggleZone} />
     </fieldset>
