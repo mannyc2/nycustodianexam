@@ -1,0 +1,36 @@
+{
+  "sourceCommit": "18b09947b860243279656b8c7da9d11e3fa00656",
+  "captures": [
+    {
+      "file": "nonvisual-saved-1042-page.png",
+      "width": 1042,
+      "mode": "nonvisual",
+      "state": "saved",
+      "area": "page",
+      "path": "/hazards/session/launch-v1-nonvisual/scene/1/?review=1",
+      "sha256": "96d22ced74963a8b8f00ed6e2fd0a9ea98e93940be4b7eb5b61aff74bad6f82c"
+    },
+    {
+      "file": "zone-controls-1042.png",
+      "sha256": "634dab8d80634ac561c7c2699bf7616a3eb5d5ff6843b05df4780db184adb0ba",
+      "width": 1042,
+      "area": "inspected fieldset crop"
+    },
+    {
+      "file": "nonvisual-saved-384-page.png",
+      "width": 384,
+      "mode": "nonvisual",
+      "state": "saved",
+      "area": "page",
+      "path": "/hazards/session/launch-v1-nonvisual/scene/1/?review=1",
+      "sha256": "3fb4f8b037b3329f24edfe99ce8bd136a670ff646a6d9f62f268e8b8f2b6532a"
+    },
+    {
+      "file": "zone-controls-384.png",
+      "sha256": "7a4b9ad08f9af680a1f777b9579cae4f94e7552b7c1b1e3aaf180f6ce0cefec1",
+      "width": 384,
+      "area": "inspected fieldset crop"
+    }
+  ],
+  "errors": []
+}
