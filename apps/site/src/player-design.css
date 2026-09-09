@@ -89,6 +89,7 @@
   .player-feedback .rationale-verdict[data-verdict="incorrect"] { color: var(--color-danger); }
   .player-feedback .feedback-confusion { padding: var(--space-4); border: var(--border-thin) solid var(--color-info); border-radius: var(--radius-md); background: var(--color-info-surface); }
   .study-player .feedback-sources { padding: var(--space-3) var(--space-4); border: var(--border-thin) solid var(--color-border); border-radius: var(--radius-md); background: var(--color-canvas); color: var(--color-text); }
+  .study-player .feedback-sources blockquote { margin-inline: 0; }
   .study-player .feedback-sources summary { min-block-size: var(--target-default); padding-block: var(--space-2); color: var(--color-action); font-weight: var(--weight-bold); cursor: pointer; }
 
   .hazard-player__workspace { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); align-items: start; gap: var(--space-5); min-inline-size: 0; }
