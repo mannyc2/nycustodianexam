@@ -44,6 +44,7 @@ export const makeScreenStore = <State, Target extends string>(input: {
     getSnapshot: () => snapshot,
     getHydrationSnapshot: () => hydrationSnapshot,
     subscribe: (listener) => {
+      if (!active) return () => {}
       listeners.add(listener)
       return () => {
         listeners.delete(listener)
@@ -71,6 +72,7 @@ export const makeScreenStore = <State, Target extends string>(input: {
       notify()
     },
     acknowledgeRequest: (requestId) => {
+      if (!active) return
       if (
         snapshot.focusRequest?.id !== requestId &&
         snapshot.announcementRequest?.id !== requestId

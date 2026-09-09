@@ -212,3 +212,10 @@ The Review bootstrap still retained activity-read state and repeatedly rendered 
 Four new controller tests cover successful-focus acknowledgment without rereading history, initial/rebuild and stale read ordering, unavailable history with retained recovery focus, and ignored late results/commands after disposal. All 22 targeted Review controller/projection tests passed. Site typecheck, 171-module boundary check, 154-source/46-fixture convention check, maintained layout (319 files), production build and artifact/bundle checks passed. All 24 Review queue and Study hub browser cases passed across Chromium, Firefox and WebKit (16.9 seconds), including durable finished history and keyboard focus. The first browser execution request timed out in automatic execution review before starting; its permitted single retry ran successfully. Logs: `/tmp/nyc-review-screen-build.log`, `/tmp/nyc-review-screen-browser.log`.
 
 This closes the inspected Review bootstrap history-orchestration gap; it does not prove every island's mount/unmount/remount behavior or add new visual acceptance.
+
+
+## Shared screen-store disposal
+
+Disposed screen stores now ignore new subscriptions and late focus/announcement acknowledgments, in addition to publications and initialization. This preserves the final snapshot identity when an already queued provider effect runs after disposal. Two regression tests cover subscription removal/resubscription and late operations after repeated disposal.
+
+Validation: all 383 site tests across 47 files passed, and the site TypeScript check passed. The production build log records successful generation and artifact verification for 1,352 documents, 224 item-scoped artifacts, 291 delivery assets and 60 safe shell URLs. Logs: `/tmp/nyc-screen-disposal-site-tests.log`, `/tmp/nyc-screen-disposal-build.log`. This proves the shared store behavior; every island's actual mount/unmount/remount lifecycle still requires runtime evidence. No new visual acceptance is claimed.
