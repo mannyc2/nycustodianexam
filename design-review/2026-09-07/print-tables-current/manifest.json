@@ -1,0 +1,103 @@
+{
+  "sourceCommit": "3a77b749c881f5e1b8527864ada2ea415485b841",
+  "rasterOutput": "/tmp/nycustodian-print-final-products-pages",
+  "captures": [
+    {
+      "id": "blank-answer-sheet-us-letter-normal",
+      "sha256": "6f647d1fabc335a720596c4f549f44b80c9c0467b96d181c8a43c523de4e5429",
+      "product": "blank-answer-sheet",
+      "count": 45,
+      "paper": "us-letter",
+      "large": false,
+      "estimatedPages": 3,
+      "pages": 3,
+      "pageSize": "612 x 792 pts (letter)",
+      "searchableText": true
+    },
+    {
+      "id": "blank-answer-sheet-us-letter-large-wide",
+      "sha256": "560eb490f1e2bcbb9d3a0b26b3e1ebf43ea014d8dda084de8cbd7176ec05842d",
+      "product": "blank-answer-sheet",
+      "count": 45,
+      "paper": "us-letter",
+      "large": true,
+      "estimatedPages": 7,
+      "pages": 7,
+      "pageSize": "612 x 792 pts (letter)",
+      "searchableText": true
+    },
+    {
+      "id": "blank-answer-sheet-a4-normal",
+      "sha256": "b75b57fda1d17f7c5798229b817dd3909f4084aca4bb932ecf028ee3aee9f893",
+      "product": "blank-answer-sheet",
+      "count": 45,
+      "paper": "a4",
+      "large": false,
+      "estimatedPages": 3,
+      "pages": 3,
+      "pageSize": "594.96 x 841.92 pts (A4)",
+      "searchableText": true
+    },
+    {
+      "id": "blank-answer-sheet-a4-large-wide",
+      "sha256": "4591af58c50926fb5e62bf3986135850671be0d5b6d331d985d8c7cbfcadd9a0",
+      "product": "blank-answer-sheet",
+      "count": 45,
+      "paper": "a4",
+      "large": true,
+      "estimatedPages": 6,
+      "pages": 6,
+      "pageSize": "594.96 x 841.92 pts (A4)",
+      "searchableText": true
+    },
+    {
+      "id": "answer-key-us-letter-normal",
+      "sha256": "bf7866e7016a00d7bf8c4105d2c503efffb07e00c65dbd056758a17cec9e1f41",
+      "product": "answer-key",
+      "count": 10,
+      "paper": "us-letter",
+      "large": false,
+      "estimatedPages": 2,
+      "pages": 2,
+      "pageSize": "612 x 792 pts (letter)",
+      "searchableText": true
+    },
+    {
+      "id": "answer-key-us-letter-large-wide",
+      "sha256": "1ecae1564250c51d8bb6e9e7ee0becffd843410d41b3c7b81caf33496badfa23",
+      "product": "answer-key",
+      "count": 10,
+      "paper": "us-letter",
+      "large": true,
+      "estimatedPages": 2,
+      "pages": 2,
+      "pageSize": "612 x 792 pts (letter)",
+      "searchableText": true
+    },
+    {
+      "id": "answer-key-a4-normal",
+      "sha256": "4b77dd4610301d7a15027f698c99b092f024a9bfa382af8b7a40f98a018df7d7",
+      "product": "answer-key",
+      "count": 10,
+      "paper": "a4",
+      "large": false,
+      "estimatedPages": 2,
+      "pages": 2,
+      "pageSize": "594.96 x 841.92 pts (A4)",
+      "searchableText": true
+    },
+    {
+      "id": "answer-key-a4-large-wide",
+      "sha256": "711b897a14dec78b8b397a5cb522ccd4291c19da0ffb4cf507cfab1c17644309",
+      "product": "answer-key",
+      "count": 10,
+      "paper": "a4",
+      "large": true,
+      "estimatedPages": 2,
+      "pages": 2,
+      "pageSize": "594.96 x 841.92 pts (A4)",
+      "searchableText": true
+    }
+  ],
+  "errors": []
+}

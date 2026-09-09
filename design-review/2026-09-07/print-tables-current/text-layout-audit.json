@@ -1,0 +1,137 @@
+{
+  "method": "Poppler bbox-layout and pdftohtml XML at zoom 1; dominant size by extracted character count. Small labels are not certified by this check.",
+  "results": [
+    {
+      "file": "answer-key-a4-large-wide.pdf",
+      "pages": 2,
+      "outOfPageWords": [],
+      "orphanedReceiptLabels": [],
+      "dominantTextSizePt": 18.0,
+      "expectedBodySizePt": 18,
+      "dominantTextMeetsBodySize": true,
+      "minimumTextSizePt": 18.0,
+      "largePrintMinimumMet": true,
+      "charactersByPointSize": {
+        "18.0": 447,
+        "22.0": 10,
+        "27.0": 10
+      }
+    },
+    {
+      "file": "answer-key-a4-normal.pdf",
+      "pages": 2,
+      "outOfPageWords": [],
+      "orphanedReceiptLabels": [],
+      "dominantTextSizePt": 12.0,
+      "expectedBodySizePt": 12,
+      "dominantTextMeetsBodySize": true,
+      "minimumTextSizePt": 12.0,
+      "largePrintMinimumMet": true,
+      "charactersByPointSize": {
+        "12.0": 473,
+        "20.0": 10,
+        "25.0": 10
+      }
+    },
+    {
+      "file": "answer-key-us-letter-large-wide.pdf",
+      "pages": 2,
+      "outOfPageWords": [],
+      "orphanedReceiptLabels": [],
+      "dominantTextSizePt": 18.0,
+      "expectedBodySizePt": 18,
+      "dominantTextMeetsBodySize": true,
+      "minimumTextSizePt": 18.0,
+      "largePrintMinimumMet": true,
+      "charactersByPointSize": {
+        "18.0": 448,
+        "22.0": 10,
+        "27.0": 10
+      }
+    },
+    {
+      "file": "answer-key-us-letter-normal.pdf",
+      "pages": 2,
+      "outOfPageWords": [],
+      "orphanedReceiptLabels": [],
+      "dominantTextSizePt": 12.0,
+      "expectedBodySizePt": 12,
+      "dominantTextMeetsBodySize": true,
+      "minimumTextSizePt": 12.0,
+      "largePrintMinimumMet": true,
+      "charactersByPointSize": {
+        "12.0": 474,
+        "20.0": 10,
+        "25.0": 10
+      }
+    },
+    {
+      "file": "blank-answer-sheet-a4-large-wide.pdf",
+      "pages": 6,
+      "outOfPageWords": [],
+      "orphanedReceiptLabels": [],
+      "dominantTextSizePt": 18.0,
+      "expectedBodySizePt": 18,
+      "dominantTextMeetsBodySize": true,
+      "minimumTextSizePt": 18.0,
+      "largePrintMinimumMet": true,
+      "charactersByPointSize": {
+        "18.0": 1026,
+        "22.0": 18,
+        "27.0": 18,
+        "31.0": 180
+      }
+    },
+    {
+      "file": "blank-answer-sheet-a4-normal.pdf",
+      "pages": 3,
+      "outOfPageWords": [],
+      "orphanedReceiptLabels": [],
+      "dominantTextSizePt": 12.0,
+      "expectedBodySizePt": 12,
+      "dominantTextMeetsBodySize": true,
+      "minimumTextSizePt": 12.0,
+      "largePrintMinimumMet": true,
+      "charactersByPointSize": {
+        "12.0": 1016,
+        "18.0": 180,
+        "20.0": 18,
+        "25.0": 18
+      }
+    },
+    {
+      "file": "blank-answer-sheet-us-letter-large-wide.pdf",
+      "pages": 7,
+      "outOfPageWords": [],
+      "orphanedReceiptLabels": [],
+      "dominantTextSizePt": 18.0,
+      "expectedBodySizePt": 18,
+      "dominantTextMeetsBodySize": true,
+      "minimumTextSizePt": 18.0,
+      "largePrintMinimumMet": true,
+      "charactersByPointSize": {
+        "18.0": 1073,
+        "22.0": 18,
+        "27.0": 18,
+        "31.0": 180
+      }
+    },
+    {
+      "file": "blank-answer-sheet-us-letter-normal.pdf",
+      "pages": 3,
+      "outOfPageWords": [],
+      "orphanedReceiptLabels": [],
+      "dominantTextSizePt": 12.0,
+      "expectedBodySizePt": 12,
+      "dominantTextMeetsBodySize": true,
+      "minimumTextSizePt": 12.0,
+      "largePrintMinimumMet": true,
+      "charactersByPointSize": {
+        "12.0": 1016,
+        "18.0": 180,
+        "20.0": 18,
+        "25.0": 18
+      }
+    }
+  ]
+}

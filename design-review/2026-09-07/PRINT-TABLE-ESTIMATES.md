@@ -24,3 +24,10 @@ NYCUSTODIAN_PRINT_CAPTURE_OUTPUT=/mnt/models/dev/nycustodianexam/implementation/
 The manifest retains exact PDF hashes, source commit, searchable-text checks, and paper dimensions. This verifies counts for the captured 45-question sheets and ten-answer keys, not every possible count, font environment, printer, or appended packet. It is not an all-page visual acceptance claim.
 
 Explanations and announcement fact sheets remain unresolved as documented in `PRINT-FINAL-PRODUCTS-BASELINE.md`. Their complete assembled rationale/fact/source content must inform estimates; do not reuse these table metrics for prose.
+
+
+## Current table capture
+
+Source `3a77b749c881f5e1b8527864ada2ea415485b841` was rebuilt through the integrated verification command before capturing eight PDFs into `print-tables-current/`. All eight hashes match the new manifest, capture errors are empty, and all 27 pages retain the table counts in the matrix above. The text-layout audit reports no extracted words outside page bounds or orphaned receipt labels; dominant text is 12pt normal and 18pt large. Full visual inspection of these new PDFs remains pending. The older `51eb50d` answer-key PDFs were inspected on all eight pages: rows and repeated headings were intact, but their small “Saved print preview” label predates the current print CSS. That historical inspection is not acceptance of the new capture.
+
+The new capture uses the current print providers and CSS, including hiding that screen-only label. It supersedes the older table PDFs as the next visual-review target. Exact evidence is in `print-tables-current/manifest.json` and `text-layout-audit.json`; capture log: `/tmp/nyc-current-tables-capture.log`.

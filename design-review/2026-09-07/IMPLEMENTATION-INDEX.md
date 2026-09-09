@@ -26,7 +26,7 @@ The original [snapshot README](README.md), imported exports and `current-screens
 | Exam records | [EXAM-RECORD-REVIEW.md](EXAM-RECORD-REVIEW.md) | Source-bound facts, filters, tabs and announcement hierarchy. |
 | Report | [REPORT-REVIEW.md](REPORT-REVIEW.md) | Shared-component adaptation; local draft recovery and dormant intake. No dedicated supplied Report prototype. |
 | Print screen and earlier PDFs | [PRINT-OUTPUT-REVIEW.md](PRINT-OUTPUT-REVIEW.md) | Preview states and earlier question/tool/hazard output passes; observations are revision-specific. |
-| Latest print tables | [PRINT-TABLE-ESTIMATES.md](PRINT-TABLE-ESTIMATES.md) | Eight PDF estimates match measured pagination for the captured counts/settings. |
+| Latest print tables | [PRINT-TABLE-ESTIMATES.md](PRINT-TABLE-ESTIMATES.md) | Eight current PDFs at 3a77b74 retain matching estimates across 27 pages; full visual inspection pending. |
 | Fact-sheet heading correction | [PRINT-FACT-HEADINGS.md](PRINT-FACT-HEADINGS.md) | Four checksummed PDFs, 185 pages pass automated layout checks; all four formats visually inspected (185 pages). |
 | Latest print fragmentation/type audit | [PRINT-RECEIPT-PAIRS.md](PRINT-RECEIPT-PAIRS.md) | Eight regenerated PDFs; source labels kept with values and all extracted large text at least 18pt. Final visual review remains partial. |
 | Latest prose print | [PRINT-PROSE-ESTIMATES.md](PRINT-PROSE-ESTIMATES.md) | Content-based estimates and corrected 18pt body text; eight checksummed PDFs and text-layout audit. |
@@ -48,4 +48,4 @@ Start visual review with the [comparison gallery](implementation-comparison.html
 
 ## Latest automated checkpoint
 
-See `FINAL-REVIEW-VALIDATION.md` for the latest integrated checkpoint at `364835e` (504 tests, with a separately passing historical validator after sandbox EPERM). Earlier runs retain their exact source and scope in the individual documents; counts from separate runs are not summed into an invented single run.
+See `FINAL-REVIEW-VALIDATION.md` for the latest integrated checkpoint at `3a77b74` (506 tests, with a separately passing historical validator after sandbox EPERM). Earlier runs retain their exact source and scope in the individual documents; counts from separate runs are not summed into an invented single run.
