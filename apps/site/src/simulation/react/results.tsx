@@ -1,3 +1,4 @@
+import { QuestionIllustration } from "../../question-illustration.tsx"
 import { useEffect, useRef, useSyncExternalStore } from "react"
 import { createSimulationResultsController } from "../controller.ts"
 import {
@@ -376,6 +377,7 @@ export const SimulationResults = ({ controller }: { readonly controller: Results
             return <li className="reference-card" key={itemId}>
               <h3 id={`result-question-${item.position}`} tabIndex={-1}>Question {item.position}: {questionResult?.correct ? "Correct" : questionResult?.selectedOptionId === null ? "Unanswered" : "Incorrect"}</h3>
               <p>{item.question.prompt}</p>
+              <QuestionIllustration illustration={"illustration" in item.question ? item.question.illustration : undefined} />
               {questionResult === undefined || answer === undefined
                 ? <p role="alert">The saved result for this item is unavailable.</p>
                 : <QuestionResultFeedback answer={answer} item={item} result={questionResult} />}

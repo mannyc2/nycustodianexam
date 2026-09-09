@@ -21,11 +21,14 @@ describe("question illustration compilation", () => {
   it("publishes only neutral description and exact asset receipts", async () => {
     const compiled = await compile(binding)
     const stimulus = compiled.questions[0]!.precommit.illustration!
+    for (const derivative of stimulus.derivatives) {
+      expect(compiled.assets).toContainEqual(expect.objectContaining(derivative))
+    }
     expect(stimulus.masterSha256).toBe(eligible.master.sha256)
-    expect(stimulus.derivatives).toEqual(eligible.derivatives.map(({ kind, sha256, bytes }) => ({ kind, sha256, bytes })))
+    expect(stimulus.derivatives).toEqual(eligible.derivatives.map(({ kind, path, sha256, bytes }) => ({ kind, path, sha256, bytes })))
     expect(Object.keys(stimulus).sort()).toEqual(["derivatives", "masterSha256", "neutralDescription"])
     expect(JSON.stringify(stimulus)).not.toContain(eligible.conceptId)
-    expect(JSON.stringify(stimulus)).not.toContain("content/")
+    for (const derivative of stimulus.derivatives) expect(derivative.path).toMatch(/^content\/assets\/derivatives\/tools\/t[0-9]+-(?:web|phone|print)\.png$/)
   })
   it("rejects an image added without a new editorial review", async () => {
     await expect(compile(binding, false)).rejects.toMatchObject({ stage: "relation", detail: expect.stringContaining("changed after its recorded review") })

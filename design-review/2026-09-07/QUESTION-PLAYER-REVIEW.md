@@ -85,3 +85,31 @@ build/artifact checks pass with unchanged released content and bundle measuremen
 The tests use synthetic pairings, not newly reviewed learner questions. Neutral
 image URL delivery, cache closure, rendering, and actual original illustrated
 content remain unfinished; no illustrated question has been released yet.
+
+## Neutral delivery and shared image view
+
+Inspection corrected an earlier assumption: accepted tool derivatives already use
+neutral `t001-web.png`-style paths, not answer-bearing Atlas route names. The image
+receipt now reuses those validated paths, checksums and sizes. Compiler tests
+assert that every emitted derivative belongs to the release asset closure. Existing
+byte verification, delivery manifests and explicit offline-pack receipts cover
+these images without aliases or duplicate downloads. Concept names and answer keys
+remain absent from the pre-answer image projection.
+
+A shared React image view is wired into question prompts, simulation questions
+and simulation results, with responsive phone/web sources, neutral alt text, and
+retryable missing-image feedback. Practice distinguishes illustrated questions
+from text questions. No actual illustrated question is released yet: presentation
+tests inject a synthetic binding and never submit it. Actual reviewed content,
+retained Review verification, print integration and visual comparison remain.
+
+The shared dependency symlinks had resolved workspace packages to the original
+checkout. Local untracked dependency overlays now resolve workspace packages into
+this implementation checkout while sharing third-party dependencies. The original
+checkout is untouched. Earlier package-local compiler tests exercised new code,
+but earlier site builds did not validate those schema changes. Fresh local site
+and browser typechecks and the production build now pass. Reusing the existing
+derivative schema keeps Settings within its unchanged limit at 487477 raw / 146602
+gzip / 123330 Brotli bytes. Two image-view unit tests and three browser cases cover
+responsive image loading and failure/retry recovery; these are functional tests,
+not proof of final visual fidelity or illustrated answer persistence.

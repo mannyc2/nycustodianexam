@@ -1,3 +1,4 @@
+import { ReleasedDerivativeAsset } from "./visual-release-inputs.ts"
 import { Schema } from "effect"
 import { ArtifactPathSegment, Sha256 } from "./content-primitives.ts"
 import {
@@ -7,15 +8,11 @@ import {
 } from "./question-metadata.ts"
 import { SourceReceipt, SupportedClaim } from "./source-evidence.ts"
 
-/** Reviewed stimulus identity; delivery resolves hashes to neutral image URLs. */
+/** Reviewed stimulus with the existing receipt-bound, neutral delivery paths. */
 export const QuestionIllustration = Schema.Struct({
   masterSha256: Sha256,
   neutralDescription: Schema.NonEmptyString,
-  derivatives: Schema.NonEmptyArray(Schema.Struct({
-    kind: Schema.Literals(["web", "phone", "print"]),
-    sha256: Sha256,
-    bytes: Schema.Natural
-  }))
+  derivatives: Schema.NonEmptyArray(ReleasedDerivativeAsset)
 })
 
 export class QuestionOption extends Schema.Class<QuestionOption>(

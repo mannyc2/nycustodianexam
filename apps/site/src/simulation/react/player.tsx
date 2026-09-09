@@ -1,3 +1,4 @@
+import { QuestionIllustration } from "../../question-illustration.tsx"
 import { useEffect, useRef, useState, useSyncExternalStore } from "react"
 import type { SimulationPlayerController } from "../controller.ts"
 import {
@@ -175,6 +176,7 @@ export const SimulationPlayer = ({
       </div>
       <header className="question-prompt">
         <h1 id="simulation-question-heading">{item.question.prompt}</h1>
+        <QuestionIllustration illustration={"illustration" in item.question ? item.question.illustration : undefined} />
         <p>Choose one answer. You can edit it until final submission. Feedback is not loaded during the simulation.</p>
       </header>
       <fieldset disabled={session.status !== "active" || answerEditBlocked}>

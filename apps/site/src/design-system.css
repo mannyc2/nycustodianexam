@@ -1059,3 +1059,9 @@
     .exams-cycle-summary .timeline strong { font-size: var(--text-xs); }
   }
 }
+
+@layer components {
+  .question-illustration { margin: 1.25rem 0; padding: 1rem; border: 1px solid var(--color-border); border-radius: .5rem; background: white; }
+  .question-illustration picture { display: block; }
+  .question-illustration img { display: block; width: 100%; max-height: 24rem; aspect-ratio: 1; object-fit: contain; }
+}

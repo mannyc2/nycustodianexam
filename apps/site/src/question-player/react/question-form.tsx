@@ -1,3 +1,4 @@
+import { QuestionIllustration } from "../../question-illustration.tsx"
 import { type FormEvent, type ReactNode } from "react"
 import { selectedOptionId } from "../state.ts"
 import { useQuestionPlayer } from "./context.tsx"
@@ -9,11 +10,11 @@ export const QuestionFrame = ({ children }: { readonly children: ReactNode }) =>
 )
 
 export const QuestionHeader = ({ positionLabel = "Practice question" }: { readonly positionLabel?: string }) => {
-  const { actions, state } = useQuestionPlayer()
+  const { actions, question, state } = useQuestionPlayer()
   const canChangeFlag = state.tag === "ready" || state.tag === "commit_failed"
   return (
     <div className="player-heading-row">
-      <span className="player-position">{positionLabel} · Text version</span>
+      <span className="player-position">{positionLabel} · {question.illustration === undefined ? "Text version" : "Illustrated question"}</span>
       <button
         aria-pressed={state.reviewIntent === "flagged"}
         className="button button-secondary player-flag"
@@ -33,6 +34,7 @@ export const QuestionPrompt = () => {
   return (
     <header className="question-prompt">
       <h1 id="question-heading">{question.prompt}</h1>
+      <QuestionIllustration illustration={question.illustration} />
       <p>
         {state.tag === "revealed"
           ? "Your answer is saved. Read the explanation, then continue when you are ready."

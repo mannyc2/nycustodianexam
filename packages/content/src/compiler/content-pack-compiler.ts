@@ -1192,7 +1192,7 @@ export const compileContentPack = Effect.fn("Content.compileContentPack")(
       const illustration = binding === undefined || illustratedRelease === undefined ? undefined : {
         masterSha256: binding.masterSha256,
         neutralDescription: binding.neutralDescription,
-        derivatives: illustratedRelease.derivatives.map(({ kind, sha256, bytes }) => ({ kind, sha256, bytes }))
+        derivatives: illustratedRelease.derivatives.map(({ kind, path, sha256, bytes }) => ({ kind, path, sha256, bytes }))
       }
       safeMembershipsByQuestionId.set(question.id, memberships)
       precommitQuestions.push({
