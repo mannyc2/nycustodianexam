@@ -57,3 +57,39 @@ it("reconstructs historical drills only under their receipt's own version prefix
     expect(resolveHazardDrill(wrongVersion, attempt)).toBeUndefined()
   }
 })
+
+it("guards setup commands and navigates to the exact selected modality once", async () => {
+  const { createHazardBuilderController } = await import("../src/practice/hazard-builder-controller.ts")
+  const paths: string[] = []
+  const controller = createHazardBuilderController({ sources, navigate: path => { paths.push(path) } })
+  for (const length of [0, -1, 1.5, 19, Number.NaN]) {
+    controller.actions.setLength(length)
+    controller.actions.start()
+  }
+  expect(paths).toHaveLength(0)
+  controller.actions.setLength(5)
+  controller.actions.setMode("nonvisual")
+  controller.actions.setSeed("repeat")
+  controller.actions.start()
+  controller.actions.start()
+  expect(paths).toEqual([assembleHazardDrill(sources, { seed: "repeat", length: 5, mode: "nonvisual" })[0]!.href])
+  controller.dispose()
+  const snapshot = controller.getSnapshot()
+  controller.actions.setMode("visual")
+  controller.actions.start()
+  expect(controller.getSnapshot()).toBe(snapshot)
+  expect(paths).toHaveLength(1)
+})
+
+it("focuses broken Hazard closure recovery without navigating", async () => {
+  const { createHazardBuilderController } = await import("../src/practice/hazard-builder-controller.ts")
+  let navigated = false
+  const controller = createHazardBuilderController({ sources: sources.map(source => ({ ...source, visualItemUrl: "/wrong/" })), navigate: () => { navigated = true } })
+  controller.actions.start()
+  expect(navigated).toBe(false)
+  expect(controller.getSnapshot().state.failure).toBe(true)
+  expect(controller.getSnapshot().focusRequest?.target).toBe("failure")
+  controller.actions.setSeed("retry")
+  expect(controller.getSnapshot().state.failure).toBe(false)
+  controller.dispose()
+})

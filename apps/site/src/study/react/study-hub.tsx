@@ -126,10 +126,7 @@ export const StudyHistory = () => {
   const { state: { historyState }, actions: { retryActivity } } = useStudy()
   return <ActivityHistory state={historyState} onRetry={retryActivity} />
 }
-export const StudyPracticeBuilder = () => {
-  const { state: { bootstrap } } = useStudy()
-  return <PracticeBuilder sources={bootstrap.reviewQueue.questions} />
-}
+export const StudyPracticeBuilder = () => <PracticeBuilder />
 export const StudyHub = () => {
   const { state: { hasActivity, compact } } = useStudy()
   return <div className={`study-hub${hasActivity ? " study-returning" : " study-first-visit"}`}>
