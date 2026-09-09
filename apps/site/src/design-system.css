@@ -884,6 +884,7 @@
   .home-scope-row h3, .task-card h3 { font-size: 1.0625rem; }
   :is([data-route-id="home"], [data-route-id="study-hub"], [data-route-id="review-queue"]) .site-footer-prominent { margin: 0 max(2.5rem, calc((100% - 80rem) / 2)) 2.75rem; border-radius: 0.5rem; }
   @media (max-width: 47.99rem) {
+    html:has(.nav-primary) { scroll-padding-block-end: calc(4.75rem + env(safe-area-inset-bottom)); }
     body:has(.nav-primary) { padding-block-end: calc(3.75rem + env(safe-area-inset-bottom)); }
     .site-header-inner { min-block-size: 3.25rem; padding: 0; }
     .site-header-inner > .brand { font-size: 0.9375rem; }
@@ -1067,3 +1068,28 @@
 }
 
 @layer components { .print-question-image { display: block; width: 100%; max-width: 3.5in; max-height: 3.5in; object-fit: contain; margin-block: 1rem; break-inside: avoid; } }
+
+
+@layer overrides {
+  .exams-cycle-summary .timeline-compact { display: none; }
+  @media (max-width: 47.99rem) {
+    .exams-cycle-summary .timeline-ample,
+    .exams-cycle-summary .timeline-note,
+    .exams-cycle-summary .timeline > .timeline-item-opening { display: none; }
+    .exams-cycle-summary .timeline-compact { display: inline; }
+    .exams-cycle-summary .timeline > li { grid-template-columns: minmax(0, 1fr) max-content; align-items: baseline; gap: var(--space-3); }
+    .exams-cycle-summary .timeline time { grid-column: 2; grid-row: 1; white-space: nowrap; }
+    .exams-cycle-summary .timeline strong { grid-column: 1; grid-row: 1; font-size: var(--text-sm); }
+  }
+}
+
+@layer overrides {
+  @media (max-width: 47.99rem) {
+    .exams-cycle-summary .exams-cycle-caveat { display: none; }
+    .exams-cycle-summary .notice h3 { font-size: 0.9375rem; }
+    .exams-cycle-summary .timeline > li { padding: 0.625rem 0.875rem; }
+    .exams-cycle-summary .timeline strong { font-size: 0.875rem; font-weight: 400; }
+    .exams-cycle-summary .timeline > .timeline-item-warning { background: var(--color-surface); }
+    .exams-cycle-summary .timeline-item-warning time { font-weight: 700; }
+  }
+}

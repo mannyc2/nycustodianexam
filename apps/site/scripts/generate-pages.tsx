@@ -1,3 +1,4 @@
+import { resolveAnnouncementTimeline } from "./announcement-timeline.ts"
 import historicalV3 from "../../../content/authoring/compatibility/launch-v1-v3-review.json"
 import { resolveFilingStatusReviews } from "./filing-status.ts"
 import { setupDestinations } from "../src/practice/setup-navigation.ts"
@@ -396,13 +397,15 @@ export const renderAnnouncementMilestones = (
     <details class="home-cycle-evidence"><summary>Sources and review dates</summary>${sourceProofLine(lineIds, evidence.map((fact) => fact.reviewedOn), sourceLineById, sourceById)}${sourceLineLinks(lineIds, sourceLineById, sourceById)}</details>
   </section>`
   if (sectionId === "exams-cycle") {
-    const notices = administration.map((fact) => `<aside class="notice ${fact.state === "unverified" || fact.state === "conflicting" ? "notice-warning" : "notice-neutral"}" data-administration-state="${fact.state}"><h3>${fact.state === "unverified" ? "Administration: Not confirmed" : escapeHtml(fact.label)}</h3><p>${escapeHtml(fact.value ?? fact.detail ?? "No administration value is asserted in this record.")}</p>${fact.conflictingValues.length === 0 ? "" : `<ul>${fact.conflictingValues.map((value) => `<li>${escapeHtml(value.value)}</li>`).join("")}</ul>`}</aside>`).join("")
+    const timeline = resolveAnnouncementTimeline(facts)
+    const caveat = "Later announcements or filing periods may exist outside this reviewed record. Next-cycle dates are not specified here."
+    const notices = (includeCaveat: boolean) => administration.map((fact) => `<aside class="notice ${fact.state === "unverified" || fact.state === "conflicting" ? "notice-warning" : "notice-neutral"}" data-administration-state="${fact.state}"><h3>${fact.state === "unverified" ? "Administration: Not confirmed" : escapeHtml(fact.label)}</h3><p>${escapeHtml(fact.value ?? fact.detail ?? "No administration value is asserted in this record.")}</p>${fact.conflictingValues.length === 0 ? "" : `<ul>${fact.conflictingValues.map((value) => `<li>${escapeHtml(value.value)}</li>`).join("")}</ul>`}${includeCaveat ? `<p>${caveat}</p>` : ""}</aside>`).join("")
     return `<section class="home-section announcement-cycle exams-cycle-summary" id="exams-cycle" aria-labelledby="exams-cycle-heading">
       <div class="section-header"><h2 id="exams-cycle-heading">Where the cycle stands</h2><p>Dates from the reviewed announcements. Each announcement keeps its own filing terms.</p></div>
-      <div class="exams-cycle-compact">${notices}</div>
-      ${milestones.length === 0 ? "" : `<ol class="timeline">${milestones.map((fact) => `<li><strong>${escapeHtml(fact.label)}</strong><p class="timeline-note">${escapeHtml(fact.value as string)}</p></li>`).join("")}</ol>`}
-      <div class="exams-cycle-ample">${notices}</div>
-      <p class="source-note">Later announcements or filing periods may exist outside this reviewed record. Next-cycle dates are not specified here.</p>
+      <div class="exams-cycle-compact">${notices(true)}</div>
+      <ol class="timeline">${timeline.map(entry => `<li class="timeline-item-${entry.kind}${entry.tone === "warning" ? ' timeline-item-warning' : ""}"><time class="timeline-date" datetime="${entry.date}"><span class="timeline-ample">${escapeHtml(publicDate(entry.date))}</span><span class="timeline-compact">${escapeHtml(publicDate(entry.date).replace(/, \d{4}$/, ""))}</span></time><strong><span class="timeline-ample">${escapeHtml(entry.label)}</span><span class="timeline-compact">${escapeHtml(entry.compactLabel)}</span></strong><p class="timeline-note">${escapeHtml(entry.note)}</p></li>`).join("")}</ol>
+      <div class="exams-cycle-ample">${notices(false)}</div>
+      <p class="source-note${administration.length === 0 ? "" : " exams-cycle-caveat"}">${caveat}</p>
       <details class="home-cycle-evidence"><summary>Sources and review dates</summary>${sourceProofLine(lineIds, evidence.map((fact) => fact.reviewedOn), sourceLineById, sourceById)}${sourceLineLinks(lineIds, sourceLineById, sourceById)}</details>
     </section>`
   }

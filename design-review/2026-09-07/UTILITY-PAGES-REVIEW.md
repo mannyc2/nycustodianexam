@@ -182,3 +182,50 @@ now records 16 desktop/compact crops, including closed, plan-only, and empty-ope
 filter states. Compact closed cards and desktop empty results were visually inspected;
 that inspection found and corrected the redundant empty-result selection prompt.
 Full-page comparison and source-aware duplicate exam-date consolidation remain.
+
+## Consolidated, source-bound timeline and full-page audit
+
+The Exams timeline now follows the accepted Landing prototype's four desktop
+milestones: June 11 opening, July 1 open-competitive closing, July 5 Jericho-only
+promotion deadline, and one August 22 announced date. Compact layout shows the
+three date rows, retains “Jericho only” and “not confirmed held,” and places the
+review caveat in the compact notice. The desktop date stays warning-colored.
+All original announcement facts and source links remain available.
+
+`content/authoring/announcement-timeline.json` contains explicit presentation
+entries. Dates were read from the released filing/date facts, not inferred from
+null effective-through fields or guessed by prose parsing. Each entry is bound to
+SHA-256 of ordered fact ID, category, label, state, value, detail, review date,
+sorted exam numbers, and sorted source-line IDs. The generator rejects missing,
+ambiguous, changed, or unrepresented date/administration facts and invalid dates.
+The digest detects source drift; this implementation review supplies the editorial
+interpretation. No live filing or administration status is newly asserted.
+
+At 1248px the four timeline cards match the reference's order and hierarchy. At
+384px the three single-line date rows now use 14px normal-weight labels with
+monospaced dates. Capturing this layout exposed a no-JavaScript source-disclosure
+scroll target behind the fixed bottom navigation. Compact root scroll padding
+now reserves that occupied area; the no-JavaScript test passes in all three
+browsers without forced clicks. The source disclosure remains available.
+
+`exams-overview-audit/` now includes full first-visit and record-open pages at
+1248/384 in addition to the timeline, source disclosure, cards, and filter states.
+The cycle crops and full-page captures were visually compared with references
+09/10 and the editable Landing prototype. The capture waits for fonts and two
+paint frames. The fixed bottom bar's position in a full-page bitmap represents
+the initial viewport, not a bar embedded in the document flow.
+
+Remaining full-page differences are explicit: desktop search and filters still
+stack rather than share one row; the record panel repeats per-fact technical
+source disclosures, substantially increasing its height; compact first-visit
+shows an additional choose-an-entry prompt. These remain implementation work.
+Real counts, restrained administration claims, exact jurisdiction restrictions,
+source accessibility, and genuine practice destinations remain intentional
+content differences from prototype fixtures. The timeline change is complete;
+the entire Exams family is not yet declared visually complete.
+
+Validation for timeline/filing generation: 25 unit tests, site/browser typechecks,
+and full build/artifact verification pass. The focused no-JavaScript scroll test
+passes across Chromium, Firefox, and WebKit after the scroll-padding correction.
+The complete shared-navigation/design-handoff browser suite passes after the
+shared scroll-padding change: 54 checks across all three browsers.

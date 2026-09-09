@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "entries": [
+    {
+      "date": "2026-06-11",
+      "label": "Both announcements opened",
+      "note": "Open competitive and promotion. Each announcement sets its own filing terms.",
+      "tone": "neutral",
+      "facts": [
+        {
+          "id": "oc-filing-period",
+          "sha256": "8193211c02d3e7dcbf476c5bab9ff0f07e5f748a18655f616c34f3cc678dfc58"
+        },
+        {
+          "id": "promo-filing-period",
+          "sha256": "514fb0e7067ddfb70a95a4e8d5cc3ed6c2387636618cbeafeb8988eed425724e"
+        }
+      ],
+      "kind": "opening",
+      "compactLabel": "Both announcements opened"
+    },
+    {
+      "date": "2026-07-01",
+      "label": "Open-competitive filing closed",
+      "note": "11:59 PM Eastern.",
+      "tone": "neutral",
+      "facts": [
+        {
+          "id": "oc-filing-period",
+          "sha256": "8193211c02d3e7dcbf476c5bab9ff0f07e5f748a18655f616c34f3cc678dfc58"
+        }
+      ],
+      "kind": "filing-close",
+      "compactLabel": "Open-competitive filing closed"
+    },
+    {
+      "date": "2026-07-05",
+      "label": "Jericho promotion deadline",
+      "note": "This later deadline applied only to the added Jericho Public Library jurisdiction.",
+      "tone": "neutral",
+      "facts": [
+        {
+          "id": "promo-filing-period",
+          "sha256": "514fb0e7067ddfb70a95a4e8d5cc3ed6c2387636618cbeafeb8988eed425724e"
+        }
+      ],
+      "kind": "filing-close",
+      "compactLabel": "Promotion deadline (Jericho only)"
+    },
+    {
+      "date": "2026-08-22",
+      "label": "Shared announced test date",
+      "note": "Administration was not confirmed in the August 25 review.",
+      "tone": "warning",
+      "facts": [
+        {
+          "id": "oc-exam-date",
+          "sha256": "884d979a381774c93a395b5d40fff280e47672e835f772c4817c0861d0f87632"
+        },
+        {
+          "id": "promo-exam-date",
+          "sha256": "aaabc80cbfb31ad9a799d362f04bf3001e872dc2aac1c5df09910cded738c3c9"
+        },
+        {
+          "id": "administration-status",
+          "sha256": "3daf75dcc88b6a6f7dc0bab373a7c22abe7eb45af13a03f5d495c1437b6b50c2"
+        }
+      ],
+      "kind": "exam-date",
+      "compactLabel": "Test date, not confirmed held"
+    }
+  ]
+}

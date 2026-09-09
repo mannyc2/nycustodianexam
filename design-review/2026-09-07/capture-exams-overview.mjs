@@ -14,7 +14,9 @@ try {
     page.on('pageerror', error => errors.push(String(error)));
     await page.goto('http://127.0.0.1:4187/exams/');
     await expect(page.getByRole('searchbox')).toBeVisible();
-    await page.evaluate(() => document.fonts.ready);
+    await page.evaluate(async () => { await document.fonts.ready; await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))); });
+    await page.screenshot({ path: output + `page-${width}.png`, fullPage: true });
+    captures.push({ file: `page-${width}.png`, width, fullPage: true });
     for (const [name, locator] of [
       ['hero', page.locator('.exams-page > .page-header-prominent')],
       ['cycle', page.locator('#exams-cycle')],
@@ -41,6 +43,11 @@ try {
     await cycle.screenshot({ path: output + sourcesFile, style: '.site-header-inner > .nav-primary, .site-header-inner > .nav-utility { opacity: 0; }' });
     captures.push({ file: sourcesFile, width, bounds: await cycle.boundingBox() });
     await cycle.getByText('Sources and review dates', { exact: true }).click();
+    await page.locator('[data-exam-choice]').first().click();
+    await expect(page.locator('[data-exam-panel]:visible')).toBeVisible();
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.screenshot({ path: output + `page-record-${width}.png`, fullPage: true });
+    captures.push({ file: `page-record-${width}.png`, width, fullPage: true, recordOpen: true });
     if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)) throw new Error('Exams overflow');
     const actions = page.locator('.exam-card-coverage a:visible');
     await expect(actions).toHaveCount(width === 384 ? 3 : 0);
