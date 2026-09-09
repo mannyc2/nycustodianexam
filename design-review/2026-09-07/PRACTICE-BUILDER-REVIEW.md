@@ -51,3 +51,35 @@ Navigation follow-up: root build/artifact verification and all workspace
 typechecks passed. Three Chromium builder tests passed, including traversing
 all three setup destinations. Builder captures were refreshed with the new
 navigation; hazard and simulation visual audits remain part of final review.
+
+
+## Practice setup composition and direct links
+
+Setup navigation now sits above the form card, with the scope note before the
+20px builder heading and content fields. The first fieldset no longer adds an
+extra top margin; the card fills its parent section and scope-note text/links
+have explicit spacing. The builder remains an anchored section of Practice,
+preserving the accepted hub's saved-activity and coverage content.
+
+Direct `/practice/#practice-builder` navigation now focuses and scrolls to its
+focusable section once the hub's independent activity and Review reads settle.
+An empty Review queue is a completed read. The action runs once, so later user
+interactions are not repeatedly scrolled back. Ordinary in-page links retain
+native fragment navigation. Focus outlines intentionally remain visible.
+
+The initial implementation focused before saved-content layout settled and
+failed viewport checks in Chromium/WebKit. The corrected cross-browser setup
+navigation test passes in all three engines, including focused target and visible
+builder heading. The other ten Practice-builder checks passed in the original
+run, including exact saved feedback and offline custom documents. Five workspace
+typechecks and root build/artifact checks pass after the final changes.
+
+`practice-composition-screenshots/` retains default, unavailable-length, and
+all-matching states at 1053/384 CSS widths, plus direct-link entry captures.
+The final capture checks focus, heading visibility, and absence of horizontal
+overflow before interaction. All captures completed without page errors.
+Desktop and compact entry layouts were inspected, and the desktop card-width
+correction was inspected in the final refreshed capture. Reference 22 supplies
+the setup composition; real four-category inventory and native checked marks
+remain intentional differences. Final setup-summary comparison and the broader
+Home/Practice/Review visual audit remain unfinished.

@@ -334,3 +334,11 @@
   .hazard-setup-page .setup-scope-note { display: grid; gap: 0.75rem; }
   .hazard-setup-page .simulation-settings > fieldset:first-child { margin-block-start: 0; }
 }
+
+@layer overrides {
+  .practice-setup-section { scroll-margin-block-start: 5rem; }
+  .practice-setup-section > .simulation-setup-panel { inline-size: 100%; }
+  .practice-setup-section #practice-builder-heading { font-size: 1.25rem; }
+  .practice-setup-section .setup-scope-note { display: grid; gap: 0.75rem; }
+  .practice-setup-section .simulation-settings > fieldset:first-child { margin-block-start: 0; }
+}

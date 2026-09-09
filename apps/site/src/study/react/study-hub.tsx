@@ -38,6 +38,17 @@ export const StudyHub = ({ bootstrap, activityState, reviewController, onRetry }
   const unavailable = activityState.tag === "unavailable"
   const headingRef = useRef<HTMLHeadingElement>(null)
   useEffect(() => { if (unavailable) headingRef.current?.focus() }, [unavailable])
+  const initialBuilderFocus = useRef(false)
+  useEffect(() => {
+    if (initialBuilderFocus.current || activityState.tag !== "ready" ||
+      review.tag === "loading") return
+    initialBuilderFocus.current = true
+    if (window.location.hash === "#practice-builder") {
+      const builder = document.getElementById("practice-builder")
+      builder?.focus({ preventScroll: true })
+      builder?.scrollIntoView({ block: "start" })
+    }
+  }, [activityState.tag, review.tag])
   const firstPractice = bootstrap.firstPractice
   const waysSection = (<section className="study-section" aria-labelledby="study-ways-heading">
       <div className="section-header"><h2 id="study-ways-heading">Ways to practice</h2><p><a href="/settings/">Larger text and reduced motion</a>{" · "}<a href="/offline/">Download for offline use</a></p></div>

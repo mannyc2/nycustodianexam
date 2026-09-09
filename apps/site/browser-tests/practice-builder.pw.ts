@@ -45,6 +45,8 @@ test("an invalid custom set link cannot fall through to a normal answer form", a
 
 test("setup navigation connects Practice, Hazard drill and Simulation with real links", async ({ page }) => {
   await page.goto("/practice/#practice-builder")
+  await expect(page.locator("#practice-builder")).toBeFocused()
+  await expect(page.getByRole("heading", { name: "Build a practice set", exact: true })).toBeInViewport()
   const navigation = page.getByRole("navigation", { name: "Practice setup", exact: true })
   await expect(navigation.getByRole("link", { name: "Practice set", exact: true })).toHaveAttribute("aria-current", "page")
   await navigation.getByRole("link", { name: "Hazard drill", exact: true }).click()

@@ -23,10 +23,12 @@ export const PracticeBuilder = ({ sources }: { readonly sources: ReadonlyArray<R
   const lengths = [...new Set([45, 60, 90, length, ...(capacity > 0 ? [capacity] : [])])].sort((a, b) => a - b)
   const valid = Number.isSafeInteger(length) && length > 0 && length <= capacity && seed.trim().length > 0 && seed.trim().length <= practiceSetSeedLimit
   if (inventory.length === 0) return null
-  return <section className="study-section simulation-setup-panel practice-builder" id="practice-builder" aria-labelledby="practice-builder-heading">
-    <div className="section-header"><p className="eyebrow">Set builder</p><h2 id="practice-builder-heading">Build a practice set</h2><p>Choose your content and length. Explanations follow each saved answer.</p></div>
+  return <section className="study-section practice-setup-section" id="practice-builder" tabIndex={-1} aria-labelledby="practice-builder-heading">
+    <p className="eyebrow">Set up</p>
     <SetupNavigation current="practice" />
+    <div className="simulation-setup-panel practice-builder">
     <aside className="setup-scope-note"><h3>What every set draws on</h3><p>One bank of {inventory.length} original questions for the New York Entry-Level Custodians and Janitors series. Your choices change the number of questions and the areas they come from.</p><p><a href="#covers">What practice covers</a>{" · "}<a href="/exams/">Compare with your announcement</a></p></aside>
+    <h2 id="practice-builder-heading">Build a practice set</h2>
     <form className="simulation-settings" onSubmit={(event) => {
       event.preventDefault()
       if (!valid) return
@@ -53,5 +55,6 @@ export const PracticeBuilder = ({ sources }: { readonly sources: ReadonlyArray<R
       <button type="submit" className="button button-primary" disabled={!valid}>Start this practice set</button>
       <p className="field-hint">Original, unofficial practice. Set lengths and content mix do not describe an official exam.</p>
     </form>
+    </div>
   </section>
 }
