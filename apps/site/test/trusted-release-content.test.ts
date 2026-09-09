@@ -351,6 +351,39 @@ describe("trusted release-content registry", () => {
     })).toThrow(TrustedReleaseContentError)
   })
 
+  it("closes every historical version and rejects missing, extra, duplicate, or altered sources", () => {
+    const previous = { ...rawReviewQueue(), practiceQuestions: [] }
+    const current = rawReviewQueue()
+    const value = {
+      schemaVersion: 1,
+      questionIds: ["question-1"], sceneIds: ["scene-1"],
+      trustedReleaseContentRegistry: {
+        ...rawRegistry(),
+        entries: [...rawEntries().map(entry => ({ ...entry, packVersion: 2 })), ...rawEntries()]
+      },
+      reviewQueue: {
+        ...current,
+        questions: current.questions.map(source => ({ ...source, receipt: { ...source.receipt, packVersion: 2 } })),
+        scenes: current.scenes.map(source => ({ ...source,
+          visualReceipt: { ...source.visualReceipt, packVersion: 2 },
+          nonvisualReceipt: { ...source.nonvisualReceipt, packVersion: 2 }
+        })),
+        previousInventories: [{ questions: previous.questions, practiceQuestions: [], scenes: previous.scenes }]
+      }
+    }
+    expect(decodeSettingsBootstrap(value).trustedReleaseContentRegistry.entries).toHaveLength(6)
+    expect(() => decodeSettingsBootstrap({ ...value, reviewQueue: { ...value.reviewQueue, previousInventories: [] } })).toThrow(/do not close/)
+    expect(() => decodeSettingsBootstrap({ ...value, trustedReleaseContentRegistry: rawRegistry() })).toThrow(TrustedReleaseContentError)
+    expect(() => decodeSettingsBootstrap({ ...value, reviewQueue: { ...value.reviewQueue,
+      previousInventories: [...value.reviewQueue.previousInventories, ...value.reviewQueue.previousInventories]
+    } })).toThrow(/do not close/)
+    expect(() => decodeSettingsBootstrap({ ...value, reviewQueue: { ...value.reviewQueue,
+      previousInventories: [{ ...value.reviewQueue.previousInventories[0], questions: [{
+        ...previous.questions[0], receipt: { ...questionReceipt(), postcommitSha256: "e".repeat(64) }
+      }] }]
+    } })).toThrow(TrustedReleaseContentError)
+  })
+
   it("publishes the generated launch registry without answer-bearing fields", async () => {
     const html = await readFile(new URL("../settings/index.html", import.meta.url), "utf8")
     const match = html.match(
@@ -362,12 +395,12 @@ describe("trusted release-content registry", () => {
     const decoded = decodeSettingsBootstrap(JSON.parse(embedded))
 
     expect(decoded.questionIds).toEqual(
-      Array.from({ length: 90 }, (_, index) => `q${String(index + 1).padStart(3, "0")}`)
+      Array.from({ length: 91 }, (_, index) => `q${String(index + 1).padStart(3, "0")}`)
     )
     expect(decoded.sceneIds).toEqual(
       Array.from({ length: 18 }, (_, index) => `s${String(index + 1).padStart(3, "0")}`)
     )
-    expect(decoded.trustedReleaseContentRegistry.entries).toHaveLength(126)
+    expect(decoded.trustedReleaseContentRegistry.entries).toHaveLength(253)
     for (const answerBearingKey of [
       "correctOptionId",
       "rationales",

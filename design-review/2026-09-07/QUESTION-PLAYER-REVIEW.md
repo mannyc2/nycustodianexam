@@ -251,3 +251,29 @@ unchanged 146900 gzip / 123500 Brotli limits (measured 146875 / 123356).
 Import classification, previous-version links from the Practice activity list,
 and explicit offline upgrade behavior still need verification. These tests do
 not prove those separate paths or full historical simulation compatibility.
+
+## Historical activity and portable import
+
+Practice activity and Review now share the same receipt-bound source index,
+including archived question presets, custom question sets, and both hazard modes.
+The generated trusted registry contains 127 current and 126 archived content
+variants. Settings validates exact versioned inventory closure, rejects duplicate
+or extra canonical entries, and verifies every canonical and preset receipt.
+Current question/scene ID projections still describe the current inventory.
+
+The historical browser matrix now exports each seeded version-3 record through
+Settings, removes its durable source record, imports the actual exported file,
+and requires one added record with zero quarantined records. It then opens the
+Practice feedback link and checks restored feedback; eligible records also open
+through Review. All 18 cases pass across Chromium, Firefox, and WebKit, including
+canonical/preset/custom questions and visual/custom/nonvisual hazards.
+
+29 related unit tests pass, including missing/extra/duplicate historical inventory
+and altered receipt rejection. Site and browser typechecks pass. Full build and
+artifact verification pass with 939 routes, 222 public item artifacts, and 291
+byte-identical image assets. Settings measures 488500 raw / 146890 gzip / 123318
+Brotli bytes, within the existing limits. No budget increase was needed.
+
+This verifies portable question/hazard records and activity navigation. Explicit
+offline upgrade, historical simulation compatibility, illustrated-item PDFs,
+and the remaining visual comparisons still require their own evidence.

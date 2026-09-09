@@ -1,10 +1,39 @@
 import { Schema } from "effect"
 import { ReviewQueueBootstrap } from "../src/review/model.ts"
-import { expect, test } from "@playwright/test"
+import { readFile } from "node:fs/promises"
+import { expect, test, type Page } from "@playwright/test"
 import historical from "../../../content/authoring/compatibility/launch-v1-v3-review.json" with { type: "json" }
 import { questionAttemptId } from "../src/attempt-receipt.ts"
 import { assemblePracticeQuestions } from "../src/practice/question-set.ts"
 import { practiceInventoryFromReview } from "../src/practice/review-source.ts"
+
+const roundTripSavedRecord = async (page: Page, store: string) => {
+  await page.goto("/settings/")
+  const downloadPromise = page.waitForEvent("download")
+  await page.getByRole("button", { name: "Export a file", exact: true }).click()
+  const path = await (await downloadPromise).path()
+  if (path === null) throw new Error("Export download is missing")
+  const buffer = await readFile(path)
+  await page.evaluate(storeName => new Promise<void>((resolve, reject) => {
+    const request = indexedDB.open("nycustodian-study-v1")
+    request.onerror = () => reject(request.error)
+    request.onsuccess = () => {
+      const db = request.result
+      const tx = db.transaction(storeName, "readwrite")
+      tx.objectStore(storeName).clear()
+      tx.oncomplete = () => { db.close(); resolve() }
+      tx.onabort = () => { db.close(); reject(tx.error) }
+    }
+  }), store)
+  await page.getByRole("button", { name: "Choose a file", exact: true }).click()
+  await page.getByLabel("Local export JSON").setInputFiles({ name: "historical-export.json", mimeType: "application/json", buffer })
+  await page.getByRole("button", { name: "Check and preview import" }).click()
+  await expect(page.getByRole("heading", { name: "Import preview — nothing written yet" })).toBeVisible()
+  await page.getByLabel("Apply exactly this preview without overwriting existing records").check()
+  await page.getByRole("button", { name: "Apply import" }).click()
+  await expect(page.getByText("Import saved: 1 added, 0 already present, 0 set aside. Existing records kept.")).toBeVisible()
+  await page.goto("/practice/")
+}
 
 for (const kind of ["canonical", "preset", "custom"] as const) {
   test(`version-3 ${kind} answer opens its exact historical explanation`, async ({ page }) => {
@@ -31,6 +60,12 @@ for (const kind of ["canonical", "preset", "custom"] as const) {
         }
       })
     }, { id, questionId: source.id, selectedOptionId: source.optionIds[0]!, optionIds: source.optionIds, reviewIntent: "flagged", committedAt: Date.now(), receipt })
+    await roundTripSavedRecord(page, "attempts")
+    const activityLink = page.getByRole("link", { name: /Open saved feedback/ })
+    await expect(activityLink).toHaveAttribute("href", /^\/history\/launch-v1-v3\//)
+    await activityLink.click()
+    await expect(page.locator("[data-question-player]")).toHaveAttribute("data-question-attempt-id", id)
+    await expect(page.getByRole("heading", { name: "Answer explanations", exact: true })).toBeVisible()
     await page.goto("/review/")
     const link = page.getByRole("link", { name: "Read explanation", exact: true })
     await expect(link).toHaveCount(1)
@@ -69,9 +104,12 @@ for (const kind of ["visual", "custom", "nonvisual"] as const) {
       })
     }, { id, sceneId: source.scene.id, mode: receipt.mode, markers: [], selectedZoneOrders: [], zeroHazardsConfirmed: true,
       committedAt: Date.now(), receipt, allowedZoneOrders: source.scene.neutralPreAnswer.zones.map(zone => zone.order) })
-    if (kind === "nonvisual") {
-      await page.goto(`/history/launch-v1-v3${source.nonvisualItemUrl}`)
-    } else {
+    await roundTripSavedRecord(page, "hazard-attempts")
+    const activityLink = page.getByRole("link", { name: /Open saved feedback/ })
+    await expect(activityLink).toHaveAttribute("href", /^\/history\/launch-v1-v3\//)
+    await activityLink.click()
+    await expect(page.getByRole("heading", { name: "Scene explanation and evidence", exact: true })).toBeVisible()
+    if (kind !== "nonvisual") {
       await page.goto("/review/")
       await page.getByRole("link", { name: "Read explanation", exact: true }).click()
     }

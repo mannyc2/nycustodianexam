@@ -1,7 +1,6 @@
-import { resolveCustomHazardSource } from "../practice/hazard-set.ts"
-import { resolveCustomReviewSource } from "../practice/review-source.ts"
+import { createReviewSourceIndex } from "../review/source-index.ts"
 import { Effect } from "effect"
-import { questionAttemptId, sameHazardReceipt, sameQuestionReceipt } from "../attempt-receipt.ts"
+import { sameHazardReceipt, sameQuestionReceipt } from "../attempt-receipt.ts"
 import { HazardPersistence, type HazardAttemptRecord } from "../hazard-player/persistence.ts"
 import { QuestionPersistence, type QuestionAttemptRecord } from "../question-player/persistence.ts"
 import type { ReviewQuarantine, ReviewQueueBootstrap } from "../review/model.ts"
@@ -14,16 +13,14 @@ export const projectStudyActivity = (
   hazards: ReadonlyArray<HazardAttemptRecord>,
   acknowledgements: ReadonlyArray<ReviewAcknowledgementRecord>
 ): StudyActivity => {
-  const questionSources = new Map([...bootstrap.questions, ...(bootstrap.practiceQuestions ?? [])]
-    .map((source) => [questionAttemptId(source.receipt), source]))
-  const sceneSources = new Map(bootstrap.scenes.map((source) => [source.scene.id, source]))
+  const sources = createReviewSourceIndex(bootstrap)
   const rows: StudyActivityRow[] = []
   const unavailableAttempts: UnavailableStudyAttempt[] = []
   const attemptRows = new Map<string, StudyActivityRow>()
   let questionCount = 0
   let hazardCount = 0
   for (const attempt of questions) {
-    const source = questionSources.get(attempt.id) ?? resolveCustomReviewSource(bootstrap.questions, attempt)
+    const source = sources.question(attempt)
     if (source === undefined || attempt.receipt === undefined ||
       !sameQuestionReceipt(attempt.receipt, source.receipt) ||
       attempt.optionIds?.length !== source.optionIds.length ||
@@ -45,7 +42,7 @@ export const projectStudyActivity = (
     questionCount += 1
   }
   for (const attempt of hazards) {
-    const source = resolveCustomHazardSource(bootstrap.scenes, attempt) ?? sceneSources.get(attempt.sceneId)
+    const source = sources.scene(attempt)
     const unavailable = { id: attempt.id, recordedAt: attempt.committedAt, label: attempt.mode === "visual" ? "Visual hazard attempt" : "Keyboard hazard attempt" }
     if (source === undefined || attempt.receipt === undefined) {
       unavailableAttempts.push(unavailable)

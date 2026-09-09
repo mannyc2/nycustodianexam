@@ -4,6 +4,7 @@ import { ReviewQueueBootstrap } from "../review/model.ts"
 import {
   TrustedReleaseContentRegistry,
   decodeTrustedReleaseContentRegistry,
+  trustedReleaseContentKey,
   verifyTrustedHazardContent,
   verifyTrustedQuestionContent
 } from "../trusted-release-content.ts"
@@ -83,53 +84,60 @@ export const decodeSettingsBootstrap = (value: unknown): SettingsBootstrap => {
   const registry = decodeTrustedReleaseContentRegistry(
     bootstrap.trustedReleaseContentRegistry
   )
-  const registryQuestionIds = registry.entries
-    .filter((entry) => entry.variant === "question")
-    .map((entry) => entry.itemId)
-  const registrySceneIds = registry.entries
-    .filter((entry) => entry.variant === "hazard-visual")
-    .map((entry) => entry.itemId)
+  const inventories = [bootstrap.reviewQueue, ...(bootstrap.reviewQueue.previousInventories ?? [])]
+  const expectedKeys = new Set<string>()
+  const include = (entry: Parameters<typeof trustedReleaseContentKey>[0]) => {
+    const key = trustedReleaseContentKey(entry)
+    if (expectedKeys.has(key)) throw new Error("Settings inventories do not close over the registry")
+    expectedKeys.add(key)
+  }
   const reviewQuestionIds = bootstrap.reviewQueue.questions.map((entry) => entry.id)
   const reviewSceneIds = bootstrap.reviewQueue.scenes.map((entry) => entry.scene.id)
 
   if (
     new Set(bootstrap.questionIds).size !== bootstrap.questionIds.length ||
     new Set(bootstrap.sceneIds).size !== bootstrap.sceneIds.length ||
-    !sameStrings(bootstrap.questionIds, registryQuestionIds) ||
-    !sameStrings(bootstrap.sceneIds, registrySceneIds) ||
     !sameStrings(bootstrap.questionIds, reviewQuestionIds) ||
     !sameStrings(bootstrap.sceneIds, reviewSceneIds)
   ) {
     throw new Error(
-      "Settings bootstrap content references do not close over its trusted review registry"
+      "Settings inventories do not close over the registry"
     )
   }
 
-  for (const source of bootstrap.reviewQueue.questions) {
-    if (source.id !== source.receipt.questionId) {
-      throw new Error("Settings review question identity does not close over its receipt")
+  for (const inventory of inventories) {
+    for (const source of inventory.questions) {
+      if (source.id !== source.receipt.questionId) {
+        throw new Error("Settings review question identity does not close over its receipt")
+      }
+      include(verifyTrustedQuestionContent(registry, {
+        receipt: source.receipt,
+        optionIds: source.optionIds
+      }))
     }
-    verifyTrustedQuestionContent(registry, {
-      receipt: source.receipt,
-      optionIds: source.optionIds
-    })
+    for (const source of inventory.practiceQuestions ?? []) {
+      verifyTrustedQuestionContent(registry, { receipt: source.receipt, optionIds: source.optionIds })
+    }
+    for (const source of inventory.scenes) {
+      const allowedZoneOrders = source.scene.neutralPreAnswer.zones.map((zone) => zone.order)
+      if (
+        source.scene.id !== source.visualReceipt.sceneId ||
+        source.scene.id !== source.nonvisualReceipt.sceneId
+      ) {
+        throw new Error("Settings review scene identity does not close over its receipts")
+      }
+      include(verifyTrustedHazardContent(registry, {
+        receipt: source.visualReceipt,
+        allowedZoneOrders
+      }))
+      include(verifyTrustedHazardContent(registry, {
+        receipt: source.nonvisualReceipt,
+        allowedZoneOrders
+      }))
+    }
   }
-  for (const source of bootstrap.reviewQueue.scenes) {
-    const allowedZoneOrders = source.scene.neutralPreAnswer.zones.map((zone) => zone.order)
-    if (
-      source.scene.id !== source.visualReceipt.sceneId ||
-      source.scene.id !== source.nonvisualReceipt.sceneId
-    ) {
-      throw new Error("Settings review scene identity does not close over its receipts")
-    }
-    verifyTrustedHazardContent(registry, {
-      receipt: source.visualReceipt,
-      allowedZoneOrders
-    })
-    verifyTrustedHazardContent(registry, {
-      receipt: source.nonvisualReceipt,
-      allowedZoneOrders
-    })
+  if (expectedKeys.size !== registry.entries.length) {
+    throw new Error("Settings inventories do not close over the registry")
   }
   return bootstrap
 }

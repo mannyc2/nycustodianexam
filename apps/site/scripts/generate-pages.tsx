@@ -900,6 +900,23 @@ const buildPages = ({
             visualAssetReceipt: null
           }
         ]
+      }),
+      ...historicalV3.reviewQueue.questions.map(source => ({
+        releaseId: source.receipt.releaseId, packVersion: source.receipt.packVersion,
+        variant: "question", itemId: source.id, optionIds: source.optionIds,
+        postcommitReceipt: { postcommitPath: source.receipt.postcommitPath, postcommitBytes: source.receipt.postcommitBytes, postcommitSha256: source.receipt.postcommitSha256 }
+      })),
+      ...historicalV3.reviewQueue.scenes.flatMap(source => {
+        const shared = { releaseId: source.visualReceipt.releaseId, packVersion: source.visualReceipt.packVersion,
+          itemId: source.scene.id, allowedZoneOrders: source.scene.neutralPreAnswer.zones.map(zone => zone.order),
+          assetRevision: source.visualReceipt.assetRevision, assetMasterSha256: source.visualReceipt.assetMasterSha256,
+          postcommitReceipt: { postcommitPath: source.visualReceipt.postcommitPath, postcommitBytes: source.visualReceipt.postcommitBytes, postcommitSha256: source.visualReceipt.postcommitSha256 } }
+        const image = source.scene.asset.derivatives.find(asset => asset.kind === "web")
+        if (image === undefined) throw new Error(`Historical scene image missing: ${source.scene.id}`)
+        return [
+          { ...shared, variant: "hazard-visual", mode: "visual", visualAssetReceipt: { path: `/${image.path}`, bytes: image.bytes, sha256: image.sha256 } },
+          { ...shared, variant: "hazard-nonvisual", mode: "nonvisual", visualAssetReceipt: null }
+        ]
       })
     ]
   })

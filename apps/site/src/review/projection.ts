@@ -1,12 +1,11 @@
-import { resolveCustomHazardSource } from "../practice/hazard-set.ts"
-import { resolveCustomReviewSource } from "../practice/review-source.ts"
+import { createReviewSourceIndex } from "./source-index.ts"
 import {
   PostcommitQuestion as PostcommitQuestionSchema,
   PostcommitScene as PostcommitSceneSchema,
   type PostcommitQuestion
 } from "@nycustodian/content/model"
 import { Effect, Schema } from "effect"
-import { questionAttemptId, sameHazardReceipt, sameQuestionReceipt } from "../attempt-receipt.ts"
+import { sameHazardReceipt, sameQuestionReceipt } from "../attempt-receipt.ts"
 import { assessVisualMarkers, hasValidPostcommitClosure } from "../hazard-player/assessment.ts"
 import {
   HazardPersistence,
@@ -223,18 +222,6 @@ const loadHazardItem = Effect.fn("ReviewProjection.loadHazardItem")(function*(
   return yield* deriveVisualHazardReviewItem(attempt, source, unknownPayload)
 })
 
-const uniqueMap = <Value>(
-  entries: ReadonlyArray<readonly [string, Value]>,
-  label: string
-): Map<string, Value> => {
-  const result = new Map<string, Value>()
-  for (const [key, value] of entries) {
-    if (result.has(key)) throw new Error(`Review bootstrap repeats ${label} ${key}`)
-    result.set(key, value)
-  }
-  return result
-}
-
 type AttemptProjection =
   | { readonly tag: "projected"; readonly item: ReviewQueueItem | undefined }
   | { readonly tag: "quarantined"; readonly quarantine: ReviewQuarantine }
@@ -287,28 +274,13 @@ export const buildReviewQueue = Effect.fn("ReviewProjection.buildReviewQueue")(f
     return { attemptCount, items: [], quarantined: [] } satisfies ReviewQueueProjection
   }
 
-  const questionById = yield* Effect.try({
-    try: () => uniqueMap(bootstrap.questions.map((source) => [source.id, source]), "question"),
-    catch: (cause) =>
-      projectionError("projection", "The review question bootstrap is inconsistent.", cause)
-  })
-  const questionByAttemptId = yield* Effect.try({
-    try: () => uniqueMap(
-      [...bootstrap.questions, ...(bootstrap.practiceQuestions ?? []), ...(bootstrap.previousInventories ?? []).flatMap(set => [...set.questions, ...set.practiceQuestions])]
-        .map((source) => [questionAttemptId(source.receipt), source]),
-      "question receipt"
-    ),
-    catch: (cause) =>
-      projectionError("projection", "The review practice receipt bootstrap is inconsistent.", cause)
-  })
-  const sceneById = yield* Effect.try({
-    try: () => uniqueMap(bootstrap.scenes.map((source) => [source.scene.id, source]), "scene"),
-    catch: (cause) =>
-      projectionError("projection", "The review scene bootstrap is inconsistent.", cause)
+  const sources = yield* Effect.try({
+    try: () => createReviewSourceIndex(bootstrap),
+    catch: cause => projectionError("projection", "The review source bootstrap is inconsistent.", cause)
   })
 
   const questionEffects = questionAttempts.map((attempt) => {
-    const source = questionByAttemptId.get(attempt.id) ?? resolveCustomReviewSource(bootstrap.questions, attempt) ?? (bootstrap.previousInventories ?? []).map(set => resolveCustomReviewSource(set.questions, attempt)).find(source => source !== undefined) ?? questionById.get(attempt.questionId)
+    const source = sources.question(attempt)
     const effect = !hasBoundQuestionReceipt(attempt)
       ? Effect.fail(
           projectionError(
@@ -337,11 +309,8 @@ export const buildReviewQueue = Effect.fn("ReviewProjection.buildReviewQueue")(f
       : loadQuestionItem(attempt, source)
     return containAttemptFailure(attempt.id, "question", attempt.committedAt, effect)
   })
-  const sceneInventories = [bootstrap.scenes, ...(bootstrap.previousInventories ?? []).map(inventory => inventory.scenes)]
   const hazardEffects = hazardAttempts.map((attempt) => {
-    const source = sceneInventories.map(scenes => resolveCustomHazardSource(scenes, attempt) ?? scenes.find(source =>
-      attempt.receipt !== undefined && sameHazardReceipt(attempt.receipt, attempt.mode === "visual" ? source.visualReceipt : source.nonvisualReceipt)
-    )).find(source => source !== undefined) ?? sceneById.get(attempt.sceneId)
+    const source = sources.scene(attempt)
     const expectedReceipt = source === undefined
       ? undefined
       : attempt.mode === "visual"
