@@ -137,3 +137,11 @@ test("Practice follows the responsive reading order and preserves quick presets 
     await expect(fallback).toHaveURL(/\/practice\/session\/[^/]+\/question\/1\/$/)
   } finally { await noScript.close() }
 })
+
+test("a direct compact coverage link lands on the rendered coverage section", async ({ page }) => {
+  await page.setViewportSize({ width: 384, height: 900 })
+  await page.goto("/practice/#covers")
+  await expect(page.getByRole("heading", { name: "No saved activity yet", exact: true })).toBeVisible()
+  await expect(page.locator("#study-coverage-heading")).toBeInViewport()
+  await expect(page.locator("#covers")).toBeFocused()
+})

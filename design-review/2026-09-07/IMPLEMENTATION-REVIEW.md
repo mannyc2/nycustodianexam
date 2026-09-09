@@ -192,3 +192,19 @@ compact Practice hero/activity entry and Review's confirmation page against the
 accepted references. Final compact confirmation widths were then corrected and
 recaptured. Review's multi-item/unavailable inventory comparison and the remaining
 full-page families still need final visual verification.
+
+## Practice coverage deep-link recovery
+
+A new browser regression reproduced `/practice/#covers` landing outside the
+coverage viewport in Chromium, Firefox, and WebKit. The browser initially scrolls
+to the generated fallback section, but the interactive hub replaces and moves
+that section after loading saved activity. Extended the existing one-time builder
+fragment recovery to the coverage section: once activity and Review finish
+loading, focus the requested section without scrolling, then scroll it into view.
+Coverage is programmatically focusable with tabindex -1 and does not add a Tab
+stop. The guard preserves the unavailable-state focus behavior.
+
+All three pre-fix coverage checks failed on the viewport assertion. After the fix,
+nine checks passed across all three browsers: coverage viewport/focus, builder
+setup navigation/focus, and storage-unavailable focus. Root build/artifact
+verification passed. No document layout or saved-content contracts changed.

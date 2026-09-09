@@ -48,15 +48,16 @@ export const StudyHub = ({ bootstrap, activityState, reviewController, onRetry }
   const unavailable = activityState.tag === "unavailable"
   const headingRef = useRef<HTMLHeadingElement>(null)
   useEffect(() => { if (unavailable) headingRef.current?.focus() }, [unavailable])
-  const initialBuilderFocus = useRef(false)
+  const initialSectionFocus = useRef(false)
   useEffect(() => {
-    if (initialBuilderFocus.current || activityState.tag !== "ready" ||
+    if (initialSectionFocus.current || activityState.tag !== "ready" ||
       review.tag === "loading") return
-    initialBuilderFocus.current = true
-    if (window.location.hash === "#practice-builder") {
-      const builder = document.getElementById("practice-builder")
-      builder?.focus({ preventScroll: true })
-      builder?.scrollIntoView({ block: "start" })
+    initialSectionFocus.current = true
+    const targetId = window.location.hash.slice(1)
+    if (targetId === "practice-builder" || targetId === "covers") {
+      const section = document.getElementById(targetId)
+      section?.focus({ preventScroll: true })
+      section?.scrollIntoView({ block: "start" })
     }
   }, [activityState.tag, review.tag])
   const firstPractice = bootstrap.firstPractice
@@ -91,7 +92,7 @@ export const StudyHub = ({ bootstrap, activityState, reviewController, onRetry }
           review.tag === "empty" ? <div className="empty-state"><h3 className="empty-state-heading">Nothing is waiting for review</h3><p>Missed or flagged questions and visual hazard mistakes appear here after you save an answer. Finished reviews stay in your history.</p><div className="empty-state-actions"><a href="/review/">How review works</a></div></div> :
             <div className="study-read-notice"><h3>{review.items.length} {review.items.length === 1 ? "item is" : "items are"} ready to revisit</h3><p>Read each explanation, then confirm Finish review when you are ready to remove it from the queue.</p>{review.quarantined.length > 0 ? <p>{review.quarantined.length} saved {review.quarantined.length === 1 ? "attempt is" : "attempts are"} unavailable.</p> : null}<dl className="figure-strip"><div><dt>Missed or misidentified</dt><dd>{review.items.filter((item) => item.reasons.some((reason) => reason.tag !== "flag")).length}</dd></div><div><dt>Flagged by you</dt><dd>{review.items.filter((item) => item.reasons.some((reason) => reason.tag === "flag")).length}</dd></div></dl><a className="button button-primary" href="/review/">Review your saved work</a></div>}
     </section>)
-  const coverageSection = <section className="study-section" id="covers" aria-labelledby="study-coverage-heading">
+  const coverageSection = <section className="study-section" id="covers" tabIndex={-1} aria-labelledby="study-coverage-heading">
     <div className="section-header"><h2 id="study-coverage-heading">What practice covers</h2></div>
     {compact ? <article className="study-read-notice study-coverage-compact">
       <h3>One bank of {bootstrap.questionCount}, the three announced areas</h3>
