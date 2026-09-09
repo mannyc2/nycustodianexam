@@ -115,6 +115,9 @@
   .hazard-player__marker-list { display: grid; gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
   .hazard-player__marker-list > li { padding: var(--space-3); border: var(--border-thin) solid var(--color-border); border-radius: var(--radius-sm); background: var(--color-surface); }
   .hazard-player__marker-list p { margin-block-end: var(--space-3); font-size: var(--text-sm); }
+  .hazard-player__marker-feedback p { margin-block-end: 0; }
+  .hazard-player__marker-feedback.hazard-marker-hit { color: var(--color-danger); }
+  .hazard-player__marker-feedback.hazard-marker-decoy_false_positive { color: var(--color-action); }
   .hazard-player__marker-moves button { min-inline-size: var(--target-default); min-block-size: var(--target-default); padding: var(--space-2); border: var(--border-thin) solid var(--color-border-control); border-radius: var(--radius-sm); background: var(--color-surface); color: var(--color-text); font-size: var(--text-xs); cursor: pointer; }
   .hazard-player__marker-moves button:disabled { cursor: not-allowed; color: var(--color-disabled-text); background: var(--color-disabled-surface); }
   .hazard-player__zones { min-inline-size: 0; margin: 0; padding: var(--space-4); border: var(--border-thin) solid var(--color-border); border-radius: var(--radius-md); }

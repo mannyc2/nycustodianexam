@@ -199,6 +199,10 @@ test("visual markers are durable before feedback fetch and restore exactly", asy
   await expect(page.getByRole("heading", {
     name: "You found 0 of 1 hazard in this scene. 1 extra or repeated mark was counted."
   })).toBeFocused()
+  await expect(page.locator(".hazard-player__marker-list")).toContainText("This mark does not match a recorded condition.")
+  await expect(page.getByRole("button", { name: "Add marker at center" })).toHaveCount(0)
+  await expect(page.getByRole("button", { name: /^Move marker/ })).toHaveCount(0)
+  await expect(page.getByRole("heading", { name: "Marker feedback", exact: true })).toHaveCount(0)
   expect(attemptObservedAtFetch).toMatchObject({
     id: visualAttemptId,
     sceneId: "s001",
@@ -531,4 +535,26 @@ test("a mismatched postcommit artifact leaves the durable response saved but unr
     markers: [{ id: "marker-1", x: 0.5, y: 0.5 }]
   })
   await expect(page.getByRole("button", { name: "Retry feedback" })).toBeEnabled()
+})
+
+
+test("saved marker cards pair each coordinate with its hazard or safe-detail feedback", async ({ page }) => {
+  await gotoReadyVisualHazard(page)
+  const scene = page.locator(".hazard-player__image-layer")
+  const bounds = await scene.boundingBox()
+  if (bounds === null) throw new Error("Scene image bounds unavailable")
+  await scene.click({ position: { x: bounds.width * 0.5, y: bounds.height * 0.7 } })
+  await scene.click({ position: { x: bounds.width * 0.9, y: bounds.height * 0.65 } })
+  await expect(page.locator(".hazard-player__marker-feedback")).toHaveCount(0)
+  await page.getByRole("button", { name: "Save marks", exact: true }).click()
+  const cards = page.locator(".hazard-player__marker-list > li")
+  await expect(cards.nth(0)).toContainText("Hazard found.")
+  await expect(cards.nth(1)).toContainText("Safe as shown.")
+  await expect(cards.nth(0)).toContainText("Marker 1")
+  await expect(cards.nth(1)).toContainText("Marker 2")
+  await expect(cards.getByRole("button")).toHaveCount(0)
+  await page.reload()
+  await expect(cards.nth(0)).toContainText("Hazard found.")
+  await expect(cards.nth(1)).toContainText("Safe as shown.")
+  await expect(cards.getByRole("button")).toHaveCount(0)
 })

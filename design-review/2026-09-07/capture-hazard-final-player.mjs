@@ -16,10 +16,18 @@ try {
     await expect(page.getByRole('button', { name: 'Add marker at center', exact: true })).toBeEnabled();
     const card = page.locator('.study-player.hazard-player');
     for (const state of ['empty', 'marked', 'saved']) {
-      if (state === 'marked') await page.getByRole('button', { name: 'Add marker at center', exact: true }).click();
+      if (state === 'marked') {
+        const scene = page.locator('.hazard-player__image-layer');
+        const bounds = await scene.boundingBox();
+        if (!bounds) throw new Error('Scene image bounds unavailable');
+        await scene.click({ position: { x: bounds.width * 0.5, y: bounds.height * 0.7 } });
+        await scene.click({ position: { x: bounds.width * 0.9, y: bounds.height * 0.65 } });
+      }
       if (state === 'saved') {
         await page.getByRole('button', { name: 'Save marks', exact: true }).click();
         await expect(page.locator('.hazard-player__results')).toBeVisible();
+        await expect(page.locator('.hazard-player__marker-list')).toContainText('Hazard found.');
+        await expect(page.locator('.hazard-player__marker-list')).toContainText('Safe as shown.');
       }
       await page.evaluate(async () => {
         await document.fonts.ready;
@@ -31,6 +39,12 @@ try {
       const overflowing = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
       if (overflowing) throw new Error(`Horizontal overflow at ${width}`);
       captures.push({ file, width, state, bounds: await card.boundingBox() });
+      if (state === 'saved') {
+        const markers = page.locator('.hazard-player__markers');
+        const markerFile = `saved-markers-${width}.png`;
+        await markers.screenshot({ path: output + markerFile });
+        captures.push({ file: markerFile, width, state: 'saved-markers', bounds: await markers.boundingBox() });
+      }
     }
     await context.close();
   }

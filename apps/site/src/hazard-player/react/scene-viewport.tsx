@@ -217,14 +217,14 @@ export const HazardSceneViewport = () => {
 
         </div>
       </div>
-      <button
+      {state.tag === "revealed" || state.tag === "reveal_failed" ? null : <button
         className="button button-secondary"
         disabled={!editable}
         onClick={() => actions.addMarker(0.5, 0.5)}
         type="button"
       >
         Add marker at center
-      </button>
+      </button>}
     </section>
   )
 }

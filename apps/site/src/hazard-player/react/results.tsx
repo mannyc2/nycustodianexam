@@ -1,12 +1,9 @@
-import type { ReactNode } from "react"
 import {
   assessSelectedZones,
-  assessVisualMarkers,
-  type MarkerAssessment
+  assessVisualMarkers
 } from "../assessment.ts"
 import type { ReleasedPostcommitScene } from "../attempt.ts"
 import {
-  decoyFeedbackForScene,
   targetFeedbackForScene,
   zonedStatementsForScene
 } from "../released-scene.ts"
@@ -14,73 +11,13 @@ import { draftFromState } from "../state.ts"
 import { useHazardPlayer } from "./context.tsx"
 import { HazardPostcommitEquivalent, HazardSceneFacts } from "./scene-feedback.tsx"
 
-const markerFeedback = (
-  assessment: MarkerAssessment,
-  payload: ReleasedPostcommitScene
-): ReactNode => {
-  if (assessment.kind === "false_positive") {
-    return (
-      <p>
-        This mark does not match a recorded condition. It counts as an extra mark, but the site
-        cannot say what that object means.
-      </p>
-    )
-  }
-
-  if (assessment.kind === "decoy_false_positive") {
-    const decoy = decoyFeedbackForScene(payload, assessment.inventoryId)
-    return (
-      <p>
-        <strong>Safe as shown.</strong>{" "}
-        {decoy === undefined
-          ? "The detail you marked is safe as depicted in this scene."
-          : `${decoy.observableCondition}. Safe as depicted: ${decoy.safeAsDepicted}`}
-      </p>
-    )
-  }
-
-  const target = targetFeedbackForScene(payload, assessment.inventoryId)
-  if (assessment.kind === "duplicate") {
-    return (
-      <p>
-        <strong>Already marked.</strong>{" "}
-        {target === undefined
-          ? "Another marker already covers this hazard."
-          : `Another marker already covers ${target.observableCondition}.`}
-      </p>
-    )
-  }
-
-  return (
-    <p>
-      <strong>Hazard found.</strong>{" "}
-      {target === undefined
-        ? "This marker matches a condition that needs correction."
-        : `${target.observableCondition}. Immediate correction: ${target.immediateCorrection}`}
-    </p>
-  )
-}
-
 const VisualResults = ({ payload }: { readonly payload: ReleasedPostcommitScene }) => {
   const { state } = useHazardPlayer()
   const markers = draftFromState(state).markers
   const assessment = assessVisualMarkers(markers, payload)
 
   return (
-    <section aria-labelledby="visual-marker-feedback-heading">
-      <h3 id="visual-marker-feedback-heading">Marker feedback</h3>
-      {assessment.markers.length === 0 ? (
-        <p>You submitted no markers.</p>
-      ) : (
-        <ol>
-          {assessment.markers.map((result) => (
-            <li key={result.marker.id}>
-              <h4>Marker {result.markerNumber}</h4>
-              {markerFeedback(result, payload)}
-            </li>
-          ))}
-        </ol>
-      )}
+    <section aria-label="Unmarked hazards">
       {assessment.missedInventoryIds.length === 0 ? (
         <p>No hazard was left unmarked.</p>
       ) : (
@@ -91,7 +28,7 @@ const VisualResults = ({ payload }: { readonly payload: ReleasedPostcommitScene 
               const target = targetFeedbackForScene(payload, inventoryId)
               return target === undefined ? null : (
                 <li key={inventoryId}>
-                  {target.observableCondition}. Immediate correction: {target.immediateCorrection}
+                  {target.observableCondition.replace(/\.$/, "")}. Immediate correction: {target.immediateCorrection}
                 </li>
               )
             })}

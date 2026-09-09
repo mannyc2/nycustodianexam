@@ -66,3 +66,32 @@ composition before closing the player audit. Real hallway content (four zones,
 one hazard) differs from the prototype stairwell fixture, and complete source
 claims/text equivalents are longer; those are intentional content differences.
 System-font rendering varies by platform. Final integrated validation remains.
+
+
+## Saved-marker feedback composition — September 9, 2026
+
+Each saved visual marker now contains its existing assessed explanation beneath
+the marker number and coordinates. Hit and safe-detail messages use textual
+labels plus red/blue treatments. The separate duplicate marker-feedback list is
+removed; missed-hazard feedback remains below the outcome. Marker movement,
+removal and addition controls disappear once the response is saved, including
+saved-but-unavailable feedback. During saving they remain disabled; failed saves
+still permit correction/retry. Feedback is rendered only from the revealed state.
+
+The full three-browser suite passes 28 checks, with two intentional BFCache
+skips. Added coverage checks hit/safe-detail card association and exact reload,
+while the existing extra-mark test verifies no edit controls or duplicate list
+remain. Durable-before-fetch assertions still pass. Site/browser typechecks and
+build/artifact verification pass.
+
+The refreshed visual captures use two actual pointer selections at normalized
+(0.5, 0.7) and (0.9, 0.65), exercising the hallway hazard and safe detail. The
+script asserts both feedback labels after saving. Full desktop saved output and
+readable marker close-ups at desktop/384px were visually inspected. A discovered
+doubled full stop in condition-plus-explanation formatting was corrected.
+
+This closes the saved-marker composition discrepancy recorded above. The full
+source claims, scene metadata and linked text equivalent remain longer than the
+prototype's short fixture. Final integrated validation and remaining page-family
+audits still apply; these observations are not manual assistive-technology
+certification.
