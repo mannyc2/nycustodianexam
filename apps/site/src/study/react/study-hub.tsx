@@ -17,10 +17,10 @@ const StudyIcon = ({ kind }: { readonly kind: keyof typeof studyIconPaths }) =>
   <svg className="study-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{studyIconPaths[kind]}</svg>
 
 const ways = [
-  { icon: "practice", title: "Practice set", description: "Answer questions at your own pace. Read the explanation and sources after each saved answer.", href: "#practice-builder", action: "Choose a set" },
-  { icon: "hazard", title: "Hazard practice", description: "Look through a workplace scene and mark hazards, or use the keyboard zone version.", href: "/hazards/", action: "Explore the scenes" },
-  { icon: "simulation", title: "Simulation", description: "Choose a practice length and your own timing. Feedback waits until you finish.", href: "/simulations/", action: "Set up a simulation" },
-  { icon: "print", title: "Print a set", description: "Study on paper, with questions and their answer key on separate pages.", href: "/print/", action: "Open print center" }
+  { icon: "practice", title: "Practice set", compactDescription: "Choose a question set", description: "Answer questions at your own pace. Read the explanation and sources after each saved answer.", href: "#practice-builder", action: "Choose a set" },
+  { icon: "hazard", title: "Hazard practice", compactDescription: "Visual and keyboard scenes", description: "Look through a workplace scene and mark hazards, or use the keyboard zone version.", href: "/hazards/", action: "Explore the scenes" },
+  { icon: "simulation", title: "Simulation", compactDescription: "Your own timing", description: "Choose a practice length and your own timing. Feedback waits until you finish.", href: "/simulations/", action: "Set up a simulation" },
+  { icon: "print", title: "Print a set", compactDescription: "Paper, with answer key", description: "Study on paper, with questions and their answer key on separate pages.", href: "/print/", action: "Open print center" }
 ] as const
 
 export const StudyHub = ({ bootstrap, activityState, reviewController, onRetry }: {
@@ -52,9 +52,12 @@ export const StudyHub = ({ bootstrap, activityState, reviewController, onRetry }
   const firstPractice = bootstrap.firstPractice
   const waysSection = (<section className="study-section" aria-labelledby="study-ways-heading">
       <div className="section-header"><h2 id="study-ways-heading">Ways to practice</h2><p><a href="/settings/">Larger text and reduced motion</a>{" · "}<a href="/offline/">Download for offline use</a></p></div>
-      <ul className="task-cards">{ways.map((way, index) => <li className={`task-card${index === 0 ? " task-card-primary" : ""}`} key={way.href}>
-        <StudyIcon kind={way.icon} /><h3>{way.title}</h3><p>{way.description}</p>
-        <a className={`button ${index === 0 ? "button-primary" : "button-secondary"}`} href={way.href}>{way.action}</a>
+      <ul className="task-cards study-ways-grid">{ways.map((way, index) => <li className={`task-card${index === 0 ? " task-card-primary" : ""}`} key={way.href}>
+        <a className="task-card-link" href={way.href} aria-labelledby={`study-way-${way.icon}`}>
+          <StudyIcon kind={way.icon} /><h3 className="task-card-title" id={`study-way-${way.icon}`}>{way.title}</h3>
+          <p className="task-card-description">{way.description}</p><p className="task-card-compact-summary">{way.icon === "hazard" ? `${bootstrap.sceneCount} scenes` : way.compactDescription}</p>
+          <span className={`task-card-cta button ${index === 0 ? "button-primary" : "button-secondary"}`}>{way.action}</span>
+        </a>
       </li>)}</ul>
     </section>)
   const progressSection = (<section className="study-section" aria-labelledby="study-progress-heading">
@@ -120,13 +123,13 @@ export const StudyHub = ({ bootstrap, activityState, reviewController, onRetry }
       {coverageSection}
       {waysSection}
     </> : <>
-      {coverageSection}
       {waysSection}
       {progressSection}
       <div className="study-activity-grid">
         {reviewSection}
         <ActivityHistory state={historyState} onRetry={onRetry} />
       </div>
+      {coverageSection}
     </>}
     <PracticeBuilder sources={bootstrap.reviewQueue.questions} />
     <section className="study-section" aria-labelledby="study-exam-heading">

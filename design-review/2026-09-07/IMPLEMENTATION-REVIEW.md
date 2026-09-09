@@ -128,3 +128,30 @@ Root build/artifact checks and updated capture assertions passed. The capture
 script now asserts heading sizes and records typography for reproducibility.
 Earlier three-browser compact reflow checks preceded this typography correction;
 the current capture verification is Chromium only.
+
+## Practice first-visit composition follow-up
+
+The final comparison with reference 06 exposed an ordering mismatch: first-visit
+coverage preceded Ways to practice. Moved coverage below saved activity, Review,
+and recent activity, matching the reference's sequence. Returning state ordering
+is unchanged. Practice activity cards now use the existing whole-card-link
+component styling: four columns at ample width and two compact columns, concise
+compact summaries, with the real hazard count from bootstrap. First-visit compact
+saved activity now omits the repeated descriptions and action buttons, matching
+the reference's concise record rows. Those destinations remain in the activity
+cards and shared Library navigation.
+
+Refreshed all 24 integrated core states in `integrated-core-screenshots/` through
+real answer saves and explicit failure fixtures without unexpected page errors.
+Inspected first-visit desktop and compact viewport captures: activities now follow
+the hero; desktop retains four complete activity cards and compact begins its
+two-column grid. Root build/artifact checks and site typecheck passed. Eighteen
+existing Practice builder, saved-activity, unavailable-state, and durable Review
+checks passed across Chromium, Firefox, and WebKit. Offline tests were excluded
+because the content/save/cache contracts were unchanged.
+
+The complete page remains longer than the prototype because of the functional
+builder and detailed coverage. Compact hero coverage-link ordering, placement of
+settings/offline links, remaining coverage density, and the separate preset chooser
+still need final reconciliation. This update does not certify all integrated
+captures as visually complete.
