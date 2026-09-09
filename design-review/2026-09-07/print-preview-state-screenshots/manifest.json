@@ -1,0 +1,65 @@
+{
+  "captures": [
+    {
+      "file": "ready-header-779.png",
+      "width": 779,
+      "state": "ready-header"
+    },
+    {
+      "file": "inspection-actions-779.png",
+      "width": 779,
+      "state": "inspection-actions"
+    },
+    {
+      "file": "system-print-failure-779.png",
+      "width": 779,
+      "state": "system-print-failure"
+    },
+    {
+      "file": "regeneration-failure-779.png",
+      "width": 779,
+      "state": "regeneration-failure"
+    },
+    {
+      "file": "stale-779.png",
+      "width": 779,
+      "state": "stale"
+    },
+    {
+      "file": "restore-unavailable-779.png",
+      "width": 779,
+      "state": "restore-unavailable"
+    },
+    {
+      "file": "ready-header-384.png",
+      "width": 384,
+      "state": "ready-header"
+    },
+    {
+      "file": "inspection-actions-384.png",
+      "width": 384,
+      "state": "inspection-actions"
+    },
+    {
+      "file": "system-print-failure-384.png",
+      "width": 384,
+      "state": "system-print-failure"
+    },
+    {
+      "file": "regeneration-failure-384.png",
+      "width": 384,
+      "state": "regeneration-failure"
+    },
+    {
+      "file": "stale-384.png",
+      "width": 384,
+      "state": "stale"
+    },
+    {
+      "file": "restore-unavailable-384.png",
+      "width": 384,
+      "state": "restore-unavailable"
+    }
+  ],
+  "errors": []
+}

@@ -511,7 +511,11 @@ export const PrintPreview = ({ controller }: { readonly controller: PrintPreview
         </details>
       </header>
 
-      {job.status === "stale" ? <p className="status-panel status-panel-warning">This job references corrected or removed content. Regenerate it before printing.</p> : null}
+      {job.status === "stale" ? <section className="status-panel status-panel-warning" aria-labelledby="stale-print-heading">
+        <h2 id="stale-print-heading">This job references corrected or removed content</h2>
+        <p>Regenerate it before printing. The saved preview remains readable at this address.</p>
+        <a href="#print-preview-actions">Review regeneration options</a>
+      </section> : null}
       {snapshot.state.tag === "regenerating" ? <p className="status-panel" role="status">Regenerating this packet from the saved settings…</p> : null}
       {snapshot.state.tag === "regenerate-error" ? <section
         aria-labelledby="print-regenerate-error-heading"
@@ -536,15 +540,16 @@ export const PrintPreview = ({ controller }: { readonly controller: PrintPreview
         key={section.tag}
       >{packetSection(section, manifest.settings.includeSources)}</div>)}
 
-      <footer className="print-preview-actions screen-only">
+      <footer className="print-preview-actions screen-only" id="print-preview-actions" tabIndex={-1}>
         <p>System print and browser “Save as PDF” are the output path. Opening the dialog does not confirm that printing occurred.</p>
-        <label>
+        <label className="affirmation-control">
           <input
             type="checkbox"
             checked={inspectionConfirmed}
             onChange={(event) => setInspectionConfirmed(event.target.checked)}
           /> I inspected browser print preview for clipping, page breaks, grayscale readability, source readability, and product separation.
         </label>
+        <div className="question-controls">
         <button
           className="button button-secondary"
           disabled={snapshot.state.tag === "regenerating"}
@@ -557,6 +562,7 @@ export const PrintPreview = ({ controller }: { readonly controller: PrintPreview
           onClick={controller.requestSystemPrint}
           type="button"
         >Open system print</button>
+        </div>
         <p className="status-text" role="status" aria-live="polite">{snapshot.state.tag === "system-print-requested" ? "System print was requested; completion is not confirmed." : ""}</p>
       </footer>
     </article>
