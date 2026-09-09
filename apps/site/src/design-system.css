@@ -848,12 +848,12 @@
 @layer overrides {
   @media (max-width: 40rem) {
     .utility-content .section-header h2 { font-size: 1.125rem; }
-    .settings-task-cards .task-card { grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto 1fr; column-gap: var(--space-3); }
+    .settings-task-cards .task-card { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; }
     .settings-task-cards .task-card > svg { display: none; }
     .settings-task-cards .task-card > :is(h3, p) { grid-column: 1; }
-    .settings-task-cards .task-card > .button { grid-column: 2; grid-row: 1 / span 2; align-self: center; max-inline-size: 8rem; }
+    .settings-task-cards .task-card > .button { grid-column: 1; inline-size: 100%; max-inline-size: none; }
     .settings-task-cards .settings-card-action { grid-column: 1 / -1; }
-    .settings-task-cards .settings-card-action .button { justify-self: start; inline-size: auto; }
+    .settings-task-cards .settings-card-action .button { inline-size: 100%; }
   }
 }
 

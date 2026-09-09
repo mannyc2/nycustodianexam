@@ -1,0 +1,41 @@
+{
+  "captures": [
+    {
+      "file": "exams-1248.png",
+      "width": 1248,
+      "state": "exams",
+      "url": "http://127.0.0.1:4187/exams/"
+    },
+    {
+      "file": "settings-1248.png",
+      "width": 1248,
+      "state": "settings",
+      "url": "http://127.0.0.1:4187/settings/"
+    },
+    {
+      "file": "offline-1248.png",
+      "width": 1248,
+      "state": "offline",
+      "url": "http://127.0.0.1:4187/offline/"
+    },
+    {
+      "file": "exams-384.png",
+      "width": 384,
+      "state": "exams",
+      "url": "http://127.0.0.1:4187/exams/"
+    },
+    {
+      "file": "settings-384.png",
+      "width": 384,
+      "state": "settings",
+      "url": "http://127.0.0.1:4187/settings/"
+    },
+    {
+      "file": "offline-384.png",
+      "width": 384,
+      "state": "offline",
+      "url": "http://127.0.0.1:4187/offline/"
+    }
+  ],
+  "errors": []
+}
