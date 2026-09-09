@@ -1,0 +1,46 @@
+{
+  "pdf": "explanations-and-sources-us-letter-normal.pdf",
+  "sha256": "1ae01bf49c4c36e3d43f8c31b4ece8242abbbe62e03edf314034f3bab44d551f",
+  "sourceCommit": "c7627c73af779828f915a5ab7be0d90814fc5a2f",
+  "inspectedPages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "result": "No observed clipping, overlap or split technical source label/value pairs. Metadata, rationales, claims and source text are readable. Long source entries continue across pages; the final question starts on its own page.",
+  "observations": [
+    {
+      "pages": [
+        1
+      ],
+      "finding": "Readable metadata; preview-only eyebrow absent."
+    },
+    {
+      "pages": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "finding": "Question 1 and its extended source material flow without overlap or clipped content. Publisher/evidence paragraphs can continue onto the following page; technical label/value pairs stay together."
+    },
+    {
+      "pages": [
+        8
+      ],
+      "finding": "Question 2 and its source details fit on the final page, with an intact closing border."
+    }
+  ],
+  "limitations": [
+    "Applies only to this exact eight-page PDF.",
+    "Large A4, fact-sheet and remaining product visual checks remain open.",
+    "Not physical-printer or assistive-technology certification."
+  ]
+}

@@ -33,3 +33,5 @@ python3 design-review/2026-09-07/audit-print-pdfs.py design-review/2026-09-07/pr
 The production build and artifact/bundle invariants passed. No application behavior or content bytes were changed; this is print CSS plus PDF audit tooling. The new PDFs, exact hashes, source commit and audit output are retained in `print-receipt-pairs/`; raster inspection pages are regenerable temporary files.
 
 The corrected normal A4 explanation PDF has also been visually inspected on all seven pages. `print-receipt-pairs/visual-review-a4-normal.json` records the exact PDF hash and page observations. No clipping, overlap or split technical label/value pairs were observed. This closes only that specific PDF visual pass.
+
+All eight corrected normal Letter explanation pages are now visually inspected, with no observed clipping, overlap or split technical source pairs. See `print-receipt-pairs/visual-review-letter-normal.json` for the exact hash and page observations. Source entries may continue across pages; this review does not claim each entire source is kept on one page.
