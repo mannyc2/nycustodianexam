@@ -1,3 +1,4 @@
+import historicalV4 from "../../../content/authoring/compatibility/launch-v1-v4-review.json" with { type: "json" }
 import { Schema } from "effect"
 import { ReviewQueueBootstrap } from "../src/review/model.ts"
 import { readFile } from "node:fs/promises"
@@ -119,3 +120,42 @@ for (const kind of ["visual", "custom", "nonvisual"] as const) {
     await expect(page.getByRole("heading", { name: "Scene explanation and evidence", exact: true })).toBeVisible()
   })
 }
+
+
+test("version-4 illustrated answer keeps its original stimulus and feedback after export/import", async ({ page }) => {
+  const source = historicalV4.reviewQueue.questions.find(question => question.id === "q091")!
+  const id = questionAttemptId(source.receipt)
+  await page.goto("/practice/")
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible()
+  await page.evaluate(attempt => new Promise<void>((resolve, reject) => {
+    const request = indexedDB.open("nycustodian-study-v1")
+    request.onerror = () => reject(request.error)
+    request.onsuccess = () => {
+      const db = request.result
+      const tx = db.transaction("attempts", "readwrite")
+      tx.objectStore("attempts").put(attempt)
+      tx.oncomplete = () => { db.close(); resolve() }
+      tx.onabort = () => { db.close(); reject(tx.error) }
+    }
+  }), { id, questionId: source.id, selectedOptionId: "c", optionIds: source.optionIds,
+    reviewIntent: "flagged", committedAt: Date.now(), receipt: source.receipt })
+  await roundTripSavedRecord(page, "attempts")
+  await page.goto("/review/")
+  const link = page.getByRole("link", { name: "Read explanation", exact: true })
+  await expect(link).toHaveAttribute("href", "/history/launch-v1-v4/review/session/launch-v1/item/91/")
+  await link.click()
+  await expect(page.getByRole("heading", { name: /Correct.*Adjustable wrench/ })).toBeVisible()
+  await expect(page.locator("[data-question-player]")).toHaveAttribute("data-question-attempt-id", id)
+  const original = JSON.parse(await page.locator("#question-data").textContent() ?? "null")
+  const restoredReceipt = JSON.parse(await page.locator("#question-receipt-data").textContent() ?? "null")
+  expect(restoredReceipt).toEqual(source.receipt)
+  expect(original.version).toBe(1)
+  expect(original.illustration.nonvisualEquivalent).toBeUndefined()
+  await page.reload()
+  await expect(page.getByRole("heading", { name: /Correct.*Adjustable wrench/ })).toBeVisible()
+  await page.goto("/practice/session/launch-v1/question/91/")
+  const current = JSON.parse(await page.locator("#question-data").textContent() ?? "null")
+  expect(current.version).toBe(2)
+  expect(current.illustration.nonvisualEquivalent.observations).toHaveLength(4)
+  await expect(page.getByRole("button", { name: "Save answer", exact: true })).toBeVisible()
+})

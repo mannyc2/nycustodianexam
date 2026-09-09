@@ -114,7 +114,7 @@ export const questionReviews = [...reviewedDigests.map(([id, reviewedArtifactSha
 {
   "id": "q091",
   "reviewedAt": "2026-09-09",
-  "reviewedArtifactSha256": "bf75a721da4f36bed188372a60f2cb59ef681fbef6994790ad792f9313790bd0",
+  "reviewedArtifactSha256": "e01d691a8c590d0cfd8566af5f492174946cff251d3356071bd9ce56c58a7e0e",
   "outcomes": {
     "content": "passed",
     "security": "passed",

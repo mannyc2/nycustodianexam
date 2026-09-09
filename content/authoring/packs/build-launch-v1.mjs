@@ -534,7 +534,13 @@ const reviewText = (question) => JSON.stringify({
   ...(question.illustration === undefined ? {} : { illustration: {
     conceptId: question.illustration.conceptId,
     masterSha256: question.illustration.masterSha256,
-    neutralDescription: question.illustration.neutralDescription
+    neutralDescription: question.illustration.neutralDescription,
+    ...(question.illustration.nonvisualEquivalent === undefined ? {} : {
+      nonvisualEquivalent: {
+        prompt: question.illustration.nonvisualEquivalent.prompt,
+        observations: [...question.illustration.nonvisualEquivalent.observations]
+      }
+    })
   } }),
   options: question.options.map(({ id, label, conceptId }) => ({ id, label, conceptId })),
   correctOptionId: question.correctOptionId,
@@ -586,7 +592,7 @@ const questionsWithoutReviews = drafts.map((unpermutedDraft, index) => {
   )
   return {
     id,
-    version: 1,
+    version: draft.version ?? 1,
     profileIds,
     prompt: draft.prompt,
     options: draft.options.map((entry, optionIndex) => ({ id: optionIds[optionIndex], ...entry })),
@@ -635,7 +641,7 @@ const questions = questionsWithoutReviews.map((question, index) => {
   return {
     ...question,
     reviewReceipt: {
-      id: opaqueOrdinal("r", index),
+      id: `${opaqueOrdinal("r", index)}${question.version === 1 ? "" : `-v${question.version}`}`,
       reviewedAt: review.reviewedAt,
       reviewerKind: "ai-agent",
       reviewMethod: "agent-assisted-editorial-source-security-accessibility-review",
@@ -649,7 +655,7 @@ const questions = questionsWithoutReviews.map((question, index) => {
 const pack = {
   schemaVersion: 1,
   packId: "launch-v1",
-  version: 4,
+  version: 5,
   locale: "en",
   sources,
   sourceLines,

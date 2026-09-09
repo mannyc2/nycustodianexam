@@ -715,7 +715,7 @@ export const verify = async (): Promise<void> => {
   }
   if (
     manifest.releaseId !== "launch-v1" ||
-    manifest.packVersion !== 4 ||
+    manifest.packVersion !== 5 ||
     catalog.locale !== "en" ||
     catalog.tools.length !== 65 ||
     catalog.comparisons.length !== 14 ||
@@ -868,7 +868,7 @@ export const verify = async (): Promise<void> => {
   )
   const sceneRecords = manifest.artifacts.filter((artifact) => artifact.kind === "scene-precommit")
   const questionPostcommitById = new Map(
-    deliveryManifest.artifacts
+    manifest.artifacts
       .filter((artifact) => artifact.kind === "question-postcommit" && artifact.itemId !== undefined)
       .map((artifact) => [artifact.itemId as string, artifact])
   )

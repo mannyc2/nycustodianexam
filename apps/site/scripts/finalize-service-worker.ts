@@ -1,3 +1,4 @@
+import { retainedQuestionArtifacts } from "../../../scripts/release-history.ts"
 import { readFile, readdir, writeFile } from "node:fs/promises"
 import { createHash } from "node:crypto"
 import { dirname, relative, resolve } from "node:path"
@@ -378,7 +379,11 @@ export const finalizeBuild = async (): Promise<void> => {
   const internalManifest = Schema.decodeUnknownSync(ReleaseManifest)(
     JSON.parse(await Bun.file(internalManifestUrl).text())
   )
-  const manifest = derivePublicDeliveryManifest(internalManifest)
+  const retained = retainedQuestionArtifacts(internalManifest)
+  const deliverySource = { ...internalManifest, artifacts: [
+    internalManifest.artifacts[0], ...internalManifest.artifacts.slice(1), ...retained.map(entry => entry.artifact)
+  ] as const }
+  const manifest = derivePublicDeliveryManifest(deliverySource)
   if (
     !isDeepStrictEqual(rawBuiltManifest, JSON.parse(JSON.stringify(stagedManifest))) ||
     !isDeepStrictEqual(
@@ -388,7 +393,7 @@ export const finalizeBuild = async (): Promise<void> => {
   ) {
     throw new Error("Staged delivery manifest is not the exact closed deployable subset")
   }
-  await writeFile(builtManifestUrl, serializePublicDeliveryManifest(internalManifest))
+  await writeFile(builtManifestUrl, serializePublicDeliveryManifest(deliverySource))
 
   const provisionalBuildFiles = await collectFiles(distRoot.pathname)
   const htmlPaths = provisionalBuildFiles.filter((path) => path.endsWith(".html"))

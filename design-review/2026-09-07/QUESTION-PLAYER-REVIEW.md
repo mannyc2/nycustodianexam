@@ -567,3 +567,28 @@ The verifier checks published historical stimuli and scans retained feedback for
 pre-answer leaks. Sixteen targeted tests, site typecheck, and the complete current
 release build pass. Synthetic v5/q091-v2 tests prove both old files are selected
 and their original receipt bytes match; actual v5 runtime upgrade remains pending.
+
+
+Pack v5 now compiles q091 revision 2 with an independently authored nonvisual
+prompt and four ordered observable facts, reviewed against accepted t036 artwork
+and the existing feature claims. The editorial record is
+`content/authoring/packs/q091-v2-review.md`. Original options, explanations, and
+artwork remain unchanged. The reproducible authoring generator and explicit
+review ledger bind the new version and nonvisual fields.
+
+Actual v5 generation exposed two current-only assumptions: service-worker
+finalization omitted retained records, and verifier item-ID lookup could select
+old q091 over its current revision. Both are corrected. Generation/finalization
+and artifact verification pass with 1,352 routes, 224 item artifacts, and 291
+unchanged delivery assets. All 182 original question files remain byte-identical
+at saved URLs. The nonvisual player presentation and separately identified
+results are still required; compiled content alone does not complete that work.
+The pre-change v4 build is retained locally at
+`/tmp/nycustodian-upgrade-v4-8375c3e-dist` for the actual installed-pack upgrade test.
+
+Validation also passes 103 content tests and site/browser typechecks. The existing
+39 illustrated-player and v3 historical browser checks pass across all three
+browsers. The new v4 q091 export/import test initially waited incorrectly for a
+fresh response after Review had already fetched feedback; corrected exact-receipt
+and original-stimulus assertions pass in Chromium, Firefox, and WebKit (3 checks).
+This verifies saved-record round trips, not yet a real installed v4-to-v5 upgrade.

@@ -72,7 +72,17 @@ export const illustratedQuestions = [
     "illustration": {
       "conceptId": "tool.adjustable-wrench",
       "masterSha256": "edb1f4e907926fd83ed55aaa11668d285bf85a181f98e0aeeb8b845dbc0b192d",
-      "neutralDescription": "A hand tool with a single handle and two opposing flat jaw faces. A small ridged adjustment wheel sits below the jaws. The handle has a round hole at its end."
-    }
+      "neutralDescription": "A hand tool with a single handle and two opposing flat jaw faces. A small ridged adjustment wheel sits below the jaws. The handle has a round hole at its end.",
+      "nonvisualEquivalent": {
+        "prompt": "Which tool matches these observable features?",
+        "observations": [
+          "A single handle extends from a broad head with two opposing, flat jaw faces.",
+          "The jaw faces are parallel, with no projecting gripping teeth.",
+          "A small ridged adjustment wheel sits in an opening immediately below the jaws.",
+          "The far end of the handle has a round hole."
+        ]
+      }
+    },
+    "version": 2
   }
 ]

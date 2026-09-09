@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "packId": "launch-v1",
-  "version": 4,
+  "version": 5,
   "locale": "en",
   "sources": [
     {
@@ -16013,7 +16013,7 @@
     },
     {
       "id": "q091",
-      "version": 1,
+      "version": 2,
       "profileIds": [
         "nys-entry-level-custodians-janitors",
         "nassau-county-custodian-entry-level"
@@ -16096,15 +16096,24 @@
       "illustration": {
         "conceptId": "tool.adjustable-wrench",
         "masterSha256": "edb1f4e907926fd83ed55aaa11668d285bf85a181f98e0aeeb8b845dbc0b192d",
-        "neutralDescription": "A hand tool with a single handle and two opposing flat jaw faces. A small ridged adjustment wheel sits below the jaws. The handle has a round hole at its end."
+        "neutralDescription": "A hand tool with a single handle and two opposing flat jaw faces. A small ridged adjustment wheel sits below the jaws. The handle has a round hole at its end.",
+        "nonvisualEquivalent": {
+          "prompt": "Which tool matches these observable features?",
+          "observations": [
+            "A single handle extends from a broad head with two opposing, flat jaw faces.",
+            "The jaw faces are parallel, with no projecting gripping teeth.",
+            "A small ridged adjustment wheel sits in an opening immediately below the jaws.",
+            "The far end of the handle has a round hole."
+          ]
+        }
       },
       "originalContentAttestation": true,
       "reviewReceipt": {
-        "id": "r091",
+        "id": "r091-v2",
         "reviewedAt": "2026-09-09",
         "reviewerKind": "ai-agent",
         "reviewMethod": "agent-assisted-editorial-source-security-accessibility-review",
-        "reviewedArtifactSha256": "bf75a721da4f36bed188372a60f2cb59ef681fbef6994790ad792f9313790bd0",
+        "reviewedArtifactSha256": "e01d691a8c590d0cfd8566af5f492174946cff251d3356071bd9ce56c58a7e0e",
         "evidenceClaimIds": [
           "claim.feature.t036",
           "claim.feature.t037",
