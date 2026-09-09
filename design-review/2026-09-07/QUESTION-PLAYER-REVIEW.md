@@ -171,3 +171,25 @@ need a focused pass after this release expansion.
 `capture-illustrated-question.mjs` records four actual-item desktop/compact cards,
 before and after commitment, at 1053/384 CSS widths. PDF pagination, complete
 visual comparison and explicit offline image-retention tests remain outstanding.
+
+## Version-4 regression and historical receipt audit
+
+The combined question-player/illustration matrix returned 22 passes, two skips
+and three failures in the same preset-navigation test. That test used the now
+collapsed preset section and a hardcoded older deterministic URL. It now opens
+the native disclosure and checks the actual published Start 90 target and its
+next position. All three targeted browser checks pass after that correction.
+
+A separate code trace found a real remaining upgrade issue: Review compares saved
+version-3 receipts against version-4 bootstrap sources, so older saved answers are
+preserved in storage but excluded from the ready list. Custom sets additionally
+need their original 90-item inventory to reproduce the saved position. Simply
+relaxing the pack-version comparison would accept the wrong deterministic closure.
+
+`content/authoring/compatibility/launch-v1-v3-review.json` preserves the exact
+version-3 safe review inventory from the tracked Settings document at 78de137,
+with full commit/path/source-byte SHA provenance: 90 canonical questions, 195
+preset coordinates and 18 scenes. This contains safe prompts/receipts, not answer
+payloads. It is an input for explicit historical resolution, not yet wired into
+the browser. Historical-player links, runtime resolution and end-to-end upgrade
+proof remain required before calling older saved work compatible.

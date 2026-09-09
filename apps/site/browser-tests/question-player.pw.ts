@@ -111,15 +111,16 @@ test("schema-valid bytes with the wrong digest stay unrevealed until a clean ret
 
 test("session start pushes history while Next replaces the current position", async ({ page }) => {
   await page.goto("/practice/")
-  await page
-    .getByLabel("Available whole-bank practice lengths")
-    .getByRole("link", { name: "Start 90" })
-    .click()
-  await expect(page).toHaveURL("/practice/session/ps-5c27f5ab2a5455a818503905/question/1/")
+  await page.locator("#practice-sets > summary").click()
+  const start = page.getByLabel("Available whole-bank practice lengths").getByRole("link", { name: "Start 90" })
+  const startPath = await start.getAttribute("href")
+  expect(startPath).toMatch(/^\/practice\/session\/ps-[a-f0-9]+\/question\/1\/$/)
+  await start.click()
+  await expect(page).toHaveURL(startPath!)
   await expect(page.getByRole("radio").first()).toBeEnabled()
 
   await page.getByRole("link", { name: "Next question" }).click()
-  await expect(page).toHaveURL("/practice/session/ps-5c27f5ab2a5455a818503905/question/2/")
+  await expect(page).toHaveURL(startPath!.replace("/question/1/", "/question/2/"))
 
   await page.goBack({ waitUntil: "commit" })
   await expect(page).toHaveURL("/practice/")
