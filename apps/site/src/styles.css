@@ -744,6 +744,7 @@
   .zone-list { display: grid; gap: var(--space-3); padding-inline-start: var(--space-6); }
   .zone-list span { display: block; color: var(--color-text-muted); }
   .source-record { max-inline-size: 52rem; margin-inline: auto; }
+  .source-record blockquote { margin-inline: 0; }
   .fact-state {
     display: inline-block;
     padding: var(--space-1) var(--space-2);

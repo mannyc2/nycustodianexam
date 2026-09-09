@@ -1,0 +1,18 @@
+{
+  "baseCommit": "356da0e4309f9de5f010d4279746f5c9d211e33e",
+  "workingTreeSourceSha256": {
+    "apps/site/scripts/generate-pages.tsx": "cd2a3b9278b62c3f8ead0e03dcc036ec5418d16a070605e7733f6e877996b90b",
+    "apps/site/scripts/profile-fact.tsx": "59e4dc7b0c04cb4a5b3efeba08ec57b6909d21f37297ff94862dfc1c85c47ca8",
+    "apps/site/scripts/source-line-citations.tsx": "dda734f92a7b849d14e2a0e77743b75f2b6651c020cac91e59bdfcfdc1502a29",
+    "apps/site/scripts/source-citation.tsx": "c20e550b9e3b2a2f16578ff2eae0476436a8a7ecbe2b0cb5b0ebb17ee2dc5af2"
+  },
+  "captures": {
+    "source-384.png": "3bdf5d771249ff2bfaf71608cce3f331432eabc58dc71f66d44319d68377a173",
+    "source-1042.png": "0a141961417e3a89d45a7902040eb3a5e177227dba79c53a68d56c3291dca302"
+  },
+  "route": "/transparency/sources/nys-dcs-entry-level-guide/",
+  "cssWidths": [
+    1042,
+    384
+  ]
+}

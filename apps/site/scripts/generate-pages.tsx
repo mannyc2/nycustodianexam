@@ -1,3 +1,5 @@
+import { SourceCitationDetails } from "./source-citation.tsx"
+import { SourceLineCitations } from "./source-line-citations.tsx"
 import { renderToStaticMarkup } from "react-dom/server"
 import { ProfileFactView } from "./profile-fact.tsx"
 import { resolveAnnouncementTimeline } from "./announcement-timeline.ts"
@@ -341,14 +343,7 @@ const sourceLineLinks = (
   sourceLineIds: readonly string[],
   sourceLineById: ReadonlyMap<string, Catalog["sourceLines"][number]>,
   sourceById: ReadonlyMap<string, ContentSource>
-): string => `
-  <ul class="link-list">${sourceLineIds.map((sourceLineId) => {
-    const line = sourceLineById.get(sourceLineId)
-    if (line === undefined) throw new Error(`Profile references missing source line ${sourceLineId}`)
-    const source = sourceById.get(line.sourceId)
-    if (source === undefined) throw new Error(`Source line ${sourceLineId} references missing source`)
-    return `<li><a href="/transparency/sources/${slugify(source.id)}/">${escapeHtml(source.title)}</a><span><code>${escapeHtml(line.locator)}</code> — ${escapeHtml(line.excerpt)}</span></li>`
-  }).join("")}</ul>`
+): string => renderToStaticMarkup(<SourceLineCitations ids={sourceLineIds} sourceLineById={sourceLineById} sourceById={sourceById} sourcePath={(id) => `/transparency/sources/${slugify(id)}/`} />)
 
 const sourceProofLine = (
   sourceLineIds: readonly string[],
@@ -463,17 +458,6 @@ export const renderSeriesScopeDisclaimer = (
     "lastReviewedOn" | "seriesScopeDisclaimer" | "version"
   >
 ): string => `<section class="source-note section-gap"><h2>Series and scope disclaimer</h2><p>${escapeHtml(factSheet.seriesScopeDisclaimer)}</p><p>Reviewed ${escapeHtml(factSheet.lastReviewedOn)}.</p><details><summary>Technical details</summary><p>Fact-sheet version ${factSheet.version}.</p></details></section>`
-
-const externalSourceLink = (source: ContentSource): string => {
-  if (source.url === undefined) return ""
-  try {
-    const parsed = new URL(source.url)
-    if (parsed.protocol !== "https:") return ""
-    return `<p><a data-network-only-link href="${escapeHtml(parsed.href)}" rel="external noopener">Open the public source</a><span class="network-only-status" data-network-only-status> This external source is unavailable until a fresh online page loads.</span></p>`
-  } catch {
-    return ""
-  }
-}
 
 export const printAnnouncementFactSheet = (
   profile: Catalog["profiles"][number],
@@ -1685,7 +1669,7 @@ const buildPages = ({
       body: `
   <main class="page-shell" id="main-content" tabindex="-1">
     ${breadcrumb([{ href: "/transparency/", label: "Sources and methods" }, { href: "/transparency/sources/", label: "Sources" }, { label: source.title }])}
-    <article class="reference-card source-record"><p class="eyebrow">Source record</p><h1>${escapeHtml(source.title)}</h1><dl class="fact-list">${source.publisher === undefined ? "" : `<dt>Publisher</dt><dd>${escapeHtml(source.publisher)}</dd>`}<dt>Locator</dt><dd><code>${escapeHtml(source.locator)}</code></dd><dt>Supported scope</dt><dd>${escapeHtml(source.scope)}</dd></dl>${externalSourceLink(source)}<section class="section-gap"><h2>Public pages using this record</h2>${publicUses.length === 0 ? "<p>No current indexable page cites this record directly.</p>" : `<ul class="link-list">${publicUses.join("")}</ul>`}</section></article>
+    <article class="reference-card source-record"><p class="eyebrow">Source record</p><h1>${escapeHtml(source.title)}</h1>${renderToStaticMarkup(<SourceCitationDetails source={source} lines={catalog.sourceLines.filter(line => line.sourceId === source.id)} />)}<section class="section-gap"><h2>Public pages using this record</h2>${publicUses.length === 0 ? "<p>No current indexable page cites this record directly.</p>" : `<ul class="link-list">${publicUses.join("")}</ul>`}</section></article>
   </main>`
     })
   }

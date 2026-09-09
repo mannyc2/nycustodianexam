@@ -138,7 +138,7 @@ test("cached profile and source facts remain readable with truthful stale state"
   const sourcePath = new URL(sourceHref, page.url()).pathname
   await page.goto(sourcePath)
   await expect(page.getByRole("heading", { name: sourceHeading, exact: true })).toBeVisible()
-  const supportedScope = (await page.locator(".source-record .fact-list dd").nth(2).innerText())
+  const supportedScope = (await page.locator(".source-record .fact-list dt").filter({ hasText: /^Supported scope$/ }).locator("xpath=following-sibling::dd[1]").innerText())
     .trim()
   expect(supportedScope.length).toBeGreaterThan(0)
   await expect
