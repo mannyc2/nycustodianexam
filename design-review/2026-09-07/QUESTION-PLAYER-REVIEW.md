@@ -627,3 +627,25 @@ Simulation now retains the same authored nonvisual choice in saved responses,
 immutable submissions, and evaluated results. See SIMULATION-FLOW-REVIEW.md for
 38 unit checks, 27 cross-browser workflows, and four actual-download captures.
 Nonvisual print/no-JS adaptation and the installed v4-to-v5 upgrade remain.
+
+
+### No-JavaScript authored equivalent
+
+The generated q091 fallback now includes a native “Read nonvisual version”
+disclosure with the reviewed prompt and ordered facts. It works without an
+island or script and never fetches feedback. Answer controls remain disabled;
+the opening copy now explains reading-only availability rather than instructing
+a selection that cannot be saved. Static headings use the player typography.
+Shared image-retry copy is valid for both active questions and read-only results.
+
+All 21 illustrated-player checks passed across three browsers before the final
+fallback copy/typography adjustment; all six no-JavaScript checks were rerun and
+pass on that adjustment. Site/browser typechecks, two rendering tests, and the
+full build pass. `nonvisual-nojs-audit/` contains final expanded 1053/384 captures;
+the compact result was visually inspected for readable facts, disabled controls,
+accurate availability copy, and horizontal fit. The initial capture helper used
+an animation callback that cannot run with page scripting disabled; it now polls
+native font readiness and relies on screenshot layout stability.
+
+The real installed v4-to-v5 upgrade is recorded in UPGRADE-V4-V5.md. Nonvisual
+print output remains outstanding.

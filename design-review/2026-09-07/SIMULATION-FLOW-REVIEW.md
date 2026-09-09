@@ -106,3 +106,10 @@ player/results at 1008/384 CSS pixels. Compact player and desktop result were
 visually inspected: ordered facts, selected option, and presentation labels fit
 without horizontal overflow. Final full-page simulation/reference comparison,
 Static Assets, and actual installed v4-to-v5 upgrade remain separate gates.
+
+
+The actual installed v4-to-v5 test now passes in Chromium, Firefox, and WebKit:
+old pack claim/version/item array and responses remain pinned; with the origin
+disconnected, the old simulation submits to evaluated results. Original q091
+Practice feedback and a new v5 nonvisual answer also work offline. See
+UPGRADE-V4-V5.md for source coordinates, manifest hashes, and reproduction.

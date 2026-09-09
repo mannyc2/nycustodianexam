@@ -30,7 +30,7 @@ const IllustrationImage = ({ illustration }: { readonly illustration: Illustrati
   if (web === undefined) return <p role="alert">The question illustration is unavailable. Skip this question for now.</p>
   return <figure ref={figure} className="question-illustration question-illustration-interactive" tabIndex={-1} aria-label="Question illustration">
     {failed ? <div className="notice notice-warning" role="alert">
-      <p>The question illustration could not load. Try again, or skip this question for now.</p>
+      <p>The question illustration could not load. Try again to reload the image.</p>
       <button className="button button-secondary" type="button" onClick={() => {
         figure.current?.focus()
         resetView()

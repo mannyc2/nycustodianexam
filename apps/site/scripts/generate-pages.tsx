@@ -578,19 +578,21 @@ const renderQuestionIllustrationFallback = (question: Question): string => {
   if (illustration === undefined) return ""
   const web = illustration.derivatives.find(asset => asset.kind === "web")
   const phone = illustration.derivatives.find(asset => asset.kind === "phone")
-  if (web === undefined) return '<p role="alert">The question illustration is unavailable. Skip this question for now.</p>'
+  const equivalent = illustration.nonvisualEquivalent
+  const nonvisual = equivalent === undefined ? "" : `<details class="question-nonvisual-body"><summary>Read nonvisual version</summary><p><strong>${escapeHtml(equivalent.prompt)}</strong></p><ol>${equivalent.observations.map(fact => `<li>${escapeHtml(fact)}</li>`).join("")}</ol></details>`
+  if (web === undefined) return `<p role="alert">The question illustration is unavailable.</p>${nonvisual}`
   return `<figure class="question-illustration"><picture>
     ${phone === undefined ? "" : `<source media="(max-width: 30rem)" srcset="/${escapeHtml(phone.path)}">`}
     <img src="/${escapeHtml(web.path)}" alt="${escapeHtml(illustration.neutralDescription)}">
-  </picture></figure>`
+  </picture>${nonvisual === "" ? "" : `<figcaption>${nonvisual}</figcaption>`}</figure>`
 }
 
 const renderQuestionFallback = (question: Question, position: number, count: number): string => `
-      <article class="question-card" aria-labelledby="question-heading">
+      <article class="question-card study-player" aria-labelledby="question-heading">
         <header class="question-prompt">
           <p class="eyebrow">Question ${position} of ${count}</p>
           <h1 id="question-heading">${escapeHtml(question.prompt)}</h1>
-          <p>Select one answer — you can change it until you submit. Submitting locks your answer, and the explanation opens only after it is saved on this device.</p>
+          <p>Read the question and answer choices below. Interactive practice needs JavaScript.</p>
         </header>
         ${renderQuestionIllustrationFallback(question)}
         <fieldset disabled>
