@@ -41,16 +41,16 @@ export const QuestionPlayer = {
   CommitStatus: QuestionPlayerPieces.Status
 } as const
 
-interface PracticeQuestionProps { readonly positionLabel?: string; readonly nextHref?: string }
+interface PracticeQuestionProps { readonly positionLabel?: string; readonly nextHref?: string; readonly completionLink?: { readonly href: string; readonly label: string } }
 
-export const PracticeQuestion = ({ positionLabel, nextHref, children }: PracticeQuestionProps & { readonly children: ReactNode }) => (
+export const PracticeQuestion = ({ positionLabel, nextHref, completionLink, children }: PracticeQuestionProps & { readonly children: ReactNode }) => (
   <QuestionPlayerPieces.Frame>
     <QuestionPlayerPieces.Header {...(positionLabel === undefined ? {} : { positionLabel })} />
     <QuestionPlayerPieces.Prompt>{children}</QuestionPlayerPieces.Prompt>
     <QuestionPlayerPieces.Form>
       <QuestionPlayerPieces.Options />
       <QuestionPlayerPieces.Feedback />
-      <QuestionPlayerPieces.Controls {...(nextHref === undefined ? {} : { nextHref })} />
+      <QuestionPlayerPieces.Controls {...(nextHref === undefined ? {} : { nextHref })} {...(completionLink === undefined ? {} : { completionLink })} />
     </QuestionPlayerPieces.Form>
     <QuestionPlayerPieces.Status />
   </QuestionPlayerPieces.Frame>
@@ -69,4 +69,35 @@ export const PracticeQuestionRoute = (props: PracticeQuestionProps) => {
   return state.presentation === "nonvisual"
     ? <PracticeNonvisualQuestion {...props} />
     : <PracticeVisualQuestion {...props} />
+}
+
+const ReviewQuestionContext = () => {
+  const { state } = useQuestionPlayer()
+  if (state.tag !== "revealed") return <p className="source-note">Saved review details appear after the exact answer and explanation are restored.</p>
+  const reasons = [
+    ...(state.reviewIntent === "flagged" ? ["Flagged for review"] : []),
+    ...(state.selectedOptionId !== state.payload.correctOptionId ? ["Answered incorrectly"] : [])
+  ]
+  return <p className="source-note review-question-context"><strong>Saved answer context:</strong> {reasons.length === 0
+    ? "No incorrect-answer or flag reason is recorded for this answer."
+    : reasons.join("; ") + "."} Opening this explanation does not finish a review.</p>
+}
+
+export const ReviewQuestion = ({ children, ...props }: PracticeQuestionProps & { readonly children: ReactNode }) => (
+  <PracticeQuestion {...props} completionLink={{ href: "/review/", label: "Return to Review" }}><ReviewQuestionContext />{children}</PracticeQuestion>
+)
+
+export const ReviewVisualQuestion = (props: PracticeQuestionProps) => (
+  <ReviewQuestion {...props}><QuestionPlayer.VisualBody /></ReviewQuestion>
+)
+
+export const ReviewNonvisualQuestion = (props: PracticeQuestionProps) => (
+  <ReviewQuestion {...props}><QuestionPlayer.NonvisualBody /></ReviewQuestion>
+)
+
+export const ReviewQuestionRoute = (props: PracticeQuestionProps) => {
+  const { state } = useQuestionPlayer()
+  return state.presentation === "nonvisual"
+    ? <ReviewNonvisualQuestion {...props} />
+    : <ReviewVisualQuestion {...props} />
 }

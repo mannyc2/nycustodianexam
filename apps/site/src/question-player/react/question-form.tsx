@@ -114,7 +114,7 @@ export const QuestionForm = ({ children }: { readonly children: ReactNode }) => 
   )
 }
 
-export const QuestionControls = ({ nextHref }: { readonly nextHref?: string }) => {
+export const QuestionControls = ({ nextHref, completionLink }: { readonly nextHref?: string; readonly completionLink?: { readonly href: string; readonly label: string } }) => {
   const { state } = useQuestionPlayer()
   const selected = selectedOptionId(state)
   const isRevealRetry = state.tag === "reveal_failed"
@@ -130,8 +130,8 @@ export const QuestionControls = ({ nextHref }: { readonly nextHref?: string }) =
         <>
         <a className="button button-secondary" href="/atlas/">Open study tools</a>
         <a className="button button-secondary" href="/report/">Report a correction</a>
-        <a className="button button-primary player-continue" data-session-history={nextHref === undefined ? undefined : "replace"} href={nextHref ?? "/practice/"}>
-          {nextHref === undefined ? "Return to Practice" : "Next question"}
+        <a className="button button-primary player-continue" data-session-history={completionLink !== undefined || nextHref === undefined ? undefined : "replace"} href={completionLink?.href ?? nextHref ?? "/practice/"}>
+          {completionLink?.label ?? (nextHref === undefined ? "Return to Practice" : "Next question")}
         </a>
         </>
       ) : (

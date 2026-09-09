@@ -11,7 +11,7 @@ The original [snapshot README](README.md), imported exports and `current-screens
 | Area | Review entry | Evidence scope |
 | --- | --- | --- |
 | Shared navigation, Home, Practice, Review | [IMPLEMENTATION-REVIEW.md](IMPLEMENTATION-REVIEW.md) | First-slice comparison gallery and later focused corrections; real saved/empty/failure states. |
-| Question composition | [QUESTION-COMPOSITION-AUDIT.md](QUESTION-COMPOSITION-AUDIT.md) | Practice wrappers corrected; Review and Simulation wrapper contracts remain open. |
+| Question composition | [QUESTION-COMPOSITION-AUDIT.md](QUESTION-COMPOSITION-AUDIT.md) | Practice and Review wrappers corrected; Simulation wrapper contract remains open. |
 | Current work checklist | [IMPLEMENTATION-STATUS.md](IMPLEMENTATION-STATUS.md) | Page-family evidence and remaining work; implementation is not yet certified complete. |
 | Practice builder | [PRACTICE-BUILDER-REVIEW.md](PRACTICE-BUILDER-REVIEW.md) | Preset/custom lengths, retained choices, setup navigation and durable Review history. |
 | Hazard builder | [HAZARD-BUILDER-REVIEW.md](HAZARD-BUILDER-REVIEW.md) | Visual/nonvisual setup, matching-width composition and recovery. |

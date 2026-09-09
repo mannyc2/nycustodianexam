@@ -9,7 +9,7 @@ import { appRuntime, disposeAppRuntime } from "../../app-runtime.ts"
 import { QuestionAttemptReceipt, questionAttemptId, sameQuestionReceipt } from "../../attempt-receipt.ts"
 import { installSessionNavigation } from "../../session-navigation.ts"
 import { createQuestionController } from "../controller.ts"
-import { PracticeQuestionRoute, QuestionPlayer } from "./player.tsx"
+import { PracticeQuestionRoute, ReviewQuestionRoute, QuestionPlayer } from "./player.tsx"
 
 const mount = document.querySelector<HTMLElement>("[data-question-player]")
 const data = document.querySelector<HTMLScriptElement>("#question-data")
@@ -87,9 +87,12 @@ const mountPlayer = (): void => {
     .find((anchor) => anchor.textContent?.startsWith("Next question"))?.getAttribute("href") ?? undefined
   const root = createRoot(mount)
   const removeSessionNavigation = installSessionNavigation()
+  // Custom practice sets can use a retained Review document as their item URL.
+  const QuestionRoute = document.body.dataset.routeId === "review-player" && !params.has("set")
+    ? ReviewQuestionRoute : PracticeQuestionRoute
   root.render(
     <QuestionPlayer.Provider controller={controller}>
-      <PracticeQuestionRoute {...(positionLabel === undefined ? {} : { positionLabel })} {...(nextHref === undefined ? {} : { nextHref })} />
+      <QuestionRoute {...(positionLabel === undefined ? {} : { positionLabel })} {...(nextHref === undefined ? {} : { nextHref })} />
     </QuestionPlayer.Provider>
   )
 

@@ -198,5 +198,8 @@ test("nonvisual question presentation survives commitment, reload, and export/im
   await page.getByRole("link", { name: "Read explanation", exact: true }).click()
   await expect(page.getByRole("heading", { name: "Which tool matches these observable features?", exact: true })).toBeVisible()
   await expect(page.locator(".question-illustration")).toHaveCount(0)
+  await expect(page.locator(".review-question-context")).toContainText("Flagged for review; Answered incorrectly")
+  await expect(page.locator(".review-question-context")).toContainText("does not finish a review")
+  await expect(page.getByRole("link", { name: "Return to Review", exact: true })).toHaveAttribute("href", "/review/")
   await expect(page.getByText("Answered using the nonvisual version.", { exact: true })).toBeVisible()
 })

@@ -1,8 +1,8 @@
 import { PostcommitQuestion, PrecommitQuestion } from "@nycustodian/content/model"
-import { createElement, createRef } from "react"
+import { createElement, createRef, type ReactNode } from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import { describe, expect, it } from "vitest"
-import { QuestionPlayerPieces } from "../src/question-player/react/player.tsx"
+import { QuestionPlayerPieces, ReviewVisualQuestion } from "../src/question-player/react/player.tsx"
 import {
   QuestionPlayerContract,
   type QuestionPlayerValue
@@ -66,7 +66,7 @@ const payload = new PostcommitQuestion({
   objectiveId: "claim-1"
 })
 
-const renderFeedback = (state: QuestionScreenState): string => {
+const renderFeedback = (state: QuestionScreenState, children: ReactNode = createElement(QuestionPlayerPieces.Feedback)): string => {
   const value: QuestionPlayerValue = {
     question,
     state,
@@ -93,7 +93,7 @@ const renderFeedback = (state: QuestionScreenState): string => {
   return renderToStaticMarkup(
     createElement(QuestionPlayerContract, {
       value,
-      children: createElement(QuestionPlayerPieces.Feedback)
+      children
     })
   )
 }
@@ -190,5 +190,30 @@ describe("question feedback", () => {
     expect(html).not.toContain("Key distinction")
     expect(html).not.toContain("key distinction above")
     expect(html).toContain("in the answer explanations above")
+  })
+})
+
+
+describe("saved Review question context", () => {
+  it("does not infer correctness or a review reason before exact feedback is restored", () => {
+    const html = renderFeedback(initialQuestionState(), createElement(ReviewVisualQuestion))
+    expect(html).toContain("Saved review details appear after")
+    expect(html).not.toContain("Answered incorrectly")
+    expect(html).not.toContain("Saved answer context:")
+    expect(html).not.toContain("Rationale for")
+  })
+
+  it("shows overlapping saved reasons without implying review completion", () => {
+    const html = renderFeedback({ tag: "revealed", selectedOptionId: "a", reviewIntent: "flagged", payload }, createElement(ReviewVisualQuestion))
+    expect(html).toContain("Flagged for review; Answered incorrectly.")
+    expect(html).toContain("Opening this explanation does not finish a review.")
+    expect(html).toContain('href="/review/"')
+    expect(html).toContain("Return to Review")
+  })
+
+  it("does not invent a reason for a correct unflagged saved answer", () => {
+    const html = renderFeedback({ tag: "revealed", selectedOptionId: "c", reviewIntent: "unflagged", payload }, createElement(ReviewVisualQuestion))
+    expect(html).toContain("No incorrect-answer or flag reason is recorded")
+    expect(html).not.toContain("Answered incorrectly")
   })
 })

@@ -1,0 +1,33 @@
+{
+  "captures": [
+    {
+      "file": "review-visual-1053.png",
+      "width": 1053,
+      "mode": "visual",
+      "route": "/review/session/launch-v1/item/91/",
+      "overflow": false
+    },
+    {
+      "file": "review-nonvisual-1053.png",
+      "width": 1053,
+      "mode": "nonvisual",
+      "route": "/review/session/launch-v1/item/91/",
+      "overflow": false
+    },
+    {
+      "file": "review-visual-384.png",
+      "width": 384,
+      "mode": "visual",
+      "route": "/review/session/launch-v1/item/91/",
+      "overflow": false
+    },
+    {
+      "file": "review-nonvisual-384.png",
+      "width": 384,
+      "mode": "nonvisual",
+      "route": "/review/session/launch-v1/item/91/",
+      "overflow": false
+    }
+  ],
+  "errors": []
+}
