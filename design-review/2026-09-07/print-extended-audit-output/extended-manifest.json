@@ -1,0 +1,41 @@
+{
+  "captures": [
+    {
+      "id": "letter-large-wide",
+      "product": "Original multiple-choice practice",
+      "count": 10,
+      "large": true,
+      "paper": "us-letter",
+      "images": 0,
+      "pages": 5,
+      "pageSize": "612 x 792 pts (letter)",
+      "searchableText": true,
+      "backgrounds": false
+    },
+    {
+      "id": "a4-large-wide",
+      "product": "Original multiple-choice practice",
+      "count": 10,
+      "large": true,
+      "paper": "a4",
+      "images": 0,
+      "pages": 5,
+      "pageSize": "594.96 x 841.92 pts (A4)",
+      "searchableText": true,
+      "backgrounds": false
+    },
+    {
+      "id": "letter-tool-families",
+      "product": "Tool-family contrast cards",
+      "count": 9,
+      "large": false,
+      "paper": "us-letter",
+      "images": 65,
+      "pages": 35,
+      "pageSize": "612 x 792 pts (letter)",
+      "searchableText": true,
+      "backgrounds": false
+    }
+  ],
+  "errors": []
+}

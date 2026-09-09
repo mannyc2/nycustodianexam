@@ -1076,6 +1076,8 @@ describe("deterministic print generation", () => {
 
     expect(generated.manifest.itemIds).toEqual(["wrenches"])
     expect(generated.manifest.actualLength).toBe(1)
+    // Three cards at the normal two-card estimate, plus the metadata page.
+    expect(generated.manifest.pageCount).toBe(3)
     expect(generated.manifest.assets).toEqual([
       assetReceipt("adjustable-wrench"),
       assetReceipt("fixed-wrench"),

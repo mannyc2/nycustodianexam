@@ -449,6 +449,12 @@ export const generatePrintManifest = ({
           })
         : []
     : []
+  // A selected tool item is a whole family, but pagination counts its cards.
+  const estimatedItemCount = settings.product === "tool-family-contrast-cards"
+    ? eligibleContrastFamilies(bootstrap, settings.profileId)
+      .filter((family) => itemIds.includes(family.id))
+      .reduce((count, family) => count + family.members.length, 0)
+    : itemIds.length
   const withoutPairingFingerprint = {
     schemaVersion: 3 as const,
     algorithmId: printAlgorithmId,
@@ -461,7 +467,8 @@ export const generatePrintManifest = ({
     assets,
     actualLength: itemIds.length,
     actualDistribution,
-    pageCount: estimatePageCount(settings, itemIds.length)
+    pageCount: estimatePageCount(settings, estimatedItemCount) +
+      (settings.product === "tool-family-contrast-cards" ? 1 : 0)
   }
   const withoutFingerprint = {
     ...withoutPairingFingerprint,

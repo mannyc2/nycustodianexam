@@ -4,7 +4,7 @@ import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 const require = createRequire(new URL('../../apps/site/package.json', import.meta.url));
 const { chromium, expect } = require('@playwright/test');
-const output = fileURLToPath(new URL('./print-output/', import.meta.url));
+const output = fileURLToPath(new URL(process.env.PRINT_CAPTURE_OUTPUT ?? './print-output/', import.meta.url));
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({ channel: 'chromium' });
 const captures = [], errors = [];
@@ -35,6 +35,7 @@ try {
     await expect(page.getByRole('heading', { name: entry.product, exact: true, level: 1 })).toBeVisible({ timeout: 30000 });
     await page.emulateMedia({ media: 'print' });
     await expect(page.locator('.print-preview-actions')).toBeHidden();
+    await expect(page.locator('.print-preview h1')).toHaveCSS('outline-style', 'none');
     const images = await page.locator('.print-preview img').evaluateAll(images => images.map(image => ({ loaded: image.complete && image.naturalWidth > 0, filter: getComputedStyle(image).filter })));
     if (images.some(image => !image.loaded || image.filter !== 'grayscale(1)')) throw new Error('Print image missing or not grayscale');
     const file = output + entry.id + '.pdf';

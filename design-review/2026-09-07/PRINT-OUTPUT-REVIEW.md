@@ -56,3 +56,48 @@ within each page's bounds. The final Letter page was visually inspected: questio
 42–45 and their choices remain intact. These checks do not prove all-page visual
 fidelity, illustration pagination, physical printing, or exact pagination in
 Firefox/WebKit. Extended large-text/tool PDFs still need their full visual audit.
+
+
+## Full extended-packet pagination audit
+
+The earlier sampled inspection missed real defects in the historical
+`print-output/letter-tool-families.pdf`: nested grid fragmentation overlapped
+later cards and obscured text/images. Its extracted text contains 52 overlapping
+word pairs. The historical large-print A4 packet also stranded the Questions
+heading before the first question. Those files are historical evidence, not
+accepted final pagination proofs.
+
+Print media now uses block flow for sections, family containers, and question
+lists while retaining the two-column tool-card grid. This keeps question headings
+with their content and prevents later families from overlapping prior cards.
+Screen focus outlines are suppressed only in print media.
+
+The current artifacts are in `print-extended-audit-output/`: five Letter large-print
+pages, five A4 large-print pages, and 35 Letter tool-family pages. All 45 pages were
+visually inspected after the fragmentation fix, including illustrations, card
+labels, supported uses, recognition cues, and question choices. Following the
+estimate adjustment, tool pages 2–35 were pixel-identical to that reviewed render;
+the final regenerated first page was inspected again after suppressing its focus
+outline. The PDF capture asserts that the print heading has no focus outline.
+No physical printer or Firefox/WebKit PDF-pagination certification is claimed.
+
+The tool estimate now counts the selected families' individual cards plus metadata,
+instead of treating each family as one card. For all 65 tools it estimates 34 pages;
+Chromium actually produces 35. It remains explicitly an estimate. Actual length
+remains nine families. Selection/order and the selection algorithm are unchanged.
+Saved jobs validate their retained page count and fingerprint rather than
+recomputing the estimate, so existing jobs remain compatible; newly generated
+manifests incorporate the corrected estimate in their fingerprint.
+
+`verify-print-extended-pdfs.py` checks every current PDF page for out-of-bounds
+text and overlapping word boxes, verifies all ten question numbers in order and
+the first question beside its heading, and checks all 65 supported-use and
+recognition-cue blocks. The retained `page-verification.json` records PDF hashes
+and per-page results: zero detected word collisions or out-of-page text. These
+text checks supplement visual review; they cannot detect every image-layout defect.
+
+Validation: 33 print-generation unit tests, 27 print browser tests across three
+browsers, all five workspace typechecks, and root build/artifact checks passed.
+The final focus-only CSS adjustment was covered by a fresh build and PDF capture.
+Hazard worksheets/annotated answer PDFs and the remaining product-specific visual
+checks are still outstanding.

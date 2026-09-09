@@ -1,0 +1,392 @@
+[
+  {
+    "file": "letter-large-wide.pdf",
+    "sha256": "c5721d6a60a435211529b76d9b5dc3cb7c9558246b59fc8aad633da1bb386dd4",
+    "pages": [
+      {
+        "page": 1,
+        "words": 67,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 2,
+        "words": 57,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 3,
+        "words": 83,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 4,
+        "words": 80,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 5,
+        "words": 56,
+        "size": [
+          612.0,
+          792.0
+        ]
+      }
+    ],
+    "overlappingWords": [],
+    "textOutsidePage": [],
+    "completeItemText": true,
+    "printControlsAbsent": true
+  },
+  {
+    "file": "a4-large-wide.pdf",
+    "sha256": "825c3fdcbdbe3174bdcf9a978e4d9e7b241838ebf58b6318397aea037a4a9d2f",
+    "pages": [
+      {
+        "page": 1,
+        "words": 67,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 2,
+        "words": 84,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 3,
+        "words": 86,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 4,
+        "words": 80,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 5,
+        "words": 26,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      }
+    ],
+    "overlappingWords": [],
+    "textOutsidePage": [],
+    "completeItemText": true,
+    "printControlsAbsent": true
+  },
+  {
+    "file": "letter-tool-families.pdf",
+    "sha256": "c3d64823b6dbe276bb77c43e87b7805c834b83e1b39a03c02fb87190658f10a2",
+    "pages": [
+      {
+        "page": 1,
+        "words": 74,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 2,
+        "words": 58,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 3,
+        "words": 52,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 4,
+        "words": 60,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 5,
+        "words": 24,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 6,
+        "words": 48,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 7,
+        "words": 42,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 8,
+        "words": 45,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 9,
+        "words": 51,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 10,
+        "words": 48,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 11,
+        "words": 48,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 12,
+        "words": 65,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 13,
+        "words": 54,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 14,
+        "words": 22,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 15,
+        "words": 56,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 16,
+        "words": 48,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 17,
+        "words": 53,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 18,
+        "words": 49,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 19,
+        "words": 50,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 20,
+        "words": 50,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 21,
+        "words": 49,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 22,
+        "words": 47,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 23,
+        "words": 41,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 24,
+        "words": 56,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 25,
+        "words": 28,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 26,
+        "words": 47,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 27,
+        "words": 62,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 28,
+        "words": 51,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 29,
+        "words": 56,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 30,
+        "words": 51,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 31,
+        "words": 51,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 32,
+        "words": 48,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 33,
+        "words": 45,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 34,
+        "words": 47,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 35,
+        "words": 50,
+        "size": [
+          612.0,
+          792.0
+        ]
+      }
+    ],
+    "overlappingWords": [],
+    "textOutsidePage": [],
+    "completeItemText": true,
+    "printControlsAbsent": true
+  }
+]
