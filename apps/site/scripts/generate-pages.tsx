@@ -1,3 +1,5 @@
+import { renderToStaticMarkup } from "react-dom/server"
+import { ProfileFactView } from "./profile-fact.tsx"
 import { resolveAnnouncementTimeline } from "./announcement-timeline.ts"
 import { previousReleaseInventories, retainedQuestionArtifacts } from "../../../scripts/release-history.ts"
 import { resolveFilingStatusReviews } from "./filing-status.ts"
@@ -452,19 +454,7 @@ export const renderProfileFact = (
   sourceLineById: ReadonlyMap<string, Catalog["sourceLines"][number]>,
   sourceById: ReadonlyMap<string, ContentSource>
 ): string => {
-  const directEvidence = fact.sourceLineIds.length === 0
-    ? ""
-    : sourceLineLinks(fact.sourceLineIds, sourceLineById, sourceById)
-  const conflictingEvidence = fact.conflictingValues.length === 0
-    ? ""
-    : `<ol class="link-list">${fact.conflictingValues.map((candidate) => `<li><strong>${escapeHtml(candidate.value)}</strong>${sourceLineLinks(candidate.sourceLineIds, sourceLineById, sourceById)}</li>`).join("")}</ol>`
-  const effectiveWindow = fact.effectiveFrom === null
-    ? "No effective interval asserted."
-    : fact.effectiveThrough === null
-      ? `Effective from ${escapeHtml(fact.effectiveFrom)}.`
-      : `Effective ${escapeHtml(fact.effectiveFrom)} through ${escapeHtml(fact.effectiveThrough)}.`
-  const appliesTo = fact.appliesToExamNumbers.join(", ")
-  return `<dt>${escapeHtml(fact.label)}</dt><dd data-fact-state="${fact.state}"><p><span class="fact-state fact-state-${fact.state}">Status: ${factStateLabel(fact.state)}</span></p><p>${escapeHtml(fact.value ?? fact.detail ?? "No value asserted.")}</p>${conflictingEvidence}${directEvidence}<p class="source-note">Exam ${escapeHtml(appliesTo)} · reviewed ${escapeHtml(fact.reviewedOn)} · ${effectiveWindow}</p><details class="source-note"><summary>Technical details</summary><p>Profile version ${profileVersion} · fact-sheet version ${factSheetVersion}.${fact.supersededByFactId === null ? "" : ` Replaced by fact <code>${escapeHtml(fact.supersededByFactId)}</code>.`}</p></details></dd>`
+  return renderToStaticMarkup(<ProfileFactView fact={fact} profileVersion={profileVersion} factSheetVersion={factSheetVersion} sourceLineById={sourceLineById} sourceById={sourceById} sourcePath={(id) => `/transparency/sources/${slugify(id)}/`} />)
 }
 
 export const renderSeriesScopeDisclaimer = (
