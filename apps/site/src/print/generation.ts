@@ -458,6 +458,70 @@ const estimateTablePages = (
   return pages
 }
 
+const estimateProsePages = (
+  settings: PrintSettings,
+  section: Extract<ReleasedPrintPacketSection, { readonly tag: "explanations" | "announcement-profile-fact-sheet" }>,
+  standalone = true
+): number => {
+  const large = settings.printSize === "large"
+  const margin = settings.margin === "wide" ? 54 : 36
+  const height = (settings.paper === "a4" ? 841.89 : 792) - margin * 2
+  const width = (settings.paper === "a4" ? 595.28 : 612) - margin * 2 - 60
+  const font = large ? 18 : 12
+  const line = font * (large ? 1.55 : 1.5)
+  const paragraph = (text: string) => Math.max(1, Math.ceil(text.length / (width / (font * 0.5)))) * line + 12
+  const sourceHeight = (source: {
+    readonly publisher: string; readonly title: string; readonly excerpt: string
+    readonly verifiedOn: string; readonly locator: string; readonly id: string
+    readonly sourceId: string; readonly version: string; readonly url?: string
+    readonly rightsNotes?: string
+  }, includeRights = false) => paragraph(`${source.publisher} — ${source.title} (verified ${source.verifiedOn})`) +
+    paragraph("Evidence: official evidence") + paragraph(source.excerpt) +
+    (!includeRights || source.rightsNotes === undefined ? 0 : paragraph(`Language: English. Rights: ${source.rightsNotes}.`)) +
+    (source.url === undefined ? 0 : paragraph(`Open the source (${source.url})`)) +
+    // Technical receipts print even when their screen disclosure is closed.
+    ["Source version", source.version, "Locator", source.locator,
+      "Source line ID", source.id, "Source record ID", source.sourceId].reduce((sum, text) => sum + paragraph(text), 0)
+  let points = (standalone ? large ? height : 450 : 0) + (large ? 44 : 36)
+  if (section.tag === "explanations") {
+    for (const explanation of section.explanations) {
+      points += paragraph(`Question ${explanation.number}: choice ${explanation.correctOptionLabel}`)
+      for (const rationale of explanation.rationales) points += paragraph(`Choice ${rationale.optionLabel}`) + paragraph(rationale.message)
+      if ("claims" in explanation) {
+        points += paragraph("Supported claims")
+        for (const claim of explanation.claims) points += paragraph(`${claim.text} Evidence: ${claim.evidenceTier}. ${claim.caveat ?? ""}`)
+      }
+      if (explanation.sources.length > 0) points += paragraph("Where this comes from")
+      for (const source of explanation.sources) points += "title" in source
+        ? sourceHeight(source) : paragraph(`${source.label} — ${source.locator}`)
+    }
+  } else {
+    const sheet = section.factSheet
+    if (sheet.schemaVersion !== 2) return 1
+    const sources = new Map(sheet.sourceLines.map(source => [source.id, source]))
+    const receipts = (ids: ReadonlyArray<string>) => ids.reduce((total, id) => {
+      const source = sources.get(id)
+      return total + (source === undefined ? paragraph("Source information is unavailable.") : sourceHeight(source, true))
+    }, 0)
+    points += [section.profileLabel, section.jurisdiction, sheet.lastReviewedOn,
+      `Fact-sheet version ${sheet.version}`, sheet.controllingDocumentNotice,
+      sheet.seriesScopeDisclaimer, "Facts by explicit publication state"].reduce((sum, text) => sum + paragraph(text), 0)
+    for (const fact of sheet.facts) {
+      points += paragraph(fact.label) + paragraph(`Status: ${fact.state}. Category: ${fact.category}.`) +
+        (fact.value === null ? 0 : paragraph(`Recorded value: ${fact.value}`)) +
+        (fact.detail === null ? 0 : paragraph(`Detail: ${fact.detail}`)) +
+        paragraph(`Applies to exam numbers: ${fact.appliesToExamNumbers.join(", ")}. Reviewed: ${fact.reviewedOn}.`) +
+        paragraph(`Effective interval: ${fact.effectiveFrom ?? "none asserted"} through ${fact.effectiveThrough ?? "current"}.`) +
+        (fact.supersededByFactId === null ? 0 : paragraph(`Superseded by fact: ${fact.supersededByFactId}`))
+      for (const candidate of fact.conflictingValues) points += paragraph(candidate.value) + receipts(candidate.sourceLineIds)
+      if (fact.sourceLineIds.length > 0) points += paragraph("Where this fact comes from") + receipts(fact.sourceLineIds)
+    }
+    points += paragraph("Change history")
+    for (const change of sheet.changeHistory) points += paragraph(`Version ${change.version}, ${change.changedOn}: ${change.summary}`) + receipts(change.sourceLineIds)
+  }
+  return Math.max(1, Math.ceil(points / height))
+}
+
 // Estimate assembled questions and hazards, including required images and source text.
 // This is not browser pagination: fonts and fragmentation can change the result.
 export const finalizePrintJob = (
@@ -477,8 +541,15 @@ export const finalizePrintJob = (
       pages += estimateTablePages(manifest.settings, appendedKey, false) -
         estimateProductPageCount("answer-key", section.questions.length, large)
     }
+    const appendedExplanations = packet.sections.find(candidate => candidate.tag === "explanations")
+    if (appendedExplanations?.tag === "explanations") {
+      pages += estimateProsePages(manifest.settings, appendedExplanations, false) -
+        estimateProductPageCount("explanations-and-sources", section.questions.length, large)
+    }
   } else if (section?.tag === "answer-sheet" || section?.tag === "answer-key") {
     pages = estimateTablePages(manifest.settings, section)
+  } else if (section?.tag === "explanations" || section?.tag === "announcement-profile-fact-sheet") {
+    pages = estimateProsePages(manifest.settings, section)
   } else if (section?.tag === "hazard-worksheet") {
     pages += section.scenes.length * (large ? 2 : 1)
   } else if (section?.tag === "annotated-hazard-answers" || section?.tag === "text-equivalent-scenes") {

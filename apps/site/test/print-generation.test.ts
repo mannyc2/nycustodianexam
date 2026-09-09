@@ -1949,6 +1949,23 @@ describe("print workflow local closure", () => {
 })
 
 describe("print table pagination estimates", () => {
+  it("counts explanation text and repeated source receipts in standalone and appended products", () => {
+    const verboseAnswers = answers.map(answer => new PrintQuestionAnswer({ ...answer,
+      sources: answer.sources.map(source => ({ ...source, excerpt: source.excerpt.repeat(300) }))
+    }))
+    for (const product of ["explanations-and-sources", "multiple-choice-questions"] as const) {
+      const configuration = new PrintSettings({ ...settings(product),
+        answerKeyPlacement: product === "multiple-choice-questions" ? "new-section" : "separate-job",
+        includeExplanations: true
+      })
+      const short = generatePrintJob({ bootstrap, settings: configuration, answers })
+      const verbose = generatePrintJob({ bootstrap, settings: configuration, answers: verboseAnswers })
+      expect(verbose.manifest.pageCount).toBeGreaterThan(short.manifest.pageCount)
+      expect(verbose.manifest.questions).toEqual(short.manifest.questions)
+      expect(verbose.manifest.pairingFingerprint).toBe(short.manifest.pairingFingerprint)
+    }
+  })
+
   it("includes metadata and repeated headers for a 45-row answer sheet", () => {
     const bank = new PrintBuilderBootstrap({ ...bootstrap,
       questions: Array.from({ length: 45 }, (_, index) => ({ ...bootstrap.questions[0]!, id: `table-q${index + 1}` }))
