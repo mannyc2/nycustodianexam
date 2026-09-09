@@ -99,7 +99,7 @@ const CurrentSceneFacts = ({
     <p><strong>Hazards and how to correct them</strong></p>
     {payload.targets.length === 0
       ? <p>This scene contains no hazard that needs correction.</p>
-      : <ol>{payload.targets.map((target) => <li key={target.id}>
+      : <ol className="hazard-condition-list">{payload.targets.map((target) => <li className="hazard-condition hazard-condition--correction" key={target.id}>
           <p><strong>{target.observableCondition}</strong></p>
           <dl>
             <ClaimFeedback
@@ -124,7 +124,7 @@ const CurrentSceneFacts = ({
           </p>
         </li>)}</ol>}
     <p><strong>Details that are safe as shown</strong></p>
-    <ol>{payload.decoys.map((decoy) => <li key={decoy.id}>
+    <ol className="hazard-condition-list">{payload.decoys.map((decoy) => <li className="hazard-condition hazard-condition--safe" key={decoy.id}>
       <p><strong>{decoy.observableCondition}</strong></p>
       <dl>
         <div><dt>Why it may look suspicious</dt><dd>{decoy.suspiciousBecause}</dd></div>

@@ -221,7 +221,9 @@ test("visual markers are durable before feedback fetch and restore exactly", asy
   expect(committed?.evaluation?.retainedVisualAsset?.dataUrl).toMatch(
     /^data:image\/png;base64,/
   )
-  await expect(page.getByText("Reviewed scene overlay.", { exact: false })).toBeVisible()
+  await expect(page.locator("#scene-pointer-instructions")).toContainText("Reviewed scene overlay.")
+  await expect(page.locator("#scene-pointer-instructions")).toBeVisible()
+  await expect(page.locator("[data-hazard-player] img")).toHaveCount(1)
   await expect(page.getByRole("heading", { name: "Scene explanation and evidence" })).toBeVisible()
   await expect(page.getByText("The spill makes the travel surface non-dry and creates a recognized slip-and-fall condition.", { exact: true }).first()).toBeVisible()
   await expect(page.getByText("A person could slip, fall, and be injured.", { exact: true }).first()).toBeVisible()

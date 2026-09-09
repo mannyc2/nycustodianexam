@@ -23,3 +23,11 @@ Visual feedback now shares the response column with the saved marker list. The o
 An initial regression exposed the saved-image restoration boundary: the live asset URL can be absent when reopening a committed response. The viewport now selects the retained committed image before testing asset availability. All nine Hazard browser regressions pass, including restoration with original image/postcommit requests removed; all five workspace typechecks and the production build pass. Refreshed visual/keyboard captures retain all explanation and source content.
 
 The reference has shorter fixture explanations and fewer source disclosures than real released content. Detailed source receipts and the full text equivalent remain available. Further refinement of explanation grouping, metadata disclosure, and safe/unsafe visual treatments is still needed; this pass closes image duplication and column composition, not the full visual audit.
+
+## Explanation grouping pass
+
+Released correction explanations now have a solid red leading border and pale red surface; safe-as-shown explanations use a dashed blue leading border and pale blue surface, matching the reference’s non-color-only distinction. Existing textual group labels, individual claim rationales, source disclosures, and scope remain intact. Styling is scoped to Hazard player results; shared print and simulation explanations keep their existing presentation. Desktop saved capture was visually inspected and all desktop/compact captures regenerated.
+
+Build/artifact checks and nine Hazard regressions pass. The regression now explicitly checks the visible external overlay legend and exactly one rendered scene image. Its previous text-only selector became ambiguous after the external legend was added alongside the reusable component’s hidden caption; the scoped assertion verifies the intended visible element.
+
+Remaining visual differences are the real content’s length, detailed evidence, metadata and system font. Final cross-browser and page-family audit remains open.

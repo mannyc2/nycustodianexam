@@ -134,6 +134,12 @@
   .hazard-player__results li { margin-block-start: var(--space-3); }
   .hazard-player__results section > * + * { margin-block-start: var(--space-3); }
   .hazard-player__results dt { font-weight: var(--weight-bold); }
+  .hazard-player__results .hazard-condition-list { display: grid; gap: var(--space-3); padding: 0; list-style: none; }
+  .hazard-player__results .hazard-condition { margin: 0; padding: var(--space-3) var(--space-4); border-inline-start: var(--space-1) solid var(--color-danger); background: var(--color-danger-surface); }
+  .hazard-player__results .hazard-condition--safe { border-inline-start-style: dashed; border-inline-start-color: var(--color-info); background: var(--color-info-surface); }
+  .hazard-player__results .hazard-condition > * + * { margin-block-start: var(--space-3); }
+  .hazard-player__results .hazard-condition dl > * + * { margin-block-start: var(--space-3); }
+
 
   .simulation-workspace { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-5); align-items: start; margin-block-start: var(--space-5); max-inline-size: 58rem; margin-inline: auto; }
   .simulation-main,
