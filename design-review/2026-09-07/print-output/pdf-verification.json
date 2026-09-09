@@ -1,0 +1,18 @@
+[
+  {
+    "paper": "us-letter",
+    "pages": 13,
+    "pageSize": "612 x 792 pts (letter)",
+    "bytes": 54843,
+    "searchableQuestions": 45,
+    "printControlsAbsent": true
+  },
+  {
+    "paper": "a4",
+    "pages": 12,
+    "pageSize": "594.96 x 841.92 pts (A4)",
+    "bytes": 54901,
+    "searchableQuestions": 45,
+    "printControlsAbsent": true
+  }
+]

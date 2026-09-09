@@ -1,0 +1,17 @@
+{
+  "captures": [
+    {
+      "paper": "us-letter",
+      "questionCount": 45,
+      "seed": "print-pagination-review",
+      "pdf": "us-letter-45-questions.pdf"
+    },
+    {
+      "paper": "a4",
+      "questionCount": 45,
+      "seed": "print-pagination-review",
+      "pdf": "a4-45-questions.pdf"
+    }
+  ],
+  "errors": []
+}
