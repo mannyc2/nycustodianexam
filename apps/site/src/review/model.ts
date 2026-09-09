@@ -1,12 +1,14 @@
+import { matchesVersionedItemPath } from "../versioned-item-path.ts"
 import { PrecommitScene as PrecommitSceneSchema } from "@nycustodian/content/model"
 import { Schema } from "effect"
 import { HazardAttemptReceipt, QuestionAttemptReceipt } from "../attempt-receipt.ts"
 
 const safePathSegment = "[a-z0-9][a-z0-9._-]*"
+const historyPrefix = `(?:/history/${safePathSegment}-v[1-9][0-9]*)?`
 
 const ReviewQuestionItemUrl = Schema.String.check(
   Schema.isPattern(
-    new RegExp(`^/review/session/${safePathSegment}/item/[1-9][0-9]*/$`),
+    new RegExp(`^${historyPrefix}/review/session/${safePathSegment}/item/[1-9][0-9]*/$`),
     { expected: "an exact root-relative review-player path" }
   )
 )
@@ -20,7 +22,7 @@ const ReviewHazardItemUrl = Schema.String.check(
 
 const PracticeQuestionItemUrl = Schema.String.check(
   Schema.isPattern(
-    new RegExp(`^/practice/session/${safePathSegment}/question/[1-9][0-9]*/$`),
+    new RegExp(`^${historyPrefix}/practice/session/${safePathSegment}/question/[1-9][0-9]*/$`),
     { expected: "an exact root-relative practice-player path" }
   )
 )
@@ -50,7 +52,7 @@ export const ReviewPracticeQuestionBootstrap = Schema.Struct({
   itemUrl: PracticeQuestionItemUrl
 }).check(Schema.makeFilter((source) =>
   source.id === source.receipt.questionId &&
-    source.itemUrl === `/practice/session/${source.receipt.sessionId}/question/${source.receipt.position}/` &&
+    matchesVersionedItemPath(source.itemUrl, `/practice/session/${source.receipt.sessionId}/question/${source.receipt.position}/`, source.receipt) &&
     source.receipt.postcommitPath === `/content/vertical-slice/questions/${source.id}.postcommit.json`
     ? undefined
     : "the practice feedback URL and content path must match the exact receipt"
@@ -70,6 +72,10 @@ export class ReviewQueueBootstrap extends Schema.Class<ReviewQueueBootstrap>(
   schemaVersion: Schema.Literal(1),
   questions: Schema.Array(ReviewQuestionBootstrap),
   practiceQuestions: Schema.optionalKey(Schema.Array(ReviewPracticeQuestionBootstrap)),
+  previousQuestionSets: Schema.optionalKey(Schema.Array(Schema.Struct({
+    questions: Schema.Array(ReviewQuestionBootstrap),
+    practiceQuestions: Schema.Array(ReviewPracticeQuestionBootstrap)
+  }))),
   scenes: Schema.Array(ReviewSceneBootstrap)
 }) {}
 

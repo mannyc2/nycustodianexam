@@ -294,7 +294,7 @@ export const buildReviewQueue = Effect.fn("ReviewProjection.buildReviewQueue")(f
   })
   const questionByAttemptId = yield* Effect.try({
     try: () => uniqueMap(
-      [...bootstrap.questions, ...(bootstrap.practiceQuestions ?? [])]
+      [...bootstrap.questions, ...(bootstrap.practiceQuestions ?? []), ...(bootstrap.previousQuestionSets ?? []).flatMap(set => [...set.questions, ...set.practiceQuestions])]
         .map((source) => [questionAttemptId(source.receipt), source]),
       "question receipt"
     ),
@@ -308,7 +308,7 @@ export const buildReviewQueue = Effect.fn("ReviewProjection.buildReviewQueue")(f
   })
 
   const questionEffects = questionAttempts.map((attempt) => {
-    const source = questionByAttemptId.get(attempt.id) ?? resolveCustomReviewSource(bootstrap.questions, attempt) ?? questionById.get(attempt.questionId)
+    const source = questionByAttemptId.get(attempt.id) ?? resolveCustomReviewSource(bootstrap.questions, attempt) ?? (bootstrap.previousQuestionSets ?? []).map(set => resolveCustomReviewSource(set.questions, attempt)).find(source => source !== undefined) ?? questionById.get(attempt.questionId)
     const effect = !hasBoundQuestionReceipt(attempt)
       ? Effect.fail(
           projectionError(

@@ -7616,5 +7616,553 @@
         "nonvisualItemUrl": "/hazards/session/launch-v1-nonvisual/scene/18/"
       }
     ]
+  },
+  "precommitReceipts": [
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q001.precommit.json",
+      "bytes": 594,
+      "sha256": "f3f262dc421126fc1e404a45d840504a6578013b0c265ab421c5187815b4c36a"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q002.precommit.json",
+      "bytes": 667,
+      "sha256": "4314541ca77ad0ba42a2be64803b7772f6479307020912de73eb17f17c29cd12"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q003.precommit.json",
+      "bytes": 729,
+      "sha256": "61df0784f08869fb163f27716ae6af731477967a59087a14c2c1abbbc887251d"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q004.precommit.json",
+      "bytes": 765,
+      "sha256": "b865caf9c058242ad4cb32a130eb159d0ab772f56b8e42186229dd06e071bd86"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q005.precommit.json",
+      "bytes": 719,
+      "sha256": "9d5e68eb638d595fc2bf77831438fb40505d460a7e224dab01bc13a2d31038ff"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q006.precommit.json",
+      "bytes": 703,
+      "sha256": "66286a1001de37de88e18db3664bb390f5983442b947b092f9f596ddb159e0e9"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q007.precommit.json",
+      "bytes": 688,
+      "sha256": "61a4cee073a25ea3f8322772f90d5a9a839e54bdd5e3ac2ea94f386f71c6d927"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q008.precommit.json",
+      "bytes": 698,
+      "sha256": "56c168e24c9eca2b42fd31d1632cf468769c37499834da61452e656d53c5b278"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q009.precommit.json",
+      "bytes": 697,
+      "sha256": "8447c0da4109f2df4cf631036ac906d9549d52ba4f76cac0edb14603ba19c772"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q010.precommit.json",
+      "bytes": 735,
+      "sha256": "8e78a6e0baf8b13a4094f91282d0cebd4337936604846b40c2696d4886767946"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q011.precommit.json",
+      "bytes": 694,
+      "sha256": "5be7b5739c49855b3fe084c3c97a0711f06d0f8cd0b2d330fe0d024007bccf8e"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q012.precommit.json",
+      "bytes": 698,
+      "sha256": "562d402573c60b2e7cb344c42fff2714ec5c45ba4c32b7fa3b39138574110665"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q013.precommit.json",
+      "bytes": 709,
+      "sha256": "a477303bfd667638bf8e06c7189535163a1ae7d1245a945df6eab3f052946bb9"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q014.precommit.json",
+      "bytes": 738,
+      "sha256": "68845b4b1e85e84be59897f0b3c01b624b7eb7f0979879b2e57c5a735a41ae16"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q015.precommit.json",
+      "bytes": 797,
+      "sha256": "bb7e0d1e07e4d411d288979fde5cb6286102cd7bb920487e90503db28a575aea"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q016.precommit.json",
+      "bytes": 800,
+      "sha256": "beee4dfb6110fbdaa765706b3cae5c71937dd31dcfb020abd62ce36d0952bed6"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q017.precommit.json",
+      "bytes": 773,
+      "sha256": "70da7ffc245cdfff48e4db77a89424d1b49a3cbb21058fc738b8d2aed86e44b0"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q018.precommit.json",
+      "bytes": 698,
+      "sha256": "939d9e0ec02954ecdd649df99d30f3d814dccd5eac298eb8add9433ac3d55ffa"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q019.precommit.json",
+      "bytes": 730,
+      "sha256": "be57c10a8d52220fe600572c4521248a4592eb384deb63777739232855f2ef3c"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q020.precommit.json",
+      "bytes": 698,
+      "sha256": "a27aea016a17db2e1d83b7572bfa5c35ec5ba904f0784cd80e220c09087f74af"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q021.precommit.json",
+      "bytes": 682,
+      "sha256": "94cf41cecd9c18474b2f86244802fb166dce1c937ca79e69ad14281b2272e286"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q022.precommit.json",
+      "bytes": 803,
+      "sha256": "823003e3d1835e33e92f00c17e677de4b49dc512870c0be0664e80667099ac76"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q023.precommit.json",
+      "bytes": 709,
+      "sha256": "ac4f53d84748eb09ce1a03936d69f02082a0faa4506f5a78d799ce5ad648e19b"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q024.precommit.json",
+      "bytes": 708,
+      "sha256": "7d9eaf00cca2a59fb5803755cb4d1d8cfd841b1534445d37d9f1a7da3a7c947f"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q025.precommit.json",
+      "bytes": 715,
+      "sha256": "56c9566d110b17732b54a7c2a0f10e81ab8123ea973312933a4e162c03a447ec"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q026.precommit.json",
+      "bytes": 829,
+      "sha256": "b2a81383c2c94e7abd5ea42d0ddb500d1c526a2d2cb79e7df96c505eed1d2856"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q027.precommit.json",
+      "bytes": 817,
+      "sha256": "1e0401ac6d88c93e51e5b637f4f15055fadae818b9b8982afb27b1c93ded2dac"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q028.precommit.json",
+      "bytes": 784,
+      "sha256": "c4302bee887ffb4df78189e2de4a3129870e93882bc50b7486b04c2541250303"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q029.precommit.json",
+      "bytes": 685,
+      "sha256": "cc86f68586dc33294c7256b88cb26677c8d45c23db0aa32789993afdce16f228"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q030.precommit.json",
+      "bytes": 673,
+      "sha256": "841ccfc61458e375bca50bfd18c4fee2c241751c3bfc03b3d2e1f3a15c93e56b"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q031.precommit.json",
+      "bytes": 687,
+      "sha256": "37b86b05a3344c0cec7284c32e8be7bfd6f85218210cdfd050379bd511c73c3d"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q032.precommit.json",
+      "bytes": 695,
+      "sha256": "fe40c028841d0069f61cc62315b48a269ec6affcc8fbdc09808e2347b40a0481"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q033.precommit.json",
+      "bytes": 685,
+      "sha256": "39449fcb06bdfd4707e2b9837b37b87a786b812550286e2105d07e5020df9a79"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q034.precommit.json",
+      "bytes": 716,
+      "sha256": "174a7d51917e830b5136d16e22820709aa21eb8a0a9b66d7aa06a4511f330c7c"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q035.precommit.json",
+      "bytes": 698,
+      "sha256": "33a8cbfa3179e404f30f9b9c767062a50f50cb55e8886900380982f8ead6d541"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q036.precommit.json",
+      "bytes": 690,
+      "sha256": "9f60799c0a7201f62e7b8453c2e82aaf7796fad6490d77680819a9351c0440e0"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q037.precommit.json",
+      "bytes": 703,
+      "sha256": "9a58a707e46288c764f2c871922ee02ec44676a27d606532d4ef228d88ef594d"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q038.precommit.json",
+      "bytes": 607,
+      "sha256": "4f399b443fd35f7eb37d0fb7f2c748a045cb108dd5ea485ebfb4ffc3934158b0"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q039.precommit.json",
+      "bytes": 699,
+      "sha256": "88989b2748c0262aa417c97ef8967ec6daafd8370819d8a25ff18fbf5320bb9f"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q040.precommit.json",
+      "bytes": 721,
+      "sha256": "00785c0e7c0eb35fec8fa047e9d0787a39bcfae589aaf3563aaf1e22c78a3443"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q041.precommit.json",
+      "bytes": 637,
+      "sha256": "1861985fa35e9d3e35d6a3fd7ddc26222190892ceeaec5af33c5ef21e476d076"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q042.precommit.json",
+      "bytes": 702,
+      "sha256": "cd24c39e2513d61053667cb51fcc8128893dc7fc198b56ed88b7286c71775f00"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q043.precommit.json",
+      "bytes": 700,
+      "sha256": "a6e54bc6c777603e2da5c03e69a946618fb21564f11220507a4b7d6175c9dbf4"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q044.precommit.json",
+      "bytes": 684,
+      "sha256": "5f96f17730b253ef13ded43868053abf41c1dea15f76e7024e2f71ac735caa49"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q045.precommit.json",
+      "bytes": 799,
+      "sha256": "050b1925b284cfd27c901aa52401a2917416ef03de3b8494f9e08457b826d7f1"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q046.precommit.json",
+      "bytes": 783,
+      "sha256": "d015fbe9227b429ba9e31a197b5465c428d18ae3d0b68c17671b9dd6628d6d0c"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q047.precommit.json",
+      "bytes": 721,
+      "sha256": "d5f204aa635d1c723dc2879e9285b9eee6a824874d414d8ba33dfe51a58a5b61"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q048.precommit.json",
+      "bytes": 765,
+      "sha256": "92b8f39b39c98e9b1afbb365c53cc0de1734632d4c7320a7bf349e334fca80ad"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q049.precommit.json",
+      "bytes": 616,
+      "sha256": "0b5c90b12c1a0f44b13fa9cf98613cdd539b765b6948c278070e8d6d72083773"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q050.precommit.json",
+      "bytes": 827,
+      "sha256": "f529fd341eb26d783ad4eb2994e4542ff518941ec75cd957769fe1e6461a361b"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q051.precommit.json",
+      "bytes": 814,
+      "sha256": "77d89a3dfd63824bdf54c3695ac06b43cdabe950fada767689061e391e36ab58"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q052.precommit.json",
+      "bytes": 608,
+      "sha256": "5ba9bb483c429f2ec4fca098143f4163cb6422bcd9dda259ced4a11ae600edf8"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q053.precommit.json",
+      "bytes": 592,
+      "sha256": "7cc9d3102e8b827158955625563ac52dd9985ddad7dc58871e068f2717618f21"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q054.precommit.json",
+      "bytes": 712,
+      "sha256": "bafba74b37a92c4ff040d1ff4da94265a61d4a96ee1064a658a56129a3e8996b"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q055.precommit.json",
+      "bytes": 698,
+      "sha256": "165812a7c9782ae209b87dc1955050f106817f9f138412595a1b2f7d7029ab79"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q056.precommit.json",
+      "bytes": 700,
+      "sha256": "7c7fc74df7bb4432c39b31b1752c19035b15d91f159a05270f67fe8e864f1169"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q057.precommit.json",
+      "bytes": 715,
+      "sha256": "30b0a3efe543013a58c675529394abbf7d8fb36df706b5a45c0e6a6b309a9ee2"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q058.precommit.json",
+      "bytes": 711,
+      "sha256": "a5931d14bb8eb286c3d8b44a05bc08c85372cad49010048adce764917fad3938"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q059.precommit.json",
+      "bytes": 732,
+      "sha256": "326911d83f86198854d853d05eff1df7547c40ea170d6bd0c10c24ba6c9c8ced"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q060.precommit.json",
+      "bytes": 776,
+      "sha256": "61798ca5e02b2b0c975fea0715e8504ddfdc73904fa9a869050b9153465510a5"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q061.precommit.json",
+      "bytes": 721,
+      "sha256": "5c997e7dd360db1b327bcf417c7dcba7fbef41e5fd4ebf94bd760f688c9bc0ef"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q062.precommit.json",
+      "bytes": 726,
+      "sha256": "34ae49e48f2fcda15314f8804717a4a1b28329581c114e5b1e7cbfe38b728686"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q063.precommit.json",
+      "bytes": 736,
+      "sha256": "421df3eb329b2bd5da6cad27a099792491853bee5579fe23adfc08261eba1203"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q064.precommit.json",
+      "bytes": 735,
+      "sha256": "dbd0bad88b3d51f83579e754bf6c7d74f2d562209f5f071c1918df85210f6d6a"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q065.precommit.json",
+      "bytes": 738,
+      "sha256": "deda7c7ed36534f7922b451f517f3e2160aa8b601a15a17aac159b2d8bb80e5b"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q066.precommit.json",
+      "bytes": 739,
+      "sha256": "427adc5c91a07fd96cd0084d1fbda30bfaeb064750bb0481d1c2d89819a87393"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q067.precommit.json",
+      "bytes": 725,
+      "sha256": "f26fb962afa7a3a0ea4992a262187fdca6abbb457e9c7705773073b4576d1e9b"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q068.precommit.json",
+      "bytes": 826,
+      "sha256": "820060324a690cd1f2afc2245f7e6430746c860d781f24839a4a7e1b660abd7e"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q069.precommit.json",
+      "bytes": 783,
+      "sha256": "7a72b8ac00291685aeab802067f915cc1580a85943377aed269455d1aa090576"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q070.precommit.json",
+      "bytes": 788,
+      "sha256": "2af819eaa3a4651b4ae7381a75a9ae3d443d8e1b3a2905b7c43dab1cf8ad69c7"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q071.precommit.json",
+      "bytes": 783,
+      "sha256": "531a8f6c495993fa7660696b6698450d5237789bfe972f9f001072bbe9293c98"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q072.precommit.json",
+      "bytes": 811,
+      "sha256": "f3197f02746faf3a6276147662092dc7ad69afc5383f4020797e815ba849a8d7"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q073.precommit.json",
+      "bytes": 779,
+      "sha256": "1fc90e7d545d656cf82243640990a1667b459c1a590a01d826272b86777a1137"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q074.precommit.json",
+      "bytes": 845,
+      "sha256": "7020beae3a1930c960fe06847437a55fcd11357d06d6e718f310a6ec3f6814ab"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q075.precommit.json",
+      "bytes": 813,
+      "sha256": "4ccfc01d96a67cbfcd8e5db21a2e5255d90aedc6f4957abb7ebe3d98eb9e2aed"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q076.precommit.json",
+      "bytes": 798,
+      "sha256": "b216a4c569a0249474333de67128a4733ac1f44a27d47c511174f1c8f864a5c1"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q077.precommit.json",
+      "bytes": 868,
+      "sha256": "3e614a4417416601a361d62a30ce8fecea6a9ba439a4a312cbbc0ad00fc7033e"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q078.precommit.json",
+      "bytes": 793,
+      "sha256": "1fd825db4526bd7f3a8c04e8bc73e3909fc4a8f2cf2dd448c1447c8e5187e964"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q079.precommit.json",
+      "bytes": 746,
+      "sha256": "648fc06995af234d55b53b12af9b9210627766641848d6ef297950c003bc9598"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q080.precommit.json",
+      "bytes": 794,
+      "sha256": "5c2d77eefa556d672ce10235dcc6cffe4a33d6e9309d623b287e84911c3b9997"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q081.precommit.json",
+      "bytes": 732,
+      "sha256": "3d92f8ded8bd640c5a2f9b4f4e40f179488cc528d6d3a2b4371ef2a72e68c696"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q082.precommit.json",
+      "bytes": 774,
+      "sha256": "e5baba7cda6626fe3fdefc8ec24c6f89b94bdaaca52e851c6c965ddc95e3c909"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q083.precommit.json",
+      "bytes": 814,
+      "sha256": "eb756260cc77482edfd723fce0ff68872533ba0799cf6b0f9e16262f23d88d2d"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q084.precommit.json",
+      "bytes": 782,
+      "sha256": "752c4c6bed3fb50576b088ed8707b583ef70426d5cfc3ab8ded1b2efe576545f"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q085.precommit.json",
+      "bytes": 798,
+      "sha256": "a8e47d1a2dfe7b8bbd972fdc70d745108f0eba26688a11406bc9c5b34aff3907"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q086.precommit.json",
+      "bytes": 778,
+      "sha256": "acef0bb3b8ffa92101f0e44ecfc581012d828ecb2139791227b68f9757b0951c"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q087.precommit.json",
+      "bytes": 791,
+      "sha256": "5c39a743e880f3401872ff745338d3eb27a453e30228c50cd4a98d18eaaf012e"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q088.precommit.json",
+      "bytes": 775,
+      "sha256": "b748b5d26a54274131a2785b0cce42f7c631c8f24d53f106f581ede86a6ce118"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q089.precommit.json",
+      "bytes": 778,
+      "sha256": "4352721c3f9ba1d3c5b3615665a2eeebaca8e441d1256f645a263f232128be7d"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/questions/q090.precommit.json",
+      "bytes": 740,
+      "sha256": "fea081f0ce2386433e0599424238d8593b26eec0769c201bfe6ea39521a5051e"
+    }
+  ],
+  "receiptProvenance": {
+    "commit": "78de1372bf360de74c7c00875789cf0e892fc8d9",
+    "path": "apps/site/offline/index.html",
+    "sourceSha256": "b0bf4aa3683d71baa308bf448858e70657108b85f4d1a14d4815d2c29d2ffc11",
+    "selector": "script#offline-pack-descriptor.receipts"
   }
 }

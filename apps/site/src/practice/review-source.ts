@@ -7,7 +7,7 @@ export const practiceInventoryFromReview = (sources: ReadonlyArray<ReviewQuestio
   return sources.map((source) => ({
     ...source,
     category: source.category!,
-    itemUrl: `/practice/session/${source.receipt.sessionId}/question/${source.receipt.position}/`
+    itemUrl: source.itemUrl.replace("/review/session/", "/practice/session/").replace("/item/", "/question/")
   })) satisfies ReadonlyArray<PracticeQuestionSource>
 }
 

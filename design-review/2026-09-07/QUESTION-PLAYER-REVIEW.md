@@ -193,3 +193,33 @@ preset coordinates and 18 scenes. This contains safe prompts/receipts, not answe
 payloads. It is an input for explicit historical resolution, not yet wired into
 the browser. Historical-player links, runtime resolution and end-to-end upgrade
 proof remain required before calling older saved work compatible.
+
+## Historical question resolution implemented
+
+Review now includes explicit previous-question inventories, indexed by full attempt
+receipt identity. Canonical and preset answers resolve directly; custom sets are
+reconstructed from their original 90-item inventory. Receipt equality and option
+order checks remain in force. Historical links use `/history/launch-v1-v3/` and
+retain the original session ID, position and pack version in the embedded receipt.
+The shared path check accepts only the normal path or the exact receipt-derived
+historical prefix, rejecting mismatched release/version prefixes.
+
+The generator creates 375 noindex historical question documents: 90 canonical
+Review pages, 195 preset pages and 90 canonical practice targets for custom-set
+links. These reuse current item bytes only after checking both precommit and
+postcommit sizes/checksums against preserved version-3 receipts. The archive now
+also retains the precommit receipts and exact immutable Offline-document provenance.
+A changed or unavailable historical stimulus fails the build instead of substituting
+new material. Generated history output is ignored alongside other generated routes.
+
+Nine browser checks pass across Chromium/Firefox/WebKit for historical canonical,
+preset and custom answers: each opens and reloads the exact old attempt explanation.
+25 related unit tests and site/browser typechecks pass. The final build verifies
+903 routes, including each historical receipt and noindex declaration. Historical
+question resolution adds 303 raw bytes to the shared Settings closure; its bounded
+limit is now 488400 raw / 146900 gzip / 123500 Brotli, measured 488299 / 146808 /
+123403. Other route limits are unchanged.
+
+Historical hazards, import classification, explicit offline upgrade behavior and
+original illustrated-item PDF validation remain outstanding. This pass proves
+question explanation restoration, not all version-upgrade behavior.

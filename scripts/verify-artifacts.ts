@@ -1,3 +1,4 @@
+import historicalV3 from "../content/authoring/compatibility/launch-v1-v3-review.json"
 import { createHash } from "node:crypto"
 import { readdir } from "node:fs/promises"
 import { dirname, join, relative, resolve } from "node:path"
@@ -144,6 +145,7 @@ export const extractEmbeddedJson = (html: string, id: string): unknown => {
 }
 
 interface ExpectedRoute {
+  readonly packVersion?: number
   readonly canonicalPath: string
   readonly hazardMode?: "nonvisual" | "visual"
   readonly position?: number
@@ -1286,6 +1288,22 @@ export const verify = async (): Promise<void> => {
     })
   })
 
+  const historyPrefix = `/history/${historicalV3.releaseId}-v${historicalV3.packVersion}`
+  const historySources = [
+    ...historicalV3.reviewQueue.questions,
+    ...historicalV3.reviewQueue.practiceQuestions,
+    ...historicalV3.reviewQueue.questions.map(source => ({ ...source, itemUrl: source.itemUrl.replace("/review/session/", "/practice/session/").replace("/item/", "/question/") }))
+  ]
+  for (const source of historySources) {
+    const precommit = questions.find(question => question.value.id === source.id)?.value
+    const artifact = questionPostcommitById.get(source.id)
+    const stimulusReceipt = historicalV3.precommitReceipts.find(receipt => receipt.path === `/content/vertical-slice/questions/${source.id}.precommit.json`)
+    const currentStimulus = manifest.artifacts.find(entry => entry.path === `questions/${source.id}.precommit.json`)
+    if (precommit === undefined || artifact === undefined || stimulusReceipt === undefined || currentStimulus?.sha256 !== stimulusReceipt.sha256 || currentStimulus.bytes !== stimulusReceipt.bytes ||
+      artifact.sha256 !== source.receipt.postcommitSha256 || artifact.bytes !== source.receipt.postcommitBytes) throw new Error(`Historical item closure differs: ${source.id}`)
+    expectedRoutes.push({ canonicalPath: historyPrefix + source.itemUrl, precommit, postcommitArtifact: artifact, postcommitPath: source.receipt.postcommitPath,
+      position: source.receipt.position, sessionId: source.receipt.sessionId, packVersion: source.receipt.packVersion, robots: "noindex,follow", routeId: "review-player" })
+  }
   for (const route of expectedRoutes) assertCanonicalRouteId(route.routeId)
 
   const htmlFiles = buildFiles.filter((path) => path.endsWith(".html"))
@@ -1916,7 +1934,7 @@ export const verify = async (): Promise<void> => {
         rawReceipt,
         {
           artifact: route.postcommitArtifact,
-          packVersion: deliveryManifest.packVersion,
+          packVersion: route.packVersion ?? deliveryManifest.packVersion,
           position: route.position,
           questionId: decoded.id,
           releaseId: deliveryManifest.releaseId,
@@ -2158,10 +2176,11 @@ export const verify = async (): Promise<void> => {
   for (const [family, measurement] of bundleReports) {
     // Settings shares print generation for retained-job validation, including
     // source-aware hazard estimates (+1162 raw bytes), and its saved-work summary.
-    // Required question-image retention adds 519 raw bytes to this closure.
+    // Required question-image retention adds 519 raw bytes; historical question
+    // receipt resolution adds 303 more raw bytes to this closure.
     // Keep this measured allowance local; other island limits remain unchanged.
     const limit = family === "settings"
-      ? { raw: 488_100, gzip: 146_750, brotli: 123_500 }
+      ? { raw: 488_400, gzip: 146_900, brotli: 123_500 }
       : bundleBudgets
     for (const format of ["raw", "gzip", "brotli"] as const) {
       if (measurement[format] > limit[format]) {
