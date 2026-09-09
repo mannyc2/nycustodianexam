@@ -81,3 +81,48 @@ test("Settings removes its paired refresh listeners when its root is disposed", 
   expect(await paired()).toBe(1)
   expect(errors).toEqual([])
 })
+
+for (const mode of ["visual", "nonvisual"] as const) {
+  test(`Hazard ${mode} cleanup removes its navigation portal and document click handler`, async ({ page }) => {
+    await page.addInitScript(() => {
+      const listeners = new Set<EventListenerOrEventListenerObject>()
+      let removed = 0
+      const add = document.addEventListener.bind(document)
+      const remove = document.removeEventListener.bind(document)
+      document.addEventListener = (type: string, listener: EventListenerOrEventListenerObject | null, options?: boolean | AddEventListenerOptions) => {
+        if (type === "click" && listener) listeners.add(listener)
+        if (listener) add(type, listener, options)
+      }
+      document.removeEventListener = (type: string, listener: EventListenerOrEventListenerObject | null, options?: boolean | EventListenerOptions) => {
+        if (type === "click" && listener && listeners.delete(listener)) removed++
+        if (listener) remove(type, listener, options)
+      }
+      Object.assign(window, { hazardLifecycle: () => ({ active: listeners.size, removed }) })
+    })
+    const errors: string[] = []
+    page.on("pageerror", (error) => errors.push(error.message))
+    await page.goto(`/hazards/session/${mode === "visual" ? "launch-v1" : "launch-v1-nonvisual"}/scene/1/`)
+    const ready = mode === "visual" ? page.getByRole("button", { name: "Add marker at center", exact: true }) : page.getByRole("checkbox").first()
+    await expect(ready).toBeEnabled()
+    const navigation = page.getByRole("navigation", { name: "Hazard scene navigation", exact: true })
+    await expect(navigation.getByRole("link", { name: "Next scene →", exact: true })).toBeVisible()
+    const counts = () => page.evaluate(() => (window as unknown as { hazardLifecycle: () => { active: number; removed: number } }).hazardLifecycle())
+    const before = await counts()
+    expect(before.active).toBeGreaterThan(0)
+    await page.evaluate(() => window.dispatchEvent(new PageTransitionEvent("pagehide", { persisted: true })))
+    expect(await counts()).toEqual(before)
+    await expect(ready).toBeEnabled()
+    await page.evaluate(() => {
+      window.dispatchEvent(new PageTransitionEvent("pagehide", { persisted: false }))
+      window.dispatchEvent(new PageTransitionEvent("pagehide", { persisted: false }))
+    })
+    await expect(page.locator("[data-hazard-player]")).toBeEmpty()
+    await expect(navigation).toBeEmpty()
+    expect(await counts()).toEqual({ active: before.active - 1, removed: before.removed + 1 })
+    await page.reload()
+    await expect(ready).toBeEnabled()
+    await expect(navigation.getByRole("link", { name: "Next scene →", exact: true })).toBeVisible()
+    expect(await counts()).toEqual(before)
+    expect(errors).toEqual([])
+  })
+}
