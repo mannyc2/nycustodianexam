@@ -287,3 +287,9 @@ The local-edit lifecycle matrix now includes Print's set code and Hazard builder
 The question lifecycle case selects an answer, preserves selection across synthetic persisted pagehide, flags and durably saves it, then verifies repeated nonpersisted pagehide empties the player and reload restores feedback without Save answer. It follows Read explanation from the Review queue and repeats persisted retention and cleanup/reload checks on that actual saved-answer destination. This proves the exercised queue link and canonical saved question; it does not certify every historical/custom or explicit Review route variant.
 
 All 33 lifecycle cases passed across Chromium, Firefox and WebKit (14.7 seconds). Browser TypeScript passed. Log: `/tmp/nyc-question-lifecycle-browser.log`. No new application source, visual acceptance, actual BFCache certification or complete listener accounting is claimed. Print preview and active Simulation/results still need their own lifecycle coverage.
+
+## Saved Print preview lifecycle
+
+A generated blank answer-sheet packet now exercises the Print preview root: synthetic persisted pagehide retains the visible packet and fingerprint; repeated nonpersisted pagehide empties the root; subsequent beforeprint/afterprint events produce no page errors; reload restores the same saved packet URL and fingerprint. This covers the common preview lifecycle using a blank-sheet product, not every print product, actual printing or direct print-listener identity accounting.
+
+All 36 lifecycle cases passed across Chromium, Firefox and WebKit (16.1 seconds), with browser TypeScript and diff whitespace checks passing. Log: `/tmp/nyc-preview-lifecycle-browser.log`. Active Simulation/results lifecycle and broader visual acceptance remain open.
