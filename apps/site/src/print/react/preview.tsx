@@ -530,7 +530,7 @@ export const PrintPreview = ({ controller }: { readonly controller: PrintPreview
         <h2 id="print-request-error-heading" ref={errorRef} tabIndex={-1}>System print did not open</h2>
         <p>{snapshot.state.detail}</p>
       </section> : null}
-      {job.packet.warnings.map((warning) => <p className="print-warning" key={warning}>{warning}</p>)}
+      {job.packet.warnings.map((warning) => <p className="print-warning screen-only" key={warning}>{warning}</p>)}
       {job.packet.sections.map((section, index) => <div
         className={index === 0 ? undefined : "print-appended-section"}
         key={section.tag}
