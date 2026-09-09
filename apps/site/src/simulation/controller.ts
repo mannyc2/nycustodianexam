@@ -1,3 +1,4 @@
+import { questionPresentationFields, type QuestionPresentation } from "../question-presentation.ts"
 import {
   ReleasedPostcommitQuestion,
   ReleasedPostcommitScene
@@ -40,6 +41,7 @@ export type SimulationPlayerState =
   | { readonly tag: "failure"; readonly detail: string }
 
 export type SimulationPlayerCommand =
+  | { readonly tag: "select-presentation"; readonly presentation: QuestionPresentation }
   | { readonly tag: "select-option"; readonly optionId: string }
   | { readonly tag: "add-hazard-marker"; readonly x: number; readonly y: number }
   | {
@@ -193,6 +195,7 @@ const patchLocalResponse = (
   selectedOptionId: string | null,
   reviewIntent: "unflagged" | "flagged",
   hazard: {
+    readonly presentation?: QuestionPresentation
     readonly markers: ReadonlyArray<{ readonly id: string; readonly x: number; readonly y: number }>
     readonly selectedZoneOrders: ReadonlyArray<number>
     readonly zeroHazardsConfirmed: boolean
@@ -379,16 +382,21 @@ export const createSimulationPlayerController = (input: {
       readonly markers: ReadonlyArray<{ readonly id: string; readonly x: number; readonly y: number }>
       readonly selectedZoneOrders: ReadonlyArray<number>
       readonly zeroHazardsConfirmed: boolean
-    } = { markers: [], selectedZoneOrders: [], zeroHazardsConfirmed: false }
+    } = { markers: [], selectedZoneOrders: [], zeroHazardsConfirmed: false },
+    presentation?: QuestionPresentation
   ): void => {
     const item = session.items[input.position - 1]
     if (item === undefined || simulationItemId(item) !== questionId) return
+    const previous = session.responses.find(response => response.questionId === questionId)
+    const presentationFields = presentation === undefined
+      ? questionPresentationFields(previous ?? {}) : { presentation }
+    const responseDetails = { ...hazard, ...presentationFields }
     const optimistic = patchLocalResponse(
       session,
       questionId,
       selectedOptionId,
       reviewIntent,
-      hazard
+      responseDetails
     )
     queueSave({
       kind: "response",
@@ -400,7 +408,7 @@ export const createSimulationPlayerController = (input: {
             sessionId: session.id,
             questionId,
             selectedOptionId,
-            ...hazard,
+            ...responseDetails,
             reviewIntent
           })
         })
@@ -520,7 +528,13 @@ export const createSimulationPlayerController = (input: {
       const response = state.session.responses.find(
         (candidate) => candidate.questionId === itemId
       )
-      if (command.tag === "select-option") {
+      if (command.tag === "select-presentation") {
+        if (state.saving || state.recoverableError?.kind === "timer" || state.recoverableError?.kind === "submission" || !("question" in item)) return
+        const illustration = "illustration" in item.question ? item.question.illustration : undefined
+        if (illustration?.nonvisualEquivalent === undefined) return
+        saveResponse(state.session, itemId, response?.selectedOptionId ?? null,
+          response?.reviewIntent ?? "unflagged", undefined, command.presentation)
+      } else if (command.tag === "select-option") {
         if (state.saving || state.recoverableError?.kind === "timer" || state.recoverableError?.kind === "submission") return
         if (!("question" in item)) return
         if (!item.optionOrder.includes(command.optionId)) return

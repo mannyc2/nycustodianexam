@@ -515,7 +515,7 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
   expect(bootstrap.schemaVersion).toBe(2)
   expect(bootstrap.advertisedLengths).toEqual([45, 60, 90])
   expect(bootstrap.inventory).toHaveLength(91)
-  expect(new Set(bootstrap.inventory.map(({ question }) => question.id)).size).toBe(90)
+  expect(new Set(bootstrap.inventory.map(({ question }) => question.id)).size).toBe(91)
   const selectedProfile = bootstrap.profiles.find(
     ({ id }) => id === "nys-entry-level-custodians-janitors"
   )
@@ -556,7 +556,7 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
   })
   expect(categoryOptions).not.toHaveLength(0)
   expect(categoryOptions.every(({ checked }) => checked)).toBe(true)
-  expect(categoryOptions.reduce((total, { count }) => total + count, 0)).toBe(90)
+  expect(categoryOptions.reduce((total, { count }) => total + count, 0)).toBe(bootstrap.inventory.length)
   const smallestAdvertisedLength = Math.min(...bootstrap.advertisedLengths)
   const filteredCategory = [...categoryOptions]
     .filter(({ count }) => count < smallestAdvertisedLength)
@@ -1186,4 +1186,57 @@ test("keeps a fitting length and requires a replacement when the subject selecti
   await areas.getByRole("checkbox", { name: /^Minor maintenance and repair/ }).check()
   await expect(lengths.getByRole("radio", { name: /^30 items/ })).toBeChecked()
   await expect(page.getByRole("button", { name: "Start simulation" })).toBeEnabled()
+})
+
+test("nonvisual question presentation persists through simulation reload and final results", async ({ page }) => {
+  await page.goto("/simulations/")
+  await expectSharedStudyBank(page)
+  await primeSimulationResultCache(page)
+  await page.getByRole("group", { name: "Set length" }).getByRole("radio", { name: /^90 items/ }).check()
+  await page.locator("details", { has: page.getByLabel("Set code (seed)") }).evaluate(node => { (node as HTMLDetailsElement).open = true })
+  await page.getByLabel("Set code (seed)").fill("nonvisual-simulation")
+  await page.getByRole("button", { name: "Start simulation", exact: true }).click()
+  await expect(page).toHaveURL(/\/simulations\/session\/sim-[a-z0-9-]+\/question\/1\/$/)
+  const coordinate = await page.evaluate(({ databaseName, store }) => new Promise<{ id: string; position: number }>((resolve, reject) => {
+    const request = indexedDB.open(databaseName)
+    request.onerror = () => reject(request.error)
+    request.onsuccess = () => {
+      const db = request.result
+      const tx = db.transaction(store, "readonly")
+      const query = tx.objectStore(store).getAll()
+      query.onsuccess = () => {
+        const session = query.result[0]
+        const item = session?.items.find((item: { question?: { id: string } }) => item.question?.id === "q091")
+        if (item === undefined) reject(new Error("The deterministic fixture must include q091"))
+        else resolve({ id: session.id, position: item.position })
+      }
+      tx.oncomplete = () => db.close()
+      tx.onabort = () => { db.close(); reject(tx.error) }
+    }
+  }), { databaseName: appDatabaseName, store: appDatabaseStores.simulationSessions })
+  await page.goto(`/simulations/session/${coordinate.id}/question/${coordinate.position}/`)
+  await page.getByRole("button", { name: "Use nonvisual version", exact: true }).click()
+  await expect(page.getByText("Saved on this device", { exact: true })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "Which tool matches these observable features?", exact: true })).toBeVisible()
+  await expect(page.locator(".question-illustration")).toHaveCount(0)
+  await expect(page.locator(".question-nonvisual-body li")).toHaveCount(4)
+  await page.reload()
+  await expect(page.getByRole("heading", { name: "Which tool matches these observable features?", exact: true })).toBeVisible()
+  await page.getByRole("radio", { name: "Adjustable wrench", exact: true }).check()
+  await expect(page.getByText("Saved on this device", { exact: true })).toBeVisible()
+  await page.getByRole("button", { name: "Flag this question", exact: true }).click()
+  await expect(page.getByText("Saved on this device", { exact: true })).toBeVisible()
+  await page.reload()
+  await expect(page.getByRole("radio", { name: "Adjustable wrench", exact: true })).toBeChecked()
+  await expect(page.getByText("Nonvisual version", { exact: true })).toBeVisible()
+  await expect(page.getByText(/^Correct answer:/)).toHaveCount(0)
+  await page.getByRole("button", { name: "Review and submit simulation", exact: true }).click()
+  await page.getByRole("button", { name: "Submit final answers", exact: true }).click()
+  await expect(page).toHaveURL(/\/results\/$/)
+  const result = page.locator("li.reference-card").filter({ has: page.locator(`#result-question-${coordinate.position}`) })
+  await expect(result.getByText("Answered using the nonvisual version.", { exact: true })).toBeVisible()
+  await expect(result.locator(".question-nonvisual-body li")).toHaveCount(4)
+  await expect(result.locator(".question-illustration")).toHaveCount(0)
+  await page.reload()
+  await expect(result.getByText("Answered using the nonvisual version.", { exact: true })).toBeVisible()
 })

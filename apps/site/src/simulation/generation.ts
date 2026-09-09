@@ -1,3 +1,4 @@
+import { questionPresentationFields } from "../question-presentation.ts"
 import { Schema } from "effect"
 import { assessVisualMarkers, hasValidPostcommitClosure } from "../hazard-player/assessment.ts"
 import {
@@ -380,6 +381,7 @@ export const evaluateSimulation = (input: EvaluateSimulationInput): {
       }
       return new SimulationQuestionResult({
         kind: "question",
+        ...questionPresentationFields(answer),
         questionId: item.question.id,
         selectedOptionId: answer.selectedOptionId,
         correctOptionId: postcommit.correctOptionId,

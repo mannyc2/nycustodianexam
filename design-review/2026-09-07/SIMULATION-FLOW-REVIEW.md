@@ -72,3 +72,37 @@ item-scoped artifacts and 291 delivery assets). The two hazard Simulation
 regressions passed in all three browsers (six passes), including restored responses
 and self-contained feedback after verified cache removal. The earlier 24-check
 run remains evidence for unchanged broader Simulation behavior.
+
+
+### Authored nonvisual question presentation
+
+Illustrated q091 now offers the authored nonvisual prompt and ordered facts in
+simulations. Choosing a presentation creates a saved response even before an
+answer is selected; that response remains unanswered until a choice is made.
+Answer/flag edits retain presentation. Save failures keep the optimistic view and
+support retry or another edit under the existing response-save rules. Reload
+uses the saved presentation. Final submission freezes it, evaluation copies it,
+and integrity validation rejects result/answer presentation mismatches and
+presentations unavailable in the pinned question. Hazard responses reject this
+question-only field. Legacy records without it retain their original behavior.
+
+Results show the authored prompt/facts and explicitly identify nonvisual use.
+Original options, shuffled order, feedback, timing, and commit-before-read rules
+remain in force. This is an accommodation for original practice, not evidence of
+an official exam format or cross-modality score equivalence.
+
+Validation: 38 simulation unit tests; site/browser typechecks; full 1,352-route
+build. All 27 simulation browser workflows excluding the separate Static Assets
+case pass across Chromium/Firefox/WebKit. The initial broad run found stale
+90-item inventory/category totals; assertions now verify the actual 91-item
+inventory and its category partition. A legacy unit assertion likewise used the
+old progress sentence; it now verifies the current zero-recorded/one-unanswered/
+one-flagged values. Three rechecks pass for the corrected full workflow.
+
+`capture-simulation-nonvisual.mjs` downloads and activates an actual study pack,
+starts the deterministic 90-item set, saves q091's nonvisual presentation and
+answer, reloads, and submits. Four captures in `simulation-nonvisual-audit/` show
+player/results at 1008/384 CSS pixels. Compact player and desktop result were
+visually inspected: ordered facts, selected option, and presentation labels fit
+without horizontal overflow. Final full-page simulation/reference comparison,
+Static Assets, and actual installed v4-to-v5 upgrade remain separate gates.

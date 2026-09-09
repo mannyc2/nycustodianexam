@@ -1,0 +1,49 @@
+{
+  "captures": [
+    {
+      "file": "player-1008.png",
+      "width": 1008,
+      "position": 10,
+      "bounds": {
+        "x": 104,
+        "y": 0.109375,
+        "width": 800,
+        "height": 932.078125
+      }
+    },
+    {
+      "file": "result-1008.png",
+      "width": 1008,
+      "position": 10,
+      "bounds": {
+        "x": 65.203125,
+        "y": -198.890625,
+        "width": 917.59375,
+        "height": 1297.515625
+      }
+    },
+    {
+      "file": "player-384.png",
+      "width": 384,
+      "position": 10,
+      "bounds": {
+        "x": 16,
+        "y": 0.4375,
+        "width": 352,
+        "height": 1160.328125
+      }
+    },
+    {
+      "file": "result-384.png",
+      "width": 384,
+      "position": 10,
+      "bounds": {
+        "x": 56,
+        "y": -693.03125,
+        "width": 312,
+        "height": 2209.078125
+      }
+    }
+  ],
+  "errors": []
+}

@@ -132,6 +132,8 @@ export const SimulationPlayer = ({
   }
   const itemId = simulationItemId(item)
   const response = session.responses.find((candidate) => candidate.questionId === itemId)
+  const questionIllustration = "question" in item && "illustration" in item.question ? item.question.illustration : undefined
+  const nonvisualEquivalent = questionIllustration?.nonvisualEquivalent
   const answered = session.responses.filter((candidate) =>
     candidate.selectedOptionId !== null ||
     (candidate.markers?.length ?? 0) > 0 ||
@@ -175,8 +177,22 @@ export const SimulationPlayer = ({
         <span className="player-mode-label">Practice simulation</span>
       </div>
       <header className="question-prompt">
-        <h1 id="simulation-question-heading">{item.question.prompt}</h1>
-        <QuestionIllustration illustration={"illustration" in item.question ? item.question.illustration : undefined} />
+        {response?.presentation === "nonvisual" && nonvisualEquivalent !== undefined ?
+          <section className="question-nonvisual-body" aria-labelledby="simulation-question-heading">
+            <h1 id="simulation-question-heading">{nonvisualEquivalent.prompt}</h1>
+            <ol>{nonvisualEquivalent.observations.map((fact, index) => <li key={index}>{fact}</li>)}</ol>
+          </section> : <>
+            <h1 id="simulation-question-heading">{item.question.prompt}</h1>
+            <QuestionIllustration illustration={questionIllustration} />
+          </>}
+        {nonvisualEquivalent === undefined ? null : <>
+          <p className="source-note">{response?.presentation === "nonvisual" ? "Nonvisual version" : "Illustrated version"}</p>
+          <button type="button" className="button button-secondary question-presentation-toggle"
+            disabled={session.status !== "active" || answerEditBlocked}
+            onClick={() => controller.dispatch({ tag: "select-presentation", presentation: response?.presentation === "nonvisual" ? "visual" : "nonvisual" })}>
+            {response?.presentation === "nonvisual" ? "Use illustrated version" : "Use nonvisual version"}
+          </button>
+        </>}
         <p>Choose one answer. You can edit it until final submission. Feedback is not loaded during the simulation.</p>
       </header>
       <fieldset disabled={session.status !== "active" || answerEditBlocked}>

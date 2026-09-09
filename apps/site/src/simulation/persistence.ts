@@ -1,3 +1,4 @@
+import { questionPresentationFields, type QuestionPresentation } from "../question-presentation.ts"
 import {
   ReleasedPostcommitQuestion,
   ReleasedPostcommitScene
@@ -50,6 +51,7 @@ export class SimulationPersistenceError extends Schema.TaggedError<SimulationPer
 ) {}
 
 export interface SaveSimulationResponseInput {
+  readonly presentation?: QuestionPresentation
   readonly sessionId: string
   readonly questionId: string
   readonly selectedOptionId: string | null
@@ -152,6 +154,11 @@ const validateResponseForItem = (
     throw new Error(`Saved response ${response.questionId} repeats a hazard coordinate`)
   }
   if ("question" in item) {
+    const illustration = "illustration" in item.question ? item.question.illustration : undefined
+    if ((response.presentation === "nonvisual" && illustration?.nonvisualEquivalent === undefined) ||
+      (response.presentation === "visual" && illustration === undefined)) {
+      throw new Error(`Saved response ${response.questionId} has an unavailable question presentation`)
+    }
     if (
       (response.selectedOptionId !== null && !item.optionOrder.includes(response.selectedOptionId)) ||
       markers.length > 0 ||
@@ -165,6 +172,7 @@ const validateResponseForItem = (
   const allowedZoneOrders = item.scene.neutralPreAnswer.zones.map((zone) => zone.order)
   const selectedCount = item.mode === "visual" ? markers.length : selectedZoneOrders.length
   if (
+    response.presentation !== undefined ||
     response.selectedOptionId !== null ||
     (item.mode === "visual" && selectedZoneOrders.length > 0) ||
     (item.mode === "nonvisual" && markers.length > 0) ||
@@ -391,6 +399,7 @@ export const validateSimulationSubmission = (
       if (
         result.kind !== "question" ||
         result.selectedOptionId !== answer.selectedOptionId ||
+        result.presentation !== answer.presentation ||
         !hasValidQuestionPostcommitClosure(item, result.postcommit) ||
         result.correctOptionId !== result.postcommit.correctOptionId ||
         result.category !== item.category ||
@@ -792,6 +801,7 @@ const submit = Effect.fn("SimulationPersistence.submit")(function*(
         return {
           questionId: itemId,
           selectedOptionId: response?.selectedOptionId ?? null,
+          ...questionPresentationFields(response ?? {}),
           markers: response?.markers ?? [],
           selectedZoneOrders: response?.selectedZoneOrders ?? [],
           zeroHazardsConfirmed: response?.zeroHazardsConfirmed ?? false,
@@ -964,6 +974,7 @@ export const simulationPersistenceLive = Layer.effect(
             }
             const response = {
               questionId: input.questionId,
+              ...questionPresentationFields(input),
               selectedOptionId: input.selectedOptionId,
               markers: input.markers ?? [],
               selectedZoneOrders: input.selectedZoneOrders ?? [],

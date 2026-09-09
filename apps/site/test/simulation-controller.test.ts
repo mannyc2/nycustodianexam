@@ -298,6 +298,7 @@ const savedResponse = (
   ...session,
   responses: [{
     questionId: input.questionId,
+    ...(input.presentation === undefined ? {} : { presentation: input.presentation }),
     selectedOptionId: input.selectedOptionId,
     markers: input.markers ?? [],
     selectedZoneOrders: input.selectedZoneOrders ?? [],
@@ -309,6 +310,43 @@ const savedResponse = (
 })
 
 describe("simulation player controller", () => {
+  it("saves presentation before an answer and preserves it through answer and flag edits", async () => {
+    const original = sessionFixture()
+    let session = Schema.decodeUnknownSync(SimulationSessionRecord)({ ...original, items: original.items.map(item => "question" in item ? {
+      ...item, question: { ...item.question, illustration: {
+        masterSha256: "a".repeat(64), neutralDescription: "Two flat faces on one handle.",
+        derivatives: [{ kind: "web", path: "content/assets/derivatives/tools/t036-web.png", bytes: 1, sha256: "b".repeat(64) }],
+        nonvisualEquivalent: { prompt: "Which tool matches these features?", observations: ["Two flat faces on one handle."] }
+      } }
+    } : item) })
+    const saves: Array<Parameters<SimulationPersistence["Service"]["saveResponse"]>[0]> = []
+    const persistence = SimulationPersistence.of({
+      createSession: () => Effect.die("not used"), findSession: () => Effect.succeed(session),
+      saveResponse: input => Effect.sync(() => { saves.push(input); session = savedResponse(session, input); return session }),
+      setPosition: () => Effect.succeed(session), setTimerVisibility: () => Effect.die("not used"),
+      submit: () => Effect.die("not used"), findSubmission: () => Effect.succeed(undefined), complete: () => Effect.die("not used")
+    })
+    const controller = createSimulationPlayerController({ runtime: runtimeFor(persistence), sessionId: session.id, position: 1, replaceLocation: () => undefined })
+    controller.start()
+    await vi.waitFor(() => expect(controller.getSnapshot().state.tag).toBe("ready"))
+    controller.dispatch({ tag: "select-presentation", presentation: "nonvisual" })
+    await vi.waitFor(() => expect(saves).toHaveLength(1))
+    expect(saves[0]).toMatchObject({ presentation: "nonvisual", selectedOptionId: null })
+    await vi.waitFor(() => expect(controller.getSnapshot().state).toMatchObject({ saving: false }))
+    const item = session.items[0]!
+    if (!("question" in item)) throw new Error("Expected a question")
+    controller.dispatch({ tag: "select-option", optionId: item.optionOrder[0]! })
+    await vi.waitFor(() => expect(saves).toHaveLength(2))
+    expect(saves[1]).toMatchObject({ presentation: "nonvisual", selectedOptionId: item.optionOrder[0] })
+    await vi.waitFor(() => expect(controller.getSnapshot().state).toMatchObject({ saving: false }))
+    controller.dispatch({ tag: "toggle-flag" })
+    await vi.waitFor(() => expect(saves).toHaveLength(3))
+    expect(saves[2]).toMatchObject({ presentation: "nonvisual", reviewIntent: "flagged" })
+    expect(validateSimulationSession(session).responses[0]!.presentation).toBe("nonvisual")
+    expect(() => validateSimulationSession({ ...original, responses: session.responses })).toThrow(/presentation/)
+    controller.dispose()
+  })
+
   it("reports a missing local session without exposing its internal diagnostic", async () => {
     const persistence = SimulationPersistence.of({
       createSession: () => Effect.die("not used"),
@@ -389,7 +427,7 @@ describe("simulation player controller", () => {
         controller: { ...controller, getHydrationSnapshot: () => snapshot },
         position: 1
       }))
-      expect(html).toContain("0 answered · 1 unanswered")
+      expect(html).toContain("0 recorded, 1 unanswered, 1 flagged.")
       expect(html).toContain('aria-pressed="true"')
       controller.dispose()
     }

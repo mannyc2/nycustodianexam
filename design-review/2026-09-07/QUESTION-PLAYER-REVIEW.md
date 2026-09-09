@@ -621,3 +621,9 @@ horizontal overflow. This new state has no supplied matching screenshot, so it
 adapts the accepted text-player spacing and hierarchy rather than claiming pixel
 identity. Simulation presentation/result persistence, nonvisual print/no-JS
 adaptation, and actual installed v4-to-v5 upgrade remain outstanding.
+
+
+Simulation now retains the same authored nonvisual choice in saved responses,
+immutable submissions, and evaluated results. See SIMULATION-FLOW-REVIEW.md for
+38 unit checks, 27 cross-browser workflows, and four actual-download captures.
+Nonvisual print/no-JS adaptation and the installed v4-to-v5 upgrade remain.

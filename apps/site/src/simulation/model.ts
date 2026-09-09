@@ -1,3 +1,4 @@
+import { QuestionPresentation } from "../question-presentation.ts"
 import {
   PrecommitQuestion,
   PrecommitScene,
@@ -171,6 +172,7 @@ export class SimulationResponse extends Schema.Class<SimulationResponse>(
 )({
   questionId: Schema.NonEmptyString,
   selectedOptionId: Schema.NullOr(Schema.NonEmptyString),
+  presentation: Schema.optionalKey(QuestionPresentation),
   markers: Schema.optionalKey(Schema.Array(SimulationHazardMarker)),
   selectedZoneOrders: Schema.optionalKey(Schema.Array(Schema.Natural)),
   zeroHazardsConfirmed: Schema.optionalKey(Schema.Boolean),
@@ -231,6 +233,7 @@ export class SimulationSubmittedAnswer extends Schema.Class<SimulationSubmittedA
 )({
   questionId: Schema.NonEmptyString,
   selectedOptionId: Schema.NullOr(Schema.NonEmptyString),
+  presentation: Schema.optionalKey(QuestionPresentation),
   markers: Schema.optionalKey(Schema.Array(SimulationHazardMarker)),
   selectedZoneOrders: Schema.optionalKey(Schema.Array(Schema.Natural)),
   zeroHazardsConfirmed: Schema.optionalKey(Schema.Boolean),
@@ -243,6 +246,7 @@ export class SimulationQuestionResult extends Schema.Class<SimulationQuestionRes
   kind: Schema.Literal("question"),
   questionId: Schema.NonEmptyString,
   selectedOptionId: Schema.NullOr(Schema.NonEmptyString),
+  presentation: Schema.optionalKey(QuestionPresentation),
   correctOptionId: Schema.NonEmptyString,
   correct: Schema.Boolean,
   category: Schema.NonEmptyString,

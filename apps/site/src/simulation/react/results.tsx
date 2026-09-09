@@ -374,10 +374,16 @@ export const SimulationResults = ({ controller }: { readonly controller: Results
           const answer = submission.answers[itemIndex]
           if ("question" in item) {
             const questionResult = result?.kind === "question" ? result : undefined
+            const illustration = "illustration" in item.question ? item.question.illustration : undefined
+            const equivalent = illustration?.nonvisualEquivalent
             return <li className="reference-card" key={itemId}>
               <h3 id={`result-question-${item.position}`} tabIndex={-1}>Question {item.position}: {questionResult?.correct ? "Correct" : questionResult?.selectedOptionId === null ? "Unanswered" : "Incorrect"}</h3>
-              <p>{item.question.prompt}</p>
-              <QuestionIllustration illustration={"illustration" in item.question ? item.question.illustration : undefined} />
+              {answer?.presentation === "nonvisual" && equivalent !== undefined ?
+                <section className="question-nonvisual-body">
+                  <p>{equivalent.prompt}</p>
+                  <ol>{equivalent.observations.map((fact, index) => <li key={index}>{fact}</li>)}</ol>
+                </section> : <><p>{item.question.prompt}</p><QuestionIllustration illustration={illustration} /></>}
+              {illustration === undefined ? null : <p className="source-note">{answer?.selectedOptionId === null ? "Presented" : "Answered"} using the {answer?.presentation === "nonvisual" ? "nonvisual" : "illustrated"} version.</p>}
               {questionResult === undefined || answer === undefined
                 ? <p role="alert">The saved result for this item is unavailable.</p>
                 : <QuestionResultFeedback answer={answer} item={item} result={questionResult} />}

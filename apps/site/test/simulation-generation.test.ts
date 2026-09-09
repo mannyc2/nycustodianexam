@@ -1005,6 +1005,31 @@ describe("deterministic simulation generation", () => {
     ).profile).toEqual(nassauWithSameSettings.profile)
   })
 
+  it("binds evaluated question presentation to the immutable submitted answer", () => {
+    const original = assembleSimulation({ bootstrap: bootstrap(), sessionId: "sim-nonvisual1", length: 1,
+      seed: "nonvisual", ...simulationSettings, now: 100 })
+    const item = questionItems(original)[0]!
+    const illustrated = Schema.decodeUnknownSync(SimulationSessionRecord)({ ...original, items: [{ ...item, question: {
+      ...item.question, illustration: {
+        masterSha256: "a".repeat(64), neutralDescription: "Two flat faces.",
+        derivatives: [{ kind: "web", path: "content/assets/derivatives/tools/t036-web.png", bytes: 1, sha256: "b".repeat(64) }],
+        nonvisualEquivalent: { prompt: "Which tool matches these features?", observations: ["Two flat faces."] }
+      }
+    } }] })
+    const artifact = postcommitArtifact(questionPostcommit(item))
+    const session = bindPostcommitReceipts(illustrated, [artifact])
+    const submission = new SimulationSubmissionRecord({ schemaVersion: 1, id: `${session.id}:final`,
+      sessionId: session.id, status: "submitted", submittedAt: 200,
+      answers: [{ questionId: item.question.id, selectedOptionId: item.optionOrder[0]!, reviewIntent: "unflagged", presentation: "nonvisual" }] })
+    const evaluation = evaluateSimulation({ session, submission, postcommit: [artifact] })
+    expect(evaluation.results[0]).toMatchObject({ kind: "question", presentation: "nonvisual" })
+    const evaluated = Schema.decodeUnknownSync(SimulationSubmissionRecord)({ ...submission, ...evaluation, status: "evaluated", evaluatedAt: 300 })
+    expect(validateSimulationSubmission(session, evaluated)).toEqual(evaluated)
+    expect(() => validateSimulationSubmission(session, { ...evaluated,
+      results: evaluated.results!.map(result => ({ ...result, presentation: "visual" }))
+    })).toThrow(/submitted answer closure/)
+  })
+
   it("retains and verifies an exact BOM-bearing question postcommit artifact", async () => {
     const initial = assembleSimulation({
       bootstrap: bootstrap(),
