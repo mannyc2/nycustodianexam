@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState, type MouseEvent as ReactMouseEvent } from "react"
-import type { SimulationPlayerController } from "../controller.ts"
+import { useSimulationPlayer } from "./player-provider.tsx"
 import type {
   SimulationHazardSessionItem,
   SimulationResponse
@@ -9,7 +9,6 @@ const markerStep = 0.025
 
 export const SimulationHazardItem = ({
   answerEditBlocked,
-  controller,
   item,
   position,
   response,
@@ -18,7 +17,6 @@ export const SimulationHazardItem = ({
   visualAssetUrl
 }: {
   readonly answerEditBlocked: boolean
-  readonly controller: SimulationPlayerController
   readonly item: SimulationHazardSessionItem
   readonly position: number
   readonly response: SimulationResponse | undefined
@@ -26,6 +24,7 @@ export const SimulationHazardItem = ({
   readonly total: number
   readonly visualAssetUrl: string | null
 }) => {
+  const { actions } = useSimulationPlayer()
   const [zoom, setZoom] = useState(1)
   const viewportRef = useRef<HTMLDivElement>(null)
   const markers = response?.markers ?? []
@@ -48,11 +47,7 @@ export const SimulationHazardItem = ({
     if (answerEditBlocked || event.button !== 0) return
     const bounds = event.currentTarget.getBoundingClientRect()
     if (bounds.width <= 0 || bounds.height <= 0) return
-    controller.dispatch({
-      tag: "add-hazard-marker",
-      x: (event.clientX - bounds.left) / bounds.width,
-      y: (event.clientY - bounds.top) / bounds.height
-    })
+    actions.addHazardMarker((event.clientX - bounds.left) / bounds.width, (event.clientY - bounds.top) / bounds.height)
   }
 
   return <article className="hazard-player study-player" aria-labelledby="simulation-question-heading">
@@ -123,7 +118,7 @@ export const SimulationHazardItem = ({
             >{index + 1}</span>)}
           </div>
         </div>
-        <button className="button button-secondary" disabled={answerEditBlocked || markers.length >= 64} onClick={() => controller.dispatch({ tag: "add-hazard-marker", x: 0.5, y: 0.5 })} type="button">Add marker at center</button>
+        <button className="button button-secondary" disabled={answerEditBlocked || markers.length >= 64} onClick={() => actions.addHazardMarker(0.5, 0.5)} type="button">Add marker at center</button>
       </>}
       <section aria-labelledby="simulation-marker-list-heading" className="hazard-player__markers">
         <h3 id="simulation-marker-list-heading">Your markers</h3>
@@ -141,15 +136,10 @@ export const SimulationHazardItem = ({
                 aria-label={`Move marker ${index + 1} ${direction}`}
                 disabled={answerEditBlocked}
                 key={direction}
-                onClick={() => controller.dispatch({
-                  tag: "move-hazard-marker",
-                  markerId: marker.id,
-                  deltaX,
-                  deltaY
-                })}
+                onClick={() => actions.moveHazardMarker(marker.id, deltaX, deltaY)}
                 type="button"
               >{direction[0]?.toUpperCase()}{direction.slice(1)}</button>)}
-              <button aria-label={`Remove marker ${index + 1}`} disabled={answerEditBlocked} onClick={() => controller.dispatch({ tag: "remove-hazard-marker", markerId: marker.id })} type="button">Remove</button>
+              <button aria-label={`Remove marker ${index + 1}`} disabled={answerEditBlocked} onClick={() => actions.removeHazardMarker(marker.id)} type="button">Remove</button>
             </div>
           </li>)}
         </ol>}
@@ -159,7 +149,7 @@ export const SimulationHazardItem = ({
       <p>Select a zone when its neutral description gives you concern. Selecting does not reveal whether the zone is safe or unsafe.</p>
       <ol>{item.scene.neutralPreAnswer.zones.map((zone) => <li key={zone.order}>
         <label>
-          <input checked={selectedZoneOrders.has(zone.order)} name="simulation-hazard-zone" onChange={() => controller.dispatch({ tag: "toggle-hazard-zone", zoneOrder: zone.order })} type="checkbox" value={zone.order} />
+          <input checked={selectedZoneOrders.has(zone.order)} name="simulation-hazard-zone" onChange={() => actions.toggleHazardZone(zone.order)} type="checkbox" value={zone.order} />
           <strong>Zone {zone.order}: {zone.label}</strong>
           <span>{zone.description}</span>
         </label>
@@ -171,7 +161,7 @@ export const SimulationHazardItem = ({
         <input
           checked={response?.zeroHazardsConfirmed === true}
           disabled={answerEditBlocked || selectedCount > 0}
-          onChange={() => controller.dispatch({ tag: "toggle-zero-hazards" })}
+          onChange={() => actions.toggleZeroHazards()}
           type="checkbox"
         /> I found no concerning locations or zones in this scene
       </label>
@@ -179,7 +169,7 @@ export const SimulationHazardItem = ({
         aria-pressed={response?.reviewIntent === "flagged"}
         className="button button-secondary"
         disabled={answerEditBlocked}
-        onClick={() => controller.dispatch({ tag: "toggle-flag" })}
+        onClick={() => actions.toggleFlag()}
         type="button"
       >{response?.reviewIntent === "flagged" ? "Flagged for review" : "Flag this item"}</button>
       <span aria-live="polite" className="source-note">{saving ? "Saving locally…" : "Saved on this device"}</span>

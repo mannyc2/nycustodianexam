@@ -1,6 +1,7 @@
+import { SimulationPlayerProvider, useSimulationPlayer } from "./player-provider.tsx"
 import { SimulationQuestionProvider } from "./question-provider.tsx"
 import { SimulationQuestionRoute } from "./question-item.tsx"
-import { useEffect, useRef, useState, useSyncExternalStore } from "react"
+import { useEffect, useRef, useState } from "react"
 import type { SimulationPlayerController } from "../controller.ts"
 import {
   simulationItemId,
@@ -19,18 +20,17 @@ const formatRemaining = (seconds: number): string => {
 }
 
 const SimulationTimer = ({
-  controller,
   retryRequired,
   saving,
   session,
   strictExpiryPending
 }: {
-  readonly controller: SimulationPlayerController
   readonly retryRequired: boolean
   readonly saving: boolean
   readonly session: SimulationSessionRecord
   readonly strictExpiryPending: boolean
 }) => {
+  const { actions } = useSimulationPlayer()
   const [now, setNow] = useState(() => Date.now())
   const duration = session.timing.durationSeconds
   const remaining = session.timing.mode === "timed" && duration !== null
@@ -45,9 +45,9 @@ const SimulationTimer = ({
 
   useEffect(() => {
     if (remaining === 0 && session.timing.autoSubmit) {
-      controller.dispatch({ tag: "timer-expired" })
+      actions.timerExpired()
     }
-  }, [controller, remaining, session.timing.autoSubmit])
+  }, [actions, remaining, session.timing.autoSubmit])
 
   if (remaining === null) {
     return <section className="reference-card" aria-label="Simulation timing"><p><strong>Untimed practice.</strong> No countdown or automatic submission is active.</p></section>
@@ -67,7 +67,7 @@ const SimulationTimer = ({
     <input
       checked={session.timing.timerVisible}
       disabled={saving || retryRequired}
-      onChange={() => controller.dispatch({ tag: "toggle-timer" })}
+      onChange={() => actions.toggleTimer()}
       type="checkbox"
     /> Show the timer
     </label>
@@ -84,29 +84,12 @@ export const SimulationPlayer = ({
   readonly controller: SimulationPlayerController
   readonly position: number
 }) => {
-  const snapshot = useSyncExternalStore(
-    controller.subscribe,
-    controller.getSnapshot,
-    controller.getHydrationSnapshot
-  )
-  const errorRef = useRef<HTMLHeadingElement>(null)
-  const recoverableErrorRef = useRef<HTMLHeadingElement>(null)
-  const confirmationRef = useRef<HTMLHeadingElement>(null)
-  const currentItemRef = useRef<HTMLAnchorElement>(null)
-  const presentationToggleRef = useRef<HTMLButtonElement>(null)
+  return <SimulationPlayerProvider controller={controller}><SimulationPlayerView position={position} /></SimulationPlayerProvider>
+}
 
-  useEffect(() => {
-    if (snapshot.focusRequest?.target === "presentation-toggle") presentationToggleRef.current?.focus()
-    if (snapshot.focusRequest?.target === "error") errorRef.current?.focus()
-    if (snapshot.focusRequest?.target === "recoverable-error") recoverableErrorRef.current?.focus()
-    if (snapshot.focusRequest?.target === "confirmation") confirmationRef.current?.focus()
-    if (snapshot.focusRequest !== null) controller.acknowledgeRequest(snapshot.focusRequest.id)
-  }, [controller, snapshot.focusRequest])
-  useEffect(() => {
-    if (snapshot.announcementRequest !== null) {
-      controller.acknowledgeRequest(snapshot.announcementRequest.id)
-    }
-  }, [controller, snapshot.announcementRequest])
+const SimulationPlayerView = ({ position }: { readonly position: number }) => {
+  const { state: snapshot, actions, meta: { errorRef, recoverableErrorRef, confirmationRef, presentationToggleRef } } = useSimulationPlayer()
+  const currentItemRef = useRef<HTMLAnchorElement>(null)
   const announcement = <p aria-live="polite" className="sr-only">{snapshot.announcementRequest?.message ?? ""}</p>
 
   if (snapshot.state.tag === "restoring") {
@@ -119,7 +102,7 @@ export const SimulationPlayer = ({
     return <>{announcement}<section className="error-panel" role="alert">
       <h1 ref={errorRef} tabIndex={-1}>Simulation storage is unavailable</h1>
       <p>{snapshot.state.detail}</p>
-      <button className="button button-primary" onClick={() => controller.dispatch({ tag: "retry" })} type="button">Retry</button>
+      <button className="button button-primary" onClick={() => actions.retry()} type="button">Retry</button>
       <p><a href="/simulations/">Start a new simulation</a></p>
     </section></>
   }
@@ -162,7 +145,7 @@ export const SimulationPlayer = ({
         : "The saved simulation remains available and this exact operation can be retried."}</p>
       <button
         className="button button-primary"
-        onClick={() => controller.dispatch({ tag: "retry-save" })}
+        onClick={() => actions.retrySave()}
         type="button"
       >{recoverableError.kind === "submission" ? "Retry final submission" : "Retry this exact local save"}</button>
     </section>}
@@ -172,13 +155,12 @@ export const SimulationPlayer = ({
     </p>
     <div className="simulation-workspace">
     <div className="simulation-main">
-    {"question" in item ? <SimulationQuestionProvider controller={controller}
+    {"question" in item ? <SimulationQuestionProvider
       state={{ snapshot: snapshot.state, item, position, response, answerEditBlocked }}
       meta={{ presentationToggleRef }}>
       <SimulationQuestionRoute />
     </SimulationQuestionProvider> : <SimulationHazardItem
       answerEditBlocked={session.status !== "active" || answerEditBlocked}
-      controller={controller}
       item={item}
       position={position}
       response={response}
@@ -246,7 +228,7 @@ export const SimulationPlayer = ({
         className="button button-primary"
         disabled={saving || recoverableError !== null}
         hidden={snapshot.state.confirmation}
-        onClick={() => controller.dispatch({ tag: "open-confirmation" })}
+        onClick={() => actions.openConfirmation()}
         type="button"
       >Review and submit simulation</button>
     {snapshot.state.confirmation && <section className="reference-card simulation-confirmation" aria-labelledby="final-submit-heading">
@@ -254,13 +236,12 @@ export const SimulationPlayer = ({
       <p>{session.actualLength - answered} of {session.actualLength} items are unanswered and {flagged} are flagged. Unanswered items will count as unanswered in the practice result.</p>
       <p>After final submission, answers cannot be edited. The submission is saved locally before any answer or explanation content is requested.</p>
       <div className="question-controls">
-        <button className="button button-primary" disabled={saving} onClick={() => controller.dispatch({ tag: "submit-final" })} type="button">Submit final answers</button>
-        <button className="button button-secondary" disabled={saving} onClick={() => { controller.dispatch({ tag: "cancel-confirmation" }); currentItemRef.current?.focus() }} type="button">Continue editing</button>
+        <button className="button button-primary" disabled={saving} onClick={() => actions.submitFinal()} type="button">Submit final answers</button>
+        <button className="button button-secondary" disabled={saving} onClick={() => { actions.cancelConfirmation(); currentItemRef.current?.focus() }} type="button">Continue editing</button>
       </div>
     </section>}
     </nav>
     <SimulationTimer
-      controller={controller}
       retryRequired={recoverableError !== null}
       saving={saving}
       session={session}

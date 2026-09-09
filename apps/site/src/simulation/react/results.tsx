@@ -1,6 +1,5 @@
 import { QuestionIllustration } from "../../question-player/react/illustration.tsx"
-import { useEffect, useRef, useSyncExternalStore } from "react"
-import { createSimulationResultsController } from "../controller.ts"
+import { SimulationResultsProvider, useSimulationResults, type ResultsController } from "./results-provider.tsx"
 import {
   formatSimulationElapsed,
   simulationElapsedMilliseconds
@@ -28,7 +27,6 @@ import {
   sourceEvidenceTierLabel
 } from "../../public-content-labels.ts"
 
-type ResultsController = ReturnType<typeof createSimulationResultsController>
 
 const QuestionEvidence = ({ result }: { readonly result: SimulationQuestionResult }) => {
   const feedback = result.postcommit
@@ -238,24 +236,11 @@ const HazardResultFeedback = ({
 </>
 
 export const SimulationResults = ({ controller }: { readonly controller: ResultsController }) => {
-  const snapshot = useSyncExternalStore(
-    controller.subscribe,
-    controller.getSnapshot,
-    controller.getHydrationSnapshot
-  )
-  const headingRef = useRef<HTMLHeadingElement>(null)
-  const errorRef = useRef<HTMLHeadingElement>(null)
+  return <SimulationResultsProvider controller={controller}><SimulationResultsView /></SimulationResultsProvider>
+}
 
-  useEffect(() => {
-    if (snapshot.focusRequest?.target === "results") headingRef.current?.focus()
-    if (snapshot.focusRequest?.target === "error") errorRef.current?.focus()
-    if (snapshot.focusRequest !== null) controller.acknowledgeRequest(snapshot.focusRequest.id)
-  }, [controller, snapshot.focusRequest])
-  useEffect(() => {
-    if (snapshot.announcementRequest !== null) {
-      controller.acknowledgeRequest(snapshot.announcementRequest.id)
-    }
-  }, [controller, snapshot.announcementRequest])
+const SimulationResultsView = () => {
+  const { state: snapshot, actions, meta: { headingRef, errorRef } } = useSimulationResults()
   const announcement = <p aria-live="polite" className="sr-only">{snapshot.announcementRequest?.message ?? ""}</p>
 
   if (snapshot.state.tag === "reconciling") {
@@ -269,7 +254,7 @@ export const SimulationResults = ({ controller }: { readonly controller: Results
       <h1 ref={errorRef} tabIndex={-1}>Results are not available yet</h1>
       <p>{snapshot.state.detail}</p>
       <p>Retry only checks for a saved final submission; it does not create or resubmit one.</p>
-      <button className="button button-primary" onClick={controller.retry} type="button">Retry loading results</button>
+      <button className="button button-primary" onClick={actions.retry} type="button">Retry loading results</button>
     </section></>
   }
 

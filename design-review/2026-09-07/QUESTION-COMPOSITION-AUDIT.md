@@ -88,3 +88,21 @@ Validation: 21 targeted question tests, site/browser typechecks, maintained layo
 Validation: 61 question/illustration/Simulation unit tests, site/browser typechecks, maintained layout (287 files), boundaries (147 modules), production build and artifact/bundle checks passed. All six targeted Practice/Review and Simulation presentation browser workflows passed across Chromium, Firefox and WebKit (13.9 seconds), covering switch-back focus/selection, commitment, reload, export/import and final-result presentation. Logs: `/tmp/nyc-shared-question-body-build.log` and `/tmp/nyc-shared-question-body-browser.log`.
 
 This closes the question body duplication identified above. The wider Simulation parent/hazard provider contract and remaining family audit are still open; previous full-browser evidence remains revision-specific.
+
+
+## Simulation player provider boundary
+
+The player now mounts `SimulationPlayerProvider`, which owns the authoritative snapshot subscription, stable semantic command actions, focus refs/delivery and request acknowledgments. `SimulationPlayerView`, timer and hazard controls consume its state/actions/meta contract. The question-specific provider projects that same action contract and retains its narrower item state; it no longer knows controller dispatch. Timer/zoom scratch remains view-local. No duplicate durable state or runtime is introduced, and final-submission/retry commands are unchanged.
+
+Source inspection confirms that `player.tsx` only passes the controller from the public mount wrapper into the provider, while `hazard-item.tsx` and `question-provider.tsx` contain no controller dispatch. Results and setup islands are separate audit scope.
+
+Validation: 38 Simulation unit tests, site/browser typechecks, maintained layout (288 files), module boundaries (148 modules), production build and artifact/bundle checks passed. All 27 local Simulation browser cases passed across Chromium, Firefox and WebKit (41.5 seconds), including strict opt-in timer expiry, visual/nonvisual hazard responses, failed IndexedDB save/exact retry, final submission and restored question presentation. Simulation player closure is 456,644 raw / 137,545 gzip / 116,124 Brotli bytes. Logs: `/tmp/nyc-simulation-player-provider-build.log` and `/tmp/nyc-simulation-player-provider-browser.log`. This closes the directly observed player/timer/hazard dispatch boundary gap; the broader component-family audit remains open.
+
+
+## Simulation results provider boundary
+
+`results-provider.tsx` now owns the results snapshot subscription, retry action, heading refs and focus/announcement acknowledgments. The results view reads state/actions/meta and retains the existing reconciling/failure/completed rendering. The public wrapper only mounts the provider; no result calculation, submission lookup or retry semantics changed.
+
+Validation: 38 Simulation unit tests, site/browser typechecks, maintained layout (289 files), boundaries (149 modules), build/artifact/bundle checks passed. All 27 local Simulation browser cases passed across Chromium, Firefox and WebKit (41.8 seconds), including self-contained question/hazard results after restoration. Logs: `/tmp/nyc-results-provider-build.log` and `/tmp/nyc-results-provider-browser.log`.
+
+Remaining setup gap verified by direct inspection: `simulation/react/setup.tsx` keeps workflow settings/status in React state and calls `assembleSimulation`, UUID/time globals and `runtime.runPromise(createLocallyClosedSimulation(...))` from its start handler. The maintained renderer-neutral controller boundary requires moving that workflow into a controller with an adapter/provider. Preserve effective length/format/timing validation, durable creation before navigation, offline availability and failure focus; a provider-only rename would not close this gap. No new setup behavior failure is claimed by this source audit.
