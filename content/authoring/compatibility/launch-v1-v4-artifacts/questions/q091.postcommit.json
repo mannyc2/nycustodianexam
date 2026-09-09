@@ -1,0 +1,307 @@
+{
+  "schemaVersion": 2,
+  "id": "q091",
+  "version": 1,
+  "optionConceptIds": [
+    {
+      "optionId": "a",
+      "conceptId": "tool.pipe-wrench"
+    },
+    {
+      "optionId": "b",
+      "conceptId": "tool.pliers.slip-joint"
+    },
+    {
+      "optionId": "c",
+      "conceptId": "tool.adjustable-wrench"
+    },
+    {
+      "optionId": "d",
+      "conceptId": "tool.pliers.tongue-groove"
+    }
+  ],
+  "correctOptionId": "c",
+  "rationales": [
+    {
+      "optionId": "a",
+      "message": "A pipe wrench has serrated hook and heel jaws for gripping round work. The illustration instead shows smooth opposing jaw faces and a worm adjustment gear.",
+      "claimIds": [
+        "claim.feature.t037",
+        "claim.feature.t036"
+      ]
+    },
+    {
+      "optionId": "b",
+      "message": "Slip-joint pliers have two handles and a two-position sliding pivot. The illustrated tool has one handle and an adjustment wheel beneath its jaws.",
+      "claimIds": [
+        "claim.feature.t039",
+        "claim.feature.t036"
+      ]
+    },
+    {
+      "optionId": "c",
+      "message": "This is an adjustable wrench. Its smooth parallel jaws and visible worm adjustment gear match the accepted recognition features. The wheel moves one jaw to change the opening.",
+      "claimIds": [
+        "claim.feature.t036"
+      ]
+    },
+    {
+      "optionId": "d",
+      "message": "Tongue-and-groove pliers have a multi-position adjustment channel and offset serrated jaws. That channel and the pliers linkage are absent from this single-handled wrench.",
+      "claimIds": [
+        "claim.feature.t040",
+        "claim.feature.t036"
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "id": "claim.feature.t036",
+      "text": "Adjustable wrench is recognized by smooth parallel jaws and visible worm gear for jaw adjustment.",
+      "sourceLineIds": [
+        "line.feature-fact.t036",
+        "line.feature-brief.t036",
+        "line.feature-release.t036"
+      ],
+      "evidenceTier": "accepted-release-record",
+      "caveat": "Recognition cues describe the accepted original illustration and do not imply a universal product silhouette."
+    },
+    {
+      "id": "claim.feature.t037",
+      "text": "Pipe wrench is recognized by serrated offset hook and heel jaws and long adjustable body.",
+      "sourceLineIds": [
+        "line.feature-fact.t037",
+        "line.feature-brief.t037",
+        "line.feature-release.t037"
+      ],
+      "evidenceTier": "accepted-release-record",
+      "caveat": "Recognition cues describe the accepted original illustration and do not imply a universal product silhouette."
+    },
+    {
+      "id": "claim.feature.t039",
+      "text": "Slip-joint pliers is recognized by two-position sliding pivot and general-purpose gripping jaws.",
+      "sourceLineIds": [
+        "line.feature-fact.t039",
+        "line.feature-brief.t039",
+        "line.feature-release.t039"
+      ],
+      "evidenceTier": "accepted-release-record",
+      "caveat": "Recognition cues describe the accepted original illustration and do not imply a universal product silhouette."
+    },
+    {
+      "id": "claim.feature.t040",
+      "text": "Tongue-and-groove pliers is recognized by multi-position tongue-and-groove channel and offset serrated jaws.",
+      "sourceLineIds": [
+        "line.feature-fact.t040",
+        "line.feature-brief.t040",
+        "line.feature-release.t040"
+      ],
+      "evidenceTier": "accepted-release-record",
+      "caveat": "Recognition cues describe the accepted original illustration and do not imply a universal product silhouette."
+    }
+  ],
+  "sources": [
+    {
+      "id": "line.feature-fact.t036",
+      "sourceId": "editorial.tool-facts",
+      "title": "Reviewed launch tool facts and question blueprints",
+      "publisher": "NY Custodian Exam editorial project",
+      "evidenceTier": "maintained-editorial-synthesis",
+      "version": "launch-v1 reviewed 2026-08-25",
+      "rightsNotes": "Repository-authored educational synthesis.",
+      "locator": "toolFacts[35].features (tool.adjustable-wrench)",
+      "excerpt": "smooth parallel jaws; visible worm gear for jaw adjustment",
+      "language": "en",
+      "verifiedOn": "2026-08-25",
+      "supportedClaimIds": [
+        "claim.feature.t036"
+      ]
+    },
+    {
+      "id": "line.feature-brief.t036",
+      "sourceId": "visual.tool-briefs",
+      "title": "Reviewed tool illustration briefs",
+      "publisher": "NY Custodian Exam visual editorial project",
+      "evidenceTier": "maintained-editorial-synthesis",
+      "version": "brief versions recorded per concept",
+      "rightsNotes": "Repository-authored briefs; linked third-party references are not reproduced.",
+      "locator": "pilot-tool-04#mustShow",
+      "excerpt": "smooth parallel jaw faces; one movable jaw; clearly visible worm adjustment gear; open-ended wrench head; mechanically plausible guide",
+      "language": "en",
+      "verifiedOn": "2026-08-25",
+      "supportedClaimIds": [
+        "claim.feature.t036"
+      ]
+    },
+    {
+      "id": "line.feature-release.t036",
+      "sourceId": "visual.tool-release",
+      "title": "Accepted tool visual release ledger",
+      "publisher": "NY Custodian Exam release process",
+      "evidenceTier": "accepted-release-record",
+      "version": "accepted release 2026-08-23",
+      "rightsNotes": "Repository release metadata for original project assets.",
+      "locator": "tools.json#conceptId=tool.adjustable-wrench",
+      "excerpt": "{\"productionStatus\":\"accepted\",\"technical\":\"pass\",\"phone\":\"pass at 320x320 review size\",\"print\":\"pass in grayscale derivative\",\"securityLeak\":\"pass\"}",
+      "language": "en",
+      "verifiedOn": "2026-08-25",
+      "supportedClaimIds": [
+        "claim.feature.t036"
+      ]
+    },
+    {
+      "id": "line.feature-fact.t037",
+      "sourceId": "editorial.tool-facts",
+      "title": "Reviewed launch tool facts and question blueprints",
+      "publisher": "NY Custodian Exam editorial project",
+      "evidenceTier": "maintained-editorial-synthesis",
+      "version": "launch-v1 reviewed 2026-08-25",
+      "rightsNotes": "Repository-authored educational synthesis.",
+      "locator": "toolFacts[36].features (tool.pipe-wrench)",
+      "excerpt": "serrated offset hook and heel jaws; long adjustable body",
+      "language": "en",
+      "verifiedOn": "2026-08-25",
+      "supportedClaimIds": [
+        "claim.feature.t037"
+      ]
+    },
+    {
+      "id": "line.feature-brief.t037",
+      "sourceId": "visual.tool-briefs",
+      "title": "Reviewed tool illustration briefs",
+      "publisher": "NY Custodian Exam visual editorial project",
+      "evidenceTier": "maintained-editorial-synthesis",
+      "version": "brief versions recorded per concept",
+      "rightsNotes": "Repository-authored briefs; linked third-party references are not reproduced.",
+      "locator": "pilot-tool-05#mustShow",
+      "excerpt": "offset hook jaw; opposing heel jaw; clearly visible serrated gripping faces; round-work opening; adjusting nut; heavy straight handle",
+      "language": "en",
+      "verifiedOn": "2026-08-25",
+      "supportedClaimIds": [
+        "claim.feature.t037"
+      ]
+    },
+    {
+      "id": "line.feature-release.t037",
+      "sourceId": "visual.tool-release",
+      "title": "Accepted tool visual release ledger",
+      "publisher": "NY Custodian Exam release process",
+      "evidenceTier": "accepted-release-record",
+      "version": "accepted release 2026-08-23",
+      "rightsNotes": "Repository release metadata for original project assets.",
+      "locator": "tools.json#conceptId=tool.pipe-wrench",
+      "excerpt": "{\"productionStatus\":\"accepted\",\"technical\":\"pass\",\"phone\":\"pass at 320x320 review size\",\"print\":\"pass in grayscale derivative\",\"securityLeak\":\"pass\"}",
+      "language": "en",
+      "verifiedOn": "2026-08-25",
+      "supportedClaimIds": [
+        "claim.feature.t037"
+      ]
+    },
+    {
+      "id": "line.feature-fact.t039",
+      "sourceId": "editorial.tool-facts",
+      "title": "Reviewed launch tool facts and question blueprints",
+      "publisher": "NY Custodian Exam editorial project",
+      "evidenceTier": "maintained-editorial-synthesis",
+      "version": "launch-v1 reviewed 2026-08-25",
+      "rightsNotes": "Repository-authored educational synthesis.",
+      "locator": "toolFacts[38].features (tool.pliers.slip-joint)",
+      "excerpt": "two-position sliding pivot; general-purpose gripping jaws",
+      "language": "en",
+      "verifiedOn": "2026-08-25",
+      "supportedClaimIds": [
+        "claim.feature.t039"
+      ]
+    },
+    {
+      "id": "line.feature-brief.t039",
+      "sourceId": "visual.tool-briefs",
+      "title": "Reviewed tool illustration briefs",
+      "publisher": "NY Custodian Exam visual editorial project",
+      "evidenceTier": "maintained-editorial-synthesis",
+      "version": "brief versions recorded per concept",
+      "rightsNotes": "Repository-authored briefs; linked third-party references are not reproduced.",
+      "locator": "pilot-tool-14#mustShow",
+      "excerpt": "two handles; short serrated gripping jaws; simple two-position slip-joint pivot slot; plausible crossed linkage",
+      "language": "en",
+      "verifiedOn": "2026-08-25",
+      "supportedClaimIds": [
+        "claim.feature.t039"
+      ]
+    },
+    {
+      "id": "line.feature-release.t039",
+      "sourceId": "visual.tool-release",
+      "title": "Accepted tool visual release ledger",
+      "publisher": "NY Custodian Exam release process",
+      "evidenceTier": "accepted-release-record",
+      "version": "accepted release 2026-08-23",
+      "rightsNotes": "Repository release metadata for original project assets.",
+      "locator": "tools.json#conceptId=tool.pliers.slip-joint",
+      "excerpt": "{\"productionStatus\":\"accepted\",\"technical\":\"pass\",\"phone\":\"pass at 320x320 review size\",\"print\":\"pass in grayscale derivative\",\"securityLeak\":\"pass\"}",
+      "language": "en",
+      "verifiedOn": "2026-08-25",
+      "supportedClaimIds": [
+        "claim.feature.t039"
+      ]
+    },
+    {
+      "id": "line.feature-fact.t040",
+      "sourceId": "editorial.tool-facts",
+      "title": "Reviewed launch tool facts and question blueprints",
+      "publisher": "NY Custodian Exam editorial project",
+      "evidenceTier": "maintained-editorial-synthesis",
+      "version": "launch-v1 reviewed 2026-08-25",
+      "rightsNotes": "Repository-authored educational synthesis.",
+      "locator": "toolFacts[39].features (tool.pliers.tongue-groove)",
+      "excerpt": "multi-position tongue-and-groove channel; offset serrated jaws",
+      "language": "en",
+      "verifiedOn": "2026-08-25",
+      "supportedClaimIds": [
+        "claim.feature.t040"
+      ]
+    },
+    {
+      "id": "line.feature-brief.t040",
+      "sourceId": "visual.tool-briefs",
+      "title": "Reviewed tool illustration briefs",
+      "publisher": "NY Custodian Exam visual editorial project",
+      "evidenceTier": "maintained-editorial-synthesis",
+      "version": "brief versions recorded per concept",
+      "rightsNotes": "Repository-authored briefs; linked third-party references are not reproduced.",
+      "locator": "pilot-tool-15#mustShow",
+      "excerpt": "long handles; angled serrated gripping jaws; clearly visible multi-position tongue-and-groove adjustment channel; plausible crossed linkage",
+      "language": "en",
+      "verifiedOn": "2026-08-25",
+      "supportedClaimIds": [
+        "claim.feature.t040"
+      ]
+    },
+    {
+      "id": "line.feature-release.t040",
+      "sourceId": "visual.tool-release",
+      "title": "Accepted tool visual release ledger",
+      "publisher": "NY Custodian Exam release process",
+      "evidenceTier": "accepted-release-record",
+      "version": "accepted release 2026-08-23",
+      "rightsNotes": "Repository release metadata for original project assets.",
+      "locator": "tools.json#conceptId=tool.pliers.tongue-groove",
+      "excerpt": "{\"productionStatus\":\"accepted\",\"technical\":\"pass\",\"phone\":\"pass at 320x320 review size\",\"print\":\"pass in grayscale derivative\",\"securityLeak\":\"pass\"}",
+      "language": "en",
+      "verifiedOn": "2026-08-25",
+      "supportedClaimIds": [
+        "claim.feature.t040"
+      ]
+    }
+  ],
+  "tags": {
+    "domain": "minor-maintenance-and-repair",
+    "family": "articulated hand tools",
+    "confusionSetIds": [],
+    "seriesScope": "entry-level-custodians-janitors",
+    "editorialDifficulty": "contrast"
+  },
+  "objectiveId": "claim.feature.t036",
+  "equivalenceGroupId": "eq091",
+  "factKind": "recognition-feature"
+}

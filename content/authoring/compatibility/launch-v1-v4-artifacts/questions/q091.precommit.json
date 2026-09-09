@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 2,
+  "id": "q091",
+  "version": 1,
+  "profileId": "nys-entry-level-custodians-janitors",
+  "profileIds": [
+    "nys-entry-level-custodians-janitors",
+    "nassau-county-custodian-entry-level"
+  ],
+  "prompt": "Which tool is shown in the illustration?",
+  "options": [
+    {
+      "id": "a",
+      "label": "Pipe wrench"
+    },
+    {
+      "id": "b",
+      "label": "Slip-joint pliers"
+    },
+    {
+      "id": "c",
+      "label": "Adjustable wrench"
+    },
+    {
+      "id": "d",
+      "label": "Tongue-and-groove pliers"
+    }
+  ],
+  "illustration": {
+    "masterSha256": "edb1f4e907926fd83ed55aaa11668d285bf85a181f98e0aeeb8b845dbc0b192d",
+    "neutralDescription": "A hand tool with a single handle and two opposing flat jaw faces. A small ridged adjustment wheel sits below the jaws. The handle has a round hole at its end.",
+    "derivatives": [
+      {
+        "kind": "web",
+        "path": "content/assets/derivatives/tools/t036-web.png",
+        "bytes": 539176,
+        "sha256": "1da20b7f2207a91777df0fd084f7100fd2358b6778aa835cc798c5608e0a9fa5"
+      },
+      {
+        "kind": "phone",
+        "path": "content/assets/derivatives/tools/t036-phone.png",
+        "bytes": 62147,
+        "sha256": "53b51d08c7f80ea4109bca467b0f8b46636083a6f22f5f490837d4621ab18e0e"
+      },
+      {
+        "kind": "print",
+        "path": "content/assets/derivatives/tools/t036-print.png",
+        "bytes": 118864,
+        "sha256": "8533fdca062b8bdf37ab88d10478b8254cbec754fa5de8c7a64d9c7c5f196423"
+      }
+    ]
+  },
+  "memberships": [
+    {
+      "filterKind": "domain",
+      "filterValue": "minor-maintenance-and-repair"
+    },
+    {
+      "filterKind": "family",
+      "filterValue": "articulated hand tools"
+    }
+  ]
+}

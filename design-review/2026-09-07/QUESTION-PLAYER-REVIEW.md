@@ -540,3 +540,11 @@ These checks prove the publication/runtime foundation, not a completed release
 upgrade. Retaining the v4 inventory and original q091 bytes, publishing reviewed
 nonvisual content, linked presentation, and real offline/import/upgrade checks
 remain required before the new release is complete.
+
+
+The version-4 compatibility inventory and original q091 pre/postcommit bytes are
+now retained under `content/authoring/compatibility/`, with committed Settings
+source provenance. Two archive tests verify the runtime inventory shape and
+exact q091 receipt hashes/lengths; site typecheck passes. This is preservation
+only: historical page generation still consumes v3, and the v4 archive must be
+integrated before publishing the revised question.
