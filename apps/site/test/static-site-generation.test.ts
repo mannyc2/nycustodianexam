@@ -367,6 +367,22 @@ describe("static-site generator boundaries", () => {
       supersededHtml.indexOf("Technical details")
     )
 
+    const hostileText = '<img src=x onerror="alert(1)"> & retained text'
+    const escapedFact = { ...facts[3][2], label: hostileText, value: hostileText,
+      conflictingValues: [{ value: hostileText, sourceLineIds: ["line-a"] }] }
+    const escapedLines = new Map(lines)
+    escapedLines.set("line-a", { ...lines.get("line-a")!, locator: hostileText, excerpt: hostileText })
+    const escapedSources = new Map(sources)
+    escapedSources.set("source-a", { ...sources.get("source-a")!, title: hostileText })
+    const escapedHtml = renderProfileFact(escapedFact as Parameters<typeof renderProfileFact>[0], 7, 4, escapedLines, escapedSources)
+    expect(escapedHtml).not.toContain("<img")
+    expect(escapedHtml).toContain("<dt>&lt;img")
+    expect(escapedHtml).toContain("<strong>&lt;img")
+    expect(escapedHtml).toContain("<code>&lt;img")
+    expect(escapedHtml).toContain("&amp; retained text")
+    expect(() => renderProfileFact(facts[0][2] as Parameters<typeof renderProfileFact>[0], 7, 4, new Map(), sources)).toThrow("Profile references missing source line line-a")
+    expect(() => renderProfileFact(facts[0][2] as Parameters<typeof renderProfileFact>[0], 7, 4, lines, new Map())).toThrow("Source line line-a references missing source")
+
     const disclaimerHtml = renderSeriesScopeDisclaimer({
       version: 4,
       lastReviewedOn: "2026-08-25",
