@@ -1,0 +1,54 @@
+{
+  "captures": [
+    {
+      "id": "letter-hazard-worksheet",
+      "product": "Blank hazard worksheet",
+      "count": 2,
+      "large": false,
+      "paper": "us-letter",
+      "images": 2,
+      "pages": 3,
+      "pageSize": "612 x 792 pts (letter)",
+      "searchableText": true,
+      "backgrounds": false
+    },
+    {
+      "id": "letter-hazard-answers",
+      "product": "Annotated hazard-answer packet",
+      "count": 2,
+      "large": false,
+      "paper": "us-letter",
+      "images": 2,
+      "pages": 11,
+      "pageSize": "612 x 792 pts (letter)",
+      "searchableText": true,
+      "backgrounds": false
+    },
+    {
+      "id": "a4-hazard-answers-large",
+      "product": "Annotated hazard-answer packet",
+      "count": 2,
+      "large": true,
+      "paper": "a4",
+      "images": 2,
+      "pages": 19,
+      "pageSize": "594.96 x 841.92 pts (A4)",
+      "searchableText": true,
+      "backgrounds": false
+    },
+    {
+      "id": "a4-hazard-text",
+      "product": "Text-equivalent/nonvisual set",
+      "title": "Text-equivalent hazard set",
+      "count": 2,
+      "large": false,
+      "paper": "a4",
+      "images": 0,
+      "pages": 9,
+      "pageSize": "594.96 x 841.92 pts (A4)",
+      "searchableText": true,
+      "backgrounds": false
+    }
+  ],
+  "errors": []
+}

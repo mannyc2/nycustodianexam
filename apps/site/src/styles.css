@@ -299,7 +299,21 @@
     .print-tool-grid > section,
     .print-answer-sheet tr { break-inside: avoid; }
     .print-appended-section { break-before: page; }
-    .print-hazard-page { break-before: page; }
+    .print-hazard-page {
+      display: block;
+      break-before: page;
+      border: 0;
+      padding-block: 0;
+    }
+    .print-hazard-page > * + * { margin-block-start: var(--space-4); }
+    .print-hazard-page > img,
+    .print-annotated-scene,
+    .print-response-space,
+    .print-hazard-page li { break-inside: avoid; }
+    .print-hazard-worksheet,
+    .print-hazard-answers,
+    .print-text-equivalent { break-before: page; }
+    .print-size-normal .print-hazard-worksheet .print-hazard-page > img { max-block-size: 3.5in; }
     .print-hazard-page:first-of-type { break-before: auto; }
     .print-preview thead { display: table-header-group; }
     .print-preview :focus { outline: none; }

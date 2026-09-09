@@ -1,0 +1,378 @@
+[
+  {
+    "file": "letter-hazard-worksheet.pdf",
+    "sha256": "db46df8fc04262a0ab433cad29d561be8c996cac84f492e89ba7e5de2cc237da",
+    "pages": [
+      {
+        "page": 1,
+        "words": 49,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 2,
+        "words": 86,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 3,
+        "words": 81,
+        "size": [
+          612.0,
+          792.0
+        ]
+      }
+    ],
+    "overlappingWords": [],
+    "textOutsidePage": [],
+    "completeItemText": true,
+    "printControlsAbsent": true
+  },
+  {
+    "file": "letter-hazard-answers.pdf",
+    "sha256": "3fbde016caa09ac94c39e25e16ca934203c7666a05ea70806879bf6e3be8bebe",
+    "pages": [
+      {
+        "page": 1,
+        "words": 49,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 2,
+        "words": 101,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 3,
+        "words": 243,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 4,
+        "words": 147,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 5,
+        "words": 139,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 6,
+        "words": 68,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 7,
+        "words": 17,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 8,
+        "words": 276,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 9,
+        "words": 259,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 10,
+        "words": 132,
+        "size": [
+          612.0,
+          792.0
+        ]
+      },
+      {
+        "page": 11,
+        "words": 72,
+        "size": [
+          612.0,
+          792.0
+        ]
+      }
+    ],
+    "overlappingWords": [],
+    "textOutsidePage": [],
+    "completeItemText": true,
+    "printControlsAbsent": true
+  },
+  {
+    "file": "a4-hazard-answers-large.pdf",
+    "sha256": "fa8f8475e1f8ab808806b26d18b157e36aa45d82291cc6a168353a6fc560ff56",
+    "pages": [
+      {
+        "page": 1,
+        "words": 49,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 2,
+        "words": 22,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 3,
+        "words": 80,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 4,
+        "words": 126,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 5,
+        "words": 118,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 6,
+        "words": 75,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 7,
+        "words": 74,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 8,
+        "words": 68,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 9,
+        "words": 73,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 10,
+        "words": 69,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 11,
+        "words": 16,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 12,
+        "words": 105,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 13,
+        "words": 126,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 14,
+        "words": 139,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 15,
+        "words": 89,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 16,
+        "words": 81,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 17,
+        "words": 68,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 18,
+        "words": 65,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 19,
+        "words": 74,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      }
+    ],
+    "overlappingWords": [],
+    "textOutsidePage": [],
+    "completeItemText": true,
+    "printControlsAbsent": true
+  },
+  {
+    "file": "a4-hazard-text.pdf",
+    "sha256": "3ee08939c7bff965c6c0b16cbad605b5e709b62b83352a0373c58dd59e079fc3",
+    "pages": [
+      {
+        "page": 1,
+        "words": 49,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 2,
+        "words": 298,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 3,
+        "words": 219,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 4,
+        "words": 140,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 5,
+        "words": 140,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 6,
+        "words": 306,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 7,
+        "words": 246,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 8,
+        "words": 147,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      },
+      {
+        "page": 9,
+        "words": 136,
+        "size": [
+          594.95996,
+          841.91998
+        ]
+      }
+    ],
+    "overlappingWords": [],
+    "textOutsidePage": [],
+    "completeItemText": true,
+    "printControlsAbsent": true
+  }
+]

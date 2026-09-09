@@ -101,3 +101,37 @@ browsers, all five workspace typechecks, and root build/artifact checks passed.
 The final focus-only CSS adjustment was covered by a fresh build and PDF capture.
 Hazard worksheets/annotated answer PDFs and the remaining product-specific visual
 checks are still outstanding.
+
+
+## Hazard packet pagination audit
+
+`capture-print-hazards.mjs` captures two matching scenes as a Letter blank
+worksheet, Letter annotated answers, A4 large-print annotated answers, and A4
+text equivalents. It waits for image decode and print-media grayscale styles.
+The initial worksheet had an otherwise empty border-only page. Source headings
+in the initial answer PDF could split from their excerpts. Print-only block flow,
+removal of trailing scene borders/padding, and break avoidance for individual
+feedback/source items address those defects. Normal worksheet images are bounded
+to 3.5 inches high to leave room for response lines.
+
+Current captures contain 3 worksheet pages, 11 Letter answer pages, 19 A4
+large-answer pages, and 9 A4 text-equivalent pages. All 42 pages were visually
+reviewed as rasterized PDF pages. Both worksheet scenes retain their neutral
+zones and all three response lines on the same sheet. Scene images and answer
+outlines remain intact; feedback and source records stay together when they fit.
+The text-equivalent final source page was also inspected individually at full
+render size. No physical-print or Firefox/WebKit PDF-pagination certification
+is claimed.
+
+`verify-print-hazard-pdfs.py` checks every retained page for blank output, word
+collisions, and text outside page bounds; verifies both scenes are present; and
+checks worksheet/answer-label separation. All checks pass, and the report records
+PDF hashes. All 27 print browser regressions passed. The build passed again after
+the final worksheet image-size rule. These checks supplement visual inspection.
+
+Remaining findings: large-print body text scales to 18pt but heading tokens and
+printed URL pseudo-elements retain smaller fixed sizes. These need a focused
+print typography correction and regenerated large-print evidence. Hazard page
+estimates are also too low for source-inclusive answer packets (the two-scene
+large packet estimates 2 and produces 19). Pagination is readable, but these
+findings mean the print family is not yet fully reconciled.
