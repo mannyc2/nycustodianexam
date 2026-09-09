@@ -274,7 +274,9 @@ test("filing filters compose with search, restore from the URL, and never select
 })
 
 
-test("exam controls align on desktop and compact records omit the empty selection panel", async ({ page }) => {
+test("exam controls align on desktop and compact records omit the empty selection panel", { tag: "@cross-browser" }, async ({ page }) => {
+  // Layout and disclosure checks should not race focus-triggered smooth scrolling.
+  await page.emulateMedia({ reducedMotion: "reduce" })
   for (const width of [1248, 384]) {
     await page.setViewportSize({ width, height: 900 })
     await page.goto("/exams/")
@@ -294,6 +296,7 @@ test("exam controls align on desktop and compact records omit the empty selectio
     await expect(panel.locator(".fact-table details")).toHaveCount(0)
     await expect(panel.locator(".record-source-trail")).toHaveCount(1)
     await panel.getByText("Sources for this record", { exact: true }).click()
+    await expect(panel.locator(".record-source-trail")).toHaveAttribute("open")
     await expect(panel.locator(".record-fact-sources")).toBeVisible()
     await expectPageReflow(page)
   }
