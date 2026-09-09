@@ -1,0 +1,82 @@
+{
+  "sourceCommit": "933d11255311795fa7a0c75026842401bdd8cb16",
+  "captures": [
+    {
+      "file": "visual-saved-1042-page.png",
+      "sha256": "e64ce4018c67d95c0bd703594fd999a98976f8e5a30be27842a17c385127bba8",
+      "width": 1042,
+      "height": 4367,
+      "inspectedCropBounds": [
+        [
+          0,
+          0,
+          1042,
+          1450
+        ],
+        [
+          0,
+          1400,
+          1042,
+          2850
+        ],
+        [
+          0,
+          2800,
+          1042,
+          4250
+        ],
+        [
+          0,
+          4200,
+          1042,
+          4367
+        ]
+      ]
+    },
+    {
+      "file": "visual-saved-384-page.png",
+      "sha256": "83badfc639bd78460e5fc93baeda390f6a4eaa13995843d57edae162f6db5619",
+      "width": 384,
+      "height": 6223,
+      "inspectedCropBounds": [
+        [
+          0,
+          0,
+          384,
+          1450
+        ],
+        [
+          0,
+          1400,
+          384,
+          2850
+        ],
+        [
+          0,
+          2800,
+          384,
+          4250
+        ],
+        [
+          0,
+          4200,
+          384,
+          5650
+        ],
+        [
+          0,
+          5600,
+          384,
+          6223
+        ]
+      ]
+    }
+  ],
+  "findings": [
+    "All pixels covered by overlapping readable-scale crops, including footer.",
+    "No observed text clipping, control overlap, cut-off markers or overflowing closed source disclosures.",
+    "Compact reading order is notice, scene, marker feedback, outcome, explanation, text equivalent, footer.",
+    "Desktop explanation remains in a narrow right column with substantial unused left-column space below the scene; this is a retained layout limitation, not a newly resolved design issue."
+  ],
+  "scope": "Visual saved-response state for scene 1 with one hazard marker and one safe-detail marker at two widths. Source disclosures are closed. No dedicated supplied saved-Review reference exists. Does not establish full per-state design fidelity, open receipt usability, nonvisual page acceptance, assistive technology or physical-device certification."
+}
