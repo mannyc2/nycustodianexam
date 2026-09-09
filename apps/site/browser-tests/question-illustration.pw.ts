@@ -36,11 +36,22 @@ test("released illustrated question saves, reloads, and opens from Review", asyn
   const image = page.locator(".question-illustration img")
   await expect(image).toBeVisible()
   await expect.poll(() => image.evaluate(node => (node as HTMLImageElement).naturalWidth)).toBeGreaterThan(0)
+  const actions = page.locator(".player-action-bar")
+  await expect(actions.getByRole("link", { name: "Open study tools", exact: true })).toHaveCount(0)
+  await expect(actions.getByRole("link", { name: "Report a correction", exact: true })).toHaveCount(0)
   await page.getByRole("button", { name: "Flag for review", exact: true }).click()
   await page.getByRole("radio", { name: "Adjustable wrench", exact: true }).check()
   await page.getByRole("button", { name: "Save answer", exact: true }).click()
   await expect(page.getByRole("heading", { name: /Correct.*Adjustable wrench/ })).toBeVisible()
   await expect(image).toBeVisible()
+  await expect(page.locator(".feedback-rationales h4")).toHaveText([
+    "C. Adjustable wrench", "A. Pipe wrench", "B. Slip-joint pliers", "D. Tongue-and-groove pliers"
+  ])
+  for (const [name, href] of [["Open study tools", "/atlas/"], ["Report a correction", "/report/"]]) {
+    const link = actions.getByRole("link", { name: name!, exact: true })
+    await expect(link).toHaveAttribute("href", href!)
+    expect((await page.request.get(href!)).ok()).toBe(true)
+  }
   await page.reload()
   await expect(page.getByRole("heading", { name: /Correct.*Adjustable wrench/ })).toBeVisible()
   await expect(image).toBeVisible()

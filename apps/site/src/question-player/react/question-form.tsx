@@ -105,9 +105,13 @@ export const QuestionControls = ({ nextHref }: { readonly nextHref?: string }) =
     ) : null}
     <div className="question-controls player-action-bar">
       {state.tag === "revealed" ? (
-        <a className="button button-primary" data-session-history={nextHref === undefined ? undefined : "replace"} href={nextHref ?? "/practice/"}>
+        <>
+        <a className="button button-secondary" href="/atlas/">Open study tools</a>
+        <a className="button button-secondary" href="/report/">Report a correction</a>
+        <a className="button button-primary player-continue" data-session-history={nextHref === undefined ? undefined : "replace"} href={nextHref ?? "/practice/"}>
           {nextHref === undefined ? "Return to Practice" : "Next question"}
         </a>
+        </>
       ) : (
         <button
           className="button button-primary"

@@ -1195,3 +1195,12 @@
   .question-image-description summary { padding-block: 0.625rem; min-block-size: 2.75rem; color: var(--color-action); cursor: pointer; }
   .question-image-description p { margin-block: 0.5rem 0; }
 }
+
+@layer overrides {
+  .player-feedback .rationale-list { list-style: none; padding-inline-start: 0; }
+  .player-action-bar .player-continue { margin-inline-start: auto; }
+  .player-action-bar:has(.player-continue) .player-action-note { flex-basis: 100%; }
+  @media (max-width: 47.99rem) {
+    .player-action-bar .player-continue { margin-inline-start: 0; }
+  }
+}

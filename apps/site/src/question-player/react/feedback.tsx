@@ -89,7 +89,7 @@ export const QuestionFeedback = () => {
             return (
               <li key={optionId}>
                 <div className="rationale-heading-row">
-                  <h4>{optionLabel(optionId)}</h4>
+                  <h4>{String.fromCharCode(65 + question.options.findIndex(option => option.id === optionId))}. {optionLabel(optionId)}</h4>
                   <span className="rationale-verdict" data-verdict={optionId === state.payload.correctOptionId ? "correct" : optionId === state.selectedOptionId ? "incorrect" : "other"}>
                     {optionId === state.payload.correctOptionId
                       ? "Correct answer"

@@ -452,3 +452,43 @@ image, keyboard retry, and answered states at 1053/384. Visually inspected the
 The reference fixture and released q091 contain different tools/options; the
 actual reviewed question remains unchanged. A genuine linked nonvisual variant
 and final answered-state comparison remain open.
+
+## Answered-player comparison and actions — September 9
+
+Compared the actual illustrated answered card with reference 27, then refreshed
+both illustrated and text-player captures. The maintained FEATURE_SPEC.md
+requires the correct rationale first, followed by the learner's incorrect
+choice and other distractors. That order remains authoritative over the
+prototype's A–D order. Each rationale now carries its original option letter;
+the unrelated numeric list markers are suppressed. This makes the association
+clear without reordering reviewed explanations.
+
+Saved feedback now exposes Open study tools and Report a correction before the
+continuation action. These are ordinary /atlas/ and /report/ links, available
+only after reveal. Continuation retains its primary emphasis and existing
+replace-history semantics; the final item returns to Practice. Compact actions
+stack, and the save-status note occupies its own row. The correction link opens
+the existing form; it does not automatically submit or prefill a report.
+
+Visually inspected compact illustrated and desktop text answered captures. The
+reference's truncated image, fixture content, visible live-region debug label,
+and post-save mutable flag control are not copied. The image is whole at reset,
+the live region stays visually hidden, and committed review intent remains
+immutable under the existing save contract. Authored scope/distinction/source
+content remains present even where the shorter prototype omits it. Sources
+remain in an expandable evidence section with retained excerpts.
+
+Validation: full build/artifact verification, site/browser typechecks, and six
+feedback/illustration view tests pass. The combined question-player and
+illustration browser run passes 40 checks; two skips are the existing
+Chromium-only BFCache regression on Firefox/WebKit. New assertions verify the
+original rationale letters and post-save support links, including successful
+local destinations and absence of those actions before saving. All refreshed
+illustrated/text captures complete without page errors.
+
+The authored nonvisual requirement remains open. Question artifacts currently
+have an optional illustration but no authored-equivalent prompt/fact linkage;
+nonvisual zoned equivalents exist for hazard scenes only. A truthful linked
+question variant requires reviewed content, model/compiler support, compatible
+routes and persistence behavior, and verification—not relabeling the neutral
+description as another scored question.
