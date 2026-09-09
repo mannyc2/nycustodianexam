@@ -90,6 +90,7 @@ export const SimulationPlayer = ({
   const errorRef = useRef<HTMLHeadingElement>(null)
   const recoverableErrorRef = useRef<HTMLHeadingElement>(null)
   const confirmationRef = useRef<HTMLHeadingElement>(null)
+  const currentItemRef = useRef<HTMLAnchorElement>(null)
 
   useEffect(() => {
     if (snapshot.focusRequest?.target === "error") errorRef.current?.focus()
@@ -234,11 +235,9 @@ export const SimulationPlayer = ({
     <aside className="simulation-rail" aria-label="Simulation progress and timing">
     <nav className="simulation-navigator" aria-label="Simulation items">
       <div className="player-heading-row">
-        <h2 id="simulation-items-heading">Item navigator</h2>
-        <span className="player-position">{position} / {session.actualLength}</span>
+        <h2 id="simulation-items-heading">Item {position} of {session.actualLength}</h2>
       </div>
-      <label className="simulation-progress-label" htmlFor="simulation-progress">{answered} of {session.actualLength} answered</label>
-      <progress id="simulation-progress" max={session.actualLength} value={answered} />
+      <p className="simulation-progress-label">{answered} recorded, {session.actualLength - answered} unanswered, {flagged} flagged. You are on item {position}.</p>
       <ol className="simulation-item-grid">
         {session.items.map((candidate) => {
           const candidateId = simulationItemId(candidate)
@@ -263,6 +262,7 @@ export const SimulationPlayer = ({
             {saving || recoverableError !== null
               ? <span aria-label={`${label}; navigation waits for local save`}>{candidate.position}<small aria-hidden="true">{saved?.reviewIntent === "flagged" ? "⚑" : savedAnswered ? "✓" : ""}</small></span>
               : <a
+                  ref={candidate.position === position ? currentItemRef : undefined}
                   aria-current={candidate.position === position ? "step" : undefined}
                   aria-label={label}
                   data-session-history="replace"
@@ -277,13 +277,22 @@ export const SimulationPlayer = ({
         <li><span aria-hidden="true" className="simulation-key-flagged" /> Flagged ⚑</li>
         <li><span aria-hidden="true" className="simulation-key-current" /> Current</li>
       </ul>
-      <p className="player-action-note">{answered} answered · {session.actualLength - answered} unanswered · {flagged} flagged</p>
       <button
         className="button button-primary"
         disabled={saving || recoverableError !== null}
+        hidden={snapshot.state.confirmation}
         onClick={() => controller.dispatch({ tag: "open-confirmation" })}
         type="button"
       >Review and submit simulation</button>
+    {snapshot.state.confirmation && <section className="reference-card simulation-confirmation" aria-labelledby="final-submit-heading">
+      <h2 id="final-submit-heading" ref={confirmationRef} tabIndex={-1}>Submit final answers?</h2>
+      <p>{session.actualLength - answered} of {session.actualLength} items are unanswered and {flagged} are flagged. Unanswered items will count as unanswered in the practice result.</p>
+      <p>After final submission, answers cannot be edited. The submission is saved locally before any answer or explanation content is requested.</p>
+      <div className="question-controls">
+        <button className="button button-primary" disabled={saving} onClick={() => controller.dispatch({ tag: "submit-final" })} type="button">Submit final answers</button>
+        <button className="button button-secondary" disabled={saving} onClick={() => { controller.dispatch({ tag: "cancel-confirmation" }); currentItemRef.current?.focus() }} type="button">Continue editing</button>
+      </div>
+    </section>}
     </nav>
     <SimulationTimer
       controller={controller}
@@ -295,14 +304,6 @@ export const SimulationPlayer = ({
     </aside>
     </div>
 
-    {snapshot.state.confirmation && <section className="reference-card section-gap simulation-confirmation" aria-labelledby="final-submit-heading">
-      <h2 id="final-submit-heading" ref={confirmationRef} tabIndex={-1}>Submit final answers?</h2>
-      <p>{answered} of {session.actualLength} items are answered. {session.actualLength - answered} unanswered items will count as unanswered in the practice result.</p>
-      <p>After final submission, answers cannot be edited. The submission is saved locally before any answer or explanation content is requested.</p>
-      <div className="question-controls">
-        <button className="button button-primary" disabled={saving} onClick={() => controller.dispatch({ tag: "submit-final" })} type="button">Submit final answers</button>
-        <button className="button button-secondary" disabled={saving} onClick={() => controller.dispatch({ tag: "cancel-confirmation" })} type="button">Continue editing</button>
-      </div>
-    </section>}
+
   </>
 }

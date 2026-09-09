@@ -1,0 +1,31 @@
+{
+  "captures": [
+    {
+      "file": "confirmation-1008.png",
+      "width": 1008,
+      "bounds": {
+        "x": 40,
+        "y": 264.921875,
+        "width": 928,
+        "height": 590.5625
+      },
+      "answered": 3,
+      "flagged": 1,
+      "position": 4
+    },
+    {
+      "file": "confirmation-384.png",
+      "width": 384,
+      "bounds": {
+        "x": 16,
+        "y": -152.46875,
+        "width": 352,
+        "height": 1173.53125
+      },
+      "answered": 3,
+      "flagged": 1,
+      "position": 4
+    }
+  ],
+  "errors": []
+}

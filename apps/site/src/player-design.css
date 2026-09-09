@@ -300,3 +300,12 @@
   .study-player.question-card > form { display: grid; gap: 1.5rem; }
   .study-player.question-card .player-action-bar { margin-block-start: 0; }
 }
+
+@layer overrides {
+  .simulation-navigator h2 { font-size: 1.125rem; }
+  .simulation-navigator .simulation-progress-label { margin-block: 1.25rem; }
+  .simulation-navigator .simulation-confirmation { margin-block-start: 1.25rem; padding: 1.25rem; }
+  .simulation-navigator .simulation-confirmation > * + * { margin-block-start: 0.75rem; }
+  .simulation-item > :is(a, span) { inline-size: 2.75rem; block-size: 2.75rem; padding: 0; font-family: var(--font-sans); }
+  .simulation-item:not([data-flagged]) small { display: none; }
+}
