@@ -1,0 +1,31 @@
+import { expect } from "@playwright/test"
+import { test } from "./offline-origin-fixture.ts"
+
+test("downloaded illustrated question opens, saves, and restores feedback with its origin disconnected", async ({ page, offlineOrigin }) => {
+  test.setTimeout(120000)
+  await page.setViewportSize({ width: 384, height: 900 })
+  await page.goto(offlineOrigin.url + "/offline/")
+  await page.getByRole("button", { name: /^Download (the .* copy|and check)$/ }).click()
+  await expect(page.getByText(/Download complete and checked/)).toBeVisible({ timeout: 90000 })
+  await page.getByRole("button", { name: /Turn on this saved copy/ }).click()
+  await expect(page.getByText(/now in use for new sessions/)).toBeVisible()
+  await page.evaluate(async () => { await navigator.serviceWorker.ready })
+  await page.reload()
+  await expect.poll(() => page.evaluate(() => navigator.serviceWorker.controller !== null)).toBe(true)
+  await offlineOrigin.disconnect()
+  // Neither this question document nor its feedback has been visited online.
+  await page.goto(offlineOrigin.url + "/practice/session/launch-v1/question/91/")
+  const image = page.locator(".question-illustration img")
+  await expect.poll(() => image.evaluate(node => (node as HTMLImageElement).naturalWidth)).toBeGreaterThan(0)
+  expect(await image.evaluate(node => (node as HTMLImageElement).currentSrc)).toContain("t036-phone.png")
+  await page.getByRole("button", { name: "Flag for review", exact: true }).click()
+  await page.getByRole("radio", { name: "Adjustable wrench", exact: true }).check()
+  await page.getByRole("button", { name: "Save answer", exact: true }).click()
+  await expect(page.getByRole("heading", { name: /Correct.*Adjustable wrench/ })).toBeVisible()
+  await page.reload()
+  await expect(page.getByRole("heading", { name: /Correct.*Adjustable wrench/ })).toBeVisible()
+  await page.goto(offlineOrigin.url + "/review/")
+  await page.getByRole("link", { name: "Read explanation", exact: true }).click()
+  await expect(page.getByRole("heading", { name: "Answer explanations", exact: true })).toBeVisible()
+  await expect.poll(() => page.locator(".question-illustration img").evaluate(node => (node as HTMLImageElement).naturalWidth)).toBeGreaterThan(0)
+})

@@ -82,7 +82,7 @@ const customPracticeDocument = (request) => {
   if (request.mode !== "navigate") return undefined
   const url = new URL(request.url)
   if (url.origin !== self.location.origin ||
-    !/^\/(?:practice\/session\/[a-z0-9][a-z0-9._-]*\/question|hazards\/session\/[a-z0-9][a-z0-9._-]*\/scene)\/[1-9][0-9]*\/$/.test(url.pathname) ||
+    !/^\/(?:history\/[a-z0-9][a-z0-9._-]*-v[1-9][0-9]*\/)?(?:practice\/session\/[a-z0-9][a-z0-9._-]*\/question|hazards\/session\/[a-z0-9][a-z0-9._-]*\/scene)\/[1-9][0-9]*\/$/.test(url.pathname) ||
     url.searchParams.getAll("set").length !== 1 || url.searchParams.getAll("position").length !== 1 ||
     [...url.searchParams.keys()].some((key) => key !== "set" && key !== "position")) return undefined
   return `${url.origin}${url.pathname}`

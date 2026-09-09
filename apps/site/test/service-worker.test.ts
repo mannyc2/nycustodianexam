@@ -630,3 +630,28 @@ describe("service-worker fetch", () => {
     expect(pointerTouches).toBe(0)
   })
 })
+
+describe("custom practice document cache identity", () => {
+  it("normalizes current and historical set navigation without accepting extra or repeated parameters", async () => {
+    const source = await readFile(new URL("../public/sw.js", import.meta.url), "utf8")
+    const normalize = new Function("self", `${source}\nreturn customPracticeDocument`)(
+      { location: { origin: "https://study.example" }, addEventListener: () => undefined }
+    ) as (request: { mode: string; url: string }) => string | undefined
+    for (const prefix of ["", "/history/launch-v1-v3"]) {
+      for (const path of ["/practice/session/launch-v1/question/1/", "/hazards/session/launch-v1/scene/1/"]) {
+        const canonical = `https://study.example${prefix}${path}`
+        for (const query of ["?set=pb1.1.1.61&position=1", "?position=1&set=pb1.1.1.61"]) {
+          expect(normalize({ mode: "navigate", url: canonical + query })).toBe(canonical)
+          expect(normalize({ mode: "cors", url: canonical + query })).toBeUndefined()
+          expect(normalize({ mode: "navigate", url: canonical.replace("study.example", "other.example") + query })).toBeUndefined()
+        }
+        for (const query of ["?set=x", "?position=1", "?set=x&set=y&position=1", "?set=x&position=1&position=2", "?set=x&position=1&extra=1"]) {
+          expect(normalize({ mode: "navigate", url: canonical + query })).toBeUndefined()
+        }
+      }
+    }
+    for (const path of ["/history/launch-v1-v0/practice/session/launch-v1/question/1/", "/history/launch/practice/session/launch-v1/question/1/", "/settings/"]) {
+      expect(normalize({ mode: "navigate", url: `https://study.example${path}?set=x&position=1` })).toBeUndefined()
+    }
+  })
+})

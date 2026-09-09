@@ -352,3 +352,29 @@ artifact verification pass with the existing route/content/image invariants.
 The complete print browser suite also passes: 33 cases across Chromium, Firefox,
 and WebKit, including restoration, regeneration failures, separate/appended keys,
 source-bound fact sheets, tool cards, hazards, and required-image recovery.
+
+## Downloaded feedback with the origin disconnected
+
+New browser tests use a dedicated HTTP origin and close its listening server and
+connections after downloading and activating the current pack. This uses actual
+network loss in all browsers. The illustrated test first visits q091 only after
+shutdown, verifies the phone image has decoded, saves a flagged answer, reloads,
+and opens its explanation and image through Review while still disconnected.
+
+The historical test seeds exact archived version-3 custom question/hazard records,
+downloads the current pack, and opens both historical explanations after shutdown
+without any prior visit to those documents. It reorders set parameters and reloads
+both explanations. Before the fix, Chromium fell back to the offline page because
+the service worker normalized custom set parameters only on current paths. The
+normalizer now also recognizes the historical version prefix; it still requires
+same-origin navigation and exactly one set and position parameter, with no extra
+parameters. Fourteen worker tests cover both path generations and rejection cases.
+
+This establishes feedback availability from a newly downloaded current pack with
+older saved records. It does not yet establish an in-place transition from an
+installed version-3 service worker/pack or full historical simulation resumption.
+
+After the fix, all six origin-disconnected browser cases pass across Chromium,
+Firefox, and WebKit. Browser typecheck, all 14 service-worker tests, full build,
+and artifact verification pass. Public item and image counts and bundle limits
+remain unchanged.
