@@ -7,7 +7,7 @@
         "x": 0,
         "y": 57,
         "width": 1248,
-        "height": 557.5
+        "height": 578.171875
       }
     },
     {
@@ -15,7 +15,7 @@
       "width": 1248,
       "bounds": {
         "x": 40,
-        "y": 250.5,
+        "y": 250.171875,
         "width": 1168,
         "height": 649.359375
       }
@@ -25,7 +25,7 @@
       "width": 1248,
       "bounds": {
         "x": 40,
-        "y": 179.859375,
+        "y": 179.53125,
         "width": 1168,
         "height": 540.984375
       }
@@ -35,7 +35,7 @@
       "width": 1248,
       "bounds": {
         "x": 40,
-        "y": 581.140625,
+        "y": 581.8125,
         "width": 1168,
         "height": 318.40625
       }
@@ -45,7 +45,7 @@
       "width": 1248,
       "bounds": {
         "x": 40,
-        "y": 296.59375,
+        "y": 296.265625,
         "width": 1168,
         "height": 307.5625
       }
@@ -55,7 +55,7 @@
       "width": 1248,
       "bounds": {
         "x": 40,
-        "y": 640.15625,
+        "y": 639.828125,
         "width": 1168,
         "height": 220.671875
       }
@@ -118,6 +118,46 @@
         "y": 466.953125,
         "width": 352,
         "height": 432.765625
+      }
+    }
+  ],
+  "typography": [
+    {
+      "width": 1248,
+      "fonts": [
+        {
+          "familyName": "DejaVu Sans",
+          "postScriptName": "DejaVuSans-Bold",
+          "isCustomFont": false,
+          "glyphCount": 72
+        }
+      ],
+      "computed": {
+        "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "fontSize": "46px",
+        "fontWeight": "700",
+        "lineHeight": "52.9px",
+        "letterSpacing": "-1.15px",
+        "textWrap": "pretty"
+      }
+    },
+    {
+      "width": 384,
+      "fonts": [
+        {
+          "familyName": "DejaVu Sans",
+          "postScriptName": "DejaVuSans-Bold",
+          "isCustomFont": false,
+          "glyphCount": 72
+        }
+      ],
+      "computed": {
+        "fontFamily": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+        "fontSize": "26px",
+        "fontWeight": "700",
+        "lineHeight": "31.2px",
+        "letterSpacing": "-0.52px",
+        "textWrap": "pretty"
       }
     }
   ],

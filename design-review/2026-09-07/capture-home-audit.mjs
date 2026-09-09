@@ -6,7 +6,7 @@ const { chromium, expect } = require('@playwright/test');
 const output = fileURLToPath(new URL(process.env.HOME_CAPTURE_OUTPUT ?? './home-final-audit/', import.meta.url));
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({ channel: 'chromium' });
-const captures = [], errors = [];
+const captures = [], errors = [], typography = [];
 try {
   for (const width of [1248, 384]) {
     const context = await browser.newContext({ viewport: { width, height: 900 }, reducedMotion: 'reduce', serviceWorkers: 'block' });
@@ -14,6 +14,19 @@ try {
     page.on('pageerror', error => errors.push(String(error)));
     await page.goto('http://127.0.0.1:4187/');
     await page.evaluate(async () => { await document.fonts.ready; await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))); });
+    const heading = page.locator('.home-hero h1');
+    await expect(heading).toHaveCSS('font-size', width === 384 ? '26px' : '46px');
+    const cdp = await context.newCDPSession(page);
+    await cdp.send('DOM.enable');
+    await cdp.send('CSS.enable');
+    const { root } = await cdp.send('DOM.getDocument');
+    const { nodeId } = await cdp.send('DOM.querySelector', { nodeId: root.nodeId, selector: '.home-hero h1' });
+    const { fonts } = await cdp.send('CSS.getPlatformFontsForNode', { nodeId });
+    typography.push({ width, fonts, computed: await heading.evaluate(element => {
+      const style = getComputedStyle(element);
+      return { fontFamily: style.fontFamily, fontSize: style.fontSize, fontWeight: style.fontWeight, lineHeight: style.lineHeight, letterSpacing: style.letterSpacing, textWrap: style.textWrap };
+    }) });
+    await cdp.detach();
     if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)) throw new Error('Home overflows');
     for (const [name, locator] of [
       ['hero', page.locator('.home-hero')],
@@ -44,5 +57,5 @@ try {
     await context.close();
   }
 } finally { await browser.close(); }
-await writeFile(output + 'manifest.json', JSON.stringify({ captures, errors }, null, 2) + '\n');
+await writeFile(output + 'manifest.json', JSON.stringify({ captures, typography, errors }, null, 2) + '\n');
 if (errors.length) throw new Error(errors.join('\n'));

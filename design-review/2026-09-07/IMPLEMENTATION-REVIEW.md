@@ -105,3 +105,26 @@ Root build/artifact verification passes. Existing Home mobile reflow/navigation
 and serious/critical axe checks pass in Chromium, Firefox, and WebKit (3 tests).
 The native-font wrapping, fuller footer, and additional source disclosures still
 differ from the supplied compact reference; full fidelity remains unproven.
+
+## Home typography verification
+
+Compared the actual stylesheet with Home.dc.html rather than inferring every
+wrapping difference from screenshots. A later override had replaced the desktop
+prototype's responsive heading size with a fixed 40px. Restored
+`clamp(2rem, 1.5rem + 1.8vw, 2.875rem)`, the prototype's `text-wrap: pretty`
+for the heading/intro, and compact heading letter spacing of -0.02em.
+
+The refreshed `home-compact-audit/manifest.json` records computed typography and
+Chromium's actual platform font: DejaVu Sans Bold, not a downloaded custom font.
+At 1248px, heading size/line height/spacing are 46px/52.9px/-1.15px; at 384px
+they are 26px/31.2px/-0.52px, matching the prototype declarations at these widths.
+The native font stack is identical in app and prototype. The font used to produce
+the supplied PNGs is not established by those PNGs. Inspected both updated hero
+crops: readable, complete headings and actions, without overflow. Remaining line
+break differences are retained as a platform-dependent visual difference, not
+compensated with a smaller-than-specified type size.
+
+Root build/artifact checks and updated capture assertions passed. The capture
+script now asserts heading sizes and records typography for reproducibility.
+Earlier three-browser compact reflow checks preceded this typography correction;
+the current capture verification is Chromium only.
