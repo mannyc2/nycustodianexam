@@ -1,4 +1,5 @@
-import { expect, test } from "@playwright/test"
+import { expect } from "@playwright/test"
+import { test } from "./offline-origin-fixture.ts"
 
 for (const mode of ["visual", "nonvisual"] as const) {
   test(`custom ${mode} drill preserves order, saved feedback and history`, async ({ page }) => {
@@ -35,14 +36,14 @@ for (const mode of ["visual", "nonvisual"] as const) {
   })
 }
 
-test("a cached keyboard drill document reopens offline with reordered parameters", async ({ page, context }) => {
+test("a cached keyboard drill document reopens offline with reordered parameters", async ({ page, context, browserName, offlineOrigin }) => {
   test.setTimeout(120_000)
-  await page.goto("/offline/")
+  await page.goto(offlineOrigin.url + "/offline/")
   await page.getByRole("button", { name: /^Download (the .* copy|and check)$/ }).click()
   await expect(page.getByText(/Download complete and checked/)).toBeVisible({ timeout: 90_000 })
   await page.getByRole("button", { name: /Turn on this saved copy/ }).click()
   await expect(page.getByText(/now in use for new sessions/)).toBeVisible()
-  await page.goto("/hazards/")
+  await page.goto(offlineOrigin.url + "/hazards/")
   const builder = page.getByRole("region", { name: "Build a hazard drill" })
   await builder.getByRole("radio", { name: /^Read and select zones/ }).check()
   await builder.getByRole("button", { name: "Start drill", exact: true }).click()
@@ -53,8 +54,12 @@ test("a cached keyboard drill document reopens offline with reordered parameters
   const url = new URL(page.url())
   const set = url.searchParams.get("set")!
   url.search = `?position=1&set=${set}`
-  await context.setOffline(true)
+  if (browserName === "webkit") await offlineOrigin.disconnect()
+  else await context.setOffline(true)
   await page.goto(url.href)
   await expect(page.locator(".player-position")).toHaveText("Scene 1 of 1 · Original scene")
   await expect(page.getByRole("checkbox").first()).toBeEnabled()
+  await page.getByRole("checkbox").first().check()
+  await page.getByRole("button", { name: "Save response", exact: true }).click()
+  await expect(page.getByRole("heading", { name: /^Response saved/ })).toBeVisible()
 })

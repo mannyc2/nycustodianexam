@@ -1,4 +1,5 @@
-import { expect, test } from "@playwright/test"
+import { expect } from "@playwright/test"
+import { test } from "./offline-origin-fixture.ts"
 
 test("custom practice preserves the chosen length and saves exact feedback for Review", async ({ page }) => {
   await page.goto("/practice/")
@@ -55,14 +56,14 @@ test("setup navigation connects Practice, Hazard drill and Simulation with real 
   await expect(page.getByRole("region", { name: "Build a practice set" })).toBeVisible()
 })
 
-test("custom question documents remain available offline with reordered set parameters", async ({ page, context }) => {
+test("custom question documents remain available offline with reordered set parameters", async ({ page, context, browserName, offlineOrigin }) => {
   test.setTimeout(120_000)
-  await page.goto("/offline/")
+  await page.goto(offlineOrigin.url + "/offline/")
   await page.getByRole("button", { name: /^Download (the .* copy|and check)$/ }).click()
   await expect(page.getByText(/Download complete and checked/)).toBeVisible({ timeout: 90_000 })
   await page.getByRole("button", { name: /Turn on this saved copy/ }).click()
   await expect(page.getByText(/now in use for new sessions/)).toBeVisible()
-  await page.goto("/practice/")
+  await page.goto(offlineOrigin.url + "/practice/")
   await page.getByRole("region", { name: "Build a practice set" }).getByRole("button", { name: "Start this practice set" }).click()
   await expect(page.locator(".player-position")).toHaveText("Question 1 of 45 · Text version")
   await page.evaluate(async () => { await navigator.serviceWorker.ready })
@@ -73,8 +74,12 @@ test("custom question documents remain available offline with reordered set para
   const url = new URL(page.url())
   const set = url.searchParams.get("set")!
   url.search = `?position=1&set=${set}`
-  await context.setOffline(true)
+  if (browserName === "webkit") await offlineOrigin.disconnect()
+  else await context.setOffline(true)
   await page.goto(url.href)
   await expect(page.locator(".player-position")).toHaveText("Question 1 of 45 · Text version")
   await expect(page.getByRole("button", { name: "Save answer", exact: true })).toBeVisible()
+  await page.getByRole("radio").first().check()
+  await page.getByRole("button", { name: "Save answer", exact: true }).click()
+  await expect(page.locator(".feedback-rationales")).toBeVisible()
 })
