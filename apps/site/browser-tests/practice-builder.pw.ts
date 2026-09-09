@@ -53,3 +53,21 @@ test("setup navigation connects Practice, Hazard drill and Simulation with real 
   await navigation.getByRole("link", { name: "Practice set", exact: true }).click()
   await expect(page.getByRole("region", { name: "Build a practice set" })).toBeVisible()
 })
+
+test("custom question documents remain available offline with reordered set parameters", async ({ page, context }) => {
+  await page.goto("/practice/")
+  await page.getByRole("region", { name: "Build a practice set" }).getByRole("button", { name: "Start this practice set" }).click()
+  await expect(page.locator(".player-position")).toHaveText("Question 1 of 45 · Text version")
+  await page.evaluate(async () => { await navigator.serviceWorker.ready })
+  // First navigation may precede worker activation. Reload under its control
+  // so this actual document is cached through the service worker fetch path.
+  await page.reload()
+  await expect(page.getByRole("button", { name: "Save answer", exact: true })).toBeVisible()
+  const url = new URL(page.url())
+  const set = url.searchParams.get("set")!
+  url.search = `?position=1&set=${set}`
+  await context.setOffline(true)
+  await page.goto(url.href)
+  await expect(page.locator(".player-position")).toHaveText("Question 1 of 45 · Text version")
+  await expect(page.getByRole("button", { name: "Save answer", exact: true })).toBeVisible()
+})

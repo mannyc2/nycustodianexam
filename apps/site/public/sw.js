@@ -75,6 +75,19 @@ const localSessionShell = (request) => {
   return undefined
 }
 
+// Custom set parameters select client-side order, never a different HTML
+// document. Share the canonical document cache entry while retaining the full
+// navigation URL for the player's exact receipt validation.
+const customPracticeDocument = (request) => {
+  if (request.mode !== "navigate") return undefined
+  const url = new URL(request.url)
+  if (url.origin !== self.location.origin ||
+    !/^\/(?:practice\/session\/[a-z0-9][a-z0-9._-]*\/question|hazards\/session\/[a-z0-9][a-z0-9._-]*\/scene)\/[1-9][0-9]*\/$/.test(url.pathname) ||
+    url.searchParams.getAll("set").length !== 1 || url.searchParams.getAll("position").length !== 1 ||
+    [...url.searchParams.keys()].some((key) => key !== "set" && key !== "position")) return undefined
+  return `${url.origin}${url.pathname}`
+}
+
 const isPackManagedContent = (request) => {
   const url = new URL(request.url)
   return url.origin === self.location.origin &&
@@ -121,8 +134,9 @@ self.addEventListener("fetch", (event) => {
     )
     return
   }
+  const appCacheKey = customPracticeDocument(event.request) ?? event.request
   let cacheWrite = Promise.resolve()
-  const response = matchCurrentShell(event.request).then((currentShellResponse) => {
+  const response = matchCurrentShell(appCacheKey).then((currentShellResponse) => {
     if (currentShellResponse) return currentShellResponse
     return fetch(event.request)
       .then((networkResponse) => {
@@ -133,18 +147,18 @@ self.addEventListener("fetch", (event) => {
         ) {
           const copy = networkResponse.clone()
           cacheWrite = caches.open(runtimeCache).then((cache) =>
-            cache.put(event.request, copy)
+            cache.put(appCacheKey, copy)
           )
         }
         return networkResponse
       })
       .catch(async () => {
-        const currentRuntimeResponse = await matchCurrentRuntime(event.request)
+        const currentRuntimeResponse = await matchCurrentRuntime(appCacheKey)
         if (currentRuntimeResponse) return currentRuntimeResponse
 
         // A retained pack is only an offline fallback for app/navigation URLs;
         // it must never mask the freshly installed shell or an online response.
-        const packResponse = await matchActivePack(event.request)
+        const packResponse = await matchActivePack(appCacheKey)
         if (packResponse) return packResponse
 
         if (event.request.mode === "navigate") {

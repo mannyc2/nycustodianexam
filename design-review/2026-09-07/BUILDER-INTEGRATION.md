@@ -77,3 +77,21 @@ that integration is still required. Existing Hazard controllers are unchanged.
 
 Hazard integration is now implemented; see `HAZARD-BUILDER-REVIEW.md` for
 current behavior, evidence and remaining audit work.
+
+## Offline document routing correction
+
+Custom set query parameters now share the canonical question/scene document
+cache key. Normalization applies only to same-origin player navigations with
+exactly one `set` and `position` parameter and no other parameters. The full
+browser URL still reaches the player for exact set/receipt validation. Network
+requests retain their URL, no-store bypass remains first, and content artifact
+caching is unchanged. Canonical runtime and active-pack documents can therefore
+serve these custom navigations without needing one cache entry per repeat code.
+
+Evidence: browser regressions load an actual question or keyboard-scene document
+under the service worker, go offline, and reopen the same set using an uncached
+parameter order. Correct custom positions and controls remain available. The
+four question-builder tests and three Hazard-builder tests pass, along with 13
+service-worker tests, browser typecheck and root build/artifact verification.
+This proves cached-document behavior; custom downloaded-pack, import/export and
+cross-browser coverage remain separate outstanding checks.

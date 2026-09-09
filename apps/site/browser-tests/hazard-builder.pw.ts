@@ -34,3 +34,21 @@ for (const mode of ["visual", "nonvisual"] as const) {
     }
   })
 }
+
+test("a cached keyboard drill document reopens offline with reordered parameters", async ({ page, context }) => {
+  await page.goto("/hazards/")
+  const builder = page.getByRole("region", { name: "Build a hazard drill" })
+  await builder.getByRole("radio", { name: /^Read and select zones/ }).check()
+  await builder.getByRole("button", { name: "Start drill", exact: true }).click()
+  await expect(page.locator(".player-position")).toHaveText("Scene 1 of 1 · Original scene")
+  await page.evaluate(async () => { await navigator.serviceWorker.ready })
+  await page.reload()
+  await expect(page.getByRole("checkbox").first()).toBeEnabled()
+  const url = new URL(page.url())
+  const set = url.searchParams.get("set")!
+  url.search = `?position=1&set=${set}`
+  await context.setOffline(true)
+  await page.goto(url.href)
+  await expect(page.locator(".player-position")).toHaveText("Scene 1 of 1 · Original scene")
+  await expect(page.getByRole("checkbox").first()).toBeEnabled()
+})
