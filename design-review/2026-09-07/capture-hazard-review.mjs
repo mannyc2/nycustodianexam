@@ -6,14 +6,20 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 const require = createRequire(new URL('../../apps/site/package.json', import.meta.url));
 const { chromium, expect } = require('@playwright/test');
+const receiptCapture = process.env.NYCUSTODIAN_HAZARD_CAPTURE_RECEIPTS === '1';
+if (receiptCapture && !process.env.NYCUSTODIAN_HAZARD_CAPTURE_OUTPUT) throw new Error('Receipt captures require a separate output directory');
 const output = process.env.NYCUSTODIAN_HAZARD_CAPTURE_OUTPUT
   ? resolve(process.env.NYCUSTODIAN_HAZARD_CAPTURE_OUTPUT) + sep
   : fileURLToPath(new URL('./hazard-review-current/', import.meta.url));
 await mkdir(output, { recursive: true });
 const sourceCommit = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+const sourceDiff = execFileSync('git', ['diff', 'HEAD', '--', 'apps/site/src', 'apps/site/scripts'], { encoding: 'utf8' });
+const sourceDiffSha256 = sourceDiff.length ? createHash('sha256').update(sourceDiff).digest('hex') : null;
+if (sourceDiffSha256 !== null) await writeFile(output + 'application-source.patch', sourceDiff);
+const untrackedSources = execFileSync('git', ['ls-files', '--others', '--exclude-standard', '--', 'apps/site/src', 'apps/site/scripts'], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
+if (untrackedSources.length) throw new Error('Commit or explicitly account for untracked application sources before capture');
 const browser = await chromium.launch({ channel: 'chromium' });
 const captures = [], errors = [];
-const receiptCapture = process.env.NYCUSTODIAN_HAZARD_CAPTURE_RECEIPTS === '1';
 try {
   for (const width of [1042, 384]) for (const mode of ['visual', 'nonvisual']) {
     const context = await browser.newContext({ viewport: { width, height: 900 }, serviceWorkers: 'block', reducedMotion: 'reduce' });
@@ -58,5 +64,5 @@ try {
     await context.close();
   }
 } finally { await browser.close(); }
-await writeFile(output + 'manifest.json', JSON.stringify({ sourceCommit, captures, errors }, null, 2) + '\n');
+await writeFile(output + 'manifest.json', JSON.stringify({ sourceCommit, sourceDiffSha256, captures, errors }, null, 2) + '\n');
 if (errors.length) throw new Error(errors.join('\n'));
