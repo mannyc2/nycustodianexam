@@ -325,3 +325,35 @@ test("every announcement fact keeps its exact source excerpt without JavaScript"
     }
   } finally { await context.close() }
 })
+
+for (const javaScriptEnabled of [true, false]) {
+  test(`compact exam subject disclosures work with JavaScript ${javaScriptEnabled ? "enabled" : "disabled"}`, async ({ browser, baseURL }) => {
+    if (baseURL === undefined) throw new Error("Browser base URL is required")
+    const context = await browser.newContext({ baseURL, javaScriptEnabled, viewport: { width: 384, height: 900 } })
+    try {
+      const page = await context.newPage()
+      await page.goto("/exams/")
+      const before = page.url()
+      const cards = page.locator(".exam-card-subjects")
+      await expect(cards).toHaveCount(3)
+      for (const card of await cards.all()) {
+        await expect(card.locator("ol")).toBeHidden()
+        await card.locator("summary").focus()
+        await page.keyboard.press("Enter")
+        await expect(card.locator("ol")).toBeVisible()
+        await expect(card.locator("li")).toHaveText([
+          "Cleaning Tools and Their Uses",
+          "Tools Used for Minor Maintenance and Repair",
+          "Health and Safety Issues in Custodial Work"
+        ])
+        await expectPageReflow(page)
+        await page.keyboard.press("Enter")
+        await expect(card.locator("ol")).toBeHidden()
+      }
+      expect(page.url()).toBe(before)
+      if (javaScriptEnabled) await expect(page.locator("[data-exam-panel]:visible")).toHaveCount(0)
+      await page.setViewportSize({ width: 1248, height: 900 })
+      await expect(page.locator(".exam-card-coverage:visible")).toHaveCount(0)
+    } finally { await context.close() }
+  })
+}

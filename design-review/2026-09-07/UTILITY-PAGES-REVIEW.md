@@ -296,3 +296,31 @@ design-handoff browser checks passed with the format section and footer; all
 The no-JavaScript check expands the format disclosure, verifies the admission
 notice/count caveats, and confirms its local source link resolves successfully.
 Capture scripts report no page errors.
+
+## Compact card subject disclosures — September 9
+
+Replaced the compact cards' always-visible coverage paragraphs with native
+subject disclosures, matching the accepted Landing prototype's collapsed and
+expanded card behavior. Each list uses the existing published subject names.
+The disclosure includes the announcement compatibility statement, or the
+statewide plan's own-announcement caveat. The filing badge precedes the title
+on compact screens; title and competition text use the reference's smaller
+type hierarchy. Jurisdiction and review date remain visible.
+
+Opening a subject disclosure does not open an announcement record, change the
+URL, or alter study selection. Keyboard Enter toggles it with or without
+JavaScript. The desktop record tabs remain the subject-view interface there.
+The practice coverage action retains its genuine /practice/#covers destination.
+
+Refreshed the overview captures and added cards-subjects-384.png for all three
+expanded lists. Visually inspected collapsed and expanded card crops against
+the compact Landing prototype. The collapsed card group now measures 899px,
+with source qualification available on expansion. Compact search/filter controls
+and the retained site footer remain differences from the short prototype.
+
+Validation: full build/artifact verification and both typechecks pass. All 24
+Exams-focused browser checks pass across Chromium, Firefox, and WebKit, including
+six keyboard-disclosure checks covering JavaScript on/off. The checks verify
+all three subject names, open/closed reflow, unchanged URL, no selected record,
+and hidden compact coverage controls after resizing to desktop. Captures report
+no page errors.

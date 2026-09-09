@@ -1126,3 +1126,16 @@
     [data-route-id="exam-selector"] .site-footer-meta { font-size: 0.75rem; }
   }
 }
+
+@layer overrides {
+  @media (max-width: 47.99rem) {
+    .exams-page .record-item > .status-chip { order: -1; }
+    .exams-page .record-item > strong { font-size: 1rem; }
+    .exams-page .record-item > .record-kind { font-size: 0.8125rem; }
+    .exam-card-subjects { border: var(--border-thin) solid var(--color-border); border-radius: var(--radius-sm); background: var(--color-canvas); }
+    .exam-card-subjects > summary { padding: 0.625rem 0.875rem; min-block-size: 2.75rem; font-size: 0.875rem; font-weight: var(--weight-medium); cursor: pointer; }
+    .exam-card-subjects > ol { margin: 0; padding: 0 0.875rem 0.5rem 2rem; font-size: 0.8125rem; }
+    .exam-card-subjects > ol > li + li { margin-block-start: 0.25rem; }
+    .exam-card-coverage .exam-card-subjects > p { padding: 0 0.875rem 0.875rem; border: 0; font-size: 0.75rem; }
+  }
+}
