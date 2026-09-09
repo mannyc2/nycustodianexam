@@ -95,3 +95,19 @@ four question-builder tests and three Hazard-builder tests pass, along with 13
 service-worker tests, browser typecheck and root build/artifact verification.
 This proves cached-document behavior; custom downloaded-pack, import/export and
 cross-browser coverage remain separate outstanding checks.
+
+## Portable custom records and existing pack regressions
+
+September 9: all 19 Chromium tests in `local-data-and-packs.pw.ts` pass against
+these builder integrations. Coverage includes atomic import, quarantined unknown
+references, parent drift, preference persistence failures, pack removal/pinning
+races, quota recovery, generation retirement, staged-byte rehashing and real
+offline Atlas navigation/images.
+
+`custom-set-transfer.pw.ts` additionally saves real custom question, visual
+Hazard and keyboard Hazard responses, exports through Settings, imports the file
+into a fresh browser context, and reopens exact feedback and custom positions
+from Review/activity. It passes, as does browser-harness typecheck. This closes
+the basic custom-record portability check without relying on fabricated receipt
+fixtures. Custom drills launched entirely from a downloaded pack and full
+cross-browser coverage remain outstanding.
