@@ -1,0 +1,42 @@
+{
+  "sourceCommit": "eae33c7ba8f4432ee9aabf8554370cd5739f5fdf",
+  "captures": [
+    {
+      "file": "visual-saved-1042-receipts.png",
+      "width": 1042,
+      "mode": "visual",
+      "state": "saved",
+      "area": "receipts",
+      "path": "/hazards/session/launch-v1/scene/1/?review=1",
+      "sha256": "1263d215681d4926b0ec1d0a75dec324603cf4e7d83ddbfa018dce5817066a6c"
+    },
+    {
+      "file": "nonvisual-saved-1042-receipts.png",
+      "width": 1042,
+      "mode": "nonvisual",
+      "state": "saved",
+      "area": "receipts",
+      "path": "/hazards/session/launch-v1-nonvisual/scene/1/?review=1",
+      "sha256": "10b3c6930bc92163f1e4c8b6f224a4bd8992a5b40adbbc5e0c2d3eb03b51d382"
+    },
+    {
+      "file": "visual-saved-384-receipts.png",
+      "width": 384,
+      "mode": "visual",
+      "state": "saved",
+      "area": "receipts",
+      "path": "/hazards/session/launch-v1/scene/1/?review=1",
+      "sha256": "0a14650a484b20482e7ef774267caa662671ff4be41faaf5355ceac772dda853"
+    },
+    {
+      "file": "nonvisual-saved-384-receipts.png",
+      "width": 384,
+      "mode": "nonvisual",
+      "state": "saved",
+      "area": "receipts",
+      "path": "/hazards/session/launch-v1-nonvisual/scene/1/?review=1",
+      "sha256": "ce0d9e60b4121b2dad68d6720437561098f8562bd3374ff262e414b577cde52e"
+    }
+  ],
+  "errors": []
+}
