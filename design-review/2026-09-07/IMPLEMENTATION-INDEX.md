@@ -26,6 +26,7 @@ The original [snapshot README](README.md), imported exports and `current-screens
 | Report | [REPORT-REVIEW.md](REPORT-REVIEW.md) | Shared-component adaptation; local draft recovery and dormant intake. No dedicated supplied Report prototype. |
 | Print screen and earlier PDFs | [PRINT-OUTPUT-REVIEW.md](PRINT-OUTPUT-REVIEW.md) | Preview states and earlier question/tool/hazard output passes; observations are revision-specific. |
 | Latest print tables | [PRINT-TABLE-ESTIMATES.md](PRINT-TABLE-ESTIMATES.md) | Eight PDF estimates match measured pagination for the captured counts/settings. |
+| Latest print fragmentation/type audit | [PRINT-RECEIPT-PAIRS.md](PRINT-RECEIPT-PAIRS.md) | Eight regenerated PDFs; source labels kept with values and all extracted large text at least 18pt. Final visual review remains partial. |
 | Latest prose print | [PRINT-PROSE-ESTIMATES.md](PRINT-PROSE-ESTIMATES.md) | Content-based estimates and corrected 18pt body text; eight checksummed PDFs and text-layout audit. |
 | Runtime gates | [LOCAL-RUNTIME-GATES.md](LOCAL-RUNTIME-GATES.md) | Local terminal withdrawal/failure and disabled intake workerd proof; not deployment. |
 | Static Assets routing | [STATIC-ASSETS-SIMULATION.md](STATIC-ASSETS-SIMULATION.md) | Local Cloudflare simulation/print-shell routing; includes the original failure and isolated recheck. |
