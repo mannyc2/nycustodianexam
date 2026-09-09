@@ -1291,3 +1291,44 @@ test("active Simulation and results retain saved answers through lifecycle clean
   await expect(results.locator("li.reference-card")).toHaveCount(resultCount)
   expect(errors).toEqual([])
 })
+
+test("timed Simulation removes its ticking interval on disposal", async ({ page }) => {
+  await page.addInitScript(() => {
+    const active = new Set<number>()
+    const timers = window as unknown as {
+      setInterval: (handler: TimerHandler, timeout?: number, ...args: unknown[]) => number
+      clearInterval: (id?: number) => void
+    }
+    const start = timers.setInterval.bind(window)
+    const stop = timers.clearInterval.bind(window)
+    timers.setInterval = (handler: TimerHandler, timeout?: number, ...args: unknown[]) => {
+      const id = start(handler, timeout, ...args)
+      if (timeout === 1000) active.add(id)
+      return id
+    }
+    timers.clearInterval = (id?: number) => {
+      if (id !== undefined) active.delete(id)
+      stop(id)
+    }
+    Object.assign(window, { activeSecondIntervals: () => active.size })
+  })
+  await page.goto("/simulations/")
+  await expectSharedStudyBank(page)
+  await primeSimulationResultCache(page)
+  await page.getByRole("radio", { name: "Timed practice", exact: true }).check()
+  await page.getByRole("button", { name: "Start simulation", exact: true }).click()
+  await expect(page.locator("[data-simulation-timer]")).toBeVisible()
+  const count = () => page.evaluate(() => (window as unknown as { activeSecondIntervals: () => number }).activeSecondIntervals())
+  await expect.poll(count).toBe(1)
+  await page.evaluate(() => window.dispatchEvent(new PageTransitionEvent("pagehide", { persisted: true })))
+  expect(await count()).toBe(1)
+  await page.evaluate(() => {
+    window.dispatchEvent(new PageTransitionEvent("pagehide", { persisted: false }))
+    window.dispatchEvent(new PageTransitionEvent("pagehide", { persisted: false }))
+  })
+  await expect(page.locator("[data-simulation-player]")).toBeEmpty()
+  expect(await count()).toBe(0)
+  await page.reload()
+  await expect(page.locator("[data-simulation-timer]")).toBeVisible()
+  await expect.poll(count).toBe(1)
+})
