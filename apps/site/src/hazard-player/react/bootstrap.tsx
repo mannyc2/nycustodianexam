@@ -1,3 +1,5 @@
+import { createPortal } from "react-dom"
+import { HazardNavigation, type HazardNavigationLinks } from "./navigation.tsx"
 import { VisualHazardReview, NonvisualHazardReview } from "./review.tsx"
 import { ReviewSceneBootstrap } from "../../review/model.ts"
 import { assembleHazardDrill } from "../../practice/hazard-set.ts"
@@ -116,6 +118,13 @@ window.addEventListener("pagehide", (event) => {
 
 const bootstrap = (): void => {
   let positionLabel = mount.dataset.positionLabel
+  const navigation = document.querySelector<HTMLElement>('.directional-nav[aria-label="Hazard scene navigation"]')
+  const navigationAnchors = navigation?.querySelectorAll<HTMLAnchorElement>("a")
+  let navigationLinks: HazardNavigationLinks = {
+    previousPath: Array.from(navigationAnchors ?? []).find((link) => link.textContent?.includes("Previous"))?.getAttribute("href") ?? undefined,
+    nextPath: Array.from(navigationAnchors ?? []).find((link) => link.textContent?.includes("Next"))?.getAttribute("href") ?? undefined,
+    endLabel: "End of session"
+  }
   const params = new URLSearchParams(window.location.search)
   if (params.has("set") || params.has("position")) {
     try {
@@ -133,19 +142,7 @@ const bootstrap = (): void => {
       receipt = step.receipt
       positionLabel = `Scene ${position} of ${steps.length}`
       document.title = `${positionLabel} — Hazard practice`
-      const navigation = document.querySelector<HTMLElement>('.directional-nav[aria-label="Hazard scene navigation"]')
-      if (navigation !== null) {
-        navigation.replaceChildren()
-        for (const [target, label] of [[steps[position - 2], "← Previous scene"], [steps[position], "Next scene →"]] as const) {
-          const node = document.createElement(target === undefined ? "span" : "a")
-          node.textContent = target === undefined ? (label.startsWith("Next") ? "End of drill" : "") : label
-          if (node instanceof HTMLAnchorElement && target !== undefined) {
-            node.href = target.href
-            node.dataset.sessionHistory = "replace"
-          }
-          navigation.append(node)
-        }
-      }
+      navigationLinks = { previousPath: steps[position - 2]?.href, nextPath: steps[position]?.href, endLabel: "End of drill" }
     } catch {
       const heading = document.createElement("h1")
       heading.textContent = "This hazard drill is unavailable"
@@ -176,10 +173,14 @@ const bootstrap = (): void => {
   const root = createRoot(mount)
   const removeSessionNavigation = installSessionNavigation()
 
+  navigation?.replaceChildren()
   root.render(
+    <>
     <HazardPlayer.Provider controller={controller}>
       {params.get("review") === "1" ? (mode === "visual" ? <VisualHazardReview /> : <NonvisualHazardReview />) : mode === "visual" ? <VisualHazardPractice {...(positionLabel === undefined ? {} : { positionLabel })} /> : <NonvisualHazardPractice {...(positionLabel === undefined ? {} : { positionLabel })} />}
     </HazardPlayer.Provider>
+    {navigation?.isConnected && params.get("review") !== "1" ? createPortal(<HazardNavigation {...navigationLinks} />, navigation) : null}
+    </>
   )
 
   queueMicrotask(() => controller.start())
