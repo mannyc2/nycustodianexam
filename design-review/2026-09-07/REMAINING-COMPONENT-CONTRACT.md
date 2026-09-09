@@ -293,3 +293,9 @@ All 33 lifecycle cases passed across Chromium, Firefox and WebKit (14.7 seconds)
 A generated blank answer-sheet packet now exercises the Print preview root: synthetic persisted pagehide retains the visible packet and fingerprint; repeated nonpersisted pagehide empties the root; subsequent beforeprint/afterprint events produce no page errors; reload restores the same saved packet URL and fingerprint. This covers the common preview lifecycle using a blank-sheet product, not every print product, actual printing or direct print-listener identity accounting.
 
 All 36 lifecycle cases passed across Chromium, Firefox and WebKit (16.1 seconds), with browser TypeScript and diff whitespace checks passing. Log: `/tmp/nyc-preview-lifecycle-browser.log`. Active Simulation/results lifecycle and broader visual acceptance remain open.
+
+## Active Simulation and results lifecycle
+
+A question Simulation created through setup now exercises active-player and results roots. After a selection is durably saved, synthetic persisted pagehide retains it; repeated nonpersisted pagehide empties the root; reload restores the same session URL and selected answer. The test submits final answers through the UI, observes results, retains them across persisted pagehide, cleans up repeatedly, and restores the same results URL and item count on reload. No page errors occurred.
+
+All three engine cases passed (5.6 seconds); browser TypeScript and whitespace checks passed. Log: `/tmp/nyc-simulation-lifecycle-browser.log`. Combined with the separately passing 36-case island lifecycle suite, each inspected bootstrap family now has a controlled lifecycle observation, but these are not one combined run or full per-variant certification. This Simulation case covers question mode; direct listener/timer accounting, actual BFCache and same-document remount remain separate gaps. Results assertions verify restoration/count, not a new full correctness audit.
