@@ -18,9 +18,9 @@ export const HazardReviewContext = () => {
     {assessment === null ? <p>Your written-zone choices are saved separately. Compare them with the full explanation; they are not scored against picture markers.</p> : <>
       <p>Compare your saved markers with the explanation for this exact scene.</p>
       <ul>
-        <li>{assessment.missedInventoryIds.length} hazards left unmarked.</li>
-        <li>{safeMarks} marks on details that are safe as shown.</li>
-        <li>{otherMarks} marks where the scene records no hazard.</li>
+        <li>{assessment.missedInventoryIds.length} {assessment.missedInventoryIds.length === 1 ? "hazard" : "hazards"} left unmarked.</li>
+        <li>{safeMarks} {safeMarks === 1 ? "mark" : "marks"} on details that are safe as shown.</li>
+        <li>{otherMarks} {otherMarks === 1 ? "mark" : "marks"} where the scene records no hazard.</li>
       </ul>
     </>}
     <p>Reading this explanation does not finish a queued review. <a href="/review/">Return to Review</a> to finish it explicitly, or <a href="/practice/">return to saved activity</a>.</p>
