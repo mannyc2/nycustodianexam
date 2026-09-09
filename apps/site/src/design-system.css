@@ -190,6 +190,9 @@
   .utility-page :is(.reference-card, .local-data-state, .local-data-form) h2 { font-size: var(--text-h3); }
   .utility-page :is(.reference-card, .local-data-state) > p { max-inline-size: var(--measure-copy); font-size: var(--text-sm); }
   .utility-page .form-field { max-inline-size: 24rem; }
+  .report-page .form-field:has(textarea) { max-inline-size: var(--measure-copy); }
+  .report-page .report-draft-note { margin-block-start: var(--space-5); }
+  .report-page .report-draft-note h2 { font-size: 1.125rem; }
   .utility-page :is(.form-field-group, .local-data-state, .reference-card) > .button { justify-self: start; }
   .utility-page .form-field-group > .button { margin-block-start: var(--space-2); }
   .utility-page .local-data-stack > [role="status"] { font-size: var(--text-sm); color: var(--color-text-muted); }

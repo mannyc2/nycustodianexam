@@ -1,0 +1,45 @@
+{
+  "captures": [
+    {
+      "width": 1053,
+      "state": "empty",
+      "posts": 0
+    },
+    {
+      "width": 1053,
+      "state": "restored",
+      "posts": 0
+    },
+    {
+      "width": 1053,
+      "state": "intake-off",
+      "posts": 0
+    },
+    {
+      "width": 1053,
+      "state": "validation-error",
+      "posts": 0
+    },
+    {
+      "width": 384,
+      "state": "empty",
+      "posts": 0
+    },
+    {
+      "width": 384,
+      "state": "restored",
+      "posts": 0
+    },
+    {
+      "width": 384,
+      "state": "intake-off",
+      "posts": 0
+    },
+    {
+      "width": 384,
+      "state": "validation-error",
+      "posts": 0
+    }
+  ],
+  "errors": []
+}

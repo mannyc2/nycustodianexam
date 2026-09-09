@@ -1973,10 +1973,10 @@ const buildPages = ({
     routeId: "correction-submit",
     section: "utility",
     body: `
-  <main class="page-shell utility-page" id="main-content" tabindex="-1">
+  <main class="page-shell utility-page report-page" id="main-content" tabindex="-1">
     ${breadcrumb([{ href: "/transparency/", label: "Sources and methods" }, { label: "Report a correction" }])}
     <section class="hero"><h1>Report a content, access, rights, or security concern.</h1><p>Do not include secure questions, answer options, reconstructed drawings, photographs, or review-session notes. Local drafting works offline. Going online never submits or retries a draft automatically.</p></section>
-    <aside class="local-data-warning"><h2>Reports cannot be sent right now</h2><p>Online submission is turned off until the correction service is separately approved and turned on. You can still save a draft in this browser, but browser data can be cleared. <a href="/settings/#export-local-data">Export a backup</a> if you want to keep it. Nothing is sent unless intake is on and you submit it yourself.</p></aside>
+    <aside class="local-data-state report-draft-note"><h2>Saving a draft does not send it.</h2><p>Drafts stay in this browser until you submit them yourself. Use the availability check below to see whether reports can be sent. Browser data can be cleared; <a href="/settings/#export-local-data">export a backup</a> if you want to keep your draft.</p></aside>
     <div data-correction-form data-island="correction-form"><p>JavaScript and browser storage are required to save a draft on this device. Nothing has been submitted.</p></div>
   </main>
   <script type="module" src="/src/corrections/react/bootstrap.tsx"></script>`

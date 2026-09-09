@@ -357,3 +357,11 @@ focus restoration, desktop/compact resizing, and URL-restored filing filters.
 Existing search/filter composition, record tabs, no-JavaScript source access,
 compact subject disclosures, navigation, and reflow checks remain green. The
 updated capture script reports no page errors.
+
+
+## Report follow-through — September 9, 2026
+
+See `REPORT-REVIEW.md` for shared-component reconciliation, current local-draft
+behavior, nine cross-browser checks and eight desktop/compact state captures.
+The static availability contradiction and narrow Details field were corrected.
+Online intake remains dormant; mocked active/accepted states do not activate it.

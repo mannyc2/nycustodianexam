@@ -738,6 +738,7 @@ test("a correction submit never reaches the network until its pre-submit draft p
   await expect(page.getByText("No saved draft was found on this device. Nothing has been sent.")).toBeVisible()
   await page.getByRole("button", { name: "Check whether reports can be sent" }).click()
   await expect(page.getByRole("button", { name: "Submit report" })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "Reports cannot be sent right now", exact: true })).toHaveCount(0)
   await expect.poll(() => statusChecks).toBe(1)
   await page.getByRole("button", { name: "Submit report" }).click()
   await expect(page.getByRole("heading", { name: "Report not submitted" })).toBeFocused()
