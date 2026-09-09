@@ -1,6 +1,7 @@
+import { SceneViewportControls, useSceneViewport } from "../../hazard-player/react/viewport-controls.tsx"
 import { MarkerMoves } from "../../hazard-player/react/marker-moves.tsx"
 import { NeutralZoneInputs } from "../../hazard-player/react/neutral-zone-inputs.tsx"
-import { useCallback, useRef, useState, type ReactNode, type MouseEvent as ReactMouseEvent } from "react"
+import { type ReactNode, type MouseEvent as ReactMouseEvent } from "react"
 import { useSimulationPlayer } from "./player-provider.tsx"
 import type {
   SimulationHazardSessionItem,
@@ -51,22 +52,10 @@ export const SimulationHazardRoute = (props: SimulationHazardProps) => props.ite
 
 export const SimulationHazardSceneViewport = ({ answerEditBlocked, item, response, visualAssetUrl }: SimulationHazardProps) => {
   const { actions } = useSimulationPlayer()
-  const [zoom, setZoom] = useState(1)
-  const viewportRef = useRef<HTMLDivElement>(null)
+  const view = useSceneViewport()
+  const { zoom, viewportRef } = view
   const markers = response?.markers ?? []
-  const panViewport = useCallback((horizontal: -1 | 0 | 1, vertical: -1 | 0 | 1) => {
-    const viewport = viewportRef.current
-    if (viewport === null) return
-    viewport.scrollBy({
-      behavior: "auto",
-      left: horizontal * Math.max(44, viewport.clientWidth * 0.4),
-      top: vertical * Math.max(44, viewport.clientHeight * 0.4)
-    })
-  }, [])
-  const resetView = useCallback(() => {
-    setZoom(1)
-    viewportRef.current?.scrollTo({ behavior: "auto", left: 0, top: 0 })
-  }, [])
+
   const addPointerMarker = (event: ReactMouseEvent<HTMLDivElement>): void => {
     if (answerEditBlocked || event.button !== 0) return
     const bounds = event.currentTarget.getBoundingClientRect()
@@ -80,16 +69,7 @@ export const SimulationHazardSceneViewport = ({ answerEditBlocked, item, respons
         <h3>Exact scene image unavailable</h3>
         <p>This item cannot accept markers without the scene image saved on this device.</p>
       </div> : <>
-        <div aria-label="Scene view controls" className="hazard-player__viewport-controls">
-          <button className="button button-secondary" disabled={zoom <= 1} onClick={() => setZoom((current) => Math.max(1, current - 0.25))} type="button">Zoom out</button>
-          <button className="button button-secondary" disabled={zoom >= 2.5} onClick={() => setZoom((current) => Math.min(2.5, current + 0.25))} type="button">Zoom in</button>
-          <button aria-controls="simulation-scene-viewport" className="button button-secondary" disabled={zoom <= 1} onClick={() => panViewport(-1, 0)} type="button">Pan left</button>
-          <button aria-controls="simulation-scene-viewport" className="button button-secondary" disabled={zoom <= 1} onClick={() => panViewport(1, 0)} type="button">Pan right</button>
-          <button aria-controls="simulation-scene-viewport" className="button button-secondary" disabled={zoom <= 1} onClick={() => panViewport(0, -1)} type="button">Pan up</button>
-          <button aria-controls="simulation-scene-viewport" className="button button-secondary" disabled={zoom <= 1} onClick={() => panViewport(0, 1)} type="button">Pan down</button>
-          <button className="button button-secondary" disabled={zoom === 1} onClick={resetView} type="button">Reset view</button>
-          <span aria-live="polite">{Math.round(zoom * 100)}% view</span>
-        </div>
+        <SceneViewportControls viewportId="simulation-scene-viewport" view={view} />
         <p id="simulation-scene-pointer-help">Pointer users may place markers on the image. Keyboard and touch users can add a centered marker and move it below. Use the directional pan controls to inspect a zoomed scene without dragging.</p>
         <div
           aria-label="Pannable simulation hazard scene"

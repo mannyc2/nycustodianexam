@@ -1,7 +1,6 @@
+import { SceneViewportControls, useSceneViewport } from "./viewport-controls.tsx"
 import {
   useCallback,
-  useRef,
-  useState,
   type MouseEvent as ReactMouseEvent,
   type ReactNode
 } from "react"
@@ -39,25 +38,10 @@ export const HazardPrompt = ({ positionLabel = "Hazard practice" }: { readonly p
 
 export const HazardSceneViewport = () => {
   const { actions, meta, scene, state, visualAssetUrl } = useHazardPlayer()
-  const [zoom, setZoom] = useState(1)
-  const viewportRef = useRef<HTMLDivElement>(null)
+  const view = useSceneViewport()
+  const { zoom, viewportRef } = view
   const editable = isEditableHazardState(state)
   const draft = draftFromState(state)
-
-  const panViewport = useCallback((horizontal: -1 | 0 | 1, vertical: -1 | 0 | 1) => {
-    const viewport = viewportRef.current
-    if (viewport === null) return
-    viewport.scrollBy({
-      behavior: "auto",
-      left: horizontal * Math.max(44, viewport.clientWidth * 0.4),
-      top: vertical * Math.max(44, viewport.clientHeight * 0.4)
-    })
-  }, [])
-
-  const resetView = useCallback(() => {
-    setZoom(1)
-    viewportRef.current?.scrollTo({ behavior: "auto", left: 0, top: 0 })
-  }, [])
 
   const addPointerMarker = useCallback(
     (event: ReactMouseEvent<HTMLDivElement>) => {
@@ -92,69 +76,7 @@ export const HazardSceneViewport = () => {
   return (
     <section aria-labelledby="visual-scene-heading" className="hazard-player__visual">
       <h2 id="visual-scene-heading">Scene</h2>
-      <div aria-label="Scene view controls" className="hazard-player__viewport-controls">
-        <button
-          className="button button-secondary"
-          disabled={zoom <= 1}
-          onClick={() => setZoom((current) => Math.max(1, current - 0.25))}
-          type="button"
-        >
-          Zoom out
-        </button>
-        <button
-          className="button button-secondary"
-          disabled={zoom >= 2.5}
-          onClick={() => setZoom((current) => Math.min(2.5, current + 0.25))}
-          type="button"
-        >
-          Zoom in
-        </button>
-        <button
-          aria-controls={`${meta.instanceId}-scene-viewport`}
-          className="button button-secondary"
-          disabled={zoom <= 1}
-          onClick={() => panViewport(-1, 0)}
-          type="button"
-        >
-          Pan left
-        </button>
-        <button
-          aria-controls={`${meta.instanceId}-scene-viewport`}
-          className="button button-secondary"
-          disabled={zoom <= 1}
-          onClick={() => panViewport(1, 0)}
-          type="button"
-        >
-          Pan right
-        </button>
-        <button
-          aria-controls={`${meta.instanceId}-scene-viewport`}
-          className="button button-secondary"
-          disabled={zoom <= 1}
-          onClick={() => panViewport(0, -1)}
-          type="button"
-        >
-          Pan up
-        </button>
-        <button
-          aria-controls={`${meta.instanceId}-scene-viewport`}
-          className="button button-secondary"
-          disabled={zoom <= 1}
-          onClick={() => panViewport(0, 1)}
-          type="button"
-        >
-          Pan down
-        </button>
-        <button
-          className="button button-secondary"
-          disabled={zoom === 1}
-          onClick={resetView}
-          type="button"
-        >
-          Reset view
-        </button>
-        <span aria-live="polite">{Math.round(zoom * 100)}% view</span>
-      </div>
+      <SceneViewportControls viewportId={`${meta.instanceId}-scene-viewport`} view={view} />
       <p id="scene-pointer-instructions">
         {state.tag === "revealed"
           ? "Reviewed scene overlay. Numbered markers match the feedback list. Solid regions show conditions needing correction; dashed regions show details that are safe as depicted. Use zoom and pan to inspect the scene."
