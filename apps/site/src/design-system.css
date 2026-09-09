@@ -971,8 +971,8 @@
 }
 @layer overrides {
   .atlas-browser [data-atlas-image-notice] { font-size: 0.8125rem; color: var(--color-text-muted); }
-  .atlas-browser .tool-card[data-image-unavailable]::before { content: '—'; display: grid; place-items: center; aspect-ratio: 1; color: var(--color-text-muted); background: var(--color-surface-subtle); }
+
   @media (max-width: 47.99rem) {
-    .atlas-browser .tool-card[data-image-unavailable] > div { grid-column: 2; }
+    .atlas-browser .tool-card[data-image-unavailable] > div { grid-column: 1 / -1; }
   }
 }

@@ -1,0 +1,41 @@
+{
+  "captures": [
+    {
+      "file": "tool-record-1053.png",
+      "width": 1053,
+      "state": "tool-record",
+      "url": "http://127.0.0.1:4187/atlas/tool/pipe-wrench/"
+    },
+    {
+      "file": "family-record-1053.png",
+      "width": 1053,
+      "state": "family-record",
+      "url": "http://127.0.0.1:4187/atlas/family/articulated-hand-tools/"
+    },
+    {
+      "file": "missing-images-1053.png",
+      "width": 1053,
+      "state": "missing-images",
+      "url": "http://127.0.0.1:4187/atlas/"
+    },
+    {
+      "file": "tool-record-384.png",
+      "width": 384,
+      "state": "tool-record",
+      "url": "http://127.0.0.1:4187/atlas/tool/pipe-wrench/"
+    },
+    {
+      "file": "family-record-384.png",
+      "width": 384,
+      "state": "family-record",
+      "url": "http://127.0.0.1:4187/atlas/family/articulated-hand-tools/"
+    },
+    {
+      "file": "missing-images-384.png",
+      "width": 384,
+      "state": "missing-images",
+      "url": "http://127.0.0.1:4187/atlas/"
+    }
+  ],
+  "errors": []
+}
