@@ -17,3 +17,11 @@ NYCUSTODIAN_PLAYWRIGHT_BASE_URL=http://127.0.0.1:4187 node node_modules/@playwri
 ```
 
 Print table estimates were edited after the full sweep started. This browser run used the preceding build and does not validate those new estimates. Fresh build/PDF evidence remains required.
+
+## Current lifecycle-era sweep — 346ea81
+
+The complete configured suite ran against source `346ea8172707905ac4d6454303a8c164b6bd26bd` and the verified production build: 432 cases, 400 passed, 29 skipped, 3 failed, 10.6 minutes. The only failing test was custom-set export/import, once in each browser engine. Chromium trace inspection proved export, import, and restored question feedback succeeded before the test waited for the old Hazard history href without `review=1`. The original-page failure screenshot showed Export ready because the failing interaction belonged to a second page; it did not establish export failure.
+
+The fixture now constructs the expected review URL while retaining exact custom-set coordinates, expects the saved-review position label, verifies the saved-response context, and verifies absence of Save marks/Save response controls. The initial focused rerun reached Review but failed on the stale practice position label in all three engines. After correcting that expectation, all three export/import cases passed (15.4 seconds), covering visual and written Hazard responses plus the custom question response in a fresh browser. Browser TypeScript and diff whitespace checks passed. Application source did not change.
+
+Logs: `/tmp/nyc-current-full-browser.log`, `/tmp/nyc-custom-transfer-review-browser.log`, `/tmp/nyc-custom-transfer-final-browser.log`. This is a full sweep with three failures followed by a passing affected-test rerun, not a new all-green full-suite invocation. The 29 configured skips, broader lifecycle requirements, visual acceptance and production certification remain separate.

@@ -52,9 +52,13 @@ test("custom question and Hazard responses survive export and import into an emp
     await expect(restored.locator(".player-position")).toHaveText("Question 1 of 45 · Text version")
     for (const path of hazardPaths) {
       await restored.goto(new URL("/practice/", savedUrl).href)
-      await restored.getByRole("region", { name: "Recent activity" }).locator(`a[href="${path}"]`).click()
+      const reviewUrl = new URL(path, savedUrl)
+      reviewUrl.searchParams.set("review", "1")
+      await restored.getByRole("region", { name: "Recent activity" }).locator(`a[href="${reviewUrl.pathname}${reviewUrl.search}"]`).click()
+      await expect(restored.getByRole("button", { name: /^(Save marks|Save response)$/ })).toHaveCount(0)
       await expect(restored.getByRole("heading", { name: /You found \d+ of \d+|no hazard to find|Response saved/ })).toBeVisible()
-      await expect(restored.locator(".player-position")).toHaveText("Scene 1 of 1 · Original scene")
+      await expect(restored.locator(".player-position")).toHaveText("Saved hazard review · Original scene")
+      await expect(restored.getByRole("heading", { name: "Review your saved response", exact: true })).toBeVisible()
     }
   } finally { await restored.close() }
 })
