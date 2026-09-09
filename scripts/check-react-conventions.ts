@@ -46,6 +46,14 @@ const inspect = (text: string, path: string): ReadonlyArray<string> => {
     }
   }
   const visit = (node: ts.Node): void => {
+    if (ts.isExportDeclaration(node) && !node.isTypeOnly && node.moduleSpecifier !== undefined) {
+      const runtimeExport = node.exportClause === undefined || !ts.isNamedExports(node.exportClause) || node.exportClause.elements.some(entry => !entry.isTypeOnly)
+      if (runtimeExport && (node.exportClause === undefined || ts.isNamespaceExport(node.exportClause))) {
+        report(node, "Wildcard runtime barrels are prohibited; export an explicit family API")
+      } else if (runtimeExport && /(?:^|\/)(?:ui|react)\/index\.tsx?$/.test(path)) {
+        report(node, "UI index barrels are prohibited; import the exact family or primitive module")
+      }
+    }
     if (leaf && ts.isImportDeclaration(node) && ts.isStringLiteral(node.moduleSpecifier) && hasValueImport(node)) {
       const specifier = node.moduleSpecifier.text
       if (capabilityModule(specifier)) report(node, "Leaf views must receive capabilities through their provider, not import workflow/runtime/persistence modules")
@@ -113,6 +121,14 @@ const inspect = (text: string, path: string): ReadonlyArray<string> => {
 // Executed with the gate: aliases, namespace access and syntax lookalikes must
 // remain distinguished when this detector is changed.
 const fixtures: ReadonlyArray<readonly [string, number, string?]> = [
+  ['export * from "./player.tsx"', 1],
+  ['export * as Player from "./player.tsx"', 1],
+  ['export { Player } from "../question-player/react/player.tsx"', 1, 'apps/site/src/ui/index.ts'],
+  ['export { Player } from "./player.tsx"', 1, 'apps/site/src/question-player/react/index.ts'],
+  ['export type * from "./model.ts"', 0],
+  ['export { type PlayerProps } from "./player.tsx"', 0, 'apps/site/src/ui/index.ts'],
+  ['export const Player = { Frame, Body }', 0],
+  ['export { reasonId } from "./reason-id.ts"', 0],
   ['import { load } from "../persistence.ts"', 1],
   ['import { appRuntime } from "../../app-runtime.ts"', 1],
   ['import "../../study-storage/app-database.ts"', 1],

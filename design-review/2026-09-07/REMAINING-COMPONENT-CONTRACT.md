@@ -185,3 +185,11 @@ The React convention gate now classifies `.tsx` views outside the maintained boo
 Fourteen additional detector cases cover persistence/runtime/database/verified-content imports, dynamic imports, re-exports, Effect aliases, type-only syntax and legitimate adapters/helpers. The complete 33-fixture gate passed on 153 source files alongside the 170-module boundary check. Strict standalone checker typecheck, maintained layout (317 files) and `git diff --check` passed. No application source changed in this tooling checkpoint, so no new browser/build or visual acceptance is claimed.
 
 This enforces direct imports from known capability owners. It is not a whole-program transitive effect analysis, and it does not classify arbitrary renamed helper modules or runtime-computed dynamic import paths. Provider lifecycle/runtime-construction rules still require their own inspection. Boolean-mode and broad-barrel enforcement remain open.
+
+## Wildcard and UI-index barrel enforcement
+
+The convention gate now rejects wildcard runtime re-exports, including namespace wildcard exports, and value re-exports from `ui/index.ts(x)` or `react/index.ts(x)`. Explicit compound-family objects, narrow named re-exports and type-only exports remain allowed. Inspection found only the existing narrow Print identity and Review reason re-exports in current source; no UI index module required migration.
+
+Eight additional fixtures distinguish prohibited wildcard/UI-index exports from type-only exports and explicit family APIs. The full 41-fixture gate passed across 153 site sources, together with the 170-module boundary check, maintained layout (317 files), strict checker typecheck and `git diff --check`. Application source did not change; no new browser/build or visual acceptance is claimed.
+
+This guards the concrete wildcard and UI-index barrel forms. It does not infer whether an arbitrarily named module with selective imports/exports has become a cross-family aggregation layer. That broader ownership question remains a source-review requirement. The `reviewsOnly` history boolean mode still needs explicit composition and enforcement.
