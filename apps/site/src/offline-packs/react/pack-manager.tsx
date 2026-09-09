@@ -1,25 +1,6 @@
-import type { Effect as EffectType } from "effect"
-import { Effect } from "effect"
-import { useEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom"
-import {
-  LocalActionError,
-  localFailureReport,
-  type LocalFailureReport
-} from "../../local-failure-detail.ts"
-import { OfflinePackManager, OfflinePackManagerError } from "../manager.ts"
-import type {
-  OfflinePackDescriptor,
-  OfflinePackRecord,
-  OfflinePackRemovalImpact
-} from "../model.ts"
-import { offlinePackShellBuildFingerprintSource } from "../model.ts"
-
-interface OfflinePackEffectRunner {
-  readonly runPromise: <A, E>(
-    effect: EffectType.Effect<A, E, OfflinePackManager>
-  ) => Promise<A>
-}
+import type { OfflinePackRecord, OfflinePackDescriptor } from "../model.ts"
+import { useOfflinePacks } from "./provider.tsx"
 
 const formatBytes = (bytes: number): string => {
   if (bytes < 1_024) return `${bytes} B`
@@ -48,283 +29,11 @@ const lifecycleLabel = (lifecycle: OfflinePackDescriptor["lifecycle"]): string =
   }
 }
 
-const ensureServiceWorker = async (): Promise<void> => {
-  if (!("serviceWorker" in navigator)) {
-    throw new LocalActionError("This browser does not support the feature (a service worker) needed for offline navigation.")
-  }
-  await navigator.serviceWorker.register("/sw.js", { scope: "/" })
-  await navigator.serviceWorker.ready
-}
-
-export interface OfflinePackRecordGroup {
-  readonly packRecords: ReadonlyArray<OfflinePackRecord>
-  readonly currentShellBuildRecords: ReadonlyArray<OfflinePackRecord>
-}
-
-export type OfflinePackAvailabilityState =
-  | "absent"
-  | "current"
-  | "retry"
-  | "update-available"
-
-export const offlinePackAvailabilityState = (
-  group: OfflinePackRecordGroup
-): OfflinePackAvailabilityState => {
-  if (group.currentShellBuildRecords.length > 0) {
-    return group.currentShellBuildRecords.every((pack) => pack.status === "quarantined")
-      ? "retry"
-      : "current"
-  }
-  return group.packRecords.length > 0 ? "update-available" : "absent"
-}
-
-export const groupOfflinePackRecords = (
-  packs: ReadonlyArray<OfflinePackRecord>,
-  descriptor: OfflinePackDescriptor
-): OfflinePackRecordGroup => {
-  const currentShellBuild = offlinePackShellBuildFingerprintSource(descriptor)
-  const packRecords = packs.filter((pack) => pack.packId === descriptor.id)
-  return {
-    packRecords,
-    currentShellBuildRecords: packRecords.filter((pack) =>
-      offlinePackShellBuildFingerprintSource(pack.descriptor) === currentShellBuild
-    )
-  }
-}
-
-export const activateOfflinePackClaim = (claimId: string) => Effect.gen(function*() {
-  const manager = yield* OfflinePackManager
-  return yield* manager.activate(claimId)
-})
-
-export const previewOfflinePackRemoval = (claimId: string) => Effect.gen(function*() {
-  const manager = yield* OfflinePackManager
-  return yield* manager.previewRemoval(claimId)
-})
-
-export const removeOfflinePackClaim = (
-  claimId: string,
-  confirmedHistoricalImpact: boolean
-) => Effect.gen(function*() {
-  const manager = yield* OfflinePackManager
-  yield* manager.remove(claimId, confirmedHistoricalImpact)
-})
-
-export const OfflinePackManagerIsland = ({
-  descriptor,
-  runtime,
-  headerMount
-}: {
-  readonly descriptor: OfflinePackDescriptor
-  readonly headerMount: HTMLElement
-  readonly runtime: OfflinePackEffectRunner
-}) => {
-  const [packs, setPacks] = useState<ReadonlyArray<OfflinePackRecord>>([])
-  const [downloadsLoaded, setDownloadsLoaded] = useState(false)
-  const [busy, setBusy] = useState<string | null>(null)
-  const [notice, setNotice] = useState("Checking what is saved on this device…")
-  const [problem, setProblem] = useState<LocalFailureReport | null>(null)
-  const [completion, setCompletion] = useState<string | null>(null)
-  const [storage, setStorage] = useState<{
-    readonly availability: "checking" | "available" | "estimate-unavailable" | "quota-limited"
-    readonly persisted: boolean | null
-    readonly quota: number | null
-    readonly usage: number | null
-  }>({ availability: "checking", persisted: null, quota: null, usage: null })
-  const [removalPreview, setRemovalPreview] = useState<{
-    readonly pack: OfflinePackRecord
-    readonly impact: OfflinePackRemovalImpact
-  } | null>(null)
-  const removalHeading = useRef<HTMLHeadingElement>(null)
-  const removalTrigger = useRef<HTMLButtonElement | null>(null)
-  const errorHeading = useRef<HTMLHeadingElement>(null)
-  const storedPacksHeading = useRef<HTMLHeadingElement>(null)
-
-  const run = <A,>(effect: EffectType.Effect<A, OfflinePackManagerError, OfflinePackManager>): Promise<A> =>
-    runtime.runPromise(effect)
-
-  const refresh = async (): Promise<void> => {
-    const records = await run(Effect.gen(function*() {
-      const manager = yield* OfflinePackManager
-      return yield* manager.reconcileDescriptor(descriptor)
-    }))
-    setPacks(records)
-    setDownloadsLoaded(true)
-  }
-
-  const refreshStorage = async (): Promise<void> => {
-    try {
-      const estimate = await navigator.storage?.estimate?.()
-      const persisted = await navigator.storage?.persisted?.()
-      const quota = estimate?.quota ?? null
-      const usage = estimate?.usage ?? null
-      const required = descriptor.estimatedDownloadBytes ?? descriptor.totalBytes
-      setStorage({
-        availability: quota === null || usage === null
-          ? "estimate-unavailable"
-          : quota - usage < required
-          ? "quota-limited"
-          : "available",
-        persisted: persisted ?? null,
-        quota,
-        usage
-      })
-    } catch {
-      setStorage({
-        availability: "estimate-unavailable",
-        persisted: null,
-        quota: null,
-        usage: null
-      })
-    }
-  }
-
-  useEffect(() => {
-    let active = true
-    void refresh().then(() => {
-      if (active) setNotice("Checked the downloads saved on this device. Nothing was downloaded or changed.")
-    }).catch((cause: OfflinePackManagerError) => {
-      if (active) setProblem(localFailureReport(cause, "Saved downloads could not be read from this device."))
-    })
-    void refreshStorage()
-    return () => {
-      active = false
-    }
-  }, [])
-
-  useEffect(() => {
-    if (problem !== null) errorHeading.current?.focus()
-  }, [problem])
-
-  useEffect(() => {
-    if (removalPreview !== null) removalHeading.current?.focus()
-  }, [removalPreview])
-
-  const stage = async (target: OfflinePackDescriptor): Promise<void> => {
-    setRemovalPreview(null)
-    setBusy(target.id)
-    setProblem(null)
-    setCompletion(null)
-    setNotice("Downloading the study pack you requested…")
-    const knownOffline = navigator.onLine === false
-    try {
-      if (knownOffline) throw new LocalActionError("Go online before downloading or updating.")
-      await ensureServiceWorker()
-      await run(Effect.gen(function*() {
-        const manager = yield* OfflinePackManager
-        return yield* manager.stage(target)
-      }))
-      await refresh()
-      await refreshStorage()
-      setNotice("Download complete and checked. It is not in use yet — turn it on when you are ready.")
-      setCompletion("Download checked")
-    } catch (cause) {
-      if (cause instanceof OfflinePackManagerError && cause.reason === "quota-limited") {
-        setStorage((current) => ({ ...current, availability: "quota-limited" }))
-      }
-      setProblem(localFailureReport(cause, "The download did not finish or failed its check. Review the download status below, then retry or remove the failed copy."))
-      setNotice("Update failed — your old copy, if you had one, still works.")
-      if (!knownOffline) await refresh().catch(() => undefined)
-    } finally {
-      setBusy(null)
-    }
-  }
-
-  const activate = async (claimId: string): Promise<void> => {
-    setRemovalPreview(null)
-    setBusy(claimId)
-    setProblem(null)
-    setCompletion(null)
-    try {
-      await ensureServiceWorker()
-      await run(activateOfflinePackClaim(claimId))
-      await refresh()
-      setNotice("This download is now in use for new sessions. Your previous copy was kept.")
-      setCompletion("Offline copy turned on")
-    } catch (cause) {
-      setProblem(localFailureReport(cause, "This download could not be confirmed as ready. Review the status below before starting a new session."))
-      await refresh().catch(() => undefined)
-    } finally {
-      setBusy(null)
-    }
-  }
-
-  const previewRemoval = async (pack: OfflinePackRecord, trigger: HTMLButtonElement): Promise<void> => {
-    setRemovalPreview(null)
-    setBusy(pack.id)
-    setProblem(null)
-    setCompletion(null)
-    removalTrigger.current = trigger
-    try {
-      const impact = await run(previewOfflinePackRemoval(pack.id))
-      setRemovalPreview({ pack, impact })
-    } catch (cause) {
-      setProblem(localFailureReport(cause, "The removal preview could not be read. Nothing was removed."))
-    } finally {
-      setBusy(null)
-    }
-  }
-
-  const keepCopy = (): void => {
-    setRemovalPreview(null)
-    setNotice("Removal canceled. Nothing changed.")
-    requestAnimationFrame(() => removalTrigger.current?.focus())
-  }
-
-  const remove = async (): Promise<void> => {
-    if (removalPreview === null || removalPreview.impact.activeSessionPins > 0) return
-    const { pack, impact } = removalPreview
-    setBusy(pack.id)
-    setProblem(null)
-    setCompletion(null)
-    try {
-      await run(removeOfflinePackClaim(pack.id, impact.historicalAttempts > 0))
-      setRemovalPreview(null)
-      await refresh()
-      await refreshStorage()
-      setNotice("The download was removed. Your study history stayed on this device.")
-      setCompletion("Download removed")
-      requestAnimationFrame(() => storedPacksHeading.current?.focus())
-    } catch (cause) {
-      setRemovalPreview(null)
-      setProblem(localFailureReport(cause, "The removal did not finish. Review the downloads still listed below before trying again."))
-      await refresh().catch(() => undefined)
-    } finally {
-      setBusy(null)
-    }
-  }
-
-  const requestPersistence = async (): Promise<void> => {
-    if (navigator.storage?.persist === undefined) {
-      setNotice("This browser does not support asking for kept storage.")
-      return
-    }
-    setProblem(null)
-    try {
-      const persisted = await navigator.storage.persist()
-      setStorage((current) => ({ ...current, persisted }))
-      setNotice(persisted
-        ? "The browser reports it will keep this data. That still does not back it up anywhere."
-        : "The browser did not agree to keep this data; it may still delete offline data if space runs low.")
-    } catch (cause) {
-      setProblem(localFailureReport(
-        cause,
-        "The keep-this-data request failed. Existing records were not changed."
-      ))
-    }
-  }
-
-  const group = groupOfflinePackRecords(
-    packs,
-    descriptor
-  )
-  const availability = offlinePackAvailabilityState(group)
-  const currentShellBuildNeedsStage = availability === "absent" ||
-    availability === "retry" || availability === "update-available"
-  const availableForNewSessions = descriptor.lifecycle !== "retired"
-  const insufficientCapacity = storage.availability === "quota-limited"
-  const activePack = downloadsLoaded ? packs.find((pack) => pack.status === "active") : undefined
-
+export const OfflinePackManagerView = () => {
+  const { state, actions, meta } = useOfflinePacks()
+  const { descriptor, packs, downloadsLoaded, busy, notice, problem, completion, storage, removalPreview, availability, currentShellBuildNeedsStage, availableForNewSessions, insufficientCapacity, activePack, blocked } = state
+  const { stage, activate, previewRemoval, keepCopy, remove, requestPersistence, reload } = actions
+  const { headerMount, removalHeading, errorHeading, storedPacksHeading } = meta
   return (
     <div className="local-data-stack offline-pack-manager">
       {createPortal(<>
@@ -366,7 +75,7 @@ export const OfflinePackManagerIsland = ({
             {problem === null ? null : <>
               <p>Online reference pages remain readable. Saving practice responses requires working browser storage.</p>
               <div className="question-controls">
-                <button className="button button-secondary" type="button" onClick={() => location.reload()}>Check again</button>
+                <button className="button button-secondary" type="button" onClick={reload}>Check again</button>
                 <a className="button button-secondary" href="/atlas/">Read tool references</a>
               </div>
             </>}
@@ -377,7 +86,7 @@ export const OfflinePackManagerIsland = ({
               <h3 className="empty-state-heading" tabIndex={-1}>Nothing downloaded yet</h3>
               <p>Download and check a copy, then turn it on to study with no connection.</p>
               {availableForNewSessions ? <div className="empty-state-actions">
-                <button className="button button-primary" disabled={insufficientCapacity} onClick={() => void stage(descriptor)} type="button">Download the {formatBytes(descriptor.estimatedDownloadBytes ?? descriptor.totalBytes)} copy</button>
+                <button className="button button-primary" disabled={blocked || insufficientCapacity} onClick={() => void stage(descriptor)} type="button">Download the {formatBytes(descriptor.estimatedDownloadBytes ?? descriptor.totalBytes)} copy</button>
               </div> : <p>This release is retired. A new download is not offered.</p>}
             </div>
           ) : null}
@@ -389,7 +98,7 @@ export const OfflinePackManagerIsland = ({
                   <p className="pack-help">{formatBytes(descriptor.estimatedDownloadBytes ?? descriptor.totalBytes)}. {availability === "update-available" ? "A newer copy of the site is available to download and check." : "The download is checked before it can be turned on."}</p>
                   {busy === descriptor.id ? <><progress aria-label="Downloading and checking the copy" /><p className="pack-help">An interrupted download starts again from the beginning.</p></> : null}
                 </div>
-                {busy === descriptor.id ? null : <button className="button button-primary" disabled={busy !== null || insufficientCapacity} onClick={() => void stage(descriptor)} type="button">Download and check</button>}
+                {busy === descriptor.id ? null : <button className="button button-primary" disabled={blocked || insufficientCapacity} onClick={() => void stage(descriptor)} type="button">Download and check</button>}
               </li>
             ) : null}
             {packs.map((pack) => (
@@ -405,13 +114,13 @@ export const OfflinePackManagerIsland = ({
                 </div>
                 <div className="question-controls">
                   {availableForNewSessions && pack.descriptor.lifecycle !== "retired" && pack.packId === descriptor.id && (pack.status === "staged" || pack.status === "retained") ? (
-                    <button aria-label={`Turn on this saved copy of ${pack.descriptor.label}`} className="button button-primary" disabled={busy !== null} onClick={() => void activate(pack.id)} type="button">Turn on this copy</button>
+                    <button aria-label={`Turn on this saved copy of ${pack.descriptor.label}`} className="button button-primary" disabled={blocked} onClick={() => void activate(pack.id)} type="button">Turn on this copy</button>
                   ) : null}
                   {availableForNewSessions && pack.descriptor.lifecycle !== "retired" && pack.packId === descriptor.id && pack.status === "quarantined" ? (
-                    <button aria-label={`Retry this saved copy of ${pack.descriptor.label}`} className="button button-secondary" disabled={busy !== null || insufficientCapacity} onClick={() => void stage(pack.descriptor)} type="button">Retry the download</button>
+                    <button aria-label={`Retry this saved copy of ${pack.descriptor.label}`} className="button button-secondary" disabled={blocked || insufficientCapacity} onClick={() => void stage(pack.descriptor)} type="button">Retry the download</button>
                   ) : null}
                   {pack.status === "staged" || pack.status === "active" || pack.status === "retained" || pack.status === "quarantined" ? (
-                    <button className="button button-secondary" disabled={busy !== null} onClick={(event) => void previewRemoval(pack, event.currentTarget)} type="button">Preview removal</button>
+                    <button className="button button-secondary" disabled={blocked} onClick={(event) => void previewRemoval(pack.id, event.currentTarget)} type="button">Preview removal</button>
                   ) : <span>Reload this page to finish this interrupted operation before choosing another action.</span>}
                 </div>
               </li>
@@ -432,8 +141,8 @@ export const OfflinePackManagerIsland = ({
         {removalPreview.pack.status === "active" ? <p>This is the copy currently turned on. Removing it means a copy must be turned on again before starting new offline work.</p> : null}
         <details className="technical-details"><summary>Technical details</summary><p>Pack version {removalPreview.pack.descriptor.packVersion}. Device generation {removalPreview.pack.generation}.</p></details>
         <div className="question-controls">
-          {removalPreview.impact.activeSessionPins > 0 ? <a className="button button-secondary" href="/practice/">Back to studying</a> : <button className="button button-danger-outline" disabled={busy !== null} onClick={() => void remove()} type="button">Remove this copy</button>}
-          <button className="button button-secondary" disabled={busy !== null} onClick={keepCopy} type="button">Keep it</button>
+          {removalPreview.impact.activeSessionPins > 0 ? <a className="button button-secondary" href="/practice/">Back to studying</a> : <button className="button button-danger-outline" disabled={blocked} onClick={() => void remove()} type="button">Remove this copy</button>}
+          <button className="button button-secondary" disabled={blocked} onClick={keepCopy} type="button">Keep it</button>
           <a href="/settings/#export-local-data">Export my progress first</a>
         </div>
       </section>}
@@ -484,7 +193,7 @@ export const OfflinePackManagerIsland = ({
         <p>{storage.persisted === true
           ? "The browser reports it will keep this data."
           : "The browser may delete offline data if space runs low."}</p>
-        <button className="button button-secondary" onClick={() => void requestPersistence()} type="button">
+        <button className="button button-secondary" disabled={blocked} onClick={() => void requestPersistence()} type="button">
           Ask the browser to keep this data
         </button>
       </section>
