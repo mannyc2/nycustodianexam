@@ -16,7 +16,19 @@ try {
     await expect(page.getByRole('radio', { name: 'Adjustable wrench', exact: true })).toBeEnabled();
     await page.locator('.question-illustration img').evaluate(image => image.decode());
     await page.evaluate(() => document.fonts.ready);
-    for (const state of ['unanswered', 'answered']) {
+    for (const state of ['unanswered', 'image-unavailable', 'image-retried', 'answered']) {
+      if (state === 'image-unavailable') {
+        await page.route('**/content/assets/**', route => route.abort());
+        await page.reload();
+        await expect(page.getByRole('button', { name: 'Try image again', exact: true })).toBeVisible();
+      }
+      if (state === 'image-retried') {
+        await page.unroute('**/content/assets/**');
+        await page.getByRole('button', { name: 'Try image again', exact: true }).focus();
+        await page.keyboard.press('Enter');
+        await page.locator('.question-illustration img').evaluate(image => image.decode());
+        await expect(page.locator('.question-illustration')).toBeFocused();
+      }
       if (state === 'answered') {
         await page.getByRole('radio', { name: 'Adjustable wrench', exact: true }).check();
         await page.getByRole('button', { name: 'Save answer', exact: true }).click();
@@ -24,7 +36,7 @@ try {
       }
       const card = page.locator('.question-card');
       const file = `${state}-${width}.png`;
-      await card.screenshot({ path: output + file });
+      await card.screenshot({ path: output + file, style: '.site-header-inner > .nav-primary, .site-header-inner > .nav-utility { opacity: 0; }' });
       captures.push({ file, width, bounds: await card.boundingBox() });
       if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)) throw new Error('Question overflow');
     }

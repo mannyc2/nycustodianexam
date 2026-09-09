@@ -11,6 +11,26 @@
       }
     },
     {
+      "file": "image-unavailable-1053.png",
+      "width": 1053,
+      "bounds": {
+        "x": 126.5,
+        "y": 0.21875,
+        "width": 800,
+        "height": 875.890625
+      }
+    },
+    {
+      "file": "image-retried-1053.png",
+      "width": 1053,
+      "bounds": {
+        "x": 126.5,
+        "y": 0.21875,
+        "width": 800,
+        "height": 1101.5
+      }
+    },
+    {
       "file": "answered-1053.png",
       "width": 1053,
       "bounds": {
@@ -22,6 +42,26 @@
     },
     {
       "file": "unanswered-384.png",
+      "width": 384,
+      "bounds": {
+        "x": 16,
+        "y": 0.046875,
+        "width": 352,
+        "height": 1104.46875
+      }
+    },
+    {
+      "file": "image-unavailable-384.png",
+      "width": 384,
+      "bounds": {
+        "x": 16,
+        "y": 0.046875,
+        "width": 352,
+        "height": 1044.453125
+      }
+    },
+    {
+      "file": "image-retried-384.png",
       "width": 384,
       "bounds": {
         "x": 16,

@@ -70,3 +70,27 @@ for (const width of [384, 1053]) {
     } finally { await context.close() }
   })
 }
+
+test("released illustration retry keeps keyboard focus through repeated failures and recovery", async ({ page }) => {
+  let imagesFail = true
+  const postcommit: string[] = []
+  page.on("request", request => { if (request.url().includes("/postcommit/")) postcommit.push(request.url()) })
+  await page.route("**/content/assets/**", route => imagesFail ? route.abort() : route.continue())
+  await page.goto("/practice/session/launch-v1/question/91/")
+  const retry = page.getByRole("button", { name: "Try image again", exact: true })
+  const figure = page.locator("figure.question-illustration")
+  await expect(retry).toBeVisible()
+  await retry.focus()
+  await page.keyboard.press("Enter")
+  await expect(retry).toBeVisible()
+  await expect(figure).toBeFocused()
+  await page.keyboard.press("Tab")
+  await expect(retry).toBeFocused()
+  imagesFail = false
+  await page.keyboard.press("Enter")
+  await expect.poll(() => figure.locator("img").evaluate(node => (node as HTMLImageElement).naturalWidth)).toBeGreaterThan(0)
+  await expect(figure).toBeFocused()
+  await expect(figure).toHaveAccessibleName("Question illustration")
+  expect(postcommit).toEqual([])
+  await expect(page.getByRole("radio", { name: "Adjustable wrench", exact: true })).not.toBeChecked()
+})

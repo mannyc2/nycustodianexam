@@ -383,3 +383,37 @@ The installed version-3 to version-4 upgrade is now separately verified in all
 three browsers. `INSTALLED-PACK-UPGRADE-REVIEW.md` records the immutable prior
 build, worker hashes, reproduction, saved-question restoration, and exact pinned
 simulation resumption after the upgraded origin is disconnected.
+
+## Illustrated retry focus and matching-width audit — September 9
+
+The released q091 retry button lost keyboard focus when retry replaced its
+error panel with a picture. A new browser regression failed before the fix at
+the focused-figure assertion. The component now has a named, programmatically
+focusable figure and focuses it synchronously before replacing the retry
+button. The stable container survives both a successful load and another
+failure; Tab reaches the retry button again after a failure. It does not add
+a tab stop to ordinary forward navigation or select/commit an answer.
+
+The browser regression uses actual q091, blocks image requests for two attempts,
+then permits the image. It verifies stable focus throughout, the container's
+neutral accessible name, no selected answer, and no postcommit request. All
+15 illustration browser checks pass across Chromium, Firefox, and WebKit,
+including existing responsive assets, save/reload/Review, and no-JavaScript
+coverage. Two illustration view tests, site/browser typechecks, and full
+build/artifact verification pass.
+
+`capture-illustrated-question.mjs` now captures unanswered, failed-image,
+keyboard-retried, and answered states at 1053/384 viewports (eight captures).
+The desktop card measures 800px, matching reference 26/27. Fixed navigation
+is excluded from element crops only. Visually inspected the desktop unanswered
+card and compact retry focus against reference 26. Accepted artwork is shown
+whole, unlike the reference's cropped image specimen. The released question
+uses an adjustable wrench and different choices; source content is not replaced
+with the prototype's push-broom fixture.
+
+This audit identifies further presentation work: reference image zoom/reset
+controls and its visible text-description alternative are not yet implemented.
+The final canonical question has no next item, explaining the missing Skip
+action in this q091 capture; earlier text-player checks cover skip navigation.
+The invisible live region remains intentionally invisible. The full question
+player visual audit is still open.
