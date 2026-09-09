@@ -1,3 +1,4 @@
+import { SetupNavigation } from "./setup-navigation.tsx"
 import { useMemo, useState } from "react"
 import type { ReviewQuestionSource } from "../review/model.ts"
 import { practiceInventoryFromReview } from "./review-source.ts"
@@ -24,6 +25,7 @@ export const PracticeBuilder = ({ sources }: { readonly sources: ReadonlyArray<R
   if (inventory.length === 0) return null
   return <section className="study-section simulation-setup-panel practice-builder" id="practice-builder" aria-labelledby="practice-builder-heading">
     <div className="section-header"><p className="eyebrow">Set builder</p><h2 id="practice-builder-heading">Build a practice set</h2><p>Choose your content and length. Explanations follow each saved answer.</p></div>
+    <SetupNavigation current="practice" />
     <aside className="setup-scope-note"><h3>What every set draws on</h3><p>One bank of {inventory.length} original questions for the New York Entry-Level Custodians and Janitors series. Your choices change the number of questions and the areas they come from.</p><p><a href="#covers">What practice covers</a>{" · "}<a href="/exams/">Compare with your announcement</a></p></aside>
     <form className="simulation-settings" onSubmit={(event) => {
       event.preventDefault()

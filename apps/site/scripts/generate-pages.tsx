@@ -1,3 +1,4 @@
+import { setupDestinations } from "../src/practice/setup-navigation.ts"
 import { questionCategoryFromSafeMetadata } from "../src/question-category.ts"
 import { ReviewQuestionBootstrap, type ReviewQuestionSource } from "../src/review/model.ts"
 import { createHash } from "node:crypto"
@@ -1505,6 +1506,7 @@ const buildPages = ({
     body: `
   <main class="page-shell" id="main-content" tabindex="-1">
     ${breadcrumb([{ label: "Hazards" }])}
+    <nav class="setup-navigation" aria-label="Practice setup">${setupDestinations.map(({ id, label, href }) => `<a class="button ${id === "hazards" ? "button-primary" : "button-secondary"}" href="${href}"${id === "hazards" ? ' aria-current="page"' : ""}>${label}</a>`).join("")}</nav>
     <section class="hero"><p class="eyebrow">${scenes.length} hazard scenes</p><h1>Scan the whole workplace before you decide.</h1><p>Each scene starts with a neutral description only. Which conditions are hazards — and which are safe as shown — is revealed, with corrections and sources, only after you submit your response.</p><div class="question-controls"><a class="button button-primary" href="/hazards/session/${manifest.releaseId}/scene/1/">Start visual scene 1</a><a class="button button-secondary" href="/hazards/session/${manifest.releaseId}-nonvisual/scene/1/">Start keyboard scene 1 (no image)</a></div></section>
     <section class="section-gap"><h2>Environments in this release</h2><ul class="tag-list">${[...new Set(scenes.map(({ value }) => value.environment))].map((environment) => `<li>${escapeHtml(environment)}</li>`).join("")}</ul></section>
   </main>`

@@ -289,3 +289,8 @@
     .practice-area-count { grid-column: 2; }
   }
 }
+
+@layer components {
+  .setup-navigation { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-block: 0.5rem 1rem; }
+  .setup-navigation .button { min-block-size: var(--target-default); }
+}

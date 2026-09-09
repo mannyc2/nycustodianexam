@@ -40,3 +40,16 @@ test("an invalid custom set link cannot fall through to a normal answer form", a
   await expect(page.getByRole("heading", { name: "This practice set is unavailable" })).toBeVisible()
   await expect(page.getByRole("button", { name: "Save answer", exact: true })).toHaveCount(0)
 })
+
+test("setup navigation connects Practice, Hazard drill and Simulation with real links", async ({ page }) => {
+  await page.goto("/practice/#practice-builder")
+  const navigation = page.getByRole("navigation", { name: "Practice setup", exact: true })
+  await expect(navigation.getByRole("link", { name: "Practice set", exact: true })).toHaveAttribute("aria-current", "page")
+  await navigation.getByRole("link", { name: "Hazard drill", exact: true }).click()
+  await expect(page).toHaveURL(/\/hazards\/$/)
+  await expect(navigation.getByRole("link", { name: "Hazard drill", exact: true })).toHaveAttribute("aria-current", "page")
+  await navigation.getByRole("link", { name: "Full simulation", exact: true }).click()
+  await expect(navigation.getByRole("link", { name: "Full simulation", exact: true })).toHaveAttribute("aria-current", "page")
+  await navigation.getByRole("link", { name: "Practice set", exact: true }).click()
+  await expect(page.getByRole("region", { name: "Build a practice set" })).toBeVisible()
+})

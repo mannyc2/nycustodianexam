@@ -1,3 +1,4 @@
+import { SetupNavigation } from "../../practice/setup-navigation.tsx"
 import { useEffect, useMemo, useRef, useState } from "react"
 import {
   createLocallyClosedSimulation,
@@ -128,6 +129,7 @@ export const SimulationSetup = ({
   }
 
   return <div className="simulation-setup-panel">
+    <SetupNavigation current="simulation" />
     <section aria-labelledby="simulation-settings-heading" className="reference-card simulation-settings">
       <div className="setup-scope-note">
         <h2>What every set draws on</h2>

@@ -35,7 +35,7 @@ new persistence store was introduced.
   mixed/scenario category rather than the prototype's fixture counts.
 
 This is an integrated question builder, not completion of the complete setup
-family. Hazard drill controls and shared setup-mode navigation remain. The
+family. Shared setup-mode navigation now links Practice, Hazard drill and Simulation with real destinations and current-page semantics. Hazard drill controls remain. The
 builder currently sits within Practice; full page composition, all player
 visual states, cross-browser/offline coverage and final fidelity audit remain.
 Its compact composition adapts the established rows; no approved compact
@@ -46,3 +46,8 @@ budget now permits 482000 raw / 144500 gzip / 122000 Brotli bytes; measured
 Settings before the last identity guard was 481058 / 143923 / 121267. This is a
 bounded allowance for the actual feature; answer-bearing content remains
 outside the precommit closure. Final measurements are emitted by the verifier.
+
+Navigation follow-up: root build/artifact verification and all workspace
+typechecks passed. Three Chromium builder tests passed, including traversing
+all three setup destinations. Builder captures were refreshed with the new
+navigation; hazard and simulation visual audits remain part of final review.
