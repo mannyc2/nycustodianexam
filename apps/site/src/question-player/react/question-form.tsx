@@ -29,12 +29,14 @@ export const QuestionHeader = ({ positionLabel = "Practice question" }: { readon
 }
 
 export const QuestionPrompt = () => {
-  const { question } = useQuestionPlayer()
+  const { question, state } = useQuestionPlayer()
   return (
     <header className="question-prompt">
       <h1 id="question-heading">{question.prompt}</h1>
       <p>
-        Choose one answer. You can change your selection until you save it.
+        {state.tag === "revealed"
+          ? "Your answer is saved. Read the explanation, then continue when you are ready."
+          : "Choose one answer. You can change your selection until you save it."}
       </p>
     </header>
   )
@@ -88,7 +90,7 @@ export const QuestionForm = ({ children }: { readonly children: ReactNode }) => 
   )
 }
 
-export const QuestionControls = () => {
+export const QuestionControls = ({ nextHref }: { readonly nextHref?: string }) => {
   const { state } = useQuestionPlayer()
   const selected = selectedOptionId(state)
   const isRevealRetry = state.tag === "reveal_failed"
@@ -101,8 +103,8 @@ export const QuestionControls = () => {
     ) : null}
     <div className="question-controls player-action-bar">
       {state.tag === "revealed" ? (
-        <a className="button button-primary" href="/atlas/">
-          Open study tools
+        <a className="button button-primary" data-session-history={nextHref === undefined ? undefined : "replace"} href={nextHref ?? "/practice/"}>
+          {nextHref === undefined ? "Return to Practice" : "Next question"}
         </a>
       ) : (
         <button
@@ -123,6 +125,7 @@ export const QuestionControls = () => {
               : "Save answer"}
         </button>
       )}
+      {nextHref !== undefined && (state.tag === "ready" || state.tag === "commit_failed") ? <a className="button button-secondary" data-session-history="replace" href={nextHref}>Skip for now</a> : null}
       <span className="player-action-note">{state.tag === "revealed"
         ? "Answer saved on this device"
         : "Your answer is saved before feedback appears"}</span>

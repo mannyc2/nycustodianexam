@@ -294,3 +294,9 @@
   .setup-navigation { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-block: 0.5rem 1rem; }
   .setup-navigation .button { min-block-size: var(--target-default); }
 }
+
+@layer overrides {
+  .study-player.question-card { max-inline-size: 50rem; margin-inline: auto; }
+  .study-player.question-card > form { display: grid; gap: 1.5rem; }
+  .study-player.question-card .player-action-bar { margin-block-start: 0; }
+}

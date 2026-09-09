@@ -35,15 +35,15 @@ export const QuestionPlayer = {
   CommitStatus: QuestionPlayerPieces.Status
 } as const
 
-export const PracticeNonvisualQuestion = ({ positionLabel }: { readonly positionLabel?: string }) => (
+export const PracticeNonvisualQuestion = ({ positionLabel, nextHref }: { readonly positionLabel?: string; readonly nextHref?: string }) => (
   <QuestionPlayerPieces.Frame>
     <QuestionPlayerPieces.Header {...(positionLabel === undefined ? {} : { positionLabel })} />
     <QuestionPlayerPieces.Prompt />
     <QuestionPlayerPieces.Form>
       <QuestionPlayerPieces.Options />
-      <QuestionPlayerPieces.Controls />
+      <QuestionPlayerPieces.Feedback />
+      <QuestionPlayerPieces.Controls {...(nextHref === undefined ? {} : { nextHref })} />
     </QuestionPlayerPieces.Form>
-    <QuestionPlayerPieces.Feedback />
     <QuestionPlayerPieces.Status />
   </QuestionPlayerPieces.Frame>
 )

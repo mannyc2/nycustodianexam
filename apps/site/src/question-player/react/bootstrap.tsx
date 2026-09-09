@@ -83,11 +83,13 @@ const mountPlayer = (): void => {
   mount.dataset.questionAttemptId = questionAttemptId(receipt)
   const controller = createQuestionController(question, appRuntime, receipt)
 
+  const nextHref = [...document.querySelectorAll<HTMLAnchorElement>('.directional-nav[aria-label="Question navigation"] a')]
+    .find((anchor) => anchor.textContent?.startsWith("Next question"))?.getAttribute("href") ?? undefined
   const root = createRoot(mount)
   const removeSessionNavigation = installSessionNavigation()
   root.render(
     <QuestionPlayer.Provider controller={controller}>
-      <PracticeNonvisualQuestion {...(positionLabel === undefined ? {} : { positionLabel })} />
+      <PracticeNonvisualQuestion {...(positionLabel === undefined ? {} : { positionLabel })} {...(nextHref === undefined ? {} : { nextHref })} />
     </QuestionPlayer.Provider>
   )
 

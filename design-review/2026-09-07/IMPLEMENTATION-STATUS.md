@@ -10,7 +10,7 @@ The active task is the complete handoff in `/mnt/models/dev/nycustodianexam/IMPL
 | Simulation setup | SETUP-ATLAS-REVIEW.md, effective lengths/timing/format; no exam prerequisite | Final integrated capture/checks |
 | Practice/Hazard builder | PRACTICE-BUILDER-REVIEW.md and HAZARD-BUILDER-REVIEW.md: effective builders, custom navigation and exact saved-history receipts | Final page composition and cross-browser verification; custom offline-pack and import flows now pass in Chromium |
 | Atlas catalog | Nine-family desktop/compact controls, all 65 images, eligibility/failure states | Individual record/family layouts and final comparison |
-| Question player | Existing durable commit-before-reveal preserved | Match unanswered/answered reference captures |
+| Question player | QUESTION-PLAYER-REVIEW.md: text card/action reconciliation, real-state captures, 14 browser checks | Illustrated question binding is absent from current content schema; complete modality and final visual audit |
 | Hazard player | Existing real marker/zone state machine preserved | Match controls, feedback, failures and compact adaptation |
 | Simulation player/results | Existing resumable sessions and strict submit behavior preserved | Navigator/layout comparison, recovery and compact states |
 | Print configuration | Ten products and effective controls; reviewed document scope | Print preview layout, failure/stale states, paginated output evidence |

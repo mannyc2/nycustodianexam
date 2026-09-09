@@ -1,0 +1,77 @@
+{
+  "captures": [
+    {
+      "file": "unanswered-1053.png",
+      "width": 1053,
+      "state": "unanswered",
+      "bounds": {
+        "x": 126.5,
+        "y": 182.21875,
+        "width": 800,
+        "height": 691.953125
+      },
+      "route": "/practice/session/ps-a0bb1562365390d297a4a3e5/question/1/"
+    },
+    {
+      "file": "selected-1053.png",
+      "width": 1053,
+      "state": "selected",
+      "bounds": {
+        "x": 126.5,
+        "y": 121.21875,
+        "width": 800,
+        "height": 779.203125
+      },
+      "route": "/practice/session/ps-a0bb1562365390d297a4a3e5/question/1/"
+    },
+    {
+      "file": "answered-1053.png",
+      "width": 1053,
+      "state": "answered",
+      "bounds": {
+        "x": 126.5,
+        "y": 0.21875,
+        "width": 800,
+        "height": 1390.9375
+      },
+      "route": "/practice/session/ps-a0bb1562365390d297a4a3e5/question/1/"
+    },
+    {
+      "file": "unanswered-384.png",
+      "width": 384,
+      "state": "unanswered",
+      "bounds": {
+        "x": 16,
+        "y": 51.046875,
+        "width": 352,
+        "height": 849.15625
+      },
+      "route": "/practice/session/ps-a0bb1562365390d297a4a3e5/question/1/"
+    },
+    {
+      "file": "selected-384.png",
+      "width": 384,
+      "state": "selected",
+      "bounds": {
+        "x": 16,
+        "y": 0.046875,
+        "width": 352,
+        "height": 982.90625
+      },
+      "route": "/practice/session/ps-a0bb1562365390d297a4a3e5/question/1/"
+    },
+    {
+      "file": "answered-384.png",
+      "width": 384,
+      "state": "answered",
+      "bounds": {
+        "x": 16,
+        "y": 0.046875,
+        "width": 352,
+        "height": 1850.03125
+      },
+      "route": "/practice/session/ps-a0bb1562365390d297a4a3e5/question/1/"
+    }
+  ],
+  "errors": []
+}

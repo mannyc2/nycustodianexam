@@ -123,7 +123,7 @@ test("session start pushes history while Next replaces the current position", as
 
   await page.goBack({ waitUntil: "commit" })
   await expect(page).toHaveURL("/practice/")
-  await expect(page.getByRole("heading", { name: "Start with a practice set.", level: 1 }))
+  await expect(page.getByRole("heading", { name: "Start with a set of 45.", level: 1 }))
     .toBeVisible()
 })
 
