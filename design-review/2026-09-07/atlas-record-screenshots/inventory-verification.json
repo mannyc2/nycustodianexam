@@ -1,0 +1,397 @@
+{
+  "records": [
+    {
+      "slug": "adjustable-wrench",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "angle-broom-household-broom",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "ball-peen-hammer",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "bar-clamp",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "c-clamp",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "canister-vacuum",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "carpenter-square-combination-square",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "carpet-extractor",
+      "referenceOnly": true,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "claw-hammer",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "combination-open-end-box-wrench",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "crosscut-saw",
+      "referenceOnly": true,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "deck-brush",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "diagonal-cutting-pliers",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "dust-mop",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "duster-feather-or-synthetic-duster",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "dustpan",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "equipment-dolly",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "extension-ladder",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "flat-mop",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "flat-slotted-screwdriver",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "floor-squeegee",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "hacksaw",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "hand-auger-drain-snake",
+      "referenceOnly": true,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "hand-plane",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "hand-scrub-brush",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "hand-truck",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "hedge-trimmer",
+      "referenceOnly": true,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "high-speed-burnisher",
+      "referenceOnly": true,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "janitor-cart",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "level",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "locking-pliers",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "low-speed-rotary-floor-machine",
+      "referenceOnly": true,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "mop-bucket-and-wringer",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "needle-nose-pliers",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "paint-scraper",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "phillips-screwdriver",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "pipe-reamer",
+      "referenceOnly": true,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "pipe-wrench",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "plunger-cup",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "plunger-flange",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "protective-ear-plugs",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "protective-gloves-generic",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "push-broom",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "putty-knife",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "ride-on-industrial-vacuum-cleaner",
+      "referenceOnly": true,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "rip-saw",
+      "referenceOnly": true,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "rubber-mallet",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "safety-glasses",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "scrub-brush",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "slip-joint-pliers",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "snow-blower",
+      "referenceOnly": true,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "soldering-gun",
+      "referenceOnly": true,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "staple-gun",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "steam-cleaning-equipment",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "stepladder",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "tape-measure",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "toilet-bowl-brush",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "tongue-and-groove-pliers",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "upright-vacuum",
+      "referenceOnly": true,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "utility-knife",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "wet-dry-vacuum",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "wet-floor-warning-sign-cone",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "wet-string-mop",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "window-squeegee",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    },
+    {
+      "slug": "window-washer-strip-washer",
+      "referenceOnly": false,
+      "illustrationAndDescription": true,
+      "requiredSections": true
+    }
+  ],
+  "total": 65,
+  "referenceOnly": 12,
+  "scope": "Generated record completeness and link restrictions; not source-truth or all-page visual certification."
+}

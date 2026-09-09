@@ -12,11 +12,17 @@ try {
     const context = await browser.newContext({ viewport: { width, height: 900 }, serviceWorkers: 'block', reducedMotion: 'reduce' });
     const page = await context.newPage();
     page.on('pageerror', error => errors.push(String(error)));
-    for (const state of ['tool-record', 'family-record', 'missing-images']) {
+    for (const state of ['tool-record', 'family-record', 'reference-only', 'missing-images']) {
       if (state === 'missing-images') await page.route('**/content/assets/**', route => route.abort());
-      await page.goto('http://127.0.0.1:4187/' + (state === 'tool-record' ? 'atlas/tool/pipe-wrench/' : state === 'family-record' ? 'atlas/family/articulated-hand-tools/' : 'atlas/'));
+      await page.goto('http://127.0.0.1:4187/' + (state === 'tool-record' ? 'atlas/tool/pipe-wrench/' : state === 'family-record' ? 'atlas/family/articulated-hand-tools/' : state === 'reference-only' ? 'atlas/tool/soldering-gun/' : 'atlas/'));
       await expect(page.locator('h1')).toBeVisible();
       if (state === 'missing-images') await expect(page.locator('[data-atlas-image-notice]').first()).toBeVisible();
+      if (state === 'reference-only') {
+        const restriction = page.getByRole('heading', { name: /^(Publication restriction|Reference-only restriction)$/ });
+        await restriction.scrollIntoViewIfNeeded();
+        await expect(restriction).toBeVisible();
+        await expect(page.locator('.reference-layout').getByRole('link', { name: 'Start practice', exact: true })).toHaveCount(0);
+      }
       await page.evaluate(() => document.fonts.ready);
       await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
       const file = `${state}-${width}.png`;
