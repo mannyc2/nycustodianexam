@@ -195,6 +195,43 @@ test("question input and saved Review survive their appropriate page lifecycle",
 })
 
 test("saved Print preview restores the same packet after root cleanup", async ({ page }) => {
+  await page.addInitScript(() => {
+    const registered = new Map<string, Set<EventListenerOrEventListenerObject>>()
+    const record = (type: string, listener: EventListenerOrEventListenerObject, adding: boolean) => {
+      const set = registered.get(type) ?? new Set<EventListenerOrEventListenerObject>()
+      if (adding) set.add(listener)
+      else set.delete(listener)
+      registered.set(type, set)
+    }
+    const add = window.addEventListener.bind(window)
+    const remove = window.removeEventListener.bind(window)
+    window.addEventListener = (type: string, listener: EventListenerOrEventListenerObject | null, options?: boolean | AddEventListenerOptions) => {
+      if (listener && (type === "beforeprint" || type === "afterprint")) record(type, listener, true)
+      if (listener) add(type, listener, options)
+    }
+    window.removeEventListener = (type: string, listener: EventListenerOrEventListenerObject | null, options?: boolean | EventListenerOptions) => {
+      if (listener) record(type, listener, false)
+      if (listener) remove(type, listener, options)
+    }
+    const match = window.matchMedia.bind(window)
+    window.matchMedia = (query) => {
+      const media = match(query)
+      if (query !== "print") return media
+      const addMedia = media.addEventListener.bind(media)
+      const removeMedia = media.removeEventListener.bind(media)
+      media.addEventListener = (type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions) => {
+        if (type === "change") record("print-media", listener, true)
+        addMedia(type, listener, options)
+      }
+      media.removeEventListener = (type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions) => {
+        if (type === "change") record("print-media", listener, false)
+        removeMedia(type, listener, options)
+      }
+      return media
+    }
+    Object.assign(window, { printListenerCounts: () => ["beforeprint", "afterprint", "print-media"].map(type => registered.get(type)?.size ?? 0) })
+  })
+  const listenerCounts = () => page.evaluate(() => (window as unknown as { printListenerCounts: () => number[] }).printListenerCounts())
   const errors: string[] = []
   page.on("pageerror", (error) => errors.push(error.message))
   await page.goto("/print/")
@@ -203,6 +240,7 @@ test("saved Print preview restores the same packet after root cleanup", async ({
   await expect(page).toHaveURL(/\/print\/preview\/print-[a-f0-9-]+\/$/)
   const title = page.getByRole("heading", { level: 1, name: "Blank answer sheet", exact: true })
   await expect(title).toBeVisible()
+  await expect.poll(listenerCounts).toEqual([1, 1, 1])
   const fingerprintNode = page.locator("[data-print-fingerprint]")
   const fingerprint = await fingerprintNode.getAttribute("data-print-fingerprint")
   expect(fingerprint).toBeTruthy()
@@ -217,9 +255,11 @@ test("saved Print preview restores the same packet after root cleanup", async ({
     window.dispatchEvent(new Event("afterprint"))
   })
   await expect(page.locator("[data-print-preview]")).toBeEmpty()
+  expect(await listenerCounts()).toEqual([0, 0, 0])
   await page.reload()
   await expect(page).toHaveURL(path)
   await expect(title).toBeVisible()
+  await expect.poll(listenerCounts).toEqual([1, 1, 1])
   await expect(fingerprintNode).toHaveAttribute("data-print-fingerprint", fingerprint!)
   expect(errors).toEqual([])
 })

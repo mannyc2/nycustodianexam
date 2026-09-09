@@ -303,3 +303,7 @@ All three engine cases passed (5.6 seconds); browser TypeScript and whitespace c
 ## Timed Simulation interval cleanup
 
 Browser instrumentation now tracks IDs of one-second window intervals during a timed question Simulation. One interval is present with the visible timer, persists across synthetic persisted pagehide, is removed after repeated nonpersisted pagehide/root cleanup, and is recreated once after reload. All three engines passed (3.7 seconds). The browser TypeScript check initially exposed mixed Node/Bun/DOM timer overloads; the fixture now explicitly types the actual browser timer capability and typecheck passes. Log: `/tmp/nyc-simulation-interval-browser.log`. This is direct timer-registration cleanup evidence for the exercised timed Simulation, not arbitrary scheduler/heap accounting or actual BFCache certification.
+
+## Print preview listener accounting
+
+The saved preview lifecycle case now instruments callback identities for beforeprint, afterprint and the print MediaQueryList change listener. The ready preview has one of each, root cleanup leaves zero of each, and fresh-document restoration installs one of each again. All three engine cases passed (2.8 seconds), with browser TypeScript and whitespace checks passing. Log: `/tmp/nyc-print-listeners-browser.log`. This strengthens the earlier late-event observation with direct registration accounting for these three event types; it is not universal heap/listener or same-document remount proof.
