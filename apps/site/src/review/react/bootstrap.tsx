@@ -7,7 +7,7 @@ import { createReviewController } from "../controller.ts"
 import { ReviewQueueBootstrap } from "../model.ts"
 import { matchesQuestionPostcommitPath, questionAttemptId } from "../../attempt-receipt.ts"
 import { loadStudyActivity } from "../../study/activity.ts"
-import type { StudyActivityState } from "../../study/model.ts"
+import { createReviewScreenController } from "../screen-controller.ts"
 
 const mount = document.querySelector<HTMLElement>("[data-review-queue]")
 const data = document.querySelector<HTMLScriptElement>("#review-bootstrap-data")
@@ -62,38 +62,13 @@ for (const source of bootstrap.scenes) {
   }
 }
 
-const controller = createReviewController(bootstrap, appRuntime)
+const queueController = createReviewController(bootstrap, appRuntime)
+const controller = createReviewScreenController(queueController, () => appRuntime.runPromise(loadStudyActivity(bootstrap)))
 const root = createRoot(mount)
 const removeSessionNavigation = installSessionNavigation()
-let activityState: StudyActivityState = { tag: "loading" }
-let activityRead = 0
 let cleanedUp = false
-const render = (): void => {
-  if (!cleanedUp) root.render(<ReviewQueueIsland controller={controller} activityState={activityState} onRetryHistory={readActivity} />)
-}
-const readActivity = (): void => {
-  const revision = ++activityRead
-  activityState = { tag: "loading" }
-  render()
-  void appRuntime.runPromise(loadStudyActivity(bootstrap)).then(
-    (activity) => {
-      if (cleanedUp || revision !== activityRead) return
-      activityState = { tag: "ready", activity }
-      render()
-    },
-    () => {
-      if (cleanedUp || revision !== activityRead) return
-      activityState = { tag: "unavailable" }
-      render()
-    }
-  )
-}
-const unsubscribeHistory = controller.subscribe(() => {
-  const state = controller.getSnapshot().state
-  if (state.tag === "empty" || (state.tag === "ready" && state.acknowledgingItemId === null)) readActivity()
-})
-readActivity()
-queueMicrotask(() => controller.start())
+root.render(<ReviewQueueIsland controller={controller} />)
+controller.start()
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
@@ -105,7 +80,6 @@ const cleanup = (): void => {
   if (cleanedUp) return
   cleanedUp = true
   removeSessionNavigation()
-  unsubscribeHistory()
   root.unmount()
   controller.dispose()
   void disposeAppRuntime()

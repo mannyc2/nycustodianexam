@@ -1,7 +1,6 @@
 import { createContext, use, useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react"
 import { includeUnavailableReviews } from "../../study/activity.ts"
-import type { StudyActivityState } from "../../study/model.ts"
-import type { ReviewController } from "../controller.ts"
+import type { ReviewScreenController } from "../screen-controller.ts"
 import type { ReviewQueueItem } from "../model.ts"
 
 type ReviewScope = "all" | "missed" | "flagged"
@@ -12,12 +11,12 @@ const inScope = (item: ReviewQueueItem, scope: ReviewScope): boolean =>
   scope === "all" || item.reasons.some((reason) => scope === "flagged" ? reason.tag === "flag" : reason.tag !== "flag")
 
 export interface ReviewProviderProps {
-  readonly controller: ReviewController
-  readonly activityState: StudyActivityState
-  readonly onRetryHistory: () => void
+  readonly controller: ReviewScreenController
 }
-const useReviewValue = ({ controller, activityState, onRetryHistory }: ReviewProviderProps) => {
-  const snapshot = useSyncExternalStore(controller.subscribe, controller.getSnapshot, controller.getHydrationSnapshot)
+const useReviewValue = ({ controller }: ReviewProviderProps) => {
+  const screen = useSyncExternalStore(controller.subscribe, controller.getSnapshot, controller.getHydrationSnapshot)
+  const snapshot = screen.state.queue
+  const activityState = screen.state.activity
   const state = snapshot.state
   const [scope, setScope] = useState<ReviewScope>("all")
   const errorHeadingRef = useRef<HTMLHeadingElement>(null)
@@ -53,7 +52,7 @@ const useReviewValue = ({ controller, activityState, onRetryHistory }: ReviewPro
 
   return {
     state: { queue: state, scope, items, filtered, missed, flagged, busy, historyState, unavailableAttempts },
-    actions: { setScope, retryHistory: onRetryHistory,
+    actions: { setScope, retryHistory: controller.retryHistory,
       retry: () => controller.dispatch({ tag: "retry" }),
       rebuild: () => controller.dispatch({ tag: "rebuild" }),
       acknowledge: (itemId: string) => controller.dispatch({ tag: "acknowledge", itemId })
