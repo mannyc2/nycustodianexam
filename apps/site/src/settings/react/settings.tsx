@@ -88,6 +88,7 @@ export const SettingsIsland = ({
   const preferenceWrite = useRef(false)
   const preferenceFocus = useRef<HTMLInputElement | null>(null)
   const [preferenceStatus, setPreferenceStatus] = useState<Partial<Record<DisplayPreference, LocalFailureReport>>>({})
+  const deleteTrigger = useRef<HTMLButtonElement>(null)
   const [dataAction, setDataAction] = useState<"import" | "delete" | null>(null)
   const actionHeading = useRef<HTMLHeadingElement>(null)
   const [includeDrafts, setIncludeDrafts] = useState(false)
@@ -452,6 +453,7 @@ export const SettingsIsland = ({
             const action = "href" in task
               ? <a className="button button-secondary" href={task.href}>{task.label}</a>
               : <button className={exporting ? "button button-primary" : "button button-secondary"} type="button" disabled={busy || preferenceRead === "loading"}
+              ref={task.controls === "settings-delete" ? deleteTrigger : undefined}
               aria-expanded={task.expanded} aria-controls={task.controls} onClick={task.run}>{task.label}</button>
             return <li id={task.id} className="task-card" aria-labelledby={exporting ? "export-heading" : undefined} key={task.title}>
               <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><use href={`#settings-icon-${task.icon}`} /></svg>
@@ -572,6 +574,12 @@ export const SettingsIsland = ({
               </button>
             </div>
           )}
+          <button className="button button-secondary" type="button" onClick={() => {
+            setResetPreview(null)
+            setResetConfirmed(false)
+            setDataAction(null)
+            deleteTrigger.current?.focus()
+          }}>Cancel</button>
         </fieldset>
       </section>
       {completion === null ? (

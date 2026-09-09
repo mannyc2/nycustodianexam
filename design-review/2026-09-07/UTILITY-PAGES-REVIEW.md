@@ -13,3 +13,11 @@ Remaining: returning Settings summary and Offline placement; export/delete dialo
 Offline management now sits with Export, Import, Rebuild and Delete in the saved-work group, as the accepted reference shows. Its action is a native link, represented separately from command buttons in the task-card type. Desktop uses five columns; existing intermediate/compact breakpoints retain readable stacking. The obsolete standalone block above reading preferences is replaced by a no-JavaScript link to `/offline/`. No download size or stored-copy count is invented.
 
 Build/artifact checks and five workspace typechecks pass. Eighteen design/recovery checks passed in the combined run; the no-JavaScript check then passed separately after correcting an accidental test-label edit (the final test is unchanged). Desktop/mobile captures are refreshed. Returning saved-data summaries are still outstanding.
+
+## Delete preview cancellation
+
+The deletion workflow now has the reference’s explicit Cancel action. It clears the preview and confirmation, closes the section, and returns keyboard focus to the originating button. It never invokes reset persistence. The enclosing disabled fieldset prevents cancellation during an active operation.
+
+A new browser regression saves a preference, previews and confirms its deletion, cancels, reopens and confirms that a fresh preview requires fresh confirmation, then reloads to prove the preference survived. All four utility recovery tests, the production build and five workspace typechecks pass. `capture-settings-delete.mjs` records a real one-preference preview at 608/384 CSS pixels. The compact capture was visually inspected and the Cancel action remains visible.
+
+This does not close returning-summary or export-preview requirements. The deletion section remains in flow rather than a modal, preserving the existing application’s focus/recovery structure.

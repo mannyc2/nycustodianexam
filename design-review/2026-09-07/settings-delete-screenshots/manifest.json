@@ -1,0 +1,19 @@
+{
+  "captures": [
+    {
+      "file": "preferences-preview-608.png",
+      "width": 608,
+      "scope": "preferences",
+      "records": 1,
+      "confirmed": false
+    },
+    {
+      "file": "preferences-preview-384.png",
+      "width": 384,
+      "scope": "preferences",
+      "records": 1,
+      "confirmed": false
+    }
+  ],
+  "errors": []
+}
