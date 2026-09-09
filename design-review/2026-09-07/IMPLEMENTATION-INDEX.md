@@ -26,7 +26,7 @@ The original [snapshot README](README.md), imported exports and `current-screens
 | Exam records | [EXAM-RECORD-REVIEW.md](EXAM-RECORD-REVIEW.md) | Source-bound facts, filters, tabs and announcement hierarchy. |
 | Report | [REPORT-REVIEW.md](REPORT-REVIEW.md) | Shared-component adaptation; local draft recovery and dormant intake. No dedicated supplied Report prototype. |
 | Print screen and earlier PDFs | [PRINT-OUTPUT-REVIEW.md](PRINT-OUTPUT-REVIEW.md) | Preview states and earlier question/tool/hazard output passes; observations are revision-specific. |
-| Latest print tables | [PRINT-TABLE-ESTIMATES.md](PRINT-TABLE-ESTIMATES.md) | Eight current PDFs at 3a77b74 retain matching estimates across 27 pages; full visual inspection pending. |
+| Latest print tables | [PRINT-TABLE-ESTIMATES.md](PRINT-TABLE-ESTIMATES.md) | Eight PDFs at 3a77b74 retain matching estimates; all 27 pages visually inspected, with sparse endings documented. |
 | Fact-sheet heading correction | [PRINT-FACT-HEADINGS.md](PRINT-FACT-HEADINGS.md) | Four checksummed PDFs, 185 pages pass automated layout checks; all four formats visually inspected (185 pages). |
 | Latest print fragmentation/type audit | [PRINT-RECEIPT-PAIRS.md](PRINT-RECEIPT-PAIRS.md) | Eight regenerated PDFs; source labels kept with values and all extracted large text at least 18pt. Final visual review remains partial. |
 | Latest prose print | [PRINT-PROSE-ESTIMATES.md](PRINT-PROSE-ESTIMATES.md) | Content-based estimates and corrected 18pt body text; eight checksummed PDFs and text-layout audit. |
@@ -40,7 +40,7 @@ Start visual review with the [comparison gallery](implementation-comparison.html
 
 ## Open acceptance items
 
-- Finish visual review of the remaining print PDFs. All four corrected explanation PDFs have completed visual review (41 pages); the recorded fact-sheet matrix has completed automated and visual inspection of all four formats (185 pages). Remaining table PDFs still need full visual review. Those automated checks do not certify every page, small label, overlap or physical printer.
+- Finish visual review of the remaining print PDFs. All four corrected explanation PDFs have completed visual review (41 pages); the recorded fact-sheet matrix has completed automated and visual inspection of all four formats (185 pages). The eight table PDFs at 3a77b74 also have complete visual review (27 pages). Those automated checks do not certify every page, small label, overlap or physical printer.
 - Prose page counts remain estimates: the measured matrix differs by -1 to +5 pages. Final browser/printer pagination is authoritative.
 - Reconcile any remaining component-contract or page/state gaps against the maintained product documents before declaring the full handoff complete.
 - Manual assistive-technology, device and physical-print certification remains unverified. The production certification record is explicitly blocked; passing automated tests must not be called production certification.

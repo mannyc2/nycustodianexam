@@ -1,0 +1,202 @@
+{
+  "sourceCommit": "3a77b749c881f5e1b8527864ada2ea415485b841",
+  "rasterScaleToPixels": 1100,
+  "totalPagesInspected": 27,
+  "captures": [
+    {
+      "file": "blank-answer-sheet-us-letter-normal.pdf",
+      "sha256": "6f647d1fabc335a720596c4f549f44b80c9c0467b96d181c8a43c523de4e5429",
+      "pagesInspected": [
+        1,
+        2,
+        3
+      ],
+      "questionRowsByPage": [
+        [
+          1,
+          6
+        ],
+        [
+          7,
+          26
+        ],
+        [
+          27,
+          45
+        ]
+      ]
+    },
+    {
+      "file": "blank-answer-sheet-us-letter-large-wide.pdf",
+      "sha256": "560eb490f1e2bcbb9d3a0b26b3e1ebf43ea014d8dda084de8cbd7176ec05842d",
+      "pagesInspected": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "questionRowsByPage": [
+        null,
+        [
+          1,
+          11
+        ],
+        [
+          12,
+          19
+        ],
+        [
+          20,
+          27
+        ],
+        [
+          28,
+          35
+        ],
+        [
+          36,
+          43
+        ],
+        [
+          44,
+          45
+        ]
+      ]
+    },
+    {
+      "file": "blank-answer-sheet-a4-normal.pdf",
+      "sha256": "b75b57fda1d17f7c5798229b817dd3909f4084aca4bb932ecf028ee3aee9f893",
+      "pagesInspected": [
+        1,
+        2,
+        3
+      ],
+      "questionRowsByPage": [
+        [
+          1,
+          8
+        ],
+        [
+          9,
+          30
+        ],
+        [
+          31,
+          45
+        ]
+      ]
+    },
+    {
+      "file": "blank-answer-sheet-a4-large-wide.pdf",
+      "sha256": "4591af58c50926fb5e62bf3986135850671be0d5b6d331d985d8c7cbfcadd9a0",
+      "pagesInspected": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "questionRowsByPage": [
+        null,
+        [
+          1,
+          9
+        ],
+        [
+          10,
+          18
+        ],
+        [
+          19,
+          27
+        ],
+        [
+          28,
+          36
+        ],
+        [
+          37,
+          45
+        ]
+      ]
+    },
+    {
+      "file": "answer-key-us-letter-normal.pdf",
+      "sha256": "bf7866e7016a00d7bf8c4105d2c503efffb07e00c65dbd056758a17cec9e1f41",
+      "pagesInspected": [
+        1,
+        2
+      ],
+      "questionRowsByPage": [
+        [
+          1,
+          7
+        ],
+        [
+          8,
+          10
+        ]
+      ]
+    },
+    {
+      "file": "answer-key-us-letter-large-wide.pdf",
+      "sha256": "1ecae1564250c51d8bb6e9e7ee0becffd843410d41b3c7b81caf33496badfa23",
+      "pagesInspected": [
+        1,
+        2
+      ],
+      "questionRowsByPage": [
+        null,
+        [
+          1,
+          10
+        ]
+      ]
+    },
+    {
+      "file": "answer-key-a4-normal.pdf",
+      "sha256": "4b77dd4610301d7a15027f698c99b092f024a9bfa382af8b7a40f98a018df7d7",
+      "pagesInspected": [
+        1,
+        2
+      ],
+      "questionRowsByPage": [
+        [
+          1,
+          9
+        ],
+        [
+          10,
+          10
+        ]
+      ]
+    },
+    {
+      "file": "answer-key-a4-large-wide.pdf",
+      "sha256": "711b897a14dec78b8b397a5cb522ccd4291c19da0ffb4cf507cfab1c17644309",
+      "pagesInspected": [
+        1,
+        2
+      ],
+      "questionRowsByPage": [
+        null,
+        [
+          1,
+          10
+        ]
+      ]
+    }
+  ],
+  "findings": [
+    "No observed clipping, overlap, split table row or missing answer circle.",
+    "Continuation pages repeat the column headers; all 45 answer-sheet rows and all ten key rows remain in order.",
+    "Large-print question and choice labels wrap within their cells; all four answer circles remain aligned with each question.",
+    "Metadata and pairing values fit their boxes. The screen-only Saved print preview label is absent.",
+    "Sparse endings remain: normal A4 key page 2 contains row 10, normal Letter key page 2 rows 8\u201310, and large Letter sheet page 7 rows 44\u201345."
+  ],
+  "scope": "All pages of these eight checksummed PDFs visually inspected. This does not establish all count combinations, physical writing usability, physical-printer behavior or assistive-technology certification."
+}
