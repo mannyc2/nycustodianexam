@@ -1,3 +1,4 @@
+import { localProductShellPath } from "../src/asset-router.ts"
 import { createServer } from "node:http"
 import { readFile } from "node:fs/promises"
 import { extname, resolve, sep } from "node:path"
@@ -6,6 +7,7 @@ import { test as base } from "@playwright/test"
 
 interface OfflineOrigin {
   readonly url: string
+  readonly serveRelease: (directory: string) => void
   readonly disconnect: () => Promise<void>
 }
 
@@ -20,11 +22,13 @@ const contentTypes: Readonly<Record<string, string>> = {
 // offline emulation rejects even a minimal worker-cached navigation.
 export const test = base.extend<{ readonly offlineOrigin: OfflineOrigin }>({
   offlineOrigin: async ({}, use) => {
+    let servedRoot = root
     const server = createServer(async (request, response) => {
       try {
         const pathname = decodeURIComponent(new URL(request.url ?? "/", "http://localhost").pathname)
-        const path = resolve(root, "." + pathname + (pathname.endsWith("/") ? "index.html" : ""))
-        if (!path.startsWith(resolve(root) + sep)) {
+        const documentPath = localProductShellPath(pathname) ?? pathname
+        const path = resolve(servedRoot, "." + documentPath + (documentPath.endsWith("/") ? "index.html" : ""))
+        if (!path.startsWith(resolve(servedRoot) + sep)) {
           response.writeHead(403).end()
           return
         }
@@ -49,7 +53,7 @@ export const test = base.extend<{ readonly offlineOrigin: OfflineOrigin }>({
       })
     }
     try {
-      await use({ url: `http://127.0.0.1:${address.port}`, disconnect })
+      await use({ url: `http://127.0.0.1:${address.port}`, disconnect, serveRelease: directory => { servedRoot = resolve(directory) } })
     } finally {
       await disconnect()
     }

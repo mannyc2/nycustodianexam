@@ -378,3 +378,8 @@ After the fix, all six origin-disconnected browser cases pass across Chromium,
 Firefox, and WebKit. Browser typecheck, all 14 service-worker tests, full build,
 and artifact verification pass. Public item and image counts and bundle limits
 remain unchanged.
+
+The installed version-3 to version-4 upgrade is now separately verified in all
+three browsers. `INSTALLED-PACK-UPGRADE-REVIEW.md` records the immutable prior
+build, worker hashes, reproduction, saved-question restoration, and exact pinned
+simulation resumption after the upgraded origin is disconnected.
