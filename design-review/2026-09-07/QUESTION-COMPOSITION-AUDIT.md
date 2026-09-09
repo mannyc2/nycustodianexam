@@ -13,7 +13,7 @@ This changes composition and focus handling, not question content, answer evalua
 ## Still open
 
 - Review now selects `ReviewVisualQuestion` / `ReviewNonvisualQuestion` through `ReviewQuestionRoute`. See the Review correction below. The full wider component-contract audit remains open.
-- Simulation chooses its question body inline inside `simulation/react/player.tsx`; the named `SimulationVisualQuestion` / `SimulationNonvisualQuestion` wrappers remain absent.
+- Simulation now chooses `SimulationVisualQuestion` / `SimulationNonvisualQuestion` through `SimulationQuestionRoute`; see the correction below. Wider family/provider contract requirements still require their own acceptance evidence.
 - Do not close the full component-contract audit based on the Practice correction. Review and Simulation must retain their distinct workflow behavior, especially no Simulation feedback before final submission.
 
 Validation: 16 question state/feedback/commit unit tests passed; site and browser TypeScript checks passed; build/artifact/bundle checks passed; complete question-player and historical-review suites passed across three browsers with 43 passes and two declared BFCache skips (34.8 seconds). The added switch-back assertions preserve focus and selected answers, and the existing persistence/failure checks remain green. Publication still requires the explicit approval recorded in `IMPLEMENTATION-PR-DRAFT.md`; no push was retried.
@@ -28,3 +28,14 @@ Review now offers **Return to Review** as its completion action. The initial com
 `capture-review-question-context.mjs` commits an actual flagged incorrect q091 answer, restores its saved Review document, verifies the body variant and return action, and captures both modes at 1053px and 384px. Four full-page captures and a manifest are retained in `review-question-context/`; all have no page errors or horizontal overflow. The compact nonvisual capture was visually inspected for the new reason context, its separation from the question, and readable continuation into feedback. This added context adapts the existing source-note styling; no dedicated supplied saved-reason specimen is claimed.
 
 Validation: 19 question state/feedback/commit unit tests, site/browser typechecks, build and artifact/bundle invariants passed. The complete historical Review, Practice-builder and Review-queue suites passed 42 browser cases before the return-action correction. A targeted three-browser saved-nonvisual workflow recheck verifies the final return action. The capture script independently checks that action in all four visual specimens.
+
+
+## Simulation correction
+
+`simulation/react/question-item.tsx` now defines the named visual/nonvisual variants around a shared `SimulationQuestion`. The parent passes the current ready snapshot, pinned question and response. Each wrapper supplies one body; the parent retains timer, navigation, submit confirmation, session subscription and recovery state. The markup and styles of the existing question card remain unchanged.
+
+The question module imports only the precommit illustration renderer and types; it has no outcome/rationale/source renderer or feedback fetch. Submission and exact-result loading remain in the existing controller. Missing authored nonvisual content cannot silently fall back to an illustrated body.
+
+An optional saved-focus request belongs to the existing queued local operation. Presentation changes request focus on the new toggle only after the operation succeeds; failures retain recoverable-error focus and exact retry. Ordinary answer and timer saves do not request toggle focus. The browser regression switches both ways after selecting an answer, checks focus and selection, reloads, flags, submits and verifies retained nonvisual results.
+
+Validation: 38 Simulation unit tests, site/browser typechecks, build/artifact/bundle checks, maintained layout (284 files) and module boundaries (144 modules) passed. All 27 local Simulation browser cases passed across Chromium, Firefox and WebKit (41.4 seconds). Cloudflare-tagged delivery cases are separate and were not rerun for this component-only change. This is a composition/focus correction, not new screenshot evidence; prior visual captures remain revision-specific.

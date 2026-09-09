@@ -1,4 +1,4 @@
-import { QuestionIllustration } from "../../question-player/react/illustration.tsx"
+import { SimulationQuestionRoute } from "./question-item.tsx"
 import { useEffect, useRef, useState, useSyncExternalStore } from "react"
 import type { SimulationPlayerController } from "../controller.ts"
 import {
@@ -92,8 +92,10 @@ export const SimulationPlayer = ({
   const recoverableErrorRef = useRef<HTMLHeadingElement>(null)
   const confirmationRef = useRef<HTMLHeadingElement>(null)
   const currentItemRef = useRef<HTMLAnchorElement>(null)
+  const presentationToggleRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
+    if (snapshot.focusRequest?.target === "presentation-toggle") presentationToggleRef.current?.focus()
     if (snapshot.focusRequest?.target === "error") errorRef.current?.focus()
     if (snapshot.focusRequest?.target === "recoverable-error") recoverableErrorRef.current?.focus()
     if (snapshot.focusRequest?.target === "confirmation") confirmationRef.current?.focus()
@@ -132,8 +134,6 @@ export const SimulationPlayer = ({
   }
   const itemId = simulationItemId(item)
   const response = session.responses.find((candidate) => candidate.questionId === itemId)
-  const questionIllustration = "question" in item && "illustration" in item.question ? item.question.illustration : undefined
-  const nonvisualEquivalent = questionIllustration?.nonvisualEquivalent
   const answered = session.responses.filter((candidate) =>
     candidate.selectedOptionId !== null ||
     (candidate.markers?.length ?? 0) > 0 ||
@@ -171,65 +171,10 @@ export const SimulationPlayer = ({
     </p>
     <div className="simulation-workspace">
     <div className="simulation-main">
-    {"question" in item ? <article className="question-card study-player" aria-labelledby="simulation-question-heading">
-      <div className="player-heading-row">
-        <span className="player-position">Question {position} of {session.actualLength}</span>
-        <span className="player-mode-label">Practice simulation</span>
-      </div>
-      <header className="question-prompt">
-        {response?.presentation === "nonvisual" && nonvisualEquivalent !== undefined ?
-          <section className="question-nonvisual-body" aria-labelledby="simulation-question-heading">
-            <h1 id="simulation-question-heading">{nonvisualEquivalent.prompt}</h1>
-            <ol>{nonvisualEquivalent.observations.map((fact, index) => <li key={index}>{fact}</li>)}</ol>
-          </section> : <>
-            <h1 id="simulation-question-heading">{item.question.prompt}</h1>
-            <QuestionIllustration illustration={questionIllustration} />
-          </>}
-        {nonvisualEquivalent === undefined ? null : <>
-          <p className="source-note">{response?.presentation === "nonvisual" ? "Nonvisual version" : "Illustrated version"}</p>
-          <button type="button" className="button button-secondary question-presentation-toggle"
-            disabled={session.status !== "active" || answerEditBlocked}
-            onClick={() => controller.dispatch({ tag: "select-presentation", presentation: response?.presentation === "nonvisual" ? "visual" : "nonvisual" })}>
-            {response?.presentation === "nonvisual" ? "Use illustrated version" : "Use nonvisual version"}
-          </button>
-        </>}
-        <p>Choose one answer. You can edit it until final submission. Feedback is not loaded during the simulation.</p>
-      </header>
-      <fieldset disabled={session.status !== "active" || answerEditBlocked}>
-        <legend className="player-choice-legend">Answer choices</legend>
-        <div className="answer-list">
-          {item.optionOrder.map((optionId, index) => {
-            const option = item.question.options.find((candidate) => candidate.id === optionId)
-            if (option === undefined) return null
-            return <label className="answer-option" key={option.id}>
-              <input
-                checked={response?.selectedOptionId === option.id}
-                name={`simulation-${item.question.id}`}
-                onChange={() => controller.dispatch({ tag: "select-option", optionId: option.id })}
-                type="radio"
-                value={option.id}
-              />
-              <span aria-hidden="true" className="answer-letter">{String.fromCharCode(65 + index)}</span>
-              <span>{option.label}</span>
-            </label>
-          })}
-        </div>
-      </fieldset>
-      <div className="question-controls player-action-bar">
-        <button
-          aria-pressed={response?.reviewIntent === "flagged"}
-          className="button button-secondary"
-          disabled={answerEditBlocked}
-          onClick={() => controller.dispatch({ tag: "toggle-flag" })}
-          type="button"
-        >{response?.reviewIntent === "flagged" ? "Flagged for review" : "Flag this question"}</button>
-        <span aria-live="polite" className="player-action-note">{saving
-          ? "Saving locally…"
-          : recoverableError === null
-            ? "Saved on this device"
-            : "Not yet saved; retry required"}</span>
-      </div>
-    </article> : <SimulationHazardItem
+    {"question" in item ? <SimulationQuestionRoute
+      controller={controller} state={snapshot.state} item={item} position={position}
+      response={response} answerEditBlocked={answerEditBlocked} presentationToggleRef={presentationToggleRef}
+    /> : <SimulationHazardItem
       answerEditBlocked={session.status !== "active" || answerEditBlocked}
       controller={controller}
       item={item}

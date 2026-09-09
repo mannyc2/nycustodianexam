@@ -69,8 +69,8 @@ export interface SimulationEffectRunner {
 }
 
 export interface SimulationPlayerController {
-  readonly getSnapshot: () => ScreenSnapshot<SimulationPlayerState, "error" | "recoverable-error" | "confirmation">
-  readonly getHydrationSnapshot: () => ScreenSnapshot<SimulationPlayerState, "error" | "recoverable-error" | "confirmation">
+  readonly getSnapshot: () => ScreenSnapshot<SimulationPlayerState, "error" | "recoverable-error" | "confirmation" | "presentation-toggle">
+  readonly getHydrationSnapshot: () => ScreenSnapshot<SimulationPlayerState, "error" | "recoverable-error" | "confirmation" | "presentation-toggle">
   readonly subscribe: (listener: () => void) => () => void
   readonly acknowledgeRequest: (requestId: string) => void
   readonly dispatch: (command: SimulationPlayerCommand) => void
@@ -230,6 +230,7 @@ export const createSimulationPlayerController = (input: {
 }): SimulationPlayerController => {
   type ReadyState = Extract<SimulationPlayerState, { readonly tag: "ready" }>
   type SaveOperation = {
+    readonly savedFocus?: "presentation-toggle"
     readonly kind: "response" | "timer"
     readonly optimistic: SimulationSessionRecord
     readonly persist: () => Promise<SimulationSessionRecord>
@@ -240,7 +241,7 @@ export const createSimulationPlayerController = (input: {
 
   const screen = makeScreenStore<
     SimulationPlayerState,
-    "error" | "recoverable-error" | "confirmation"
+    "error" | "recoverable-error" | "confirmation" | "presentation-toggle"
   >({
     initialState: { tag: "restoring" },
     requestIdPrefix: "simulation-"
@@ -351,7 +352,7 @@ export const createSimulationPlayerController = (input: {
           visualAssetUrl: state.visualAssetUrl,
           recoverableError: null
         }
-        screen.publish(ready, { announce: operation.savedAnnouncement })
+        screen.publish(ready, { announce: operation.savedAnnouncement, ...(operation.savedFocus === undefined ? {} : { focus: operation.savedFocus }) })
         if (strictExpiryPending) submitFinal(ready, false)
       },
       (cause) => {
@@ -413,6 +414,7 @@ export const createSimulationPlayerController = (input: {
           })
         })
       ),
+      ...(presentation === undefined || presentation === previous?.presentation ? {} : { savedFocus: "presentation-toggle" as const }),
       savingAnnouncement: "Saving this response locally.",
       savedAnnouncement: "Response saved on this device.",
       failureAnnouncement: "The response was not saved. The edit remains visible and can be retried."
