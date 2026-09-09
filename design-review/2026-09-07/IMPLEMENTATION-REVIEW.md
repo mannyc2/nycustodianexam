@@ -58,3 +58,30 @@ Capture output can be redirected with `IMPLEMENTATION_CAPTURE_OUTPUT`; the
 historical first-slice evidence is preserved. Final full-page visual checks of
 the remaining core states and other families remain on the implementation ledger.
 The separate illustrated-question contract audit is in QUESTION-PLAYER-REVIEW.md.
+
+## Home section audit and compact subject links
+
+`home-final-audit/` contains desktop (1248 CSS px) and compact (384 CSS px)
+Home captures, plus separate hero, coverage, study-card, cycle, trust, and footer
+crops. Compared the full pages with accepted references 01/02. Compact subject
+links now use blue underlined text and an arrow, with the narrower numbered-column
+layout from the reference. Their interactive boxes remain at least 44px tall.
+The change is scoped to Home below 47.99rem.
+
+The capture script checks horizontal overflow, every compact subject-link target
+and underline, the Start practicing destination, and unexpected page errors. All
+checks passed; the root build and artifact verifier passed. No new three-browser
+regression run was required for this scoped CSS change. Section crops hide fixed
+navigation to avoid obscuring content; full-page captures retain it at the capture
+viewport position (the compact bar appearing within the long image is not its
+document-flow position).
+
+Remaining visual differences are concrete: the compact implementation is 3227px
+high versus the supplied 2097px image. Source citations and technical-details
+disclosure, the cycle qualification/source disclosure, five rather than three
+compact trust rows, and fuller footer copy add height. Native-font wrapping also
+differs, including the hero heading. Desktop retains the intended three-column
+study cards and five trust rows; compact retains the two-column study cards.
+Real destinations and qualified announcement facts remain intentional content
+differences. The extra compact information hierarchy and typography still need
+a focused reconciliation; this evidence does not certify full Home fidelity.

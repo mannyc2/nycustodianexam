@@ -998,3 +998,17 @@
     .home-scope-caveat { display: block; font-size: 0.8125rem; color: var(--color-text-muted); }
   }
 }
+
+@layer overrides {
+  @media (max-width: 47.99rem) {
+    .home-areas-section .home-scope-row { grid-template-columns: 1.75rem minmax(0, 1fr); gap: 0 1rem; }
+    .home-areas-section .home-scope-row > a {
+      color: var(--color-action);
+      background: transparent;
+      font-size: 0.8125rem;
+      text-decoration: underline;
+      text-underline-offset: 0.15em;
+    }
+    .home-areas-section .home-scope-row > a::after { content: " →"; }
+  }
+}
