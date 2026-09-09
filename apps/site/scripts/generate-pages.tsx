@@ -602,7 +602,7 @@ const questionPage = ({
   <main class="page-shell" id="main-content" tabindex="-1">
     ${breadcrumb([{ href: context === "review" ? "/review/" : "/practice/", label: context === "review" ? "Review queue" : "Practice" }, { label: `Question ${position}` }])}
     ${context === "review" ? '<p class="source-note review-notice"><strong>Saved feedback:</strong> opening this item does not finish it or remove it from your review queue. When you are done, return to Review and choose Finish review.</p>' : ""}
-    <div data-question-player data-island="question-player-bootstrap" data-question-attempt-id="${escapeHtml(questionAttemptId(receipt))}" data-postcommit-url="${escapeHtml(receipt.postcommitPath)}">${renderQuestionFallback(question, position, count)}</div>
+    <div data-question-player data-island="question-player-bootstrap" data-position-label="${context === "review" ? "Review" : "Question"} ${position} of ${count}" data-question-attempt-id="${escapeHtml(questionAttemptId(receipt))}" data-postcommit-url="${escapeHtml(receipt.postcommitPath)}">${renderQuestionFallback(question, position, count)}</div>
     <nav class="directional-nav" aria-label="Question navigation">
       ${previousPath === undefined ? "<span></span>" : `<a data-session-history="replace" href="${previousPath}">← Previous question</a>`}
       ${nextPath === undefined ? "<span>End of session</span>" : `<a data-session-history="replace" href="${nextPath}">Next question →</a>`}

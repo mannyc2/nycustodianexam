@@ -72,6 +72,7 @@ test("a generated practice answer appears in Study and can be durably finished i
   expect(sessionPath).toMatch(/^\/practice\/session\/ps-[a-z0-9]+\/question\/1\/$/)
   await firstPractice.click()
   await expect(page.getByRole("button", { name: "Flag for review", exact: true })).toBeEnabled()
+  await expect(page.locator(".player-position")).toHaveText("Question 1 of 45 · Text version")
   await page.getByRole("button", { name: "Flag for review", exact: true }).click()
   await page.getByRole("radio").first().check()
   await page.getByRole("button", { name: "Save answer", exact: true }).click()

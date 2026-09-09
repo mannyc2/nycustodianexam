@@ -35,9 +35,9 @@ export const QuestionPlayer = {
   CommitStatus: QuestionPlayerPieces.Status
 } as const
 
-export const PracticeNonvisualQuestion = () => (
+export const PracticeNonvisualQuestion = ({ positionLabel }: { readonly positionLabel?: string }) => (
   <QuestionPlayerPieces.Frame>
-    <QuestionPlayerPieces.Header />
+    <QuestionPlayerPieces.Header {...(positionLabel === undefined ? {} : { positionLabel })} />
     <QuestionPlayerPieces.Prompt />
     <QuestionPlayerPieces.Form>
       <QuestionPlayerPieces.Options />

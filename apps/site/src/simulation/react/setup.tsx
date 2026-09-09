@@ -162,7 +162,9 @@ export const SimulationSetup = ({
       </fieldset> : <p className="setup-inventory-note">All {capacity} released scenes are available. The visual task uses markers; the keyboard task uses written zones.</p>}
       <fieldset className="simulation-length-fields">
         <legend>Set length</legend>
-        <p className="field-hint">45, 60 and 90 are preset question lengths. You can also use all matching items. No set is padded with repeats or quietly shortened.</p>
+        <p className="field-hint">{format === "questions"
+          ? `${bootstrap.advertisedLengths.join(", ")} are preset question lengths.`
+          : "1, 5 and 10 are preset scene counts."} You can also use all matching {format === "questions" ? "questions" : "scenes"}. No set is padded with repeats or quietly shortened.</p>
         {!lengthValid && capacity > 0 ? <p className="notice notice-warning" role="status">Your chosen length of {length} no longer fits: {capacity} items match. Choose a replacement length before starting.</p> : null}
         <div className="answer-list">
           {lengths.map((candidate) => {

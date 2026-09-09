@@ -32,7 +32,7 @@ const root = createRoot(mount)
 const removeSessionNavigation = installSessionNavigation()
 root.render(
   <QuestionPlayer.Provider controller={controller}>
-    <PracticeNonvisualQuestion />
+    <PracticeNonvisualQuestion {...(mount.dataset.positionLabel === undefined ? {} : { positionLabel: mount.dataset.positionLabel })} />
   </QuestionPlayer.Provider>
 )
 

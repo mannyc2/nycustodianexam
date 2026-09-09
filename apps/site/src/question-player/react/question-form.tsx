@@ -8,12 +8,12 @@ export const QuestionFrame = ({ children }: { readonly children: ReactNode }) =>
   </article>
 )
 
-export const QuestionHeader = () => {
+export const QuestionHeader = ({ positionLabel = "Practice question" }: { readonly positionLabel?: string }) => {
   const { actions, state } = useQuestionPlayer()
   const canChangeFlag = state.tag === "ready" || state.tag === "commit_failed"
   return (
     <div className="player-heading-row">
-      <span className="player-position">Practice question · Text version</span>
+      <span className="player-position">{positionLabel} · Text version</span>
       <button
         aria-pressed={state.reviewIntent === "flagged"}
         className="button button-secondary player-flag"
