@@ -1,4 +1,4 @@
-import { PracticeBuilder } from "../../practice/react/builder.tsx"
+import { PracticeSessionSetup } from "../../practice/react/builder.tsx"
 import { ActivityHistory } from "./history.tsx"
 import { useStudy } from "./provider.tsx"
 
@@ -126,7 +126,7 @@ export const StudyHistory = () => {
   const { state: { historyState }, actions: { retryActivity } } = useStudy()
   return <ActivityHistory state={historyState} onRetry={retryActivity} />
 }
-export const StudyPracticeBuilder = () => <PracticeBuilder />
+export const StudyPracticeBuilder = () => <PracticeSessionSetup />
 export const StudyHub = () => {
   const { state: { hasActivity, compact } } = useStudy()
   return <div className={`study-hub${hasActivity ? " study-returning" : " study-first-visit"}`}>
