@@ -320,3 +320,17 @@
   .simulation-item > :is(a, span) { inline-size: 2.75rem; block-size: 2.75rem; padding: 0; font-family: var(--font-sans); }
   .simulation-item:not([data-flagged]) small { display: none; }
 }
+
+@layer components {
+  .hazard-setup-page { max-inline-size: 66rem; }
+  .hazard-setup-heading { display: grid; gap: var(--space-2); margin-block: var(--space-5); }
+  .hazard-setup-heading h1 { font-size: var(--text-h2); }
+  .hazard-setup-heading p { color: var(--color-text-muted); max-inline-size: 68ch; }
+  .hazard-environments > summary { cursor: pointer; font-weight: 700; min-block-size: var(--target-default); }
+}
+
+@layer overrides {
+  .hazard-setup-page #hazard-builder-heading { font-size: 1.25rem; }
+  .hazard-setup-page .setup-scope-note { display: grid; gap: 0.75rem; }
+  .hazard-setup-page .simulation-settings > fieldset:first-child { margin-block-start: 0; }
+}

@@ -1508,12 +1508,12 @@ const buildPages = ({
     routeId: "hazards-index",
     section: "hazards",
     body: `
-  <main class="page-shell" id="main-content" tabindex="-1">
+  <main class="page-shell hazard-setup-page" id="main-content" tabindex="-1">
     ${breadcrumb([{ label: "Hazards" }])}
     <nav class="setup-navigation" aria-label="Practice setup">${setupDestinations.map(({ id, label, href }) => `<a class="button ${id === "hazards" ? "button-primary" : "button-secondary"}" href="${href}"${id === "hazards" ? ' aria-current="page"' : ""}>${label}</a>`).join("")}</nav>
-    <section class="hero"><p class="eyebrow">${scenes.length} hazard scenes</p><h1>Scan the whole workplace before you decide.</h1><p>Each scene starts with a neutral description only. Which conditions are hazards — and which are safe as shown — is revealed, with corrections and sources, only after you submit your response.</p><div class="question-controls"><a class="button button-primary" href="/hazards/session/${manifest.releaseId}/scene/1/">Start visual scene 1</a><a class="button button-secondary" href="/hazards/session/${manifest.releaseId}-nonvisual/scene/1/">Start keyboard scene 1 (no image)</a></div></section>
-    <div data-hazard-builder><p>Choose a scene above, or enable JavaScript to build a drill with a scene count and repeat code.</p></div>
-    <section class="section-gap"><h2>Environments in this release</h2><ul class="tag-list">${[...new Set(scenes.map(({ value }) => value.environment))].map((environment) => `<li>${escapeHtml(environment)}</li>`).join("")}</ul></section>
+    <header class="hazard-setup-heading"><h1>Hazard drill</h1><p>Choose a scene count and how to respond. Feedback opens after each saved response.</p></header>
+    <div data-hazard-builder><section class="reference-card"><h2>Start with the released scenes</h2><p>The custom builder needs JavaScript. You can still open the first scene in either response mode.</p><div class="question-controls"><a class="button button-primary" href="/hazards/session/${manifest.releaseId}/scene/1/">Start visual scene 1</a><a class="button button-secondary" href="/hazards/session/${manifest.releaseId}-nonvisual/scene/1/">Start keyboard scene 1 (no image)</a></div></section></div>
+    <details class="hazard-environments section-gap"><summary>Environments in this release</summary><ul class="tag-list">${[...new Set(scenes.map(({ value }) => value.environment))].map((environment) => `<li>${escapeHtml(environment)}</li>`).join("")}</ul></details>
   </main>
   <script id="hazard-builder-data" type="application/json">${escapeJsonForHtml(canonicalReviewBootstrap.scenes)}</script>
   <script type="module" src="/src/practice/hazard-builder-bootstrap.tsx"></script>`
