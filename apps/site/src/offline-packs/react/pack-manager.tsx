@@ -1,6 +1,7 @@
 import type { Effect as EffectType } from "effect"
 import { Effect } from "effect"
 import { useEffect, useRef, useState } from "react"
+import { createPortal } from "react-dom"
 import {
   LocalActionError,
   localFailureReport,
@@ -111,9 +112,11 @@ export const removeOfflinePackClaim = (
 
 export const OfflinePackManagerIsland = ({
   descriptor,
-  runtime
+  runtime,
+  headerMount
 }: {
   readonly descriptor: OfflinePackDescriptor
+  readonly headerMount: HTMLElement
   readonly runtime: OfflinePackEffectRunner
 }) => {
   const [packs, setPacks] = useState<ReadonlyArray<OfflinePackRecord>>([])
@@ -320,9 +323,25 @@ export const OfflinePackManagerIsland = ({
     availability === "retry" || availability === "update-available"
   const availableForNewSessions = descriptor.lifecycle !== "retired"
   const insufficientCapacity = storage.availability === "quota-limited"
+  const activePack = downloadsLoaded ? packs.find((pack) => pack.status === "active") : undefined
 
   return (
     <div className="local-data-stack offline-pack-manager">
+      {createPortal(<>
+        <div className="page-header-copy">
+          <h1>{activePack === undefined ? "Study with no connection at all." : "Your practice material is available offline."}</h1>
+          <p className="lead">{activePack === undefined
+            ? "Download a study copy and let it finish its check, then turn it on yourself. Nothing downloads on page load."
+            : "A checked copy is turned on for new offline work. Downloading, turning on and removing a copy each require your action."}</p>
+        </div>
+        {downloadsLoaded ? <dl className="offline-summary">
+          <div><dt>Turned on</dt><dd>{activePack === undefined ? "No copy turned on" : `${activePack.descriptor.label} · version ${activePack.descriptor.packVersion}`}</dd></div>
+          <div><dt>What it holds</dt><dd>{activePack === undefined ? "Turn on a checked copy first" : `${activePack.descriptor.counts.questions} questions · ${activePack.descriptor.counts.hazardScenes} scenes · ${activePack.descriptor.counts.tools} tools`}</dd></div>
+          <div><dt>Downloaded files</dt><dd>{formatBytes(packs.reduce((total, pack) => total + pack.downloadedBytes, 0))} across {packs.length} {packs.length === 1 ? "copy" : "copies"}</dd></div>
+          <div><dt>Estimated space left</dt><dd>{storage.quota === null || storage.usage === null ? "Not available" : formatBytes(Math.max(0, storage.quota - storage.usage))}</dd></div>
+        </dl> : <p role="status">{problem === null ? "Checking saved copies…" : "Saved copies could not be checked."}</p>}
+        {activePack !== undefined && currentShellBuildNeedsStage && availableForNewSessions ? <a className="button button-primary" href="#stored-packs-heading">Review available download</a> : null}
+      </>, headerMount)}
       {problem === null ? null : (
         <section className="local-data-error" role="alert" aria-labelledby="pack-error-heading">
           <h2 id="pack-error-heading" ref={errorHeading} tabIndex={-1}>This offline action stopped</h2>

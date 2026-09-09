@@ -1,0 +1,45 @@
+{
+  "captures": [
+    {
+      "name": "settings-empty",
+      "width": 1248
+    },
+    {
+      "name": "settings-saved",
+      "width": 1248
+    },
+    {
+      "name": "offline-empty",
+      "width": 1248
+    },
+    {
+      "name": "offline-staged",
+      "width": 1248
+    },
+    {
+      "name": "offline-active",
+      "width": 1248
+    },
+    {
+      "name": "settings-empty",
+      "width": 384
+    },
+    {
+      "name": "settings-saved",
+      "width": 384
+    },
+    {
+      "name": "offline-empty",
+      "width": 384
+    },
+    {
+      "name": "offline-staged",
+      "width": 384
+    },
+    {
+      "name": "offline-active",
+      "width": 384
+    }
+  ],
+  "errors": []
+}

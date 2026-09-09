@@ -41,3 +41,55 @@ Remaining Offline work includes storage-unavailable visual evidence and final co
 Blocking IndexedDB open produces “Saved downloads could not be checked,” not the empty-copy state. The page hides download actions and retains Check again. It now also links directly to readable tool references and explains that saving practice responses requires working browser storage. This corrects the prototype’s overbroad claim that practice works whenever connected; durable commit-before-feedback remains required.
 
 `capture-offline-unavailable.mjs` captures this state at 608/384 CSS pixels without page errors or horizontal overflow. The compact capture was visually inspected. A new browser regression verifies the nonempty-state wording, absence of download actions, and working Atlas navigation while storage is blocked. All five utility recovery tests and the production build/artifact checks pass. The error heading at page level remains focused by the existing recovery logic.
+
+## Saved-work and installed-copy summaries
+
+Settings now shows current counts for question answers, scene responses, finished
+reviews, simulations and print jobs above the saved-work actions. It reuses the
+existing read-only multi-store count transaction; it does not load answer payloads
+or create a delete confirmation. Draft question/hazard sessions and simulation
+submission records are not counted a second time as separate learner activities.
+Preferences, correction drafts, import quarantine and downloaded files are outside
+this activity summary. Export's existing contents disclosure still explains its
+broader scope. No prototype record count or “saved since” date is invented.
+
+The summary loads independently of preferences, refreshes after data actions and
+on window focus/history restoration, and discards obsolete read results. A failed
+read says counts are unavailable instead of replacing history with zeros. These
+reads do not change saved records or affect the commit-before-feedback boundary.
+
+Offline's prominent header now reflects the reconciled active copy and displays
+its version, actual question/scene/tool inventory, downloaded file bytes across
+saved copies, and estimated remaining browser quota when available. A staged copy
+is not described as turned on. Failed storage reads omit count/availability claims.
+Downloaded bytes are labelled as files, not total browser disk consumption; quota
+is labelled as an estimate. The existing generated header remains available with
+JavaScript disabled. The React island owns the dynamic header through a portal
+into that same section, keeping the shared page layout intact.
+
+`capture-utility-summaries.mjs` records ten captures at 1248/384 CSS widths: empty
+and returning Settings, and empty/staged/active Offline. It creates a real saved
+answer and installs/activates a real verified pack. The separate
+`capture-utility-summary-unavailable.mjs` records four blocked-storage captures.
+Both manifests have no page errors. Desktop header facts form four columns; mobile
+facts stack and the Settings summary wraps without document overflow. Real pack
+size, browser quota and full released pack name differ from the prototype fixtures.
+
+Validation: root build/artifact checks pass (526 routes, 220 item-scoped artifacts,
+291 delivery assets), as do all five workspace typechecks and browser typechecking.
+All 21 utility recovery checks pass across Chromium, Firefox and WebKit, including
+two new summary tests for a real answer followed by scoped deletion, and a failed
+count read with preferences still available. The broader local-data/pack/rebuild
+run passed 44 checks and retained 12 existing browser exclusions; four Chromium
+checks initially stopped on ambiguous pack-name text selectors after names appeared
+in the header too. Those selectors now explicitly target the pack-list heading.
+All four subsequently pass, including actual staged-pack verification and offline
+study. The final targeted run also passed all six summary checks (10 passes total,
+eight existing browser exclusions); no new skips were introduced.
+
+Settings' final measured JavaScript closure is 485973 bytes raw, 146199 gzip,
+122766 brotli, compared with 484994/145997/122667 before this work. The read-only
+summary and its refresh/unknown states need a small Settings-only allowance of
+486500/146500/123500. Other families retain the existing 485000/146000/123000 limits;
+Offline remains well below them. This is a bounded feature allowance, not removal
+of the artifact budget gate.

@@ -2155,10 +2155,15 @@ export const verify = async (): Promise<void> => {
   // Keep a bounded allowance for that feature, not an unconstrained exemption.
   const bundleBudgets = { raw: 485_000, gzip: 146_000, brotli: 123_000 } as const
   for (const [family, measurement] of bundleReports) {
+    // Settings adds a read-only saved-work summary with refresh and unknown states.
+    // Keep its small allowance local; all other island limits remain unchanged.
+    const limit = family === "settings"
+      ? { raw: 486_500, gzip: 146_500, brotli: 123_500 }
+      : bundleBudgets
     for (const format of ["raw", "gzip", "brotli"] as const) {
-      if (measurement[format] > bundleBudgets[format]) {
+      if (measurement[format] > limit[format]) {
         throw new Error(
-          `${family} ${format} closure ${measurement[format]} exceeds ${bundleBudgets[format]} bytes`
+          `${family} ${format} closure ${measurement[format]} exceeds ${limit[format]} bytes`
         )
       }
     }

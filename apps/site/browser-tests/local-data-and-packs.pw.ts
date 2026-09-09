@@ -1561,7 +1561,7 @@ test("offline-pack reconciliation quarantines malformed rows without risking val
   })
 
   await page.goto("/offline/")
-  await expect(page.getByText("Prior verified pack", { exact: true })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "Prior verified pack", exact: true })).toBeVisible()
   await expect(page.getByRole("status")).toContainText(
     "Checked the downloads saved on this device. Nothing was downloaded or changed."
   )
@@ -1645,7 +1645,7 @@ test("an already-offline pack request performs no work and succeeds only after e
   const prior = packFixture(priorPackDescriptor(), "known-offline-prior-generation", "active", 21)
   await seedPackFixtures(page, [prior], prior.id)
   await page.goto("/offline/")
-  await expect(page.getByText("Prior verified pack", { exact: true })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "Prior verified pack", exact: true })).toBeVisible()
   await expect(page.getByRole("status")).toContainText(
     "Checked the downloads saved on this device. Nothing was downloaded or changed."
   )
@@ -2015,7 +2015,7 @@ test("a quota failure during pack caching preserves the prior active generation 
   const prior = packFixture(priorPackDescriptor(), "quota-prior-generation", "active", 51)
   await seedPackFixtures(page, [prior], prior.id)
   await page.goto("/offline/")
-  await expect(page.getByText("Prior verified pack", { exact: true })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "Prior verified pack", exact: true })).toBeVisible()
   await page.evaluate((failingPath) => {
     const originalPut = Cache.prototype.put
     Cache.prototype.put = function(request: RequestInfo | URL, response: Response): Promise<void> {
@@ -2237,7 +2237,7 @@ test("a staged pack is rehashed before activation and serves Atlas and custom dr
   await seedPackFixtures(page, [prior, retired], prior.id)
 
   await page.goto("/offline/")
-  await expect(page.getByText("Prior verified pack", { exact: true })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "Prior verified pack", exact: true })).toBeVisible()
   const retiredPack = page.getByRole("listitem").filter({
     hasText: "Retired historical pack"
   })

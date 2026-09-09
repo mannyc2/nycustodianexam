@@ -238,3 +238,36 @@ test("unreadable Offline storage offers references without claiming no copies ex
   await expect(page).toHaveURL(/\/atlas\/$/)
   await expect(page.getByRole("heading", { name: "Tool atlas", exact: true })).toBeVisible()
 })
+
+test("saved-work counts reflect real answers and refresh after scoped deletion", async ({ page }) => {
+  await page.goto("/settings/")
+  const summary = page.locator("[data-saved-work-summary]")
+  await expect(summary).toHaveText("0 question answers · 0 scene responses · 0 finished reviews · 0 simulations · 0 print jobs")
+  await gotoReadyQuestion(page)
+  await page.getByRole("radio").first().check()
+  await page.getByRole("button", { name: "Save answer", exact: true }).click()
+  await expect(page.locator(".feedback-rationales")).toBeVisible()
+  await page.goto("/settings/")
+  await expect(summary).toHaveText("1 question answer · 0 scene responses · 0 finished reviews · 0 simulations · 0 print jobs")
+  await page.getByRole("button", { name: "Choose what to delete", exact: true }).click()
+  await page.getByRole("button", { name: "Preview delete", exact: true }).click()
+  await page.getByLabel("Delete exactly these previewed records from this device").check()
+  await page.getByRole("button", { name: "Delete these records", exact: true }).click()
+  await expect(page.getByRole("heading", { name: "Delete complete", exact: true })).toBeVisible()
+  await expect(summary).toHaveText("0 question answers · 0 scene responses · 0 finished reviews · 0 simulations · 0 print jobs")
+})
+
+test("unavailable saved-work counts are not shown as an empty history", async ({ page }) => {
+  await page.addInitScript((store) => {
+    const transaction = IDBDatabase.prototype.transaction
+    IDBDatabase.prototype.transaction = function(names, mode, options) {
+      if (mode === "readonly" && Array.from(typeof names === "string" ? [names] : names).includes(store)) {
+        throw new DOMException("Saved-work counts blocked", "InvalidStateError")
+      }
+      return transaction.call(this, names, mode, options)
+    }
+  }, appDatabaseStores.questionAttempts)
+  await page.goto("/settings/")
+  await expect(page.locator("[data-saved-work-summary]")).toHaveText("Saved-work counts unavailable. This does not mean your work is gone.")
+  await expect(page.getByRole("checkbox", { name: "Larger text", exact: true })).toBeEnabled()
+})

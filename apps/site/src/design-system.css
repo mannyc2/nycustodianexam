@@ -222,6 +222,10 @@
   }
   .pack-facts dt { font-weight: var(--weight-bold); }
   .pack-facts dd { margin: 0; color: var(--color-text-muted); }
+  .offline-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); gap: var(--space-5); padding-block-start: var(--space-5); border-block-start: var(--border-thin) solid var(--color-border-control); }
+  .offline-summary dt { font-size: var(--text-sm); }
+  .offline-summary dd { margin: 0; font-weight: var(--weight-bold); overflow-wrap: anywhere; }
+
   .pack-record-list li { padding: 1.25rem; background: var(--color-surface); }
   .pack-record-list li[data-pack-state="active"] { border-color: var(--color-success); }
   .pack-record-list li[data-pack-state="quarantined"] { border-color: var(--color-danger); background: var(--color-danger-surface); }

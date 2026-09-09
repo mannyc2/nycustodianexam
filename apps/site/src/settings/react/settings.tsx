@@ -22,6 +22,7 @@ import {
   type SettingsBootstrap
 } from "../model.ts"
 import { SettingsPersistence } from "../persistence.ts"
+import { appDatabaseStores } from "../../study-storage/app-database.ts"
 import {
   clearBootPreferences,
   saveBootPreferences
@@ -69,6 +70,24 @@ interface SettingsEffectRunner {
 
 const loadPreferences = Effect.flatMap(SettingsPersistence, (settings) => settings.loadPreferences())
 
+const savedWorkLabels = [
+  [appDatabaseStores.questionAttempts, "question answers"],
+  [appDatabaseStores.hazardAttempts, "scene responses"],
+  [appDatabaseStores.reviewAcknowledgements, "finished reviews"],
+  [appDatabaseStores.simulationSessions, "simulations"],
+  [appDatabaseStores.printJobs, "print jobs"]
+] as const
+
+const loadSavedWork = Effect.fn("Settings.loadSavedWork")(function*() {
+  const settings = yield* SettingsPersistence
+  const preview = yield* settings.previewReset("study-events")
+  const counts = new Map(preview.stores.map((store) => [store.name, store.records]))
+  return savedWorkLabels.map(([store, label]) => {
+    const count = counts.get(store) ?? 0
+    return `${count} ${count === 1 ? label.slice(0, -1) : label}`
+  }).join(" · ")
+})
+
 const useResultFocus = (result: unknown, heading: RefObject<HTMLHeadingElement | null>): void => {
   useEffect(() => {
     if (result !== null) heading.current?.focus()
@@ -100,6 +119,7 @@ export const SettingsIsland = ({
   const [resetPreview, setResetPreview] = useState<ResetPreview | null>(null)
   const [resetConfirmed, setResetConfirmed] = useState(false)
   const [reviewRebuild, setReviewRebuild] = useState<ReviewRebuildState>({ tag: "idle" })
+  const [savedWork, setSavedWork] = useState("Checking saved work…")
   const [busy, setBusy] = useState(false)
   const [notice, setNotice] = useState("Loading local settings…")
   const [problem, setProblem] = useState<LocalFailureReport | null>(null)
@@ -151,6 +171,29 @@ export const SettingsIsland = ({
       active = false
     }
   }, [runtime])
+
+  useEffect(() => {
+    let generation = 0
+    let active = true
+    const refresh = (): void => {
+      const current = ++generation
+      setSavedWork("Checking saved work…")
+      if (busy) return
+      void runtime.runPromise(loadSavedWork()).then((summary) => {
+        if (active && current === generation) setSavedWork(summary)
+      }).catch(() => {
+        if (active && current === generation) setSavedWork("Saved-work counts unavailable. This does not mean your work is gone.")
+      })
+    }
+    refresh()
+    window.addEventListener("focus", refresh)
+    window.addEventListener("pageshow", refresh)
+    return () => {
+      active = false
+      window.removeEventListener("focus", refresh)
+      window.removeEventListener("pageshow", refresh)
+    }
+  }, [runtime, busy])
 
   useResultFocus(problem, problemHeading)
   useResultFocus(importPlan, resultHeading)
@@ -417,7 +460,9 @@ export const SettingsIsland = ({
       </section>
 
       <section className="settings-data" aria-labelledby="saved-work-heading">
-        <div className="section-header"><h2 id="saved-work-heading">Your saved work</h2></div>
+        <div className="section-header"><h2 id="saved-work-heading">Your saved work</h2>
+          <p data-saved-work-summary="" role="status">{savedWork}</p>
+        </div>
         <ul className="task-cards settings-task-cards">
           {[
             {
