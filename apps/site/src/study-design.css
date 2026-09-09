@@ -220,3 +220,15 @@
     .review-page .review-confirmation-actions { display: grid; }
   }
 }
+
+@layer overrides {
+  @media (max-width: 47.99rem) {
+    .review-page .review-reason-list { margin: 0; padding: 0; list-style: none; gap: 0.125rem; font-size: 0.8125rem; text-wrap: pretty; }
+  }
+}
+
+@layer overrides {
+  @media (min-width: 48rem) {
+    .review-page .study-hero .figure-strip:has(> div:nth-child(4)) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+}

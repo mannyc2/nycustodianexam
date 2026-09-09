@@ -1,0 +1,74 @@
+{
+  "fixture": "Seven real flagged question saves; one deliberately mismatched receipt; one review finished. No hazard responses in this fixture.",
+  "captures": [
+    {
+      "file": "all-1248.png",
+      "width": 1248,
+      "filter": "All",
+      "visibleItems": 5
+    },
+    {
+      "file": "missed-1248.png",
+      "width": 1248,
+      "filter": "Missed",
+      "visibleItems": 4
+    },
+    {
+      "file": "flagged-1248.png",
+      "width": 1248,
+      "filter": "Flagged",
+      "visibleItems": 5
+    },
+    {
+      "file": "confirmation-1248.png",
+      "width": 1248
+    },
+    {
+      "file": "unavailable-1248.png",
+      "width": 1248
+    },
+    {
+      "file": "history-1248.png",
+      "width": 1248
+    },
+    {
+      "file": "hero-1248.png",
+      "width": 1248
+    },
+    {
+      "file": "all-384.png",
+      "width": 384,
+      "filter": "All",
+      "visibleItems": 5
+    },
+    {
+      "file": "missed-384.png",
+      "width": 384,
+      "filter": "Missed",
+      "visibleItems": 4
+    },
+    {
+      "file": "flagged-384.png",
+      "width": 384,
+      "filter": "Flagged",
+      "visibleItems": 5
+    },
+    {
+      "file": "confirmation-384.png",
+      "width": 384
+    },
+    {
+      "file": "unavailable-384.png",
+      "width": 384
+    },
+    {
+      "file": "history-384.png",
+      "width": 384
+    },
+    {
+      "file": "hero-384.png",
+      "width": 384
+    }
+  ],
+  "errors": []
+}

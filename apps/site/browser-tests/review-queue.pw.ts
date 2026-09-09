@@ -88,6 +88,7 @@ test("an exact receipt mismatch is quarantined without loading or substituting f
   await expect(page.getByRole("heading", { name: "0 items to review" })).toBeVisible()
   await expect(page.getByRole("heading", { name: "Unavailable saved attempts" }))
     .toBeVisible()
+  await expect(page.locator(".study-hero .figure-strip > div").filter({ has: page.locator("dt", { hasText: "Unavailable attempts" }) }).locator("dd")).toHaveText("1")
   const unavailable = page.getByRole("region", { name: "Unavailable saved attempts" })
   await expect(unavailable.getByRole("listitem")).toContainText("This saved attempt can’t be displayed.")
   await expect(unavailable.getByRole("listitem")).toContainText("Jan 1, 1970")

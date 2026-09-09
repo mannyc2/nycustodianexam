@@ -208,3 +208,34 @@ All three pre-fix coverage checks failed on the viewport assertion. After the fi
 nine checks passed across all three browsers: coverage viewport/focus, builder
 setup navigation/focus, and storage-unavailable focus. Root build/artifact
 verification passed. No document layout or saved-content contracts changed.
+
+## Review multi-item inventory comparison
+
+`capture-review-inventory.mjs` produces fourteen section captures in
+`review-inventory-audit/` at 1248/384 CSS widths. It saves seven flagged question
+answers through the real player, deliberately changes one saved receipt hash to
+exercise unavailable-record quarantine, and explicitly finishes one review. The
+remaining queue has five items: four missed and five flagged. It captures All,
+Missed, and Flagged panels; confirmation; unavailable records; finished history;
+and the header. This fixture contains questions only, not hazard responses, and
+does not fabricate the prototype's answer text or saved dates.
+
+Compared compact queue/unavailable sections with reference 21 and inspected the
+desktop header. Added the missing unavailable-attempt summary count using the
+same derived list as the unavailable section. With four summary facts, desktop
+uses four columns; compact uses two. Compact reasons now match the prototype's
+13px text, 2px row gap, and unbulleted layout. Explicit list semantics remain.
+Primary explanation and quieter confirmation actions remain distinct.
+
+Root build/artifact verification and site typecheck pass. Six Review regression
+checks pass across Chromium, Firefox, and WebKit, including the new unavailable
+count assertion, exact-receipt quarantine, and preserved finished history. Capture
+checks verify five ready records, one unavailable record, one finished review,
+filter switching, the actual summary count, responsive column counts, cancellation
+focus, and no horizontal overflow/page errors. The final desktop-column CSS change
+was verified in Chromium captures after those browser tests.
+
+This supersedes the single-item evidence for queue density and unavailable counts.
+Mixed question/hazard inventory and the dedicated cleared/read-failed/finish-failed
+reference widths still need a final comparison; native-font differences remain
+documented rather than compensated with fabricated content.

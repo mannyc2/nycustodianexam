@@ -24,7 +24,7 @@ const reasonLabel = (reason: ReviewReason): string => {
 }
 
 const ReviewReasons = ({ reasons }: { readonly reasons: ReadonlyArray<ReviewReason> }) => (
-  <ul className="review-reason-list">
+  <ul className="review-reason-list" role="list">
     {reasons.map((reason, index) => (
       <li key={`${reason.tag}-${index}`}>{reasonLabel(reason)}</li>
     ))}
@@ -113,6 +113,8 @@ export const ReviewQueueIsland = ({ controller, activityState, onRetryHistory }:
     ? { tag: "ready" as const, activity: includeUnavailableReviews(activityState.activity, quarantined) }
     : activityState
 
+  const unavailableAttempts = historyState.tag === "ready" ? historyState.activity.unavailableAttempts : quarantined.map((entry) => ({ id: entry.attemptId, recordedAt: entry.committedAt ?? null, label: entry.kind === "question" ? "Question attempt" : "Visual hazard attempt" }))
+
   useEffect(() => { if (focusError) errorHeadingRef.current?.focus() }, [focusError])
   useEffect(() => { if (focusCompletedEmpty) emptyHeadingRef.current?.focus() }, [focusCompletedEmpty])
   useEffect(() => { if (filteredEmpty) filteredHeadingRef.current?.focus() }, [filteredEmpty])
@@ -150,6 +152,7 @@ export const ReviewQueueIsland = ({ controller, activityState, onRetryHistory }:
         <div><dt>Ready for review</dt><dd>{items.length} {items.length === 1 ? "item" : "items"}</dd></div>
         <div><dt>Missed or misidentified</dt><dd>{missed}</dd></div>
         <div><dt>Flagged by you</dt><dd>{flagged}</dd></div>
+        {unavailableAttempts.length > 0 ? <div><dt>Unavailable attempts</dt><dd>{unavailableAttempts.length}</dd></div> : null}
       </dl>}
     </section>}
 
@@ -181,7 +184,7 @@ export const ReviewQueueIsland = ({ controller, activityState, onRetryHistory }:
         {filtered.length === 0 ? <div className="empty-state"><h3 className="empty-state-heading" ref={filteredHeadingRef} tabIndex={-1}>No {scope === "all" ? "review" : scope} items in this view</h3><p>{items.length > 0 ? "Choose All to return to the complete queue." : "Unavailable saved attempts are listed below."}</p>{items.length > 0 ? <div className="empty-state-actions"><button className="button button-secondary" type="button" onClick={() => setScope("all")}>Show all review items</button></div> : null}</div> : <ol className="review-queue-list">{filtered.map((item) => <ReviewItem key={item.id} acknowledging={state.tag === "ready" && state.acknowledgingItemId === item.id} disabled={state.tag === "recoverable_error" || busy} item={item} onAcknowledge={(itemId) => { acknowledgementFocusId.current = itemId; controller.dispatch({ tag: "acknowledge", itemId }) }} />)}</ol>}
       </div>
     </section> : null}
-    <UnavailableAttempts attempts={historyState.tag === "ready" ? historyState.activity.unavailableAttempts : quarantined.map((entry) => ({ id: entry.attemptId, recordedAt: entry.committedAt ?? null, label: entry.kind === "question" ? "Question attempt" : "Visual hazard attempt" }))} headingId="review-unavailable-heading" />
+    <UnavailableAttempts attempts={unavailableAttempts} headingId="review-unavailable-heading" />
     <ActivityHistory state={historyState} reviewsOnly onRetry={onRetryHistory} />
     <section className="study-section" aria-labelledby="review-how-heading">
       <div className="section-header"><h2 id="review-how-heading">How review works</h2></div>
