@@ -548,3 +548,12 @@ source provenance. Two archive tests verify the runtime inventory shape and
 exact q091 receipt hashes/lengths; site typecheck passes. This is preservation
 only: historical page generation still consumes v3, and the v4 archive must be
 integrated before publishing the revised question.
+
+
+Historical generation, registry assembly, and the artifact verifier now iterate
+all older retained inventories rather than a hard-coded version-3 singleton.
+Version 4 is excluded while current, preventing duplicate trusted registry keys;
+a future version 5 selects v3 and v4. Twelve archive/registry tests, site typecheck,
+and the full 939-route build pass. This does not yet prove v5 restoration:
+retained q091 artifact loading/publication must replace current-item lookup before
+its content changes, and actual upgrade tests remain required.

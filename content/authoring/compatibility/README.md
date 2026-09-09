@@ -20,7 +20,11 @@ original-practice feedback and must never enter an initial document, executable
 bundle, or safe precache. It may only be published as an item-scoped postcommit
 artifact subject to the existing durable-commit-before-read boundary.
 
-The version-4 inventory is staged for the next release, not yet consumed by page
-generation. Before changing q091, wire historical generation, retained artifact
-publication, offline inventory, and trusted receipt registry to it, then verify
-actual old saved answers and unfinished simulations through the release upgrade.
+Page generation, trusted registry assembly, and artifact verification now select
+all archived inventories older than the current pack version through
+`scripts/release-history.ts`. Version 4 is excluded while it remains current;
+version 5 will include both retained inventories. Exact artifact hash/length
+checks remain mandatory and currently require matching release artifacts.
+Before changing q091, connect retained artifact loading and publication (including
+offline inventory), then verify actual old saved answers and unfinished
+simulations through the release upgrade.

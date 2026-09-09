@@ -1,3 +1,4 @@
+import { previousReleaseInventories } from "../../../scripts/release-history.ts"
 import { createHash } from "node:crypto"
 import { readFileSync } from "node:fs"
 import { describe, expect, it } from "vitest"
@@ -12,6 +13,12 @@ const retained = (path: string) => readFileSync(new URL(
 const digest = (bytes: Uint8Array) => createHash("sha256").update(bytes).digest("hex")
 
 describe("retained version-4 question history", () => {
+  it("activates all older inventories without duplicating the current release", () => {
+    expect(previousReleaseInventories({ releaseId: "launch-v1", packVersion: 4 }).map(item => item.packVersion)).toEqual([3])
+    expect(previousReleaseInventories({ releaseId: "launch-v1", packVersion: 5 }).map(item => item.packVersion)).toEqual([3, 4])
+    expect(previousReleaseInventories({ releaseId: "another-release", packVersion: 5 })).toEqual([])
+  })
+
   it("keeps the complete receipt inventory without recursively copying older releases", () => {
     const queue = Schema.decodeUnknownSync(ReviewQueueBootstrap)(archive.reviewQueue)
     expect(queue.questions).toHaveLength(91)

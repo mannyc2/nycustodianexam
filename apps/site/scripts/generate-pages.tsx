@@ -1,5 +1,5 @@
 import { resolveAnnouncementTimeline } from "./announcement-timeline.ts"
-import historicalV3 from "../../../content/authoring/compatibility/launch-v1-v3-review.json"
+import { previousReleaseInventories } from "../../../scripts/release-history.ts"
 import { resolveFilingStatusReviews } from "./filing-status.ts"
 import { setupDestinations } from "../src/practice/setup-navigation.ts"
 import { questionCategoryFromSafeMetadata } from "../src/question-category.ts"
@@ -782,6 +782,7 @@ const buildPages = ({
   readonly pages: ReadonlyArray<PageDefinition>
   readonly printBootstrap: PrintBuilderBootstrap
 } => {
+  const historicalReleases = previousReleaseInventories(manifest)
   const filingReviews = resolveFilingStatusReviews(catalog)
   const sourceById = new Map(catalog.sources.map((source) => [source.id, source]))
   const sourceLineById = new Map(catalog.sourceLines.map((line) => [line.id, line]))
@@ -917,12 +918,12 @@ const buildPages = ({
           }
         ]
       }),
-      ...historicalV3.reviewQueue.questions.map(source => ({
+      ...historicalReleases.flatMap(archive => archive.reviewQueue.questions).map(source => ({
         releaseId: source.receipt.releaseId, packVersion: source.receipt.packVersion,
         variant: "question", itemId: source.id, optionIds: source.optionIds,
         postcommitReceipt: { postcommitPath: source.receipt.postcommitPath, postcommitBytes: source.receipt.postcommitBytes, postcommitSha256: source.receipt.postcommitSha256 }
       })),
-      ...historicalV3.reviewQueue.scenes.flatMap(source => {
+      ...historicalReleases.flatMap(archive => archive.reviewQueue.scenes).flatMap(source => {
         const shared = { releaseId: source.visualReceipt.releaseId, packVersion: source.visualReceipt.packVersion,
           itemId: source.scene.id, allowedZoneOrders: source.scene.neutralPreAnswer.zones.map(zone => zone.order),
           assetRevision: source.visualReceipt.assetRevision, assetMasterSha256: source.visualReceipt.assetMasterSha256,
@@ -1157,28 +1158,30 @@ const buildPages = ({
   )
   const scopeList = `<ol class="home-scope-list home-scope-list-framed">${subjectAreas.map((area, index) => `<li class="home-scope-row"><span aria-hidden="true">${index + 1}</span><div><h3>${escapeHtml(area)}</h3>${subjectDescriptions[area] === undefined ? "" : `<p>${escapeHtml(subjectDescriptions[area])}</p>`}</div><a class="button button-secondary" href="${index === 2 ? "/hazards/" : "/atlas/"}">${index === 2 ? "Hazard scenes" : "Tool atlas"}</a></li>`).join("")}</ol>`
   const reviewedDates = [...new Set(catalog.profiles.map((profile) => profile.contentAvailability.lastVerifiedOn))]
-  const historicalPrefix = `/history/${historicalV3.releaseId}-v${historicalV3.packVersion}`
-  const historicalQuestions = historicalV3.reviewQueue.questions.map(source => ({ ...source, itemUrl: historicalPrefix + source.itemUrl }))
-  const historicalPractice = historicalV3.reviewQueue.practiceQuestions.map(source => ({ ...source, itemUrl: historicalPrefix + source.itemUrl }))
-  for (const old of historicalV3.precommitReceipts) {
-    const current = manifest.artifacts.find(artifact => `/content/vertical-slice/${artifact.path}` === old.path)
-    if (current === undefined || current.sha256 !== old.sha256 || current.bytes !== old.bytes) throw new Error(`Historical question stimulus unavailable: ${old.path}`)
-  }
-  for (const old of historicalQuestions) {
-    const current = questionPostcommitById.get(old.id)
-    if (current === undefined || current.sha256 !== old.receipt.postcommitSha256 || current.bytes !== old.receipt.postcommitBytes) throw new Error(`Historical question feedback unavailable: ${old.id}`)
-  }
-  const historicalScenes = historicalV3.reviewQueue.scenes.map(source => ({ ...source,
-    visualItemUrl: historicalPrefix + source.visualItemUrl, nonvisualItemUrl: historicalPrefix + source.nonvisualItemUrl }))
-  for (const old of historicalV3.scenePrecommitReceipts) {
-    const current = manifest.artifacts.find(artifact => `/content/vertical-slice/${artifact.path}` === old.path)
-    if (current === undefined || current.sha256 !== old.sha256 || current.bytes !== old.bytes) throw new Error(`Historical scene stimulus unavailable: ${old.path}`)
-  }
-  for (const old of historicalScenes) {
-    const current = scenePostcommitById.get(old.scene.id)
-    if (current === undefined || current.sha256 !== old.visualReceipt.postcommitSha256 || current.bytes !== old.visualReceipt.postcommitBytes) throw new Error(`Historical scene feedback unavailable: ${old.scene.id}`)
-  }
-  const previousInventories = [{ questions: historicalQuestions, practiceQuestions: historicalPractice, scenes: historicalScenes }]
+  const previousInventories = historicalReleases.map(archive => {
+    const historicalPrefix = `/history/${archive.releaseId}-v${archive.packVersion}`
+    const historicalQuestions = archive.reviewQueue.questions.map(source => ({ ...source, itemUrl: historicalPrefix + source.itemUrl }))
+    const historicalPractice = archive.reviewQueue.practiceQuestions.map(source => ({ ...source, itemUrl: historicalPrefix + source.itemUrl }))
+    for (const old of archive.precommitReceipts) {
+      const current = manifest.artifacts.find(artifact => `/content/vertical-slice/${artifact.path}` === old.path)
+      if (current === undefined || current.sha256 !== old.sha256 || current.bytes !== old.bytes) throw new Error(`Historical question stimulus unavailable: ${old.path}`)
+    }
+    for (const old of historicalQuestions) {
+      const current = questionPostcommitById.get(old.id)
+      if (current === undefined || current.sha256 !== old.receipt.postcommitSha256 || current.bytes !== old.receipt.postcommitBytes) throw new Error(`Historical question feedback unavailable: ${old.id}`)
+    }
+    const historicalScenes = archive.reviewQueue.scenes.map(source => ({ ...source,
+      visualItemUrl: historicalPrefix + source.visualItemUrl, nonvisualItemUrl: historicalPrefix + source.nonvisualItemUrl }))
+    for (const old of archive.scenePrecommitReceipts) {
+      const current = manifest.artifacts.find(artifact => `/content/vertical-slice/${artifact.path}` === old.path)
+      if (current === undefined || current.sha256 !== old.sha256 || current.bytes !== old.bytes) throw new Error(`Historical scene stimulus unavailable: ${old.path}`)
+    }
+    for (const old of historicalScenes) {
+      const current = scenePostcommitById.get(old.scene.id)
+      if (current === undefined || current.sha256 !== old.visualReceipt.postcommitSha256 || current.bytes !== old.visualReceipt.postcommitBytes) throw new Error(`Historical scene feedback unavailable: ${old.scene.id}`)
+    }
+    return { questions: historicalQuestions, practiceQuestions: historicalPractice, scenes: historicalScenes }
+  })
   const reviewBootstrap = {
     ...canonicalReviewBootstrap,
     previousInventories,
@@ -1730,32 +1733,34 @@ const buildPages = ({
     }))
   })
 
-  const historicalInventory = Schema.decodeUnknownSync(ReviewQueueBootstrap)({ ...canonicalReviewBootstrap, previousInventories }).previousInventories![0]!
-  for (const source of [...historicalInventory.questions, ...historicalInventory.practiceQuestions]) {
-    const question = questions.find(entry => entry.value.id === source.id)?.value
-    if (question === undefined) throw new Error(`Missing historical question ${source.id}`)
-    pages.push(questionPage({
-      canonicalPath: source.itemUrl,
-      context: "review",
-      count: source.receipt.sessionId === historicalV3.releaseId ? historicalInventory.questions.length : historicalInventory.practiceQuestions.filter(entry => entry.receipt.sessionId === source.receipt.sessionId).length,
-      position: source.receipt.position,
-      receipt: source.receipt,
-      question,
-      routeId: "review-player"
-    }))
-  }
-  for (const source of historicalInventory.questions) {
-    const question = questions.find(entry => entry.value.id === source.id)!.value
-    pages.push(questionPage({
-      canonicalPath: source.itemUrl.replace("/review/session/", "/practice/session/").replace("/item/", "/question/"),
-      practiceInventory: historicalInventory.questions,
-      context: "review",
-      count: historicalInventory.questions.length,
-      position: source.receipt.position,
-      receipt: source.receipt,
-      question,
-      routeId: "review-player"
-    }))
+  const historicalInventories = Schema.decodeUnknownSync(ReviewQueueBootstrap)({ ...canonicalReviewBootstrap, previousInventories }).previousInventories!
+  for (const historicalInventory of historicalInventories) {
+    for (const source of [...historicalInventory.questions, ...historicalInventory.practiceQuestions]) {
+      const question = questions.find(entry => entry.value.id === source.id)?.value
+      if (question === undefined) throw new Error(`Missing historical question ${source.id}`)
+      pages.push(questionPage({
+        canonicalPath: source.itemUrl,
+        context: "review",
+        count: source.receipt.sessionId === source.receipt.releaseId ? historicalInventory.questions.length : historicalInventory.practiceQuestions.filter(entry => entry.receipt.sessionId === source.receipt.sessionId).length,
+        position: source.receipt.position,
+        receipt: source.receipt,
+        question,
+        routeId: "review-player"
+      }))
+    }
+    for (const source of historicalInventory.questions) {
+      const question = questions.find(entry => entry.value.id === source.id)!.value
+      pages.push(questionPage({
+        canonicalPath: source.itemUrl.replace("/review/session/", "/practice/session/").replace("/item/", "/question/"),
+        practiceInventory: historicalInventory.questions,
+        context: "review",
+        count: historicalInventory.questions.length,
+        position: source.receipt.position,
+        receipt: source.receipt,
+        question,
+        routeId: "review-player"
+      }))
+    }
   }
   const firstQuestion = questions[0]?.value
   const firstQuestionArtifact = firstQuestion === undefined
@@ -1803,15 +1808,18 @@ const buildPages = ({
     }))
   })
 
-  for (const source of historicalInventory.scenes) {
-    for (const mode of ["visual", "nonvisual"] as const) {
-      const receipt = mode === "visual" ? source.visualReceipt : source.nonvisualReceipt
-      pages.push(hazardPage({
-        canonicalPath: mode === "visual" ? source.visualItemUrl : source.nonvisualItemUrl,
-        count: historicalInventory.scenes.length, drillInventory: historicalInventory.scenes,
-        mode, position: receipt.position, receipt, scene: source.scene
-      }))
+  for (const historicalInventory of historicalInventories) {
+    for (const source of historicalInventory.scenes) {
+      for (const mode of ["visual", "nonvisual"] as const) {
+        const receipt = mode === "visual" ? source.visualReceipt : source.nonvisualReceipt
+        pages.push(hazardPage({
+          canonicalPath: mode === "visual" ? source.visualItemUrl : source.nonvisualItemUrl,
+          count: historicalInventory.scenes.length, drillInventory: historicalInventory.scenes,
+          mode, position: receipt.position, receipt, scene: source.scene
+        }))
+      }
     }
+
   }
 
   const packReceiptRecords = [

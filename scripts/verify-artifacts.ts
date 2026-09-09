@@ -1,4 +1,4 @@
-import historicalV3 from "../content/authoring/compatibility/launch-v1-v3-review.json"
+import { previousReleaseInventories } from "./release-history.ts"
 import { createHash } from "node:crypto"
 import { readdir } from "node:fs/promises"
 import { dirname, join, relative, resolve } from "node:path"
@@ -1288,34 +1288,36 @@ export const verify = async (): Promise<void> => {
     })
   })
 
-  const historyPrefix = `/history/${historicalV3.releaseId}-v${historicalV3.packVersion}`
-  const historySources = [
-    ...historicalV3.reviewQueue.questions,
-    ...historicalV3.reviewQueue.practiceQuestions,
-    ...historicalV3.reviewQueue.questions.map(source => ({ ...source, itemUrl: source.itemUrl.replace("/review/session/", "/practice/session/").replace("/item/", "/question/") }))
-  ]
-  for (const source of historySources) {
-    const precommit = questions.find(question => question.value.id === source.id)?.value
-    const artifact = questionPostcommitById.get(source.id)
-    const stimulusReceipt = historicalV3.precommitReceipts.find(receipt => receipt.path === `/content/vertical-slice/questions/${source.id}.precommit.json`)
-    const currentStimulus = manifest.artifacts.find(entry => entry.path === `questions/${source.id}.precommit.json`)
-    if (precommit === undefined || artifact === undefined || stimulusReceipt === undefined || currentStimulus?.sha256 !== stimulusReceipt.sha256 || currentStimulus.bytes !== stimulusReceipt.bytes ||
-      artifact.sha256 !== source.receipt.postcommitSha256 || artifact.bytes !== source.receipt.postcommitBytes) throw new Error(`Historical item closure differs: ${source.id}`)
-    expectedRoutes.push({ canonicalPath: historyPrefix + source.itemUrl, precommit, postcommitArtifact: artifact, postcommitPath: source.receipt.postcommitPath,
-      position: source.receipt.position, sessionId: source.receipt.sessionId, packVersion: source.receipt.packVersion, robots: "noindex,follow", routeId: "review-player" })
-  }
-  for (const source of historicalV3.reviewQueue.scenes) {
-    const current = scenes.find(entry => entry.value.id === source.scene.id)
-    const old = historicalV3.scenePrecommitReceipts.find(entry => entry.path === `/content/vertical-slice/scenes/${source.scene.id}.precommit.json`)
-    const stimulus = manifest.artifacts.find(entry => entry.path === `scenes/${source.scene.id}.precommit.json`)
-    const artifact = scenePostcommitById.get(source.scene.id)
-    if (current === undefined || old === undefined || stimulus?.sha256 !== old.sha256 || stimulus.bytes !== old.bytes || artifact === undefined) throw new Error(`Historical scene stimulus differs: ${source.scene.id}`)
-    for (const mode of ["visual", "nonvisual"] as const) {
-      const receipt = mode === "visual" ? source.visualReceipt : source.nonvisualReceipt
-      if (artifact.sha256 !== receipt.postcommitSha256 || artifact.bytes !== receipt.postcommitBytes) throw new Error(`Historical scene feedback differs: ${source.scene.id}`)
-      expectedRoutes.push({ canonicalPath: historyPrefix + (mode === "visual" ? source.visualItemUrl : source.nonvisualItemUrl),
-        precommit: current.value, postcommitArtifact: artifact, postcommitPath: receipt.postcommitPath, position: receipt.position,
-        sessionId: receipt.sessionId, packVersion: receipt.packVersion, hazardMode: mode, robots: "noindex,follow", routeId: "hazard-player" })
+  for (const archive of previousReleaseInventories(manifest)) {
+    const historyPrefix = `/history/${archive.releaseId}-v${archive.packVersion}`
+    const historySources = [
+      ...archive.reviewQueue.questions,
+      ...archive.reviewQueue.practiceQuestions,
+      ...archive.reviewQueue.questions.map(source => ({ ...source, itemUrl: source.itemUrl.replace("/review/session/", "/practice/session/").replace("/item/", "/question/") }))
+    ]
+    for (const source of historySources) {
+      const precommit = questions.find(question => question.value.id === source.id)?.value
+      const artifact = questionPostcommitById.get(source.id)
+      const stimulusReceipt = archive.precommitReceipts.find(receipt => receipt.path === `/content/vertical-slice/questions/${source.id}.precommit.json`)
+      const currentStimulus = manifest.artifacts.find(entry => entry.path === `questions/${source.id}.precommit.json`)
+      if (precommit === undefined || artifact === undefined || stimulusReceipt === undefined || currentStimulus?.sha256 !== stimulusReceipt.sha256 || currentStimulus.bytes !== stimulusReceipt.bytes ||
+        artifact.sha256 !== source.receipt.postcommitSha256 || artifact.bytes !== source.receipt.postcommitBytes) throw new Error(`Historical item closure differs: ${source.id}`)
+      expectedRoutes.push({ canonicalPath: historyPrefix + source.itemUrl, precommit, postcommitArtifact: artifact, postcommitPath: source.receipt.postcommitPath,
+        position: source.receipt.position, sessionId: source.receipt.sessionId, packVersion: source.receipt.packVersion, robots: "noindex,follow", routeId: "review-player" })
+    }
+    for (const source of archive.reviewQueue.scenes) {
+      const current = scenes.find(entry => entry.value.id === source.scene.id)
+      const old = archive.scenePrecommitReceipts.find(entry => entry.path === `/content/vertical-slice/scenes/${source.scene.id}.precommit.json`)
+      const stimulus = manifest.artifacts.find(entry => entry.path === `scenes/${source.scene.id}.precommit.json`)
+      const artifact = scenePostcommitById.get(source.scene.id)
+      if (current === undefined || old === undefined || stimulus?.sha256 !== old.sha256 || stimulus.bytes !== old.bytes || artifact === undefined) throw new Error(`Historical scene stimulus differs: ${source.scene.id}`)
+      for (const mode of ["visual", "nonvisual"] as const) {
+        const receipt = mode === "visual" ? source.visualReceipt : source.nonvisualReceipt
+        if (artifact.sha256 !== receipt.postcommitSha256 || artifact.bytes !== receipt.postcommitBytes) throw new Error(`Historical scene feedback differs: ${source.scene.id}`)
+        expectedRoutes.push({ canonicalPath: historyPrefix + (mode === "visual" ? source.visualItemUrl : source.nonvisualItemUrl),
+          precommit: current.value, postcommitArtifact: artifact, postcommitPath: receipt.postcommitPath, position: receipt.position,
+          sessionId: receipt.sessionId, packVersion: receipt.packVersion, hazardMode: mode, robots: "noindex,follow", routeId: "hazard-player" })
+      }
     }
   }
   for (const route of expectedRoutes) assertCanonicalRouteId(route.routeId)
