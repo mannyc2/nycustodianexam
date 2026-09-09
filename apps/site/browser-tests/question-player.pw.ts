@@ -10,7 +10,7 @@ import {
   recordedAnnouncements
 } from "./question-player-fixtures.ts"
 
-test("commit is durable before feedback fetch and survives reload", async ({ context, page }) => {
+test("commit is durable before feedback fetch and survives reload", { tag: "@cross-browser" }, async ({ context, page }) => {
   await gotoReadyQuestion(page)
 
   let attemptObservedAtFetch: Awaited<ReturnType<typeof readStoredAttempt>>
@@ -128,7 +128,7 @@ test("session start pushes history while Next replaces the current position", as
     .toBeVisible()
 })
 
-test("an injected IndexedDB write failure never reveals or requests feedback", async ({ page }) => {
+test("an injected IndexedDB write failure never reveals or requests feedback", { tag: "@cross-browser" }, async ({ page }) => {
   await gotoReadyQuestion(page)
 
   let postcommitRequests = 0
@@ -159,7 +159,7 @@ test("an injected IndexedDB write failure never reveals or requests feedback", a
   expect(await readStoredAttempt(page)).toBeUndefined()
 })
 
-test("keyboard selection drives focus and polite status announcements", async ({ page }) => {
+test("keyboard selection drives focus and polite status announcements", { tag: "@cross-browser" }, async ({ page }) => {
   await gotoReadyQuestion(page)
   await installAnnouncementRecorder(page)
 

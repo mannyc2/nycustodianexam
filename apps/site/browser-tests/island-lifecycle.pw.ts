@@ -162,7 +162,7 @@ for (const fixture of [
   })
 }
 
-test("question input and saved Review survive their appropriate page lifecycle", async ({ page }) => {
+test("question input and saved Review survive their appropriate page lifecycle", { tag: "@cross-browser" }, async ({ page }) => {
   const errors: string[] = []
   page.on("pageerror", (error) => errors.push(error.message))
   await page.goto("/practice/session/launch-v1/question/1/")
@@ -194,7 +194,7 @@ test("question input and saved Review survive their appropriate page lifecycle",
   expect(errors).toEqual([])
 })
 
-test("saved Print preview restores the same packet after root cleanup", async ({ page }) => {
+test("saved Print preview restores the same packet after root cleanup", { tag: "@cross-browser" }, async ({ page }) => {
   await page.addInitScript(() => {
     const registered = new Map<string, Set<EventListenerOrEventListenerObject>>()
     const record = (type: string, listener: EventListenerOrEventListenerObject, adding: boolean) => {

@@ -1850,6 +1850,7 @@ const buildPages = ({
   ]
   const firstPackNavigation = packNavigationRecords[0]
   if (firstPackNavigation === undefined) throw new Error("Offline pack has no navigation closure")
+  const publicationTime = process.env.NYCUSTODIAN_PUBLICATION_TIME ?? null
   const offlinePackDescriptor = assertClosedOfflinePackDescriptor(
     new OfflinePackDescriptor({
       schemaVersion: 1,
@@ -1858,8 +1859,8 @@ const buildPages = ({
       packVersion: manifest.packVersion,
       locale: manifest.locale,
       label: `${catalog.profiles[0]?.label ?? "New York entry-level study"} offline pack`,
-      lifecycle: "preview",
-      publicationTime: null,
+      lifecycle: publicationTime === null ? "preview" : "published",
+      publicationTime,
       compatibility: [firstCompatibility, ...compatibilityRecords.slice(1)],
       counts: {
         profiles: manifest.profileCount,

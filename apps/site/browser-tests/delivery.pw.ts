@@ -12,7 +12,9 @@ test("@cloudflare serves canonical nested documents with the intended route iden
     const response = await page.goto(route.path)
     expect(response?.status()).toBe(200)
     await expect(page.locator("body")).toHaveAttribute("data-route-id", route.id)
-    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", route.canonical)
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", process.env.NYCUSTODIAN_CANONICAL_ORIGIN
+      ? new URL(route.canonical, process.env.NYCUSTODIAN_CANONICAL_ORIGIN).href
+      : route.canonical)
   }
 })
 

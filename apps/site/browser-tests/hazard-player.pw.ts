@@ -141,7 +141,7 @@ for (const failure of ["missing", "corrupt"] as const) {
   })
 }
 
-test("phone and keyboard users can pan a zoomed scene and reset the whole-image view", async ({
+test("phone and keyboard users can pan a zoomed scene and reset the whole-image view", { tag: "@cross-browser" }, async ({
   page
 }) => {
   await page.setViewportSize({ height: 720, width: 320 })
@@ -178,7 +178,7 @@ test("phone and keyboard users can pan a zoomed scene and reset the whole-image 
   }))).toEqual({ fitsHorizontally: true, fitsVertically: true, left: 0, top: 0 })
 })
 
-test("visual markers are durable before feedback fetch and restore exactly", async ({
+test("visual markers are durable before feedback fetch and restore exactly", { tag: "@cross-browser" }, async ({
   context,
   page
 }) => {
@@ -462,7 +462,7 @@ test("an IndexedDB write failure focuses recovery and never requests or reveals 
   await expect(page.getByRole("button", { name: "Retry saving response" })).toBeEnabled()
 })
 
-test("keyboard-only nonvisual zone selection commits before feedback", async ({ context, page }) => {
+test("keyboard-only nonvisual zone selection commits before feedback", { tag: "@cross-browser" }, async ({ context, page }) => {
   await gotoReadyNonvisualHazard(page)
 
   let attemptObservedAtFetch: StoredHazardAttempt | undefined

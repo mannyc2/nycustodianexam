@@ -1,7 +1,7 @@
 import { expect } from "@playwright/test"
 import { test } from "./offline-origin-fixtures.ts"
 
-test("downloaded illustrated question opens, saves, and restores feedback with its origin disconnected", async ({ page, offlineOrigin }) => {
+test("downloaded illustrated question opens, saves, and restores feedback with its origin disconnected", { tag: "@cross-browser" }, async ({ page, offlineOrigin }) => {
   test.setTimeout(120000)
   await page.setViewportSize({ width: 384, height: 900 })
   await page.goto(offlineOrigin.url + "/offline/")

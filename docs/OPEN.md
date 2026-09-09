@@ -423,3 +423,16 @@ Status: optional / deferred.
   evidence remains in the P16 implementation-gate list above.
 
 Keep this file as the single queue of unresolved truth claims. When an item is resolved, update the relevant canonical document and retain a short resolution note here if the former conflict is important to provenance.
+
+### CI/CD update — 2026-09-09
+
+`nycustodianexam.com` was verified as an active zone in the connected
+Cloudflare account. No Worker custom domain was attached at inspection time.
+The GitHub `cloudflare-preview` environment has Cloudflare credentials and
+`CANONICAL_DOMAIN=nycustodianexam.com`; the `production` environment initially
+had no secrets and retains a required-reviewer rule. Current workflow changes
+queue tested main artifacts for that protected production environment.
+Activation still requires production credentials and a successful published
+workflow/deployment. This does not close manual accessibility or print gaps.
+The historical production certification record is retained as dated evidence;
+see the current operating policy in `product/ARCHITECTURE_CONSTRAINTS.md`.
