@@ -1,3 +1,4 @@
+import { NeutralZoneInputs } from "./neutral-zone-inputs.tsx"
 import { draftFromState, isEditableHazardState } from "../state.ts"
 import { useHazardPlayer } from "./context.tsx"
 
@@ -17,23 +18,7 @@ export const HazardZoneNavigator = () => {
         Select a zone when its neutral description gives you concern. Selecting does not submit.
         The order carries no meaning and the number of zones is not a hint.
       </p>
-      <ol>
-        {scene.neutralPreAnswer.zones.map((zone) => (
-          <li key={zone.order}>
-            <label>
-              <input
-                checked={selected.has(zone.order)}
-                name="hazard-zone"
-                onChange={() => actions.toggleZone(zone.order)}
-                type="checkbox"
-                value={zone.order}
-              />
-              <strong>Zone {zone.order}: {zone.label}</strong>
-              <span>{zone.description}</span>
-            </label>
-          </li>
-        ))}
-      </ol>
+      <NeutralZoneInputs zones={scene.neutralPreAnswer.zones} selected={selected} name="hazard-zone" onToggle={actions.toggleZone} />
     </fieldset>
   )
 }

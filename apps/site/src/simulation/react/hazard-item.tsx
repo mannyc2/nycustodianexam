@@ -1,3 +1,4 @@
+import { NeutralZoneInputs } from "../../hazard-player/react/neutral-zone-inputs.tsx"
 import { useCallback, useRef, useState, type ReactNode, type MouseEvent as ReactMouseEvent } from "react"
 import { useSimulationPlayer } from "./player-provider.tsx"
 import type {
@@ -141,13 +142,7 @@ export const SimulationHazardZoneNavigator = ({ answerEditBlocked, item, respons
   return <fieldset className="hazard-player__zones" disabled={answerEditBlocked}>
       <legend>Observable zones</legend>
       <p>Select a zone when its neutral description gives you concern. Selecting does not reveal whether the zone is safe or unsafe.</p>
-      <ol>{item.scene.neutralPreAnswer.zones.map((zone) => <li key={zone.order}>
-        <label>
-          <input checked={selectedZoneOrders.has(zone.order)} name="simulation-hazard-zone" onChange={() => actions.toggleHazardZone(zone.order)} type="checkbox" value={zone.order} />
-          <strong>Zone {zone.order}: {zone.label}</strong>
-          <span>{zone.description}</span>
-        </label>
-      </li>)}</ol>
+      <NeutralZoneInputs zones={item.scene.neutralPreAnswer.zones} selected={selectedZoneOrders} name="simulation-hazard-zone" onToggle={actions.toggleHazardZone} />
     </fieldset>
 }
 
