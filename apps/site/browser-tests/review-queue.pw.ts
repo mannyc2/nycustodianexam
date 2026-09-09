@@ -116,7 +116,7 @@ test.describe("review history when feedback becomes unavailable", () => {
       await page.getByRole("radio").first().check()
       await page.getByRole("button", { name: "Save answer", exact: true }).click()
       await expect(page.locator(".feedback-rationales")).toBeVisible()
-      if (position === 1) await page.getByRole("link", { name: /^Next question/ }).click()
+      if (position === 1) await page.getByRole("link", { name: "Next question", exact: true }).click()
     }
     const savedAttempt = await readStoredAttempt(page)
     await page.goto("/review/")

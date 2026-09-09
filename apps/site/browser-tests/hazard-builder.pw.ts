@@ -36,6 +36,12 @@ for (const mode of ["visual", "nonvisual"] as const) {
 }
 
 test("a cached keyboard drill document reopens offline with reordered parameters", async ({ page, context }) => {
+  test.setTimeout(120_000)
+  await page.goto("/offline/")
+  await page.getByRole("button", { name: /^Download (the .* copy|and check)$/ }).click()
+  await expect(page.getByText(/Download complete and checked/)).toBeVisible({ timeout: 90_000 })
+  await page.getByRole("button", { name: /Turn on this saved copy/ }).click()
+  await expect(page.getByText(/now in use for new sessions/)).toBeVisible()
   await page.goto("/hazards/")
   const builder = page.getByRole("region", { name: "Build a hazard drill" })
   await builder.getByRole("radio", { name: /^Read and select zones/ }).check()

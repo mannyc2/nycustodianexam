@@ -56,6 +56,12 @@ test("setup navigation connects Practice, Hazard drill and Simulation with real 
 })
 
 test("custom question documents remain available offline with reordered set parameters", async ({ page, context }) => {
+  test.setTimeout(120_000)
+  await page.goto("/offline/")
+  await page.getByRole("button", { name: /^Download (the .* copy|and check)$/ }).click()
+  await expect(page.getByText(/Download complete and checked/)).toBeVisible({ timeout: 90_000 })
+  await page.getByRole("button", { name: /Turn on this saved copy/ }).click()
+  await expect(page.getByText(/now in use for new sessions/)).toBeVisible()
   await page.goto("/practice/")
   await page.getByRole("region", { name: "Build a practice set" }).getByRole("button", { name: "Start this practice set" }).click()
   await expect(page.locator(".player-position")).toHaveText("Question 1 of 45 · Text version")
