@@ -90,7 +90,7 @@ export const HazardCommitControls = () => {
       aria-labelledby={`${meta.instanceId}-commit-heading`}
       className="hazard-player__commit"
     >
-      <h2 className="sr-only" id={`${meta.instanceId}-commit-heading`}>Save this response</h2>
+      <h2 id={`${meta.instanceId}-commit-heading`}>Save this response</h2>
       {state.tag === "commit_failed" ? (
         <div className="feedback feedback-error" role="alert">
           <h3 ref={meta.errorHeadingRef} tabIndex={-1}>Your response was not saved</h3>

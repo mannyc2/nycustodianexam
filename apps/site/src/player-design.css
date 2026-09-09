@@ -20,7 +20,7 @@
   .study-player .hazard-player__prompt > * + * { margin-block-start: var(--space-3); }
   .study-player .question-prompt p,
   .study-player .hazard-player__prompt p { color: var(--color-text-muted); font-size: var(--text-body); line-height: var(--leading-body); }
-  .study-player .hazard-player__prompt > .player-heading-row { margin-block-end: var(--space-5); }
+  .study-player .hazard-player__prompt > .player-heading-row { margin-block-end: 0; align-items: baseline; }
 
   .player-heading-row {
     display: flex;
@@ -54,6 +54,9 @@
     color: var(--color-text-muted);
     font-size: var(--text-sm);
   }
+  .hazard-player .player-position { font-family: var(--font-sans); font-size: var(--text-sm); }
+  .hazard-player .player-mode-label { padding: 0; border: 0; border-radius: 0; background: none; font-size: var(--text-sm); font-weight: var(--weight-bold); }
+  .study-player .hazard-player__prompt .player-selection-note { padding: 0; border: 0; background: none; font-size: var(--text-sm); }
   .study-player form > .player-selection-note { margin-block-start: var(--space-4); }
   .player-action-bar,
   .study-player .question-controls {
@@ -88,7 +91,7 @@
   .study-player .feedback-sources { padding: var(--space-3) var(--space-4); border: var(--border-thin) solid var(--color-border); border-radius: var(--radius-md); background: var(--color-canvas); color: var(--color-text); }
   .study-player .feedback-sources summary { min-block-size: var(--target-default); padding-block: var(--space-2); color: var(--color-action); font-weight: var(--weight-bold); cursor: pointer; }
 
-  .hazard-player__workspace { display: grid; align-items: start; gap: var(--space-5); min-inline-size: 0; }
+  .hazard-player__workspace { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); align-items: start; gap: var(--space-5); min-inline-size: 0; }
   .hazard-player__response-panel { display: grid; align-content: start; gap: var(--space-4); min-inline-size: 0; }
   .hazard-player__visual { display: grid; gap: var(--space-3); min-inline-size: 0; }
   .hazard-player__visual h2,
@@ -117,7 +120,7 @@
   .hazard-player__zones label:has(input:checked) { border-color: var(--color-action); background: var(--color-selected-surface); }
   .hazard-player__zones input { grid-row: span 2; inline-size: 1.25rem; block-size: 1.25rem; margin-block-start: var(--space-1); accent-color: var(--color-action); }
   .hazard-player__zones label > span { grid-column: 2; color: var(--color-text-muted); }
-  .hazard-player__commit { padding-block-start: 0; }
+  .hazard-player__commit { padding: var(--space-4); border: var(--border-thin) solid var(--color-border); border-radius: var(--radius-md); }
   .hazard-player__commit > p { margin-block-start: var(--space-3); font-size: var(--text-sm); color: var(--color-text-muted); }
   .hazard-player__zero-confirm { padding: var(--space-5); border: var(--border-strong) solid var(--color-border-control); border-radius: var(--radius-md); background: var(--color-canvas); }
   .hazard-player__zero-confirm > * + * { margin-block-start: var(--space-3); }
@@ -187,9 +190,6 @@
   .simulation-inclusions ul { padding-inline-start: var(--space-5); }
   .simulation-inclusions p { margin-block-start: var(--space-3); }
 
-  @media (min-width: 64rem) {
-    .hazard-player__workspace { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
   @media (min-width: 48rem) {
     .simulation-settings .simulation-format-fields { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .simulation-settings .simulation-mix-fields,

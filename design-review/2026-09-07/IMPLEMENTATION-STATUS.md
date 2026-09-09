@@ -11,7 +11,7 @@ The active task is the complete handoff in `/mnt/models/dev/nycustodianexam/IMPL
 | Practice/Hazard builder | PRACTICE-BUILDER-REVIEW.md and HAZARD-BUILDER-REVIEW.md: effective builders, custom navigation and exact saved-history receipts | Final page composition and cross-browser verification; custom offline-pack and import flows now pass in Chromium |
 | Atlas catalog | Nine-family desktop/compact controls, all 65 images, eligibility/failure states | Individual record/family layouts and final comparison |
 | Question player | QUESTION-PLAYER-REVIEW.md: text card/action reconciliation, real-state captures, 14 browser checks | Illustrated question binding is absent from current content schema; complete modality and final visual audit |
-| Hazard player | Existing real marker/zone state machine preserved | Match controls, feedback, failures and compact adaptation |
+| Hazard player | HAZARD-PLAYER-REVIEW.md: responsive workspace, header/save panel, nine real-state captures and nine regression tests | Reconcile revealed feedback, keyboard zones, and compact recovery states |
 | Simulation player/results | SIMULATION-NAVIGATOR-REVIEW.md: navigator/confirmation layout, cancel focus, desktop/compact captures; 8 regression tests | Full player, timer and results visual reconciliation |
 | Print configuration | Ten products and effective controls; reviewed document scope | PRINT-OUTPUT-REVIEW.md: actual Letter/A4 question PDFs and searchable-text fix; remaining preview comparison, large-print/illustration pagination and failure/stale captures |
 | Exams / Settings / Offline / report | Existing implementation and prior recovery tests preserved | Compare each accepted page family, fix visual/state discrepancies |

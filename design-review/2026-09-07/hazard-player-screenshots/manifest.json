@@ -1,0 +1,104 @@
+{
+  "captures": [
+    {
+      "file": "empty-1053.png",
+      "width": 1053,
+      "state": "empty",
+      "bounds": {
+        "x": 26.328125,
+        "y": 0.21875,
+        "width": 1000.34375,
+        "height": 916
+      }
+    },
+    {
+      "file": "marked-1053.png",
+      "width": 1053,
+      "state": "marked",
+      "bounds": {
+        "x": 26.328125,
+        "y": 0.21875,
+        "width": 1000.34375,
+        "height": 916
+      }
+    },
+    {
+      "file": "saved-1053.png",
+      "width": 1053,
+      "state": "saved",
+      "bounds": {
+        "x": 26.328125,
+        "y": -103.78125,
+        "width": 1000.34375,
+        "height": 3984.171875
+      }
+    },
+    {
+      "file": "empty-850.png",
+      "width": 850,
+      "state": "empty",
+      "bounds": {
+        "x": 21.25,
+        "y": 0.046875,
+        "width": 807.5,
+        "height": 914.078125
+      }
+    },
+    {
+      "file": "marked-850.png",
+      "width": 850,
+      "state": "marked",
+      "bounds": {
+        "x": 21.25,
+        "y": 0.046875,
+        "width": 807.5,
+        "height": 914.078125
+      }
+    },
+    {
+      "file": "saved-850.png",
+      "width": 850,
+      "state": "saved",
+      "bounds": {
+        "x": 21.25,
+        "y": -504.953125,
+        "width": 807.5,
+        "height": 4079.484375
+      }
+    },
+    {
+      "file": "empty-384.png",
+      "width": 384,
+      "state": "empty",
+      "bounds": {
+        "x": 16,
+        "y": 0.046875,
+        "width": 352,
+        "height": 1580.34375
+      }
+    },
+    {
+      "file": "marked-384.png",
+      "width": 384,
+      "state": "marked",
+      "bounds": {
+        "x": 16,
+        "y": -557.953125,
+        "width": 352,
+        "height": 1723.09375
+      }
+    },
+    {
+      "file": "saved-384.png",
+      "width": 384,
+      "state": "saved",
+      "bounds": {
+        "x": 16,
+        "y": -1010.953125,
+        "width": 352,
+        "height": 5918.328125
+      }
+    }
+  ],
+  "errors": []
+}
