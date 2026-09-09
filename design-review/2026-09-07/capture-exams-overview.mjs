@@ -25,6 +25,15 @@ try {
       await locator.screenshot({ path: output + file, style: '.site-header-inner > .nav-primary, .site-header-inner > .nav-utility { opacity: 0; }' });
       captures.push({ file, width, bounds: await locator.boundingBox() });
     }
+    for (const [status, count] of [['closed', 2], ['plan', 1], ['open', 0]]) {
+      await page.locator(`[data-exam-status-filter="${status}"]`).click();
+      await expect(page.locator('[data-exam-row]:visible')).toHaveCount(count);
+      const registry = page.locator('#exams-board');
+      const file = `registry-${status}-${width}.png`;
+      await registry.screenshot({ path: output + file, style: '.site-header-inner > .nav-primary, .site-header-inner > .nav-utility { opacity: 0; }' });
+      captures.push({ file, width, status, visibleRecords: count, bounds: await registry.boundingBox() });
+    }
+    await page.locator('[data-exam-status-filter="all"]').click();
     const cycle = page.locator('#exams-cycle');
     await expect(cycle.locator('[data-administration-state]:visible')).toHaveCount(1);
     await cycle.getByText('Sources and review dates', { exact: true }).click();

@@ -147,11 +147,14 @@ const enhanceExams = (root: HTMLElement): void => {
     tabs.hidden = false
   }
 
+  const statusGroup = root.querySelector<HTMLElement>("[data-exam-status-filters]")
+  const statusButtons = [...root.querySelectorAll<HTMLButtonElement>("[data-exam-status-filter]")]
+  let status = "all"
   const filter = (): void => {
     const query = search.value.trim().toLocaleLowerCase()
     let visible = 0
     for (const row of rows) {
-      row.hidden = !(row.dataset.examSearchText ?? "").includes(query)
+      row.hidden = !(row.dataset.examSearchText ?? "").includes(query) || (status !== "all" && row.dataset.examStatus !== status)
       if (!row.hidden) visible += 1
     }
     const selected = choices.find((choice) => choice.hasAttribute("aria-current"))
@@ -159,17 +162,30 @@ const enhanceExams = (root: HTMLElement): void => {
       show(null, false)
       replaceQuery("record", null)
     }
-    count.textContent = `${visible} ${visible === 1 ? "entry" : "entries"} in the published registry${query.length > 0 ? " match your search" : ""}.`
+    count.textContent = `${visible} ${visible === 1 ? "entry" : "entries"} in the published registry${query.length > 0 || status !== "all" ? " match these filters" : ""}.`
+    for (const button of statusButtons) button.setAttribute("aria-pressed", String(button.dataset.examStatusFilter === status))
     empty.hidden = visible !== 0
+    prompt.hidden = visible === 0 || choices.some((choice) => choice.hasAttribute("aria-current"))
   }
+  for (const button of statusButtons) button.addEventListener("click", () => {
+    status = button.dataset.examStatusFilter ?? "all"
+    replaceQuery("filing", status === "all" ? null : status)
+    filter()
+  })
   search.addEventListener("input", filter)
   root.querySelector<HTMLButtonElement>("[data-exam-clear]")?.addEventListener("click", () => {
     search.value = ""
+    status = "all"
+    replaceQuery("filing", null)
     filter()
     search.focus()
   })
   const url = new URL(window.location.href)
+  const requestedStatus = url.searchParams.get("filing")
+  status = statusButtons.some((button) => button.dataset.examStatusFilter === requestedStatus) ? requestedStatus! : "all"
   show(url.searchParams.get("record") ?? url.hash.slice(1), false)
+  filter()
+  if (statusGroup !== null) statusGroup.hidden = false
   searchField.hidden = false
 }
 

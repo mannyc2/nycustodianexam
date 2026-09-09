@@ -152,3 +152,33 @@ Implement explicit source-backed filing metadata/classification before adding
 the proposed status filters. Separate announcement date rows are currently
 retained, including the two equal announced exam dates; consolidation and the
 complete overview comparison remain open.
+
+## Source-bound filing filters
+
+Exams now offers All, Open for filing, Filing closed, and Plan only filters.
+They combine with text search, restore the filing filter from the URL, and clear
+a selected detail when its record is filtered out. No study preference is written.
+Without JavaScript all announcement facts remain readable and controls stay hidden.
+The empty result hides the choose-an-entry prompt because there is nothing to choose.
+
+`content/authoring/announcement-filing-status.json` is an editorial classification
+ledger bound to the released announcement facts. Both Nassau records are classified
+closed **at their August 25, 2026 source review**, based on the authored filing facts:
+the open-competitive period ended July 1; the promotion fact records the later-added
+Jericho jurisdiction deadline of July 5. This is not a new live availability check.
+The page explicitly qualifies the labels and prints each classification review date.
+The statewide plan has no filing status. Missing classifications remain unverified.
+
+The generator rejects stale or duplicate bindings, nonverified/nonfiling facts,
+wrong exam applicability, and review-date or digest mismatch. The SHA-256 input is
+JSON of the ordered array: fact ID, category, state, value, review date, sorted exam
+numbers, sorted source-line IDs. The digest detects drift; it does not itself prove
+the editorial classification. This separate display metadata leaves saved question
+and simulation receipts unchanged.
+
+Validation: production build/artifact checks, site and browser typechecks, 22 unit
+tests, and 12 Chromium/Firefox/WebKit checks passed. `capture-exams-overview.mjs`
+now records 16 desktop/compact crops, including closed, plan-only, and empty-open
+filter states. Compact closed cards and desktop empty results were visually inspected;
+that inspection found and corrected the redundant empty-result selection prompt.
+Full-page comparison and source-aware duplicate exam-date consolidation remain.

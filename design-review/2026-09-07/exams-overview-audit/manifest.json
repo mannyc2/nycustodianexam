@@ -25,9 +25,9 @@
       "width": 1248,
       "bounds": {
         "x": 31.203125,
-        "y": 86.65625,
+        "y": -13.34375,
         "width": 1185.59375,
-        "height": 726.15625
+        "height": 926.03125
       }
     },
     {
@@ -35,9 +35,45 @@
       "width": 1248,
       "bounds": {
         "x": 31.203125,
-        "y": 310.75,
+        "y": 349.34375,
         "width": 320.4375,
-        "height": 502.0625
+        "height": 550.34375
+      }
+    },
+    {
+      "file": "registry-closed-1248.png",
+      "width": 1248,
+      "status": "closed",
+      "visibleRecords": 2,
+      "bounds": {
+        "x": 31.203125,
+        "y": -0.34375,
+        "width": 1185.59375,
+        "height": 752.90625
+      }
+    },
+    {
+      "file": "registry-plan-1248.png",
+      "width": 1248,
+      "status": "plan",
+      "visibleRecords": 1,
+      "bounds": {
+        "x": 31.203125,
+        "y": -0.34375,
+        "width": 1185.59375,
+        "height": 540.8125
+      }
+    },
+    {
+      "file": "registry-open-1248.png",
+      "width": 1248,
+      "status": "open",
+      "visibleRecords": 0,
+      "bounds": {
+        "x": 31.203125,
+        "y": -0.34375,
+        "width": 1185.59375,
+        "height": 553.46875
       }
     },
     {
@@ -75,9 +111,9 @@
       "width": 384,
       "bounds": {
         "x": 16,
-        "y": -266.140625,
+        "y": -398.140625,
         "width": 352,
-        "height": 1432.46875
+        "height": 1697.140625
       }
     },
     {
@@ -85,9 +121,45 @@
       "width": 384,
       "bounds": {
         "x": 16,
-        "y": -27.203125,
+        "y": 0.1875,
         "width": 352,
-        "height": 981.078125
+        "height": 1029.359375
+      }
+    },
+    {
+      "file": "registry-closed-384.png",
+      "width": 384,
+      "status": "closed",
+      "visibleRecords": 2,
+      "bounds": {
+        "x": 16,
+        "y": -0.140625,
+        "width": 352,
+        "height": 1389.140625
+      }
+    },
+    {
+      "file": "registry-plan-384.png",
+      "width": 384,
+      "status": "plan",
+      "visibleRecords": 1,
+      "bounds": {
+        "x": 16,
+        "y": -0.140625,
+        "width": 352,
+        "height": 1017.375
+      }
+    },
+    {
+      "file": "registry-open-384.png",
+      "width": 384,
+      "status": "open",
+      "visibleRecords": 0,
+      "bounds": {
+        "x": 16,
+        "y": -0.140625,
+        "width": 352,
+        "height": 738.734375
       }
     },
     {

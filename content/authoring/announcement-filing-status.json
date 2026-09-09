@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "reviews": [
+    {
+      "profileId": "nassau-county-custodian-entry-level",
+      "examNumber": "60112026",
+      "factId": "oc-filing-period",
+      "state": "closed",
+      "reviewedOn": "2026-08-25",
+      "factSha256": "ea765ad0ac75acfe771b1bea190aa2a3236b7a5399d850f61a712a365c33a26b"
+    },
+    {
+      "profileId": "nassau-county-custodian-entry-level",
+      "examNumber": "61012026",
+      "factId": "promo-filing-period",
+      "state": "closed",
+      "reviewedOn": "2026-08-25",
+      "factSha256": "3abdba1c79beabf5d3b26eb15857944ff267171856580ab5385fe9d3f0b7b05f"
+    }
+  ]
+}
