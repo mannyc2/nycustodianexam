@@ -42,3 +42,13 @@ The integrated run after explicit question feedback/controls, shared question bo
 The root command again exited 1 solely at the historical packet validator's sandbox-denied `git` subprocess (`EPERM`). The exact unchanged validator then passed separately outside that sandbox. Logs: `/tmp/nyc-component-integrated-verify.log`, `/tmp/nyc-component-packet-recheck.log`. This is not an exit-0 root invocation. Historical packet scope and blocked production certification remain unchanged.
 
 Browser verification remains separately recorded in QUESTION-COMPOSITION-AUDIT.md: the final setup controller passed all 27 Simulation cases; earlier question control/body changes have their own passing targeted suites. No new broad browser sweep or full visual acceptance is implied by this integrated checkpoint.
+
+## Controller-family checkpoint at 94095d9
+
+Source `94095d9f64f2bcd0f4dbc5ed89d7f46b3523e7ec`, after the Review, Settings, Offline and Report controller/provider corrections. The worktree was clean at the start of integrated verification.
+
+All application gates passed: exact Bun 1.4.0 / Node 22.22.0, maintained layout (301 files), module boundaries (158 modules), visual release (396 hash-verified artifacts), five workspace typechecks, browser-test typecheck, 492 unit/integration tests (content 103, intake 3, compiler 15, correction worker 8, site 363), production build and artifact/bundle invariants. Output remains 1,352 route documents, 224 item-scoped artifacts, 291 byte-identical delivery assets and 59 safe shell URLs. All island byte budgets passed.
+
+The root `bun run verify` invocation exited 1 only at its final historical packet validator because `spawnSync git` returned sandbox `EPERM`. The exact unchanged validator then exited 0 when run separately outside that sandbox: packet `4130693dee6caaa804a116f490b2192861f53e6e`, four reviews, 41 sources, 19 promoted rules, seven unresolved rules, 61 mutation checks, no human participants. Logs: `/tmp/nyc-controller-family-integrated-verify.log` and `/tmp/nyc-controller-family-packet-recheck.log`. This is not a single exit-0 root invocation, and the historical packet excludes current implementation from its evidence scope.
+
+Targeted browser results for these corrections are recorded in REMAINING-COMPONENT-CONTRACT.md: Review 27 passes, Settings 48 passes, Offline 21 passes with 12 declared skips, Report nine passes. Those runs are separate and retain their respective source scopes; no new complete browser sweep or full visual acceptance is claimed. Production certification remains valid and blocked. Nothing was pushed, deployed, merged or activated by this checkpoint.
