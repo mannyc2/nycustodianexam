@@ -28,7 +28,7 @@ The original [snapshot README](README.md), imported exports and `current-screens
 | Print screen and earlier PDFs | [PRINT-OUTPUT-REVIEW.md](PRINT-OUTPUT-REVIEW.md) | Preview states and earlier question/tool/hazard output passes; observations are revision-specific. |
 | Latest print tables | [PRINT-TABLE-ESTIMATES.md](PRINT-TABLE-ESTIMATES.md) | Eight PDFs at 3a77b74 retain matching estimates; all 27 pages visually inspected, with sparse endings documented. |
 | Fact-sheet heading correction | [PRINT-FACT-HEADINGS.md](PRINT-FACT-HEADINGS.md) | Four checksummed PDFs, 185 pages pass automated layout checks; all four formats visually inspected (185 pages). |
-| Latest print fragmentation/type audit | [PRINT-RECEIPT-PAIRS.md](PRINT-RECEIPT-PAIRS.md) | Eight regenerated PDFs; source labels kept with values and all extracted large text at least 18pt. Final visual review remains partial. |
+| Print fragmentation/type audit | [PRINT-RECEIPT-PAIRS.md](PRINT-RECEIPT-PAIRS.md) | All four corrected explanation PDFs visually inspected (41 pages). Later fact-sheet output is covered by PRINT-FACT-HEADINGS.md; source-pair and 18pt checks retain their exact-file scope. |
 | Latest prose print | [PRINT-PROSE-ESTIMATES.md](PRINT-PROSE-ESTIMATES.md) | Content-based estimates and corrected 18pt body text; eight checksummed PDFs and text-layout audit. |
 | Runtime gates | [LOCAL-RUNTIME-GATES.md](LOCAL-RUNTIME-GATES.md) | Local terminal withdrawal/failure and disabled intake workerd proof; not deployment. |
 | Static Assets routing | [STATIC-ASSETS-SIMULATION.md](STATIC-ASSETS-SIMULATION.md) | Local Cloudflare simulation/print-shell routing; includes the original failure and isolated recheck. |
@@ -41,7 +41,7 @@ Start visual review with the [comparison gallery](implementation-comparison.html
 
 ## Open acceptance items
 
-- Finish visual review of the remaining print PDFs. All four corrected explanation PDFs have completed visual review (41 pages); the recorded fact-sheet matrix has completed automated and visual inspection of all four formats (185 pages). The eight table PDFs at 3a77b74 also have complete visual review (27 pages). Those automated checks do not certify every page, small label, overlap or physical printer.
+- Reconcile current print acceptance against the recorded artifact revisions. Complete visual inspection is recorded for four corrected explanation PDFs (41 pages), four fact-sheet formats (185 pages), and eight table PDFs at 3a77b74 (27 pages). Do not reopen superseded PDF versions solely because an earlier note says review was pending; do not extend these exact-file observations to every product/count combination or physical printer.
 - Prose page counts remain estimates: the measured matrix differs by -1 to +5 pages. Final browser/printer pagination is authoritative.
 - Reconcile any remaining component-contract or page/state gaps against the maintained product documents before declaring the full handoff complete.
 - Manual assistive-technology, device and physical-print certification remains unverified. The production certification record is explicitly blocked; passing automated tests must not be called production certification.

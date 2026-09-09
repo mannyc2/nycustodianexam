@@ -22,15 +22,17 @@ Review entry point: [implementation evidence index](https://github.com/mannyc2/n
 
 Validation:
 
-- Root `bun run verify` passes: 464 tests, all workspace/browser typechecks, layout/boundaries, build, visual/content checks and artifact/bundle invariants.
-- Full browser sweep: 378 passed, 26 skipped, 10 stale-fixture failures. Corrected fixtures pass all affected suites: 45 passed, 12 declared capability skips. The latest print changes pass all 36 browser cases.
+- At implementation source `cc400cb782947fc3ce71542b694971caeb9a6db1`, 514 workspace tests, all workspace/browser typechecks, layout/boundaries, 396 visual asset hashes, production build and artifact/bundle checks passed. Root `bun run verify` exited 1 only at the historical packet validator when sandbox Git access returned EPERM; that exact read-only validator passed separately with approved access.
+- Full local Chromium/Firefox/WebKit suite against the same unchanged build: **442 passed, 26 explicitly skipped, zero failures** (468 cases, 12.0 minutes). Skips are named Chromium-only BFCache and service-worker/Cache API inspection checks in Firefox/WebKit. Cloudflare-tagged checks remain separate.
 - Actual installed v4-to-v5 upgrade passes in Chromium, Firefox and WebKit, including saved simulation retention. Local workerd gates pass; no deployment or intake activation occurred.
 - Eight table PDF estimates match measured counts. Eight prose PDFs retain searchable text and requested 12pt/18pt body size after fixing shrink-to-fit; prose counts remain estimates.
 
 Still draft:
 
-- Finish visual review of the remaining PDF pages and complete the handoff/component-contract acceptance audit.
+- Complete the remaining handoff/component-contract and matching-reference visual acceptance. Recorded full PDF inspections cover four corrected explanation PDFs (41 pages), four corrected fact-sheet PDFs (185 pages), and eight current table PDFs (27 pages), each at its documented revision; these are not a blanket current-build or every-product certification.
 - Manual assistive-technology, device and physical-printer checks remain uncertified. The production certification record is explicitly blocked.
 - Historical UI/UX packet verification is historical evidence, not certification of the current interface.
+
+The implementation now also includes named static Fact states, shared source-line rendering, and source detail citations with retained excerpts, verification dates, tier/version metadata and offline-safe external-link behavior. Desktop/compact source captures and browser checks are linked from the evidence index.
 
 No merge or deployment is requested by this draft.
