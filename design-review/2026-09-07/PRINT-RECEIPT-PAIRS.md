@@ -21,7 +21,7 @@ The strengthened PDF audit fails on the retained earlier Letter PDF with three o
 
 Across all 225 pages: zero out-of-page extracted words, zero page-ending receipt labels, and no extracted large-print text below 18pt. The normal PDFs retain 12pt dominant body text. Page estimates remain approximate; this pass does not recalibrate them.
 
-Final large Letter explanation pages 1, 8, 9, 10, 11, 12 and 13 were visually inspected. The opening metadata has no preview-only eyebrow; each formerly stranded label now accompanies its value, with no observed overlap or clipping. Other final pages and the long fact-sheet outputs still require the remaining visual acceptance pass. Earlier screenshots and PDF counts are not silently relabeled as current.
+Final large Letter explanation pages 1, 8, 9, 10, 11, 12 and 13 were visually inspected. The opening metadata has no preview-only eyebrow; each formerly stranded label now accompanies its value, with no observed overlap or clipping. The subsequent completion pass inspected pages 2–7, completing all 13 pages of this exact large Letter explanation PDF; `print-receipt-pairs/visual-review.json` records its SHA-256 and per-page observations. No remaining clipping, overlap or split receipt pairs were observed in that PDF. Other formats and the long fact-sheet outputs still require their remaining visual acceptance pass. Earlier screenshots and PDF counts are not silently relabeled as current.
 
 Reproduction:
 

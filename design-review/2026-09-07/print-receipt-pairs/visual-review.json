@@ -1,0 +1,64 @@
+{
+  "scope": "Visual inspection of raster pages derived from the exact retained PDF; not physical-printer or assistive-technology certification.",
+  "pdf": "explanations-and-sources-us-letter-large-wide.pdf",
+  "sha256": "cdca3b5839f9df7b10bcddc2f78568eddfc1a12a9e86377d01bb1113601bba7f",
+  "sourceCommit": "c7627c73af779828f915a5ab7be0d90814fc5a2f",
+  "pages": 13,
+  "inspectedPages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13
+  ],
+  "observations": [
+    {
+      "pages": [
+        1
+      ],
+      "finding": "Title, original-practice notice and metadata are readable; preview-only eyebrow is absent."
+    },
+    {
+      "pages": [
+        2,
+        3
+      ],
+      "finding": "Rationales and claims remain readable; the long claim and caveat continue naturally across the page boundary."
+    },
+    {
+      "pages": [
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "finding": "Source excerpts, technical details and list continuation are readable without observed clipping or overlap."
+    },
+    {
+      "pages": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "finding": "Formerly stranded source labels now remain with their values. The second question starts separately and its final receipt remains readable."
+    }
+  ],
+  "result": "No observed clipping, overlap or split source label/value pairs in this PDF.",
+  "limitations": [
+    "Does not certify the other seven PDFs in this directory.",
+    "Font-size and text-bound evidence is separately recorded in text-layout-audit.json.",
+    "Normal size, A4, fact-sheet and remaining product visual acceptance must be tracked separately."
+  ]
+}
