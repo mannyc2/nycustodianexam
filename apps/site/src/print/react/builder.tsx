@@ -144,10 +144,13 @@ export const PrintBuilder = ({
         Counts are limited by what this release contains. Each product is saved separately so
         questions, keys, and explanations can begin on distinct sheets.
       </p>
-      {snapshot.state.tag === "recoverable-error" ? (
+      {snapshot.state.tag === "recoverable-error" || snapshot.state.tag === "download-required" ? (
         <section className="status-panel status-panel-danger" role="alert" aria-labelledby="print-error-heading">
           <h3 id="print-error-heading" ref={errorRef} tabIndex={-1}>Print preview was not generated</h3>
-          <p>{snapshot.state.detail}</p>
+          {snapshot.state.tag === "download-required" ? <>
+            <p>This packet needs images or answer references that have not been downloaded and checked on this device. Download the study copy, then return here and choose Generate preview again. Your settings stay in this tab.</p>
+            <a className="button button-secondary" href="/offline/" target="_blank" rel="noopener">Open downloads in a new tab</a>
+          </> : <p>{snapshot.state.detail}</p>}
         </section>
       ) : null}
       <form onSubmit={submit}>

@@ -736,3 +736,26 @@ test("required question images survive saved print preview restoration", async (
   await expect(image).toBeVisible()
   await expect.poll(() => image.evaluate(node => (node as HTMLImageElement).naturalWidth)).toBeGreaterThan(0)
 })
+
+
+test("illustrated packet explains its missing download and retains setup while downloading", async ({ page }) => {
+  test.setTimeout(120000)
+  await page.goto("/print/")
+  await page.getByLabel("Number of questions").fill("3")
+  await page.getByText("Repeat this exact set", { exact: true }).click()
+  await page.locator("#print-seed").fill("illustrated-print-158")
+  await page.getByRole("button", { name: "Generate preview", exact: true }).click()
+  await expect(page.getByRole("heading", { name: "Print preview was not generated", exact: true })).toBeFocused()
+  await expect(page.getByText(/This packet needs images or answer references/)).toBeVisible()
+  const popupPromise = page.waitForEvent("popup")
+  await page.getByRole("link", { name: "Open downloads in a new tab" }).click()
+  const downloads = await popupPromise
+  await downloads.getByRole("button", { name: /^Download (the .* copy|and check)$/ }).click()
+  await expect(downloads.getByText(/Download complete and checked/)).toBeVisible({ timeout: 90000 })
+  await downloads.close()
+  await expect(page.locator("#print-seed")).toHaveValue("illustrated-print-158")
+  await expect(page.getByLabel("Number of questions")).toHaveValue("3")
+  await page.getByRole("button", { name: "Generate preview", exact: true }).click()
+  await expect(page.locator("img.print-question-image")).toBeVisible()
+  await expect(page.locator("img.print-question-image")).toHaveAttribute("src", /^data:image\/png;base64,/)
+})

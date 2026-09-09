@@ -12,6 +12,7 @@ import {
 import type { PrintPersistence } from "./persistence.ts"
 import {
   createPrintJob,
+  PrintLocalClosureError,
   recordSystemPrintRequest,
   restorePrintJob
 } from "./workflow.ts"
@@ -23,6 +24,7 @@ export interface PrintEffectRunner {
 }
 
 export type PrintBuilderState =
+  | { readonly tag: "download-required" }
   | { readonly tag: "configuring" }
   | { readonly tag: "generating" }
   | { readonly tag: "recoverable-error"; readonly detail: string }
@@ -130,7 +132,9 @@ export const createPrintBuilderController = (input: {
         .then((job) => input.navigate(printPreviewPath(exactJob(job, id).id)))
         .catch((cause: unknown) => {
           screen.publish(
-            { tag: "recoverable-error", detail: builderError(cause) },
+            cause instanceof PrintLocalClosureError
+              ? { tag: "download-required" }
+              : { tag: "recoverable-error", detail: builderError(cause) },
             { focus: "error-summary" }
           )
         })

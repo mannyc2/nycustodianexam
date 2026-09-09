@@ -305,3 +305,22 @@ Two confirmed follow-ups remain from this capture:
 - Generating this illustrated packet before downloading its required image fails
   with the generic generation error. The local-content requirement is enforced,
   but recovery must explain the missing download and offer the relevant action.
+
+## Missing local print content recovery
+
+The print builder now distinguishes a missing verified local content closure from
+storage or unexpected generation errors. It focuses the existing error heading,
+explains that the packet needs downloaded images or answer references, and opens
+Downloads in a new tab. The original tab retains the count, repeat code, and other
+settings for an explicit retry. The error state contains no raw receipt paths or
+diagnostics, and it never creates an incomplete print preview.
+
+The real q091 browser test now starts without downloaded content, encounters this
+state, downloads the pack in the new tab, returns to unchanged settings, retries,
+and verifies the retained illustration in the resulting preview. All three
+browsers pass. All 37 print unit tests pass, including private-diagnostic rejection
+and download-state focus. Site/browser typechecks and full artifact verification
+pass without budget changes. The two real-state crops in
+`print-download-recovery-audit/` were visually inspected at 1053px and 384px:
+readable copy, visible action, and no overflow. The generic error remains for
+unrelated failures. Illustrated page-count estimation remains a separate open fix.

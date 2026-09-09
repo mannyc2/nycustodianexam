@@ -1578,6 +1578,23 @@ describe("semantic print preview", () => {
     }
   })
 
+  it("offers download recovery for missing local print content without leaking receipt details", async () => {
+    const navigate = vi.fn()
+    const runtime: PrintEffectRunner = {
+      runPromise: <A, E>(_effect: Effect.Effect<A, E, PrintPersistence | VerifiedContent>) =>
+        Promise.reject(new PrintLocalClosureError({
+          detail: "internal receipt is absent", path: "/private-diagnostic", cause: new Error("cache miss")
+        }))
+    }
+    const controller = createPrintBuilderController({ bootstrap, runtime, createId: () => "print-missing123", navigate })
+    try {
+      controller.generate(settings("multiple-choice-questions"))
+      await vi.waitFor(() => expect(controller.getSnapshot().state).toEqual({ tag: "download-required" }))
+      expect(controller.getSnapshot().focusRequest?.target).toBe("error-summary")
+      expect(navigate).not.toHaveBeenCalled()
+    } finally { controller.dispose() }
+  })
+
   it("retains the saved preview when the system print request fails", async () => {
     const generated = generatePrintJob({
       bootstrap,
