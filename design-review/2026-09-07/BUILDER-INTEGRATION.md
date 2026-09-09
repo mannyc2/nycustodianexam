@@ -61,3 +61,16 @@ player or projection calls it yet, and the query links are not exposed in the UI
 The question path is now wired into Practice, the player, saved activity and
 Review. See `PRACTICE-BUILDER-REVIEW.md` for current evidence and remaining work.
 The preceding primitive-only status describes the earlier commits.
+
+## Hazard generation groundwork
+
+`practice/hazard-set.ts` implements drill selection for the accepted 1/5/10/all
+scene counts using the shared versioned repeat-code algorithm. Visual and
+keyboard modes retain the same scene order but separate attempt identities,
+canonical routes and mode-specific receipts. Resolution checks the exact scene,
+mode, release, pack, asset revision/master digest and postcommit receipt.
+Three focused tests cover every offered length, reconstruction after inventory
+reordering, mode separation and changed receipt coordinates. Combined with the
+shared selection suite, 11 tests pass; all workspace typechecks also pass.
+This module is not yet called by the Hazard UI or saved-history projections;
+that integration is still required. Existing Hazard controllers are unchanged.
