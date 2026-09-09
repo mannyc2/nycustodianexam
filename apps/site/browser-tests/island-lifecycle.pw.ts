@@ -161,3 +161,35 @@ for (const fixture of [
     expect(errors).toEqual([])
   })
 }
+
+test("question input and saved Review survive their appropriate page lifecycle", async ({ page }) => {
+  const errors: string[] = []
+  page.on("pageerror", (error) => errors.push(error.message))
+  await page.goto("/practice/session/launch-v1/question/1/")
+  const choice = page.getByRole("radio").first()
+  await expect(choice).toBeEnabled()
+  await choice.check()
+  await page.evaluate(() => window.dispatchEvent(new PageTransitionEvent("pagehide", { persisted: true })))
+  await expect(choice).toBeChecked()
+  await page.getByRole("button", { name: "Flag for review", exact: true }).click()
+  await page.getByRole("button", { name: "Save answer", exact: true }).click()
+  await expect(page.locator(".feedback-rationales")).toBeVisible()
+  const disposeAndReload = async () => {
+    await page.evaluate(() => {
+      window.dispatchEvent(new PageTransitionEvent("pagehide", { persisted: false }))
+      window.dispatchEvent(new PageTransitionEvent("pagehide", { persisted: false }))
+    })
+    await expect(page.locator("[data-question-player]")).toBeEmpty()
+    await page.reload()
+    await expect(page.locator(".feedback-rationales")).toBeVisible()
+    await expect(page.getByRole("button", { name: "Save answer", exact: true })).toHaveCount(0)
+  }
+  await disposeAndReload()
+  await page.goto("/review/")
+  await page.getByRole("link", { name: "Read explanation", exact: true }).first().click()
+  await expect(page.locator(".feedback-rationales")).toBeVisible()
+  await page.evaluate(() => window.dispatchEvent(new PageTransitionEvent("pagehide", { persisted: true })))
+  await expect(page.locator(".feedback-rationales")).toBeVisible()
+  await disposeAndReload()
+  expect(errors).toEqual([])
+})
