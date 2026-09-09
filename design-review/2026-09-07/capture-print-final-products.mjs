@@ -7,7 +7,8 @@ import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 const require = createRequire(new URL('../../apps/site/package.json', import.meta.url));
 const { chromium, expect } = require('@playwright/test');
-const output = fileURLToPath(new URL('./print-final-products/', import.meta.url));
+const output = (process.env.NYCUSTODIAN_PRINT_CAPTURE_OUTPUT ?? fileURLToPath(new URL('./print-final-products/', import.meta.url))).replace(/\/?$/, '/');
+const selectedProducts = process.env.NYCUSTODIAN_PRINT_CAPTURE_PRODUCTS?.split(',');
 // Raster pages are regenerable review aids; PDFs and receipts are durable evidence.
 const rasterOutput = join(tmpdir(), 'nycustodian-print-final-products-pages');
 await mkdir(output, { recursive: true });
@@ -27,7 +28,7 @@ try {
     { id: 'answer-key', title: 'Answer key', count: 10 },
     { id: 'explanations-and-sources', title: 'Explanations and source references', count: 2 },
     { id: 'announcement-profile-fact-sheet', title: 'Announcement-profile fact sheet', count: 1 }
-  ]) for (const paper of ['us-letter', 'a4']) for (const large of [false, true]) {
+  ].filter(product => selectedProducts === undefined || selectedProducts.includes(product.id))) for (const paper of ['us-letter', 'a4']) for (const large of [false, true]) {
     await page.emulateMedia({ media: 'screen' });
     await page.goto('http://127.0.0.1:4187/print/');
     await page.locator(`input[name="print-product"][value="${product.id}"]`).check();

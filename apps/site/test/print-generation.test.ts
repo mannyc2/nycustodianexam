@@ -1948,6 +1948,26 @@ describe("print workflow local closure", () => {
   })
 })
 
+describe("print table pagination estimates", () => {
+  it("includes metadata and repeated headers for a 45-row answer sheet", () => {
+    const bank = new PrintBuilderBootstrap({ ...bootstrap,
+      questions: Array.from({ length: 45 }, (_, index) => ({ ...bootstrap.questions[0]!, id: `table-q${index + 1}` }))
+    })
+    const normal = generatePrintJob({ bootstrap: bank, settings: settings("blank-answer-sheet", 45) })
+    const large = generatePrintJob({ bootstrap: bank, settings: new PrintSettings({
+      ...settings("blank-answer-sheet", 45), printSize: "large", margin: "wide"
+    }) })
+    const a4 = generatePrintJob({ bootstrap: bank, settings: new PrintSettings({
+      ...large.manifest.settings, paper: "a4"
+    }) })
+    expect(normal.manifest.pageCount).toBe(3)
+    expect(large.manifest.pageCount).toBe(7)
+    expect(a4.manifest.pageCount).toBe(6)
+    expect(large.manifest.questions).toEqual(normal.manifest.questions)
+    expect(large.manifest.pairingFingerprint).toBe(normal.manifest.pairingFingerprint)
+  })
+})
+
 describe("required question illustrations in print", () => {
   const image = retainedAssets[0]!
   const illustrated = new PrintBuilderBootstrap({

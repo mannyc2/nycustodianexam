@@ -427,6 +427,37 @@ const estimateQuestionPages = (
   return pages
 }
 
+// Table estimates include the opening metadata, repeated column headings, cell
+// padding and large-print label wrapping. Keep rows whole, as in the print CSS.
+const estimateTablePages = (
+  settings: PrintSettings,
+  section: Extract<ReleasedPrintPacketSection, { readonly tag: "answer-sheet" | "answer-key" }>,
+  standalone = true
+): number => {
+  const large = settings.printSize === "large"
+  const margin = settings.margin === "wide" ? 54 : 36
+  const height = (settings.paper === "a4" ? 841.89 : 792) - margin * 2
+  const lineHeight = large ? 27.9 : 18
+  const paddingAndBorder = 12.75
+  // Answer-sheet labels can wrap in their five-column table. Reserving two
+  // lines at large size is conservative for the shorter single-digit labels.
+  const header = lineHeight * (large && section.tag === "answer-sheet" ? 2 : 1) + paddingAndBorder
+  const row = section.tag === "answer-sheet"
+    ? large ? lineHeight * 2 + paddingAndBorder : 21 + paddingAndBorder
+    : lineHeight + paddingAndBorder
+  const count = section.tag === "answer-sheet" ? section.questionNumbers.length : section.answers.length
+  let pages = 1
+  let used = (standalone ? large ? height : 450 : 0) + (large ? 44 : 36) + header
+  for (let index = 0; index < count; index += 1) {
+    if (used + row > height) {
+      pages += 1
+      used = header + (index === 0 ? large ? 44 : 36 : 0)
+    }
+    used += row
+  }
+  return pages
+}
+
 // Estimate assembled questions and hazards, including required images and source text.
 // This is not browser pagination: fonts and fragmentation can change the result.
 export const finalizePrintJob = (
@@ -441,6 +472,13 @@ export const finalizePrintJob = (
     pages = estimateQuestionPages(manifest.settings, section.questions) +
       estimatePageCount(manifest.settings, section.questions.length) -
       estimateProductPageCount("multiple-choice-questions", section.questions.length, large)
+    const appendedKey = packet.sections.find(candidate => candidate.tag === "answer-key")
+    if (appendedKey?.tag === "answer-key") {
+      pages += estimateTablePages(manifest.settings, appendedKey, false) -
+        estimateProductPageCount("answer-key", section.questions.length, large)
+    }
+  } else if (section?.tag === "answer-sheet" || section?.tag === "answer-key") {
+    pages = estimateTablePages(manifest.settings, section)
   } else if (section?.tag === "hazard-worksheet") {
     pages += section.scenes.length * (large ? 2 : 1)
   } else if (section?.tag === "annotated-hazard-answers" || section?.tag === "text-equivalent-scenes") {
