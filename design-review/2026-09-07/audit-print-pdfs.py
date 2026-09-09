@@ -22,7 +22,7 @@ for pdf in sorted(root.glob("*.pdf")):
     orphaned_labels = []
     for number, text_page in enumerate(text_pages, 1):
         lines = [line.strip() for line in text_page.splitlines() if line.strip()]
-        if lines and lines[-1] in {"Source version", "Locator", "Source line ID", "Source record ID"}:
+        if lines and lines[-1] in {"Source version", "Locator", "Source line ID", "Source record ID", "Where this fact comes from", "Published conflicting values"}:
             orphaned_labels.append({"page": number, "label": lines[-1]})
     fonts = ET.fromstring(subprocess.check_output(["pdftohtml", "-xml", "-zoom", "1", "-stdout", "-i", str(pdf)]))
     sizes = {}
