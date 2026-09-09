@@ -9,7 +9,7 @@ import { appRuntime, disposeAppRuntime } from "../../app-runtime.ts"
 import { QuestionAttemptReceipt, questionAttemptId, sameQuestionReceipt } from "../../attempt-receipt.ts"
 import { installSessionNavigation } from "../../session-navigation.ts"
 import { createQuestionController } from "../controller.ts"
-import { PracticeNonvisualQuestion, QuestionPlayer } from "./player.tsx"
+import { PracticeQuestionRoute, QuestionPlayer } from "./player.tsx"
 
 const mount = document.querySelector<HTMLElement>("[data-question-player]")
 const data = document.querySelector<HTMLScriptElement>("#question-data")
@@ -89,7 +89,7 @@ const mountPlayer = (): void => {
   const removeSessionNavigation = installSessionNavigation()
   root.render(
     <QuestionPlayer.Provider controller={controller}>
-      <PracticeNonvisualQuestion {...(positionLabel === undefined ? {} : { positionLabel })} {...(nextHref === undefined ? {} : { nextHref })} />
+      <PracticeQuestionRoute {...(positionLabel === undefined ? {} : { positionLabel })} {...(nextHref === undefined ? {} : { nextHref })} />
     </QuestionPlayer.Provider>
   )
 

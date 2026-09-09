@@ -27,10 +27,13 @@ export const QuestionPlayerProvider = ({
   const instanceId = `question-${controller.question.id}`
   const errorHeadingRef = useRef<HTMLHeadingElement>(null)
   const outcomeHeadingRef = useRef<HTMLHeadingElement>(null)
+  const presentationToggleRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     const request = snapshot.focusRequest
-    if (request?.target === "commit-error") {
+    if (request?.target === "presentation-toggle") {
+      presentationToggleRef.current?.focus()
+    } else if (request?.target === "commit-error") {
       errorHeadingRef.current?.focus()
     } else if (request?.target === "outcome") {
       outcomeHeadingRef.current?.focus()
@@ -64,6 +67,7 @@ export const QuestionPlayerProvider = ({
         instanceId,
         errorHeadingRef,
         outcomeHeadingRef,
+        presentationToggleRef,
         statusId: `${instanceId}-status`,
         focusRequest: snapshot.focusRequest,
         announcementRequest: snapshot.announcementRequest,

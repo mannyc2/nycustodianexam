@@ -25,6 +25,7 @@ export interface QuestionMeta {
   readonly instanceId: string
   readonly errorHeadingRef: RefObject<HTMLHeadingElement | null>
   readonly outcomeHeadingRef: RefObject<HTMLHeadingElement | null>
+  readonly presentationToggleRef: RefObject<HTMLButtonElement | null>
   readonly statusId: string
   readonly focusRequest: QuestionFocusRequest | null
   readonly announcementRequest: QuestionAnnouncementRequest | null

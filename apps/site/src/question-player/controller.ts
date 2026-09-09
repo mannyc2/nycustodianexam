@@ -221,7 +221,9 @@ export const createQuestionController = (
       switch (command.tag) {
         case "select-presentation":
           if (question.illustration?.nonvisualEquivalent !== undefined) {
-            publish(selectPresentation(screen.getSnapshot().state, command.presentation))
+            const previous = screen.getSnapshot().state
+            const next = selectPresentation(previous, command.presentation)
+            publish(next, next.presentation === previous.presentation ? undefined : { focus: "presentation-toggle" })
           }
           return
         case "select-option":

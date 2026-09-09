@@ -44,13 +44,13 @@ export const QuestionNonvisualBody = () => {
   </section>
 }
 
-export const QuestionPrompt = () => {
-  const { question, state, actions } = useQuestionPlayer()
+export const QuestionPrompt = ({ children }: { readonly children: ReactNode }) => {
+  const { question, state, actions, meta } = useQuestionPlayer()
   return (
     <header className="question-prompt">
-      {state.presentation === "nonvisual" ? <QuestionNonvisualBody /> : <QuestionVisualBody />}
+      {children}
       {question.illustration?.nonvisualEquivalent === undefined ? null :
-        <button type="button" className="button button-secondary question-presentation-toggle"
+        <button ref={meta.presentationToggleRef} type="button" className="button button-secondary question-presentation-toggle"
           disabled={state.tag !== "ready" && state.tag !== "commit_failed"}
           onClick={() => actions.selectPresentation(state.presentation === "nonvisual" ? "visual" : "nonvisual")}>
           {state.presentation === "nonvisual" ? "Use illustrated version" : "Use nonvisual version"}

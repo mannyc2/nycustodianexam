@@ -82,6 +82,7 @@ const renderFeedback = (state: QuestionScreenState): string => {
       instanceId: "question-q-feedback",
       errorHeadingRef: createRef(),
       outcomeHeadingRef: createRef(),
+      presentationToggleRef: createRef(),
       statusId: "question-q-feedback-status",
       focusRequest: null,
       announcementRequest: null,

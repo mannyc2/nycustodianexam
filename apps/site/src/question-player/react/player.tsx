@@ -1,3 +1,5 @@
+import type { ReactNode } from "react"
+import { useQuestionPlayer } from "./context.tsx"
 import {
   QuestionFeedback,
   QuestionStatus
@@ -8,7 +10,9 @@ import {
   QuestionFrame,
   QuestionHeader,
   QuestionOptions,
-  QuestionPrompt
+  QuestionPrompt,
+  QuestionVisualBody,
+  QuestionNonvisualBody
 } from "./question-form.tsx"
 import { QuestionPlayerProvider } from "./provider.tsx"
 
@@ -25,6 +29,8 @@ export const QuestionPlayerPieces = {
 
 export const QuestionPlayer = {
   Provider: QuestionPlayerProvider,
+  VisualBody: QuestionVisualBody,
+  NonvisualBody: QuestionNonvisualBody,
   Frame: QuestionPlayerPieces.Frame,
   Header: QuestionPlayerPieces.Header,
   Form: QuestionPlayerPieces.Form,
@@ -35,10 +41,12 @@ export const QuestionPlayer = {
   CommitStatus: QuestionPlayerPieces.Status
 } as const
 
-export const PracticeNonvisualQuestion = ({ positionLabel, nextHref }: { readonly positionLabel?: string; readonly nextHref?: string }) => (
+interface PracticeQuestionProps { readonly positionLabel?: string; readonly nextHref?: string }
+
+export const PracticeQuestion = ({ positionLabel, nextHref, children }: PracticeQuestionProps & { readonly children: ReactNode }) => (
   <QuestionPlayerPieces.Frame>
     <QuestionPlayerPieces.Header {...(positionLabel === undefined ? {} : { positionLabel })} />
-    <QuestionPlayerPieces.Prompt />
+    <QuestionPlayerPieces.Prompt>{children}</QuestionPlayerPieces.Prompt>
     <QuestionPlayerPieces.Form>
       <QuestionPlayerPieces.Options />
       <QuestionPlayerPieces.Feedback />
@@ -47,3 +55,18 @@ export const PracticeNonvisualQuestion = ({ positionLabel, nextHref }: { readonl
     <QuestionPlayerPieces.Status />
   </QuestionPlayerPieces.Frame>
 )
+
+export const PracticeVisualQuestion = (props: PracticeQuestionProps) => (
+  <PracticeQuestion {...props}><QuestionPlayer.VisualBody /></PracticeQuestion>
+)
+
+export const PracticeNonvisualQuestion = (props: PracticeQuestionProps) => (
+  <PracticeQuestion {...props}><QuestionPlayer.NonvisualBody /></PracticeQuestion>
+)
+
+export const PracticeQuestionRoute = (props: PracticeQuestionProps) => {
+  const { state } = useQuestionPlayer()
+  return state.presentation === "nonvisual"
+    ? <PracticeNonvisualQuestion {...props} />
+    : <PracticeVisualQuestion {...props} />
+}
