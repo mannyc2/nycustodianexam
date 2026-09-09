@@ -18,6 +18,12 @@ for pdf in sorted(root.glob("*.pdf")):
             if (float(word.attrib["xMin"]) < 0 or float(word.attrib["yMin"]) < 0
                 or float(word.attrib["xMax"]) > width or float(word.attrib["yMax"]) > height):
                 outside.append({"page": number, "word": word.text, "bounds": word.attrib})
+    text_pages = subprocess.check_output(["pdftotext", "-layout", str(pdf), "-"], text=True).split("\f")
+    orphaned_labels = []
+    for number, text_page in enumerate(text_pages, 1):
+        lines = [line.strip() for line in text_page.splitlines() if line.strip()]
+        if lines and lines[-1] in {"Source version", "Locator", "Source line ID", "Source record ID"}:
+            orphaned_labels.append({"page": number, "label": lines[-1]})
     fonts = ET.fromstring(subprocess.check_output(["pdftohtml", "-xml", "-zoom", "1", "-stdout", "-i", str(pdf)]))
     sizes = {}
     characters = collections.Counter()
@@ -29,12 +35,12 @@ for pdf in sorted(root.glob("*.pdf")):
     dominant = characters.most_common(1)[0][0]
     expected = 18 if "large" in pdf.stem else 12
     results.append({"file": pdf.name, "pages": len(pages), "outOfPageWords": outside,
-                    "dominantTextSizePt": dominant, "expectedBodySizePt": expected,
+                    "orphanedReceiptLabels": orphaned_labels, "dominantTextSizePt": dominant, "expectedBodySizePt": expected,
                     "dominantTextMeetsBodySize": dominant >= expected,
                     "charactersByPointSize": dict(sorted(characters.items()))})
 report = {"method": "Poppler bbox-layout and pdftohtml XML at zoom 1; dominant size by extracted character count. Small labels are not certified by this check.", "results": results}
 (root / "text-layout-audit.json").write_text(json.dumps(report, indent=2) + "\n")
 for result in results:
-    print(result["file"], result["pages"], "pages; dominant text", result["dominantTextSizePt"], "pt; outside", len(result["outOfPageWords"]))
-if any(result["outOfPageWords"] or not result["dominantTextMeetsBodySize"] for result in results):
+    print(result["file"], result["pages"], "pages; dominant text", result["dominantTextSizePt"], "pt; outside", len(result["outOfPageWords"]), "orphaned receipt labels", len(result["orphanedReceiptLabels"]))
+if any(result["outOfPageWords"] or result["orphanedReceiptLabels"] or not result["dominantTextMeetsBodySize"] for result in results):
     sys.exit(1)

@@ -334,6 +334,7 @@
     .print-preview p { orphans: 3; widows: 3; }
     .print-preview details > summary { display: none; }
     .print-preview details:not([open]) > :not(summary) { display: block; }
+    .print-preview .source-note dl > div { break-inside: avoid; }
     /* Filtering the whole packet rasterizes PDF text in Chromium. */
     .print-grayscale .print-section { filter: none; }
     .print-grayscale img { filter: grayscale(1); }
