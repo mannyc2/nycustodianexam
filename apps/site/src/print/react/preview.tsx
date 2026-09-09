@@ -161,6 +161,10 @@ const packetSection = (
             {section.questions.map((question) => (
               <li key={question.id} className="print-question">
                 <p>{question.prompt}</p>
+                {question.observations === undefined ? null : <>
+                  <p className="print-nonvisual-label">Nonvisual version</p>
+                  <ol className="print-observation-list">{question.observations.map((fact, index) => <li key={index}>{fact}</li>)}</ol>
+                </>}
                 {question.illustration === undefined ? null : <img className="print-question-image" src={question.illustration.asset.dataUrl} alt={question.illustration.neutralDescription} />}
                 <ol className="print-option-list">
                   {question.options.map((option) => <li key={option.label} data-option-label={option.label}>{option.text}</li>)}

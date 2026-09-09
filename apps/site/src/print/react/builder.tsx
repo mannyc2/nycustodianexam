@@ -58,6 +58,7 @@ export const PrintBuilder = ({
   const [printSize, setPrintSize] = useState<"normal" | "large">("normal")
   const [grayscalePreview, setGrayscalePreview] = useState(true)
   const [includeImages, setIncludeImages] = useState(true)
+  const [useNonvisualQuestions, setUseNonvisualQuestions] = useState(false)
   const [answerKeyPlacement, setAnswerKeyPlacement] = useState<"separate-job" | "new-section">("separate-job")
   const [includeExplanations, setIncludeExplanations] = useState(false)
   const [includeSources, setIncludeSources] = useState(true)
@@ -126,6 +127,7 @@ export const PrintBuilder = ({
       printSize,
       grayscalePreview,
       includeImages: imageProduct && includeImages,
+      ...(product === "multiple-choice-questions" && useNonvisualQuestions ? { questionPresentation: "nonvisual" as const } : {}),
       answerKeyPlacement: product === "multiple-choice-questions"
         ? answerKeyPlacement
         : "separate-job",
@@ -238,7 +240,10 @@ export const PrintBuilder = ({
           <legend>Accessibility and output</legend>
           <label><input type="checkbox" checked={printSize === "large"} onChange={(event) => setPrintSize(event.target.checked ? "large" : "normal")} /> Large print (at least 18pt)</label>
           <label><input type="checkbox" checked={grayscalePreview} onChange={(event) => setGrayscalePreview(event.target.checked)} /> Grayscale preview</label>
-          {product === "multiple-choice-questions" ? <p>Illustrations needed to answer a question are always included.</p> : null}
+          {product === "multiple-choice-questions" ? <>
+            <label><input type="checkbox" checked={useNonvisualQuestions} onChange={event => setUseNonvisualQuestions(event.target.checked)} /> Use authored nonvisual versions for illustrated questions</label>
+            <p>{useNonvisualQuestions ? "Illustrated questions use their reviewed prompt and observable facts. Other questions keep their original text." : "Illustrations needed to answer a question are included."}</p>
+          </> : null}
           <label><input type="checkbox" checked={includeImages} disabled={!imageProduct} onChange={(event) => setIncludeImages(event.target.checked)} /> Include released print images</label>
           <label><input type="checkbox" checked={includeSources} disabled={!sourceProduct} onChange={(event) => setIncludeSources(event.target.checked)} /> Include source references</label>
           <label htmlFor="print-key-placement">

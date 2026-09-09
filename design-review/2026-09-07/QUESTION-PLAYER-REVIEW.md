@@ -649,3 +649,11 @@ native font readiness and relies on screenshot layout stability.
 
 The real installed v4-to-v5 upgrade is recorded in UPGRADE-V4-V5.md. Nonvisual
 print output remains outstanding.
+
+
+### Nonvisual print follow-through — September 9, 2026
+
+Authored nonvisual question output is now implemented and verified. See
+`PRINT-OUTPUT-REVIEW.md` and `print-nonvisual-audit/REVIEW.md` for saved-packet,
+answer-key pairing, browser and actual PDF evidence. This closes the outstanding
+print adaptation noted above; final integrated validation remains.

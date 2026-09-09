@@ -1,0 +1,69 @@
+{
+  "captures": [
+    {
+      "id": "us-letter-normal",
+      "paper": "us-letter",
+      "large": false,
+      "seed": "nonvisual-print-21",
+      "questionIds": [
+        "q045",
+        "q091",
+        "q037"
+      ],
+      "retainedImages": 0,
+      "estimatedPages": 2,
+      "pages": 2,
+      "pageSize": "612 x 792 pts (letter)",
+      "searchableText": true
+    },
+    {
+      "id": "us-letter-large-wide",
+      "paper": "us-letter",
+      "large": true,
+      "seed": "nonvisual-print-21",
+      "questionIds": [
+        "q045",
+        "q091",
+        "q037"
+      ],
+      "retainedImages": 0,
+      "estimatedPages": 3,
+      "pages": 3,
+      "pageSize": "612 x 792 pts (letter)",
+      "searchableText": true
+    },
+    {
+      "id": "a4-normal",
+      "paper": "a4",
+      "large": false,
+      "seed": "nonvisual-print-21",
+      "questionIds": [
+        "q045",
+        "q091",
+        "q037"
+      ],
+      "retainedImages": 0,
+      "estimatedPages": 2,
+      "pages": 2,
+      "pageSize": "594.96 x 841.92 pts (A4)",
+      "searchableText": true
+    },
+    {
+      "id": "a4-large-wide",
+      "paper": "a4",
+      "large": true,
+      "seed": "nonvisual-print-21",
+      "questionIds": [
+        "q045",
+        "q091",
+        "q037"
+      ],
+      "retainedImages": 0,
+      "estimatedPages": 3,
+      "pages": 3,
+      "pageSize": "594.96 x 841.92 pts (A4)",
+      "searchableText": true
+    }
+  ],
+  "errors": []
+}

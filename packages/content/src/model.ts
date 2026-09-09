@@ -15,6 +15,7 @@ export {
   LegacyQuestionSourceReceipt,
   PostcommitQuestion,
   PrecommitQuestion,
+  QuestionNonvisualEquivalent,
   QuestionOption,
   QuestionOptionConcept,
   QuestionOptionConceptMappings,

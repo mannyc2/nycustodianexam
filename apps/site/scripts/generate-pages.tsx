@@ -1037,6 +1037,7 @@ const buildPages = ({
         options: question.options,
         ...(question.illustration === undefined ? {} : { illustration: {
           neutralDescription: question.illustration.neutralDescription,
+          ...(question.illustration.nonvisualEquivalent === undefined ? {} : { nonvisualEquivalent: question.illustration.nonvisualEquivalent }),
           asset: (() => {
             const image = question.illustration.derivatives.find(asset => asset.kind === "print")
             if (image === undefined) throw new Error(`Question ${question.id} has no print illustration`)

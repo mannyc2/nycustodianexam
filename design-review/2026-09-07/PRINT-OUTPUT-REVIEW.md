@@ -199,3 +199,21 @@ rerun against stable output is recorded separately below.
 
 The isolated Chromium hazard-product rerun passed (1/1). All 27 print checks
 therefore passed across the original run and the stable-output rerun.
+
+
+## Authored nonvisual question output — September 9, 2026
+
+The multiple-choice product now offers authored nonvisual versions. Illustrated
+questions use the reviewed prompt and ordered observable facts; text questions
+keep their original prompt. Unsupported equivalents stop generation with an
+explanation. Question order, option order and answer-key pairing are unchanged.
+The saved packet retains its presentation and facts without image bytes; reload
+works without a study-image download. Optional fields preserve old print records.
+
+`print-nonvisual-audit/REVIEW.md` records 40 print unit tests, typechecks, the full
+build/artifact gate, and 36 browser workflows across Chromium/Firefox/WebKit
+(33 initial passes plus three corrected fixture reruns). Four actual Letter/A4
+PDFs cover normal and large/wide output; ten pages were visually inspected, and
+all authored facts are searchable. The observation-spacing estimate was corrected
+to follow the fixed CSS margins; all four sample page estimates now match.
+These PDF samples are local output evidence, not physical-printer certification.

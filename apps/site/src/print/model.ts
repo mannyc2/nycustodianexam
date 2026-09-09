@@ -13,6 +13,7 @@ import {
 import { printJobIdPattern, printPreviewPathPattern } from "./identity.ts"
 import {
   PostcommitScene,
+  QuestionNonvisualEquivalent,
   SafeQuestionMembership
 } from "@nycustodian/content/model"
 
@@ -338,7 +339,7 @@ export class PrintQuestionSource extends Schema.Class<PrintQuestionSource>(
         : "print question option IDs must be unique"
     })
   ),
-  illustration: Schema.optionalKey(Schema.Struct({ neutralDescription: Schema.NonEmptyString, asset: AssetContentReceipt })),
+  illustration: Schema.optionalKey(Schema.Struct({ neutralDescription: Schema.NonEmptyString, asset: AssetContentReceipt, nonvisualEquivalent: Schema.optionalKey(QuestionNonvisualEquivalent) })),
   answerReceipt: Schema.NullOr(PostcommitContentReceipt)
 }) {}
 
@@ -453,6 +454,7 @@ export class PrintSettings extends Schema.Class<PrintSettings>(
   printSize: PrintSize,
   grayscalePreview: Schema.Boolean,
   includeImages: Schema.Boolean,
+  questionPresentation: Schema.optionalKey(Schema.Literal("nonvisual")),
   answerKeyPlacement: Schema.Literals(["separate-job", "new-section"]),
   includeExplanations: Schema.Boolean,
   includeSources: Schema.Boolean,
@@ -537,12 +539,14 @@ const PrintQuestionsSection = Schema.Struct({
     id: Schema.NonEmptyString,
     prompt: Schema.NonEmptyString,
     illustration: Schema.optionalKey(Schema.Struct({ neutralDescription: Schema.NonEmptyString, asset: PrintRetainedAsset })),
+    observations: Schema.optionalKey(QuestionNonvisualEquivalent.fields.observations),
     options: Schema.Array(Schema.Struct({
       id: Schema.NonEmptyString,
       label: Schema.NonEmptyString,
       text: Schema.NonEmptyString
     }))
-  }))
+  }).check(Schema.makeFilter(question => question.observations !== undefined && question.illustration !== undefined
+    ? "a printed question uses either an illustration or authored nonvisual facts" : undefined)))
 })
 
 const PrintAnswerKeySection = Schema.Struct({

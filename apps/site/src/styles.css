@@ -161,6 +161,10 @@
     padding-block: var(--space-4);
   }
 
+  .print-observation-list { margin-block: var(--space-3); padding-inline-start: 1.5rem; }
+  .print-observation-list li + li { margin-block-start: var(--space-2); }
+  .print-nonvisual-label { font-weight: var(--weight-bold); }
+
   .print-option-list { list-style: none; padding-inline-start: var(--space-2); }
   .print-option-list li::before { content: attr(data-option-label) ". "; font-weight: var(--weight-bold); }
 

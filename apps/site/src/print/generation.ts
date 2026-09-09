@@ -258,6 +258,9 @@ export const generatePrintManifest = ({
   settings: unsafeSettings
 }: GeneratePrintJobInput): PrintJobManifest => {
   const settings = Schema.decodeUnknownSync(PrintSettings)(unsafeSettings)
+  if (settings.questionPresentation !== undefined && settings.product !== "multiple-choice-questions") {
+    throw new PrintGenerationError("Nonvisual question presentation applies only to a multiple-choice question packet.")
+  }
   if (settings.answerKeyPlacement === "new-section" && settings.product !== "multiple-choice-questions") {
     throw new PrintGenerationError("An appended answer key applies only to a multiple-choice question packet.")
   }
@@ -287,6 +290,10 @@ export const generatePrintManifest = ({
   const identity = `${printAlgorithmId}\n${bootstrap.releaseId}\n${bootstrap.contentVersion}\n${canonicalSelection(settings)}`
   const selected = shuffled([...inventory].sort(compareIds), fnv1a32(identity)).slice(0, settings.count)
   const itemIds = selected.map((item) => item.id)
+  if (settings.questionPresentation === "nonvisual" && itemIds.some(id => {
+    const illustration = bootstrap.questions.find(question => question.id === id)?.illustration
+    return illustration !== undefined && illustration.nonvisualEquivalent === undefined
+  })) throw new PrintGenerationError("A selected illustrated question has no authored nonvisual version. Choose illustrated output or another question set.")
   const selectedQuestionById = new Map(bootstrap.questions.map((question) => [question.id, question]))
   const questions = questionProducts.has(settings.product)
     ? itemIds.map((questionId) => {
@@ -332,7 +339,7 @@ export const generatePrintManifest = ({
   const assets = settings.product === "multiple-choice-questions"
     ? itemIds.flatMap(id => {
         const image = bootstrap.questions.find(question => question.id === id)?.illustration
-        return image === undefined ? [] : [image.asset]
+        return image === undefined || settings.questionPresentation === "nonvisual" ? [] : [image.asset]
       })
     : settings.includeImages
     ? settings.product === "tool-family-contrast-cards"
@@ -398,8 +405,16 @@ const estimateQuestionPages = (
   let used = (large ? height : 450) + heading
   let pages = 1
   for (const [index, question] of questions.entries()) {
-    const textLines = lines(question.prompt) + question.options.reduce((total, option) => total + lines(option.text), 0)
-    const block = textLines * lineHeight + Math.max(0, question.options.length - 1) * 9 + 25.5 +
+    const observations = question.observations ?? []
+    // The facts use a single label line, 0.75rem list margins and 0.5rem
+    // between facts; those fixed spaces do not grow to full large-print lines.
+    const observationLines = observations.length === 0 ? 0 :
+      1 + observations.reduce((total, fact) => total + lines(fact), 0)
+    const observationSpacing = observations.length === 0 ? 0 :
+      18 + Math.max(0, observations.length - 1) * 6
+    const textLines = lines(question.prompt) + observationLines +
+      question.options.reduce((total, option) => total + lines(option.text), 0)
+    const block = textLines * lineHeight + observationSpacing + Math.max(0, question.options.length - 1) * 9 + 25.5 +
       (question.illustration === undefined ? 0 : 252 + 24)
     const gap = index === 0 ? 0 : 9
     if (used + gap + block > height) {
@@ -554,8 +569,11 @@ export const makePrintPacket = (
         questions: orderedQuestions.map(({ question, options }, index) => ({
           number: index + 1,
           id: question.id,
-          prompt: question.prompt,
-          ...(question.illustration === undefined ? {} : { illustration: {
+          prompt: manifest.settings.questionPresentation === "nonvisual"
+            ? question.illustration?.nonvisualEquivalent?.prompt ?? question.prompt : question.prompt,
+          ...(question.illustration === undefined ? {} : manifest.settings.questionPresentation === "nonvisual" ? {
+            observations: question.illustration.nonvisualEquivalent!.observations
+          } : { illustration: {
             neutralDescription: question.illustration.neutralDescription,
             asset: retainedAsset(question.illustration.asset)!
           } }),
@@ -570,7 +588,7 @@ export const makePrintPacket = (
         appendedSections.push(answerKeySection())
         if (manifest.settings.includeExplanations) appendedSections.push(explanationSection())
       }
-      title = "Original multiple-choice practice"
+      title = manifest.settings.questionPresentation === "nonvisual" ? "Original multiple-choice practice — nonvisual" : "Original multiple-choice practice"
       break
     case "answer-key":
       section = answerKeySection()

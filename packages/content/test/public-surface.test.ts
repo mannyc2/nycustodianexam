@@ -70,6 +70,7 @@ describe("public package surface", () => {
       "PublicProfile",
       "QuestionDomain",
       "QuestionFactKind",
+      "QuestionNonvisualEquivalent",
       "QuestionOption",
       "QuestionOptionConcept",
       "QuestionOptionConceptMappings",

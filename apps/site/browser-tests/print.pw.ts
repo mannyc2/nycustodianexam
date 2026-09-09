@@ -157,6 +157,8 @@ test("generates, restores, and prints a separate deterministic question packet",
 
   await page.getByLabel("Number of questions").fill("2")
   await fillPrintSetCode(page, "browser-print-proof")
+  // A versioned deterministic set may contain an illustration in this release.
+  await primePrintLocalClosure(page)
   await page.getByRole("button", { name: "Generate preview" }).click()
   await expect(page).toHaveURL(/\/print\/preview\/print-[a-f0-9-]+\/$/)
 
@@ -743,7 +745,7 @@ test("illustrated packet explains its missing download and retains setup while d
   await page.goto("/print/")
   await page.getByLabel("Number of questions").fill("3")
   await page.getByText("Repeat this exact set", { exact: true }).click()
-  await page.locator("#print-seed").fill("illustrated-print-158")
+  await page.locator("#print-seed").fill("nonvisual-print-21")
   await page.getByRole("button", { name: "Generate preview", exact: true }).click()
   await expect(page.getByRole("heading", { name: "Print preview was not generated", exact: true })).toBeFocused()
   await expect(page.getByText(/This packet needs images or answer references/)).toBeVisible()
@@ -753,9 +755,34 @@ test("illustrated packet explains its missing download and retains setup while d
   await downloads.getByRole("button", { name: /^Download (the .* copy|and check)$/ }).click()
   await expect(downloads.getByText(/Download complete and checked/)).toBeVisible({ timeout: 90000 })
   await downloads.close()
-  await expect(page.locator("#print-seed")).toHaveValue("illustrated-print-158")
+  await expect(page.locator("#print-seed")).toHaveValue("nonvisual-print-21")
   await expect(page.getByLabel("Number of questions")).toHaveValue("3")
   await page.getByRole("button", { name: "Generate preview", exact: true }).click()
   await expect(page.locator("img.print-question-image")).toBeVisible()
   await expect(page.locator("img.print-question-image")).toHaveAttribute("src", /^data:image\/png;base64,/)
+})
+
+
+test("nonvisual question packet needs no image download and survives reload", async ({ page }) => {
+  await page.goto("/print/")
+  await page.getByLabel("Number of questions").fill("3")
+  await fillPrintSetCode(page, "nonvisual-print-21")
+  await page.getByLabel("Use authored nonvisual versions for illustrated questions", { exact: true }).check()
+  await page.getByRole("button", { name: "Generate preview", exact: true }).click()
+  await expect(page).toHaveURL(/\/print\/preview\/print-[a-f0-9-]+\/$/)
+  const prompt = page.getByText("Which tool matches these observable features?", { exact: true })
+  await expect(prompt).toBeVisible()
+  await expect(page.locator(".print-observation-list li")).toHaveCount(4)
+  await expect(page.locator("img.print-question-image")).toHaveCount(0)
+  const jobs = await readPrintJobs(page)
+  expect(jobs).toHaveLength(1)
+  expect(jobs[0]).toMatchObject({ manifest: {
+    settings: { questionPresentation: "nonvisual" },
+    itemIds: ["q045", "q091", "q037"], assets: []
+  } })
+  await page.reload()
+  await expect(prompt).toBeVisible()
+  await expect(page.locator(".print-observation-list li")).toHaveCount(4)
+  await expect(page.locator("img.print-question-image")).toHaveCount(0)
+  expect(await readPrintJobs(page)).toEqual(jobs)
 })

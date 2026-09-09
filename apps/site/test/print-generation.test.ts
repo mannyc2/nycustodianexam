@@ -1957,6 +1957,35 @@ describe("required question illustrations in print", () => {
       asset: image.receipt
     } }]
   })
+  it("retains authored nonvisual facts without image bytes and preserves answer-key pairing", async () => {
+    const equivalent = { prompt: "Which tool matches these observable features?", observations: ["Two flat faces oppose one another.", "A ridged wheel sits below them."] as const }
+    const paired = new PrintBuilderBootstrap({ ...illustrated, questions: illustrated.questions.map(question => ({
+      ...question, illustration: { ...question.illustration!, nonvisualEquivalent: equivalent }
+    })) })
+    const base = settings("multiple-choice-questions", 1)
+    const visual = generatePrintJob({ bootstrap: paired, settings: base, retainedAssets: [image] })
+    const nonvisual = generatePrintJob({ bootstrap: paired, settings: new PrintSettings({ ...base, questionPresentation: "nonvisual" }) })
+    expect(nonvisual.manifest.assets).toEqual([])
+    expect(nonvisual.manifest.questions).toEqual(visual.manifest.questions)
+    expect(nonvisual.manifest.pairingFingerprint).toBe(visual.manifest.pairingFingerprint)
+    const html = renderPrintJob(nonvisual)
+    expect(html).toContain(equivalent.prompt)
+    expect(html).toContain(equivalent.observations[0])
+    expect(html).not.toContain(image.dataUrl)
+    expect(html).not.toContain('class="print-question-image"')
+    const record = new PrintJobRecord({ id: "print-nonvisual1", ...nonvisual, status: "preview-ready", updatedAt: 100 })
+    await expect(validatePrintJobRecordIntegrity(JSON.parse(JSON.stringify(record)))).resolves.toEqual(record)
+  })
+
+  it("rejects unavailable equivalents and non-question products instead of dropping required images", () => {
+    expect(() => generatePrintJob({ bootstrap: illustrated,
+      settings: new PrintSettings({ ...settings("multiple-choice-questions", 1), questionPresentation: "nonvisual" })
+    })).toThrow(/no authored nonvisual version/)
+    expect(() => generatePrintJob({ bootstrap: illustrated,
+      settings: new PrintSettings({ ...settings("answer-key", 1), questionPresentation: "nonvisual" })
+    })).toThrow(/only to a multiple-choice question packet/)
+  })
+
   it("retains the image even when optional images are disabled and restores exact bytes", async () => {
     const generated = generatePrintJob({ bootstrap: illustrated, settings: settings("multiple-choice-questions", 1), retainedAssets: [image] })
     expect(generated.manifest.settings.includeImages).toBe(false)
