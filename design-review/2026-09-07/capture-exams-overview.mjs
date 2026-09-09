@@ -17,6 +17,7 @@ try {
     await page.evaluate(() => document.fonts.ready);
     for (const [name, locator] of [
       ['hero', page.locator('.exams-page > .page-header-prominent')],
+      ['cycle', page.locator('#exams-cycle')],
       ['registry', page.locator('#exams-board')],
       ['cards', page.locator('.record-list')]
     ]) {
@@ -24,6 +25,13 @@ try {
       await locator.screenshot({ path: output + file, style: '.site-header-inner > .nav-primary, .site-header-inner > .nav-utility { opacity: 0; }' });
       captures.push({ file, width, bounds: await locator.boundingBox() });
     }
+    const cycle = page.locator('#exams-cycle');
+    await expect(cycle.locator('[data-administration-state]:visible')).toHaveCount(1);
+    await cycle.getByText('Sources and review dates', { exact: true }).click();
+    const sourcesFile = `cycle-sources-${width}.png`;
+    await cycle.screenshot({ path: output + sourcesFile, style: '.site-header-inner > .nav-primary, .site-header-inner > .nav-utility { opacity: 0; }' });
+    captures.push({ file: sourcesFile, width, bounds: await cycle.boundingBox() });
+    await cycle.getByText('Sources and review dates', { exact: true }).click();
     if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)) throw new Error('Exams overflow');
     const actions = page.locator('.exam-card-coverage a:visible');
     await expect(actions).toHaveCount(width === 384 ? 3 : 0);

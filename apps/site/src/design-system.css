@@ -1043,3 +1043,19 @@
     .exams-page > .page-header-prominent .lead { font-size: 0.9375rem; }
   }
 }
+
+@layer overrides {
+  .exams-cycle-compact { display: none; }
+  .exams-cycle-ample { display: grid; gap: var(--space-3); }
+  @media (max-width: 47.99rem) {
+    .exams-cycle-compact { display: grid; gap: var(--space-3); }
+    .exams-cycle-ample { display: none; }
+    .exams-cycle-summary > .section-header > p { display: none; }
+    .exams-cycle-summary .notice { padding: var(--space-4); }
+    .exams-cycle-summary .notice h3 { font-size: var(--text-sm); }
+    .exams-cycle-summary .notice p, .exams-cycle-summary .timeline-note { font-size: var(--text-xs); }
+    .exams-cycle-summary .timeline { gap: var(--space-2); }
+    .exams-cycle-summary .timeline > li { padding: var(--space-3); }
+    .exams-cycle-summary .timeline strong { font-size: var(--text-xs); }
+  }
+}

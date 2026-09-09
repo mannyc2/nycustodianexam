@@ -393,6 +393,17 @@ export const renderAnnouncementMilestones = (
     </div><dl class="home-cycle-dates">${milestones.map((fact) => `<div><dt>${escapeHtml(fact.label)}</dt><dd>${escapeHtml(fact.value as string)}</dd></div>`).join("")}</dl></div>
     <details class="home-cycle-evidence"><summary>Sources and review dates</summary>${sourceProofLine(lineIds, evidence.map((fact) => fact.reviewedOn), sourceLineById, sourceById)}${sourceLineLinks(lineIds, sourceLineById, sourceById)}</details>
   </section>`
+  if (sectionId === "exams-cycle") {
+    const notices = administration.map((fact) => `<aside class="notice ${fact.state === "unverified" || fact.state === "conflicting" ? "notice-warning" : "notice-neutral"}" data-administration-state="${fact.state}"><h3>${fact.state === "unverified" ? "Administration: Not confirmed" : escapeHtml(fact.label)}</h3><p>${escapeHtml(fact.value ?? fact.detail ?? "No administration value is asserted in this record.")}</p>${fact.conflictingValues.length === 0 ? "" : `<ul>${fact.conflictingValues.map((value) => `<li>${escapeHtml(value.value)}</li>`).join("")}</ul>`}</aside>`).join("")
+    return `<section class="home-section announcement-cycle exams-cycle-summary" id="exams-cycle" aria-labelledby="exams-cycle-heading">
+      <div class="section-header"><h2 id="exams-cycle-heading">Where the cycle stands</h2><p>Dates from the reviewed announcements. Each announcement keeps its own filing terms.</p></div>
+      <div class="exams-cycle-compact">${notices}</div>
+      ${milestones.length === 0 ? "" : `<ol class="timeline">${milestones.map((fact) => `<li><strong>${escapeHtml(fact.label)}</strong><p class="timeline-note">${escapeHtml(fact.value as string)}</p></li>`).join("")}</ol>`}
+      <div class="exams-cycle-ample">${notices}</div>
+      <p class="source-note">Later announcements or filing periods may exist outside this reviewed record. Next-cycle dates are not specified here.</p>
+      <details class="home-cycle-evidence"><summary>Sources and review dates</summary>${sourceProofLine(lineIds, evidence.map((fact) => fact.reviewedOn), sourceLineById, sourceById)}${sourceLineLinks(lineIds, sourceLineById, sourceById)}</details>
+    </section>`
+  }
   return `<section class="home-section announcement-cycle" id="${escapeHtml(sectionId)}" aria-labelledby="${escapeHtml(sectionId)}-heading"><div class="section-header"><h2 id="${escapeHtml(sectionId)}-heading">Where the cycle stands</h2><p>Dates from the reviewed announcements. Each announcement keeps its own filing terms.</p></div>
     ${milestones.length === 0 ? "" : `<ol class="timeline">${milestones.map((fact) => `<li><strong>${escapeHtml(fact.label)}</strong><p class="timeline-note">${escapeHtml(fact.value as string)}</p></li>`).join("")}</ol>`}
     ${administration.map((fact) => `<aside class="notice ${fact.state === "unverified" || fact.state === "conflicting" ? "notice-warning" : "notice-neutral"}" data-administration-state="${fact.state}"><h3>${fact.state === "unverified" ? "Administration: Not confirmed" : escapeHtml(fact.label)}</h3><p>${escapeHtml(fact.value ?? fact.detail ?? "No administration value is asserted in this record.")}</p>${fact.conflictingValues.length === 0 ? "" : `<ul>${fact.conflictingValues.map((value) => `<li>${escapeHtml(value.value)}</li>`).join("")}</ul>`}</aside>`).join("")}

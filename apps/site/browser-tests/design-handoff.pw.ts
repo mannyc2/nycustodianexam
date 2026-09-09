@@ -203,3 +203,28 @@ test("Atlas preserves written records when released illustrations cannot load", 
   await expect(page.getByRole("combobox", { name: "Family", exact: true })).toBeEnabled()
   await expectPageReflow(page)
 })
+
+
+test("exam cycle keeps the responsive reading order and sources without JavaScript", async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false })
+  try {
+    const page = await context.newPage()
+    for (const width of [1248, 384]) {
+      await page.setViewportSize({ width, height: 900 })
+      await page.goto("/exams/")
+      const cycle = page.locator("#exams-cycle")
+      const notice = cycle.locator("[data-administration-state]:visible")
+      await expect(notice).toHaveCount(1)
+      const noticeBox = await notice.boundingBox()
+      const datesBox = await cycle.locator(".timeline").boundingBox()
+      expect(noticeBox).not.toBeNull()
+      expect(datesBox).not.toBeNull()
+      if (width === 384) expect(noticeBox!.y).toBeLessThan(datesBox!.y)
+      else expect(noticeBox!.y).toBeGreaterThan(datesBox!.y)
+      await cycle.getByText("Sources and review dates", { exact: true }).click()
+      await expect(cycle.locator("details .proof-line")).toBeVisible()
+      expect(await cycle.locator("details a:visible").count()).toBeGreaterThan(0)
+      await expectPageReflow(page)
+    }
+  } finally { await context.close() }
+})

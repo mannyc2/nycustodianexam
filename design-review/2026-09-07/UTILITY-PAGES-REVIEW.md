@@ -125,3 +125,30 @@ status filters, and compact record labels/status details need further source-awa
 reconciliation. Maintained announcement prose is preserved; the prototype's fixed
 filing-status fixture is not a live availability claim. The final complete Exams
 page comparison is still open.
+
+## Exams cycle order and source disclosure
+
+Exams now places the administration uncertainty notice before date rows on
+compact screens and after them on desktop, matching references 09/10. Both
+positions render the same authored notice; CSS exposes only the applicable
+position, preserving visible reading order without JavaScript or duplicate IDs.
+Compact notices/date cards use the reference's smaller text and padding. All
+source evidence and review dates remain in a native disclosure, reducing repeated
+source prose in the overview. The qualification about possible later notices
+remains visible. Home and other announcement renderers are unchanged.
+
+`exams-overview-audit/` now also includes cycle captures with the source disclosure
+closed and open. Inspected the compact cycle: one notice, all date facts, the
+visible uncertainty qualification, and a readable source disclosure. Root build
+and artifact checks pass, all 17 static-generation tests pass, and nine Exams
+checks pass across Chromium/Firefox/WebKit. The new check verifies one visible
+notice, responsive order, source access, and reflow with JavaScript disabled.
+
+Status-filter audit: current identities have no filing-status field. Their
+verified filing-period facts store prose plus review/effective dates;
+`effectiveThrough` is null even where the prose gives a closing date. Do not use
+that null as an open-ended filing window or infer current filing availability.
+Implement explicit source-backed filing metadata/classification before adding
+the proposed status filters. Separate announcement date rows are currently
+retained, including the two equal announced exam dates; consolidation and the
+complete overview comparison remain open.
