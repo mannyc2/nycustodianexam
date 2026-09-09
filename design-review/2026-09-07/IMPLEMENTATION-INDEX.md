@@ -27,7 +27,7 @@ The original [snapshot README](README.md), imported exports and `current-screens
 | Report | [REPORT-REVIEW.md](REPORT-REVIEW.md) | Shared-component adaptation; local draft recovery and dormant intake. No dedicated supplied Report prototype. |
 | Print screen and earlier PDFs | [PRINT-OUTPUT-REVIEW.md](PRINT-OUTPUT-REVIEW.md) | Preview states and earlier question/tool/hazard output passes; observations are revision-specific. |
 | Latest print tables | [PRINT-TABLE-ESTIMATES.md](PRINT-TABLE-ESTIMATES.md) | Eight PDF estimates match measured pagination for the captured counts/settings. |
-| Fact-sheet heading correction | [PRINT-FACT-HEADINGS.md](PRINT-FACT-HEADINGS.md) | Four checksummed PDFs, 185 pages pass automated layout checks; both normal formats visually inspected (60 pages). |
+| Fact-sheet heading correction | [PRINT-FACT-HEADINGS.md](PRINT-FACT-HEADINGS.md) | Four checksummed PDFs, 185 pages pass automated layout checks; both normal formats and A4 large visually inspected (121 pages). |
 | Latest print fragmentation/type audit | [PRINT-RECEIPT-PAIRS.md](PRINT-RECEIPT-PAIRS.md) | Eight regenerated PDFs; source labels kept with values and all extracted large text at least 18pt. Final visual review remains partial. |
 | Latest prose print | [PRINT-PROSE-ESTIMATES.md](PRINT-PROSE-ESTIMATES.md) | Content-based estimates and corrected 18pt body text; eight checksummed PDFs and text-layout audit. |
 | Runtime gates | [LOCAL-RUNTIME-GATES.md](LOCAL-RUNTIME-GATES.md) | Local terminal withdrawal/failure and disabled intake workerd proof; not deployment. |
@@ -40,7 +40,7 @@ Start visual review with the [comparison gallery](implementation-comparison.html
 
 ## Open acceptance items
 
-- Finish visual review of the remaining print PDFs. All four corrected explanation PDFs have completed visual review (41 pages); the latest fact-sheet pass checks 185 pages automatically and visually inspects both normal formats (60 pages). Those automated checks do not certify every page, small label, overlap or physical printer.
+- Finish visual review of the remaining print PDFs. All four corrected explanation PDFs have completed visual review (41 pages); the latest fact-sheet pass checks 185 pages automatically and visually inspects both normal formats and A4 large (121 pages); Letter large remains to inspect (64 pages). Those automated checks do not certify every page, small label, overlap or physical printer.
 - Prose page counts remain estimates: the measured matrix differs by -1 to +5 pages. Final browser/printer pagination is authoritative.
 - Reconcile any remaining component-contract or page/state gaps against the maintained product documents before declaring the full handoff complete.
 - Manual assistive-technology, device and physical-print certification remains unverified. The production certification record is explicitly blocked; passing automated tests must not be called production certification.
