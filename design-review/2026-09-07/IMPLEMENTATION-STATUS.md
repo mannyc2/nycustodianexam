@@ -4,7 +4,7 @@ The active task is the complete handoff in `/mnt/models/dev/nycustodianexam/IMPL
 
 | Area | Current evidence | Remaining work |
 |---|---|---|
-| Shared navigation | `acd7a88`, 1248/384 captures, reflow/keyboard/no-JS/bottom-bar tests | Final cross-browser check after all changes |
+| Shared navigation | `acd7a88`, 1248/384 captures, reflow/keyboard/no-JS/bottom-bar tests | 48 design-handoff checks now pass across Chromium/Firefox/WebKit; repeat only if later shell changes warrant it |
 | Home | First-slice comparison gallery and notes | Final visual audit; documented live-content and system-font differences |
 | Practice hub and Review | First-slice real-save/failure captures, durable review regression tests | Final visual audit and mixed-inventory wording as builder is added |
 | Simulation setup | SETUP-ATLAS-REVIEW.md, effective lengths/timing/format; no exam prerequisite | Final integrated capture/checks |
@@ -14,7 +14,7 @@ The active task is the complete handoff in `/mnt/models/dev/nycustodianexam/IMPL
 | Hazard player | HAZARD-PLAYER-REVIEW.md: responsive workspace, header/save panel, nine real-state captures and nine regression tests | Visual/keyboard layout, integrated retained-image overlay, correction/safe groups and compact recovery captured; final cross-browser and matching-width visual audit remain |
 | Simulation player/results | SIMULATION-NAVIGATOR-REVIEW.md: navigator/confirmation layout, cancel focus, desktop/compact captures; 8 regression tests | Full player, timer and results visual reconciliation |
 | Print configuration | Ten products and effective controls; reviewed document scope | PRINT-OUTPUT-REVIEW.md: actual Letter/A4 question PDFs and searchable-text fix; remaining preview comparison, large-print/illustration pagination and failure/stale captures |
-| Exams / Settings / Offline / report | UTILITY-PAGES-REVIEW.md: first-visit desktop/compact captures, Settings action layout/Offline grouping and recovery checks | Delete preview cancellation/captures verified; returning summaries, live export counts, Offline installed summary, Exams board/action wording and report comparison remain; all record/tab states captured; actual Offline active/removal/unavailable states captured |
+| Exams / Settings / Offline / report | UTILITY-PAGES-REVIEW.md: first-visit desktop/compact captures, Settings action layout/Offline grouping and recovery checks | Delete preview cancellation/captures verified; returning summaries, live export counts, Offline installed summary, Exams board visual audit and report comparison remain; coverage action and three-browser navigation checks pass; all record/tab states captured; actual Offline active/removal/unavailable states captured |
 | Final validation/publication | First-slice local commit; next slice in progress | Full relevant checks, evidence index, clean local commits, reviewable publication; never merge/deploy automatically |
 
 Important discovered content difference: simulation metadata has 30 cleaning, 37 maintenance, 5 safety, and 18 mixed/scenario questions, not the prototype's 34/26/30. Preserve real classification and counts. Internal session/profile/version references remain required; global exam selection is removed.

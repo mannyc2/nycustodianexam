@@ -142,6 +142,7 @@ test("exam search, record selection, and detail tabs use the published records",
   const panel = page.locator("[data-exam-panel]:visible")
   await expect(panel).toHaveCount(1)
   await expect(panel).toBeFocused()
+  await expect(panel.getByRole("link", { name: "See what practice covers", exact: true })).toHaveAttribute("href", "/practice/#covers")
   const subjectTab = panel.getByRole("tab", { name: "What it tests", exact: true })
   await subjectTab.click()
   await expect(subjectTab).toHaveAttribute("aria-selected", "true")

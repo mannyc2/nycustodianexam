@@ -7,3 +7,9 @@ The complete record-level source list now uses a native “Sources for this reco
 Build/artifact invariants and all 16 design-handoff Chromium checks pass, including exam search/tab navigation and no-JavaScript navigation. The script's localStorage comparison does not independently prove absence of every possible persistence effect; the static exam enhancement contains no storage writes and does not set a global active exam.
 
 Remaining: final comparison of the board/hero and action wording against Landing.dc.html, plus cross-browser verification. Live facts and longer source-supported scope descriptions intentionally differ from prototype fixtures.
+
+## Coverage action and cross-browser pass
+
+The primary record action now says “See what practice covers” and links to the existing `/practice/#covers` explanation. The full-profile link remains secondary. Its label stays “Read the full profile,” accurately describing its destination rather than suggesting it opens the visitor’s own announcement. All record/tab captures were refreshed.
+
+Build/artifact checks pass. All 48 `design-handoff.pw.ts` checks pass across Chromium, Firefox and WebKit (16 per browser), including exam search/tab behavior, coverage-link destination, compact Library navigation, no-JavaScript navigation, page reflow and Atlas fallback. Command: `NYCUSTODIAN_PLAYWRIGHT_BASE_URL=http://127.0.0.1:4187 node node_modules/@playwright/test/cli.js test browser-tests/design-handoff.pw.ts --workers=2`. This is functional cross-browser evidence for that file’s scope; full workflows and visual comparison are still separate gates.
