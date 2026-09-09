@@ -2,7 +2,7 @@ import { reviewReasonId } from "../reason-id.ts"
 import { hazardReviewPath } from "../../hazard-player/review-path.ts"
 import { ReviewQueueProvider, useReviewQueue, scopes, type ReviewProviderProps } from "./provider.tsx"
 import { useEffect, useRef, useState } from "react"
-import { ActivityHistory } from "../../study/react/history.tsx"
+import { ReviewHistory as SavedReviewHistory } from "../../study/react/history.tsx"
 import { UnavailableAttempts } from "../../study/react/unavailable-attempts.tsx"
 import type { ReviewQueueItem, ReviewReason } from "../model.ts"
 
@@ -162,7 +162,7 @@ export const ReviewHistory = () => {
   const { state: { historyState, unavailableAttempts }, actions, meta: { unavailableHeadingRef } } = useReviewQueue()
   return <>
     <UnavailableAttempts headingRef={unavailableHeadingRef} attempts={unavailableAttempts} headingId="review-unavailable-heading" />
-    <ActivityHistory state={historyState} reviewsOnly onRetry={actions.retryHistory} />
+    <SavedReviewHistory state={historyState} onRetry={actions.retryHistory} />
 
   </>
 }

@@ -14,7 +14,7 @@ The handoff supersedes stale selected-profile/global exam selection and schedule
 | Print | Builder/preview providers and explicit pieces now adapt their renderer-neutral controllers | Inspected provider/composition correction and controller lifecycle guards recorded below. Remaining PDF visual acceptance is separate. |
 | Practice/Hazard builders | Separate setup controllers/providers adapt named PracticeSessionSetup and HazardSessionSetup compositions with explicit controls, preview and actions | Inspected controller/provider and setup-piece corrections recorded below. Full per-family acceptance remains open. |
 | Hazard workflow pieces | Practice, saved Review and Simulation have named visual/nonvisual variants; Review context uses exact restored response data | Remaining family source/navigation composition, neutral-input reuse and full per-family acceptance. |
-| Architecture enforcement | Existing module checks now run alongside AST checks for prohibited React APIs and render props, with detector fixtures | Add enforcement for boolean modes, index-based keys, broad UI barrels and leaf capability imports; current success does not prove these remaining conventions. |
+| Architecture enforcement | AST gates cover React APIs/render props, lexical map-index keys, known leaf-capability imports, wildcard/UI-index barrels and named workflow-mode props; 46 detector fixtures | Preserve documented detector limits; inspect indirect aliases, arbitrarily named cross-family aggregation and remaining provider lifecycle requirements. |
 
 Question workflow/control/feedback/body corrections and Simulation setup/player/results provider boundaries are recorded in QUESTION-COMPOSITION-AUDIT.md. They do not close the rows above.
 
@@ -193,3 +193,13 @@ The convention gate now rejects wildcard runtime re-exports, including namespace
 Eight additional fixtures distinguish prohibited wildcard/UI-index exports from type-only exports and explicit family APIs. The full 41-fixture gate passed across 153 site sources, together with the 170-module boundary check, maintained layout (317 files), strict checker typecheck and `git diff --check`. Application source did not change; no new browser/build or visual acceptance is claimed.
 
 This guards the concrete wildcard and UI-index barrel forms. It does not infer whether an arbitrarily named module with selective imports/exports has become a cross-family aggregation layer. That broader ownership question remains a source-review requirement. The `reviewsOnly` history boolean mode still needs explicit composition and enforcement.
+
+## Explicit Activity and Review history
+
+`ActivityHistory` and `ReviewHistory` are now separate compositions; the public `reviewsOnly` workflow switch is removed. Activity owns kind filtering, empty-filter focus and unavailable-attempt presentation. Review selects finished-review rows and uses its own empty-state guidance. Shared record rendering and read-state recovery retain the existing dates, month grouping, expansion control, feedback links, stable IDs and recovery copy. The Review queue's existing section piece imports the saved-review composition under an alias to keep the two ownership roles clear.
+
+The convention gate rejects the named workflow/modality props `isPractice`, `isReview`, `isSimulation`, `isVisual`, `isNonvisual`, `isHazard` and `reviewsOnly` in JSX, interfaces and object properties. Five new fixtures verify those failures while permitting ordinary state flags such as disabled/expanded. This is a known-name regression guard, not semantic detection of every possible boolean workflow switch.
+
+Validation: 22 Study/Review controller and projection tests passed. Site and strict checker typechecks, maintained layout (317 files), the 170-module boundary check and the 46-fixture convention scan over 153 sources passed. Production build and artifact/bundle checks passed. Log: `/tmp/nyc-history-variants-build.log`. No new visual comparison or PDF acceptance is claimed by this composition change.
+
+All 24 Study hub and Review queue browser cases passed across Chromium, Firefox and WebKit (16.6 seconds), including filtering/expansion, empty-result keyboard focus, unavailable saved data, finished-review history and responsive reading order. Log: `/tmp/nyc-history-variants-browser.log`. The inspected history-mode correction is complete; full per-family visual acceptance and the documented analysis limits remain open.

@@ -6,6 +6,7 @@ import ts from "typescript"
 
 const root = fileURLToPath(new URL("../", import.meta.url))
 const prohibited = new Set(["forwardRef", "useContext"])
+const workflowModeProps = new Set(["isPractice", "isReview", "isSimulation", "isVisual", "isNonvisual", "isHazard", "reviewsOnly"])
 const nameOf = (node: ts.Node | undefined): string | undefined =>
   node !== undefined && (ts.isIdentifier(node) || ts.isStringLiteral(node)) ? node.text : undefined
 
@@ -110,6 +111,7 @@ const inspect = (text: string, path: string): ReadonlyArray<string> => {
     }
     if (ts.isJsxAttribute(node) || ts.isPropertySignature(node) || ts.isPropertyAssignment(node)) {
       const property = nameOf(node.name)
+      if (property !== undefined && workflowModeProps.has(property)) report(node, `Workflow mode prop ${property} is prohibited; select an explicit composition`)
       if (property !== undefined && /^render[A-Z]/.test(property)) report(node, `Product ${property} render prop is prohibited; compose children or explicit pieces`)
     }
     ts.forEachChild(node, visit)
@@ -121,6 +123,11 @@ const inspect = (text: string, path: string): ReadonlyArray<string> => {
 // Executed with the gate: aliases, namespace access and syntax lookalikes must
 // remain distinguished when this detector is changed.
 const fixtures: ReadonlyArray<readonly [string, number, string?]> = [
+  ['const view = <Player isSimulation />', 1],
+  ['interface Props { isNonvisual?: boolean }', 1],
+  ['const props = { reviewsOnly: true }', 1],
+  ['const view = <Button disabled={busy} aria-expanded={expanded} />', 0],
+  ['interface Props { expanded: boolean; disabled: boolean }', 0],
   ['export * from "./player.tsx"', 1],
   ['export * as Player from "./player.tsx"', 1],
   ['export { Player } from "../question-player/react/player.tsx"', 1, 'apps/site/src/ui/index.ts'],
