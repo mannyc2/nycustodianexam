@@ -31,3 +31,19 @@ Follow-up fixes made during inspection: the hydrated question header now
 retains its generated position and Review context; hazard simulation length
 guidance describes scene presets rather than question presets. These are
 display fixes, not completion of the builder or player visual reconciliation.
+
+## In-progress generation primitive
+
+`apps/site/src/practice/set.ts` now implements the versioned `pb1` descriptor
+and deterministic item selection. Its descriptor encodes the normalized repeat
+code, category mask and concrete length in the existing receipt-safe alphabet.
+The surrounding receipt supplies the release and pack version. Categories use
+a canonical order within that release; callers must supply the pinned release's
+inventory. No answers, persistence or simulation evaluation enter this module.
+
+Unit evidence covers exact algorithm output, descriptor reconstruction after
+inventory/category reordering, Unicode codes, different seeds/releases, the
+four actual category capacities, invalid input and duplicate IDs, and explicit
+replacement when a requested length exceeds capacity. This primitive is not yet
+wired into the UI: player receipt resolution, navigation, Review/Study projection
+and builder controls remain required before calling custom practice functional.
