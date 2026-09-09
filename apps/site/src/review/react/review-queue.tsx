@@ -1,3 +1,4 @@
+import { reviewReasonId } from "../reason-id.ts"
 import { hazardReviewPath } from "../../hazard-player/review-path.ts"
 import { ReviewQueueProvider, useReviewQueue, scopes, type ReviewProviderProps } from "./provider.tsx"
 import { useEffect, useRef, useState } from "react"
@@ -24,8 +25,8 @@ const reasonLabel = (reason: ReviewReason): string => {
 
 const ReviewReasons = ({ reasons }: { readonly reasons: ReadonlyArray<ReviewReason> }) => (
   <ul className="review-reason-list" role="list">
-    {reasons.map((reason, index) => (
-      <li key={`${reason.tag}-${index}`}>{reasonLabel(reason)}</li>
+    {reasons.map((reason) => (
+      <li key={reviewReasonId(reason)}>{reasonLabel(reason)}</li>
     ))}
   </ul>
 )

@@ -1,3 +1,4 @@
+import { keyedContent } from "../../content-keys.ts"
 import { assessVisualMarkers } from "../assessment.ts"
 import type { HazardMarker, ReleasedPostcommitScene } from "../attempt.ts"
 import { decoyRegionsForScene, targetRegionsForScene } from "../released-scene.ts"
@@ -25,17 +26,17 @@ export const AnnotatedHazardScene = ({
         preserveAspectRatio="none"
         viewBox="0 0 1 1"
       >
-        {targetRegions.flatMap((region) => region.polygons.map((polygon, index) => <polygon
+        {targetRegions.flatMap((region) => keyedContent(region.polygons, polygon => JSON.stringify(polygon)).map(({ value: polygon, key }) => <polygon
           className="hazard-result-region hazard-result-region--target"
           data-inventory-id={region.inventoryId}
-          key={`target:${region.inventoryId}:${index}`}
+          key={JSON.stringify(["target", region.inventoryId, key])}
           points={polygon.map(([x, y]) => `${x},${y}`).join(" ")}
           vectorEffect="non-scaling-stroke"
         />))}
-        {decoyRegions.flatMap((region) => region.polygons.map((polygon, index) => <polygon
+        {decoyRegions.flatMap((region) => keyedContent(region.polygons, polygon => JSON.stringify(polygon)).map(({ value: polygon, key }) => <polygon
           className="hazard-result-region hazard-result-region--decoy"
           data-inventory-id={region.inventoryId}
-          key={`decoy:${region.inventoryId}:${index}`}
+          key={JSON.stringify(["decoy", region.inventoryId, key])}
           points={polygon.map(([x, y]) => `${x},${y}`).join(" ")}
           vectorEffect="non-scaling-stroke"
         />))}

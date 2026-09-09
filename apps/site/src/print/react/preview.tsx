@@ -1,4 +1,4 @@
-import { keyedQuestionObservations } from "../../question-observations.ts"
+import { keyedContent } from "../../content-keys.ts"
 import { sourceEvidenceTierLabel } from "../../public-content-labels.ts"
 import { PrintPreviewProvider, usePrintPreview, type PrintPreviewProviderProps } from "./preview-provider.tsx"
 import type {
@@ -77,7 +77,7 @@ const CurrentHazardFeedback = ({
     </li>)}</ul>
     {answer.safeBackground.length === 0 ? null : <>
       <h4>Safe background details</h4>
-      <ul>{answer.safeBackground.map((detail, index) => <li key={`${detail.zone}-${index}`}>
+      <ul>{keyedContent(answer.safeBackground, detail => JSON.stringify([detail.zone, detail.observableCondition])).map(({ value: detail, key }) => <li key={key}>
         <strong>{detail.zone}:</strong> {detail.observableCondition}
       </li>)}</ul>
     </>}
@@ -162,7 +162,7 @@ const packetSection = (
                 <p>{question.prompt}</p>
                 {question.observations === undefined ? null : <>
                   <p className="print-nonvisual-label">Nonvisual version</p>
-                  <ol className="print-observation-list">{keyedQuestionObservations(question.observations).map(({ key, text }) => <li key={key}>{text}</li>)}</ol>
+                  <ol className="print-observation-list">{keyedContent(question.observations, text => text).map(({ key, value: text }) => <li key={key}>{text}</li>)}</ol>
                 </>}
                 {question.illustration === undefined ? null : <img className="print-question-image" src={question.illustration.asset.dataUrl} alt={question.illustration.neutralDescription} />}
                 <ol className="print-option-list">
@@ -259,8 +259,8 @@ const packetSection = (
                 <img src={scene.asset.dataUrl} alt={`${scene.environment} scene with answer outlines`} />
                 <svg aria-label="Hazard-region outlines" preserveAspectRatio="none" role="img" viewBox="0 0 100 100">
                   {regions.flatMap((region, regionIndex) =>
-                    region.polygons.map((polygon, polygonIndex) => <polygon
-                      key={`${region.key}-${polygonIndex}`}
+                    keyedContent(region.polygons, polygon => JSON.stringify(polygon)).map(({ value: polygon, key }) => <polygon
+                      key={JSON.stringify([region.key, key])}
                       points={polygon.map(([x, y]) => `${x * 100},${y * 100}`).join(" ")}
                       vectorEffect="non-scaling-stroke"
                     ><title>{`Hazard region ${regionIndex + 1}`}</title></polygon>)
@@ -292,13 +292,13 @@ const packetSection = (
                 <ol>
                   {scene.answer.targets.map((target) => <li key={target.id}><strong>{target.zone} · Condition needing correction:</strong> {target.observableCondition}</li>)}
                   {scene.answer.decoys.map((decoy) => <li key={decoy.id}><strong>{decoy.zone} · Safe detail that may look suspicious:</strong> {decoy.observableCondition}</li>)}
-                  {scene.answer.safeBackground.map((detail, detailIndex) => <li key={`${detail.zone}-${detailIndex}`}><strong>{detail.zone} · Safe background detail:</strong> {detail.observableCondition}</li>)}
+                  {keyedContent(scene.answer.safeBackground, detail => JSON.stringify([detail.zone, detail.observableCondition])).map(({ value: detail, key }) => <li key={JSON.stringify(["safe-background", key])}><strong>{detail.zone} · Safe background detail:</strong> {detail.observableCondition}</li>)}
                 </ol>
                 <CurrentHazardFeedback answer={scene.answer} includeSources={includeSources} />
               </>
               : <>
                 <p><strong>Scene explanation:</strong> {scene.answer.claim}</p>
-                <ol>{scene.answer.nonvisualStatements.map((statement, statementIndex) => <li key={`${statement.zone}-${statementIndex}`}><strong>{statement.zone} · {printRoleLabel(statement.role)}:</strong> {statement.statement}</li>)}</ol>
+                <ol>{keyedContent(scene.answer.nonvisualStatements, statement => JSON.stringify([statement.zone, statement.role, statement.statement])).map(({ value: statement, key }) => <li key={key}><strong>{statement.zone} · {printRoleLabel(statement.role)}:</strong> {statement.statement}</li>)}</ol>
                 {scene.answer.sourceReferences.length === 0 ? null : <><h4>Source references</h4><ul>{scene.answer.sourceReferences.map((source) => <li key={source.id}>{source.label} — {source.locator}</li>)}</ul></>}
               </>}
           </article>)}

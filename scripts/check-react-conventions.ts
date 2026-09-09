@@ -50,19 +50,24 @@ const inspect = (text: string, path: string): ReadonlyArray<string> => {
         if (prohibited.has(property)) report(entry, `React ${property} re-export is prohibited`)
       }
     }
-    if (ts.isJsxAttribute(node) && nameOf(node.name) === "key" && node.initializer !== undefined && ts.isJsxExpression(node.initializer) && node.initializer.expression !== undefined && ts.isIdentifier(node.initializer.expression)) {
-      const key = node.initializer.expression.text
-      let owner: ts.Node | undefined = node.parent
-      while (owner !== undefined) {
-        if ((ts.isArrowFunction(owner) || ts.isFunctionExpression(owner)) && owner.parameters.some(parameter => nameOf(parameter.name) === key)) {
-          const call = owner.parent
-          if (nameOf(owner.parameters[1]?.name) === key && ts.isCallExpression(call) && ts.isPropertyAccessExpression(call.expression) && call.expression.name.text === "map") {
-            report(node, "Array-position keys are prohibited; use stable content identity")
+    if (ts.isJsxAttribute(node) && nameOf(node.name) === "key" && node.initializer !== undefined && ts.isJsxExpression(node.initializer) && node.initializer.expression !== undefined) {
+      let usesIndex = false
+      const inspectKey = (expression: ts.Node): void => {
+        if (ts.isIdentifier(expression) && !(ts.isPropertyAccessExpression(expression.parent) && expression.parent.name === expression)) {
+          let owner: ts.Node | undefined = expression.parent
+          while (owner !== undefined) {
+            if ((ts.isArrowFunction(owner) || ts.isFunctionExpression(owner)) && owner.parameters.some(parameter => nameOf(parameter.name) === expression.text)) {
+              const call = owner.parent
+              if (nameOf(owner.parameters[1]?.name) === expression.text && ts.isCallExpression(call) && ts.isPropertyAccessExpression(call.expression) && ["map", "flatMap"].includes(call.expression.name.text)) usesIndex = true
+              break
+            }
+            owner = owner.parent
           }
-          break
         }
-        owner = owner.parent
+        ts.forEachChild(expression, inspectKey)
       }
+      inspectKey(node.initializer.expression)
+      if (usesIndex) report(node, "Array-position keys are prohibited; use stable content identity")
     }
     if (ts.isJsxAttribute(node) || ts.isPropertySignature(node) || ts.isPropertyAssignment(node)) {
       const property = nameOf(node.name)
@@ -88,6 +93,9 @@ const fixtures: ReadonlyArray<readonly [string, number]> = [
   ['const props = { renderBody: () => null }', 1],
   ['const view = rows.map((row, position) => <p key={position} />)', 1],
   ['const view = rows.map(function(row, i) { return <p key={i} /> })', 1],
+  ['const view = rows.map((row, i) => <p key={`${row.id}-${i}`} />)', 1],
+  ['const view = rows.flatMap((row, position) => [<p key={String(position)} />])', 1],
+  ['const view = rows.map((row, index) => <p key={row.index} />)', 0],
   ['const view = rows.map(row => <p key={row.id} />)', 0],
   ['const view = rows.map((key, position) => <p key={key} />)', 0],
   ['import { use } from "react"; const view = <Player><Body /></Player>', 0],
@@ -110,4 +118,4 @@ if (problems.length > 0) {
   console.error(problems.join("\n"))
   process.exit(1)
 }
-console.log(`React API/render-prop/direct-index-key conventions passed for ${files.length} source files; ${fixtures.length} detector fixtures passed`)
+console.log(`React API/render-prop/index-key conventions passed for ${files.length} source files; ${fixtures.length} detector fixtures passed`)
