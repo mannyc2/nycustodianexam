@@ -1,0 +1,49 @@
+{
+  "captures": [
+    {
+      "file": "active-1248.png",
+      "width": 1248,
+      "state": "active",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 1248,
+        "height": 1970.03125
+      }
+    },
+    {
+      "file": "removal-preview-1248.png",
+      "width": 1248,
+      "state": "removal-preview",
+      "bounds": {
+        "x": 31.203125,
+        "y": 348.59375,
+        "width": 928,
+        "height": 551.015625
+      }
+    },
+    {
+      "file": "active-384.png",
+      "width": 384,
+      "state": "active",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 384,
+        "height": 3058.625
+      }
+    },
+    {
+      "file": "removal-preview-384.png",
+      "width": 384,
+      "state": "removal-preview",
+      "bounds": {
+        "x": 16,
+        "y": -0.328125,
+        "width": 352,
+        "height": 942.515625
+      }
+    }
+  ],
+  "errors": []
+}

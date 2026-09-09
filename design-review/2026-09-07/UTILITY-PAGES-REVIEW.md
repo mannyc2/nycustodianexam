@@ -27,3 +27,11 @@ This does not close returning-summary or export-preview requirements. The deleti
 The Export card now has a native expandable “What the file includes” note before its download button. Its categories follow the actual transfer payload: answers, finished reviews, preferences, simulations and print jobs. Downloads and import quarantine are excluded, and the review projection is rebuilt. The existing optional-drafts checkbox remains explicit. No upload, extra approval step, or new persistence is introduced.
 
 The production build passes the unchanged closure budgets after keeping the note concise. `capture-settings-export.mjs` records the open disclosure at 608/384 CSS pixels. This provides contents guidance, not a live count preview; returning-record summaries remain outstanding.
+
+## Real Offline states and removal treatment
+
+`capture-offline-states.mjs` downloads, verifies and explicitly activates the actual released study pack in fresh browser contexts, then records active and removal-preview states at 1248/384 CSS pixels. No deletion is performed for the captures. The real pack is 106.0 MiB; the empty contexts have zero active session pins and historical attempts. These intentionally differ from the prototype's size/count fixtures. All four captures complete without page errors or document horizontal overflow.
+
+Removal preview now uses the reference’s neutral surface, restrained heading, and red outlined removal button. Keep it, export, exact dependency impact and preserved-history copy remain visible. The compact removal capture was visually inspected. Build/artifact checks and the 23 local-data/pack/utility recovery browser checks pass, covering activation, real offline use, malformed metadata, imports, active-pack removal, pinned copies and stale previews.
+
+Remaining Offline work includes storage-unavailable visual evidence and final comparison of the installed-state summary. The generic hero remains unchanged; this pass is not complete installed-state fidelity.

@@ -395,7 +395,7 @@ export const OfflinePackManagerIsland = ({
         </>}
       </section>
 
-      {removalPreview === null ? null : <section className={removalPreview.impact.activeSessionPins > 0 ? "local-data-error" : "operation-preview"} aria-labelledby="pack-removal-heading">
+      {removalPreview === null ? null : <section className={removalPreview.impact.activeSessionPins > 0 ? "local-data-error" : "operation-preview pack-removal-preview"} aria-labelledby="pack-removal-heading">
         <h2 id="pack-removal-heading" ref={removalHeading} tabIndex={-1}>{removalPreview.impact.activeSessionPins > 0 ? "Cannot be removed yet" : "Remove this copy?"}</h2>
         <p>{removalPreview.pack.descriptor.label}. Nothing has been removed yet.</p>
         <dl className="fact-table">
@@ -407,7 +407,7 @@ export const OfflinePackManagerIsland = ({
         {removalPreview.pack.status === "active" ? <p>This is the copy currently turned on. Removing it means a copy must be turned on again before starting new offline work.</p> : null}
         <details className="technical-details"><summary>Technical details</summary><p>Pack version {removalPreview.pack.descriptor.packVersion}. Device generation {removalPreview.pack.generation}.</p></details>
         <div className="question-controls">
-          {removalPreview.impact.activeSessionPins > 0 ? <a className="button button-secondary" href="/practice/">Back to studying</a> : <button className="button button-primary" disabled={busy !== null} onClick={() => void remove()} type="button">Remove this copy</button>}
+          {removalPreview.impact.activeSessionPins > 0 ? <a className="button button-secondary" href="/practice/">Back to studying</a> : <button className="button button-danger-outline" disabled={busy !== null} onClick={() => void remove()} type="button">Remove this copy</button>}
           <button className="button button-secondary" disabled={busy !== null} onClick={keepCopy} type="button">Keep it</button>
           <a href="/settings/#export-local-data">Export my progress first</a>
         </div>

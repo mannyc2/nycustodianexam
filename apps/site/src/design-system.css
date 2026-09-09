@@ -979,3 +979,10 @@
     .atlas-browser .tool-card[data-image-unavailable] > div { grid-column: 1 / -1; }
   }
 }
+
+@layer overrides {
+  .pack-removal-preview { background: var(--color-surface); border-color: var(--color-border); }
+  .pack-removal-preview h2 { font-size: var(--text-h4); }
+  .button-danger-outline { background: var(--color-surface); border-color: var(--color-danger); color: var(--color-danger); }
+  .button-danger-outline:hover:not(:disabled) { background: var(--color-danger-surface); color: var(--color-danger); }
+}
