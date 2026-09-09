@@ -2,7 +2,7 @@
 
 This branch implements the reconciled handoff at `aca00668ec6f4cf002cb79c13ce6ff70c7d5baf3`, beginning with the shared shell, Home, Practice and Review, and continuing through the remaining page families. It preserves the independent/unofficial content boundary, real inventory counts, original reviewed artwork, and durable save-before-feedback behavior. There is no site-wide active exam.
 
-The separate implementation draft is based on `design/reconciliation-2026-09-07`; design PR #49 remains the supplied-reference review. Do not merge or deploy from this index. The original dirty main checkout was preserved.
+The [prepared implementation draft](IMPLEMENTATION-PR-DRAFT.md) is local and unpublished pending explicit publication approval. Its proposed base is `design/reconciliation-2026-09-07`; design PR #49 remains the supplied-reference review. Do not merge or deploy from this index. The original dirty main checkout was preserved.
 
 ## Find the evidence
 
