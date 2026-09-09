@@ -1,3 +1,4 @@
+import { keyedQuestionObservations } from "../../question-observations.ts"
 import { sourceEvidenceTierLabel } from "../../public-content-labels.ts"
 import { PrintPreviewProvider, usePrintPreview, type PrintPreviewProviderProps } from "./preview-provider.tsx"
 import type {
@@ -161,7 +162,7 @@ const packetSection = (
                 <p>{question.prompt}</p>
                 {question.observations === undefined ? null : <>
                   <p className="print-nonvisual-label">Nonvisual version</p>
-                  <ol className="print-observation-list">{question.observations.map((fact, index) => <li key={index}>{fact}</li>)}</ol>
+                  <ol className="print-observation-list">{keyedQuestionObservations(question.observations).map(({ key, text }) => <li key={key}>{text}</li>)}</ol>
                 </>}
                 {question.illustration === undefined ? null : <img className="print-question-image" src={question.illustration.asset.dataUrl} alt={question.illustration.neutralDescription} />}
                 <ol className="print-option-list">

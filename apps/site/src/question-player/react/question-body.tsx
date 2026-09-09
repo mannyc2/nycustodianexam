@@ -1,3 +1,4 @@
+import { keyedQuestionObservations } from "../../question-observations.ts"
 import type { ComponentProps, ReactNode } from "react"
 import { QuestionIllustration } from "./illustration.tsx"
 
@@ -18,6 +19,6 @@ export const NonvisualQuestionBody = ({ illustration, headingId, children }: {
   if (equivalent === undefined) return children
   return <section className="question-nonvisual-body" aria-labelledby={headingId}>
     <h1 id={headingId}>{equivalent.prompt}</h1>
-    <ol>{equivalent.observations.map((observation, index) => <li key={index}>{observation}</li>)}</ol>
+    <ol>{keyedQuestionObservations(equivalent.observations).map(({ key, text }) => <li key={key}>{text}</li>)}</ol>
   </section>
 }

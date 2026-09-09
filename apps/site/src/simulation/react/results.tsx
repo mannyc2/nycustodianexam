@@ -1,3 +1,4 @@
+import { keyedQuestionObservations } from "../../question-observations.ts"
 import { QuestionIllustration } from "../../question-player/react/illustration.tsx"
 import { SimulationResultsProvider, useSimulationResults, type ResultsController } from "./results-provider.tsx"
 import {
@@ -366,7 +367,7 @@ const SimulationResultsView = () => {
               {answer?.presentation === "nonvisual" && equivalent !== undefined ?
                 <section className="question-nonvisual-body">
                   <p>{equivalent.prompt}</p>
-                  <ol>{equivalent.observations.map((fact, index) => <li key={index}>{fact}</li>)}</ol>
+                  <ol>{keyedQuestionObservations(equivalent.observations).map(({ key, text }) => <li key={key}>{text}</li>)}</ol>
                 </section> : <><p>{item.question.prompt}</p><QuestionIllustration illustration={illustration} /></>}
               {illustration === undefined ? null : <p className="source-note">{answer?.selectedOptionId === null ? "Presented" : "Answered"} using the {answer?.presentation === "nonvisual" ? "nonvisual" : "illustrated"} version.</p>}
               {questionResult === undefined || answer === undefined

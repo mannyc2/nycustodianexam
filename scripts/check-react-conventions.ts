@@ -50,6 +50,20 @@ const inspect = (text: string, path: string): ReadonlyArray<string> => {
         if (prohibited.has(property)) report(entry, `React ${property} re-export is prohibited`)
       }
     }
+    if (ts.isJsxAttribute(node) && nameOf(node.name) === "key" && node.initializer !== undefined && ts.isJsxExpression(node.initializer) && node.initializer.expression !== undefined && ts.isIdentifier(node.initializer.expression)) {
+      const key = node.initializer.expression.text
+      let owner: ts.Node | undefined = node.parent
+      while (owner !== undefined) {
+        if ((ts.isArrowFunction(owner) || ts.isFunctionExpression(owner)) && owner.parameters.some(parameter => nameOf(parameter.name) === key)) {
+          const call = owner.parent
+          if (nameOf(owner.parameters[1]?.name) === key && ts.isCallExpression(call) && ts.isPropertyAccessExpression(call.expression) && call.expression.name.text === "map") {
+            report(node, "Array-position keys are prohibited; use stable content identity")
+          }
+          break
+        }
+        owner = owner.parent
+      }
+    }
     if (ts.isJsxAttribute(node) || ts.isPropertySignature(node) || ts.isPropertyAssignment(node)) {
       const property = nameOf(node.name)
       if (property !== undefined && /^render[A-Z]/.test(property)) report(node, `Product ${property} render prop is prohibited; compose children or explicit pieces`)
@@ -72,6 +86,10 @@ const fixtures: ReadonlyArray<readonly [string, number]> = [
   ['const view = <Player renderBody={() => <p />} />', 1],
   ['interface Props { renderBody: () => unknown }', 1],
   ['const props = { renderBody: () => null }', 1],
+  ['const view = rows.map((row, position) => <p key={position} />)', 1],
+  ['const view = rows.map(function(row, i) { return <p key={i} /> })', 1],
+  ['const view = rows.map(row => <p key={row.id} />)', 0],
+  ['const view = rows.map((key, position) => <p key={key} />)', 0],
   ['import { use } from "react"; const view = <Player><Body /></Player>', 0],
   ['// forwardRef useContext renderBody\nconst text = "renderBody"; const view = <p>useContext</p>', 0],
   ['const unrelated = { useContext: () => null }; unrelated.useContext()', 0]
@@ -92,4 +110,4 @@ if (problems.length > 0) {
   console.error(problems.join("\n"))
   process.exit(1)
 }
-console.log(`React API/render-prop conventions passed for ${files.length} source files; ${fixtures.length} detector fixtures passed`)
+console.log(`React API/render-prop/direct-index-key conventions passed for ${files.length} source files; ${fixtures.length} detector fixtures passed`)
