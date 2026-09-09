@@ -1,3 +1,4 @@
+import { resolveCustomReviewSource } from "../practice/review-source.ts"
 import { Effect } from "effect"
 import { questionAttemptId, sameHazardReceipt, sameQuestionReceipt } from "../attempt-receipt.ts"
 import { HazardPersistence, type HazardAttemptRecord } from "../hazard-player/persistence.ts"
@@ -21,7 +22,7 @@ export const projectStudyActivity = (
   let questionCount = 0
   let hazardCount = 0
   for (const attempt of questions) {
-    const source = questionSources.get(attempt.id)
+    const source = questionSources.get(attempt.id) ?? resolveCustomReviewSource(bootstrap.questions, attempt)
     if (source === undefined || attempt.receipt === undefined ||
       !sameQuestionReceipt(attempt.receipt, source.receipt) ||
       attempt.optionIds?.length !== source.optionIds.length ||

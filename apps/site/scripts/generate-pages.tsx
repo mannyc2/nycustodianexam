@@ -1,3 +1,5 @@
+import { questionCategoryFromSafeMetadata } from "../src/question-category.ts"
+import { ReviewQuestionBootstrap, type ReviewQuestionSource } from "../src/review/model.ts"
 import { createHash } from "node:crypto"
 import { cp, mkdir, rm } from "node:fs/promises"
 import {
@@ -572,6 +574,7 @@ const renderQuestionFallback = (question: Question, position: number, count: num
 
 const questionPage = ({
   canonicalPath,
+  practiceInventory,
   context = "practice",
   count,
   nextPath,
@@ -582,6 +585,7 @@ const questionPage = ({
   routeId = "question-player"
 }: {
   readonly canonicalPath: string
+  readonly practiceInventory?: ReadonlyArray<ReviewQuestionSource>
   readonly context?: "practice" | "review"
   readonly count: number
   readonly nextPath?: string
@@ -608,6 +612,7 @@ const questionPage = ({
       ${nextPath === undefined ? "<span>End of session</span>" : `<a data-session-history="replace" href="${nextPath}">Next question →</a>`}
     </nav>
   </main>
+  ${practiceInventory === undefined ? "" : `<script id="practice-inventory-data" type="application/json">${escapeJsonForHtml(practiceInventory)}</script>`}
   <script id="question-data" type="application/json">${escapeJsonForHtml(question)}</script>
   <script id="question-receipt-data" type="application/json">${escapeJsonForHtml(receipt)}</script>
   <script type="module" src="/src/question-player/react/bootstrap.tsx"></script>`
@@ -891,6 +896,7 @@ const buildPages = ({
         prompt: question.prompt,
         optionIds: question.options.map((option) => option.id),
         receipt: questionReceipt(artifact, question.id, index + 1),
+        category: questionCategoryFromSafeMetadata(question),
         itemUrl: `/review/session/${manifest.releaseId}/item/${index + 1}/`
       }
     }),
@@ -1594,6 +1600,7 @@ const buildPages = ({
     if (artifact === undefined) throw new Error(`Question ${question.id} has no postcommit record`)
     pages.push(questionPage({
       canonicalPath: `${base}${position}/`,
+      practiceInventory: Schema.decodeUnknownSync(Schema.Array(ReviewQuestionBootstrap))(canonicalReviewBootstrap.questions),
       count: questions.length,
       position,
       receipt: questionReceipt(artifact, question.id, position),

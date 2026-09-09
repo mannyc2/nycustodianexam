@@ -34,6 +34,7 @@ const UniqueOptionIds = Schema.NonEmptyArray(Schema.NonEmptyString).check(
 )
 
 export const ReviewQuestionBootstrap = Schema.Struct({
+  category: Schema.optionalKey(Schema.NonEmptyString),
   id: Schema.NonEmptyString,
   prompt: Schema.optionalKey(Schema.NonEmptyString),
   optionIds: UniqueOptionIds,

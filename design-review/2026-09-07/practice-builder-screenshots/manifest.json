@@ -1,0 +1,71 @@
+{
+  "captures": [
+    {
+      "file": "default-1053.png",
+      "width": 1053,
+      "state": "default",
+      "bounds": {
+        "x": 40,
+        "y": -281.609375,
+        "width": 973,
+        "height": 1463.9375
+      }
+    },
+    {
+      "file": "unavailable-1053.png",
+      "width": 1053,
+      "state": "unavailable",
+      "bounds": {
+        "x": 40,
+        "y": -281.609375,
+        "width": 973,
+        "height": 1588.53125
+      }
+    },
+    {
+      "file": "all-matching-1053.png",
+      "width": 1053,
+      "state": "all-matching",
+      "bounds": {
+        "x": 40,
+        "y": -281.609375,
+        "width": 973,
+        "height": 1529.734375
+      }
+    },
+    {
+      "file": "default-384.png",
+      "width": 384,
+      "state": "default",
+      "bounds": {
+        "x": 16,
+        "y": -574.359375,
+        "width": 352,
+        "height": 2047.71875
+      }
+    },
+    {
+      "file": "unavailable-384.png",
+      "width": 384,
+      "state": "unavailable",
+      "bounds": {
+        "x": 16,
+        "y": -477.359375,
+        "width": 352,
+        "height": 2246.703125
+      }
+    },
+    {
+      "file": "all-matching-384.png",
+      "width": 384,
+      "state": "all-matching",
+      "bounds": {
+        "x": 16,
+        "y": -1014.359375,
+        "width": 352,
+        "height": 2113.515625
+      }
+    }
+  ],
+  "errors": []
+}

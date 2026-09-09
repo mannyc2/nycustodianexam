@@ -1,3 +1,4 @@
+import { PracticeBuilder } from "../../practice/builder.tsx"
 import { useEffect, useRef, useSyncExternalStore } from "react"
 import type { ReviewController } from "../../review/controller.ts"
 import { ActivityHistory } from "./history.tsx"
@@ -16,7 +17,7 @@ const StudyIcon = ({ kind }: { readonly kind: keyof typeof studyIconPaths }) =>
   <svg className="study-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{studyIconPaths[kind]}</svg>
 
 const ways = [
-  { icon: "practice", title: "Practice set", description: "Answer questions at your own pace. Read the explanation and sources after each saved answer.", href: "#practice-sets", action: "Choose a set" },
+  { icon: "practice", title: "Practice set", description: "Answer questions at your own pace. Read the explanation and sources after each saved answer.", href: "#practice-builder", action: "Choose a set" },
   { icon: "hazard", title: "Hazard practice", description: "Look through a workplace scene and mark hazards, or use the keyboard zone version.", href: "/hazards/", action: "Explore the scenes" },
   { icon: "simulation", title: "Simulation", description: "Choose a practice length and your own timing. Feedback waits until you finish.", href: "/simulations/", action: "Set up a simulation" },
   { icon: "print", title: "Print a set", description: "Study on paper, with questions and their answer key on separate pages.", href: "/print/", action: "Open print center" }
@@ -116,6 +117,7 @@ export const StudyHub = ({ bootstrap, activityState, reviewController, onRetry }
         <ActivityHistory state={historyState} onRetry={onRetry} />
       </div>
     </>}
+    <PracticeBuilder sources={bootstrap.reviewQueue.questions} />
     <section className="study-section" aria-labelledby="study-exam-heading">
       <div className="section-header"><h2 id="study-exam-heading">Does this match your exam?</h2></div>
       <p>Compare the subjects in your official announcement with this site's entry-level study material. Higher-level series have different requirements.</p>

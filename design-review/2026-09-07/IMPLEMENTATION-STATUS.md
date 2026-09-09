@@ -8,7 +8,7 @@ The active task is the complete handoff in `/mnt/models/dev/nycustodianexam/IMPL
 | Home | First-slice comparison gallery and notes | Final visual audit; documented live-content and system-font differences |
 | Practice hub and Review | First-slice real-save/failure captures, durable review regression tests | Final visual audit and mixed-inventory wording as builder is added |
 | Simulation setup | SETUP-ATLAS-REVIEW.md, effective lengths/timing/format; no exam prerequisite | Final integrated capture/checks |
-| Practice/Hazard builder | Existing static practice lengths and hazard catalog remain functional | Implement the accepted setup compositions without inventing resumable question-practice sessions |
+| Practice/Hazard builder | PRACTICE-BUILDER-REVIEW.md: effective question builder, custom navigation and exact saved-history receipts | Hazard builder, shared mode navigation, final page composition and cross-browser/offline verification |
 | Atlas catalog | Nine-family desktop/compact controls, all 65 images, eligibility/failure states | Individual record/family layouts and final comparison |
 | Question player | Existing durable commit-before-reveal preserved | Match unanswered/answered reference captures |
 | Hazard player | Existing real marker/zone state machine preserved | Match controls, feedback, failures and compact adaptation |

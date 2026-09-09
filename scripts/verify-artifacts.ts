@@ -2134,13 +2134,12 @@ export const verify = async (): Promise<void> => {
     ])
   )
 
-  // The interactive entries share the framework/runtime and verified-content chunks. M4 and M5
-  // share durable-session, print, pack, settings, correction, and canonical review-projection
-  // services. The handoff's exact generated-practice receipt validation adds
-  // 733 raw bytes to Settings (476162 total). Shared Library keyboard/dismissal
-  // behavior keeps the raw ceiling and measures 142575 bytes gzip; allow a
-  // further 250 gzip bytes for this shared navigation, retaining the Brotli ceiling.
-  const bundleBudgets = { raw: 477_000, gzip: 142_750, brotli: 121_000 } as const
+  // Shared closures include the versioned custom-practice receipt resolver.
+  // It regenerates selected item order before accepting saved feedback, rather
+  // than trusting an arbitrary session ID. September 9 integration measures
+  // Settings at 481058 raw bytes (+4261 over the prior implementation).
+  // Keep a bounded allowance for that feature, not an unconstrained exemption.
+  const bundleBudgets = { raw: 482_000, gzip: 144_500, brotli: 122_000 } as const
   for (const [family, measurement] of bundleReports) {
     for (const format of ["raw", "gzip", "brotli"] as const) {
       if (measurement[format] > bundleBudgets[format]) {

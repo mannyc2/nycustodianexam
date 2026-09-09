@@ -1,3 +1,4 @@
+import { resolveCustomReviewSource } from "../practice/review-source.ts"
 import {
   PostcommitQuestion as PostcommitQuestionSchema,
   PostcommitScene as PostcommitSceneSchema,
@@ -306,7 +307,7 @@ export const buildReviewQueue = Effect.fn("ReviewProjection.buildReviewQueue")(f
   })
 
   const questionEffects = questionAttempts.map((attempt) => {
-    const source = questionByAttemptId.get(attempt.id) ?? questionById.get(attempt.questionId)
+    const source = questionByAttemptId.get(attempt.id) ?? resolveCustomReviewSource(bootstrap.questions, attempt) ?? questionById.get(attempt.questionId)
     const effect = !hasBoundQuestionReceipt(attempt)
       ? Effect.fail(
           projectionError(

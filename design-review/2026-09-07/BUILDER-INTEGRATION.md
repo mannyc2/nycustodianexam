@@ -55,3 +55,9 @@ question, artifact path, byte count and digest. It rejects mismatched inventory
 routes and mixed releases. Twelve combined unit tests cover selection and this
 receipt boundary. This resolver is still an integration primitive: no production
 player or projection calls it yet, and the query links are not exposed in the UI.
+
+## Integration update
+
+The question path is now wired into Practice, the player, saved activity and
+Review. See `PRACTICE-BUILDER-REVIEW.md` for current evidence and remaining work.
+The preceding primitive-only status describes the earlier commits.
