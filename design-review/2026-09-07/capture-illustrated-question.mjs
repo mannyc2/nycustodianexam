@@ -16,7 +16,15 @@ try {
     await expect(page.getByRole('radio', { name: 'Adjustable wrench', exact: true })).toBeEnabled();
     await page.locator('.question-illustration img').evaluate(image => image.decode());
     await page.evaluate(() => document.fonts.ready);
-    for (const state of ['unanswered', 'image-unavailable', 'image-retried', 'answered']) {
+    for (const state of ['unanswered', 'zoomed', 'description', 'image-unavailable', 'image-retried', 'answered']) {
+      if (state === 'zoomed') {
+        await page.getByRole('button', { name: 'Zoom in', exact: true }).click();
+        await page.getByRole('button', { name: 'Zoom in', exact: true }).click();
+      }
+      if (state === 'description') {
+        await page.getByRole('button', { name: 'Reset view', exact: true }).click();
+        await page.getByText('Read image description', { exact: true }).click();
+      }
       if (state === 'image-unavailable') {
         await page.route('**/content/assets/**', route => route.abort());
         await page.reload();

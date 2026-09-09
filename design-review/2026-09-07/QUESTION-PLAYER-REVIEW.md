@@ -417,3 +417,38 @@ The final canonical question has no next item, explaining the missing Skip
 action in this q091 capture; earlier text-player checks cover skip navigation.
 The invisible live region remains intentionally invisible. The full question
 player visual audit is still open.
+
+## Zoom/reset and visible neutral description — September 9
+
+The shared question illustration now has explicit zoom-out/in and Reset view
+controls. Zoom runs from 100% to 400% in 50-point steps, with disabled endpoints
+and a polite percentage status. At 100% the complete accepted image fits the
+viewport; the 20rem desktop image region matches reference 26's height without
+copying its accidental crop. Compact height is bounded by viewport width.
+
+A labeled, focusable native scroll region supports keyboard arrow scrolling and
+normal touch scrolling when zoomed. Zoom retains the viewing center; Reset
+restores 100% and both scroll offsets. These states are local presentation only,
+with no answer selection, persistence, or postcommit reads. Retry preserves the
+previous stable-figure focus behavior and resets the image view.
+
+“Read image description” is a native disclosure containing exactly the existing
+reviewed neutral description. It remains available when an image fails. This
+is deliberately labeled as an image description: the maintained component
+contract also requires an authored nonvisual question prompt/observable-facts
+variant and a link to it. That separate content/model/routing requirement is
+not satisfied by revealing alt text and remains implementation work.
+
+Validation: full build/artifact verification, site/browser typechecks, and two
+illustration view tests pass. All 21 illustration browser checks pass across
+Chromium, Firefox, and WebKit. Six new checks cover compact/desktop whole-image
+bounds, 150–400% zoom, keyboard scrolling, reset offsets, neutral description
+identity, page reflow, no selected answer, and no postcommit request. Existing
+retry, saved feedback/Review, and no-JavaScript image tests remain green.
+
+Twelve captures now cover unanswered, 200% zoom, expanded description, failed
+image, keyboard retry, and answered states at 1053/384. Visually inspected the
+800px desktop unanswered card, compact zoom, and expanded neutral description.
+The reference fixture and released q091 contain different tools/options; the
+actual reviewed question remains unchanged. A genuine linked nonvisual variant
+and final answered-state comparison remain open.
