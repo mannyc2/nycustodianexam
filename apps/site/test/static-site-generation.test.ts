@@ -369,7 +369,7 @@ describe("static-site generator boundaries", () => {
 
     const hostileText = '<img src=x onerror="alert(1)"> & retained text'
     const escapedFact = { ...facts[3][2], label: hostileText, value: hostileText,
-      conflictingValues: [{ value: hostileText, sourceLineIds: ["line-a"] }] }
+      conflictingValues: [{ value: hostileText, sourceLineIds: ["line-a"] as const }] }
     const escapedLines = new Map(lines)
     escapedLines.set("line-a", { ...lines.get("line-a")!, locator: hostileText, excerpt: hostileText })
     const escapedSources = new Map(sources)

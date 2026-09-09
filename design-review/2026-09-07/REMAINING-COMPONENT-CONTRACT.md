@@ -324,3 +324,5 @@ All 17 static generation tests passed, including six fact states, conflict evide
 ## Static Fact escaping and missing-evidence regression
 
 The six-state generation test now also supplies HTML-like markup in fact labels/values, conflicting candidates, source titles, excerpts and locators. Assertions verify escaped output rather than injected image markup, including label/conflict/locator positions. Missing source-line and missing source-record maps must still throw their explicit generation errors. All 17 generation tests and site TypeScript passed; log `/tmp/nyc-fact-escaping-tests.log`. This verifies the renderer boundary changed by static React composition; it does not add new visual acceptance or source truth claims.
+
+Validation correction: the first escaping-fixture typecheck failed because its new sourceLineIds array was inferred as string[] rather than the schema's nonempty tuple. The preceding entry was committed before that result was inspected. Adding `as const` to that fixture's source IDs resolves the mismatch; the subsequent site TypeScript command exited 0. Runtime generation tests had already passed. No application source changed.
