@@ -1,5 +1,5 @@
 import { resolveAnnouncementTimeline } from "./announcement-timeline.ts"
-import { previousReleaseInventories } from "../../../scripts/release-history.ts"
+import { previousReleaseInventories, retainedQuestionArtifacts } from "../../../scripts/release-history.ts"
 import { resolveFilingStatusReviews } from "./filing-status.ts"
 import { setupDestinations } from "../src/practice/setup-navigation.ts"
 import { questionCategoryFromSafeMetadata } from "../src/question-category.ts"
@@ -713,6 +713,8 @@ const hazardPage = ({
 })
 
 const loadRelease = async (): Promise<{
+  readonly retained: ReturnType<typeof retainedQuestionArtifacts>
+  readonly historicalQuestions: ReadonlyMap<string, Question>
   readonly catalog: Catalog
   readonly manifest: Manifest
   readonly pack: typeof PrecommitPackArtifact.Type
@@ -770,10 +772,22 @@ const loadRelease = async (): Promise<{
     throw new Error("Release catalog, precommit pack, and manifest counts or identities disagree")
   }
 
-  return { catalog, manifest, pack, questions, scenes }
+  const retained = retainedQuestionArtifacts(manifest)
+  const historicalQuestions = new Map(questions.map(entry => [entry.artifact.path, entry.value]))
+  for (const { artifact, sourceUrl } of retained) {
+    await assertManifestRecord(artifact, sourceUrl)
+    if (artifact.kind === "question-precommit") {
+      const question = Schema.decodeUnknownSync(PrecommitQuestion)(await readJson(sourceUrl))
+      if (question.id !== artifact.itemId) throw new Error(`Historical stimulus identity mismatch: ${artifact.path}`)
+      historicalQuestions.set(artifact.path, question)
+    }
+  }
+  return { catalog, manifest, pack, questions, scenes, retained, historicalQuestions }
 }
 
 const buildPages = ({
+  retained,
+  historicalQuestions,
   catalog,
   manifest,
   questions,
@@ -782,6 +796,7 @@ const buildPages = ({
   readonly pages: ReadonlyArray<PageDefinition>
   readonly printBootstrap: PrintBuilderBootstrap
 } => {
+  const deliveryArtifacts = [...manifest.artifacts, ...retained.map(entry => entry.artifact)]
   const historicalReleases = previousReleaseInventories(manifest)
   const filingReviews = resolveFilingStatusReviews(catalog)
   const sourceById = new Map(catalog.sources.map((source) => [source.id, source]))
@@ -1163,17 +1178,17 @@ const buildPages = ({
     const historicalQuestions = archive.reviewQueue.questions.map(source => ({ ...source, itemUrl: historicalPrefix + source.itemUrl }))
     const historicalPractice = archive.reviewQueue.practiceQuestions.map(source => ({ ...source, itemUrl: historicalPrefix + source.itemUrl }))
     for (const old of archive.precommitReceipts) {
-      const current = manifest.artifacts.find(artifact => `/content/vertical-slice/${artifact.path}` === old.path)
+      const current = deliveryArtifacts.find(artifact => `/content/vertical-slice/${artifact.path}` === old.path)
       if (current === undefined || current.sha256 !== old.sha256 || current.bytes !== old.bytes) throw new Error(`Historical question stimulus unavailable: ${old.path}`)
     }
     for (const old of historicalQuestions) {
-      const current = questionPostcommitById.get(old.id)
+      const current = deliveryArtifacts.find(artifact => `/content/vertical-slice/${artifact.path}` === old.receipt.postcommitPath)
       if (current === undefined || current.sha256 !== old.receipt.postcommitSha256 || current.bytes !== old.receipt.postcommitBytes) throw new Error(`Historical question feedback unavailable: ${old.id}`)
     }
     const historicalScenes = archive.reviewQueue.scenes.map(source => ({ ...source,
       visualItemUrl: historicalPrefix + source.visualItemUrl, nonvisualItemUrl: historicalPrefix + source.nonvisualItemUrl }))
     for (const old of archive.scenePrecommitReceipts) {
-      const current = manifest.artifacts.find(artifact => `/content/vertical-slice/${artifact.path}` === old.path)
+      const current = deliveryArtifacts.find(artifact => `/content/vertical-slice/${artifact.path}` === old.path)
       if (current === undefined || current.sha256 !== old.sha256 || current.bytes !== old.bytes) throw new Error(`Historical scene stimulus unavailable: ${old.path}`)
     }
     for (const old of historicalScenes) {
@@ -1736,7 +1751,7 @@ const buildPages = ({
   const historicalInventories = Schema.decodeUnknownSync(ReviewQueueBootstrap)({ ...canonicalReviewBootstrap, previousInventories }).previousInventories!
   for (const historicalInventory of historicalInventories) {
     for (const source of [...historicalInventory.questions, ...historicalInventory.practiceQuestions]) {
-      const question = questions.find(entry => entry.value.id === source.id)?.value
+      const question = historicalQuestions.get(source.receipt.postcommitPath.replace("/content/vertical-slice/", "").replace(/\.postcommit\.json$/, ".precommit.json"))
       if (question === undefined) throw new Error(`Missing historical question ${source.id}`)
       pages.push(questionPage({
         canonicalPath: source.itemUrl,
@@ -1749,7 +1764,8 @@ const buildPages = ({
       }))
     }
     for (const source of historicalInventory.questions) {
-      const question = questions.find(entry => entry.value.id === source.id)!.value
+      const question = historicalQuestions.get(source.receipt.postcommitPath.replace("/content/vertical-slice/", "").replace(/\.postcommit\.json$/, ".precommit.json"))
+      if (question === undefined) throw new Error(`Missing historical question ${source.id}`)
       pages.push(questionPage({
         canonicalPath: source.itemUrl.replace("/review/session/", "/practice/session/").replace("/item/", "/question/"),
         practiceInventory: historicalInventory.questions,
@@ -1823,7 +1839,7 @@ const buildPages = ({
   }
 
   const packReceiptRecords = [
-    ...manifest.artifacts.filter(isPublicReleaseArtifact).map((artifact) => ({
+    ...deliveryArtifacts.filter(isPublicReleaseArtifact).map((artifact) => ({
       kind: "artifact" as const,
       path: `/content/vertical-slice/${artifact.path}`,
       bytes: artifact.bytes,
@@ -2028,7 +2044,8 @@ const writePage = async (page: PageDefinition): Promise<void> => {
   await Bun.write(target, document(page))
 }
 
-const publishRelease = async (manifest: Manifest): Promise<void> => {
+const publishRelease = async (manifest: Manifest, retained: ReturnType<typeof retainedQuestionArtifacts>): Promise<void> => {
+  const deliveryManifest = { ...manifest, artifacts: [manifest.artifacts[0], ...manifest.artifacts.slice(1), ...retained.map(entry => entry.artifact)] as const }
   const publicContentRoot = new URL("public/content/", siteRoot)
   await rm(publicContentRoot, { recursive: true, force: true })
   await mkdir(publicContentRoot, { recursive: true })
@@ -2037,13 +2054,18 @@ const publishRelease = async (manifest: Manifest): Promise<void> => {
   await mkdir(publicReleaseRoot, { recursive: true })
   await Bun.write(
     new URL("manifest.json", publicReleaseRoot),
-    `${JSON.stringify(derivePublicDeliveryManifest(manifest), null, 2)}\n`
+    `${JSON.stringify(derivePublicDeliveryManifest(deliveryManifest), null, 2)}\n`
   )
 
   for (const artifact of manifest.artifacts.filter(isPublicReleaseArtifact)) {
     const destination = new URL(artifact.path, publicReleaseRoot)
     await mkdir(new URL("./", destination), { recursive: true })
     await cp(new URL(artifact.path, releaseRoot), destination)
+  }
+  for (const { artifact, sourceUrl } of retained) {
+    const destination = new URL(artifact.path, publicReleaseRoot)
+    await mkdir(new URL("./", destination), { recursive: true })
+    await cp(sourceUrl, destination)
   }
   for (const asset of manifest.assets) {
     const destination = new URL(asset.path.replace(/^content\//, ""), publicContentRoot)
@@ -2087,7 +2109,7 @@ export const generateSite = async (): Promise<void> => {
   const { pages, printBootstrap } = buildPages(release)
   await Promise.all(pages.map(writePage))
   await Bun.write(new URL("404.html", siteRoot), notFoundDocument())
-  await publishRelease(release.manifest)
+  await publishRelease(release.manifest, release.retained)
   await Bun.write(
     new URL("public/print-bootstrap.json", siteRoot),
     `${JSON.stringify(printBootstrap)}\n`

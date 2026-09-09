@@ -1,4 +1,4 @@
-import { previousReleaseInventories } from "./release-history.ts"
+import { previousReleaseInventories, retainedQuestionArtifacts } from "./release-history.ts"
 import { createHash } from "node:crypto"
 import { readdir } from "node:fs/promises"
 import { dirname, join, relative, resolve } from "node:path"
@@ -622,6 +622,11 @@ export const verify = async (): Promise<void> => {
   const canonicalOrigin = normalizeCanonicalOrigin(process.env.NYCUSTODIAN_CANONICAL_ORIGIN)
   const sourceManifestText = await text(new URL("manifest.json", releaseRoot))
   const manifest = Schema.decodeUnknownSync(ReleaseManifest)(JSON.parse(sourceManifestText))
+  const retained = retainedQuestionArtifacts(manifest)
+  for (const { artifact, sourceUrl } of retained) {
+    await assertFileRecord(artifact, sourceUrl, "Retained historical artifact")
+  }
+  const deliveryArtifacts = [manifest.artifacts[0], ...manifest.artifacts.slice(1), ...retained.map(entry => entry.artifact)] as const
   const builtManifestUrl = new URL("content/vertical-slice/manifest.json", distRoot)
   const builtManifestText = await text(builtManifestUrl)
   if (builtManifestText === sourceManifestText) {
@@ -629,7 +634,7 @@ export const verify = async (): Promise<void> => {
   }
   const rawBuiltManifest = JSON.parse(builtManifestText) as unknown
   const deliveryManifest = decodePublicDeliveryManifest(rawBuiltManifest)
-  const expectedDeliveryManifest = derivePublicDeliveryManifest(manifest)
+  const expectedDeliveryManifest = derivePublicDeliveryManifest({ ...manifest, artifacts: deliveryArtifacts })
   const encodedDeliveryManifest = JSON.parse(JSON.stringify(deliveryManifest)) as unknown
   const encodedExpectedManifest = JSON.parse(JSON.stringify(expectedDeliveryManifest)) as unknown
   if (
@@ -1296,10 +1301,11 @@ export const verify = async (): Promise<void> => {
       ...archive.reviewQueue.questions.map(source => ({ ...source, itemUrl: source.itemUrl.replace("/review/session/", "/practice/session/").replace("/item/", "/question/") }))
     ]
     for (const source of historySources) {
-      const precommit = questions.find(question => question.value.id === source.id)?.value
-      const artifact = questionPostcommitById.get(source.id)
-      const stimulusReceipt = archive.precommitReceipts.find(receipt => receipt.path === `/content/vertical-slice/questions/${source.id}.precommit.json`)
-      const currentStimulus = manifest.artifacts.find(entry => entry.path === `questions/${source.id}.precommit.json`)
+      const stimulusPath = source.receipt.postcommitPath.replace("/content/vertical-slice/", "").replace(/\.postcommit\.json$/, ".precommit.json")
+      const precommit = Schema.decodeUnknownSync(PrecommitQuestion)(JSON.parse(await text(new URL(stimulusPath, publishedReleaseRoot))))
+      const artifact = deliveryArtifacts.find(entry => `/content/vertical-slice/${entry.path}` === source.receipt.postcommitPath)
+      const stimulusReceipt = archive.precommitReceipts.find(receipt => receipt.path === `/content/vertical-slice/${stimulusPath}`)
+      const currentStimulus = deliveryArtifacts.find(entry => entry.path === stimulusPath)
       if (precommit === undefined || artifact === undefined || stimulusReceipt === undefined || currentStimulus?.sha256 !== stimulusReceipt.sha256 || currentStimulus.bytes !== stimulusReceipt.bytes ||
         artifact.sha256 !== source.receipt.postcommitSha256 || artifact.bytes !== source.receipt.postcommitBytes) throw new Error(`Historical item closure differs: ${source.id}`)
       expectedRoutes.push({ canonicalPath: historyPrefix + source.itemUrl, precommit, postcommitArtifact: artifact, postcommitPath: source.receipt.postcommitPath,
@@ -2087,10 +2093,10 @@ export const verify = async (): Promise<void> => {
   assertNoAnswerBearingStructuredFields(printBootstrap, "Standalone print bootstrap")
 
   const secretMaterial: string[] = []
-  for (const record of manifest.artifacts) {
+  for (const record of deliveryArtifacts) {
     if (record.kind === "question-postcommit") {
       const payload = Schema.decodeUnknownSync(PostcommitQuestion)(
-        JSON.parse(await text(new URL(record.path, releaseRoot)))
+        JSON.parse(await text(new URL(record.path, publishedReleaseRoot)))
       )
       secretMaterial.push(
         ...payload.rationales.map((rationale) => rationale.message),
@@ -2104,7 +2110,7 @@ export const verify = async (): Promise<void> => {
     }
     if (record.kind === "scene-postcommit") {
       const payload = decodeCurrentPostcommitScene(
-        JSON.parse(await text(new URL(record.path, releaseRoot)))
+        JSON.parse(await text(new URL(record.path, publishedReleaseRoot)))
       )
       secretMaterial.push(
         ...payload.claims.flatMap((claim) => [claim.text, claim.caveat ?? ""]),

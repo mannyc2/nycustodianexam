@@ -1,4 +1,4 @@
-import { previousReleaseInventories } from "../../../scripts/release-history.ts"
+import { previousReleaseInventories, retainedQuestionArtifacts } from "../../../scripts/release-history.ts"
 import { createHash } from "node:crypto"
 import { readFileSync } from "node:fs"
 import { describe, expect, it } from "vitest"
@@ -44,5 +44,47 @@ describe("retained version-4 question history", () => {
     expect(feedback.byteLength).toBe(receipt.postcommitBytes)
     expect(digest(feedback)).toBe(receipt.postcommitSha256)
     expect(JSON.parse(feedback.toString()).id).toBe("q091")
+  })
+})
+
+
+describe("historical artifact publication", () => {
+  const originalRecords = archive.reviewQueue.questions.flatMap(question => {
+    const stimulus = archive.precommitReceipts.find(entry => entry.path.endsWith(`/${question.id}.precommit.json`))!
+    return [
+      { kind: "question-precommit" as const, itemId: question.id,
+        path: stimulus.path.replace("/content/vertical-slice/", ""), bytes: stimulus.bytes, sha256: stimulus.sha256 },
+      { kind: "question-postcommit" as const, itemId: question.id,
+        path: question.receipt.postcommitPath.replace("/content/vertical-slice/", ""),
+        bytes: question.receipt.postcommitBytes, sha256: question.receipt.postcommitSha256 }
+    ]
+  })
+  const manifest = (records = originalRecords) => ({
+    releaseId: "launch-v1", packVersion: 5,
+    artifacts: [records[0]!, ...records.slice(1)] as const
+  })
+
+  it("reuses byte-identical history and retains both original files when q091 is revised", () => {
+    expect(retainedQuestionArtifacts(manifest())).toEqual([])
+    const revised = originalRecords.map(record => record.itemId === "q091"
+      ? { ...record, path: record.path.replace("questions/", "questions/v2/"), sha256: "f".repeat(64) }
+      : record)
+    const result = retainedQuestionArtifacts(manifest(revised))
+    expect(result.map(entry => entry.artifact.path)).toEqual([
+      "questions/q091.precommit.json", "questions/q091.postcommit.json"
+    ])
+    for (const entry of result) {
+      const bytes = readFileSync(entry.sourceUrl)
+      expect(bytes.byteLength).toBe(entry.artifact.bytes)
+      expect(digest(bytes)).toBe(entry.artifact.sha256)
+      expect(entry.sourceUrl.pathname).toContain("launch-v1-v4-artifacts/")
+    }
+  })
+
+  it("refuses to overwrite historical URLs even if the item ID is unchanged", () => {
+    for (const change of [{ sha256: "f".repeat(64) }, { bytes: 1 }]) {
+      const corrupted = originalRecords.map(record => record.itemId === "q091" ? { ...record, ...change } : record)
+      expect(() => retainedQuestionArtifacts(manifest(corrupted))).toThrow("Historical artifact URL collision")
+    }
   })
 })

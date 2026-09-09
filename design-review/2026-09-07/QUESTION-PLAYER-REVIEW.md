@@ -557,3 +557,13 @@ a future version 5 selects v3 and v4. Twelve archive/registry tests, site typech
 and the full 939-route build pass. This does not yet prove v5 restoration:
 retained q091 artifact loading/publication must replace current-item lookup before
 its content changes, and actual upgrade tests remain required.
+
+
+Retained question artifact resolution is now connected to generation and delivery:
+missing old paths resolve to exact archive files, are hash/length checked, enter
+the public item manifest and explicit offline download, and supply historical
+page stimuli by saved path. Conflicting bytes at an existing URL fail the build.
+The verifier checks published historical stimuli and scans retained feedback for
+pre-answer leaks. Sixteen targeted tests, site typecheck, and the complete current
+release build pass. Synthetic v5/q091-v2 tests prove both old files are selected
+and their original receipt bytes match; actual v5 runtime upgrade remains pending.
