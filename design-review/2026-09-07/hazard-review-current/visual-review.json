@@ -1,0 +1,20 @@
+{
+  "sourceCommit": "f8d8bc84ce7790a2192b41074a5947d55b3d4363",
+  "inspected": [
+    "visual-missing-1042-page.png",
+    "visual-saved-1042-context.png",
+    "nonvisual-missing-1042-page.png",
+    "nonvisual-saved-1042-context.png",
+    "visual-missing-384-page.png",
+    "visual-saved-384-context.png",
+    "nonvisual-missing-384-page.png",
+    "nonvisual-saved-384-context.png"
+  ],
+  "findings": [
+    "Missing-response layouts and saved-response notice crops inspected at 1042px and 384px CSS widths for visual and nonvisual modes.",
+    "No observed clipping or overlap in the inspected layouts. Links wrap within the notice at compact width.",
+    "Visual singular-count grammar corrected from 1 marks to 1 mark and verified in refreshed captures.",
+    "Written-zone notice explicitly preserves its separate unscored construct; reading does not finish a queued review."
+  ],
+  "scope": "Focused visual acceptance of new Review notices and missing-response layouts. Full saved-page screenshots are retained for review, but long explanation sections are not newly certified from scaled full-page images. No dedicated supplied saved-Hazard-Review reference exists; this adapts the established Hazard frame and notice components."
+}

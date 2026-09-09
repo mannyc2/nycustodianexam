@@ -95,3 +95,12 @@ source claims, scene metadata and linked text equivalent remain longer than the
 prototype's short fixture. Final integrated validation and remaining page-family
 audits still apply; these observations are not manual assistive-technology
 certification.
+
+
+## Saved Hazard Review context
+
+At source `f8d8bc84ce7790a2192b41074a5947d55b3d4363`, `capture-hazard-review.mjs` captured visual/nonvisual saved and missing-response states at 1042px and 384px CSS widths (16 checksummed full-page/notice images in `hazard-review-current/`). The fixtures save actual responses before reopening `?review=1`; all eight states assert their expected heading, absence of save buttons and no horizontal overflow. No page errors were recorded. Visual markers cover one hazard and one safe detail; written mode saves the first zone separately.
+
+All four missing-response full pages and four saved-notice crops were visually inspected. Typography, padding and link wrapping fit without observed clipping or overlap. Inspection found “1 marks”; the correction now renders singular hazard/mark counts and was rebuilt and recaptured. Site typecheck and production artifact/bundle checks passed (`/tmp/nyc-hazard-review-copy-build.log`). Capture log: `/tmp/nyc-hazard-review-capture.log`.
+
+The export index supplies Hazard marking/revealed/keyboard references, but no dedicated saved-Hazard-Review or missing-response design. These additions adapt the established Hazard frame and notice components while preserving the separate written construct and explicit queue completion. `hazard-review-current/visual-review.json` records exact inspected images. Long saved-page explanation sections remain available in full-page captures, but this focused pass does not claim new full-page fidelity from reduced-scale previews or device/assistive-technology certification.

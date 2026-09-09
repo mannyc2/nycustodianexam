@@ -19,7 +19,7 @@ The original [snapshot README](README.md), imported exports and `current-screens
 | Atlas and setup | [SETUP-ATLAS-REVIEW.md](SETUP-ATLAS-REVIEW.md) | Nine-family catalog and real simulation setup; no global exam selection. |
 | Atlas records | [ATLAS-RECORD-REVIEW.md](ATLAS-RECORD-REVIEW.md) | All 65 tools, reference-only eligibility and sampled record/family views. |
 | Question player | [QUESTION-PLAYER-REVIEW.md](QUESTION-PLAYER-REVIEW.md) | Commit-before-feedback, illustrations, authored nonvisual mode and historical receipts. |
-| Hazard player | [HAZARD-PLAYER-REVIEW.md](HAZARD-PLAYER-REVIEW.md) | Marked/keyboard/nonvisual/saved/failure states and in-place marker explanations. |
+| Hazard player | [HAZARD-PLAYER-REVIEW.md](HAZARD-PLAYER-REVIEW.md) | Marked/keyboard/nonvisual/saved/failure states; new saved Review notices and missing-response layouts inspected at desktop/compact widths. |
 | Simulation | [SIMULATION-FLOW-REVIEW.md](SIMULATION-FLOW-REVIEW.md) | Setup, timer, durable answers, submitted results and review. |
 | Simulation navigation | [SIMULATION-NAVIGATOR-REVIEW.md](SIMULATION-NAVIGATOR-REVIEW.md) | Navigator state, focus, compact layout and item controls. |
 | Exams and utilities | [UTILITY-PAGES-REVIEW.md](UTILITY-PAGES-REVIEW.md) | Exams, Settings, Offline and related utility behavior. |
