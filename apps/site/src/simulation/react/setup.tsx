@@ -1,133 +1,14 @@
 import { SetupNavigation } from "../../practice/react/setup-navigation.tsx"
-import { useEffect, useMemo, useRef, useState } from "react"
-import {
-  createLocallyClosedSimulation,
-  type SimulationEffectRunner
-} from "../controller.ts"
-import {
-  assembleSimulation,
-  simulationCapacity,
-  simulationCategoryCapacities,
-  simulationHazardCapacity,
-  simulationHazardCategoryCapacities
-} from "../generation.ts"
-import {
-  SimulationBootstrap,
-  SimulationTimingSettings,
-  type SimulationFormat,
-  simulationQuestionPath
-} from "../model.ts"
-import { studyContentProfileId } from "../../study-content.ts"
 import { deterministicSeedMaxLength } from "../../deterministic-seed.ts"
+import type { SimulationSetupController } from "../setup-controller.ts"
+import { SimulationSetupProvider, useSimulationSetup } from "./setup-provider.tsx"
 
-const createSessionId = (): string => `sim-${crypto.randomUUID().toLowerCase()}`
+export const SimulationSetup = ({ controller }: { readonly controller: SimulationSetupController }) =>
+  <SimulationSetupProvider controller={controller}><SimulationSetupView /></SimulationSetupProvider>
 
-const failureDetail = (cause: unknown): string => {
-  console.error("Unable to create the simulation", cause)
-  return "The simulation could not be saved on this device. Nothing was created — check free storage, then try again."
-}
-
-export const SimulationSetup = ({
-  bootstrap,
-  navigate,
-  runtime
-}: {
-  readonly bootstrap: SimulationBootstrap
-  readonly navigate: (path: string) => void
-  readonly runtime: SimulationEffectRunner
-}) => {
-  const profileId = studyContentProfileId
-  const [format, setFormat] = useState<SimulationFormat>("questions")
-  const selectedProfile = bootstrap.profiles.find((profile) => profile.id === profileId)
-  const categories = useMemo(
-    () => format === "questions"
-      ? simulationCategoryCapacities(bootstrap.inventory, profileId)
-      : simulationHazardCategoryCapacities(bootstrap.hazards, profileId),
-    [bootstrap.hazards, bootstrap.inventory, format, profileId]
-  )
-  const [selectedCategories, setSelectedCategories] = useState<ReadonlyArray<string>>(
-    categories.map(({ category }) => category)
-  )
-  const capacity = format === "questions"
-    ? simulationCapacity(bootstrap.inventory, selectedCategories, profileId)
-    : simulationHazardCapacity(bootstrap.hazards, selectedCategories, profileId)
-  const [requestedLength, setRequestedLength] = useState(Math.min(...bootstrap.advertisedLengths))
-  const lengths = [...new Set([
-    ...(format === "questions" ? bootstrap.advertisedLengths : [1, 5, 10]),
-    ...(capacity > 0 ? [capacity] : []),
-    requestedLength
-  ])].sort((left, right) => left - right)
-  const length = requestedLength
-  const lengthValid = length > 0 && length <= capacity
-  const changeFormat = (next: SimulationFormat): void => {
-    if (next === format) return
-    const nextCategories = next === "questions"
-      ? simulationCategoryCapacities(bootstrap.inventory, profileId)
-      : simulationHazardCategoryCapacities(bootstrap.hazards, profileId)
-    setFormat(next)
-    if ((next === "questions") !== (format === "questions")) {
-      setSelectedCategories(nextCategories.map(({ category }) => category))
-      setRequestedLength(next === "questions" ? Math.min(...bootstrap.advertisedLengths) : 1)
-    }
-  }
-  const [seed, setSeed] = useState(`${bootstrap.releaseId}-practice`)
-  const [timingMode, setTimingMode] = useState<"untimed" | "timed">("untimed")
-  const [durationMinutes, setDurationMinutes] = useState(120)
-  const [timerHidden, setTimerHidden] = useState(false)
-  const [autoSubmit, setAutoSubmit] = useState(false)
-  const timingValid = timingMode === "untimed" ||
-    Number.isSafeInteger(durationMinutes) && durationMinutes >= 1 && durationMinutes <= 240
-  const [status, setStatus] = useState<
-    | { readonly tag: "idle" }
-    | { readonly tag: "creating" }
-    | { readonly tag: "failure"; readonly detail: string }
-  >({ tag: "idle" })
-  const failureRef = useRef<HTMLHeadingElement>(null)
-
-  useEffect(() => {
-    if (status.tag === "failure") failureRef.current?.focus()
-  }, [status.tag])
-
-  const start = (): void => {
-    if (
-      status.tag === "creating" || selectedProfile === undefined || capacity === 0 || !lengthValid ||
-      seed.trim().length === 0 || seed.trim().length > deterministicSeedMaxLength || !timingValid
-    ) return
-    setStatus({ tag: "creating" })
-    const sessionId = createSessionId()
-    let session
-    try {
-      session = assembleSimulation({
-        bootstrap,
-        sessionId,
-        profileId,
-        format,
-        length,
-        seed,
-        selectedCategories,
-        timing: new SimulationTimingSettings(timingMode === "untimed"
-          ? { mode: "untimed", durationSeconds: null, timerVisible: false, autoSubmit: false }
-          : {
-              mode: "timed",
-              durationSeconds: durationMinutes * 60,
-              timerVisible: !timerHidden,
-              autoSubmit
-            }),
-        now: Date.now()
-      })
-    } catch (cause) {
-      setStatus({ tag: "failure", detail: failureDetail(cause) })
-      return
-    }
-    void runtime.runPromise(createLocallyClosedSimulation(session)).then(
-      (saved) => navigate(simulationQuestionPath(saved.id, 1)),
-      (cause) => setStatus({
-        tag: "failure",
-        detail: failureDetail(cause)
-      })
-    )
-  }
-
+const SimulationSetupView = () => {
+  const { state: { bootstrap, format, selectedProfile, categories, selectedCategories, capacity, lengths, length, lengthValid, seed, timingMode, durationMinutes, timerHidden, autoSubmit, timingValid, status, canStart },
+    actions: { changeFormat, selectCategory, setRequestedLength, setSeed, setTimingMode, setDurationMinutes, setTimerHidden, setAutoSubmit, start }, meta: { failureRef } } = useSimulationSetup()
   return <div className="simulation-setup-panel">
     <SetupNavigation current="simulation" />
     <section aria-labelledby="simulation-settings-heading" className="reference-card simulation-settings">
@@ -152,9 +33,7 @@ export const SimulationSetup = ({
           <input
             checked={selectedCategories.includes(category)}
             disabled={status.tag === "creating"}
-            onChange={(event) => setSelectedCategories((current) => event.target.checked
-              ? [...current, category].sort()
-              : current.filter((candidate) => candidate !== category))}
+            onChange={(event) => selectCategory(category, event.target.checked)}
             type="checkbox"
           /> {category} ({count} unique {count === 1 ? "item" : "items"})
         </label>)}
@@ -250,7 +129,7 @@ export const SimulationSetup = ({
       <div className="player-action-bar">
         <button
           className="button button-primary"
-          disabled={status.tag === "creating" || selectedProfile === undefined || capacity === 0 || !lengthValid || seed.trim().length === 0 || seed.trim().length > deterministicSeedMaxLength || !timingValid}
+          disabled={!canStart}
           onClick={start}
           type="button"
         >{status.tag === "creating" ? "Preparing your simulation…" : "Start simulation"}</button>

@@ -1,3 +1,5 @@
+import { createSimulationSetupController } from "../src/simulation/setup-controller.ts"
+import { studyContentProfileId } from "../src/study-content.ts"
 import { createHash } from "node:crypto"
 import { readFileSync } from "node:fs"
 import {
@@ -7,7 +9,7 @@ import {
   ReleaseManifest
 } from "@nycustodian/content/model"
 import { Schema } from "effect"
-import { describe, expect, it } from "vitest"
+import { describe, expect, it, vi } from "vitest"
 import {
   assembleSimulation,
   evaluateSimulation,
@@ -1340,5 +1342,60 @@ describe("deterministic simulation generation", () => {
       ...evaluated,
       correctCount: 0
     })).toThrow(/score does not match/)
+  })
+})
+
+
+describe("renderer-neutral simulation setup", () => {
+  const setupBootstrap = () => Schema.decodeUnknownSync(SimulationBootstrap)(JSON.parse(JSON.stringify(bootstrap()).replaceAll("profile-1", studyContentProfileId)))
+  it("waits for durable creation, rejects duplicate starts and locks settings while saving", async () => {
+    let finish!: () => void
+    const save = vi.fn((session: SimulationSessionRecord) => new Promise<SimulationSessionRecord>((resolve) => { finish = () => resolve(session) }))
+    const navigate = vi.fn()
+    const controller = createSimulationSetupController({ bootstrap: setupBootstrap(), createSessionId: () => "sim-setup-test", now: () => 1234, save, navigate })
+    controller.actions.start()
+    controller.actions.start()
+    controller.actions.setSeed("changed while saving")
+    expect(save).toHaveBeenCalledTimes(1)
+    expect(controller.getSnapshot().state.seed).toBe("release-1-practice")
+    expect(navigate).not.toHaveBeenCalled()
+    finish()
+    await vi.waitFor(() => expect(navigate).toHaveBeenCalledWith("/simulations/session/sim-setup-test/question/1/"))
+    controller.dispose()
+  })
+  it("retains an invalid selected length until an explicit replacement is chosen", () => {
+    const save = vi.fn(async (session: SimulationSessionRecord) => session)
+    const controller = createSimulationSetupController({ bootstrap: setupBootstrap(), createSessionId: () => "sim-setup-test", now: () => 1234, save, navigate: () => undefined })
+    controller.actions.selectCategory(controller.getSnapshot().state.categories.find((entry) => entry.count === 1)!.category, false)
+    expect(controller.getSnapshot().state.length).toBe(3)
+    expect(controller.getSnapshot().state.capacity).toBe(2)
+    expect(controller.getSnapshot().state.canStart).toBe(false)
+    controller.actions.start()
+    expect(save).not.toHaveBeenCalled()
+    controller.actions.setRequestedLength(2)
+    expect(controller.getSnapshot().state.canStart).toBe(true)
+    controller.dispose()
+  })
+  it("publishes failure focus without navigating when creation fails", async () => {
+    const error = vi.spyOn(console, "error").mockImplementation(() => undefined)
+    const navigate = vi.fn()
+    const controller = createSimulationSetupController({ bootstrap: setupBootstrap(), createSessionId: () => "sim-setup-test", now: () => 1234, save: async () => { throw new Error("storage unavailable") }, navigate })
+    controller.actions.start()
+    await vi.waitFor(() => expect(controller.getSnapshot().state.status.tag).toBe("failure"))
+    expect(controller.getSnapshot().focusRequest?.target).toBe("failure")
+    expect(navigate).not.toHaveBeenCalled()
+    controller.dispose()
+    error.mockRestore()
+  })
+  it("does not navigate when disposed during creation", async () => {
+    let finish!: () => void
+    const navigate = vi.fn()
+    const controller = createSimulationSetupController({ bootstrap: setupBootstrap(), createSessionId: () => "sim-setup-test", now: () => 1234,
+      save: (session) => new Promise((resolve) => { finish = () => resolve(session) }), navigate })
+    controller.actions.start()
+    controller.dispose()
+    finish()
+    await Promise.resolve()
+    expect(navigate).not.toHaveBeenCalled()
   })
 })
