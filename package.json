@@ -30,7 +30,7 @@
   },
   "scripts": {
     "build": "bun run check:toolchain && bun run content:build && bun run site:build && bun run verify:artifacts",
-    "check:boundaries": "bun run scripts/check-module-boundaries.ts",
+    "check:boundaries": "bun run scripts/check-module-boundaries.ts && bun run scripts/check-react-conventions.ts",
     "check:certification-record": "bun run scripts/check-production-certification.ts --allow-blocked",
     "check:layout": "bun run scripts/check-maintained-layout.ts",
     "check:toolchain": "bun run scripts/check-toolchain.ts",
