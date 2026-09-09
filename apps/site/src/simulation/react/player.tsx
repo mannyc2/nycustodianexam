@@ -8,7 +8,7 @@ import {
   simulationQuestionPath,
   type SimulationSessionRecord
 } from "../model.ts"
-import { SimulationHazardItem } from "./hazard-item.tsx"
+import { SimulationHazardRoute } from "./hazard-item.tsx"
 
 const formatRemaining = (seconds: number): string => {
   const hours = Math.floor(seconds / 3_600)
@@ -159,7 +159,7 @@ const SimulationPlayerView = ({ position }: { readonly position: number }) => {
       state={{ snapshot: snapshot.state, item, position, response, answerEditBlocked }}
       meta={{ presentationToggleRef }}>
       <SimulationQuestionRoute />
-    </SimulationQuestionProvider> : <SimulationHazardItem
+    </SimulationQuestionProvider> : <SimulationHazardRoute
       answerEditBlocked={session.status !== "active" || answerEditBlocked}
       item={item}
       position={position}

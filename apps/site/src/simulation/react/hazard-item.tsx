@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState, type MouseEvent as ReactMouseEvent } from "react"
+import { useCallback, useRef, useState, type ReactNode, type MouseEvent as ReactMouseEvent } from "react"
 import { useSimulationPlayer } from "./player-provider.tsx"
 import type {
   SimulationHazardSessionItem,
@@ -7,15 +7,7 @@ import type {
 
 const markerStep = 0.025
 
-export const SimulationHazardItem = ({
-  answerEditBlocked,
-  item,
-  position,
-  response,
-  saving,
-  total,
-  visualAssetUrl
-}: {
+interface SimulationHazardProps {
   readonly answerEditBlocked: boolean
   readonly item: SimulationHazardSessionItem
   readonly position: number
@@ -23,13 +15,45 @@ export const SimulationHazardItem = ({
   readonly saving: boolean
   readonly total: number
   readonly visualAssetUrl: string | null
-}) => {
+}
+
+const SimulationHazardHeader = ({ item, position, total, modeLabel, children }: SimulationHazardProps & { readonly modeLabel: string; readonly children: ReactNode }) => (
+  <header className="hazard-player__prompt">
+    <div className="player-heading-row">
+      <span className="player-position">Hazard item {position} of {total}</span>
+      <span className="player-mode-label">Practice simulation · {modeLabel}</span>
+    </div>
+    <h1 id="simulation-question-heading">Inspect the {item.scene.environment}</h1>
+    <p>{item.scene.neutralPreAnswer.overview}</p>
+    <p>{children}</p>
+  </header>
+)
+
+export const VisualHazardSimulation = (props: SimulationHazardProps) => (
+  <article className="hazard-player study-player" aria-labelledby="simulation-question-heading">
+    <SimulationHazardHeader {...props} modeLabel="Visual">Mark every location that concerns you. Expected counts and feedback stay unavailable until the entire simulation is submitted.</SimulationHazardHeader>
+    <SimulationHazardSceneViewport {...props} />
+    <SimulationHazardResponseControls {...props} selectedCount={props.response?.markers?.length ?? 0} />
+  </article>
+)
+
+export const NonvisualHazardSimulation = (props: SimulationHazardProps) => (
+  <article className="hazard-player study-player" aria-labelledby="simulation-question-heading">
+    <SimulationHazardHeader {...props} modeLabel="Text version">Select every zone that concerns you. This text version covers the same knowledge, but it is not the same task as marking the image.</SimulationHazardHeader>
+    <SimulationHazardZoneNavigator {...props} />
+    <SimulationHazardResponseControls {...props} selectedCount={new Set(props.response?.selectedZoneOrders ?? []).size} />
+  </article>
+)
+
+export const SimulationHazardRoute = (props: SimulationHazardProps) => props.item.mode === "visual"
+  ? <VisualHazardSimulation {...props} />
+  : <NonvisualHazardSimulation {...props} />
+
+export const SimulationHazardSceneViewport = ({ answerEditBlocked, item, response, visualAssetUrl }: SimulationHazardProps) => {
   const { actions } = useSimulationPlayer()
   const [zoom, setZoom] = useState(1)
   const viewportRef = useRef<HTMLDivElement>(null)
   const markers = response?.markers ?? []
-  const selectedZoneOrders = new Set(response?.selectedZoneOrders ?? [])
-  const selectedCount = item.mode === "visual" ? markers.length : selectedZoneOrders.size
   const panViewport = useCallback((horizontal: -1 | 0 | 1, vertical: -1 | 0 | 1) => {
     const viewport = viewportRef.current
     if (viewport === null) return
@@ -50,20 +74,7 @@ export const SimulationHazardItem = ({
     actions.addHazardMarker((event.clientX - bounds.left) / bounds.width, (event.clientY - bounds.top) / bounds.height)
   }
 
-  return <article className="hazard-player study-player" aria-labelledby="simulation-question-heading">
-    <header className="hazard-player__prompt">
-      <div className="player-heading-row">
-        <span className="player-position">Hazard item {position} of {total}</span>
-        <span className="player-mode-label">Practice simulation · {item.mode === "visual" ? "Visual" : "Text version"}</span>
-      </div>
-      <h1 id="simulation-question-heading">Inspect the {item.scene.environment}</h1>
-      <p>{item.scene.neutralPreAnswer.overview}</p>
-      <p>{item.mode === "visual"
-        ? "Mark every location that concerns you. Expected counts and feedback stay unavailable until the entire simulation is submitted."
-        : "Select every zone that concerns you. This text version covers the same knowledge, but it is not the same task as marking the image."}</p>
-    </header>
-
-    {item.mode === "visual" ? <section aria-labelledby="simulation-visual-scene-heading" className="hazard-player__visual">
+  return <section aria-labelledby="simulation-visual-scene-heading" className="hazard-player__visual">
       <h2 id="simulation-visual-scene-heading">Scene image</h2>
       {visualAssetUrl === null ? <div className="feedback feedback-error" role="alert">
         <h3>Exact scene image unavailable</h3>
@@ -120,7 +131,52 @@ export const SimulationHazardItem = ({
         </div>
         <button className="button button-secondary" disabled={answerEditBlocked || markers.length >= 64} onClick={() => actions.addHazardMarker(0.5, 0.5)} type="button">Add marker at center</button>
       </>}
-      <section aria-labelledby="simulation-marker-list-heading" className="hazard-player__markers">
+      <SimulationHazardMarkerList answerEditBlocked={answerEditBlocked} response={response} />
+    </section>
+}
+
+export const SimulationHazardZoneNavigator = ({ answerEditBlocked, item, response }: SimulationHazardProps) => {
+  const { actions } = useSimulationPlayer()
+  const selectedZoneOrders = new Set(response?.selectedZoneOrders ?? [])
+  return <fieldset className="hazard-player__zones" disabled={answerEditBlocked}>
+      <legend>Observable zones</legend>
+      <p>Select a zone when its neutral description gives you concern. Selecting does not reveal whether the zone is safe or unsafe.</p>
+      <ol>{item.scene.neutralPreAnswer.zones.map((zone) => <li key={zone.order}>
+        <label>
+          <input checked={selectedZoneOrders.has(zone.order)} name="simulation-hazard-zone" onChange={() => actions.toggleHazardZone(zone.order)} type="checkbox" value={zone.order} />
+          <strong>Zone {zone.order}: {zone.label}</strong>
+          <span>{zone.description}</span>
+        </label>
+      </li>)}</ol>
+    </fieldset>
+}
+
+export const SimulationHazardResponseControls = ({ answerEditBlocked, response, saving, selectedCount }: SimulationHazardProps & { readonly selectedCount: number }) => {
+  const { actions } = useSimulationPlayer()
+  return <div className="question-controls">
+      <label>
+        <input
+          checked={response?.zeroHazardsConfirmed === true}
+          disabled={answerEditBlocked || selectedCount > 0}
+          onChange={() => actions.toggleZeroHazards()}
+          type="checkbox"
+        /> I found no concerning locations or zones in this scene
+      </label>
+      <button
+        aria-pressed={response?.reviewIntent === "flagged"}
+        className="button button-secondary"
+        disabled={answerEditBlocked}
+        onClick={() => actions.toggleFlag()}
+        type="button"
+      >{response?.reviewIntent === "flagged" ? "Flagged for review" : "Flag this item"}</button>
+      <span aria-live="polite" className="source-note">{saving ? "Saving locally…" : "Saved on this device"}</span>
+    </div>
+}
+
+export const SimulationHazardMarkerList = ({ answerEditBlocked, response }: Pick<SimulationHazardProps, "answerEditBlocked" | "response">) => {
+  const { actions } = useSimulationPlayer()
+  const markers = response?.markers ?? []
+  return <section aria-labelledby="simulation-marker-list-heading" className="hazard-player__markers">
         <h3 id="simulation-marker-list-heading">Your markers</h3>
         <p aria-live="polite">{markers.length === 0 ? "No markers placed." : `${markers.length} ${markers.length === 1 ? "marker" : "markers"} placed.`}</p>
         {markers.length === 0 ? null : <ol className="hazard-player__marker-list">
@@ -144,35 +200,4 @@ export const SimulationHazardItem = ({
           </li>)}
         </ol>}
       </section>
-    </section> : <fieldset className="hazard-player__zones" disabled={answerEditBlocked}>
-      <legend>Observable zones</legend>
-      <p>Select a zone when its neutral description gives you concern. Selecting does not reveal whether the zone is safe or unsafe.</p>
-      <ol>{item.scene.neutralPreAnswer.zones.map((zone) => <li key={zone.order}>
-        <label>
-          <input checked={selectedZoneOrders.has(zone.order)} name="simulation-hazard-zone" onChange={() => actions.toggleHazardZone(zone.order)} type="checkbox" value={zone.order} />
-          <strong>Zone {zone.order}: {zone.label}</strong>
-          <span>{zone.description}</span>
-        </label>
-      </li>)}</ol>
-    </fieldset>}
-
-    <div className="question-controls">
-      <label>
-        <input
-          checked={response?.zeroHazardsConfirmed === true}
-          disabled={answerEditBlocked || selectedCount > 0}
-          onChange={() => actions.toggleZeroHazards()}
-          type="checkbox"
-        /> I found no concerning locations or zones in this scene
-      </label>
-      <button
-        aria-pressed={response?.reviewIntent === "flagged"}
-        className="button button-secondary"
-        disabled={answerEditBlocked}
-        onClick={() => actions.toggleFlag()}
-        type="button"
-      >{response?.reviewIntent === "flagged" ? "Flagged for review" : "Flag this item"}</button>
-      <span aria-live="polite" className="source-note">{saving ? "Saving locally…" : "Saved on this device"}</span>
-    </div>
-  </article>
 }
