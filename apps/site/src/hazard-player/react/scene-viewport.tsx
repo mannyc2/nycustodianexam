@@ -1,3 +1,4 @@
+import { NeutralSceneImage } from "./neutral-scene-image.tsx"
 import { SceneViewportControls, useSceneViewport } from "./viewport-controls.tsx"
 import {
   useCallback,
@@ -113,29 +114,7 @@ export const HazardSceneViewport = () => {
               markers={draft.markers}
               payload={state.payload}
             />
-          ) : <>
-          <img
-            alt={scene.neutralPreAnswer.overview}
-            draggable={false}
-            src={displayedImageUrl}
-            style={{ display: "block", height: "auto", width: "100%" }}
-          />
-          {draft.markers.map((marker, index) => (
-            <span
-              aria-hidden="true"
-              className="hazard-player__marker"
-              key={marker.id}
-              style={{
-                left: `${marker.x * 100}%`,
-                position: "absolute",
-                top: `${marker.y * 100}%`,
-                transform: "translate(-50%, -50%)"
-              }}
-            >
-              {index + 1}
-            </span>
-          ))}
-          </>}
+          ) : <NeutralSceneImage alt={scene.neutralPreAnswer.overview} imageUrl={displayedImageUrl} markers={draft.markers} />}
 
         </div>
       </div>

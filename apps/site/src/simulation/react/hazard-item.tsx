@@ -1,3 +1,4 @@
+import { NeutralSceneImage } from "../../hazard-player/react/neutral-scene-image.tsx"
 import { SceneViewportControls, useSceneViewport } from "../../hazard-player/react/viewport-controls.tsx"
 import { MarkerMoves } from "../../hazard-player/react/marker-moves.tsx"
 import { NeutralZoneInputs } from "../../hazard-player/react/neutral-zone-inputs.tsx"
@@ -95,18 +96,7 @@ export const SimulationHazardSceneViewport = ({ answerEditBlocked, item, respons
               width: `${zoom * 100}%`
             }}
           >
-            <img alt={item.scene.neutralPreAnswer.overview} draggable={false} src={visualAssetUrl} style={{ display: "block", height: "auto", width: "100%" }} />
-            {markers.map((marker, index) => <span
-              aria-hidden="true"
-              className="hazard-player__marker"
-              key={marker.id}
-              style={{
-                left: `${marker.x * 100}%`,
-                position: "absolute",
-                top: `${marker.y * 100}%`,
-                transform: "translate(-50%, -50%)"
-              }}
-            >{index + 1}</span>)}
+            <NeutralSceneImage alt={item.scene.neutralPreAnswer.overview} imageUrl={visualAssetUrl} markers={markers} />
           </div>
         </div>
         <button className="button button-secondary" disabled={answerEditBlocked || markers.length >= 64} onClick={() => actions.addHazardMarker(0.5, 0.5)} type="button">Add marker at center</button>
