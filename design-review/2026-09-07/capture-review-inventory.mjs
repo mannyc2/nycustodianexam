@@ -3,7 +3,8 @@ import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 const require = createRequire(new URL('../../apps/site/package.json', import.meta.url));
 const { chromium, expect } = require('@playwright/test');
-const output = fileURLToPath(new URL('./review-inventory-audit/', import.meta.url));
+const includeHazards = process.env.REVIEW_INCLUDE_HAZARDS === '1';
+const output = fileURLToPath(new URL(includeHazards ? './review-mixed-audit/' : './review-inventory-audit/', import.meta.url));
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({ channel: 'chromium' });
 const errors = [], captures = [];
@@ -22,6 +23,15 @@ try {
     await expect(page.locator('.feedback-rationales')).toBeVisible();
     if (index < 6) await page.getByRole('link', { name: 'Next question', exact: true }).click();
   }
+  if (includeHazards) {
+    for (const position of [1, 3]) {
+      await page.goto(`http://127.0.0.1:4187/hazards/session/launch-v1/scene/${position}/`);
+      await expect(page.getByRole('button', { name: 'Save marks', exact: true })).toBeEnabled();
+      await page.getByRole('button', { name: 'Save marks', exact: true }).click();
+      await page.getByRole('button', { name: 'Confirm and save no marks', exact: true }).click();
+      await expect(page.locator('.hazard-player__results')).toBeVisible();
+    }
+  }
   // Explicit failure fixture: corrupt one saved receipt, preserving the response.
   await page.evaluate(() => new Promise((resolve, reject) => {
     const open = indexedDB.open('nycustodian-study-v1');
@@ -38,10 +48,10 @@ try {
     };
   }));
   await page.goto('http://127.0.0.1:4187/review/');
-  await expect(page.getByRole('heading', { name: '6 items to review', exact: true })).toBeVisible();
-  await page.getByRole('button', { name: 'Finish review', exact: true }).first().click();
+  await expect(page.getByRole('heading', { name: `${includeHazards ? 8 : 6} items to review`, exact: true })).toBeVisible();
+  await page.locator('.review-item-card').filter({ has: page.locator('a[href*="/practice/session/"]') }).first().getByRole('button', { name: 'Finish review', exact: true }).click();
   await page.getByRole('button', { name: 'Confirm finish review', exact: true }).click();
-  await expect(page.getByRole('heading', { name: '5 items to review', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: `${includeHazards ? 7 : 5} items to review`, exact: true })).toBeVisible();
   await expect(page.getByRole('region', { name: 'Unavailable saved attempts', exact: true }).getByRole('listitem')).toHaveCount(1);
   await expect(page.getByRole('region', { name: 'Review history', exact: true }).getByRole('listitem')).toHaveCount(1);
   await expect(page.locator('.study-hero .figure-strip > div').filter({ hasText: 'Unavailable attempts' }).locator('dd')).toHaveText('1');
@@ -50,6 +60,7 @@ try {
     await expect.poll(() => page.locator(".study-hero .figure-strip").evaluate(element => getComputedStyle(element).gridTemplateColumns.split(" ").length)).toBe(width === 384 ? 2 : 4);
     for (const filter of ['All', 'Missed', 'Flagged']) {
       await page.getByRole('tab', { name: new RegExp(`^${filter} `) }).click();
+      if (includeHazards) await expect(page.locator('.review-item-card').filter({ has: page.locator('a[href*="/hazards/session/"]') })).toHaveCount(filter === 'Flagged' ? 0 : 2);
       await page.evaluate(async () => { await document.fonts.ready; });
       if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)) throw new Error('Review overflows');
       const file = `${filter.toLowerCase()}-${width}.png`;
@@ -71,6 +82,11 @@ try {
     await page.getByRole('button', { name: 'Keep in review', exact: true }).click();
     await expect(page.getByRole('button', { name: 'Finish review', exact: true }).first()).toBeFocused();
   }
+  if (includeHazards) {
+    await page.locator('.review-item-card').filter({ has: page.locator('a[href*="/hazards/session/"]') }).first().getByRole('link', { name: 'Read explanation', exact: true }).click();
+    await expect(page.locator('.hazard-player__results')).toBeVisible();
+    await expect(page.locator('.hazard-player__workspace img').first()).toBeVisible();
+  }
 } finally { await browser.close(); }
-await writeFile(output + 'manifest.json', JSON.stringify({ fixture: 'Seven real flagged question saves; one deliberately mismatched receipt; one review finished. No hazard responses in this fixture.', captures, errors }, null, 2) + '\n');
+await writeFile(output + 'manifest.json', JSON.stringify({ fixture: `Seven real flagged question saves; one deliberately mismatched receipt; one question review finished. ${includeHazards ? 'Two real visual hazard responses with confirmed empty marks, preserving missed-hazard feedback.' : 'No hazard responses in this fixture.'}`, captures, errors }, null, 2) + '\n');
 if (errors.length) throw new Error(errors.join('\n'));

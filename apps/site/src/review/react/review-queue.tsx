@@ -133,7 +133,7 @@ export const ReviewQueueIsland = ({ controller, activityState, onRetryHistory }:
     {state.tag === "recoverable_error" ? <section className="review-state review-error" aria-labelledby="review-error-heading" role="alert">
       <h1 id="review-error-heading" ref={errorHeadingRef} tabIndex={-1}>{state.operation === "acknowledge" ? "Your finished review was not saved" : "Review queue could not be built"}</h1>
       <p>{state.operation === "acknowledge" ? "The change could not be written to this device's storage. The item stays in your queue." : "Your saved attempts could not be read from this device's storage."}</p>
-      <p>No saved attempt was deleted or replaced.</p>
+      <p><strong>No saved attempt was deleted or replaced.</strong></p>
       {state.detail.length === 0 ? null : <details className="feedback-sources"><summary>Technical details</summary><p>{state.detail}</p></details>}
       <div className="question-controls">
         <button className="button button-primary" onClick={() => controller.dispatch({ tag: "retry" })} type="button">Retry</button>
@@ -144,11 +144,11 @@ export const ReviewQueueIsland = ({ controller, activityState, onRetryHistory }:
       <p className="eyebrow">Review</p>
       <h1 id="review-queue-heading">{state.tag === "loading" ? "Loading your review queue" : state.tag === "empty" ? "Your review queue is clear." : `${items.length} ${items.length === 1 ? "item" : "items"} to review`}</h1>
       <p>{state.tag === "loading" ? state.action === "rebuild" ? "Rebuilding from your saved attempts and finished reviews…" : "Reading the attempts saved on this device…" : state.tag === "empty" ? "Nothing is waiting for review. Try another practice set, explore a scene, or come back after your next saved answer." : "Revisit the questions you missed or flagged and the visual scenes that need another look. Untimed, with your original saved feedback."}</p>
-      <div className="question-controls">
+      {state.tag === "empty" ? null : <div className="question-controls">
         {items[0] === undefined ? <a className="button button-primary" href="/practice/#practice-sets">Choose a practice set</a> : <a className="button button-primary" href={items[0].itemUrl}>Read first explanation</a>}
         <a className="button button-secondary" href="/practice/">Practice and activity</a>
-      </div>
-      {state.tag === "loading" ? <span role="status" className="sr-only">Reading your review queue.</span> : <dl className="figure-strip">
+      </div>}
+      {state.tag === "empty" ? null : state.tag === "loading" ? <span role="status" className="sr-only">Reading your review queue.</span> : <dl className="figure-strip">
         <div><dt>Ready for review</dt><dd>{items.length} {items.length === 1 ? "item" : "items"}</dd></div>
         <div><dt>Missed or misidentified</dt><dd>{missed}</dd></div>
         <div><dt>Flagged by you</dt><dd>{flagged}</dd></div>
@@ -161,7 +161,7 @@ export const ReviewQueueIsland = ({ controller, activityState, onRetryHistory }:
       <div className="empty-state review-empty">
         <h3 className="empty-state-heading" id="review-empty-heading" ref={emptyHeadingRef} tabIndex={-1}>No review items are ready</h3>
         <p>Missed or flagged questions and mistakes in visual hazard scenes build this queue. Correct answers you did not flag, keyboard zone attempts, and finished reviews do not return here.</p>
-        <div className="empty-state-actions"><a className="button button-primary" href="/practice/#practice-sets">Practice questions</a><a className="button button-secondary" href="/hazards/">Practice hazard scanning</a></div>
+        <div className="empty-state-actions"><a className="button button-secondary" href="/practice/#practice-sets">Practice questions</a><a className="button button-secondary" href="/hazards/">Practice hazard scanning</a></div>
       </div>
     </section> : (state.tag === "ready" || state.tag === "recoverable_error") && items.length > 0 ? <section className="study-section" aria-labelledby="review-due-heading">
       <div className="section-header"><h2 id="review-due-heading" ref={queueHeadingRef} tabIndex={-1}>What is ready</h2><p>Read each explanation, then confirm Finish review when you are done. Reading one never removes it.</p></div>

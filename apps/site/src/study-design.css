@@ -232,3 +232,18 @@
     .review-page .study-hero .figure-strip:has(> div:nth-child(4)) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   }
 }
+
+@layer overrides {
+  .review-page .review-error h1 { font-size: 1.125rem; line-height: 1.4; color: var(--color-danger); }
+  .review-page .review-error > p { font-size: 0.9375rem; }
+  .review-page .review-error .question-controls { gap: var(--space-2); }
+  .review-page .review-error .button { font-size: 0.875rem; padding-inline: var(--space-4); }
+  @media (min-width: 36rem) {
+    .review-page .review-error .question-controls { display: flex; flex-direction: row; flex-wrap: wrap; }
+    .review-page .review-error .question-controls .button { inline-size: auto; }
+  }
+}
+
+@layer overrides {
+  .review-page .review-empty .button { font-size: 0.875rem; padding-inline: var(--space-4); }
+}

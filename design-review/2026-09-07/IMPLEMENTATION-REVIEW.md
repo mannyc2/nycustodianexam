@@ -239,3 +239,42 @@ This supersedes the single-item evidence for queue density and unavailable count
 Mixed question/hazard inventory and the dedicated cleared/read-failed/finish-failed
 reference widths still need a final comparison; native-font differences remain
 documented rather than compensated with fabricated content.
+
+## Mixed Review and recovery specimens
+
+`REVIEW_INCLUDE_HAZARDS=1 node capture-review-inventory.mjs` produces
+`review-mixed-audit/`: fourteen desktop/compact captures from seven real flagged
+question saves and two real visual hazard saves with confirmed empty marks. One
+question receipt is deliberately mismatched and one question review is finished.
+The queue therefore has seven ready items, six missed, five flagged, one
+unavailable record, and one finished review. The script chooses a question
+explicitly for acknowledgement rather than assuming which record sorts first.
+Both hazard records appear in All/Missed and neither appears in Flagged. Opening
+one verifies retained feedback and its saved image. Scene descriptions identify
+these records instead of the prototype's generic numbered fixture labels.
+
+`capture-review-recovery.mjs` produces ten captures in `review-recovery-audit/`.
+Read and write failures are explicit IndexedDB fault fixtures; the cleared state
+follows a real successful confirmation after the write fault is removed. At a
+598px viewport the error/empty panels are 566px wide, matching the inner panels
+of the 608px reference specimens (23–25). Their surrounding specimen annotations
+are not product content. The full-width cleared hero is 598px, so its outer bounds
+are not an exact match to the specimen's inset hero. Compact captures use 384px.
+
+Compared mixed queue rows and recovery panels with the correct references.
+Recovery headings now use 18px danger text, the saved-record preservation message
+is emphasized, and actions fit one row at the wider comparison size while
+stacking on compact screens. The cleared header now contains only its heading
+and explanation; the next actions live in the empty panel, styled as the
+reference's secondary actions. Narrower action padding and 14px labels keep
+those actions together at the wider size. The actual focus outline remains
+visible, and the export action remains available during write recovery.
+
+Root build/artifact verification and site typecheck pass. Nine existing Review
+and durable Practice-to-Review checks pass across Chromium/Firefox/WebKit.
+Recovery capture assertions verify focused error/cleared headings, disabled
+Finish review after write failure, preserved explanation destinations, one
+finished-history record, responsive action rows, heading size, and no horizontal
+overflow/page errors. Final empty-action styling was checked by recapture after
+the browser regression run. Mixed and recovery comparisons close those specific
+visual audit gaps; final integrated validation and other page families remain.
