@@ -1,0 +1,55 @@
+{
+  "sourceCommit": "00409514b36ad12d484736728ea4dd1290edda9f",
+  "rasterOutput": "/tmp/nycustodian-print-final-products-pages",
+  "captures": [
+    {
+      "id": "announcement-profile-fact-sheet-us-letter-normal",
+      "sha256": "530945a742517425a8f6e34ec166d8f5c2b60e8c4474dc3f0a3bd8c1a064a032",
+      "product": "announcement-profile-fact-sheet",
+      "count": 1,
+      "paper": "us-letter",
+      "large": false,
+      "estimatedPages": 35,
+      "pages": 31,
+      "pageSize": "612 x 792 pts (letter)",
+      "searchableText": true
+    },
+    {
+      "id": "announcement-profile-fact-sheet-us-letter-large-wide",
+      "sha256": "e430a7156666e09b78450e1797465f25768eab2ea6f5741022e22a4fde054631",
+      "product": "announcement-profile-fact-sheet",
+      "count": 1,
+      "paper": "us-letter",
+      "large": true,
+      "estimatedPages": 62,
+      "pages": 64,
+      "pageSize": "612 x 792 pts (letter)",
+      "searchableText": true
+    },
+    {
+      "id": "announcement-profile-fact-sheet-a4-normal",
+      "sha256": "3baea707f64ae6b59285b9540dedd4d7d02ddb4e5e8712fc664408bc86a73686",
+      "product": "announcement-profile-fact-sheet",
+      "count": 1,
+      "paper": "a4",
+      "large": false,
+      "estimatedPages": 33,
+      "pages": 29,
+      "pageSize": "594.96 x 841.92 pts (A4)",
+      "searchableText": true
+    },
+    {
+      "id": "announcement-profile-fact-sheet-a4-large-wide",
+      "sha256": "016c112cd91f7641b838a08024d9c0082aafcf96614d11c2ce3b9174fece9a55",
+      "product": "announcement-profile-fact-sheet",
+      "count": 1,
+      "paper": "a4",
+      "large": true,
+      "estimatedPages": 59,
+      "pages": 61,
+      "pageSize": "594.96 x 841.92 pts (A4)",
+      "searchableText": true
+    }
+  ],
+  "errors": []
+}

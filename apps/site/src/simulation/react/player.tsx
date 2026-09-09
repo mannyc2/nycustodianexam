@@ -1,3 +1,4 @@
+import { SimulationQuestionProvider } from "./question-provider.tsx"
 import { SimulationQuestionRoute } from "./question-item.tsx"
 import { useEffect, useRef, useState, useSyncExternalStore } from "react"
 import type { SimulationPlayerController } from "../controller.ts"
@@ -171,10 +172,11 @@ export const SimulationPlayer = ({
     </p>
     <div className="simulation-workspace">
     <div className="simulation-main">
-    {"question" in item ? <SimulationQuestionRoute
-      controller={controller} state={snapshot.state} item={item} position={position}
-      response={response} answerEditBlocked={answerEditBlocked} presentationToggleRef={presentationToggleRef}
-    /> : <SimulationHazardItem
+    {"question" in item ? <SimulationQuestionProvider controller={controller}
+      state={{ snapshot: snapshot.state, item, position, response, answerEditBlocked }}
+      meta={{ presentationToggleRef }}>
+      <SimulationQuestionRoute />
+    </SimulationQuestionProvider> : <SimulationHazardItem
       answerEditBlocked={session.status !== "active" || answerEditBlocked}
       controller={controller}
       item={item}

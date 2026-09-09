@@ -1,19 +1,9 @@
-import type { ReactNode, RefObject } from "react"
+import type { ReactNode } from "react"
 import { QuestionIllustration } from "../../question-player/react/illustration.tsx"
-import type { SimulationPlayerController, SimulationPlayerState } from "../controller.ts"
-import type { SimulationSessionItem, SimulationResponse } from "../model.ts"
+import { useSimulationQuestion } from "./question-context.tsx"
 
-interface SimulationQuestionProps {
-  readonly controller: SimulationPlayerController
-  readonly state: Extract<SimulationPlayerState, { readonly tag: "ready" }>
-  readonly item: SimulationSessionItem
-  readonly position: number
-  readonly response: SimulationResponse | undefined
-  readonly answerEditBlocked: boolean
-  readonly presentationToggleRef: RefObject<HTMLButtonElement | null>
-}
-
-export const SimulationQuestion = ({ controller, state, item, position, response, answerEditBlocked, presentationToggleRef, children }: SimulationQuestionProps & { readonly children: ReactNode }) => {
+export const SimulationQuestion = ({ children }: { readonly children: ReactNode }) => {
+  const { state: { snapshot: state, item, position, response, answerEditBlocked }, actions, meta: { presentationToggleRef } } = useSimulationQuestion()
   const { session, saving, recoverableError } = state
   const illustration = "illustration" in item.question ? item.question.illustration : undefined
   const nonvisualEquivalent = illustration?.nonvisualEquivalent
@@ -28,7 +18,7 @@ export const SimulationQuestion = ({ controller, state, item, position, response
           <p className="source-note">{response?.presentation === "nonvisual" ? "Nonvisual version" : "Illustrated version"}</p>
           <button ref={presentationToggleRef} type="button" className="button button-secondary question-presentation-toggle"
             disabled={session.status !== "active" || answerEditBlocked}
-            onClick={() => controller.dispatch({ tag: "select-presentation", presentation: response?.presentation === "nonvisual" ? "visual" : "nonvisual" })}>
+            onClick={() => actions.selectPresentation(response?.presentation === "nonvisual" ? "visual" : "nonvisual")}>
             {response?.presentation === "nonvisual" ? "Use illustrated version" : "Use nonvisual version"}
           </button>
         </>}
@@ -44,7 +34,7 @@ export const SimulationQuestion = ({ controller, state, item, position, response
               <input
                 checked={response?.selectedOptionId === option.id}
                 name={`simulation-${item.question.id}`}
-                onChange={() => controller.dispatch({ tag: "select-option", optionId: option.id })}
+                onChange={() => actions.selectOption(option.id)}
                 type="radio"
                 value={option.id}
               />
@@ -59,7 +49,7 @@ export const SimulationQuestion = ({ controller, state, item, position, response
           aria-pressed={response?.reviewIntent === "flagged"}
           className="button button-secondary"
           disabled={answerEditBlocked}
-          onClick={() => controller.dispatch({ tag: "toggle-flag" })}
+          onClick={() => actions.toggleFlag()}
           type="button"
         >{response?.reviewIntent === "flagged" ? "Flagged for review" : "Flag this question"}</button>
         <span aria-live="polite" className="player-action-note">{saving
@@ -71,18 +61,20 @@ export const SimulationQuestion = ({ controller, state, item, position, response
     </article>
 }
 
-export const SimulationVisualQuestion = (props: SimulationQuestionProps) => {
-  const illustration = "illustration" in props.item.question ? props.item.question.illustration : undefined
-  return <SimulationQuestion {...props}>
-    <h1 id="simulation-question-heading">{props.item.question.prompt}</h1>
+export const SimulationVisualQuestion = () => {
+  const { state: { item } } = useSimulationQuestion()
+  const illustration = "illustration" in item.question ? item.question.illustration : undefined
+  return <SimulationQuestion>
+    <h1 id="simulation-question-heading">{item.question.prompt}</h1>
     <QuestionIllustration illustration={illustration} />
   </SimulationQuestion>
 }
 
-export const SimulationNonvisualQuestion = (props: SimulationQuestionProps) => {
-  const illustration = "illustration" in props.item.question ? props.item.question.illustration : undefined
+export const SimulationNonvisualQuestion = () => {
+  const { state: { item } } = useSimulationQuestion()
+  const illustration = "illustration" in item.question ? item.question.illustration : undefined
   const equivalent = illustration?.nonvisualEquivalent
-  return <SimulationQuestion {...props}>
+  return <SimulationQuestion>
     {equivalent === undefined ? <h1 id="simulation-question-heading">The saved nonvisual question is unavailable.</h1> :
       <section className="question-nonvisual-body" aria-labelledby="simulation-question-heading">
         <h1 id="simulation-question-heading">{equivalent.prompt}</h1>
@@ -91,5 +83,8 @@ export const SimulationNonvisualQuestion = (props: SimulationQuestionProps) => {
   </SimulationQuestion>
 }
 
-export const SimulationQuestionRoute = (props: SimulationQuestionProps) => props.response?.presentation === "nonvisual"
-  ? <SimulationNonvisualQuestion {...props} /> : <SimulationVisualQuestion {...props} />
+export const SimulationQuestionRoute = () => {
+  const { state: { response } } = useSimulationQuestion()
+  return response?.presentation === "nonvisual"
+    ? <SimulationNonvisualQuestion /> : <SimulationVisualQuestion />
+}

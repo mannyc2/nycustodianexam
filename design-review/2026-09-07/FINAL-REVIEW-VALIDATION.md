@@ -22,3 +22,14 @@ The command completed with exit 0 using the required Bun 1.4.0 / Node 22.22.0 to
 Browser evidence is separate: `FULL-BROWSER-SWEEP.md` records the broad run and fixture corrections. The latest changed print implementation passed all 36 cross-browser print cases. `PRINT-PROSE-ESTIMATES.md` records actual PDF/font checks and the limits of sampled visual inspection. Local workerd evidence is in `LOCAL-RUNTIME-GATES.md` and `STATIC-ASSETS-SIMULATION.md`.
 
 No merge, deployment, intake activation or manual accessibility/device/printer certification is implied by this checkpoint.
+
+
+## Current implementation recheck
+
+Source `00409514b36ad12d484736728ea4dd1290edda9f`, including the explicit Practice/Review/Simulation question variants and fact-sheet heading pagination fix. Pending worktree changes at execution were review documentation and captured evidence only.
+
+The root `bun run verify` run passed toolchain, maintained layout (284 files), module boundaries (144 modules), certification-record validation, visual release verification, all five workspace typechecks, browser-test typecheck, all 467 unit/integration tests (content 103, intake 3, compiler 15, correction worker 8, site 338), production generation and artifact/bundle invariants. Output remains 1,352 route documents, 224 published item-scoped artifacts, 291 byte-identical assets and 59 safe shell URLs. Every island byte budget passed.
+
+The root command exited 1 at its final historical packet validator because a `git` subprocess returned sandbox `EPERM`. The exact unchanged validator was then rerun outside that sandbox and exited 0: four reviews, 41 sources, 19 promoted rules, seven unresolved rules and 61 mutation checks. This is a successful separate recheck of the final gate, not a single exit-0 root invocation. Transient logs: `/tmp/nyc-current-integrated-verify.log` and `/tmp/nyc-current-packet-recheck.log`.
+
+No browser suite was included in this run. Existing browser evidence retains its recorded revision and scope. The certification record remains valid and blocked, and the historical packet explicitly excludes the current implementation from its evidence scope.

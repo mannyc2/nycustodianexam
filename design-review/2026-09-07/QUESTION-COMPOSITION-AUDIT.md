@@ -39,3 +39,27 @@ The question module imports only the precommit illustration renderer and types; 
 An optional saved-focus request belongs to the existing queued local operation. Presentation changes request focus on the new toggle only after the operation succeeds; failures retain recoverable-error focus and exact retry. Ordinary answer and timer saves do not request toggle focus. The browser regression switches both ways after selecting an answer, checks focus and selection, reloads, flags, submits and verifies retained nonvisual results.
 
 Validation: 38 Simulation unit tests, site/browser typechecks, build/artifact/bundle checks, maintained layout (284 files) and module boundaries (144 modules) passed. All 27 local Simulation browser cases passed across Chromium, Firefox and WebKit (41.4 seconds). Cloudflare-tagged delivery cases are separate and were not rerun for this component-only change. This is a composition/focus correction, not new screenshot evidence; prior visual captures remain revision-specific.
+
+
+## Remaining contract gaps verified at 0040951
+
+Direct inspection of `product/COMPONENT_ARCHITECTURE.md` sections 2, 3 and 6 against the current source establishes these concrete incomplete requirements:
+
+| Requirement | Current source evidence | Required follow-through |
+| --- | --- | --- |
+| Provider/adapter alone knows command dispatch | `simulation/react/question-item.tsx` accepts `SimulationPlayerController` and invokes `controller.dispatch` in presentation, choice and flag controls | Adapt the ready Simulation snapshot to a state/actions/meta contract outside the compound leaves; preserve durable save and focus acknowledgments. |
+| Explicit QuestionPlayer compound pieces | `question-player/react/player.tsx` maps Outcome to the entire QuestionFeedback and CommitAction to QuestionControls; Position, FlagAction, Rationales, ConfusionFeedback, Sources, ReviewActions and Navigation are not exposed as separate pieces | Extract meaningful leaves from the existing markup and explicitly compose them in the workflow; do not add aliases that still hide the combined structure. |
+| Family body composition across workflows | Practice/Review use QuestionPlayer body leaves; Simulation wrappers separately construct prompt/illustration/nonvisual markup | Share the appropriate precommit body contract or explicitly adapt it for Simulation without importing postcommit feedback into its closure. |
+
+The existing `question-player/react/context.tsx` already has state/actions/meta and React 19 context access; preserve it rather than introduce a second state machine. `feedback.tsx` gates all successful feedback on `state.tag === "revealed"`; splitting its leaves must retain this guard for every postcommit leaf, error recovery focus, authored rationale ordering and exact source receipts. Simulation must keep editable session behavior and never acquire ordinary Practice commit/reveal semantics.
+
+These findings are source-level architecture gaps, not evidence of newly observed learner-facing failures. Existing functional checks remain valid within their scope. Closure requires implementation, type/build/boundary checks, and the existing real-save, failure/retry, Review restoration and Simulation no-feedback browser workflows. The wider family audit remains open beyond this bounded QuestionPlayer inspection.
+
+
+## Simulation question provider correction
+
+The question-specific dispatch gap above is corrected in the working implementation. `simulation/react/question-provider.tsx` adapts the authoritative ready snapshot and controller into the `question-context.tsx` state/actions/meta contract. `question-item.tsx` and its named variants read this contract through React 19 `use`; they neither receive a controller nor dispatch commands directly. The parent supplies one provider around the route. No second reducer, runtime, persistence store or subscription was added, and the existing presentation-toggle ref remains owned by the parent focus delivery.
+
+Validation: 38 Simulation unit tests, site/browser typechecks, maintained layout (286 files), module boundaries (146 modules), production build and all artifact/bundle budgets passed. All 27 local Simulation browser cases passed across Chromium, Firefox and WebKit (42.6 seconds), including IndexedDB failure/exact retry, presentation focus and restoration, and final results. Simulation player closure is 455,352 raw / 137,116 gzip / 115,866 Brotli bytes. Logs are `/tmp/nyc-simulation-provider-build.log` and `/tmp/nyc-simulation-provider-browser.log`.
+
+This closes direct dispatch within the question compounds only. The wider Simulation parent/hazard adapter contract, shared body composition and explicit QuestionPlayer leaf inventory remain separate outstanding work. The earlier integrated checkpoint predates this correction; the targeted validation above applies to it.
