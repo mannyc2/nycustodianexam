@@ -324,3 +324,31 @@ pass without budget changes. The two real-state crops in
 `print-download-recovery-audit/` were visually inspected at 1053px and 384px:
 readable copy, visible action, and no overflow. The generic error remains for
 unrelated failures. Illustrated page-count estimation remains a separate open fix.
+
+## Illustrated question page estimates
+
+Question packets now finalize their estimate from the assembled prompts, choices,
+and required illustrations. The calculation uses the print type sizes, average
+text width, block spacing, 3.5-inch image allowance, Letter/A4 dimensions, margins,
+and opening metadata space. It packs whole question blocks where they fit and
+adds separately started answer-key/explanation estimates. This remains an
+approximation: actual word wrapping, fonts, and browser fragmentation can differ.
+No content, option ordering, or set-pairing fingerprint is changed by estimation.
+
+The four refreshed q091 PDFs now report estimates matching their observed page
+counts: Letter normal 2, Letter large/wide 4, A4 normal 2, A4 large/wide 3. Their
+four changed cover rasters were visually inspected; all seven other page rasters
+are byte-identical to the earlier inspected captures. The manifest records both
+estimated and observed values. This is evidence for these samples, not a promise
+that every packet/browser has exact estimates.
+
+Saved-print identity functions now live in `print/identity.ts`, allowing
+persistence/import validation to use fingerprints without loading generation and
+layout estimation. Their algorithms and serialized inputs were moved unchanged.
+Settings decreased from 488500 to 475483 raw bytes (143382 gzip / 120640 Brotli),
+with no budget increase; other study families also shed the unnecessary generator.
+47 targeted print/Settings/registry tests and both typechecks pass. Full build and
+artifact verification pass with the existing route/content/image invariants.
+The complete print browser suite also passes: 33 cases across Chromium, Firefox,
+and WebKit, including restoration, regeneration failures, separate/appended keys,
+source-bound fact sheets, tool cards, hazards, and required-image recovery.

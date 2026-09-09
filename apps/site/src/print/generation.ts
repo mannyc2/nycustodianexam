@@ -1,3 +1,5 @@
+import { computePrintManifestFingerprint, computePrintPacketFingerprint, computePrintPairingFingerprint, printOptionLabel, printAlgorithmId, questionProducts, fnv1a32 } from "./identity.ts"
+export { computePrintManifestFingerprint, computePrintPacketFingerprint, computePrintPairingFingerprint, printOptionLabel, printAlgorithmId } from "./identity.ts"
 import { Schema } from "effect"
 import {
   PrintJobManifest,
@@ -8,7 +10,6 @@ import {
   type PrintProduct,
   type PrintProductAvailability,
   type PrintQuestionAnswer,
-  type ReleasedPrintJobManifest,
   type ReleasedPrintPacket,
   type ReleasedPrintPacketSection,
   type PrintRetainedAsset,
@@ -21,18 +22,10 @@ const printQuestionCategory = (
   question: PrintBuilderBootstrap["questions"][number]
 ): string => questionCategoryFromSafeMetadata(question)
 
-export const printAlgorithmId = "print-v1-fnv1a32-xorshift32" as const
-
 const unsupportedReasons = {
   "correction-change-log-excerpt": "No publishable structured correction or change-log record exists in this release."
 } as const
 
-const questionProducts = new Set<PrintProduct>([
-  "blank-answer-sheet",
-  "multiple-choice-questions",
-  "answer-key",
-  "explanations-and-sources"
-])
 const hazardProducts = new Set<PrintProduct>([
   "hazard-worksheet",
   "annotated-hazard-answer-packet",
@@ -142,15 +135,6 @@ export const printProductAvailability = (
   return { product, available: true, reason: null }
 }
 
-const fnv1a32 = (input: string, offset = 0x811c9dc5): number => {
-  let hash = offset >>> 0
-  for (let index = 0; index < input.length; index += 1) {
-    hash ^= input.charCodeAt(index)
-    hash = Math.imul(hash, 0x01000193) >>> 0
-  }
-  return hash >>> 0
-}
-
 const randomSource = (seed: number): (() => number) => {
   let state = seed === 0 ? 0x9e3779b9 : seed >>> 0
   return () => {
@@ -189,97 +173,6 @@ const canonicalSelection = (settings: PrintSettings): string => JSON.stringify({
   seed: settings.seed,
   filters: [...settings.filters].sort()
 })
-
-const fingerprint = (value: string): string => {
-  const left = fnv1a32(value).toString(16).padStart(8, "0")
-  const right = fnv1a32(value, 0x9e3779b9).toString(16).padStart(8, "0")
-  return `${left}${right}`
-}
-
-export const printOptionLabel = (index: number): string => {
-  let value = index + 1
-  let result = ""
-  while (value > 0) {
-    value -= 1
-    result = String.fromCharCode(65 + (value % 26)) + result
-    value = Math.floor(value / 26)
-  }
-  return result
-}
-
-type PrintPairingFingerprintInput = Pick<
-  ReleasedPrintJobManifest,
-  "releaseId" | "contentVersion" | "profile" | "settings" | "questions"
->
-
-export const computePrintPairingFingerprint = (
-  manifest: PrintPairingFingerprintInput
-): string | null => questionProducts.has(manifest.settings.product)
-  ? fingerprint(JSON.stringify({
-      algorithmId: printAlgorithmId,
-      coordinateKind: "question-set-pairing-v1",
-      releaseId: manifest.releaseId,
-      contentVersion: manifest.contentVersion,
-      profileId: manifest.profile.id,
-      count: manifest.settings.count,
-      seed: manifest.settings.seed,
-      filters: [...manifest.settings.filters].sort(),
-      questions: manifest.questions
-    }))
-  : null
-
-type PrintManifestFingerprintInput = Pick<
-  ReleasedPrintJobManifest,
-  | "schemaVersion"
-  | "algorithmId"
-  | "pairingFingerprint"
-  | "releaseId"
-  | "contentVersion"
-  | "profile"
-  | "settings"
-  | "questions"
-  | "itemIds"
-  | "assets"
-  | "actualLength"
-  | "actualDistribution"
-  | "pageCount"
->
-
-export const computePrintManifestFingerprint = (
-  manifest: PrintManifestFingerprintInput
-): string => fingerprint(JSON.stringify({
-  schemaVersion: manifest.schemaVersion,
-  algorithmId: manifest.algorithmId,
-  pairingFingerprint: manifest.pairingFingerprint,
-  releaseId: manifest.releaseId,
-  contentVersion: manifest.contentVersion,
-  profile: manifest.profile,
-  settings: manifest.settings,
-  questions: manifest.questions,
-  itemIds: manifest.itemIds,
-  assets: manifest.assets,
-  actualLength: manifest.actualLength,
-  actualDistribution: manifest.actualDistribution,
-  pageCount: manifest.pageCount
-}))
-
-interface PrintPacketFingerprintInput {
-  readonly schemaVersion: 1 | 2 | 3
-  readonly title: string
-  readonly statement: "Original practice — not an official or past exam"
-  readonly sections: ReadonlyArray<ReleasedPrintPacketSection>
-  readonly warnings: ReadonlyArray<string>
-}
-
-export const computePrintPacketFingerprint = (
-  packet: PrintPacketFingerprintInput
-): string => fingerprint(JSON.stringify({
-  schemaVersion: packet.schemaVersion,
-  title: packet.title,
-  statement: packet.statement,
-  sections: packet.sections,
-  warnings: packet.warnings
-}))
 
 const estimateProductPageCount = (
   product: SupportedPrintProduct,
@@ -485,7 +378,41 @@ export const generatePrintManifest = ({
   })
 }
 
-// Estimate the assembled hazard packet, including optional retained source text.
+// Approximate block layout in points using the print stylesheet's type sizes,
+// 3.5-inch required images, spacing, and paper margins. Text wrapping uses an
+// average glyph width; browser preview remains authoritative for pagination.
+const estimateQuestionPages = (
+  settings: PrintSettings,
+  questions: Extract<ReleasedPrintPacketSection, { readonly tag: "questions" }>["questions"]
+): number => {
+  const large = settings.printSize === "large"
+  const margin = settings.margin === "wide" ? 54 : 36
+  const height = (settings.paper === "a4" ? 841.89 : 792) - margin * 2
+  const width = (settings.paper === "a4" ? 595.28 : 612) - margin * 2 - 36
+  const font = large ? 18 : 12
+  const lineHeight = font * (large ? 1.55 : 1.5)
+  const lines = (text: string) => Math.max(1, Math.ceil(text.length / (width / (font * 0.5))))
+  const heading = large ? 44 : 36
+  // Large metadata fills the opening sheet; normal metadata shares it with
+  // short questions. These allowances include release and pairing details.
+  let used = (large ? height : 450) + heading
+  let pages = 1
+  for (const [index, question] of questions.entries()) {
+    const textLines = lines(question.prompt) + question.options.reduce((total, option) => total + lines(option.text), 0)
+    const block = textLines * lineHeight + Math.max(0, question.options.length - 1) * 9 + 25.5 +
+      (question.illustration === undefined ? 0 : 252 + 24)
+    const gap = index === 0 ? 0 : 9
+    if (used + gap + block > height) {
+      pages += 1
+      used = index === 0 ? heading : 0
+    } else used += gap
+    used += block
+    while (used > height) { pages += 1; used -= height }
+  }
+  return pages
+}
+
+// Estimate assembled questions and hazards, including required images and source text.
 // This is not browser pagination: fonts and fragmentation can change the result.
 export const finalizePrintJob = (
   manifest: PrintJobManifest,
@@ -495,7 +422,11 @@ export const finalizePrintJob = (
   const large = manifest.settings.printSize === "large"
   const capacity = (large ? 1000 : 2400) * (manifest.settings.margin === "wide" ? 0.85 : 1)
   let pages = 1 // Metadata precedes hazard content on its own sheet.
-  if (section?.tag === "hazard-worksheet") {
+  if (section?.tag === "questions") {
+    pages = estimateQuestionPages(manifest.settings, section.questions) +
+      estimatePageCount(manifest.settings, section.questions.length) -
+      estimateProductPageCount("multiple-choice-questions", section.questions.length, large)
+  } else if (section?.tag === "hazard-worksheet") {
     pages += section.scenes.length * (large ? 2 : 1)
   } else if (section?.tag === "annotated-hazard-answers" || section?.tag === "text-equivalent-scenes") {
     for (const scene of section.scenes) {

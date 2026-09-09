@@ -21,7 +21,7 @@ import {
   computePrintPacketFingerprint,
   computePrintPairingFingerprint,
   printOptionLabel
-} from "./generation.ts"
+} from "./identity.ts"
 import {
   decodeRetainedImage,
   sameAssetReceipt,

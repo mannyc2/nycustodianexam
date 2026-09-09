@@ -11,6 +11,7 @@
         "q024"
       ],
       "retainedImages": 1,
+      "estimatedPages": 2,
       "pages": 2,
       "pageSize": "612 x 792 pts (letter)",
       "searchableText": true
@@ -26,6 +27,7 @@
         "q024"
       ],
       "retainedImages": 1,
+      "estimatedPages": 4,
       "pages": 4,
       "pageSize": "612 x 792 pts (letter)",
       "searchableText": true
@@ -41,6 +43,7 @@
         "q024"
       ],
       "retainedImages": 1,
+      "estimatedPages": 2,
       "pages": 2,
       "pageSize": "594.96 x 841.92 pts (A4)",
       "searchableText": true
@@ -56,6 +59,7 @@
         "q024"
       ],
       "retainedImages": 1,
+      "estimatedPages": 3,
       "pages": 3,
       "pageSize": "594.96 x 841.92 pts (A4)",
       "searchableText": true

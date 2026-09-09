@@ -25,6 +25,7 @@ try {
     await page.locator('#print-seed').fill('illustrated-print-158');
     await page.getByRole('button', { name: 'Generate preview', exact: true }).click();
     await expect(page.getByRole('heading', { name: 'Original multiple-choice practice', exact: true, level: 1 })).toBeVisible();
+    const estimatedPages = Number(await page.locator('div').filter({ has: page.locator('dt', { hasText: /^Estimated page count$/ }) }).filter({ has: page.locator('dd') }).last().locator('dd').innerText());
     const image = page.locator('img.print-question-image');
     await expect(image).toHaveCount(1);
     await expect(image).toHaveAttribute('src', /^data:image\/png;base64,/);
@@ -42,7 +43,7 @@ try {
     const text = execFileSync('pdftotext', ['-layout', file, '-'], { encoding: 'utf8' });
     if (!text.includes('Which tool is shown in the illustration?')) throw new Error('Illustrated question missing from PDF');
     execFileSync('pdftoppm', ['-scale-to', '1100', '-png', file, output + id]);
-    captures.push({ id, paper, large, seed: 'illustrated-print-158', questionIds: ['q048', 'q091', 'q024'], retainedImages: 1, pages: Number(info.match(/Pages:\s+(\d+)/)[1]), pageSize: info.match(/Page size:\s+(.+)/)[1], searchableText: true });
+    captures.push({ id, paper, large, seed: 'illustrated-print-158', questionIds: ['q048', 'q091', 'q024'], retainedImages: 1, estimatedPages, pages: Number(info.match(/Pages:\s+(\d+)/)[1]), pageSize: info.match(/Page size:\s+(.+)/)[1], searchableText: true });
     await context.close();
   }
 } finally { await browser.close(); }

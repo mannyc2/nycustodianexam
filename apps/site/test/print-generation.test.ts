@@ -1967,6 +1967,24 @@ describe("required question illustrations in print", () => {
     expect(html).toContain(image.dataUrl)
     expect(html).toContain('alt="A neutral description of the required question image."')
   })
+  it("estimates required images and text blocks without changing set pairing", () => {
+    const illustratedBank = new PrintBuilderBootstrap({ ...bootstrap, questions: bootstrap.questions.map(question => ({
+      ...question, illustration: { neutralDescription: "A required illustration.", asset: image.receipt }
+    })) })
+    const plain = generatePrintJob({ bootstrap, settings: settings("multiple-choice-questions", 3) })
+    const pictured = generatePrintJob({ bootstrap: illustratedBank, settings: settings("multiple-choice-questions", 3), retainedAssets: [image] })
+    const large = generatePrintJob({ bootstrap: illustratedBank,
+      settings: new PrintSettings({ ...settings("multiple-choice-questions", 3), printSize: "large", margin: "wide" }), retainedAssets: [image] })
+    expect(pictured.manifest.pageCount).toBeGreaterThan(plain.manifest.pageCount)
+    expect(large.manifest.pageCount).toBeGreaterThanOrEqual(pictured.manifest.pageCount)
+    expect(pictured.manifest.itemIds).toEqual(plain.manifest.itemIds)
+    expect(pictured.manifest.pairingFingerprint).toBe(plain.manifest.pairingFingerprint)
+    const verbose = generatePrintJob({ bootstrap: new PrintBuilderBootstrap({ ...bootstrap,
+      questions: bootstrap.questions.map(question => ({ ...question, prompt: question.prompt.repeat(200) }))
+    }), settings: settings("multiple-choice-questions", 3) })
+    expect(verbose.manifest.pageCount).toBeGreaterThan(plain.manifest.pageCount)
+  })
+
   it("refuses to create a worksheet when required image bytes are missing", () => {
     expect(() => generatePrintJob({ bootstrap: illustrated, settings: settings("multiple-choice-questions", 1) })).toThrow(/exact verified retained bytes/)
   })
