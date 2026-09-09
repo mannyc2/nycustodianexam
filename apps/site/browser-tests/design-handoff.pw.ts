@@ -158,6 +158,12 @@ test("exam search, record selection, and detail tabs use the published records",
   await expect(search).toBeFocused()
   await expect(search).toHaveValue("")
   await expect(page.locator("[data-exam-row]:visible")).toHaveCount(total)
+  const coverage = rows.first().locator(".exam-card-coverage").getByRole("link", { name: "See what practice covers", exact: true })
+  await expect(coverage).toBeVisible()
+  await coverage.click()
+  await expect(page).toHaveURL(/\/practice\/#covers$/)
+  await expect(page.locator("#covers")).toBeFocused()
+  await expect(page.locator("#study-coverage-heading")).toBeInViewport()
 })
 
 test("compact navigation stays at the viewport bottom and all Library destinations resolve", async ({ page }) => {

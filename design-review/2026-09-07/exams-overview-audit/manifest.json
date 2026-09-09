@@ -1,0 +1,65 @@
+{
+  "captures": [
+    {
+      "file": "hero-1248.png",
+      "width": 1248,
+      "bounds": {
+        "x": 0,
+        "y": 57,
+        "width": 1248,
+        "height": 461.640625
+      }
+    },
+    {
+      "file": "registry-1248.png",
+      "width": 1248,
+      "bounds": {
+        "x": 31.203125,
+        "y": 87.25,
+        "width": 1185.59375,
+        "height": 726.15625
+      }
+    },
+    {
+      "file": "cards-1248.png",
+      "width": 1248,
+      "bounds": {
+        "x": 31.203125,
+        "y": 311.34375,
+        "width": 320.4375,
+        "height": 502.0625
+      }
+    },
+    {
+      "file": "hero-384.png",
+      "width": 384,
+      "bounds": {
+        "x": 0,
+        "y": 53,
+        "width": 384,
+        "height": 352.96875
+      }
+    },
+    {
+      "file": "registry-384.png",
+      "width": 384,
+      "bounds": {
+        "x": 16,
+        "y": -265.890625,
+        "width": 352,
+        "height": 1432.46875
+      }
+    },
+    {
+      "file": "cards-384.png",
+      "width": 384,
+      "bounds": {
+        "x": 16,
+        "y": -26.953125,
+        "width": 352,
+        "height": 981.078125
+      }
+    }
+  ],
+  "errors": []
+}

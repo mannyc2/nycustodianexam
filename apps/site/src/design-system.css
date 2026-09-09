@@ -1022,3 +1022,24 @@
     .home-page section[aria-labelledby="home-ways"] .section-header > p { display: none; }
   }
 }
+
+@layer overrides {
+  .exam-card-coverage { display: none; }
+  @media (max-width: 47.99rem) {
+    .exams-page > .page-header-prominent .figure-strip { display: none; }
+    .exams-page .record-list > li { border: var(--border-thin) solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); }
+    .exams-page .record-list .record-item { border: 0; }
+    .exam-card-coverage { display: grid; gap: var(--space-2); padding: 0 var(--space-4) var(--space-4); }
+    .exam-card-coverage p { margin: 0; padding: var(--space-3); border: var(--border-thin) solid var(--color-border); border-radius: var(--radius-sm); background: var(--color-canvas); color: var(--color-text-muted); font-size: var(--text-xs); }
+    .exam-card-coverage .button { font-size: var(--text-sm); }
+  }
+}
+
+@layer overrides {
+  .exams-page > .page-header-prominent h1 { font-size: clamp(2rem, 1.5rem + 1.8vw, 2.875rem); line-height: 1.15; letter-spacing: -0.025em; text-wrap: pretty; }
+  @media (max-width: 47.99rem) {
+    .exams-page > .page-header-prominent { padding: 1.75rem 1.125rem 1.5rem; gap: var(--space-4); }
+    .exams-page > .page-header-prominent h1 { font-size: 1.625rem; line-height: 1.2; letter-spacing: -0.02em; }
+    .exams-page > .page-header-prominent .lead { font-size: 0.9375rem; }
+  }
+}

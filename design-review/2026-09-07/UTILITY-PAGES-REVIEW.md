@@ -93,3 +93,35 @@ summary and its refresh/unknown states need a small Settings-only allowance of
 486500/146500/123500. Other families retain the existing 485000/146000/123000 limits;
 Offline remains well below them. This is a bounded feature allowance, not removal
 of the artifact budget gate.
+
+## Exams header and compact announcement cards
+
+Reconciled the header with references 09/10: it now says “Exam announcements,
+and what each one says,” explains that reading preserves practice/saved work,
+and uses the prototype's responsive heading size and compact padding. Compact
+summary statistics are omitted as in the reference; desktop retains real counts.
+Announcement entries precede the statewide study plan, preserving their stable
+record IDs and source facts.
+
+Compact records now have an inset coverage summary and a direct See what practice
+covers action, rather than only terse record-selection links. The existing link
+to each record's facts remains available, while the new action goes directly to
+`/practice/#covers` and focuses the rendered coverage section. Coverage copy
+comes from the maintained compatible subject-plan facts; no exam is selected or
+stored. Status labels remain “Announcement on file” and “Study reference” rather
+than inferring a current filing state from the passage of time.
+
+`exams-overview-audit/` contains six current hero/registry/card crops at 1248/384
+CSS widths. Inspected the compact hero and three-card list against reference 10.
+`exam-record-screenshots/` was refreshed for all three records × two tabs × both
+widths after ordering changed; its manifest records the actual record IDs. Every
+record/tab remained readable, focusable, and free of horizontal overflow; reading
+the records did not change localStorage. Six Exams reflow/axe/search/tab/navigation
+checks pass across Chromium, Firefox, and WebKit, including the new compact
+coverage action and destination focus. Root build/artifact verification passes.
+
+Remaining differences: cycle-summary composition and disclosure density, desktop
+status filters, and compact record labels/status details need further source-aware
+reconciliation. Maintained announcement prose is preserved; the prototype's fixed
+filing-status fixture is not a live availability claim. The final complete Exams
+page comparison is still open.
