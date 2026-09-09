@@ -15,3 +15,11 @@ Keyboard zones now share the responsive scene/response workspace, use compact di
 Three additional 384px captures exercise actual image-request failure, neutral zero confirmation, and feedback-request failure after durable save. All complete without page errors or horizontal overflow; the saved-but-unavailable feedback capture retains a clear Retry feedback action. Scripts intercept only the relevant network request; product code has no failure toggle.
 
 Build/artifact invariants and all nine Hazard browser regressions pass. The detailed revealed explanation/overlay composition still needs reconciliation; these captures do not close that requirement.
+
+## Revealed composition pass
+
+Visual feedback now shares the response column with the saved marker list. The original zoomable scene displays the reviewed overlay, eliminating the duplicated full-width image. Keyboard feedback also uses its response column. The overlay legend is visible outside the scrollable image area, while the matching caption remains available in other uses of the annotated-scene component.
+
+An initial regression exposed the saved-image restoration boundary: the live asset URL can be absent when reopening a committed response. The viewport now selects the retained committed image before testing asset availability. All nine Hazard browser regressions pass, including restoration with original image/postcommit requests removed; all five workspace typechecks and the production build pass. Refreshed visual/keyboard captures retain all explanation and source content.
+
+The reference has shorter fixture explanations and fewer source disclosures than real released content. Detailed source receipts and the full text equivalent remain available. Further refinement of explanation grouping, metadata disclosure, and safe/unsafe visual treatments is still needed; this pass closes image duplication and column composition, not the full visual audit.

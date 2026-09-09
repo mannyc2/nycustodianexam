@@ -126,6 +126,8 @@
   .hazard-player__zero-confirm { padding: var(--space-5); border: var(--border-strong) solid var(--color-border-control); border-radius: var(--radius-md); background: var(--color-canvas); }
   .hazard-player__zero-confirm > * + * { margin-block-start: var(--space-3); }
   .hazard-player__zero-confirm .button { margin-inline-end: var(--space-2); }
+  .hazard-player__image-layer .hazard-result-figure { margin: 0; }
+  .hazard-player__image-layer .hazard-result-figure figcaption { display: none; }
   .hazard-player__results { display: grid; gap: var(--space-5); }
   .hazard-player__results > h2 { font-size: var(--text-h3); }
   .hazard-player__results :is(ul, ol) { padding-inline-start: var(--space-5); }

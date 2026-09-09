@@ -11,7 +11,6 @@ import {
   zonedStatementsForScene
 } from "../released-scene.ts"
 import { draftFromState } from "../state.ts"
-import { AnnotatedHazardScene } from "./annotated-scene.tsx"
 import { useHazardPlayer } from "./context.tsx"
 import { HazardPostcommitEquivalent, HazardSceneFacts } from "./scene-feedback.tsx"
 
@@ -62,15 +61,7 @@ const markerFeedback = (
   )
 }
 
-const VisualResults = ({
-  imageUrl,
-  payload,
-  sceneAlt
-}: {
-  readonly imageUrl: string | null
-  readonly payload: ReleasedPostcommitScene
-  readonly sceneAlt: string
-}) => {
+const VisualResults = ({ payload }: { readonly payload: ReleasedPostcommitScene }) => {
   const { state } = useHazardPlayer()
   const markers = draftFromState(state).markers
   const assessment = assessVisualMarkers(markers, payload)
@@ -78,14 +69,6 @@ const VisualResults = ({
   return (
     <section aria-labelledby="visual-marker-feedback-heading">
       <h3 id="visual-marker-feedback-heading">Marker feedback</h3>
-      {imageUrl === null
-        ? <p role="alert">The saved scene image is unavailable.</p>
-        : <AnnotatedHazardScene
-            alt={sceneAlt}
-            imageUrl={imageUrl}
-            markers={markers}
-            payload={payload}
-          />}
       {assessment.markers.length === 0 ? (
         <p>You submitted no markers.</p>
       ) : (
@@ -156,7 +139,7 @@ const NonvisualResults = ({ payload }: { readonly payload: ReleasedPostcommitSce
 }
 
 export const HazardResults = () => {
-  const { meta, mode, scene, state } = useHazardPlayer()
+  const { meta, mode, state } = useHazardPlayer()
   if (state.tag !== "revealed") return null
 
   const assessment = mode === "visual"
@@ -180,11 +163,7 @@ export const HazardResults = () => {
       <h2 ref={meta.outcomeHeadingRef} tabIndex={-1}>{outcome}</h2>
       <p>Your response was saved on this device before this feedback loaded.</p>
       {mode === "visual"
-        ? <VisualResults
-            imageUrl={state.retainedVisualAsset?.dataUrl ?? null}
-            payload={state.payload}
-            sceneAlt={scene.neutralPreAnswer.overview}
-          />
+        ? <VisualResults payload={state.payload} />
         : <NonvisualResults payload={state.payload} />}
       <HazardSceneFacts payload={state.payload} />
       <HazardPostcommitEquivalent payload={state.payload} />

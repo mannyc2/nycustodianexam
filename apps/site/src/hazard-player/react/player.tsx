@@ -40,9 +40,9 @@ export const VisualHazardPractice = ({ positionLabel }: { readonly positionLabel
       <div className="hazard-player__response-panel">
         <HazardPlayerPieces.MarkerList />
         <HazardPlayerPieces.Commit />
+        <HazardPlayerPieces.Results />
       </div>
     </div>
-    <HazardPlayerPieces.Results />
     <HazardPlayerPieces.Status />
   </HazardPlayerPieces.Frame>
 )
@@ -54,9 +54,9 @@ export const NonvisualHazardPractice = ({ positionLabel }: { readonly positionLa
       <HazardPlayerPieces.ZoneNavigator />
       <div className="hazard-player__response-panel">
         <HazardPlayerPieces.Commit />
+        <HazardPlayerPieces.Results />
       </div>
     </div>
-    <HazardPlayerPieces.Results />
     <HazardPlayerPieces.Status />
   </HazardPlayerPieces.Frame>
 )

@@ -6,6 +6,7 @@ import {
   type ReactNode
 } from "react"
 import { draftFromState, isEditableHazardState } from "../state.ts"
+import { AnnotatedHazardScene } from "./annotated-scene.tsx"
 import { useHazardPlayer } from "./context.tsx"
 
 export const HazardFrame = ({ children }: { readonly children: ReactNode }) => (
@@ -71,7 +72,11 @@ export const HazardSceneViewport = () => {
     [actions, editable]
   )
 
-  if (visualAssetUrl === null) {
+  const displayedImageUrl = state.tag === "revealed"
+    ? state.retainedVisualAsset?.dataUrl ?? visualAssetUrl
+    : visualAssetUrl
+
+  if (displayedImageUrl === null) {
     if (state.tag === "restoring") {
       return <p role="status">Loading the exact released scene…</p>
     }
@@ -151,9 +156,9 @@ export const HazardSceneViewport = () => {
         <span aria-live="polite">{Math.round(zoom * 100)}% view</span>
       </div>
       <p id="scene-pointer-instructions">
-        Pointer users may place a marker on the image. Keyboard and touch users can add a
-        centered marker, then move it with the controls below. Use the directional pan
-        controls to inspect a zoomed scene without dragging.
+        {state.tag === "revealed"
+          ? "Reviewed scene overlay. Numbered markers match the feedback list. Solid regions show conditions needing correction; dashed regions show details that are safe as depicted. Use zoom and pan to inspect the scene."
+          : "Pointer users may place a marker on the image. Keyboard and touch users can add a centered marker, then move it with the controls below. Use the directional pan controls to inspect a zoomed scene without dragging."}
       </p>
       <div
         aria-label="Pannable hazard scene"
@@ -179,10 +184,18 @@ export const HazardSceneViewport = () => {
             width: `${zoom * 100}%`
           }}
         >
+          {state.tag === "revealed" ? (
+            <AnnotatedHazardScene
+              alt={scene.neutralPreAnswer.overview}
+              imageUrl={displayedImageUrl}
+              markers={draft.markers}
+              payload={state.payload}
+            />
+          ) : <>
           <img
             alt={scene.neutralPreAnswer.overview}
             draggable={false}
-            src={visualAssetUrl}
+            src={displayedImageUrl}
             style={{ display: "block", height: "auto", width: "100%" }}
           />
           {draft.markers.map((marker, index) => (
@@ -200,6 +213,8 @@ export const HazardSceneViewport = () => {
               {index + 1}
             </span>
           ))}
+          </>}
+
         </div>
       </div>
       <button
