@@ -1,0 +1,104 @@
+{
+  "captures": [
+    {
+      "file": "empty-320.png",
+      "width": 320,
+      "state": "empty",
+      "bounds": {
+        "x": 0,
+        "y": 53,
+        "width": 320,
+        "height": 622.5625
+      }
+    },
+    {
+      "file": "unavailable-320.png",
+      "width": 320,
+      "state": "unavailable",
+      "bounds": {
+        "x": 0,
+        "y": 53,
+        "width": 320,
+        "height": 382.96875
+      }
+    },
+    {
+      "file": "no-script-320.png",
+      "width": 320,
+      "state": "no-script",
+      "bounds": {
+        "x": 0,
+        "y": 53,
+        "width": 320,
+        "height": 388.40625
+      }
+    },
+    {
+      "file": "empty-384.png",
+      "width": 384,
+      "state": "empty",
+      "bounds": {
+        "x": 0,
+        "y": 53,
+        "width": 384,
+        "height": 586.5625
+      }
+    },
+    {
+      "file": "unavailable-384.png",
+      "width": 384,
+      "state": "unavailable",
+      "bounds": {
+        "x": 0,
+        "y": 53,
+        "width": 384,
+        "height": 322.171875
+      }
+    },
+    {
+      "file": "no-script-384.png",
+      "width": 384,
+      "state": "no-script",
+      "bounds": {
+        "x": 0,
+        "y": 53,
+        "width": 384,
+        "height": 299.71875
+      }
+    },
+    {
+      "file": "empty-1248.png",
+      "width": 1248,
+      "state": "empty",
+      "bounds": {
+        "x": 0,
+        "y": 57,
+        "width": 1248,
+        "height": 352.921875
+      }
+    },
+    {
+      "file": "unavailable-1248.png",
+      "width": 1248,
+      "state": "unavailable",
+      "bounds": {
+        "x": 0,
+        "y": 57,
+        "width": 1248,
+        "height": 304.671875
+      }
+    },
+    {
+      "file": "no-script-1248.png",
+      "width": 1248,
+      "state": "no-script",
+      "bounds": {
+        "x": 0,
+        "y": 57,
+        "width": 1248,
+        "height": 285.515625
+      }
+    }
+  ],
+  "errors": []
+}

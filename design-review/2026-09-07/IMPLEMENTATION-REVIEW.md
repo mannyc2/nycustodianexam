@@ -278,3 +278,26 @@ finished-history record, responsive action rows, heading size, and no horizontal
 overflow/page errors. Final empty-action styling was checked by recapture after
 the browser regression run. Mixed and recovery comparisons close those specific
 visual audit gaps; final integrated validation and other page families remain.
+
+## Combined core verification and Offline reflow fix
+
+Ran design-handoff, study-hub, review-queue, utility-design-recovery, and
+practice-builder suites together across Chromium, Firefox, and WebKit. Of 102
+checks, 100 passed; the two failures both exposed Offline's 320px overflow
+(Chromium and WebKit). This run included actual offline custom-practice coverage,
+not only online navigation.
+
+Measured the offending header grid: a 331.84px content track extended the
+document to 364px. A browser-only experiment with an explicit `minmax(0, 1fr)`
+header column reduced document width to exactly 320px. Applied that scoped rule
+to `[data-offline-header]`; no content clipping or overflow suppression was added.
+Root build/artifact verification passed. All nine follow-up checks passed across
+the three browsers: Offline reflow/navigation/axe, unreadable storage, and failed
+second removal preview. The unaffected 100 passing checks were not repeated.
+
+`capture-offline-reflow.mjs` records empty, storage-unavailable, and no-JavaScript
+headers at 320/384/1248 CSS widths in `offline-reflow-audit/`, asserting no
+horizontal overflow. These captures extend the previous 384px-only compact
+evidence to the failing width. Exams comparison also identified outstanding
+compact announcement-card and header differences; those were inspected but not
+changed while resolving this regression. Full handoff validation remains open.
