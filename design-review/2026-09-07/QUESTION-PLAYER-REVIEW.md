@@ -492,3 +492,34 @@ nonvisual zoned equivalents exist for hazard scenes only. A truthful linked
 question variant requires reviewed content, model/compiler support, compatible
 routes and persistence behavior, and verification—not relabeling the neutral
 description as another scored question.
+
+## Authored nonvisual model/compiler foundation — September 9
+
+Added optional illustration.nonvisualEquivalent to authored and compiled
+question schemas. It contains an authored prompt and a nonempty ordered list
+of observable facts. Empty/whitespace-only prompts and observations are rejected.
+It shares the reviewed question's answer options and feedback closure; it is
+not a generated caption or an inferred question from an Atlas label.
+
+The review hash includes the prompt and ordered facts in canonical field order.
+Adding or changing either, including reordering facts, requires a new review.
+The compiler carries the reviewed equivalent into the precommit illustration
+without adding option concepts, keys, or rationale fields to that stimulus.
+The schema stays internal to the existing model modules; no new public facade
+export is needed. The optional field permits exact older artifacts to remain
+readable and does not authorize new visual releases without their equivalent.
+
+Verification: all 102 content-package tests pass. Eleven targeted illustration
+compiler/review tests include new publication, changed-review, blank-content,
+and canonical-order checks. Existing review digests still match all released
+questions. Content/site typechecks and full build/artifact verification pass.
+Before/after SHA-256 comparison confirms all 224 current release JSON artifacts
+are byte-identical. This proves the foundation does not silently republish the
+current pack; it does not prove a future upgraded pack's runtime compatibility.
+
+Remaining to deliver the actual feature: author/review q091's equivalent,
+version its changed question stimulus in a new pack while preserving version-4
+receipts and routes, implement the linked nonvisual prompt/facts presentation
+across Practice/Review/simulation, retain the selected presentation in durable
+work where needed, and exercise offline/save/import/upgrade flows. No equivalent
+is published or user-visible by this foundation commit.

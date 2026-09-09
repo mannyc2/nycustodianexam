@@ -32,3 +32,12 @@ describe("illustrated question review closure", () => {
     } }, pack)).toBe(questionReviewSha256({ ...question, illustration }, pack))
   })
 })
+
+it("canonicalizes nonvisual fields while retaining authored observation order", () => {
+  const nonvisualEquivalent = { prompt: "Identify the described tool.", observations: ["A broad head.", "One handle."] }
+  const paired = { ...question, illustration: { ...illustration, nonvisualEquivalent } }
+  expect(questionReviewSha256(paired, pack)).not.toBe(questionReviewSha256({ ...question, illustration }, pack))
+  expect(questionReviewSha256({ ...paired, illustration: { ...illustration, nonvisualEquivalent: {
+    observations: nonvisualEquivalent.observations, prompt: nonvisualEquivalent.prompt
+  } } }, pack)).toBe(questionReviewSha256(paired, pack))
+})

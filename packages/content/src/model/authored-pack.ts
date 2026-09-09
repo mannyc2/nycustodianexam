@@ -1,6 +1,6 @@
 import { Schema } from "effect"
 import { ArtifactPathSegment, ContentLocale, Sha256 } from "./content-primitives.ts"
-import { QuestionRationale } from "./question-artifacts.ts"
+import { QuestionNonvisualEquivalent, QuestionRationale } from "./question-artifacts.ts"
 import {
   ContentSource,
   SourceLine,
@@ -222,7 +222,8 @@ export class AuthoredPackQuestion extends Schema.Class<AuthoredPackQuestion>(
   illustration: Schema.optionalKey(Schema.Struct({
     conceptId: ArtifactPathSegment,
     masterSha256: Sha256,
-    neutralDescription: Schema.NonEmptyString
+    neutralDescription: Schema.NonEmptyString,
+    nonvisualEquivalent: Schema.optionalKey(QuestionNonvisualEquivalent)
   })),
   originalContentAttestation: Schema.Literal(true),
   reviewReceipt: QuestionReviewReceipt

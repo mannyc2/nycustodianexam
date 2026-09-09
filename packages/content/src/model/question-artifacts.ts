@@ -8,10 +8,17 @@ import {
 } from "./question-metadata.ts"
 import { SourceReceipt, SupportedClaim } from "./source-evidence.ts"
 
+/** Authored observable facts for the same question's nonvisual presentation. */
+export const QuestionNonvisualEquivalent = Schema.Struct({
+  prompt: Schema.NonEmptyString.check(Schema.isPattern(/\S/)),
+  observations: Schema.NonEmptyArray(Schema.NonEmptyString.check(Schema.isPattern(/\S/)))
+})
+
 /** Reviewed stimulus with the existing receipt-bound, neutral delivery paths. */
 export const QuestionIllustration = Schema.Struct({
   masterSha256: Sha256,
   neutralDescription: Schema.NonEmptyString,
+  nonvisualEquivalent: Schema.optionalKey(QuestionNonvisualEquivalent),
   derivatives: Schema.NonEmptyArray(ReleasedDerivativeAsset)
 })
 

@@ -9,6 +9,10 @@ export interface ReviewableQuestion {
     readonly conceptId: string
     readonly masterSha256: string
     readonly neutralDescription: string
+    readonly nonvisualEquivalent?: {
+      readonly prompt: string
+      readonly observations: ReadonlyArray<string>
+    }
   }
   readonly options: ReadonlyArray<{
     readonly id: string
@@ -146,7 +150,13 @@ export const questionReviewText = (
       illustration: {
         conceptId: question.illustration.conceptId,
         masterSha256: question.illustration.masterSha256,
-        neutralDescription: question.illustration.neutralDescription
+        neutralDescription: question.illustration.neutralDescription,
+        ...(question.illustration.nonvisualEquivalent === undefined ? {} : {
+          nonvisualEquivalent: {
+            prompt: question.illustration.nonvisualEquivalent.prompt,
+            observations: [...question.illustration.nonvisualEquivalent.observations]
+          }
+        })
       }
     }),
     options: question.options.map((option) => ({
