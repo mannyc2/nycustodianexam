@@ -1951,7 +1951,7 @@ describe("print workflow local closure", () => {
 describe("print table pagination estimates", () => {
   it("counts explanation text and repeated source receipts in standalone and appended products", () => {
     const verboseAnswers = answers.map(answer => new PrintQuestionAnswer({ ...answer,
-      sources: answer.sources.map(source => ({ ...source, excerpt: source.excerpt.repeat(300) }))
+      sources: [{ ...answer.sources[0], excerpt: answer.sources[0].excerpt.repeat(300) }, ...answer.sources.slice(1)]
     }))
     for (const product of ["explanations-and-sources", "multiple-choice-questions"] as const) {
       const configuration = new PrintSettings({ ...settings(product),

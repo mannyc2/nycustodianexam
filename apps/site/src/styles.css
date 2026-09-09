@@ -290,6 +290,9 @@
     .print-a4.print-margin-wide { page: a4-wide; }
 
     .print-size-normal { font-size: 12pt; line-height: 1.5; }
+    /* Source versions and other receipt strings can exceed the paper width.
+       Wrap them instead of triggering browser-wide shrink-to-fit pagination. */
+    .print-preview { overflow-wrap: anywhere; }
     .print-size-large { font-size: 18pt; line-height: 1.55; }
     .print-size-large .answer-mark { font-size: 1.75em; }
     .print-size-large h1 { font-size: 1.5em; }
