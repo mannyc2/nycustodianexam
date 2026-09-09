@@ -47,3 +47,11 @@ four actual category capacities, invalid input and duplicate IDs, and explicit
 replacement when a requested length exceeds capacity. This primitive is not yet
 wired into the UI: player receipt resolution, navigation, Review/Study projection
 and builder controls remain required before calling custom practice functional.
+
+`practice/question-set.ts` now assembles question steps with distinct custom-set
+receipts and canonical-document query links. Its resolver regenerates the set
+from compiled safe inventory and checks the exact release, pack, position,
+question, artifact path, byte count and digest. It rejects mismatched inventory
+routes and mixed releases. Twelve combined unit tests cover selection and this
+receipt boundary. This resolver is still an integration primitive: no production
+player or projection calls it yet, and the query links are not exposed in the UI.
