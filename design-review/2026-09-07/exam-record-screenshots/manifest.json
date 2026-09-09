@@ -1,0 +1,77 @@
+{
+  "captures": [
+    {
+      "file": "record-1-facts-1248.png",
+      "width": 1248,
+      "record": "nys-entry-level-custodians-janitors",
+      "tab": "Announcement facts"
+    },
+    {
+      "file": "record-1-subjects-1248.png",
+      "width": 1248,
+      "record": "nys-entry-level-custodians-janitors",
+      "tab": "What it tests"
+    },
+    {
+      "file": "record-2-facts-1248.png",
+      "width": 1248,
+      "record": "exam-60112026",
+      "tab": "Announcement facts"
+    },
+    {
+      "file": "record-2-subjects-1248.png",
+      "width": 1248,
+      "record": "exam-60112026",
+      "tab": "What it tests"
+    },
+    {
+      "file": "record-3-facts-1248.png",
+      "width": 1248,
+      "record": "exam-61012026",
+      "tab": "Announcement facts"
+    },
+    {
+      "file": "record-3-subjects-1248.png",
+      "width": 1248,
+      "record": "exam-61012026",
+      "tab": "What it tests"
+    },
+    {
+      "file": "record-1-facts-384.png",
+      "width": 384,
+      "record": "nys-entry-level-custodians-janitors",
+      "tab": "Announcement facts"
+    },
+    {
+      "file": "record-1-subjects-384.png",
+      "width": 384,
+      "record": "nys-entry-level-custodians-janitors",
+      "tab": "What it tests"
+    },
+    {
+      "file": "record-2-facts-384.png",
+      "width": 384,
+      "record": "exam-60112026",
+      "tab": "Announcement facts"
+    },
+    {
+      "file": "record-2-subjects-384.png",
+      "width": 384,
+      "record": "exam-60112026",
+      "tab": "What it tests"
+    },
+    {
+      "file": "record-3-facts-384.png",
+      "width": 384,
+      "record": "exam-61012026",
+      "tab": "Announcement facts"
+    },
+    {
+      "file": "record-3-subjects-384.png",
+      "width": 384,
+      "record": "exam-61012026",
+      "tab": "What it tests"
+    }
+  ],
+  "errors": []
+}
