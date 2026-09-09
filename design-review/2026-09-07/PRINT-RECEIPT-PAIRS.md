@@ -35,3 +35,5 @@ The production build and artifact/bundle invariants passed. No application behav
 The corrected normal A4 explanation PDF has also been visually inspected on all seven pages. `print-receipt-pairs/visual-review-a4-normal.json` records the exact PDF hash and page observations. No clipping, overlap or split technical label/value pairs were observed. This closes only that specific PDF visual pass.
 
 All eight corrected normal Letter explanation pages are now visually inspected, with no observed clipping, overlap or split technical source pairs. See `print-receipt-pairs/visual-review-letter-normal.json` for the exact hash and page observations. Source entries may continue across pages; this review does not claim each entire source is kept on one page.
+
+All 13 corrected large A4 explanation pages are now visually inspected; see `print-receipt-pairs/visual-review-a4-large.json`. With the other three exact-file ledgers, this completes visual inspection of the four corrected explanation PDFs (41 pages). No clipping, overlap or split technical source pairs were observed. This does not close fact-sheet, other-product, physical-printer or broader handoff acceptance.

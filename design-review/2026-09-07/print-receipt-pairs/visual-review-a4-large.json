@@ -1,0 +1,56 @@
+{
+  "pdf": "explanations-and-sources-a4-large-wide.pdf",
+  "sha256": "ab0147c5b6cd5fdce413bd87361f55672190eef062e43f907c5849ec0b8c2d98",
+  "sourceCommit": "c7627c73af779828f915a5ab7be0d90814fc5a2f",
+  "inspectedPages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13
+  ],
+  "result": "No observed clipping, overlap or split technical source label/value pairs. Large text, metadata, rationale/claim lists and retained source details are readable. Long entries continue across page boundaries without losing their technical label/value pairing.",
+  "observations": [
+    {
+      "pages": [
+        1
+      ],
+      "finding": "Title and metadata fit the narrower A4 content width; preview-only eyebrow absent."
+    },
+    {
+      "pages": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "finding": "Question 1, claims and extended source material remain readable across page boundaries; closing border is intact."
+    },
+    {
+      "pages": [
+        12,
+        13
+      ],
+      "finding": "Question 2 and its source material continue cleanly, with technical labels paired with their values."
+    }
+  ],
+  "limitations": [
+    "Applies only to this exact thirteen-page PDF.",
+    "Fact sheets and remaining product visual acceptance are separate.",
+    "Not physical-printer or assistive-technology certification."
+  ]
+}
