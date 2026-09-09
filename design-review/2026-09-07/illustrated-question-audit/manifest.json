@@ -1,0 +1,45 @@
+{
+  "captures": [
+    {
+      "file": "unanswered-1053.png",
+      "width": 1053,
+      "bounds": {
+        "x": 126.5,
+        "y": 0.21875,
+        "width": 800,
+        "height": 1101.5
+      }
+    },
+    {
+      "file": "answered-1053.png",
+      "width": 1053,
+      "bounds": {
+        "x": 126.5,
+        "y": -394.78125,
+        "width": 800,
+        "height": 2039.65625
+      }
+    },
+    {
+      "file": "unanswered-384.png",
+      "width": 384,
+      "bounds": {
+        "x": 16,
+        "y": 0.046875,
+        "width": 352,
+        "height": 1104.46875
+      }
+    },
+    {
+      "file": "answered-384.png",
+      "width": 384,
+      "bounds": {
+        "x": 16,
+        "y": -391.953125,
+        "width": 352,
+        "height": 2556.09375
+      }
+    }
+  ],
+  "errors": []
+}

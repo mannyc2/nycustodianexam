@@ -234,13 +234,13 @@ describe("compileContentPack", () => {
       effectiveThrough: null,
       value: expect.stringContaining("43 jurisdictions")
     })
-    expect(compiled.questions).toHaveLength(90)
+    expect(compiled.questions).toHaveLength(91)
     expect(new Set(compiled.questions.map(
       (question) => question.postcommit.objectiveId
-    )).size).toBe(90)
+    )).size).toBe(91)
     expect(new Set(compiled.questions.map(
       (question) => question.postcommit.equivalenceGroupId
-    )).size).toBe(90)
+    )).size).toBe(91)
     expect(compiled.questions.every((question) =>
       question.precommit.profileIds?.includes("nassau-county-custodian-entry-level") === true
     )).toBe(true)
@@ -285,13 +285,13 @@ describe("compileContentPack", () => {
       ])
     )).toEqual({
       use: 41,
-      "recognition-feature": 26,
+      "recognition-feature": 27,
       "comparison-distinction": 11,
       "safety-application": 12
     })
     expect(new Set(compiled.questions.map(
       (question) => question.precommit.prompt.trim().toLocaleLowerCase("en-US")
-    )).size).toBe(90)
+    )).size).toBe(91)
     expect(compiled.catalog.tools.filter(
       (tool) => tool.practiceEligibility === "atlas-only"
     )).toHaveLength(12)
@@ -337,7 +337,7 @@ describe("compileContentPack", () => {
         record.filterKind === "all"
     )
     expect(statewideCapacity).toMatchObject({
-      questionCount: 90,
+      questionCount: 91,
       availableSetLengths: [45, 60, 90]
     })
 
@@ -401,7 +401,7 @@ describe("compileContentPack", () => {
       "reviewOverlay"
     ]
 
-    expect(precommitArtifacts).toHaveLength(108)
+    expect(precommitArtifacts).toHaveLength(109)
     for (const artifact of precommitArtifacts) {
       const parsed = JSON.parse(artifact.text) as unknown
       const keys = keysIn(parsed)
@@ -667,7 +667,7 @@ describe("compileContentPack", () => {
       (artifact) => artifact.kind === "legacy-question-precommit"
     )
 
-    expect(manifest.artifacts).toHaveLength(221)
+    expect(manifest.artifacts).toHaveLength(223)
     expect(
       manifest.artifacts.filter(
         (artifact) => artifact.itemId === "s001" && artifact.kind.startsWith("scene-")

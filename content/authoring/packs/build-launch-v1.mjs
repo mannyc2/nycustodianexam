@@ -1,3 +1,4 @@
+import { illustratedQuestions } from "./launch-v1.illustrated.mjs"
 import { createHash } from "node:crypto"
 import { readFile, writeFile } from "node:fs/promises"
 import {
@@ -530,6 +531,11 @@ const reviewText = (question) => JSON.stringify({
   version: question.version,
   profileIds: [...question.profileIds],
   prompt: question.prompt,
+  ...(question.illustration === undefined ? {} : { illustration: {
+    conceptId: question.illustration.conceptId,
+    masterSha256: question.illustration.masterSha256,
+    neutralDescription: question.illustration.neutralDescription
+  } }),
   options: question.options.map(({ id, label, conceptId }) => ({ id, label, conceptId })),
   correctOptionId: question.correctOptionId,
   rationales: question.rationales.map(({ optionId, message, claimIds }) => ({ optionId, message, claimIds: [...claimIds] })),
@@ -552,8 +558,8 @@ const reviewText = (question) => JSON.stringify({
 const reviewDigest = (question) =>
   createHash("sha256").update(reviewText(question)).digest("hex")
 
-const drafts = [...useQuestions, ...featureQuestions, ...contrastQuestions, ...safetyQuestions]
-assert(optionPermutations.length === 90, "the authored option-order ledger must contain 90 rows")
+const drafts = [...useQuestions, ...featureQuestions, ...contrastQuestions, ...safetyQuestions, ...illustratedQuestions]
+assert(optionPermutations.length === 91, "the authored option-order ledger must contain 91 rows")
 const questionsWithoutReviews = drafts.map((unpermutedDraft, index) => {
   const id = opaqueOrdinal("q", index)
   const permutation = optionPermutations[index].filter(
@@ -597,6 +603,7 @@ const questionsWithoutReviews = drafts.map((unpermutedDraft, index) => {
       equivalenceGroupId: opaqueOrdinal("eq", index),
       factKind: draft.factKind
     },
+    ...(draft.illustration === undefined ? {} : { illustration: draft.illustration }),
     originalContentAttestation: true
   }
 })
@@ -605,10 +612,10 @@ assert(useQuestions.length === 41, "launch requires 41 non-redundant tool-use qu
 assert(featureQuestions.length === 26, "launch requires 26 recognition-feature questions")
 assert(contrastQuestions.length === 11, "launch requires 11 ungated comparison questions")
 assert(safetyQuestions.length === 12, "launch requires 12 safety-application questions")
-assert(questionsWithoutReviews.length === 90, "launch requires exactly 90 reviewed questions")
-assert(unique(questionsWithoutReviews.map((question) => question.prompt)).length === 90, "question prompts must be unique")
-assert(unique(questionsWithoutReviews.map((question) => question.capacity.objectiveId)).length === 90, "semantic objectives must be unique")
-assert(unique(questionsWithoutReviews.map((question) => question.capacity.equivalenceGroupId)).length === 90, "equivalence groups must be unique")
+assert(questionsWithoutReviews.length === 91, "launch requires exactly 91 reviewed questions")
+assert(unique(questionsWithoutReviews.map((question) => question.prompt)).length === 91, "question prompts must be unique")
+assert(unique(questionsWithoutReviews.map((question) => question.capacity.objectiveId)).length === 91, "semantic objectives must be unique")
+assert(unique(questionsWithoutReviews.map((question) => question.capacity.equivalenceGroupId)).length === 91, "equivalence groups must be unique")
 
 const reviewCandidates = questionsWithoutReviews.map((question) => ({
   id: question.id,
@@ -620,7 +627,7 @@ if (process.argv.includes("--review-candidates")) {
 }
 
 const reviewById = new Map(questionReviews.map((review) => [review.id, review]))
-assert(reviewById.size === 90, "the explicit review ledger must contain exactly 90 unique records")
+assert(reviewById.size === 91, "the explicit review ledger must contain exactly 91 unique records")
 const questions = questionsWithoutReviews.map((question, index) => {
   const review = reviewById.get(question.id)
   assert(review !== undefined, `missing explicit review for ${question.id}`)
@@ -642,7 +649,7 @@ const questions = questionsWithoutReviews.map((question, index) => {
 const pack = {
   schemaVersion: 1,
   packId: "launch-v1",
-  version: 3,
+  version: 4,
   locale: "en",
   sources,
   sourceLines,

@@ -708,11 +708,11 @@ export const verify = async (): Promise<void> => {
   }
   if (
     manifest.releaseId !== "launch-v1" ||
-    manifest.packVersion !== 3 ||
+    manifest.packVersion !== 4 ||
     catalog.locale !== "en" ||
     catalog.tools.length !== 65 ||
     catalog.comparisons.length !== 14 ||
-    pack.questions.length !== 90 ||
+    pack.questions.length !== 91 ||
     pack.scenes.length !== 18
   ) {
     throw new Error("English launch-v1 minimum content contract is not satisfied")
@@ -920,6 +920,7 @@ export const verify = async (): Promise<void> => {
         version: value.version,
         profileIds: value.profileIds,
         prompt: value.prompt,
+        ...(value.illustration === undefined ? {} : { illustration: value.illustration }),
         options: value.options,
         memberships: value.memberships ?? []
       })
@@ -1033,7 +1034,7 @@ export const verify = async (): Promise<void> => {
   )
   if (!isDeepStrictEqual(factKindCounts, {
     use: 41,
-    "recognition-feature": 26,
+    "recognition-feature": 27,
     "comparison-distinction": 11,
     "safety-application": 12
   })) {

@@ -101,7 +101,7 @@ const reviewedDigests = [
   ["q090", "136d01d81b6e78ebdd6c917abd1a2d87e635d4ed948aec5a2b58b1aba51b6922"]
 ]
 
-export const questionReviews = reviewedDigests.map(([id, reviewedArtifactSha256]) => ({
+export const questionReviews = [...reviewedDigests.map(([id, reviewedArtifactSha256]) => ({
   id,
   reviewedAt: "2026-08-25",
   reviewedArtifactSha256,
@@ -110,4 +110,15 @@ export const questionReviews = reviewedDigests.map(([id, reviewedArtifactSha256]
     security: "passed",
     accessibility: "passed"
   }
-}))
+})),
+{
+  "id": "q091",
+  "reviewedAt": "2026-09-09",
+  "reviewedArtifactSha256": "bf75a721da4f36bed188372a60f2cb59ef681fbef6994790ad792f9313790bd0",
+  "outcomes": {
+    "content": "passed",
+    "security": "passed",
+    "accessibility": "passed"
+  }
+}
+]

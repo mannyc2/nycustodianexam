@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "packId": "launch-v1",
-  "version": 3,
+  "version": 4,
   "locale": "en",
   "sources": [
     {
@@ -16003,6 +16003,113 @@
         "reviewedArtifactSha256": "136d01d81b6e78ebdd6c917abd1a2d87e635d4ed948aec5a2b58b1aba51b6922",
         "evidenceClaimIds": [
           "claim.safety.s012"
+        ],
+        "outcomes": {
+          "content": "passed",
+          "security": "passed",
+          "accessibility": "passed"
+        }
+      }
+    },
+    {
+      "id": "q091",
+      "version": 1,
+      "profileIds": [
+        "nys-entry-level-custodians-janitors",
+        "nassau-county-custodian-entry-level"
+      ],
+      "prompt": "Which tool is shown in the illustration?",
+      "options": [
+        {
+          "id": "a",
+          "label": "Pipe wrench",
+          "conceptId": "tool.pipe-wrench"
+        },
+        {
+          "id": "b",
+          "label": "Slip-joint pliers",
+          "conceptId": "tool.pliers.slip-joint"
+        },
+        {
+          "id": "c",
+          "label": "Adjustable wrench",
+          "conceptId": "tool.adjustable-wrench"
+        },
+        {
+          "id": "d",
+          "label": "Tongue-and-groove pliers",
+          "conceptId": "tool.pliers.tongue-groove"
+        }
+      ],
+      "correctOptionId": "c",
+      "rationales": [
+        {
+          "optionId": "a",
+          "message": "A pipe wrench has serrated hook and heel jaws for gripping round work. The illustration instead shows smooth opposing jaw faces and a worm adjustment gear.",
+          "claimIds": [
+            "claim.feature.t037",
+            "claim.feature.t036"
+          ]
+        },
+        {
+          "optionId": "b",
+          "message": "Slip-joint pliers have two handles and a two-position sliding pivot. The illustrated tool has one handle and an adjustment wheel beneath its jaws.",
+          "claimIds": [
+            "claim.feature.t039",
+            "claim.feature.t036"
+          ]
+        },
+        {
+          "optionId": "c",
+          "message": "This is an adjustable wrench. Its smooth parallel jaws and visible worm adjustment gear match the accepted recognition features. The wheel moves one jaw to change the opening.",
+          "claimIds": [
+            "claim.feature.t036"
+          ]
+        },
+        {
+          "optionId": "d",
+          "message": "Tongue-and-groove pliers have a multi-position adjustment channel and offset serrated jaws. That channel and the pliers linkage are absent from this single-handled wrench.",
+          "claimIds": [
+            "claim.feature.t040",
+            "claim.feature.t036"
+          ]
+        }
+      ],
+      "claimIds": [
+        "claim.feature.t036",
+        "claim.feature.t037",
+        "claim.feature.t039",
+        "claim.feature.t040"
+      ],
+      "tags": {
+        "domain": "minor-maintenance-and-repair",
+        "family": "articulated hand tools",
+        "confusionSetIds": [],
+        "seriesScope": "entry-level-custodians-janitors",
+        "editorialDifficulty": "contrast"
+      },
+      "capacity": {
+        "objectiveId": "claim.feature.t036",
+        "equivalenceGroupId": "eq091",
+        "factKind": "recognition-feature"
+      },
+      "illustration": {
+        "conceptId": "tool.adjustable-wrench",
+        "masterSha256": "edb1f4e907926fd83ed55aaa11668d285bf85a181f98e0aeeb8b845dbc0b192d",
+        "neutralDescription": "A hand tool with a single handle and two opposing flat jaw faces. A small ridged adjustment wheel sits below the jaws. The handle has a round hole at its end."
+      },
+      "originalContentAttestation": true,
+      "reviewReceipt": {
+        "id": "r091",
+        "reviewedAt": "2026-09-09",
+        "reviewerKind": "ai-agent",
+        "reviewMethod": "agent-assisted-editorial-source-security-accessibility-review",
+        "reviewedArtifactSha256": "bf75a721da4f36bed188372a60f2cb59ef681fbef6994790ad792f9313790bd0",
+        "evidenceClaimIds": [
+          "claim.feature.t036",
+          "claim.feature.t037",
+          "claim.feature.t039",
+          "claim.feature.t040"
         ],
         "outcomes": {
           "content": "passed",

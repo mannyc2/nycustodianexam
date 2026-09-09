@@ -137,3 +137,37 @@ are unchanged. Artifact verification passes under that bounded allowance.
 Actual reviewed illustrated content and resulting PDF pagination/image/large-print
 comparisons remain unfinished. Browser tests use explicit synthetic presentation
 fixtures, not newly authored or published learner questions.
+
+## First released illustrated item: q091
+
+Pack version 4 adds one independently authored recognition item. The original
+90 authored records remain identical to version 3; the new bank has 91 items.
+The normal authoring builder consumes `launch-v1.illustrated.mjs`, the explicit
+option-order row and the separate editorial review ledger. It verifies the same
+image-inclusive review projection as the compiler. No build auto-approves reviews.
+
+The September 9 agent review inspected the accepted t036 phone and grayscale print
+derivatives and the maintained feature claims/source lines for t036, t037, t039
+and t040. The image clearly shows a single handle, smooth parallel jaw faces and
+worm adjustment gear, distinguishing it from the three offered distractors.
+Each distractor explanation cites its own recognition claim and the shown tool's
+claim. Neutral alt text describes the visible parts without naming the tool.
+There is no secure/recalled/public-sample item input, copied item composition,
+brand, answer label or scale claim. The existing accepted master is unchanged.
+This is an agent-assisted review, not a human-usability or assistive-technology
+certification. The exact binding and reviewed content hash are in r091.
+
+The bank's recognition count increases from 26 to 27; the other fact-kind counts
+remain 41 use, 11 comparison and 12 safety. The publication verifier and compiler
+inventory tests now check the expanded exact closure, including item/pack image
+identity: 528 route documents, 222 published item artifacts and the same 291 image
+assets. All 32 targeted compiler/review tests pass. The build's artifact verifier
+passes after updating those explicit inventory contracts. Three actual-item browser
+checks pass for answer commitment, reload and entry through Review. Current-release
+browser fixtures now use pack version 4; historical migration fixtures remain
+historical. Broad regression validation and older saved-version compatibility still
+need a focused pass after this release expansion.
+
+`capture-illustrated-question.mjs` records four actual-item desktop/compact cards,
+before and after commitment, at 1053/384 CSS widths. PDF pagination, complete
+visual comparison and explicit offline image-retention tests remain outstanding.

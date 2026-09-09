@@ -514,7 +514,7 @@ test("builds a deterministic-capacity simulation, restores edits, and commits be
   }
   expect(bootstrap.schemaVersion).toBe(2)
   expect(bootstrap.advertisedLengths).toEqual([45, 60, 90])
-  expect(bootstrap.inventory).toHaveLength(90)
+  expect(bootstrap.inventory).toHaveLength(91)
   expect(new Set(bootstrap.inventory.map(({ question }) => question.id)).size).toBe(90)
   const selectedProfile = bootstrap.profiles.find(
     ({ id }) => id === "nys-entry-level-custodians-janitors"
