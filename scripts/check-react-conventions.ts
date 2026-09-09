@@ -9,8 +9,23 @@ const prohibited = new Set(["forwardRef", "useContext"])
 const nameOf = (node: ts.Node | undefined): string | undefined =>
   node !== undefined && (ts.isIdentifier(node) || ts.isStringLiteral(node)) ? node.text : undefined
 
+const capabilityModule = (specifier: string): boolean =>
+  /(?:^|\/)(?:[^/]*-)?(?:runtime|persistence|controller|manager)(?:\.ts)?$/.test(specifier) ||
+  /(?:^|\/)(?:verified-content|app-database)(?:\.ts)?$/.test(specifier) ||
+  /(?:^|\/)(?:study-storage|persistence)(?:\/|$)/.test(specifier)
+const adapterFile = /(?:^|\/)(?:[^/]+-)?(?:bootstrap|provider)(?:-[^/]+)?\.tsx$/
+const hasValueImport = (node: ts.ImportDeclaration): boolean => {
+  const clause = node.importClause
+  if (clause === undefined) return true
+  if (clause.isTypeOnly) return false
+  if (clause.name !== undefined) return true
+  const bindings = clause.namedBindings
+  return bindings === undefined || ts.isNamespaceImport(bindings) || bindings.elements.some(entry => !entry.isTypeOnly)
+}
+
 const inspect = (text: string, path: string): ReadonlyArray<string> => {
   const source = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, path.endsWith(".tsx") ? ts.ScriptKind.TSX : ts.ScriptKind.TS)
+  const leaf = path.endsWith(".tsx") && !adapterFile.test(path)
   const namespaces = new Set<string>()
   const problems: string[] = []
   const report = (node: ts.Node, rule: string) => {
@@ -31,6 +46,22 @@ const inspect = (text: string, path: string): ReadonlyArray<string> => {
     }
   }
   const visit = (node: ts.Node): void => {
+    if (leaf && ts.isImportDeclaration(node) && ts.isStringLiteral(node.moduleSpecifier) && hasValueImport(node)) {
+      const specifier = node.moduleSpecifier.text
+      if (capabilityModule(specifier)) report(node, "Leaf views must receive capabilities through their provider, not import workflow/runtime/persistence modules")
+      if (specifier === "effect") {
+        const bindings = node.importClause?.namedBindings
+        if (node.importClause?.name !== undefined || bindings === undefined || ts.isNamespaceImport(bindings) || bindings.elements.some(entry => !entry.isTypeOnly && ["Effect", "ManagedRuntime", "Runtime", "Layer"].includes((entry.propertyName ?? entry.name).text))) {
+          report(node, "Leaf views must not import Effect runtime or workflow construction")
+        }
+      }
+    }
+    if (leaf && ts.isCallExpression(node) && node.expression.kind === ts.SyntaxKind.ImportKeyword && node.arguments[0] !== undefined && ts.isStringLiteral(node.arguments[0]) && (capabilityModule(node.arguments[0].text) || node.arguments[0].text === "effect")) {
+      report(node, "Leaf views must not dynamically import capability modules")
+    }
+    if (leaf && ts.isExportDeclaration(node) && !node.isTypeOnly && !(node.exportClause !== undefined && ts.isNamedExports(node.exportClause) && node.exportClause.elements.every(entry => entry.isTypeOnly)) && node.moduleSpecifier !== undefined && ts.isStringLiteral(node.moduleSpecifier) && capabilityModule(node.moduleSpecifier.text)) {
+      report(node, "Leaf views must not re-export capability modules")
+    }
     if (ts.isPropertyAccessExpression(node) && ts.isIdentifier(node.expression) && namespaces.has(node.expression.text) && prohibited.has(node.name.text)) {
       report(node, `React ${node.name.text} is prohibited`)
     }
@@ -81,7 +112,21 @@ const inspect = (text: string, path: string): ReadonlyArray<string> => {
 
 // Executed with the gate: aliases, namespace access and syntax lookalikes must
 // remain distinguished when this detector is changed.
-const fixtures: ReadonlyArray<readonly [string, number]> = [
+const fixtures: ReadonlyArray<readonly [string, number, string?]> = [
+  ['import { load } from "../persistence.ts"', 1],
+  ['import { appRuntime } from "../../app-runtime.ts"', 1],
+  ['import "../../study-storage/app-database.ts"', 1],
+  ['const load = () => import("../../verified-content.ts")', 1],
+  ['export { load } from "../controller.ts"', 1],
+  ['const runtime = import("effect")', 1],
+  ['export { type Controller } from "../controller.ts"', 0],
+  ['import { Effect as E } from "effect"', 1],
+  ['import type { Controller } from "../controller.ts"', 0],
+  ['import { type Controller } from "../controller.ts"', 0],
+  ['import { createController } from "../controller.ts"', 0, 'feature/react/bootstrap-player.tsx'],
+  ['import { project } from "../controller.ts"', 0, 'feature/react/player-provider.tsx'],
+  ['import { usePlayer } from "./provider.tsx"', 0],
+  ['import { reasonId } from "../reason-id.ts"', 0],
   ['import { useContext as read } from "react"; read(Context)', 1],
   ['import { forwardRef } from "react"', 1],
   ['import * as R from "react"; R.useContext(Context)', 1],
@@ -102,7 +147,7 @@ const fixtures: ReadonlyArray<readonly [string, number]> = [
   ['// forwardRef useContext renderBody\nconst text = "renderBody"; const view = <p>useContext</p>', 0],
   ['const unrelated = { useContext: () => null }; unrelated.useContext()', 0]
 ]
-for (const [source, expected] of fixtures) assert.equal(inspect(source, "fixture.tsx").length, expected, source)
+for (const [source, expected, path = "fixture.tsx"] of fixtures) assert.equal(inspect(source, path).length, expected, source)
 
 const files: string[] = []
 const collect = (directory: string): void => {
@@ -118,4 +163,4 @@ if (problems.length > 0) {
   console.error(problems.join("\n"))
   process.exit(1)
 }
-console.log(`React API/render-prop/index-key conventions passed for ${files.length} source files; ${fixtures.length} detector fixtures passed`)
+console.log(`React conventions and leaf capability imports passed for ${files.length} source files; ${fixtures.length} detector fixtures passed`)

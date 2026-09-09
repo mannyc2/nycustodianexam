@@ -177,3 +177,11 @@ The AST detector now follows identifier references within JSX key expressions, r
 Validation: 82 targeted content-key, Print generation, Review projection and Hazard commit/reveal tests passed. Site and standalone checker typechecks, maintained layout, production build and artifact/bundle checks passed; `git diff --check` passed. Build log: `/tmp/nyc-composite-key-build.log`. The earlier `question-observations.ts` helper/test names are superseded by `content-keys.ts` and `content-keys.test.ts`.
 
 All 15 targeted Review queue and saved Hazard builder browser cases passed across Chromium, Firefox and WebKit (16.5 seconds), including Review focus retention and visual/nonvisual saved feedback. Log: `/tmp/nyc-composite-key-browser.log`. This does not refresh Print PDF visual evidence or constitute a complete browser sweep. Boolean-mode, broad-barrel and leaf-capability enforcement remain open.
+
+## Leaf capability import enforcement
+
+The React convention gate now classifies `.tsx` views outside the maintained bootstrap/provider filename patterns as leaves. It rejects value and side-effect imports from the known runtime, controller, manager, persistence, database and verified-content module owners, plus Effect workflow/runtime construction imports. Literal dynamic capability imports and capability re-exports are checked too. Type-only imports/re-exports remain allowed, as do normal context-consumer imports and pure domain helpers. Bootstrap/provider adapters retain their distinct ownership role.
+
+Fourteen additional detector cases cover persistence/runtime/database/verified-content imports, dynamic imports, re-exports, Effect aliases, type-only syntax and legitimate adapters/helpers. The complete 33-fixture gate passed on 153 source files alongside the 170-module boundary check. Strict standalone checker typecheck, maintained layout (317 files) and `git diff --check` passed. No application source changed in this tooling checkpoint, so no new browser/build or visual acceptance is claimed.
+
+This enforces direct imports from known capability owners. It is not a whole-program transitive effect analysis, and it does not classify arbitrary renamed helper modules or runtime-computed dynamic import paths. Provider lifecycle/runtime-construction rules still require their own inspection. Boolean-mode and broad-barrel enforcement remain open.
