@@ -288,6 +288,10 @@
     .print-size-normal { font-size: 12pt; line-height: 1.5; }
     .print-size-large { font-size: 18pt; line-height: 1.55; }
     .print-size-large .answer-mark { font-size: 1.75em; }
+    .print-size-large h1 { font-size: 1.5em; }
+    .print-size-large h2 { font-size: 1.25em; }
+    .print-size-large h3 { font-size: 1.125em; }
+    .print-size-large h4 { font-size: 1em; }
 
     /* Nested grids can overlap later families after page fragmentation. */
     .print-section, .print-family-card, .print-question-list { display: block; }
@@ -947,6 +951,7 @@
     .tool-card { box-shadow: none; break-inside: avoid; }
     a { color: CanvasText; text-decoration: none; }
     a[href]::after { content: " (" attr(href) ")"; font-size: var(--text-xs); }
+    .print-preview a[href]::after { font-size: inherit; overflow-wrap: anywhere; }
   }
 }
 

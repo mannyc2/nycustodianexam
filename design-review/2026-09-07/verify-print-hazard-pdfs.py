@@ -1,12 +1,13 @@
 """Check every retained hazard-PDF page; render separately for visual review."""
 import hashlib
 import json
+import os
 import re
 import subprocess
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-root = Path(__file__).parent / 'print-hazard-output'
+root = Path(__file__).parent / os.environ.get('PRINT_VERIFY_OUTPUT', 'print-hazard-output')
 reports = []
 for name in ['letter-hazard-worksheet', 'letter-hazard-answers', 'a4-hazard-answers-large', 'a4-hazard-text']:
     path = root / (name + '.pdf')

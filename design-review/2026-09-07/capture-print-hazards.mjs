@@ -42,12 +42,18 @@ try {
     for (const image of await page.locator('.print-preview img').all()) await expect(image).toHaveCSS('filter', 'grayscale(1)');
     const images = await page.locator('.print-preview img').evaluateAll(images => images.map(image => ({ loaded: image.complete && image.naturalWidth > 0, filter: getComputedStyle(image).filter })));
     if (images.some(image => !image.loaded || image.filter !== 'grayscale(1)')) throw new Error('Print image missing or not grayscale: ' + JSON.stringify(images));
+    const typography = await page.locator('.print-preview').evaluate(preview => ({
+      headings: [...preview.querySelectorAll('h1,h2,h3,h4')].map(node => ({ text: node.textContent, pixels: parseFloat(getComputedStyle(node).fontSize) })),
+      urls: [...preview.querySelectorAll('.print-section a[href]')].map(node => parseFloat(getComputedStyle(node, '::after').fontSize))
+    }));
+    const minimum = entry.large ? 24 : 16;
+    if (typography.headings.some(heading => heading.pixels < minimum) || typography.urls.some(size => size < minimum)) throw new Error('Printed type is below the selected size: ' + JSON.stringify(typography));
     const file = output + entry.id + '.pdf';
     await page.pdf({ path: file, preferCSSPageSize: true, printBackground: false });
     const info = execFileSync('pdfinfo', [file], { encoding: 'utf8' });
     const text = execFileSync('pdftotext', ['-layout', file, '-'], { encoding: 'utf8' });
     if (!text.includes(entry.title ?? entry.product)) throw new Error('PDF text is not searchable');
-    captures.push({ ...entry, images: images.length, pages: Number(info.match(/Pages:\s+(\d+)/)[1]), pageSize: info.match(/Page size:\s+(.+)/)[1], searchableText: true, backgrounds: false });
+    captures.push({ ...entry, typography, images: images.length, pages: Number(info.match(/Pages:\s+(\d+)/)[1]), pageSize: info.match(/Page size:\s+(.+)/)[1], searchableText: true, backgrounds: false });
   }
 } finally { await browser.close(); }
 await writeFile(output + 'hazard-manifest.json', JSON.stringify({ captures, errors }, null, 2) + '\n');

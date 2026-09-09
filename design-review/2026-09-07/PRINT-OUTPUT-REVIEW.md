@@ -135,3 +135,28 @@ print typography correction and regenerated large-print evidence. Hazard page
 estimates are also too low for source-inclusive answer packets (the two-scene
 large packet estimates 2 and produces 19). Pagination is readable, but these
 findings mean the print family is not yet fully reconciled.
+
+
+## Printed heading and URL sizing
+
+Print-only heading sizes now follow the large-print body: h1 27pt, h2 22.5pt,
+h3 20.25pt, and h4 18pt. Printed source URLs inherit the packet's text size
+(12pt normal or 18pt large) and can wrap within the page. Screen styles are
+unchanged. The capture script checks every printed heading and source URL
+pseudo-element against the selected minimum and retains the computed sizes.
+
+The fresh `print-hazard-typography-output/` artifacts supersede the preceding
+hazard PDFs for typography. They retain the same 3/11/19/9 page counts. All
+19 large-print pages were visually inspected again; headings, full-size URLs,
+images, and source records remain within page bounds. Normal Letter answer
+page 10 and A4 text-equivalent page 9 were inspected individually for the URL
+change. The all-page text-boundary/collision/item checks pass for all four PDFs.
+Use `PRINT_VERIFY_OUTPUT=print-hazard-typography-output python3
+verify-print-hazard-pdfs.py` from this directory to reproduce the report.
+The root build/artifact checks passed. The prior 27 browser regressions are
+historical for the pagination change; this typography change was checked by
+fresh Chromium capture assertions and actual PDF inspection.
+
+Source-inclusive hazard page estimation remains unfinished. Other large-print
+product PDFs need refreshing during final integrated print validation because
+the heading rule applies to all print products.
