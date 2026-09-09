@@ -128,15 +128,17 @@ for (const mode of ["visual", "nonvisual"] as const) {
 }
 
 for (const fixture of [
-  { path: "/simulations/", owner: "[data-simulation-setup]", control: "Set code (seed)", value: "lifecycle-seed" },
-  { path: "/report/", owner: "[data-correction-form]", control: "Short summary", value: "Lifecycle draft" }
+  { path: "/simulations/", owner: "[data-simulation-setup]", control: "Set code (seed)", value: "lifecycle-seed", disclosure: "Repeat this exact set" },
+  { path: "/report/", owner: "[data-correction-form]", control: "Short summary", value: "Lifecycle draft", disclosure: "" },
+  { path: "/print/", owner: "[data-print-builder]", control: "Set code", value: "lifecycle-print", disclosure: "Repeat this exact set" },
+  { path: "/hazards/", owner: "[data-hazard-builder]", control: "Drill code", value: "lifecycle-drill", disclosure: "Repeat a drill" }
 ]) {
   test(`${fixture.path} retains local edits during persisted pagehide and remounts after cleanup`, async ({ page }) => {
     const errors: string[] = []
     page.on("pageerror", (error) => errors.push(error.message))
     await page.goto(fixture.path)
-    if (fixture.path === "/simulations/") await page.getByText("Repeat this exact set", { exact: true }).click()
-    const control = page.getByLabel(fixture.control, { exact: true })
+    if (fixture.disclosure) await page.getByText(fixture.disclosure, { exact: true }).click()
+    const control = page.locator(fixture.owner).getByLabel(fixture.control, { exact: fixture.path !== "/print/" })
     await expect(control).toBeEnabled()
     await control.fill(fixture.value)
     await page.evaluate(() => {
@@ -153,7 +155,7 @@ for (const fixture of [
     await expect(page.locator(fixture.owner)).toBeEmpty()
     await page.reload()
     await expect(control).toBeEnabled()
-    if (fixture.path === "/simulations/") await page.getByText("Repeat this exact set", { exact: true }).click()
+    if (fixture.disclosure) await page.getByText(fixture.disclosure, { exact: true }).click()
     await control.fill("Fresh document")
     await expect(control).toHaveValue("Fresh document")
     expect(errors).toEqual([])
