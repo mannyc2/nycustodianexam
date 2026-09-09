@@ -1,0 +1,38 @@
+{
+  "captures": [
+    {
+      "file": "missing-image-384.png",
+      "width": 384,
+      "state": "missing-image",
+      "bounds": {
+        "x": 16,
+        "y": 131.046875,
+        "width": 352,
+        "height": 768.8125
+      }
+    },
+    {
+      "file": "zero-confirmation-384.png",
+      "width": 384,
+      "state": "zero-confirmation",
+      "bounds": {
+        "x": 16,
+        "y": -718.953125,
+        "width": 352,
+        "height": 1619.0625
+      }
+    },
+    {
+      "file": "feedback-failure-384.png",
+      "width": 384,
+      "state": "feedback-failure",
+      "bounds": {
+        "x": 16,
+        "y": -604.953125,
+        "width": 352,
+        "height": 1563.484375
+      }
+    }
+  ],
+  "errors": []
+}

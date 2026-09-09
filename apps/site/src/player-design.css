@@ -96,11 +96,15 @@
   .hazard-player__visual { display: grid; gap: var(--space-3); min-inline-size: 0; }
   .hazard-player__visual h2,
   .hazard-player__markers h2,
-  .hazard-player__commit h2 { font-size: var(--text-h4); }
+  .hazard-player__commit h2 { font-size: 1.0625rem; }
   .hazard-player__viewport-controls,
   .hazard-player__marker-moves { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
   .hazard-player__viewport-controls .button { padding: var(--space-2) var(--space-3); font-size: var(--text-xs); }
   .hazard-player__viewport-controls > span { color: var(--color-text-muted); font-family: var(--font-mono); font-size: var(--text-xs); }
+  .hazard-player__visual > .button { justify-self: start; }
+  .study-player .hazard-player__prompt > p { max-inline-size: 68ch; }
+  .hazard-player__commit .player-action-bar { padding-block: 0; margin-block-start: var(--space-3); }
+  .hazard-player__commit .player-action-note { flex: 0 1 auto; font-size: 0.875rem; }
   .hazard-player__visual > p { font-size: var(--text-sm); color: var(--color-text-muted); }
   .hazard-player__viewport { border: var(--border-thin) solid var(--color-border); border-radius: var(--radius-md); background: var(--color-canvas); }
   .hazard-player__marker,
@@ -114,7 +118,7 @@
   .hazard-player__marker-moves button { min-inline-size: var(--target-default); min-block-size: var(--target-default); padding: var(--space-2); border: var(--border-thin) solid var(--color-border-control); border-radius: var(--radius-sm); background: var(--color-surface); color: var(--color-text); font-size: var(--text-xs); cursor: pointer; }
   .hazard-player__marker-moves button:disabled { cursor: not-allowed; color: var(--color-disabled-text); background: var(--color-disabled-surface); }
   .hazard-player__zones { min-inline-size: 0; margin: 0; padding: var(--space-4); border: var(--border-thin) solid var(--color-border); border-radius: var(--radius-md); }
-  .hazard-player__zones legend { font-size: var(--text-h4); font-weight: var(--weight-bold); }
+  .hazard-player__zones legend { font-size: var(--text-body); font-weight: var(--weight-bold); }
   .hazard-player__zones > p { margin-block: var(--space-3); color: var(--color-text-muted); }
   .hazard-player__zones ol { display: grid; gap: 0; list-style: none; margin: 0; padding: 0; }
   .hazard-player__zones label { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: var(--space-2) var(--space-3); padding-block: var(--space-2); border-block-end: var(--border-thin) solid var(--color-border); cursor: pointer; }
@@ -123,6 +127,9 @@
   .hazard-player__zones label > span { grid-column: 2; color: var(--color-text-muted); }
   .hazard-player__commit { padding: var(--space-4); border: var(--border-thin) solid var(--color-border); border-radius: var(--radius-md); }
   .hazard-player__commit > p { margin-block-start: var(--space-3); font-size: var(--text-sm); color: var(--color-text-muted); }
+  .hazard-player .feedback { padding: 1.25rem; border: var(--border-strong) solid currentColor; border-radius: var(--radius-md); }
+  .hazard-player .feedback h2 { font-size: 1.0625rem; }
+  .hazard-player .feedback > p { color: var(--color-text); font-size: var(--text-sm); }
   .hazard-player__zero-confirm { padding: var(--space-5); border: var(--border-strong) solid var(--color-border-control); border-radius: var(--radius-md); background: var(--color-canvas); }
   .hazard-player__zero-confirm > * + * { margin-block-start: var(--space-3); }
   .hazard-player__zero-confirm .button { margin-inline-end: var(--space-2); }

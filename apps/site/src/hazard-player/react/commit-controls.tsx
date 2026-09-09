@@ -71,7 +71,7 @@ export const HazardCommitControls = () => {
 
   if (state.tag === "reveal_failed") {
     return (
-      <section className="feedback feedback-error" role="alert">
+      <section className="feedback feedback-review" role="alert">
         <h2 ref={meta.errorHeadingRef} tabIndex={-1}>Your response is saved</h2>
         <p>{state.message}</p>
         <p>Your saved marks can no longer be changed. Retrying only loads the matching feedback.</p>

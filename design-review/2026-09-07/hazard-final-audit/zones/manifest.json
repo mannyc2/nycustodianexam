@@ -1,0 +1,71 @@
+{
+  "captures": [
+    {
+      "file": "empty-1042.png",
+      "width": 1042,
+      "state": "empty",
+      "bounds": {
+        "x": 26.046875,
+        "y": 14.5625,
+        "width": 989.890625,
+        "height": 885.15625
+      }
+    },
+    {
+      "file": "marked-1042.png",
+      "width": 1042,
+      "state": "marked",
+      "bounds": {
+        "x": 26.046875,
+        "y": 14.5625,
+        "width": 989.890625,
+        "height": 885.15625
+      }
+    },
+    {
+      "file": "saved-1042.png",
+      "width": 1042,
+      "state": "saved",
+      "bounds": {
+        "x": 26.046875,
+        "y": -0.4375,
+        "width": 989.890625,
+        "height": 3684.234375
+      }
+    },
+    {
+      "file": "empty-384.png",
+      "width": 384,
+      "state": "empty",
+      "bounds": {
+        "x": 16,
+        "y": 0.046875,
+        "width": 352,
+        "height": 1608.875
+      }
+    },
+    {
+      "file": "marked-384.png",
+      "width": 384,
+      "state": "marked",
+      "bounds": {
+        "x": 16,
+        "y": 0.046875,
+        "width": 352,
+        "height": 1562.375
+      }
+    },
+    {
+      "file": "saved-384.png",
+      "width": 384,
+      "state": "saved",
+      "bounds": {
+        "x": 16,
+        "y": -849.953125,
+        "width": 352,
+        "height": 5591.375
+      }
+    }
+  ],
+  "errors": []
+}

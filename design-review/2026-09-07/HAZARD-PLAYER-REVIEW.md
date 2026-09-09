@@ -31,3 +31,38 @@ Released correction explanations now have a solid red leading border and pale re
 Build/artifact checks and nine Hazard regressions pass. The regression now explicitly checks the visible external overlay legend and exactly one rendered scene image. Its previous text-only selector became ambiguous after the external legend was added alongside the reusable component’s hidden caption; the scoped assertion verifies the intended visible element.
 
 Remaining visual differences are the real content’s length, detailed evidence, metadata and system font. Final cross-browser and page-family audit remains open.
+
+
+## Matching-width and recovery audit — September 9, 2026
+
+`hazard-final-audit/` refreshes 15 current-release captures: visual and keyboard
+empty/marked/saved states at 1042/384 CSS viewport widths, plus three compact
+recovery states. The desktop card measures approximately 990 CSS pixels, matching
+references 35–37. Captures wait for fonts; visual/zone captures also decode loaded
+images and wait two paint frames. No page errors or horizontal document overflow
+were observed. Desktop marked visual/keyboard and compact feedback failure were
+visually inspected after the changes; the initial compact keyboard and revealed
+visual captures were also inspected. This does not claim every final screenshot
+has received detailed visual review.
+
+Panel headings now use the prototype's 1.0625rem size; the zone legend uses body
+size. Prompt paragraphs retain the prototype's 68ch measure. The Add marker button
+fits its content, and save-note sizing/flex behavior follows the reference rather
+than compressing beside the save button. Recovery panels have explicit borders
+and compact headings. Saved-but-unavailable feedback now uses amber with a clear
+saved-state heading; failed saves remain errors.
+
+All 25 applicable Hazard browser workflows pass across Chromium/Firefox/WebKit;
+two BFCache checks are intentionally skipped on unsupported projects. The first
+run exposed four assertions per browser still using v4 attempt IDs. Current
+generated routes explicitly declare v5; fixture IDs/receipts were updated and the
+full suite rerun. Durable-save-before-fetch and exact restoration assertions
+remain intact. Site/browser typechecks and production build/artifact gates pass.
+
+Remaining revealed-state discrepancy: marker feedback is a separate list while
+disabled edit controls remain in the saved marker panel. The reference puts
+feedback beside each saved marker and removes editing controls. Reconcile that
+composition before closing the player audit. Real hallway content (four zones,
+one hazard) differs from the prototype stairwell fixture, and complete source
+claims/text equivalents are longer; those are intentional content differences.
+System-font rendering varies by platform. Final integrated validation remains.

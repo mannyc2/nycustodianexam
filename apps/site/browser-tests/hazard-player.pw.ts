@@ -5,8 +5,8 @@ const visualPath = "/hazards/session/launch-v1/scene/1/"
 const nonvisualPath = "/hazards/session/launch-v1-nonvisual/scene/1/"
 const postcommitPath = "/content/vertical-slice/scenes/s001.postcommit.json"
 const attemptsStore = "hazard-attempts"
-const visualAttemptId = "launch-v1:v4:launch-v1:hazard-visual:1"
-const nonvisualAttemptId = "launch-v1:v4:launch-v1-nonvisual:hazard-nonvisual:1"
+const visualAttemptId = "launch-v1:v5:launch-v1:hazard-visual:1"
+const nonvisualAttemptId = "launch-v1:v5:launch-v1-nonvisual:hazard-nonvisual:1"
 const postcommitBytes = 9_992
 const postcommitSha256 = "8b245799410f3f449a5e92b8a5d5a449bbb1de84a29e686103a8c143116962a7"
 const assetMasterSha256 = "5648c401bd764f44b1f23e1dbaa5aac3e79c4292990e68c98f1d47947037ff0d"
@@ -28,7 +28,7 @@ interface StoredHazardReceipt {
 
 const hazardReceipt = (mode: "visual" | "nonvisual"): StoredHazardReceipt => ({
   releaseId: "launch-v1",
-  packVersion: 4,
+  packVersion: 5,
   sessionId: mode === "visual" ? "launch-v1" : "launch-v1-nonvisual",
   position: 1,
   postcommitPath,
