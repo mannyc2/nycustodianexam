@@ -6,11 +6,33 @@
       "state": "all",
       "bounds": {
         "x": 26.046875,
-        "y": -3980.796875,
+        "y": -3981.296875,
         "width": 989.890625,
-        "height": 4604.46875
+        "height": 4835.90625
       },
       "records": 65
+    },
+    {
+      "file": "release-note-1042.png",
+      "width": 1042,
+      "state": "release-note",
+      "bounds": {
+        "x": 47.046875,
+        "y": 663.171875,
+        "width": 947.890625,
+        "height": 155.4375
+      }
+    },
+    {
+      "file": "release-details-1042.png",
+      "width": 1042,
+      "state": "release-details",
+      "bounds": {
+        "x": 47.046875,
+        "y": 783.609375,
+        "width": 947.890625,
+        "height": 116.421875
+      }
     },
     {
       "file": "rigid-hand-tools-1042.png",
@@ -18,9 +40,9 @@
       "state": "rigid hand tools",
       "bounds": {
         "x": 26.046875,
-        "y": -581.796875,
+        "y": -582.296875,
         "width": 989.890625,
-        "height": 1217.1875
+        "height": 1448.625
       },
       "records": 15
     },
@@ -30,11 +52,22 @@
       "state": "missing-images",
       "bounds": {
         "x": 26.046875,
-        "y": -1043.796875,
+        "y": -1218.296875,
         "width": 989.890625,
-        "height": 1780.34375
+        "height": 2186.28125
       },
       "records": 15
+    },
+    {
+      "file": "image-recovery-1042.png",
+      "width": 1042,
+      "state": "image-recovery",
+      "bounds": {
+        "x": 47.046875,
+        "y": 370.953125,
+        "width": 947.890625,
+        "height": 158.5
+      }
     },
     {
       "file": "all-384.png",
@@ -44,9 +77,31 @@
         "x": 16,
         "y": -6285.8125,
         "width": 352,
-        "height": 6742.875
+        "height": 7107
       },
       "records": 65
+    },
+    {
+      "file": "release-note-384.png",
+      "width": 384,
+      "state": "release-note",
+      "bounds": {
+        "x": 16,
+        "y": 476.0625,
+        "width": 352,
+        "height": 288.125
+      }
+    },
+    {
+      "file": "release-details-384.png",
+      "width": 384,
+      "state": "release-details",
+      "bounds": {
+        "x": 16,
+        "y": 627.1875,
+        "width": 352,
+        "height": 196.984375
+      }
     },
     {
       "file": "rigid-hand-tools-384.png",
@@ -56,7 +111,7 @@
         "x": 16,
         "y": -852.8125,
         "width": 352,
-        "height": 1677.828125
+        "height": 2041.953125
       },
       "records": 15
     },
@@ -66,11 +121,22 @@
       "state": "missing-images",
       "bounds": {
         "x": 16,
-        "y": -3519.8125,
+        "y": -3740.8125,
         "width": 352,
-        "height": 4052.65625
+        "height": 4637.78125
       },
       "records": 15
+    },
+    {
+      "file": "image-recovery-384.png",
+      "width": 384,
+      "state": "image-recovery",
+      "bounds": {
+        "x": 16,
+        "y": 309.484375,
+        "width": 352,
+        "height": 205
+      }
     }
   ],
   "errors": []

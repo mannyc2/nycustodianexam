@@ -54,3 +54,38 @@ is absent (the current page puts eligibility totals in its introduction), and
 image failures lack its page-level recovery/download message. Per-record
 descriptions remain readable. These are explicit next implementation items;
 this grid comparison does not declare the whole Atlas family complete.
+
+## Release provenance and visible-image recovery — September 9
+
+The catalog now ends with the reference's release note and native technical
+disclosure. Counts come from released/scored tool inventories (65/53/12); the
+content-release identity comes from catalog.packId/version (launch-v1, version
+4), not the prototype's old v2.0.0 fixture. The wording says every record has a
+released illustration, without claiming that every image loaded on this device.
+The note identifies written descriptions, source evidence, and scored-use
+restrictions; the disclosure directs readers to individual records for support.
+Eligibility totals moved from the page introduction to this closing note.
+
+An image-recovery notice appears above the grid only when a currently visible
+card has an actual failed image request. Family selection recomputes visibility
+from those observed failures. Its copy states that some illustrations could not
+load, preserves written-record use, and links to /offline/ for downloads. It
+does not diagnose missing installation from a network failure or promise that
+a download fixes every failure. The existing per-record neutral descriptions
+and eligibility warnings remain available.
+
+The final capture set now has 12 artifacts: all/rigid/failed-image catalogs and
+focused release-note, expanded-details, and recovery-message crops at both
+viewport widths. Visually inspected those focused crops, including the compact
+metadata wrapping and download action. The new elements use the accepted
+reference's hierarchy with current release metadata and qualified recovery copy.
+Previously listed missing provenance/recovery elements are implemented.
+
+Validation: full build/artifact verification and site/browser typechecks pass.
+All 15 Atlas browser checks pass across Chromium, Firefox, and WebKit. A partial
+image-failure test verifies message visibility when the affected card is shown,
+suppression for an unaffected family, return with All families, and the genuine
+download destination. It also verifies current release metadata through a native
+disclosure without JavaScript. All 12 captures complete without page errors.
+Remaining platform typography differences and record-view sampling limits from
+the earlier audit remain explicit; broad final integrated gates are still pending.

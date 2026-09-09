@@ -36,6 +36,10 @@ const enhanceAtlas = (root: HTMLElement): void => {
   const compact = window.matchMedia("(max-width: 47.99rem)")
   if (filters === null || count === null || panel === null || buttons.length === 0) return
 
+  const imageRecovery = root.querySelector<HTMLElement>("[data-atlas-image-recovery]")
+  const updateImageRecovery = (): void => {
+    if (imageRecovery !== null) imageRecovery.hidden = !cards.some(card => !card.hidden && card.hasAttribute("data-image-unavailable"))
+  }
   for (const card of cards) {
     const illustration = card.querySelector<HTMLImageElement>("img")
     const notice = card.querySelector<HTMLElement>("[data-atlas-image-notice]")
@@ -44,6 +48,7 @@ const enhanceAtlas = (root: HTMLElement): void => {
       illustration.hidden = true
       notice.hidden = false
       card.setAttribute("data-image-unavailable", "")
+      updateImageRecovery()
     }
     illustration.addEventListener("error", unavailable)
     if (illustration.complete && illustration.naturalWidth === 0) unavailable()
@@ -60,6 +65,7 @@ const enhanceAtlas = (root: HTMLElement): void => {
       card.hidden = family !== "all" && card.dataset.toolFamily !== family
       if (!card.hidden) visible += 1
     }
+    updateImageRecovery()
     if (compactSelect !== null) compactSelect.value = family
     panel.setAttribute("aria-labelledby", compact.matches ? "atlas-family-select" : button.id)
     count.textContent = family === "all"

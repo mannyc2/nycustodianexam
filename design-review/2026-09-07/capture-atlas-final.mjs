@@ -34,6 +34,22 @@ try {
       await region.screenshot({ path: output + file, style: '.site-header-inner > .nav-primary, .site-header-inner > .nav-utility { opacity: 0; }' });
       if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)) throw new Error(`Overflow ${state}`);
       captures.push({ file, width, state, bounds, records: await page.locator('[data-tool-family]:visible').count() });
+      if (state === 'all') {
+        for (const [name, selector] of [['release-note', '.atlas-release-note'], ['release-details', '.atlas-release-details']]) {
+          const element = page.locator(selector);
+          if (name === 'release-details') await element.locator('summary').click();
+          const file = `${name}-${width}.png`;
+          await element.screenshot({ path: output + file, style: '.site-header-inner > .nav-primary, .site-header-inner > .nav-utility { opacity: 0; }' });
+          captures.push({ file, width, state: name, bounds: await element.boundingBox() });
+          if (name === 'release-details') await element.locator('summary').click();
+        }
+      }
+      if (state === 'missing-images') {
+        const element = page.locator('[data-atlas-image-recovery]');
+        const file = `image-recovery-${width}.png`;
+        await element.screenshot({ path: output + file, style: '.site-header-inner > .nav-primary, .site-header-inner > .nav-utility { opacity: 0; }' });
+        captures.push({ file, width, state: 'image-recovery', bounds: await element.boundingBox() });
+      }
     }
     await context.close();
   }
