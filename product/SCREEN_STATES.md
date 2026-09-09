@@ -157,7 +157,8 @@ official score conversion or pass prediction.
 ```text
 configuring -> generating -> preview-ready
 generating -> configuring + recoverable-error
-preview-ready -> generating (regenerate) | system-print-requested
+preview-ready -> generating (regenerate) | requesting-print
+requesting-print -> system-print-requested | request-print-error
 preview-ready -> stale (referenced content corrected/removed)
 stale -> regenerate | retain-versioned-preview when safely supported
 ```
@@ -165,6 +166,10 @@ stale -> regenerate | retain-versioned-preview when safely supported
 Opening or cancelling the operating-system print dialog does not prove a print
 occurred. The product may record only that system print was requested. Question
 and key/explanation products remain separately controllable in every state.
+While the request record is saving, `requesting-print` retains the readable
+preview and blocks another print or regeneration command. The dialog opens only
+after that save completes. Disposal prevents a late completion from opening a
+dialog or navigating to a generated replacement.
 
 ### Offline pack
 
@@ -244,7 +249,7 @@ replacement; a still-fitting length remains selected.
 | 12. `hazards-index`, `hazard-player` | Index `ready` or `empty`; player `restoring`, `ready`, `marking`, `confirm-zero`, `committing`, `answered-revealed`, `reviewed`, `completed`, or `recoverable-error` | Failure restores neutral editable marks and focuses summary. Marker-count updates are polite. Reveal focuses outcome; next focuses scene heading | Same one-entry session/replace-position rule as questions; reload restores stable markers, not pointer scratch | Player starts only with exact image, regions, descriptions, and sources local; missing closure is unavailable |
 | 13. `review-queue`, `review-player` | Queue `loading`, `ready`, `empty`, or `recoverable-error`; rebuild `pending`; player uses explicit question/hazard review variant states | Empty queue focuses its heading only on explicit completion. Projection error offers rebuild. Missing item offers correction/history path, not substitution | Queue URL holds no due state; player position replaces one session entry; reload rebuilds/reconciles from events | Queue/review work locally; unavailable historical object is quarantined with a truthful notice |
 | 14. `simulation-setup`, `simulation-player`, `simulation-results` | `setup`, `generating`, `active` (`unanswered` or `recorded`), `final-confirmation`, `submitting`, `reconciling`, `results`, `recoverable-error`, or `completed` | Generation failure retains settings. Submit failure returns to active/reconciling with no reveal. Results focus heading; item summary links focus targeted result | Setup → player pushes; positions replace. Final results replace the active-player entry to prevent history from reopening a pre-submit view. Reload reconciles session | Start requires complete local closure; active session continues offline; connectivity/update never changes pin |
-| 15. `print-center`, `print-preview` | `configuring`, `generating`, `preview-ready`, `stale`, `recoverable-error`, or `system-print-requested` | Failure retains controls and focuses summary. Preview success focuses heading. Pagination/contrast warnings link to exact control | Center → preview pushes; regenerate replaces current job URL only after durable manifest creation; reload decodes job manifest | Generates from retained local content; missing resource blocks generation with exact recovery link |
+| 15. `print-center`, `print-preview` | `configuring`, `generating`, `preview-ready`, `stale`, `recoverable-error`, `requesting-print`, or `system-print-requested` | Failure retains controls and focuses summary. Preview success focuses heading. Pagination/contrast warnings link to exact control | Center → preview pushes; regenerate replaces current job URL only after durable manifest creation; reload decodes job manifest | Generates from retained local content; missing resource blocks generation with exact recovery link |
 | 16. `faq` | `ready` or `offline-stale`; no local interaction machine | Initial document/fragment target; broken enhancement cannot hide answers | Normal document/fragment history | Fully useful when cached; stale mutable facts link to cached profile/source status |
 | 17. `transparency-index`, `source`, `corrections`, `foil`, `security`, `privacy` | `ready`, `offline-stale`, `withdrawn`, or `not-found`; source filters may be `empty` | Return to transparency index, use cached excerpt, report correction; source fragment/record heading is focus target | Stable documents and source IDs; corrected records preserve links/history | Cached records remain readable; external navigation is disabled/annotated, never faked |
 | 18. `correction-submit` | `draft`, `validating`, `ready-to-submit`, `submitting`, `local-draft-saved`, `submitted`, `validation-errors`, or `recoverable-error` | First invalid field/summary gets focus; failure retains safe fields; success focuses receipt heading | No report text in URL/history. Reload restores explicitly saved local draft. Submitted receipt may be local state, not an indexable URL | Draft save works; submission never does. Reconnection requires explicit submit |

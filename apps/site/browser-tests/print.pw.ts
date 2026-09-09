@@ -1,3 +1,4 @@
+import { holdWritesToStore, releaseHeldStoreWrites } from "./held-store-writes-fixtures.ts"
 import { readFile } from "node:fs/promises"
 import { fileURLToPath } from "node:url"
 import { expect, test, type Page } from "@playwright/test"
@@ -216,7 +217,13 @@ test("generates, restores, and prints a separate deterministic question packet",
   const printButton = page.getByRole("button", { name: "Open system print" })
   await expect(printButton).toBeDisabled()
   await page.getByLabel(/I inspected browser print preview/).check()
+  await holdWritesToStore(page, appDatabaseStores.printJobs)
   await printButton.click()
+  await expect(page.getByRole("button", { name: "Opening system print…", exact: true })).toBeDisabled()
+  await expect(page.getByRole("button", { name: "Regenerate this packet", exact: true })).toBeDisabled()
+  await expect(page.getByRole("heading", { name: "Questions", exact: true })).toBeVisible()
+  expect(await page.evaluate(() => (window as typeof window & { __printDialogRequested?: boolean }).__printDialogRequested)).toBe(false)
+  await releaseHeldStoreWrites(page)
   await expect.poll(() => page.evaluate(() => (window as typeof window & { __printDialogRequested?: boolean }).__printDialogRequested)).toBe(true)
   await expect.poll(async () => (await readPrintJobs(page))[0]?.status).toBe("system-print-requested")
   await expect(page.getByText("System print was requested; completion is not confirmed.")).toBeVisible()

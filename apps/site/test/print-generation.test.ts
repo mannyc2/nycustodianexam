@@ -2055,3 +2055,99 @@ describe("required question illustrations in print", () => {
     expect(() => generatePrintJob({ bootstrap: illustrated, settings: settings("multiple-choice-questions", 1) })).toThrow(/exact verified retained bytes/)
   })
 })
+
+const deferredPrintRuntime = () => {
+  const pending: Array<{ resolve: (value: unknown) => void; reject: (cause: unknown) => void }> = []
+  const runtime: PrintEffectRunner = {
+    runPromise: <A>() => new Promise<A>((resolve, reject) => {
+      pending.push({ resolve: (value) => resolve(value as A), reject })
+    })
+  }
+  return { pending, runtime }
+}
+const flushPrint = async () => { await Promise.resolve(); await Promise.resolve(); await Promise.resolve() }
+const retainedControllerJob = () => new PrintJobRecord({
+  id: "print-pending123",
+  ...generatePrintJob({ bootstrap, settings: settings("multiple-choice-questions") }),
+  status: "preview-ready", updatedAt: 1
+})
+
+describe("Print controller lifecycle and pending dialog", () => {
+  it("does not navigate or generate new jobs after builder disposal", async () => {
+    const { runtime, pending } = deferredPrintRuntime()
+    const navigate = vi.fn()
+    const createId = vi.fn(() => "print-pending123")
+    const controller = createPrintBuilderController({ bootstrap, runtime, createId, navigate })
+    controller.generate(settings("multiple-choice-questions"))
+    controller.generate(settings("multiple-choice-questions"))
+    expect(pending).toHaveLength(1)
+    controller.dispose()
+    pending[0]!.resolve(retainedControllerJob())
+    await flushPrint()
+    controller.generate(settings("multiple-choice-questions"))
+    expect(createId).toHaveBeenCalledTimes(1)
+    expect(navigate).not.toHaveBeenCalled()
+  })
+  it("retains the preview and locks duplicate dialog/regeneration requests during the durable print-request save", async () => {
+    const { runtime, pending } = deferredPrintRuntime()
+    const job = retainedControllerJob()
+    const openSystemPrint = vi.fn()
+    const controller = createPrintPreviewController({ id: job.id, bootstrap, runtime, createId: () => "print-another123", replaceLocation: vi.fn(), openSystemPrint })
+    controller.start()
+    pending[0]!.resolve(job)
+    await flushPrint()
+    controller.requestSystemPrint()
+    controller.requestSystemPrint()
+    controller.regenerate()
+    expect(pending).toHaveLength(2)
+    expect(openSystemPrint).not.toHaveBeenCalled()
+    expect(controller.getSnapshot().state).toEqual({ tag: "requesting-print", job })
+    const snapshot = controller.getSnapshot()
+    const html = renderToStaticMarkup(createElement(PrintPreview, { controller: { ...controller, getHydrationSnapshot: () => snapshot } }))
+    expect(html).toContain(job.packet.title)
+    expect(html).toContain("Opening system print…")
+    expect(html).not.toContain("System print was requested; completion is not confirmed.")
+    pending[1]!.resolve(new PrintJobRecord({ ...job, status: "system-print-requested" }))
+    await flushPrint()
+    expect(openSystemPrint).toHaveBeenCalledTimes(1)
+    expect(controller.getSnapshot().state.tag).toBe("system-print-requested")
+  })
+  it("does not open the dialog after disposal during the request save", async () => {
+    const { runtime, pending } = deferredPrintRuntime()
+    const job = retainedControllerJob()
+    const openSystemPrint = vi.fn()
+    const controller = createPrintPreviewController({ id: job.id, bootstrap, runtime, createId: () => "print-another123", replaceLocation: vi.fn(), openSystemPrint })
+    controller.start()
+    pending[0]!.resolve(job)
+    await flushPrint()
+    controller.requestSystemPrint()
+    controller.dispose()
+    pending[1]!.resolve(new PrintJobRecord({ ...job, status: "system-print-requested" }))
+    await flushPrint()
+    controller.requestSystemPrint()
+    controller.retryRestore()
+    controller.regenerate()
+    expect(pending).toHaveLength(2)
+    expect(openSystemPrint).not.toHaveBeenCalled()
+  })
+  it("does not create a replacement job after disposal during inventory loading", async () => {
+    const { runtime, pending } = deferredPrintRuntime()
+    const job = retainedControllerJob()
+    let finishLoading!: (value: PrintBuilderBootstrap) => void
+    const replaceLocation = vi.fn()
+    const controller = createPrintPreviewController({
+      id: job.id, runtime, createId: () => "print-another123", replaceLocation, openSystemPrint: vi.fn(),
+      loadBootstrap: () => new Promise((resolve) => { finishLoading = resolve })
+    })
+    controller.start()
+    pending[0]!.resolve(job)
+    await flushPrint()
+    controller.regenerate()
+    await flushPrint()
+    controller.dispose()
+    finishLoading(bootstrap)
+    await flushPrint()
+    expect(pending).toHaveLength(1)
+    expect(replaceLocation).not.toHaveBeenCalled()
+  })
+})

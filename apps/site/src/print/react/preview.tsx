@@ -1,8 +1,6 @@
-import { useEffect, useRef, useState, useSyncExternalStore } from "react"
 import { sourceEvidenceTierLabel } from "../../public-content-labels.ts"
-import type { PrintPreviewController, PrintPreviewState } from "../controller.ts"
+import { PrintPreviewProvider, usePrintPreview, type PrintPreviewProviderProps } from "./preview-provider.tsx"
 import type {
-  PrintJobRecord,
   PrintSceneAnswerV2,
   ReleasedPrintPacketSection
 } from "../model.ts"
@@ -406,71 +404,9 @@ const packetSection = (
   }
 }
 
-const readyJob = (state: PrintPreviewState): PrintJobRecord | undefined =>
-  state.tag === "preview-ready" || state.tag === "stale" ||
-  state.tag === "system-print-requested" || state.tag === "regenerating" ||
-    state.tag === "regenerate-error" || state.tag === "request-print-error"
-    ? state.job
-    : undefined
-
-export const PrintPreview = ({ controller }: { readonly controller: PrintPreviewController }) => {
-  const snapshot = useSyncExternalStore(
-    controller.subscribe,
-    controller.getSnapshot,
-    controller.getHydrationSnapshot
-  )
-  const headingRef = useRef<HTMLHeadingElement>(null)
-  const errorRef = useRef<HTMLHeadingElement>(null)
-  const previewRef = useRef<HTMLElement>(null)
-  const printDetailsState = useRef<ReadonlyArray<readonly [HTMLDetailsElement, boolean]> | null>(null)
-  const [inspectionConfirmed, setInspectionConfirmed] = useState(false)
-  const job = readyJob(snapshot.state)
-
-  useEffect(() => {
-    if (snapshot.focusRequest?.target === "preview-heading") headingRef.current?.focus()
-    if (snapshot.focusRequest?.target === "error-summary") errorRef.current?.focus()
-    if (snapshot.focusRequest !== null) controller.acknowledgeViewRequest(snapshot.focusRequest.id)
-  }, [controller, snapshot.focusRequest])
-
-  useEffect(() => {
-    if (snapshot.announcementRequest !== null) {
-      controller.acknowledgeViewRequest(snapshot.announcementRequest.id)
-    }
-  }, [controller, snapshot.announcementRequest])
-
-  useEffect(() => {
-    const printMedia = window.matchMedia("print")
-    const expandTechnicalDetails = (): void => {
-      if (printDetailsState.current !== null) return
-      const details = [...(previewRef.current?.querySelectorAll("details") ?? [])]
-      printDetailsState.current = details.map((detail) => [detail, detail.open] as const)
-      for (const detail of details) detail.open = true
-    }
-    const restoreTechnicalDetails = (): void => {
-      const previous = printDetailsState.current
-      if (previous === null) return
-      for (const [detail, wasOpen] of previous) {
-        if (detail.isConnected) detail.open = wasOpen
-      }
-      printDetailsState.current = null
-    }
-    const handlePrintMediaChange = (event: MediaQueryListEvent): void => {
-      if (event.matches) expandTechnicalDetails()
-      else restoreTechnicalDetails()
-    }
-
-    printMedia.addEventListener("change", handlePrintMediaChange)
-    window.addEventListener("beforeprint", expandTechnicalDetails)
-    window.addEventListener("afterprint", restoreTechnicalDetails)
-    if (printMedia.matches) expandTechnicalDetails()
-
-    return () => {
-      printMedia.removeEventListener("change", handlePrintMediaChange)
-      window.removeEventListener("beforeprint", expandTechnicalDetails)
-      window.removeEventListener("afterprint", restoreTechnicalDetails)
-      restoreTechnicalDetails()
-    }
-  }, [job?.id])
+export const PrintPreview = (props: PrintPreviewProviderProps) => <PrintPreviewProvider {...props}><PrintPreviewView /></PrintPreviewProvider>
+export const PrintPreviewView = () => {
+  const { state: { snapshot, job }, actions: { retryRestore }, meta: { errorRef, previewRef } } = usePrintPreview()
   const announcement = <p aria-live="polite" className="sr-only">{snapshot.announcementRequest?.message ?? ""}</p>
 
   if (snapshot.state.tag === "restoring") return <>{announcement}<p role="status">Restoring the saved print preview…</p></>
@@ -480,7 +416,7 @@ export const PrintPreview = ({ controller }: { readonly controller: PrintPreview
         <h1 ref={errorRef} tabIndex={-1}>Print preview unavailable</h1>
         <p>{snapshot.state.detail}</p>
         <p><a href="/print/">Return to the print center</a></p>
-        {snapshot.state.tag === "recoverable-error" ? <button className="button" type="button" onClick={controller.retryRestore}>Retry</button> : null}
+        {snapshot.state.tag === "recoverable-error" ? <button className="button" type="button" onClick={retryRestore}>Retry</button> : null}
       </section></>
     )
   }
@@ -495,7 +431,19 @@ export const PrintPreview = ({ controller }: { readonly controller: PrintPreview
       ref={previewRef}
     >
       {announcement}
-      <header className="print-preview-header">
+      <PrintPreviewHeader />
+      <PrintPreviewStatus />
+      <PrintPreviewPacket />
+      <PrintPreviewActions />
+    </article>
+  )
+}
+
+export const PrintPreviewHeader = () => {
+  const { state: { job }, meta: { headingRef } } = usePrintPreview()
+  if (job === undefined) return null
+  const manifest = job.manifest
+  return <header className="print-preview-header">
         <p className="eyebrow">Saved print preview</p>
         <h1 ref={headingRef} tabIndex={-1}>{job.packet.title}</h1>
         <p className="print-original-statement"><strong>{job.packet.statement}</strong></p>
@@ -515,8 +463,11 @@ export const PrintPreview = ({ controller }: { readonly controller: PrintPreview
           </dl>
         </details>
       </header>
-
-      {job.status === "stale" ? <section className="status-panel status-panel-warning" aria-labelledby="stale-print-heading">
+}
+export const PrintPreviewStatus = () => {
+  const { state: { snapshot, job }, meta: { errorRef } } = usePrintPreview()
+  if (job === undefined) return null
+  return <>{job.status === "stale" ? <section className="status-panel status-panel-warning" aria-labelledby="stale-print-heading">
         <h2 id="stale-print-heading">This job references corrected or removed content</h2>
         <p>Regenerate it before printing. The saved preview remains readable at this address.</p>
         <a href="#print-preview-actions">Review regeneration options</a>
@@ -539,13 +490,21 @@ export const PrintPreview = ({ controller }: { readonly controller: PrintPreview
         <h2 id="print-request-error-heading" ref={errorRef} tabIndex={-1}>System print did not open</h2>
         <p>{snapshot.state.detail}</p>
       </section> : null}
-      {job.packet.warnings.map((warning) => <p className="print-warning screen-only" key={warning}>{warning}</p>)}
-      {job.packet.sections.map((section, index) => <div
+      {job.packet.warnings.map((warning) => <p className="print-warning screen-only" key={warning}>{warning}</p>)}</>
+}
+export const PrintPreviewPacket = () => {
+  const { state: { job } } = usePrintPreview()
+  if (job === undefined) return null
+  const manifest = job.manifest
+  return <>{job.packet.sections.map((section, index) => <div
         className={index === 0 ? undefined : "print-appended-section"}
         key={section.tag}
-      >{packetSection(section, manifest.settings.includeSources)}</div>)}
-
-      <footer className="print-preview-actions screen-only" id="print-preview-actions" tabIndex={-1}>
+      >{packetSection(section, manifest.settings.includeSources)}</div>)}</>
+}
+export const PrintPreviewActions = () => {
+  const { state: { snapshot, job, inspectionConfirmed }, actions: { setInspectionConfirmed, regenerate, requestSystemPrint } } = usePrintPreview()
+  if (job === undefined) return null
+  return <footer className="print-preview-actions screen-only" id="print-preview-actions" tabIndex={-1}>
         <p>System print and browser “Save as PDF” are the output path. Opening the dialog does not confirm that printing occurred.</p>
         <label className="affirmation-control">
           <input
@@ -557,19 +516,17 @@ export const PrintPreview = ({ controller }: { readonly controller: PrintPreview
         <div className="question-controls">
         <button
           className="button button-secondary"
-          disabled={snapshot.state.tag === "regenerating"}
-          onClick={controller.regenerate}
+          disabled={snapshot.state.tag === "regenerating" || snapshot.state.tag === "requesting-print"}
+          onClick={regenerate}
           type="button"
         >{snapshot.state.tag === "regenerating" ? "Regenerating…" : "Regenerate this packet"}</button>{" "}
         <button
           className="button"
-          disabled={job.status === "stale" || snapshot.state.tag === "regenerating" || snapshot.state.tag === "regenerate-error" || !inspectionConfirmed}
-          onClick={controller.requestSystemPrint}
+          disabled={snapshot.state.tag === "requesting-print" || job.status === "stale" || snapshot.state.tag === "regenerating" || snapshot.state.tag === "regenerate-error" || !inspectionConfirmed}
+          onClick={requestSystemPrint}
           type="button"
-        >Open system print</button>
+        >{snapshot.state.tag === "requesting-print" ? "Opening system print…" : "Open system print"}</button>
         </div>
         <p className="status-text" role="status" aria-live="polite">{snapshot.state.tag === "system-print-requested" ? "System print was requested; completion is not confirmed." : ""}</p>
       </footer>
-    </article>
-  )
 }

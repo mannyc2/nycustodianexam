@@ -1,143 +1,12 @@
-import {
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  useSyncExternalStore,
-  type FormEvent
-} from "react"
-import type { PrintBuilderController } from "../controller.ts"
-import {
-  printProductAvailability,
-  printProductCapacity,
-  printProductFilterOptions
-} from "../generation.ts"
-import {
-  PrintSettings,
-  type PrintBuilderBootstrap,
-  type PrintProduct,
-  type SupportedPrintProduct
-} from "../model.ts"
-import { studyContentProfileId } from "../../study-content.ts"
+import type { SupportedPrintProduct } from "../model.ts"
 import { deterministicSeedMaxLength } from "../../deterministic-seed.ts"
+import { PrintBuilderProvider, usePrintBuilder, type PrintBuilderProviderProps } from "./builder-provider.tsx"
 
-const products: ReadonlyArray<{ readonly id: PrintProduct; readonly label: string }> = [
-  { id: "blank-answer-sheet", label: "Blank answer sheet" },
-  { id: "multiple-choice-questions", label: "Original multiple-choice questions" },
-  { id: "answer-key", label: "Separate answer key" },
-  { id: "explanations-and-sources", label: "Separate explanations and source references" },
-  { id: "tool-family-contrast-cards", label: "Tool-family contrast cards" },
-  { id: "hazard-worksheet", label: "Blank hazard worksheet" },
-  { id: "annotated-hazard-answer-packet", label: "Annotated hazard-answer packet" },
-  { id: "text-equivalent-set", label: "Text-equivalent/nonvisual set" },
-  { id: "announcement-profile-fact-sheet", label: "Announcement-profile fact sheet" },
-  { id: "correction-change-log-excerpt", label: "Correction/change-log excerpt" }
-]
-
-export const PrintBuilder = ({
-  bootstrap,
-  controller
-}: {
-  readonly bootstrap: PrintBuilderBootstrap
-  readonly controller: PrintBuilderController
-}) => {
-  const snapshot = useSyncExternalStore(
-    controller.subscribe,
-    controller.getSnapshot,
-    controller.getHydrationSnapshot
-  )
-  const factProfiles = bootstrap.profiles.filter((profile) => profile.announcementFactSheet !== null)
-  const [factProfileId, setFactProfileId] = useState(factProfiles[0]?.id ?? "")
-  const [product, setProduct] = useState<SupportedPrintProduct>("multiple-choice-questions")
-  const profileId = product === "announcement-profile-fact-sheet" ? factProfileId : studyContentProfileId
-  const selectedProfile = bootstrap.profiles.find((profile) => profile.id === profileId)
-  const [count, setCount] = useState(Math.min(10, bootstrap.questions.length))
-  const [seed, setSeed] = useState("practice-1")
-  const [paper, setPaper] = useState<"us-letter" | "a4">("us-letter")
-  const [margin, setMargin] = useState<"standard" | "wide">("standard")
-  const [printSize, setPrintSize] = useState<"normal" | "large">("normal")
-  const [grayscalePreview, setGrayscalePreview] = useState(true)
-  const [includeImages, setIncludeImages] = useState(true)
-  const [useNonvisualQuestions, setUseNonvisualQuestions] = useState(false)
-  const [answerKeyPlacement, setAnswerKeyPlacement] = useState<"separate-job" | "new-section">("separate-job")
-  const [includeExplanations, setIncludeExplanations] = useState(false)
-  const [includeSources, setIncludeSources] = useState(true)
-  const [filter, setFilter] = useState("")
-  const errorRef = useRef<HTMLHeadingElement>(null)
-
-  useEffect(() => {
-    if (snapshot.focusRequest?.target === "error-summary") errorRef.current?.focus()
-    if (snapshot.focusRequest !== null) {
-      controller.acknowledgeViewRequest(snapshot.focusRequest.id)
-    }
-  }, [controller, snapshot.focusRequest])
-
-  useEffect(() => {
-    if (snapshot.announcementRequest !== null) {
-      controller.acknowledgeViewRequest(snapshot.announcementRequest.id)
-    }
-  }, [controller, snapshot.announcementRequest])
-
-  const availability = useMemo(
-    () => new Map(products.map(({ id }) => [id, printProductAvailability(id, bootstrap, id === "announcement-profile-fact-sheet" ? factProfileId : studyContentProfileId)])),
-    [bootstrap, factProfileId]
-  )
-  const filterOptions = useMemo(
-    () => printProductFilterOptions(product, bootstrap, profileId),
-    [bootstrap, product, profileId]
-  )
-  useEffect(() => {
-    if (filter !== "" && !filterOptions.includes(filter)) setFilter("")
-  }, [filter, filterOptions])
-  const capacity = printProductCapacity(product, bootstrap, profileId, filter === "" ? [] : [filter])
-  const countUnit = product === "tool-family-contrast-cards"
-    ? "families"
-    : product === "hazard-worksheet" || product === "annotated-hazard-answer-packet" || product === "text-equivalent-set"
-      ? "scenes"
-      : product === "announcement-profile-fact-sheet"
-        ? "profiles"
-        : product === "correction-change-log-excerpt"
-          ? "records"
-          : "questions"
-  const imageProduct = product === "tool-family-contrast-cards" ||
-    product === "hazard-worksheet" || product === "annotated-hazard-answer-packet"
-  const appendedQuestionAnswers = product === "multiple-choice-questions" &&
-    answerKeyPlacement === "new-section"
-  const sourceProduct = product === "explanations-and-sources" ||
-    product === "annotated-hazard-answer-packet" ||
-    product === "text-equivalent-set" ||
-    appendedQuestionAnswers && includeExplanations
-  useEffect(() => {
-    if (selectedProfile === undefined || capacity === 0) return
-    setCount((current) => Math.max(1, Math.min(current, Math.max(1, capacity))))
-  }, [capacity, selectedProfile])
-  const disabled = selectedProfile === undefined || capacity === 0 ||
-    snapshot.state.tag === "generating"
-
-  const submit = (event: FormEvent<HTMLFormElement>): void => {
-    event.preventDefault()
-    if (seed.trim().length === 0 || seed.trim().length > deterministicSeedMaxLength) return
-    controller.generate(new PrintSettings({
-      profileId,
-      product,
-      count,
-      seed: seed.trim(),
-      paper,
-      margin,
-      printSize,
-      grayscalePreview,
-      includeImages: imageProduct && includeImages,
-      ...(product === "multiple-choice-questions" && useNonvisualQuestions ? { questionPresentation: "nonvisual" as const } : {}),
-      answerKeyPlacement: product === "multiple-choice-questions"
-        ? answerKeyPlacement
-        : "separate-job",
-      includeExplanations: product === "explanations-and-sources" ||
-        appendedQuestionAnswers && includeExplanations,
-      includeSources: sourceProduct && includeSources,
-      filters: filter === "" ? [] : [filter]
-    }))
-  }
-
+export const PrintBuilder = (props: PrintBuilderProviderProps) => <PrintBuilderProvider {...props}><PrintBuilderView /></PrintBuilderProvider>
+export const PrintBuilderView = () => {
+  const { state, actions, meta: { errorRef } } = usePrintBuilder()
+  const { snapshot } = state
+  const { generate } = actions
   return (
     <section aria-labelledby="print-builder-heading" className="print-builder screen-only">
       <p aria-live="polite" className="sr-only">{snapshot.announcementRequest?.message ?? ""}</p>
@@ -155,9 +24,21 @@ export const PrintBuilder = ({
           </> : <p>{snapshot.state.detail}</p>}
         </section>
       ) : null}
-      <form onSubmit={submit}>
+      <form onSubmit={(event) => { event.preventDefault(); generate() }}>
         <fieldset className="print-config-fields" disabled={snapshot.state.tag === "generating"}><legend className="sr-only">Print settings</legend>
-        <div className="setup-scope-note"><h3>One shared study bank</h3><p>Practice products use the entry-level study bank. A fact sheet reproduces the reviewed announcement named on it; it does not select an exam for your practice.</p><a href="/practice/#covers">What practice covers</a></div>
+        <PrintProductControls />
+        <PrintCountControls />
+        <PrintOutputControls />
+        <PrintGenerateAction />
+        </fieldset>
+      </form>
+    </section>
+  )
+}
+
+export const PrintProductControls = () => {
+  const { state: { products, availability, product, factProfiles, factProfileId, selectedProfile, filterOptions, filter }, actions: { setProduct, setFactProfileId, setFilter } } = usePrintBuilder()
+  return <><div className="setup-scope-note"><h3>One shared study bank</h3><p>Practice products use the entry-level study bank. A fact sheet reproduces the reviewed announcement named on it; it does not select an exam for your practice.</p><a href="/practice/#covers">What practice covers</a></div>
         <fieldset>
           <legend>Product type</legend>
           <div className="print-product-list">
@@ -196,9 +77,11 @@ export const PrintBuilder = ({
         </select>
         <p className="field-hint">{filterOptions.length === 0
           ? "No additional category filter applies to this product."
-          : "Filter by the published question category, tool family, or scene environment."}</p>
-
-        <div className="print-control-grid">
+          : "Filter by the published question category, tool family, or scene environment."}</p></>
+}
+export const PrintCountControls = () => {
+  const { state: { countUnit, capacity, count, paper, margin, seed }, actions: { setCount, setPaper, setMargin, setSeed } } = usePrintBuilder()
+  return <><div className="print-control-grid">
           <label htmlFor="print-count">
             Number of {countUnit}
             <input
@@ -234,9 +117,11 @@ export const PrintBuilder = ({
             <input id="print-seed" maxLength={deterministicSeedMaxLength} value={seed} onChange={(event) => setSeed(event.target.value)} />
             <span className="field-hint">The same settings and code always produce the same items.</span>
           </label>
-        </details>
-
-        <fieldset>
+        </details></>
+}
+export const PrintOutputControls = () => {
+  const { state: { product, printSize, grayscalePreview, useNonvisualQuestions, includeImages, imageProduct, includeSources, sourceProduct, answerKeyPlacement, includeExplanations, appendedQuestionAnswers }, actions: { setPrintSize, setGrayscalePreview, setUseNonvisualQuestions, setIncludeImages, setIncludeSources, setAnswerKeyPlacement, setIncludeExplanations } } = usePrintBuilder()
+  return <><fieldset>
           <legend>Accessibility and output</legend>
           <label><input type="checkbox" checked={printSize === "large"} onChange={(event) => setPrintSize(event.target.checked ? "large" : "normal")} /> Large print (at least 18pt)</label>
           <label><input type="checkbox" checked={grayscalePreview} onChange={(event) => setGrayscalePreview(event.target.checked)} /> Grayscale preview</label>
@@ -265,16 +150,14 @@ export const PrintBuilder = ({
             type="checkbox"
           /> Append explanations after the answer key</label>
           <p className="field-hint">Question sheets, answer sheets, keys, and explanations printed with the same settings and code carry the same pairing label, so you can match them later.</p>
-        </fieldset>
-
-        <p className="status-text" role="status" aria-live="polite">
+        </fieldset></>
+}
+export const PrintGenerateAction = () => {
+  const { state: { snapshot, disabled, count, seed, capacity } } = usePrintBuilder()
+  return <><p className="status-text" role="status" aria-live="polite">
           {snapshot.state.tag === "generating" ? "Generating and saving preview…" : ""}
         </p>
         <button className="button button-primary" type="submit" disabled={disabled || !Number.isSafeInteger(count) || seed.trim().length === 0 || seed.trim().length > deterministicSeedMaxLength || count < 1 || count > capacity}>
           Generate preview
-        </button>
-        </fieldset>
-      </form>
-    </section>
-  )
+        </button></>
 }

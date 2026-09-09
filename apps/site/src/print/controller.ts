@@ -45,6 +45,7 @@ export type PrintPreviewState =
   | { readonly tag: "preview-ready"; readonly job: PrintJobRecord }
   | { readonly tag: "stale"; readonly job: PrintJobRecord }
   | { readonly tag: "system-print-requested"; readonly job: PrintJobRecord }
+  | { readonly tag: "requesting-print"; readonly job: PrintJobRecord }
   | { readonly tag: "request-print-error"; readonly job: PrintJobRecord; readonly detail: string }
   | { readonly tag: "regenerating"; readonly job: PrintJobRecord }
   | { readonly tag: "regenerate-error"; readonly job: PrintJobRecord; readonly detail: string }
@@ -111,12 +112,13 @@ export const createPrintBuilderController = (input: {
     initialState: { tag: "configuring" },
     requestIdPrefix: "print-builder-"
   })
+  let active = true
   return {
     getSnapshot: screen.getSnapshot,
     getHydrationSnapshot: screen.getHydrationSnapshot,
     subscribe: screen.subscribe,
     generate: (settings) => {
-      if (screen.getSnapshot().state.tag === "generating") return
+      if (!active || screen.getSnapshot().state.tag === "generating") return
       let id: string
       try {
         id = decodePrintJobId(input.createId())
@@ -129,8 +131,9 @@ export const createPrintBuilderController = (input: {
       }
       screen.publish({ tag: "generating" }, { announce: "Generating and saving the print preview." })
       void input.runtime.runPromise(createPrintJob({ id, bootstrap: input.bootstrap, settings }))
-        .then((job) => input.navigate(printPreviewPath(exactJob(job, id).id)))
+        .then((job) => { if (active) input.navigate(printPreviewPath(exactJob(job, id).id)) })
         .catch((cause: unknown) => {
+          if (!active) return
           screen.publish(
             cause instanceof PrintLocalClosureError
               ? { tag: "download-required" }
@@ -140,7 +143,7 @@ export const createPrintBuilderController = (input: {
         })
     },
     acknowledgeViewRequest: screen.acknowledgeRequest,
-    dispose: screen.dispose
+    dispose: () => { active = false; screen.dispose() }
   }
 }
 
@@ -159,10 +162,13 @@ export const createPrintPreviewController = (input: {
     "preview-heading" | "error-summary"
   >({ initialState: { tag: "restoring" }, requestIdPrefix: "print-preview-" })
 
+  let active = true
   const restore = (): void => {
+    if (!active) return
     screen.publish({ tag: "restoring" }, { announce: "Restoring the saved print preview." })
     void input.runtime.runPromise(restorePrintJob(expectedId))
       .then((job) => {
+        if (!active) return
         if (job === undefined) {
           screen.publish(
             {
@@ -184,6 +190,7 @@ export const createPrintPreviewController = (input: {
         )
       })
       .catch((cause: unknown) => {
+        if (!active) return
         screen.publish(
           { tag: "recoverable-error", detail: restoreError(cause) },
           { focus: "error-summary" }
@@ -192,6 +199,7 @@ export const createPrintPreviewController = (input: {
   }
 
   const regenerate = (): void => {
+    if (!active) return
     const state = screen.getSnapshot().state
     const job = state.tag === "preview-ready" || state.tag === "stale" ||
         state.tag === "system-print-requested" || state.tag === "request-print-error" ||
@@ -223,13 +231,12 @@ export const createPrintPreviewController = (input: {
       )
       return
     }
-    void loadBootstrap().then((bootstrap) => input.runtime.runPromise(createPrintJob({
-      id,
-      bootstrap,
-      settings: job.manifest.settings
-    }))).then((created) => {
-      input.replaceLocation(printPreviewPath(exactJob(created, id).id))
+    void Promise.resolve().then(() => active ? loadBootstrap() : undefined).then(async (bootstrap) => {
+      if (!active || bootstrap === undefined) return
+      const created = await input.runtime.runPromise(createPrintJob({ id, bootstrap, settings: job.manifest.settings }))
+      if (active) input.replaceLocation(printPreviewPath(exactJob(created, id).id))
     }).catch((cause: unknown) => {
+        if (!active) return
         screen.publish(
           { tag: "regenerate-error", job, detail: regenerationError(cause) },
           {
@@ -245,16 +252,19 @@ export const createPrintPreviewController = (input: {
     getHydrationSnapshot: screen.getHydrationSnapshot,
     subscribe: screen.subscribe,
     start: () => screen.start(restore),
-    retryRestore: restore,
+    retryRestore: () => { if (screen.getSnapshot().state.tag === "recoverable-error") restore() },
     regenerate,
     requestSystemPrint: () => {
+      if (!active) return
       const state = screen.getSnapshot().state
       if (
         state.tag !== "preview-ready" && state.tag !== "system-print-requested" &&
         state.tag !== "request-print-error"
       ) return
+      screen.publish({ tag: "requesting-print", job: state.job }, { announce: "Opening system print." })
       void input.runtime.runPromise(recordSystemPrintRequest(expectedId))
         .then((job) => {
+          if (!active) return
           exactJob(job, expectedId)
           screen.publish(
             { tag: "system-print-requested", job },
@@ -263,6 +273,7 @@ export const createPrintPreviewController = (input: {
           input.openSystemPrint()
         })
         .catch((cause: unknown) => {
+          if (!active) return
           screen.publish(
             { tag: "request-print-error", job: state.job, detail: systemPrintError(cause) },
             {
@@ -273,6 +284,6 @@ export const createPrintPreviewController = (input: {
         })
     },
     acknowledgeViewRequest: screen.acknowledgeRequest,
-    dispose: screen.dispose
+    dispose: () => { active = false; screen.dispose() }
   }
 }
