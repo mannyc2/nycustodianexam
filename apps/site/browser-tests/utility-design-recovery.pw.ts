@@ -224,3 +224,17 @@ test("canceling a delete preview preserves preferences and clears confirmation",
   await page.reload()
   await expect(preference).toBeChecked()
 })
+
+test("unreadable Offline storage offers references without claiming no copies exist", async ({ page }) => {
+  await page.addInitScript(() => {
+    indexedDB.open = () => { throw new DOMException("Storage blocked", "SecurityError") }
+  })
+  await page.goto("/offline/")
+  await expect(page.getByRole("heading", { name: "Saved downloads could not be checked", exact: true })).toBeVisible()
+  await expect(page.getByText("This does not mean there are no saved copies.", { exact: true })).toBeVisible()
+  await expect(page.getByRole("button", { name: /^Download/ })).toHaveCount(0)
+  await expect(page.getByRole("button", { name: "Check again", exact: true })).toBeVisible()
+  await page.getByRole("link", { name: "Read tool references", exact: true }).click()
+  await expect(page).toHaveURL(/\/atlas\/$/)
+  await expect(page.getByRole("heading", { name: "Tool atlas", exact: true })).toBeVisible()
+})

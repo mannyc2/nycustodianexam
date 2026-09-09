@@ -35,3 +35,9 @@ The production build passes the unchanged closure budgets after keeping the note
 Removal preview now uses the reference’s neutral surface, restrained heading, and red outlined removal button. Keep it, export, exact dependency impact and preserved-history copy remain visible. The compact removal capture was visually inspected. Build/artifact checks and the 23 local-data/pack/utility recovery browser checks pass, covering activation, real offline use, malformed metadata, imports, active-pack removal, pinned copies and stale previews.
 
 Remaining Offline work includes storage-unavailable visual evidence and final comparison of the installed-state summary. The generic hero remains unchanged; this pass is not complete installed-state fidelity.
+
+## Storage-unavailable recovery
+
+Blocking IndexedDB open produces “Saved downloads could not be checked,” not the empty-copy state. The page hides download actions and retains Check again. It now also links directly to readable tool references and explains that saving practice responses requires working browser storage. This corrects the prototype’s overbroad claim that practice works whenever connected; durable commit-before-feedback remains required.
+
+`capture-offline-unavailable.mjs` captures this state at 608/384 CSS pixels without page errors or horizontal overflow. The compact capture was visually inspected. A new browser regression verifies the nonempty-state wording, absence of download actions, and working Atlas navigation while storage is blocked. All five utility recovery tests and the production build/artifact checks pass. The error heading at page level remains focused by the existing recovery logic.

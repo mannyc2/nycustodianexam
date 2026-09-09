@@ -344,7 +344,13 @@ export const OfflinePackManagerIsland = ({
           <div className="local-data-state">
             <h3>{problem === null ? "Checking what is saved on this device" : "Saved downloads could not be checked"}</h3>
             <p>{problem === null ? "The list will appear when the check finishes." : "This does not mean there are no saved copies."}</p>
-            {problem === null ? null : <button className="button button-secondary" type="button" onClick={() => location.reload()}>Check again</button>}
+            {problem === null ? null : <>
+              <p>Online reference pages remain readable. Saving practice responses requires working browser storage.</p>
+              <div className="question-controls">
+                <button className="button button-secondary" type="button" onClick={() => location.reload()}>Check again</button>
+                <a className="button button-secondary" href="/atlas/">Read tool references</a>
+              </div>
+            </>}
           </div>
         ) : <>
           {packs.length === 0 && busy === null ? (

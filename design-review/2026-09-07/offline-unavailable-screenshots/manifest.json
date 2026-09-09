@@ -1,0 +1,15 @@
+{
+  "captures": [
+    {
+      "file": "storage-unavailable-608.png",
+      "width": 608,
+      "state": "storage-unavailable"
+    },
+    {
+      "file": "storage-unavailable-384.png",
+      "width": 384,
+      "state": "storage-unavailable"
+    }
+  ],
+  "errors": []
+}
