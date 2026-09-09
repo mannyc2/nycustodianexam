@@ -1410,6 +1410,14 @@ const buildPages = ({
         </div><div class="empty-state" data-exam-empty hidden><h3 tabindex="-1">No entries match these filters</h3><p>Clear the filters to see every announcement and study plan in this published registry.</p><button class="button button-secondary" type="button" data-exam-clear>Clear filters</button></div>
       </section>
       <section class="home-section"><div class="section-header"><h2>Start studying</h2><p>Explore the original practice and reference content without an account.</p></div>${examTaskCards}</section>
+      <section class="home-section exam-format" aria-labelledby="exam-format-heading"><div class="section-header"><h2 id="exam-format-heading">How the real test works</h2></div>
+        <dl class="exam-format-facts">
+          <div><dt>Format</dt><dd>Multiple choice; two hours for this series. Follow your admission notice.</dd></div>
+          <div><dt>Drawings</dt><dd>Used in all three subject areas. Tool drawings are not necessarily to scale.</dd></div>
+          <div><dt>Questions</dt><dd>No official count verified. Practice lengths are site-designed.</dd></div>
+        </dl>
+        <details class="home-cycle-evidence"><summary>Where the format facts come from</summary><p>The state’s entry-level guide, Introduction (PDF page 2), describes the multiple-choice format, two-hour allowance, and drawings. Your announcement controls the exact subjects.</p>${sourceLinks(["nys.dcs.entry-level-guide"], sourceById)}<p>The reviewed evidence does not establish an official question count or subject weights.</p></details>
+      </section>
     </div>
   </main>
   <script type="module" src="/src/static-browser.ts"></script>`

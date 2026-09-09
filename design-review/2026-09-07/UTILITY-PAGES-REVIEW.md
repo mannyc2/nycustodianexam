@@ -258,3 +258,41 @@ checks pass across Chromium, Firefox, and WebKit. New checks verify desktop
 control alignment, compact prompt suppression, expanded-source reflow, and
 nonzero exact fact-source row counts plus every referenced excerpt/locator
 without JavaScript. Capture scripts reported no page errors.
+
+## Exams format section and compact spacing — September 9
+
+Added “How the real test works” after the study destinations, with three rows
+for format, drawings, and unverified official question count. Unlike the
+prototype's unconditional paper-medium wording, the visible copy names the
+multiple-choice/two-hour series format and tells readers to follow their
+admission notice. The scale caveat is scoped to tool drawings. These choices
+follow docs/FACTBASE.md (Format & logistics) and docs/SCOPE.md (allowed format
+claims), not the prototype's fixture wording.
+
+The public [DCS entry-level guide](https://www.cs.ny.gov/testing/test_guides/Custodians_Janitors_EntryLevel_TestGuide.pdf),
+Introduction on PDF page 2, was inspected on September 9, 2026 to corroborate
+the maintained format/allowance/drawing facts. No sample artwork or question
+content was incorporated. The UI links the existing local source record through
+a native disclosure, including the page locator and announcement-scope caveat.
+The guide does not establish an official question count.
+
+Compact section gaps/padding now use 24px/20px; registry caveats use plain
+12px text instead of large bordered notes. The footer adopts the wrapped-link
+layout already used by Home/Practice/Review. Search, filing filters, counts,
+source review caveats, and all footer destinations remain available.
+
+Refreshed 22 overview captures, including new format-section crops at 1248/384.
+Visually inspected the final compact format crop and full page. The compact
+page is 3493px tall including the new section, versus 3505px before this change
+and 2255px in the reference. The reference omits the compact search/filter
+controls and full footer; record-card copy and metadata also remain denser.
+These remaining presentation differences need reconciliation; this is not a
+claim of complete visual fidelity. The format section is also available on
+desktop so its information is not viewport-dependent.
+
+Validation: full build/artifact verification and both typechecks pass. All 60
+design-handoff browser checks passed with the format section and footer; all
+18 Exams-focused checks passed again after final compact spacing/copy changes.
+The no-JavaScript check expands the format disclosure, verifies the admission
+notice/count caveats, and confirms its local source link resolves successfully.
+Capture scripts report no page errors.

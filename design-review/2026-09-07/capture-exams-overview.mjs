@@ -18,6 +18,7 @@ try {
     await page.screenshot({ path: output + `page-${width}.png`, fullPage: true });
     captures.push({ file: `page-${width}.png`, width, fullPage: true });
     for (const [name, locator] of [
+      ['format', page.locator('.exam-format')],
       ['hero', page.locator('.exams-page > .page-header-prominent')],
       ['cycle', page.locator('#exams-cycle')],
       ['registry', page.locator('#exams-board')],
