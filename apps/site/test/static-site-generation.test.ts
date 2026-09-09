@@ -2,7 +2,7 @@ import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises"
 import { join } from "node:path"
 import { tmpdir } from "node:os"
 import type { ReleaseManifest } from "@nycustodian/content/model"
-import { describe, expect, it } from "vitest"
+import { describe, expect, it, vi } from "vitest"
 import {
   escapeHtml,
   escapeJsonForHtml,
@@ -730,6 +730,7 @@ describe("dynamic document discovery", () => {
 
   it("canonicalizes every marked built document and leaves utility HTML alone", async () => {
     const root = await mkdtemp(join(tmpdir(), "nycustodian-canonical-"))
+    vi.stubEnv("NYCUSTODIAN_CANONICAL_ORIGIN", undefined)
     try {
       await mkdir(join(root, "atlas"), { recursive: true })
       await writeFile(
@@ -748,6 +749,7 @@ describe("dynamic document discovery", () => {
       )
       expect(await readFile(join(root, "offline.html"), "utf8")).toBe("<main>Offline</main>")
     } finally {
+      vi.unstubAllEnvs()
       await rm(root, { recursive: true, force: true })
     }
   })

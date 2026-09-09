@@ -95,3 +95,17 @@ adding a production-only update endpoint.
 - No lab/field performance run is introduced here; configured deterministic
   bundle budgets pass locally and remain the only automated performance evidence
   until this revision completes real-browser and release certification.
+
+## Current CI selection — 2026-09-09
+
+The earlier complete-matrix-per-PR policy is superseded. PRs run all Chromium
+cases plus `@cross-browser` cases in Firefox/WebKit. Main and manual runs use
+the full matrix. Broad route and question-state axe audits run in Chromium;
+engine-sensitive interaction/reflow/storage/print checks retain cross-engine
+coverage. Add the tag when a regression depends on browser-engine behavior.
+
+CI supplies a validated build via `NYCUSTODIAN_TEST_PREBUILT=1`. Local
+`bun run test:browser` still builds automatically. When exercising a canonical
+production build, set `NYCUSTODIAN_CANONICAL_ORIGIN=https://nycustodianexam.com`
+for delivery assertions as well as the build. Playwright results demonstrate
+automated behavior only; the manual evidence limitations above still apply.

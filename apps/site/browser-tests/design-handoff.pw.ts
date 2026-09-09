@@ -13,7 +13,7 @@ const expectPageReflow = async (page: Page): Promise<void> => {
 }
 
 for (const path of ["/", "/exams/", "/atlas/", "/practice/", "/review/", "/simulations/", "/offline/", "/settings/", "/report/"]) {
-  test(`the redesigned ${path} page reflows and has accessible mobile navigation`, async ({ page }) => {
+  test(`the redesigned ${path} page reflows and has accessible mobile navigation`, { tag: "@cross-browser" }, async ({ page }) => {
     await page.setViewportSize({ height: 720, width: 320 })
     await page.goto(path)
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible()
@@ -29,6 +29,13 @@ for (const path of ["/", "/exams/", "/atlas/", "/practice/", "/review/", "/simul
     await expect(navigation.getByRole("link", { name: /^Hazard scenes/ })).toBeVisible()
     await expectPageReflow(page)
 
+  })
+
+  test(`the ${path} page has no serious WCAG A/AA axe violations`, async ({ page, browserName }) => {
+    test.skip(browserName !== "chromium", "Full DOM accessibility scans run in Chromium")
+    await page.setViewportSize({ height: 720, width: 320 })
+    await page.goto(path)
+    await page.getByRole("navigation", { name: "Primary", exact: true }).locator("summary").click()
     const scan = await new AxeBuilder({ page })
       .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
       .analyze()
@@ -39,7 +46,7 @@ for (const path of ["/", "/exams/", "/atlas/", "/practice/", "/review/", "/simul
   })
 }
 
-test("Library supports keyboard dismissal, outside clicks, and normal link navigation", async ({ page }) => {
+test("Library supports keyboard dismissal, outside clicks, and normal link navigation", { tag: "@cross-browser" }, async ({ page }) => {
   await page.goto("/")
   const menu = page.locator("[data-library-menu]")
   const trigger = menu.locator("summary")
@@ -58,7 +65,7 @@ test("Library supports keyboard dismissal, outside clicks, and normal link navig
   await expect(page).toHaveURL(/\/hazards\/$/)
 })
 
-test("enlarged text keeps Settings on the right and the Library panel within the viewport", async ({ page }) => {
+test("enlarged text keeps Settings on the right and the Library panel within the viewport", { tag: "@cross-browser" }, async ({ page }) => {
   for (const width of [320, 800, 900, 1280]) {
     await page.setViewportSize({ width, height: 900 })
     await page.goto("/")
@@ -73,7 +80,7 @@ test("enlarged text keeps Settings on the right and the Library panel within the
   }
 })
 
-test("Library links and Settings downloads remain reachable without JavaScript", async ({ browser }) => {
+test("Library links and Settings downloads remain reachable without JavaScript", { tag: "@cross-browser" }, async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 320, height: 720 } })
   const page = await context.newPage()
   await page.goto("/")
@@ -168,7 +175,7 @@ test("exam search, record selection, and detail tabs use the published records",
   await expect(page.locator("#study-coverage-heading")).toBeInViewport()
 })
 
-test("compact navigation stays at the viewport bottom and all Library destinations resolve", async ({ page }) => {
+test("compact navigation stays at the viewport bottom and all Library destinations resolve", { tag: "@cross-browser" }, async ({ page }) => {
   await page.setViewportSize({ width: 384, height: 800 })
   await page.goto("/practice/")
   await expect(page.getByRole("heading", { name: "Start with a set of 45.", exact: true })).toBeVisible()
@@ -360,7 +367,7 @@ for (const javaScriptEnabled of [true, false]) {
   })
 }
 
-test("compact exam filters disclose on demand and recover visible controls across resize", async ({ page }) => {
+test("compact exam filters disclose on demand and recover visible controls across resize", { tag: "@cross-browser" }, async ({ page }) => {
   await page.setViewportSize({ width: 384, height: 900 })
   await page.goto("/exams/")
   const disclosure = page.locator("[data-exam-filter-disclosure]")

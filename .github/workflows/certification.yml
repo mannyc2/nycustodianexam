@@ -1,4 +1,4 @@
-name: Certification
+name: CI
 
 on:
   workflow_call:
@@ -11,57 +11,103 @@ permissions:
   contents: read
 
 concurrency:
-  group: certification-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+env:
+  NYCUSTODIAN_CANONICAL_ORIGIN: https://nycustodianexam.com
+  NYCUSTODIAN_TEST_PREBUILT: "1"
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      app: ${{ steps.paths.outputs.app }}
+      correction: ${{ steps.paths.outputs.correction }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - id: paths
+        name: Select affected checks
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        shell: bash
+        run: |
+          if [ "$GITHUB_EVENT_NAME" != pull_request ]; then
+            echo 'app=true' >> "$GITHUB_OUTPUT"
+            echo 'correction=true' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git fetch --no-tags --depth=1 origin "$BASE_SHA"
+          git diff --name-only "$BASE_SHA" HEAD > /tmp/changed-paths
+          app=false
+          correction=false
+          if grep -Eq '^(apps/|packages/|content/|scripts/|\.github/|package\.json$|bun\.lock$|bunfig\.toml$|tsconfig)' /tmp/changed-paths; then app=true; fi
+          if grep -Eq '^(apps/correction-worker/|packages/correction-intake/|\.github/|scripts/|package\.json$|bun\.lock$|bunfig\.toml$|tsconfig)' /tmp/changed-paths; then correction=true; fi
+          echo "app=$app" >> "$GITHUB_OUTPUT"
+          echo "correction=$correction" >> "$GITHUB_OUTPUT"
+
   verify:
-    name: Frozen Bun 1.4 verification
+    name: Types, tests, content, and build
+    needs: changes
+    if: needs.changes.outputs.app == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: 22.22.0
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
         with:
           bun-version: 1.4.0
-      - name: Install the committed dependency graph
-        run: bun install --frozen-lockfile
-      - name: Verify the toolchain and repository
-        run: bun run verify
+      - run: bun install --frozen-lockfile
+      - name: Set reproducible release metadata
+        run: |
+          release_time=$(git show -s --format=%cI HEAD)
+          echo "NYCUSTODIAN_PUBLICATION_TIME=$(date -u -d "$release_time" +%Y-%m-%dT%H:%M:%S.000Z)" >> "$GITHUB_ENV"
+      - run: bun run verify
+      - name: Package the tested build
+        run: tar -cf site-build.tar apps/site/dist content/releases/vertical-slice
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: site-build
+          path: site-build.tar
+          retention-days: 7
 
   browser:
-    name: Browser, accessibility, offline, and print gates
+    name: Browser (${{ matrix.browser }})
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
     needs: verify
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: 22.22.0
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
         with:
           bun-version: 1.4.0
-      - name: Install the committed dependency graph
-        run: bun install --frozen-lockfile
-      - name: Compile the validated content release
-        run: bun run content:build
-      - name: Install browser engines and system dependencies
-        run: bun run --cwd apps/site playwright install --with-deps chromium firefox webkit
-      - name: Typecheck the browser harness
-        run: bun run typecheck:browser
-      - name: Run the browser certification suite
-        run: bun run test:browser
+      - run: bun install --frozen-lockfile
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: site-build
+      - run: tar -xf site-build.tar
+      - run: bun run --cwd apps/site playwright install --with-deps ${{ matrix.browser }}
+      - name: Full regression suite
+        if: github.event_name != 'pull_request' || matrix.browser == 'chromium'
+        run: bun run test:browser --project=${{ matrix.browser }}
+      - name: Engine-sensitive PR checks
+        if: github.event_name == 'pull_request' && matrix.browser != 'chromium'
+        run: bun run test:browser --project=${{ matrix.browser }} --grep @cross-browser
       - name: Preserve browser failure evidence
         if: failure()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: browser-certification-evidence
+          name: browser-${{ matrix.browser }}
           path: |
             /tmp/nycustodian-playwright-results
             /tmp/nycustodian-playwright-report
@@ -69,35 +115,35 @@ jobs:
           retention-days: 14
 
   cloudflare-preview:
-    name: Cloudflare Static Assets preview
+    name: Cloudflare delivery integration
     needs: verify
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: 22.22.0
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
         with:
           bun-version: 1.4.0
-      - name: Install the committed dependency graph
-        run: bun install --frozen-lockfile
-      - name: Compile the validated content release
-        run: bun run content:build
-      - name: Install Chromium and system dependencies
-        run: bun run --cwd apps/site playwright install --with-deps chromium
+      - run: bun install --frozen-lockfile
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: site-build
+      - run: tar -xf site-build.tar
+      - run: bun run --cwd apps/site playwright install --with-deps chromium
       - name: Exercise the built site through local workerd
         env:
           NYCUSTODIAN_PLAYWRIGHT_PREVIEW: cloudflare
         run: bun run test:browser:chromium --grep @cloudflare
-      - name: Exercise fixture withdrawal and failure terminals through local workerd
-        run: bun run --filter @nycustodian/site test:terminal-workerd
-      - name: Preserve preview failure evidence
+      - name: Exercise withdrawal and failure responses
+        run: bun run --filter @nycustodian/site test:terminal-workerd:built
+      - name: Preserve browser failure evidence
         if: failure()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: cloudflare-preview-evidence
+          name: browser-${{ github.job }}
           path: |
             /tmp/nycustodian-playwright-results
             /tmp/nycustodian-playwright-report
@@ -105,19 +151,37 @@ jobs:
           retention-days: 14
 
   dormant-correction-workerd:
-    name: Dormant correction Worker boundary
-    needs: verify
+    name: Disabled correction endpoint
+    needs: changes
+    if: needs.changes.outputs.correction == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: 22.22.0
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
         with:
           bun-version: 1.4.0
-      - name: Install the committed dependency graph
-        run: bun install --frozen-lockfile
-      - name: Exercise disabled correction intake through local workerd
-        run: bun run correction-worker:test:workerd
+      - run: bun install --frozen-lockfile
+      - run: bun run correction-worker:test:workerd
+
+  result:
+    name: CI passed
+    if: always()
+    needs: [changes, verify, browser, cloudflare-preview, dormant-correction-workerd]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require success or an intentional path skip
+        env:
+          RESULTS: ${{ toJSON(needs) }}
+        run: |
+          echo "$RESULTS" | jq -e 'all(.[]; .result == "success" or .result == "skipped")'
+
+  deploy:
+    name: Deliver tested main to production
+    needs: [result, verify]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/cloudflare-production.yml
+    secrets: inherit

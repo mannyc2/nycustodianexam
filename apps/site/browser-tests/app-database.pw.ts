@@ -144,7 +144,7 @@ const openStorageOrigin = async (page: Page): Promise<void> => {
   await page.goto("/content/release/current.json")
 }
 
-test("upgrades the exact M4 store union to v5 without rewriting durable M4 records", async ({
+test("upgrades the exact M4 store union to v5 without rewriting durable M4 records", { tag: "@cross-browser" }, async ({
   page
 }) => {
   await openStorageOrigin(page)
@@ -444,7 +444,7 @@ test("does not create absent legacy databases while checking for migration data"
   }
 })
 
-test("fails closed and reloads after an older tab blocks the database upgrade", async ({
+test("fails closed and reloads after an older tab blocks the database upgrade", { tag: "@cross-browser" }, async ({
   context,
   page
 }) => {
@@ -479,7 +479,7 @@ test("fails closed and reloads after an older tab blocks the database upgrade", 
   }
 })
 
-test("reopens the shared connection after a persisted page lifecycle", async ({ page }) => {
+test("reopens the shared connection after a persisted page lifecycle", { tag: "@cross-browser" }, async ({ page }) => {
   await page.goto(visualHazardPath)
   await expect(page.getByRole("button", { name: "Add marker at center" })).toBeEnabled()
 

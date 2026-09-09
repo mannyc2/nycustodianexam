@@ -294,3 +294,56 @@ commit/reload/offline checks are implemented; treat the scaffold as an
 implementation proof until the remaining multi-browser failure/update,
 accessibility, and preview gates pass. Add or change commands only when they
 execute against the reviewed locked toolchain.
+
+## CI and continuous delivery
+
+The normal local gate is `bun run verify`: toolchain/layout/import checks,
+reviewed visual and content integrity, all workspace and browser typechecks,
+unit/integration tests, one site build, and artifact/answer-leak/bundle checks.
+It does not revalidate historical research reports or require a manual
+certification record for an ordinary code change.
+
+Browser tests stay in `apps/site/browser-tests`; deterministic tests stay in
+workspace `test` directories. On application PRs, CI runs the full Chromium
+suite and the `@cross-browser` subset in Firefox/WebKit. The subset covers
+engine-sensitive storage, failed writes, focus, keyboard navigation, layout,
+and print behavior. Broad axe scans run in Chromium. Main and manual CI runs
+exercise the full supported browser matrix. Pure documentation changes skip
+application jobs while the stable `CI passed` check still completes.
+
+CI uploads a single `site-build` artifact containing the validated site and
+compiled content release. Browser and local Cloudflare checks consume those
+bytes with `NYCUSTODIAN_TEST_PREBUILT=1`; they do not rebuild the site. The
+standalone browser command still builds by default. Run local delivery checks
+against an existing build with `bun run --filter @nycustodian/site test:terminal-workerd:built`. Correction workerd tests run for
+correction/shared-tooling changes and every main/manual run.
+
+Successful pushes to `main` automatically queue the same tested artifact for
+`production` at https://nycustodianexam.com. GitHub's existing production
+required-reviewer rule is the manual release checkpoint. Approval must account
+for relevant screen-reader, device, true-zoom, and physical-print review;
+automated success does not claim that these manual checks occurred. The old
+candidate-bound JSON attestation remains historical evidence, not a requirement
+to manufacture a fresh attestation commit for each deployment. Deploy rejects
+superseded main commits and unpublished content, then checks the live home page
+and sitemap. Dispatch `CI` for a full diagnostic run; dispatch the remote
+preview workflow to upload an inactive version without production traffic.
+
+Production needs the GitHub environment secrets `CLOUDFLARE_ACCOUNT_ID` and
+`CLOUDFLARE_API_TOKEN`. The domain is declared in `apps/site/wrangler.jsonc` and
+the CI canonical-origin environment; change both together when moving hosts.
+Cloudflare must contain the active zone. Never put tokens in source or logs.
+See [Cloudflare authentication guidance](https://developers.cloudflare.com/workers/ci-cd/external-cicd/github-actions/).
+
+For historical research provenance, run `bun run audit:uiux`. It uses the existing validator’s
+`--packet-commit 4130693dee6caaa804a116f490b2192861f53e6e` mode to read the
+accepted packet from Git. This retains exact evidence
+checks without freezing current product documents. A full Git history is
+needed for this explicit audit; ordinary CI uses shallow checkouts.
+
+CI derives `NYCUSTODIAN_PUBLICATION_TIME` from the tested commit's timestamp,
+then validates the resulting published descriptor before deployment. This is a
+reproducible release timestamp, not evidence of the wall-clock deployment time.
+Local builds without this variable remain previews. A malformed timestamp fails
+the existing descriptor validation. Each browser engine runs on its own CI
+runner and installs only its own engine.

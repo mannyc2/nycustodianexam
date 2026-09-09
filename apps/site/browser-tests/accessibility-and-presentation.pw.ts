@@ -11,7 +11,8 @@ const seriousAccessibilityViolations = async (page: Page) => {
     .map(({ help, id, nodes }) => ({ help, id, targets: nodes.map((node) => node.target) }))
 }
 
-test("ready and revealed states have no serious WCAG A/AA axe violations", async ({ page }) => {
+test("ready and revealed states have no serious WCAG A/AA axe violations", async ({ page, browserName }) => {
+  test.skip(browserName !== "chromium", "Full DOM accessibility scans run in Chromium")
   await gotoReadyQuestion(page)
   expect(await seriousAccessibilityViolations(page)).toEqual([])
 
@@ -21,7 +22,7 @@ test("ready and revealed states have no serious WCAG A/AA axe violations", async
   expect(await seriousAccessibilityViolations(page)).toEqual([])
 })
 
-test("the question reflows without page-level horizontal scrolling at 320 CSS pixels", async ({
+test("the question reflows without page-level horizontal scrolling at 320 CSS pixels", { tag: "@cross-browser" }, async ({
   page
 }) => {
   await page.setViewportSize({ height: 720, width: 320 })
@@ -47,7 +48,7 @@ test("the question reflows without page-level horizontal scrolling at 320 CSS pi
   }
 })
 
-test("forced colors preserves a non-color selected indicator", async ({ page }) => {
+test("forced colors preserves a non-color selected indicator", { tag: "@cross-browser" }, async ({ page }) => {
   await page.emulateMedia({ forcedColors: "active" })
   await gotoReadyQuestion(page)
   await page.getByRole("radio", { name: "Scrub brush" }).check()
@@ -69,7 +70,7 @@ test("forced colors preserves a non-color selected indicator", async ({ page }) 
   expect(Number.parseFloat(selectedStyle.outlineWidth)).toBeGreaterThanOrEqual(2)
 })
 
-test("reduced motion removes smooth scrolling and transition delays", async ({ page }) => {
+test("reduced motion removes smooth scrolling and transition delays", { tag: "@cross-browser" }, async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" })
   await gotoReadyQuestion(page)
 
@@ -86,7 +87,7 @@ test("reduced motion removes smooth scrolling and transition delays", async ({ p
   expect(transitionSeconds).toBeLessThanOrEqual(0.00001)
 })
 
-test("print media removes application chrome and controls while retaining feedback", async ({
+test("print media removes application chrome and controls while retaining feedback", { tag: "@cross-browser" }, async ({
   page
 }) => {
   await gotoReadyQuestion(page)

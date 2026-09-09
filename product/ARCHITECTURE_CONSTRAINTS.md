@@ -488,3 +488,26 @@ first-pass or direct-DOM defaults forward silently.
   allowlisted, redacted, bounded, and must never contain question or rationale
   text, source excerpts, free-form corrections, exact searches, or
   security-sensitive leak values.
+
+### CI/CD operating policy — 2026-09-09
+
+The owner authorized separating historical evidence audits from application CI
+and enabling delivery to the active `nycustodianexam.com` Cloudflare zone.
+`bun run verify` checks current code/content/build invariants. Historical
+CODEX-ONLY-UIUX-V1 provenance is audited separately at its accepted snapshot;
+it does not freeze current design documents. These operating rules supersede
+older descriptions of every PR as full release certification.
+
+PRs run Chromium regressions plus selected Firefox/WebKit engine-sensitive
+cases; main/manual runs retain the full browser matrix. Broad automated axe
+scans use Chromium. Deterministic algorithm coverage belongs in unit tests;
+browser tests verify integration and observable outcomes. CI builds once and
+shares the output across browser, delivery, preview, and production jobs.
+
+Successful main CI queues production delivery through the existing protected
+GitHub environment. Environment approval is the release-review checkpoint;
+the candidate-bound production JSON remains truthful historical evidence and
+is no longer an additional deployment gate. Manual assistive-technology,
+zoom, device, and physical-print review remain release responsibilities, not
+claims implied by CI. Publication, artifact integrity, and answer-order checks
+remain mandatory. The correction endpoint remains dormant.

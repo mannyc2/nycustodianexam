@@ -8,9 +8,10 @@ const defaultBaseURL = `http://127.0.0.1:${port}`
 const baseURL = process.env.NYCUSTODIAN_PLAYWRIGHT_BASE_URL ?? defaultBaseURL
 const chromiumExecutable = process.env.NYCUSTODIAN_CHROMIUM_EXECUTABLE
 
-const previewCommand = cloudflarePreview
-  ? "bun run build && bun run wrangler dev --config scripts/wrangler-preview.jsonc --ip 127.0.0.1 --port 8787 --show-interactive-dev-session=false"
-  : "bun run build && bun run vite preview --host 127.0.0.1 --port 4173 --strictPort"
+const buildCommand = process.env.NYCUSTODIAN_TEST_PREBUILT === "1" ? "" : "bun run build && "
+const previewCommand = buildCommand + (cloudflarePreview
+  ? "bun run wrangler dev --config scripts/wrangler-preview.jsonc --ip 127.0.0.1 --port 8787 --show-interactive-dev-session=false"
+  : "bun run vite preview --host 127.0.0.1 --port 4173 --strictPort")
 
 const serverConfiguration = process.env.NYCUSTODIAN_PLAYWRIGHT_BASE_URL === undefined
   ? {
