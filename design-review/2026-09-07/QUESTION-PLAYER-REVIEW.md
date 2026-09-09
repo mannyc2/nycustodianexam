@@ -523,3 +523,20 @@ receipts and routes, implement the linked nonvisual prompt/facts presentation
 across Practice/Review/simulation, retain the selected presentation in durable
 work where needed, and exercise offline/save/import/upgrade flows. No equivalent
 is published or user-visible by this foundation commit.
+
+
+### Revision-specific question artifact paths
+
+Question revisions above version 1 now publish under `questions/vN/`; version-1
+paths remain unchanged. Practice assembly, Review bootstrap validation, and the
+trusted-content registry accept these paths while retaining exact receipt path,
+SHA-256, and byte-count comparisons. This prevents a future revised q091 from
+reusing the feedback URL saved by its original version.
+
+Validation: 103 content tests, 16 targeted site tests, site TypeScript check,
+and the complete build/artifact verifier pass (939 routes). All 224 current
+release JSON artifacts remain byte-identical to the pre-foundation v4 snapshot.
+These checks prove the publication/runtime foundation, not a completed release
+upgrade. Retaining the v4 inventory and original q091 bytes, publishing reviewed
+nonvisual content, linked presentation, and real offline/import/upgrade checks
+remain required before the new release is complete.

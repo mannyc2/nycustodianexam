@@ -1,7 +1,7 @@
 import { matchesVersionedItemPath } from "../versioned-item-path.ts"
 import { PrecommitScene as PrecommitSceneSchema } from "@nycustodian/content/model"
 import { Schema } from "effect"
-import { HazardAttemptReceipt, QuestionAttemptReceipt } from "../attempt-receipt.ts"
+import { HazardAttemptReceipt, matchesQuestionPostcommitPath, QuestionAttemptReceipt } from "../attempt-receipt.ts"
 
 const safePathSegment = "[a-z0-9][a-z0-9._-]*"
 const historyPrefix = `(?:/history/${safePathSegment}-v[1-9][0-9]*)?`
@@ -53,7 +53,7 @@ export const ReviewPracticeQuestionBootstrap = Schema.Struct({
 }).check(Schema.makeFilter((source) =>
   source.id === source.receipt.questionId &&
     matchesVersionedItemPath(source.itemUrl, `/practice/session/${source.receipt.sessionId}/question/${source.receipt.position}/`, source.receipt) &&
-    source.receipt.postcommitPath === `/content/vertical-slice/questions/${source.id}.postcommit.json`
+    matchesQuestionPostcommitPath(source.receipt.postcommitPath, source.id)
     ? undefined
     : "the practice feedback URL and content path must match the exact receipt"
 ))

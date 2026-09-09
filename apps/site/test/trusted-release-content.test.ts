@@ -220,6 +220,24 @@ describe("trusted release-content registry", () => {
     })).toThrow(/non-canonical path/)
   })
 
+  it("accepts revision directories while retaining exact receipt verification", () => {
+    const postcommitPath = "/content/vertical-slice/questions/v2/question-1.postcommit.json"
+    const decoded = decodeTrustedReleaseContentRegistry({ ...rawRegistry(), entries: [
+      { ...rawEntries()[0], postcommitReceipt: { ...questionPostcommitReceipt, postcommitPath } },
+      ...rawEntries().slice(1)
+    ] })
+    const receipt = { ...questionReceipt(), postcommitPath }
+    const optionIds = ["option-a", "option-b", "option-c"]
+    expect(verifyTrustedQuestionContent(decoded, { receipt, optionIds }).itemId).toBe("question-1")
+    for (const change of [
+      { postcommitPath: questionPostcommitReceipt.postcommitPath },
+      { postcommitPath: postcommitPath.replace("v2/", "v3/") },
+      { postcommitSha256: "f".repeat(64) }, { postcommitBytes: 102 }
+    ]) expect(() => verifyTrustedQuestionContent(decoded, {
+      receipt: { ...receipt, ...change }, optionIds
+    })).toThrow()
+  })
+
   it("binds question coordinates, exact receipt bytes, and ordered option closure", () => {
     const decoded = registry()
     expect(verifyTrustedQuestionContent(decoded, {

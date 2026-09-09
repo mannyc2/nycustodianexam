@@ -1,6 +1,7 @@
 import { ArtifactPathSegment } from "@nycustodian/content/model"
 import { Schema } from "effect"
 import {
+  matchesQuestionPostcommitPath,
   HazardAttemptReceipt,
   QuestionAttemptReceipt,
   type HazardAttemptReceipt as HazardAttemptReceiptValue,
@@ -155,10 +156,10 @@ export const trustedReleaseContentKey = (
 ): string =>
   `${coordinate.releaseId}:v${coordinate.packVersion}:${coordinate.variant}:${coordinate.itemId}`
 
-const expectedPostcommitPath = (entry: TrustedReleaseContentEntry): string =>
+const hasExpectedPostcommitPath = (entry: TrustedReleaseContentEntry): boolean =>
   entry.variant === "question"
-    ? `/content/vertical-slice/questions/${entry.itemId}.postcommit.json`
-    : `/content/vertical-slice/scenes/${entry.itemId}.postcommit.json`
+    ? matchesQuestionPostcommitPath(entry.postcommitReceipt.postcommitPath, entry.itemId)
+    : entry.postcommitReceipt.postcommitPath === `/content/vertical-slice/scenes/${entry.itemId}.postcommit.json`
 
 const assertClosedRegistry = (
   registry: TrustedReleaseContentRegistry
@@ -179,7 +180,7 @@ const assertClosedRegistry = (
     }
     entriesByKey.set(key, entry)
 
-    if (entry.postcommitReceipt.postcommitPath !== expectedPostcommitPath(entry)) {
+    if (!hasExpectedPostcommitPath(entry)) {
       throw new Error(`Trusted release-content registry contains a non-canonical path for ${key}`)
     }
     if (entry.variant === "question") continue

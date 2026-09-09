@@ -4,15 +4,15 @@ import pack from "../../../content/authoring/packs/launch-v1.json"
 import tools from "../../../content/authoring/visuals/releases/tools.json"
 import comparisons from "../../../content/authoring/visuals/releases/comparisons.json"
 import scenes from "../../../content/authoring/visuals/releases/scenes.json"
-import { compileContentPack } from "../src/compiler.ts"
+import { compileContentPack, renderReleaseArtifacts } from "../src/compiler.ts"
 import { questionReviewSha256, type ReviewableQuestion } from "../src/compiler/question-review.ts"
 
 const eligible = tools.find(release => release.publicationGate === null && pack.tools.some(tool => tool.conceptId === release.conceptId && tool.practiceEligibility === "text-question"))!
 const binding = { conceptId: eligible.conceptId, masterSha256: eligible.master.sha256, neutralDescription: "An isolated tool viewed against a plain background." }
 type Binding = NonNullable<ReviewableQuestion["illustration"]>
-const compile = (illustration: Binding, updateReview = true, reviewedIllustration: Binding = illustration) => {
+const compile = (illustration: Binding, updateReview = true, reviewedIllustration: Binding = illustration, version = 1) => {
   const authoredPack = structuredClone(pack)
-  const first = { ...authoredPack.questions[0]!, illustration }
+  const first = { ...authoredPack.questions[0]!, illustration, version }
   if (updateReview) first.reviewReceipt.reviewedArtifactSha256 = questionReviewSha256({ ...first, illustration: reviewedIllustration } as ReviewableQuestion, authoredPack)
   const input = { ...authoredPack, questions: [first, ...authoredPack.questions.slice(1)] }
   return Effect.runPromise(compileContentPack({ authoredPack: input, acceptedTools: tools, acceptedComparisons: comparisons, acceptedScenes: scenes }))
@@ -72,4 +72,16 @@ describe("authored nonvisual question compilation", () => {
       { ...nonvisualEquivalent, observations: [" "] }
     ]) await expect(compile({ ...paired, nonvisualEquivalent: invalid })).rejects.toMatchObject({ stage: "schema" })
   })
+})
+
+it("publishes revised question bytes at version-specific paths without changing version-1 paths", async () => {
+  const current = await compile(binding)
+  const revised = await compile(binding, true, binding, 2)
+  const questionId = current.questions[0]!.id
+  const pathsFor = (compiled: typeof current) => renderReleaseArtifacts(compiled)
+    .filter(artifact => artifact.itemId === questionId && ["question-precommit", "question-postcommit"].includes(artifact.kind))
+    .map(artifact => artifact.path)
+  expect(pathsFor(current)).toEqual([`questions/${questionId}.precommit.json`, `questions/${questionId}.postcommit.json`])
+  expect(pathsFor(revised)).toEqual([`questions/v2/${questionId}.precommit.json`, `questions/v2/${questionId}.postcommit.json`])
+  expect(pathsFor(revised).some(path => pathsFor(current).includes(path))).toBe(false)
 })

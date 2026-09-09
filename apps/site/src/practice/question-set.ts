@@ -1,5 +1,5 @@
 import { matchesVersionedItemPath } from "../versioned-item-path.ts"
-import type { QuestionAttemptReceipt } from "../attempt-receipt.ts"
+import { matchesQuestionPostcommitPath, type QuestionAttemptReceipt } from "../attempt-receipt.ts"
 import { parsePracticeSetId, selectPracticeSet, type PracticeSetSpec } from "./set.ts"
 
 /** Compiled pre-answer inventory; never assembled from saved attempt contents. */
@@ -32,7 +32,7 @@ export const assemblePracticeQuestions = <T extends PracticeQuestionSource>(
       source.receipt.releaseId !== first.receipt.releaseId ||
       source.receipt.packVersion !== first.receipt.packVersion ||
       !matchesVersionedItemPath(source.itemUrl, `/practice/session/${source.receipt.sessionId}/question/${source.receipt.position}/`, source.receipt) ||
-      source.receipt.postcommitPath !== `/content/vertical-slice/questions/${source.id}.postcommit.json` ||
+      !matchesQuestionPostcommitPath(source.receipt.postcommitPath, source.id) ||
       source.optionIds.length === 0 || new Set(source.optionIds).size !== source.optionIds.length) {
       throw new Error("Practice inventory does not have a coherent released question closure")
     }

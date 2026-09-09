@@ -44,4 +44,18 @@ describe("custom question set receipt closure", () => {
       })).toThrow("coherent")
     }
   })
+  it("restores revised artifacts only through their exact saved path", () => {
+    const revised = inventory.map((item) => ({ ...item, receipt: {
+      ...item.receipt,
+      postcommitPath: `/content/vertical-slice/questions/v2/${item.id}.postcommit.json`
+    } }))
+    const step = assemblePracticeQuestions(revised, spec)[0]!
+    expect(resolvePracticeQuestion(revised, step.receipt)).toEqual(step)
+    expect(resolvePracticeQuestion(inventory, step.receipt)).toBeUndefined()
+    expect(resolvePracticeQuestion(revised, {
+      ...step.receipt,
+      postcommitPath: `/content/vertical-slice/questions/${step.receipt.questionId}.postcommit.json`
+    })).toBeUndefined()
+  })
+
 })

@@ -5,7 +5,7 @@ import { installSessionNavigation } from "../../session-navigation.ts"
 import { ReviewQueueIsland } from "./review-queue.tsx"
 import { createReviewController } from "../controller.ts"
 import { ReviewQueueBootstrap } from "../model.ts"
-import { questionAttemptId } from "../../attempt-receipt.ts"
+import { matchesQuestionPostcommitPath, questionAttemptId } from "../../attempt-receipt.ts"
 import { loadStudyActivity } from "../../study/activity.ts"
 import type { StudyActivityState } from "../../study/model.ts"
 
@@ -30,8 +30,7 @@ for (const question of [...bootstrap.questions, ...(bootstrap.practiceQuestions 
   questionIds.add(identity)
   if (
     question.receipt.questionId !== question.id ||
-    question.receipt.postcommitPath !==
-      `/content/vertical-slice/questions/${encodeURIComponent(question.id)}.postcommit.json`
+    !matchesQuestionPostcommitPath(question.receipt.postcommitPath, question.id)
   ) {
     throw new Error("Review bootstrap question feedback path does not match its item ID")
   }

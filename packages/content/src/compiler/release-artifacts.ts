@@ -30,6 +30,7 @@ export const renderReleaseArtifacts = (
     }
   ]
   for (const question of compiled.questions) {
+    const directory = question.precommit.version === 1 ? "questions" : `questions/v${question.precommit.version}`
     const precommitText = question === firstQuestion
       ? firstQuestionPrecommitText
       : stableJson(question.precommit)
@@ -40,13 +41,13 @@ export const renderReleaseArtifacts = (
       {
         kind: "question-precommit",
         itemId: question.id,
-        path: `questions/${question.id}.precommit.json`,
+        path: `${directory}/${question.id}.precommit.json`,
         text: precommitText
       },
       {
         kind: "question-postcommit",
         itemId: question.id,
-        path: `questions/${question.id}.postcommit.json`,
+        path: `${directory}/${question.id}.postcommit.json`,
         text: postcommitText
       }
     )

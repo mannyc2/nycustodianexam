@@ -18,10 +18,14 @@ const Sha256 = Schema.String.check(
 
 const QuestionPostcommitPath = Schema.String.check(
   Schema.isPattern(
-    new RegExp(`^/content/vertical-slice/questions/${safePathSegment}\.postcommit\.json$`),
+    /^\/content\/vertical-slice\/questions\/(?:v(?:[2-9]|[1-9][0-9]+)\/)?[a-z0-9][a-z0-9._-]*\.postcommit\.json$/,
     { expected: "an exact root-relative question postcommit artifact path" }
   )
 )
+
+const isQuestionPostcommitPath = Schema.is(QuestionPostcommitPath)
+export const matchesQuestionPostcommitPath = (path: string, questionId: string): boolean =>
+  isQuestionPostcommitPath(path) && path.endsWith(`/${questionId}.postcommit.json`)
 
 const ScenePostcommitPath = Schema.String.check(
   Schema.isPattern(
