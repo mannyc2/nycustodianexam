@@ -67,3 +67,21 @@ The authored schema, accepted-artwork compiler validation, neutral delivery
 identity, player and retained-history rendering, and print closure still need
 implementation before any illustrated item can be published. The test binding
 is synthetic and is not authored or released study content.
+
+## Authored and compiled illustration contract
+
+Authored questions now accept that optional reviewed binding. The compiler checks
+the exact accepted tool master, membership in the authored tool set, practice
+eligibility, and the absence of a publication gate. It then projects only the
+neutral description, master checksum, and derivative kind/checksum/byte receipts
+into both the pack and item precommit artifacts. Concept IDs and repository paths
+are deliberately absent from the stimulus projection. Existing text records omit
+the field entirely.
+
+Four compiler tests cover safe projection, absent editorial re-review, stale or
+missing artwork, and reference-only exclusion. Together with the existing pack
+and fingerprint tests, 32 tests pass; content typecheck and full production
+build/artifact checks pass with unchanged released content and bundle measurements.
+The tests use synthetic pairings, not newly reviewed learner questions. Neutral
+image URL delivery, cache closure, rendering, and actual original illustrated
+content remain unfinished; no illustrated question has been released yet.

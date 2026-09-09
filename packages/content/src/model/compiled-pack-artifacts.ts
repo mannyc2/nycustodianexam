@@ -21,6 +21,7 @@ import {
   Sha256
 } from "./content-primitives.ts"
 import {
+  QuestionIllustration,
   QuestionOption,
   QuestionOptionConceptMappings,
   QuestionRationale
@@ -144,6 +145,7 @@ export const PrecommitPackQuestion = Schema.Struct({
   profileIds: Schema.NonEmptyArray(Schema.NonEmptyString),
   prompt: Schema.NonEmptyString,
   options: Schema.NonEmptyArray(QuestionOption),
+  illustration: Schema.optionalKey(QuestionIllustration),
   memberships: Schema.Array(SafeQuestionMembership)
 })
 

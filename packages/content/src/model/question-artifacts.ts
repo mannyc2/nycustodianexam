@@ -1,11 +1,22 @@
 import { Schema } from "effect"
-import { ArtifactPathSegment } from "./content-primitives.ts"
+import { ArtifactPathSegment, Sha256 } from "./content-primitives.ts"
 import {
   AuthoredQuestionTags,
   QuestionFactKind,
   SafeQuestionMembership
 } from "./question-metadata.ts"
 import { SourceReceipt, SupportedClaim } from "./source-evidence.ts"
+
+/** Reviewed stimulus identity; delivery resolves hashes to neutral image URLs. */
+export const QuestionIllustration = Schema.Struct({
+  masterSha256: Sha256,
+  neutralDescription: Schema.NonEmptyString,
+  derivatives: Schema.NonEmptyArray(Schema.Struct({
+    kind: Schema.Literals(["web", "phone", "print"]),
+    sha256: Sha256,
+    bytes: Schema.Natural
+  }))
+})
 
 export class QuestionOption extends Schema.Class<QuestionOption>(
   "@nycustodian/content/QuestionOption"
@@ -100,6 +111,7 @@ export class PrecommitQuestion extends Schema.Class<PrecommitQuestion>(
   profileIds: Schema.optionalKey(Schema.NonEmptyArray(Schema.NonEmptyString)),
   prompt: Schema.NonEmptyString,
   options: Schema.NonEmptyArray(QuestionOption),
+  illustration: Schema.optionalKey(QuestionIllustration),
   memberships: Schema.optionalKey(Schema.Array(SafeQuestionMembership))
 }) {}
 

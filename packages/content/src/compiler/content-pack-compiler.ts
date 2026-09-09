@@ -1176,12 +1176,31 @@ export const compileContentPack = Effect.fn("Content.compileContentPack")(
           }
         }
       }
+      const binding = question.illustration
+      const illustratedTool = binding === undefined ? undefined : authoredToolMap.get(binding.conceptId)
+      const illustratedRelease = binding === undefined ? undefined : acceptedToolMap.get(binding.conceptId)
+      if (binding !== undefined && (
+        illustratedTool?.practiceEligibility !== "text-question" ||
+        illustratedRelease === undefined || illustratedRelease.publicationGate !== null ||
+        illustratedRelease.master.sha256 !== binding.masterSha256
+      )) {
+        return yield* relationError(
+          `question ${question.id} illustration must bind exact accepted, practice-eligible artwork`,
+          `questions.${question.id}.illustration`
+        )
+      }
+      const illustration = binding === undefined || illustratedRelease === undefined ? undefined : {
+        masterSha256: binding.masterSha256,
+        neutralDescription: binding.neutralDescription,
+        derivatives: illustratedRelease.derivatives.map(({ kind, sha256, bytes }) => ({ kind, sha256, bytes }))
+      }
       safeMembershipsByQuestionId.set(question.id, memberships)
       precommitQuestions.push({
         id: question.id,
         version: question.version,
         profileIds: question.profileIds,
         prompt: question.prompt,
+        ...(illustration === undefined ? {} : { illustration }),
         options: question.options.map((option) => ({ id: option.id, label: option.label })),
         memberships
       })
@@ -1801,6 +1820,7 @@ export const compileContentPack = Effect.fn("Content.compileContentPack")(
           profileId: question.profileIds[0],
           profileIds: question.profileIds,
           prompt: question.prompt,
+          ...(question.illustration === undefined ? {} : { illustration: question.illustration }),
           options,
           memberships: question.memberships
         }),
