@@ -1,321 +1,30 @@
-import type { Effect as EffectType } from "effect"
-import { Effect } from "effect"
-import { useEffect, useRef, useState } from "react"
-import {
-  localFailureReport,
-  type LocalFailureReport
-} from "../../local-failure-detail.ts"
-import {
-  CorrectionDraftPersistence,
-  type CorrectionDraftPersistenceError
-} from "../persistence.ts"
-import {
-  CorrectionDraftRecord,
-  correctionReportFromDraft,
-  emptyCorrectionDraft
-} from "../model.ts"
-import {
-  fetchCorrectionIntakeStatus,
-  submitCorrectionReport,
-  type CorrectionIntakeStatus
-} from "../client.ts"
+import type { CorrectionDraftRecord } from "../model.ts"
+import { useCorrection } from "./provider.tsx"
 
-interface CorrectionEffectRunner {
-  readonly runPromise: <A, E>(
-    effect: EffectType.Effect<A, E, CorrectionDraftPersistence>
-  ) => Promise<A>
-}
-
-const freshDraft = (): CorrectionDraftRecord =>
-  emptyCorrectionDraft(crypto.randomUUID())
-
-type CorrectionField = "pagePath" | "summary" | "details" | "publicSourceUrl" | "affirmation"
-type CorrectionValidationErrors = Partial<Record<CorrectionField, string>>
-
-const validateCorrectionDraft = (draft: CorrectionDraftRecord): CorrectionValidationErrors => {
-  const errors: CorrectionValidationErrors = {}
-  const pagePath = draft.pagePath.trim()
-  const pageSegments = pagePath === "/"
-    ? []
-    : pagePath.slice(1, pagePath.endsWith("/") ? -1 : undefined).split("/")
-  if (
-    pagePath.length > 500 ||
-    !(
-      pagePath === "/" ||
-      /^\/(?:[A-Za-z0-9._~-]+\/)*[A-Za-z0-9._~-]+\/?$/.test(pagePath)
-    ) ||
-    pageSegments.some((segment) => segment === "." || segment === "..")
-  ) {
-    errors.pagePath = "Enter a root-relative public path without a domain, query, or fragment."
-  }
-  if (draft.summary.trim().length === 0) errors.summary = "Enter a short summary."
-  if (draft.details.trim().length === 0) errors.details = "Enter the correction details."
-  if (draft.publicSourceUrl.trim().length > 0) {
-    try {
-      const source = new URL(draft.publicSourceUrl.trim())
-      if (source.protocol !== "https:" || source.username !== "" || source.password !== "") {
-        errors.publicSourceUrl = "Use an HTTPS public source URL without credentials."
-      }
-    } catch {
-      errors.publicSourceUrl = "Enter a valid HTTPS public source URL."
-    }
-  }
-  if (!draft.affirmsNoSecureExamMaterial) {
-    errors.affirmation = "Confirm that the report contains no secure or remembered exam material."
-  }
-  return errors
-}
-
-export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffectRunner }) => {
-  const [draft, setDraft] = useState<CorrectionDraftRecord>(freshDraft)
-  const [loading, setLoading] = useState(true)
-  const [busy, setBusy] = useState(false)
-  const [notice, setNotice] = useState("Checking this device for a saved draft…")
-  const [problem, setProblem] = useState<LocalFailureReport | null>(null)
-  const [intakeStatus, setIntakeStatus] = useState<CorrectionIntakeStatus | "unchecked" | "checking">("unchecked")
-  const [validationErrors, setValidationErrors] = useState<CorrectionValidationErrors>({})
-  const [acceptedRemotely, setAcceptedRemotely] = useState<string | null>(null)
-  const [receiptStorageProblem, setReceiptStorageProblem] = useState(false)
-  const problemHeading = useRef<HTMLHeadingElement>(null)
-  const receiptHeading = useRef<HTMLHeadingElement>(null)
-
-  useEffect(() => {
-    let active = true
-    void runtime.runPromise(
-      Effect.gen(function*() {
-        const persistence = yield* CorrectionDraftPersistence
-        return yield* persistence.findLatest()
-      })
-    ).then((stored) => {
-      if (!active) return
-      if (stored !== undefined) setDraft(stored)
-      setNotice(stored === undefined
-        ? "No saved draft was found on this device. Nothing has been sent."
-        : stored.submissionState === "accepted"
-        ? "Your accepted report receipt is saved on this device."
-        : "Your saved draft was restored. Nothing was sent.")
-      setLoading(false)
-    }).catch((cause: CorrectionDraftPersistenceError) => {
-      if (!active) return
-      setProblem(localFailureReport(cause, "Saved drafts could not be read from this device\u2019s storage."))
-      setNotice("Nothing was sent.")
-      setLoading(false)
-    })
-    return () => {
-      active = false
-    }
-  }, [runtime])
-
-  // No status request happens on page load; the learner asks explicitly.
-  const checkIntake = async (): Promise<void> => {
-    setIntakeStatus("checking")
-    setIntakeStatus(await fetchCorrectionIntakeStatus(fetch))
-  }
-
-  useEffect(() => {
-    if (problem !== null) problemHeading.current?.focus()
-  }, [problem])
-
-  useEffect(() => {
-    if (draft.submissionState === "accepted") receiptHeading.current?.focus()
-  }, [draft.submissionState, receiptStorageProblem])
-
-  const update = <K extends keyof CorrectionDraftRecord>(
-    key: K,
-    value: CorrectionDraftRecord[K]
-  ): void => {
-    setProblem(null)
-    const validationKey: CorrectionField | undefined = key === "affirmsNoSecureExamMaterial"
-      ? "affirmation"
-      : key === "pagePath" || key === "summary" || key === "details" || key === "publicSourceUrl"
-      ? key
-      : undefined
-    if (validationKey !== undefined) {
-      setValidationErrors((current) => ({ ...current, [validationKey]: undefined }))
-    }
-    setDraft(new CorrectionDraftRecord({ ...draft, [key]: value }))
-  }
-
-  const persist = async (candidate: CorrectionDraftRecord): Promise<CorrectionDraftRecord> =>
-    runtime.runPromise(
-      Effect.gen(function*() {
-        const persistence = yield* CorrectionDraftPersistence
-        return yield* persistence.save(candidate)
-      })
-    )
-
-  const saveLocally = async (): Promise<void> => {
-    setBusy(true)
-    setProblem(null)
-    try {
-      const saved = await persist(new CorrectionDraftRecord({
-        ...draft,
-        submissionState: "draft",
-        acceptedAt: null
-      }))
-      setDraft(saved)
-      setNotice("Draft saved in this browser. It was not submitted. Browser data can be cleared; export a backup from Settings if you want to keep it.")
-    } catch (cause) {
-      setProblem(localFailureReport(cause, "The draft could not be saved to this device\u2019s storage. What you typed is still shown."))
-      setNotice("The draft was not saved, and nothing was sent.")
-    } finally {
-      setBusy(false)
-    }
-  }
-
-  const submit = async (): Promise<void> => {
-    if (acceptedRemotely !== null) return
-    if (intakeStatus !== "active") {
-      setNotice("Reports cannot be sent right now. Nothing was sent. Use Save draft on this device if you want to keep what is shown.")
-      return
-    }
-    setBusy(true)
-    setProblem(null)
-    let report
-    const errors = validateCorrectionDraft(draft)
-    if (Object.keys(errors).length > 0) {
-      setValidationErrors(errors)
-      setProblem({ message: "Correct the labeled fields below before submitting this report.", diagnostic: null })
-      setNotice("Nothing was sent.")
-      setBusy(false)
-      return
-    }
-    try {
-      report = correctionReportFromDraft(draft)
-    } catch {
-      setProblem({ message: "Correct the labeled fields below before submitting this report.", diagnostic: null })
-      setNotice("Nothing was sent.")
-      setBusy(false)
-      return
-    }
-
-    try {
-      const saved = await persist(new CorrectionDraftRecord({
-        ...draft,
-        submissionState: "draft",
-        acceptedAt: null
-      }))
-      setDraft(saved)
-      const result = await submitCorrectionReport(fetch, report)
-      if (result.tag === "inactive") {
-        setIntakeStatus("inactive")
-        setNotice("Online intake is off, so nothing was sent. Your draft remains saved in this browser.")
-        return
-      }
-      if (result.tag === "rate-limited") {
-        setProblem({
-          message: `Too many reports are arriving right now. Wait about ${result.retryAfterSeconds} seconds, then choose Submit again.`,
-          diagnostic: null
-        })
-        setNotice("Your draft remains saved in this browser. It will not retry on its own.")
-        return
-      }
-      if (result.tag === "failed") {
-        setProblem({ message: result.detail, diagnostic: null })
-        setNotice("Your draft remains saved in this browser. It will not retry on its own.")
-        return
-      }
-
-      const acceptedCandidate = new CorrectionDraftRecord({
-        ...saved,
-        submissionState: "accepted",
-        acceptedAt: Date.now()
-      })
-      setAcceptedRemotely(result.clientReceiptId)
-      setDraft(acceptedCandidate)
-      try {
-        const accepted = await persist(acceptedCandidate)
-        setDraft(accepted)
-        setReceiptStorageProblem(false)
-        setNotice("The report was accepted, and its receipt is saved on this device. Acceptance does not mean it will be published.")
-      } catch (cause) {
-        console.error("Unable to save the accepted-report receipt", cause)
-        setReceiptStorageProblem(true)
-        setProblem(null)
-        setNotice(
-          "The service accepted the report, but its receipt could not be saved on this device. " +
-          "Do not submit this report again — retry only the receipt save."
-        )
-      }
-    } catch (cause) {
-      setProblem(localFailureReport(cause, "The draft could not be written to this device\u2019s storage before sending, so nothing was sent."))
-      setNotice("Nothing will retry on its own. Review or save the fields again.")
-    } finally {
-      setBusy(false)
-    }
-  }
-
-  const retryReceiptSave = async (): Promise<void> => {
-    if (acceptedRemotely === null || draft.submissionState !== "accepted") return
-    setBusy(true)
-    setProblem(null)
-    try {
-      const accepted = await persist(draft)
-      setDraft(accepted)
-      setReceiptStorageProblem(false)
-      setNotice("The accepted report\u2019s receipt is now saved on this device. Nothing new was sent.")
-    } catch (cause) {
-      console.error("Unable to save the accepted-report receipt", cause)
-      setReceiptStorageProblem(true)
-      setNotice(
-        "The report remains accepted, but its receipt still could not be saved on this device. You can retry the receipt save."
-      )
-    } finally {
-      setBusy(false)
-    }
-  }
-
-  const startAnotherReport = (): void => {
-    setAcceptedRemotely(null)
-    setReceiptStorageProblem(false)
-    setProblem(null)
-    setDraft(freshDraft())
-    setNotice("A new unsaved report is ready. Nothing new has been submitted.")
-  }
-
-  const deleteDraft = async (): Promise<void> => {
-    const deletingAcceptedReceipt = draft.submissionState === "accepted"
-    if (!window.confirm(deletingAcceptedReceipt
-      ? "Delete this accepted report\u2019s local receipt from this device? This will not withdraw the submitted report."
-      : "Delete this local correction draft from this device?")) return
-    setBusy(true)
-    setProblem(null)
-    try {
-      await runtime.runPromise(
-        Effect.gen(function*() {
-          const persistence = yield* CorrectionDraftPersistence
-          yield* persistence.remove(draft.id)
-        })
-      )
-      setDraft(freshDraft())
-      setAcceptedRemotely(null)
-      setReceiptStorageProblem(false)
-      setNotice(deletingAcceptedReceipt
-        ? "The local receipt was deleted. The report remains submitted; deleting its local receipt did not withdraw it."
-        : "The local draft was deleted. Nothing was submitted.")
-    } catch (cause) {
-      setProblem(localFailureReport(
-        cause,
-        deletingAcceptedReceipt
-          ? "The accepted report\u2019s local receipt could not be deleted from this device\u2019s storage. The report remains submitted and was not withdrawn."
-          : "The draft could not be deleted from this device\u2019s storage. Nothing was sent."
-      ))
-    } finally {
-      setBusy(false)
-    }
-  }
-
+export const CorrectionForm = () => {
+  const { state, actions, meta } = useCorrection()
+  const { draft, loading, busy, notice, problem, intakeStatus, validationErrors, receiptStatus } = state
+  const receiptStorageProblem = receiptStatus === "unsaved"
+  const { update, saveLocally, submit, checkIntake, retryReceiptSave, startAnotherReport, deleteDraft } = actions
+  const { problemHeading, receiptHeading, formFields } = meta
   if (loading) return <p role="status">{notice}</p>
 
   if (draft.submissionState === "accepted") {
     return (
       <section className="local-data-state" aria-labelledby="correction-receipt-heading">
         <h2 id="correction-receipt-heading" ref={receiptHeading} tabIndex={-1}>
-          {receiptStorageProblem
+          {receiptStatus === "saving"
+            ? "Report accepted — saving receipt on this device"
+            : receiptStorageProblem
             ? "Report accepted — receipt not saved on this device yet"
             : "Report receipt saved on this device"}
         </h2>
-        <p>{notice}</p>
+        {problem === null ? null : <section className="local-data-error" role="alert" aria-labelledby="correction-error-heading">
+          <h3 id="correction-error-heading" ref={problemHeading} tabIndex={-1}>This local action did not finish</h3>
+          <p>{problem.message}</p>
+          {problem.diagnostic === null ? null : <details className="feedback-sources"><summary>Technical details</summary><p><code>{problem.diagnostic}</code></p></details>}
+        </section>}
+        <p role="status" aria-live="polite">{notice}</p>
         <details className="source-note">
           <summary>Technical details</summary>
           <p><strong>Client receipt ID:</strong> <code>{draft.id}</code></p>
@@ -354,7 +63,7 @@ export const CorrectionForm = ({ runtime }: { readonly runtime: CorrectionEffect
           )}
         </section>
       )}
-      <fieldset className="form-field-group">
+      <fieldset className="form-field-group" ref={formFields} tabIndex={-1}>
         <legend>Correction report details</legend>
       <div className="form-field">
         <label htmlFor="correction-category">Concern category</label>

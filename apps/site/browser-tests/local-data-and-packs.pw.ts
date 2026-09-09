@@ -911,12 +911,35 @@ test("a remotely accepted report never blindly resubmits when local receipt pers
   })
   await holdWritesToStore(page, appDatabaseStores.correctionDrafts)
   await page.getByRole("button", { name: "Retry saving the receipt" }).click()
+  await expect(page.getByRole("heading", { name: "Report accepted — saving receipt on this device", exact: true })).toBeFocused()
+  await expect(page.getByRole("heading", { name: "Report receipt saved on this device", exact: true })).toHaveCount(0)
   await expect(page.getByRole("button", { name: "Delete local receipt" })).toBeDisabled()
   await releaseHeldStoreWrites(page)
   await expect(page.getByRole("heading", { name: "Report receipt saved on this device" }))
     .toBeFocused()
   await expect(page.getByText(/Nothing new was sent/)).toBeVisible()
   expect(posts).toBe(1)
+
+  await page.evaluate(() => {
+    const owner = window as typeof window & { __originalReceiptDelete?: typeof IDBObjectStore.prototype.delete }
+    owner.__originalReceiptDelete = IDBObjectStore.prototype.delete
+    IDBObjectStore.prototype.delete = function(key) {
+      if (this.name === "correction-drafts") throw new DOMException("Deletion unavailable", "UnknownError")
+      return owner.__originalReceiptDelete!.call(this, key)
+    }
+  })
+  page.once("dialog", (dialog) => dialog.accept())
+  await page.getByRole("button", { name: "Delete local receipt" }).click()
+  await expect(page.getByRole("heading", { name: "This local action did not finish", exact: true })).toBeFocused()
+  await expect(page.getByRole("alert")).toContainText("was not withdrawn")
+  expect(posts).toBe(1)
+  expect(await readStoreRecords(page, appDatabaseStores.correctionDrafts)).toHaveLength(1)
+  await page.evaluate(() => {
+    const owner = window as typeof window & { __originalReceiptDelete?: typeof IDBObjectStore.prototype.delete }
+    if (owner.__originalReceiptDelete === undefined) throw new Error("Missing receipt-delete fixture")
+    IDBObjectStore.prototype.delete = owner.__originalReceiptDelete
+    delete owner.__originalReceiptDelete
+  })
 
   page.once("dialog", async (dialog) => {
     expect(dialog.message()).toContain("will not withdraw the submitted report")
