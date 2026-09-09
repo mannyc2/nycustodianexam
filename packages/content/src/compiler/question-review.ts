@@ -5,6 +5,11 @@ export interface ReviewableQuestion {
   readonly version: number
   readonly profileIds: ReadonlyArray<string>
   readonly prompt: string
+  readonly illustration?: {
+    readonly conceptId: string
+    readonly masterSha256: string
+    readonly neutralDescription: string
+  }
   readonly options: ReadonlyArray<{
     readonly id: string
     readonly label: string
@@ -137,6 +142,13 @@ export const questionReviewText = (
     version: question.version,
     profileIds: [...question.profileIds],
     prompt: question.prompt,
+    ...(question.illustration === undefined ? {} : {
+      illustration: {
+        conceptId: question.illustration.conceptId,
+        masterSha256: question.illustration.masterSha256,
+        neutralDescription: question.illustration.neutralDescription
+      }
+    }),
     options: question.options.map((option) => ({
       id: option.id,
       label: option.label,

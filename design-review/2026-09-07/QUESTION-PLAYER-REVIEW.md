@@ -52,3 +52,18 @@ and simulation compatibility. Existing text-question receipts and saved records
 must remain valid. The accepted isolated tool images can supply reviewed artwork,
 but their Atlas URLs are not suitable pre-answer identifiers. No illustrated
 question or review receipt was fabricated during this audit.
+
+## Illustration review fingerprint foundation
+
+The review projection now supports an optional illustration binding containing
+the authored concept identity, exact accepted master SHA-256, and neutral
+description. Each field participates in the canonical review fingerprint;
+omitting the binding preserves the original text-only projection byte-for-byte.
+Three focused tests verify all 90 existing authored review receipts, image-binding
+drift, and stable projection order. Content-package typecheck passes.
+
+This is the first implementation step, not a released illustrated modality.
+The authored schema, accepted-artwork compiler validation, neutral delivery
+identity, player and retained-history rendering, and print closure still need
+implementation before any illustrated item can be published. The test binding
+is synthetic and is not authored or released study content.
