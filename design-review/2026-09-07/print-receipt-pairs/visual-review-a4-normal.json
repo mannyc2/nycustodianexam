@@ -1,0 +1,43 @@
+{
+  "pdf": "explanations-and-sources-a4-normal.pdf",
+  "sha256": "a019a7fb3bebc578ff68b0719833cf01070e49b9f88956642322bd6d119666b1",
+  "sourceCommit": "c7627c73af779828f915a5ab7be0d90814fc5a2f",
+  "inspectedPages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "result": "No observed clipping, overlap or split source label/value pairs. Metadata, rationale text, source excerpts and technical receipts remain readable. Long source entries continue across pages; each technical label remains with its value.",
+  "observations": [
+    {
+      "pages": [
+        1
+      ],
+      "finding": "Metadata is readable and the preview-only label is absent."
+    },
+    {
+      "pages": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "finding": "First-question rationales and complete source material continue without overlapping text or clipped boundaries."
+    },
+    {
+      "pages": [
+        7
+      ],
+      "finding": "Second-question rationales and source receipt fit on the final page; closing border is intact."
+    }
+  ],
+  "limitations": [
+    "Visual inspection of this exact seven-page PDF only.",
+    "Does not certify large A4, normal Letter, fact sheets, physical printers or assistive technology."
+  ]
+}
