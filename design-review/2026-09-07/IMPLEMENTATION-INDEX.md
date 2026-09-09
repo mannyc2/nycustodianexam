@@ -48,4 +48,4 @@ Start visual review with the [comparison gallery](implementation-comparison.html
 
 ## Latest automated checkpoint
 
-See `FINAL-REVIEW-VALIDATION.md` for the latest combined component checkpoint at `6bc18ea` (473 tests, with a separately passing historical validator after sandbox EPERM). Earlier runs retain their exact source and scope in the individual documents; counts from separate runs are not summed into an invented single run.
+See `FINAL-REVIEW-VALIDATION.md` for the latest integrated checkpoint at `364835e` (504 tests, with a separately passing historical validator after sandbox EPERM). Earlier runs retain their exact source and scope in the individual documents; counts from separate runs are not summed into an invented single run.
