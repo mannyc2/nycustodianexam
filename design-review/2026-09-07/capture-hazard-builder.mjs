@@ -28,6 +28,9 @@ try {
       await builder.screenshot({ path: output + file, style: '.site-header-inner > .nav-primary, .site-header-inner > .nav-utility { opacity: 0; }' });
       await page.evaluate(() => scrollTo(0, 0));
       await page.screenshot({ path: output + `${state}-${width}-viewport.png` });
+      const summary = builder.getByRole('region', { name: 'Your drill, before you start', exact: true });
+      await expect(summary).toContainText('on this device');
+      await summary.screenshot({ path: output + `${state}-${width}-summary.png`, style: '.site-header-inner > .nav-primary, .site-header-inner > .nav-utility { opacity: 0; }' });
       captures.push({ file, width, state, bounds: await builder.boundingBox() });
     }
     await context.close();

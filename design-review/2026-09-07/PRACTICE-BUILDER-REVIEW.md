@@ -83,3 +83,28 @@ correction was inspected in the final refreshed capture. Reference 22 supplies
 the setup composition; real four-category inventory and native checked marks
 remain intentional differences. Final setup-summary comparison and the broader
 Home/Practice/Review visual audit remain unfinished.
+
+
+## Setup summary reconciliation
+
+Practice and Hazard now use a titled summary card with divided definition-list
+rows for task, length, timing, feedback and saved-record behavior. Practice also
+names its selected content areas; an invalid requested length explicitly asks
+for replacement. Hazard identifies visual marking versus written zones and
+explains that those response records remain separate. The summary reflects
+current controls and does not introduce sessions, quotas, or new storage.
+
+`setup-summary-practice/` and `setup-summary-hazards/` retain desktop/compact
+captures, including dedicated summary crops for each captured state. The
+unavailable Practice length, default Practice set, written five-scene drill,
+and all-scenes visual drill were visually compared with the accepted builder's
+summary structure. Compact rows stack their labels and values. The prototype's
+invented technical pack/version strings are not reproduced; repeat-code behavior
+remains explained in the existing disclosure.
+
+All 15 targeted online Practice/Hazard builder workflow checks pass across
+Chromium, Firefox and WebKit, including selection, saving, Review and setup
+navigation. Offline cases were not repeated for this presentation-only change.
+Five workspace typechecks and root build/artifact checks pass. Both capture
+scripts completed without page errors. The remaining integrated visual audit
+and illustrated-question binding work are still tracked separately.

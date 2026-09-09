@@ -1,0 +1,83 @@
+{
+  "captures": [
+    {
+      "file": "visual-one-1053.png",
+      "width": 1053,
+      "state": "visual-one",
+      "bounds": {
+        "x": 26.328125,
+        "y": -589.8125,
+        "width": 1000.34375,
+        "height": 1372.671875
+      }
+    },
+    {
+      "file": "visual-all-1053.png",
+      "width": 1053,
+      "state": "visual-all",
+      "bounds": {
+        "x": 26.328125,
+        "y": -589.8125,
+        "width": 1000.34375,
+        "height": 1372.671875
+      }
+    },
+    {
+      "file": "keyboard-five-1053.png",
+      "width": 1053,
+      "state": "keyboard-five",
+      "bounds": {
+        "x": 26.328125,
+        "y": -589.8125,
+        "width": 1000.34375,
+        "height": 1372.671875
+      }
+    },
+    {
+      "file": "no-javascript-1053.png",
+      "width": 1053,
+      "state": "no-javascript",
+      "directSceneNavigation": true
+    },
+    {
+      "file": "visual-one-384.png",
+      "width": 384,
+      "state": "visual-one",
+      "bounds": {
+        "x": 16,
+        "y": -871.765625,
+        "width": 352,
+        "height": 1754.328125
+      }
+    },
+    {
+      "file": "visual-all-384.png",
+      "width": 384,
+      "state": "visual-all",
+      "bounds": {
+        "x": 16,
+        "y": -871.765625,
+        "width": 352,
+        "height": 1754.328125
+      }
+    },
+    {
+      "file": "keyboard-five-384.png",
+      "width": 384,
+      "state": "keyboard-five",
+      "bounds": {
+        "x": 16,
+        "y": -882.765625,
+        "width": 352,
+        "height": 1777.578125
+      }
+    },
+    {
+      "file": "no-javascript-384.png",
+      "width": 384,
+      "state": "no-javascript",
+      "directSceneNavigation": true
+    }
+  ],
+  "errors": []
+}

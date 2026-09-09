@@ -28,7 +28,17 @@ export const HazardBuilder = ({ sources }: { readonly sources: ReadonlyArray<Rev
         <label><input type="radio" name="drill-mode" checked={mode === "nonvisual"} onChange={() => setMode("nonvisual")} /><span><strong>Read and select zones</strong><br />Use written scene zones without an image.</span></label>
         <p className="field-hint">Both tasks are keyboard operable. Written zones cover the same knowledge but are a different task from marking a picture.</p>
       </fieldset>
-      <dl className="simulation-preview simulation-preview-facts reference-card"><div><dt>Your drill</dt><dd>{length} {length === 1 ? "scene" : "scenes"} · untimed</dd></div><div><dt>Response</dt><dd>{mode === "visual" ? "Markers on the picture" : "Written zones, no image"}</dd></div><div><dt>Feedback</dt><dd>After each saved response</dd></div></dl>
+      <section className="simulation-preview reference-card setup-summary" aria-labelledby="hazard-summary-heading">
+        <h3 id="hazard-summary-heading">Your drill, before you start</h3>
+        <dl className="simulation-preview-facts">
+          <div><dt>Task</dt><dd>{mode === "visual" ? "Hazard scenes — marking the picture" : "Hazard scenes — selecting written zones"}</dd></div>
+          <div><dt>Length</dt><dd>{length} of {sources.length} reviewed scenes</dd></div>
+          <div><dt>Timing</dt><dd>Untimed — work at your own pace</dd></div>
+          <div><dt>Feedback</dt><dd>After each saved response</dd></div>
+          <div><dt>Saved</dt><dd>One record per scene response in this drill, on this device</dd></div>
+        </dl>
+        <p>Visual and written-zone drills are different tasks. Their responses are saved separately, and neither is scored against the other.</p>
+      </section>
       <details className="practice-repeat"><summary>Repeat a drill</summary><label htmlFor="hazard-set-code">Drill code</label><input className="text-input" id="hazard-set-code" value={seed} required maxLength={practiceSetSeedLimit} onChange={(event) => setSeed(event.target.value)} /><p>The same release, scene count and code reproduce the same scene order. Responses already saved for this drill remain saved on this device.</p></details>
       {failure ? <p role="alert">This drill could not be prepared. Check your choices and try again.</p> : null}
       <button className="button button-primary" type="submit" disabled={sources.length < length || seed.trim().length === 0}>Start drill</button>

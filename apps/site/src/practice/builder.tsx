@@ -49,7 +49,18 @@ export const PracticeBuilder = ({ sources }: { readonly sources: ReadonlyArray<R
         {capacity === 0 ? <p role="status">Select at least one content area.</p> : length > capacity ? <p className="notice notice-warning" role="status">Your chosen length of {length} no longer fits: {capacity} questions match. Choose a replacement before starting.</p> : null}
         <div className="answer-list">{lengths.map((count) => <label className="answer-option" key={count}><input type="radio" name="practice-builder-length" checked={count === length && length <= capacity} disabled={count > capacity} onChange={() => setLength(count)} /> <span>{count} questions{count === capacity ? " — all matching" : ""}{count > capacity ? " — unavailable" : ""}</span></label>)}</div>
       </fieldset>
-      <dl className="simulation-preview simulation-preview-facts reference-card"><div><dt>Your set</dt><dd>{length} questions · untimed</dd></div><div><dt>Matching content</dt><dd>{capacity} unique questions</dd></div><div><dt>Feedback</dt><dd>After each saved answer</dd></div></dl>
+      <section className="simulation-preview reference-card setup-summary" aria-labelledby="practice-summary-heading">
+        <h3 id="practice-summary-heading">Your set, before you start</h3>
+        <dl className="simulation-preview-facts">
+          <div><dt>Task</dt><dd>Original multiple-choice questions</dd></div>
+          <div><dt>Length</dt><dd>{length <= capacity ? `${length} of ${capacity} matching questions` : `${length} requested; choose a replacement length`}</dd></div>
+          <div><dt>Content</dt><dd>{selected.length === 0 ? "No areas selected" : selected.join("; ")}</dd></div>
+          <div><dt>Timing</dt><dd>Untimed — work at your own pace</dd></div>
+          <div><dt>Feedback</dt><dd>After each saved answer</dd></div>
+          <div><dt>Saved</dt><dd>Answers and flags for this set, on this device</dd></div>
+        </dl>
+        <p>Questions appear once in this set. Returning to the same set keeps answers you have already saved.</p>
+      </section>
       <details className="simulation-repeat-fields practice-repeat"><summary>Repeat a set</summary><label htmlFor="practice-set-code">Set code</label><input className="text-input" id="practice-set-code" value={seed} maxLength={practiceSetSeedLimit} onChange={(event) => setSeed(event.target.value)} required /><p>The same release, areas, length and code reproduce the same set. Saved answers for that set remain saved on this device.</p></details>
       {failure === null ? null : <p role="alert" className="notice notice-warning">{failure}</p>}
       <button type="submit" className="button button-primary" disabled={!valid}>Start this practice set</button>
