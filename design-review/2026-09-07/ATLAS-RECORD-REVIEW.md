@@ -15,3 +15,42 @@ Remaining: final catalog matching-width comparison and cross-browser checks. All
 `verify-atlas-records.py` parses all 65 generated main-content regions. Each has a nonempty image alternative, a released image file, and the required use/cue/evidence/scope/eligibility/source sections. Exactly 12 are reference-only; each has a restriction notice and no `/practice/` link in main content. The shared navigation remains available. Results are recorded in `atlas-record-screenshots/inventory-verification.json`. This verifies generated completeness and restrictions, not underlying source truth.
 
 The expanded capture script records the soldering-gun restriction at 1053/384 CSS pixels and asserts that its main content has no Start practice link. The compact restriction capture was visually inspected: eligibility, publication restriction, and source trail remain readable above the bottom navigation. Eight captures now complete without page errors or document horizontal overflow.
+
+## Catalog grid comparison — September 9
+
+A dedicated capture now uses a 1042px viewport to obtain a measured 990px
+catalog region, matching desktop reference captures 32/33. Earlier 990px
+viewport captures had narrower content bounds. Compact captures use a 384px
+viewport; the 352px catalog content sits inside the normal page gutters.
+`capture-atlas-final.mjs` records all families, the 15 rigid hand tools, and
+failed-image rigid records at both widths. It scrolls every visible card to
+load lazy images, awaits image decoding and fonts, and records region bounds.
+
+The comparison exposed a forced four-column grid. Desktop now follows the
+reference's 11rem minimum auto-fill cards, 16px gaps, outer panel, 16px card
+padding, 15px titles, and 13px muted family labels. At the matched width there
+are five columns. Tab gaps match the prototype. Links underline on hover;
+compact cards retain their existing eligibility labels while desktop cards
+only repeat the reference-only warning, as in the desktop prototype. All 12
+restrictions remain visible.
+
+Visually inspected full all-family, rigid-family, and compact captures against
+32/33/34; also inspected missing-image compact records. Platform font metrics
+still cause different line breaks. Long names now have optional breaks after
+slashes and overflow wrapping so text stays inside the card. The accepted
+illustration bytes, names, family order, source records, and restrictions remain
+unchanged. No new artwork was generated.
+
+Validation: build/artifact verification and site/browser typechecks pass. Twelve
+Atlas browser checks pass across Chromium, Firefox, and WebKit, covering the
+reference grid, all nine family counts, URL/selector behavior, card-title
+overflow, 12 desktop restriction labels, 53 compact scored labels, reflow, and
+failed-image descriptions. The inventory verifier again checks all 65 record
+pages, including every reference-only restriction and absence of practice links
+in those main-content regions.
+
+Remaining catalog differences: the prototype's closing release/provenance note
+is absent (the current page puts eligibility totals in its introduction), and
+image failures lack its page-level recovery/download message. Per-record
+descriptions remain readable. These are explicit next implementation items;
+this grid comparison does not declare the whole Atlas family complete.

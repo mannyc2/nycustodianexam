@@ -387,3 +387,27 @@ test("compact exam filters disclose on demand and recover visible controls acros
   await expect(search).toBeVisible()
   await expect(page.locator("[data-exam-row]:visible")).toHaveCount(1)
 })
+
+test("Atlas desktop cards follow the reference grid and retain every family count", async ({ page }) => {
+  await page.setViewportSize({ width: 1042, height: 900 })
+  await page.goto("/atlas/")
+  const cards = page.locator("[data-tool-family]:visible")
+  await expect(cards).toHaveCount(65)
+  expect(await cards.locator("h2").evaluateAll(headings => headings.every(heading => heading.scrollWidth <= heading.clientWidth))).toBe(true)
+  const first = (await cards.nth(0).boundingBox())!
+  expect((await cards.nth(4).boundingBox())!.y).toBe(first.y)
+  expect((await cards.nth(5).boundingBox())!.y).toBeGreaterThan(first.y + first.height)
+  const families = page.locator('[data-atlas-family]:not([data-atlas-family="all"])')
+  await expect(families).toHaveCount(9)
+  for (const family of await families.all()) {
+    const count = Number(await family.locator(".filter-count").textContent())
+    await family.click()
+    await expect(cards).toHaveCount(count)
+    await expectPageReflow(page)
+  }
+  await page.locator('[data-atlas-family="all"]').click()
+  await expect(page.locator(".tool-eligibility:not(.tool-eligibility-scored):visible")).toHaveCount(12)
+  await expect(page.locator(".tool-eligibility-scored:visible")).toHaveCount(0)
+  await page.setViewportSize({ width: 384, height: 900 })
+  await expect(page.locator(".tool-eligibility-scored:visible")).toHaveCount(53)
+})

@@ -1,0 +1,77 @@
+{
+  "captures": [
+    {
+      "file": "all-1042.png",
+      "width": 1042,
+      "state": "all",
+      "bounds": {
+        "x": 26.046875,
+        "y": -3980.796875,
+        "width": 989.890625,
+        "height": 4604.46875
+      },
+      "records": 65
+    },
+    {
+      "file": "rigid-hand-tools-1042.png",
+      "width": 1042,
+      "state": "rigid hand tools",
+      "bounds": {
+        "x": 26.046875,
+        "y": -581.796875,
+        "width": 989.890625,
+        "height": 1217.1875
+      },
+      "records": 15
+    },
+    {
+      "file": "missing-images-1042.png",
+      "width": 1042,
+      "state": "missing-images",
+      "bounds": {
+        "x": 26.046875,
+        "y": -1043.796875,
+        "width": 989.890625,
+        "height": 1780.34375
+      },
+      "records": 15
+    },
+    {
+      "file": "all-384.png",
+      "width": 384,
+      "state": "all",
+      "bounds": {
+        "x": 16,
+        "y": -6285.8125,
+        "width": 352,
+        "height": 6742.875
+      },
+      "records": 65
+    },
+    {
+      "file": "rigid-hand-tools-384.png",
+      "width": 384,
+      "state": "rigid hand tools",
+      "bounds": {
+        "x": 16,
+        "y": -852.8125,
+        "width": 352,
+        "height": 1677.828125
+      },
+      "records": 15
+    },
+    {
+      "file": "missing-images-384.png",
+      "width": 384,
+      "state": "missing-images",
+      "bounds": {
+        "x": 16,
+        "y": -3519.8125,
+        "width": 352,
+        "height": 4052.65625
+      },
+      "records": 15
+    }
+  ],
+  "errors": []
+}
