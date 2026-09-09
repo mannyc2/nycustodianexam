@@ -2219,7 +2219,7 @@ test("a removal claim that reaches removing first rejects the queued session pin
   expect(await page.evaluate((cacheName) => caches.has(cacheName), target.cacheName)).toBe(false)
 })
 
-test("a staged pack is rehashed before activation and serves atlas navigation and imagery offline", async ({
+test("a staged pack is rehashed before activation and serves Atlas and custom drills offline", async ({
   browserName,
   context,
   page
@@ -2397,4 +2397,30 @@ test("a staged pack is rehashed before activation and serves atlas navigation an
   const image = page.getByRole("img", { name: atlasImageAlternative, exact: true })
   await expect(image).toBeVisible()
   expect(await image.evaluate((element: HTMLImageElement) => element.naturalWidth)).toBeGreaterThan(0)
+
+  // These builder/player URLs have not been visited in this browser. Only the
+  // downloaded pack can supply their documents and item-scoped feedback.
+  await page.goto("/practice/")
+  await page.getByRole("region", { name: "Build a practice set" }).getByRole("button", { name: "Start this practice set" }).click()
+  await expect(page.locator(".player-position")).toHaveText("Question 1 of 45 · Text version")
+  await page.getByRole("radio").first().check()
+  await page.getByRole("button", { name: "Save answer", exact: true }).click()
+  await expect(page.locator(".feedback-rationales")).toBeVisible()
+
+  for (const mode of ["visual", "nonvisual"] as const) {
+    await page.goto("/hazards/")
+    const builder = page.getByRole("region", { name: "Build a hazard drill" })
+    if (mode === "nonvisual") await builder.getByRole("radio", { name: /^Read and select zones/ }).check()
+    await builder.getByRole("button", { name: "Start drill", exact: true }).click()
+    await expect(page.locator(".player-position")).toHaveText("Scene 1 of 1 · Original scene")
+    if (mode === "visual") {
+      await expect(page.locator(".hazard-player__image-layer img")).toBeVisible()
+      await page.getByRole("button", { name: "Save marks", exact: true }).click()
+      await page.getByRole("button", { name: "Confirm and save no marks", exact: true }).click()
+    } else {
+      await page.getByRole("checkbox").first().check()
+      await page.getByRole("button", { name: "Save response", exact: true }).click()
+    }
+    await expect(page.getByRole("heading", { name: /You found \d+ of \d+|no hazard to find|Response saved/ })).toBeVisible()
+  }
 })

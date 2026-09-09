@@ -111,3 +111,15 @@ from Review/activity. It passes, as does browser-harness typecheck. This closes
 the basic custom-record portability check without relying on fabricated receipt
 fixtures. Custom drills launched entirely from a downloaded pack and full
 cross-browser coverage remain outstanding.
+
+## Downloaded-pack custom drills
+
+The real staged-pack browser test now goes beyond cached visits. After verifying,
+activating and exercising pack recovery, it disables network access and launches
+previously unvisited custom question, visual Hazard and keyboard Hazard drills.
+Each drill saves an answer/response and displays its item-scoped feedback;
+the visual drill also loads its verified illustration. The extended Chromium
+test passes (27.5 seconds including setup). This proves the active downloaded
+pack supplies the new builder/player documents, dependencies, images and
+postcommit artifacts through the canonical navigation fix. Cross-browser
+coverage and the remaining design families still require work.
