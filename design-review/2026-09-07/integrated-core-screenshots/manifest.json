@@ -1,0 +1,225 @@
+{
+  "browser": "Chromium",
+  "locale": "en-US",
+  "timezone": "UTC",
+  "fixedTime": "2026-09-07T12:00:00Z",
+  "captures": [
+    {
+      "file": "home-1248.png",
+      "viewportFile": "home-1248-viewport.png",
+      "route": "/",
+      "state": "First visit; no saved attempts or downloads",
+      "width": 1248,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "practice-first-visit-1248.png",
+      "viewportFile": "practice-first-visit-1248-viewport.png",
+      "route": "/practice/",
+      "state": "First visit; no saved attempts or downloads",
+      "width": 1248,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "review-empty-1248.png",
+      "viewportFile": "review-empty-1248-viewport.png",
+      "route": "/review/",
+      "state": "First visit; no saved attempts or downloads",
+      "width": 1248,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "practice-library-open-1248.png",
+      "viewportFile": "practice-library-open-1248-viewport.png",
+      "route": "/practice/",
+      "state": "First visit; Library disclosure open",
+      "width": 1248,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "question-unanswered-1248.png",
+      "viewportFile": "question-unanswered-1248-viewport.png",
+      "route": "/practice/session/ps-a0bb1562365390d297a4a3e5/question/1/",
+      "state": "First question of the actual 45-question set; no answer selected",
+      "width": 1248,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "question-answered-1248.png",
+      "viewportFile": "question-answered-1248-viewport.png",
+      "route": "/practice/session/ps-a0bb1562365390d297a4a3e5/question/1/",
+      "state": "One flagged answer saved using the real player",
+      "width": 1248,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "practice-returning-1248.png",
+      "viewportFile": "practice-returning-1248-viewport.png",
+      "route": "/practice/",
+      "state": "Returning learner with one real saved and flagged answer",
+      "width": 1248,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "review-ready-1248.png",
+      "viewportFile": "review-ready-1248-viewport.png",
+      "route": "/review/",
+      "state": "One flagged answer ready for review",
+      "width": 1248,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "review-confirmation-1248.png",
+      "viewportFile": "review-confirmation-1248-viewport.png",
+      "route": "/review/",
+      "state": "Finish review confirmation open; item remains in queue",
+      "width": 1248,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "review-finish-failed-1248.png",
+      "viewportFile": "review-finish-failed-1248-viewport.png",
+      "route": "/review/",
+      "state": "Explicit fixture: acknowledgement transaction fails; saved attempt remains",
+      "width": 1248,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "practice-storage-unavailable-1248.png",
+      "viewportFile": "practice-storage-unavailable-1248-viewport.png",
+      "route": "/practice/",
+      "state": "Explicit test fixture: IndexedDB open fails",
+      "width": 1248,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "review-read-failed-1248.png",
+      "viewportFile": "review-read-failed-1248-viewport.png",
+      "route": "/review/",
+      "state": "Explicit test fixture: IndexedDB open fails",
+      "width": 1248,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "home-384.png",
+      "viewportFile": "home-384-viewport.png",
+      "route": "/",
+      "state": "First visit; no saved attempts or downloads",
+      "width": 384,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "practice-first-visit-384.png",
+      "viewportFile": "practice-first-visit-384-viewport.png",
+      "route": "/practice/",
+      "state": "First visit; no saved attempts or downloads",
+      "width": 384,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "review-empty-384.png",
+      "viewportFile": "review-empty-384-viewport.png",
+      "route": "/review/",
+      "state": "First visit; no saved attempts or downloads",
+      "width": 384,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "practice-library-open-384.png",
+      "viewportFile": "practice-library-open-384-viewport.png",
+      "route": "/practice/",
+      "state": "First visit; Library disclosure open",
+      "width": 384,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "question-unanswered-384.png",
+      "viewportFile": "question-unanswered-384-viewport.png",
+      "route": "/practice/session/ps-a0bb1562365390d297a4a3e5/question/1/",
+      "state": "First question of the actual 45-question set; no answer selected",
+      "width": 384,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "question-answered-384.png",
+      "viewportFile": "question-answered-384-viewport.png",
+      "route": "/practice/session/ps-a0bb1562365390d297a4a3e5/question/1/",
+      "state": "One flagged answer saved using the real player",
+      "width": 384,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "practice-returning-384.png",
+      "viewportFile": "practice-returning-384-viewport.png",
+      "route": "/practice/",
+      "state": "Returning learner with one real saved and flagged answer",
+      "width": 384,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "review-ready-384.png",
+      "viewportFile": "review-ready-384-viewport.png",
+      "route": "/review/",
+      "state": "One flagged answer ready for review",
+      "width": 384,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "review-confirmation-384.png",
+      "viewportFile": "review-confirmation-384-viewport.png",
+      "route": "/review/",
+      "state": "Finish review confirmation open; item remains in queue",
+      "width": 384,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "review-finish-failed-384.png",
+      "viewportFile": "review-finish-failed-384-viewport.png",
+      "route": "/review/",
+      "state": "Explicit fixture: acknowledgement transaction fails; saved attempt remains",
+      "width": 384,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "practice-storage-unavailable-384.png",
+      "viewportFile": "practice-storage-unavailable-384-viewport.png",
+      "route": "/practice/",
+      "state": "Explicit test fixture: IndexedDB open fails",
+      "width": 384,
+      "height": 900,
+      "fullPage": true
+    },
+    {
+      "file": "review-read-failed-384.png",
+      "viewportFile": "review-read-failed-384-viewport.png",
+      "route": "/review/",
+      "state": "Explicit test fixture: IndexedDB open fails",
+      "width": 384,
+      "height": 900,
+      "fullPage": true
+    }
+  ],
+  "pageErrors": []
+}

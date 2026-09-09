@@ -990,3 +990,11 @@
   .button-danger-outline { background: var(--color-surface); border-color: var(--color-danger); color: var(--color-danger); }
   .button-danger-outline:hover:not(:disabled) { background: var(--color-danger-surface); color: var(--color-danger); }
 }
+
+@layer overrides {
+  .home-scope-caveat { display: none; }
+  @media (max-width: 47.99rem) {
+    .home-areas-section > .section-header > p { display: none; }
+    .home-scope-caveat { display: block; font-size: 0.8125rem; color: var(--color-text-muted); }
+  }
+}

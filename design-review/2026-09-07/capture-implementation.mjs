@@ -8,7 +8,7 @@ const repositoryRoot = fileURLToPath(new URL('../../', import.meta.url));
 const require = createRequire(path.join(repositoryRoot, 'apps/site/package.json'));
 const { chromium, expect } = require('@playwright/test');
 const baseURL = process.env.NYCUSTODIAN_REVIEW_URL ?? 'http://127.0.0.1:4187';
-const output = path.join(reviewRoot, 'implementation-screenshots');
+const output = path.join(reviewRoot, process.env.IMPLEMENTATION_CAPTURE_OUTPUT ?? 'implementation-screenshots');
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({
   ...(process.env.NYCUSTODIAN_CHROMIUM_EXECUTABLE

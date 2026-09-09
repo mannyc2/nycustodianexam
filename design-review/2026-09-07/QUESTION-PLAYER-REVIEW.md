@@ -27,3 +27,28 @@ Validation: root build/artifact checks and workspace typechecks passed; all 14 t
 question-player, custom-builder and Study browser regressions passed. One old history-test heading expectation was updated to the
 previously implemented first-visit copy. Further work remains on the full visual
 player modality, remaining player families and final cross-browser audit.
+
+
+## Illustrated-question contract audit
+
+At implementation commit a2c4fc8, all 90 records in
+`content/authoring/packs/launch-v1.json` use text prompt/options with no image
+binding fields. None refers to a pictured item or shown illustration.
+`AuthoredPackQuestion` and `PrecommitQuestion` likewise contain no illustration
+receipt or neutral description. Adding an Atlas image to an existing question
+would change its stimulus and potentially reveal its keyed answer.
+
+This is implementation work still to do, not a requirement to obtain a new user
+approval or a claim that images are unavailable. `QuestionReviewReceipt` supports
+agent-assisted editorial/source/security/accessibility review and pins the reviewed
+artifact hash. An illustrated item needs a reviewed image-question pairing and
+neutral delivery identity before that receipt can truthfully cover it.
+
+Required implementation spans: authored binding and review-hash closure; compiler
+validation and neutral pre-answer image receipts; delivery/cache closure without
+answer-bearing filenames or metadata; accessible player image and missing-image
+states; retained feedback/Review and print behavior; and deterministic custom-set
+and simulation compatibility. Existing text-question receipts and saved records
+must remain valid. The accepted isolated tool images can supply reviewed artwork,
+but their Atlas URLs are not suitable pre-answer identifiers. No illustrated
+question or review receipt was fabricated during this audit.

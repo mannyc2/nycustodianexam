@@ -34,3 +34,27 @@ Visual inspection covered Home, first-visit/returning Practice, navigation open,
 ## Validation
 
 Exact Bun 1.4.0 and Node 22.22.0. Root build and artifact checks pass: 526 canonical documents, 220 item-scoped artifacts, 291 byte-identical delivery assets, answer boundary and route budgets verified. Site and browser-harness typechecks pass. The four targeted Chromium suites cover 23 tests, including mobile reflow/accessibility, keyboard/no-JavaScript navigation, storage recovery, review persistence and bottom-sheet destination checks. Captures cover 24 route/state/width combinations with full-page and viewport images and no unexpected page errors.
+
+
+## Integrated core refresh after builder reconciliation
+
+`integrated-core-screenshots/` captures the current Home, first-visit/returning
+Practice, Library disclosure, question save flow, Review confirmation/failures,
+and unavailable storage at 1248/384 CSS widths. All 24 states completed without
+unexpected page errors using the real saved-answer flow and explicit storage
+failure fixtures. These are current integration captures, not a claim that all
+24 states have completed their final visual audit.
+
+Home desktop/compact hero captures were compared with references 01/02, and
+compact Review-ready was inspected. The maintained system-font stack resolves
+differently on this platform; existing live-content differences remain documented
+above. A concrete compact Home mismatch was corrected: its repeated coverage
+intro no longer precedes the subject rows. The announcement/site-length caveat
+now follows the compact list, retaining the qualification while matching the
+reference hierarchy. Desktop copy is unchanged. The refreshed compact viewport
+was inspected after this correction. Root build/artifact verification passes.
+
+Capture output can be redirected with `IMPLEMENTATION_CAPTURE_OUTPUT`; the
+historical first-slice evidence is preserved. Final full-page visual checks of
+the remaining core states and other families remain on the implementation ledger.
+The separate illustrated-question contract audit is in QUESTION-PLAYER-REVIEW.md.
