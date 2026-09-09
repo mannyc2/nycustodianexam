@@ -370,11 +370,11 @@ Route work is incomplete until automated checks prove:
 10. each route ID has a component/story/test fixture for every applicable legal
     state in `SCREEN_STATES.md`.
 
-### Historical question documents
+### Historical study documents
 
-Receipt-bound previous question inventories may generate noindex `review-player`
-documents under `/history/{releaseId}-v{packVersion}/`, followed by the original
-practice or review path. These are ordinary Static Assets documents, not dynamic
+Receipt-bound previous inventories may generate noindex `review-player` and
+`hazard-player` documents under `/history/{releaseId}-v{packVersion}/`, followed by the original
+practice, review or hazard path. These are ordinary Static Assets documents, not dynamic
 Worker routes. Review links use the exact saved version and deterministic set
 coordinates. Generation must verify archived precommit and feedback byte receipts
 before reusing an item; a current item ID alone is insufficient. These documents

@@ -8164,5 +8164,115 @@
     "path": "apps/site/offline/index.html",
     "sourceSha256": "b0bf4aa3683d71baa308bf448858e70657108b85f4d1a14d4815d2c29d2ffc11",
     "selector": "script#offline-pack-descriptor.receipts"
-  }
+  },
+  "scenePrecommitReceipts": [
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/scenes/s001.precommit.json",
+      "bytes": 1822,
+      "sha256": "20e766fc6fb767352cde3dcd813e8e32430f11cf8a3de4ee6a2527d9c177ce28"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/scenes/s002.precommit.json",
+      "bytes": 1782,
+      "sha256": "58727ba9065f9b1028a1557fe1a500e1fc2b25b5829b1125f5e4dd8dc2bfdc95"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/scenes/s003.precommit.json",
+      "bytes": 2043,
+      "sha256": "509793c9089bced0bd456c44316a952f3ce36a73e7c03111d8249fd6cc9368f0"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/scenes/s004.precommit.json",
+      "bytes": 1903,
+      "sha256": "662d923351d8d4aad7e8a2b275da67957c0963ddb22939486595b3ef78e97748"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/scenes/s005.precommit.json",
+      "bytes": 1826,
+      "sha256": "9ff6dbe9363291dd530a3ee4d907d53c3d7115e6a43efeca607cac0d35772d52"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/scenes/s006.precommit.json",
+      "bytes": 2054,
+      "sha256": "0897c547d4dd0b720bcf00255dff271a4fe3d128c30e3e7bd842ba44fab5e840"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/scenes/s007.precommit.json",
+      "bytes": 1869,
+      "sha256": "dcb65d27dc356fd86e29c12342d8919f29d603c9ca7dcfb0c8664b0d1fe545c3"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/scenes/s008.precommit.json",
+      "bytes": 1887,
+      "sha256": "69c77c960d6665cbcd0d9d2aef2b6f8a1d026efada290c922c52e3f322fc0c58"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/scenes/s009.precommit.json",
+      "bytes": 1784,
+      "sha256": "ed712442daa277cdfbdad0b884e86ddf68ce257c9f30136a33372dfbaa54d937"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/scenes/s010.precommit.json",
+      "bytes": 1983,
+      "sha256": "330d5e7213f0f385e67baa7f8b8a92ce7e0a44c801c5209c47a9a61509ae7995"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/scenes/s011.precommit.json",
+      "bytes": 1973,
+      "sha256": "c49042efe0b02e005903d06f9518a371b819e1b3542e75e041c0e56b0debdf62"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/scenes/s012.precommit.json",
+      "bytes": 1920,
+      "sha256": "ef862bf15aeb31ab3facf4ebdad7f30ef304cdfbd419021292673e55fad4f9e4"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/scenes/s013.precommit.json",
+      "bytes": 1871,
+      "sha256": "5bc5b42b40a4312fb90910800ba7af71bcafa2afa431abddd06d46592a4d66bb"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/scenes/s014.precommit.json",
+      "bytes": 1850,
+      "sha256": "46e7dbdea9d7629f7cdebe55b151b440588bda7f29d8dbc1ac79fc552e23054b"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/scenes/s015.precommit.json",
+      "bytes": 1893,
+      "sha256": "b60ee9e7d58d9f7716db8d1365d0d1bc592fef2af420c513167a57447fa61663"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/scenes/s016.precommit.json",
+      "bytes": 2002,
+      "sha256": "3ac85259ec920e996705d07c65da420aa4cbc2a18a40509d6ce0b7cc6f556a82"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/scenes/s017.precommit.json",
+      "bytes": 2054,
+      "sha256": "fe7b5df2ac435c916d7ee35c6f53472373fe7ab2a770cca090053f94db2c7882"
+    },
+    {
+      "kind": "artifact",
+      "path": "/content/vertical-slice/scenes/s018.precommit.json",
+      "bytes": 2108,
+      "sha256": "d27fe530c4ab48ed42a40273353f67fd060ab50a9fab881f8ac325cc613368fa"
+    }
+  ]
 }

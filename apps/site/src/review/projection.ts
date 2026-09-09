@@ -294,7 +294,7 @@ export const buildReviewQueue = Effect.fn("ReviewProjection.buildReviewQueue")(f
   })
   const questionByAttemptId = yield* Effect.try({
     try: () => uniqueMap(
-      [...bootstrap.questions, ...(bootstrap.practiceQuestions ?? []), ...(bootstrap.previousQuestionSets ?? []).flatMap(set => [...set.questions, ...set.practiceQuestions])]
+      [...bootstrap.questions, ...(bootstrap.practiceQuestions ?? []), ...(bootstrap.previousInventories ?? []).flatMap(set => [...set.questions, ...set.practiceQuestions])]
         .map((source) => [questionAttemptId(source.receipt), source]),
       "question receipt"
     ),
@@ -308,7 +308,7 @@ export const buildReviewQueue = Effect.fn("ReviewProjection.buildReviewQueue")(f
   })
 
   const questionEffects = questionAttempts.map((attempt) => {
-    const source = questionByAttemptId.get(attempt.id) ?? resolveCustomReviewSource(bootstrap.questions, attempt) ?? (bootstrap.previousQuestionSets ?? []).map(set => resolveCustomReviewSource(set.questions, attempt)).find(source => source !== undefined) ?? questionById.get(attempt.questionId)
+    const source = questionByAttemptId.get(attempt.id) ?? resolveCustomReviewSource(bootstrap.questions, attempt) ?? (bootstrap.previousInventories ?? []).map(set => resolveCustomReviewSource(set.questions, attempt)).find(source => source !== undefined) ?? questionById.get(attempt.questionId)
     const effect = !hasBoundQuestionReceipt(attempt)
       ? Effect.fail(
           projectionError(
@@ -337,8 +337,11 @@ export const buildReviewQueue = Effect.fn("ReviewProjection.buildReviewQueue")(f
       : loadQuestionItem(attempt, source)
     return containAttemptFailure(attempt.id, "question", attempt.committedAt, effect)
   })
+  const sceneInventories = [bootstrap.scenes, ...(bootstrap.previousInventories ?? []).map(inventory => inventory.scenes)]
   const hazardEffects = hazardAttempts.map((attempt) => {
-    const source = resolveCustomHazardSource(bootstrap.scenes, attempt) ?? sceneById.get(attempt.sceneId)
+    const source = sceneInventories.map(scenes => resolveCustomHazardSource(scenes, attempt) ?? scenes.find(source =>
+      attempt.receipt !== undefined && sameHazardReceipt(attempt.receipt, attempt.mode === "visual" ? source.visualReceipt : source.nonvisualReceipt)
+    )).find(source => source !== undefined) ?? sceneById.get(attempt.sceneId)
     const expectedReceipt = source === undefined
       ? undefined
       : attempt.mode === "visual"

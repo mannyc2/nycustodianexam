@@ -43,3 +43,17 @@ it("rejects changed receipt coordinates and out-of-capacity requests", () => {
   expect(resolveHazardDrill(sources, { ...attempt, mode: "nonvisual" })).toBeUndefined()
   expect(() => assembleHazardDrill(sources, { seed: "repeat", length: 19, mode: "visual" })).toThrow()
 })
+
+it("reconstructs historical drills only under their receipt's own version prefix", () => {
+  const historical = sources.map(source => ({ ...source,
+    visualItemUrl: `/history/release-a-v1${source.visualItemUrl}`,
+    nonvisualItemUrl: `/history/release-a-v1${source.nonvisualItemUrl}`
+  }))
+  for (const mode of ["visual", "nonvisual"] as const) {
+    const step = assembleHazardDrill(historical, { seed: "old", length: 3, mode })[0]!
+    const attempt = { id: hazardAttemptId(step.receipt), sceneId: step.receipt.sceneId, mode, receipt: step.receipt }
+    expect(resolveHazardDrill(historical, attempt)?.href).toMatch(/^\/history\/release-a-v1\//)
+    const wrongVersion = historical.map(source => ({ ...source, visualItemUrl: source.visualItemUrl.replace("-v1/", "-v2/") }))
+    expect(resolveHazardDrill(wrongVersion, attempt)).toBeUndefined()
+  }
+})

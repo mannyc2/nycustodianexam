@@ -1304,6 +1304,20 @@ export const verify = async (): Promise<void> => {
     expectedRoutes.push({ canonicalPath: historyPrefix + source.itemUrl, precommit, postcommitArtifact: artifact, postcommitPath: source.receipt.postcommitPath,
       position: source.receipt.position, sessionId: source.receipt.sessionId, packVersion: source.receipt.packVersion, robots: "noindex,follow", routeId: "review-player" })
   }
+  for (const source of historicalV3.reviewQueue.scenes) {
+    const current = scenes.find(entry => entry.value.id === source.scene.id)
+    const old = historicalV3.scenePrecommitReceipts.find(entry => entry.path === `/content/vertical-slice/scenes/${source.scene.id}.precommit.json`)
+    const stimulus = manifest.artifacts.find(entry => entry.path === `scenes/${source.scene.id}.precommit.json`)
+    const artifact = scenePostcommitById.get(source.scene.id)
+    if (current === undefined || old === undefined || stimulus?.sha256 !== old.sha256 || stimulus.bytes !== old.bytes || artifact === undefined) throw new Error(`Historical scene stimulus differs: ${source.scene.id}`)
+    for (const mode of ["visual", "nonvisual"] as const) {
+      const receipt = mode === "visual" ? source.visualReceipt : source.nonvisualReceipt
+      if (artifact.sha256 !== receipt.postcommitSha256 || artifact.bytes !== receipt.postcommitBytes) throw new Error(`Historical scene feedback differs: ${source.scene.id}`)
+      expectedRoutes.push({ canonicalPath: historyPrefix + (mode === "visual" ? source.visualItemUrl : source.nonvisualItemUrl),
+        precommit: current.value, postcommitArtifact: artifact, postcommitPath: receipt.postcommitPath, position: receipt.position,
+        sessionId: receipt.sessionId, packVersion: receipt.packVersion, hazardMode: mode, robots: "noindex,follow", routeId: "hazard-player" })
+    }
+  }
   for (const route of expectedRoutes) assertCanonicalRouteId(route.routeId)
 
   const htmlFiles = buildFiles.filter((path) => path.endsWith(".html"))
@@ -1990,7 +2004,7 @@ export const verify = async (): Promise<void> => {
           assetMasterSha256: decoded.asset.masterSha256,
           assetRevision: decoded.asset.revision,
           mode: route.hazardMode,
-          packVersion: deliveryManifest.packVersion,
+          packVersion: route.packVersion ?? deliveryManifest.packVersion,
           position: route.position,
           releaseId: deliveryManifest.releaseId,
           sceneId: decoded.id,
@@ -2177,10 +2191,10 @@ export const verify = async (): Promise<void> => {
     // Settings shares print generation for retained-job validation, including
     // source-aware hazard estimates (+1162 raw bytes), and its saved-work summary.
     // Required question-image retention adds 519 raw bytes; historical question
-    // receipt resolution adds 303 more raw bytes to this closure.
+    // receipt resolution adds 303 more raw bytes, and historical hazards add 216.
     // Keep this measured allowance local; other island limits remain unchanged.
     const limit = family === "settings"
-      ? { raw: 488_400, gzip: 146_900, brotli: 123_500 }
+      ? { raw: 488_600, gzip: 146_900, brotli: 123_500 }
       : bundleBudgets
     for (const format of ["raw", "gzip", "brotli"] as const) {
       if (measurement[format] > limit[format]) {

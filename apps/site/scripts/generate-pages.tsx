@@ -1135,10 +1135,20 @@ const buildPages = ({
     const current = questionPostcommitById.get(old.id)
     if (current === undefined || current.sha256 !== old.receipt.postcommitSha256 || current.bytes !== old.receipt.postcommitBytes) throw new Error(`Historical question feedback unavailable: ${old.id}`)
   }
-  const previousQuestionSets = [{ questions: historicalQuestions, practiceQuestions: historicalPractice }]
+  const historicalScenes = historicalV3.reviewQueue.scenes.map(source => ({ ...source,
+    visualItemUrl: historicalPrefix + source.visualItemUrl, nonvisualItemUrl: historicalPrefix + source.nonvisualItemUrl }))
+  for (const old of historicalV3.scenePrecommitReceipts) {
+    const current = manifest.artifacts.find(artifact => `/content/vertical-slice/${artifact.path}` === old.path)
+    if (current === undefined || current.sha256 !== old.sha256 || current.bytes !== old.bytes) throw new Error(`Historical scene stimulus unavailable: ${old.path}`)
+  }
+  for (const old of historicalScenes) {
+    const current = scenePostcommitById.get(old.scene.id)
+    if (current === undefined || current.sha256 !== old.visualReceipt.postcommitSha256 || current.bytes !== old.visualReceipt.postcommitBytes) throw new Error(`Historical scene feedback unavailable: ${old.scene.id}`)
+  }
+  const previousInventories = [{ questions: historicalQuestions, practiceQuestions: historicalPractice, scenes: historicalScenes }]
   const reviewBootstrap = {
     ...canonicalReviewBootstrap,
-    previousQuestionSets,
+    previousInventories,
     practiceQuestions: questionSessions.flatMap((session) => session.questions.map(({ value: question }, index) => {
       const artifact = questionPostcommitById.get(question.id)
       if (artifact === undefined) throw new Error(`Question ${question.id} has no study history receipt`)
@@ -1675,7 +1685,7 @@ const buildPages = ({
     }))
   })
 
-  const historicalInventory = Schema.decodeUnknownSync(ReviewQueueBootstrap)({ ...canonicalReviewBootstrap, previousQuestionSets }).previousQuestionSets![0]!
+  const historicalInventory = Schema.decodeUnknownSync(ReviewQueueBootstrap)({ ...canonicalReviewBootstrap, previousInventories }).previousInventories![0]!
   for (const source of [...historicalInventory.questions, ...historicalInventory.practiceQuestions]) {
     const question = questions.find(entry => entry.value.id === source.id)?.value
     if (question === undefined) throw new Error(`Missing historical question ${source.id}`)
@@ -1747,6 +1757,17 @@ const buildPages = ({
       scene
     }))
   })
+
+  for (const source of historicalInventory.scenes) {
+    for (const mode of ["visual", "nonvisual"] as const) {
+      const receipt = mode === "visual" ? source.visualReceipt : source.nonvisualReceipt
+      pages.push(hazardPage({
+        canonicalPath: mode === "visual" ? source.visualItemUrl : source.nonvisualItemUrl,
+        count: historicalInventory.scenes.length, drillInventory: historicalInventory.scenes,
+        mode, position: receipt.position, receipt, scene: source.scene
+      }))
+    }
+  }
 
   const packReceiptRecords = [
     ...manifest.artifacts.filter(isPublicReleaseArtifact).map((artifact) => ({

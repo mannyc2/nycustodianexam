@@ -223,3 +223,31 @@ limit is now 488400 raw / 146900 gzip / 123500 Brotli, measured 488299 / 146808 
 Historical hazards, import classification, explicit offline upgrade behavior and
 original illustrated-item PDF validation remain outstanding. This pass proves
 question explanation restoration, not all version-upgrade behavior.
+
+## Historical hazard restoration
+
+The explicit previous inventories now include scenes as well as questions.
+Historical visual attempts resolve through exact receipt equality; custom drills
+reconstruct their original scene ordering. The shared versioned-path check applies
+to both visual and nonvisual drill targets. Nonvisual answers remain outside the
+Review queue by the existing product rule; their historical documents restore
+saved responses directly.
+
+The generator adds 36 noindex historical hazard documents. It checks all 18
+archived scene-precommit receipts and exact feedback receipts before reusing the
+scene data. The original Offline-document provenance covers the additional
+precommit receipts. The verifier independently checks each generated route's
+scene, mode, saved pack version and feedback binding.
+
+All 18 historical browser cases pass after unifying current/historical lookup:
+canonical/preset/custom question answers, visual/custom hazard Review entries,
+and direct nonvisual restoration, across Chromium/Firefox/WebKit. Each reloads
+its explanation. 21 related unit tests pass, including mismatched historical
+prefix rejection; site and browser typechecks pass. Artifact verification closes
+939 routes and unchanged item/image asset counts. Historical hazard support adds
+216 raw bytes to Settings; its local raw limit is 488600 (measured 488515), with
+unchanged 146900 gzip / 123500 Brotli limits (measured 146875 / 123356).
+
+Import classification, previous-version links from the Practice activity list,
+and explicit offline upgrade behavior still need verification. These tests do
+not prove those separate paths or full historical simulation compatibility.

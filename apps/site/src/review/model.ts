@@ -15,7 +15,7 @@ const ReviewQuestionItemUrl = Schema.String.check(
 
 const ReviewHazardItemUrl = Schema.String.check(
   Schema.isPattern(
-    new RegExp(`^/hazards/session/${safePathSegment}/scene/[1-9][0-9]*/$`),
+    new RegExp(`^${historyPrefix}/hazards/session/${safePathSegment}/scene/[1-9][0-9]*/$`),
     { expected: "an exact root-relative hazard-player path" }
   )
 )
@@ -72,9 +72,10 @@ export class ReviewQueueBootstrap extends Schema.Class<ReviewQueueBootstrap>(
   schemaVersion: Schema.Literal(1),
   questions: Schema.Array(ReviewQuestionBootstrap),
   practiceQuestions: Schema.optionalKey(Schema.Array(ReviewPracticeQuestionBootstrap)),
-  previousQuestionSets: Schema.optionalKey(Schema.Array(Schema.Struct({
+  previousInventories: Schema.optionalKey(Schema.Array(Schema.Struct({
     questions: Schema.Array(ReviewQuestionBootstrap),
-    practiceQuestions: Schema.Array(ReviewPracticeQuestionBootstrap)
+    practiceQuestions: Schema.Array(ReviewPracticeQuestionBootstrap),
+    scenes: Schema.Array(ReviewSceneBootstrap)
   }))),
   scenes: Schema.Array(ReviewSceneBootstrap)
 }) {}

@@ -1,3 +1,4 @@
+import { matchesVersionedItemPath } from "../versioned-item-path.ts"
 import { hazardAttemptId, sameHazardReceipt, type HazardAttemptReceipt } from "../attempt-receipt.ts"
 import type { ReviewSceneSource } from "../review/model.ts"
 import { parsePracticeSetId, selectPracticeSet } from "./set.ts"
@@ -19,7 +20,7 @@ export const assembleHazardDrill = (
         receipt.releaseId !== first.visualReceipt.releaseId || receipt.packVersion !== first.visualReceipt.packVersion ||
         receipt.assetRevision !== source.scene.asset.revision || receipt.assetMasterSha256 !== source.scene.asset.masterSha256 ||
         receipt.postcommitPath !== `/content/vertical-slice/scenes/${source.scene.asset.opaqueAssetId}.postcommit.json` ||
-        href !== `/hazards/session/${receipt.sessionId}/scene/${receipt.position}/`) {
+        !matchesVersionedItemPath(href, `/hazards/session/${receipt.sessionId}/scene/${receipt.position}/`, receipt)) {
         throw new Error("Hazard inventory does not match its released scene receipts")
       }
     }
