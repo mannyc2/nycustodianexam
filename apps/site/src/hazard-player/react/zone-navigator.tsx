@@ -15,6 +15,7 @@ export const HazardZoneNavigator = () => {
       <legend>Observable zones</legend>
       <p id={`${meta.instanceId}-zone-help`}>
         Select a zone when its neutral description gives you concern. Selecting does not submit.
+        The order carries no meaning and the number of zones is not a hint.
       </p>
       <ol>
         {scene.neutralPreAnswer.zones.map((zone) => (

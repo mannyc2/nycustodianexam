@@ -50,8 +50,12 @@ export const VisualHazardPractice = ({ positionLabel }: { readonly positionLabel
 export const NonvisualHazardPractice = ({ positionLabel }: { readonly positionLabel?: string }) => (
   <HazardPlayerPieces.Frame>
     <HazardPlayerPieces.Prompt {...(positionLabel === undefined ? {} : { positionLabel })} />
-    <HazardPlayerPieces.ZoneNavigator />
-    <HazardPlayerPieces.Commit />
+    <div className="hazard-player__workspace">
+      <HazardPlayerPieces.ZoneNavigator />
+      <div className="hazard-player__response-panel">
+        <HazardPlayerPieces.Commit />
+      </div>
+    </div>
     <HazardPlayerPieces.Results />
     <HazardPlayerPieces.Status />
   </HazardPlayerPieces.Frame>
