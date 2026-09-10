@@ -67,7 +67,7 @@ test("a generated practice answer appears in Study and can be durably finished i
   await expect(page.getByRole("heading", { name: "No saved activity yet" })).toBeVisible()
   const firstPractice = page.locator("#practice-sets").getByRole("link", { name: "Start 45", exact: true })
   await expect(page.getByRole("heading", { name: "Practice", exact: true })).toBeVisible()
-  await expect(firstPractice).toContainText("45")
+  await expect(firstPractice).toContainText("45 questions")
   const sessionPath = await firstPractice.getAttribute("href")
   expect(sessionPath).toMatch(/^\/practice\/session\/ps-[a-z0-9]+\/question\/1\/$/)
   await firstPractice.click()
@@ -111,7 +111,7 @@ test("a generated practice answer appears in Study and can be durably finished i
 })
 
 
-test("presets come first, custom setup has its own page, and presets work without JavaScript", async ({ page, browser }) => {
+test("presets come first, customization is disclosed, and presets work without JavaScript", async ({ page, browser }) => {
   for (const width of [384, 700, 1248]) {
     await page.setViewportSize({ width, height: 900 })
     await page.goto("/practice/")
@@ -122,15 +122,14 @@ test("presets come first, custom setup has its own page, and presets work withou
     await expect(page.locator("#practice-sets").getByRole("link", { name: /Full simulation/ })).toBeVisible()
     await expect(page.getByText("Why some set sizes are unavailable", { exact: true })).toHaveCount(0)
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true)
-    await page.getByRole("link", { name: /Choose your own topics and length/ }).click()
-    await expect(page).toHaveURL(/\/practice\/custom\/$/)
+    await page.getByText("Customize a practice set", { exact: false }).click()
     await expect(page.getByRole("region", { name: "Build a practice set" })).toBeVisible()
   }
   const noScript = await browser.newContext({ javaScriptEnabled: false })
   try {
     const fallback = await noScript.newPage()
     await fallback.goto("/practice/")
-    await fallback.getByRole("link", { name: "Start 45", exact: true }).click()
+    await fallback.locator(".study-set-options").getByRole("link", { name: /45 questions/ }).click()
     await expect(fallback).toHaveURL(/\/practice\/session\/[^/]+\/question\/1\/$/)
   } finally { await noScript.close() }
 })

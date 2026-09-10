@@ -13,7 +13,6 @@ export const CANONICAL_ROUTE_IDS = [
   "privacy",
   "profile",
   "question-player",
-  "practice-custom",
   "review-player",
   "review-queue",
   "security",

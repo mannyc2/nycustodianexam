@@ -8,13 +8,13 @@
 > feature; remote intake status alone does not publish the UI. Existing stored
 > drafts remain supported by data export/import and reset for compatibility.
 
-> **Practice entry layout — 2026-09-10:** Group question-count presets in one
-> question-practice panel, alongside Hazard drill and Full simulation links.
-> Custom question setup lives at `/practice/custom/`, reached through a normal
-> link; it is not an inline disclosure. Legacy `/practice/#practice-builder`
-> links redirect there. Saved activity and coverage follow the choices. Omit the
-> availability matrix and scoring-boundary block from the entry page. Preset
-> links remain available without JavaScript; set sizes are site-designed practice.
+> **Practice entry layout — 2026-09-10:** Show available question-count presets,
+> Hazard drill, and Full simulation first. Put custom question settings behind
+> “Customize a practice set,” closed by default; `/practice/#practice-builder`
+> opens and focuses that setup. Saved activity and coverage follow the choices.
+> Omit the availability matrix and scoring-boundary block from this entry page.
+> Preset question links remain available without JavaScript; hazard and simulation
+> cards link to their existing setup flows. Set sizes remain site-designed practice.
 
 ## Normalized product contract — recovered 2026-08-19
 
