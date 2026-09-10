@@ -108,6 +108,7 @@ export const applyFreshDocumentStatus = (online: boolean): void => {
   document.documentElement.setAttribute("data-connectivity", online ? "online" : "offline")
   if (online) {
     document.documentElement.removeAttribute("data-freshness")
+    document.documentElement.removeAttribute("data-page-update")
   } else {
     document.documentElement.setAttribute("data-freshness", "offline-stale")
   }
@@ -117,6 +118,7 @@ export const applyFreshDocumentStatus = (online: boolean): void => {
 export const applyAwaitingFreshDocumentStatus = (): void => {
   document.documentElement.setAttribute("data-connectivity", "online")
   document.documentElement.setAttribute("data-freshness", "checking")
+  document.documentElement.removeAttribute("data-page-update")
   applyNetworkAvailabilityFromDocumentState()
 }
 
@@ -129,8 +131,19 @@ export const applyConnectivityStatus = (online: boolean): void => {
 const documentRevision = (root: Document): string | null =>
   root.querySelector<HTMLMetaElement>('meta[name="nycustodian-document-revision"]')?.content ?? null
 
+export const applyDocumentValidationResult = (result: "current" | "updated" | "unverified"): void => {
+  // A connectivity event during the request owns the newer state.
+  if (document.documentElement.getAttribute("data-freshness") !== "checking") return
+  if (result === "current") applyFreshDocumentStatus(true)
+  else {
+    document.documentElement.setAttribute("data-freshness", "offline-stale")
+    if (result === "updated") document.documentElement.setAttribute("data-page-update", "available")
+    applyNetworkAvailabilityFromDocumentState()
+  }
+}
+
 const validateControlledDocument = async (expectedRevision: string | null): Promise<void> => {
-  let fresh = false
+  let result: "current" | "updated" | "unverified" = "unverified"
   try {
     const response = await fetch(window.location.href, {
       cache: "no-store",
@@ -140,15 +153,12 @@ const validateControlledDocument = async (expectedRevision: string | null): Prom
     })
     if (!response.ok || !response.headers.get("content-type")?.includes("text/html")) return
     const freshDocument = new DOMParser().parseFromString(await response.text(), "text/html")
-    fresh = expectedRevision !== null && documentRevision(freshDocument) === expectedRevision
+    const revision = documentRevision(freshDocument)
+    if (expectedRevision !== null && revision !== null) result = revision === expectedRevision ? "current" : "updated"
   } catch {
     // An unavailable network cannot establish the currency of cached markup.
   } finally {
-    // A connectivity event during the request owns the newer state.
-    if (document.documentElement.getAttribute("data-freshness") === "checking") {
-      if (fresh && navigator.onLine !== false) applyFreshDocumentStatus(true)
-      else document.documentElement.setAttribute("data-freshness", "offline-stale")
-    }
+    applyDocumentValidationResult(navigator.onLine === false ? "unverified" : result)
   }
 }
 
@@ -166,8 +176,12 @@ if (typeof window !== "undefined") {
     applyAwaitingFreshDocumentStatus()
     void validateControlledDocument(expectedRevision)
   }
-  window.addEventListener("online", () => applyConnectivityStatus(true))
+  window.addEventListener("online", () => {
+    applyAwaitingFreshDocumentStatus()
+    void validateControlledDocument(documentRevision(document))
+  })
   window.addEventListener("offline", () => applyConnectivityStatus(false))
+  document.querySelector("[data-reload-page]")?.addEventListener("click", () => window.location.reload())
   window.addEventListener("storage", (event) => {
     if (event.key === bootPreferencesKey) applyBootPreferences(readBootPreferences())
   })

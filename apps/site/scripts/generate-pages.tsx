@@ -221,8 +221,8 @@ const footer = `
 
 const connectivityNotice = `
   <p class="connectivity-notice" data-connectivity-notice role="status" aria-live="polite">
-    <span data-connectivity-message="offline">You are offline. You can keep studying with the copy saved on this device; it may be out of date, and outside links will not open.</span>
-    <span data-connectivity-message="stale-online">You are back online, but this saved copy may be out of date. Reload the page to get the current version before relying on outside sources.</span>
+    <span data-connectivity-message="offline">You’re offline. Only saved study material is available.</span>
+    <span data-connectivity-message="stale-online">A newer version of this page is available. <button type="button" data-reload-page>Reload</button></span>
   </p>`
 
 const document = ({

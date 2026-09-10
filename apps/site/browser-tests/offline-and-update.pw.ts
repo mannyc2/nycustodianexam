@@ -37,6 +37,34 @@ test("ordinary online reloads stay quiet on service-worker controlled pages", as
   expect(await page.evaluate(() => Reflect.get(window, "connectivityNotices"))).toEqual([])
 })
 
+for (const outcome of ["unavailable", "updated"] as const) {
+  test(`freshness check is conservative when the network result is ${outcome}`, async ({ page }) => {
+    await page.goto("/practice/")
+    await page.evaluate(() => navigator.serviceWorker.register("/sw.js"))
+    await waitForActiveServiceWorker(page)
+    await page.addInitScript((result) => {
+      const originalFetch = window.fetch.bind(window)
+      Object.defineProperty(window, "fetch", { configurable: true, value: async (input: RequestInfo | URL, init?: RequestInit) => {
+        if (init?.cache !== "no-store" || new Headers(init.headers).get("accept") !== "text/html") return originalFetch(input, init)
+        if (result === "unavailable") throw new TypeError("Network unavailable")
+        const response = await originalFetch(input, init)
+        const document = new DOMParser().parseFromString(await response.text(), "text/html")
+        document.querySelector('meta[name="nycustodian-document-revision"]')?.setAttribute("content", "different-build")
+        return new Response(document.documentElement.outerHTML, { status: 200, headers: { "content-type": "text/html" } })
+      } })
+    }, outcome)
+    await page.reload()
+    await expect(page.locator("html")).toHaveAttribute("data-freshness", "offline-stale")
+    const notice = page.locator("[data-connectivity-notice]")
+    if (outcome === "unavailable") await expect(notice).toBeHidden()
+    else {
+      await expect(notice).toBeVisible()
+      await expect(notice.getByRole("button", { name: "Reload", exact: true })).toBeVisible()
+      await expect(page.locator('[data-connectivity-message="stale-online"]')).toContainText("A newer version of this page is available.")
+    }
+  })
+}
+
 const readStoredAttemptAt = (page: import("@playwright/test").Page, id: string): Promise<unknown> =>
   page.evaluate(({ expectedDatabaseName, expectedStore, expectedId }) =>
     new Promise<unknown>((resolve, reject) => {
@@ -104,15 +132,17 @@ test("a committed question reloads from the controlled service worker while offl
   await page.reload({ waitUntil: "domcontentloaded" })
 
   await expect(page).toHaveURL(questionPath)
-  await expect(page.locator("[data-connectivity-notice]")).toBeVisible()
+  // Blocking requests does not always change navigator.onLine in Chromium.
+  // An unverified fetch alone must not announce that the device is offline.
+  if (await page.evaluate(() => navigator.onLine)) await expect(page.locator("[data-connectivity-notice]")).toBeHidden()
+  else await expect(page.locator("[data-connectivity-notice]")).toBeVisible()
   await expect(page.locator("html")).toHaveAttribute("data-freshness", "offline-stale")
   await expect(page.getByRole("heading", { name: /^Correct — / })).toBeFocused()
   expect(await readStoredAttempt(page)).toEqual(committed)
 
   await context.setOffline(false)
   await expect(page.locator("html")).toHaveAttribute("data-connectivity", "online")
-  await expect(page.locator("html")).toHaveAttribute("data-freshness", "offline-stale")
-  await expect(page.locator('[data-connectivity-message="stale-online"]')).toBeVisible()
+  await expect(page.locator("[data-connectivity-notice]")).toBeHidden()
 
   await page.reload({ waitUntil: "domcontentloaded" })
   await expect.poll(() => page.locator("html").getAttribute("data-freshness")).toBeNull()

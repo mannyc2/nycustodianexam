@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest"
 import {
   applyConnectivityStatus,
+  applyDocumentValidationResult,
   applyAwaitingFreshDocumentStatus,
   applyFreshDocumentStatus,
   bootPreferencesKey,
@@ -57,6 +58,30 @@ const documentStub = (links: readonly HTMLAnchorElement[] = []) => {
 }
 
 describe("preference boot mirror failures", () => {
+  it("only offers an update when a newer document is confirmed", () => {
+    const { attributes } = documentStub()
+    applyAwaitingFreshDocumentStatus()
+    applyDocumentValidationResult("unverified")
+    expect(attributes.has("data-page-update")).toBe(false)
+    expect(attributes.get("data-freshness")).toBe("offline-stale")
+    applyAwaitingFreshDocumentStatus()
+    applyDocumentValidationResult("updated")
+    expect(attributes.get("data-page-update")).toBe("available")
+    applyAwaitingFreshDocumentStatus()
+    applyDocumentValidationResult("current")
+    expect(attributes.has("data-page-update")).toBe(false)
+    expect(attributes.has("data-freshness")).toBe(false)
+  })
+
+  it("does not let a late validation overwrite an offline event", () => {
+    const { attributes } = documentStub()
+    applyAwaitingFreshDocumentStatus()
+    applyConnectivityStatus(false)
+    applyDocumentValidationResult("updated")
+    expect(attributes.get("data-connectivity")).toBe("offline")
+    expect(attributes.has("data-page-update")).toBe(false)
+  })
+
   it("keeps validation quiet without enabling outside links prematurely", () => {
     const source = anchorStub("https://example.gov/public-source")
     const { attributes } = documentStub([source.element])

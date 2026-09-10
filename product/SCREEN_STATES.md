@@ -1,5 +1,12 @@
 # Screen-state, transition, and recovery contract
 
+Online freshness checks are quiet while pending or inconclusive. A global update
+notice requires a confirmed different document revision; it offers an explicit
+Reload action. Reconnection revalidates in the background and does not itself
+announce an update. Unverified source-link availability remains contextual;
+connectivity alone never establishes that cached facts are current.
+
+
 > **Current reporting availability — 2026-09-10:** Correction intake is dormant.
 > Do not offer reporting links, generate `/report/` or
 > `/transparency/corrections/`, ship the correction-form island, or include these
