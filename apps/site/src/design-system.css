@@ -969,6 +969,10 @@
 }
 
 @layer overrides {
+  [data-route-id="atlas-index"] .page-shell { padding-block: clamp(1.25rem, 3vw, 2rem); }
+  [data-route-id="atlas-index"] .page-header { display: grid; gap: 0.5rem; margin-block-end: 1.5rem; }
+  [data-route-id="atlas-index"] .page-header h1 { font-size: clamp(1.625rem, 1.25rem + 1vw, 2rem); letter-spacing: -0.025em; }
+  [data-route-id="atlas-index"] .page-header p { max-inline-size: 72ch; color: var(--color-text-muted); text-wrap: pretty; }
   .atlas-family-select { display: none; }
   .atlas-eligibility-note { font-size: 0.9375rem; color: var(--color-text-muted); max-inline-size: 80ch; }
   .atlas-browser { gap: 1rem; }
