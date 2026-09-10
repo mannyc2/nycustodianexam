@@ -20,19 +20,15 @@ const ways = [
   { icon: "print", title: "Print a set", compactDescription: "Paper, with answer key", description: "Study on paper, with questions and their answer key on separate pages.", href: "/print/", action: "Open print center" }
 ] as const
 
-const StudySettingsLinks = () => {
-  const { state: { compact } } = useStudy()
-  return <p className="study-settings-links"><a href="/settings/">Larger text and reduced motion</a>{compact ? null : <>{" · "}<a href="/offline/">Download for offline use</a></>}</p>
-}
 const StudyCoverageLink = () => {
   const { state: { unavailable, hasActivity } } = useStudy()
   return !unavailable && !hasActivity ? <a className="study-coverage-link" href="#covers">What practice covers</a> : null
 }
 
 export const StudyWays = () => {
-  const { state: { bootstrap, compact } } = useStudy()
+  const { state: { bootstrap } } = useStudy()
   return (<section className="study-section" aria-labelledby="study-ways-heading">
-      <div className="section-header"><h2 id="study-ways-heading">Ways to practice</h2>{compact ? null : <StudySettingsLinks />}</div>
+      <div className="section-header"><h2 id="study-ways-heading">Ways to practice</h2></div>
       <ul className="task-cards study-ways-grid">{ways.map((way, index) => <li className={`task-card${index === 0 ? " task-card-primary" : ""}`} key={way.href}>
         <a className="task-card-link" href={way.href} aria-labelledby={`study-way-${way.icon}`}>
           <StudyIcon kind={way.icon} /><h3 className="task-card-title" id={`study-way-${way.icon}`}>{way.title}</h3>
@@ -40,7 +36,6 @@ export const StudyWays = () => {
           <span className={`task-card-cta button ${index === 0 ? "button-primary" : "button-secondary"}`}>{way.action}</span>
         </a>
       </li>)}</ul>
-      {compact ? <StudySettingsLinks /> : null}
     </section>)
 }
 

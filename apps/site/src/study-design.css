@@ -203,7 +203,6 @@
 }
 
 @layer overrides {
-  .study-settings-links { margin: 0; font-size: var(--text-xs); font-weight: var(--weight-bold); }
   .study-quick-presets > summary { min-block-size: var(--target-default); padding-block: var(--space-3); cursor: pointer; color: var(--color-action); font-weight: var(--weight-bold); }
   .study-quick-presets[open] > .section-header { margin-block: var(--space-4); }
   .study-coverage-compact :is(h3, p) { font-size: var(--text-xs); }
