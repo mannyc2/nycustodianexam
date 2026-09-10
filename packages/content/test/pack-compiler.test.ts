@@ -133,7 +133,7 @@ describe("compileContentPack", () => {
         id: "line.nassau.admin-status-unknown",
         sourceId: "nassau.factbase",
         locator: "docs/FACTBASE.md — introductory current-status note",
-        excerpt: "The announcements for exams 60112026 / 61012026 list 2026-08-22 as the exam date. That date has passed, but no official post-administration notice or result/list record was located in the 2026-08-25 read-only refresh, so actual administration status remains unconfirmed."
+        excerpt: "The announcements for exams 60112026 / 61012026 still list 2026-08-22. As of 2026-09-10, no official confirmation of administration or result/list record for either exam was located. The live Nassau eligible-list index contains older Custodian lists but neither 2026 exam number; this does not establish that the examinations were canceled or that results have not been sent to candidates."
       },
       {
         id: "line.nassau.preparer-unknown",
@@ -220,11 +220,18 @@ describe("compileContentPack", () => {
         compatibilityKey: "nassau-county-custodian-entry-level-v2"
       },
       contentAvailability: { status: "available", lastVerifiedOn: "2026-08-25" },
-      announcementFactSheet: { version: 2, lastReviewedOn: "2026-08-25" }
+      announcementFactSheet: { version: 3, lastReviewedOn: "2026-09-10" }
     })
     const nassauFacts = compiled.catalog.profiles.find(
       (profile) => profile.id === "nassau-county-custodian-entry-level"
     )?.announcementFactSheet?.facts ?? []
+    expect(nassauFacts.find((fact) => fact.id === "administration-status")).toMatchObject({
+      state: "unverified", reviewedOn: "2026-09-10"
+    })
+    expect(nassauFacts.find((fact) => fact.id === "oc-filing-period")).toMatchObject({
+      reviewedOn: "2026-08-25"
+    })
+    expect(compiled.catalog.sourceLines.find((line) => line.id === "line.nassau.admin-status-unknown")?.verifiedOn).toBe("2026-09-10")
     expect(new Set(nassauFacts.map((fact) => fact.state))).toEqual(
       new Set(["verified", "not_published", "unverified", "superseded"])
     )
@@ -1062,7 +1069,7 @@ describe("compileContentPack", () => {
     })
 
     const staleHistory = structuredClone(input.authoredPack) as MutablePack
-    nassauFactSheet(staleHistory).version = 3
+    nassauFactSheet(staleHistory).version += 1
     await expect(
       Effect.runPromise(compileContentPack({ ...input, authoredPack: staleHistory }))
     ).rejects.toMatchObject({

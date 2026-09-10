@@ -50,7 +50,7 @@
     {
       "date": "2026-08-22",
       "label": "Shared announced test date",
-      "note": "Administration was not confirmed in the August 25 review.",
+      "note": "Administration was not confirmed in the September 10 review.",
       "tone": "warning",
       "facts": [
         {
@@ -63,7 +63,7 @@
         },
         {
           "id": "administration-status",
-          "sha256": "3daf75dcc88b6a6f7dc0bab373a7c22abe7eb45af13a03f5d495c1437b6b50c2"
+          "sha256": "ee2c52ad4bc9790434d68437a4cd532f6d1f6272a521e9724637aa588a52d3c0"
         }
       ],
       "kind": "exam-date",

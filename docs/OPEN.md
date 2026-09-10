@@ -88,9 +88,14 @@ This ledger contains unresolved research questions, contradictions, recovery tar
 passed. General guide supports paper booklet + machine-scored answer sheet as
 the standard and gives ID/pencil/security rules; announcement/admission notice
 controls administration-specific details. A read-only official-source refresh
-on 2026-08-25 found the announcements still available but did not locate an
+on 2026-09-10 found the announcements still available but did not locate an
 official post-administration notice, result/list record, or other confirmation
-that establishes whether the administration occurred as announced.
+that establishes whether the administration occurred as announced. Both dropdowns
+in the live eligible-list index were inspected; neither 60112026 nor 61012026
+was present. Older Custodian lists were present. Absence from that index does
+not establish cancellation or whether candidates received individual results.
+No next-cycle announcement was located; no future cadence is inferred.
+See `research/exam-refresh-2026-09-10.md` for exact scope and limitations.
 
 **Resolve with:** actual official admission notice, contemporaneous official
 candidate instruction page, official post-administration notice, or a later

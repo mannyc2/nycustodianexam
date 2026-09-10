@@ -71,7 +71,7 @@ export const nassauSources = [
     title: "Maintained Nassau Custodian factbase",
     publisher: "NY Custodian Exam research project",
     evidenceTier: "official-primary-synthesis",
-    version: "2026-08-25 refresh",
+    version: "2026-09-10 status refresh; other facts retained",
     locator: "docs/FACTBASE.md — Exam identity & series and introductory current-status note",
     scope: "Separates verified official announcement facts from historical inference and unresolved administration status.",
     rightsNotes: "Repository-authored synthesis; official linked records control."
@@ -186,11 +186,12 @@ export const nassauEvidence = [
     text: "The promotion announcement adds 0.10 point to a passing score per six months of specified continuous service in the promotion jurisdiction, includes provisional-promotion time in the examination title, caps credit at twenty years/four points, and requires service through appointment."
   },
   {
+    verifiedOn: "2026-09-10",
     claimId: "claim.nassau.admin-status-unknown",
     lineId: "line.nassau.admin-status-unknown",
     sourceId: "nassau.factbase",
     locator: "docs/FACTBASE.md — introductory current-status note",
-    excerpt: "The announcements for exams 60112026 / 61012026 list 2026-08-22 as the exam date. That date has passed, but no official post-administration notice or result/list record was located in the 2026-08-25 read-only refresh, so actual administration status remains unconfirmed.",
+    excerpt: "The announcements for exams 60112026 / 61012026 still list 2026-08-22. As of 2026-09-10, no official confirmation of administration or result/list record for either exam was located. The live Nassau eligible-list index contains older Custodian lists but neither 2026 exam number; this does not establish that the examinations were canceled or that results have not been sent to candidates.",
     text: "Actual administration of the announced 2026 exam remains unconfirmed in the maintained evidence."
   },
   {
@@ -356,7 +357,7 @@ export const launchProfiles = [
   },
   {
     id: "nassau-county-custodian-entry-level",
-    version: 2,
+    version: 3,
     label: "Nassau County Custodian — Entry-Level Series Layer",
     jurisdiction: "Nassau County public employers covered by the controlling announcements",
     canonicalPath: "/ny/nassau-county/custodian/",
@@ -369,8 +370,8 @@ export const launchProfiles = [
     ],
     announcementFactSheet: {
       schemaVersion: 2,
-      version: 2,
-      lastReviewedOn: reviewedOn,
+      version: 3,
+      lastReviewedOn: "2026-09-10",
       controllingDocumentNotice: "The announcement for a specific exam controls its title, competition type, eligibility, participating jurisdictions, filing terms, and subjects; the admission notice controls administration-specific instructions.",
       seriesScopeDisclaimer: "This layer supports original site-designed practice. It does not establish official item counts or weights, identical open and promotion forms, preparer identity, or secure content.",
       facts: [
@@ -394,7 +395,7 @@ export const launchProfiles = [
         unavailableFact("current-review-procedure", "review", "Current post-exam review procedure", "unverified", bothNassauExams, "Current post-exam review mechanics remain unresolved in the maintained source set.", ["line.nassau.review-form-unknown"]),
         unavailableFact("current-form-identity", "form_identity", "Open/promotion form identity", "not_published", bothNassauExams, "The maintained controlling sources do not establish whether the open-competitive and promotion examinations use identical forms.", ["line.nassau.form-identity-unknown"]),
         verifiedFact("promo-seniority-credit", "seniority_credit", "Promotion seniority credit", promo, "0.10 point added to a passing score per six months of specified continuous service in the promotion jurisdiction, including stated provisional-promotion time; maximum twenty years/four points; service continues through appointment.", ["line.nassau.promo-seniority"], "2026-06-11"),
-        unavailableFact("administration-status", "administration_status", "Actual 2026 administration status", "unverified", bothNassauExams, "The announced date passed, but the refresh did not locate an official post-administration or result/list record confirming administration occurred as announced.", ["line.nassau.admin-status-unknown"]),
+        { ...unavailableFact("administration-status", "administration_status", "Actual 2026 administration status", "unverified", bothNassauExams, "Checked September 10, 2026: both announcements still list August 22. We found no official confirmation that the exams took place and no eligible list for either 2026 exam in Nassau’s current list index. This does not mean the exams were canceled or that candidates have not received results.", ["line.nassau.admin-status-unknown"]), reviewedOn: "2026-09-10" },
         unavailableFact("preparer-identity", "preparer_identity", "Exam preparer identity", "unverified", bothNassauExams, "The maintained corpus does not directly confirm the preparer for this Nassau administration.", ["line.nassau.preparer-unknown"])
       ],
       changeHistory: [
@@ -409,6 +410,12 @@ export const launchProfiles = [
           changedOn: "2026-08-25",
           summary: "Added six-state fact wrappers, effective-dated promotion jurisdiction history, exact announcement excerpts, residency and provisional-service notes, and explicit exam identity/compatibility/availability.",
           sourceLineIds: ["line.nassau.oc-residency", "line.nassau.promo-amendments", "line.nassau.promo-provisional", "line.statewide.subject-plan"]
+        },
+        {
+          version: 3,
+          changedOn: "2026-09-10",
+          summary: "Rechecked administration and eligible-list availability against the official bulletins and live Nassau list index. Administration remains unconfirmed; neither 2026 exam number was found in the index. Other fact review dates are retained.",
+          sourceLineIds: ["line.nassau.admin-status-unknown"]
         }
       ]
     },

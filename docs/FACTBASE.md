@@ -1,10 +1,15 @@
 # FACTBASE.md
 Established facts: exam, format, scoring, logistics, legal framework, titles, jurisdiction.
-Current through factual refresh 2026-08-25. The announcements for exams
-60112026 / 61012026 list 2026-08-22 as the exam date. That date has passed, but
-no official post-administration notice or result/list record was located in the
-2026-08-25 read-only refresh, so actual administration status remains
-unconfirmed.
+Administration/list status checked 2026-09-10; other facts retain their prior review dates.
+The announcements for exams 60112026 / 61012026 still list 2026-08-22. As of 2026-09-10, no official confirmation of administration or result/list record for either exam was located. The live Nassau eligible-list index contains older Custodian lists but neither 2026 exam number; this does not establish that the examinations were canceled or that results have not been sent to candidates.
+
+Official follow-up sources checked September 10:
+- [Current eligible lists by title](https://www.nassaucivilservice.com/NCCSWeb/homepage.nsf/WebSiteContent/Eligible%2BLists%2BBy%2BTitle?OpenDocument): live HTML dropdowns inspected, including both open-competitive and promotion lists. The index says newly established lists appear within 48–72 hours of establishment; that is not a results-processing estimate.
+- [Commission homepage](https://www.nassaucivilservice.com/NCCSWeb/homepage.nsf/HomePage?ReadForm): applicant contact maintenance, email/postal canvassing notice, and links to Job Interest Cards for future open-competitive announcements. Exam inquiries: examunit@nassaucountyny.gov; list inquiries: placement@nassaucountyny.gov.
+- No next-cycle Custodian announcement was located in this bounded search. Dynamic NEOGOV listing text is not proof that no announcement exists.
+
+Source coordinates, retrieval limitations, and checksums: [September refresh](../research/exam-refresh-2026-09-10.md).
+
 [v4 ingested 2026-08: class-spec provenance revised (most detailed specs are union mirrors); NYS Cleaner/Janitor standards added as corroborative; general-guide facts added; v4's 2017/2021/2026-only cadence REJECTED — 2024 administration retained on better sourcing.]
 
 ## Exam identity & series
