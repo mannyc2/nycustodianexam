@@ -41,7 +41,7 @@ const useStudyValue = ({ bootstrap, controller }: StudyProviderProps) => {
       review.tag === "loading") return
     initialSectionFocus.current = true
     const targetId = window.location.hash.slice(1)
-    if (targetId === "practice-builder" || targetId === "practice-sets" || targetId === "covers") {
+    if (targetId === "practice-sets" || targetId === "covers") {
       const section = document.getElementById(targetId)
       section?.focus({ preventScroll: true })
       section?.scrollIntoView({ block: "start" })

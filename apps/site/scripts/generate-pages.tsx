@@ -1439,15 +1439,28 @@ const buildPages = ({
     body: `
   <main class="page-shell" id="main-content" tabindex="-1">
     <div data-study-hub><header class="page-header"><h1>Practice</h1><p>Build confidence with original questions and workplace scenes, at your own pace.</p></header>
-    <section class="study-section" id="practice-sets"><div class="section-header"><h2>Choose a practice set</h2><p>Get explanations after each answer, or save feedback until the end with a simulation.</p></div>
-    <ul class="practice-preset-grid study-set-options">${studyBootstrap.practiceSets.map(set => `<li><a class="practice-preset" href="${set.href}"><h3>${set.length} questions</h3><p>Mixed topics · Untimed</p><span>Start ${set.length} →</span></a></li>`).join("")}
-    <li><a class="practice-preset" href="/hazards/"><h3>Hazard drill</h3><p>Spot hazards in workplace scenes.</p><span>Choose a drill →</span></a></li>
-    <li><a class="practice-preset" href="/simulations/"><h3>Full simulation</h3><p>Your timing, with feedback at the end.</p><span>Set up simulation →</span></a></li></ul></section>
-    <p class="source-note">Custom sets and saved activity require JavaScript. <a href="/print/">Print a practice set</a>.</p>
+    <section class="study-section practice-choices" id="practice-sets"><h2>Choose a practice set</h2><div class="practice-choice-layout">
+    <article class="practice-question-choice"><div class="practice-choice-title"><h3>Question practice</h3><span>At your own pace</span></div><p>Build your knowledge across all three subjects. Get an explanation after every answer.</p><div class="practice-length-label">How many questions?</div><ul class="practice-length-links" aria-label="Practice activities">${studyBootstrap.practiceSets.map(set => `<li><a href="${set.href}" aria-label="Start ${set.length}"><strong>${set.length}</strong><span>questions ↗</span></a></li>`).join("")}</ul><a class="practice-custom-link" href="/practice/custom/">Choose your own topics and length →</a></article>
+    <div class="practice-other-choices"><a class="practice-activity-link" href="/hazards/"><div><h3>Hazard drill</h3><p>Look around a workplace scene. Can you spot what’s unsafe?</p><span>Practice spotting hazards →</span></div></a><a class="practice-activity-link" href="/simulations/"><div><h3>Full simulation</h3><p>Practice with your own timer and see your feedback at the end.</p><span>Set up a simulation →</span></div></a></div></div><p class="practice-print-link">Prefer to work on paper? <a href="/print/">Print a practice set</a></p></section>
     <section class="study-section" id="covers"><h2>What practice covers</h2><p>Cleaning tools, minor maintenance and repair, and health and safety. All questions are original and unofficial.</p></section></div>
   </main>
   <script id="study-bootstrap-data" type="application/json">${escapeJsonForHtml(studyBootstrap)}</script>
   <script type="module" src="/src/study/react/bootstrap.tsx"></script>`
+  })
+
+  pages.push({
+    relativePath: "practice/custom/index.html",
+    canonicalPath: "/practice/custom/",
+    title: "Custom practice — NY Custodian Exam Study",
+    description: "Choose the topics and number of questions for your practice set.",
+    robots: "noindex,follow",
+    routeId: "practice-custom",
+    section: "practice",
+    body: `<main class="page-shell custom-practice-page" id="main-content" tabindex="-1">
+      ${breadcrumb([{ href: "/practice/", label: "Practice" }, { label: "Custom set" }])}
+      <header class="page-header"><h1>Make it your practice</h1><p>Choose what you want to work on and how many questions to answer.</p></header>
+      <div data-practice-custom><p>Turn on JavaScript to choose your topics and length, or <a href="/practice/#practice-sets">start a ready-made set</a>.</p></div>
+    </main><script id="practice-custom-data" type="application/json">${escapeJsonForHtml(reviewBootstrap)}</script><script type="module" src="/src/practice/react/custom-bootstrap.tsx"></script>`
   })
 
   pages.push({

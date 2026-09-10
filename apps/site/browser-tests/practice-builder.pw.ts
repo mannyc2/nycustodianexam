@@ -2,7 +2,7 @@ import { expect } from "@playwright/test"
 import { test } from "./offline-origin-fixtures.ts"
 
 test("custom practice preserves the chosen length and saves exact feedback for Review", async ({ page }) => {
-  await page.goto("/practice/#practice-builder")
+  await page.goto("/practice/custom/")
   const builder = page.getByRole("region", { name: "Build a practice set" })
   await expect(builder).toBeVisible()
   await builder.getByRole("checkbox", { name: /^Cleaning tools/ }).uncheck()
@@ -36,18 +36,19 @@ test("custom practice preserves the chosen length and saves exact feedback for R
 })
 
 test("an invalid custom set link cannot fall through to a normal answer form", async ({ page }) => {
-  await page.goto("/practice/#practice-builder")
-  const href = await page.locator("#practice-sets a.practice-preset").first().getAttribute("href")
+  await page.goto("/practice/")
+  const href = await page.locator("#practice-sets .practice-length-links a").first().getAttribute("href")
   await page.goto(`${href}?set=pb1.1.45.0000&position=1`)
   await expect(page.getByRole("heading", { name: "This practice set is unavailable" })).toBeVisible()
   await expect(page.getByRole("button", { name: "Save answer", exact: true })).toHaveCount(0)
 })
 
 test("setup navigation connects Practice, Hazard drill and Simulation with real links", async ({ page }) => {
-  await page.goto("/practice/#practice-builder")
-  await expect(page.locator("#practice-builder")).toBeFocused()
+  await page.goto("/practice/custom/")
+  await expect(page).toHaveURL(/\/practice\/custom\/$/)
   await expect(page.getByRole("heading", { name: "Build a practice set", exact: true })).toBeInViewport()
   const navigation = page.getByRole("navigation", { name: "Practice setup", exact: true })
+  await page.getByRole("link", { name: "Practice", exact: true }).first().click()
   await page.locator("#practice-sets").getByRole("link", { name: /Hazard drill/ }).click()
   await expect(page).toHaveURL(/\/hazards\/$/)
   await expect(navigation.getByRole("link", { name: "Hazard drill", exact: true })).toHaveAttribute("aria-current", "page")
@@ -64,7 +65,7 @@ test("custom question documents remain available offline with reordered set para
   await expect(page.getByText(/Download complete and checked/)).toBeVisible({ timeout: 90_000 })
   await page.getByRole("button", { name: /Turn on this saved copy/ }).click()
   await expect(page.getByText(/now in use for new sessions/)).toBeVisible()
-  await page.goto(offlineOrigin.url + "/practice/#practice-builder")
+  await page.goto(offlineOrigin.url + "/practice/custom/")
   await page.getByRole("region", { name: "Build a practice set" }).getByRole("button", { name: "Start this practice set" }).click()
   await expect(page.locator(".player-position")).toHaveText("Question 1 of 45 · Text version")
   await page.evaluate(async () => { await navigator.serviceWorker.ready })
@@ -83,4 +84,10 @@ test("custom question documents remain available offline with reordered set para
   await page.getByRole("radio").first().check()
   await page.getByRole("button", { name: "Save answer", exact: true }).click()
   await expect(page.locator(".feedback-rationales")).toBeVisible()
+})
+
+test("old custom setup links redirect to the dedicated page", async ({ page }) => {
+  await page.goto("/practice/#practice-builder")
+  await expect(page).toHaveURL(/\/practice\/custom\/$/)
+  await expect(page.getByRole("button", { name: "Start this practice set" })).toBeVisible()
 })

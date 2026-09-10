@@ -1081,6 +1081,7 @@ export const verify = async (): Promise<void> => {
       robots: "index,follow" as const,
       routeId: "profile" as const
     })),
+    { canonicalPath: "/practice/custom/", robots: "noindex,follow", routeId: "practice-custom" },
     { canonicalPath: "/practice/", robots: "index,follow", routeId: "study-hub" },
     { canonicalPath: "/review/", robots: "noindex,follow", routeId: "review-queue" },
     { canonicalPath: "/simulations/", robots: "index,follow", routeId: "simulation-setup" },
@@ -1497,6 +1498,7 @@ export const verify = async (): Promise<void> => {
   const interactiveRouteIds = new Set([
     "hazards-index",
     "study-hub",
+    "practice-custom",
     "question-player",
     "review-player",
     "review-queue",
@@ -1723,6 +1725,15 @@ export const verify = async (): Promise<void> => {
     if (route.routeId === "print-preview") {
       if (!html.includes("data-print-preview") || html.includes('type="application/json"')) {
         throw new Error("Print preview shell must load only its opaque local job")
+      }
+      continue
+    }
+
+    if (route.routeId === "practice-custom") {
+      const bootstrap = Schema.decodeUnknownSync(ReviewQueueBootstrap)(extractEmbeddedJson(html, "practice-custom-data"))
+      assertNoAnswerBearingStructuredFields(bootstrap, "Custom practice bootstrap")
+      if (bootstrap.questions.length !== questions.length || !html.includes("data-practice-custom")) {
+        throw new Error("Custom practice bootstrap is incomplete")
       }
       continue
     }

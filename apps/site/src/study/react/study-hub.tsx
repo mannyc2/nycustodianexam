@@ -1,5 +1,3 @@
-import { useEffect, useRef } from "react"
-import { PracticeSessionSetup } from "../../practice/react/builder.tsx"
 import { ActivityHistory } from "./history.tsx"
 import { useStudy } from "./provider.tsx"
 
@@ -17,31 +15,36 @@ const StudyIcon = ({ kind }: { readonly kind: keyof typeof studyIconPaths }) =>
 export const StudyPresets = () => {
   const { state: { bootstrap } } = useStudy()
   const sets = bootstrap.practiceSets ?? (bootstrap.firstPractice === null ? [] : [bootstrap.firstPractice])
-  return <section className="study-section" id="practice-sets" tabIndex={-1} aria-labelledby="practice-sets-heading">
-    <div className="section-header"><h2 id="practice-sets-heading">Choose a practice set</h2><p>Get explanations after each answer, or save feedback until the end with a simulation.</p></div>
-    <ul className="practice-preset-grid study-set-options" aria-label="Practice activities">
-      {sets.map(set => <li key={set.length}><a className="practice-preset" href={set.href} aria-label={`Start ${set.length}`}>
-        <StudyIcon kind="practice" /><h3>{set.length} questions</h3><p>Mixed topics · Untimed</p><span>Start {set.length} →</span>
-      </a></li>)}
-      <li><a className="practice-preset" href="/hazards/"><StudyIcon kind="hazard" /><h3>Hazard drill</h3><p>Spot hazards in workplace scenes.</p><span>Choose a drill →</span></a></li>
-      <li><a className="practice-preset" href="/simulations/"><StudyIcon kind="simulation" /><h3>Full simulation</h3><p>Your timing, with feedback at the end.</p><span>Set up simulation →</span></a></li>
-    </ul>
-    <StudyPracticeBuilder />
-    <p className="practice-print-link">Prefer paper? <a href="/print/">Print a practice set</a></p>
+  return <section className="study-section practice-choices" id="practice-sets" tabIndex={-1} aria-labelledby="practice-sets-heading">
+    <h2 id="practice-sets-heading">Choose a practice set</h2>
+    <div className="practice-choice-layout">
+      <article className="practice-question-choice">
+        <div className="practice-choice-title"><StudyIcon kind="practice" /><h3>Question practice</h3><span>At your own pace</span></div>
+        <p>Build your knowledge across all three subjects. Get an explanation after every answer.</p>
+        <div className="practice-length-label">How many questions?</div>
+        <ul className="practice-length-links" aria-label="Practice activities">{sets.map(set => <li key={set.length}><a href={set.href} aria-label={`Start ${set.length}`}><strong>{set.length}</strong><span>questions <span aria-hidden="true">↗</span></span></a></li>)}</ul>
+        <a className="practice-custom-link" href="/practice/custom/">Choose your own topics and length <span aria-hidden="true">→</span></a>
+      </article>
+      <div className="practice-other-choices">
+        <a className="practice-activity-link" href="/hazards/"><StudyIcon kind="hazard" /><div><h3>Hazard drill</h3><p>Look around a workplace scene. Can you spot what’s unsafe?</p><span>Practice spotting hazards <span aria-hidden="true">→</span></span></div></a>
+        <a className="practice-activity-link" href="/simulations/"><StudyIcon kind="simulation" /><div><h3>Full simulation</h3><p>Practice with your own timer and see your feedback at the end.</p><span>Set up a simulation <span aria-hidden="true">→</span></span></div></a>
+      </div>
+    </div>
+    <p className="practice-print-link">Prefer to work on paper? <a href="/print/">Print a practice set</a></p>
   </section>
 }
 
 export const StudyProgress = () => {
-  const { state: { bootstrap, activityState } } = useStudy()
+  const { state: { activityState } } = useStudy()
   return (<section className="study-section" aria-labelledby="study-progress-heading">
       <div className="section-header"><h2 id="study-progress-heading">Saved activity</h2></div>
       {activityState.tag === "unavailable" ? <div className="study-read-notice notice notice-warning"><h3>Progress is unavailable</h3><p>Your saved attempts could not be read. You can retry in Recent activity below.</p></div> :
         activityState.tag === "loading" ? <p className="study-read-notice" role="status">Reading your saved progress…</p> :
-          <div className="study-progress-rows">
-            <div><StudyIcon kind="practice" /><div><h3>Question practice</h3><p>Recognizing tools and choosing how to use them.</p><strong>{activityState.activity.questionCount === 0 ? "No saved answers in this release" : `${activityState.activity.questionCount} ${activityState.activity.questionCount === 1 ? "answer" : "answers"} saved`}</strong></div><a className="button button-secondary" href="#practice-sets">Practice questions</a></div>
-            <div><StudyIcon kind="hazard" /><div><h3>Hazard scanning</h3><p>Identifying unsafe conditions in workplace scenes.</p><strong>{activityState.activity.hazardCount === 0 ? "No saved scene responses in this release" : `${activityState.activity.hazardCount} scene ${activityState.activity.hazardCount === 1 ? "response" : "responses"} saved`}</strong></div><a className="button button-secondary" href="/hazards/">Practice hazards</a></div>
-            <div><StudyIcon kind="library" /><div><h3>Tool reference</h3><p>Compare how tools look, what they do, and where their uses differ.</p><strong>{bootstrap.toolCount} tools</strong></div><a className="button button-secondary" href="/atlas/">Browse tools</a></div>
-          </div>}
+          <dl className="practice-saved-counts">
+            <div><dt>Questions answered</dt><dd>{activityState.activity.questionCount}</dd></div>
+            <div><dt>Scene responses</dt><dd>{activityState.activity.hazardCount}</dd></div>
+            <div><dt>Reviews finished</dt><dd>{activityState.activity.reviewCount}</dd></div>
+          </dl>}
       <p className="study-source-note">Kept in this browser on this device. Clearing browser data can delete your records. <a href="/settings/#export-local-data">Export a backup</a> to keep a copy.</p>
     </section>)
 }
@@ -97,21 +100,6 @@ export const StudyHeader = () => {
 export const StudyHistory = () => {
   const { state: { historyState }, actions: { retryActivity } } = useStudy()
   return <ActivityHistory state={historyState} onRetry={retryActivity} />
-}
-export const StudyPracticeBuilder = () => {
-  const disclosure = useRef<HTMLDetailsElement>(null)
-  useEffect(() => {
-    const reveal = () => {
-      if (window.location.hash === "#practice-builder" && disclosure.current !== null) disclosure.current.open = true
-    }
-    reveal()
-    window.addEventListener("hashchange", reveal)
-    return () => window.removeEventListener("hashchange", reveal)
-  }, [])
-  return <details className="practice-customize" ref={disclosure}>
-    <summary>Customize a practice set<span>Choose topics, length, or a repeat set</span></summary>
-    <PracticeSessionSetup />
-  </details>
 }
 export const StudyHub = () => <div className="study-hub">
   <StudyHeader />
