@@ -422,7 +422,7 @@ test("Atlas desktop cards follow the reference grid and retain every family coun
   await expect(page.locator(".tool-eligibility-scored:visible")).toHaveCount(53)
 })
 
-test("Atlas recovery follows visible failures and its release note is readable without JavaScript", async ({ page, browser, baseURL }) => {
+test("Atlas recovery follows visible failures and its study guidance is usable without JavaScript", async ({ page, browser, baseURL }) => {
   await page.setViewportSize({ width: 384, height: 900 })
   await page.goto("/atlas/")
   const recovery = page.locator("[data-atlas-image-recovery]")
@@ -443,10 +443,13 @@ test("Atlas recovery follows visible failures and its release note is readable w
   try {
     const document = await context.newPage()
     await document.goto("/atlas/")
-    await expect(document.getByRole("heading", { name: "All 65 records have released illustrations", exact: true })).toBeVisible()
-    const details = document.locator(".atlas-release-details")
+    await expect(document.getByRole("heading", { name: "All 65 records have released illustrations", exact: true })).toHaveCount(0)
+    const details = document.locator(".atlas-help")
     await details.locator("summary").click()
-    await expect(details.locator("dd").first()).toHaveText(`${catalog.packId} · version ${catalog.version}`)
+    await expect(details.getByText(/These tools are available to study/)).toBeVisible()
+    await expect(details.getByRole("link", { name: "Sources and methods", exact: true })).toHaveAttribute("href", "/transparency/")
+    await details.getByRole("link", { name: "Download a study copy", exact: true }).click()
+    await expect(document).toHaveURL(/\/offline\/$/)
     await expectPageReflow(document)
   } finally { await context.close() }
 })
