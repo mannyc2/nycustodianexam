@@ -1439,11 +1439,12 @@ const buildPages = ({
     body: `
   <main class="page-shell" id="main-content" tabindex="-1">
     <div data-study-hub><header class="page-header"><h1>Practice</h1><p>Build confidence with original questions and workplace scenes, at your own pace.</p></header>
-    <section class="study-section" id="practice-sets"><div class="section-header"><h2>Choose a practice set</h2><p>Get explanations after each answer, or save feedback until the end with a simulation.</p></div>
-    <ul class="practice-preset-grid study-set-options">${studyBootstrap.practiceSets.map(set => `<li><a class="practice-preset" href="${set.href}"><h3>${set.length} questions</h3><p>Mixed topics · Untimed</p><span>Start ${set.length} →</span></a></li>`).join("")}
-    <li><a class="practice-preset" href="/hazards/"><h3>Hazard drill</h3><p>Spot hazards in workplace scenes.</p><span>Choose a drill →</span></a></li>
-    <li><a class="practice-preset" href="/simulations/"><h3>Full simulation</h3><p>Your timing, with feedback at the end.</p><span>Set up simulation →</span></a></li></ul></section>
-    <p class="source-note">Custom sets and saved activity require JavaScript. <a href="/print/">Print a practice set</a>.</p>
+    <section class="study-section" id="practice-sets"><div class="section-header"><h2>Choose a practice set</h2><p>Untimed, with explanations after each answer — or save feedback until the end with a simulation.</p></div>
+    <ul class="practice-preset-grid study-set-options">${studyBootstrap.practiceSets.map((set, index) => `<li><a class="practice-preset${index === 0 ? " practice-preset-primary" : ""}" href="${set.href}" aria-label="Start ${set.length}"><p class="set-card-number" aria-hidden="true">${set.length}</p><h3>${set.length} questions</h3><p>${set.length === questions.length ? "Every question in this release, in one sitting." : set.length === 45 ? "A shorter mix drawn from the whole question bank." : set.length === 60 ? "A longer mix, still without repeated questions." : "The longest mix, without repeated questions."}</p><span class="button button-${index === 0 ? "primary" : "secondary"} practice-preset-cta">Start ${set.length}</span></a></li>`).join("")}
+    <li><a class="practice-preset" href="/hazards/"><h3>Hazard drill</h3><p>Spot hazards in workplace scenes.</p><span class="button button-secondary practice-preset-cta">Choose a drill</span></a></li>
+    <li><a class="practice-preset" href="/simulations/"><h3>Full simulation</h3><p>Your timing, with feedback at the end.</p><span class="button button-secondary practice-preset-cta">Set up simulation</span></a></li>
+    <li><a class="practice-preset" href="/print/"><h3>Prefer paper?</h3><p>Print questions with the answer key on separate pages.</p><span class="button button-secondary practice-preset-cta">Open print center</span></a></li></ul></section>
+    <p class="source-note">Custom sets and saved activity require JavaScript.</p>
     <section class="study-section" id="covers"><h2>What practice covers</h2><p>Cleaning tools, minor maintenance and repair, and health and safety. All questions are original and unofficial.</p></section></div>
   </main>
   <script id="study-bootstrap-data" type="application/json">${escapeJsonForHtml(studyBootstrap)}</script>

@@ -129,7 +129,7 @@ test("presets come first, customization is disclosed, and presets work without J
   try {
     const fallback = await noScript.newPage()
     await fallback.goto("/practice/")
-    await fallback.locator(".study-set-options").getByRole("link", { name: /45 questions/ }).click()
+    await fallback.locator(".study-set-options").getByRole("link", { name: "Start 45", exact: true }).click()
     await expect(fallback).toHaveURL(/\/practice\/session\/[^/]+\/question\/1\/$/)
   } finally { await noScript.close() }
 })

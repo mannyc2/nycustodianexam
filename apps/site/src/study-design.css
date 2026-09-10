@@ -249,20 +249,21 @@
   .study-hub > .practice-heading { margin: 0; padding-block: 1.75rem 0; gap: 0.625rem; }
   .study-hub { gap: 2rem; }
   .practice-heading h1 { font-size: clamp(2rem, 4vw, 2.75rem); }
-  .study-set-options.practice-preset-grid { grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: 0.875rem; padding: 0; border: 0; background: none; }
+  .study-set-options.practice-preset-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.875rem; padding: 0; border: 0; background: none; }
   .practice-preset-grid > li { display: block; padding: 0; }
   .practice-preset-grid > li + li { border: 0; }
   .practice-preset { display: flex; flex-direction: column; align-items: flex-start; gap: 0.75rem; height: 100%; padding: 1.25rem; border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); color: var(--color-text); text-decoration: none; }
   .practice-preset:hover { border-color: var(--color-action); }
+  .practice-preset-primary { border-color: var(--color-action); }
   .practice-preset-grid h3 { font-size: 1.125rem; }
   .practice-preset-grid p { margin: 0; font-size: 0.875rem; }
-  .practice-preset > span { margin-block-start: auto; padding-block-start: 0.5rem; color: var(--color-action); font-weight: 700; font-size: 0.875rem; }
+  .practice-preset .set-card-number { margin: 0; font-size: 1.75rem; font-weight: 700; line-height: 1; color: var(--color-action); font-variant-numeric: tabular-nums; }
+  .practice-preset .practice-preset-cta { margin-block-start: auto; align-self: stretch; text-align: center; }
   .practice-preset .study-icon { color: var(--color-action); }
   .practice-customize { border-block: 1px solid var(--color-border); }
   .practice-customize > summary { padding-block: 1rem; cursor: pointer; font-weight: 700; color: var(--color-action); }
   .practice-customize > summary > span { margin-inline-start: 1rem; font-size: 0.875rem; font-weight: 400; color: var(--color-text-muted); }
   .practice-customize .practice-setup-section { margin-block: 0 1.25rem; }
-  .practice-print-link { margin: 0; font-size: 0.875rem; color: var(--color-text-muted); }
   @media (max-width: 35rem) {
     .study-set-options.practice-preset-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .study-hub { gap: 1.5rem; }

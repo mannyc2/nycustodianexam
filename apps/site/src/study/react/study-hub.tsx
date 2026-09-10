@@ -14,20 +14,29 @@ const studyIconPaths = {
 const StudyIcon = ({ kind }: { readonly kind: keyof typeof studyIconPaths }) =>
   <svg className="study-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{studyIconPaths[kind]}</svg>
 
+const setDescription = (length: number, questionCount: number): string =>
+  length === questionCount
+    ? "Every question in this release, in one sitting."
+    : length === 45
+      ? "A shorter mix drawn from the whole question bank."
+      : length === 60
+        ? "A longer mix, still without repeated questions."
+        : "The longest mix, without repeated questions."
+
 export const StudyPresets = () => {
   const { state: { bootstrap } } = useStudy()
   const sets = bootstrap.practiceSets ?? (bootstrap.firstPractice === null ? [] : [bootstrap.firstPractice])
   return <section className="study-section" id="practice-sets" tabIndex={-1} aria-labelledby="practice-sets-heading">
-    <div className="section-header"><h2 id="practice-sets-heading">Choose a practice set</h2><p>Get explanations after each answer, or save feedback until the end with a simulation.</p></div>
+    <div className="section-header"><h2 id="practice-sets-heading">Choose a practice set</h2><p>Untimed, with explanations after each answer — or save feedback until the end with a simulation.</p></div>
     <ul className="practice-preset-grid study-set-options" aria-label="Practice activities">
-      {sets.map(set => <li key={set.length}><a className="practice-preset" href={set.href} aria-label={`Start ${set.length}`}>
-        <StudyIcon kind="practice" /><h3>{set.length} questions</h3><p>Mixed topics · Untimed</p><span>Start {set.length} →</span>
+      {sets.map((set, index) => <li key={set.length}><a className={`practice-preset${index === 0 ? " practice-preset-primary" : ""}`} href={set.href} aria-label={`Start ${set.length}`}>
+        <p className="set-card-number" aria-hidden="true">{set.length}</p><h3>{set.length} questions</h3><p>{setDescription(set.length, bootstrap.questionCount)}</p><span className={`button button-${index === 0 ? "primary" : "secondary"} practice-preset-cta`}>Start {set.length}</span>
       </a></li>)}
-      <li><a className="practice-preset" href="/hazards/"><StudyIcon kind="hazard" /><h3>Hazard drill</h3><p>Spot hazards in workplace scenes.</p><span>Choose a drill →</span></a></li>
-      <li><a className="practice-preset" href="/simulations/"><StudyIcon kind="simulation" /><h3>Full simulation</h3><p>Your timing, with feedback at the end.</p><span>Set up simulation →</span></a></li>
+      <li><a className="practice-preset" href="/hazards/"><StudyIcon kind="hazard" /><h3>Hazard drill</h3><p>Spot hazards in workplace scenes.</p><span className="button button-secondary practice-preset-cta">Choose a drill</span></a></li>
+      <li><a className="practice-preset" href="/simulations/"><StudyIcon kind="simulation" /><h3>Full simulation</h3><p>Your timing, with feedback at the end.</p><span className="button button-secondary practice-preset-cta">Set up simulation</span></a></li>
+      <li><a className="practice-preset" href="/print/"><StudyIcon kind="print" /><h3>Prefer paper?</h3><p>Print questions with the answer key on separate pages.</p><span className="button button-secondary practice-preset-cta">Open print center</span></a></li>
     </ul>
     <StudyPracticeBuilder />
-    <p className="practice-print-link">Prefer paper? <a href="/print/">Print a practice set</a></p>
   </section>
 }
 
