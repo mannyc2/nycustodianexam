@@ -1,4 +1,13 @@
 # NY Entry-Level Custodians and Janitors Study Site
+
+> **Current reporting availability — 2026-09-10:** Correction intake is dormant.
+> Do not offer reporting links, generate `/report/` or
+> `/transparency/corrections/`, ship the correction-form island, or include these
+> routes in offline packs. Direct visits return not found. Reporting/drafting
+> flows described below are deferred until reporting is enabled as a complete
+> feature; remote intake status alone does not publish the UI. Existing stored
+> drafts remain supported by data export/import and reset for compatibility.
+
 ## Normalized product contract — recovered 2026-08-19
 
 **Source:** normalized from the 3,427-line `CUSTODIAN_STUDY_SITE_FEATURE_SPEC_V1.md` authored 2026-08-17. Original recovered SHA-256: `1d94e4e5155ae3adf768493bf31755042709ac46f3cde356bf799ca1e39a3368`.

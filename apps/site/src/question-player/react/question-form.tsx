@@ -158,7 +158,6 @@ export const QuestionReviewActions = () => {
   if (state.tag !== "revealed") return null
   return <>
     <a className="button button-secondary" href="/atlas/">Open study tools</a>
-    <a className="button button-secondary" href="/report/">Report a correction</a>
   </>
 }
 

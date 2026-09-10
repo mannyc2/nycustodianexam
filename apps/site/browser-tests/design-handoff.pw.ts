@@ -12,7 +12,7 @@ const expectPageReflow = async (page: Page): Promise<void> => {
   expect(dimensions.body).toBeLessThanOrEqual(dimensions.viewport)
 }
 
-for (const path of ["/", "/exams/", "/atlas/", "/practice/", "/review/", "/simulations/", "/offline/", "/settings/", "/report/"]) {
+for (const path of ["/", "/exams/", "/atlas/", "/practice/", "/review/", "/simulations/", "/offline/", "/settings/"]) {
   test(`the redesigned ${path} page reflows and has accessible mobile navigation`, { tag: "@cross-browser" }, async ({ page }) => {
     await page.setViewportSize({ height: 720, width: 320 })
     await page.goto(path)

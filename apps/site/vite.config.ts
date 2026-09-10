@@ -53,6 +53,7 @@ const installScopedSessionShells = (server: {
 }
 
 export default defineConfig(({ command }) => ({
+  appType: "mpa",
   plugins: [{
     name: "nycustodian-document-revision",
     transformIndexHtml: {

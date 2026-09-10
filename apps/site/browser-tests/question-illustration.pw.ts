@@ -47,11 +47,9 @@ test("released illustrated question saves, reloads, and opens from Review", asyn
   await expect(page.locator(".feedback-rationales h4")).toHaveText([
     "C. Adjustable wrench", "A. Pipe wrench", "B. Slip-joint pliers", "D. Tongue-and-groove pliers"
   ])
-  for (const [name, href] of [["Open study tools", "/atlas/"], ["Report a correction", "/report/"]]) {
-    const link = actions.getByRole("link", { name: name!, exact: true })
-    await expect(link).toHaveAttribute("href", href!)
-    expect((await page.request.get(href!)).ok()).toBe(true)
-  }
+  await expect(actions.getByRole("link", { name: "Open study tools", exact: true })).toHaveAttribute("href", "/atlas/")
+  await expect(actions.getByRole("link", { name: "Report a correction", exact: true })).toHaveCount(0)
+  expect((await page.request.get("/atlas/")).ok()).toBe(true)
   await page.reload()
   await expect(page.getByRole("heading", { name: /Correct.*Adjustable wrench/ })).toBeVisible()
   await expect(image).toBeVisible()

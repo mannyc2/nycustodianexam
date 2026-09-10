@@ -213,7 +213,7 @@ const footer = `
   <footer class="site-footer site-footer-prominent">
     <div class="site-footer-inner">
       <div class="footer-columns site-footer-columns"><div><strong>Independent and unofficial</strong><p>Free study for New York’s entry-level custodian exams. Not affiliated with or endorsed by New York City, New York State, or any civil service agency. Your official announcement and admission notice govern your exam.</p></div>
-      <nav aria-label="Where this comes from"><strong>Where this comes from</strong><a href="/transparency/">Sources and methods</a><a href="/report/">Report a correction</a><a href="/transparency/security/">Exam security</a></nav>
+      <nav aria-label="Where this comes from"><strong>Where this comes from</strong><a href="/transparency/">Sources and methods</a><a href="/transparency/security/">Exam security</a></nav>
       <nav aria-label="Site policies"><strong>Your study space</strong><a href="/offline/">Use offline</a><a href="/settings/">Settings and accessibility</a><a href="/transparency/privacy/">Privacy</a></nav></div>
       <div class="footer-bottom site-footer-meta"><p>Original practice. No secure or recalled exam material.</p><p>Progress stays in this browser. <a href="/settings/#export-local-data">Export a backup</a> before browser data is cleared.</p></div>
     </div>
@@ -1619,7 +1619,7 @@ const buildPages = ({
   <main class="page-shell" id="main-content" tabindex="-1">
     ${breadcrumb([{ label: "Sources and methods" }])}
     <section class="hero"><p class="eyebrow">Current sources and methods</p><h1>Know what supports the study material.</h1><p>The public reference pages cite ${catalog.sources.length} source records. Practice exercises embed only neutral prompts and request one item’s feedback only after your answer is saved on this device.</p><details class="source-note"><summary>Technical details</summary><p>Release <code>${escapeHtml(manifest.releaseId)}</code> · version ${manifest.packVersion}</p></details></section>
-    <section class="card-grid"><article class="card"><h2>Source registry</h2><p>Review titles, exact locators, scope notes, and publishers where available.</p><a href="/transparency/sources/">Browse sources</a></article><article class="card"><h2>Corrections</h2><p>Review the correction boundary and save a draft on this device.</p><a href="/transparency/corrections/">Read the correction policy</a></article><article class="card"><h2>Security</h2><p>Do not submit secure or recalled exam material.</p><a href="/transparency/security/">Read the security policy</a></article><article class="card"><h2>Privacy</h2><p>Study progress is stored in this browser and can be cleared with browser data. <a href="/settings/#export-local-data">Export a backup</a> if you want to keep it. Launch analytics are disabled.</p><a href="/transparency/privacy/">Read the privacy policy</a></article><article class="card"><h2>FOIL research</h2><p>No outreach or FOIL request is implied by this site.</p><a href="/transparency/foil/">Review the research boundary</a></article><article class="card"><h2>Release boundary</h2><p>This release contains exactly ${manifest.toolCount} tools, ${manifest.questionCount} questions, and ${manifest.hazardSceneCount} scenes. A combined answer file is never published to the site.</p></article></section>
+    <section class="card-grid"><article class="card"><h2>Source registry</h2><p>Review titles, exact locators, scope notes, and publishers where available.</p><a href="/transparency/sources/">Browse sources</a></article><article class="card"><h2>Security</h2><p>Do not submit secure or recalled exam material.</p><a href="/transparency/security/">Read the security policy</a></article><article class="card"><h2>Privacy</h2><p>Study progress is stored in this browser and can be cleared with browser data. <a href="/settings/#export-local-data">Export a backup</a> if you want to keep it. Launch analytics are disabled.</p><a href="/transparency/privacy/">Read the privacy policy</a></article><article class="card"><h2>FOIL research</h2><p>No outreach or FOIL request is implied by this site.</p><a href="/transparency/foil/">Review the research boundary</a></article><article class="card"><h2>Release boundary</h2><p>This release contains exactly ${manifest.toolCount} tools, ${manifest.questionCount} questions, and ${manifest.hazardSceneCount} scenes. A combined answer file is never published to the site.</p></article></section>
   </main>`
   })
 
@@ -1938,36 +1938,6 @@ const buildPages = ({
   })
 
   pages.push({
-    relativePath: "report/index.html",
-    canonicalPath: "/report/",
-    title: "Report a correction — NY Custodian Exam Study",
-    description: "Write a correction draft in this browser. Online submission stays off until intake is separately turned on.",
-    robots: "noindex,follow",
-    routeId: "correction-submit",
-    section: "utility",
-    body: `
-  <main class="page-shell utility-page report-page" id="main-content" tabindex="-1">
-    ${breadcrumb([{ href: "/transparency/", label: "Sources and methods" }, { label: "Report a correction" }])}
-    <section class="hero"><h1>Report a content, access, rights, or security concern.</h1><p>Do not include secure questions, answer options, reconstructed drawings, photographs, or review-session notes. Local drafting works offline. Going online never submits or retries a draft automatically.</p></section>
-    <aside class="local-data-state report-draft-note"><h2>Saving a draft does not send it.</h2><p>Drafts stay in this browser until you submit them yourself. Use the availability check below to see whether reports can be sent. Browser data can be cleared; <a href="/settings/#export-local-data">export a backup</a> if you want to keep your draft.</p></aside>
-    <div data-correction-form data-island="correction-form"><p>JavaScript and browser storage are required to save a draft on this device. Nothing has been submitted.</p></div>
-  </main>
-  <script type="module" src="/src/corrections/react/bootstrap.tsx"></script>`
-  })
-
-  pages.push({
-    relativePath: "transparency/corrections/index.html",
-    canonicalPath: "/transparency/corrections/",
-    title: "Corrections policy — NY Custodian Exam Study",
-    description: "How corrections preserve history and remain separate from secure exam material.",
-    robots: "index,follow",
-    routeId: "corrections",
-    section: "transparency",
-    body: `
-  <main class="page-shell" id="main-content" tabindex="-1">${breadcrumb([{ href: "/transparency/", label: "Sources and methods" }, { label: "Corrections" }])}<article class="reference-card"><p class="eyebrow">Corrections</p><h1>Corrections do not silently rewrite history.</h1><p>Reports may cover facts, original questions, explanations, images, accessibility, translation, rights, or security. A report is not publication. Accepted changes retain stable identities and correction history where applicable.</p><p>No attachments are accepted in v1. Suspected secure material must not be reproduced and, after any future activation, would enter a nonpublic hold without confirming whether it is genuine.</p><a class="button button-primary" href="/report/">Open the report form</a></article></main>`
-  })
-
-  pages.push({
     relativePath: "transparency/privacy/index.html",
     canonicalPath: "/transparency/privacy/",
     title: "Privacy — NY Custodian Exam Study",
@@ -1976,7 +1946,7 @@ const buildPages = ({
     routeId: "privacy",
     section: "transparency",
     body: `
-  <main class="page-shell" id="main-content" tabindex="-1">${breadcrumb([{ href: "/transparency/", label: "Sources and methods" }, { label: "Privacy" }])}<article class="reference-card"><p class="eyebrow">Launch privacy</p><h1>Your study data is stored in this browser.</h1><p>Browser data can be cleared by you or the browser. <a href="/settings/#export-local-data">Export a backup</a> if you want to keep your study records.</p><p>No account, name, email, employer, applicant ID, or admission number is required. There is no launch analytics, ad profiling, cross-site tracking, data sale, or advertising audience creation.</p><p>A correction draft is stored only in this browser unless you submit it yourself after online intake is separately approved and turned on. While intake is off, the site runs no correction service at all — nothing is collected or logged.</p><p>Exports exclude free-form correction drafts unless you explicitly include them.</p></article></main>`
+  <main class="page-shell" id="main-content" tabindex="-1">${breadcrumb([{ href: "/transparency/", label: "Sources and methods" }, { label: "Privacy" }])}<article class="reference-card"><p class="eyebrow">Launch privacy</p><h1>Your study data is stored in this browser.</h1><p>Browser data can be cleared by you or the browser. <a href="/settings/#export-local-data">Export a backup</a> if you want to keep your study records.</p><p>No account, name, email, employer, applicant ID, or admission number is required. There is no launch analytics, ad profiling, cross-site tracking, data sale, or advertising audience creation.</p></article></main>`
   })
 
   pages.push({
@@ -1988,7 +1958,7 @@ const buildPages = ({
     routeId: "security",
     section: "transparency",
     body: `
-  <main class="page-shell" id="main-content" tabindex="-1">${breadcrumb([{ href: "/transparency/", label: "Sources and methods" }, { label: "Security" }])}<article class="reference-card"><p class="eyebrow">Test security</p><h1>Do not reproduce secure exam material.</h1><p>Do not submit remembered questions, answer choices, reconstructed diagrams, photographs, admission notices, or review-session notes. This project publishes original study tasks and public-source references only.</p><p>The report contract returns a generic receipt and never confirms whether suspected secure material is genuine. There is no attachment handling or automatic public posting.</p><a href="/report/">Report a security concern without reproducing material</a></article></main>`
+  <main class="page-shell" id="main-content" tabindex="-1">${breadcrumb([{ href: "/transparency/", label: "Sources and methods" }, { label: "Security" }])}<article class="reference-card"><p class="eyebrow">Test security</p><h1>Do not reproduce secure exam material.</h1><p>Do not submit remembered questions, answer choices, reconstructed diagrams, photographs, admission notices, or review-session notes. This project publishes original study tasks and public-source references only.</p></article></main>`
   })
 
   pages.push({

@@ -129,7 +129,6 @@ for (const mode of ["visual", "nonvisual"] as const) {
 
 for (const fixture of [
   { path: "/simulations/", owner: "[data-simulation-setup]", control: "Set code (seed)", value: "lifecycle-seed", disclosure: "Repeat this exact set" },
-  { path: "/report/", owner: "[data-correction-form]", control: "Short summary", value: "Lifecycle draft", disclosure: "" },
   { path: "/print/", owner: "[data-print-builder]", control: "Set code", value: "lifecycle-print", disclosure: "Repeat this exact set" },
   { path: "/hazards/", owner: "[data-hazard-builder]", control: "Drill code", value: "lifecycle-drill", disclosure: "Repeat a drill" }
 ]) {

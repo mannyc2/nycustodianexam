@@ -1,11 +1,9 @@
 export const trustedCurrentShellNavigationPaths = [
   "/",
   "/offline/",
-  "/report/",
   "/settings/",
   "/status/",
   "/transparency/",
-  "/transparency/corrections/",
   "/transparency/foil/",
   "/transparency/privacy/",
   "/transparency/security/",
