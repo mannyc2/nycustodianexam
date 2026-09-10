@@ -178,7 +178,7 @@ test("exam search, record selection, and detail tabs use the published records",
 test("compact navigation stays at the viewport bottom and all Library destinations resolve", { tag: "@cross-browser" }, async ({ page }) => {
   await page.setViewportSize({ width: 384, height: 800 })
   await page.goto("/practice/")
-  await expect(page.getByRole("heading", { name: "Start with a set of 45.", exact: true })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "Practice", exact: true })).toBeVisible()
   const primary = page.getByRole("navigation", { name: "Primary", exact: true })
   await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
   const bar = await primary.boundingBox()

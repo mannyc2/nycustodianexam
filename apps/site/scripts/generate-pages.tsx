@@ -418,12 +418,6 @@ export const renderAnnouncementMilestones = (
 const capitalize = (value: string): string =>
   value.length === 0 ? value : `${value[0]?.toUpperCase()}${value.slice(1)}`
 
-const practiceDomainLabels: Readonly<Record<string, string>> = {
-  "cleaning-tools-and-uses": "Cleaning tools and uses",
-  "health-and-safety": "Health and safety",
-  "minor-maintenance-and-repair": "Minor maintenance and repair"
-}
-
 const layerLabel = (layer: string): string =>
   layer === "statewide-series"
     ? "Statewide series"
@@ -1067,40 +1061,6 @@ const buildPages = ({
   if (capacityProfile === undefined) {
     throw new Error("Release requires a statewide-series profile for neutral practice context")
   }
-  const capacityRecords = catalog.practiceCapacity.records.filter(
-    (record) => record.profileId === capacityProfile.id
-  )
-  const capacityLabel = (
-    record: Catalog["practiceCapacity"]["records"][number]
-  ): string => {
-    switch (record.filterKind) {
-      case "all":
-        return "All questions"
-      case "domain": {
-        const label = practiceDomainLabels[record.filterValue]
-        if (label === undefined) {
-          throw new Error(`Unsupported practice domain ${record.filterValue}`)
-        }
-        return `Topic: ${label}`
-      }
-      case "family":
-        return `Tool family: ${capitalize(record.filterValue)}`
-      case "confusion-set": {
-        const comparison = catalog.comparisons.find(({ id }) => id === record.filterValue)
-        if (comparison === undefined) {
-          throw new Error(`Practice capacity references missing comparison ${record.filterValue}`)
-        }
-        const names = comparison.memberIds.map((id) => {
-          const tool = toolById.get(id)
-          if (tool === undefined) {
-            throw new Error(`Comparison ${comparison.id} references missing tool ${id}`)
-          }
-          return tool.canonicalTerm
-        })
-        return `Tool comparison: ${names.join(" vs. ")}`
-      }
-    }
-  }
   const questionSessions = derivePracticeSessions({
     releaseId: manifest.releaseId,
     packVersion: manifest.packVersion,
@@ -1197,6 +1157,10 @@ const buildPages = ({
     questionCount: questions.length,
     sceneCount: scenes.length,
     profileLabel: capacityProfile.label,
+    practiceSets: catalog.practiceCapacity.advertisedSetLengths.flatMap((length) => {
+      const session = sessionByCapacity.get(`all:all:${length}`)
+      return session === undefined ? [] : [{ length, href: `/practice/session/${session.id}/question/1/`, label: `Start ${length}` }]
+    }),
     firstPractice: (() => {
       const session = leadPracticeSession ?? questionSessions.filter((candidate) => candidate.record.filterKind === "all")
         .sort((left, right) => left.length - right.length)[0]
@@ -1474,22 +1438,13 @@ const buildPages = ({
     section: "practice",
     body: `
   <main class="page-shell" id="main-content" tabindex="-1">
-    <div data-study-hub><section class="page-header"><h1>Practice and activity</h1><p>Practice for the New York entry-level Custodians and Janitors series. Choose a question set or revisit your saved attempts.</p><div class="question-controls"><a class="button button-primary" href="#practice-sets">Choose a practice set</a><a class="button button-secondary" href="/review/">Open Review</a></div></section><section class="section-gap" id="covers" aria-labelledby="study-fallback-ways"><h2 id="study-fallback-ways">What practice covers</h2><p>One original question bank for the New York Entry-Level Custodians and Janitors series: cleaning tools, minor maintenance tools, and health and safety. Reading an exam page does not select an exam or change this bank.</p>${studyTaskCards}</section><p class="source-note">JavaScript and available browser storage are required to show progress saved on this device.</p></div>
-    <details class="section-gap study-quick-presets" id="practice-sets"><summary>Quick preset sets</summary><div class="section-header"><h2>Choose a practice set</h2><p>Each set draws distinct questions with no repeats. These sizes and distributions are designed for this site.</p></div>
-    <ul class="study-set-options" aria-label="Available whole-bank practice lengths">${catalog.practiceCapacity.advertisedSetLengths.map((length) => {
-      const session = sessionByCapacity.get(`all:all:${length}`)
-      return session === undefined
-        ? `<li><div><h3>${length} questions</h3><p>Not available: this release cannot fill ${length} questions without repeats.</p></div></li>`
-        : `<li><div><h3>${length} questions</h3><p>Untimed, with no repeated questions.</p></div><a class="button button-secondary" href="/practice/session/${session.id}/question/1/">Start ${length}</a></li>`
-    }).join("")}</ul>
-    <details class="section-gap"><summary>Why some set sizes are unavailable</summary><p>Every set is drawn without repeats, so a size is offered only when this release has enough distinct questions for that filter. The table shows the current counts.</p><div class="comparison-table-wrap"><table class="comparison-table"><caption>Available set sizes by filter</caption><thead><tr><th scope="col">Filter</th><th scope="col">Questions</th>${catalog.practiceCapacity.advertisedSetLengths.map((length) => `<th scope="col">${length}</th>`).join("")}</tr></thead><tbody>${capacityRecords.map((record) => `<tr><th scope="row">${escapeHtml(capacityLabel(record))}</th><td>${record.questionCount}</td>${catalog.practiceCapacity.advertisedSetLengths.map((length) => {
-      const session = sessionByCapacity.get(`${record.filterKind}:${record.filterValue}:${length}`)
-      return session === undefined
-        ? `<td>Not available</td>`
-        : `<td><a href="/practice/session/${session.id}/question/1/">Start ${length}</a></td>`
-    }).join("")}</tr>`).join("")}</tbody></table></div></details>
-    <p class="source-note"><strong>Scoring boundary:</strong> practice accuracy is not an official converted score or a pass prediction. Answers and their sourced explanations load only after each answer is submitted and saved on this device.</p>
-    </details>
+    <div data-study-hub><header class="page-header"><h1>Practice</h1><p>Build confidence with original questions and workplace scenes, at your own pace.</p></header>
+    <section class="study-section" id="practice-sets"><div class="section-header"><h2>Choose a practice set</h2><p>Get explanations after each answer, or save feedback until the end with a simulation.</p></div>
+    <ul class="practice-preset-grid study-set-options">${studyBootstrap.practiceSets.map(set => `<li><a class="practice-preset" href="${set.href}"><h3>${set.length} questions</h3><p>Mixed topics · Untimed</p><span>Start ${set.length} →</span></a></li>`).join("")}
+    <li><a class="practice-preset" href="/hazards/"><h3>Hazard drill</h3><p>Spot hazards in workplace scenes.</p><span>Choose a drill →</span></a></li>
+    <li><a class="practice-preset" href="/simulations/"><h3>Full simulation</h3><p>Your timing, with feedback at the end.</p><span>Set up simulation →</span></a></li></ul></section>
+    <p class="source-note">Custom sets and saved activity require JavaScript. <a href="/print/">Print a practice set</a>.</p>
+    <section class="study-section" id="covers"><h2>What practice covers</h2><p>Cleaning tools, minor maintenance and repair, and health and safety. All questions are original and unofficial.</p></section></div>
   </main>
   <script id="study-bootstrap-data" type="application/json">${escapeJsonForHtml(studyBootstrap)}</script>
   <script type="module" src="/src/study/react/bootstrap.tsx"></script>`

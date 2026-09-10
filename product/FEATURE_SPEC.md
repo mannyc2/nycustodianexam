@@ -8,6 +8,14 @@
 > feature; remote intake status alone does not publish the UI. Existing stored
 > drafts remain supported by data export/import and reset for compatibility.
 
+> **Practice entry layout — 2026-09-10:** Show available question-count presets,
+> Hazard drill, and Full simulation first. Put custom question settings behind
+> “Customize a practice set,” closed by default; `/practice/#practice-builder`
+> opens and focuses that setup. Saved activity and coverage follow the choices.
+> Omit the availability matrix and scoring-boundary block from this entry page.
+> Preset question links remain available without JavaScript; hazard and simulation
+> cards link to their existing setup flows. Set sizes remain site-designed practice.
+
 ## Normalized product contract — recovered 2026-08-19
 
 **Source:** normalized from the 3,427-line `CUSTODIAN_STUDY_SITE_FEATURE_SPEC_V1.md` authored 2026-08-17. Original recovered SHA-256: `1d94e4e5155ae3adf768493bf31755042709ac46f3cde356bf799ca1e39a3368`.

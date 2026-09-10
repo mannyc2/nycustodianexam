@@ -1,6 +1,12 @@
 import { Schema } from "effect"
 import { ReviewQueueBootstrap } from "../review/model.ts"
 
+const PracticePreset = Schema.Struct({
+  length: Schema.Literals([45, 60, 90]),
+  href: Schema.String.check(Schema.isPattern(/^\/practice\/session\/[a-z0-9][a-z0-9._-]*\/question\/1\/$/)),
+  label: Schema.NonEmptyString
+})
+
 export class StudyBootstrap extends Schema.Class<StudyBootstrap>(
   "@nycustodian/site/study/StudyBootstrap"
 )({
@@ -9,11 +15,8 @@ export class StudyBootstrap extends Schema.Class<StudyBootstrap>(
   questionCount: Schema.Natural,
   sceneCount: Schema.Natural,
   profileLabel: Schema.NonEmptyString,
-  firstPractice: Schema.NullOr(Schema.Struct({
-    length: Schema.Literals([45, 60, 90]),
-    href: Schema.String.check(Schema.isPattern(/^\/practice\/session\/[a-z0-9][a-z0-9._-]*\/question\/1\/$/)),
-    label: Schema.NonEmptyString
-  })),
+  firstPractice: Schema.NullOr(PracticePreset),
+  practiceSets: Schema.optionalKey(Schema.Array(PracticePreset)),
   reviewQueue: ReviewQueueBootstrap
 }) {}
 
