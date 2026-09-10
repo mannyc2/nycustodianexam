@@ -108,7 +108,6 @@ export const renderWithdrawalHtml = (
   requestedTarget: requestedTarget(url),
   recoveryLinks: [
     { href: record.recoveryPath, label: record.recoveryLabel },
-    { href: "/transparency/corrections/", label: "Read correction history" },
     { href: "/", label: "Return to the study home" }
   ],
   title: "Study page withdrawn — NY Custodian Exam Study"

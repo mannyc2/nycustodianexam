@@ -213,7 +213,7 @@ const footer = `
   <footer class="site-footer site-footer-prominent">
     <div class="site-footer-inner">
       <div class="footer-columns site-footer-columns"><div><strong>Independent and unofficial</strong><p>Free study for New York’s entry-level custodian exams. Not affiliated with or endorsed by New York City, New York State, or any civil service agency. Your official announcement and admission notice govern your exam.</p></div>
-      <nav aria-label="Where this comes from"><strong>Where this comes from</strong><a href="/transparency/">Sources and methods</a><a href="/report/">Report a correction</a><a href="/transparency/security/">Exam security</a></nav>
+      <nav aria-label="Where this comes from"><strong>Where this comes from</strong><a href="/transparency/">Sources and methods</a><a href="/transparency/security/">Exam security</a></nav>
       <nav aria-label="Site policies"><strong>Your study space</strong><a href="/offline/">Use offline</a><a href="/settings/">Settings and accessibility</a><a href="/transparency/privacy/">Privacy</a></nav></div>
       <div class="footer-bottom site-footer-meta"><p>Original practice. No secure or recalled exam material.</p><p>Progress stays in this browser. <a href="/settings/#export-local-data">Export a backup</a> before browser data is cleared.</p></div>
     </div>
@@ -221,8 +221,8 @@ const footer = `
 
 const connectivityNotice = `
   <p class="connectivity-notice" data-connectivity-notice role="status" aria-live="polite">
-    <span data-connectivity-message="offline">You are offline. You can keep studying with the copy saved on this device; it may be out of date, and outside links will not open.</span>
-    <span data-connectivity-message="stale-online">You are back online, but this saved copy may be out of date. Reload the page to get the current version before relying on outside sources.</span>
+    <span data-connectivity-message="offline">You’re offline. Only saved study material is available.</span>
+    <span data-connectivity-message="stale-online">A newer version of this page is available. <button type="button" data-reload-page>Reload</button></span>
   </p>`
 
 const document = ({
@@ -417,12 +417,6 @@ export const renderAnnouncementMilestones = (
 
 const capitalize = (value: string): string =>
   value.length === 0 ? value : `${value[0]?.toUpperCase()}${value.slice(1)}`
-
-const practiceDomainLabels: Readonly<Record<string, string>> = {
-  "cleaning-tools-and-uses": "Cleaning tools and uses",
-  "health-and-safety": "Health and safety",
-  "minor-maintenance-and-repair": "Minor maintenance and repair"
-}
 
 const layerLabel = (layer: string): string =>
   layer === "statewide-series"
@@ -1067,40 +1061,6 @@ const buildPages = ({
   if (capacityProfile === undefined) {
     throw new Error("Release requires a statewide-series profile for neutral practice context")
   }
-  const capacityRecords = catalog.practiceCapacity.records.filter(
-    (record) => record.profileId === capacityProfile.id
-  )
-  const capacityLabel = (
-    record: Catalog["practiceCapacity"]["records"][number]
-  ): string => {
-    switch (record.filterKind) {
-      case "all":
-        return "All questions"
-      case "domain": {
-        const label = practiceDomainLabels[record.filterValue]
-        if (label === undefined) {
-          throw new Error(`Unsupported practice domain ${record.filterValue}`)
-        }
-        return `Topic: ${label}`
-      }
-      case "family":
-        return `Tool family: ${capitalize(record.filterValue)}`
-      case "confusion-set": {
-        const comparison = catalog.comparisons.find(({ id }) => id === record.filterValue)
-        if (comparison === undefined) {
-          throw new Error(`Practice capacity references missing comparison ${record.filterValue}`)
-        }
-        const names = comparison.memberIds.map((id) => {
-          const tool = toolById.get(id)
-          if (tool === undefined) {
-            throw new Error(`Comparison ${comparison.id} references missing tool ${id}`)
-          }
-          return tool.canonicalTerm
-        })
-        return `Tool comparison: ${names.join(" vs. ")}`
-      }
-    }
-  }
   const questionSessions = derivePracticeSessions({
     releaseId: manifest.releaseId,
     packVersion: manifest.packVersion,
@@ -1197,6 +1157,10 @@ const buildPages = ({
     questionCount: questions.length,
     sceneCount: scenes.length,
     profileLabel: capacityProfile.label,
+    practiceSets: catalog.practiceCapacity.advertisedSetLengths.flatMap((length) => {
+      const session = sessionByCapacity.get(`all:all:${length}`)
+      return session === undefined ? [] : [{ length, href: `/practice/session/${session.id}/question/1/`, label: `Start ${length}` }]
+    }),
     firstPractice: (() => {
       const session = leadPracticeSession ?? questionSessions.filter((candidate) => candidate.record.filterKind === "all")
         .sort((left, right) => left.length - right.length)[0]
@@ -1281,7 +1245,7 @@ const buildPages = ({
     body: `
   <main class="page-shell" id="main-content" tabindex="-1">
     ${breadcrumb([{ href: "/practice/", label: "Practice" }, { label: "Print center" }])}
-    <section class="hero"><p class="eyebrow">Printable practice</p><h1>Build a printable practice packet.</h1><p>Every packet states that it is original practice — not an official or past exam — and identifies the exact release it came from. Inspect the preview, then use your browser's print dialog or Save as PDF.</p></section>
+    <header class="print-center-heading"><h1>Print study materials</h1><p>Create worksheets, answer keys, and tool cards for studying on paper.</p></header>
     <div data-print-builder data-island="print-builder-bootstrap">
       <section class="review-state"><h2>Loading printable content</h2><p>JavaScript and available browser storage are required to build and keep a preview. No answers are embedded in this page.</p></section>
     </div>
@@ -1474,22 +1438,14 @@ const buildPages = ({
     section: "practice",
     body: `
   <main class="page-shell" id="main-content" tabindex="-1">
-    <div data-study-hub><section class="page-header"><h1>Practice and activity</h1><p>Practice for the New York entry-level Custodians and Janitors series. Choose a question set or revisit your saved attempts.</p><div class="question-controls"><a class="button button-primary" href="#practice-sets">Choose a practice set</a><a class="button button-secondary" href="/review/">Open Review</a></div></section><section class="section-gap" id="covers" aria-labelledby="study-fallback-ways"><h2 id="study-fallback-ways">What practice covers</h2><p>One original question bank for the New York Entry-Level Custodians and Janitors series: cleaning tools, minor maintenance tools, and health and safety. Reading an exam page does not select an exam or change this bank.</p>${studyTaskCards}</section><p class="source-note">JavaScript and available browser storage are required to show progress saved on this device.</p></div>
-    <details class="section-gap study-quick-presets" id="practice-sets"><summary>Quick preset sets</summary><div class="section-header"><h2>Choose a practice set</h2><p>Each set draws distinct questions with no repeats. These sizes and distributions are designed for this site.</p></div>
-    <ul class="study-set-options" aria-label="Available whole-bank practice lengths">${catalog.practiceCapacity.advertisedSetLengths.map((length) => {
-      const session = sessionByCapacity.get(`all:all:${length}`)
-      return session === undefined
-        ? `<li><div><h3>${length} questions</h3><p>Not available: this release cannot fill ${length} questions without repeats.</p></div></li>`
-        : `<li><div><h3>${length} questions</h3><p>Untimed, with no repeated questions.</p></div><a class="button button-secondary" href="/practice/session/${session.id}/question/1/">Start ${length}</a></li>`
-    }).join("")}</ul>
-    <details class="section-gap"><summary>Why some set sizes are unavailable</summary><p>Every set is drawn without repeats, so a size is offered only when this release has enough distinct questions for that filter. The table shows the current counts.</p><div class="comparison-table-wrap"><table class="comparison-table"><caption>Available set sizes by filter</caption><thead><tr><th scope="col">Filter</th><th scope="col">Questions</th>${catalog.practiceCapacity.advertisedSetLengths.map((length) => `<th scope="col">${length}</th>`).join("")}</tr></thead><tbody>${capacityRecords.map((record) => `<tr><th scope="row">${escapeHtml(capacityLabel(record))}</th><td>${record.questionCount}</td>${catalog.practiceCapacity.advertisedSetLengths.map((length) => {
-      const session = sessionByCapacity.get(`${record.filterKind}:${record.filterValue}:${length}`)
-      return session === undefined
-        ? `<td>Not available</td>`
-        : `<td><a href="/practice/session/${session.id}/question/1/">Start ${length}</a></td>`
-    }).join("")}</tr>`).join("")}</tbody></table></div></details>
-    <p class="source-note"><strong>Scoring boundary:</strong> practice accuracy is not an official converted score or a pass prediction. Answers and their sourced explanations load only after each answer is submitted and saved on this device.</p>
-    </details>
+    <div data-study-hub><header class="page-header"><h1>Practice</h1><p>Build confidence with original questions and workplace scenes, at your own pace.</p></header>
+    <section class="study-section" id="practice-sets"><div class="section-header"><h2>Choose a practice set</h2><p>Untimed, with explanations after each answer — or save feedback until the end with a simulation.</p></div>
+    <ul class="practice-preset-grid study-set-options">${studyBootstrap.practiceSets.map((set, index) => `<li><a class="practice-preset${index === 0 ? " practice-preset-primary" : ""}" href="${set.href}" aria-label="Start ${set.length}"><p class="set-card-number" aria-hidden="true">${set.length}</p><h3>${set.length} questions</h3><p>${set.length === questions.length ? "Every question in this release, in one sitting." : set.length === 45 ? "A shorter mix drawn from the whole question bank." : set.length === 60 ? "A longer mix, still without repeated questions." : "The longest mix, without repeated questions."}</p><span class="button button-${index === 0 ? "primary" : "secondary"} practice-preset-cta">Start ${set.length}</span></a></li>`).join("")}
+    <li><a class="practice-preset" href="/hazards/"><h3>Hazard drill</h3><p>Spot hazards in workplace scenes.</p><span class="button button-secondary practice-preset-cta">Choose a drill</span></a></li>
+    <li><a class="practice-preset" href="/simulations/"><h3>Full simulation</h3><p>Your timing, with feedback at the end.</p><span class="button button-secondary practice-preset-cta">Set up simulation</span></a></li>
+    <li><a class="practice-preset" href="/print/"><h3>Prefer paper?</h3><p>Print questions with the answer key on separate pages.</p><span class="button button-secondary practice-preset-cta">Open print center</span></a></li></ul></section>
+    <p class="source-note">Custom sets and saved activity require JavaScript.</p>
+    <section class="study-section" id="covers"><h2>What practice covers</h2><p>Cleaning tools, minor maintenance and repair, and health and safety. All questions are original and unofficial.</p></section></div>
   </main>
   <script id="study-bootstrap-data" type="application/json">${escapeJsonForHtml(studyBootstrap)}</script>
   <script type="module" src="/src/study/react/bootstrap.tsx"></script>`
@@ -1510,13 +1466,12 @@ const buildPages = ({
     <div class="atlas-family-select" data-atlas-select-field hidden><label for="atlas-family-select">Family</label><select id="atlas-family-select" data-atlas-select><option value="all">All families — ${releasedTools.length} records</option>${[...families].map(([family, tools]) => `<option value="${escapeHtml(family)}">${escapeHtml(capitalize(family))} — ${tools.length} records</option>`).join("")}</select></div>
     <aside class="notice notice-warning atlas-image-recovery" data-atlas-image-recovery hidden aria-labelledby="atlas-image-recovery-heading"><h2 id="atlas-image-recovery-heading">Some illustrations could not load</h2><p>The written records below remain available. Check your connection or manage the study pack downloads to use illustrations offline.</p><a href="/offline/">Manage downloads</a></aside>
     <div class="tool-grid" id="atlas-tools">${toolEntries.map(({ slug, tool }, index) => `<article class="tool-card" data-tool-family="${escapeHtml(tool.family)}"><img src="${derivativePath(tool, "phone")}" width="320" height="320" ${index >= 4 ? 'loading="lazy" ' : ""}alt="${escapeHtml(tool.neutralDescription)}"><div><h2><a href="/atlas/tool/${slug}/">${escapeHtml(tool.canonicalTerm).replaceAll("/", "/<wbr>")}</a></h2><p class="tool-family">${escapeHtml(capitalize(tool.family))}</p><div data-atlas-image-notice hidden><p><strong>Illustration unavailable on this device.</strong></p><p>${escapeHtml(tool.neutralDescription)}</p><p>Open the record for supported uses and source evidence.</p></div>${tool.practiceEligibility === "atlas-only" ? '<p class="tool-eligibility"><strong>Reference-only:</strong> excluded from scored practice.</p>' : '<p class="tool-eligibility tool-eligibility-scored">In scored practice</p>'}</div></article>`).join("")}</div>
-    <section class="atlas-release-note" aria-labelledby="atlas-release-heading"><h2 id="atlas-release-heading">All ${releasedTools.length} records have released illustrations</h2><p>Each record includes an accepted illustration, a written description, and source evidence. ${scoredTools.length} tools can appear in scored practice; the ${releasedTools.length - scoredTools.length} marked reference-only remain available to study while a source caution or specialist review is open.</p><p>Source: the accepted tool inventory in this site's content release.</p></section>
-    <details class="atlas-release-details"><summary>Technical details</summary><dl><dt>Content release</dt><dd>${escapeHtml(catalog.packId)} · version ${catalog.version}</dd><dt>Illustrations</dt><dd>${releasedTools.length} accepted tool records; 320px phone derivatives</dd><dt>Source support</dt><dd>Open an individual tool record for its recognition cues, supported uses, source evidence, and any scored-use restriction.</dd></dl></details></section>
-    <section class="section-gap" id="comparisons"><h2>Comparison panels</h2><p>Each panel lives on its tool-family page, together with any restriction that keeps it out of scored practice.</p><ul class="link-list">${comparisonEntries.map(({ canonicalPath, comparison }) => {
+    <details class="atlas-help"><summary>About this atlas</summary><div><p><strong>Study a tool:</strong> Open its card for a larger illustration, a written description, its uses, and the features that distinguish it from similar tools.</p><p><strong>Reference-only:</strong> These tools are available to study but are not used as scored answer options in this site's practice. The tool's page explains why.</p><p><strong>Check the sources:</strong> Each tool page links to its supporting sources. Read <a href="/transparency/">Sources and methods</a> for how the study material is supported.</p><p><strong>Study offline:</strong> <a href="/offline/">Download a study copy</a> to use without a connection. Outside source links still require internet access.</p></div></details></section>
+    <section class="atlas-related-section" id="comparisons" aria-labelledby="atlas-comparisons-heading"><header class="atlas-section-heading"><h2 id="atlas-comparisons-heading">Compare similar tools</h2><p>See look-alikes side by side and learn the features that tell them apart.</p></header><ul class="atlas-comparison-grid">${comparisonEntries.map(({ canonicalPath, comparison }) => {
       const names = comparison.memberIds.map((id) => toolById.get(id)?.canonicalTerm ?? id)
-      return `<li><a href="${canonicalPath}">${escapeHtml(names.join(" vs. "))}</a><span>${comparison.scoredUseGate.length === 0 ? "Can appear in scored practice" : "Reference-only"}</span></li>`
+      return `<li><a class="atlas-comparison-card" href="${canonicalPath}"><img src="${derivativePath(comparison, "phone")}" width="640" height="320" loading="lazy" alt=""><span class="atlas-related-card-copy"><strong>${escapeHtml(names.join(" vs. "))}</strong><span>${comparison.scoredUseGate.length === 0 ? "Can appear in scored practice" : "Reference-only"}</span></span></a></li>`
     }).join("")}</ul></section>
-    ${comparableFamilies.length === 0 ? "" : `<section class="section-gap"><h2>Compare a tool family</h2><ul class="link-list">${comparableFamilies.map(([family, tools]) => `<li><a href="/atlas/family/${slugify(family)}/">${escapeHtml(family)} (${tools.length} tools)</a></li>`).join("")}</ul></section>`}
+    ${comparableFamilies.length === 0 ? "" : `<section class="atlas-related-section" aria-labelledby="atlas-families-heading"><header class="atlas-section-heading"><h2 id="atlas-families-heading">Explore tool families</h2><p>Compare uses and recognition cues across a whole family.</p></header><ul class="atlas-family-grid">${comparableFamilies.map(([family, tools]) => `<li><a class="atlas-family-card" href="/atlas/family/${slugify(family)}/"><span class="atlas-family-card-heading"><span class="atlas-related-card-copy"><strong>${escapeHtml(capitalize(family))}</strong><span>${tools.length} tools</span></span><span aria-hidden="true">→</span></span><span class="atlas-family-examples">${tools.slice(0, 3).map(tool => `<span class="atlas-family-example"><img src="${derivativePath(tool, "phone")}" width="320" height="320" loading="lazy" alt=""><span>${escapeHtml(tool.canonicalTerm)}</span></span>`).join("")}</span></a></li>`).join("")}</ul></section>`}
   </main>
   <script type="module" src="/src/static-browser.ts"></script>`
   })
@@ -1539,17 +1494,16 @@ const buildPages = ({
       body: `
   <main class="page-shell" id="main-content" tabindex="-1">
     ${breadcrumb([{ href: "/atlas/", label: "Study tools" }, { label: family }])}
-    <section class="hero"><p class="eyebrow">Tool family</p><h1>Compare ${escapeHtml(family)}.</h1><p>Use the supported task and the released recognition cues together. Scope and scored-use restrictions remain attached to each entry.</p></section>
-    <div class="comparison-table-wrap"><table class="comparison-table"><caption>${escapeHtml(family)} comparison</caption><thead><tr><th scope="col">Tool</th><th scope="col">Supported use</th><th scope="col">Recognition cues</th></tr></thead><tbody>${tools.map((tool) => `<tr><th scope="row"><a href="/atlas/tool/${slugify(tool.canonicalTerm)}/">${escapeHtml(tool.canonicalTerm)}</a></th><td>${escapeHtml(tool.useSummary)}</td><td>${tool.distinguishingFeatures.map(escapeHtml).join("; ")}</td></tr>`).join("")}</tbody></table></div>
-    ${familyComparisons.length === 0 ? "" : `<section class="section-gap"><h2>Comparison panels</h2>${familyComparisons.map(({ slug, comparison }) => {
-      const members = comparison.memberIds.map((memberId) => {
+    <header class="family-heading"><h1>${escapeHtml(capitalize(family))}</h1><p>Compare what each tool does and how to recognize it.</p></header>
+    ${familyComparisons.length === 0 ? "" : `<section class="family-comparisons" aria-label="Side-by-side comparisons">${familyComparisons.map(({ slug, comparison }) => {
+      const memberNames = comparison.memberIds.map((memberId) => {
         const member = toolById.get(memberId)
         if (member === undefined) throw new Error(`Comparison ${comparison.id} has missing member ${memberId}`)
-        return member
+        return member.canonicalTerm
       })
-      const memberNames = members.map((member) => member.canonicalTerm)
-      return `<article class="reference-card section-gap" id="comparison-${slug}"><p class="eyebrow">Comparison panel</p><h3>${escapeHtml(memberNames.join(" vs. "))}</h3><p>${escapeHtml(comparison.decisiveDistinction)}</p><figure class="tool-figure comparison-figure"><picture><source media="print" srcset="${derivativePath(comparison, "print")}"><img src="${derivativePath(comparison, "phone")}" srcset="${derivativePath(comparison, "phone")} 640w, ${derivativePath(comparison, "web")} 960w" sizes="(max-width: 58rem) calc(100vw - 4rem), 58rem" width="960" height="480" alt="Original side-by-side line-art comparison of ${escapeHtml(memberNames.join(" and "))}."></picture><figcaption>Drawn from the same released illustrations as each tool's page.</figcaption></figure><section class="source-note" aria-labelledby="comparison-status-${slug}"><h4 id="comparison-status-${slug}">Scored-use status</h4>${comparison.scoredUseGate.length === 0 ? "<p>This comparison can appear in scored practice. Every question stays an original written for this site.</p>" : `<p><strong>Reference-only comparison:</strong> excluded from scored practice until each listed restriction is cleared.</p><ul>${comparison.scoredUseGate.map((gate) => `<li>${escapeHtml(gate)}</li>`).join("")}</ul>`}</section><div class="comparison-table-wrap"><table class="comparison-table"><caption>Member uses and recognition cues</caption><thead><tr><th scope="col">Member</th><th scope="col">Supported use</th><th scope="col">Recognition cues</th><th scope="col">Practice status</th></tr></thead><tbody>${members.map((member) => `<tr><th scope="row"><a href="/atlas/tool/${slugify(member.canonicalTerm)}/">${escapeHtml(member.canonicalTerm)}</a></th><td>${escapeHtml(member.useSummary)}</td><td>${member.distinguishingFeatures.map(escapeHtml).join("; ")}</td><td>${member.practiceEligibility === "text-question" ? "Eligible" : "Reference-only"}</td></tr>`).join("")}</tbody></table></div><h4>Source trail</h4>${sourceLinks(comparison.sourceIds, sourceById)}</article>`
+      return `<article class="family-comparison" id="comparison-${slug}"><figure><picture><source media="print" srcset="${derivativePath(comparison, "print")}"><img src="${derivativePath(comparison, "phone")}" srcset="${derivativePath(comparison, "phone")} 640w, ${derivativePath(comparison, "web")} 960w" sizes="(max-width: 47.99rem) calc(100vw - 4rem), 28rem" width="960" height="480" alt="Side-by-side illustration of ${escapeHtml(memberNames.join(" and "))}."></picture></figure><div class="family-comparison-copy"><h2>${escapeHtml(memberNames.join(" vs. "))}</h2><p>${escapeHtml(comparison.decisiveDistinction)}</p>${comparison.scoredUseGate.length === 0 ? "" : `<p class="family-reference-note">Reference-only comparison · for study, not scored practice.</p>`}</div></article>`
     }).join("")}</section>`}
+    <section class="family-tool-section" aria-labelledby="family-tools-heading"><h2 id="family-tools-heading">Tools in this family</h2><div class="family-tool-grid">${tools.map((tool) => `<article class="family-tool-card"><header><img src="${derivativePath(tool, "phone")}" width="320" height="320" loading="lazy" alt=""><div><h3><a href="/atlas/tool/${slugify(tool.canonicalTerm)}/">${escapeHtml(tool.canonicalTerm)}</a></h3>${tool.practiceEligibility === "atlas-only" ? '<p class="family-reference-note">Reference-only</p>' : ""}</div></header><p>${escapeHtml(tool.useSummary)}</p><section class="family-recognition"><h4>How to recognize it</h4><ul>${tool.distinguishingFeatures.map(feature => `<li>${escapeHtml(feature)}</li>`).join("")}</ul></section></article>`).join("")}</div></section>
   </main>`
     })
   }
@@ -1621,7 +1575,7 @@ const buildPages = ({
   <main class="page-shell" id="main-content" tabindex="-1">
     ${breadcrumb([{ label: "Sources and methods" }])}
     <section class="hero"><p class="eyebrow">Current sources and methods</p><h1>Know what supports the study material.</h1><p>The public reference pages cite ${catalog.sources.length} source records. Practice exercises embed only neutral prompts and request one item’s feedback only after your answer is saved on this device.</p><details class="source-note"><summary>Technical details</summary><p>Release <code>${escapeHtml(manifest.releaseId)}</code> · version ${manifest.packVersion}</p></details></section>
-    <section class="card-grid"><article class="card"><h2>Source registry</h2><p>Review titles, exact locators, scope notes, and publishers where available.</p><a href="/transparency/sources/">Browse sources</a></article><article class="card"><h2>Corrections</h2><p>Review the correction boundary and save a draft on this device.</p><a href="/transparency/corrections/">Read the correction policy</a></article><article class="card"><h2>Security</h2><p>Do not submit secure or recalled exam material.</p><a href="/transparency/security/">Read the security policy</a></article><article class="card"><h2>Privacy</h2><p>Study progress is stored in this browser and can be cleared with browser data. <a href="/settings/#export-local-data">Export a backup</a> if you want to keep it. Launch analytics are disabled.</p><a href="/transparency/privacy/">Read the privacy policy</a></article><article class="card"><h2>FOIL research</h2><p>No outreach or FOIL request is implied by this site.</p><a href="/transparency/foil/">Review the research boundary</a></article><article class="card"><h2>Release boundary</h2><p>This release contains exactly ${manifest.toolCount} tools, ${manifest.questionCount} questions, and ${manifest.hazardSceneCount} scenes. A combined answer file is never published to the site.</p></article></section>
+    <section class="card-grid"><article class="card"><h2>Source registry</h2><p>Review titles, exact locators, scope notes, and publishers where available.</p><a href="/transparency/sources/">Browse sources</a></article><article class="card"><h2>Security</h2><p>Do not submit secure or recalled exam material.</p><a href="/transparency/security/">Read the security policy</a></article><article class="card"><h2>Privacy</h2><p>Study progress is stored in this browser and can be cleared with browser data. <a href="/settings/#export-local-data">Export a backup</a> if you want to keep it. Launch analytics are disabled.</p><a href="/transparency/privacy/">Read the privacy policy</a></article><article class="card"><h2>FOIL research</h2><p>No outreach or FOIL request is implied by this site.</p><a href="/transparency/foil/">Review the research boundary</a></article><article class="card"><h2>Release boundary</h2><p>This release contains exactly ${manifest.toolCount} tools, ${manifest.questionCount} questions, and ${manifest.hazardSceneCount} scenes. A combined answer file is never published to the site.</p></article></section>
   </main>`
   })
 
@@ -1940,36 +1894,6 @@ const buildPages = ({
   })
 
   pages.push({
-    relativePath: "report/index.html",
-    canonicalPath: "/report/",
-    title: "Report a correction — NY Custodian Exam Study",
-    description: "Write a correction draft in this browser. Online submission stays off until intake is separately turned on.",
-    robots: "noindex,follow",
-    routeId: "correction-submit",
-    section: "utility",
-    body: `
-  <main class="page-shell utility-page report-page" id="main-content" tabindex="-1">
-    ${breadcrumb([{ href: "/transparency/", label: "Sources and methods" }, { label: "Report a correction" }])}
-    <section class="hero"><h1>Report a content, access, rights, or security concern.</h1><p>Do not include secure questions, answer options, reconstructed drawings, photographs, or review-session notes. Local drafting works offline. Going online never submits or retries a draft automatically.</p></section>
-    <aside class="local-data-state report-draft-note"><h2>Saving a draft does not send it.</h2><p>Drafts stay in this browser until you submit them yourself. Use the availability check below to see whether reports can be sent. Browser data can be cleared; <a href="/settings/#export-local-data">export a backup</a> if you want to keep your draft.</p></aside>
-    <div data-correction-form data-island="correction-form"><p>JavaScript and browser storage are required to save a draft on this device. Nothing has been submitted.</p></div>
-  </main>
-  <script type="module" src="/src/corrections/react/bootstrap.tsx"></script>`
-  })
-
-  pages.push({
-    relativePath: "transparency/corrections/index.html",
-    canonicalPath: "/transparency/corrections/",
-    title: "Corrections policy — NY Custodian Exam Study",
-    description: "How corrections preserve history and remain separate from secure exam material.",
-    robots: "index,follow",
-    routeId: "corrections",
-    section: "transparency",
-    body: `
-  <main class="page-shell" id="main-content" tabindex="-1">${breadcrumb([{ href: "/transparency/", label: "Sources and methods" }, { label: "Corrections" }])}<article class="reference-card"><p class="eyebrow">Corrections</p><h1>Corrections do not silently rewrite history.</h1><p>Reports may cover facts, original questions, explanations, images, accessibility, translation, rights, or security. A report is not publication. Accepted changes retain stable identities and correction history where applicable.</p><p>No attachments are accepted in v1. Suspected secure material must not be reproduced and, after any future activation, would enter a nonpublic hold without confirming whether it is genuine.</p><a class="button button-primary" href="/report/">Open the report form</a></article></main>`
-  })
-
-  pages.push({
     relativePath: "transparency/privacy/index.html",
     canonicalPath: "/transparency/privacy/",
     title: "Privacy — NY Custodian Exam Study",
@@ -1978,7 +1902,7 @@ const buildPages = ({
     routeId: "privacy",
     section: "transparency",
     body: `
-  <main class="page-shell" id="main-content" tabindex="-1">${breadcrumb([{ href: "/transparency/", label: "Sources and methods" }, { label: "Privacy" }])}<article class="reference-card"><p class="eyebrow">Launch privacy</p><h1>Your study data is stored in this browser.</h1><p>Browser data can be cleared by you or the browser. <a href="/settings/#export-local-data">Export a backup</a> if you want to keep your study records.</p><p>No account, name, email, employer, applicant ID, or admission number is required. There is no launch analytics, ad profiling, cross-site tracking, data sale, or advertising audience creation.</p><p>A correction draft is stored only in this browser unless you submit it yourself after online intake is separately approved and turned on. While intake is off, the site runs no correction service at all — nothing is collected or logged.</p><p>Exports exclude free-form correction drafts unless you explicitly include them.</p></article></main>`
+  <main class="page-shell" id="main-content" tabindex="-1">${breadcrumb([{ href: "/transparency/", label: "Sources and methods" }, { label: "Privacy" }])}<article class="reference-card"><p class="eyebrow">Launch privacy</p><h1>Your study data is stored in this browser.</h1><p>Browser data can be cleared by you or the browser. <a href="/settings/#export-local-data">Export a backup</a> if you want to keep your study records.</p><p>No account, name, email, employer, applicant ID, or admission number is required. There is no launch analytics, ad profiling, cross-site tracking, data sale, or advertising audience creation.</p></article></main>`
   })
 
   pages.push({
@@ -1990,7 +1914,7 @@ const buildPages = ({
     routeId: "security",
     section: "transparency",
     body: `
-  <main class="page-shell" id="main-content" tabindex="-1">${breadcrumb([{ href: "/transparency/", label: "Sources and methods" }, { label: "Security" }])}<article class="reference-card"><p class="eyebrow">Test security</p><h1>Do not reproduce secure exam material.</h1><p>Do not submit remembered questions, answer choices, reconstructed diagrams, photographs, admission notices, or review-session notes. This project publishes original study tasks and public-source references only.</p><p>The report contract returns a generic receipt and never confirms whether suspected secure material is genuine. There is no attachment handling or automatic public posting.</p><a href="/report/">Report a security concern without reproducing material</a></article></main>`
+  <main class="page-shell" id="main-content" tabindex="-1">${breadcrumb([{ href: "/transparency/", label: "Sources and methods" }, { label: "Security" }])}<article class="reference-card"><p class="eyebrow">Test security</p><h1>Do not reproduce secure exam material.</h1><p>Do not submit remembered questions, answer choices, reconstructed diagrams, photographs, admission notices, or review-session notes. This project publishes original study tasks and public-source references only.</p></article></main>`
   })
 
   pages.push({

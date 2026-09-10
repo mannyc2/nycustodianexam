@@ -1,5 +1,21 @@
 # Screen-state, transition, and recovery contract
 
+Online freshness checks are quiet while pending or inconclusive. A global update
+notice requires a confirmed different document revision; it offers an explicit
+Reload action. Reconnection revalidates in the background and does not itself
+announce an update. Unverified source-link availability remains contextual;
+connectivity alone never establishes that cached facts are current.
+
+
+> **Current reporting availability — 2026-09-10:** Correction intake is dormant.
+> Do not offer reporting links, generate `/report/` or
+> `/transparency/corrections/`, ship the correction-form island, or include these
+> routes in offline packs. Direct visits return not found. Reporting/drafting
+> flows described below are deferred until reporting is enabled as a complete
+> feature; remote intake status alone does not publish the UI. Existing stored
+> drafts remain supported by data export/import and reset for compatibility.
+
+
 **Status:** maintained implementation contract, accepted 2026-08-23.
 
 This file defines the legal user-visible states for every route family in

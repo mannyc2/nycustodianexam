@@ -1,4 +1,5 @@
 import { readdirSync } from "node:fs"
+import { createHash } from "node:crypto"
 import { relative, resolve } from "node:path"
 import { defineConfig, type Connect } from "vite"
 import { localProductShellPath } from "./src/asset-router.ts"
@@ -52,7 +53,16 @@ const installScopedSessionShells = (server: {
 }
 
 export default defineConfig(({ command }) => ({
+  appType: "mpa",
   plugins: [{
+    name: "nycustodian-document-revision",
+    transformIndexHtml: {
+      order: "post",
+      handler(html) {
+        return [{ tag: "meta", attrs: { name: "nycustodian-document-revision", content: createHash("sha256").update(html).digest("hex") }, injectTo: "head" }]
+      }
+    }
+  }, {
     name: "nycustodian-scoped-local-session-shells",
     configureServer(server) {
       installScopedSessionShells(server)

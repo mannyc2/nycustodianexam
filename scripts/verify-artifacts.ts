@@ -1105,16 +1105,10 @@ export const verify = async (): Promise<void> => {
     { canonicalPath: "/status/", robots: "noindex,follow", routeId: "status" },
     { canonicalPath: "/offline/", robots: "noindex,follow", routeId: "offline-packs" },
     { canonicalPath: "/settings/", robots: "noindex,follow", routeId: "settings" },
-    { canonicalPath: "/report/", robots: "noindex,follow", routeId: "correction-submit" },
     {
       canonicalPath: "/transparency/",
       robots: "index,follow",
       routeId: "transparency-index"
-    },
-    {
-      canonicalPath: "/transparency/corrections/",
-      robots: "index,follow",
-      routeId: "corrections"
     },
     {
       canonicalPath: "/transparency/foil/",
@@ -1357,6 +1351,20 @@ export const verify = async (): Promise<void> => {
     "Generated HTML routes"
   )
   const routeHtml = await Promise.all(routeFiles.map((path) => Bun.file(path).text()))
+  // Dormant reporting has no published pages, navigation, or form bundle.
+  for (const path of buildFiles.filter(path => path.endsWith(".js"))) {
+    if ((await Bun.file(path).text()).includes("data-correction-form")) {
+      throw new Error(`Dormant correction form bundled: ${path}`)
+    }
+  }
+  for (const path of ["report/index.html", "transparency/corrections/index.html"]) {
+    if (await Bun.file(new URL(path, distRoot)).exists()) throw new Error(`Dormant reporting page published: ${path}`)
+  }
+  for (const html of routeHtml) {
+    if (/href=["']\/(?:report|transparency\/corrections)\//.test(html) || html.includes("data-correction-form")) {
+      throw new Error("Dormant correction reporting is exposed in generated HTML")
+    }
+  }
   assertGeneratedPublicCopyBoundary(await Promise.all(htmlFiles.map(async (path) => ({
     path: relative(new URL(".", distRoot).pathname, path),
     html: await Bun.file(path).text()
@@ -1499,8 +1507,7 @@ export const verify = async (): Promise<void> => {
     "print-center",
     "print-preview",
     "offline-packs",
-    "settings",
-    "correction-submit"
+    "settings"
   ])
 
   for (const route of expectedRoutes) {
@@ -1891,14 +1898,11 @@ export const verify = async (): Promise<void> => {
 
     if (
       route.routeId === "offline-packs" ||
-      route.routeId === "settings" ||
-      route.routeId === "correction-submit"
+      route.routeId === "settings"
     ) {
       const marker = route.routeId === "offline-packs"
         ? "data-offline-pack-manager"
-        : route.routeId === "settings"
-        ? "data-settings"
-        : "data-correction-form"
+        : "data-settings"
       if (
         !html.includes(marker) ||
         !/<script type="module"[^>]+src="\/assets\/[^"]+\.js"/.test(html) ||

@@ -12,8 +12,7 @@ export const PrintBuilderView = () => {
       <p aria-live="polite" className="sr-only">{snapshot.announcementRequest?.message ?? ""}</p>
       <h2 id="print-builder-heading">Choose what to print</h2>
       <p>
-        Counts are limited by what this release contains. Each product is saved separately so
-        questions, keys, and explanations can begin on distinct sheets.
+        Choose your material and page settings, then review the packet before printing.
       </p>
       {snapshot.state.tag === "recoverable-error" || snapshot.state.tag === "download-required" ? (
         <section className="status-panel status-panel-danger" role="alert" aria-labelledby="print-error-heading">
@@ -26,10 +25,14 @@ export const PrintBuilderView = () => {
       ) : null}
       <form onSubmit={(event) => { event.preventDefault(); generate() }}>
         <fieldset className="print-config-fields" disabled={snapshot.state.tag === "generating"}><legend className="sr-only">Print settings</legend>
-        <PrintProductControls />
-        <PrintCountControls />
-        <PrintOutputControls />
-        <PrintGenerateAction />
+        <div className="print-setup-columns">
+          <div className="print-material-panel"><PrintProductControls /></div>
+          <div className="print-options-panel">
+            <section className="print-page-settings" aria-labelledby="print-page-settings-heading"><h3 id="print-page-settings-heading">Page settings</h3><PrintCountControls /></section>
+            <PrintOutputControls />
+          </div>
+        </div>
+        <div className="print-submit-row"><PrintGenerateAction /><p className="field-hint">Preview first. Print or save as PDF from the next screen.</p></div>
         </fieldset>
       </form>
     </section>
@@ -38,7 +41,7 @@ export const PrintBuilderView = () => {
 
 export const PrintProductControls = () => {
   const { state: { products, availability, product, factProfiles, factProfileId, selectedProfile, filterOptions, filter }, actions: { setProduct, setFactProfileId, setFilter } } = usePrintBuilder()
-  return <><div className="setup-scope-note"><h3>One shared study bank</h3><p>Practice products use the entry-level study bank. A fact sheet reproduces the reviewed announcement named on it; it does not select an exam for your practice.</p><a href="/practice/#covers">What practice covers</a></div>
+  return <>
         <fieldset>
           <legend>Product type</legend>
           <div className="print-product-list">
@@ -65,7 +68,7 @@ export const PrintProductControls = () => {
         </fieldset>
 
         {product === "announcement-profile-fact-sheet" ? factProfiles.length > 1 ? <label htmlFor="print-fact-profile">Announcement document<select id="print-fact-profile" value={factProfileId} onChange={(event) => setFactProfileId(event.target.value)}>{factProfiles.map((profile) => <option key={profile.id} value={profile.id}>{profile.label}</option>)}</select></label> : <p className="source-note">Announcement document: {selectedProfile?.label ?? "Unavailable"}</p> : null}
-        <label htmlFor="print-filter">Content filter</label>
+        <div className="print-filter-field"><label htmlFor="print-filter">Content filter</label>
         <select
           disabled={filterOptions.length === 0}
           id="print-filter"
@@ -77,7 +80,7 @@ export const PrintProductControls = () => {
         </select>
         <p className="field-hint">{filterOptions.length === 0
           ? "No additional category filter applies to this product."
-          : "Filter by the published question category, tool family, or scene environment."}</p></>
+          : "Choose a question category, tool family, or scene environment."}</p></div></>
 }
 export const PrintCountControls = () => {
   const { state: { countUnit, capacity, count, paper, margin, seed }, actions: { setCount, setPaper, setMargin, setSeed } } = usePrintBuilder()
@@ -110,7 +113,7 @@ export const PrintCountControls = () => {
           </label>
         </div>
 
-        <details className="source-note">
+        <details className="print-repeat-settings">
           <summary>Repeat this exact set</summary>
           <label htmlFor="print-seed">
             Set code

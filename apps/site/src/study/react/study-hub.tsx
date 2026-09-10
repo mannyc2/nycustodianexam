@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react"
 import { PracticeSessionSetup } from "../../practice/react/builder.tsx"
 import { ActivityHistory } from "./history.tsx"
 import { useStudy } from "./provider.tsx"
@@ -13,35 +14,30 @@ const studyIconPaths = {
 const StudyIcon = ({ kind }: { readonly kind: keyof typeof studyIconPaths }) =>
   <svg className="study-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{studyIconPaths[kind]}</svg>
 
-const ways = [
-  { icon: "practice", title: "Practice set", compactDescription: "Choose a question set", description: "Answer questions at your own pace. Read the explanation and sources after each saved answer.", href: "#practice-builder", action: "Choose a set" },
-  { icon: "hazard", title: "Hazard practice", compactDescription: "Visual and keyboard scenes", description: "Look through a workplace scene and mark hazards, or use the keyboard zone version.", href: "/hazards/", action: "Explore the scenes" },
-  { icon: "simulation", title: "Simulation", compactDescription: "Your own timing", description: "Choose a practice length and your own timing. Feedback waits until you finish.", href: "/simulations/", action: "Set up a simulation" },
-  { icon: "print", title: "Print a set", compactDescription: "Paper, with answer key", description: "Study on paper, with questions and their answer key on separate pages.", href: "/print/", action: "Open print center" }
-] as const
+const setDescription = (length: number, questionCount: number): string =>
+  length === questionCount
+    ? "Every question in this release, in one sitting."
+    : length === 45
+      ? "A shorter mix drawn from the whole question bank."
+      : length === 60
+        ? "A longer mix, still without repeated questions."
+        : "The longest mix, without repeated questions."
 
-const StudySettingsLinks = () => {
-  const { state: { compact } } = useStudy()
-  return <p className="study-settings-links"><a href="/settings/">Larger text and reduced motion</a>{compact ? null : <>{" · "}<a href="/offline/">Download for offline use</a></>}</p>
-}
-const StudyCoverageLink = () => {
-  const { state: { unavailable, hasActivity } } = useStudy()
-  return !unavailable && !hasActivity ? <a className="study-coverage-link" href="#covers">What practice covers</a> : null
-}
-
-export const StudyWays = () => {
-  const { state: { bootstrap, compact } } = useStudy()
-  return (<section className="study-section" aria-labelledby="study-ways-heading">
-      <div className="section-header"><h2 id="study-ways-heading">Ways to practice</h2>{compact ? null : <StudySettingsLinks />}</div>
-      <ul className="task-cards study-ways-grid">{ways.map((way, index) => <li className={`task-card${index === 0 ? " task-card-primary" : ""}`} key={way.href}>
-        <a className="task-card-link" href={way.href} aria-labelledby={`study-way-${way.icon}`}>
-          <StudyIcon kind={way.icon} /><h3 className="task-card-title" id={`study-way-${way.icon}`}>{way.title}</h3>
-          <p className="task-card-description">{way.description}</p><p className="task-card-compact-summary">{way.icon === "hazard" ? `${bootstrap.sceneCount} scenes` : way.compactDescription}</p>
-          <span className={`task-card-cta button ${index === 0 ? "button-primary" : "button-secondary"}`}>{way.action}</span>
-        </a>
-      </li>)}</ul>
-      {compact ? <StudySettingsLinks /> : null}
-    </section>)
+export const StudyPresets = () => {
+  const { state: { bootstrap } } = useStudy()
+  const sets = bootstrap.practiceSets ?? (bootstrap.firstPractice === null ? [] : [bootstrap.firstPractice])
+  return <section className="study-section" id="practice-sets" tabIndex={-1} aria-labelledby="practice-sets-heading">
+    <div className="section-header"><h2 id="practice-sets-heading">Choose a practice set</h2><p>Untimed, with explanations after each answer — or save feedback until the end with a simulation.</p></div>
+    <ul className="practice-preset-grid study-set-options" aria-label="Practice activities">
+      {sets.map((set, index) => <li key={set.length}><a className={`practice-preset${index === 0 ? " practice-preset-primary" : ""}`} href={set.href} aria-label={`Start ${set.length}`}>
+        <p className="set-card-number" aria-hidden="true">{set.length}</p><h3>{set.length} questions</h3><p>{setDescription(set.length, bootstrap.questionCount)}</p><span className={`button button-${index === 0 ? "primary" : "secondary"} practice-preset-cta`}>Start {set.length}</span>
+      </a></li>)}
+      <li><a className="practice-preset" href="/hazards/"><StudyIcon kind="hazard" /><h3>Hazard drill</h3><p>Spot hazards in workplace scenes.</p><span className="button button-secondary practice-preset-cta">Choose a drill</span></a></li>
+      <li><a className="practice-preset" href="/simulations/"><StudyIcon kind="simulation" /><h3>Full simulation</h3><p>Your timing, with feedback at the end.</p><span className="button button-secondary practice-preset-cta">Set up simulation</span></a></li>
+      <li><a className="practice-preset" href="/print/"><StudyIcon kind="print" /><h3>Prefer paper?</h3><p>Print questions with the answer key on separate pages.</p><span className="button button-secondary practice-preset-cta">Open print center</span></a></li>
+    </ul>
+    <StudyPracticeBuilder />
+  </section>
 }
 
 export const StudyProgress = () => {
@@ -99,54 +95,37 @@ export const StudyCoverage = () => {
 }
 
 export const StudyHeader = () => {
-  const { state: { bootstrap, unavailable, hasActivity, compact, firstPractice, activity }, actions: { retryActivity: onRetry }, meta: { headingRef } } = useStudy()
-  return <section className={`page-header study-hero${unavailable ? " study-hero-unavailable" : " page-header-prominent"}`} aria-labelledby="study-heading">
-      <p className="eyebrow">{unavailable ? "Saved activity" : hasActivity ? "Practice and activity" : "Start here"}</p>
-      <h1 id="study-heading" ref={headingRef} tabIndex={-1}>{unavailable ? "Your saved progress could not be read" : firstPractice === null ? "Choose your practice." : hasActivity ? `Start another set of ${firstPractice.length}.` : `Start with a set of ${firstPractice.length}.`}</h1>
-      <p>{unavailable ? "The study data on this device did not load. Try reading it again, or choose a practice set below. Your saved attempts have not been changed." : hasActivity
-        ? `${activity.questionCount + activity.hazardCount} saved answers and scene responses are on this device. Open any saved answer again to reread its explanation.`
-        : `Original questions across all three subject areas, untimed, with the reasoning and its source after every saved answer. Every set is drawn from one question bank written for the ${bootstrap.profileLabel} series.`}</p>
-      {compact ? <StudyCoverageLink /> : null}
-      <div className="question-controls">
-        {unavailable ? <button className="button button-primary" type="button" onClick={onRetry}>Retry reading progress</button> : firstPractice === null ? <a className="button button-primary" href="#practice-sets">See available practice</a> : <a className="button button-primary" href={firstPractice.href}>{firstPractice.label}</a>}
-        <a className="button button-secondary" href={unavailable ? "#practice-sets" : hasActivity ? "/review/" : "/hazards/"}>{unavailable ? "Choose a practice set" : hasActivity ? "Open your review queue" : "Practice spotting hazards"}</a>
-        {compact ? null : <StudyCoverageLink />}
-      </div>
-      {unavailable ? null : <dl className="figure-strip">
-        <div><dt>{hasActivity ? "Questions answered" : "Original questions"}</dt><dd>{hasActivity ? activity.questionCount : bootstrap.questionCount}</dd></div>
-        <div><dt>{hasActivity ? "Scene responses" : "Hazard scenes"}</dt><dd>{hasActivity ? activity.hazardCount : bootstrap.sceneCount}</dd></div>
-        <div><dt>{hasActivity ? "Finished reviews" : "Tools"}</dt><dd>{hasActivity ? activity.reviewCount : bootstrap.toolCount}</dd></div>
-        {!hasActivity ? <div><dt>Subject areas</dt><dd>3, named for this series</dd></div> : null}
-        {activity !== undefined && activity.unavailableAttempts.length > 0 ? <div><dt>Unavailable saved attempts</dt><dd>{activity.unavailableAttempts.length}</dd></div> : null}
-      </dl>}
-    </section>
+  const { state: { unavailable }, actions: { retryActivity }, meta: { headingRef } } = useStudy()
+  return <header className={`page-header study-hero practice-heading${unavailable ? " study-hero-unavailable" : ""}`}>
+    <h1 id="study-heading" ref={headingRef} tabIndex={-1}>{unavailable ? "Your saved progress could not be read" : "Practice"}</h1>
+    <p>{unavailable ? "Your saved attempts have not been changed. Retry reading your progress, or choose an activity below." : "Build confidence with original questions and workplace scenes, at your own pace."}</p>
+    {unavailable ? <div><button className="button button-primary" type="button" onClick={retryActivity}>Retry reading progress</button></div> : null}
+  </header>
 }
 
 export const StudyHistory = () => {
   const { state: { historyState }, actions: { retryActivity } } = useStudy()
   return <ActivityHistory state={historyState} onRetry={retryActivity} />
 }
-export const StudyPracticeBuilder = () => <PracticeSessionSetup />
-export const StudyHub = () => {
-  const { state: { hasActivity, compact } } = useStudy()
-  return <div className={`study-hub${hasActivity ? " study-returning" : " study-first-visit"}`}>
-    <StudyHeader />
-    {hasActivity ? <>
-      <StudyReview />
-      <StudyProgress />
-      <StudyHistory />
-      <StudyCoverage />
-      <StudyWays />
-    </> : <>
-      {compact ? null : <StudyCoverage />}
-      <StudyWays />
-      <StudyProgress />
-      <div className="study-activity-grid">
-        <StudyReview />
-        <StudyHistory />
-      </div>
-      {compact ? <StudyCoverage /> : null}
-    </>}
-    <StudyPracticeBuilder />
-  </div>
+export const StudyPracticeBuilder = () => {
+  const disclosure = useRef<HTMLDetailsElement>(null)
+  useEffect(() => {
+    const reveal = () => {
+      if (window.location.hash === "#practice-builder" && disclosure.current !== null) disclosure.current.open = true
+    }
+    reveal()
+    window.addEventListener("hashchange", reveal)
+    return () => window.removeEventListener("hashchange", reveal)
+  }, [])
+  return <details className="practice-customize" ref={disclosure}>
+    <summary>Customize a practice set<span>Choose topics, length, or a repeat set</span></summary>
+    <PracticeSessionSetup />
+  </details>
 }
+export const StudyHub = () => <div className="study-hub">
+  <StudyHeader />
+  <StudyPresets />
+  <StudyProgress />
+  <div className="study-activity-grid"><StudyReview /><StudyHistory /></div>
+  <StudyCoverage />
+</div>

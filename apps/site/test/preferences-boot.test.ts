@@ -1,6 +1,8 @@
 import { afterEach, describe, expect, it, vi } from "vitest"
 import {
   applyConnectivityStatus,
+  applyDocumentValidationResult,
+  applyAwaitingFreshDocumentStatus,
   applyFreshDocumentStatus,
   bootPreferencesKey,
   clearBootPreferences,
@@ -56,6 +58,41 @@ const documentStub = (links: readonly HTMLAnchorElement[] = []) => {
 }
 
 describe("preference boot mirror failures", () => {
+  it("only offers an update when a newer document is confirmed", () => {
+    const { attributes } = documentStub()
+    applyAwaitingFreshDocumentStatus()
+    applyDocumentValidationResult("unverified")
+    expect(attributes.has("data-page-update")).toBe(false)
+    expect(attributes.get("data-freshness")).toBe("offline-stale")
+    applyAwaitingFreshDocumentStatus()
+    applyDocumentValidationResult("updated")
+    expect(attributes.get("data-page-update")).toBe("available")
+    applyAwaitingFreshDocumentStatus()
+    applyDocumentValidationResult("current")
+    expect(attributes.has("data-page-update")).toBe(false)
+    expect(attributes.has("data-freshness")).toBe(false)
+  })
+
+  it("does not let a late validation overwrite an offline event", () => {
+    const { attributes } = documentStub()
+    applyAwaitingFreshDocumentStatus()
+    applyConnectivityStatus(false)
+    applyDocumentValidationResult("updated")
+    expect(attributes.get("data-connectivity")).toBe("offline")
+    expect(attributes.has("data-page-update")).toBe(false)
+  })
+
+  it("keeps validation quiet without enabling outside links prematurely", () => {
+    const source = anchorStub("https://example.gov/public-source")
+    const { attributes } = documentStub([source.element])
+    applyAwaitingFreshDocumentStatus()
+    expect(attributes.get("data-freshness")).toBe("checking")
+    expect(source.attributes.has("href")).toBe(false)
+    applyFreshDocumentStatus(true)
+    expect(attributes.has("data-freshness")).toBe(false)
+    expect(source.attributes.get("href")).toBe("https://example.gov/public-source")
+  })
+
   it("applies saved preferences in the current document when localStorage rejects the mirror", () => {
     const { toggleAttribute } = documentStub()
     Object.defineProperty(globalThis, "localStorage", {

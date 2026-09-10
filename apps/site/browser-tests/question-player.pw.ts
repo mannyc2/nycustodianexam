@@ -111,8 +111,7 @@ test("schema-valid bytes with the wrong digest stay unrevealed until a clean ret
 
 test("session start pushes history while Next replaces the current position", async ({ page }) => {
   await page.goto("/practice/")
-  await page.locator("#practice-sets > summary").click()
-  const start = page.getByLabel("Available whole-bank practice lengths").getByRole("link", { name: "Start 90" })
+  const start = page.getByLabel("Practice activities").getByRole("link", { name: "Start 90" })
   const startPath = await start.getAttribute("href")
   expect(startPath).toMatch(/^\/practice\/session\/ps-[a-f0-9]+\/question\/1\/$/)
   await start.click()
@@ -124,7 +123,7 @@ test("session start pushes history while Next replaces the current position", as
 
   await page.goBack({ waitUntil: "commit" })
   await expect(page).toHaveURL("/practice/")
-  await expect(page.getByRole("heading", { name: "Start with a set of 45.", level: 1 }))
+  await expect(page.getByRole("heading", { name: "Practice", level: 1 }))
     .toBeVisible()
 })
 

@@ -2,8 +2,6 @@ export const CANONICAL_ROUTE_IDS = [
   "atlas-family",
   "atlas-index",
   "atlas-tool",
-  "correction-submit",
-  "corrections",
   "exam-selector",
   "foil",
   "hazards-index",

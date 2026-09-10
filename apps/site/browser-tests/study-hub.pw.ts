@@ -65,9 +65,9 @@ test("saved activity expands and filters with keyboard focus on an empty result"
 test("a generated practice answer appears in Study and can be durably finished in Review", async ({ page }) => {
   await page.goto("/practice/")
   await expect(page.getByRole("heading", { name: "No saved activity yet" })).toBeVisible()
-  const firstPractice = page.locator("[data-study-hub] .study-hero a.button-primary")
-  await expect(page.getByRole("heading", { name: "Start with a set of 45.", exact: true })).toBeVisible()
-  await expect(firstPractice).toHaveText("Start a 45-question set")
+  const firstPractice = page.locator("#practice-sets").getByRole("link", { name: "Start 45", exact: true })
+  await expect(page.getByRole("heading", { name: "Practice", exact: true })).toBeVisible()
+  await expect(firstPractice).toContainText("45 questions")
   const sessionPath = await firstPractice.getAttribute("href")
   expect(sessionPath).toMatch(/^\/practice\/session\/ps-[a-z0-9]+\/question\/1\/$/)
   await firstPractice.click()
@@ -79,7 +79,7 @@ test("a generated practice answer appears in Study and can be durably finished i
   await expect(page.locator(".feedback-rationales")).toBeVisible()
 
   await page.goto("/practice/")
-  await expect(page.getByRole("heading", { name: "Start another set of 45." })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "Practice", exact: true })).toBeVisible()
   const history = page.getByRole("region", { name: "Recent activity" })
   await expect(history.getByRole("listitem")).toHaveCount(1)
   await expect(history).toContainText("Answer saved · flagged")
@@ -111,28 +111,24 @@ test("a generated practice answer appears in Study and can be durably finished i
 })
 
 
-test("Practice follows the responsive reading order and preserves quick presets without JavaScript", async ({ page, browser }) => {
-  await page.setViewportSize({ width: 700, height: 900 })
-  await page.goto("/practice/")
-  await expect(page.getByRole("heading", { name: "No saved activity yet", exact: true })).toBeVisible()
-  const sectionNames = () => page.locator(".study-hub > .study-section").evaluateAll(elements => elements.map(element => element.getAttribute("aria-labelledby")))
-  expect((await sectionNames()).indexOf("study-ways-heading")).toBeLessThan((await sectionNames()).indexOf("study-coverage-heading"))
-  const coverageLink = page.locator(".study-hero .study-coverage-link")
-  await coverageLink.focus()
-  await page.keyboard.press("Tab")
-  await expect(page.locator(".study-hero .button-primary")).toBeFocused()
-  const cards = page.locator(".study-ways-grid > li")
-  const first = await cards.nth(0).boundingBox()
-  const second = await cards.nth(1).boundingBox()
-  expect(first?.y).toBe(second?.y)
-  await page.setViewportSize({ width: 1248, height: 900 })
-  await expect.poll(async () => (await sectionNames()).indexOf("study-coverage-heading")).toBe(0)
-  await expect(page.locator("#covers")).toHaveCount(1)
+test("presets come first, customization is disclosed, and presets work without JavaScript", async ({ page, browser }) => {
+  for (const width of [384, 700, 1248]) {
+    await page.setViewportSize({ width, height: 900 })
+    await page.goto("/practice/")
+    await expect(page.getByRole("heading", { name: "No saved activity yet", exact: true })).toBeVisible()
+    await expect(page.locator(".study-hub > .study-section").first()).toHaveAttribute("id", "practice-sets")
+    await expect(page.getByRole("region", { name: "Build a practice set" })).toBeHidden()
+    await expect(page.locator("#practice-sets").getByRole("link", { name: /Hazard drill/ })).toBeVisible()
+    await expect(page.locator("#practice-sets").getByRole("link", { name: /Full simulation/ })).toBeVisible()
+    await expect(page.getByText("Why some set sizes are unavailable", { exact: true })).toHaveCount(0)
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true)
+    await page.getByText("Customize a practice set", { exact: false }).click()
+    await expect(page.getByRole("region", { name: "Build a practice set" })).toBeVisible()
+  }
   const noScript = await browser.newContext({ javaScriptEnabled: false })
   try {
     const fallback = await noScript.newPage()
     await fallback.goto("/practice/")
-    await fallback.getByText("Quick preset sets", { exact: true }).click()
     await fallback.locator(".study-set-options").getByRole("link", { name: "Start 45", exact: true }).click()
     await expect(fallback).toHaveURL(/\/practice\/session\/[^/]+\/question\/1\/$/)
   } finally { await noScript.close() }

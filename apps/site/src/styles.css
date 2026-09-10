@@ -452,14 +452,16 @@
     padding: var(--space-3) max(var(--space-4), calc((100% - var(--layout-wide)) / 2));
     border-block-end: var(--border-thin) solid var(--color-border);
     color: var(--color-text);
-    background: var(--color-warning-surface);
-    font-weight: var(--weight-bold);
+    background: var(--color-canvas);
+    font-size: var(--text-sm);
+    font-weight: normal;
   }
+  .connectivity-notice button { margin-inline-start: 0.5rem; padding: 0.5rem; min-block-size: 2.75rem; border: 0; background: transparent; color: var(--color-action); font: inherit; text-decoration: underline; cursor: pointer; }
   .connectivity-notice [data-connectivity-message] { display: none; }
   html[data-connectivity="offline"] .connectivity-notice,
-  html[data-freshness="offline-stale"] .connectivity-notice { display: block; }
+  html[data-connectivity="online"][data-page-update="available"] .connectivity-notice { display: block; }
   html[data-connectivity="offline"] [data-connectivity-message="offline"],
-  html[data-connectivity="online"][data-freshness="offline-stale"] [data-connectivity-message="stale-online"] { display: inline; }
+  html[data-connectivity="online"][data-page-update="available"] [data-connectivity-message="stale-online"] { display: inline; }
   .network-only-status { display: none; }
   html[data-freshness="offline-stale"] .network-only-status { display: inline; }
   [data-network-unavailable] {
