@@ -973,6 +973,19 @@
   [data-route-id="atlas-index"] .page-header { display: grid; gap: 0.5rem; margin-block-end: 1.5rem; }
   [data-route-id="atlas-index"] .page-header h1 { font-size: clamp(1.625rem, 1.25rem + 1vw, 2rem); letter-spacing: -0.025em; }
   [data-route-id="atlas-index"] .page-header p { max-inline-size: 72ch; color: var(--color-text-muted); text-wrap: pretty; }
+  .atlas-related-section { display: grid; gap: 1.25rem; margin-block-start: 2rem; scroll-margin-block-start: 5rem; }
+  .atlas-section-heading { display: grid; gap: 0.5rem; }
+  .atlas-section-heading h2 { font-size: clamp(1.25rem, 1rem + 1vw, 1.5rem); letter-spacing: -0.02em; }
+  .atlas-section-heading p { max-inline-size: 72ch; color: var(--color-text-muted); }
+  .atlas-comparison-grid, .atlas-family-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: 1rem; padding: 0; margin: 0; list-style: none; }
+  .atlas-comparison-card, .atlas-family-card { display: flex; block-size: 100%; border: var(--border-thin) solid var(--color-border); border-radius: 0.5rem; background: var(--color-surface); text-decoration: none; }
+  .atlas-comparison-card { flex-direction: column; }
+  .atlas-comparison-card img { display: block; inline-size: 100%; block-size: auto; aspect-ratio: 2; object-fit: contain; background: white; border-radius: 0.5rem 0.5rem 0 0; border-block-end: var(--border-thin) solid var(--color-border); }
+  .atlas-related-card-copy { display: grid; gap: 0.375rem; padding: 1rem; }
+  .atlas-related-card-copy > span { color: var(--color-text-muted); font-size: 0.875rem; }
+  .atlas-family-card { align-items: center; justify-content: space-between; gap: 1rem; padding-inline-end: 1rem; }
+  .atlas-comparison-card:hover, .atlas-family-card:hover { border-color: var(--color-action); }
+  :is(.atlas-comparison-card, .atlas-family-card):hover strong { text-decoration: underline; }
   .atlas-family-select { display: none; }
   .atlas-eligibility-note { font-size: 0.9375rem; color: var(--color-text-muted); max-inline-size: 80ch; }
   .atlas-browser { gap: 1rem; }
@@ -981,6 +994,9 @@
   .atlas-browser .tool-card h2 { font-size: 1rem; }
   .atlas-browser .tool-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   @media (max-width: 47.99rem) {
+    .atlas-comparison-card { display: grid; grid-template-columns: 6rem minmax(0, 1fr); align-items: center; gap: 0.75rem; padding: 0.75rem; }
+    .atlas-comparison-card img { border: 0; border-radius: 0; }
+    .atlas-comparison-card .atlas-related-card-copy { padding: 0; }
     .atlas-filters { display: none; }
     .atlas-family-select:not([hidden]) { display: grid; gap: 0.375rem; order: -1; }
     .atlas-family-select label { font-weight: 700; }
