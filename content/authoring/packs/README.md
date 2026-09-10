@@ -102,3 +102,8 @@ without reducing it to a display label. `PrintSourceReference` receives
 nullable `caveat`; the caveat renders adjacent to the claim/explanation. The
 same packet/restoration record pins question `id`/`version`, pack
 `packId`/`version`, and profile `id`/`version`/`compatibilityKey`.
+
+September 10 status refresh: pack version 6 and Nassau profile/fact-sheet
+version 3 carry the new administration/list observation. Unrechecked facts
+keep August 25 review dates; the administration source receipt carries
+September 10. Practice item versions and the compatibility key are unchanged.

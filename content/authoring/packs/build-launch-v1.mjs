@@ -205,14 +205,14 @@ const sources = [
 
 const sourceLines = []
 const claims = []
-const addSingleLineClaim = ({ claimId, text, lineId, sourceId, locator, excerpt, evidenceTier, caveat = null }) => {
+const addSingleLineClaim = ({ claimId, text, lineId, sourceId, locator, excerpt, evidenceTier, caveat = null, verifiedOn = "2026-08-25" }) => {
   sourceLines.push({
     id: lineId,
     sourceId,
     locator,
     excerpt,
     language: "en",
-    verifiedOn: "2026-08-25",
+    verifiedOn,
     supportedClaimIds: [claimId]
   })
   claims.push({ id: claimId, text, sourceLineIds: [lineId], evidenceTier, caveat })
@@ -655,7 +655,7 @@ const questions = questionsWithoutReviews.map((question, index) => {
 const pack = {
   schemaVersion: 1,
   packId: "launch-v1",
-  version: 5,
+  version: 6,
   locale: "en",
   sources,
   sourceLines,

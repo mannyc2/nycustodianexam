@@ -715,7 +715,7 @@ export const verify = async (): Promise<void> => {
   }
   if (
     manifest.releaseId !== "launch-v1" ||
-    manifest.packVersion !== 5 ||
+    manifest.packVersion !== 6 ||
     catalog.locale !== "en" ||
     catalog.tools.length !== 65 ||
     catalog.comparisons.length !== 14 ||
@@ -739,7 +739,7 @@ export const verify = async (): Promise<void> => {
       compatibilityKey: "nys-entry-level-custodians-janitors-v2"
     }],
     ["nassau-county-custodian-entry-level", {
-      version: 2,
+      version: 3,
       compatibilityKey: "nassau-county-custodian-entry-level-v2"
     }]
   ])
