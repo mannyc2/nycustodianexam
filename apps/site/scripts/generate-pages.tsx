@@ -1281,7 +1281,7 @@ const buildPages = ({
     body: `
   <main class="page-shell" id="main-content" tabindex="-1">
     ${breadcrumb([{ href: "/practice/", label: "Practice" }, { label: "Print center" }])}
-    <section class="hero"><p class="eyebrow">Printable practice</p><h1>Build a printable practice packet.</h1><p>Every packet states that it is original practice — not an official or past exam — and identifies the exact release it came from. Inspect the preview, then use your browser's print dialog or Save as PDF.</p></section>
+    <header class="print-center-heading"><h1>Print study materials</h1><p>Create worksheets, answer keys, and tool cards for studying on paper.</p></header>
     <div data-print-builder data-island="print-builder-bootstrap">
       <section class="review-state"><h2>Loading printable content</h2><p>JavaScript and available browser storage are required to build and keep a preview. No answers are embedded in this page.</p></section>
     </div>
