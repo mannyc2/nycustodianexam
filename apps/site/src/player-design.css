@@ -318,6 +318,16 @@
 }
 
 @layer overrides {
+  .focused-session-footer { border: 0; background: transparent; }
+  .focused-session-footer .site-footer-inner { max-inline-size: 50rem; padding-block: 1rem 2rem; border-block-start: var(--border-thin) solid var(--color-border); }
+  .focused-session-footer p { margin: 0; font-size: 0.8125rem; }
+  body:is([data-route-id="question-player"], [data-route-id="review-player"]) .page-shell {
+    max-inline-size: 50rem;
+  }
+  body:is([data-route-id="question-player"], [data-route-id="review-player"]) .directional-nav {
+    margin-block-start: var(--space-5);
+    gap: var(--space-4);
+  }
   .study-player.question-card { max-inline-size: 50rem; margin-inline: auto; }
   .study-player.question-card > form { display: grid; gap: 1.5rem; }
   .study-player.question-card .player-action-bar { margin-block-start: 0; }

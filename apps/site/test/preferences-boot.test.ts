@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest"
 import {
   applyConnectivityStatus,
+  applyAwaitingFreshDocumentStatus,
   applyFreshDocumentStatus,
   bootPreferencesKey,
   clearBootPreferences,
@@ -56,6 +57,17 @@ const documentStub = (links: readonly HTMLAnchorElement[] = []) => {
 }
 
 describe("preference boot mirror failures", () => {
+  it("keeps validation quiet without enabling outside links prematurely", () => {
+    const source = anchorStub("https://example.gov/public-source")
+    const { attributes } = documentStub([source.element])
+    applyAwaitingFreshDocumentStatus()
+    expect(attributes.get("data-freshness")).toBe("checking")
+    expect(source.attributes.has("href")).toBe(false)
+    applyFreshDocumentStatus(true)
+    expect(attributes.has("data-freshness")).toBe(false)
+    expect(source.attributes.get("href")).toBe("https://example.gov/public-source")
+  })
+
   it("applies saved preferences in the current document when localStorage rejects the mirror", () => {
     const { toggleAttribute } = documentStub()
     Object.defineProperty(globalThis, "localStorage", {

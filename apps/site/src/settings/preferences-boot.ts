@@ -96,7 +96,7 @@ const applyNetworkOnlyLinkAvailability = (available: boolean): void => {
 const applyNetworkAvailabilityFromDocumentState = (): void => {
   applyNetworkOnlyLinkAvailability(
     document.documentElement.getAttribute("data-connectivity") === "online" &&
-      document.documentElement.getAttribute("data-freshness") !== "offline-stale"
+      document.documentElement.getAttribute("data-freshness") === null
   )
 }
 
@@ -116,7 +116,7 @@ export const applyFreshDocumentStatus = (online: boolean): void => {
 
 export const applyAwaitingFreshDocumentStatus = (): void => {
   document.documentElement.setAttribute("data-connectivity", "online")
-  document.documentElement.setAttribute("data-freshness", "offline-stale")
+  document.documentElement.setAttribute("data-freshness", "checking")
   applyNetworkAvailabilityFromDocumentState()
 }
 
@@ -126,20 +126,11 @@ export const applyConnectivityStatus = (online: boolean): void => {
   applyNetworkAvailabilityFromDocumentState()
 }
 
-const transientBootAttributes = [
-  "data-connectivity",
-  "data-freshness",
-  "data-large-text",
-  "data-reduce-motion"
-] as const
+const documentRevision = (root: Document): string | null =>
+  root.querySelector<HTMLMetaElement>('meta[name="nycustodian-document-revision"]')?.content ?? null
 
-const normalizedDocumentMarkup = (root: HTMLElement): string => {
-  const clone = root.cloneNode(true) as HTMLElement
-  for (const attribute of transientBootAttributes) clone.removeAttribute(attribute)
-  return clone.outerHTML
-}
-
-const validateControlledDocument = async (expectedMarkup: string): Promise<void> => {
+const validateControlledDocument = async (expectedRevision: string | null): Promise<void> => {
+  let fresh = false
   try {
     const response = await fetch(window.location.href, {
       cache: "no-store",
@@ -149,11 +140,15 @@ const validateControlledDocument = async (expectedMarkup: string): Promise<void>
     })
     if (!response.ok || !response.headers.get("content-type")?.includes("text/html")) return
     const freshDocument = new DOMParser().parseFromString(await response.text(), "text/html")
-    if (normalizedDocumentMarkup(freshDocument.documentElement) === expectedMarkup) {
-      applyFreshDocumentStatus(true)
-    }
+    fresh = expectedRevision !== null && documentRevision(freshDocument) === expectedRevision
   } catch {
-    // A failed validation leaves the visible offline-stale state intact.
+    // An unavailable network cannot establish the currency of cached markup.
+  } finally {
+    // A connectivity event during the request owns the newer state.
+    if (document.documentElement.getAttribute("data-freshness") === "checking") {
+      if (fresh && navigator.onLine !== false) applyFreshDocumentStatus(true)
+      else document.documentElement.setAttribute("data-freshness", "offline-stale")
+    }
   }
 }
 
@@ -167,9 +162,9 @@ if (typeof window !== "undefined") {
   } else if (!("serviceWorker" in navigator) || navigator.serviceWorker.controller === null) {
     applyFreshDocumentStatus(true)
   } else {
-    const expectedMarkup = normalizedDocumentMarkup(document.documentElement)
+    const expectedRevision = documentRevision(document)
     applyAwaitingFreshDocumentStatus()
-    void validateControlledDocument(expectedMarkup)
+    void validateControlledDocument(expectedRevision)
   }
   window.addEventListener("online", () => applyConnectivityStatus(true))
   window.addEventListener("offline", () => applyConnectivityStatus(false))

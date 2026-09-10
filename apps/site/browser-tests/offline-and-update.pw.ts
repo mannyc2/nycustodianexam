@@ -19,6 +19,24 @@ import {
 const builtWorkerPath = fileURLToPath(new URL("../dist/sw.js", import.meta.url))
 const updateWorkerPath = fileURLToPath(new URL("../dist/sw-browser-update.js", import.meta.url))
 
+test("ordinary online reloads stay quiet on service-worker controlled pages", async ({ page }) => {
+  await page.goto("/practice/")
+  await page.evaluate(() => navigator.serviceWorker.register("/sw.js"))
+  await waitForActiveServiceWorker(page)
+  await page.addInitScript(() => {
+    const notices: string[] = []
+    Object.assign(window, { connectivityNotices: notices })
+    new MutationObserver(() => {
+      const notice = document.querySelector("[data-connectivity-notice]")
+      if (notice && document.documentElement.getAttribute("data-freshness") === "offline-stale") notices.push(notice.textContent ?? "")
+    }).observe(document, { subtree: true, attributes: true, attributeFilter: ["data-freshness"] })
+  })
+  await page.reload()
+  await expect.poll(() => page.locator("html").getAttribute("data-freshness")).toBeNull()
+  await expect(page.locator("[data-connectivity-notice]")).toBeHidden()
+  expect(await page.evaluate(() => Reflect.get(window, "connectivityNotices"))).toEqual([])
+})
+
 const readStoredAttemptAt = (page: import("@playwright/test").Page, id: string): Promise<unknown> =>
   page.evaluate(({ expectedDatabaseName, expectedStore, expectedId }) =>
     new Promise<unknown>((resolve, reject) => {
